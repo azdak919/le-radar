@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-08-19T19:49:02.313Z",
+  "updatedAt": "2026-08-19T20:22:50.129Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
+        "source": "api-live",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T19:48:46.812Z"
+      "checkedAt": "2026-08-19T20:22:38.008Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Parler pour jaser",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/parler-pour-jaser"
-      },
-      "next": {
         "title": "Le cours de math",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "https://cism893.ca/emissions/le-cours-de-math"
       },
+      "next": {
+        "title": "Feu | Metal | Chaos",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/feu-metal-chaos"
+      },
       "track": "",
-      "showTitle": "Parler pour jaser",
+      "showTitle": "Le cours de math",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T19:48:49.065Z"
+      "checkedAt": "2026-08-19T20:22:40.402Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T19:48:52.067Z"
+      "checkedAt": "2026-08-19T20:22:43.803Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Patch Notes",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/patch-notes"
-      },
-      "next": {
         "title": "Borderline",
         "source": "schedule-live",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/borderline"
       },
+      "next": {
+        "title": "Advice By The Fireplace",
+        "source": "schedule-live",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
+      },
       "track": "",
-      "showTitle": "Patch Notes",
+      "showTitle": "Borderline",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T19:48:54.161Z"
+      "checkedAt": "2026-08-19T20:22:45.850Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +133,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T19:48:54.936Z"
+      "checkedAt": "2026-08-19T20:22:46.738Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
-      },
+      "current": null,
       "next": {
         "title": "Podcast Nomade: L'art de se rencontrer",
         "source": "api-live",
@@ -145,8 +146,8 @@
         "end": "18:00",
         "slug": "podcast-nomade-lart-de-se-rencontrer"
       },
-      "track": "Clément - Icare",
-      "showTitle": "Palmarès CHOQ.ca",
+      "track": "Xela Edna - COPYPaste",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -156,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T19:49:01.963Z"
+      "checkedAt": "2026-08-19T20:22:49.778Z"
     }
   }
 }
