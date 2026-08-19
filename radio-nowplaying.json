@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-19T02:37:30.328Z",
+  "updatedAt": "2026-08-19T03:43:21.800Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "api-live",
-        "start": "18:50",
-        "end": "23:00",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Mercredi Bonbon",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
       "track": "",
-      "showTitle": "Capitales de Québec",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T02:37:05.090Z"
+      "checkedAt": "2026-08-19T03:42:54.636Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T02:37:06.838Z"
+      "checkedAt": "2026-08-19T03:42:56.424Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Montreal Sound Ark",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
-      },
-      "next": {
         "title": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever",
         "source": "api-live",
         "start": "23:00",
         "end": "00:00"
       },
-      "track": "",
-      "showTitle": "Montreal Sound Ark",
+      "next": {
+        "title": "Space Plane",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "02:00"
+      },
+      "track": "Easy Sonic Living/Zoe",
+      "showTitle": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T02:37:09.109Z"
+      "checkedAt": "2026-08-19T03:43:00.640Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "Turn Off The Lights",
         "source": "schedule",
         "start": "23:00",
         "end": "00:00",
         "url": "http://www.cjlo.com/shows/turn-off-the-lights"
       },
+      "next": {
+        "title": "CJLO Late Night",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Turn Off The Lights",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T02:37:22.670Z"
+      "checkedAt": "2026-08-19T03:43:14.339Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T02:37:23.659Z"
+      "checkedAt": "2026-08-19T03:43:15.278Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/in-velo-veritas"
       },
-      "track": "LØLØ - the devil wears converse",
+      "track": "Le Belladone - Dent de lait",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -158,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T02:37:29.978Z"
+      "checkedAt": "2026-08-19T03:43:21.449Z"
     }
   }
 }
