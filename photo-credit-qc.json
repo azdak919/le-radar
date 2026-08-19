@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-19T19:48:10.605Z",
+  "updated": "2026-08-19T20:37:38.938Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 130,
+  "cited": 131,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 22,
-  "updatedCount": 11,
+  "checked": 21,
+  "updatedCount": 10,
   "citedNew": 8,
-  "fallbackNew": 14,
+  "fallbackNew": 13,
   "samples": [
     {
       "title": "De la résistance au courage",
@@ -20,25 +20,11 @@
       "method": null
     },
     {
-      "title": "La dépendance aux jeux de hasard, lorsque le jeu n’a pas de fin",
-      "source": "Le Collectif",
-      "credit": "Photo : Université de Montréal",
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
       "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "De l’écotourisme en randonnée pédestre: cinq parcours à découvrir",
-      "source": "Le Collectif",
-      "credit": "Photo : Rebecca Gagné",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Rosalie Tremblay sélectionnée par Hockey Canada",
-      "source": "Le Collectif",
-      "credit": "Photo : Elite Prospect",
-      "cited": true,
-      "method": "body-tail"
+      "method": "figcaption-paren-kind"
     },
     {
       "title": "La performance de l’homosexualité : un privilège ?",
@@ -55,13 +41,6 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Ce que nous devons aux femmes",
-      "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
-      "cited": true,
-      "method": "media-credit-near"
-    },
-    {
       "title": "Les femmes MAGA au service du patriarcat",
       "source": "Le Délit",
       "credit": "Photo : Stu Doré",
@@ -76,6 +55,20 @@
       "method": null
     },
     {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
+    },
+    {
       "title": "Inside Mile End Kicks",
       "source": "The Link",
       "credit": "Photo: Courtesy of Joe Fuda",
@@ -85,9 +78,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
