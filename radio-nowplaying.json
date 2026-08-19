@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T14:30:18.746Z",
+  "updatedAt": "2026-08-19T15:04:30.799Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,87 +21,88 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T14:29:49.068Z"
+      "checkedAt": "2026-08-19T15:04:11.417Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
         "title": "Genre de bleu (reprise)",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://cism893.ca/emissions/genre-de-bleu"
       },
+      "next": {
+        "title": "La carte cadeau",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+      },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Genre de bleu (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T14:29:51.440Z"
+      "checkedAt": "2026-08-19T15:04:13.404Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Sleepy King/Terminal 5",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Free City Radio",
         "source": "api-live",
         "start": "11:00",
         "end": "11:30"
       },
+      "next": {
+        "title": "If You Got Ears",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "The Sleepy King/Terminal 5",
+      "showTitle": "Free City Radio",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "stream"
+        "stream",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T14:29:54.278Z"
+      "checkedAt": "2026-08-19T15:04:15.877Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
-      },
-      "next": {
         "title": "Unheard Of",
         "source": "schedule-live",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/unheard-of"
       },
+      "next": {
+        "title": "North-South Hockey",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/north-south-hockey"
+      },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Unheard Of",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T14:30:08.781Z"
+      "checkedAt": "2026-08-19T15:04:17.750Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +127,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T14:30:09.678Z"
+      "checkedAt": "2026-08-19T15:04:18.421Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "In Vélo Veritas",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00",
         "slug": "in-velo-veritas"
       },
-      "track": "Kelsey Lu - Better Than That",
-      "showTitle": "",
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
+      },
+      "track": "Nia Archives - This Could Be...",
+      "showTitle": "In Vélo Veritas",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T14:30:18.395Z"
+      "checkedAt": "2026-08-19T15:04:30.449Z"
     }
   }
 }
