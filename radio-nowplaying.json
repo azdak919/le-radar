@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T09:30:45.368Z",
+  "updatedAt": "2026-08-19T10:01:27.005Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T09:30:18.603Z"
+      "checkedAt": "2026-08-19T10:00:54.976Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T09:30:21.012Z"
+      "checkedAt": "2026-08-19T10:00:56.864Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T09:30:23.868Z"
+      "checkedAt": "2026-08-19T10:00:59.088Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Morning Electro-shock",
         "source": "schedule",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/morning-electro-shock"
       },
+      "next": {
+        "title": "Words and Culture",
+        "source": "schedule",
+        "start": "07:30",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/words-and-culture"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Morning Electro-shock",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T09:30:37.734Z"
+      "checkedAt": "2026-08-19T10:01:12.643Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T09:30:38.583Z"
+      "checkedAt": "2026-08-19T10:01:13.327Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:00",
         "slug": "in-velo-veritas"
       },
-      "track": "Mort Rose - Mens pas",
+      "track": "Grace of Arc - La fin",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T09:30:45.016Z"
+      "checkedAt": "2026-08-19T10:01:26.654Z"
     }
   }
 }
