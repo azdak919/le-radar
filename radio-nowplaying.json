@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T12:39:50.415Z",
+  "updatedAt": "2026-08-19T13:41:45.955Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T12:39:24.995Z"
+      "checkedAt": "2026-08-19T13:41:07.921Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/club-classique"
-      },
-      "next": {
         "title": "La collation",
         "source": "schedule",
         "start": "09:00",
         "end": "11:00",
         "url": "https://cism893.ca/emissions/mix-collation"
       },
+      "next": {
+        "title": "Genre de bleu (reprise)",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/genre-de-bleu"
+      },
       "track": "",
-      "showTitle": "Club classique",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T12:39:27.186Z"
+      "checkedAt": "2026-08-19T13:41:10.278Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Wednesday Morning After",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "The Sleepy King/Terminal 5",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Free City Radio",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "11:30"
+      },
       "track": "",
-      "showTitle": "The Wednesday Morning After",
+      "showTitle": "The Sleepy King/Terminal 5",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T12:39:29.784Z"
+      "checkedAt": "2026-08-19T13:41:15.416Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Trawling the Megahertz",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
-      },
-      "next": {
         "title": "Are We There Yet?",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/are-we-there-yet"
       },
+      "next": {
+        "title": "Democracy Now",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
+      },
       "track": "",
-      "showTitle": "Trawling the Megahertz",
+      "showTitle": "Are We There Yet?",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T12:39:43.676Z"
+      "checkedAt": "2026-08-19T13:41:30.682Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T12:39:44.421Z"
+      "checkedAt": "2026-08-19T13:41:31.723Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "12:00",
         "slug": "in-velo-veritas"
       },
-      "track": "KALIKA - PVTE GOTHIQUE",
+      "track": "Vague de films coréens en salle",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T12:39:50.065Z"
+      "checkedAt": "2026-08-19T13:41:45.604Z"
     }
   }
 }
