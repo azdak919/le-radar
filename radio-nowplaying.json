@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T15:57:14.685Z",
+  "updatedAt": "2026-08-19T16:32:53.058Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,81 +21,87 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T15:57:00.174Z"
+      "checkedAt": "2026-08-19T16:32:35.499Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Genre de bleu (reprise)",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/genre-de-bleu"
-      },
-      "next": {
         "title": "La carte cadeau",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "Genre de bleu (reprise)",
+      "showTitle": "La carte cadeau",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T15:57:02.645Z"
+      "checkedAt": "2026-08-19T16:32:37.891Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "If You Got Ears",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
-      "track": "ffiles",
-      "showTitle": "",
+      "next": {
+        "title": "Radyo Kapwa",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
+      "track": "",
+      "showTitle": "If You Got Ears",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T15:57:05.434Z"
+      "checkedAt": "2026-08-19T16:32:40.816Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Unheard Of",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/unheard-of"
-      },
-      "next": {
         "title": "North-South Hockey",
         "source": "schedule-live",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/north-south-hockey"
       },
+      "next": {
+        "title": "Beatnik Boy: Mixtape",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/beatnik-boy-mixtape"
+      },
       "track": "",
-      "showTitle": "Unheard Of",
+      "showTitle": "North-South Hockey",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T15:57:07.449Z"
+      "checkedAt": "2026-08-19T16:32:43.296Z"
     },
     "cfak": {
       "id": "cfak",
@@ -120,18 +126,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T15:57:08.309Z"
+      "checkedAt": "2026-08-19T16:32:44.137Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "In Vélo Veritas",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "slug": "in-velo-veritas"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
@@ -139,8 +139,8 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Truck Violence - My dog would fuck the air",
-      "showTitle": "In Vélo Veritas",
+      "track": "Chinese American Bear - No No Yeah Yeah",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T15:57:14.334Z"
+      "checkedAt": "2026-08-19T16:32:52.708Z"
     }
   }
 }
