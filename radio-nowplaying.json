@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20T22:23:49.914Z",
+  "updatedAt": "2026-08-20T22:54:48.532Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -25,11 +25,10 @@
       "source": "api-live",
       "sources": [
         "api-live",
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T22:23:18.654Z"
+      "checkedAt": "2026-08-20T22:54:20.897Z"
     },
     "cism": {
       "id": "cism",
@@ -56,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T22:23:20.892Z"
+      "checkedAt": "2026-08-20T22:54:23.264Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +80,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T22:23:28.785Z"
+      "checkedAt": "2026-08-20T22:54:26.134Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +107,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T22:23:42.871Z"
+      "checkedAt": "2026-08-20T22:54:40.346Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,21 +132,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T22:23:44.010Z"
+      "checkedAt": "2026-08-20T22:54:41.106Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les Apatrides Anonymes",
         "source": "api-live",
         "start": "18:30",
         "end": "19:40",
         "slug": "apatrides-anonymes"
       },
-      "track": "Kee Avil - delay",
-      "showTitle": "",
+      "next": {
+        "title": "Le grand maître des jeux",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "22:30",
+        "slug": "le-maitre-des-jeux"
+      },
+      "track": "02 Genesis Owusu - Life Keeps Going",
+      "showTitle": "Les Apatrides Anonymes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -157,7 +162,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-20T22:23:49.563Z"
+      "checkedAt": "2026-08-20T22:54:48.181Z"
     }
   }
 }
