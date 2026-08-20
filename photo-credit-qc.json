@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-20T05:52:22.827Z",
+  "updated": "2026-08-20T07:14:53.843Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 131,
+  "cited": 130,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 20,
-  "updatedCount": 8,
-  "citedNew": 7,
-  "fallbackNew": 13,
+  "checked": 19,
+  "updatedCount": 7,
+  "citedNew": 5,
+  "fallbackNew": 14,
   "samples": [
     {
       "title": "De la résistance au courage",
@@ -20,11 +20,11 @@
       "method": null
     },
     {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
+      "title": "L’épidémie de la nonchalance",
+      "source": "Le Délit",
+      "credit": "Photo : Elie Nguyen",
       "cited": true,
-      "method": "figcaption-paren-kind"
+      "method": "media-credit-featured"
     },
     {
       "title": "La performance de l’homosexualité : un privilège ?",
@@ -34,25 +34,18 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "L’épidémie de la nonchalance",
+      "title": "Sois belle et tais-toi",
       "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Les femmes MAGA au service du patriarcat",
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
+      "credit": "Photo : Stu Doré/Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
     },
     {
       "title": "Inside Mile End Kicks",
@@ -64,9 +57,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
