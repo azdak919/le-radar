@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-20T02:36:06.394Z",
+  "updatedAt": "2026-08-20T03:43:35.625Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "api-live",
-        "start": "18:50",
-        "end": "23:00",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Jeudi Révolte",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
       "track": "",
-      "showTitle": "Capitales de Québec",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T02:35:41.003Z"
+      "checkedAt": "2026-08-20T03:43:07.916Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T02:35:42.868Z"
+      "checkedAt": "2026-08-20T03:43:09.915Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +74,28 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T02:35:45.221Z"
+      "checkedAt": "2026-08-20T03:43:13.716Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "There's a Synth in the House",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
-      },
-      "next": {
         "title": "The Night Watch",
         "source": "schedule-live",
         "start": "23:00",
         "end": "00:00",
         "url": "http://www.cjlo.com/shows/the-night-watch"
       },
+      "next": null,
       "track": "",
-      "showTitle": "There's a Synth in the House",
+      "showTitle": "The Night Watch",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T02:35:59.469Z"
+      "checkedAt": "2026-08-20T03:43:27.946Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +120,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T02:36:00.115Z"
+      "checkedAt": "2026-08-20T03:43:28.773Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +133,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Satya - Project 10",
+      "track": "Rico Nasty - Butthead",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +144,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-20T02:36:06.044Z"
+      "checkedAt": "2026-08-20T03:43:35.275Z"
     }
   }
 }
