@@ -1,50 +1,14 @@
 {
-  "updated": "2026-08-20T16:38:22.433Z",
+  "updated": "2026-08-20T17:58:32.901Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 10,
+  "incomplete": 6,
   "withLeadExcerpt": 81,
-  "candidates": 10,
-  "enriched": 4,
+  "candidates": 6,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Vers un centre de données à Sherbrooke",
-      "link": "https://lecollectif.ca/a-la-une/vers-un-centre-de-donnees-a-sherbrooke/",
-      "ok": true,
-      "score": 99,
-      "chars": 334,
-      "sample": "Dans une vidéo diffusée par la mairesse de Sherbrooke, David Seminaro, directeur d’Hydro-Sherbrooke,",
-      "changed": true
-    },
-    {
-      "title": "Retour sur « Le 12 août, j’achète un livre québécois 100% humain »",
-      "link": "https://lecollectif.ca/culture/retour-sur-le-12-aout-jachete-un-livre-quebecois-100-humain/",
-      "ok": true,
-      "score": 100,
-      "chars": 399,
-      "sample": "« Le 12 août, j’achète un livre québécois » est une journée de mobilisation qui invite à découvrir e",
-      "changed": true
-    },
-    {
-      "title": "Vague de décès liés à l’Ebola en Afrique",
-      "link": "https://lecollectif.ca/a-la-une/vague-de-deces-lies-a-lebola-en-afrique/",
-      "ok": true,
-      "score": 100,
-      "chars": 296,
-      "sample": "La République démocratique du Congo (RDC) et l’Ouganda font face à une hausse du nombre de personnes",
-      "changed": true
-    },
-    {
-      "title": "FTMS : vers un événement zéro déchet ?",
-      "link": "https://lecollectif.ca/a-la-une/ftms-vers-un-evenement-zero-dechet/",
-      "ok": true,
-      "score": 94,
-      "chars": 377,
-      "sample": "Un plan d’action qui touche aux trois volets du développement durable (environnemental, social et éc",
-      "changed": true
-    },
     {
       "title": "Montreal city council to debate motion to cut ties with Israel on August 24",
       "link": "https://thelinknewspaper.ca/article/16341",
@@ -79,6 +43,24 @@
       "score": 66,
       "chars": 400,
       "sample": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt t",
+      "changed": false
+    },
+    {
+      "title": "Ask the Trib: How do I survive summer in my hometown?",
+      "link": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
+      "changed": false
+    },
+    {
+      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
+      "link": "https://thelinknewspaper.ca/article/16338",
+      "ok": true,
+      "score": 90,
+      "chars": 177,
+      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
     }
   ]
