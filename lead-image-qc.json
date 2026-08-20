@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-20T14:47:10.602Z",
+  "updated": "2026-08-20T16:44:28.992Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 21,
@@ -9,7 +9,7 @@
   "pageScraped": 21,
   "photosRecovered": 21,
   "imagesCleared": 9,
-  "stockSearches": 35,
+  "stockSearches": 34,
   "stockFound": 10,
   "campusBankFound": 4,
   "mainPageLeadReady": true,
@@ -19,6 +19,12 @@
       "link": "https://thelinknewspaper.ca/article/16334",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+    },
+    {
+      "title": "Vague de décès liés à l’Ebola en Afrique",
+      "link": "https://lecollectif.ca/a-la-une/vague-de-deces-lies-a-lebola-en-afrique/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Vague-de-deces-lies-a-lEbola-en-Afrique_Getty-Images.jpg"
     },
     {
       "title": "L’apparence physique a-t-elle une influence au travail?",
@@ -33,22 +39,16 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SPORTS_Rosalie-Tremblay-hockey_Source-Elite-Prospect.jpeg"
     },
     {
-      "title": "Nouveaux sondages diffusés par Pallas",
-      "link": "https://lecollectif.ca/a-la-une/nouveaux-sondages-diffuses-par-pallas/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Nouveaux-sondages-Pallas-divulgues_Page-FB-de-Paul-St-Pierre-Plamondon.jpg"
-    },
-    {
-      "title": "Flagrant délit d’initié de Donald Trump",
-      "link": "https://lecollectif.ca/a-la-une/flagrant-delit-dinitie-de-donald-trump/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Flagrant-delit-dinitie-de-Donald-Trump_Getty-Images.jpg"
-    },
-    {
       "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
       "link": "https://thelinknewspaper.ca/article/16326",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
+    },
+    {
+      "title": "From the rink to the links",
+      "link": "https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
     },
     {
       "title": "Spotlighting Powerful McGill Alumnae",
