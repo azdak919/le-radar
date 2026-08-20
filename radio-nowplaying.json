@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20T12:41:29.011Z",
+  "updatedAt": "2026-08-20T13:43:36.345Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T12:40:53.014Z"
+      "checkedAt": "2026-08-20T13:43:05.166Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Jimmy et Neutron",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/jimmy-et-neutron"
-      },
-      "next": {
         "title": "La collation",
         "source": "schedule",
         "start": "09:00",
         "end": "11:00",
         "url": "https://cism893.ca/emissions/mix-collation"
       },
+      "next": {
+        "title": "Une fenêtre sur le monde",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
+      },
       "track": "",
-      "showTitle": "Jimmy et Neutron",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T12:40:55.256Z"
+      "checkedAt": "2026-08-20T13:43:07.042Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "OFC Podcast Radio",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Folk Directions",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Under The Olive Tree",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "OFC Podcast Radio",
+      "showTitle": "Folk Directions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T12:40:57.914Z"
+      "checkedAt": "2026-08-20T13:43:09.389Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Free City Radio",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/free-city-radio"
-      },
-      "next": {
         "title": "Everything Everywhere",
         "source": "schedule-live",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/everything-everywhere"
       },
+      "next": {
+        "title": "Democracy Now",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
+      },
       "track": "",
-      "showTitle": "Free City Radio",
+      "showTitle": "Everything Everywhere",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T12:41:12.955Z"
+      "checkedAt": "2026-08-20T13:43:23.566Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T12:41:13.747Z"
+      "checkedAt": "2026-08-20T13:43:24.222Z"
     },
     "choq": {
       "id": "choq",
@@ -146,15 +146,18 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Célia Kameni; Claire days - Best Cards",
+      "track": "The Hello Crows - Far As I Can See",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-20T12:41:28.660Z"
+      "clientPoll": {
+        "type": "triton-np",
+        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
+      },
+      "checkedAt": "2026-08-20T13:43:35.995Z"
     }
   }
 }
