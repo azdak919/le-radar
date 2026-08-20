@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20T04:33:47.157Z",
+  "updatedAt": "2026-08-20T05:27:25.087Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T04:33:23.559Z"
+      "checkedAt": "2026-08-20T05:26:55.937Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T04:33:25.329Z"
+      "checkedAt": "2026-08-20T05:26:58.381Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T04:33:27.643Z"
+      "checkedAt": "2026-08-20T05:27:06.083Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Night Watch",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "01:00",
-        "url": "http://www.cjlo.com/shows/the-night-watch"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "01:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Daydream Nation",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/daydream-nation"
+      },
       "track": "",
-      "showTitle": "The Night Watch",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T04:33:41.579Z"
+      "checkedAt": "2026-08-20T05:27:20.412Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T04:33:42.122Z"
+      "checkedAt": "2026-08-20T05:27:21.306Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "The Blind Philosopher - Downpour",
+      "track": "Kaatayra - Rio Jovem",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-20T04:33:46.808Z"
+      "checkedAt": "2026-08-20T05:27:24.735Z"
     }
   }
 }
