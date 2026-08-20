@@ -1,14 +1,11 @@
 {
-  "checkedAt": "2026-08-19T23:33:33.212Z",
+  "checkedAt": "2026-08-20T23:36:07.925Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 4,
-    "drift": [
-      "cism",
-      "cjlo"
-    ],
+    "stable": 6,
+    "drift": [],
     "overhaul": [],
     "unreachable": []
   },
@@ -27,17 +24,11 @@
       "id": "cism",
       "published": 109,
       "fresh": 109,
-      "added": [
-        "mar 09:00–11:00 La collation",
-        "jeu 07:00–08:00 Retour sur Ilesoniq 2026"
-      ],
-      "removed": [
-        "mar 09:00–10:00 Second poteau",
-        "mar 10:00–11:00 La collation"
-      ],
-      "changed": 4,
-      "ratio": 0.037,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "ckut",
@@ -51,18 +42,13 @@
     },
     {
       "id": "cjlo",
-      "published": 370,
+      "published": 371,
       "fresh": 371,
-      "added": [
-        "lun 00:00–00:30 Queer Chaos",
-        "lun 19:00–20:00 Monday Mass with Father Kate"
-      ],
-      "removed": [
-        "lun 19:00–20:00 Queer Chaos"
-      ],
-      "changed": 3,
-      "ratio": 0.008,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cfak",
