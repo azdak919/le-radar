@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20T21:31:31.970Z",
+  "updatedAt": "2026-08-20T22:23:49.914Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -29,87 +29,86 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T21:31:07.391Z"
+      "checkedAt": "2026-08-20T22:23:18.654Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rythmologie",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
-      },
-      "next": {
         "title": "Entropie",
         "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/entropie"
       },
+      "next": {
+        "title": "La rumba",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/la-rumba"
+      },
       "track": "",
-      "showTitle": "Rythmologie",
+      "showTitle": "Entropie",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T21:31:09.320Z"
+      "checkedAt": "2026-08-20T22:23:20.892Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off the Hour: Labour Radio",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Upstage",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Grey Matters",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Off the Hour: Labour Radio",
+      "showTitle": "Upstage",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T21:31:11.883Z"
+      "checkedAt": "2026-08-20T22:23:28.785Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hooked On Sonics",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
-      },
-      "next": {
         "title": "Electric Messiah",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/electric-messiah"
       },
+      "next": {
+        "title": "I Think You Might Like This",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
+      },
       "track": "",
-      "showTitle": "Hooked On Sonics",
+      "showTitle": "Electric Messiah",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T21:31:25.560Z"
+      "checkedAt": "2026-08-20T22:23:42.871Z"
     },
     "cfak": {
       "id": "cfak",
@@ -134,18 +133,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T21:31:26.248Z"
+      "checkedAt": "2026-08-20T22:23:44.010Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "La 3ème demie",
-        "source": "api-live",
-        "start": "17:15",
-        "end": "18:00",
-        "slug": "le-12-mtlsup"
-      },
+      "current": null,
       "next": {
         "title": "Les Apatrides Anonymes",
         "source": "api-live",
@@ -153,8 +146,8 @@
         "end": "19:40",
         "slug": "apatrides-anonymes"
       },
-      "track": "ID - Velours-Velours",
-      "showTitle": "La 3ème demie",
+      "track": "Kee Avil - delay",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -164,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-20T21:31:31.619Z"
+      "checkedAt": "2026-08-20T22:23:49.563Z"
     }
   }
 }
