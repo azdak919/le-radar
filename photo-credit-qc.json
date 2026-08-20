@@ -1,17 +1,45 @@
 {
-  "updated": "2026-08-20T14:46:22.033Z",
+  "updated": "2026-08-20T16:44:59.758Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 130,
+  "cited": 131,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 6,
-  "citedNew": 4,
+  "checked": 24,
+  "updatedCount": 12,
+  "citedNew": 10,
   "fallbackNew": 14,
   "samples": [
+    {
+      "title": "Vers un centre de données à Sherbrooke",
+      "source": "Le Collectif",
+      "credit": "Photo : Google Earth",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Retour sur « Le 12 août, j’achète un livre québécois 100% humain »",
+      "source": "Le Collectif",
+      "credit": "Photo : Facebook Les Libraires",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Vague de décès liés à l’Ebola en Afrique",
+      "source": "Le Collectif",
+      "credit": "Photo : Jospin Mwisha / AFP via Getty Images",
+      "cited": true,
+      "method": "json-ld"
+    },
+    {
+      "title": "FTMS : vers un événement zéro déchet ?",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "De la résistance au courage",
       "source": "Le Collectif",
@@ -20,16 +48,16 @@
       "method": null
     },
     {
-      "title": "L’épidémie de la nonchalance",
+      "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "La performance de l’homosexualité : un privilège ?",
+      "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "credit": "Photo : Elie Nguyen",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -50,9 +78,23 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
