@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-20T22:53:26.634Z",
+  "updated": "2026-08-20T23:35:00.635Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,10 +7,10 @@
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 4,
-  "citedNew": 2,
-  "fallbackNew": 14,
+  "checked": 20,
+  "updatedCount": 8,
+  "citedNew": 5,
+  "fallbackNew": 15,
   "samples": [
     {
       "title": "À la découverte du matcha et du kohakutou",
@@ -27,18 +27,46 @@
       "method": null
     },
     {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
+      "credit": "Photo : Elie Nguyen",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Sois belle et tais-toi",
+      "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré/Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Ce que nous devons aux femmes",
+      "source": "Le Délit",
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
+    },
+    {
+      "title": "Inside Mile End Kicks",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Joe Fuda",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "The apprenticeship of public voice",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
