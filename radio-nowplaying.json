@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20T09:31:19.233Z",
+  "updatedAt": "2026-08-20T10:26:38.673Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T09:30:46.242Z"
+      "checkedAt": "2026-08-20T10:25:55.483Z"
     },
     "cism": {
       "id": "cism",
@@ -34,11 +34,11 @@
         "url": "https://cism893.ca/emissions/le-seismix"
       },
       "next": {
-        "title": "Jimmy et Neutron",
+        "title": "Retour sur Ilesoniq 2026",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/jimmy-et-neutron"
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/retour-sur-ilesoniq-2026"
       },
       "track": "",
       "showTitle": "Le Séismix",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T09:30:48.111Z"
+      "checkedAt": "2026-08-20T10:25:57.517Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "William Shatner's Whiskey Tears",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
-      },
-      "next": {
         "title": "Total €clipse of The ☾harts",
         "source": "api-live",
         "start": "06:00",
         "end": "07:00"
       },
-      "track": "William Shatner",
-      "showTitle": "William Shatner's Whiskey Tears",
+      "next": {
+        "title": "OFC Podcast Radio",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "09:00"
+      },
+      "track": "",
+      "showTitle": "Total €clipse of The ☾harts",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,35 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T09:30:50.714Z"
+      "checkedAt": "2026-08-20T10:25:59.777Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Daydream Nation",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/daydream-nation"
       },
+      "next": {
+        "title": "Everything Everywhere",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/everything-everywhere"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Daydream Nation",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T09:31:04.739Z"
+      "checkedAt": "2026-08-20T10:26:14.404Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +127,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T09:31:05.339Z"
+      "checkedAt": "2026-08-20T10:26:15.077Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +140,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "B0YG1RL & NOVAGANG - B0YG1RL & NOVAGANG - Burn",
+      "track": "Hush — Funhouse",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-20T09:31:18.883Z"
+      "checkedAt": "2026-08-20T10:26:38.322Z"
     }
   }
 }
