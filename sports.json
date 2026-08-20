@@ -1,11 +1,11 @@
 {
-  "updated": "2026-08-19T21:03:34.854Z",
-  "fetchedAt": "2026-08-19T21:03:34.854Z",
+  "updated": "2026-08-20T01:22:19.086Z",
+  "fetchedAt": "2026-08-20T01:22:19.086Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-19T21:03:34.854Z"
+    "referenceDate": "2026-08-20T01:22:19.086Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 790,
@@ -92907,37 +92907,9 @@
       "usports": false,
       "leagueLabel": "Hockey collégial masculin D1",
       "lastGame": null,
-      "nextGame": {
-        "date": "2026-08-19",
-        "time": "23:40",
-        "opponent": "Cégep Outaouais",
-        "opponentCode": "OUT",
-        "home": true,
-        "sport": "hockey",
-        "competition": "Hockey collégial masculin D1",
-        "gameId": "883752",
-        "url": "https://collegial.rseqhockey.com/fr",
-        "opponentFullName": "Cégep de l'Outaouais",
-        "opponentRegistryId": "outaouais",
-        "opponentSector": "collegial"
-      },
+      "nextGame": null,
       "results": [],
-      "nextGames": [
-        {
-          "date": "2026-08-19",
-          "time": "23:40",
-          "opponent": "Cégep Outaouais",
-          "opponentCode": "OUT",
-          "home": true,
-          "sport": "hockey",
-          "competition": "Hockey collégial masculin D1",
-          "gameId": "883752",
-          "url": "https://collegial.rseqhockey.com/fr",
-          "opponentFullName": "Cégep de l'Outaouais",
-          "opponentRegistryId": "outaouais",
-          "opponentSector": "collegial"
-        }
-      ],
+      "nextGames": [],
       "record": null,
       "source": "spordle-rseqhockey",
       "fullName": "Collège Lionel-Groulx",
@@ -92960,36 +92932,9 @@
       "usports": false,
       "leagueLabel": "Hockey collégial masculin D1",
       "lastGame": null,
-      "nextGame": {
-        "date": "2026-08-19",
-        "time": "23:40",
-        "opponent": "Lionel-Groulx",
-        "opponentCode": "CLG",
-        "home": false,
-        "sport": "hockey",
-        "competition": "Hockey collégial masculin D1",
-        "gameId": "883752",
-        "url": "https://collegial.rseqhockey.com/fr",
-        "opponentFullName": "Collège Lionel-Groulx",
-        "opponentRegistryId": "lionel-groulx",
-        "opponentSector": "collegial"
-      },
+      "nextGame": null,
       "results": [],
       "nextGames": [
-        {
-          "date": "2026-08-19",
-          "time": "23:40",
-          "opponent": "Lionel-Groulx",
-          "opponentCode": "CLG",
-          "home": false,
-          "sport": "hockey",
-          "competition": "Hockey collégial masculin D1",
-          "gameId": "883752",
-          "url": "https://collegial.rseqhockey.com/fr",
-          "opponentFullName": "Collège Lionel-Groulx",
-          "opponentRegistryId": "lionel-groulx",
-          "opponentSector": "collegial"
-        },
         {
           "date": "2026-08-22",
           "time": "20:30",
