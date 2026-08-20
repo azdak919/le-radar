@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-20T04:08:09.102Z",
+  "updated": "2026-08-20T05:52:22.827Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 130,
+  "cited": 131,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 7,
-  "citedNew": 4,
-  "fallbackNew": 14,
+  "checked": 20,
+  "updatedCount": 8,
+  "citedNew": 7,
+  "fallbackNew": 13,
   "samples": [
     {
       "title": "De la résistance au courage",
@@ -20,16 +20,23 @@
       "method": null
     },
     {
-      "title": "L’épidémie de la nonchalance",
-      "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-paren-kind"
     },
     {
       "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
       "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "L’épidémie de la nonchalance",
+      "source": "Le Délit",
+      "credit": "Photo : Elie Nguyen",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -41,11 +48,11 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
     },
     {
       "title": "Inside Mile End Kicks",
@@ -57,9 +64,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
