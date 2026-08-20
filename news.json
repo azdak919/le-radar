@@ -1,6 +1,6 @@
 {
-  "updated": "2026-08-20T17:57:55.126Z",
-  "updatedSlot": "2026-08-20T17:30:00.000Z",
+  "updated": "2026-08-20T19:46:51.099Z",
+  "updatedSlot": null,
   "count": 185,
   "freshnessSessions": 3,
   "sources": {
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-08-20T17:57:14.327Z"
+      "lastFetchOk": "2026-08-20T19:46:08.902Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-08-20T17:57:19.326Z"
+      "lastFetchOk": "2026-08-20T19:46:15.597Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-07-31T12:00:00.000Z",
-      "lastFetchOk": "2026-08-20T17:57:20.149Z"
+      "lastFetchOk": "2026-08-20T19:46:16.485Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-08-19T22:00:00.000Z",
-      "lastFetchOk": "2026-08-20T17:57:21.509Z"
+      "lastFetchOk": "2026-08-20T19:46:17.849Z"
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,7 +50,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-08-20T17:57:22.972Z"
+      "lastFetchOk": "2026-08-20T19:46:19.262Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,15 +58,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-08-20T17:57:25.216Z"
+      "lastFetchOk": "2026-08-20T19:46:21.591Z"
     },
     "Le Collectif": {
       "fetchOk": true,
       "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
-      "lastArticle": "2026-08-20T15:22:47.000Z",
-      "lastFetchOk": "2026-08-20T17:57:26.213Z"
+      "lastArticle": "2026-08-20T18:29:55.000Z",
+      "lastFetchOk": "2026-08-20T19:46:23.005Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-08-20T17:57:26.431Z"
+      "lastFetchOk": "2026-08-20T19:46:23.419Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -82,7 +82,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-06-22T14:36:10.000Z",
-      "lastFetchOk": "2026-08-20T17:57:27.209Z"
+      "lastFetchOk": "2026-08-20T19:46:24.192Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-08-20T17:57:30.891Z"
+      "lastFetchOk": "2026-08-20T19:46:27.383Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-08-18T02:00:41.000Z",
-      "lastFetchOk": "2026-08-20T17:57:31.132Z"
+      "lastFetchOk": "2026-08-20T19:46:27.719Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-08-20T17:57:31.366Z"
+      "lastFetchOk": "2026-08-20T19:46:28.204Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,10 +114,25 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-08-20T17:57:31.523Z"
+      "lastFetchOk": "2026-08-20T19:46:28.482Z"
     }
   },
   "items": [
+    {
+      "source": "Le Collectif",
+      "institution": "Université de Sherbrooke",
+      "region": "Estrie",
+      "type": "universite",
+      "lang": "fr",
+      "title": "À la découverte du matcha et du kohakutou",
+      "link": "https://lecollectif.ca/a-la-une/a-la-decouverte-du-matcha-et-du-kohakutou/",
+      "author": "Sarah Gendreau Simoneau",
+      "date": "2026-08-20T18:29:55.000Z",
+      "excerpt": "Au Festival des traditions du monde de Sherbrooke (FTMS), certes, les spectacles, l’art et la gastronomie sont à l’honneur, mais l’événement offre également une multitude d’ateliers et d’activités pour tous les goûts. Cette année, on en comptait une trentaine, dont des ateliers",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/CULTURE_FTMS_Atelier_Matcha_AyaHirose_Photo2_CreditSarahGendreauSimoneau-edited.jpg",
+      "leadExcerpt": "Le Collectif s’est immergé dans la culture japonaise lors de la dernière journée du Festival, le 16 août dernier. Aya Hirose, Japonaise d’origine, a d’abord expliqué à la quarantaine de personnes présentes, ce qu’est le matcha, l’origine et les coutumes de cette poudre de thé vert, en plus de le préparer devant le public avec les instruments traditionnels.",
+      "leadImageReady": true
+    },
     {
       "source": "Le Collectif",
       "institution": "Université de Sherbrooke",
@@ -352,27 +367,6 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "On a muggy Tuesday evening, my father and I amble down to our town’s local theatre to catch one of the summer’s biggest films: Christopher Nolan ’s The Odyssey (2026). As we squish into the old cinema’s musty velvet chairs, we joke that our legs will not be the only thing cramped during the course of the film—against the independent theatre’s small screen, Nolan’s shots will be boxed in, too."
-    },
-    {
-      "source": "Le Collectif",
-      "institution": "Université de Sherbrooke",
-      "region": "Estrie",
-      "type": "universite",
-      "lang": "fr",
-      "title": "Le Festival des traditions du monde, entre traditions et découvertes",
-      "link": "https://lecollectif.ca/culture/le-festival-des-traditions-du-monde-entre-traditions-et-decouvertes/",
-      "author": "Sarah Gendreau Simoneau",
-      "date": "2026-08-17T17:39:49.000Z",
-      "excerpt": "La 29 e édition du Festival des traditions du monde de Sherbrooke (FTMS) s’est conclue le 16 août, après cinq jours de festivités, de spectacles et de cultures qui se mélangent. L’organisation du 30 e anniversaire du Festival, très attendu, est déjà en cours.",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/CULTURE_FTMSBilan1_CreditSimonRancourt-1.jpg",
-      "sourceImageCredit": "Photo : ItSimonRancourt",
-      "sourceImageCreator": "ItSimonRancourt",
-      "sourceImageCreditUrl": "https://lecollectif.ca/culture/le-festival-des-traditions-du-monde-entre-traditions-et-decouvertes/",
-      "sourceImageCreditFrom": "rss-content",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "culture_ftmsbilan1_creditsimonrancourt-1.jpg",
-      "sourceImageCreditRev": 10,
-      "leadImageReady": true
     },
     {
       "source": "The Link",
@@ -617,13 +611,13 @@
       "image": "",
       "authorCheckedAt": "2026-08-20T07:07:43.690Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Roddick Gates closed, McGill University, July 17, 2024",
-      "imageCredit": "Photo : D. Benjamin Miller / CC0 · Wikimedia Commons",
-      "imageCreator": "D. Benjamin Miller",
-      "imageLicense": "CC0",
-      "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Roddick%20Gates%20closed%2C%20McGill%20University%2C%20July%2017%2C%202024.jpg",
+      "stockImage": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg",
+      "imageTitle": "Cruel Summer (Explore)",
+      "imageCredit": "Photo : sjpowermac / CC0 · Openverse",
+      "imageCreator": "sjpowermac",
+      "imageLicense": "cc0",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/41890311@N06/28627096297",
       "leadExcerpt": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt to forgo my jacket, and, if I’m feeling bold, no sweater either. It’s the first truly warm evening in Montreal, and as the city defrosts, everyone is spilling onto sidewalks and terrasses. Women are wearing tiny dresses, and men have started to write poetry. The whole city radiates optimism, as if Ch"
     },
     {
@@ -2984,7 +2978,8 @@
       "imageCreator": "Jason Paris",
       "imageLicense": "CC BY 2.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop's%20University%20campus%202011%2004.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop's%20University%20campus%202011%2004.jpg",
+      "_campusBank": true
     },
     {
       "source": "The Campus",
@@ -3287,63 +3282,6 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "La cassette commence à être usée",
-      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
-      "author": "Antoine Proulx",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Réponse au journal The Concordian et à l’économiste Moshe Lander.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/concordiareponseV2-scaled.jpeg",
-      "featured": true,
-      "_pageAuthor": "Antoine Proulx et Louis-Justin Sauvé",
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "concordiareponsev2.jpeg",
-      "leadImageReady": true,
-      "leadExcerpt": "Première gaffe intellectuelle (in)volontaire du Concordian . En trente secondes de recherches plus ou moins rigoureuses, il aurait pu comprendre les réelles causes de la décote du Québec par la Standard and Poor’s (S&P) – qui n’a absolument rien à voir avec la recrudescence de l’intérêt des Québécois envers la souveraineté."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "La performance de l’homosexualité : un privilège ?",
-      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
-      "author": "Joséphine Miton",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/ecriture-inclusive.png",
-      "featured": true,
-      "_pageAuthor": "Joséphine Miton",
-      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
-      "leadImageReady": true
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "L’épidémie de la nonchalance",
-      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "author": "Elie Nguyen",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/QC.jpeg",
-      "featured": true,
-      "_pageAuthor": "Elie Nguyen",
-      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance.",
-      "leadImageReady": true
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
       "title": "Le retard et les bienfaits du temps long",
       "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
       "author": "Dalia Djazouli",
@@ -3409,6 +3347,63 @@
       "leadExcerpt": "Le Délit est fier de la place qu’il occupe dans la communauté francophone de l’Université McGill. Et pas seulement pour les 20 % d’étudiants francophones, mais aussi pour tous ceux qui nous lisent pour pratiquer leur français, ou même ceux qui utilisent nos éditions pour décorer les murs de leur appartement. C’est un privilège d’occuper une place, aussi petite soit-elle, dans vos quotidiens."
     },
     {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "La cassette commence à être usée",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
+      "author": "Antoine Proulx",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Réponse au journal The Concordian et à l’économiste Moshe Lander.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/concordiareponseV2-scaled.jpeg",
+      "featured": true,
+      "_pageAuthor": "Antoine Proulx et Louis-Justin Sauvé",
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "concordiareponsev2.jpeg",
+      "leadImageReady": true,
+      "leadExcerpt": "Première gaffe intellectuelle (in)volontaire du Concordian . En trente secondes de recherches plus ou moins rigoureuses, il aurait pu comprendre les réelles causes de la décote du Québec par la Standard and Poor’s (S&P) – qui n’a absolument rien à voir avec la recrudescence de l’intérêt des Québécois envers la souveraineté."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "author": "Joséphine Miton",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/ecriture-inclusive.png",
+      "featured": true,
+      "_pageAuthor": "Joséphine Miton",
+      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
+      "leadImageReady": true
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "L’épidémie de la nonchalance",
+      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "author": "Elie Nguyen",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/QC.jpeg",
+      "featured": true,
+      "_pageAuthor": "Elie Nguyen",
+      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance.",
+      "leadImageReady": true
+    },
+    {
       "source": "The McGill Daily",
       "institution": "McGill University",
       "region": "Montréal",
@@ -3422,13 +3417,14 @@
       "image": "",
       "authorCheckedAt": "2026-08-20T08:58:07.375Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg",
-      "imageTitle": "Roddick Gates closed, McGill University, July 17, 2024",
-      "imageCredit": "Photo : Gen. Quon / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Gen. Quon",
-      "imageLicense": "CC BY-SA 4.0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/2/2d/McGill_University_Montr%C3%A9al.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "McGill University Montréal",
+      "imageCredit": "Photo : User:illuminatusds / CC BY-SA 3.0 · Wikimedia Commons",
+      "imageCreator": "User:illuminatusds",
+      "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Roddick_Gates_closed,_McGill_University,_July_17,_2024.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:McGill%20University%20Montr%C3%A9al.jpeg",
+      "_campusBank": true
     },
     {
       "source": "The McGill Daily",
@@ -3516,7 +3512,8 @@
       "imageCreator": "Balcer",
       "imageLicense": "CC BY 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop%27s_University_McGreer_Hall.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop%27s_University_McGreer_Hall.jpg",
+      "_campusBank": true
     },
     {
       "source": "The Campus",
@@ -3648,13 +3645,13 @@
       "image": "",
       "authorCheckedAt": "2026-08-20T10:02:09.585Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg",
-      "imageTitle": "Wilson Hall, McGill University",
-      "imageCredit": "Photo : Jeangagnon / CC BY-SA 3.0 · Wikimedia Commons",
-      "imageCreator": "Jeangagnon",
-      "imageLicense": "CC BY-SA 3.0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/5/56/Walking_west_on_Sherbrooke_Street_near_McGill_University%2C_May_1%2C_2023.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Walking west on Sherbrooke Street near McGill University, May 1, 2023",
+      "imageCredit": "Photo : D. Benjamin Miller / CC0 · Wikimedia Commons",
+      "imageCreator": "D. Benjamin Miller",
+      "imageLicense": "CC0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Wilson_Hall,_McGill_University.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Walking%20west%20on%20Sherbrooke%20Street%20near%20McGill%20University%2C%20May%201%2C%202023.jpg",
       "_campusBank": true
     },
     {
