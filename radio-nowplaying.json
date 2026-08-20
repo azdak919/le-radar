@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-08-20T22:54:48.532Z",
+  "updatedAt": "2026-08-20T23:22:41.062Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Les Arshitechs du Son",
+        "title": "Capitales de Québec",
         "source": "api-live",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        "start": "18:50",
+        "end": "23:00",
+        "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
       "next": {
         "title": "Vendredi Nostalgie",
@@ -20,7 +20,7 @@
         "url": "https://chyz.ca/emission/vendredi-nostalgie/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "Capitales de Québec",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,86 +28,87 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T22:54:20.897Z"
+      "checkedAt": "2026-08-20T23:22:17.444Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Entropie",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/entropie"
-      },
-      "next": {
         "title": "La rumba",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/la-rumba"
       },
+      "next": {
+        "title": "La courbe 2.0",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/la-courbe-2-0"
+      },
       "track": "",
-      "showTitle": "Entropie",
+      "showTitle": "La rumba",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T22:54:23.264Z"
+      "checkedAt": "2026-08-20T23:22:19.713Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Upstage",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Grey Matters",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Other Worlds on Earth/Dromostexte",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Upstage",
+      "showTitle": "Grey Matters",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T22:54:26.134Z"
+      "checkedAt": "2026-08-20T23:22:22.718Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Electric Messiah",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/electric-messiah"
-      },
-      "next": {
         "title": "I Think You Might Like This",
         "source": "schedule-live",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
       },
+      "next": {
+        "title": "Maiden Voyage",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/maiden-voyage"
+      },
       "track": "",
-      "showTitle": "Electric Messiah",
+      "showTitle": "I Think You Might Like This",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T22:54:40.346Z"
+      "checkedAt": "2026-08-20T23:22:37.085Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T22:54:41.106Z"
+      "checkedAt": "2026-08-20T23:22:38.210Z"
     },
     "choq": {
       "id": "choq",
@@ -151,7 +152,7 @@
         "end": "22:30",
         "slug": "le-maitre-des-jeux"
       },
-      "track": "02 Genesis Owusu - Life Keeps Going",
+      "track": "Monk.e - Topic - 1000 mots",
       "showTitle": "Les Apatrides Anonymes",
       "host": "",
       "source": "api-live",
@@ -162,7 +163,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-20T22:54:48.181Z"
+      "checkedAt": "2026-08-20T23:22:40.711Z"
     }
   }
 }
