@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20T17:01:11.397Z",
+  "updatedAt": "2026-08-20T17:56:36.114Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T17:00:43.594Z"
+      "checkedAt": "2026-08-20T17:56:08.941Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T17:00:45.943Z"
+      "checkedAt": "2026-08-20T17:56:11.123Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,17 +74,17 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T17:00:48.861Z"
+      "checkedAt": "2026-08-20T17:56:13.995Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "What's Happening in NDG",
+        "title": "Give Me Shelter",
         "source": "schedule-live",
-        "start": "13:00",
+        "start": "13:30",
         "end": "14:00",
-        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
+        "url": "http://www.cjlo.com/shows/give-me-shelter"
       },
       "next": {
         "title": "CJLO's Alternative Mega Mix",
@@ -94,15 +94,14 @@
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "What's Happening in NDG",
+      "showTitle": "Give Me Shelter",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T17:01:03.451Z"
+      "checkedAt": "2026-08-20T17:56:27.982Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T17:01:04.381Z"
+      "checkedAt": "2026-08-20T17:56:28.956Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Kelsey Lu - Better Than That",
+      "track": "BAIE - Jour apres jour",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-20T17:01:11.047Z"
+      "checkedAt": "2026-08-20T17:56:35.764Z"
     }
   }
 }
