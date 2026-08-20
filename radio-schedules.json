@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T04:59:46.618Z",
+  "updatedAt": "2026-08-20T09:39:20.762Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-08-18T04:59:46.618Z",
+      "checkedAt": "2026-08-20T09:39:20.762Z",
       "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
@@ -222,7 +222,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-08-18T04:59:46.618Z",
+      "checkedAt": "2026-08-20T09:39:20.762Z",
       "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
@@ -487,13 +487,6 @@
         {
           "day": 2,
           "start": "09:00",
-          "end": "10:00",
-          "title": "Second poteau",
-          "url": "https://cism893.ca/emissions/second-poteau"
-        },
-        {
-          "day": 2,
-          "start": "10:00",
           "end": "11:00",
           "title": "La collation",
           "url": "https://cism893.ca/emissions/mix-collation"
@@ -707,6 +700,13 @@
           "end": "07:00",
           "title": "Le Séismix",
           "url": "https://cism893.ca/emissions/le-seismix"
+        },
+        {
+          "day": 4,
+          "start": "07:00",
+          "end": "08:00",
+          "title": "Retour sur Ilesoniq 2026",
+          "url": "https://cism893.ca/emissions/retour-sur-ilesoniq-2026"
         },
         {
           "day": 4,
@@ -996,7 +996,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-08-18T04:59:46.618Z",
+      "checkedAt": "2026-08-20T09:39:20.762Z",
       "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
@@ -1613,7 +1613,7 @@
       "sources": [
         "cjlo:http://www.cjlo.com/schedule"
       ],
-      "checkedAt": "2026-08-18T04:59:46.618Z",
+      "checkedAt": "2026-08-20T09:39:20.762Z",
       "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
@@ -1783,6 +1783,13 @@
           "end": "00:30",
           "title": "The Starting Rotation",
           "url": "http://www.cjlo.com/shows/the-starting-rotation"
+        },
+        {
+          "day": 1,
+          "start": "00:00",
+          "end": "00:30",
+          "title": "Queer Chaos",
+          "url": "http://www.cjlo.com/shows/queer-chaos"
         },
         {
           "day": 1,
@@ -3573,8 +3580,8 @@
           "day": 1,
           "start": "19:00",
           "end": "20:00",
-          "title": "Queer Chaos",
-          "url": "http://www.cjlo.com/shows/queer-chaos"
+          "title": "Monday Mass with Father Kate",
+          "url": "http://www.cjlo.com/shows/monday-mass-with-father-kate"
         },
         {
           "day": 1,
@@ -4214,7 +4221,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-08-18T04:59:46.618Z",
+      "checkedAt": "2026-08-20T09:39:20.762Z",
       "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
@@ -4435,7 +4442,7 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-08-18T04:59:46.618Z",
+      "checkedAt": "2026-08-20T09:39:20.762Z",
       "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
