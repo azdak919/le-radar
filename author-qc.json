@@ -1,8 +1,8 @@
 {
-  "updated": "2026-08-20T20:31:27.593Z",
+  "updated": "2026-08-20T22:46:34.177Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 4,
+  "mismatches": 6,
   "ok": true,
   "samples": [
     {
@@ -30,6 +30,22 @@
       "reason": "no-author-source"
     },
     {
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Sixtine Nicolaÿ",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Rose Langlois",
+      "reason": "page-byline"
+    },
+    {
       "title": "Garda World au CVM (Éditorial)",
       "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
       "source": "Exil",
@@ -38,5 +54,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 4
+  "fixed": 6
 }
