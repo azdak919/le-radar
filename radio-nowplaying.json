@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-19T23:46:40.445Z",
+  "updatedAt": "2026-08-20T01:02:55.047Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T23:46:14.777Z"
+      "checkedAt": "2026-08-20T01:02:27.681Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "O'Keb (reprise)",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/okeb"
-      },
-      "next": {
         "title": "Jeunesse cosmique",
         "source": "schedule",
         "start": "20:00",
         "end": "22:00",
         "url": "https://cism893.ca/emissions/jeunesse-cosmique"
       },
+      "next": {
+        "title": "Mix anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "O'Keb (reprise)",
+      "showTitle": "Jeunesse cosmique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T23:46:16.648Z"
+      "checkedAt": "2026-08-20T01:02:30.062Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harbinger Showcase",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Jazz Euphorium",
         "source": "api-live",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Lo Signal / Meanwhile/ Rhizomatic",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Harbinger Showcase",
+      "showTitle": "Jazz Euphorium",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,35 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T23:46:19.038Z"
+      "checkedAt": "2026-08-20T01:02:33.381Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "BVST",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/bvst"
-      },
-      "next": {
         "title": "Rap Radar",
         "source": "schedule-live",
         "start": "21:00",
         "end": "22:00",
         "url": "http://www.cjlo.com/shows/rap-radar"
       },
+      "next": {
+        "title": "There's a Synth in the House",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
+      },
       "track": "",
-      "showTitle": "BVST",
+      "showTitle": "Rap Radar",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T23:46:33.138Z"
+      "checkedAt": "2026-08-20T01:02:47.259Z"
     },
     "cfak": {
       "id": "cfak",
@@ -134,18 +133,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-19T23:46:33.780Z"
+      "checkedAt": "2026-08-20T01:02:48.040Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Le CHOC des Générations",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00",
-        "slug": "le-choc-des-generations"
-      },
+      "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
         "source": "api-live",
@@ -153,8 +146,8 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Marie Celeste - Combien de temps?",
-      "showTitle": "Le CHOC des Générations",
+      "track": "Kelela - if we meet again",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -164,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-19T23:46:40.094Z"
+      "checkedAt": "2026-08-20T01:02:54.697Z"
     }
   }
 }
