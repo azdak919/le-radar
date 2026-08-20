@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-20T13:18:20.571Z",
+  "updated": "2026-08-20T14:46:22.033Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 131,
+  "cited": 130,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 20,
-  "updatedCount": 8,
-  "citedNew": 7,
-  "fallbackNew": 13,
+  "checked": 18,
+  "updatedCount": 6,
+  "citedNew": 4,
+  "fallbackNew": 14,
   "samples": [
     {
       "title": "De la résistance au courage",
@@ -50,23 +50,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
