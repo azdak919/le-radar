@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-08-20T19:57:09.072Z",
+  "updatedAt": "2026-08-20T20:28:42.163Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
+        "source": "api-live",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T19:56:41.517Z"
+      "checkedAt": "2026-08-20T20:28:19.171Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La boussole culturelle",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/la-boussole-culturelle"
-      },
-      "next": {
         "title": "Rythmologie",
         "source": "schedule",
         "start": "16:00",
         "end": "18:00",
         "url": "https://cism893.ca/emissions/rythmologie"
       },
+      "next": {
+        "title": "Entropie",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/entropie"
+      },
       "track": "",
-      "showTitle": "La boussole culturelle",
+      "showTitle": "Rythmologie",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T19:56:43.744Z"
+      "checkedAt": "2026-08-20T20:28:20.867Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T19:56:46.784Z"
+      "checkedAt": "2026-08-20T20:28:23.148Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Secondhand Sounds",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/secondhand-sounds"
-      },
-      "next": {
         "title": "Hooked On Sonics",
         "source": "schedule-live",
         "start": "16:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/hooked-on-sonics"
       },
+      "next": {
+        "title": "Electric Messiah",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/electric-messiah"
+      },
       "track": "",
-      "showTitle": "Secondhand Sounds",
+      "showTitle": "Hooked On Sonics",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T19:57:01.121Z"
+      "checkedAt": "2026-08-20T20:28:37.213Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +133,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T19:57:02.098Z"
+      "checkedAt": "2026-08-20T20:28:39.885Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
-      },
+      "current": null,
       "next": {
         "title": "La 3ème demie",
         "source": "api-live",
@@ -145,8 +146,8 @@
         "end": "18:00",
         "slug": "le-12-mtlsup"
       },
-      "track": "Man/Woman/Chainsaw - The Thing",
-      "showTitle": "Palmarès CHOQ.ca",
+      "track": "Gayance - Kinda Strange feat. KAYTA",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -156,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-20T19:57:08.721Z"
+      "checkedAt": "2026-08-20T20:28:41.811Z"
     }
   }
 }
