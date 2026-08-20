@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20T10:57:36.301Z",
+  "updatedAt": "2026-08-20T11:28:12.753Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T10:57:12.339Z"
+      "checkedAt": "2026-08-20T11:27:47.255Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "05:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "Retour sur Ilesoniq 2026",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/retour-sur-ilesoniq-2026"
       },
+      "next": {
+        "title": "Jimmy et Neutron",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/jimmy-et-neutron"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Retour sur Ilesoniq 2026",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T10:57:14.692Z"
+      "checkedAt": "2026-08-20T11:27:49.016Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Total €clipse of The ☾harts",
-        "source": "api-live",
-        "start": "06:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "OFC Podcast Radio",
         "source": "api-live",
         "start": "07:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "Folk Directions",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Total €clipse of The ☾harts",
+      "showTitle": "OFC Podcast Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T10:57:17.698Z"
+      "checkedAt": "2026-08-20T11:27:51.353Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -102,32 +102,32 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T10:57:31.938Z"
+      "checkedAt": "2026-08-20T11:28:05.262Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule-live",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T10:57:32.715Z"
+      "checkedAt": "2026-08-20T11:28:05.906Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +140,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "FUUDGE - J",
+      "track": "Love Spells - Crutch",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-20T10:57:35.951Z"
+      "checkedAt": "2026-08-20T11:28:12.402Z"
     }
   }
 }
