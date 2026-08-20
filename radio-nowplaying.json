@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20T23:22:41.062Z",
+  "updatedAt": "2026-08-20T23:50:13.279Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T23:22:17.444Z"
+      "checkedAt": "2026-08-20T23:49:49.260Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T23:22:19.713Z"
+      "checkedAt": "2026-08-20T23:49:51.133Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T23:22:22.718Z"
+      "checkedAt": "2026-08-20T23:49:53.266Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T23:22:37.085Z"
+      "checkedAt": "2026-08-20T23:50:07.022Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,18 +133,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T23:22:38.210Z"
+      "checkedAt": "2026-08-20T23:50:07.608Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Les Apatrides Anonymes",
-        "source": "api-live",
-        "start": "18:30",
-        "end": "19:40",
-        "slug": "apatrides-anonymes"
-      },
+      "current": null,
       "next": {
         "title": "Le grand maître des jeux",
         "source": "api-live",
@@ -152,8 +146,8 @@
         "end": "22:30",
         "slug": "le-maitre-des-jeux"
       },
-      "track": "Monk.e - Topic - 1000 mots",
-      "showTitle": "Les Apatrides Anonymes",
+      "track": "Angelique Kidjo - No Stopping Us",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -163,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-20T23:22:40.711Z"
+      "checkedAt": "2026-08-20T23:50:12.929Z"
     }
   }
 }
