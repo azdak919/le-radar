@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20T01:02:55.047Z",
+  "updatedAt": "2026-08-20T02:36:06.394Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T01:02:27.681Z"
+      "checkedAt": "2026-08-20T02:35:41.003Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Jeunesse cosmique",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/jeunesse-cosmique"
-      },
-      "next": {
         "title": "Mix anglo",
         "source": "schedule",
         "start": "22:00",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "La grande ludothèque (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+      },
       "track": "",
-      "showTitle": "Jeunesse cosmique",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T01:02:30.062Z"
+      "checkedAt": "2026-08-20T02:35:42.868Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Jazz Euphorium",
-        "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Lo Signal / Meanwhile/ Rhizomatic",
         "source": "api-live",
         "start": "22:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Off The Hook",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "02:00"
+      },
       "track": "",
-      "showTitle": "Jazz Euphorium",
+      "showTitle": "Lo Signal / Meanwhile/ Rhizomatic",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T01:02:33.381Z"
+      "checkedAt": "2026-08-20T02:35:45.221Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Rap Radar",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/rap-radar"
-      },
-      "next": {
         "title": "There's a Synth in the House",
         "source": "schedule-live",
         "start": "22:00",
         "end": "23:00",
         "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
       },
+      "next": {
+        "title": "The Night Watch",
+        "source": "schedule-live",
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/the-night-watch"
+      },
       "track": "",
-      "showTitle": "Rap Radar",
+      "showTitle": "There's a Synth in the House",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T01:02:47.259Z"
+      "checkedAt": "2026-08-20T02:35:59.469Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T01:02:48.040Z"
+      "checkedAt": "2026-08-20T02:36:00.115Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Kelela - if we meet again",
+      "track": "Satya - Project 10",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-20T01:02:54.697Z"
+      "checkedAt": "2026-08-20T02:36:06.044Z"
     }
   }
 }
