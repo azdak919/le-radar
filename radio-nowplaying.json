@@ -1,34 +1,35 @@
 {
-  "updatedAt": "2026-08-20T20:58:22.688Z",
+  "updatedAt": "2026-08-20T21:31:31.970Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "17:30",
         "end": "19:00",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Vendredi Nostalgie",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T20:57:52.407Z"
+      "checkedAt": "2026-08-20T21:31:07.391Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +56,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T20:57:54.907Z"
+      "checkedAt": "2026-08-20T21:31:09.320Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Positive Vibes",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Off the Hour: Labour Radio",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Upstage",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Positive Vibes",
+      "showTitle": "Off the Hour: Labour Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,7 +82,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T20:57:57.911Z"
+      "checkedAt": "2026-08-20T21:31:11.883Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +109,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T20:58:15.436Z"
+      "checkedAt": "2026-08-20T21:31:25.560Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,21 +134,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T20:58:16.449Z"
+      "checkedAt": "2026-08-20T21:31:26.248Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "La 3ème demie",
         "source": "api-live",
         "start": "17:15",
         "end": "18:00",
         "slug": "le-12-mtlsup"
       },
-      "track": "Valence - Pruneau",
-      "showTitle": "",
+      "next": {
+        "title": "Les Apatrides Anonymes",
+        "source": "api-live",
+        "start": "18:30",
+        "end": "19:40",
+        "slug": "apatrides-anonymes"
+      },
+      "track": "ID - Velours-Velours",
+      "showTitle": "La 3ème demie",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -157,7 +164,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-20T20:58:22.337Z"
+      "checkedAt": "2026-08-20T21:31:31.619Z"
     }
   }
 }
