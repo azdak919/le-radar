@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20T14:33:25.476Z",
+  "updatedAt": "2026-08-20T15:30:37.244Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T14:32:50.137Z"
+      "checkedAt": "2026-08-20T15:30:07.433Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
         "title": "Une fenêtre sur le monde",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
       },
+      "next": {
+        "title": "La grande ludothèque",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+      },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Une fenêtre sur le monde",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T14:32:51.973Z"
+      "checkedAt": "2026-08-20T15:30:09.834Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Folk Directions",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Under The Olive Tree",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00"
       },
+      "next": {
+        "title": "Venus Radio",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Folk Directions",
+      "showTitle": "Under The Olive Tree",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T14:32:54.129Z"
+      "checkedAt": "2026-08-20T15:30:12.758Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
-      },
-      "next": {
         "title": "Weirdo Rippers",
         "source": "schedule-live",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/weirdo-rippers"
       },
+      "next": {
+        "title": "The Power Hour",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/the-power-hour"
+      },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Weirdo Rippers",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T14:33:08.299Z"
+      "checkedAt": "2026-08-20T15:30:26.858Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "À nous le futur",
         "source": "schedule-live",
         "start": "11:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "After 5@8",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "À nous le futur",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T14:33:08.942Z"
+      "checkedAt": "2026-08-20T15:30:27.703Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Les Louanges - La journée va etre chaude",
+      "track": "Alice Bro - Blanc",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-20T14:33:25.126Z"
+      "checkedAt": "2026-08-20T15:30:36.893Z"
     }
   }
 }
