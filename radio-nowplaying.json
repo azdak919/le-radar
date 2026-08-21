@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-21T17:25:47.322Z",
+  "updatedAt": "2026-08-21T17:56:23.993Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T17:25:11.675Z"
+      "checkedAt": "2026-08-21T17:55:54.123Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T17:25:13.753Z"
+      "checkedAt": "2026-08-21T17:55:56.561Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,21 +81,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T17:25:17.043Z"
+      "checkedAt": "2026-08-21T17:55:59.472Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "the castle",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/the-castle"
       },
       "next": {
         "title": "Spiral Bound",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/spiral-bound"
@@ -103,12 +103,12 @@
       "track": "",
       "showTitle": "the castle",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T17:25:42.591Z"
+      "checkedAt": "2026-08-21T17:56:15.971Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T17:25:43.484Z"
+      "checkedAt": "2026-08-21T17:56:17.086Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "17:00",
         "slug": "histoire-de-passer-le-temps"
       },
-      "track": "Cámara Chilena de la Destrucción - Codigo Morse",
+      "track": "CAVS - Boitata",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-21T17:25:46.971Z"
+      "checkedAt": "2026-08-21T17:56:23.642Z"
     }
   }
 }
