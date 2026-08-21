@@ -1,7 +1,7 @@
 /* Labo photo local — revue une à la fois. Écrit via /api/* (127.0.0.1). */
 (() => {
-  const DESKTOP = { w: 1280, h: 170 };
-  const MOBILE = { w: 390, h: 175 };
+  const DESKTOP = { w: 1280, h: 208 };
+  const MOBILE = { w: 390, h: 236 };
   const PHONE = { w: 390, h: 844 };
   const FULL = { w: 1280, h: 800 };
   const STORE_KEY = 'photo-lab-current-key';
@@ -368,39 +368,67 @@
     $('band-mobile').style.height = `${mob.heightPct}%`;
   }
 
+  function creditText() {
+    return ($('credit-preview').textContent || '').replace(/^Aperçu : /, '') ||
+      (state.selected && (state.selected.credit || '')) ||
+      '';
+  }
+
+  function mastChromeHtml(phone) {
+    const cred = creditText();
+    const cls = phone ? 'pv-chrome pv-phone' : 'pv-chrome';
+    const slogan = phone
+      ? 'Journaux, radios et sports étudiants du Québec,<br>réunis au même endroit'
+      : 'Journaux, radios et sports étudiants du Québec, réunis au même endroit';
+    return `<div class="pv-scrim"></div>
+      <div class="${cls}">
+        <div class="pv-top">
+          <span class="pv-date">${phone ? 'MARDI 21 AOÛT' : 'MARDI 21 AOÛT · 14 h'}</span>
+          <span class="pv-wx"><i></i><i></i>${phone ? '' : '<i></i>'}</span>
+        </div>
+        <div class="pv-brand">
+          <div class="pv-mark"><img class="pv-logo" src="/assets/icon.svg" alt=""><span>LE‑RADAR.ca</span></div>
+          <div class="pv-slogan">${slogan}</div>
+        </div>
+        <div class="pv-credit">${cred}</div>
+      </div>`;
+  }
+
+  function fullChromeHtml() {
+    const cred = creditText();
+    return `<div class="pv-full-overlay"></div><div class="pv-full-credit">${cred}</div>`;
+  }
+
   function renderMinis() {
     const p = state.selected;
     if (!p) return;
     const fy = state.focalY;
     const pct = `${Math.round(fy * 1000) / 10}%`;
     const frames = {
-      'preview-desktop': { w: DESKTOP.w, h: DESKTOP.h, word: true },
-      'preview-mobile': { w: MOBILE.w, h: MOBILE.h, word: true },
-      'preview-phone': { w: PHONE.w, h: PHONE.h, word: false },
-      'preview-full': { w: FULL.w, h: FULL.h, word: false },
+      'preview-desktop': { w: DESKTOP.w, h: DESKTOP.h, chrome: 'mast-desk' },
+      'preview-mobile': { w: MOBILE.w, h: MOBILE.h, chrome: 'mast-phone' },
+      'preview-phone': { w: PHONE.w, h: PHONE.h, chrome: 'full' },
+      'preview-full': { w: FULL.w, h: FULL.h, chrome: 'full' },
     };
     for (const [id, f] of Object.entries(frames)) {
       const el = $(id);
+      if (!el) continue;
       const avail = el.clientWidth || 280;
       const scale = avail / f.w;
+      el.style.height = `${Math.round(f.h * scale)}px`;
       el.innerHTML = '';
       const inner = document.createElement('div');
-      inner.style.cssText = `width:${f.w}px;height:${f.h}px;transform:scale(${scale});transform-origin:top left;position:relative;`;
+      inner.style.cssText = `width:${f.w}px;height:${f.h}px;transform:scale(${scale});transform-origin:top left;position:relative;overflow:hidden;`;
       const bg = document.createElement('div');
       bg.className = 'mini-bg';
       bg.style.backgroundImage = `url("${photoSrc(p)}")`;
+      bg.style.backgroundSize = 'cover';
       bg.style.backgroundPosition = `50% ${pct}`;
       inner.appendChild(bg);
-      if (f.word) {
-        const chrome = document.createElement('div');
-        chrome.className = 'mini-chrome';
-        chrome.textContent = 'LE RADAR.ca';
-        inner.appendChild(chrome);
-        const cred = document.createElement('div');
-        cred.className = 'mini-credit';
-        cred.textContent = $('credit-preview').textContent.replace(/^Aperçu : /, '') || p.credit || '';
-        inner.appendChild(cred);
-      }
+      inner.insertAdjacentHTML(
+        'beforeend',
+        f.chrome === 'full' ? fullChromeHtml() : mastChromeHtml(f.chrome === 'mast-phone'),
+      );
       el.appendChild(inner);
     }
   }
