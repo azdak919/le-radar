@@ -64,6 +64,27 @@
       `${stats.total} au total · sans saison ${stats.untagged}`;
   }
 
+  function renderCache(c) {
+    if (!c || !$('cache-status')) return;
+    const bit = `${c.have || 0}/${c.total || 0}`;
+    $('cache-status').textContent = c.running ? `Cache ${bit}…` : `Cache ${bit}`;
+  }
+
+  function photoSrc(p) {
+    if (!p) return '';
+    return p.src || (p.id ? `/img/${p.id}` : p.url);
+  }
+
+  function prefetchAround() {
+    const i = currentIndex();
+    for (const j of [i + 1, i + 2, i - 1]) {
+      const p = state.filtered[j];
+      if (!p) continue;
+      const im = new Image();
+      im.src = photoSrc(p);
+    }
+  }
+
   function currentIndex() {
     if (!state.selected) return -1;
     return state.filtered.findIndex((p) => p.key === state.selected.key);
@@ -123,7 +144,10 @@
     try {
       sessionStorage.setItem(STORE_KEY, p.key);
     } catch (_) {}
-    $('full-photo').src = p.url;
+    $('crop-stage').classList.add('is-loading');
+    $('crop-stage').classList.remove('is-error');
+    $('load-msg').textContent = 'Chargement de la photo…';
+    $('full-photo').src = photoSrc(p);
     $('full-photo').alt = p.title || '';
     $('focal').value = String(Math.round(state.focalY * 1000));
     $('focal-val').textContent = state.focalY.toFixed(2);
@@ -217,7 +241,7 @@
       inner.style.cssText = `width:${f.w}px;height:${f.h}px;transform:scale(${scale});transform-origin:top left;position:relative;`;
       const bg = document.createElement('div');
       bg.className = 'mini-bg';
-      bg.style.backgroundImage = `url("${p.url}")`;
+      bg.style.backgroundImage = `url("${photoSrc(p)}")`;
       bg.style.backgroundPosition = `50% ${pct}`;
       inner.appendChild(bg);
       if (f.word) {
@@ -238,6 +262,7 @@
     const data = await api('/api/photos');
     state.photos = data.photos || [];
     renderStats(data.stats);
+    renderCache(data.cache);
     if (preferKey) {
       const hit = state.photos.find((p) => p.key === preferKey);
       if (hit) state.selected = hit;
@@ -345,8 +370,23 @@
   $('undo-btn').addEventListener('click', () => mutate(() => api('/api/undo', {})));
 
   $('full-photo').addEventListener('load', () => {
+    $('crop-stage').classList.remove('is-loading', 'is-error');
     updateOverlays();
     renderMinis();
+    prefetchAround();
+  });
+  $('full-photo').addEventListener('error', () => {
+    $('crop-stage').classList.add('is-error');
+    $('crop-stage').classList.remove('is-loading');
+    $('load-msg').textContent = 'Photo pas encore en cache — nouvel essai dans quelques secondes.';
+    const p = state.selected;
+    if (!p) return;
+    window.setTimeout(() => {
+      if (state.selected && state.selected.key === p.key) {
+        $('crop-stage').classList.add('is-loading');
+        $('full-photo').src = `${photoSrc(p)}?r=${Date.now()}`;
+      }
+    }, 2500);
   });
 
   function focalFromPointer(ev) {
@@ -415,6 +455,10 @@
       }
     }
   });
+
+  window.setInterval(() => {
+    api('/api/cache').then(renderCache).catch(() => {});
+  }, 2000);
 
   reload().catch((err) => {
     $('stats').textContent = err.message;

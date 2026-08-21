@@ -4,6 +4,9 @@
  *
  *   npm run lab:photos
  *   → http://127.0.0.1:8777/dev/photo-lab/
+ *
+ * Les images passent par /img/:id (cache disque). Au démarrage, téléchargement
+ * en arrière-plan de tout le corpus.
  */
 
 'use strict';
@@ -12,11 +15,22 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { createPhotoLab } = require('./photo-lab-lib');
+const {
+  cacheId,
+  cacheDir,
+  findCached,
+  downloadToCache,
+  countCached,
+  createProgress,
+  prefetchAll,
+} = require('./photo-lab-cache');
 
 const ROOT = path.join(__dirname, '..');
 const HOST = '127.0.0.1';
 const PORT = Number(process.env.PHOTO_LAB_PORT || 8777);
 const lab = createPhotoLab({ root: ROOT });
+const DIR = cacheDir(ROOT);
+const progress = createProgress();
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -28,6 +42,7 @@ const MIME = {
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.webp': 'image/webp',
+  '.gif': 'image/gif',
   '.ico': 'image/x-icon',
   '.woff2': 'font/woff2',
   '.map': 'application/json',
@@ -41,7 +56,7 @@ function isLocalHost(hostHeader) {
 function send(res, status, body, headers = {}) {
   const payload = Buffer.isBuffer(body) ? body : Buffer.from(body == null ? '' : String(body));
   res.writeHead(status, {
-    'Cache-Control': 'no-store',
+    'Cache-Control': headers['Cache-Control'] || 'no-store',
     'X-Photo-Lab': 'local',
     ...headers,
     'Content-Length': payload.length,
@@ -53,6 +68,24 @@ function sendJson(res, status, obj) {
   send(res, status, JSON.stringify(obj), {
     'Content-Type': 'application/json; charset=utf-8',
   });
+}
+
+function decorate(p) {
+  const id = cacheId(p.url);
+  return {
+    ...p,
+    id,
+    src: `/img/${id}`,
+    cached: !!findCached(DIR, id),
+  };
+}
+
+function listed() {
+  return lab.listPhotos().map(decorate);
+}
+
+function photoById(id) {
+  return listed().find((p) => p.id === id) || null;
 }
 
 function readBody(req, limit = 1_000_000) {
@@ -96,12 +129,41 @@ function safeStatic(urlPath) {
   return abs;
 }
 
+async function serveImg(req, res, id) {
+  const photo = photoById(id);
+  if (!photo) {
+    send(res, 404, 'unknown photo');
+    return;
+  }
+  let file = findCached(DIR, id);
+  if (!file) {
+    try {
+      file = await downloadToCache(photo.url, DIR);
+      progress.have = countCached(DIR, lab.listPhotos());
+    } catch (err) {
+      sendJson(res, 502, { error: err.message || 'download failed' });
+      return;
+    }
+  }
+  const ext = path.extname(file).toLowerCase();
+  const buf = fs.readFileSync(file);
+  send(res, 200, buf, {
+    'Content-Type': MIME[ext] || 'image/jpeg',
+    'Cache-Control': 'public, max-age=86400',
+  });
+}
+
 async function handleApi(req, res, url) {
   const route = url.pathname.replace(/\/+$/, '') || '/';
   try {
     if (req.method === 'GET' && route === '/api/photos') {
-      const photos = lab.listPhotos();
-      return sendJson(res, 200, { photos, stats: lab.stats(photos) });
+      const photos = listed();
+      return sendJson(res, 200, { photos, stats: lab.stats(photos), cache: { ...progress } });
+    }
+    if (req.method === 'GET' && route === '/api/cache') {
+      progress.have = countCached(DIR, lab.listPhotos());
+      progress.total = progress.total || lab.listPhotos().length;
+      return sendJson(res, 200, progress);
     }
     if (req.method === 'GET' && route === '/api/stats') {
       return sendJson(res, 200, lab.stats());
@@ -155,6 +217,16 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  if (url.pathname.startsWith('/img/')) {
+    const id = url.pathname.slice('/img/'.length).replace(/\/+$/, '');
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
+      send(res, 405, 'method not allowed');
+      return;
+    }
+    await serveImg(req, res, id);
+    return;
+  }
+
   if (url.pathname.startsWith('/api/')) {
     await handleApi(req, res, url);
     return;
@@ -175,11 +247,31 @@ const server = http.createServer(async (req, res) => {
   send(res, 200, buf, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
 });
 
+function startPrefetch() {
+  const photos = lab.listPhotos();
+  progress.total = photos.length;
+  progress.have = countCached(DIR, photos);
+  if (progress.have >= progress.total) {
+    progress.running = false;
+    console.log(`Cache déjà complet : ${progress.have}/${progress.total}`);
+    return;
+  }
+  console.log(`Cache : ${progress.have}/${progress.total} — téléchargement en arrière-plan…`);
+  prefetchAll(photos, { root: ROOT, dir: DIR, progress, concurrency: 2 }).then((p) => {
+    console.log(`Cache prêt : ${p.have}/${p.total}` + (p.failed ? ` (${p.failed} échecs)` : ''));
+  }).catch((err) => {
+    progress.running = false;
+    progress.error = err.message || String(err);
+    console.error('Cache :', err);
+  });
+}
+
 if (require.main === module) {
   server.listen(PORT, HOST, () => {
     console.log(`Labo photo → http://${HOST}:${PORT}/dev/photo-lab/`);
     console.log('127.0.0.1 seulement. Ctrl+C pour quitter.');
+    startPrefetch();
   });
 }
 
-module.exports = { server, PORT, HOST };
+module.exports = { server, PORT, HOST, startPrefetch };

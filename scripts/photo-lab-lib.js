@@ -295,6 +295,7 @@ function createPhotoLab(opts = {}) {
         g = {
           key,
           url,
+          id: photoIdFromUrl(url),
           thumb: thumbUrl(url, 640),
           title: '',
           credit: '',

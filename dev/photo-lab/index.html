@@ -11,10 +11,11 @@
   <header class="top">
     <div class="brand">
       <strong>Labo photo</strong>
-      <span class="muted">une à la fois · 127.0.0.1</span>
+      <span class="muted">une à la fois</span>
     </div>
     <div class="counter" id="counter">— / —</div>
     <div class="stats" id="stats"></div>
+    <div class="cache" id="cache-status">Cache…</div>
     <button type="button" class="btn ghost" id="undo-btn" title="Annuler (z)">Annuler</button>
   </header>
 
@@ -56,44 +57,49 @@
 
   <p class="empty" id="panel-empty" hidden>Aucune photo dans ce filtre.</p>
 
-  <div class="deck" id="panel-body">
-    <div class="stage-col">
-      <div class="nav-row">
-        <button type="button" class="btn nav" id="prev-btn" title="Précédente (←)">← Précédente</button>
-        <span class="nav-hint">← → ou Espace = suivante · R rejeter · 1–4 saison</span>
-        <button type="button" class="btn nav primary" id="next-btn" title="Suivante (→ ou Espace)">Suivante →</button>
-      </div>
-      <div class="crop-stage" id="crop-stage" title="Glisser verticalement pour choisir la zone visible">
+  <div class="page" id="panel-body">
+    <div class="nav-row">
+      <button type="button" class="btn nav" id="prev-btn" title="Précédente (←)">← Précédente</button>
+      <span class="nav-hint">← → ou Espace = suivante · R rejeter · 1–4 saison</span>
+      <button type="button" class="btn nav primary" id="next-btn" title="Suivante (→ ou Espace)">Suivante →</button>
+    </div>
+
+    <div class="crop-stage is-loading" id="crop-stage" title="Glisser verticalement pour choisir la zone visible">
+      <div class="crop-inner" id="crop-inner">
         <img id="full-photo" alt="">
         <div class="band band--desktop" id="band-desktop" title="Visible au mât bureau"></div>
         <div class="band band--mobile" id="band-mobile" title="Visible au mât mobile"></div>
       </div>
-      <p class="legend"><span class="swatch desk"></span> mât bureau &nbsp; <span class="swatch mob"></span> mât mobile — glisser ou slider</p>
-      <label class="focal-row">Hauteur / focale
-        <input id="focal" type="range" min="0" max="1000" value="500">
-        <code id="focal-val">0.50</code>
-      </label>
-      <div class="previews">
-        <figure>
-          <figcaption>Mât bureau</figcaption>
-          <div class="mini-frame" id="preview-desktop" data-kind="desktop"></div>
-        </figure>
-        <figure>
-          <figcaption>Mât mobile</figcaption>
-          <div class="mini-frame" id="preview-mobile" data-kind="mobile"></div>
-        </figure>
-        <figure>
-          <figcaption>Pomo / solitaire téléphone</figcaption>
-          <div class="mini-frame tall" id="preview-phone" data-kind="phone"></div>
-        </figure>
-        <figure>
-          <figcaption>Pomo / solitaire bureau</figcaption>
-          <div class="mini-frame wide" id="preview-full" data-kind="full"></div>
-        </figure>
-      </div>
+      <p class="load-msg" id="load-msg">Chargement de la photo…</p>
+    </div>
+    <p class="legend"><span class="swatch desk"></span> mât bureau &nbsp; <span class="swatch mob"></span> mât mobile — glisser sur la photo</p>
+    <label class="focal-row">Hauteur / focale
+      <input id="focal" type="range" min="0" max="1000" value="500">
+      <code id="focal-val">0.50</code>
+    </label>
+
+    <div class="previews mast">
+      <figure>
+        <figcaption>Mât bureau</figcaption>
+        <div class="mini-frame" id="preview-desktop"></div>
+      </figure>
+      <figure>
+        <figcaption>Mât mobile</figcaption>
+        <div class="mini-frame" id="preview-mobile"></div>
+      </figure>
+    </div>
+    <div class="previews full">
+      <figure>
+        <figcaption>Pomo / solitaire téléphone</figcaption>
+        <div class="mini-frame tall" id="preview-phone"></div>
+      </figure>
+      <figure>
+        <figcaption>Pomo / solitaire bureau</figcaption>
+        <div class="mini-frame wide" id="preview-full"></div>
+      </figure>
     </div>
 
-    <aside class="panel" id="panel">
+    <section class="edit">
       <p class="meta" id="photo-meta"></p>
       <div class="chips" id="photo-chips"></div>
       <div class="fields">
@@ -135,7 +141,7 @@
         <button type="button" class="btn gold" id="pin-btn">Ajouter à la permanente</button>
       </div>
       <p class="hint" id="status"></p>
-    </aside>
+    </section>
   </div>
   <script src="./photo-lab.js"></script>
 </body>
