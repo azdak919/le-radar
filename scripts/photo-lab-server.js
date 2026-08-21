@@ -23,6 +23,7 @@ const {
   countCached,
   createProgress,
   prefetchAll,
+  hydrateFromGithub,
 } = require('./photo-lab-cache');
 
 const ROOT = path.join(__dirname, '..');
@@ -251,19 +252,35 @@ function startPrefetch() {
   const photos = lab.listPhotos();
   progress.total = photos.length;
   progress.have = countCached(DIR, photos);
-  if (progress.have >= progress.total) {
-    progress.running = false;
-    console.log(`Cache déjà complet : ${progress.have}/${progress.total}`);
+  const goSources = () => {
+    progress.have = countCached(DIR, photos);
+    if (progress.have >= progress.total) {
+      progress.running = false;
+      console.log(`Cache déjà complet : ${progress.have}/${progress.total}`);
+      return;
+    }
+    console.log(`Cache : ${progress.have}/${progress.total} — téléchargement en arrière-plan…`);
+    prefetchAll(photos, { root: ROOT, dir: DIR, progress, concurrency: 2 }).then((p) => {
+      console.log(`Cache prêt : ${p.have}/${p.total}` + (p.failed ? ` (${p.failed} échecs)` : ''));
+    }).catch((err) => {
+      progress.running = false;
+      progress.error = err.message || String(err);
+      console.error('Cache :', err);
+    });
+  };
+  if (progress.have === 0) {
+    console.log('Cache vide — hydratation depuis GitHub Release…');
+    hydrateFromGithub({ dir: DIR, root: ROOT }).then(() => {
+      progress.have = countCached(DIR, photos);
+      console.log(`GitHub : ${progress.have}/${progress.total}`);
+      goSources();
+    }).catch((err) => {
+      console.warn('Hydratation GitHub ignorée :', err.message || err);
+      goSources();
+    });
     return;
   }
-  console.log(`Cache : ${progress.have}/${progress.total} — téléchargement en arrière-plan…`);
-  prefetchAll(photos, { root: ROOT, dir: DIR, progress, concurrency: 2 }).then((p) => {
-    console.log(`Cache prêt : ${p.have}/${p.total}` + (p.failed ? ` (${p.failed} échecs)` : ''));
-  }).catch((err) => {
-    progress.running = false;
-    progress.error = err.message || String(err);
-    console.error('Cache :', err);
-  });
+  goSources();
 }
 
 if (require.main === module) {

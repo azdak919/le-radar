@@ -43,6 +43,7 @@ assert.match(
 const {
   cacheId,
   candidateUrls,
+  commonsFileTitle,
   findCached,
 } = require('../scripts/photo-lab-cache.js');
 assert.equal(
@@ -51,9 +52,15 @@ assert.equal(
   'cacheId ignore les params Unsplash',
 );
 const commons = 'https://upload.wikimedia.org/wikipedia/commons/b/b9/Wanderer_above_the_sea_of_fog.jpg';
+assert.equal(
+  commonsFileTitle(
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/David_-_The_Death_of_Socrates.jpg/1920px-David_-_The_Death_of_Socrates.jpg',
+  ),
+  'David_-_The_Death_of_Socrates.jpg',
+);
 assert.ok(
-  candidateUrls(commons).some((u) => /1600px-/.test(u)),
-  'cache : thumb Commons 1600px en premier',
+  candidateUrls(commons).some((u) => /Special:FilePath/.test(u)),
+  'cache : Special:FilePath pour contourner un hash Commons faux',
 );
 assert.equal(findCached('/tmp/does-not-exist-photo-lab', 'nope'), null);
 
