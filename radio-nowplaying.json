@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-21T20:22:01.677Z",
+  "updatedAt": "2026-08-21T20:49:38.904Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T20:21:39.453Z"
+      "checkedAt": "2026-08-21T20:49:13.103Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T20:21:41.355Z"
+      "checkedAt": "2026-08-21T20:49:15.034Z"
     },
     "ckut": {
       "id": "ckut",
@@ -65,7 +65,7 @@
         "start": "17:00",
         "end": "18:00"
       },
-      "track": "Airtime - offline",
+      "track": "",
       "showTitle": "New Shit",
       "host": "",
       "source": "api-live",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T20:21:44.314Z"
+      "checkedAt": "2026-08-21T20:49:17.808Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T20:21:58.299Z"
+      "checkedAt": "2026-08-21T20:49:31.499Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T20:21:58.886Z"
+      "checkedAt": "2026-08-21T20:49:32.101Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +145,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Neimo - LA TEMPE",
+      "track": "Striky - On y va",
       "showTitle": "Histoire de passer le temps",
       "host": "",
       "source": "api-live",
@@ -156,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-21T20:22:01.327Z"
+      "checkedAt": "2026-08-21T20:49:38.554Z"
     }
   }
 }
