@@ -14,6 +14,7 @@
     focalDirty: false,
     metaDirty: false,
     busy: false,
+    view: 'grid',
   };
 
   const $ = (id) => document.getElementById(id);
@@ -95,9 +96,78 @@
   function updateCounter() {
     const i = currentIndex();
     const n = state.filtered.length;
-    $('counter').textContent = n ? `${i + 1} / ${n}` : '0 / 0';
-    $('prev-btn').disabled = n < 2;
-    $('next-btn').disabled = n < 2;
+    if (state.view === 'grid') {
+      $('counter').textContent = n ? `${n} photos` : '0';
+    } else {
+      $('counter').textContent = n ? `${i + 1} / ${n}` : '0 / 0';
+    }
+    const navOff = state.view !== 'detail' || n < 2;
+    if ($('prev-btn')) $('prev-btn').disabled = navOff;
+    if ($('next-btn')) $('next-btn').disabled = navOff;
+  }
+
+  function showGrid() {
+    state.view = 'grid';
+    document.body.classList.add('mode-grid');
+    document.body.classList.remove('mode-detail');
+    if ($('panel-body')) $('panel-body').hidden = true;
+    if ($('grid-view')) $('grid-view').hidden = false;
+    if ($('brand-sub')) $('brand-sub').textContent = 'grille';
+    renderGrid();
+    updateCounter();
+  }
+
+  function showDetail(key) {
+    state.view = 'detail';
+    document.body.classList.remove('mode-grid');
+    document.body.classList.add('mode-detail');
+    if ($('panel-empty')) $('panel-empty').hidden = true;
+    if ($('panel-body')) $('panel-body').hidden = false;
+    if ($('grid-view')) $('grid-view').hidden = true;
+    if ($('brand-sub')) $('brand-sub').textContent = 'fiche';
+    select(key);
+  }
+
+  function renderGrid() {
+    const root = $('grid');
+    if (!root) return;
+    root.textContent = '';
+    const frag = document.createDocumentFragment();
+    for (const p of state.filtered) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'card';
+      btn.dataset.key = p.key;
+      const img = document.createElement('img');
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.alt = p.title || '';
+      img.src = photoSrc(p);
+      const cap = document.createElement('div');
+      cap.className = 'cap';
+      const b = document.createElement('b');
+      b.textContent = p.place || p.title || p.credit || 'Sans titre';
+      cap.appendChild(b);
+      const chips = document.createElement('div');
+      chips.className = 'chips';
+      const tags = p.tags || [];
+      for (const t of ['mat', 'pomo', 'solitaire', 'campus', 'favori', 'nations']) {
+        if (!tags.includes(t) && !(t === 'favori' && p.permanent) && !(t === 'campus' && p.campus)) continue;
+        if (t === 'mat' && !tags.includes('mat') && (p.surfaces || []).includes('masthead')) {
+          /* show */
+        }
+        const c = document.createElement('span');
+        c.className = 'chip' + (t === 'favori' || t === 'campus' ? ' perm' : '');
+        c.textContent = t === 'mat' ? 'mât' : t;
+        chips.appendChild(c);
+      }
+      cap.appendChild(chips);
+      btn.appendChild(img);
+      btn.appendChild(cap);
+      btn.addEventListener('click', () => showDetail(p.key));
+      frag.appendChild(btn);
+    }
+    root.appendChild(frag);
   }
 
   function applyFilters() {
@@ -120,15 +190,19 @@
     });
     if (!state.filtered.length) {
       state.selected = null;
-      $('panel-body').hidden = true;
+      if ($('panel-body')) $('panel-body').hidden = true;
+      if ($('grid-view')) $('grid-view').hidden = true;
       $('panel-empty').hidden = false;
       updateCounter();
       return;
     }
     $('panel-empty').hidden = true;
-    $('panel-body').hidden = false;
-    const keep = prevKey && state.filtered.find((p) => p.key === prevKey);
-    select((keep || state.filtered[0]).key);
+    if (state.view === 'detail') {
+      const keep = prevKey && state.filtered.find((p) => p.key === prevKey);
+      showDetail((keep || state.filtered[0]).key);
+    } else {
+      showGrid();
+    }
   }
 
   function setFocalState(dirty) {
@@ -177,6 +251,7 @@
   }
 
   async function go(delta) {
+    if (state.view !== 'detail') return;
     const n = state.filtered.length;
     if (!n) return;
     try {
@@ -400,6 +475,17 @@
   $('f-season').addEventListener('change', applyFilters);
   $('f-q').addEventListener('input', applyFilters);
 
+  if ($('grid-btn')) {
+    $('grid-btn').addEventListener('click', async () => {
+      try {
+        await persistAllIfDirty();
+      } catch (err) {
+        $('status').textContent = err.message || String(err);
+        return;
+      }
+      showGrid();
+    });
+  }
   $('prev-btn').addEventListener('click', () => go(-1));
   $('next-btn').addEventListener('click', () => go(1));
 
@@ -543,9 +629,13 @@
       ev.target.blur();
       return;
     }
-    if (ev.key === 'ArrowRight' || ev.key === 'j' || ev.key === ' ' || ev.key === 'n') {
+    if (ev.key === 'Escape' || ev.key === 'g') {
       ev.preventDefault();
-      go(1);
+      if (state.view === 'detail') $('grid-btn').click();
+    } else if (ev.key === 'ArrowRight' || ev.key === 'j' || ev.key === ' ' || ev.key === 'n') {
+      ev.preventDefault();
+      if (state.view === 'grid' && state.filtered[0]) showDetail(state.filtered[0].key);
+      else go(1);
     } else if (ev.key === 'ArrowLeft' || ev.key === 'k' || ev.key === 'b') {
       ev.preventDefault();
       go(-1);

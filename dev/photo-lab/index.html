@@ -7,13 +7,16 @@
   <title>Labo photo — LE RADAR (local)</title>
   <link rel="stylesheet" href="./photo-lab.css">
 </head>
-<body>
+<body class="mode-grid">
   <header class="top">
     <div class="brand">
       <strong>Labo photo</strong>
-      <span class="muted">banque unique · une à la fois</span>
+      <span class="muted" id="brand-sub">grille</span>
     </div>
-    <div class="counter" id="counter">— / —</div>
+    <button type="button" class="btn ghost detail-only" id="grid-btn" title="Retour grille (g ou Échap)">Grille</button>
+    <button type="button" class="btn nav detail-only" id="prev-btn" title="Précédente (←)">←</button>
+    <div class="counter" id="counter">—</div>
+    <button type="button" class="btn nav primary detail-only" id="next-btn" title="Suivante (→)">→</button>
     <div class="stats" id="stats"></div>
     <div class="cache" id="cache-status">Cache…</div>
     <span class="dirty-pill" id="dirty-pill" hidden>non enregistré</span>
@@ -54,13 +57,11 @@
 
   <p class="empty" id="panel-empty" hidden>Aucune photo dans ce filtre.</p>
 
-  <div class="page" id="panel-body">
-    <div class="nav-row">
-      <button type="button" class="btn nav" id="prev-btn" title="Précédente (←)">← Précédente</button>
-      <span class="nav-hint">← → ou Espace · R retirer · 1–4 saison · S enregistrer</span>
-      <button type="button" class="btn nav primary" id="next-btn" title="Suivante (→ ou Espace)">Suivante →</button>
-    </div>
+  <div class="grid-wrap" id="grid-view">
+    <div class="grid" id="grid"></div>
+  </div>
 
+  <div class="page" id="panel-body" hidden>
     <div class="crop-stage is-loading" id="crop-stage" title="Glisser verticalement pour le cadrage Y">
       <div class="crop-inner" id="crop-inner">
         <img id="full-photo" alt="">

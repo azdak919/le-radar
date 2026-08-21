@@ -28,7 +28,7 @@ Un cache local **vide** s’hydrate tout seul depuis cette release au `npm run l
 
 Bind **127.0.0.1** seulement. Pas de lien prod, pas de service worker.
 
-Revue **une photo à la fois**. Compteur `12 / 345` en haut. **Suivante →** (ou `→` / Espace) / **← Précédente**.
+**Grille** d’abord, clic pour la fiche. **← →** dans la barre du haut. **Grille** (ou `g` / Échap) pour revenir.
 
 ## Actions
 
