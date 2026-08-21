@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Labo — LE RADAR (local)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./hub.css">
+</head>
+<body>
+  <div id="gate" hidden>
+    <p>Ce tableau de bord n’existe qu’en <strong>local</strong> (127.0.0.1).</p>
+  </div>
+  <div id="hub">
+    <header class="hero">
+      <p class="kicker">127.0.0.1 · pas en prod</p>
+      <h1><img src="/assets/icon.svg" alt="" width="40" height="40">Labo</h1>
+      <p class="lede">Tous les outils locaux LE RADAR — viewports, photos, pages.</p>
+    </header>
+
+    <section>
+      <h2>Labos</h2>
+      <div class="cards">
+        <a class="card" href="/index.html">
+          <span class="tag">viewport</span>
+          <strong>Site (Format)</strong>
+          <p>Accueil avec la barre de largeurs en bas. Téléphone → 3840.</p>
+        </a>
+        <a class="card featured" href="/dev/photo-lab/">
+          <span class="tag">photos</span>
+          <strong>Labo photo</strong>
+          <p>Grille, cadrage Y, tags mât / pomo / solitaire, favori, campus.</p>
+        </a>
+        <a class="card" href="/dev/header-lab.html">
+          <span class="tag">mât</span>
+          <strong>Variantes de header</strong>
+          <p>Wordmark, logo, cohabitation avec la météo — démo statique.</p>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Pages à voir</h2>
+      <div class="cards compact">
+        <a class="card" href="/index.html"><strong>Accueil</strong><p>Mât + fil</p></a>
+        <a class="card" href="/pomo/"><strong>Pomo</strong><p>Minuteur</p></a>
+        <a class="card" href="/solitaire/"><strong>Solitaire</strong><p>Jeu</p></a>
+        <a class="card" href="/sports/"><strong>Sports</strong><p>Scores</p></a>
+        <a class="card" href="/feeds.html"><strong>Flux RSS</strong><p>Abonnements</p></a>
+        <a class="card" href="/kit-media/"><strong>Kit média</strong><p>Presse</p></a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Commandes</h2>
+      <ul class="cmds">
+        <li><button type="button" data-copy="npm run lab">npm run lab</button> <span>ce serveur (tableau de bord + labo photo)</span></li>
+        <li><button type="button" data-copy="python3 -m http.server 8766 --bind 127.0.0.1">python3 -m http.server 8766 --bind 127.0.0.1</button> <span>Labo viewport seul (barre Format)</span></li>
+        <li><button type="button" data-copy="npm run lab:photos:fetch">npm run lab:photos:fetch</button> <span>cache images local</span></li>
+        <li><button type="button" data-copy="npm run maintain:keep -- --profile masthead">npm run maintain:keep -- --profile masthead</button> <span>moisson sans jeter le stock</span></li>
+        <li><button type="button" data-copy="npm run bank:check">npm run bank:check</button> <span>JSON ↔ JS + hard-ban</span></li>
+      </ul>
+      <p class="hint" id="copied" hidden>Copié.</p>
+    </section>
+  </div>
+  <script>
+    (function () {
+      const h = location.hostname;
+      const local = h === '127.0.0.1' || h === 'localhost' || h === '[::1]';
+      if (!local) {
+        document.getElementById('gate').hidden = false;
+        document.getElementById('hub').hidden = true;
+        return;
+      }
+      document.querySelectorAll('[data-copy]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(btn.getAttribute('data-copy'));
+            const n = document.getElementById('copied');
+            n.hidden = false;
+            n.textContent = 'Copié : ' + btn.getAttribute('data-copy');
+            setTimeout(() => { n.hidden = true; }, 2000);
+          } catch (_) {}
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+test.describe.configure({ mode: 'serial' });
 const PORT = Number(process.env.PHOTO_LAB_PORT || 8779);
 const BASE = `http://127.0.0.1:${PORT}`;
 
@@ -31,6 +32,13 @@ test.beforeAll(async () => {
 
 test.afterAll(async () => {
   if (child && !child.killed) child.kill('SIGTERM');
+});
+
+test('tableau de bord local', async ({ page }) => {
+  await page.goto(`${BASE}/dev/`, { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('h1')).toContainText('Labo');
+  await expect(page.locator('a.card.featured')).toHaveAttribute('href', '/dev/photo-lab/');
+  await expect(page.locator('a.card[href="/index.html"]').first()).toBeVisible();
 });
 
 test('labo photo : grille puis fiche, suivant en barre', async ({ page }) => {

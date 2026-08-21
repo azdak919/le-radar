@@ -11,6 +11,8 @@ Barre Format (Base + Grand) : **localhost seulement**.
 
 Revue photos (cadrage Y, tags, crédits) : **Labo photo** — `npm run lab:photos`.
 
+Tableau de bord (tous les labos) : `npm run lab` → http://127.0.0.1:8777/dev/
+
 ## Lancer
 
 ```bash

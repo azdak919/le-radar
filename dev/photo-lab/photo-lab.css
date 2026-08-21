@@ -19,6 +19,10 @@ button, input, select { font: inherit; color: inherit; }
   position: sticky; top: 0; background: #0c0d10f2; z-index: 5;
 }
 .brand strong { font: 700 18px/1.1 Georgia, serif; margin-right: 8px; }
+.hub-link {
+  color: var(--gold); text-decoration: none; font-size: 13px; margin-right: 10px;
+}
+.hub-link:hover { text-decoration: underline; }
 .muted { color: var(--muted); }
 .counter {
   font: 700 20px/1 ui-monospace, monospace;
