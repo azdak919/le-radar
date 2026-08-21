@@ -50,5 +50,7 @@ test('labo photo : une à la fois, suivant, bandes mât', async ({ page }) => {
   await expect(page.locator('#reject-btn')).toBeVisible();
   await expect(page.locator('#pin-btn')).toBeVisible();
   await expect(page.locator('#save-meta-btn')).toContainText('Enregistrer tout');
+  await expect(page.locator('#tag-mat')).toBeVisible();
+  await expect(page.locator('#tag-favori')).toBeVisible();
   await expect(page.locator('#focal-state')).toBeVisible();
 });

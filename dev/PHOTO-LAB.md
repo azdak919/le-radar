@@ -34,13 +34,14 @@ Revue **une photo à la fois**. Compteur `12 / 345` en haut. **Suivante →** (o
 
 | Bouton / touche | Effet |
 |---|---|
-| Rejeter (`r`) | Sortie de toutes les banques + sidecar `data/quebec-backgrounds-rejected.json` (hard-ban, ne revient pas au `maintain`) |
-| Saisons (`1–4`) | `seasonSource: manual` — les bots n’écrasent pas |
-| Crédit / lieu | Format affiché `Nom — lieu` |
-| Focale | `focalY` 0 = haut, 1 = bas. Bandes **bureau** (plein) et **mobile** (pointillés) = ce que le mât recadrera. Mini-mâts + aperçus plein écran pomo/solitaire. |
-| Permanente (`p`) | Copie favorites (`permanent: true`) + cases mât / pomo / solitaire |
+| Enregistrer tout (`s`) | Y + crédit + lieu + saison + tags (mât / pomo / solitaire / campus / favori / nations) |
+| Marquer favori (`p`) | Coche **favori** (hors moisson) + enregistre |
+| Retirer (`r`) | Sortie de `photo-bank` + sidecar reject |
+| Saisons (`1–4`) | `seasonSource: manual` |
+| Cadrage Y | Glisser la photo ou le curseur |
+| Campus | Hors moisson, et ajoute le tag mât |
 | Annuler (`z`) | Dernière écriture |
 
-Solitaire lit les favorites dont `surfaces` contient `solitaire`.
+Campus et favori ne sont **jamais** purgés à la prochaine moisson.
 
 Après une session de revue destinée à la prod : `npm run bank:check` puis PR (bump SW si les `*-data.js` du shell ont changé).
