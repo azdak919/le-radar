@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-21T01:06:20.305Z",
+  "updatedAt": "2026-08-21T02:43:31.255Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T01:05:50.874Z"
+      "checkedAt": "2026-08-21T02:43:02.584Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La courbe 2.0",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/la-courbe-2-0"
-      },
-      "next": {
         "title": "Mix anglo",
         "source": "schedule",
         "start": "22:00",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "Rebelles soniques (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/rebelles-soniques"
+      },
       "track": "",
-      "showTitle": "La courbe 2.0",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T01:05:53.402Z"
+      "checkedAt": "2026-08-21T02:43:04.512Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T01:05:56.526Z"
+      "checkedAt": "2026-08-21T02:43:08.825Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The 514",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-514"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
         "start": "22:00",
         "end": "00:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
+      "next": {
+        "title": "Finally Midnight",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/finally-midnight"
+      },
       "track": "",
-      "showTitle": "The 514",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T01:06:10.454Z"
+      "checkedAt": "2026-08-21T02:43:22.487Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,18 +133,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T01:06:11.465Z"
+      "checkedAt": "2026-08-21T02:43:25.145Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Le grand maître des jeux",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "22:30",
-        "slug": "le-maitre-des-jeux"
-      },
+      "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
         "source": "schedule",
@@ -152,18 +146,19 @@
         "end": "12:30",
         "url": "https://www.choq.ca/emissions/box-sophisme"
       },
-      "track": "Dua Saleh - Callate",
-      "showTitle": "Le grand maître des jeux",
+      "track": "Iceage - True Blue",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-21T01:06:19.954Z"
+      "checkedAt": "2026-08-21T02:43:30.904Z"
     }
   }
 }
