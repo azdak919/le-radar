@@ -140,6 +140,19 @@ lab.saveAll(lac.url, {
   place: 'Tadoussac',
   season: 'ete',
   focalY: 0.31,
+  surfaces: ['masthead', 'pomo'],
+});
+assert.equal(
+  JSON.parse(readFileSync(join(root, 'data/quebec-favorites-backgrounds.json'), 'utf8')).photos.length,
+  0,
+  'Enregistrer ne clone pas en favorites si la photo est déjà en mât/pomo',
+);
+
+lab.saveAll(lac.url, {
+  credit: 'Alice Tremblay',
+  place: 'Tadoussac',
+  season: 'ete',
+  focalY: 0.31,
   surfaces: ['pomo', 'solitaire'],
 });
 const afterSave = lab.findByUrl(lac.url);

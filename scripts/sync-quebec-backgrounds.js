@@ -256,7 +256,9 @@ function syncBanks(opts = {}) {
     const { kept, removed } = purgeBanned(data.photos || []);
     purgedTotal += removed.length;
     // Crédits Commons « machine-readable author… » → nom court
-    const creditFixed = scrubBankCredits({ photos: kept });
+    // Le labo photo passe skipScrub : sinon un save manuel est écrasé
+    // (lieu recalculé depuis le titre, crédit re-sanitisé).
+    const creditFixed = opts.skipScrub ? 0 : scrubBankCredits({ photos: kept });
     creditScrubTotal += creditFixed;
 
     for (const r of removed) {
