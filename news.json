@@ -1,6 +1,6 @@
 {
-  "updated": "2026-08-21T11:28:51.645Z",
-  "updatedSlot": "2026-08-21T11:00:00.000Z",
+  "updated": "2026-08-21T13:11:42.125Z",
+  "updatedSlot": null,
   "count": 185,
   "freshnessSessions": 3,
   "sources": {
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-08-21T11:28:05.866Z"
+      "lastFetchOk": "2026-08-21T13:11:03.554Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-08-21T11:28:14.049Z"
+      "lastFetchOk": "2026-08-21T13:11:10.630Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-07-31T12:00:00.000Z",
-      "lastFetchOk": "2026-08-21T11:28:15.067Z"
+      "lastFetchOk": "2026-08-21T13:11:11.535Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-08-19T22:00:00.000Z",
-      "lastFetchOk": "2026-08-21T11:28:15.770Z"
+      "lastFetchOk": "2026-08-21T13:11:12.968Z"
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,7 +50,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-08-21T11:28:17.882Z"
+      "lastFetchOk": "2026-08-21T13:11:14.523Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-08-21T11:28:20.124Z"
+      "lastFetchOk": "2026-08-21T13:11:16.880Z"
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-08-20T18:29:55.000Z",
-      "lastFetchOk": "2026-08-21T11:28:21.229Z"
+      "lastFetchOk": "2026-08-21T13:11:17.687Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-08-21T11:28:21.456Z"
+      "lastFetchOk": "2026-08-21T13:11:17.902Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -82,7 +82,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-06-22T14:36:10.000Z",
-      "lastFetchOk": "2026-08-21T11:28:22.355Z"
+      "lastFetchOk": "2026-08-21T13:11:18.784Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-08-21T11:28:26.044Z"
+      "lastFetchOk": "2026-08-21T13:11:21.891Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-08-18T02:00:41.000Z",
-      "lastFetchOk": "2026-08-21T11:28:26.364Z"
+      "lastFetchOk": "2026-08-21T13:11:22.302Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-08-21T11:28:26.602Z"
+      "lastFetchOk": "2026-08-21T13:11:22.560Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-08-21T11:28:26.800Z"
+      "lastFetchOk": "2026-08-21T13:11:22.697Z"
     }
   },
   "items": [
@@ -3422,7 +3422,8 @@
       "imageCreator": "Gen. Quon",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Roddick_Gates_closed,_McGill_University,_July_17,_2024.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Roddick_Gates_closed,_McGill_University,_July_17,_2024.jpg",
+      "_campusBank": true
     },
     {
       "source": "The McGill Daily",
@@ -3482,13 +3483,13 @@
       "image": "",
       "authorCheckedAt": "2026-08-21T10:02:17.127Z",
       "leadImageReady": false,
-      "stockImage": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg",
-      "imageTitle": "The Donald & Mark Wahlberg",
-      "imageCredit": "Photo : jurvetson / CC BY · Openverse",
-      "imageCreator": "jurvetson",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/44124348109@N01/99099986"
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/5/58/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531487%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "File:Masters Tournament - 2013 - Dogwood Cabin, August National Golf Club (8688531487).jpg",
+      "imageCredit": "Photo : Dan Perry from Atlanta, USA / CC BY 2.0 · Wikimedia Commons",
+      "imageCreator": "Dan Perry from Atlanta, USA",
+      "imageLicense": "CC BY 2.0",
+      "imageProvider": "wikimedia",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Masters_Tournament_-_2013_-_Dogwood_Cabin,_August_National_Golf_Club_(8688531487).jpg"
     },
     {
       "source": "The Campus",
@@ -3746,6 +3747,24 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
+      "author": "Rose Langlois",
+      "date": "2026-03-18T07:00:00.000Z",
+      "excerpt": "Petit guide pratique pour écarter les femmes du canon littéraire.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/canon-litteraire.jpg",
+      "featured": true,
+      "_pageAuthor": "Rose Langlois",
+      "authorCheckedAt": "2026-08-21T13:11:59.608Z",
+      "leadExcerpt": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez rien, ce n’est pas de votre faute. Cette absence de figures féminines dans le canon littéraire tient à une multitude de facteurs qui se résument à l’oubli. Un oubli collectif. Un oubli volontaire.",
+      "leadImageReady": true
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
       "title": "Qui sont les agents qui patrouillent notre campus ?",
       "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
       "author": "Héloïse Durning",
@@ -3764,23 +3783,6 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "« L’Université McGill est à la recherche de patrouilleurs dynamiques et engagés pour assurer la sécurité de sa communauté universitaire », selon une annonce publiée sur le site web du Groupe de sécurité Garda S.E.N.C. (Garda), mieux connu sous le nom de GardaWorld. Cette entreprise canadienne de sécurité privée est sous contrat avec McGill depuis le 26 août 2024, et ce, jusqu’au 30 avril 2027."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "Ce que nous devons aux femmes",
-      "link": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
-      "author": "Eugénie St-Pierre",
-      "date": "2026-03-18T07:00:00.000Z",
-      "excerpt": "Votre entourage, en tant qu’étudiantes et étudiants de l’Université McGill, est peut-être composé en majorité de personnes qui se revendiquent comme féministes. Certaines le sont, d’autres le prétendent, mais relativement rares sont les McGillois qui refusent ouvertement le féminisme.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Capture-decran-le-2026-03-22-a-17.22.07.png",
-      "featured": true,
-      "_pageAuthor": "Eugénie St-Pierre",
-      "authorCheckedAt": "2026-08-21T11:29:10.935Z",
-      "leadImageReady": true
     },
     {
       "source": "Exil",
