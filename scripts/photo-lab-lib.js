@@ -934,11 +934,26 @@ function createPhotoLab(opts = {}) {
     extra.note = payload.note;
     extra.title = photo.title;
     extra.photo = { ...photo, ...extra, url: photo.url };
-    const surfaces =
-      payload.surfaces != null
-        ? applyBanks(photo.url, payload.surfaces, extra)
-        : (photo.surfaces || []).slice();
-    if (payload.surfaces == null && payload.permanent) {
+    let surfaces = (photo.surfaces || []).slice();
+    if (Array.isArray(payload.tags)) {
+      const allowed = photosLib.TAGS;
+      let tags = [...new Set(payload.tags.filter((t) => allowed.includes(t)))];
+      if (payload.permanent && !tags.includes('favori')) tags.push('favori');
+      if (tags.includes('campus') && !tags.includes('mat')) tags.push('mat');
+      extra.permanent = extra.permanent || tags.includes('favori');
+      patchUnified(photo.url, (p) => {
+        p.tags = tags;
+        p.surfaces = photosLib.surfacesFromTags(tags);
+        p.campus = tags.includes('campus');
+        p.permanent = tags.includes('favori');
+        if (extra.focalY != null) p.focalY = extra.focalY;
+      });
+      surfaces = photosLib.surfacesFromTags(tags);
+      applyBanks(photo.url, surfaces, extra);
+    } else if (payload.surfaces != null) {
+      surfaces = applyBanks(photo.url, payload.surfaces, extra);
+    }
+    if (payload.tags == null && payload.surfaces == null && payload.permanent) {
       upsertFavorite({ ...photo, ...extra }, surfaces.length ? surfaces : ['masthead'], extra);
     }
     cleanupDuplicates({ skipSnapshot: true, skipSync: true });

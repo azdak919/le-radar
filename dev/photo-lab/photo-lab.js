@@ -102,17 +102,18 @@
 
   function applyFilters() {
     const surface = $('f-surface').value;
-    const bank = $('f-bank').value;
+    const tag = $('f-tag') ? $('f-tag').value : '';
     const season = $('f-season').value;
     const q = $('f-q').value.trim().toLowerCase();
     const prevKey = state.selected && state.selected.key;
     state.filtered = state.photos.filter((p) => {
       if (surface && !(p.surfaces || []).includes(surface)) return false;
-      if (bank && !(p.banks || []).includes(bank)) return false;
+      const tags = p.tags || p.banks || [];
+      if (tag && !tags.includes(tag) && !(tag === 'favori' && p.permanent)) return false;
       if (season === 'untagged' && p.season) return false;
       if (season && season !== 'untagged' && p.season !== season) return false;
       if (q) {
-        const hay = `${p.title} ${p.credit} ${p.place} ${p.url} ${p.banks.join(' ')}`.toLowerCase();
+        const hay = `${p.title} ${p.credit} ${p.place} ${p.url} ${tags.join(' ')}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
       return true;
@@ -136,6 +137,7 @@
     if (!el) return;
     el.textContent = dirty ? 'non enregistré' : 'enregistré';
     el.classList.toggle('is-dirty', !!dirty);
+    updateDirtyPill();
   }
 
   function formPayload() {
@@ -150,6 +152,7 @@
       season6: season6 || undefined,
       clearSeason: !season && !season6,
       surfaces: selectedSurfaces(),
+      tags: selectedTags(),
     };
   }
 
@@ -213,10 +216,17 @@
       el.checked = (p.season6 || '') === el.value;
     }
     state.metaDirty = false;
-    $('surf-masthead').checked = (p.surfaces || []).includes('masthead');
-    $('surf-pomo').checked = (p.surfaces || []).includes('pomo');
-    $('surf-solitaire').checked = (p.surfaces || []).includes('solitaire');
-    $('season6-wrap').style.display = (p.banks || []).includes('nations') ? '' : 'none';
+    const tags = p.tags || p.banks || [];
+    if ($('tag-mat')) $('tag-mat').checked = tags.includes('mat') || (p.surfaces || []).includes('masthead');
+    if ($('tag-pomo')) $('tag-pomo').checked = tags.includes('pomo') || (p.surfaces || []).includes('pomo');
+    if ($('tag-solitaire')) $('tag-solitaire').checked = tags.includes('solitaire') || (p.surfaces || []).includes('solitaire');
+    if ($('tag-favori')) $('tag-favori').checked = tags.includes('favori') || !!p.permanent;
+    if ($('tag-campus')) $('tag-campus').checked = tags.includes('campus') || !!p.campus;
+    if ($('tag-nations')) $('tag-nations').checked = tags.includes('nations');
+    if ($('season6-wrap')) {
+      $('season6-wrap').style.display = tags.includes('nations') ? '' : 'none';
+    }
+    updateDirtyPill();
     $('photo-meta').textContent = [
       p.place || p.title || 'Sans titre',
       p.width && p.height ? `${p.width}×${p.height}` : '',
@@ -226,23 +236,32 @@
       .join(' · ');
     const chips = $('photo-chips');
     chips.textContent = '';
-    const surfaceLabel = { masthead: 'mât', pomo: 'pomo', solitaire: 'solitaire' };
+    const tagLabel = {
+      mat: 'mât',
+      pomo: 'pomo',
+      solitaire: 'solitaire',
+      campus: 'campus',
+      favori: 'favori',
+      nations: 'nations',
+      art: 'art',
+    };
+    const shown = new Set(p.tags || []);
     for (const s of p.surfaces || []) {
+      if (s === 'masthead') shown.add('mat');
+      else shown.add(s);
+    }
+    if (p.permanent) shown.add('favori');
+    if (p.campus) shown.add('campus');
+    for (const t of shown) {
       const c = document.createElement('span');
-      c.className = 'chip';
-      c.textContent = surfaceLabel[s] || s;
+      c.className = 'chip' + (t === 'favori' || t === 'campus' ? ' perm' : '');
+      c.textContent = tagLabel[t] || t;
       chips.appendChild(c);
     }
     if (p.season) {
       const c = document.createElement('span');
       c.className = 'chip';
       c.textContent = seasonLabel(p.season);
-      chips.appendChild(c);
-    }
-    if (p.permanent) {
-      const c = document.createElement('span');
-      c.className = 'chip perm';
-      c.textContent = 'permanente';
       chips.appendChild(c);
     }
     $('status').textContent = '';
@@ -346,20 +365,38 @@
     }
   }
 
-  function selectedSurfaces() {
+  function selectedTags() {
+    const ids = ['tag-mat', 'tag-pomo', 'tag-solitaire', 'tag-favori', 'tag-campus', 'tag-nations'];
     const out = [];
-    if ($('surf-masthead').checked) out.push('masthead');
-    if ($('surf-pomo').checked) out.push('pomo');
-    if ($('surf-solitaire').checked) out.push('solitaire');
+    for (const id of ids) {
+      const el = $(id);
+      if (el && el.checked) out.push(el.value);
+    }
     return out;
+  }
+
+  function selectedSurfaces() {
+    const tags = selectedTags();
+    const out = [];
+    if (tags.includes('mat') || tags.includes('campus')) out.push('masthead');
+    if (tags.includes('pomo')) out.push('pomo');
+    if (tags.includes('solitaire')) out.push('solitaire');
+    return out;
+  }
+
+  function updateDirtyPill() {
+    const el = $('dirty-pill');
+    if (!el) return;
+    el.hidden = !(state.focalDirty || state.metaDirty);
   }
 
   function markMetaDirty() {
     state.metaDirty = true;
+    updateDirtyPill();
   }
 
   $('f-surface').addEventListener('change', applyFilters);
-  $('f-bank').addEventListener('change', applyFilters);
+  if ($('f-tag')) $('f-tag').addEventListener('change', applyFilters);
   $('f-season').addEventListener('change', applyFilters);
   $('f-q').addEventListener('input', applyFilters);
 
@@ -393,8 +430,16 @@
   document.querySelectorAll('input[name="season"], input[name="season6"]').forEach((el) => {
     el.addEventListener('change', markMetaDirty);
   });
-  ['surf-masthead', 'surf-pomo', 'surf-solitaire'].forEach((id) => {
-    $(id).addEventListener('change', markMetaDirty);
+  ['tag-mat', 'tag-pomo', 'tag-solitaire', 'tag-favori', 'tag-campus', 'tag-nations'].forEach((id) => {
+    const el = $(id);
+    if (!el) return;
+    el.addEventListener('change', () => {
+      if (id === 'tag-campus' && el.checked && $('tag-mat')) $('tag-mat').checked = true;
+      if (id === 'tag-nations' && $('season6-wrap')) {
+        $('season6-wrap').style.display = el.checked ? '' : 'none';
+      }
+      markMetaDirty();
+    });
   });
 
   $('save-meta-btn').addEventListener('click', () => {
@@ -504,6 +549,9 @@
     } else if (ev.key === 'ArrowLeft' || ev.key === 'k' || ev.key === 'b') {
       ev.preventDefault();
       go(-1);
+    } else if (ev.key === 's') {
+      ev.preventDefault();
+      $('save-meta-btn').click();
     } else if (ev.key === 'r') {
       ev.preventDefault();
       $('reject-btn').click();

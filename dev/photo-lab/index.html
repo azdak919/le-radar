@@ -11,16 +11,17 @@
   <header class="top">
     <div class="brand">
       <strong>Labo photo</strong>
-      <span class="muted">une à la fois</span>
+      <span class="muted">banque unique · une à la fois</span>
     </div>
     <div class="counter" id="counter">— / —</div>
     <div class="stats" id="stats"></div>
     <div class="cache" id="cache-status">Cache…</div>
+    <span class="dirty-pill" id="dirty-pill" hidden>non enregistré</span>
     <button type="button" class="btn ghost" id="undo-btn" title="Annuler (z)">Annuler</button>
   </header>
 
   <div class="filters" role="search">
-    <label>Surface
+    <label>Où
       <select id="f-surface">
         <option value="">Toutes</option>
         <option value="masthead">Mât</option>
@@ -28,16 +29,12 @@
         <option value="solitaire">Solitaire</option>
       </select>
     </label>
-    <label>Banque
-      <select id="f-bank">
-        <option value="">Toutes</option>
-        <option value="masthead">Paysages mât</option>
-        <option value="universities">Campus</option>
-        <option value="pomo">Pomo QC</option>
-        <option value="nations">Nations / Inuit</option>
-        <option value="favorites">Permanentes</option>
-        <option value="pomo-stock">Stock pomo</option>
-        <option value="solitaire-stock">Stock solitaire</option>
+    <label>Tag
+      <select id="f-tag">
+        <option value="">Tous</option>
+        <option value="campus">Campus</option>
+        <option value="favori">Favori</option>
+        <option value="nations">Nations</option>
       </select>
     </label>
     <label>Saison
@@ -60,11 +57,11 @@
   <div class="page" id="panel-body">
     <div class="nav-row">
       <button type="button" class="btn nav" id="prev-btn" title="Précédente (←)">← Précédente</button>
-      <span class="nav-hint">← → ou Espace = suivante · R rejeter · 1–4 saison</span>
+      <span class="nav-hint">← → ou Espace · R retirer · 1–4 saison · S enregistrer</span>
       <button type="button" class="btn nav primary" id="next-btn" title="Suivante (→ ou Espace)">Suivante →</button>
     </div>
 
-    <div class="crop-stage is-loading" id="crop-stage" title="Glisser verticalement pour choisir la zone visible">
+    <div class="crop-stage is-loading" id="crop-stage" title="Glisser verticalement pour le cadrage Y">
       <div class="crop-inner" id="crop-inner">
         <img id="full-photo" alt="">
         <div class="band band--desktop" id="band-desktop" title="Visible au mât bureau"></div>
@@ -72,8 +69,8 @@
       </div>
       <p class="load-msg" id="load-msg">Chargement de la photo…</p>
     </div>
-    <p class="legend"><span class="swatch desk"></span> ce que le mât montre sur ordinateur &nbsp; <span class="swatch mob"></span> sur téléphone — glisser la photo ou le curseur</p>
-    <label class="focal-row">Cadrage vertical (Y)
+    <p class="legend"><span class="swatch desk"></span> mât ordinateur &nbsp; <span class="swatch mob"></span> mât téléphone — glisser ou curseur</p>
+    <label class="focal-row">Cadrage Y
       <input id="focal" type="range" min="0" max="1000" value="500">
       <code id="focal-val">0.50</code>
       <span class="focal-state" id="focal-state">enregistré</span>
@@ -81,21 +78,21 @@
 
     <div class="previews mast">
       <figure>
-        <figcaption>Aperçu mât — ordinateur</figcaption>
+        <figcaption>Mât ordinateur</figcaption>
         <div class="mini-frame" id="preview-desktop"></div>
       </figure>
       <figure>
-        <figcaption>Aperçu mât — téléphone</figcaption>
+        <figcaption>Mât téléphone</figcaption>
         <div class="mini-frame" id="preview-mobile"></div>
       </figure>
     </div>
     <div class="previews full">
       <figure>
-        <figcaption>Aperçu pomo / solitaire — téléphone</figcaption>
+        <figcaption>Pomo / solitaire téléphone</figcaption>
         <div class="mini-frame tall" id="preview-phone"></div>
       </figure>
       <figure>
-        <figcaption>Aperçu pomo / solitaire — ordinateur</figcaption>
+        <figcaption>Pomo / solitaire ordinateur</figcaption>
         <div class="mini-frame wide" id="preview-full"></div>
       </figure>
     </div>
@@ -112,6 +109,20 @@
         </label>
       </div>
       <p class="credit-preview" id="credit-preview"></p>
+
+      <fieldset class="tag-set">
+        <legend>Où l’afficher</legend>
+        <label class="tag"><input type="checkbox" id="tag-mat" value="mat"> Mât</label>
+        <label class="tag"><input type="checkbox" id="tag-pomo" value="pomo"> Pomo</label>
+        <label class="tag"><input type="checkbox" id="tag-solitaire" value="solitaire"> Solitaire</label>
+      </fieldset>
+      <fieldset class="tag-set protect">
+        <legend>Hors moisson</legend>
+        <label class="tag gold"><input type="checkbox" id="tag-favori" value="favori"> Favori</label>
+        <label class="tag gold"><input type="checkbox" id="tag-campus" value="campus"> Campus</label>
+        <label class="tag"><input type="checkbox" id="tag-nations" value="nations"> Nations</label>
+      </fieldset>
+
       <fieldset class="seasons">
         <legend>Saison</legend>
         <label><input type="radio" name="season" value=""> —</label>
@@ -121,7 +132,7 @@
         <label><input type="radio" name="season" value="hiver"> Hiver</label>
       </fieldset>
       <fieldset class="seasons" id="season6-wrap">
-        <legend>Saison Nunavik (nations)</legend>
+        <legend>Saison Nunavik</legend>
         <label><input type="radio" name="season6" value=""> —</label>
         <label><input type="radio" name="season6" value="ukiuq"> Ukiuq (hiver)</label>
         <label><input type="radio" name="season6" value="upingaksaaq"> Upingaksaaq (hiver / printemps)</label>
@@ -130,24 +141,14 @@
         <label><input type="radio" name="season6" value="ukiaqsaaq"> Ukiaqsaaq (été / automne)</label>
         <label><input type="radio" name="season6" value="ukiaq"> Ukiaq (automne)</label>
       </fieldset>
-      <fieldset class="surfaces">
-        <legend>Banques (où l’afficher)</legend>
-        <label><input type="checkbox" id="surf-masthead" value="masthead"> Mât</label>
-        <label><input type="checkbox" id="surf-pomo" value="pomo"> Pomo</label>
-        <label><input type="checkbox" id="surf-solitaire" value="solitaire"> Solitaire</label>
-      </fieldset>
-      <div class="actions">
-        <button type="button" class="btn" id="save-meta-btn" title="Enregistre cadrage Y, crédit, lieu, saison et banques">Enregistrer tout</button>
-        <button type="button" class="btn gold" id="pin-btn" title="Même chose, marquée permanente hors purge des bots">Garder dans la collection permanente</button>
-        <button type="button" class="btn danger" id="reject-btn" title="Retire la photo de toutes les banques ; elle ne reviendra pas">Retirer définitivement</button>
-      </div>
-      <p class="actions-help">
-        <strong>Enregistrer tout</strong> = cadrage Y, nom, lieu, saison <em>et</em> cases mât / pomo / solitaire.
-        <strong>Garder</strong> = identique + favorite permanente.
-        <strong>Retirer</strong> = plus jamais dans le tirage.
-      </p>
-      <p class="hint" id="status"></p>
     </section>
+  </div>
+
+  <div class="dock">
+    <button type="button" class="btn" id="save-meta-btn" title="Enregistre Y, crédit, saison et tags">Enregistrer tout</button>
+    <button type="button" class="btn gold" id="pin-btn" title="Coche Favori + enregistre (hors purge moisson)">Marquer favori</button>
+    <button type="button" class="btn danger" id="reject-btn" title="Retire de la banque, ne reviendra pas">Retirer</button>
+    <p class="hint" id="status"></p>
   </div>
   <script src="./photo-lab.js"></script>
 </body>
