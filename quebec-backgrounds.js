@@ -37,10 +37,10 @@
    * Favorites : surfaces masthead (défaut) ou liste explicite.
    */
   function _mastheadPool() {
-    if (typeof QUEBEC_PHOTOS !== "undefined" && Array.isArray(QUEBEC_PHOTOS) && QUEBEC_PHOTOS.length) {
+    if (typeof PHOTO_BANK !== "undefined" && Array.isArray(PHOTO_BANK) && PHOTO_BANK.length) {
       const out = [];
       const seen = new Set();
-      for (const p of QUEBEC_PHOTOS) {
+      for (const p of PHOTO_BANK) {
         if (!p || !p.url) continue;
         const tags = Array.isArray(p.tags) ? p.tags : [];
         if (!tags.includes("mat") && !tags.includes("campus") && !tags.includes("nations")) continue;

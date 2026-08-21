@@ -163,7 +163,7 @@ const afterSave = lab.findByUrl(lac.url);
 assert.deepEqual(afterSave.surfaces.slice().sort(), ['pomo', 'solitaire']);
 assert.equal(afterSave.focalY, 0.31);
 const unifiedAfter = JSON.parse(
-  readFileSync(join(root, 'data/quebec-photos.json'), 'utf8'),
+  readFileSync(join(root, 'data/photo-bank.json'), 'utf8'),
 );
 const uniPhoto = (unifiedAfter.photos || []).find((p) => p.url === lac.url);
 assert.ok(uniPhoto, 'banque unique contient la photo');

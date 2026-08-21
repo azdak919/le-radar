@@ -1,9 +1,9 @@
 /* LE RADAR — banque unique de fonds (généré)
- * Source : data/quebec-photos.json
+ * Source : data/photo-bank.json
  * Tags : mat, pomo, solitaire, favori, campus, nations, art
  * favori + campus : hors purge moisson
  */
-const QUEBEC_PHOTOS = [
+const PHOTO_BANK = [
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg/1920px-%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg",
     credit: "The School of Athens — Raphael, 1511",

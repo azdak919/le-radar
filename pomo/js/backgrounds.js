@@ -91,8 +91,8 @@ function _mergeQuebecSourceBank(source, cultureTag, flagKey, logLabel) {
 }
 
 function _mergeQuebecPomoBanks() {
-  if (typeof QUEBEC_PHOTOS !== 'undefined' && Array.isArray(QUEBEC_PHOTOS) && QUEBEC_PHOTOS.length) {
-    const pomo = QUEBEC_PHOTOS.filter((p) => {
+  if (typeof PHOTO_BANK !== 'undefined' && Array.isArray(PHOTO_BANK) && PHOTO_BANK.length) {
+    const pomo = PHOTO_BANK.filter((p) => {
       if (!p || !p.url) return false;
       const tags = Array.isArray(p.tags) ? p.tags : [];
       return tags.includes('pomo');

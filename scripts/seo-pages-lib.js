@@ -1095,7 +1095,7 @@ ${renderWideLayoutAssets(up)}${renderTunerCriticalCss()}
          pool tel quel, et une photo d'hiver peut sortir en août. -->
     <script src="${up}scripts/season-lib.js" defer></script>
     <script src="${up}bg-rotation-lib.js" defer></script>
-    <script src="${up}quebec-photos-data.js" defer></script>
+    <script src="${up}photo-bank-data.js" defer></script>
     <script src="${up}quebec-backgrounds-data.js" defer></script>
     <script src="${up}quebec-university-backgrounds-data.js" defer></script>
     <script src="${up}quebec-nations-backgrounds-data.js" defer></script>

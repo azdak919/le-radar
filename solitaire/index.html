@@ -1387,7 +1387,7 @@
 <script src="../translate-menu.js"></script>
 <script src="../engage-prompt.js" defer></script>
 <script src="../fullscreen-wallpaper-qc.js"></script>
-<script src="../quebec-photos-data.js"></script>
+<script src="../photo-bank-data.js"></script>
 <script src="../quebec-favorites-backgrounds-data.js"></script>
 <script src="js/solitaire-rules.js"></script>
 <script src="js/backgrounds-data.js"></script>
@@ -3270,9 +3270,9 @@ function syncRadarEmbedTheme(theme) {
   });
   BACKGROUNDS.length = 0;
   BACKGROUNDS.push(..._deduped);
-  if (typeof QUEBEC_PHOTOS !== 'undefined' && Array.isArray(QUEBEC_PHOTOS)) {
+  if (typeof PHOTO_BANK !== 'undefined' && Array.isArray(PHOTO_BANK)) {
     const seenU = new Set(BACKGROUNDS.map((b) => b && b.url).filter(Boolean));
-    for (const p of QUEBEC_PHOTOS) {
+    for (const p of PHOTO_BANK) {
       if (!p || !p.url || seenU.has(p.url)) continue;
       const tags = Array.isArray(p.tags) ? p.tags : [];
       if (!tags.includes('solitaire')) continue;
