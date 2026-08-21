@@ -1,10 +1,10 @@
 {
-  "updated": "2026-08-21T16:45:32.861Z",
+  "updated": "2026-08-21T18:05:36.314Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
   "cited": 129,
-  "pending": 12,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
   "checked": 21,
@@ -22,9 +22,9 @@
     {
       "title": "À la découverte du matcha et du kohakutou",
       "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
-      "cited": false,
-      "method": null
+      "credit": "Photo : ItSarahGendreauSimoneau",
+      "cited": true,
+      "method": "filename-credit"
     },
     {
       "title": "De la résistance au courage",
@@ -48,16 +48,16 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Ce que nous devons aux femmes",
+      "title": "Des initiatives qui rassemblent",
       "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
-      "cited": true,
-      "method": "media-credit-near"
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Les femmes MAGA au service du patriarcat",
+      "title": "Élections de l’exécutif de l’AÉUM",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
+      "credit": "Photo : Toscane Ralaimongo",
       "cited": true,
       "method": "media-credit-featured"
     },
