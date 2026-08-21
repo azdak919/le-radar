@@ -45,7 +45,19 @@ function _mergeQuebecSourceBank(source, cultureTag, flagKey, logLabel) {
   const seen = new Set(BACKGROUNDS.map((b) => b && b.url).filter(Boolean));
   let added = 0;
   for (const p of source) {
-    if (!p || !p.url || seen.has(p.url)) continue;
+    if (!p || !p.url) continue;
+    if (seen.has(p.url)) {
+      const existing = BACKGROUNDS.find((b) => b && b.url === p.url);
+      if (existing) {
+        if (typeof p.focalY === 'number' && !Number.isNaN(p.focalY)) existing.focalY = p.focalY;
+        if (typeof p.position === 'string' && p.position.trim()) existing.position = p.position.trim();
+        if (p.season) existing.season = p.season;
+        if (p.season6) existing.season6 = p.season6;
+        if (p.place) existing.place = p.place;
+        if (p.credit) existing.credit = p.credit;
+      }
+      continue;
+    }
     if (Array.isArray(p.surfaces)) {
       if (!p.surfaces.length) continue;
       if (!p.surfaces.includes('pomo') && !p.surfaces.includes('*')) continue;

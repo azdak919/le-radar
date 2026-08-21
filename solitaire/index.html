@@ -3273,9 +3273,17 @@ function syncRadarEmbedTheme(theme) {
   if (typeof PHOTO_BANK !== 'undefined' && Array.isArray(PHOTO_BANK)) {
     const seenU = new Set(BACKGROUNDS.map((b) => b && b.url).filter(Boolean));
     for (const p of PHOTO_BANK) {
-      if (!p || !p.url || seenU.has(p.url)) continue;
+      if (!p || !p.url) continue;
       const tags = Array.isArray(p.tags) ? p.tags : [];
       if (!tags.includes('solitaire')) continue;
+      if (seenU.has(p.url)) {
+        const existing = BACKGROUNDS.find((b) => b && b.url === p.url);
+        if (existing && typeof p.focalY === 'number' && !Number.isNaN(p.focalY)) {
+          existing.focalY = p.focalY;
+        }
+        if (existing && p.season) existing.season = p.season;
+        continue;
+      }
       seenU.add(p.url);
       const entry = {
         url: p.url,
@@ -3435,16 +3443,26 @@ function loadBackground(index) {
     return;
   }
   const url = _optimizeBgUrl(bg.url);
-  _applyBackground(url, bg.credit, bg.link, bg.source || 'Unsplash', bg.title || '');
+  _applyBackground(url, bg.credit, bg.link, bg.source || 'Unsplash', bg.title || '', bg);
 }
 
 // Cleanup function for any in-progress background crossfade transition.
 let _bgCrossfadeCleanup = null;
 
-function _applyBackground(url, creditText, linkUrl, source, title = '') {
+function _solBgPositionCss(bg) {
+  if (bg && typeof bg.position === 'string' && bg.position.trim()) return bg.position.trim();
+  if (bg && typeof bg.focalY === 'number' && !Number.isNaN(bg.focalY)) {
+    const pct = Math.round(Math.min(1, Math.max(0, bg.focalY)) * 1000) / 10;
+    return `50% ${pct}%`;
+  }
+  return 'center center';
+}
+
+function _applyBackground(url, creditText, linkUrl, source, title = '', bgMeta = null) {
   const layerCurrent = document.getElementById('bg-layer');
   const layerNext    = document.getElementById('bg-layer-next');
   const credit       = document.getElementById('img-credit');
+  const posCss       = _solBgPositionCss(bgMeta);
 
   const img = new Image();
   try { img.decoding = 'async'; } catch (_) {}
@@ -3457,6 +3475,7 @@ function _applyBackground(url, creditText, linkUrl, source, title = '') {
     layerNext.style.transition = 'none';
     layerNext.classList.remove('loaded');
     layerNext.style.backgroundImage = `url(${url})`;
+    layerNext.style.backgroundPosition = posCss;
     layerNext.offsetHeight;
     layerNext.style.transition = '';
     requestAnimationFrame(() => { layerNext.classList.add('loaded'); });
@@ -3506,6 +3525,7 @@ function _applyBackground(url, creditText, linkUrl, source, title = '') {
       layerNext.removeEventListener('transitionend', onTransitionEnd);
       _bgCrossfadeCleanup = null;
       layerCurrent.style.backgroundImage = `url(${url})`;
+      layerCurrent.style.backgroundPosition = posCss;
       layerNext.style.transition = 'none';
       layerNext.classList.remove('loaded');
       layerNext.style.backgroundImage = '';
