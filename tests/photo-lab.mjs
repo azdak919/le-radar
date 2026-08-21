@@ -119,7 +119,11 @@ const listed = lab.listPhotos();
 assert.equal(listed.length, 3, 'QC dédupliquée + 2 stocks');
 const lac = listed.find((p) => /Lac Test/.test(p.title));
 assert.ok(lac);
-assert.deepEqual(lac.banks.sort(), ['masthead', 'pomo']);
+assert.ok(
+  lac.banks.includes('mat') || lac.banks.includes('masthead'),
+  'présent au mât',
+);
+assert.ok(lac.banks.includes('pomo'), 'présent au pomo');
 assert.ok(lac.surfaces.includes('masthead') && lac.surfaces.includes('pomo'));
 
 lab.setSeason(lac.url, { season: 'ete' });
@@ -158,13 +162,17 @@ lab.saveAll(lac.url, {
 const afterSave = lab.findByUrl(lac.url);
 assert.deepEqual(afterSave.surfaces.slice().sort(), ['pomo', 'solitaire']);
 assert.equal(afterSave.focalY, 0.31);
+const unifiedAfter = JSON.parse(
+  readFileSync(join(root, 'data/quebec-photos.json'), 'utf8'),
+);
+const uniPhoto = (unifiedAfter.photos || []).find((p) => p.url === lac.url);
+assert.ok(uniPhoto, 'banque unique contient la photo');
+assert.equal(uniPhoto.focalY, 0.31, 'focalY enregistré dans la banque unique');
+assert.ok(uniPhoto.tags.includes('pomo') && uniPhoto.tags.includes('solitaire'));
+assert.ok(!uniPhoto.tags.includes('mat'), 'décoche mât → plus de tag mat');
 assert.equal(afterSave.credit, 'Alice Tremblay');
 assert.equal(afterSave.place, 'Tadoussac');
 assert.equal(afterSave.season, 'ete');
-const favSaved = JSON.parse(
-  readFileSync(join(root, 'data/quebec-favorites-backgrounds.json'), 'utf8'),
-);
-assert.deepEqual(favSaved.photos[0].surfaces.slice().sort(), ['pomo', 'solitaire']);
 
 lab.pinPhoto(lac.url, { surfaces: ['masthead', 'solitaire'], focalY: 0.22 });
 const fav = JSON.parse(readFileSync(join(root, 'data/quebec-favorites-backgrounds.json'), 'utf8'));

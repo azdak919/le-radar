@@ -37,6 +37,29 @@
    * Favorites : surfaces masthead (défaut) ou liste explicite.
    */
   function _mastheadPool() {
+    if (typeof QUEBEC_PHOTOS !== "undefined" && Array.isArray(QUEBEC_PHOTOS) && QUEBEC_PHOTOS.length) {
+      const out = [];
+      const seen = new Set();
+      for (const p of QUEBEC_PHOTOS) {
+        if (!p || !p.url) continue;
+        const tags = Array.isArray(p.tags) ? p.tags : [];
+        if (!tags.includes("mat") && !tags.includes("campus") && !tags.includes("nations")) continue;
+        if (tags.includes("campus") || tags.includes("nations") || tags.includes("mat")) {
+          /* ok */
+        }
+        if (Array.isArray(p.surfaces) && p.surfaces.length) {
+          if (!p.surfaces.includes("masthead") && !p.surfaces.includes("*") && !tags.includes("mat")) continue;
+        }
+        if (seen.has(p.url)) continue;
+        seen.add(p.url);
+        let bank = "masthead";
+        if (tags.includes("campus")) bank = "universities";
+        else if (tags.includes("nations")) bank = "nations";
+        else if (tags.includes("favori")) bank = "favorites";
+        out.push({ ...p, bank, campus: p.campus || tags.includes("campus") });
+      }
+      return out;
+    }
     const out = [];
     const seen = new Set();
     function pushAll(arr, bank) {

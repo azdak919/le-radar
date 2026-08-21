@@ -1,4 +1,4 @@
-const CACHE_NAME = "radar-shell-v712";
+const CACHE_NAME = "radar-shell-v714";
 const CACHE_PREFIX = "radar-";
 /** Cache permanent : page maintenance / hors-ligne (ne se purge pas au bump shell). */
 const OFFLINE_CACHE = "radar-offline-v22";
@@ -44,6 +44,7 @@ const APP_SHELL = [
   "./nav-shell.js",
   "./app.js",
   "./bg-rotation-lib.js",
+  "./quebec-photos-data.js",
   "./quebec-backgrounds-data.js",
   "./quebec-university-backgrounds-data.js",
   "./quebec-nations-backgrounds-data.js",

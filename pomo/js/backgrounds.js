@@ -91,6 +91,15 @@ function _mergeQuebecSourceBank(source, cultureTag, flagKey, logLabel) {
 }
 
 function _mergeQuebecPomoBanks() {
+  if (typeof QUEBEC_PHOTOS !== 'undefined' && Array.isArray(QUEBEC_PHOTOS) && QUEBEC_PHOTOS.length) {
+    const pomo = QUEBEC_PHOTOS.filter((p) => {
+      if (!p || !p.url) return false;
+      const tags = Array.isArray(p.tags) ? p.tags : [];
+      return tags.includes('pomo');
+    });
+    _mergeQuebecSourceBank(pomo, 'quebec', '_quebecPhotosMerged', 'banque unique (tag pomo)');
+    return;
+  }
   // Pomo-only landscapes
   if (typeof QUEBEC_POMO_BACKGROUNDS !== 'undefined') {
     _mergeQuebecSourceBank(
