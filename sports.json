@@ -1,11 +1,11 @@
 {
-  "updated": "2026-08-21T11:48:26.552Z",
-  "fetchedAt": "2026-08-21T11:48:26.552Z",
+  "updated": "2026-08-21T16:50:02.531Z",
+  "fetchedAt": "2026-08-21T16:50:02.531Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-21T11:48:26.552Z"
+    "referenceDate": "2026-08-21T16:50:02.532Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 790,
@@ -38673,7 +38673,7 @@
         },
         {
           "date": "2026-09-05",
-          "time": "19:30",
+          "time": "20:30",
           "opponent": "La Pocatière",
           "opponentCode": "POC",
           "home": false,
@@ -38967,7 +38967,7 @@
         },
         {
           "date": "2026-09-05",
-          "time": "19:30",
+          "time": "20:30",
           "opponent": "Cégep Chicoutimi",
           "opponentCode": "CHI",
           "home": true,
@@ -81466,7 +81466,7 @@
         },
         {
           "date": "2026-11-22",
-          "time": "13:00",
+          "time": "11:00",
           "opponent": "Cégep Outaouais",
           "opponentCode": "OUT",
           "home": false,
@@ -81647,7 +81647,7 @@
         },
         {
           "date": "2026-11-22",
-          "time": "13:00",
+          "time": "11:00",
           "opponent": "Limoilou",
           "opponentCode": "LIM",
           "home": true,
