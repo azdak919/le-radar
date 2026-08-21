@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-08-21T14:31:52.649Z",
+  "updatedAt": "2026-08-21T15:29:24.862Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Punk-o-rama",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/punk-o-rama/"
       },
+      "next": {
+        "title": "Détour",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://chyz.ca/emission/detour/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Punk-o-rama",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T14:31:22.051Z"
+      "checkedAt": "2026-08-21T15:29:00.481Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
         "title": "Accents ouverts",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://cism893.ca/emissions/accents-ouverts"
       },
+      "next": {
+        "title": "Rebelles soniques",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/rebelles-soniques"
+      },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Accents ouverts",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T14:31:23.905Z"
+      "checkedAt": "2026-08-21T15:29:02.879Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Jazz Amuck",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00"
       },
+      "next": {
+        "title": "Butcher T's Noontime Cuts",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Jazz Amuck",
+      "showTitle": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +81,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T14:31:26.509Z"
+      "checkedAt": "2026-08-21T15:29:05.927Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
-      },
-      "next": {
         "title": "The Alley",
         "source": "schedule-live",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/the-alley"
       },
+      "next": {
+        "title": "Charts & Crafts",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/charts-and-crafts"
+      },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "The Alley",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T14:31:41.462Z"
+      "checkedAt": "2026-08-21T15:29:20.413Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "La Souterraine",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Le Ré-Show : Deuxième service",
         "source": "schedule-live",
         "start": "11:00",
         "end": "12:00"
       },
+      "next": {
+        "title": "Ciné-Histoire",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "La Souterraine",
+      "showTitle": "Le Ré-Show : Deuxième service",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T14:31:42.231Z"
+      "checkedAt": "2026-08-21T15:29:21.298Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Sharon Van Etten - Seventeen",
+      "track": "Unknown Mortal Orchestra - Can",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-21T14:31:52.298Z"
+      "checkedAt": "2026-08-21T15:29:24.511Z"
     }
   }
 }
