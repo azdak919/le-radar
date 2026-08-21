@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-21T20:49:38.904Z",
+  "updatedAt": "2026-08-21T21:20:59.328Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T20:49:13.103Z"
+      "checkedAt": "2026-08-21T21:20:36.091Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Turbo tannant",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/turbo-tannant"
-      },
-      "next": {
         "title": "Ok Doomer",
         "source": "schedule",
         "start": "17:00",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/ok-doomer"
       },
+      "next": {
+        "title": "Mix électro",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/mix-electro"
+      },
       "track": "",
-      "showTitle": "Turbo tannant",
+      "showTitle": "Ok Doomer",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T20:49:15.034Z"
+      "checkedAt": "2026-08-21T21:20:38.502Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "New Shit",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Café",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "New Shit",
+      "showTitle": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T20:49:17.808Z"
+      "checkedAt": "2026-08-21T21:20:41.249Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Tapeworms",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/tapeworms"
-      },
-      "next": {
         "title": "The Groove Master's Hour",
         "source": "schedule-live",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
       },
+      "next": {
+        "title": "The Go-Go Radio Magic Show",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
+      },
       "track": "",
-      "showTitle": "Tapeworms",
+      "showTitle": "The Groove Master's Hour",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T20:49:31.499Z"
+      "checkedAt": "2026-08-21T21:20:55.202Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,37 +126,32 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T20:49:32.101Z"
+      "checkedAt": "2026-08-21T21:20:56.159Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Histoire de passer le temps",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:00",
-        "slug": "histoire-de-passer-le-temps"
-      },
+      "current": null,
       "next": {
-        "title": "Mutations",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "mutations"
+        "title": "D'amour et de sexe",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
       },
-      "track": "Striky - On y va",
-      "showTitle": "Histoire de passer le temps",
+      "track": "Beatrice Deer - Wolf Woman",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-21T20:49:38.554Z"
+      "checkedAt": "2026-08-21T21:20:58.977Z"
     }
   }
 }
