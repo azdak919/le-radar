@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-08-21T11:55:11.978Z",
+  "updatedAt": "2026-08-21T12:40:23.904Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Vendredi Nostalgie",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/vendredi-nostalgie/"
       },
+      "next": {
+        "title": "Palmarès CHYZ",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "10:30",
+        "url": "https://chyz.ca/emission/palmares-chyz/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Vendredi Nostalgie",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T11:54:45.674Z"
+      "checkedAt": "2026-08-21T12:39:47.544Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Toute est dans toute",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/tout-est-dans-toute"
-      },
-      "next": {
         "title": "As-tu vu?",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/lart-en-ondes"
       },
+      "next": {
+        "title": "La collation",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
+      },
       "track": "",
-      "showTitle": "Toute est dans toute",
+      "showTitle": "As-tu vu?",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T11:54:47.976Z"
+      "checkedAt": "2026-08-21T12:39:49.978Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T11:54:50.914Z"
+      "checkedAt": "2026-08-21T12:39:53.200Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,32 +108,32 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T11:55:05.184Z"
+      "checkedAt": "2026-08-21T12:40:08.226Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Palmarès CFAK",
         "source": "schedule-live",
         "start": "08:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "La Souterraine",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T11:55:05.997Z"
+      "checkedAt": "2026-08-21T12:40:09.064Z"
     },
     "choq": {
       "id": "choq",
@@ -139,18 +146,15 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Gaelle - home",
+      "track": "La Bronze - L",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-08-21T11:55:11.627Z"
+      "clientPoll": null,
+      "checkedAt": "2026-08-21T12:40:23.554Z"
     }
   }
 }
