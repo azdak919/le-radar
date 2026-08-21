@@ -1,11 +1,11 @@
 {
-  "updated": "2026-08-20T21:04:48.165Z",
-  "fetchedAt": "2026-08-20T21:04:48.165Z",
+  "updated": "2026-08-21T01:26:42.424Z",
+  "fetchedAt": "2026-08-21T01:26:42.424Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-20T21:04:48.165Z"
+    "referenceDate": "2026-08-21T01:26:42.424Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 790,
@@ -92969,37 +92969,9 @@
       "usports": false,
       "leagueLabel": "Hockey collégial masculin D2",
       "lastGame": null,
-      "nextGame": {
-        "date": "2026-08-20",
-        "time": "20:30",
-        "opponent": "Thetford",
-        "opponentCode": "THE",
-        "home": true,
-        "sport": "hockey",
-        "competition": "Hockey collégial masculin D2",
-        "gameId": "885691",
-        "url": "https://collegial.rseqhockey.com/fr",
-        "opponentFullName": "Cégep de Thetford",
-        "opponentRegistryId": "thetford",
-        "opponentSector": "collegial"
-      },
+      "nextGame": null,
       "results": [],
-      "nextGames": [
-        {
-          "date": "2026-08-20",
-          "time": "20:30",
-          "opponent": "Thetford",
-          "opponentCode": "THE",
-          "home": true,
-          "sport": "hockey",
-          "competition": "Hockey collégial masculin D2",
-          "gameId": "885691",
-          "url": "https://collegial.rseqhockey.com/fr",
-          "opponentFullName": "Cégep de Thetford",
-          "opponentRegistryId": "thetford",
-          "opponentSector": "collegial"
-        }
-      ],
+      "nextGames": [],
       "record": null,
       "source": "spordle-rseqhockey",
       "fullName": "Cégep de Lévis",
@@ -93022,37 +92994,9 @@
       "usports": false,
       "leagueLabel": "Hockey collégial masculin D2",
       "lastGame": null,
-      "nextGame": {
-        "date": "2026-08-20",
-        "time": "20:30",
-        "opponent": "Lévis",
-        "opponentCode": "LÉV",
-        "home": false,
-        "sport": "hockey",
-        "competition": "Hockey collégial masculin D2",
-        "gameId": "885691",
-        "url": "https://collegial.rseqhockey.com/fr",
-        "opponentFullName": "Cégep de Lévis",
-        "opponentRegistryId": "levis",
-        "opponentSector": "collegial"
-      },
+      "nextGame": null,
       "results": [],
-      "nextGames": [
-        {
-          "date": "2026-08-20",
-          "time": "20:30",
-          "opponent": "Lévis",
-          "opponentCode": "LÉV",
-          "home": false,
-          "sport": "hockey",
-          "competition": "Hockey collégial masculin D2",
-          "gameId": "885691",
-          "url": "https://collegial.rseqhockey.com/fr",
-          "opponentFullName": "Cégep de Lévis",
-          "opponentRegistryId": "levis",
-          "opponentSector": "collegial"
-        }
-      ],
+      "nextGames": [],
       "record": null,
       "source": "spordle-rseqhockey",
       "fullName": "Cégep de Thetford",
