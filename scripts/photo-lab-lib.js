@@ -571,6 +571,10 @@ function createPhotoLab(opts = {}) {
     const photo = findByUrl(url);
     if (!photo) throw new Error(`Photo introuvable: ${url}`);
     snapshotFiles(allMutableFiles());
+    if (payload.focalY != null && payload.focalY !== '') {
+      const n = Number(payload.focalY);
+      if (Number.isFinite(n)) photo.focalY = Math.min(1, Math.max(0, n));
+    }
     const surfacesRaw = payload.surfaces || photo.surfaces || ['masthead', 'pomo'];
     const surfaces = (Array.isArray(surfacesRaw) ? surfacesRaw : String(surfacesRaw).split(','))
       .map((s) => String(s).trim())

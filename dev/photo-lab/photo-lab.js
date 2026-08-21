@@ -11,6 +11,7 @@
     filtered: [],
     selected: null,
     focalY: 0.5,
+    focalDirty: false,
     busy: false,
   };
 
@@ -128,9 +129,32 @@
     select((keep || state.filtered[0]).key);
   }
 
-  function go(delta) {
+  function setFocalState(dirty) {
+    state.focalDirty = !!dirty;
+    const el = $('focal-state');
+    if (!el) return;
+    el.textContent = dirty ? 'non enregistré' : 'enregistré';
+    el.classList.toggle('is-dirty', !!dirty);
+  }
+
+  async function persistFocalIfDirty() {
+    if (!state.focalDirty || !state.selected) return;
+    await api('/api/focal', { url: state.selected.url, focalY: state.focalY });
+    state.selected.focalY = state.focalY;
+    const listed = state.photos.find((p) => p.key === state.selected.key);
+    if (listed) listed.focalY = state.focalY;
+    setFocalState(false);
+  }
+
+  async function go(delta) {
     const n = state.filtered.length;
     if (!n) return;
+    try {
+      await persistFocalIfDirty();
+    } catch (err) {
+      $('status').textContent = err.message || String(err);
+      return;
+    }
     const i = currentIndex();
     const next = state.filtered[(i + delta + n) % n];
     if (next) select(next.key);
@@ -151,6 +175,7 @@
     $('full-photo').alt = p.title || '';
     $('focal').value = String(Math.round(state.focalY * 1000));
     $('focal-val').textContent = state.focalY.toFixed(2);
+    setFocalState(false);
     $('credit').value = p.credit || '';
     $('place').value = p.place || '';
     updateCreditPreview();
@@ -236,7 +261,6 @@
       const avail = el.clientWidth || 280;
       const scale = avail / f.w;
       el.innerHTML = '';
-      el.style.height = `${Math.round(f.h * scale)}px`;
       const inner = document.createElement('div');
       inner.style.cssText = `width:${f.w}px;height:${f.h}px;transform:scale(${scale});transform-origin:top left;position:relative;`;
       const bg = document.createElement('div');
@@ -312,12 +336,16 @@
   $('focal').addEventListener('input', () => {
     state.focalY = Number($('focal').value) / 1000;
     $('focal-val').textContent = state.focalY.toFixed(2);
+    setFocalState(true);
     updateOverlays();
     renderMinis();
   });
   $('focal').addEventListener('change', () => {
-    if (!state.selected) return;
-    mutate(() => api('/api/focal', { url: state.selected.url, focalY: state.focalY }));
+    persistFocalIfDirty().then(() => {
+      $('status').textContent = 'Cadrage Y enregistré.';
+    }).catch((err) => {
+      $('status').textContent = err.message || String(err);
+    });
   });
 
   $('credit').addEventListener('input', () => {
@@ -331,6 +359,8 @@
     const season = (document.querySelector('input[name="season"]:checked') || {}).value || '';
     const season6 = (document.querySelector('input[name="season6"]:checked') || {}).value || '';
     mutate(async () => {
+      await api('/api/focal', { url: state.selected.url, focalY: state.focalY });
+      setFocalState(false);
       await api('/api/credit', {
         url: state.selected.url,
         credit: $('credit').value,
@@ -359,12 +389,14 @@
 
   $('pin-btn').addEventListener('click', () => {
     if (!state.selected) return;
-    mutate(() =>
-      api('/api/pin', {
+    mutate(async () => {
+      await persistFocalIfDirty();
+      return api('/api/pin', {
         url: state.selected.url,
         surfaces: selectedSurfaces(),
-      })
-    );
+        focalY: state.focalY,
+      });
+    });
   });
 
   $('undo-btn').addEventListener('click', () => mutate(() => api('/api/undo', {})));
@@ -405,6 +437,7 @@
     state.focalY = focalFromPointer(ev);
     $('focal').value = String(Math.round(state.focalY * 1000));
     $('focal-val').textContent = state.focalY.toFixed(2);
+    setFocalState(true);
     updateOverlays();
     renderMinis();
   });
@@ -413,6 +446,7 @@
     state.focalY = focalFromPointer(ev);
     $('focal').value = String(Math.round(state.focalY * 1000));
     $('focal-val').textContent = state.focalY.toFixed(2);
+    setFocalState(true);
     updateOverlays();
     renderMinis();
   });
@@ -420,7 +454,11 @@
     if (!dragging) return;
     dragging = false;
     if (!state.selected) return;
-    mutate(() => api('/api/focal', { url: state.selected.url, focalY: state.focalY }));
+    persistFocalIfDirty().then(() => {
+      $('status').textContent = 'Cadrage Y enregistré.';
+    }).catch((err) => {
+      $('status').textContent = err.message || String(err);
+    });
   });
 
   document.addEventListener('keydown', (ev) => {

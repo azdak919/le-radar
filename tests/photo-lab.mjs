@@ -128,10 +128,11 @@ assert.equal(afterCredit.place, 'Tadoussac');
 lab.setFocalY(lac.url, 0.22);
 assert.equal(lab.findByUrl(lac.url).focalY, 0.22);
 
-lab.pinPhoto(lac.url, { surfaces: ['masthead', 'solitaire'] });
+lab.pinPhoto(lac.url, { surfaces: ['masthead', 'solitaire'], focalY: 0.22 });
 const fav = JSON.parse(readFileSync(join(root, 'data/quebec-favorites-backgrounds.json'), 'utf8'));
 assert.equal(fav.photos.length, 1);
 assert.equal(fav.photos[0].permanent, true);
+assert.equal(fav.photos[0].focalY, 0.22);
 assert.deepEqual(fav.photos[0].surfaces, ['masthead', 'solitaire']);
 
 lab.rejectPhoto(lac.url, 'test');

@@ -72,29 +72,30 @@
       </div>
       <p class="load-msg" id="load-msg">Chargement de la photo…</p>
     </div>
-    <p class="legend"><span class="swatch desk"></span> mât bureau &nbsp; <span class="swatch mob"></span> mât mobile — glisser sur la photo</p>
-    <label class="focal-row">Hauteur / focale
+    <p class="legend"><span class="swatch desk"></span> ce que le mât montre sur ordinateur &nbsp; <span class="swatch mob"></span> sur téléphone — glisser la photo ou le curseur</p>
+    <label class="focal-row">Cadrage vertical (Y)
       <input id="focal" type="range" min="0" max="1000" value="500">
       <code id="focal-val">0.50</code>
+      <span class="focal-state" id="focal-state">enregistré</span>
     </label>
 
     <div class="previews mast">
       <figure>
-        <figcaption>Mât bureau</figcaption>
+        <figcaption>Aperçu mât — ordinateur</figcaption>
         <div class="mini-frame" id="preview-desktop"></div>
       </figure>
       <figure>
-        <figcaption>Mât mobile</figcaption>
+        <figcaption>Aperçu mât — téléphone</figcaption>
         <div class="mini-frame" id="preview-mobile"></div>
       </figure>
     </div>
     <div class="previews full">
       <figure>
-        <figcaption>Pomo / solitaire téléphone</figcaption>
+        <figcaption>Aperçu pomo / solitaire — téléphone</figcaption>
         <div class="mini-frame tall" id="preview-phone"></div>
       </figure>
       <figure>
-        <figcaption>Pomo / solitaire bureau</figcaption>
+        <figcaption>Aperçu pomo / solitaire — ordinateur</figcaption>
         <div class="mini-frame wide" id="preview-full"></div>
       </figure>
     </div>
@@ -136,10 +137,15 @@
         <label><input type="checkbox" id="surf-solitaire" value="solitaire"> Solitaire</label>
       </fieldset>
       <div class="actions">
-        <button type="button" class="btn danger" id="reject-btn">Rejeter</button>
-        <button type="button" class="btn" id="save-meta-btn">Enregistrer crédit / saison</button>
-        <button type="button" class="btn gold" id="pin-btn">Ajouter à la permanente</button>
+        <button type="button" class="btn" id="save-meta-btn" title="Enregistre le cadrage Y, le crédit et la saison">Enregistrer cadrage + crédit + saison</button>
+        <button type="button" class="btn gold" id="pin-btn" title="Copie dans la banque favorites, hors purge des bots">Garder dans la collection permanente</button>
+        <button type="button" class="btn danger" id="reject-btn" title="Retire la photo de toutes les banques ; elle ne reviendra pas">Retirer définitivement</button>
       </div>
+      <p class="actions-help">
+        <strong>Enregistrer</strong> = cadrage Y + nom + lieu + saison.
+        <strong>Garder</strong> = favorite (cases mât / pomo / solitaire).
+        <strong>Retirer</strong> = plus jamais dans le tirage.
+      </p>
       <p class="hint" id="status"></p>
     </section>
   </div>
