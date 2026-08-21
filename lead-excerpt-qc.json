@@ -1,14 +1,23 @@
 {
-  "updated": "2026-08-21T07:09:29.456Z",
+  "updated": "2026-08-21T09:01:01.252Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 6,
+  "incomplete": 8,
   "withLeadExcerpt": 82,
-  "candidates": 6,
-  "enriched": 0,
-  "failed": 0,
+  "candidates": 8,
+  "enriched": 1,
+  "failed": 1,
   "ok": true,
   "samples": [
+    {
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
+      "changed": true
+    },
     {
       "title": "Montreal city council to debate motion to cut ties with Israel on August 24",
       "link": "https://thelinknewspaper.ca/article/16341",
