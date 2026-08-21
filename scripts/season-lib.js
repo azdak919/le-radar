@@ -32,27 +32,33 @@
    */
   const SEASON6_META = {
     ukiuq: {
-      labelFr: 'Ukiuq (plein hiver)',
+      labelFr: 'Ukiuq (hiver)',
+      season4: 'hiver',
       months: [11, 0], // déc–jan (0-index : 11=déc, 0=jan)
     },
     upingaksaaq: {
-      labelFr: 'Upingaksaaq (pré-printemps)',
+      labelFr: 'Upingaksaaq (hiver / printemps)',
+      season4: 'hiver / printemps',
       months: [1, 2], // fév–mar
     },
     upingaaq: {
       labelFr: 'Upingaaq (printemps)',
+      season4: 'printemps',
       months: [3, 4], // avr–mai
     },
     aujaq: {
       labelFr: 'Aujaq (été)',
+      season4: 'été',
       months: [5, 6], // jun–jul
     },
     ukiaqsaaq: {
-      labelFr: 'Ukiaqsaaq (fin d’été / pré-automne)',
+      labelFr: 'Ukiaqsaaq (été / automne)',
+      season4: 'été / automne',
       months: [7, 8], // aoû–sep
     },
     ukiaq: {
-      labelFr: 'Ukiaq (automne / engelure)',
+      labelFr: 'Ukiaq (automne)',
+      season4: 'automne',
       months: [9, 10], // oct–nov
     },
   };
