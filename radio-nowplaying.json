@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-21T12:40:23.904Z",
+  "updatedAt": "2026-08-21T13:42:37.188Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T12:39:47.544Z"
+      "checkedAt": "2026-08-21T13:41:58.294Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "As-tu vu?",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/lart-en-ondes"
-      },
-      "next": {
         "title": "La collation",
         "source": "schedule",
         "start": "09:00",
         "end": "11:00",
         "url": "https://cism893.ca/emissions/mix-collation"
       },
+      "next": {
+        "title": "Accents ouverts",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/accents-ouverts"
+      },
       "track": "",
-      "showTitle": "As-tu vu?",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T12:39:49.978Z"
+      "checkedAt": "2026-08-21T13:42:00.091Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Morning Detour",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Jazz Amuck",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "Morning Detour",
+      "showTitle": "Jazz Amuck",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,59 +81,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T12:39:53.200Z"
+      "checkedAt": "2026-08-21T13:42:02.470Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Wake up Folks!",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/wake-up-folks"
-      },
-      "next": {
         "title": "CJLO News Hour",
         "source": "schedule-live",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/cjlo-news-hour"
       },
+      "next": {
+        "title": "Democracy Now",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
+      },
       "track": "",
-      "showTitle": "Wake up Folks!",
+      "showTitle": "CJLO News Hour",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T12:40:08.226Z"
+      "checkedAt": "2026-08-21T13:42:16.513Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "La Souterraine",
         "source": "schedule-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Le Ré-Show : Deuxième service",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "La Souterraine",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T12:40:09.064Z"
+      "checkedAt": "2026-08-21T13:42:17.185Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "La Bronze - L",
+      "track": "Francouvertes 2026 - Dauphins",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T12:40:23.554Z"
+      "checkedAt": "2026-08-21T13:42:36.837Z"
     }
   }
 }
