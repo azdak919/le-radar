@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-21T08:36:42.094Z",
+  "updatedAt": "2026-08-21T09:33:27.147Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T08:36:18.379Z"
+      "checkedAt": "2026-08-21T09:32:59.844Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La carte cadeau (reprise)",
-        "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "05:00",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Toute est dans toute",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/tout-est-dans-toute"
+      },
       "track": "",
-      "showTitle": "La carte cadeau (reprise)",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T08:36:20.770Z"
+      "checkedAt": "2026-08-21T09:33:02.157Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T08:36:23.676Z"
+      "checkedAt": "2026-08-21T09:33:05.376Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T08:36:37.730Z"
+      "checkedAt": "2026-08-21T09:33:19.638Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T08:36:38.555Z"
+      "checkedAt": "2026-08-21T09:33:20.644Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Status/Non-Status - Bitumen Eyes",
+      "track": "Dua Saleh - Glow (feat. Bon Iver)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-21T08:36:41.744Z"
+      "checkedAt": "2026-08-21T09:33:26.797Z"
     }
   }
 }
