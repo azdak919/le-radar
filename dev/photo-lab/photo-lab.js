@@ -1,9 +1,10 @@
-/* Labo photo local — client. Écrit via /api/* (127.0.0.1). */
+/* Labo photo local — revue une à la fois. Écrit via /api/* (127.0.0.1). */
 (() => {
   const DESKTOP = { w: 1280, h: 170 };
   const MOBILE = { w: 390, h: 175 };
   const PHONE = { w: 390, h: 844 };
   const FULL = { w: 1280, h: 800 };
+  const STORE_KEY = 'photo-lab-current-key';
 
   const state = {
     photos: [],
@@ -20,7 +21,7 @@
     const h = imgH || 0;
     const fyRaw = Number(focalY);
     const fy = Math.min(1, Math.max(0, Number.isFinite(fyRaw) ? fyRaw : 0.5));
-    if (w <= 0 || h <= 0) return { topPct: 50 - 10, heightPct: 20, visibleFrac: 1 };
+    if (w <= 0 || h <= 0) return { topPct: 40, heightPct: 20, visibleFrac: 1 };
     const scale = Math.max(frameW / w, frameH / h);
     const visH = Math.min(h, frameH / scale);
     const visibleFrac = visH / h;
@@ -60,7 +61,20 @@
   function renderStats(stats) {
     if (!stats) return;
     $('stats').textContent =
-      `${stats.total} photos · mât ${stats.bySurface.masthead} · pomo ${stats.bySurface.pomo} · solitaire ${stats.bySurface.solitaire} · sans saison ${stats.untagged}`;
+      `${stats.total} au total · sans saison ${stats.untagged}`;
+  }
+
+  function currentIndex() {
+    if (!state.selected) return -1;
+    return state.filtered.findIndex((p) => p.key === state.selected.key);
+  }
+
+  function updateCounter() {
+    const i = currentIndex();
+    const n = state.filtered.length;
+    $('counter').textContent = n ? `${i + 1} / ${n}` : '0 / 0';
+    $('prev-btn').disabled = n < 2;
+    $('next-btn').disabled = n < 2;
   }
 
   function applyFilters() {
@@ -68,6 +82,7 @@
     const bank = $('f-bank').value;
     const season = $('f-season').value;
     const q = $('f-q').value.trim().toLowerCase();
+    const prevKey = state.selected && state.selected.key;
     state.filtered = state.photos.filter((p) => {
       if (surface && !(p.surfaces || []).includes(surface)) return false;
       if (bank && !(p.banks || []).includes(bank)) return false;
@@ -79,69 +94,35 @@
       }
       return true;
     });
-    renderGrid();
-  }
-
-  function renderGrid() {
-    const root = $('grid');
-    root.textContent = '';
-    const frag = document.createDocumentFragment();
-    for (const p of state.filtered) {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'card' + (state.selected && state.selected.key === p.key ? ' is-on' : '');
-      btn.dataset.key = p.key;
-      const img = document.createElement('img');
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      img.alt = p.title || '';
-      img.src = p.thumb || p.url;
-      const cap = document.createElement('div');
-      cap.className = 'cap';
-      const b = document.createElement('b');
-      b.textContent = p.place || p.title || p.credit || 'Sans titre';
-      cap.appendChild(b);
-      const chips = document.createElement('div');
-      chips.className = 'chips';
-      for (const bank of p.banks) {
-        const c = document.createElement('span');
-        c.className = 'chip';
-        c.textContent = bank.replace('-stock', '');
-        chips.appendChild(c);
-      }
-      if (p.season) {
-        const c = document.createElement('span');
-        c.className = 'chip';
-        c.textContent = seasonLabel(p.season);
-        chips.appendChild(c);
-      }
-      if (p.permanent) {
-        const c = document.createElement('span');
-        c.className = 'chip perm';
-        c.textContent = 'permanente';
-        chips.appendChild(c);
-      }
-      cap.appendChild(chips);
-      btn.appendChild(img);
-      btn.appendChild(cap);
-      btn.addEventListener('click', () => select(p.key));
-      frag.appendChild(btn);
+    if (!state.filtered.length) {
+      state.selected = null;
+      $('panel-body').hidden = true;
+      $('panel-empty').hidden = false;
+      updateCounter();
+      return;
     }
-    root.appendChild(frag);
+    $('panel-empty').hidden = true;
+    $('panel-body').hidden = false;
+    const keep = prevKey && state.filtered.find((p) => p.key === prevKey);
+    select((keep || state.filtered[0]).key);
   }
 
-  function currentIndex() {
-    if (!state.selected) return -1;
-    return state.filtered.findIndex((p) => p.key === state.selected.key);
+  function go(delta) {
+    const n = state.filtered.length;
+    if (!n) return;
+    const i = currentIndex();
+    const next = state.filtered[(i + delta + n) % n];
+    if (next) select(next.key);
   }
 
   function select(key) {
-    const p = state.photos.find((x) => x.key === key);
+    const p = state.photos.find((x) => x.key === key) || state.filtered.find((x) => x.key === key);
     if (!p) return;
     state.selected = p;
     state.focalY = typeof p.focalY === 'number' ? p.focalY : 0.5;
-    $('panel-empty').hidden = true;
-    $('panel-body').hidden = false;
+    try {
+      sessionStorage.setItem(STORE_KEY, p.key);
+    } catch (_) {}
     $('full-photo').src = p.url;
     $('full-photo').alt = p.title || '';
     $('focal').value = String(Math.round(state.focalY * 1000));
@@ -160,17 +141,34 @@
     $('surf-solitaire').checked = (p.surfaces || []).includes('solitaire');
     $('season6-wrap').style.display = (p.banks || []).includes('nations') ? '' : 'none';
     $('photo-meta').textContent = [
-      p.title,
-      (p.banks || []).join(', '),
+      p.place || p.title || 'Sans titre',
       p.width && p.height ? `${p.width}×${p.height}` : '',
-      p.seasonSource ? `source saison: ${p.seasonSource}` : '',
+      p.seasonSource ? `saison: ${p.seasonSource}` : '',
     ]
       .filter(Boolean)
       .join(' · ');
+    const chips = $('photo-chips');
+    chips.textContent = '';
+    for (const bank of p.banks || []) {
+      const c = document.createElement('span');
+      c.className = 'chip';
+      c.textContent = bank.replace('-stock', '');
+      chips.appendChild(c);
+    }
+    if (p.season) {
+      const c = document.createElement('span');
+      c.className = 'chip';
+      c.textContent = seasonLabel(p.season);
+      chips.appendChild(c);
+    }
+    if (p.permanent) {
+      const c = document.createElement('span');
+      c.className = 'chip perm';
+      c.textContent = 'permanente';
+      chips.appendChild(c);
+    }
     $('status').textContent = '';
-    document.querySelectorAll('.card.is-on').forEach((el) => el.classList.remove('is-on'));
-    const card = document.querySelector(`.card[data-key="${CSS.escape(key)}"]`);
-    if (card) card.classList.add('is-on');
+    updateCounter();
     updateOverlays();
     renderMinis();
   }
@@ -192,12 +190,10 @@
     const fy = state.focalY;
     const desk = coverWindow(nw, nh, DESKTOP.w, DESKTOP.h, fy);
     const mob = coverWindow(nw, nh, MOBILE.w, MOBILE.h, fy);
-    const d = $('band-desktop');
-    const m = $('band-mobile');
-    d.style.top = `${desk.topPct}%`;
-    d.style.height = `${desk.heightPct}%`;
-    m.style.top = `${mob.topPct}%`;
-    m.style.height = `${mob.heightPct}%`;
+    $('band-desktop').style.top = `${desk.topPct}%`;
+    $('band-desktop').style.height = `${desk.heightPct}%`;
+    $('band-mobile').style.top = `${mob.topPct}%`;
+    $('band-mobile').style.height = `${mob.heightPct}%`;
   }
 
   function renderMinis() {
@@ -238,20 +234,22 @@
     }
   }
 
-  async function reload() {
+  async function reload(preferKey) {
     const data = await api('/api/photos');
     state.photos = data.photos || [];
     renderStats(data.stats);
-    applyFilters();
-    if (state.selected) {
-      const next = state.photos.find((p) => p.key === state.selected.key);
-      if (next) select(next.key);
-      else {
-        state.selected = null;
-        $('panel-body').hidden = true;
-        $('panel-empty').hidden = false;
-      }
+    if (preferKey) {
+      const hit = state.photos.find((p) => p.key === preferKey);
+      if (hit) state.selected = hit;
+    } else if (!state.selected) {
+      let stored = '';
+      try {
+        stored = sessionStorage.getItem(STORE_KEY) || '';
+      } catch (_) {}
+      const hit = stored && state.photos.find((p) => p.key === stored);
+      if (hit) state.selected = hit;
     }
+    applyFilters();
   }
 
   async function mutate(fn) {
@@ -260,8 +258,9 @@
     $('status').textContent = 'Enregistrement…';
     try {
       const result = await fn();
+      const keep = state.selected && state.selected.key;
+      await reload(keep);
       $('status').textContent = result && result.error ? result.error : 'Enregistré.';
-      await reload();
     } catch (err) {
       $('status').textContent = err.message || String(err);
     } finally {
@@ -281,6 +280,9 @@
   $('f-bank').addEventListener('change', applyFilters);
   $('f-season').addEventListener('change', applyFilters);
   $('f-q').addEventListener('input', applyFilters);
+
+  $('prev-btn').addEventListener('click', () => go(-1));
+  $('next-btn').addEventListener('click', () => go(1));
 
   $('focal').addEventListener('input', () => {
     state.focalY = Number($('focal').value) / 1000;
@@ -320,16 +322,12 @@
 
   $('reject-btn').addEventListener('click', () => {
     if (!state.selected) return;
-    const title = state.selected.title || state.selected.url;
-    if (!window.confirm(`Rejeter définitivement « ${title} » ? Elle ne reviendra pas au prochain maintain.`)) {
-      return;
-    }
     const idx = currentIndex();
+    const next = state.filtered[idx + 1] || state.filtered[idx - 1];
+    const nextKey = next && next.key !== state.selected.key ? next.key : null;
     mutate(async () => {
       const r = await api('/api/reject', { url: state.selected.url });
-      const next = state.filtered[idx + 1] || state.filtered[idx - 1];
-      if (next) state.selected = next;
-      else state.selected = null;
+      state.selected = nextKey ? { key: nextKey } : null;
       return r;
     });
   });
@@ -389,23 +387,15 @@
     const tag = (ev.target && ev.target.tagName) || '';
     if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') {
       if (ev.key !== 'Escape') return;
+      ev.target.blur();
+      return;
     }
-    if (ev.key === 'j' || ev.key === 'ArrowDown') {
+    if (ev.key === 'ArrowRight' || ev.key === 'j' || ev.key === ' ' || ev.key === 'n') {
       ev.preventDefault();
-      const i = currentIndex();
-      const n = state.filtered[i + 1] || state.filtered[0];
-      if (n) {
-        select(n.key);
-        document.querySelector(`.card[data-key="${CSS.escape(n.key)}"]`)?.scrollIntoView({ block: 'nearest' });
-      }
-    } else if (ev.key === 'k' || ev.key === 'ArrowUp') {
+      go(1);
+    } else if (ev.key === 'ArrowLeft' || ev.key === 'k' || ev.key === 'b') {
       ev.preventDefault();
-      const i = currentIndex();
-      const n = state.filtered[i - 1] || state.filtered[state.filtered.length - 1];
-      if (n) {
-        select(n.key);
-        document.querySelector(`.card[data-key="${CSS.escape(n.key)}"]`)?.scrollIntoView({ block: 'nearest' });
-      }
+      go(-1);
     } else if (ev.key === 'r') {
       ev.preventDefault();
       $('reject-btn').click();

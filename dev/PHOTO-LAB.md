@@ -10,6 +10,8 @@ npm run lab:photos
 
 Bind **127.0.0.1** seulement. Pas de lien prod, pas de service worker.
 
+Revue **une photo à la fois**. Compteur `12 / 345` en haut. **Suivante →** (ou `→` / Espace) / **← Précédente**.
+
 ## Actions
 
 | Bouton / touche | Effet |
