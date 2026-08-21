@@ -258,7 +258,11 @@ assert(
   'banque universities : remplacement ULaval (parc ou Vandry)',
 );
 const solitaireHtml = readFileSync(join(root, 'solitaire/index.html'), 'utf8');
+const solitaireBg = readFileSync(join(root, 'solitaire/js/backgrounds-data.js'), 'utf8');
 assert(!solitaireHtml.includes('title: "Snowy Branch"'), 'solitaire: Snowy Branch retiré du pool');
+assert(!solitaireBg.includes('title: "Snowy Branch"'), 'solitaire stock: Snowy Branch retiré');
+assert(solitaireHtml.includes('js/backgrounds-data.js'), 'solitaire charge le stock extrait');
+assert(solitaireHtml.includes('quebec-favorites-backgrounds-data.js'), 'solitaire peut fusionner les favorites');
 assert(solitaireHtml.includes('fullscreen-wallpaper-qc.js'), 'solitaire charge le QC plein écran');
 const pomoHtml = readFileSync(join(root, 'pomo/index.html'), 'utf8');
 assert(pomoHtml.includes('fullscreen-wallpaper-qc.js'), 'pomo charge le QC plein écran');

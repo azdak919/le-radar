@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Labo photo — LE RADAR (local)</title>
+  <link rel="stylesheet" href="./photo-lab.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <strong>Labo photo</strong>
+      <span class="muted">mât · pomo · solitaire — 127.0.0.1</span>
+    </div>
+    <div class="stats" id="stats"></div>
+    <button type="button" class="btn ghost" id="undo-btn" title="Annuler (z)">Annuler</button>
+  </header>
+
+  <div class="filters" role="search">
+    <label>Surface
+      <select id="f-surface">
+        <option value="">Toutes</option>
+        <option value="masthead">Mât</option>
+        <option value="pomo">Pomo</option>
+        <option value="solitaire">Solitaire</option>
+      </select>
+    </label>
+    <label>Banque
+      <select id="f-bank">
+        <option value="">Toutes</option>
+        <option value="masthead">Paysages mât</option>
+        <option value="universities">Campus</option>
+        <option value="pomo">Pomo QC</option>
+        <option value="nations">Nations / Inuit</option>
+        <option value="favorites">Permanentes</option>
+        <option value="pomo-stock">Stock pomo</option>
+        <option value="solitaire-stock">Stock solitaire</option>
+      </select>
+    </label>
+    <label>Saison
+      <select id="f-season">
+        <option value="">Toutes</option>
+        <option value="untagged">Sans saison</option>
+        <option value="printemps">Printemps</option>
+        <option value="ete">Été</option>
+        <option value="automne">Automne</option>
+        <option value="hiver">Hiver</option>
+      </select>
+    </label>
+    <label class="grow">Recherche
+      <input id="f-q" type="search" placeholder="titre, lieu, crédit, fichier…">
+    </label>
+  </div>
+
+  <div class="layout">
+    <section class="grid-wrap">
+      <div id="grid" class="grid" aria-label="Toutes les photos"></div>
+    </section>
+    <aside class="panel" id="panel">
+      <p class="empty" id="panel-empty">Choisis une photo. Raccourcis : j/k, r rejeter, 1–4 saison, p permanente, z annuler.</p>
+      <div id="panel-body" hidden>
+        <div class="crop-stage" id="crop-stage" title="Glisser verticalement pour choisir la zone visible">
+          <img id="full-photo" alt="">
+          <div class="band band--desktop" id="band-desktop" title="Visible au mât bureau"></div>
+          <div class="band band--mobile" id="band-mobile" title="Visible au mât mobile"></div>
+        </div>
+        <p class="legend"><span class="swatch desk"></span> mât bureau &nbsp; <span class="swatch mob"></span> mât mobile — glisser ou slider</p>
+        <label class="focal-row">Hauteur / focale
+          <input id="focal" type="range" min="0" max="1000" value="500">
+          <code id="focal-val">0.50</code>
+        </label>
+        <div class="previews">
+          <figure>
+            <figcaption>Mât bureau 1280×170</figcaption>
+            <div class="mini-frame" id="preview-desktop" data-kind="desktop"></div>
+          </figure>
+          <figure>
+            <figcaption>Mât mobile 390×175</figcaption>
+            <div class="mini-frame" id="preview-mobile" data-kind="mobile"></div>
+          </figure>
+          <figure>
+            <figcaption>Pomo / solitaire téléphone</figcaption>
+            <div class="mini-frame tall" id="preview-phone" data-kind="phone"></div>
+          </figure>
+          <figure>
+            <figcaption>Pomo / solitaire bureau</figcaption>
+            <div class="mini-frame wide" id="preview-full" data-kind="full"></div>
+          </figure>
+        </div>
+        <p class="meta" id="photo-meta"></p>
+        <div class="fields">
+          <label>Crédit (nom)
+            <input id="credit" type="text" autocomplete="off">
+          </label>
+          <label>Lieu
+            <input id="place" type="text" autocomplete="off">
+          </label>
+        </div>
+        <p class="credit-preview" id="credit-preview"></p>
+        <fieldset class="seasons">
+          <legend>Saison (4)</legend>
+          <label><input type="radio" name="season" value=""> —</label>
+          <label><input type="radio" name="season" value="printemps"> Printemps</label>
+          <label><input type="radio" name="season" value="ete"> Été</label>
+          <label><input type="radio" name="season" value="automne"> Automne</label>
+          <label><input type="radio" name="season" value="hiver"> Hiver</label>
+        </fieldset>
+        <fieldset class="seasons" id="season6-wrap">
+          <legend>Saison Nunavik (6) — banque nations</legend>
+          <label><input type="radio" name="season6" value=""> —</label>
+          <label><input type="radio" name="season6" value="ukiuq"> Ukiuq</label>
+          <label><input type="radio" name="season6" value="upingaksaaq"> Upingaksaaq</label>
+          <label><input type="radio" name="season6" value="upingaaq"> Upingaaq</label>
+          <label><input type="radio" name="season6" value="aujaq"> Aujaq</label>
+          <label><input type="radio" name="season6" value="ukiaqsaaq"> Ukiaqsaaq</label>
+          <label><input type="radio" name="season6" value="ukiaq"> Ukiaq</label>
+        </fieldset>
+        <fieldset class="surfaces">
+          <legend>Collection permanente — surfaces</legend>
+          <label><input type="checkbox" id="surf-masthead" value="masthead"> Mât</label>
+          <label><input type="checkbox" id="surf-pomo" value="pomo"> Pomo</label>
+          <label><input type="checkbox" id="surf-solitaire" value="solitaire"> Solitaire</label>
+        </fieldset>
+        <div class="actions">
+          <button type="button" class="btn danger" id="reject-btn">Rejeter</button>
+          <button type="button" class="btn" id="save-meta-btn">Enregistrer crédit / saison</button>
+          <button type="button" class="btn gold" id="pin-btn">Ajouter à la collection permanente</button>
+        </div>
+        <p class="hint" id="status"></p>
+      </div>
+    </aside>
+  </div>
+  <script src="./photo-lab.js"></script>
+</body>
+</html>
