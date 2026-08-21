@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-08-21T16:44:06.458Z",
+  "updatedAt": "2026-08-21T17:25:47.322Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Détour",
-        "source": "schedule",
+        "source": "api-live",
         "start": "13:00",
         "end": "14:00",
         "url": "https://chyz.ca/emission/detour/"
       },
+      "next": {
+        "title": "Crooch Control",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://chyz.ca/emission/crooch-control/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Détour",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T16:43:37.883Z"
+      "checkedAt": "2026-08-21T17:25:11.675Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T16:43:40.200Z"
+      "checkedAt": "2026-08-21T17:25:13.753Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T16:43:43.194Z"
+      "checkedAt": "2026-08-21T17:25:17.043Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Charts & Crafts",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/charts-and-crafts"
-      },
-      "next": {
         "title": "the castle",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/the-castle"
       },
+      "next": {
+        "title": "Spiral Bound",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/spiral-bound"
+      },
       "track": "",
-      "showTitle": "Charts & Crafts",
+      "showTitle": "the castle",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T16:43:57.306Z"
+      "checkedAt": "2026-08-21T17:25:42.591Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T16:43:58.088Z"
+      "checkedAt": "2026-08-21T17:25:43.484Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "17:00",
         "slug": "histoire-de-passer-le-temps"
       },
-      "track": "Namasenda - Heaven",
+      "track": "Cámara Chilena de la Destrucción - Codigo Morse",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-21T16:44:06.107Z"
+      "checkedAt": "2026-08-21T17:25:46.971Z"
     }
   }
 }
