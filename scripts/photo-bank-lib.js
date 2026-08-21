@@ -330,6 +330,43 @@ function materializeLegacySlices(root = DEFAULT_ROOT) {
   return photos.length;
 }
 
+function absorbHarvest(profileId, harvested, root = DEFAULT_ROOT) {
+  const tagMap = {
+    masthead: ['mat'],
+    universities: ['mat', 'campus'],
+    pomo: ['pomo'],
+    nations: ['mat', 'pomo', 'nations'],
+  };
+  const extraTags = tagMap[profileId] || ['mat'];
+  const data = loadPhotos(root);
+  const map = new Map();
+  for (const p of data.photos || []) {
+    if (!p || !p.url) continue;
+    map.set(photoKey(p.url), p);
+  }
+  let added = 0;
+  for (const raw of harvested || []) {
+    if (!raw || !raw.url) continue;
+    const tagged = withTags(raw, extraTags);
+    const k = photoKey(tagged.url);
+    if (map.has(k)) {
+      const cur = map.get(k);
+      const merged = mergeRecord(cur, tagged);
+      merged.tags = [...new Set([...(cur.tags || []), ...(tagged.tags || []), ...extraTags])];
+      if (typeof cur.focalY === 'number') merged.focalY = cur.focalY;
+      map.set(k, merged);
+    } else {
+      if (!tagged.id) tagged.id = photoIdFromUrl(tagged.url);
+      map.set(k, tagged);
+      added += 1;
+    }
+  }
+  const photos = [...map.values()];
+  savePhotos({ photos }, root);
+  materializeLegacySlices(root);
+  return { total: photos.length, added };
+}
+
 module.exports = {
   PHOTOS_REL,
   PHOTOS_JS_REL,
@@ -344,6 +381,7 @@ module.exports = {
   loadPhotos,
   savePhotos,
   mergeLegacyIntoUnified,
+  absorbHarvest,
   filterByTag,
   surfacesFromTags,
   tagsFromSurfaces,

@@ -53,6 +53,7 @@
     "maintain:backgrounds:nations": "npm run maintain:nations",
     "maintain:backgrounds:nations:force": "npm run maintain:nations:force",
     "maintain:backgrounds:all": "npm run maintain:masthead && npm run maintain:universities && npm run maintain:pomo && npm run maintain:nations",
+    "maintain:keep": "node scripts/maintain-quebec-backgrounds.js --update --keep --max-bank=320",
     "pin-background": "node scripts/pin-background.js",
     "lab:photos": "node scripts/photo-lab-server.js",
     "lab:photos:fetch": "node scripts/photo-lab-cache.js",
