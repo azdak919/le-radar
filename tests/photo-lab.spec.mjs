@@ -33,16 +33,20 @@ test.afterAll(async () => {
   if (child && !child.killed) child.kill('SIGTERM');
 });
 
-test('labo photo : grille + bandes mât bureau et mobile', async ({ page }) => {
+test('labo photo : une à la fois, suivant, bandes mât', async ({ page }) => {
   await page.goto(`${BASE}/dev/photo-lab/`, { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('#grid .card').first()).toBeVisible({ timeout: 15000 });
-  await page.locator('#grid .card').first().click();
+  await expect(page.locator('#counter')).toContainText('1 /', { timeout: 15000 });
   await expect(page.locator('#panel-body')).toBeVisible();
+  await expect(page.locator('#next-btn')).toBeVisible();
+  await expect(page.locator('#prev-btn')).toBeVisible();
+  const firstSrc = await page.locator('#full-photo').getAttribute('src');
+  await page.locator('#next-btn').click();
+  await expect(page.locator('#counter')).toContainText('2 /');
+  await expect(page.locator('#full-photo')).not.toHaveAttribute('src', firstSrc);
   await expect(page.locator('#band-desktop')).toBeVisible();
   await expect(page.locator('#band-mobile')).toBeVisible();
   await expect(page.locator('#preview-desktop')).toBeVisible();
   await expect(page.locator('#preview-mobile')).toBeVisible();
-  await expect(page.locator('#focal')).toBeVisible();
   await expect(page.locator('#reject-btn')).toBeVisible();
   await expect(page.locator('#pin-btn')).toBeVisible();
 });
