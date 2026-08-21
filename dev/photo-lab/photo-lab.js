@@ -226,10 +226,11 @@
       .join(' · ');
     const chips = $('photo-chips');
     chips.textContent = '';
-    for (const bank of p.banks || []) {
+    const surfaceLabel = { masthead: 'mât', pomo: 'pomo', solitaire: 'solitaire' };
+    for (const s of p.surfaces || []) {
       const c = document.createElement('span');
       c.className = 'chip';
-      c.textContent = bank.replace('-stock', '');
+      c.textContent = surfaceLabel[s] || s;
       chips.appendChild(c);
     }
     if (p.season) {

@@ -291,6 +291,10 @@ if (require.main === module) {
   server.listen(PORT, HOST, () => {
     console.log(`Labo photo → http://${HOST}:${PORT}/dev/photo-lab/`);
     console.log('127.0.0.1 seulement. Ctrl+C pour quitter.');
+    const cleaned = lab.cleanupDuplicates({ skipSnapshot: true });
+    if (cleaned.removed) {
+      console.log(`Doublons fusionnés / favorites redondantes : −${cleaned.removed}`);
+    }
     startPrefetch();
   });
 }

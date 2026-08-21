@@ -214,6 +214,46 @@ function urlsMatch(a, b) {
   return photoKey(a) === photoKey(b);
 }
 
+function preferUrl(a, b) {
+  const au = String(a || '');
+  const bu = String(b || '');
+  const aq = au.includes('?');
+  const bq = bu.includes('?');
+  if (aq && !bq) return bu;
+  if (!aq && bq) return au;
+  return au.length <= bu.length ? au : bu;
+}
+
+function mergePhotoRecord(a, b) {
+  const out = { ...(a || {}) };
+  for (const [k, v] of Object.entries(b || {})) {
+    if (v == null || v === '') continue;
+    if (k === 'surfaces' && Array.isArray(v)) {
+      out.surfaces = [...new Set([...(out.surfaces || []), ...v])];
+      continue;
+    }
+    if (out[k] == null || out[k] === '') out[k] = v;
+  }
+  if (a && b && a.url && b.url) out.url = preferUrl(a.url, b.url);
+  return out;
+}
+
+function dedupePhotoList(photos) {
+  const map = new Map();
+  const order = [];
+  for (const p of photos || []) {
+    if (!p || !p.url) continue;
+    const k = photoKey(p.url);
+    if (!map.has(k)) {
+      map.set(k, { ...p });
+      order.push(k);
+    } else {
+      map.set(k, mergePhotoRecord(map.get(k), p));
+    }
+  }
+  return order.map((k) => map.get(k));
+}
+
 function createPhotoLab(opts = {}) {
   const root = opts.root || DEFAULT_ROOT;
   const rejectedPath =
@@ -265,6 +305,7 @@ function createPhotoLab(opts = {}) {
       quiet: true,
       returnResult: true,
       checkOnly: false,
+      skipScrub: true,
     });
   }
 
@@ -625,18 +666,29 @@ function createPhotoLab(opts = {}) {
       season6: extra.season6 || photo.season6 || (src && src.season6),
       seasonSource: 'manual',
       seasonConfidence: 1,
-      permanent: extra.permanent !== false,
+      permanent: extra.permanent === true,
+      keep: extra.permanent === true,
       surfaces,
       pinnedAt: new Date().toISOString(),
       note: extra.note || 'Validé manuellement — labo photo',
     };
     const idx = photos.findIndex((p) => p && urlsMatch(p.url, photo.url));
-    if (idx >= 0) photos[idx] = { ...photos[idx], ...entry, permanent: true };
+    if (idx >= 0) photos[idx] = { ...photos[idx], ...entry };
     else photos.push(entry);
     data.photos = photos;
     data.updated = new Date().toISOString();
     writeJson(file, data);
     return entry;
+  }
+
+  function favoriteIsRedundant(fav, surfaces) {
+    if ((surfaces || fav.surfaces || []).includes('solitaire')) return false;
+    let inMaintain = false;
+    eachQcPhoto((bank, _data, _photos, _i, p) => {
+      if (bank.id === 'favorites') return;
+      if (p && urlsMatch(p.url, fav.url)) inMaintain = true;
+    });
+    return inMaintain;
   }
 
   function applyBanks(url, surfacesRaw, extra = {}) {
@@ -658,7 +710,30 @@ function createPhotoLab(opts = {}) {
       }
       writeJsBackgrounds(file, photos, stockHeader(stock.id));
     }
-    if (photo) upsertFavorite({ ...photo, ...extra, url: photo.url }, surfaces, extra);
+    const needFavorite =
+      extra.permanent ||
+      surfaces.includes('solitaire') ||
+      (photo &&
+        !(photo.banks || []).some((b) =>
+          ['masthead', 'pomo', 'universities', 'nations'].includes(b)
+        ) &&
+        surfaces.length > 0);
+    if (needFavorite && photo) {
+      upsertFavorite({ ...photo, ...extra, url: photo.url }, surfaces, extra);
+    } else if (photo) {
+      const favBank = BANKS.find((b) => b.id === 'favorites');
+      const file = qcPath(favBank.jsonRel);
+      const data = loadJson(file, { photos: [] });
+      const before = (data.photos || []).length;
+      data.photos = (data.photos || []).filter((p) => {
+        if (!p || !urlsMatch(p.url, url)) return true;
+        return !favoriteIsRedundant(p, surfaces);
+      });
+      if (data.photos.length !== before) {
+        data.updated = new Date().toISOString();
+        writeJson(file, data);
+      }
+    }
     return surfaces;
   }
 
@@ -726,7 +801,7 @@ function createPhotoLab(opts = {}) {
         });
       }
     }
-    extra.permanent = payload.permanent !== false;
+    extra.permanent = payload.permanent === true;
     extra.note = payload.note;
     extra.title = photo.title;
     extra.photo = { ...photo, ...extra, url: photo.url };
@@ -737,6 +812,7 @@ function createPhotoLab(opts = {}) {
     if (payload.surfaces == null && payload.permanent) {
       upsertFavorite({ ...photo, ...extra }, surfaces.length ? surfaces : ['masthead'], extra);
     }
+    cleanupDuplicates({ skipSnapshot: true, skipSync: true });
     runSync();
     const after = findByUrl(url);
     return {
@@ -747,6 +823,57 @@ function createPhotoLab(opts = {}) {
       season: after && after.season,
       focalY: after && after.focalY,
     };
+  }
+
+  function cleanupDuplicates(opts = {}) {
+    if (!opts.skipSnapshot) snapshotFiles(allMutableFiles());
+    let removed = 0;
+    for (const bank of BANKS) {
+      const file = qcPath(bank.jsonRel);
+      const data = loadQcBank(bank);
+      const before = (data.photos || []).length;
+      data.photos = dedupePhotoList(data.photos || []);
+      removed += before - data.photos.length;
+      if (before !== data.photos.length) {
+        data.updated = new Date().toISOString();
+        writeJson(file, data);
+      }
+    }
+    for (const stock of STOCK) {
+      const file = qcPath(stock.rel);
+      const photos = loadJsBackgrounds(file);
+      const next = dedupePhotoList(photos);
+      removed += photos.length - next.length;
+      if (next.length !== photos.length) {
+        writeJsBackgrounds(file, next, stockHeader(stock.id));
+      }
+    }
+    const favBank = BANKS.find((b) => b.id === 'favorites');
+    const favFile = qcPath(favBank.jsonRel);
+    const fav = loadJson(favFile, { photos: [] });
+    const maintainKeys = new Set();
+    eachQcPhoto((bank, _d, _p, _i, p) => {
+      if (bank.id === 'favorites' || !p || !p.url) return;
+      maintainKeys.add(photoKey(p.url));
+    });
+    const beforeFav = (fav.photos || []).length;
+    fav.photos = (fav.photos || []).filter((p) => {
+      if (!p || !p.url) return false;
+      const surfaces = Array.isArray(p.surfaces) ? p.surfaces : [];
+      if (p.keep) return true;
+      if (surfaces.includes('solitaire') || surfaces.includes('*')) return true;
+      if (!maintainKeys.has(photoKey(p.url))) return true;
+      if (p.note && !/labo photo/i.test(String(p.note))) return true;
+      removed += 1;
+      return false;
+    });
+    fav.photos = dedupePhotoList(fav.photos);
+    if (fav.photos.length !== beforeFav) {
+      fav.updated = new Date().toISOString();
+      writeJson(favFile, fav);
+    }
+    if (!opts.skipSync) runSync();
+    return { ok: true, removed };
   }
 
   function pinPhoto(url, payload = {}) {
@@ -799,6 +926,7 @@ function createPhotoLab(opts = {}) {
     pinPhoto,
     saveAll,
     applyBanks,
+    cleanupDuplicates,
     undo,
     stats,
     thumbUrl,
