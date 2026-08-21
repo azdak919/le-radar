@@ -131,19 +131,19 @@
         <label><input type="radio" name="season6" value="ukiaq"> Ukiaq</label>
       </fieldset>
       <fieldset class="surfaces">
-        <legend>Collection permanente</legend>
+        <legend>Banques (où l’afficher)</legend>
         <label><input type="checkbox" id="surf-masthead" value="masthead"> Mât</label>
         <label><input type="checkbox" id="surf-pomo" value="pomo"> Pomo</label>
         <label><input type="checkbox" id="surf-solitaire" value="solitaire"> Solitaire</label>
       </fieldset>
       <div class="actions">
-        <button type="button" class="btn" id="save-meta-btn" title="Enregistre le cadrage Y, le crédit et la saison">Enregistrer cadrage + crédit + saison</button>
-        <button type="button" class="btn gold" id="pin-btn" title="Copie dans la banque favorites, hors purge des bots">Garder dans la collection permanente</button>
+        <button type="button" class="btn" id="save-meta-btn" title="Enregistre cadrage Y, crédit, lieu, saison et banques">Enregistrer tout</button>
+        <button type="button" class="btn gold" id="pin-btn" title="Même chose, marquée permanente hors purge des bots">Garder dans la collection permanente</button>
         <button type="button" class="btn danger" id="reject-btn" title="Retire la photo de toutes les banques ; elle ne reviendra pas">Retirer définitivement</button>
       </div>
       <p class="actions-help">
-        <strong>Enregistrer</strong> = cadrage Y + nom + lieu + saison.
-        <strong>Garder</strong> = favorite (cases mât / pomo / solitaire).
+        <strong>Enregistrer tout</strong> = cadrage Y, nom, lieu, saison <em>et</em> cases mât / pomo / solitaire.
+        <strong>Garder</strong> = identique + favorite permanente.
         <strong>Retirer</strong> = plus jamais dans le tirage.
       </p>
       <p class="hint" id="status"></p>

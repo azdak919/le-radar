@@ -12,6 +12,7 @@
     selected: null,
     focalY: 0.5,
     focalDirty: false,
+    metaDirty: false,
     busy: false,
   };
 
@@ -137,6 +138,21 @@
     el.classList.toggle('is-dirty', !!dirty);
   }
 
+  function formPayload() {
+    const season = (document.querySelector('input[name="season"]:checked') || {}).value || '';
+    const season6 = (document.querySelector('input[name="season6"]:checked') || {}).value || '';
+    return {
+      url: state.selected.url,
+      focalY: state.focalY,
+      credit: $('credit').value,
+      place: $('place').value,
+      season: season || undefined,
+      season6: season6 || undefined,
+      clearSeason: !season && !season6,
+      surfaces: selectedSurfaces(),
+    };
+  }
+
   async function persistFocalIfDirty() {
     if (!state.focalDirty || !state.selected) return;
     await api('/api/focal', { url: state.selected.url, focalY: state.focalY });
@@ -146,11 +162,22 @@
     setFocalState(false);
   }
 
+  async function persistAllIfDirty() {
+    if (!state.selected) return;
+    if (!state.focalDirty && !state.metaDirty) return;
+    const result = await api('/api/save', formPayload());
+    state.selected.focalY = state.focalY;
+    state.selected.surfaces = result.surfaces || selectedSurfaces();
+    setFocalState(false);
+    state.metaDirty = false;
+    return result;
+  }
+
   async function go(delta) {
     const n = state.filtered.length;
     if (!n) return;
     try {
-      await persistFocalIfDirty();
+      await persistAllIfDirty();
     } catch (err) {
       $('status').textContent = err.message || String(err);
       return;
@@ -185,7 +212,8 @@
     for (const el of document.querySelectorAll('input[name="season6"]')) {
       el.checked = (p.season6 || '') === el.value;
     }
-    $('surf-masthead').checked = (p.surfaces || []).includes('masthead') || !p.surfaces.length;
+    state.metaDirty = false;
+    $('surf-masthead').checked = (p.surfaces || []).includes('masthead');
     $('surf-pomo').checked = (p.surfaces || []).includes('pomo');
     $('surf-solitaire').checked = (p.surfaces || []).includes('solitaire');
     $('season6-wrap').style.display = (p.banks || []).includes('nations') ? '' : 'none';
@@ -322,7 +350,11 @@
     if ($('surf-masthead').checked) out.push('masthead');
     if ($('surf-pomo').checked) out.push('pomo');
     if ($('surf-solitaire').checked) out.push('solitaire');
-    return out.length ? out : ['masthead'];
+    return out;
+  }
+
+  function markMetaDirty() {
+    state.metaDirty = true;
   }
 
   $('f-surface').addEventListener('change', applyFilters);
@@ -349,29 +381,28 @@
   });
 
   $('credit').addEventListener('input', () => {
+    markMetaDirty();
     updateCreditPreview();
     renderMinis();
   });
-  $('place').addEventListener('input', updateCreditPreview);
+  $('place').addEventListener('input', () => {
+    markMetaDirty();
+    updateCreditPreview();
+  });
+  document.querySelectorAll('input[name="season"], input[name="season6"]').forEach((el) => {
+    el.addEventListener('change', markMetaDirty);
+  });
+  ['surf-masthead', 'surf-pomo', 'surf-solitaire'].forEach((id) => {
+    $(id).addEventListener('change', markMetaDirty);
+  });
 
   $('save-meta-btn').addEventListener('click', () => {
     if (!state.selected) return;
-    const season = (document.querySelector('input[name="season"]:checked') || {}).value || '';
-    const season6 = (document.querySelector('input[name="season6"]:checked') || {}).value || '';
     mutate(async () => {
-      await api('/api/focal', { url: state.selected.url, focalY: state.focalY });
+      const result = await api('/api/save', formPayload());
       setFocalState(false);
-      await api('/api/credit', {
-        url: state.selected.url,
-        credit: $('credit').value,
-        place: $('place').value,
-      });
-      return api('/api/season', {
-        url: state.selected.url,
-        season: season || undefined,
-        season6: season6 || undefined,
-        clear: !season && !season6,
-      });
+      state.metaDirty = false;
+      return result;
     });
   });
 
@@ -390,12 +421,10 @@
   $('pin-btn').addEventListener('click', () => {
     if (!state.selected) return;
     mutate(async () => {
-      await persistFocalIfDirty();
-      return api('/api/pin', {
-        url: state.selected.url,
-        surfaces: selectedSurfaces(),
-        focalY: state.focalY,
-      });
+      const result = await api('/api/save', { ...formPayload(), permanent: true });
+      setFocalState(false);
+      state.metaDirty = false;
+      return result;
     });
   });
 

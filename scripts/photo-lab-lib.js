@@ -169,6 +169,11 @@ function writeJsBackgrounds(filePath, photos, header) {
       if (typeof p.position === 'string' && p.position.trim()) {
         lines.push(`    position: ${esc(p.position.trim())}`);
       }
+      if (Array.isArray(p.surfaces)) {
+        lines.push(
+          `    surfaces: [${p.surfaces.map((s) => JSON.stringify(s)).join(', ')}]`
+        );
+      }
       return `  {\n${lines.join(',\n')},\n  }`;
     })
     .join(',\n');
@@ -327,8 +332,13 @@ function createPhotoLab(opts = {}) {
       for (const b of partial.banks || []) {
         if (!g.banks.includes(b)) g.banks.push(b);
       }
-      for (const s of partial.surfaces || []) {
-        if (!g.surfaces.includes(s)) g.surfaces.push(s);
+      if (partial.lockSurfaces) {
+        g.surfaces = (partial.surfaces || []).slice();
+        g.lockSurfaces = true;
+      } else if (!g.lockSurfaces) {
+        for (const s of partial.surfaces || []) {
+          if (!g.surfaces.includes(s)) g.surfaces.push(s);
+        }
       }
       if (partial.stock) g.stock = true;
     }
@@ -356,7 +366,10 @@ function createPhotoLab(opts = {}) {
           nation: p.nation,
           nationId: p.nationId,
           banks: [bank.id],
-          surfaces: derivedSurfaces(bank.id, p),
+          surfaces: Array.isArray(p.surfaces)
+            ? p.surfaces.slice()
+            : derivedSurfaces(bank.id, p),
+          lockSurfaces: Array.isArray(p.surfaces),
         });
       }
     }
@@ -374,7 +387,10 @@ function createPhotoLab(opts = {}) {
           focalY: typeof p.focalY === 'number' ? p.focalY : null,
           position: p.position || '',
           banks: [stock.id],
-          surfaces: stock.surfaces.slice(),
+          surfaces: Array.isArray(p.surfaces)
+            ? p.surfaces.slice()
+            : stock.surfaces.slice(),
+          lockSurfaces: Array.isArray(p.surfaces),
           stock: true,
         });
       }
@@ -567,20 +583,13 @@ function createPhotoLab(opts = {}) {
     return { ok: true, patched: n, focalY: fy };
   }
 
-  function pinPhoto(url, payload = {}) {
-    const photo = findByUrl(url);
-    if (!photo) throw new Error(`Photo introuvable: ${url}`);
-    snapshotFiles(allMutableFiles());
-    if (payload.focalY != null && payload.focalY !== '') {
-      const n = Number(payload.focalY);
-      if (Number.isFinite(n)) photo.focalY = Math.min(1, Math.max(0, n));
-    }
-    const surfacesRaw = payload.surfaces || photo.surfaces || ['masthead', 'pomo'];
-    const surfaces = (Array.isArray(surfacesRaw) ? surfacesRaw : String(surfacesRaw).split(','))
-      .map((s) => String(s).trim())
-      .filter((s) => ['masthead', 'pomo', 'solitaire', '*'].includes(s));
-    if (!surfaces.length) surfaces.push('masthead');
+  function normalizeSurfaces(raw) {
+    const allowed = ['masthead', 'pomo', 'solitaire'];
+    const list = Array.isArray(raw) ? raw : String(raw || '').split(',');
+    return [...new Set(list.map((s) => String(s).trim()).filter((s) => allowed.includes(s)))];
+  }
 
+  function upsertFavorite(photo, surfaces, extra = {}) {
     const favBank = BANKS.find((b) => b.id === 'favorites');
     const file = qcPath(favBank.jsonRel);
     const data = loadJson(file, {
@@ -597,24 +606,29 @@ function createPhotoLab(opts = {}) {
       id: (src && src.id) || photoIdFromUrl(photo.url),
       url: photo.url,
       link: photo.link || (src && src.link) || photo.url,
-      title: photo.title || (src && src.title) || 'Favorite',
-      credit: photo.credit || (src && src.credit) || '',
+      title: extra.title || photo.title || (src && src.title) || 'Favorite',
+      credit: extra.credit != null ? extra.credit : photo.credit || (src && src.credit) || '',
       license: photo.license || (src && src.license) || '',
       width: photo.width || (src && src.width),
       height: photo.height || (src && src.height),
       aspect: src && src.aspect,
       mime: src && src.mime,
-      place: photo.place || (src && src.place) || '',
-      focalY: photo.focalY != null ? photo.focalY : src && src.focalY,
+      place: extra.place != null ? extra.place : photo.place || (src && src.place) || '',
+      focalY:
+        extra.focalY != null
+          ? extra.focalY
+          : photo.focalY != null
+            ? photo.focalY
+            : src && src.focalY,
       position: photo.position || (src && src.position),
-      season: photo.season || (src && src.season),
-      season6: photo.season6 || (src && src.season6),
+      season: extra.season || photo.season || (src && src.season),
+      season6: extra.season6 || photo.season6 || (src && src.season6),
       seasonSource: 'manual',
       seasonConfidence: 1,
-      permanent: true,
+      permanent: extra.permanent !== false,
       surfaces,
       pinnedAt: new Date().toISOString(),
-      note: payload.note || 'Validé manuellement — labo photo',
+      note: extra.note || 'Validé manuellement — labo photo',
     };
     const idx = photos.findIndex((p) => p && urlsMatch(p.url, photo.url));
     if (idx >= 0) photos[idx] = { ...photos[idx], ...entry, permanent: true };
@@ -622,8 +636,121 @@ function createPhotoLab(opts = {}) {
     data.photos = photos;
     data.updated = new Date().toISOString();
     writeJson(file, data);
+    return entry;
+  }
+
+  function applyBanks(url, surfacesRaw, extra = {}) {
+    const surfaces = normalizeSurfaces(surfacesRaw);
+    const photo = extra.photo || findByUrl(url);
+    patchQcByUrl(url, (p) => {
+      p.surfaces = surfaces.slice();
+    });
+    for (const stock of STOCK) {
+      const file = qcPath(stock.rel);
+      const photos = loadJsBackgrounds(file);
+      const want = stock.surfaces[0];
+      const idx = photos.findIndex((p) => p && urlsMatch(p.url, url));
+      if (idx < 0) continue;
+      if (surfaces.includes(want)) {
+        photos[idx].surfaces = surfaces.slice();
+      } else {
+        photos.splice(idx, 1);
+      }
+      writeJsBackgrounds(file, photos, stockHeader(stock.id));
+    }
+    if (photo) upsertFavorite({ ...photo, ...extra, url: photo.url }, surfaces, extra);
+    return surfaces;
+  }
+
+  function saveAll(url, payload = {}) {
+    const photo = findByUrl(url);
+    if (!photo) throw new Error(`Photo introuvable: ${url}`);
+    snapshotFiles(allMutableFiles());
+    const extra = {};
+    if (payload.focalY != null && payload.focalY !== '') {
+      const n = Number(payload.focalY);
+      if (!Number.isFinite(n)) throw new Error('focalY invalide');
+      extra.focalY = Math.min(1, Math.max(0, n));
+      patchQcByUrl(photo.url, (p) => {
+        p.focalY = extra.focalY;
+      });
+      patchStockByUrl(photo.url, (p) => {
+        p.focalY = extra.focalY;
+      });
+    }
+    if (payload.credit != null) extra.credit = String(payload.credit).trim();
+    if (payload.place != null) extra.place = String(payload.place).trim();
+    if (extra.credit != null || extra.place != null) {
+      patchQcByUrl(photo.url, (p) => {
+        if (extra.credit != null) p.credit = extra.credit;
+        if (extra.place != null) p.place = extra.place;
+      });
+      patchStockByUrl(photo.url, (p) => {
+        if (extra.credit != null) p.credit = extra.credit;
+      });
+    }
+    if (payload.clearSeason) {
+      extra.season = '';
+      extra.season6 = '';
+      patchQcByUrl(photo.url, (p) => {
+        delete p.season;
+        delete p.season6;
+        delete p.seasonSource;
+      });
+    } else {
+      if (payload.season) {
+        if (!SEASON4.includes(payload.season)) {
+          throw new Error(`Saison 4 inconnue: ${payload.season}`);
+        }
+        extra.season = payload.season;
+      }
+      if (payload.season6) {
+        if (!SEASON6.includes(payload.season6)) {
+          throw new Error(`Saison 6 inconnue: ${payload.season6}`);
+        }
+        extra.season6 = payload.season6;
+      }
+      if (extra.season || extra.season6) {
+        patchQcByUrl(photo.url, (p) => {
+          if (extra.season) {
+            p.season = extra.season;
+            p.seasonSource = 'manual';
+            p.seasonConfidence = 1;
+            p.seasonDetectedAt = new Date().toISOString();
+          }
+          if (extra.season6) {
+            p.season6 = extra.season6;
+            p.seasonSource = 'manual';
+            p.seasonConfidence = 1;
+          }
+        });
+      }
+    }
+    extra.permanent = payload.permanent !== false;
+    extra.note = payload.note;
+    extra.title = photo.title;
+    extra.photo = { ...photo, ...extra, url: photo.url };
+    const surfaces =
+      payload.surfaces != null
+        ? applyBanks(photo.url, payload.surfaces, extra)
+        : (photo.surfaces || []).slice();
+    if (payload.surfaces == null && payload.permanent) {
+      upsertFavorite({ ...photo, ...extra }, surfaces.length ? surfaces : ['masthead'], extra);
+    }
     runSync();
-    return { ok: true, surfaces, title: entry.title, count: photos.length };
+    const after = findByUrl(url);
+    return {
+      ok: true,
+      surfaces: after ? after.surfaces : surfaces,
+      credit: after && after.credit,
+      place: after && after.place,
+      season: after && after.season,
+      focalY: after && after.focalY,
+    };
+  }
+
+  function pinPhoto(url, payload = {}) {
+    return saveAll(url, { ...payload, permanent: true });
   }
 
   function undo() {
@@ -670,6 +797,8 @@ function createPhotoLab(opts = {}) {
     setCredit,
     setFocalY,
     pinPhoto,
+    saveAll,
+    applyBanks,
     undo,
     stats,
     thumbUrl,

@@ -46,6 +46,10 @@ function _mergeQuebecSourceBank(source, cultureTag, flagKey, logLabel) {
   let added = 0;
   for (const p of source) {
     if (!p || !p.url || seen.has(p.url)) continue;
+    if (Array.isArray(p.surfaces)) {
+      if (!p.surfaces.length) continue;
+      if (!p.surfaces.includes('pomo') && !p.surfaces.includes('*')) continue;
+    }
     // Même QC plein écran que le stock Unsplash (macros / branches givrées)
     if (
       typeof FullscreenWallpaperQc !== 'undefined' &&
@@ -119,6 +123,18 @@ function _mergeQuebecPomoBanks() {
 }
 
 _mergeQuebecPomoBanks();
+
+if (typeof BACKGROUNDS !== 'undefined' && Array.isArray(BACKGROUNDS)) {
+  const kept = BACKGROUNDS.filter((p) => {
+    if (!p || !Array.isArray(p.surfaces)) return true;
+    if (!p.surfaces.length) return false;
+    return p.surfaces.includes('pomo') || p.surfaces.includes('*');
+  });
+  if (kept.length !== BACKGROUNDS.length) {
+    BACKGROUNDS.length = 0;
+    BACKGROUNDS.push(...kept);
+  }
+}
 
 // QC plein écran pomo/solitaire (pas le mât) — retire macros / hard-bans
 if (typeof FullscreenWallpaperQc !== 'undefined') {
