@@ -1,23 +1,23 @@
 {
-  "updated": "2026-08-21T04:10:45.852Z",
+  "updated": "2026-08-21T05:56:19.104Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 128,
+  "cited": 129,
   "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 20,
-  "updatedCount": 8,
-  "citedNew": 4,
-  "fallbackNew": 16,
+  "checked": 21,
+  "updatedCount": 9,
+  "citedNew": 6,
+  "fallbackNew": 15,
   "samples": [
     {
       "title": "À la découverte du matcha et du kohakutou",
       "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
-      "cited": false,
-      "method": null
+      "credit": "Photo : ItSarahGendreauSimoneau",
+      "cited": true,
+      "method": "filename-credit"
     },
     {
       "title": "De la résistance au courage",
@@ -27,13 +27,6 @@
       "method": null
     },
     {
-      "title": "L’épidémie de la nonchalance",
-      "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
       "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
       "credit": "Photo : Félix Fournier",
@@ -41,16 +34,23 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Des initiatives qui rassemblent",
+      "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Elie Nguyen",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
+      "title": "Ce que nous devons aux femmes",
       "source": "Le Délit",
-      "credit": "Photo : Toscane Ralaimongo",
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
+    },
+    {
+      "title": "Les femmes MAGA au service du patriarcat",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -65,6 +65,13 @@
       "title": "The apprenticeship of public voice",
       "source": "The Link",
       "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
       "cited": false,
       "method": null
     }
