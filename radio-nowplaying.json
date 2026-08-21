@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-21T09:33:27.147Z",
+  "updatedAt": "2026-08-21T10:26:53.424Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T09:32:59.844Z"
+      "checkedAt": "2026-08-21T10:26:23.083Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T09:33:02.157Z"
+      "checkedAt": "2026-08-21T10:26:25.345Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T09:33:05.376Z"
+      "checkedAt": "2026-08-21T10:26:28.247Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "02:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Wake up Folks!",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/wake-up-folks"
       },
+      "next": {
+        "title": "CJLO News Hour",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/cjlo-news-hour"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Wake up Folks!",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T09:33:19.638Z"
+      "checkedAt": "2026-08-21T10:26:42.946Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T09:33:20.644Z"
+      "checkedAt": "2026-08-21T10:26:43.714Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Dua Saleh - Glow (feat. Bon Iver)",
+      "track": "Boards of Canada - Prophecy At 1420 MHz",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-21T09:33:26.797Z"
+      "checkedAt": "2026-08-21T10:26:53.073Z"
     }
   }
 }
