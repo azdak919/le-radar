@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20T23:50:13.279Z",
+  "updatedAt": "2026-08-21T01:06:20.305Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T23:49:49.260Z"
+      "checkedAt": "2026-08-21T01:05:50.874Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La rumba",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/la-rumba"
-      },
-      "next": {
         "title": "La courbe 2.0",
         "source": "schedule",
         "start": "20:00",
         "end": "22:00",
         "url": "https://cism893.ca/emissions/la-courbe-2-0"
       },
+      "next": {
+        "title": "Mix anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "La rumba",
+      "showTitle": "La courbe 2.0",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T23:49:51.133Z"
+      "checkedAt": "2026-08-21T01:05:53.402Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Grey Matters",
+        "title": "Chaud Pour/Francis",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "21:00",
+        "end": "23:00"
       },
       "next": {
-        "title": "Other Worlds on Earth/Dromostexte",
+        "title": "You Need A Heart To Live 2",
         "source": "api-live",
-        "start": "20:00",
-        "end": "21:00"
+        "start": "23:00",
+        "end": "01:00"
       },
       "track": "",
-      "showTitle": "Grey Matters",
+      "showTitle": "Chaud Pour/Francis",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,73 +81,79 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T23:49:53.266Z"
+      "checkedAt": "2026-08-21T01:05:56.526Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "I Think You Might Like This",
+        "title": "The 514",
         "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/the-514"
       },
       "next": {
-        "title": "Maiden Voyage",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/maiden-voyage"
+        "start": "22:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "I Think You Might Like This",
+      "showTitle": "The 514",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T23:50:07.022Z"
+      "checkedAt": "2026-08-21T01:06:10.454Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "À nous le futur",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "After 5@8",
         "source": "schedule-live",
         "start": "20:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "À nous le futur",
+      "showTitle": "After 5@8",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-20T23:50:07.608Z"
+      "checkedAt": "2026-08-21T01:06:11.465Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le grand maître des jeux",
         "source": "api-live",
         "start": "21:00",
         "end": "22:30",
         "slug": "le-maitre-des-jeux"
       },
-      "track": "Angelique Kidjo - No Stopping Us",
-      "showTitle": "",
+      "next": {
+        "title": "Opération beurre de cinoche",
+        "source": "schedule",
+        "start": "11:30",
+        "end": "12:30",
+        "url": "https://www.choq.ca/emissions/box-sophisme"
+      },
+      "track": "Dua Saleh - Callate",
+      "showTitle": "Le grand maître des jeux",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -157,7 +163,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-20T23:50:12.929Z"
+      "checkedAt": "2026-08-21T01:06:19.954Z"
     }
   }
 }
