@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-21T22:50:24.605Z",
+  "updatedAt": "2026-08-21T23:20:59.446Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,59 +21,60 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T22:49:59.183Z"
+      "checkedAt": "2026-08-21T23:20:34.045Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ok Doomer",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/ok-doomer"
-      },
-      "next": {
         "title": "Mix électro",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/mix-electro"
       },
+      "next": {
+        "title": "Rave de nuit",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "https://cism893.ca/emissions/rave-de-nuit"
+      },
       "track": "",
-      "showTitle": "Ok Doomer",
+      "showTitle": "Mix électro",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T22:50:01.210Z"
+      "checkedAt": "2026-08-21T23:20:35.864Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Café",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Listening to Latin America: Blanca-Victoria",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Macondo",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Café",
+      "showTitle": "Listening to Latin America: Blanca-Victoria",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T22:50:03.699Z"
+      "checkedAt": "2026-08-21T23:20:41.708Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -100,32 +101,32 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T22:50:17.817Z"
+      "checkedAt": "2026-08-21T23:20:55.757Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "La récréation",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Enfin vendredi",
         "source": "schedule-live",
         "start": "19:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Mangue, Goyave et Reggae",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "La récréation",
+      "showTitle": "Enfin vendredi",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T22:50:18.474Z"
+      "checkedAt": "2026-08-21T23:20:56.434Z"
     },
     "choq": {
       "id": "choq",
@@ -138,7 +139,7 @@
         "end": "00:00",
         "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
       },
-      "track": "Downtown Boys - No Me Jodas",
+      "track": "Monk.E x DJ Manifest - Boss lady",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -150,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-21T22:50:24.255Z"
+      "checkedAt": "2026-08-21T23:20:59.095Z"
     }
   }
 }
