@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-21T03:47:58.337Z",
+  "updatedAt": "2026-08-21T04:34:40.168Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T03:47:32.293Z"
+      "checkedAt": "2026-08-21T04:34:16.339Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "Rebelles soniques (reprise)",
         "source": "schedule",
         "start": "00:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/rebelles-soniques"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "Rebelles soniques (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T03:47:34.526Z"
+      "checkedAt": "2026-08-21T04:34:18.151Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T03:47:37.273Z"
+      "checkedAt": "2026-08-21T04:34:20.623Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "Finally Midnight",
         "source": "schedule-live",
         "start": "00:00",
         "end": "02:00",
         "url": "http://www.cjlo.com/shows/finally-midnight"
       },
+      "next": {
+        "title": "CJLO Late Night",
+        "source": "schedule-live",
+        "start": "02:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Finally Midnight",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T03:47:51.117Z"
+      "checkedAt": "2026-08-21T04:34:34.772Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "After 5@8",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "After 5@8",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T03:47:51.953Z"
+      "checkedAt": "2026-08-21T04:34:35.426Z"
     },
     "choq": {
       "id": "choq",
@@ -134,24 +134,23 @@
       "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:30",
         "end": "12:30",
-        "url": "https://www.choq.ca/emissions/box-sophisme"
+        "slug": "box-sophisme"
       },
-      "track": "Le Belladone - L",
+      "track": "Kaatayra - Caminhos de Agua",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-21T03:47:57.986Z"
+      "checkedAt": "2026-08-21T04:34:39.818Z"
     }
   }
 }
