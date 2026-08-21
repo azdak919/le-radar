@@ -8,6 +8,12 @@ npm run lab:photos
 # → http://127.0.0.1:8777/dev/photo-lab/
 ```
 
+Au démarrage, le labo **télécharge les photos en cache local** (`dev/photo-lab/cache/`, gitignoré). Le bandeau « Cache 120/343… » indique l’avancement. Pour tout précharger d’un coup :
+
+```bash
+npm run lab:photos:fetch
+```
+
 Bind **127.0.0.1** seulement. Pas de lien prod, pas de service worker.
 
 Revue **une photo à la fois**. Compteur `12 / 345` en haut. **Suivante →** (ou `→` / Espace) / **← Précédente**.

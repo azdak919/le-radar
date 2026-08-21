@@ -40,6 +40,23 @@ assert.match(
   /w=640/,
 );
 
+const {
+  cacheId,
+  candidateUrls,
+  findCached,
+} = require('../scripts/photo-lab-cache.js');
+assert.equal(
+  cacheId('https://images.unsplash.com/photo-abc123?w=1920'),
+  cacheId('https://images.unsplash.com/photo-abc123?w=400'),
+  'cacheId ignore les params Unsplash',
+);
+const commons = 'https://upload.wikimedia.org/wikipedia/commons/b/b9/Wanderer_above_the_sea_of_fog.jpg';
+assert.ok(
+  candidateUrls(commons).some((u) => /1600px-/.test(u)),
+  'cache : thumb Commons 1600px en premier',
+);
+assert.equal(findCached('/tmp/does-not-exist-photo-lab', 'nope'), null);
+
 const root = mkdtempSync(join(tmpdir(), 'photo-lab-'));
 function bank(rel, photos) {
   const file = join(root, rel);
