@@ -8,7 +8,7 @@
      • Anything else same-origin under scope → stale-while-revalidate
    ═══════════════════════════════════════════════════════ */
 
-const SHELL_CACHE  = 'pomo-shell-v110';
+const SHELL_CACHE  = 'pomo-shell-v113';
 const FONT_CACHE   = 'pomo-fonts-v26';
 const CACHE_PREFIX = 'pomo-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];
