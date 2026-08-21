@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-21T07:16:05.331Z",
+  "updated": "2026-08-21T09:07:40.703Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 129,
-  "pending": 12,
+  "cited": 128,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 2,
-  "citedNew": 0,
-  "fallbackNew": 14,
+  "checked": 20,
+  "updatedCount": 8,
+  "citedNew": 4,
+  "fallbackNew": 16,
   "samples": [
     {
       "title": "À la découverte du matcha et du kohakutou",
@@ -23,6 +23,48 @@
       "title": "De la résistance au courage",
       "source": "Le Collectif",
       "credit": "Crédit photo : Le Collectif",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "L’épidémie de la nonchalance",
+      "source": "Le Délit",
+      "credit": "Photo : Elie Nguyen",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Des initiatives qui rassemblent",
+      "source": "Le Délit",
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "source": "Le Délit",
+      "credit": "Photo : Toscane Ralaimongo",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Inside Mile End Kicks",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Joe Fuda",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "The apprenticeship of public voice",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
       "cited": false,
       "method": null
     }
