@@ -1,21 +1,30 @@
 {
-  "updated": "2026-08-21T17:58:50.287Z",
+  "updated": "2026-08-21T19:38:48.409Z",
   "total": 185,
   "pool": 58,
   "incomplete": 8,
-  "withLeadExcerpt": 82,
+  "withLeadExcerpt": 83,
   "candidates": 8,
-  "enriched": 1,
-  "failed": 1,
+  "enriched": 2,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
       "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
+      "score": 96,
+      "chars": 295,
+      "sample": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez r",
+      "changed": true
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
+      "ok": true,
+      "score": 100,
+      "chars": 396,
+      "sample": "« L’Université McGill est à la recherche de patrouilleurs dynamiques et engagés pour assurer la sécu",
       "changed": true
     },
     {

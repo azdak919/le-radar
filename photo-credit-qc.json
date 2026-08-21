@@ -1,24 +1,17 @@
 {
-  "updated": "2026-08-21T18:05:36.314Z",
+  "updated": "2026-08-21T19:44:51.199Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 129,
-  "pending": 13,
+  "cited": 131,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 9,
-  "citedNew": 6,
-  "fallbackNew": 15,
+  "checked": 22,
+  "updatedCount": 10,
+  "citedNew": 9,
+  "fallbackNew": 13,
   "samples": [
-    {
-      "title": "Les rendez-vous gourmands de la région cet automne",
-      "source": "Le Collectif",
-      "credit": "Photo : Les Comptonales",
-      "cited": true,
-      "method": "body-tail"
-    },
     {
       "title": "À la découverte du matcha et du kohakutou",
       "source": "Le Collectif",
@@ -32,6 +25,27 @@
       "credit": "Crédit photo : Le Collectif",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Sois belle et tais-toi",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré/Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
     },
     {
       "title": "L’épidémie de la nonchalance",
@@ -48,18 +62,11 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Des initiatives qui rassemblent",
-      "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "source": "Le Délit",
-      "credit": "Photo : Toscane Ralaimongo",
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "via-attribution"
     },
     {
       "title": "Inside Mile End Kicks",
@@ -71,9 +78,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
