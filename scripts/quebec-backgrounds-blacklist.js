@@ -19,6 +19,11 @@
 
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
+
+const REJECTED_JSON = path.join(__dirname, '..', 'data', 'quebec-backgrounds-rejected.json');
+
 /**
  * @typedef {{ fragments: string[], reason: string, note?: string }} HardBanEntry
  */
@@ -342,6 +347,20 @@ const HARD_BANNED = [
   },
 ];
 
+function loadLabRejectedEntries() {
+  try {
+    if (!fs.existsSync(REJECTED_JSON)) return [];
+    const data = JSON.parse(fs.readFileSync(REJECTED_JSON, 'utf8'));
+    return Array.isArray(data.entries) ? data.entries : [];
+  } catch {
+    return [];
+  }
+}
+
+function allBanEntries() {
+  return HARD_BANNED.concat(loadLabRejectedEntries());
+}
+
 /**
  * @param {{ id?: string, url?: string, link?: string, title?: string }} entry
  * @returns {{ reason: string, fragment: string } | null}
@@ -353,11 +372,11 @@ function matchHardBanned(entry) {
     .join(' ')
     .toLowerCase();
   if (!hay) return null;
-  for (const ban of HARD_BANNED) {
+  for (const ban of allBanEntries()) {
     for (const frag of ban.fragments || []) {
       if (!frag) continue;
       if (hay.includes(String(frag).toLowerCase())) {
-        return { reason: ban.reason, fragment: frag };
+        return { reason: ban.reason || 'user_curated_photo_rejected', fragment: frag };
       }
     }
   }
@@ -370,11 +389,13 @@ function isHardBanned(entry) {
 
 /** Fragments plats (debug / grep / docs). */
 function allFragments() {
-  return HARD_BANNED.flatMap((b) => b.fragments || []);
+  return allBanEntries().flatMap((b) => b.fragments || []);
 }
 
 module.exports = {
   HARD_BANNED,
+  REJECTED_JSON,
+  loadLabRejectedEntries,
   matchHardBanned,
   isHardBanned,
   allFragments,

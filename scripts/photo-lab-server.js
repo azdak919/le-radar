@@ -1,0 +1,185 @@
+#!/usr/bin/env node
+/**
+ * Labo photo local — 127.0.0.1 seulement.
+ *
+ *   npm run lab:photos
+ *   → http://127.0.0.1:8777/dev/photo-lab/
+ */
+
+'use strict';
+
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+const { createPhotoLab } = require('./photo-lab-lib');
+
+const ROOT = path.join(__dirname, '..');
+const HOST = '127.0.0.1';
+const PORT = Number(process.env.PHOTO_LAB_PORT || 8777);
+const lab = createPhotoLab({ root: ROOT });
+
+const MIME = {
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
+  '.svg': 'image/svg+xml',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.ico': 'image/x-icon',
+  '.woff2': 'font/woff2',
+  '.map': 'application/json',
+};
+
+function isLocalHost(hostHeader) {
+  const h = String(hostHeader || '').split(':')[0];
+  return h === '127.0.0.1' || h === 'localhost';
+}
+
+function send(res, status, body, headers = {}) {
+  const payload = Buffer.isBuffer(body) ? body : Buffer.from(body == null ? '' : String(body));
+  res.writeHead(status, {
+    'Cache-Control': 'no-store',
+    'X-Photo-Lab': 'local',
+    ...headers,
+    'Content-Length': payload.length,
+  });
+  res.end(payload);
+}
+
+function sendJson(res, status, obj) {
+  send(res, status, JSON.stringify(obj), {
+    'Content-Type': 'application/json; charset=utf-8',
+  });
+}
+
+function readBody(req, limit = 1_000_000) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    let n = 0;
+    req.on('data', (c) => {
+      n += c.length;
+      if (n > limit) {
+        reject(new Error('body too large'));
+        req.destroy();
+        return;
+      }
+      chunks.push(c);
+    });
+    req.on('end', () => {
+      const raw = Buffer.concat(chunks).toString('utf8');
+      if (!raw) {
+        resolve({});
+        return;
+      }
+      try {
+        resolve(JSON.parse(raw));
+      } catch (err) {
+        reject(err);
+      }
+    });
+    req.on('error', reject);
+  });
+}
+
+function safeStatic(urlPath) {
+  const decoded = decodeURIComponent(urlPath.split('?')[0]);
+  let rel = decoded === '/' ? '/dev/photo-lab/index.html' : decoded;
+  if (rel === '/dev/photo-lab' || rel === '/dev/photo-lab/') {
+    rel = '/dev/photo-lab/index.html';
+  }
+  const abs = path.resolve(ROOT, `.${rel}`);
+  if (!abs.startsWith(ROOT)) return null;
+  if (!fs.existsSync(abs) || !fs.statSync(abs).isFile()) return null;
+  return abs;
+}
+
+async function handleApi(req, res, url) {
+  const route = url.pathname.replace(/\/+$/, '') || '/';
+  try {
+    if (req.method === 'GET' && route === '/api/photos') {
+      const photos = lab.listPhotos();
+      return sendJson(res, 200, { photos, stats: lab.stats(photos) });
+    }
+    if (req.method === 'GET' && route === '/api/stats') {
+      return sendJson(res, 200, lab.stats());
+    }
+    if (req.method === 'GET' && route === '/api/meta') {
+      return sendJson(res, 200, {
+        frames: lab.frames,
+        seasons4: lab.SEASON4,
+        seasons6: lab.SEASON6,
+      });
+    }
+    if (req.method === 'POST' && route === '/api/reject') {
+      const body = await readBody(req);
+      return sendJson(res, 200, lab.rejectPhoto(body.url, body.note));
+    }
+    if (req.method === 'POST' && route === '/api/season') {
+      const body = await readBody(req);
+      return sendJson(res, 200, lab.setSeason(body.url, body));
+    }
+    if (req.method === 'POST' && route === '/api/credit') {
+      const body = await readBody(req);
+      return sendJson(res, 200, lab.setCredit(body.url, body));
+    }
+    if (req.method === 'POST' && route === '/api/focal') {
+      const body = await readBody(req);
+      return sendJson(res, 200, lab.setFocalY(body.url, body.focalY));
+    }
+    if (req.method === 'POST' && route === '/api/pin') {
+      const body = await readBody(req);
+      return sendJson(res, 200, lab.pinPhoto(body.url, body));
+    }
+    if (req.method === 'POST' && route === '/api/undo') {
+      return sendJson(res, 200, lab.undo());
+    }
+    return sendJson(res, 404, { error: 'not found' });
+  } catch (err) {
+    return sendJson(res, 400, { error: err.message || String(err) });
+  }
+}
+
+const server = http.createServer(async (req, res) => {
+  if (!isLocalHost(req.headers.host)) {
+    send(res, 403, 'localhost only');
+    return;
+  }
+  let url;
+  try {
+    url = new URL(req.url || '/', `http://${HOST}:${PORT}`);
+  } catch {
+    send(res, 400, 'bad url');
+    return;
+  }
+
+  if (url.pathname.startsWith('/api/')) {
+    await handleApi(req, res, url);
+    return;
+  }
+
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
+    send(res, 405, 'method not allowed');
+    return;
+  }
+
+  const file = safeStatic(url.pathname);
+  if (!file) {
+    send(res, 404, 'not found');
+    return;
+  }
+  const ext = path.extname(file).toLowerCase();
+  const buf = fs.readFileSync(file);
+  send(res, 200, buf, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
+});
+
+if (require.main === module) {
+  server.listen(PORT, HOST, () => {
+    console.log(`Labo photo → http://${HOST}:${PORT}/dev/photo-lab/`);
+    console.log('127.0.0.1 seulement. Ctrl+C pour quitter.');
+  });
+}
+
+module.exports = { server, PORT, HOST };

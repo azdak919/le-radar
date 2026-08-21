@@ -81,7 +81,7 @@ function writeJs(photos) {
  * Ne pas écraser via maintain-quebec-backgrounds (ménage / purge).
  * Ajouts : signalement manuel ou node scripts/pin-background.js
  *
- * Consommateurs : mât (+ pomo si surfaces inclut « pomo »)
+ * Consommateurs : mât (+ pomo / solitaire si surfaces les inclut)
  * permanent: true → immunisé contre la purge des bots
  */
 `;
