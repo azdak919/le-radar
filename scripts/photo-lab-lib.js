@@ -13,6 +13,7 @@ const crypto = require('crypto');
 const vm = require('vm');
 const { BANKS, syncBanks } = require('./sync-quebec-backgrounds');
 const { sanitizeCommonsCredit, placeFromPhotoMeta } = require('./commons-credit-lib');
+const photosLib = require('./quebec-photos-lib');
 
 const DEFAULT_ROOT = path.join(__dirname, '..');
 const SEASON4 = ['printemps', 'ete', 'automne', 'hiver'];
@@ -294,11 +295,39 @@ function createPhotoLab(opts = {}) {
     return STOCK.map((s) => qcPath(s.rel));
   }
 
+  function photosFile() {
+    return qcPath(photosLib.PHOTOS_REL);
+  }
+
   function allMutableFiles() {
-    return qcFiles().concat(stockFiles()).concat([rejectedPath]);
+    return qcFiles()
+      .concat(stockFiles())
+      .concat([rejectedPath, photosFile(), qcPath(photosLib.PHOTOS_JS_REL)]);
+  }
+
+  function ensureUnified() {
+    if (!fs.existsSync(photosFile())) {
+      photosLib.mergeLegacyIntoUnified(root);
+    }
+  }
+
+  function patchUnified(url, mutator) {
+    ensureUnified();
+    const data = photosLib.loadPhotos(root);
+    let n = 0;
+    for (const p of data.photos || []) {
+      if (!p || !urlsMatch(p.url, url)) continue;
+      mutator(p);
+      n += 1;
+    }
+    if (n) photosLib.savePhotos(data, root);
+    return n;
   }
 
   function runSync() {
+    if (fs.existsSync(photosFile())) {
+      photosLib.materializeLegacySlices(root);
+    }
     if (!doSync) return { skipped: true };
     return syncBanks({
       root,
@@ -330,7 +359,55 @@ function createPhotoLab(opts = {}) {
     }
   }
 
+  function listPhotosFromUnified() {
+    ensureUnified();
+    const data = photosLib.loadPhotos(root);
+    return (data.photos || [])
+      .filter((p) => p && p.url)
+      .map((p) => {
+        const tags = Array.isArray(p.tags) ? p.tags.slice() : [];
+        const surfaces = photosLib.surfacesFromTags(tags);
+        return {
+          key: photosLib.photoKey(p.url),
+          url: p.url,
+          id: p.id || photoIdFromUrl(p.url),
+          thumb: thumbUrl(p.url, 640),
+          title: p.title || '',
+          credit: sanitizeCommonsCredit(p.credit || '') || p.credit || '',
+          place: p.place || placeFromPhotoMeta(p.title || '', p.description || ''),
+          license: p.license || '',
+          link: p.link || '',
+          season: p.season || null,
+          season6: p.season6 || null,
+          seasonSource: p.seasonSource || null,
+          focalY: typeof p.focalY === 'number' ? p.focalY : null,
+          position: p.position || '',
+          permanent: p.permanent === true || photosLib.hasTag(p, 'favori'),
+          width: p.width,
+          height: p.height,
+          faces: p.faces,
+          nation: p.nation,
+          nationId: p.nationId,
+          banks: tags.slice(),
+          surfaces,
+          tags,
+          stock: false,
+        };
+      })
+      .sort((a, b) =>
+        `${a.place || ''} ${a.title || ''}`.localeCompare(`${b.place || ''} ${b.title || ''}`, 'fr')
+      );
+  }
+
   function listPhotos() {
+    if (fs.existsSync(photosFile()) || fs.existsSync(qcPath('data/quebec-backgrounds.json'))) {
+      try {
+        const unified = listPhotosFromUnified();
+        if (unified.length) return unified;
+      } catch {
+        /* fallback héritage */
+      }
+    }
     const groups = new Map();
 
     function touch(url, partial) {
@@ -523,6 +600,12 @@ function createPhotoLab(opts = {}) {
     const photo = findByUrl(url);
     if (!photo) throw new Error(`Photo introuvable: ${url}`);
     snapshotFiles(allMutableFiles());
+    patchUnified(photo.url, () => {});
+    {
+      const uni = photosLib.loadPhotos(root);
+      uni.photos = (uni.photos || []).filter((p) => p && !urlsMatch(p.url, photo.url));
+      photosLib.savePhotos(uni, root);
+    }
     const data = loadRejected();
     const fragments = [];
     const fileFrag = commonsFileFragment(photo.url, photo.link);
@@ -559,7 +642,25 @@ function createPhotoLab(opts = {}) {
     if (season6 && !SEASON6.includes(season6)) {
       throw new Error(`Saison 6 inconnue: ${season6}`);
     }
-    snapshotFiles(qcFiles());
+    snapshotFiles(allMutableFiles());
+    patchUnified(photo.url, (p) => {
+      if (season) {
+        p.season = season;
+        p.seasonSource = 'manual';
+        p.seasonConfidence = 1;
+        p.seasonDetectedAt = new Date().toISOString();
+      }
+      if (season6) {
+        p.season6 = season6;
+        p.seasonSource = 'manual';
+        p.seasonConfidence = 1;
+      }
+      if (payload.clear) {
+        delete p.season;
+        delete p.season6;
+        delete p.seasonSource;
+      }
+    });
     const n = patchQcByUrl(photo.url, (p) => {
       if (season) {
         p.season = season;
@@ -588,6 +689,10 @@ function createPhotoLab(opts = {}) {
     const credit = payload.credit != null ? String(payload.credit).trim() : null;
     const place = payload.place != null ? String(payload.place).trim() : null;
     snapshotFiles(allMutableFiles());
+    patchUnified(photo.url, (p) => {
+      if (credit != null) p.credit = credit;
+      if (place != null) p.place = place;
+    });
     const n =
       patchQcByUrl(photo.url, (p) => {
         if (credit != null) p.credit = credit;
@@ -614,6 +719,9 @@ function createPhotoLab(opts = {}) {
     const fy = Math.min(1, Math.max(0, nVal));
     snapshotFiles(allMutableFiles());
     const n =
+      patchUnified(photo.url, (p) => {
+        p.focalY = fy;
+      }) +
       patchQcByUrl(photo.url, (p) => {
         p.focalY = fy;
       }) +
@@ -694,6 +802,16 @@ function createPhotoLab(opts = {}) {
   function applyBanks(url, surfacesRaw, extra = {}) {
     const surfaces = normalizeSurfaces(surfacesRaw);
     const photo = extra.photo || findByUrl(url);
+    patchUnified(url, (p) => {
+      const keep = (p.tags || []).filter((t) => !['mat', 'pomo', 'solitaire'].includes(t));
+      p.tags = photosLib.tagsFromSurfaces(surfaces, keep);
+      p.surfaces = surfaces.slice();
+      if (extra.permanent) {
+        p.tags = [...new Set([...(p.tags || []), 'favori'])];
+        p.permanent = true;
+      }
+      if (extra.focalY != null) p.focalY = extra.focalY;
+    });
     patchQcByUrl(url, (p) => {
       p.surfaces = surfaces.slice();
     });
@@ -710,14 +828,7 @@ function createPhotoLab(opts = {}) {
       }
       writeJsBackgrounds(file, photos, stockHeader(stock.id));
     }
-    const needFavorite =
-      extra.permanent ||
-      surfaces.includes('solitaire') ||
-      (photo &&
-        !(photo.banks || []).some((b) =>
-          ['masthead', 'pomo', 'universities', 'nations'].includes(b)
-        ) &&
-        surfaces.length > 0);
+    const needFavorite = extra.permanent;
     if (needFavorite && photo) {
       upsertFavorite({ ...photo, ...extra, url: photo.url }, surfaces, extra);
     } else if (photo) {
@@ -746,6 +857,9 @@ function createPhotoLab(opts = {}) {
       const n = Number(payload.focalY);
       if (!Number.isFinite(n)) throw new Error('focalY invalide');
       extra.focalY = Math.min(1, Math.max(0, n));
+      patchUnified(photo.url, (p) => {
+        p.focalY = extra.focalY;
+      });
       patchQcByUrl(photo.url, (p) => {
         p.focalY = extra.focalY;
       });
@@ -756,6 +870,10 @@ function createPhotoLab(opts = {}) {
     if (payload.credit != null) extra.credit = String(payload.credit).trim();
     if (payload.place != null) extra.place = String(payload.place).trim();
     if (extra.credit != null || extra.place != null) {
+      patchUnified(photo.url, (p) => {
+        if (extra.credit != null) p.credit = extra.credit;
+        if (extra.place != null) p.place = extra.place;
+      });
       patchQcByUrl(photo.url, (p) => {
         if (extra.credit != null) p.credit = extra.credit;
         if (extra.place != null) p.place = extra.place;
@@ -786,6 +904,17 @@ function createPhotoLab(opts = {}) {
         extra.season6 = payload.season6;
       }
       if (extra.season || extra.season6) {
+        patchUnified(photo.url, (p) => {
+          if (extra.season) {
+            p.season = extra.season;
+            p.seasonSource = 'manual';
+            p.seasonConfidence = 1;
+          }
+          if (extra.season6) {
+            p.season6 = extra.season6;
+            p.seasonSource = 'manual';
+          }
+        });
         patchQcByUrl(photo.url, (p) => {
           if (extra.season) {
             p.season = extra.season;

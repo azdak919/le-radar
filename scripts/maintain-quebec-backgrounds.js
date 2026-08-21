@@ -912,11 +912,22 @@ function sortByAge(photos) {
 /** Photos favorites / permanent: true — hors plafond et hors ménage. */
 function loadFavoriteUrlSet() {
   try {
-    if (!fs.existsSync(FAVORITES_JSON)) return new Set();
-    const bank = JSON.parse(fs.readFileSync(FAVORITES_JSON, 'utf8'));
-    return new Set(
-      (bank.photos || []).map((p) => p.url).filter(Boolean)
-    );
+    const urls = [];
+    if (fs.existsSync(FAVORITES_JSON)) {
+      const bank = JSON.parse(fs.readFileSync(FAVORITES_JSON, 'utf8'));
+      urls.push(...(bank.photos || []).map((p) => p.url).filter(Boolean));
+    }
+    const unifiedPath = path.join(ROOT, 'data', 'quebec-photos.json');
+    if (fs.existsSync(unifiedPath)) {
+      const uni = JSON.parse(fs.readFileSync(unifiedPath, 'utf8'));
+      for (const p of uni.photos || []) {
+        const tags = Array.isArray(p.tags) ? p.tags : [];
+        if (p.permanent || p.campus || tags.includes('favori') || tags.includes('campus')) {
+          if (p.url) urls.push(p.url);
+        }
+      }
+    }
+    return new Set(urls);
   } catch {
     return new Set();
   }
@@ -924,7 +935,9 @@ function loadFavoriteUrlSet() {
 
 function isPermanentPhoto(entry, favoriteUrls = null) {
   if (!entry) return false;
-  if (entry.permanent === true) return true;
+  if (entry.permanent === true || entry.campus === true) return true;
+  const tags = Array.isArray(entry.tags) ? entry.tags : [];
+  if (tags.includes('favori') || tags.includes('campus')) return true;
   const favs = favoriteUrls || loadFavoriteUrlSet();
   return !!(entry.url && favs.has(entry.url));
 }

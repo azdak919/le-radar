@@ -158,6 +158,9 @@ function photoToJsObject(p, bank) {
       `    surfaces: [${p.surfaces.map((s) => `"${esc(s)}"`).join(', ')}]`
     );
   }
+  if (Array.isArray(p.tags) && p.tags.length) {
+    lines.push(`    tags: [${p.tags.map((t) => `"${esc(t)}"`).join(', ')}]`);
+  }
   return `  {\n${lines.join(',\n')},\n  }`;
 }
 
@@ -215,6 +218,13 @@ function purgeBanned(photos) {
 function syncBanks(opts = {}) {
   const root = opts.root || ROOT;
   const checkOnlyFlag = opts.checkOnly != null ? opts.checkOnly : checkOnly;
+  const photosLib = require('./quebec-photos-lib');
+  const unifiedPath = path.join(root, photosLib.PHOTOS_REL);
+  const hasUnified = fs.existsSync(unifiedPath);
+  if (hasUnified && !checkOnlyFlag && opts.materialize !== false) {
+    photosLib.materializeLegacySlices(root);
+  }
+  if (opts.skipScrub == null && hasUnified) opts.skipScrub = true;
   const profile = opts.profile != null ? opts.profile : profileFilter;
   const quiet = !!opts.quiet;
   const log = (...args) => {
