@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-21T18:34:00.139Z",
+  "updatedAt": "2026-08-21T19:24:00.841Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T18:33:32.486Z"
+      "checkedAt": "2026-08-21T19:23:37.557Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "next": {
         "title": "Salsa & Bembê",
         "source": "schedule",
         "start": "15:00",
         "end": "16:00",
         "url": "https://cism893.ca/emissions/salsa-et-bembe"
       },
+      "next": {
+        "title": "Turbo tannant",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/turbo-tannant"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Salsa & Bembê",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T18:33:34.846Z"
+      "checkedAt": "2026-08-21T19:23:39.718Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "NNB/SQUAT FM/QPIRG/knots",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "New Shit",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "NNB/SQUAT FM/QPIRG/knots",
+      "showTitle": "New Shit",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T18:33:37.982Z"
+      "checkedAt": "2026-08-21T19:23:42.437Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Spiral Bound",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/spiral-bound"
-      },
-      "next": {
         "title": "Dead Beats",
         "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/dead-beats"
       },
+      "next": {
+        "title": "Tapeworms",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/tapeworms"
+      },
       "track": "",
-      "showTitle": "Spiral Bound",
+      "showTitle": "Dead Beats",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T18:33:52.363Z"
+      "checkedAt": "2026-08-21T19:23:56.814Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Ciné-Histoire",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Nouveautés Franco",
         "source": "schedule-live",
         "start": "15:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "La récréation",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Ciné-Histoire",
+      "showTitle": "Nouveautés Franco",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T18:33:53.154Z"
+      "checkedAt": "2026-08-21T19:23:57.745Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "17:00",
         "slug": "histoire-de-passer-le-temps"
       },
-      "track": "MARIE NEIGES - Emporte-moi",
+      "track": "Caroline Savoie - Quel tourment ! feat. Jeanne Cote & Ponteix",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-21T18:33:59.788Z"
+      "checkedAt": "2026-08-21T19:24:00.490Z"
     }
   }
 }
