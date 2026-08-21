@@ -45,7 +45,23 @@ function _mergeQuebecSourceBank(source, cultureTag, flagKey, logLabel) {
   const seen = new Set(BACKGROUNDS.map((b) => b && b.url).filter(Boolean));
   let added = 0;
   for (const p of source) {
-    if (!p || !p.url || seen.has(p.url)) continue;
+    if (!p || !p.url) continue;
+    if (seen.has(p.url)) {
+      const existing = BACKGROUNDS.find((b) => b && b.url === p.url);
+      if (existing) {
+        if (typeof p.focalY === 'number' && !Number.isNaN(p.focalY)) existing.focalY = p.focalY;
+        if (typeof p.position === 'string' && p.position.trim()) existing.position = p.position.trim();
+        if (p.season) existing.season = p.season;
+        if (p.season6) existing.season6 = p.season6;
+        if (p.place) existing.place = p.place;
+        if (p.credit) existing.credit = p.credit;
+      }
+      continue;
+    }
+    if (Array.isArray(p.surfaces)) {
+      if (!p.surfaces.length) continue;
+      if (!p.surfaces.includes('pomo') && !p.surfaces.includes('*')) continue;
+    }
     // Même QC plein écran que le stock Unsplash (macros / branches givrées)
     if (
       typeof FullscreenWallpaperQc !== 'undefined' &&
@@ -87,6 +103,15 @@ function _mergeQuebecSourceBank(source, cultureTag, flagKey, logLabel) {
 }
 
 function _mergeQuebecPomoBanks() {
+  if (typeof PHOTO_BANK !== 'undefined' && Array.isArray(PHOTO_BANK) && PHOTO_BANK.length) {
+    const pomo = PHOTO_BANK.filter((p) => {
+      if (!p || !p.url) return false;
+      const tags = Array.isArray(p.tags) ? p.tags : [];
+      return tags.includes('pomo');
+    });
+    _mergeQuebecSourceBank(pomo, 'quebec', '_quebecPhotosMerged', 'banque unique (tag pomo)');
+    return;
+  }
   // Pomo-only landscapes
   if (typeof QUEBEC_POMO_BACKGROUNDS !== 'undefined') {
     _mergeQuebecSourceBank(
@@ -119,6 +144,18 @@ function _mergeQuebecPomoBanks() {
 }
 
 _mergeQuebecPomoBanks();
+
+if (typeof BACKGROUNDS !== 'undefined' && Array.isArray(BACKGROUNDS)) {
+  const kept = BACKGROUNDS.filter((p) => {
+    if (!p || !Array.isArray(p.surfaces)) return true;
+    if (!p.surfaces.length) return false;
+    return p.surfaces.includes('pomo') || p.surfaces.includes('*');
+  });
+  if (kept.length !== BACKGROUNDS.length) {
+    BACKGROUNDS.length = 0;
+    BACKGROUNDS.push(...kept);
+  }
+}
 
 // QC plein écran pomo/solitaire (pas le mât) — retire macros / hard-bans
 if (typeof FullscreenWallpaperQc !== 'undefined') {

@@ -1,5 +1,5 @@
-/* Ataraxia — background image pool (data only)
- * Exports: BACKGROUNDS (global array)
+/* LE RADAR — fonds solitaire (stock plein écran)
+ * Consommateur : /solitaire/ uniquement.
  * Régénéré par le labo photo local (scripts/photo-lab-lib.js).
  */
 const BACKGROUNDS = [
@@ -16,6 +16,13 @@ const BACKGROUNDS = [
     link: "https://unsplash.com/@lucabravo",
     source: "Unsplash",
     title: "Forest Light",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=90&auto=format&fit=max",
+    credit: "Sean Oulashin",
+    link: "https://unsplash.com/@oulashin",
+    source: "Unsplash",
+    title: "Tropical Beach",
   },
   {
     url: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=90&auto=format&fit=max",
@@ -325,12 +332,27 @@ const BACKGROUNDS = [
     source: "Wikimedia Commons · Public Domain",
   },
   {
+    url: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=1920&q=90&auto=format&fit=max",
+    credit: "Jonatan Pie",
+    link: "https://unsplash.com/@r3dmax",
+    source: "Unsplash",
+    title: "Aurora Borealis",
+  },
+  {
     url: "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=1920&q=90&auto=format&fit=max",
     credit: "Su San Lee",
     link: "https://unsplash.com/@s_s_lee",
     source: "Unsplash",
     title: "Cherry Blossoms",
     culture: "japanese",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1920&q=90&auto=format&fit=max",
+    credit: "Keith Hardy",
+    link: "https://unsplash.com/@keithhardy2001",
+    source: "Unsplash",
+    title: "Monument Valley",
+    culture: "indigenous",
   },
   {
     url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&q=90&auto=format&fit=max",
@@ -396,11 +418,33 @@ const BACKGROUNDS = [
     title: "Autumn Lake",
   },
   {
+    url: "https://images.pexels.com/photos/1028600/pexels-photo-1028600.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    credit: "Maria Tyutina",
+    link: "https://www.pexels.com/@maria-tyutina-257298",
+    source: "Pexels",
+    title: "Seaside Cliffs",
+  },
+  {
+    url: "https://images.pexels.com/photos/2166553/pexels-photo-2166553.jpeg?auto=compress&cs=tinysrgb&w=1920",
+    credit: "Milo Miloezger",
+    link: "https://www.pexels.com/@miloezger",
+    source: "Pexels",
+    title: "Winter Forest",
+  },
+  {
     url: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=1920&q=90&auto=format&fit=max",
     credit: "Kazuend",
     link: "https://unsplash.com/@kazuend",
     source: "Unsplash",
     title: "Tall Redwoods",
+    culture: "indigenous",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=90&auto=format&fit=max",
+    credit: "Sebastian Unrau",
+    link: "https://unsplash.com/@sebastian_unrau",
+    source: "Unsplash",
+    title: "Green Forest",
     culture: "indigenous",
   },
   {
@@ -444,6 +488,20 @@ const BACKGROUNDS = [
     culture: "indigenous",
   },
   {
+    url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920&q=90&auto=format&fit=max",
+    credit: "Pietro De Grandi",
+    link: "https://unsplash.com/@peter_mc_greats",
+    source: "Unsplash",
+    title: "Lake Reflections",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=1920&q=90&auto=format&fit=max",
+    credit: "Kazuend",
+    link: "https://unsplash.com/@kazuend",
+    source: "Unsplash",
+    title: "Tropical Waterfall",
+  },
+  {
     url: "https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?w=1920&q=90&auto=format&fit=max",
     credit: "Dave Hoefler",
     link: "https://unsplash.com/@davehoefler",
@@ -465,6 +523,20 @@ const BACKGROUNDS = [
     title: "Peaceful Lake",
   },
   {
+    url: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=90&auto=format&fit=max",
+    credit: "Benjamin Voros",
+    link: "https://unsplash.com/@vorosbenisop",
+    source: "Unsplash",
+    title: "Starry Mountain",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&q=90&auto=format&fit=max",
+    credit: "Kalen Emsley",
+    link: "https://unsplash.com/@kalenemsley",
+    source: "Unsplash",
+    title: "Mountain Peaks",
+  },
+  {
     url: "https://images.unsplash.com/photo-1500964757637-c85e8a162699?w=1920&q=90&auto=format&fit=max",
     credit: "Simon Berger",
     link: "https://unsplash.com/@8moments",
@@ -477,6 +549,13 @@ const BACKGROUNDS = [
     link: "https://unsplash.com/@chancruttenden",
     source: "Unsplash",
     title: "Snowy Road",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=1920&q=90&auto=format&fit=max",
+    credit: "Aron Visuals",
+    link: "https://unsplash.com/@aronvisuals",
+    source: "Unsplash",
+    title: "Dramatic Sunset",
   },
   {
     url: "https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=1920&q=90&auto=format&fit=max",
@@ -514,6 +593,20 @@ const BACKGROUNDS = [
     title: "Tree Canopy Light",
   },
   {
+    url: "https://images.unsplash.com/photo-1477601263568-180e2c6d046e?w=1920&q=90&auto=format&fit=max",
+    credit: "Eberhard Grossgasteiger",
+    link: "https://unsplash.com/@eberhardgross",
+    source: "Unsplash",
+    title: "Winter Mountains",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1491002052546-bf38f186af56?w=1920&q=90&auto=format&fit=max",
+    credit: "Ales Krivec",
+    link: "https://unsplash.com/@aleskrivec",
+    source: "Unsplash",
+    title: "Frozen Lake",
+  },
+  {
     url: "https://images.unsplash.com/photo-1483664852095-d6cc6870702d?w=1920&q=90&auto=format&fit=max",
     credit: "Khamkeo Vilaysing",
     link: "https://unsplash.com/@mahkeo",
@@ -535,11 +628,25 @@ const BACKGROUNDS = [
     title: "Ocean Aerial",
   },
   {
+    url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=90&auto=format&fit=max",
+    credit: "Sean O.",
+    link: "https://unsplash.com/@seano",
+    source: "Unsplash",
+    title: "Tropical Beach",
+  },
+  {
     url: "https://images.unsplash.com/photo-1468581264429-2548ef9eb732?w=1920&q=90&auto=format&fit=max",
     credit: "Jeremy Bishop",
     link: "https://unsplash.com/@jeremybishop",
     source: "Unsplash",
     title: "Sea Rocks",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1414609245224-afa02bfb3fda?w=1920&q=90&auto=format&fit=max",
+    credit: "Dan Gold",
+    link: "https://unsplash.com/@danielcgold",
+    source: "Unsplash",
+    title: "Rocky Coast",
   },
   {
     url: "https://images.unsplash.com/photo-1471922694854-ff1b63b20054?w=1920&q=90&auto=format&fit=max",
@@ -598,6 +705,13 @@ const BACKGROUNDS = [
     title: "Swiss Alps",
   },
   {
+    url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=90&auto=format&fit=max",
+    credit: "Luca Bravo",
+    link: "https://unsplash.com/@lucabravo",
+    source: "Unsplash",
+    title: "Sunlit Meadow",
+  },
+  {
     url: "https://images.unsplash.com/photo-1510797215324-95aa89f43c33?w=1920&q=90&auto=format&fit=max",
     credit: "Timothy Eberly",
     link: "https://unsplash.com/@timothyeberly",
@@ -640,6 +754,13 @@ const BACKGROUNDS = [
     title: "Red Rock Canyon",
   },
   {
+    url: "https://images.unsplash.com/photo-1542401886-65d6c61db217?w=1920&q=90&auto=format&fit=max",
+    credit: "Andrew Coelho",
+    link: "https://unsplash.com/@andrewcoelho",
+    source: "Unsplash",
+    title: "Sand Ripples",
+  },
+  {
     url: "https://images.unsplash.com/photo-1495567720989-cebdbdd97913?w=1920&q=90&auto=format&fit=max",
     credit: "Fabian Quintero",
     link: "https://unsplash.com/@fabianquintero",
@@ -652,6 +773,13 @@ const BACKGROUNDS = [
     link: "https://unsplash.com/@grakozy",
     source: "Unsplash",
     title: "Night Sky",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=1920&q=90&auto=format&fit=max",
+    credit: "Vincentiu Solomon",
+    link: "https://unsplash.com/@vincentiu",
+    source: "Unsplash",
+    title: "Star Trails",
   },
   {
     url: "https://images.unsplash.com/photo-1465101162946-4377e57745c3?w=1920&q=90&auto=format&fit=max",
@@ -682,6 +810,27 @@ const BACKGROUNDS = [
     title: "Emerald Valley",
   },
   {
+    url: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1920&q=90&auto=format&fit=max",
+    credit: "Robert Lukeman",
+    link: "https://unsplash.com/@robertlukeman",
+    source: "Unsplash",
+    title: "Green Hills",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=90&auto=format&fit=max",
+    credit: "Dave Hoefler",
+    link: "https://unsplash.com/@davehoefler",
+    source: "Unsplash",
+    title: "Sunbeam Valley",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=1920&q=90&auto=format&fit=max",
+    credit: "Luca Bravo",
+    link: "https://unsplash.com/@lucabravo",
+    source: "Unsplash",
+    title: "Tropical Paradise",
+  },
+  {
     url: "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=1920&q=90&auto=format&fit=max",
     credit: "Ricardo Gomez Angel",
     link: "https://unsplash.com/@rgaleriacom",
@@ -696,11 +845,25 @@ const BACKGROUNDS = [
     title: "Mona Lisa",
   },
   {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/VanGogh-starry_night_ballance1.jpg/1920px-VanGogh-starry_night_ballance1.jpg",
+    credit: "Vincent van Gogh",
+    link: "https://en.wikipedia.org/wiki/The_Starry_Night",
+    source: "Wikimedia Commons",
+    title: "The Starry Night",
+  },
+  {
     url: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/The_Garden_of_Earthly_Delights_by_Bosch_High_Resolution.jpg/1920px-The_Garden_of_Earthly_Delights_by_Bosch_High_Resolution.jpg",
     credit: "Hieronymus Bosch",
     link: "https://en.wikipedia.org/wiki/The_Garden_of_Earthly_Delights",
     source: "Wikimedia Commons",
     title: "The Garden of Earthly Delights",
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1920px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
+    credit: "Vincent van Gogh",
+    link: "https://en.wikipedia.org/wiki/Starry_Night_Over_the_Rh%C3%B4ne",
+    source: "Wikimedia Commons",
+    title: "Café Terrace at Night",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Meisje_met_de_parel.jpg/1920px-Meisje_met_de_parel.jpg",
@@ -731,6 +894,14 @@ const BACKGROUNDS = [
     title: "Sunday on La Grande Jatte",
   },
   {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Tsunami_by_hokusai_19th_century.jpg/1920px-Tsunami_by_hokusai_19th_century.jpg",
+    credit: "Katsushika Hokusai",
+    link: "https://en.wikipedia.org/wiki/The_Great_Wave_off_Kanagawa",
+    source: "Wikimedia Commons",
+    title: "The Great Wave",
+    culture: "japanese",
+  },
+  {
     url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Albert_Bierstadt_-_Among_the_Sierra_Nevada%2C_California_-_Google_Art_Project.jpg/1920px-Albert_Bierstadt_-_Among_the_Sierra_Nevada%2C_California_-_Google_Art_Project.jpg",
     credit: "Albert Bierstadt",
     link: "https://en.wikipedia.org/wiki/Albert_Bierstadt",
@@ -743,6 +914,13 @@ const BACKGROUNDS = [
     link: "https://en.wikipedia.org/wiki/Wanderer_above_the_Sea_of_Fog",
     source: "Wikimedia Commons",
     title: "Wanderer Above the Sea of Fog",
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Monet_-_Impression%2C_Sunrise.jpg/1920px-Monet_-_Impression%2C_Sunrise.jpg",
+    credit: "Claude Monet",
+    link: "https://en.wikipedia.org/wiki/Impression,_Sunrise",
+    source: "Wikimedia Commons",
+    title: "Impression, Sunrise",
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Socrates_Louvre.jpg/1920px-Socrates_Louvre.jpg",

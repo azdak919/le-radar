@@ -113,6 +113,7 @@ porte jamais la barre radio.
 | `data/quebec-favorites-backgrounds.json` | **Favorites manuelles** (permanentes = hors purge bots ; l’affichage reste filtré par saison) | signalement manuel / `pin-background.js` |
 | `quebec-favorites-backgrounds-data.js` | Export favorites (`QUEBEC_FAVORITES_BACKGROUNDS`) | idem |
 | `scripts/quebec-backgrounds-blacklist.js` | **Hard-ban durable** (URL/File/id) — anti-réintroduction | curation manuelle |
+| `data/quebec-backgrounds-rejected.json` | Rejets du **labo photo local** (fusionnés à la blacklist) | `npm run lab:photos` |
 | `scripts/sync-quebec-backgrounds.js` | Sync offline JSON → JS + purge ban (`npm run bank:sync`) | agent / CI locale |
 | `bot-status.json` | Tableau de bord santé des bots | `maintain.js` |
 
