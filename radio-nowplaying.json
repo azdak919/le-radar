@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-21T02:43:31.255Z",
+  "updatedAt": "2026-08-21T03:47:58.337Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "api-live",
-        "start": "18:50",
-        "end": "23:00",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Vendredi Nostalgie",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/vendredi-nostalgie/"
       },
       "track": "",
-      "showTitle": "Capitales de Québec",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T02:43:02.584Z"
+      "checkedAt": "2026-08-21T03:47:32.293Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T02:43:04.512Z"
+      "checkedAt": "2026-08-21T03:47:34.526Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Chaud Pour/Francis",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
-      },
-      "next": {
         "title": "You Need A Heart To Live 2",
         "source": "api-live",
         "start": "23:00",
         "end": "01:00"
       },
+      "next": {
+        "title": "Listen! You Smell Something?",
+        "source": "api-live",
+        "start": "01:00",
+        "end": "04:00"
+      },
       "track": "",
-      "showTitle": "Chaud Pour/Francis",
+      "showTitle": "You Need A Heart To Live 2",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T02:43:08.825Z"
+      "checkedAt": "2026-08-21T03:47:37.273Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T02:43:22.487Z"
+      "checkedAt": "2026-08-21T03:47:51.117Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T02:43:25.145Z"
+      "checkedAt": "2026-08-21T03:47:51.953Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "12:30",
         "url": "https://www.choq.ca/emissions/box-sophisme"
       },
-      "track": "Iceage - True Blue",
+      "track": "Le Belladone - L",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -158,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-21T02:43:30.904Z"
+      "checkedAt": "2026-08-21T03:47:57.986Z"
     }
   }
 }
