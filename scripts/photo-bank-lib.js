@@ -1,6 +1,6 @@
 /**
  * LE RADAR — banque unique de fonds (tags).
- * Source de vérité : data/quebec-photos.json
+ * Source de vérité : data/photo-bank.json
  *
  * Tags : mat | pomo | solitaire | favori | campus | nations | art
  * favori + campus = hors purge des moissons.
@@ -14,8 +14,8 @@ const crypto = require('crypto');
 const vm = require('vm');
 
 const DEFAULT_ROOT = path.join(__dirname, '..');
-const PHOTOS_REL = 'data/quebec-photos.json';
-const PHOTOS_JS_REL = 'quebec-photos-data.js';
+const PHOTOS_REL = 'data/photo-bank.json';
+const PHOTOS_JS_REL = 'photo-bank-data.js';
 
 const TAGS = ['mat', 'pomo', 'solitaire', 'favori', 'campus', 'nations', 'art'];
 const SURFACE_TAGS = ['mat', 'pomo', 'solitaire'];
@@ -270,7 +270,7 @@ function writePhotosJs(photos, root = DEFAULT_ROOT) {
  * Tags : mat, pomo, solitaire, favori, campus, nations, art
  * favori + campus : hors purge moisson
  */
-const QUEBEC_PHOTOS = [
+const PHOTO_BANK = [
 ${body}
 ];
 `;

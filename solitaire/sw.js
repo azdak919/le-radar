@@ -3,7 +3,7 @@
    Scope: /solitaire/ only — isolated from root radar SW and pomo.
    ═══════════════════════════════════════════════════════ */
 
-const SHELL_CACHE  = 'solitaire-shell-v61';
+const SHELL_CACHE  = 'solitaire-shell-v62';
 const FONT_CACHE   = 'solitaire-fonts-v27';
 const CACHE_PREFIX = 'solitaire-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];
@@ -39,7 +39,7 @@ const SHELL_ASSETS = [
   './sw.js',
   './js/solitaire-rules.js',
   './js/backgrounds-data.js',
-  '../quebec-photos-data.js',
+  '../photo-bank-data.js',
   '../quebec-favorites-backgrounds-data.js',
   '../translate-menu.js',
   '../translate-menu.css',

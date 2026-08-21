@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v714",
+    "cache": "radar-shell-v715",
     "assets": {
       "app.js": "9c0428f59ec6ac10",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -15,12 +15,12 @@
       "feeds-page.js": "23103d49de90f8fc",
       "mobile-playback.js": "955026530d5993b0",
       "nav-shell.js": "97c086a5c1ef5bca",
+      "photo-bank-data.js": "3b6e42d2dd1a027c",
       "player-sync.js": "36e84f1afaff7fcb",
       "quebec-backgrounds-data.js": "c81795f80abab38a",
-      "quebec-backgrounds.js": "ee3dd304432493d6",
+      "quebec-backgrounds.js": "ba11eb61f89ef237",
       "quebec-favorites-backgrounds-data.js": "8bd6994fcd24f790",
       "quebec-nations-backgrounds-data.js": "ff3fa17fb5fff9da",
-      "quebec-photos-data.js": "7ad0f028327a8dc7",
       "quebec-university-backgrounds-data.js": "b2570cb19d970458",
       "scripts/season-lib.js": "4eda74f8e56e10ca",
       "scripts/session-freshness-lib.js": "8864fadc8cd34ed1",
@@ -34,14 +34,15 @@
     }
   },
   "pomo/sw.js": {
-    "cache": "pomo-shell-v117",
+    "cache": "pomo-shell-v118",
     "assets": {
       "bg-rotation-lib.js": "264ab71f12434497",
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
       "install-chrome.css": "83661273439635f0",
+      "photo-bank-data.js": "3b6e42d2dd1a027c",
       "pomo/js/app.js": "a8138a1bc0e114d6",
       "pomo/js/backgrounds-data.js": "8c6ac4be07d5d5f9",
-      "pomo/js/backgrounds.js": "ce98b09cb77461cc",
+      "pomo/js/backgrounds.js": "132e7575648e2eec",
       "pomo/js/layout-boot.js": "f99ed7e90cdc3cbb",
       "pomo/js/layout.js": "427d70c84a1ac245",
       "pomo/js/panels.js": "a63605d3ae8779c3",
@@ -59,7 +60,6 @@
       "pomo/styles/layout.css": "6022df23e477bc37",
       "quebec-favorites-backgrounds-data.js": "8bd6994fcd24f790",
       "quebec-nations-backgrounds-data.js": "ff3fa17fb5fff9da",
-      "quebec-photos-data.js": "7ad0f028327a8dc7",
       "quebec-pomo-backgrounds-data.js": "18335d48a4b3e784",
       "scripts/season-lib.js": "4eda74f8e56e10ca",
       "translate-menu.css": "a5a4eb37479afb60",
@@ -67,12 +67,12 @@
     }
   },
   "solitaire/sw.js": {
-    "cache": "solitaire-shell-v61",
+    "cache": "solitaire-shell-v62",
     "assets": {
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
       "install-chrome.css": "83661273439635f0",
+      "photo-bank-data.js": "3b6e42d2dd1a027c",
       "quebec-favorites-backgrounds-data.js": "8bd6994fcd24f790",
-      "quebec-photos-data.js": "7ad0f028327a8dc7",
       "solitaire/js/backgrounds-data.js": "9aa142032bf786ea",
       "solitaire/js/solitaire-rules.js": "c19bd4f9a851fda6",
       "translate-menu.css": "a5a4eb37479afb60",

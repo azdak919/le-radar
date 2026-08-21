@@ -218,7 +218,7 @@ function purgeBanned(photos) {
 function syncBanks(opts = {}) {
   const root = opts.root || ROOT;
   const checkOnlyFlag = opts.checkOnly != null ? opts.checkOnly : checkOnly;
-  const photosLib = require('./quebec-photos-lib');
+  const photosLib = require('./photo-bank-lib');
   const unifiedPath = path.join(root, photosLib.PHOTOS_REL);
   const hasUnified = fs.existsSync(unifiedPath);
   if (hasUnified && !checkOnlyFlag && opts.materialize !== false) {

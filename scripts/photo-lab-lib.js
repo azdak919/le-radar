@@ -13,7 +13,7 @@ const crypto = require('crypto');
 const vm = require('vm');
 const { BANKS, syncBanks } = require('./sync-quebec-backgrounds');
 const { sanitizeCommonsCredit, placeFromPhotoMeta } = require('./commons-credit-lib');
-const photosLib = require('./quebec-photos-lib');
+const photosLib = require('./photo-bank-lib');
 
 const DEFAULT_ROOT = path.join(__dirname, '..');
 const SEASON4 = ['printemps', 'ete', 'automne', 'hiver'];

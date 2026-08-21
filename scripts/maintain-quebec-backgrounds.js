@@ -917,7 +917,7 @@ function loadFavoriteUrlSet() {
       const bank = JSON.parse(fs.readFileSync(FAVORITES_JSON, 'utf8'));
       urls.push(...(bank.photos || []).map((p) => p.url).filter(Boolean));
     }
-    const unifiedPath = path.join(ROOT, 'data', 'quebec-photos.json');
+    const unifiedPath = path.join(ROOT, 'data', 'photo-bank.json');
     if (fs.existsSync(unifiedPath)) {
       const uni = JSON.parse(fs.readFileSync(unifiedPath, 'utf8'));
       for (const p of uni.photos || []) {
