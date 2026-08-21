@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-21T16:00:29.135Z",
+  "updatedAt": "2026-08-21T16:44:06.458Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Punk-o-rama",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/punk-o-rama/"
-      },
+      "current": null,
       "next": {
         "title": "Détour",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "https://chyz.ca/emission/detour/"
       },
       "track": "",
-      "showTitle": "Punk-o-rama",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T15:59:59.773Z"
+      "checkedAt": "2026-08-21T16:43:37.883Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T16:00:02.089Z"
+      "checkedAt": "2026-08-21T16:43:40.200Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T16:00:07.744Z"
+      "checkedAt": "2026-08-21T16:43:43.194Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T16:00:21.547Z"
+      "checkedAt": "2026-08-21T16:43:57.306Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,18 +126,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T16:00:22.443Z"
+      "checkedAt": "2026-08-21T16:43:58.088Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Opération beurre de cinoche",
-        "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
-      },
+      "current": null,
       "next": {
         "title": "Histoire de passer le temps",
         "source": "api-live",
@@ -152,8 +139,8 @@
         "end": "17:00",
         "slug": "histoire-de-passer-le-temps"
       },
-      "track": "ID - laraw",
-      "showTitle": "Opération beurre de cinoche",
+      "track": "Namasenda - Heaven",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -163,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-21T16:00:28.785Z"
+      "checkedAt": "2026-08-21T16:44:06.107Z"
     }
   }
 }
