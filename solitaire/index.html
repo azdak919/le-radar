@@ -3295,6 +3295,15 @@ function syncRadarEmbedTheme(theme) {
       BACKGROUNDS.push(entry);
     }
   }
+  const _surfKept = BACKGROUNDS.filter((bg) => {
+    if (!bg || !Array.isArray(bg.surfaces)) return true;
+    if (!bg.surfaces.length) return false;
+    return bg.surfaces.includes('solitaire') || bg.surfaces.includes('*');
+  });
+  if (_surfKept.length !== BACKGROUNDS.length) {
+    BACKGROUNDS.length = 0;
+    BACKGROUNDS.push(..._surfKept);
+  }
   // QC plein écran (macros / branches givrées) — partagé avec pomo
   if (typeof FullscreenWallpaperQc !== 'undefined' && FullscreenWallpaperQc.scrubArrayInPlace) {
     FullscreenWallpaperQc.scrubArrayInPlace(BACKGROUNDS);

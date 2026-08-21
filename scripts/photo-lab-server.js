@@ -196,6 +196,10 @@ async function handleApi(req, res, url) {
       const body = await readBody(req);
       return sendJson(res, 200, lab.pinPhoto(body.url, body));
     }
+    if (req.method === 'POST' && route === '/api/save') {
+      const body = await readBody(req);
+      return sendJson(res, 200, lab.saveAll(body.url, body));
+    }
     if (req.method === 'POST' && route === '/api/undo') {
       return sendJson(res, 200, lab.undo());
     }

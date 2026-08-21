@@ -43,6 +43,10 @@
       if (!arr || !Array.isArray(arr)) return;
       for (const p of arr) {
         if (!p || !p.url) continue;
+        if (Array.isArray(p.surfaces)) {
+          if (!p.surfaces.length) continue;
+          if (!p.surfaces.includes("masthead") && !p.surfaces.includes("*")) continue;
+        }
         if (seen.has(p.url)) continue;
         seen.add(p.url);
         out.push({ ...p, bank: p.bank || bank });

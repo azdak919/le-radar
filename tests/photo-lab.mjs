@@ -135,6 +135,24 @@ assert.equal(afterCredit.place, 'Tadoussac');
 lab.setFocalY(lac.url, 0.22);
 assert.equal(lab.findByUrl(lac.url).focalY, 0.22);
 
+lab.saveAll(lac.url, {
+  credit: 'Alice Tremblay',
+  place: 'Tadoussac',
+  season: 'ete',
+  focalY: 0.31,
+  surfaces: ['pomo', 'solitaire'],
+});
+const afterSave = lab.findByUrl(lac.url);
+assert.deepEqual(afterSave.surfaces.slice().sort(), ['pomo', 'solitaire']);
+assert.equal(afterSave.focalY, 0.31);
+assert.equal(afterSave.credit, 'Alice Tremblay');
+assert.equal(afterSave.place, 'Tadoussac');
+assert.equal(afterSave.season, 'ete');
+const favSaved = JSON.parse(
+  readFileSync(join(root, 'data/quebec-favorites-backgrounds.json'), 'utf8'),
+);
+assert.deepEqual(favSaved.photos[0].surfaces.slice().sort(), ['pomo', 'solitaire']);
+
 lab.pinPhoto(lac.url, { surfaces: ['masthead', 'solitaire'], focalY: 0.22 });
 const fav = JSON.parse(readFileSync(join(root, 'data/quebec-favorites-backgrounds.json'), 'utf8'));
 assert.equal(fav.photos.length, 1);
