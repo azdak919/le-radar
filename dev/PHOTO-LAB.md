@@ -8,11 +8,19 @@ npm run lab:photos
 # → http://127.0.0.1:8777/dev/photo-lab/
 ```
 
-Au démarrage, le labo **télécharge les photos en cache local** (`dev/photo-lab/cache/`, gitignoré). Le bandeau « Cache 120/343… » indique l’avancement. Pour tout précharger d’un coup :
+Les images vivent dans `dev/photo-lab/cache/` (**gitignoré**, trop lourd pour git).
+
+On ne contourne pas les 429 en saturant Commons : on télécharge **une fois** (Special:FilePath, 1 requête à la fois, pause si 429), puis on sert un **miroir GitHub Release**.
 
 ```bash
-npm run lab:photos:fetch
+npm run lab:photos:fetch      # complète le cache local (poli)
+npm run lab:photos:publish    # envoie le tar sur GitHub (tag photo-lab-cache)
+npm run lab:photos:hydrate    # machine neuve : tar GitHub → disque
 ```
+
+Release : https://github.com/azdak919/le-radar/releases/tag/photo-lab-cache
+
+Un cache local **vide** s’hydrate tout seul depuis cette release au `npm run lab:photos`.
 
 Bind **127.0.0.1** seulement. Pas de lien prod, pas de service worker.
 

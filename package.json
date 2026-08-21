@@ -56,6 +56,8 @@
     "pin-background": "node scripts/pin-background.js",
     "lab:photos": "node scripts/photo-lab-server.js",
     "lab:photos:fetch": "node scripts/photo-lab-cache.js",
+    "lab:photos:hydrate": "node scripts/photo-lab-cache.js --hydrate",
+    "lab:photos:publish": "node scripts/photo-lab-cache.js --publish",
     "archive": "node scripts/archive-articles.js",
     "archive:update": "node scripts/archive-articles.js --update",
     "sports:discover": "node scripts/discover-sports.js",
