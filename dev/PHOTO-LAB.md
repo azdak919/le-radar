@@ -1,6 +1,6 @@
 # Labo photo
 
-Curation des fonds (mât / pomo / solitaire). Distinct du **Labo** viewport (`dev/LAB.md`, port 8766).
+Curation des fonds (mât / pomo / solitaire). Distinct du **Labo** viewport (`dev/LAB.md`). Tableau de bord : http://127.0.0.1:8777/dev/
 
 Banque unique : `data/photo-bank.json` (`PHOTO_BANK` dans `photo-bank-data.js`).
 

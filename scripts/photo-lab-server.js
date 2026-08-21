@@ -120,9 +120,13 @@ function readBody(req, limit = 1_000_000) {
 
 function safeStatic(urlPath) {
   const decoded = decodeURIComponent(urlPath.split('?')[0]);
-  let rel = decoded === '/' ? '/dev/photo-lab/index.html' : decoded;
-  if (rel === '/dev/photo-lab' || rel === '/dev/photo-lab/') {
+  let rel = decoded || '/';
+  if (rel === '/' || rel === '/dev' || rel === '/dev/') {
+    rel = '/dev/index.html';
+  } else if (rel === '/dev/photo-lab' || rel === '/dev/photo-lab/') {
     rel = '/dev/photo-lab/index.html';
+  } else if (rel.endsWith('/')) {
+    rel = `${rel}index.html`;
   }
   const abs = path.resolve(ROOT, `.${rel}`);
   if (!abs.startsWith(ROOT)) return null;
@@ -289,6 +293,7 @@ function startPrefetch() {
 
 if (require.main === module) {
   server.listen(PORT, HOST, () => {
+    console.log(`Labo → http://${HOST}:${PORT}/dev/`);
     console.log(`Labo photo → http://${HOST}:${PORT}/dev/photo-lab/`);
     console.log('127.0.0.1 seulement. Ctrl+C pour quitter.');
     const cleaned = lab.cleanupDuplicates({ skipSnapshot: true });
