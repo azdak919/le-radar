@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-21T13:19:11.214Z",
+  "updated": "2026-08-21T14:45:27.070Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,11 +7,18 @@
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 7,
-  "citedNew": 4,
+  "checked": 21,
+  "updatedCount": 9,
+  "citedNew": 6,
   "fallbackNew": 15,
   "samples": [
+    {
+      "title": "Les rendez-vous gourmands de la région cet automne",
+      "source": "Le Collectif",
+      "credit": "Photo : Les Comptonales",
+      "cited": true,
+      "method": "body-tail"
+    },
     {
       "title": "À la découverte du matcha et du kohakutou",
       "source": "Le Collectif",
@@ -41,9 +48,16 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Sois belle et tais-toi",
+      "title": "Élections de l’exécutif de l’AÉUM",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Toscane Ralaimongo",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
     },
