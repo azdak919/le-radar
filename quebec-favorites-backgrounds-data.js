@@ -20,7 +20,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "automne",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/0/08/En_m%C3%A9moire_de_l%60abb%C3%A9_Jean_Claude_Roy_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
@@ -34,7 +34,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "printemps",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/8e/%C3%89rables_et_sable_en_f%C3%A9erie_-_panoramio.jpg",
@@ -48,7 +48,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "automne",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/ae/Etang_et_montagnes_de_Stoke_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
@@ -62,7 +62,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "printemps",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Maple_trees_and_sunset_light_-_panoramio.jpg",
@@ -76,7 +76,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "automne",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/9/90/Paysage_d%60automne_-_panoramio.jpg",
@@ -90,7 +90,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "automne",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/23/Adstock_%28Qu%C3%A9bec%29%2C_paysage_rural_et_minier_01.jpg",
@@ -105,7 +105,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "automne",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/ac/Adstock_%28Qu%C3%A9bec%29%2C_paysage_rural_et_minier_02.jpg",
@@ -120,7 +120,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "automne",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "/assets/masthead/assemblee-nationale-stephane-groleau.jpg",
@@ -150,7 +150,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/9/97/Le_paysage_vu_du_quai_de_Carleton-sur-Mer_-_panoramio.jpg",
@@ -165,7 +165,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/f4/Chute_Montmorency_panorama.jpg",
@@ -180,7 +180,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Chute-Montmorency%2C_Quebec_city%2C_Canada.png",
@@ -195,7 +195,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "hiver",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/17/Montmorency_waterfall%2C_Qu%C3%A9bec%2C_Qu%C3%A9bec.jpg",
@@ -210,22 +210,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "automne",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
-  },
-  {
-    url: "https://upload.wikimedia.org/wikipedia/commons/f/ff/Parc_de_la_Chute-Montmorency_001.jpg",
-    credit: "Wilfredor",
-    link: "https://commons.wikimedia.org/wiki/File:Parc%20de%20la%20Chute-Montmorency%20001.jpg",
-    license: "CC0",
-    title: "Parc de la Chute-Montmorency 001",
-    focalY: 0.152,
-    width: 15189,
-    height: 8701,
-    place: "Chute Montmorency",
-    season: "hiver",
-    permanent: true,
-    surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/5/58/Parc_de_la_Chute-Montmorency_004.jpg",
@@ -240,7 +225,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "hiver",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/d7/Cap_Bon-Ami%2C_Forillon_National_Park_%287612987688%29.jpg",
@@ -255,7 +240,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Cap_Bon-Ami%2C_Forillon_National_Park_%287612992284%29.jpg",
@@ -270,7 +255,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Cap_Bon-Ami%2C_Forillon_National_Park_%287613000550%29.jpg",
@@ -285,7 +270,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/80/Cap_Bon-Ami%2C_Forillon_National_Park_%287613006968%29.jpg",
@@ -300,7 +285,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/e1/Cap_Bon-Ami%2C_Forillon_National_Park_%287613010484%29.jpg",
@@ -315,7 +300,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Lac_des_Deux_Montagnes_07.JPG",
@@ -330,7 +315,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo"],
-    tags: ["mat", "pomo", "favori"],
+    tags: ["mat", "favori", "pomo"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/8/89/Le_rocher_Perc%C3%A9_vu_de_la_mer.jpg",
@@ -345,7 +330,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "automne",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Perce_20020916_11.jpg",
@@ -360,7 +345,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "automne",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/0/02/Rocher_Perc%C3%A9_%E2%80%93_Perc%C3%A9%2C_QC_%E2%80%93_%282018-07-19%29.jpg",
@@ -375,7 +360,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/7/78/Rocher_Perc%C3%A9_vu_%C3%A0_partir_de_l%27%C3%AEle_Bonaventure.jpg",
@@ -390,7 +375,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/c/cb/Rocher_Perc%C3%A9_vu_du_littoral.jpg",
@@ -405,7 +390,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Before-sunrise-perse-rock.jpg",
@@ -420,7 +405,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/a/a3/Rocher_Perc%C3%A9%2C_Quebec.jpg",
@@ -435,7 +420,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "automne",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/5/58/Rivi%C3%A8re_P%C3%A9ribonka_Montagne_%C3%89t%C3%A9_IMG_1175.jpg",
@@ -450,7 +435,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Pessamit%2C_Quebec.jpg",
@@ -466,7 +451,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season6: "aujaq",
     permanent: true,
     surfaces: ["masthead", "solitaire"],
-    tags: ["mat", "solitaire", "pomo", "nations", "favori"],
+    tags: ["mat", "pomo", "nations", "favori", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/0/09/Autumnal_Retreat_in_Old_Quebec-_A_Canvas_of_Fading_Reds_and_Vibrant_Oranges.jpg",
@@ -481,7 +466,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "automne",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Bord_de_fleuve_qu%C3%A9bec_panorama_2012.jpg",
@@ -496,7 +481,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "hiver",
     permanent: true,
     surfaces: ["masthead", "solitaire"],
-    tags: ["pomo", "mat", "solitaire", "favori"],
+    tags: ["mat", "favori", "solitaire", "pomo"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/7/77/Riviere_saint_Francois_a_l%60aube_-_panoramio.jpg",
@@ -511,7 +496,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/d/db/2016-08_Saguenay_river_01.jpg",
@@ -526,7 +511,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/0/0e/2016-08_Saguenay_river_05.jpg",
@@ -541,7 +526,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Les_collines_escarp%C3%A9es_du_parc_du_Saguenay.jpg",
@@ -556,7 +541,7 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "ete",
     permanent: true,
     surfaces: ["masthead", "solitaire"],
-    tags: ["mat", "solitaire", "favori"],
+    tags: ["mat", "favori", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/c/c6/Paysage_rural_%C3%A0_Saint-Claude_-_Normand_Lemieux.jpg",
@@ -571,6 +556,6 @@ const QUEBEC_FAVORITES_BACKGROUNDS = [
     season: "automne",
     permanent: true,
     surfaces: ["masthead", "pomo", "solitaire"],
-    tags: ["mat", "pomo", "solitaire", "favori"],
+    tags: ["mat", "favori", "pomo", "solitaire"],
   }
 ];

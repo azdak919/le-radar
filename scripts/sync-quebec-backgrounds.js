@@ -222,6 +222,13 @@ function syncBanks(opts = {}) {
   const unifiedPath = path.join(root, photosLib.PHOTOS_REL);
   const hasUnified = fs.existsSync(unifiedPath);
   if (hasUnified && !checkOnlyFlag && opts.materialize !== false) {
+    const uni = photosLib.loadPhotos(root);
+    const before = (uni.photos || []).length;
+    uni.photos = (uni.photos || []).filter((p) => !matchHardBanned(p));
+    if (uni.photos.length !== before) {
+      photosLib.savePhotos(uni, root);
+      console.log(`  − photo-bank : ${before - uni.photos.length} hard-ban`);
+    }
     photosLib.materializeLegacySlices(root);
   }
   if (opts.skipScrub == null && hasUnified) opts.skipScrub = true;
