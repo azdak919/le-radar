@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-08-21T17:56:23.993Z",
+  "updatedAt": "2026-08-21T18:34:00.139Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Détour",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://chyz.ca/emission/detour/"
-      },
+      "current": null,
       "next": {
         "title": "Crooch Control",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "21:00",
         "end": "22:00",
         "url": "https://chyz.ca/emission/crooch-control/"
       },
       "track": "",
-      "showTitle": "Détour",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-21T17:55:54.123Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Rebelles soniques",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/rebelles-soniques"
-      },
-      "next": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "track": "",
-      "showTitle": "Rebelles soniques",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T17:55:56.561Z"
+      "checkedAt": "2026-08-21T18:33:32.486Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
+      "next": {
+        "title": "Salsa & Bembê",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/salsa-et-bembe"
+      },
+      "track": "",
+      "showTitle": "Le palmarès",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-08-21T18:33:34.846Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Butcher T's Noontime Cuts",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "NNB/SQUAT FM/QPIRG/knots",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
-      "track": "Butcher T",
-      "showTitle": "Butcher T's Noontime Cuts",
+      "next": {
+        "title": "New Shit",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
+      "track": "",
+      "showTitle": "NNB/SQUAT FM/QPIRG/knots",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T17:55:59.472Z"
+      "checkedAt": "2026-08-21T18:33:37.982Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "the castle",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/the-castle"
-      },
-      "next": {
         "title": "Spiral Bound",
         "source": "schedule-live",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/spiral-bound"
       },
+      "next": {
+        "title": "Dead Beats",
+        "source": "schedule-live",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/dead-beats"
+      },
       "track": "",
-      "showTitle": "the castle",
+      "showTitle": "Spiral Bound",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T17:56:15.971Z"
+      "checkedAt": "2026-08-21T18:33:52.363Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T17:56:17.086Z"
+      "checkedAt": "2026-08-21T18:33:53.154Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "17:00",
         "slug": "histoire-de-passer-le-temps"
       },
-      "track": "CAVS - Boitata",
+      "track": "MARIE NEIGES - Emporte-moi",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-21T17:56:23.642Z"
+      "checkedAt": "2026-08-21T18:33:59.788Z"
     }
   }
 }
