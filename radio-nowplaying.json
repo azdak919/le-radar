@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-21T21:48:50.250Z",
+  "updatedAt": "2026-08-21T22:21:11.055Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T21:48:25.079Z"
+      "checkedAt": "2026-08-21T22:20:48.236Z"
     },
     "cism": {
       "id": "cism",
@@ -48,85 +48,84 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T21:48:26.961Z"
+      "checkedAt": "2026-08-21T22:20:50.167Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Café",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Listening to Latin America: Blanca-Victoria",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
+      "showTitle": "Café",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T21:48:29.470Z"
+      "checkedAt": "2026-08-21T22:20:54.226Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Groove Master's Hour",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
-      },
-      "next": {
         "title": "The Go-Go Radio Magic Show",
         "source": "schedule-live",
         "start": "18:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
       },
+      "next": {
+        "title": "El Encuentro Latino",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/el-encuentro-latino"
+      },
       "track": "",
-      "showTitle": "The Groove Master's Hour",
+      "showTitle": "The Go-Go Radio Magic Show",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T21:48:43.030Z"
+      "checkedAt": "2026-08-21T22:21:07.950Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Nouveautés Franco",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "La récréation",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Enfin vendredi",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Nouveautés Franco",
+      "showTitle": "La récréation",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-21T21:48:43.560Z"
+      "checkedAt": "2026-08-21T22:21:08.619Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +138,7 @@
         "end": "00:00",
         "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
       },
-      "track": "Mario2 - Siamese Twins (Real Ones)",
+      "track": "NAYA ALI - Private Landing",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -151,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-21T21:48:49.899Z"
+      "checkedAt": "2026-08-21T22:21:10.704Z"
     }
   }
 }
