@@ -1,30 +1,23 @@
 {
-  "updated": "2026-08-22T11:31:40.371Z",
+  "updated": "2026-08-22T13:07:55.016Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 129,
+  "cited": 130,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 7,
-  "citedNew": 4,
-  "fallbackNew": 15,
+  "checked": 18,
+  "updatedCount": 6,
+  "citedNew": 6,
+  "fallbackNew": 12,
   "samples": [
     {
-      "title": "À la découverte du matcha et du kohakutou",
-      "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "De la résistance au courage",
-      "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
-      "cited": false,
-      "method": null
+      "title": "Sois belle et tais-toi",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "L’épidémie de la nonchalance",
@@ -41,11 +34,11 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Ce que nous devons aux femmes",
-      "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
       "cited": true,
-      "method": "media-credit-near"
+      "method": "via-attribution"
     },
     {
       "title": "Inside Mile End Kicks",
@@ -57,9 +50,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
