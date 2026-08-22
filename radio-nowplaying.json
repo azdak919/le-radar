@@ -1,163 +1,156 @@
 {
-  "updatedAt": "2026-08-22T01:02:32.909Z",
+  "updatedAt": "2026-08-22T02:34:17.517Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Crooch Control",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "https://chyz.ca/emission/crooch-control/"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHYZ",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
       "track": "",
-      "showTitle": "Crooch Control",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T01:02:03.649Z"
+      "checkedAt": "2026-08-22T02:33:28.766Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le 120e parallèle (reprise)",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/le-120e-parallele"
-      },
-      "next": {
         "title": "Mix anglo",
         "source": "schedule",
         "start": "22:00",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "Rythmologie (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/rythmologie"
+      },
       "track": "",
-      "showTitle": "Le 120e parallèle (reprise)",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T01:02:05.659Z"
+      "checkedAt": "2026-08-22T02:33:31.064Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Macondo",
-        "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Weekend Groove",
         "source": "api-live",
         "start": "22:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "WEFUNK",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "02:00"
+      },
       "track": "",
-      "showTitle": "Macondo",
+      "showTitle": "Weekend Groove",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T01:02:08.676Z"
+      "checkedAt": "2026-08-22T02:33:33.910Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Stereo Field Trip",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/stereo-field-trip"
-      },
-      "next": {
         "title": "The Come Up",
         "source": "schedule-live",
         "start": "22:00",
         "end": "23:00",
         "url": "http://www.cjlo.com/shows/the-come-up"
       },
+      "next": {
+        "title": "The Waxing Gibbous",
+        "source": "schedule-live",
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/the-waxing-gibbous"
+      },
       "track": "",
-      "showTitle": "Stereo Field Trip",
+      "showTitle": "The Come Up",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T01:02:23.209Z"
+      "checkedAt": "2026-08-22T02:33:57.339Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Mangue, Goyave et Reggae",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule-live",
         "start": "22:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Mangue, Goyave et Reggae",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T01:02:24.107Z"
+      "checkedAt": "2026-08-22T02:33:58.347Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "D'amour et de sexe",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
+        "title": "Mutations",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "mutations"
       },
-      "track": "Clément - this is how",
+      "track": "feeble little horse — Guts",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-22T01:02:32.559Z"
+      "checkedAt": "2026-08-22T02:34:17.167Z"
     }
   }
 }
