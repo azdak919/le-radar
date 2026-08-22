@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-22T09:31:05.434Z",
+  "updatedAt": "2026-08-22T10:20:06.067Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T09:30:44.106Z"
+      "checkedAt": "2026-08-22T10:19:37.768Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T09:30:45.979Z"
+      "checkedAt": "2026-08-22T10:19:39.767Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Mash Time Show",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
-      },
-      "next": {
         "title": "Quebec Acadie",
         "source": "api-live",
         "start": "06:00",
         "end": "10:00"
       },
+      "next": {
+        "title": "Making Contact/Anything Goes",
+        "source": "api-live",
+        "start": "10:00",
+        "end": "10:30"
+      },
       "track": "",
-      "showTitle": "The Mash Time Show",
+      "showTitle": "Quebec Acadie",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T09:30:48.107Z"
+      "checkedAt": "2026-08-22T10:19:42.059Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "World-Up'",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
       },
+      "next": {
+        "title": "The Live Wire Show",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/the-live-wire-show"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "World-Up'",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T09:31:02.123Z"
+      "checkedAt": "2026-08-22T10:19:56.584Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T09:31:02.881Z"
+      "checkedAt": "2026-08-22T10:19:57.280Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Kamilou - Paranormal",
+      "track": "Heron - Kanen - Bras solaires",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-22T09:31:05.083Z"
+      "checkedAt": "2026-08-22T10:20:05.716Z"
     }
   }
 }
