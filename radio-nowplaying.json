@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-22T07:56:38.951Z",
+  "updatedAt": "2026-08-22T08:28:19.590Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T07:56:14.314Z"
+      "checkedAt": "2026-08-22T08:27:55.027Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T07:56:16.630Z"
+      "checkedAt": "2026-08-22T08:27:57.245Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Soca Sessions",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "The Mash Time Show",
         "source": "api-live",
         "start": "04:00",
         "end": "06:00"
       },
+      "next": {
+        "title": "Quebec Acadie",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "10:00"
+      },
       "track": "",
-      "showTitle": "Soca Sessions",
+      "showTitle": "The Mash Time Show",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T07:56:19.911Z"
+      "checkedAt": "2026-08-22T08:28:00.100Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T07:56:34.248Z"
+      "checkedAt": "2026-08-22T08:28:15.448Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T07:56:35.058Z"
+      "checkedAt": "2026-08-22T08:28:16.178Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "coffret de bijoux - faint but ever so loving",
+      "track": "Fleur de Peau - Perseides",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-22T07:56:38.600Z"
+      "checkedAt": "2026-08-22T08:28:19.239Z"
     }
   }
 }
