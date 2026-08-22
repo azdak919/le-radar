@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-08-22T16:49:25.921Z",
+  "updatedAt": "2026-08-22T17:18:13.917Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Radio Futura",
-        "source": "schedule",
+        "source": "api-live",
         "start": "13:00",
         "end": "16:00",
         "url": "https://chyz.ca/emission/radio-futura/"
       },
+      "next": {
+        "title": "Palmarès CHYZ",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "10:30",
+        "url": "https://chyz.ca/emission/palmares-chyz/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Radio Futura",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T16:48:44.784Z"
+      "checkedAt": "2026-08-22T17:17:48.352Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Elkin Polo El Show",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/elkin-polo-el-show"
-      },
-      "next": {
         "title": "Change le beat",
         "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/change-le-beat"
       },
+      "next": {
+        "title": "Faites entrer un DJ",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/faites-entrer-un-dj"
+      },
       "track": "",
-      "showTitle": "Elkin Polo El Show",
+      "showTitle": "Change le beat",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T16:48:46.722Z"
+      "checkedAt": "2026-08-22T17:17:50.523Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T16:48:54.395Z"
+      "checkedAt": "2026-08-22T17:17:53.044Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T16:49:08.077Z"
+      "checkedAt": "2026-08-22T17:18:07.012Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T16:49:08.809Z"
+      "checkedAt": "2026-08-22T17:18:07.911Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +141,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Jules — Tuer la flamme",
+      "track": "Les Lunatiques - Trip de baies",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-22T16:49:25.570Z"
+      "checkedAt": "2026-08-22T17:18:13.566Z"
     }
   }
 }
