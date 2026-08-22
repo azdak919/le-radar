@@ -1,12 +1,12 @@
 {
-  "updated": "2026-08-22T19:36:52.368Z",
+  "updated": "2026-08-22T20:26:00.781Z",
   "total": 185,
   "pool": 58,
   "incomplete": 9,
-  "withLeadExcerpt": 84,
+  "withLeadExcerpt": 83,
   "candidates": 9,
-  "enriched": 2,
-  "failed": 0,
+  "enriched": 0,
+  "failed": 1,
   "ok": true,
   "samples": [
     {
@@ -16,16 +16,7 @@
       "score": 66,
       "chars": 400,
       "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
-      "changed": true
-    },
-    {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
-      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
-      "ok": true,
-      "score": 81,
-      "chars": 400,
-      "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
-      "changed": true
+      "changed": false
     },
     {
       "title": "La mauvaise nutrition et les maladies chroniques",
@@ -79,6 +70,15 @@
       "score": 66,
       "chars": 400,
       "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
+      "changed": false
+    },
+    {
+      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
+      "link": "https://thelinknewspaper.ca/article/16338",
+      "ok": true,
+      "score": 90,
+      "chars": 177,
+      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
     }
   ]
