@@ -1,14 +1,50 @@
 {
-  "updated": "2026-08-22T14:24:44.901Z",
+  "updated": "2026-08-22T16:28:23.849Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 6,
-  "withLeadExcerpt": 82,
-  "candidates": 6,
-  "enriched": 0,
+  "incomplete": 10,
+  "withLeadExcerpt": 83,
+  "candidates": 10,
+  "enriched": 4,
   "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "La mauvaise nutrition et les maladies chroniques",
+      "link": "https://lecollectif.ca/a-la-une/la-mauvaise-nutrition-et-les-maladies-chroniques/",
+      "ok": true,
+      "score": 76,
+      "chars": 400,
+      "sample": "Les repas à forte teneur calorique, glycémique et lipidique regorgent dans la plupart des marchés d’",
+      "changed": true
+    },
+    {
+      "title": "La conduite à risque des automobilistes",
+      "link": "https://lecollectif.ca/a-la-une/la-conduite-a-risque-des-automobilistes/",
+      "ok": true,
+      "score": 100,
+      "chars": 374,
+      "sample": "Téléphone au volant, distraction avec un animal de compagnie, téléphone à l’oreille, ceinture non at",
+      "changed": true
+    },
+    {
+      "title": "La création de contenu et l’influence, un métier contemporain",
+      "link": "https://lecollectif.ca/a-la-une/la-creation-de-contenu-et-linfluence-un-metier-contemporain/",
+      "ok": true,
+      "score": 100,
+      "chars": 344,
+      "sample": "Le rôle des personnes influenceuses est de développer une communauté où elles pourront partager leur",
+      "changed": true
+    },
+    {
+      "title": "Le cinéma québécois fait son entrée en classe avec Ciné Panache",
+      "link": "https://lecollectif.ca/a-la-une/le-cinema-quebecois-fait-son-entree-en-classe-avec-cine-panache/",
+      "ok": true,
+      "score": 100,
+      "chars": 350,
+      "sample": "La sélection rassemble des œuvres marquantes de la cinématographie québécoise, allant de Léolo à C.R",
+      "changed": true
+    },
     {
       "title": "Montreal city council to debate motion to cut ties with Israel on August 24",
       "link": "https://thelinknewspaper.ca/article/16341",
@@ -43,24 +79,6 @@
       "score": 66,
       "chars": 400,
       "sample": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt t",
-      "changed": false
-    },
-    {
-      "title": "Ask the Trib: How do I survive summer in my hometown?",
-      "link": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
-      "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
-      "changed": false
-    },
-    {
-      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
-      "link": "https://thelinknewspaper.ca/article/16338",
-      "ok": true,
-      "score": 90,
-      "chars": 177,
-      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
     }
   ]
