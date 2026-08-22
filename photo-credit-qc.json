@@ -1,24 +1,17 @@
 {
-  "updated": "2026-08-22T04:03:14.931Z",
+  "updated": "2026-08-22T05:49:40.711Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 130,
-  "pending": 13,
+  "cited": 131,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
   "checked": 22,
   "updatedCount": 10,
-  "citedNew": 8,
-  "fallbackNew": 14,
+  "citedNew": 9,
+  "fallbackNew": 13,
   "samples": [
-    {
-      "title": "Des initiatives qui rassemblent",
-      "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "À la découverte du matcha et du kohakutou",
       "source": "Le Collectif",
@@ -34,11 +27,11 @@
       "method": null
     },
     {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
-      "method": "figcaption-paren-kind"
+      "method": "media-credit-featured"
     },
     {
       "title": "L’épidémie de la nonchalance",
@@ -48,11 +41,11 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "La performance de l’homosexualité : un privilège ?",
+      "title": "Ce que nous devons aux femmes",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "credit": "Photo : Alexandre Gontier",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "media-credit-near"
     },
     {
       "title": "Les femmes MAGA au service du patriarcat",
@@ -60,13 +53,6 @@
       "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
     },
     {
       "title": "Inside Mile End Kicks",
@@ -81,6 +67,20 @@
       "credit": "Illustration: Halle Keays",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
