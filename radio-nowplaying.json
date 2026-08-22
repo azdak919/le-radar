@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-22T08:58:34.226Z",
+  "updatedAt": "2026-08-22T09:31:05.434Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T08:58:12.970Z"
+      "checkedAt": "2026-08-22T09:30:44.106Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "Voix tropicale",
         "source": "schedule",
         "start": "05:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/voix-tropicale"
       },
+      "next": {
+        "title": "Elkin Polo El Show",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/elkin-polo-el-show"
+      },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "Voix tropicale",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T08:58:14.923Z"
+      "checkedAt": "2026-08-22T09:30:45.979Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T08:58:17.317Z"
+      "checkedAt": "2026-08-22T09:30:48.107Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T08:58:31.074Z"
+      "checkedAt": "2026-08-22T09:31:02.123Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T08:58:31.918Z"
+      "checkedAt": "2026-08-22T09:31:02.881Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Birds of Prrrey - Diana",
+      "track": "Kamilou - Paranormal",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-22T08:58:33.875Z"
+      "checkedAt": "2026-08-22T09:31:05.083Z"
     }
   }
 }
