@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-22T16:19:39.234Z",
+  "updatedAt": "2026-08-22T16:49:25.921Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Un Monde de Couleurs et de Son",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "12:30",
-        "url": "https://chyz.ca/emission/un-monde-de-couleurs-et-de-son/"
-      },
+      "current": null,
       "next": {
         "title": "Radio Futura",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "13:00",
         "end": "16:00",
         "url": "https://chyz.ca/emission/radio-futura/"
       },
       "track": "",
-      "showTitle": "Un Monde de Couleurs et de Son",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T16:19:14.788Z"
+      "checkedAt": "2026-08-22T16:48:44.784Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T16:19:16.808Z"
+      "checkedAt": "2026-08-22T16:48:46.722Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T16:19:19.241Z"
+      "checkedAt": "2026-08-22T16:48:54.395Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T16:19:33.895Z"
+      "checkedAt": "2026-08-22T16:49:08.077Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T16:19:34.653Z"
+      "checkedAt": "2026-08-22T16:49:08.809Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Marie Celeste - CAM",
+      "track": "Jules — Tuer la flamme",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -152,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-22T16:19:38.883Z"
+      "checkedAt": "2026-08-22T16:49:25.570Z"
     }
   }
 }
