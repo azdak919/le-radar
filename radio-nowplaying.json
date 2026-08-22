@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-08-22T15:45:53.044Z",
+  "updatedAt": "2026-08-22T16:19:39.234Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Le Ré-Show : Deuxième Service",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
-      },
-      "next": {
         "title": "Un Monde de Couleurs et de Son",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "12:00",
         "end": "12:30",
         "url": "https://chyz.ca/emission/un-monde-de-couleurs-et-de-son/"
       },
+      "next": {
+        "title": "Radio Futura",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/radio-futura/"
+      },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième Service",
+      "showTitle": "Un Monde de Couleurs et de Son",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T15:45:23.356Z"
+      "checkedAt": "2026-08-22T16:19:14.788Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T15:45:25.734Z"
+      "checkedAt": "2026-08-22T16:19:16.808Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T15:45:28.442Z"
+      "checkedAt": "2026-08-22T16:19:19.241Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Gospel Unlimited",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/gospel-unlimited"
-      },
-      "next": {
         "title": "Anatomy of Caribbean Music",
         "source": "schedule-live",
         "start": "12:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
       },
+      "next": {
+        "title": "Caribbean Callaloo",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
+      },
       "track": "",
-      "showTitle": "Gospel Unlimited",
+      "showTitle": "Anatomy of Caribbean Music",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T15:45:42.310Z"
+      "checkedAt": "2026-08-22T16:19:33.895Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T15:45:43.048Z"
+      "checkedAt": "2026-08-22T16:19:34.653Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Cola - Fainting Spells",
+      "track": "Marie Celeste - CAM",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -152,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-22T15:45:52.694Z"
+      "checkedAt": "2026-08-22T16:19:38.883Z"
     }
   }
 }
