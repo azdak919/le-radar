@@ -1,25 +1,19 @@
 {
-  "updated": "2026-08-22T16:34:52.624Z",
+  "updated": "2026-08-22T17:54:52.084Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 21,
-  "withCampusBank": 12,
+  "withStock": 28,
+  "withCampusBank": 13,
   "fullyCovered": 185,
-  "leadReadyPhotos": 144,
-  "pageScraped": 28,
-  "photosRecovered": 28,
+  "leadReadyPhotos": 121,
+  "pageScraped": 26,
+  "photosRecovered": 26,
   "imagesCleared": 17,
-  "stockSearches": 37,
-  "stockFound": 13,
-  "campusBankFound": 6,
+  "stockSearches": 67,
+  "stockFound": 16,
+  "campusBankFound": 4,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "The Cruel Optimism of Summer",
-      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg"
-    },
     {
       "title": "CSU terminates council’s chief election officer",
       "link": "https://thelinknewspaper.ca/article/16334",
@@ -33,10 +27,46 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SPORTSETBIENETRE_Mauvaise-nutrition-et-maladies-chroniques_Source-Sante-education.jpg"
     },
     {
+      "title": "La conduite à risque des automobilistes",
+      "link": "https://lecollectif.ca/a-la-une/la-conduite-a-risque-des-automobilistes/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Conduite-a-risque-des-automobilistes_Source-Lassurance-en-mouvement.jpg"
+    },
+    {
+      "title": "La création de contenu et l’influence, un métier contemporain",
+      "link": "https://lecollectif.ca/a-la-une/la-creation-de-contenu-et-linfluence-un-metier-contemporain/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Personnes-creatrices-de-contenu_Source-MJM-Graphic-Design.jpg"
+    },
+    {
       "title": "Le cinéma québécois fait son entrée en classe avec Ciné Panache",
       "link": "https://lecollectif.ca/a-la-une/le-cinema-quebecois-fait-son-entree-en-classe-avec-cine-panache/",
       "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/CULTURE_CinemaQuebecois_SourceCinePanache.png"
+    },
+    {
+      "title": "Les rendez-vous gourmands de la région cet automne",
+      "link": "https://lecollectif.ca/a-la-une/les-rendez-vous-gourmands-de-la-region-cet-automne/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/CULTURE_lesrendezvousgourmandsautomne_FacebookLesComptonales-1024x682.jpg"
+    },
+    {
+      "title": "À la découverte du matcha et du kohakutou",
+      "link": "https://lecollectif.ca/a-la-une/a-la-decouverte-du-matcha-et-du-kohakutou/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/CULTURE_FTMS_Matcha_ChasenEtChawan_Photo1_SourcePalaisDesThes.png"
+    },
+    {
+      "title": "Vers un centre de données à Sherbrooke",
+      "link": "https://lecollectif.ca/a-la-une/vers-un-centre-de-donnees-a-sherbrooke/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Vers-un-centre-de-donnees-a-Sherbrooke_Google-Earth.png"
+    },
+    {
+      "title": "Retour sur « Le 12 août, j’achète un livre québécois 100% humain »",
+      "link": "https://lecollectif.ca/culture/retour-sur-le-12-aout-jachete-un-livre-quebecois-100-humain/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/772868757_2190927092306300_8826211073640342084_n-1024x536.jpeg"
     },
     {
       "title": "Vague de décès liés à l’Ebola en Afrique",
@@ -45,46 +75,16 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Vague-de-deces-lies-a-lEbola-en-Afrique_Getty-Images.jpg"
     },
     {
-      "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
-      "link": "https://thelinknewspaper.ca/article/16326",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
+      "title": "FTMS : vers un événement zéro déchet ?",
+      "link": "https://lecollectif.ca/a-la-une/ftms-vers-un-evenement-zero-dechet/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/ENVIRONNEMENT_FTMS_Ecoresponsabilite_SourceFTMS-1024x676.png"
     },
     {
-      "title": "From the rink to the links",
-      "link": "https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
-    },
-    {
-      "title": "Mars enters Aries",
-      "link": "https://thebucampus.ca/2026/04/06/mars-enters-aries/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
-    },
-    {
-      "title": "Spotlighting Powerful McGill Alumnae",
-      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Avenue_McGill_College_07.JPG"
-    },
-    {
-      "title": "National Golf tournament",
-      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531487%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Gaiters wrap up hard-fought season with eyes on next year",
-      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/61/Bishop%27s_University_shield_stone.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "The Gentrification of Online Fandom Spaces",
-      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Avenue_McGill_College_07.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "link": "https://lapige.atmjonquiere.com/2026/06/22/se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille/?utm_source=rss&utm_medium=rss&utm_campaign=se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/06/Bruno-Cormier-retraite-benevole.png"
     }
   ]
 }

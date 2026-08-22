@@ -1,52 +1,17 @@
 {
-  "updated": "2026-08-22T16:34:59.557Z",
+  "updated": "2026-08-22T17:55:04.086Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 130,
+  "cited": 131,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 22,
-  "updatedCount": 10,
-  "citedNew": 8,
-  "fallbackNew": 14,
+  "checked": 17,
+  "updatedCount": 5,
+  "citedNew": 5,
+  "fallbackNew": 12,
   "samples": [
-    {
-      "title": "La mauvaise nutrition et les maladies chroniques",
-      "source": "Le Collectif",
-      "credit": "Photo : Santé éducation",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "La conduite à risque des automobilistes",
-      "source": "Le Collectif",
-      "credit": "Photo : L’assurance automobile",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "La création de contenu et l’influence, un métier contemporain",
-      "source": "Le Collectif",
-      "credit": "Photo : MJM Graphic Design",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Le cinéma québécois fait son entrée en classe avec Ciné Panache",
-      "source": "Le Collectif",
-      "credit": "Photo : Ciné Panache",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "À la découverte du matcha et du kohakutou",
-      "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
@@ -62,11 +27,11 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Ce que nous devons aux femmes",
-      "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
       "cited": true,
-      "method": "media-credit-near"
+      "method": "via-attribution"
     },
     {
       "title": "Inside Mile End Kicks",
@@ -78,9 +43,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
