@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-08-22T14:47:15.819Z",
+  "updatedAt": "2026-08-22T15:17:30.268Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le Ré-Show : Deuxième Service",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
       },
+      "next": {
+        "title": "Un Monde de Couleurs et de Son",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "12:30",
+        "url": "https://chyz.ca/emission/un-monde-de-couleurs-et-de-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Le Ré-Show : Deuxième Service",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T14:46:52.483Z"
+      "checkedAt": "2026-08-22T15:17:06.665Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T14:46:54.438Z"
+      "checkedAt": "2026-08-22T15:17:09.048Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T14:46:57.824Z"
+      "checkedAt": "2026-08-22T15:17:11.753Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T14:47:11.839Z"
+      "checkedAt": "2026-08-22T15:17:26.114Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T14:47:12.597Z"
+      "checkedAt": "2026-08-22T15:17:26.849Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +141,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Xela Edna - BB2000",
+      "track": "Emmanuelle Querry - Le generique",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-22T14:47:15.469Z"
+      "checkedAt": "2026-08-22T15:17:29.917Z"
     }
   }
 }
