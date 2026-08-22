@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-22T21:18:57.952Z",
+  "updatedAt": "2026-08-22T21:45:38.242Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T21:18:33.759Z"
+      "checkedAt": "2026-08-22T21:45:12.838Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le radar",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "17:30",
-        "url": "https://cism893.ca/emissions/le-radar-2"
-      },
-      "next": {
         "title": "Disconomique",
         "source": "schedule",
         "start": "17:30",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/disconomique"
       },
+      "next": {
+        "title": "Solénoïde",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/solenoide"
+      },
       "track": "",
-      "showTitle": "Le radar",
+      "showTitle": "Disconomique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T21:18:36.083Z"
+      "checkedAt": "2026-08-22T21:45:14.964Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T21:18:38.830Z"
+      "checkedAt": "2026-08-22T21:45:17.452Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T21:18:53.507Z"
+      "checkedAt": "2026-08-22T21:45:31.242Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T21:18:54.088Z"
+      "checkedAt": "2026-08-22T21:45:32.104Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Salomé Leclerc - Partir ensemble",
+      "track": "Laurence-Anne - Indigo",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-22T21:18:57.601Z"
+      "checkedAt": "2026-08-22T21:45:37.892Z"
     }
   }
 }
