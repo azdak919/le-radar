@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-22T08:54:42.070Z",
+  "updated": "2026-08-22T10:00:09.767Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 130,
-  "pending": 13,
+  "cited": 131,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
   "checked": 22,
   "updatedCount": 10,
-  "citedNew": 8,
-  "fallbackNew": 14,
+  "citedNew": 9,
+  "fallbackNew": 13,
   "samples": [
     {
       "title": "À la découverte du matcha et du kohakutou",
@@ -27,13 +27,6 @@
       "method": null
     },
     {
-      "title": "La performance de l’homosexualité : un privilège ?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
       "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
       "credit": "Photo : Elie Nguyen",
@@ -41,16 +34,23 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Ce que nous devons aux femmes",
+      "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
-      "method": "media-credit-near"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Les femmes MAGA au service du patriarcat",
+      "title": "Sois belle et tais-toi",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré/Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -71,9 +71,9 @@
     {
       "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
       "source": "La Pige",
-      "credit": "Crédit photo : La Pige",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
     },
     {
       "title": "Leave the Children Out of This",
