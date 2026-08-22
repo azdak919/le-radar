@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-22T21:45:38.242Z",
+  "updatedAt": "2026-08-22T22:18:26.696Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T21:45:12.838Z"
+      "checkedAt": "2026-08-22T22:18:04.528Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T21:45:14.964Z"
+      "checkedAt": "2026-08-22T22:18:06.501Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T21:45:17.452Z"
+      "checkedAt": "2026-08-22T22:18:08.892Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mo' Ritmo Radio",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
-      },
-      "next": {
         "title": "The Limelight",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/the-limelight"
       },
+      "next": {
+        "title": "Screamers",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/screamers"
+      },
       "track": "",
-      "showTitle": "Mo' Ritmo Radio",
+      "showTitle": "The Limelight",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T21:45:31.242Z"
+      "checkedAt": "2026-08-22T22:18:22.763Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T21:45:32.104Z"
+      "checkedAt": "2026-08-22T22:18:23.590Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Laurence-Anne - Indigo",
+      "track": "Naomi, SLM - Hershey Kiss",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-22T21:45:37.892Z"
+      "checkedAt": "2026-08-22T22:18:26.345Z"
     }
   }
 }
