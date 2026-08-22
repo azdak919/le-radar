@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-08-22T13:54:31.621Z",
+  "updatedAt": "2026-08-22T14:18:06.854Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHYZ",
-        "source": "schedule",
+        "source": "api-live",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
+      "next": {
+        "title": "Le Ré-Show : Deuxième Service",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Palmarès CHYZ",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T13:54:01.732Z"
+      "checkedAt": "2026-08-22T14:17:41.779Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T13:54:04.220Z"
+      "checkedAt": "2026-08-22T14:17:44.161Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Quebec Acadie",
-        "source": "api-live",
-        "start": "06:00",
-        "end": "10:00"
-      },
-      "next": {
         "title": "Making Contact/Anything Goes",
         "source": "api-live",
         "start": "10:00",
         "end": "10:30"
       },
+      "next": {
+        "title": "Samedi Midi",
+        "source": "api-live",
+        "start": "10:30",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Quebec Acadie",
+      "showTitle": "Making Contact/Anything Goes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T13:54:07.065Z"
+      "checkedAt": "2026-08-22T14:17:47.043Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Live Wire Show",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/the-live-wire-show"
-      },
-      "next": {
         "title": "Gospel Unlimited",
         "source": "schedule-live",
         "start": "10:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/gospel-unlimited"
       },
+      "next": {
+        "title": "Anatomy of Caribbean Music",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
+      },
       "track": "",
-      "showTitle": "The Live Wire Show",
+      "showTitle": "Gospel Unlimited",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T13:54:21.134Z"
+      "checkedAt": "2026-08-22T14:18:02.739Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T13:54:21.890Z"
+      "checkedAt": "2026-08-22T14:18:03.638Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +141,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Logan Staats - Medicine Wheel",
+      "track": "Naima Frank - Ainsi soit-il",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-22T13:54:31.272Z"
+      "checkedAt": "2026-08-22T14:18:06.503Z"
     }
   }
 }
