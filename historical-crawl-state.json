@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-08-21T07:28:16.221Z",
+  "updated": "2026-08-22T07:18:08.801Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
-      "lastAttemptAt": "2026-08-21T07:28:14.830Z",
+      "lastAttemptAt": "2026-08-22T07:18:07.335Z",
       "error": null,
       "retryAt": null,
-      "windowStart": "2023-08-21T13:28:03.456Z",
+      "windowStart": "2023-08-22T13:18:01.590Z",
       "windowYears": 3,
-      "nextPage": 17,
+      "nextPage": 21,
       "totalPages": 28,
-      "lastSuccessAt": "2026-08-21T07:28:14.830Z"
+      "lastSuccessAt": "2026-08-22T07:18:07.335Z"
     },
     "lexemplaire": {
       "strategy": "wordpress-rest",
@@ -177,14 +177,15 @@
     },
     "zone-campus": {
       "strategy": "wordpress-rest",
-      "lastAttemptAt": "2026-08-21T07:28:08.925Z",
+      "lastAttemptAt": "2026-08-22T07:18:01.661Z",
       "error": null,
       "retryAt": null,
-      "windowStart": "2023-08-21T13:28:03.456Z",
+      "windowStart": "2023-08-22T13:18:01.590Z",
       "windowYears": 3,
-      "nextPage": 17,
+      "nextPage": null,
       "totalPages": 17,
-      "lastSuccessAt": "2026-08-21T07:28:08.925Z"
+      "lastSuccessAt": "2026-08-22T07:18:01.661Z",
+      "completedAt": "2026-08-22T07:18:01.661Z"
     }
   }
 }
