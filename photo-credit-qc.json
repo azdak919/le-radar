@@ -1,23 +1,30 @@
 {
-  "updated": "2026-08-22T02:23:48.567Z",
+  "updated": "2026-08-22T04:03:14.931Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 129,
-  "pending": 12,
+  "cited": 130,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 7,
-  "citedNew": 4,
-  "fallbackNew": 15,
+  "checked": 22,
+  "updatedCount": 10,
+  "citedNew": 8,
+  "fallbackNew": 14,
   "samples": [
+    {
+      "title": "Des initiatives qui rassemblent",
+      "source": "Le Délit",
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "À la découverte du matcha et du kohakutou",
       "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
-      "cited": false,
-      "method": null
+      "credit": "Photo : ItSarahGendreauSimoneau",
+      "cited": true,
+      "method": "filename-credit"
     },
     {
       "title": "De la résistance au courage",
@@ -25,6 +32,13 @@
       "credit": "Crédit photo : Le Collectif",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
     },
     {
       "title": "L’épidémie de la nonchalance",
@@ -48,6 +62,13 @@
       "method": "media-credit-featured"
     },
     {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
       "title": "Inside Mile End Kicks",
       "source": "The Link",
       "credit": "Photo: Courtesy of Joe Fuda",
@@ -57,9 +78,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
