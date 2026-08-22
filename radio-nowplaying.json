@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-22T22:47:48.522Z",
+  "updatedAt": "2026-08-22T23:17:57.471Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T22:47:22.005Z"
+      "checkedAt": "2026-08-22T23:17:32.753Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Disconomique",
-        "source": "schedule",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/disconomique"
-      },
-      "next": {
         "title": "Solénoïde",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/solenoide"
       },
+      "next": {
+        "title": "Les criquets crinqués (reprise)",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/les-criquets-crinques"
+      },
       "track": "",
-      "showTitle": "Disconomique",
+      "showTitle": "Solénoïde",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T22:47:23.961Z"
+      "checkedAt": "2026-08-22T23:17:34.989Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "West Indian Rhythms",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Masters At Work",
         "source": "api-live",
         "start": "19:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Howls From Hell/Too Loud For The Crowd",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "West Indian Rhythms",
+      "showTitle": "Masters At Work",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T22:47:26.766Z"
+      "checkedAt": "2026-08-22T23:17:37.795Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Limelight",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/the-limelight"
-      },
-      "next": {
         "title": "Screamers",
         "source": "schedule-live",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/screamers"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "The Limelight",
+      "showTitle": "Screamers",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T22:47:40.848Z"
+      "checkedAt": "2026-08-22T23:17:52.854Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T22:47:41.669Z"
+      "checkedAt": "2026-08-22T23:17:53.694Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Marci - Butterfly Sticker",
+      "track": "The Womack Sisters - Chauffeur (Radio Edit)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-22T22:47:48.171Z"
+      "checkedAt": "2026-08-22T23:17:57.120Z"
     }
   }
 }
