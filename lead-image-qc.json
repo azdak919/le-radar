@@ -1,24 +1,24 @@
 {
-  "updated": "2026-08-22T01:56:12.008Z",
+  "updated": "2026-08-22T04:02:53.405Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 21,
   "withCampusBank": 12,
   "fullyCovered": 185,
-  "leadReadyPhotos": 150,
+  "leadReadyPhotos": 149,
   "pageScraped": 30,
   "photosRecovered": 30,
   "imagesCleared": 17,
-  "stockSearches": 31,
-  "stockFound": 8,
-  "campusBankFound": 3,
+  "stockSearches": 33,
+  "stockFound": 10,
+  "campusBankFound": 4,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "The Cruel Optimism of Summer",
-      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
+      "title": "CSU terminates council’s chief election officer",
+      "link": "https://thelinknewspaper.ca/article/16334",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
     },
     {
       "title": "Vague de décès liés à l’Ebola en Afrique",
@@ -33,6 +33,18 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_apparence-physique-au-travailSourceSileas.jpg"
     },
     {
+      "title": "Spotlighting Powerful McGill Alumnae",
+      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/5/56/Walking_west_on_Sherbrooke_Street_near_McGill_University%2C_May_1%2C_2023.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "National Golf tournament",
+      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288689651802%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "campus-bank",
@@ -42,7 +54,7 @@
       "title": "The Gentrification of Online Fandom Spaces",
       "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg"
     },
     {
       "title": "Le pays avant tout – esquisse",
@@ -73,18 +85,6 @@
       "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "reason": "no-stock-match",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
-    },
-    {
-      "title": "Gothic Cinema Rises from the Grave",
-      "link": "https://theplantnews.com/2026/05/11/gothic-cinema-rises-from-the-grave/",
-      "reason": "no-stock-match",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.png"
-    },
-    {
-      "title": "On Manon from KATSEYE: How K-Pop Takes Its Roots from Black Culture",
-      "link": "https://theplantnews.com/2026/05/11/on-manon-from-katseye-how-k-pop-takes-its-roots-from-black-culture/",
-      "reason": "no-stock-match",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-5.jpeg"
     }
   ]
 }
