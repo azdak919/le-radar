@@ -1,23 +1,23 @@
 {
-  "updated": "2026-08-22T07:07:39.051Z",
+  "updated": "2026-08-22T08:54:42.070Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 129,
-  "pending": 12,
+  "cited": 130,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 20,
-  "updatedCount": 8,
-  "citedNew": 5,
-  "fallbackNew": 15,
+  "checked": 22,
+  "updatedCount": 10,
+  "citedNew": 8,
+  "fallbackNew": 14,
   "samples": [
     {
       "title": "À la découverte du matcha et du kohakutou",
       "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
-      "cited": false,
-      "method": null
+      "credit": "Photo : ItSarahGendreauSimoneau",
+      "cited": true,
+      "method": "filename-credit"
     },
     {
       "title": "De la résistance au courage",
@@ -27,13 +27,6 @@
       "method": null
     },
     {
-      "title": "L’épidémie de la nonchalance",
-      "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
       "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
       "credit": "Photo : Félix Fournier",
@@ -41,16 +34,23 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Sois belle et tais-toi",
+      "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Elie Nguyen",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "title": "Ce que nous devons aux femmes",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré/Félix Fournier",
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
+    },
+    {
+      "title": "Les femmes MAGA au service du patriarcat",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -64,9 +64,23 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
