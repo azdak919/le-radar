@@ -1,24 +1,17 @@
 {
-  "updated": "2026-08-22T13:07:55.016Z",
+  "updated": "2026-08-22T14:31:25.425Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 130,
+  "cited": 129,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 6,
-  "citedNew": 6,
-  "fallbackNew": 12,
+  "checked": 17,
+  "updatedCount": 5,
+  "citedNew": 4,
+  "fallbackNew": 13,
   "samples": [
-    {
-      "title": "Sois belle et tais-toi",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
     {
       "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
@@ -34,11 +27,11 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
+      "title": "Ce que nous devons aux femmes",
+      "source": "Le Délit",
+      "credit": "Photo : Alexandre Gontier",
       "cited": true,
-      "method": "via-attribution"
+      "method": "media-credit-near"
     },
     {
       "title": "Inside Mile End Kicks",
@@ -50,9 +43,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
