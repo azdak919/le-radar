@@ -1,23 +1,23 @@
 {
-  "updated": "2026-08-22T10:00:09.767Z",
+  "updated": "2026-08-22T11:31:40.371Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 131,
+  "cited": 129,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 22,
-  "updatedCount": 10,
-  "citedNew": 9,
-  "fallbackNew": 13,
+  "checked": 19,
+  "updatedCount": 7,
+  "citedNew": 4,
+  "fallbackNew": 15,
   "samples": [
     {
       "title": "À la découverte du matcha et du kohakutou",
       "source": "Le Collectif",
-      "credit": "Photo : ItSarahGendreauSimoneau",
-      "cited": true,
-      "method": "filename-credit"
+      "credit": "Crédit photo : Le Collectif",
+      "cited": false,
+      "method": null
     },
     {
       "title": "De la résistance au courage",
@@ -41,18 +41,11 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Sois belle et tais-toi",
+      "title": "Ce que nous devons aux femmes",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Alexandre Gontier",
       "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Qui sont les agents qui patrouillent notre campus ?",
-      "source": "Le Délit",
-      "credit": "Photo : Stu Doré/Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
+      "method": "media-credit-near"
     },
     {
       "title": "Inside Mile End Kicks",
@@ -64,23 +57,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
