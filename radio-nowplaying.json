@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-22T02:34:17.517Z",
+  "updatedAt": "2026-08-22T03:39:04.998Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T02:33:28.766Z"
+      "checkedAt": "2026-08-22T03:38:40.797Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T02:33:31.064Z"
+      "checkedAt": "2026-08-22T03:38:42.650Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T02:33:33.910Z"
+      "checkedAt": "2026-08-22T03:38:45.062Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Come Up",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/the-come-up"
-      },
-      "next": {
         "title": "The Waxing Gibbous",
         "source": "schedule-live",
         "start": "23:00",
         "end": "00:00",
         "url": "http://www.cjlo.com/shows/the-waxing-gibbous"
       },
+      "next": {
+        "title": "Jazz Boulevard",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/jazz-boulevard"
+      },
       "track": "",
-      "showTitle": "The Come Up",
+      "showTitle": "The Waxing Gibbous",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T02:33:57.339Z"
+      "checkedAt": "2026-08-22T03:38:58.847Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-22T02:33:58.347Z"
+      "checkedAt": "2026-08-22T03:38:59.373Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "feeble little horse — Guts",
+      "track": "Tiffany Day - AMERICAN GIRL",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-22T02:34:17.167Z"
+      "checkedAt": "2026-08-22T03:39:04.647Z"
     }
   }
 }
