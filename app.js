@@ -3855,13 +3855,6 @@ function sportsCtaResultIsTodayOrYesterday(game, now = Date.now()) {
   return day === today || day === yesterday;
 }
 
-/** Résultat CTA : aujourd’hui / hier (pastilles dédiées) **ou** < 7 j (pastille Sports). */
-function sportsCtaResultIsRecent(game, now = Date.now()) {
-  if (sportsCtaResultIsTodayOrYesterday(game, now)) return true;
-  const age = sportsResultAgeMs(game, now);
-  return Number.isFinite(age) && age >= 0 && age <= SPORTS_RECENT_RESULT_MS;
-}
-
 /**
  * Match réellement en cours *maintenant* — prédicat visuel, recalculé à chaque
  * rendu (contrairement à `slide.urgency`, figé à la construction des slides).
@@ -5289,7 +5282,7 @@ function sportsSoftSportDiversity(slides) {
  * + gates mainteneur (civil aujourd’hui/hier ; hors saison 7 j) :
  *
  *  CTA (droite)
- *   • **résultats** : aujourd’hui / hier (pastilles) + autres &lt; 7 j (Sports)
+ *   • **résultats** : aujourd’hui / hier seulement (plus vieux → puces scores)
  *   • **en saison** (il y a des résultats frais) : prochains du **jour lead** seul
  *   • **hors saison** (pas de résultat aujourd’hui/hier) : **1er match** de
  *     chacun des **7 premiers jours** d’action à partir du jour lead, en
@@ -5337,7 +5330,7 @@ function sportsCtaCandidateSlides() {
     seen.add(s.key);
 
     if (s.mode === 'result') {
-      if (!sportsCtaResultIsRecent(s.game, now)) continue;
+      if (!sportsCtaResultIsTodayOrYesterday(s.game, now)) continue;
       freshResults.push(s);
       continue;
     }

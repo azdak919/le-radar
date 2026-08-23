@@ -1286,11 +1286,11 @@ assert(
 );
 assert(
   appJs.includes('function sportsCtaResultIsTodayOrYesterday')
-    && appJs.includes('function sportsCtaResultIsRecent')
+    && !appJs.includes('function sportsCtaResultIsRecent')
     && appJs.includes('function sportsCivilDayShift')
     && appJs.includes('SPORTS_RECENT_RESULT_MS')
     && !/SPORTS_CTA_FRESH_RESULT_MS\s*=\s*48/.test(appJs),
-  'app.js : CTA résultats = aujourd’hui/hier + filet 7 j (pastille Sports sinon)',
+  'app.js : CTA résultats = aujourd’hui/hier seulement (7 j = puces scores)',
 );
 assert(
   /function sportsCtaEyebrow/.test(appJs)
@@ -1312,7 +1312,7 @@ assert(
     && /const SPORTS_CTA_OFFSEASON_LEAD_DAYS\s*=\s*7/.test(appJs)
     && appJs.includes('firstByDay')
     && appJs.includes('le-radar-cta-sports-window'),
-  'app.js : CTA = today/yesterday + 7 j Sports + hors saison 7 j (1er match/jour)',
+  'app.js : CTA = today/yesterday + hors saison 7 j (1er match/jour)',
 );
 assert(
   !appJs.includes('upcomingLater'),
