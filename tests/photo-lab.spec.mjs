@@ -60,6 +60,10 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(page.locator('#cta-band').getByText('il y a 5 h', { exact: false })).toBeVisible();
   await expect(page.locator('#cta-band').getByText('dans 3 h', { exact: false })).toBeVisible();
   await expect(page.getByText('avant-hier', { exact: false }).first()).toBeVisible();
+  await expect(page.locator('#cta-band .sports-chip__cta-tag--brand')).toBeVisible();
+  await expect(page.locator('#cta-band').getByText('LE-RADAR.ca').first()).toBeVisible();
+  await expect(page.locator('#cta-band').getByText(/Réseau Académique/).first()).toBeVisible();
+  await expect(page.locator('#cta-band').getByText('Scores collégiaux')).toHaveCount(0);
   await expect(page.locator('#cta-band .sports-chip__cta-tag', { hasText: /^Prochain$/ }).first()).toBeVisible();
   await expect(page.locator('.sports-chip__cta-tag', { hasText: /^Hier$/ }).first()).toBeVisible();
   await expect(page.locator('.sports-chip__cta-tag', { hasText: /^Aujourd’hui$/ }).first()).toBeVisible();

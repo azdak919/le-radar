@@ -1132,8 +1132,15 @@ const appFlat = appJs.replace(/\s+/g, ' ');
 const cssFlat = styleCss.replace(/\s+/g, ' ');
 
 assert(
-  /const SPORTS_CTA_TAG\s*=\s*['"]Sports['"]/.test(appJs),
-  'app.js : pastille CTA mât = « Sports » au repos (pas le nom long de la section)',
+  /const RADAR_BRAND_SHORT\s*=\s*['"]LE-RADAR\.ca['"]/.test(appJs)
+    && appJs.includes('RADAR_BRAND_LONG')
+    && appJs.includes('sports-chip__cta-tag--brand'),
+  'app.js : CTA creux = logo PWA + LE-RADAR.ca + nom long',
+);
+assert(
+  /site-foot__signature notranslate/.test(readFileSync(join(root, 'scripts/seo-pages-lib.js'), 'utf8'))
+    && /site-foot__signature notranslate/.test(readFileSync(join(root, 'index.html'), 'utf8')),
+  'nom long LE-RADAR : notranslate (pied + gabarit)',
 );
 assert(
   /const SPORTS_CTA_TAG_LIVE\s*=\s*['"]En cours['"]/.test(appJs)
