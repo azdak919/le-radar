@@ -96,7 +96,7 @@
   <div id="host">
     <p><a class="hub" href="./">← Labo</a></p>
     <h1>Cartes sports</h1>
-    <p class="lede">Même CSS que le site. PROCHAIN au-dessus de SPORTS sous 431&nbsp;px. Accroche sur une ligne : défilement gauche → droite, aller-retour, pause à l’origine. Ici le marquee boucle pour qu’on le voie ; en prod il ne fait qu’un cycle puis l’info peut changer.</p>
+    <p class="lede">Même CSS que le site. PROCHAIN / HIER / AUJOURD’HUI au-dessus de SPORTS sous 431&nbsp;px. Accroche sur une ligne : défilement gauche → droite, aller-retour, pause à l’origine. Ici le marquee boucle pour qu’on le voie ; en prod il ne fait qu’un cycle puis l’info peut changer. Les scores plus vieux qu’hier ne sont pas sur cette carte.</p>
     <div class="formats" id="formats" role="toolbar" aria-label="Formats d’écran"></div>
     <p class="meta" id="meta"></p>
     <div class="clip" id="clip">
@@ -132,6 +132,25 @@
         }),
       },
       {
+        title: 'Matin — résultats d’hier',
+        html: stripCta({
+          state: 'result',
+          tone: '#3d6fa8',
+          eyebrow: 'Hier',
+          glyph: '🏈',
+          text: 'Carabins 24–21 Rouge et Or',
+          sub: 'Football univ. · sam. soir',
+          extra: matchChip({
+            tone: '#3d6fa8',
+            glyph: '🏈',
+            badge: 'V',
+            badgeMod: 'w',
+            inner: '<span class="sports-chip__name">Carabins</span> <span class="sports-chip__score">24–21</span> <span class="sports-chip__name sports-chip__opp">Rouge et Or</span>',
+            sub: 'hier · Football univ.',
+          }),
+        }),
+      },
+      {
         title: 'Résultat — aujourd’hui',
         html: stripCta({
           state: 'result',
@@ -163,11 +182,11 @@
         }),
       },
       {
-        title: 'Hors saison — reprise',
+        title: 'Hors saison — prochain (pas un score rassis)',
         html: stripCta({
           state: 'next',
           tone: '#6a7580',
-          eyebrow: 'Reprise',
+          eyebrow: 'Prochain',
           glyph: '🏈',
           text: 'Rouge et Or à Carabins',
           sub: 'ven. 4 sept., 19 h 00 · Football univ.',

@@ -55,6 +55,8 @@ test('labo cartes sports : iframe formats + marquee L→R', async ({ page }) => 
 
   const frame = page.frameLocator('#preview');
   await expect(frame.locator('.sports-chip--cta').first()).toBeVisible({ timeout: 10000 });
+  await expect(frame.locator('.sports-chip__cta-eyebrow--rail', { hasText: /^Hier$/ })).toBeVisible();
+  await expect(frame.locator('.sports-chip__cta-eyebrow', { hasText: /^Reprise$/ })).toHaveCount(0);
   const overflowing = frame.locator('.sports-chip--cta.is-overflowing').first();
   await expect(overflowing).toBeVisible({ timeout: 8000 });
 
