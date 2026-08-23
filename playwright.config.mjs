@@ -40,6 +40,7 @@ export default defineConfig({
         '**/shared-chrome.spec.mjs',
         '**/masthead-css-load.spec.mjs',
         '**/mobile-text-wrap.spec.mjs',
+        '**/tuner-resize.spec.mjs',
         // Tourne dans le projet « pwa » : il lui faut un service worker actif.
         '**/sports-pwa.spec.mjs',
       ],
@@ -56,6 +57,7 @@ export default defineConfig({
         '**/shared-chrome.spec.mjs',
         '**/masthead-css-load.spec.mjs',
         '**/mobile-text-wrap.spec.mjs',
+        '**/tuner-resize.spec.mjs',
       ],
       fullyParallel: false,
     },

@@ -287,6 +287,8 @@ const TUNER_SUB_ROTATE_VERY_NARROW_MQ = window.matchMedia?.('(max-width: 359.98p
 const TUNER_DIAL_MID_MQ = window.matchMedia?.('(min-width: 768px) and (max-width: 1099.98px)');
 /** Embed : panneau latéral « À l'antenne » masqué (voir embed.css @media max-width 639.98px). */
 const TUNER_EMBED_NOWAIR_HIDDEN_MQ = window.matchMedia?.('(max-width: 639.98px)');
+/** Même seuil que seo-page-theme / data-wide-preview (shell E). */
+const WIDE_TUNER_MQ = window.matchMedia?.('(min-width: 1281px)');
 const TUNER_VOLUME   = document.getElementById('tuner-volume');
 const TUNER_VOL      = document.getElementById('tuner-vol');
 const TUNER_VOL_TOGGLE = document.getElementById('tuner-vol-toggle');
@@ -531,7 +533,7 @@ let nowAirPreviewTimer = null;
 let nowAirPreviewRadio = null;
 let lastNowAirPreviewId = null;
 let lastDialCarouselText = '';
-let lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null };
+let lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null, shell: null };
 let tunerSubMeta = '';
 let tunerSubAirText = '';
 let tunerSubRotateTimer = null;
@@ -1930,6 +1932,13 @@ function isWideTunerLayout() {
   return isWideNoMarqueeMode();
 }
 
+/** Clé de coque du synthé — un resize qui la change doit tout repeindre. */
+function tunerShellLayoutKey() {
+  if (isWideTunerLayout()) return 'wide';
+  if (isDialCompactLayout()) return isTunerDialMidLayout() ? 'mid' : 'compact';
+  return 'desktop';
+}
+
 /** Bureau : titre « À l'antenne » sur deux lignes, pas de marquee. */
 function isNowAirTwoLineMode() {
   try {
@@ -2035,9 +2044,20 @@ function measureWideDialNeedPx() {
  * Pose une fois la largeur du carré = plus longue L1/L2 de tous les postes.
  * Recalcule seulement si `force` (resize / 1er paint).
  */
+function clearWideDialInlineSize() {
+  wideDialFixedPx = 0;
+  const dial = document.querySelector('.tuner-dial');
+  const now = document.querySelector('.tuner-now');
+  if (dial) {
+    dial.style.minWidth = '';
+    dial.style.width = '';
+  }
+  if (now) now.style.width = '';
+}
+
 function fitWideDialWidth({ force = false } = {}) {
   if (!isWideTunerLayout()) {
-    wideDialFixedPx = 0;
+    clearWideDialInlineSize();
     return;
   }
   const dial = document.querySelector('.tuner-dial');
@@ -2074,8 +2094,7 @@ function paintWideDial(radio) {
     instEl.textContent = '';
   }
   if (!isWideTunerLayout()) {
-    const dial = document.querySelector('.tuner-dial');
-    if (dial) dial.style.minWidth = '';
+    clearWideDialInlineSize();
     return false;
   }
   if (!radio) {
@@ -7330,7 +7349,7 @@ function advanceAirPhase(phaseCount) {
   if (!(phaseCount > 1)) return;
   airPhaseIndex = (airPhaseIndex + 1) % phaseCount;
   nowAirCrossfadePending = true;
-  lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null };
+  lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null, shell: null };
 }
 
 /**
@@ -8372,12 +8391,24 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
 }
 
 function onTunerSubRotateLayoutChange() {
+  syncTunerShellLayout();
+}
+
+/** Repeint le synthé pour la coque courante (wide ↔ bureau ↔ compact). */
+function syncTunerShellLayout() {
+  ensureWideNowAirPair();
+  if (!isWideTunerLayout()) clearWideDialInlineSize();
+  lastNowAir = {
+    title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null, shell: null,
+  };
   renderTunerNowAir();
   scheduleMarqueeRefresh();
   restartTunerSubRotateTimer();
   if (isNowAirPanelPreviewMode()) {
     scheduleNowAirPreviewTick();
   }
+  try { updateVolumeUI(); } catch { /* ignore */ }
+  try { syncWideStickyTop(); } catch { /* ignore */ }
 }
 
 function initTunerSubRotateListeners() {
@@ -8387,6 +8418,7 @@ function initTunerSubRotateListeners() {
   onMediaQueryChange(TUNER_SUB_ROTATE_NARROW_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(TUNER_SUB_ROTATE_VERY_NARROW_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(TUNER_EMBED_NOWAIR_HIDDEN_MQ, onTunerSubRotateLayoutChange);
+  onMediaQueryChange(WIDE_TUNER_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(PREFERS_REDUCED_MOTION, onTunerSubRotateLayoutChange);
 }
 
@@ -8424,10 +8456,14 @@ function renderTunerNowAir() {
       const { title, sub } = nowAirLines(currentStation);
       updateMediaSession(currentStation, { title, sub });
     }
+    lastNowAir = { ...lastNowAir, shell: 'wide' };
     return;
   }
 
-  // Quitter le mode wide : restaurer le panneau single.
+  // Quitter le mode wide : wrappers + largeur inline, sinon la barre casse
+  // jusqu’au prochain refresh (resize 1920 → 1280).
+  ensureWideNowAirPair();
+  clearWideDialInlineSize();
   const wideWrap = document.getElementById('tuner-nowair-wide');
   if (wideWrap) wideWrap.hidden = true;
   TUNER_NOWAIR.classList.remove('tuner-nowair--legacy-slot');
@@ -8473,12 +8509,14 @@ function renderTunerNowAir() {
     : (currentStation?.id ?? null);
 
   // Rien n'a changé : on n'écrase pas le DOM.
+  const shell = tunerShellLayoutKey();
   if (lastNowAir.title === title
     && lastNowAir.sub === sub
     && lastNowAir.empty === empty
     && lastNowAir.previewId === previewId
     && lastNowAir.kind === kind
     && lastNowAir.stationId === stationId
+    && lastNowAir.shell === shell
     && !nowAirCrossfadePending) {
     if (previewing) startNowAirPreview();
     else stopNowAirPreview();
@@ -8499,7 +8537,7 @@ function renderTunerNowAir() {
   const shouldFade = nowAirCrossfadePending || stationChanged;
   nowAirCrossfadePending = false;
 
-  lastNowAir = { title, sub, empty, previewId, kind, stationId };
+  lastNowAir = { title, sub, empty, previewId, kind, stationId, shell };
 
   // Toujours visible sur bureau (placeholder HTML dès le paint).
   TUNER_NOWAIR.classList.remove('hidden');
@@ -8626,7 +8664,7 @@ function resumeTunerPresentation() {
       dialRotateSlotB = false;
       nowAirCrossfadePending = false;
       nowAirFadeGen += 1;
-      lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null };
+      lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null, shell: null };
       renderTunerNowAir();
       scheduleMarqueeRefresh();
     });
@@ -11268,9 +11306,9 @@ function bindFiltersPanel() {
         window.requestAnimationFrame(() => refreshSportsChipScroll());
       }
     } catch { /* ignore */ }
-    // Synthé wide : dual antenne + dial institution/slogan
+    // Synthé : wrappers wide + largeur inline (sinon barre cassée jusqu’au refresh).
     try {
-      renderTunerNowAir();
+      syncTunerShellLayout();
     } catch { /* ignore */ }
     try {
       syncWideStickyTop();
@@ -11281,6 +11319,8 @@ function bindFiltersPanel() {
     if (isWideTunerLayout()) {
       syncWideStickyTop();
       fitWideDialWidth({ force: true });
+    } else {
+      clearWideDialInlineSize();
     }
   }, { passive: true });
 }
