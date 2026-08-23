@@ -1,14 +1,23 @@
 {
-  "updated": "2026-08-23T05:46:52.440Z",
+  "updated": "2026-08-23T07:48:43.146Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 7,
+  "incomplete": 8,
   "withLeadExcerpt": 83,
-  "candidates": 7,
-  "enriched": 0,
+  "candidates": 8,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
+      "ok": true,
+      "score": 100,
+      "chars": 396,
+      "sample": "« L’Université McGill est à la recherche de patrouilleurs dynamiques et engagés pour assurer la sécu",
+      "changed": true
+    },
     {
       "title": "La mauvaise nutrition et les maladies chroniques",
       "link": "https://lecollectif.ca/a-la-une/la-mauvaise-nutrition-et-les-maladies-chroniques/",
