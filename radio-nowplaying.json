@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-08-23T14:49:10.654Z",
+  "updatedAt": "2026-08-23T15:18:46.615Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le Ré-Show : Deuxième Service",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
       },
+      "next": {
+        "title": "Radio Futura",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/radio-futura/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Le Ré-Show : Deuxième Service",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T14:48:46.474Z"
+      "checkedAt": "2026-08-23T15:18:23.723Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ya Raï",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/ya-rai"
-      },
-      "next": {
         "title": "Yallah lâcher prise",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
       },
+      "next": {
+        "title": "Basses fréquences",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/basses-frequences"
+      },
       "track": "",
-      "showTitle": "Ya Raï",
+      "showTitle": "Yallah lâcher prise",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T14:48:48.446Z"
+      "checkedAt": "2026-08-23T15:18:25.856Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "International Radio Report",
-        "source": "api-live",
-        "start": "10:30",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Free Kick",
         "source": "api-live",
         "start": "11:00",
         "end": "13:00"
       },
+      "next": {
+        "title": "Modular Systems/Future Classics",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "International Radio Report",
+      "showTitle": "Free Kick",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T14:48:52.752Z"
+      "checkedAt": "2026-08-23T15:18:27.938Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T14:49:06.669Z"
+      "checkedAt": "2026-08-23T15:18:42.887Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T14:49:07.595Z"
+      "checkedAt": "2026-08-23T15:18:43.854Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Weird Nightmare - Pay No Mind",
+      "track": "Angelique Kidjo - I",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-23T14:49:10.302Z"
+      "checkedAt": "2026-08-23T15:18:46.265Z"
     }
   }
 }
