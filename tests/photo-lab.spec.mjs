@@ -59,6 +59,10 @@ test('labo cartes sports : iframe formats + marquee L→R', async ({ page }) => 
   await expect(frame.locator('.masthead-sports-strip').first()).toHaveAttribute('data-count', '1');
   await expect(frame.locator('.sports-chip__cta-eyebrow--rail', { hasText: /^Hier$/ })).toBeVisible();
   await expect(frame.locator('.sports-chip__cta-eyebrow', { hasText: /^Reprise$/ })).toHaveCount(0);
+  await expect(frame.getByText('défaite', { exact: false }).first()).toBeVisible();
+  await expect(frame.getByText('match nul', { exact: false }).first()).toBeVisible();
+  const labCopy = await frame.locator('body').innerText();
+  expect(labCopy, 'pas d’abréviation univ. — le marquee porte le mot entier').not.toMatch(/\buniv\./);
   const overflowing = frame.locator('.sports-chip--cta.is-overflowing').first();
   await expect(overflowing).toBeVisible({ timeout: 8000 });
 
@@ -85,6 +89,9 @@ test('labo cartes sports : iframe formats + marquee L→R', async ({ page }) => 
   await expect(iframe).toHaveAttribute('data-w', '768');
   await expect(frame.locator('.sports-chip--cta').first()).toBeVisible();
   await expect.poll(async () => frame.locator('.sports-chip--match').count()).toBeGreaterThan(0);
+  await expect(frame.locator('.sports-chip__badge', { hasText: /^V$/ }).first()).toBeVisible();
+  await expect(frame.locator('.sports-chip__badge', { hasText: /^D$/ }).first()).toBeVisible();
+  await expect(frame.locator('.sports-chip__badge', { hasText: /^N$/ }).first()).toBeVisible();
   await expect.poll(async () => frame.locator('.sports-chip__cta-eyebrow--rail').first().evaluate(
     (el) => getComputedStyle(el).display,
   )).toBe('none');
