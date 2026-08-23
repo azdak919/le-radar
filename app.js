@@ -4987,6 +4987,14 @@ function sportsWhenLong(iso, time) {
   return label;
 }
 
+/** Heure de coup d’envoi seule — « 17 h 00 ». */
+function sportsKickoffClock(game) {
+  const t = String(game?.time || '').trim();
+  const m = t.match(/^(\d{1,2}):(\d{2})/);
+  if (!m) return '';
+  return `${m[1]} h ${m[2]}`;
+}
+
 /** Âge lisible d’un fait daté — « il y a 14 h », « hier », « il y a 3 j ». */
 function sportsRelativeAge(ms, now = Date.now()) {
   if (!Number.isFinite(ms)) return '';
@@ -5143,31 +5151,39 @@ function sportsCtaLamp(slide, state) {
 }
 
 /**
- * Sous-ligne CTA : d’abord le relatif (« il y a 5 h », « dans 3 h »),
- * puis la compétition. La pastille porte déjà Hier / Prochain / la date :
- * on ne répète pas le même mot. Prochain lointain : relatif + jour/heure.
+ * Sous-ligne CTA — hiérarchie scorebug (ESPN / Flashscore / L’Équipe) :
+ *   live    → période si l’API la donne, sinon compétition. Jamais l’âge
+ *             du coup d’envoi (« il y a 2 min » sous En cours = match fini).
+ *   prochain→ heure (19 h 00) ; compte à rebours seulement dans l’heure
+ *             qui précède. Jamais « il y a » (ce serait déjà un live).
+ *   résultat→ compétition. La pastille dit déjà Aujourd’hui / Hier ;
+ *             l’âge du coup d’envoi ment (2 h de jeu ≠ « il y a 2 h »).
  */
 function sportsCtaSubLine(slide, state) {
   const comp = sportsCompetitionLabel(slide);
   const g = slide?.game;
   const ms = sportsGameMs(g);
-  const rel = sportsRelativeWhen(ms);
   const tag = sportsCtaTagLabel(slide, state);
-  const relShown = rel && rel.toLowerCase() !== String(tag || '').toLowerCase();
+  const now = Date.now();
   if (state === 'live') {
-    // Pas « dans 15 min » / « à l’instant » sous En cours : la pastille dit
-    // déjà le direct. Période collée par le bot, sinon la compétition seule.
     const period = sportsLivePeriodLabel(g);
     return [period, comp].filter(Boolean).join(' · ');
   }
   if (state === 'next') {
-    const when = sportsWhenLong(g?.date, g?.time);
-    const near = Number.isFinite(ms) && Math.abs(ms - Date.now()) < 36 * 3600 * 1000;
-    if (near) return [relShown ? rel : '', comp].filter(Boolean).join(' · ');
-    return [relShown ? rel : '', when, comp].filter(Boolean).join(' · ');
+    const minToGo = Number.isFinite(ms) ? Math.round((ms - now) / 60000) : null;
+    let when = '';
+    if (minToGo != null && minToGo >= 0 && minToGo < 60) {
+      when = sportsRelativeWhen(ms, now);
+    } else if (minToGo != null && minToGo >= 0) {
+      const clock = sportsKickoffClock(g);
+      const today = sportsSlideDayKey(slide) === torontoDayKey(now);
+      when = today ? clock : (sportsWhenLong(g?.date, g?.time) || clock);
+    }
+    if (when && when.toLowerCase() === String(tag || '').toLowerCase()) when = '';
+    return [when, comp].filter(Boolean).join(' · ');
   }
   if (state === 'result') {
-    return [relShown ? rel : '', comp].filter(Boolean).join(' · ');
+    return comp || '';
   }
   return [comp, sportsUpdatedShort()].filter(Boolean).join(' · ');
 }

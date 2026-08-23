@@ -1252,8 +1252,10 @@ assert(
 );
 assert(
   !/state === 'live'[\s\S]{0,200}sportsRelativeAge/.test(appFlat)
-    && appJs.includes('sportsLivePeriodLabel'),
-  'app.js : sous-ligne live = période / compétition (pas « dans 15 min »)',
+    && !/state === 'live'[\s\S]{0,200}sportsRelativeWhen/.test(appFlat)
+    && appJs.includes('sportsLivePeriodLabel')
+    && appJs.includes('function sportsKickoffClock'),
+  'app.js : sous-ligne live = période / compétition (pas « il y a 2 min »)',
 );
 assert(
   /\[data-cta-state="live"\][^{]*\{[^}]*sports-cta-ring-pulse/.test(cssFlat),
