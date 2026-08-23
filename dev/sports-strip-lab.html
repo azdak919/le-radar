@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Labo cartes sports — LE RADAR (local)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../style-masthead.css">
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #0c0d10;
+      color: #f1f2f4;
+      font: 15px/1.45 Inter, system-ui, sans-serif;
+    }
+    header { max-width: 390px; margin: 0 auto; padding: 28px 12px 8px; }
+    h1 { margin: 0; font: 700 28px/1.1 "Source Serif 4", Georgia, serif; }
+    .lede { color: #a9acb5; margin: 10px 0 0; font-size: 14px; }
+    .hub { color: #e1b95e; }
+    .hint { font-size: 12px; color: #888d96; margin-top: 8px; }
+    #col {
+      width: 390px;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 12px 12px 64px;
+    }
+    h2 {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #e1b95e;
+      margin: 22px 0 10px;
+    }
+    .case { margin: 0 0 14px; }
+    .case p { margin: 0 0 6px; font-size: 12px; color: #c3c6ce; }
+    .case p strong { color: #fff; }
+    #col .masthead-sports-strip {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      overflow: hidden;
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 0;
+      min-height: 56px;
+      gap: 8px;
+      --sports-scroll-duration: 4.2s;
+      --sports-scroll-delay: 0.45s;
+    }
+    /* Même grille 390 que le site, même si la fenêtre du labo est large. */
+    #col .masthead-sports-strip .sports-chip--cta {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      align-items: center;
+      column-gap: 8px;
+      row-gap: 2px;
+      min-width: 0;
+    }
+    #col .masthead-sports-strip .sports-chip--cta .sports-chip__cta-rail {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      gap: 3px;
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      align-self: center;
+    }
+    #col .masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail:empty,
+    #col .masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail[hidden] {
+      display: none;
+    }
+    #col .masthead-sports-strip .sports-chip--cta .sports-chip__cta-head .sports-chip__cta-eyebrow {
+      display: none;
+    }
+    #col .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
+      justify-content: center;
+      align-self: stretch;
+      padding-inline: 6px;
+    }
+    #col .masthead-sports-strip .sports-chip--cta .sports-chip__line {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    #col .masthead-sports-strip .sports-chip--cta .sports-chip__cta-stack {
+      height: auto;
+      min-height: 3.15em;
+    }
+    #col .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text,
+    #col .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
+      animation-iteration-count: infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #col .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text {
+        animation: sports-chip-scroll var(--sports-scroll-duration, 4.2s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.45s) infinite alternate both !important;
+      }
+      #col .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
+        animation: sports-chip-scroll-sub var(--sports-scroll-duration, 4.2s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.45s) infinite alternate both !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <p><a class="hub" href="./">← Labo</a></p>
+    <h1>Cartes sports</h1>
+    <p class="lede">Colonne mobile (390). Une carte à la fois. Pastille = Prochain / Hier / Aujourd’hui / date. Relatif en sous-ligne (il y a… / dans…).</p>
+    <p class="hint">Local seulement.</p>
+  </header>
+  <main id="col"></main>
+  <script>
+    const ctaCases = [
+      {
+        title: 'CTA — prochain (reçoit)',
+        cta: {
+          state: 'next', tone: '#2e7d4f', tag: 'Prochain', glyph: '⚽',
+          text: 'Patriotes de Saint-Hyacinthe reçoivent Vanier College',
+          sub: 'dans 3 h · Soccer collégial masculin division 1',
+        },
+      },
+      {
+        title: 'CTA — prochain (visiteur)',
+        cta: {
+          state: 'next', tone: '#2e7d4f', tag: 'Prochain', glyph: '⚽',
+          text: 'McGill à Concordia',
+          sub: 'demain · Soccer universitaire féminin',
+        },
+      },
+      {
+        title: 'CTA — hier (victoire)',
+        cta: {
+          state: 'result', tone: '#3d9a6a', tag: 'Hier', glyph: '🏈',
+          badge: 'V', badgeMod: 'w',
+          text: 'Carabins 24–21 Rouge et Or',
+          sub: 'il y a 18 h · Football universitaire',
+        },
+      },
+      {
+        title: 'CTA — aujourd’hui (victoire)',
+        cta: {
+          state: 'result', tone: '#3d9a6a', tag: 'Aujourd’hui', glyph: '🏀',
+          badge: 'V', badgeMod: 'w',
+          text: 'UdeM 78–71 Concordia',
+          sub: 'il y a 3 h · Basketball universitaire',
+        },
+      },
+      {
+        title: 'CTA — aujourd’hui (défaite)',
+        cta: {
+          state: 'result', tone: '#c45c5c', tag: 'Aujourd’hui', glyph: '🏒',
+          badge: 'D', badgeMod: 'l',
+          text: 'Bishop’s 2–5 McGill',
+          sub: 'il y a 5 h · Hockey universitaire',
+        },
+      },
+      {
+        title: 'CTA — aujourd’hui (match nul)',
+        cta: {
+          state: 'result', tone: '#8fa3b0', tag: 'Aujourd’hui', glyph: '⚽',
+          badge: 'N', badgeMod: 'd',
+          text: 'ULaval 1–1 UdeM',
+          sub: 'il y a 2 h · Soccer universitaire masculin',
+        },
+      },
+      {
+        title: 'CTA — aujourd’hui (place)',
+        cta: {
+          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', glyph: '⛵',
+          badge: 'V', badgeMod: 'w',
+          text: 'McGill 7e/12',
+          sub: 'il y a 6 h · Voile universitaire',
+        },
+      },
+      {
+        title: 'CTA — en direct',
+        cta: {
+          state: 'live', tone: '#c8102e', tag: 'En cours', glyph: '🏒',
+          text: 'McGill 2–1 Concordia',
+          sub: 'Hockey universitaire · 2e période',
+        },
+      },
+      {
+        title: 'CTA — hors saison',
+        cta: {
+          state: 'next', tone: '#6a7580', tag: 'Prochain', glyph: '🏈',
+          text: 'Rouge et Or à Carabins',
+          sub: 'dans 12 j · ven. 4 sept., 19 h 00 · Football universitaire',
+        },
+      },
+      {
+        title: 'CTA — marque (creux)',
+        cta: {
+          state: 'idle', tone: '#6a7580', brand: true,
+          tag: 'LE-RADAR.ca',
+          text: 'LE-RADAR.ca',
+          sub: 'Le Réseau Académique de Découverte et d’Agrégation de Ressources',
+        },
+      },
+    ];
+
+    const standardChips = [
+      {
+        title: 'Puce — prochain (reçoit)',
+        html: () => matchChip({
+          tone: '#2e7d4f', glyph: '⚽',
+          inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__vs">reçoit</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
+          sub: 'aujourd’hui, 19 h 00 · Soccer universitaire masculin',
+        }),
+      },
+      {
+        title: 'Puce — victoire aujourd’hui',
+        html: () => matchChip({
+          tone: '#3d9a6a', glyph: '🏀', badge: 'V', badgeMod: 'w',
+          inner: '<span class="sports-chip__name">UdeM</span> <span class="sports-chip__score">78–71</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
+          sub: 'aujourd’hui · Basketball universitaire',
+        }),
+      },
+      {
+        title: 'Puce — défaite hier',
+        html: () => matchChip({
+          tone: '#c45c5c', glyph: '🏒', badge: 'D', badgeMod: 'l',
+          inner: '<span class="sports-chip__name">Bishop’s</span> <span class="sports-chip__score">2–5</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
+          sub: 'hier · Hockey universitaire',
+        }),
+      },
+      {
+        title: 'Puce — match nul avant-hier',
+        html: () => matchChip({
+          tone: '#8fa3b0', glyph: '⚽', badge: 'N', badgeMod: 'd',
+          inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__score">1–1</span> <span class="sports-chip__name sports-chip__opp">UdeM</span>',
+          sub: 'avant-hier · Soccer universitaire masculin',
+        }),
+      },
+      {
+        title: 'Puce — mer. 19 août',
+        html: () => matchChip({
+          tone: '#c45c5c', glyph: '🏈', badge: 'D', badgeMod: 'l',
+          inner: '<span class="sports-chip__name">Carabins</span> <span class="sports-chip__score">17–24</span> <span class="sports-chip__name sports-chip__opp">Rouge et Or</span>',
+          sub: 'mer. 19 août · Football universitaire',
+        }),
+      },
+      {
+        title: 'Puce — sam. 16 août',
+        html: () => matchChip({
+          tone: '#3d9a6a', glyph: '🏐', badge: 'V', badgeMod: 'w',
+          inner: '<span class="sports-chip__name">Sherbrooke</span> <span class="sports-chip__score">3–1</span> <span class="sports-chip__name sports-chip__opp">UQAM</span>',
+          sub: 'sam. 16 août · Volleyball universitaire',
+        }),
+      },
+    ];
+
+    function matchChip({ tone, glyph, inner, sub, badge, badgeMod }) {
+      const b = badge
+        ? `<span class="sports-chip__badge sports-chip__badge--${badgeMod}" aria-hidden="true">${badge}</span>`
+        : '';
+      return `<a class="sports-chip sports-chip--match" href="#lab" style="--sports-tone:${tone}">
+        <span class="sports-chip__glyph" aria-hidden="true">${glyph}</span>${b}
+        <span class="sports-chip__body">
+          <span class="sports-chip__line"><span class="sports-chip__line-inner">${inner}</span></span>
+          <span class="sports-chip__sub"><span class="sports-chip__sub-text">${sub}</span></span>
+        </span>
+      </a>`;
+    }
+
+    function stripCta({ state, tone, tag, glyph, text, sub, badge, badgeMod, brand }) {
+      const tagLabel = tag || 'Sports';
+      const lamp = state === 'live' ? 'live'
+        : tagLabel === 'Aujourd’hui' ? 'today'
+        : (state === 'next' || tagLabel === 'Prochain') ? 'next'
+        : state === 'result' ? 'past'
+        : 'idle';
+      const g = glyph ? `<span class="sports-chip__cta-glyph" aria-hidden="true">${glyph}</span>` : '';
+      const b = badge
+        ? `<span class="sports-chip__badge sports-chip__badge--${badgeMod}" aria-hidden="true">${badge}</span>`
+        : '';
+      const tagInner = brand
+        ? '<img class="sports-chip__cta-logo" src="../assets/icon.svg" width="18" height="18" alt="" decoding="async" aria-hidden="true">'
+        : tagLabel;
+      const tagClass = brand
+        ? 'sports-chip__cta-tag sports-chip__cta-tag--brand notranslate'
+        : 'sports-chip__cta-tag';
+      const nt = brand ? ' translate="no"' : '';
+      const ntText = brand
+        ? ` class="sports-chip__cta-text notranslate" translate="no"`
+        : ' class="sports-chip__cta-text"';
+      const ntSub = brand
+        ? ' class="sports-chip__cta-sub-text notranslate" translate="no"'
+        : ' class="sports-chip__cta-sub-text"';
+      return `<div class="masthead-sports-strip" data-count="1" data-cta-pinned="0" data-ready="1">
+        <a class="sports-chip sports-chip--cta" data-cta-state="${state}" href="#lab" style="--sports-tone:${tone}">
+          <span class="sports-chip__cta-rail">
+            <span class="sports-chip__cta-eyebrow sports-chip__cta-eyebrow--rail" hidden></span>
+            <span class="${tagClass}" data-cta-tag="${tagLabel}" data-cta-lamp="${lamp}"${nt}>${tagInner}</span>
+          </span>
+          <span class="sports-chip__line">
+            <span class="sports-chip__cta-stack">
+              <span class="sports-chip__cta-label is-front">
+                <span class="sports-chip__cta-head">${g}${b}<span class="sports-chip__cta-line"><span${ntText}>${text}</span></span></span>
+                <span class="sports-chip__cta-sub"><span${ntSub}>${sub}</span></span>
+              </span>
+            </span>
+          </span>
+        </a>
+      </div>`;
+    }
+
+    function overflowPx(view, inner) {
+      if (!view || !inner) return 0;
+      const prev = inner.style.maxWidth;
+      inner.style.maxWidth = 'none';
+      const ov = Math.max(0, inner.scrollWidth - view.clientWidth);
+      inner.style.maxWidth = prev;
+      return ov;
+    }
+
+    function armMarquee(root) {
+      root.querySelectorAll('.sports-chip--cta').forEach((chip) => {
+        const titleView = chip.querySelector('.sports-chip__cta-line');
+        const titleInner = chip.querySelector('.sports-chip__cta-text');
+        const subView = chip.querySelector('.sports-chip__cta-sub');
+        const subInner = chip.querySelector('.sports-chip__cta-sub-text');
+        const titleOv = overflowPx(titleView, titleInner);
+        const subOv = overflowPx(subView, subInner);
+        if (titleOv > 2) {
+          chip.style.setProperty('--sports-scroll', `${titleOv}px`);
+          chip.classList.add('is-overflowing');
+        } else {
+          chip.style.removeProperty('--sports-scroll');
+          chip.classList.remove('is-overflowing');
+        }
+        if (subOv > 2) {
+          chip.style.setProperty('--sports-scroll-sub', `${subOv}px`);
+          chip.classList.add('is-sub-overflowing');
+        } else {
+          chip.style.removeProperty('--sports-scroll-sub');
+          chip.classList.remove('is-sub-overflowing');
+        }
+      });
+    }
+
+    const col = document.getElementById('col');
+    const ctaHtml = ctaCases.map((c) =>
+      `<article class="case"><p><strong>${c.title}</strong></p>${stripCta(c.cta)}</article>`
+    ).join('');
+    const stdHtml = standardChips.map((c) =>
+      `<article class="case"><p><strong>${c.title}</strong></p><div class="masthead-sports-strip" data-count="1" data-cta-pinned="0" data-ready="1">${c.html()}</div></article>`
+    ).join('');
+    col.innerHTML = `<section id="cta-band"><h2>Carte CTA</h2>${ctaHtml}</section>`
+      + `<section id="standard-chips"><h2>Puces scores</h2>${stdHtml}</section>`;
+
+    const run = () => armMarquee(col);
+    run();
+    requestAnimationFrame(() => requestAnimationFrame(run));
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+  </script>
+</body>
+</html>

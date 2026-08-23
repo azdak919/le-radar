@@ -258,7 +258,11 @@ assert(
   'banque universities : remplacement ULaval (parc ou Vandry)',
 );
 const solitaireHtml = readFileSync(join(root, 'solitaire/index.html'), 'utf8');
+const solitaireBg = readFileSync(join(root, 'solitaire/js/backgrounds-data.js'), 'utf8');
 assert(!solitaireHtml.includes('title: "Snowy Branch"'), 'solitaire: Snowy Branch retiré du pool');
+assert(!solitaireBg.includes('title: "Snowy Branch"'), 'solitaire stock: Snowy Branch retiré');
+assert(solitaireHtml.includes('js/backgrounds-data.js'), 'solitaire charge le stock extrait');
+assert(solitaireHtml.includes('quebec-favorites-backgrounds-data.js'), 'solitaire peut fusionner les favorites');
 assert(solitaireHtml.includes('fullscreen-wallpaper-qc.js'), 'solitaire charge le QC plein écran');
 const pomoHtml = readFileSync(join(root, 'pomo/index.html'), 'utf8');
 assert(pomoHtml.includes('fullscreen-wallpaper-qc.js'), 'pomo charge le QC plein écran');
@@ -1128,12 +1132,20 @@ const appFlat = appJs.replace(/\s+/g, ' ');
 const cssFlat = styleCss.replace(/\s+/g, ' ');
 
 assert(
-  /const SPORTS_CTA_TAG\s*=\s*['"]Sports['"]/.test(appJs),
-  'app.js : pastille CTA mât = « Sports » au repos (pas le nom long de la section)',
+  /const RADAR_BRAND_SHORT\s*=\s*['"]LE-RADAR\.ca['"]/.test(appJs)
+    && appJs.includes('RADAR_BRAND_LONG')
+    && appJs.includes('sports-chip__cta-tag--brand'),
+  'app.js : CTA creux = logo PWA + LE-RADAR.ca + nom long',
 );
 assert(
-  /const SPORTS_CTA_TAG_LIVE\s*=\s*['"]En cours['"]/.test(appJs),
-  'app.js : le direct est le seul cas qui remplace « Sports » (override mainteneur)',
+  /site-foot__signature notranslate/.test(readFileSync(join(root, 'scripts/seo-pages-lib.js'), 'utf8'))
+    && /site-foot__signature notranslate/.test(readFileSync(join(root, 'index.html'), 'utf8')),
+  'nom long LE-RADAR : notranslate (pied + gabarit)',
+);
+assert(
+  /const SPORTS_CTA_TAG_LIVE\s*=\s*['"]En cours['"]/.test(appJs)
+    && appJs.includes('function sportsCtaTagLabel'),
+  'app.js : pastille CTA = En cours / Hier / Aujourd’hui / Sports',
 );
 // Voyant CTA : CSS persistant (pas un span JS, pas lié à la radio).
 assert(
@@ -1149,8 +1161,12 @@ assert(
   !/data-radar-playing="1"[^{]*sports-chip__cta-tag::before/.test(cssFlat)
     && !/tuner\.is-playing\s*~[^{]*sports-chip__cta-tag::before/.test(cssFlat)
     && /\.sports-chip__cta-tag::before/.test(cssFlat)
-    && /onairPulse/.test(styleCss),
-  'style : voyant rouge CTA persistant (pas lié à la radio)',
+    && /onairPulse/.test(styleCss)
+    && /sports-cta-dot-upcoming/.test(styleCss)
+    && /sports-cta-dot-past/.test(styleCss)
+    && /data-cta-lamp="past"/.test(styleCss)
+    && appJs.includes('function sportsCtaLamp'),
+  'style : voyant CTA ambre Prochain, rouge Aujourd’hui, vert passé',
 );
 {
   const wideCss = readFileSync(join(root, 'dev/wide-desktop-preview.css'), 'utf8');
@@ -1263,14 +1279,30 @@ assert(
 assert(
   appJs.includes('sports-chip__cta-eyebrow')
     && appJs.includes('sports-chip__cta-sub')
-    && appJs.includes('function sportsUpdatedShort'),
-  'app.js : marqueur temporel + horodatage rendus dans la carte CTA',
+    && appJs.includes('function sportsUpdatedShort')
+    && appJs.includes('function sportsRelativeWhen')
+    && appJs.includes('function sportsResultBadgeEl'),
+  'app.js : CTA sous-ligne relatif + pastille V/D/N comme les puces scores',
 );
 assert(
   appJs.includes('function sportsCtaResultIsTodayOrYesterday')
+    && !appJs.includes('function sportsCtaResultIsRecent')
     && appJs.includes('function sportsCivilDayShift')
+    && appJs.includes('SPORTS_RECENT_RESULT_MS')
     && !/SPORTS_CTA_FRESH_RESULT_MS\s*=\s*48/.test(appJs),
-  'app.js : filet CTA = jours civils aujourd’hui+hier (plus de 48 h glissantes)',
+  'app.js : CTA résultats = aujourd’hui/hier seulement (7 j = puces scores)',
+);
+assert(
+  /function sportsCtaEyebrow/.test(appJs)
+    && /function sportsCtaTagLabel/.test(appJs)
+    && appJs.includes('function sportsCtaResultTag')
+    && appJs.includes("return 'Hier'")
+    && appJs.includes("return 'Prochain'")
+    && appJs.includes("return 'Aujourd’hui'")
+    && appJs.includes("return 'Avant-hier'")
+    && !/return 'Reprise'/.test(appJs)
+    && !appJs.includes('function sportsHasAnyResult'),
+  'app.js : pastille Prochain/Hier/Aujourd’hui/date — plus de SPORTS+eyebrow',
 );
 // CTA pool = aujourd’hui/hier + (en saison jour lead | hors saison 1er match × 7 j).
 assert(
@@ -1280,7 +1312,7 @@ assert(
     && /const SPORTS_CTA_OFFSEASON_LEAD_DAYS\s*=\s*7/.test(appJs)
     && appJs.includes('firstByDay')
     && appJs.includes('le-radar-cta-sports-window'),
-  'app.js : CTA = today/yesterday + hors saison 7 j (1er match/jour) en alternance',
+  'app.js : CTA = today/yesterday + hors saison 7 j (1er match/jour)',
 );
 assert(
   !appJs.includes('upcomingLater'),
@@ -1445,15 +1477,17 @@ assert(
     && !/Hors wide : une carte à la fois/.test(appJs),
   'app.js : cascade météo/sports tous écrans + marquee 1 cycle',
 );
-// Marquee site : 2 alternate both + delay — jamais infinite sur surfaces qui tournent.
+// Marquee site : alternate both + delay — jamais infinite. 2 = 1 aller-retour ;
+// --*-trips peut passer à 4 si le premier tour est trop court pour lire.
 assert(
   !/sports-chip-scroll[^;]*infinite/.test(cssFlat)
     && !/sports-chip-scroll-sub[^;]*infinite/.test(cssFlat)
-    && /sports-chip-scroll[^;]*\s2\s+alternate\s+both/.test(cssFlat)
+    && /sports-chip-scroll[^;]*alternate\s+both/.test(cssFlat)
     && /--sports-scroll-delay:\s*1\.6s/.test(cssFlat)
-    && /tunerMarquee[^;]*\s2\s+alternate\s+both/.test(cssFlat)
-    && /MARQUEE_ROUND_TRIPS\s*=\s*2/.test(appJs),
-  'CSS/JS : marquees sports + dial = 1 cycle (2 alternate), delay 1.6s, pas infinite',
+    && /tunerMarquee[^;]*alternate\s+both/.test(cssFlat)
+    && /MARQUEE_ROUND_TRIPS\s*=\s*2/.test(appJs)
+    && appJs.includes('function marqueeAlternateCount'),
+  'CSS/JS : marquees sports + dial = alternate both, delay 1.6s, pas infinite',
 );
 // Magazine mid : CSS 2 col dès 768 (iPad portrait). Le JS d'équilibre /
 // graine En bref / extraits mid doit partager ce seuil — à 900 px les

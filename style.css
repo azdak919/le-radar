@@ -442,9 +442,10 @@ body {
  * la CTA seule (ci-dessous). Scores : fit JS (−1 puce) si overflow texte.
  */
 @keyframes sports-chip-scroll {
-  /* Holds plus longs au début / fin pour lire l’info au calme. */
-  0%, 18% { transform: translateX(0); }
-  82%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
+  /* Hold à l’origine (début + retour) puis à l’extrémité. Le JS attend
+   * encore une pause au repos après le cycle avant de changer l’info. */
+  0%, 24% { transform: translateX(0); }
+  76%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
 }
 /* CTA hors marquee : clip sur le texte seul — jamais d’ellipsis, jamais sur
  * toute la couche (sinon head+sub se collapsaient sans marquee). */
@@ -579,6 +580,13 @@ body {
     rgba(60, 48, 52, 0.94);
 }
 /* Pastille : rubrique stable au repos, « En cours » pendant un match. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-rail {
+  flex: 0 0 auto;
+  display: contents;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail {
+  display: none;
+}
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
   flex: 0 0 auto;
   align-self: center;
@@ -673,6 +681,10 @@ body {
   line-height: 1;
   align-self: center;
 }
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-head .sports-chip__badge {
+  flex: 0 0 auto;
+  align-self: center;
+}
 /* Fenêtre de défilement : borne les noms, jamais le marqueur ni le glyphe. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-line {
   display: block;
@@ -747,7 +759,7 @@ body {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) 2 alternate both;
+  animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both;
   will-change: transform;
 }
 .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
@@ -755,12 +767,12 @@ body {
   overflow: visible;
   text-overflow: clip;
   /* Fallback 5.5s (pas 8.5s) : --sports-scroll-duration hérite déjà du strip. */
-  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) 2 alternate both;
+  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both;
   will-change: transform;
 }
 @keyframes sports-chip-scroll-sub {
-  0%, 32% { transform: translateX(0); }
-  68%, 100% { transform: translateX(calc(var(--sports-scroll-sub, 0) * -1)); }
+  0%, 28% { transform: translateX(0); }
+  72%, 100% { transform: translateX(calc(var(--sports-scroll-sub, 0) * -1)); }
 }
 .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-rolling-out .sports-chip__cta-text,
 .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-rolling-out .sports-chip__cta-sub-text {
@@ -768,7 +780,8 @@ body {
   transform: none;
 }
 /* Plus de flèche : la place va au texte.
- * Voyant rouge persistant (comme EN ONDES), indépendant de la radio. */
+ * Voyant : ambre Prochain ; rouge Aujourd’hui ; vert Hier / passé.
+ * En cours : point blanc sur pastille rouge. Indépendant de la radio. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-chev {
   display: none !important;
 }
@@ -778,11 +791,45 @@ body {
   width: 7px;
   height: 7px;
   border-radius: 50%;
+  background: var(--status-upcoming-soft, #e8c07a);
+  animation: sports-cta-dot-upcoming 1.8s ease-out infinite;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="today"]::before,
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-tag="Aujourd’hui"]::before {
   background: var(--live, #c8102e);
   animation: onairPulse 1.6s ease-out infinite;
 }
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="past"]::before {
+  background: #3d9a6a;
+  animation: sports-cta-dot-past 1.8s ease-out infinite;
+}
 .masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag::before {
   background: #fff;
+  animation: onairPulse 1.6s ease-out infinite;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag--brand {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  padding: 3px;
+  gap: 0;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag--brand::before {
+  display: none !important;
+  content: none !important;
+  animation: none !important;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-logo {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+@keyframes sports-cta-dot-upcoming {
+  0% { box-shadow: 0 0 0 0 rgba(232, 192, 122, 0.5); }
+  100% { box-shadow: 0 0 0 7px rgba(232, 192, 122, 0); }
+}
+@keyframes sports-cta-dot-past {
+  0% { box-shadow: 0 0 0 0 rgba(61, 154, 106, 0.55); }
+  100% { box-shadow: 0 0 0 7px rgba(61, 154, 106, 0); }
 }
 /* Halo / bordure seulement — la carte ne grossit pas. */
 @keyframes sports-cta-ring-pulse {
@@ -843,6 +890,62 @@ body {
   }
   .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-front {
     opacity: 1;
+  }
+}
+/*
+ * 390 / 430 : 2 colonnes × 2 lignes.
+ * Col. 1 = PROCHAIN au-dessus de SPORTS ; col. 2 = accroche + sous-ligne.
+ */
+@media (max-width: 430.98px) {
+  .masthead-sports-strip .sports-chip--cta {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 8px;
+    row-gap: 2px;
+    min-width: 0;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-rail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 3px;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail {
+    display: block;
+    text-align: center;
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail:empty,
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail[hidden] {
+    display: none;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-head .sports-chip__cta-eyebrow {
+    display: none;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
+    justify-content: center;
+    align-self: stretch;
+    padding-inline: 6px;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__line {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-stack {
+    height: auto;
+    min-height: 3.15em;
   }
 }
 /* Mobile : même 8 px haut/bas (pas de padding bas réduit). */
@@ -1569,7 +1672,7 @@ html[data-script-dir="rtl"] .wordmark-full {
 .is-marquee { text-overflow: clip; }
 /* 1 cycle (delay lecture + aller-retour), puis repos — pas infinite. */
 .is-marquee > .tuner-now-sub-text {
-  animation: tunerMarquee var(--marquee-duration, 12s) linear var(--marquee-delay, 1.6s) 2 alternate both;
+  animation: tunerMarquee var(--marquee-duration, 12s) linear var(--marquee-delay, 1.6s) var(--marquee-trips, 2) alternate both;
   will-change: transform;
 }
 /* L'audio reste actif en arrière-plan; seules les animations de lecture sont
@@ -1578,8 +1681,8 @@ html.is-tuner-presentation-paused .is-marquee > .tuner-now-sub-text {
   animation-play-state: paused;
 }
 @keyframes tunerMarquee {
-  0%, 14%   { transform: translate3d(0, 0, 0); }
-  86%, 100% { transform: translate3d(var(--marquee-shift, 0), 0, 0); }
+  0%, 18%   { transform: translate3d(0, 0, 0); }
+  82%, 100% { transform: translate3d(var(--marquee-shift, 0), 0, 0); }
 }
 /* Panneau antenne : même défilement doux que le dial lorsqu'un titre déborde.
  * Bureau ≥1100 : le titre passe sur 2 lignes (voir media plus bas). */
@@ -2313,6 +2416,40 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   /* Popover cast : visible quand le SDK l'active (retirant .hidden). */
   .tuner-cast--popover:not(.hidden):not([hidden]) { display: flex; }
 }
+
+/*
+ * 390 / 430 : plus de skip gauche. Le suivant se colle au cadran
+ * (onglet skip, pas un second carré 42 px). Embed kiosque inchangé.
+ */
+@media (max-width: 430.98px) {
+  html:not([data-embed="tuner"]) #tuner-prev {
+    display: none !important;
+  }
+  html:not([data-embed="tuner"]) #tuner-next.tuner-step {
+    width: 32px;
+    height: auto;
+    min-height: 36px;
+    align-self: stretch;
+    margin-left: -6px;
+    border-radius: 0 9px 9px 0;
+    border-left: 0;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: none;
+  }
+  html:not([data-embed="tuner"]) #tuner-next.tuner-step:hover,
+  html:not([data-embed="tuner"]) #tuner-next.tuner-step:active {
+    transform: none;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  html:not([data-embed="tuner"]) #tuner-next.tuner-step svg {
+    width: 18px;
+    height: 18px;
+  }
+  html:not([data-embed="tuner"]) .tuner-dial .tuner-now {
+    border-radius: 9px 0 0 9px;
+    padding-right: 18px;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .tuner-vol-slot { transition: none; }
 }
@@ -2909,12 +3046,9 @@ html[data-translate-busy="1"] .translate-toggle {
  * puis fondu/flou en bas — pas un flou opaque sur le nom.
  */
 .filters-panel {
-  /* Hauteur du *titre* seul (pad-top 6px + nom 12px/1.2 ≈ 14px) : cette
-     partie du peek reste toujours nette. */
-  --filters-title-h: 20px;
-  /* Peek plus bas : moins de « fausse » 2ᵉ rangée avant « Plus de sources ». */
-  --filters-peek: 22px;
-  --filters-title-h: 16px;
+  /* Peek : assez pour le nom, trop court pour une 2ᵉ rangée entière. */
+  --filters-peek: 24px;
+  --filters-title-h: 0px;
 }
 
 .filters-panel:not(.is-expanded):not(.is-compact) .filters {
@@ -2942,23 +3076,21 @@ html[data-translate-busy="1"] .translate-toggle {
   position: absolute;
   left: 0;
   right: 0;
-  /* Commence juste sous le titre (net) : le nom d'institution qui suit,
-     lui, est flouté/estompé jusqu'à la coupure. */
-  top: calc(var(--filters-collapsed-h) + var(--filters-title-h));
-  height: calc(var(--filters-peek) - var(--filters-title-h));
+  /* Toute la peek. Haut transparent = nom net. Pas de backdrop-filter :
+     son amorce faisait une bande nette au milieu des pastilles. */
+  top: var(--filters-collapsed-h);
+  height: var(--filters-peek);
   z-index: 2;
   pointer-events: none;
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--bg) 0%, transparent) 0%,
-    color-mix(in srgb, var(--bg) 40%, transparent) 45%,
-    color-mix(in srgb, var(--bg) 85%, transparent) 80%,
+    transparent 0%,
+    transparent 28%,
+    color-mix(in srgb, var(--bg) 22%, transparent) 55%,
+    color-mix(in srgb, var(--bg) 62%, transparent) 78%,
     var(--bg) 100%
   );
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 40%, #000 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 40%, #000 100%);
   opacity: 0;
-  /* visibility coupe aussi le backdrop-filter (que l'opacité seule n'éteint pas) */
   visibility: hidden;
   transition: opacity 0.12s ease, visibility 0s linear 0.12s;
 }
@@ -2966,8 +3098,6 @@ html[data-translate-busy="1"] .translate-toggle {
 .filters-panel.has-overflow:not(.is-expanded):not(.is-compact)::after {
   opacity: 1;
   visibility: visible;
-  -webkit-backdrop-filter: blur(1px);
-  backdrop-filter: blur(1px);
   transition: opacity 0.18s ease 0.3s, visibility 0s linear 0.3s;
 }
 
@@ -5644,15 +5774,12 @@ body.external-listen-open {
   pointer-events: none;
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--bg) 0%, transparent) 0%,
-    color-mix(in srgb, var(--bg) 35%, transparent) 40%,
-    color-mix(in srgb, var(--bg) 80%, transparent) 75%,
+    transparent 0%,
+    transparent 28%,
+    color-mix(in srgb, var(--bg) 22%, transparent) 55%,
+    color-mix(in srgb, var(--bg) 62%, transparent) 78%,
     var(--bg) 100%
   );
-  -webkit-backdrop-filter: blur(1px);
-  backdrop-filter: blur(1px);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 45%, #000 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 45%, #000 100%);
 }
 .news-tail.is-expanded .news-tail-body::after {
   display: none;
