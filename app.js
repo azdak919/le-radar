@@ -3728,6 +3728,24 @@ function sportsResultTone(result) {
   return SPORTS_SPORT_TONES.default;
 }
 
+/** Pastille V / D / N — puces scores et CTA. */
+function sportsResultBadgeSpec(game) {
+  const r = String(game?.result || '');
+  if (r === 'W') return { letter: 'V', mod: 'w' };
+  if (r === 'L') return { letter: 'D', mod: 'l' };
+  if (r === 'D' || r === 'T') return { letter: 'N', mod: 'd' };
+  return { letter: 'N', mod: 'd' };
+}
+
+function sportsResultBadgeEl(game) {
+  const spec = sportsResultBadgeSpec(game);
+  const el = document.createElement('span');
+  el.className = `sports-chip__badge sports-chip__badge--${spec.mod}`;
+  el.textContent = spec.letter;
+  el.setAttribute('aria-hidden', 'true');
+  return el;
+}
+
 function sportsSportTone(sport) {
   const s = String(sport || '').toLowerCase();
   if (s.includes('basket')) return SPORTS_SPORT_TONES.basketball;
@@ -5520,6 +5538,9 @@ function fillSportsCtaLayer(layer, slide) {
     gEl.textContent = glyph;
     head.append(gEl);
   }
+  if (src?.mode === 'result' && src.game) {
+    head.append(sportsResultBadgeEl(src.game));
+  }
   const line = document.createElement('span');
   line.className = 'sports-chip__cta-line';
   const text = document.createElement('span');
@@ -6090,13 +6111,7 @@ function paintSportsChip(slide, animate = false) {
   const subLine = sportsMatchSubLine(slide);
 
   if (slide.mode === 'result') {
-    const badge = g.result === 'W' ? 'V' : g.result === 'L' ? 'D' : 'N';
-    const badgeMod = g.result === 'W' ? 'w' : g.result === 'L' ? 'l' : 'd';
-    const badgeEl = document.createElement('span');
-    badgeEl.className = `sports-chip__badge sports-chip__badge--${badgeMod}`;
-    badgeEl.textContent = badge;
-    badgeEl.setAttribute('aria-hidden', 'true');
-    a.append(glyph, badgeEl);
+    a.append(glyph, sportsResultBadgeEl(g));
     const placeKind = sportsIsPlaceResult(g, sport);
     const prior = g.priorSeason || team.lastGamePriorSeason;
     if (placeKind) {

@@ -1271,8 +1271,9 @@ assert(
   appJs.includes('sports-chip__cta-eyebrow')
     && appJs.includes('sports-chip__cta-sub')
     && appJs.includes('function sportsUpdatedShort')
-    && appJs.includes('function sportsRelativeWhen'),
-  'app.js : CTA sous-ligne = relatif (il y a / dans) + compétition',
+    && appJs.includes('function sportsRelativeWhen')
+    && appJs.includes('function sportsResultBadgeEl'),
+  'app.js : CTA sous-ligne relatif + pastille V/D/N comme les puces scores',
 );
 assert(
   appJs.includes('function sportsCtaResultIsTodayOrYesterday')
