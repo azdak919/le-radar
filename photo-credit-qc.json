@@ -1,37 +1,23 @@
 {
-  "updated": "2026-08-23T10:00:17.643Z",
+  "updated": "2026-08-23T11:30:38.270Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 132,
+  "cited": 130,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 9,
-  "citedNew": 9,
-  "fallbackNew": 12,
+  "checked": 19,
+  "updatedCount": 7,
+  "citedNew": 5,
+  "fallbackNew": 14,
   "samples": [
     {
       "title": "À la découverte du matcha et du kohakutou",
       "source": "Le Collectif",
-      "credit": "Photo : ItSarahGendreauSimoneau",
-      "cited": true,
-      "method": "filename-credit"
-    },
-    {
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "source": "Le Délit",
-      "credit": "Photo : Toscane Ralaimongo",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
+      "credit": "Crédit photo : Le Collectif",
+      "cited": false,
+      "method": null
     },
     {
       "title": "L’épidémie de la nonchalance",
@@ -55,11 +41,11 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
+      "title": "Sois belle et tais-toi",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
-      "method": "via-attribution"
+      "method": "media-credit-featured"
     },
     {
       "title": "Inside Mile End Kicks",
@@ -71,9 +57,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
