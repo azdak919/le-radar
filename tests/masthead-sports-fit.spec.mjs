@@ -397,10 +397,10 @@ test('mât : point médian centré entre date et heure', async ({ page }) => {
 });
 
 /**
- * CTA SPORTS téléphone : sous-ligne longue → wrap 2 lignes, pas d’ellipse,
- * pas de marquee. (≤700 px le défilement retardait le changement d’accroche.)
+ * CTA SPORTS téléphone : sous-ligne longue → marquee L→R (aller-retour),
+ * pas de wrap 2 lignes, pas d’ellipse.
  */
-test('CTA sports téléphone : sous-ligne wrappe, pas d’ellipse ni marquee', async ({ page }) => {
+test('CTA sports téléphone : sous-ligne trop longue défile L→R', async ({ page }) => {
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
 
@@ -438,7 +438,6 @@ test('CTA sports téléphone : sous-ligne wrappe, pas d’ellipse ni marquee', a
     const cs = getComputedStyle(subInner);
     return {
       ok: true,
-      wrap: typeof isPhoneTextWrapMode === 'function' ? isPhoneTextWrapMode() : false,
       isSub: chip.classList.contains('is-sub-overflowing'),
       hasSubText: !!layer.querySelector('.sports-chip__cta-sub-text'),
       whiteSpace: cs.whiteSpace,
@@ -448,12 +447,11 @@ test('CTA sports téléphone : sous-ligne wrappe, pas d’ellipse ni marquee', a
     };
   }, longSub);
   expect(ready.ok, `préparation CTA : ${ready.reason || 'ok'}`).toBe(true);
-  expect(ready.wrap, 'mode wrap téléphone').toBe(true);
   expect(ready.hasSubText, 'markup .sports-chip__cta-sub-text requis').toBe(true);
-  expect(ready.isSub, 'pas de marquee sous-ligne sur téléphone').toBe(false);
-  expect(ready.whiteSpace, 'sous-ligne wrap').toBe('normal');
+  expect(ready.isSub, 'refreshSportsChipScroll doit activer is-sub-overflowing').toBe(true);
+  expect(ready.whiteSpace, 'sous-ligne une ligne').toBe('nowrap');
   expect(ready.textOverflow, 'pas d’ellipse').toBe('clip');
-  expect(ready.animationName === 'none' || !ready.animationName, `anim=${ready.animationName}`).toBe(true);
+  expect(ready.animationName, 'sous-ligne doit animer').toMatch(/sports-chip-scroll-sub/);
   expect(ready.text).toBe(longSub);
 
   expect(pageErrors).toEqual([]);

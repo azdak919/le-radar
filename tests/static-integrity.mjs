@@ -1449,15 +1449,17 @@ assert(
     && !/Hors wide : une carte à la fois/.test(appJs),
   'app.js : cascade météo/sports tous écrans + marquee 1 cycle',
 );
-// Marquee site : 2 alternate both + delay — jamais infinite sur surfaces qui tournent.
+// Marquee site : alternate both + delay — jamais infinite. 2 = 1 aller-retour ;
+// --*-trips peut passer à 4 si le premier tour est trop court pour lire.
 assert(
   !/sports-chip-scroll[^;]*infinite/.test(cssFlat)
     && !/sports-chip-scroll-sub[^;]*infinite/.test(cssFlat)
-    && /sports-chip-scroll[^;]*\s2\s+alternate\s+both/.test(cssFlat)
+    && /sports-chip-scroll[^;]*alternate\s+both/.test(cssFlat)
     && /--sports-scroll-delay:\s*1\.6s/.test(cssFlat)
-    && /tunerMarquee[^;]*\s2\s+alternate\s+both/.test(cssFlat)
-    && /MARQUEE_ROUND_TRIPS\s*=\s*2/.test(appJs),
-  'CSS/JS : marquees sports + dial = 1 cycle (2 alternate), delay 1.6s, pas infinite',
+    && /tunerMarquee[^;]*alternate\s+both/.test(cssFlat)
+    && /MARQUEE_ROUND_TRIPS\s*=\s*2/.test(appJs)
+    && appJs.includes('function marqueeAlternateCount'),
+  'CSS/JS : marquees sports + dial = alternate both, delay 1.6s, pas infinite',
 );
 // Magazine mid : CSS 2 col dès 768 (iPad portrait). Le JS d'équilibre /
 // graine En bref / extraits mid doit partager ce seuil — à 900 px les

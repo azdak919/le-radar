@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test';
 
 /**
- * Téléphone : CTA / météo / synthé — 2 lignes, pas de marquee.
- * L’info change au rythme de lecture au lieu d’attendre un aller-retour.
+ * Téléphone : CTA / météo / synthé — une ligne, marquee L→R puis retour,
+ * ensuite seulement changement d’info. Pas de wrap 2 lignes.
  */
 
 const weather = [
@@ -23,7 +23,7 @@ const weather = [
   current: { temperature_2m, weather_code, is_day },
 }));
 
-test('téléphone 390 : pas de marquee CTA / météo / synthé', async ({ page }) => {
+test('téléphone 390 : une ligne, marquee si overflow, pas de wrap', async ({ page }) => {
   await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => route.fulfill({
     contentType: 'application/json',
     headers: { 'access-control-allow-origin': '*' },
@@ -32,35 +32,25 @@ test('téléphone 390 : pas de marquee CTA / météo / synthé', async ({ page }
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await page.waitForFunction(() => window.RadarAir?._pure?.isPhoneTextWrapMode?.() === true);
-
-  const wrap = await page.evaluate(() => window.RadarAir._pure.isPhoneTextWrapMode());
-  expect(wrap, 'mode wrap téléphone').toBe(true);
-
-  const weatherRibbon = page.locator('#masthead-weather');
-  await expect(weatherRibbon).toBeVisible();
-  await expect(weatherRibbon.locator('.masthead-weather__city.is-active').first()).toBeVisible({ timeout: 8000 });
-  await expect(weatherRibbon.locator('.masthead-weather__city.is-active.is-overflowing')).toHaveCount(0);
-  const weatherAnim = await weatherRibbon
-    .locator('.masthead-weather__city.is-active .masthead-weather__name-text')
-    .first()
-    .evaluate((el) => getComputedStyle(el).animationName);
-  expect(weatherAnim === 'none' || !weatherAnim, `météo animation=${weatherAnim}`).toBe(true);
 
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip.locator('.sports-chip--cta')).toBeVisible({ timeout: 8000 });
-  await expect(strip.locator('.sports-chip--cta')).not.toHaveClass(/is-overflowing/);
-  await expect(strip.locator('.sports-chip--cta')).not.toHaveClass(/is-sub-overflowing/);
   const ctaWhiteSpace = await strip.locator('.sports-chip--cta .sports-chip__cta-text').first().evaluate(
     (el) => getComputedStyle(el).whiteSpace,
   );
-  expect(ctaWhiteSpace, 'CTA wrap').toBe('normal');
+  expect(ctaWhiteSpace, 'CTA une ligne').toBe('nowrap');
 
   await page.waitForFunction(() => document.getElementById('tuner')?.classList.contains('is-dial-ready'));
-  const tunerMarquees = await page.locator('#tuner .is-marquee').count();
-  expect(tunerMarquees, 'synthé sans is-marquee').toBe(0);
   const subWhiteSpace = await page.locator('#tuner-now-sub, .tuner-now-sub').first().evaluate(
     (el) => getComputedStyle(el).whiteSpace,
   );
-  expect(subWhiteSpace, 'synthé wrap').toBe('normal');
+  expect(subWhiteSpace, 'synthé une ligne').toBe('nowrap');
+
+  const weatherRibbon = page.locator('#masthead-weather');
+  await expect(weatherRibbon.locator('.masthead-weather__city.is-active').first()).toBeVisible({ timeout: 8000 });
+  const weatherWrap = await weatherRibbon
+    .locator('.masthead-weather__city.is-active .masthead-weather__name-text')
+    .first()
+    .evaluate((el) => getComputedStyle(el).whiteSpace);
+  expect(weatherWrap, 'météo une ligne').toBe('nowrap');
 });
