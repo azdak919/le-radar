@@ -96,7 +96,7 @@
   <div id="host">
     <p><a class="hub" href="./">← Labo</a></p>
     <h1>Cartes sports</h1>
-    <p class="lede">Même CSS que le site. À 390/430, <strong>CTA seule</strong> (le fit prod retire les puces scores). Dès 768, une puce à gauche + la CTA. PROCHAIN / HIER / AUJOURD’HUI au-dessus de SPORTS sous 431&nbsp;px. Accroche sur une ligne : défilement gauche → droite, aller-retour, pause à l’origine. Ici le marquee boucle ; en prod il ne fait qu’un cycle.</p>
+    <p class="lede">Même CSS que le site. À 390/430, <strong>CTA seule</strong>. Dès 768, puce score (V / D / N) + CTA. Libellés <strong>complets</strong> (universitaire, collégial) — pas d’abréviation : le défilement L→R couvre le trop-long. PROCHAIN / HIER / AUJOURD’HUI au-dessus de SPORTS sous 431&nbsp;px.</p>
     <div class="formats" id="formats" role="toolbar" aria-label="Formats d’écran"></div>
     <p class="meta" id="meta"></p>
     <div class="clip" id="clip">
@@ -118,12 +118,12 @@
 
     const cases = [
       {
-        title: 'En saison — prochain',
+        title: 'En saison — prochain (reçoit)',
         extra: () => matchChip({
           tone: '#2e7d4f',
           glyph: '⚽',
           inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__vs">reçoit</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
-          sub: 'aujourd’hui, 19 h 00 · Soccer univ.',
+          sub: 'aujourd’hui, 19 h 00 · Soccer universitaire masculin',
         }),
         cta: {
           state: 'next',
@@ -135,41 +135,115 @@
         },
       },
       {
-        title: 'Matin — résultats d’hier',
+        title: 'En saison — prochain (visiteur)',
         extra: () => matchChip({
-          tone: '#3d6fa8',
+          tone: '#2e7d4f',
+          glyph: '⚽',
+          inner: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__vs">à</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
+          sub: 'demain, 15 h 00 · Soccer universitaire féminin',
+        }),
+        cta: {
+          state: 'next',
+          tone: '#2e7d4f',
+          eyebrow: 'Prochain',
+          glyph: '⚽',
+          text: 'McGill à Concordia',
+          sub: 'lun. 24 août, 15 h 00 · Soccer universitaire féminin',
+        },
+      },
+      {
+        title: 'Matin — résultats d’hier (victoire)',
+        extra: () => matchChip({
+          tone: '#3d9a6a',
           glyph: '🏈',
           badge: 'V',
           badgeMod: 'w',
           inner: '<span class="sports-chip__name">Carabins</span> <span class="sports-chip__score">24–21</span> <span class="sports-chip__name sports-chip__opp">Rouge et Or</span>',
-          sub: 'hier · Football univ.',
+          sub: 'hier · Football universitaire',
         }),
         cta: {
           state: 'result',
-          tone: '#3d6fa8',
+          tone: '#3d9a6a',
           eyebrow: 'Hier',
           glyph: '🏈',
           text: 'Carabins 24–21 Rouge et Or',
-          sub: 'Football univ. · sam. soir',
+          sub: 'Football universitaire · sam. soir',
         },
       },
       {
-        title: 'Résultat — aujourd’hui',
+        title: 'Résultat — victoire',
         extra: () => matchChip({
-          tone: '#3d6fa8',
+          tone: '#3d9a6a',
           glyph: '🏀',
           badge: 'V',
           badgeMod: 'w',
           inner: '<span class="sports-chip__name">UdeM</span> <span class="sports-chip__score">78–71</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
-          sub: 'aujourd’hui · Basket univ.',
+          sub: 'aujourd’hui · Basketball universitaire',
+        }),
+        cta: {
+          state: 'result',
+          tone: '#3d9a6a',
+          eyebrow: 'Aujourd’hui',
+          glyph: '🏀',
+          text: 'UdeM 78–71 Concordia',
+          sub: 'Basketball universitaire · il y a 3 h',
+        },
+      },
+      {
+        title: 'Résultat — défaite',
+        extra: () => matchChip({
+          tone: '#c45c5c',
+          glyph: '🏒',
+          badge: 'D',
+          badgeMod: 'l',
+          inner: '<span class="sports-chip__name">Bishop’s</span> <span class="sports-chip__score">2–5</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
+          sub: 'aujourd’hui · Hockey universitaire',
+        }),
+        cta: {
+          state: 'result',
+          tone: '#c45c5c',
+          eyebrow: 'Aujourd’hui',
+          glyph: '🏒',
+          text: 'Bishop’s 2–5 McGill',
+          sub: 'Hockey universitaire · il y a 5 h',
+        },
+      },
+      {
+        title: 'Résultat — match nul',
+        extra: () => matchChip({
+          tone: '#8fa3b0',
+          glyph: '⚽',
+          badge: 'N',
+          badgeMod: 'd',
+          inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__score">1–1</span> <span class="sports-chip__name sports-chip__opp">UdeM</span>',
+          sub: 'aujourd’hui · Soccer universitaire masculin',
+        }),
+        cta: {
+          state: 'result',
+          tone: '#8fa3b0',
+          eyebrow: 'Aujourd’hui',
+          glyph: '⚽',
+          text: 'ULaval 1–1 UdeM',
+          sub: 'Soccer universitaire masculin · il y a 2 h',
+        },
+      },
+      {
+        title: 'Résultat — place (régate)',
+        extra: () => matchChip({
+          tone: '#3d6fa8',
+          glyph: '⛵',
+          badge: 'V',
+          badgeMod: 'w',
+          inner: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__score">7e/12</span>',
+          sub: 'aujourd’hui · Voile universitaire',
         }),
         cta: {
           state: 'result',
           tone: '#3d6fa8',
           eyebrow: 'Aujourd’hui',
-          glyph: '🏀',
-          text: 'UdeM 78–71 Concordia',
-          sub: 'Basket univ. · il y a 3 h',
+          glyph: '⛵',
+          text: 'McGill 7e/12',
+          sub: 'Voile universitaire · ICSA Regional',
         },
       },
       {
@@ -181,7 +255,7 @@
           tag: 'En cours',
           glyph: '🏒',
           text: 'McGill 2–1 Concordia',
-          sub: 'Hockey univ. · 2e période',
+          sub: 'Hockey universitaire · 2e période',
         },
       },
       {
@@ -192,7 +266,7 @@
           eyebrow: 'Prochain',
           glyph: '🏈',
           text: 'Rouge et Or à Carabins',
-          sub: 'ven. 4 sept., 19 h 00 · Football univ.',
+          sub: 'ven. 4 sept., 19 h 00 · Football universitaire',
         },
       },
       {
