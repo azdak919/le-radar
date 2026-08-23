@@ -1,7 +1,7 @@
 /**
  * LE-RADAR — page « SPORTS Étudiants » (/sports/).
  * Progressive enhancement : sans ce script, toute la grille reste visible.
- * Filtres : sport · catégorie · secteur · période (semaine / mois / session)
+ * Filtres : sport · catégorie · secteur · période (en cours / semaine / mois / session)
  * + loupe de recherche locale (équipe, institution, sport…)
  * + flèche « haut de page » (bas-gauche, suit le défilement)
  */
@@ -32,7 +32,10 @@
   const searchHint = document.getElementById('sports-search-hint');
 
   const TZ = 'America/Toronto';
-  const PERIOD_KEYS = new Set(['all', 'week', 'next-week', 'month', 'session']);
+  const PERIOD_KEYS = new Set(['all', 'live', 'week', 'next-week', 'month', 'session']);
+  /* Même fenêtre que app.js (CTA « En cours ») : 15 min avant → 3 h après. */
+  const LIVE_LEAD_MS = 15 * 60 * 1000;
+  const LIVE_TAIL_MS = 3 * 3600 * 1000;
 
   const labels = {
     fr: {
@@ -41,7 +44,9 @@
         : `${n} équipe${n > 1 ? 's' : ''} sur ${total}`),
       boardsOnly: 'Tableaux officiels (liens)',
       empty: 'Aucune équipe pour ce filtre.',
+      live: 'En cours',
       emptyPeriod: {
+        live: 'Aucun match en cours.',
         week: 'Aucun match cette semaine.',
         'next-week': 'Aucun match la semaine prochaine.',
         month: 'Aucun match ce mois-ci.',
@@ -58,7 +63,9 @@
         : `${n} of ${total} team${total > 1 ? 's' : ''}`),
       boardsOnly: 'Official boards (links)',
       empty: 'No teams match this filter.',
+      live: 'Live',
       emptyPeriod: {
+        live: 'No games in progress.',
         week: 'No games this week.',
         'next-week': 'No games next week.',
         month: 'No games this month.',
@@ -168,10 +175,116 @@
     return dates;
   }
 
+  function panelKickoffMs(panel) {
+    const ts = parseFloat(panel.getAttribute('data-next-ts') || '');
+    return Number.isFinite(ts) && ts > 0 ? ts : NaN;
+  }
+
+  function panelIsLiveNow(panel, now = Date.now()) {
+    if (panel.classList.contains('sports-panel--external')) return false;
+    const ts = panelKickoffMs(panel);
+    if (Number.isFinite(ts)) {
+      return ts <= now + LIVE_LEAD_MS && ts >= now - LIVE_TAIL_MS;
+    }
+    return panel.getAttribute('data-live') === '1';
+  }
+
+  function ensureLivePill(panel, live) {
+    let pill = panel.querySelector('.sports-panel__live');
+    if (!live) {
+      if (pill) pill.hidden = true;
+      return pill;
+    }
+    if (!pill) {
+      const name = panel.querySelector('.sports-panel__name');
+      if (!name) return null;
+      pill = document.createElement('span');
+      pill.className = 'sports-panel__live';
+      pill.textContent = t.live;
+      name.appendChild(pill);
+    }
+    pill.hidden = false;
+    return pill;
+  }
+
+  function armLiveRow(row) {
+    if (!row) return;
+    const score = row.querySelector('.sports-result__score');
+    const badge = row.querySelector('.sports-result__badge');
+    if (score && !score.hasAttribute('data-idle-html')) {
+      score.setAttribute('data-idle-html', score.innerHTML);
+      score.setAttribute('data-idle-class', score.className);
+    }
+    if (badge && !badge.hasAttribute('data-idle-badge')) {
+      badge.setAttribute('data-idle-badge', badge.textContent || '');
+      badge.setAttribute('data-idle-badge-class', badge.className);
+    }
+    row.classList.add('sports-result--live');
+    row.classList.remove('sports-result--next');
+    row.setAttribute('data-live-armed', '1');
+    if (score) {
+      const idle = score.getAttribute('data-idle-html') || '';
+      const isUpcoming = /à venir|upcoming/i.test(score.textContent || '')
+        || /à venir|upcoming/i.test(idle);
+      if (isUpcoming && !score.querySelector('.sports-result__live-flag')) {
+        score.className = 'sports-result__score sports-result__score--live';
+        score.setAttribute('aria-label', t.live);
+        score.innerHTML = `<span class="sports-result__live-flag">${t.live}</span>`;
+      } else if (!score.querySelector('.sports-result__live-flag')) {
+        const pts = (score.textContent || '').trim();
+        score.classList.add('sports-result__score--live');
+        score.classList.remove('sports-result__score--next');
+        score.setAttribute('aria-label', t.live);
+        score.innerHTML = `<span class="sports-result__live-flag">${t.live}</span>`
+          + (pts ? `<span class="sports-result__live-score">${pts}</span>` : '');
+      }
+    }
+    if (badge) {
+      badge.textContent = t.live;
+      badge.setAttribute('title', t.live);
+      badge.classList.remove('sports-result__badge--next');
+    }
+  }
+
+  function disarmLiveRow(row) {
+    if (!row || row.hasAttribute('data-result')) return;
+    const score = row.querySelector('.sports-result__score');
+    const badge = row.querySelector('.sports-result__badge');
+    row.classList.remove('sports-result--live');
+    row.classList.add('sports-result--next');
+    row.removeAttribute('data-live-armed');
+    if (score && score.hasAttribute('data-idle-html')) {
+      score.innerHTML = score.getAttribute('data-idle-html') || '';
+      score.className = score.getAttribute('data-idle-class') || 'sports-result__score sports-result__score--next';
+    }
+    if (badge && badge.hasAttribute('data-idle-badge')) {
+      badge.textContent = badge.getAttribute('data-idle-badge') || '→';
+      badge.className = badge.getAttribute('data-idle-badge-class')
+        || 'sports-result__badge sports-result__badge--next';
+      badge.setAttribute('title', badge.textContent);
+    }
+  }
+
+  function syncLivePresentation(now = Date.now()) {
+    scoredPanels.forEach((panel) => {
+      const live = panelIsLiveNow(panel, now);
+      panel.classList.toggle('sports-panel--live', live);
+      if (live) panel.setAttribute('data-live', '1');
+      else panel.removeAttribute('data-live');
+      ensureLivePill(panel, live);
+      const row = panel.querySelector('.sports-result--next, .sports-result--live');
+      if (live) armLiveRow(row);
+      else if (row && row.getAttribute('data-live-armed') === '1') {
+        disarmLiveRow(row);
+      }
+    });
+  }
+
   function panelMatchesPeriod(panel, periodKey) {
     if (!periodKey || periodKey === 'all') return true;
     // Cartes « liens officiels » sans calendrier : hors filtres temporels.
     if (panel.classList.contains('sports-panel--external')) return false;
+    if (periodKey === 'live') return panelIsLiveNow(panel);
     const range = periodRange(periodKey);
     if (!range) return true;
     const dates = panelGameYmds(panel);
@@ -314,6 +427,7 @@
   }
 
   function apply(sport, sector, sex, period, team, query) {
+    syncLivePresentation();
     const sportKey = sport || 'all';
     const sectorKey = sector || 'all';
     const sexKey = (sex || 'all').toLowerCase();
@@ -670,4 +784,11 @@
   if (initial.q) setSearchOpen(true);
   if (!team && !initial.q) openHashSport();
   window.addEventListener('hashchange', openHashSport);
+  window.setInterval(() => {
+    syncLivePresentation();
+    const cur = currentFilters();
+    if (cur.period === 'live') {
+      apply(cur.sport, cur.sector, cur.sex, cur.period, '', searchQuery);
+    }
+  }, 30000);
 })();

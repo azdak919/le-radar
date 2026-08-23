@@ -120,6 +120,15 @@ test('labo cartes page sports : variantes V D N prochain creux', async ({ page }
   await expect(page.locator('#fiches .sports-result--D').first()).toBeVisible();
   await expect(page.locator('#fiches .sports-result--next').first()).toBeVisible();
   await expect(page.locator('#fiches .sports-result--live').first()).toBeVisible();
+  const livePill = page.locator('#fiches .sports-panel__live').first();
+  await expect(livePill).toBeVisible();
+  await expect(livePill).toHaveText(/En cours/i);
+  const liveFilter = page.locator('#lab-filters [data-filter-period="live"]');
+  await expect(liveFilter).toBeVisible();
+  await liveFilter.click();
+  await expect(page.locator('#fiches .lab-case:not([hidden])')).toHaveCount(1);
+  await expect(page.locator('#fiches .lab-case:not([hidden]) .sports-panel__live')).toBeVisible();
+  await page.locator('#lab-filters [data-filter-period="all"]').click();
   await expect(page.locator('#fiches .sports-result__badge', { hasText: /^V$/ }).first()).toBeVisible();
   await expect(page.locator('#fiches .sports-result__badge', { hasText: /^D$/ }).first()).toBeVisible();
   await expect(page.locator('#fiches .sports-result__badge', { hasText: /^N$/ }).first()).toBeVisible();

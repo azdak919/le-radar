@@ -172,6 +172,7 @@
     }
     html.lab-embed .lab-chrome,
     html.lab-embed #lab-nav,
+    html.lab-embed #lab-filters,
     html.lab-embed #formats,
     html.lab-embed .lab-case > p,
     html.lab-embed #fiches {
@@ -195,30 +196,16 @@
       }
     }
 
-    /* Proposition — match en cours. Pas encore émis par seo-pages.js. */
-    .sports-result--live {
-      border-left: 3px solid var(--status-live, #c8102e);
-      margin-inline: -6px;
-      padding-inline: 6px;
-      border-radius: 4px;
-      background: color-mix(in srgb, var(--status-live, #c8102e) 9%, transparent);
+    #lab-filters {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      margin: 0 0 16px;
+      padding: 0 0 10px;
+      background: var(--bg);
     }
-    .sports-result--live .sports-result__badge { color: var(--status-live, #c8102e); }
-    .sports-result__score--live {
-      color: var(--status-live, #c8102e);
-      font-size: 11.5px;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
-    [data-theme="dark"] .sports-result--live {
-      border-left-color: var(--status-live-soft, #ff7d6e);
-      background: color-mix(in srgb, var(--status-live-soft, #ff7d6e) 12%, transparent);
-    }
-    [data-theme="dark"] .sports-result--live .sports-result__badge,
-    [data-theme="dark"] .sports-result__score--live {
-      color: var(--status-live-soft, #ff7d6e);
-    }
+    .lab-case[hidden],
+    #grille .sports-panel[hidden] { display: none !important; }
   </style>
 </head>
 <body class="lab-app">
@@ -246,6 +233,17 @@
   </div>
   <nav id="lab-nav" aria-label="Variantes"></nav>
   <div id="lab-main">
+    <div class="sports-filters" id="lab-filters" role="group" aria-label="Filtres">
+      <div class="sports-filters__row" data-filter-period-row>
+        <span class="sports-filters__label">Période</span>
+        <button type="button" class="sports-filter is-active" data-filter-period="all" aria-pressed="true">Toutes</button>
+        <button type="button" class="sports-filter" data-filter-period="live" aria-pressed="false">En cours</button>
+        <button type="button" class="sports-filter" data-filter-period="week" aria-pressed="false">Cette semaine</button>
+        <button type="button" class="sports-filter" data-filter-period="next-week" aria-pressed="false">Semaine prochaine</button>
+        <button type="button" class="sports-filter" data-filter-period="month" aria-pressed="false">Ce mois-ci</button>
+        <button type="button" class="sports-filter" data-filter-period="session" aria-pressed="false">Cette session</button>
+      </div>
+    </div>
     <div id="stage">
       <div id="fiches"></div>
       <div id="grille" class="sports-board" role="list" hidden></div>
@@ -285,7 +283,10 @@
         scoreAria = 'À venir';
       } else if (kind === 'live') {
         scoreCls += ' sports-result__score--live';
-        score = r.score || 'En cours';
+        const pts = r.score || '';
+        score = pts
+          ? `<span class="sports-result__live-flag">En cours</span><span class="sports-result__live-score">${pts}</span>`
+          : '<span class="sports-result__live-flag">En cours</span>';
         scoreAria = r.scoreAria || 'En cours';
       }
       const vs = r.vs || 'vs';
@@ -305,7 +306,7 @@
       const badge = kind === 'next'
         ? `<span class="sports-result__badge sports-result__badge--next" title="À venir">→</span>`
         : kind === 'live'
-          ? `<span class="sports-result__badge" title="En cours">●</span>`
+          ? `<span class="sports-result__badge" title="En cours">En cours</span>`
           : `<span class="sports-result__badge" title="${r.badgeTitle}">${r.badge}</span>`;
       const priorMeta = r.prior
         ? `\n  <span class="sports-result__season-meta">Saison précédente</span>`
@@ -322,18 +323,20 @@
       const tone = TONE[p.sport] || 'var(--accent)';
       const glyph = GLYPH[p.sport] || '🏅';
       const sexMod = p.sexKey === 'F' ? 'f' : p.sexKey === 'M' ? 'm' : 'x';
+      const isLive = !!(p.live || (p.rows || []).some((r) => r.kind === 'live'));
       const sexBadge = p.sex
         ? ` <span class="sports-panel__sex sports-panel__sex--${sexMod}"${p.sexKey === 'X' ? ' title="Mixte"' : ''}>${p.sex}</span>`
         : '';
+      const livePill = isLive ? ' <span class="sports-panel__live">En cours</span>' : '';
       const code = p.code
         ? ` <span class="sports-panel__code notranslate" translate="no">${p.code}</span>`
         : '';
       let nameBlock;
       if (p.nick) {
-        nameBlock = `<h3 class="sports-panel__name sports-panel__name--branded"><span class="sports-panel__brand">${p.nick}</span>${sexBadge}</h3>
+        nameBlock = `<h3 class="sports-panel__name sports-panel__name--branded"><span class="sports-panel__brand">${p.nick}</span>${sexBadge}${livePill}</h3>
       <p class="sports-panel__program"><span class="sports-panel__name-text">${p.name}</span>${code}</p>`;
       } else {
-        nameBlock = `<h3 class="sports-panel__name"><span class="sports-panel__brand">${p.name}</span>${code}${sexBadge}</h3>`;
+        nameBlock = `<h3 class="sports-panel__name"><span class="sports-panel__brand">${p.name}</span>${code}${sexBadge}${livePill}</h3>`;
       }
       const school = p.school
         ? `<p class="sports-panel__school">${p.school}</p>`
@@ -341,6 +344,7 @@
       const extra = [
         p.external ? 'sports-panel--external' : '',
         p.spotlight ? 'is-spotlight' : '',
+        isLive ? 'sports-panel--live' : '',
       ].filter(Boolean).join(' ');
       let body;
       if (p.emptyClub) {
@@ -358,7 +362,7 @@
       } else {
         body = `<ul class="sports-panel__list">${(p.rows || []).map(resultRow).join('\n')}</ul>`;
       }
-      return `<section class="sports-panel${extra ? ` ${extra}` : ''}" data-sport="${p.sport}" data-sector="${p.sector || ''}" data-sex="${(p.sexKey || '').toLowerCase()}" style="--sports-panel-c:${tone}">
+      return `<section class="sports-panel${extra ? ` ${extra}` : ''}" data-sport="${p.sport}" data-sector="${p.sector || ''}" data-sex="${(p.sexKey || '').toLowerCase()}"${isLive ? ' data-live="1"' : ''} style="--sports-panel-c:${tone}">
   <header class="sports-panel__head">
     <span class="sports-panel__glyph" aria-hidden="true">${glyph}</span>
     <div class="sports-panel__identity">
@@ -538,11 +542,12 @@
         },
       },
       {
-        title: 'En direct',
-        note: 'proposition labo — pas encore généré sur /sports/',
+        title: 'En cours',
+        note: 'pastille En cours + filtre Période',
         panel: {
           sport: 'hockey', sector: 'universitaire', name: 'McGill',
           nick: 'Redbirds', code: 'MCG', sex: 'Masculin', sexKey: 'M',
+          live: true,
           school: 'Université McGill',
           meta: 'Hockey · D1 · Universitaire',
           rows: [{
@@ -762,6 +767,30 @@
       setTheme(savedTheme || 'light');
       setView(savedView || 'fiches');
       setCurrent(0);
+
+      const labFilters = document.getElementById('lab-filters');
+      function applyLabPeriod(key) {
+        labFilters.querySelectorAll('[data-filter-period]').forEach((b) => {
+          const on = b.getAttribute('data-filter-period') === key;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        const liveOnly = key === 'live';
+        fiches.querySelectorAll('.lab-case').forEach((el) => {
+          const live = !!el.querySelector('[data-live="1"], .sports-panel--live');
+          el.hidden = liveOnly && !live;
+        });
+        grille.querySelectorAll('.sports-panel').forEach((el) => {
+          const live = el.classList.contains('sports-panel--live') || el.getAttribute('data-live') === '1';
+          el.hidden = liveOnly && !live;
+        });
+      }
+      labFilters.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-filter-period]');
+        if (!btn) return;
+        applyLabPeriod(btn.getAttribute('data-filter-period'));
+      });
+
       const io = new IntersectionObserver((entries) => {
         const vis = entries
           .filter((e) => e.isIntersecting)
