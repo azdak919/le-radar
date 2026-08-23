@@ -776,7 +776,8 @@ body {
   transform: none;
 }
 /* Plus de flèche : la place va au texte.
- * Voyant rouge persistant (comme EN ONDES), indépendant de la radio. */
+ * Voyant : ambre (Prochain, Hier, dates) ; rouge seulement Aujourd’hui.
+ * En cours : point blanc sur pastille rouge. Indépendant de la radio. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-chev {
   display: none !important;
 }
@@ -786,11 +787,20 @@ body {
   width: 7px;
   height: 7px;
   border-radius: 50%;
+  background: var(--status-upcoming-soft, #e8c07a);
+  animation: sports-cta-dot-upcoming 1.8s ease-out infinite;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-tag="Aujourd’hui"]::before {
   background: var(--live, #c8102e);
   animation: onairPulse 1.6s ease-out infinite;
 }
 .masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag::before {
   background: #fff;
+  animation: onairPulse 1.6s ease-out infinite;
+}
+@keyframes sports-cta-dot-upcoming {
+  0% { box-shadow: 0 0 0 0 rgba(232, 192, 122, 0.5); }
+  100% { box-shadow: 0 0 0 7px rgba(232, 192, 122, 0); }
 }
 /* Halo / bordure seulement — la carte ne grossit pas. */
 @keyframes sports-cta-ring-pulse {
