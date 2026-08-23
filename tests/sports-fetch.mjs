@@ -99,7 +99,8 @@ test('update-sports.yml couvre les heures de consultation QC', () => {
 
 test('update-sports-live.yml sonde les fenêtres de match', () => {
   const yml = readFileSync(join(ROOT, '.github/workflows/update-sports-live.yml'), 'utf8');
-  assert.match(yml, /0,15,30,45 19-23 \* \* \*/);
-  assert.match(yml, /0,15,30,45 0-2 \* \* \*/);
+  assert.match(yml, /\*\/5 16-23 \* \* \*/);
+  assert.match(yml, /\*\/5 0-3 \* \* \*/);
+  assert.doesNotMatch(yml, /0,15,30,45/);
   assert.match(yml, /--live/);
 });

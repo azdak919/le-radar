@@ -6973,7 +6973,8 @@ function scheduleSportsRotate() {
   scheduleSportsWave({ fromSlot: 0, firstWait: true });
 }
 
-const SPORTS_LIVE_POLL_MS = 45000;
+/** Relit sports.json tant qu’un direct est à l’écran — le bot tourne aux 5 min. */
+const SPORTS_LIVE_POLL_MS = 15000;
 
 function sportsLivePollNeeded() {
   try {
