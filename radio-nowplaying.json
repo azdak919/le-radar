@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-23T17:45:25.049Z",
+  "updatedAt": "2026-08-23T18:24:05.870Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T17:44:55.460Z"
+      "checkedAt": "2026-08-23T18:23:40.860Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
-      },
-      "next": {
         "title": "Le char de marge",
         "source": "schedule",
         "start": "14:00",
         "end": "16:00",
         "url": "https://cism893.ca/emissions/le-char-de-marge"
       },
+      "next": {
+        "title": "Vibrance",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/vibrance"
+      },
       "track": "",
-      "showTitle": "Basses fréquences",
+      "showTitle": "Le char de marge",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T17:44:57.873Z"
+      "checkedAt": "2026-08-23T18:23:43.318Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Modular Systems/Future Classics",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "The Magic Roundabout",
         "source": "api-live",
         "start": "14:00",
         "end": "16:00"
       },
+      "next": {
+        "title": "Bhum Bhum Time",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Modular Systems/Future Classics",
+      "showTitle": "The Magic Roundabout",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T17:45:00.806Z"
+      "checkedAt": "2026-08-23T18:23:46.684Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Northern Stagelights",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/northern-stagelights"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
+      "next": {
+        "title": "Fukubukuro",
+        "source": "schedule-live",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/fukubukuro"
+      },
       "track": "",
-      "showTitle": "Northern Stagelights",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T17:45:14.890Z"
+      "checkedAt": "2026-08-23T18:24:01.795Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T17:45:15.615Z"
+      "checkedAt": "2026-08-23T18:24:02.746Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Robber Robber - Pieces",
+      "track": "Emma Beko - Uneasy smile ft. Tuerie",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-23T17:45:24.699Z"
+      "checkedAt": "2026-08-23T18:24:05.519Z"
     }
   }
 }
