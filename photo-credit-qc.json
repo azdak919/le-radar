@@ -1,17 +1,24 @@
 {
-  "updated": "2026-08-23T17:53:37.955Z",
+  "updated": "2026-08-23T19:41:45.959Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 131,
-  "pending": 13,
+  "cited": 132,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 7,
-  "citedNew": 6,
-  "fallbackNew": 13,
+  "checked": 21,
+  "updatedCount": 9,
+  "citedNew": 9,
+  "fallbackNew": 12,
   "samples": [
+    {
+      "title": "À la découverte du matcha et du kohakutou",
+      "source": "Le Collectif",
+      "credit": "Photo : ItSarahGendreauSimoneau",
+      "cited": true,
+      "method": "filename-credit"
+    },
     {
       "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
@@ -27,16 +34,16 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Des initiatives qui rassemblent",
+      "title": "Sois belle et tais-toi",
       "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
       "source": "Le Délit",
-      "credit": "Photo : Toscane Ralaimongo",
+      "credit": "Photo : Stu Doré/Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -53,6 +60,13 @@
       "credit": "Illustration: Halle Keays",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
     },
     {
       "title": "Leave the Children Out of This",
