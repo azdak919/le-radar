@@ -1241,8 +1241,9 @@ assert(
     && appJs.includes('function sportsCtaHoldOnLive')
     && /const lives = sportsCtaLiveSources\(now\)/.test(appJs)
     && appJs.includes('function pollLiveSportsJson')
+    && /const SPORTS_LIVE_POLL_MS\s*=\s*15000/.test(appJs)
     && appJs.includes("if (state === 'live')"),
-  'app.js : direct = pastille En cours + score collé + sondage sports.json',
+  'app.js : direct = pastille En cours + score collé + sondage sports.json aux 15 s',
 );
 assert(
   /const lives = sportsCtaLiveSources\(now\);\s*if \(lives\.length\)/.test(appFlat)

@@ -4,13 +4,14 @@ on:
   schedule:
     # Rafraîchit seulement les ligues avec un match dans la fenêtre live
     # (coup d’envoi −15 min / +3 h). GitHub Actions = UTC.
+    # Plancher GitHub : 5 min. 15 min trop lent pour un score en cours.
     #
-    # | UTC              | ≈ EDT            | Intention                    |
-    # |------------------|------------------|------------------------------|
-    # | 19:00–23:45 /15  | 15:00–19:45      | après-midi / début de soirée |
-    # | 00:00–02:45 /15  | 20:00–22:45      | soirée matchs                |
-    - cron: '0,15,30,45 19-23 * * *'
-    - cron: '0,15,30,45 0-2 * * *'
+    # | UTC              | ≈ EDT            | Intention                 |
+    # |------------------|------------------|---------------------------|
+    # | 16:00–23:55 /5   | 12:00–19:55      | après-midi collégial      |
+    # | 00:00–03:55 /5   | 20:00–23:55      | soirée + fin de match     |
+    - cron: '*/5 16-23 * * *'
+    - cron: '*/5 0-3 * * *'
   workflow_dispatch:
 
 concurrency:
