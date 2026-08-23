@@ -13,7 +13,7 @@
 <body class="mode-grid">
   <header class="top">
     <div class="brand">
-      <a href="/dev/" class="hub-link">Labo</a>
+      <a href="../" class="hub-link">Labo</a>
       <strong>Labo photo</strong>
       <span class="muted" id="brand-sub">grille</span>
     </div>
@@ -150,9 +150,10 @@
   </div>
 
   <div class="dock">
-    <button type="button" class="btn" id="save-meta-btn" title="Enregistre Y, crédit, saison et tags">Enregistrer tout</button>
+    <button type="button" class="btn" id="save-meta-btn" title="Enregistre Y, crédit, saison et tags sur le disque local">Enregistrer tout</button>
     <button type="button" class="btn gold" id="pin-btn" title="Coche Favori + enregistre (hors purge moisson)">Marquer favori</button>
     <button type="button" class="btn danger" id="reject-btn" title="Retire de la banque, ne reviendra pas">Retirer</button>
+    <p class="hint" id="persist-hint">Écrit les fichiers locaux. Ce n’est pas le-radar.ca tant que la PR n’est pas mergée.</p>
     <p class="hint" id="status"></p>
   </div>
   <script src="./photo-lab.js"></script>

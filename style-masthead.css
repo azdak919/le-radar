@@ -1162,4 +1162,20 @@ a { color: inherit; }
     animation: none;
   }
 }
+/* Téléphone : nom de ville sur 2 lignes, pas de marquee avant de changer de carte. */
+@media (max-width: 700px) {
+  .masthead-weather__name-text {
+    white-space: normal;
+    max-width: 100%;
+    display: block;
+    max-height: calc(1.15em * 2);
+    overflow: hidden;
+    text-overflow: clip;
+  }
+  .masthead-weather__city.is-overflowing .masthead-weather__name-text {
+    max-width: 100%;
+    animation: none;
+    transform: none;
+  }
+}
 
