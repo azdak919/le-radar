@@ -1,7 +1,7 @@
 {
   "version": 1,
   "profile": "masthead",
-  "updated": "2026-08-21T05:12:53.111Z",
+  "updated": "2026-08-23T19:28:15.569Z",
   "photos": [
     {
       "id": "1eb2382981cc",
@@ -3475,11 +3475,18 @@
       "sessionId": "ete",
       "bank": "masthead",
       "season": "printemps",
-      "seasonSource": "balance-query",
-      "seasonConfidence": 0.55,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
       "tags": [
         "mat"
-      ]
+      ],
+      "focalY": 0.8067226890756303,
+      "place": "",
+      "surfaces": [
+        "masthead"
+      ],
+      "campus": false,
+      "permanent": false
     },
     {
       "id": "2ca939addcaf",
@@ -3574,50 +3581,6 @@
       ]
     },
     {
-      "id": "bfe04ca1ed5a",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/8/88/297_365_-_February_25%2C_2009_%283309238100%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "link": "https://commons.wikimedia.org/wiki/File:297%20365%20-%20February%2025%2C%202009%20(3309238100).jpg",
-      "title": "297 365 - February 25, 2009 (3309238100)",
-      "credit": "Morgan",
-      "license": "CC BY 2.0",
-      "description": "Oh Sh... I'm late for work! side note* I didn't realize that the focus wasn't on me, but on the fire hydrant until I uploaded the photo. Oops! &lt;a href=\" https://www.flickr.com/groups/gameon/ \"&gt;FGR&lt;/a&gt; - &lt;a href=\" https://www.flickr.com/groups/runningfromcamera/ \"&gt;Running From Camera&lt;/a&gt;. &lt;a href=\" https://www.flickr.com/groups/therogueplayers/ \"&gt;TRP&lt;/a&gt; - &lt;a ",
-      "categories": "Winter in Quebec|Fire hydrants in Quebec|Flickr images reviewed by FlickreviewR 2|February 2009 in Quebec|Files from Morgan Carter Flickr stream",
-      "width": 3872,
-      "height": 2592,
-      "aspect": 1.494,
-      "mime": "image/jpeg",
-      "source": "commons-cat",
-      "addedAt": "2026-08-21T04:57:25.828Z",
-      "sessionId": "ete",
-      "bank": "masthead",
-      "season": "hiver",
-      "tags": [
-        "mat"
-      ]
-    },
-    {
-      "id": "7636673b6262",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/1/15/2008-%2710_Ford_F-250_Super_Duty.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "link": "https://commons.wikimedia.org/wiki/File:2008-'10%20Ford%20F-250%20Super%20Duty.jpg",
-      "title": "2008-'10 Ford F-250 Super Duty",
-      "credit": "Bull-Doser",
-      "license": "Public domain",
-      "description": "2008-2010 Ford Super Duty F-250 photographed in Pointe-Claire , Québec , Canada .",
-      "categories": "Taken with Samsung Galaxy Note 3|Self-published work|PD-self|Snow in Quebec|November 2018 Canada photographs|Blue Ford trucks|Flatbed pickup trucks|Ford F-250 Super Duty (P356)",
-      "width": 2651,
-      "height": 1886,
-      "aspect": 1.406,
-      "mime": "image/jpeg",
-      "source": "commons-cat",
-      "addedAt": "2026-08-21T04:57:25.828Z",
-      "sessionId": "ete",
-      "bank": "masthead",
-      "season": "hiver",
-      "tags": [
-        "mat"
-      ]
-    },
-    {
       "id": "ebcfede6b764",
       "url": "https://upload.wikimedia.org/wikipedia/commons/4/43/49%2C_rue_Saint-Louis_-_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
       "link": "https://commons.wikimedia.org/wiki/File:49%2C%20rue%20Saint-Louis%20-%2002.jpg",
@@ -3637,7 +3600,16 @@
       "season": "hiver",
       "tags": [
         "mat"
-      ]
+      ],
+      "focalY": 0.039545229856648545,
+      "place": "",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "campus": false,
+      "permanent": false
     },
     {
       "id": "51a318153a96",
