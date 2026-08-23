@@ -400,6 +400,7 @@ const T = {
     footerSchedules: 'Radios',
     archives: 'Archives',
     kitMedia: 'Kit média',
+    iframes: 'iFrames',
     licenseIntro: 'Ce projet est distribué sous',
     licenseName: 'licence publique générale GNU, version 2',
     sourceCode: 'Code source (GitHub)',
@@ -565,6 +566,7 @@ const T = {
     footerSchedules: 'Radio',
     archives: 'Archives',
     kitMedia: 'Media kit',
+    iframes: 'iFrames',
     licenseIntro: 'This project is distributed under the',
     licenseName: 'GNU General Public License, version 2',
     sourceCode: 'Source code (GitHub)',
@@ -791,6 +793,7 @@ const SECTIONS = [
   },
   { id: 'archives', key: 'archives', path: { fr: 'archives/', en: 'archives/' }, footerOnly: true },
   { id: 'kit', key: 'kitMedia', path: { fr: 'kit-media/', en: 'en/media-kit/' }, footerOnly: true },
+  { id: 'iframes', key: 'iframes', path: { fr: 'iframes/', en: 'en/iframes/' }, footerOnly: true },
 ];
 
 function sectionLinks({ lang, href, includeFooterOnly = false, includeNavOnly = false, current = null } = {}) {

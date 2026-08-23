@@ -1064,6 +1064,28 @@ for (const rel of ['index.html', 'tuner-embed.html', 'feeds.html']) {
     assert(connectSrc.includes(origin), `${rel}: connect-src doit autoriser ${origin}`);
   }
 }
+{
+  const rel = 'sports-embed.html';
+  const html = readFileSync(join(root, rel), 'utf8');
+  assert(/data-embed="sports"/.test(html), `${rel}: data-embed=sports requis`);
+  const csp = html.match(/Content-Security-Policy" content="([^"]+)"/i)?.[1] || '';
+  const connectSrc = csp.match(/(?:^|;\s*)connect-src\s+([^;]+)/i)?.[1] || '';
+  assert(connectSrc, `${rel}: directive connect-src CSP requise`);
+  assert(!/(^|\s)https:(?:\s|$)/.test(connectSrc), `${rel}: connect-src ne doit pas autoriser tout https:`);
+  for (const origin of CONNECT_ORIGINS) {
+    assert(connectSrc.includes(origin), `${rel}: connect-src doit autoriser ${origin}`);
+  }
+}
+{
+  const iframes = readFileSync(join(root, 'iframes/index.html'), 'utf8');
+  assert(iframes.includes('iFrames'), 'iframes : titre iFrames requis');
+  assert(iframes.includes('tuner-embed.html'), 'iframes : snippet radio requis');
+  assert(iframes.includes('sports-embed.html'), 'iframes : snippet sports requis');
+  assert(iframes.includes('id="snippet-radio"'), 'iframes : bloc copiable radio requis');
+  assert(iframes.includes('id="snippet-sports"'), 'iframes : bloc copiable sports requis');
+  assert(iframes.includes('Copier le code radio'), 'iframes : bouton copier radio requis');
+  assert(iframes.includes('Copier le code sports'), 'iframes : bouton copier sports requis');
+}
 // Pages avec lecteur natif : sans media-src https:, les flux radio sont bloqués
 // par default-src 'self' (silence au play sur SEO / feeds).
 for (const rel of ['index.html', 'feeds.html', 'radios/chyz/index.html', 'scripts/seo-pages-lib.js']) {

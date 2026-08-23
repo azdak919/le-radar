@@ -36,6 +36,7 @@ const NO_PLAYER = new Set([
   'offline.html',
   'easter-egg.html',
   'tuner-embed.html', // est le lecteur, pas un consommateur
+  'sports-embed.html', // iframe sports, pas un consommateur radio
 ]);
 
 const pages = walkHtml(root);
@@ -84,6 +85,7 @@ for (const file of pages) {
     || r.startsWith('sports/')
     || r.startsWith('archives/')
     || r.startsWith('kit-media/')
+    || r.startsWith('iframes/')
     || r.startsWith('en/');
 
   if (!looksPublic) {

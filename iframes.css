@@ -1,0 +1,129 @@
+/* Page iFrames — aperçus + snippets copiables */
+
+.iframe-block {
+  margin: 0 0 28px;
+}
+
+.iframe-block h3 {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  margin: 0 0 8px;
+}
+
+.iframe-preview {
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-soft) 70%, #1a1c22) 0%, var(--bg-soft) 100%);
+  padding: 14px;
+  overflow: hidden;
+}
+
+.iframe-preview--light {
+  background: #eef0f4;
+}
+
+.iframe-preview iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+}
+
+.iframe-preview--radio iframe {
+  height: 68px;
+}
+
+.iframe-preview--sports {
+  max-width: 422px;
+}
+
+.iframe-preview--sports iframe {
+  height: 520px;
+  max-width: 390px;
+  margin: 0 auto;
+}
+
+.iframe-snippet {
+  position: relative;
+  margin: 12px 0 0;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.iframe-snippet pre {
+  margin: 0;
+  padding: 14px 16px 44px;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: #0e0f12;
+  color: #e8eaef;
+  overflow-x: auto;
+  font: 12.5px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  white-space: pre;
+}
+
+.iframe-snippet pre code {
+  font: inherit;
+  color: inherit;
+}
+
+.iframe-copy {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--accent, #cf7ec1);
+  background: color-mix(in srgb, #0e0f12 20%, #1c1e24);
+  border: 1px solid color-mix(in srgb, var(--accent, #cf7ec1) 40%, #3a3d46);
+  border-radius: 999px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+.iframe-copy:hover,
+.iframe-copy:focus-visible {
+  background: color-mix(in srgb, var(--accent, #cf7ec1) 18%, #1c1e24);
+}
+
+.iframe-copy:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent, #cf7ec1) 70%, #fff);
+  outline-offset: 2px;
+}
+
+.iframe-note {
+  font-size: 13px;
+  color: var(--ink-soft, var(--muted));
+  margin: 10px 0 0;
+  max-width: 46rem;
+}
+
+.iframe-params {
+  width: 100%;
+  max-width: 46rem;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin: 12px 0 0;
+}
+
+.iframe-params th,
+.iframe-params td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+
+.iframe-params th {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.iframe-params code {
+  font: 12.5px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
