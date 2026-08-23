@@ -282,12 +282,14 @@
         score = 'À venir';
         scoreAria = 'À venir';
       } else if (kind === 'live') {
-        scoreCls += ' sports-result__score--live';
-        const pts = r.score || '';
-        score = pts
-          ? `<span class="sports-result__live-flag">En cours</span><span class="sports-result__live-score">${pts}</span>`
-          : '<span class="sports-result__live-flag">En cours</span>';
-        scoreAria = r.scoreAria || 'En cours';
+        if (r.score) {
+          score = r.score;
+          scoreAria = r.scoreAria || 'En cours';
+        } else {
+          scoreCls += ' sports-result__score--live';
+          score = 'En cours';
+          scoreAria = 'En cours';
+        }
       }
       const vs = r.vs || 'vs';
       const school = r.oppSchool
@@ -306,7 +308,7 @@
       const badge = kind === 'next'
         ? `<span class="sports-result__badge sports-result__badge--next" title="À venir">→</span>`
         : kind === 'live'
-          ? `<span class="sports-result__badge" title="En cours">En cours</span>`
+          ? `<span class="sports-result__badge" title="En cours"></span>`
           : `<span class="sports-result__badge" title="${r.badgeTitle}">${r.badge}</span>`;
       const priorMeta = r.prior
         ? `\n  <span class="sports-result__season-meta">Saison précédente</span>`
