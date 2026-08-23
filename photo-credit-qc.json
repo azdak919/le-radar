@@ -1,30 +1,79 @@
 {
-  "updated": "2026-08-23T02:31:44.287Z",
+  "updated": "2026-08-23T04:08:28.153Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 130,
+  "cited": 132,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 2,
-  "citedNew": 2,
+  "checked": 21,
+  "updatedCount": 9,
+  "citedNew": 9,
   "fallbackNew": 12,
   "samples": [
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
+      "title": "À la découverte du matcha et du kohakutou",
+      "source": "Le Collectif",
+      "credit": "Photo : ItSarahGendreauSimoneau",
+      "cited": true,
+      "method": "filename-credit"
+    },
+    {
+      "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
-      "credit": "Photo : Toscane Ralaimongo",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "title": "L’épidémie de la nonchalance",
+      "source": "Le Délit",
+      "credit": "Photo : Elie Nguyen",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Ce que nous devons aux femmes",
+      "source": "Le Délit",
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
+    },
+    {
+      "title": "Les femmes MAGA au service du patriarcat",
       "source": "Le Délit",
       "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Inside Mile End Kicks",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Joe Fuda",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "The apprenticeship of public voice",
+      "source": "The Link",
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "source": "La Pige",
+      "credit": "Photo : Léa Morin-Letort",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }

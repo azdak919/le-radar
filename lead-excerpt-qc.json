@@ -1,30 +1,21 @@
 {
-  "updated": "2026-08-23T02:25:12.749Z",
+  "updated": "2026-08-23T04:02:54.309Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 9,
-  "withLeadExcerpt": 84,
-  "candidates": 9,
-  "enriched": 2,
+  "incomplete": 8,
+  "withLeadExcerpt": 83,
+  "candidates": 8,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "title": "Les femmes MAGA au service du patriarcat",
+      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
       "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
-      "changed": true
-    },
-    {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
-      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
-      "ok": true,
-      "score": 81,
-      "chars": 400,
-      "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
+      "score": 100,
+      "chars": 393,
+      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
       "changed": true
     },
     {
@@ -79,6 +70,15 @@
       "score": 66,
       "chars": 400,
       "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
+      "changed": false
+    },
+    {
+      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
+      "link": "https://thelinknewspaper.ca/article/16338",
+      "ok": true,
+      "score": 90,
+      "chars": 177,
+      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
     }
   ]
