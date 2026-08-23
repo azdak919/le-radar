@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-08-23T16:51:03.052Z",
+  "updatedAt": "2026-08-23T17:18:08.793Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Radio Futura",
-        "source": "schedule",
+        "source": "api-live",
         "start": "13:00",
         "end": "16:00",
         "url": "https://chyz.ca/emission/radio-futura/"
       },
+      "next": {
+        "title": "Lundi Indie",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Radio Futura",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T16:50:38.381Z"
+      "checkedAt": "2026-08-23T17:17:43.938Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T16:50:40.181Z"
+      "checkedAt": "2026-08-23T17:17:46.261Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Free Kick",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "13:00"
-      },
-      "next": {
         "title": "Modular Systems/Future Classics",
         "source": "api-live",
         "start": "13:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "The Magic Roundabout",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "16:00"
+      },
       "track": "",
-      "showTitle": "Free Kick",
+      "showTitle": "Modular Systems/Future Classics",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T16:50:42.443Z"
+      "checkedAt": "2026-08-23T17:17:49.384Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Brave Little Emo Girl",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
-      },
-      "next": {
         "title": "Northern Stagelights",
         "source": "schedule-live",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/northern-stagelights"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "Brave Little Emo Girl",
+      "showTitle": "Northern Stagelights",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T16:50:56.047Z"
+      "checkedAt": "2026-08-23T17:18:04.274Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T16:50:56.910Z"
+      "checkedAt": "2026-08-23T17:18:05.128Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Grace Ives - Drink Up",
+      "track": "Cadence Weapon - Barabbas (feat. Ariel)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-23T16:51:02.701Z"
+      "checkedAt": "2026-08-23T17:18:08.442Z"
     }
   }
 }
