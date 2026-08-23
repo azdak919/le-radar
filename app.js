@@ -4972,11 +4972,6 @@ function sportsMatchSubLine(slide) {
   return [when, meta, prior ? 'Saison précédente' : ''].filter(Boolean).join(' · ');
 }
 
-/** Existe-t-il un résultat exploitable à la banque ? Sinon : hors saison. */
-function sportsHasAnyResult() {
-  return sportsSlides.some((s) => s?.mode === 'result');
-}
-
 /**
  * Accroche principale de la CTA — noms en clair, score lisible, sans sigle.
  * Le marqueur temporel vit à part (`sportsCtaEyebrow`) pour rester hors de la
@@ -5010,16 +5005,17 @@ function sportsCtaLabelFromSlide(slide) {
  */
 function sportsCtaEyebrow(slide, state) {
   if (state === 'live') return '';
-  const g = slide?.game;
   if (state === 'result') {
-    const ms = sportsGameMs(g);
-    if (!Number.isFinite(ms)) return 'Résultat';
-    const day = torontoDayKey(ms);
-    if (day === torontoDayKey()) return 'Aujourd’hui';
-    if (day === torontoDayKey(Date.now() - 86400000)) return 'Hier';
-    return 'Avant-hier';
+    const day = sportsSlideDayKey(slide);
+    if (!day) return 'Résultat';
+    const today = torontoDayKey();
+    if (day === today) return 'Aujourd’hui';
+    if (day === sportsCivilDayShift(today, -1)) return 'Hier';
+    // Plus vieux que hier : hors pool CTA. Pas « Reprise » (ça n’est pas un score).
+    return 'Résultat';
   }
-  if (state === 'next') return sportsHasAnyResult() ? 'Prochain' : 'Reprise';
+  // Hors saison comme en saison : c’est le prochain coup d’envoi, pas un résultat rassis.
+  if (state === 'next') return 'Prochain';
   return '';
 }
 
@@ -5042,8 +5038,8 @@ function sportsCtaSubLine(slide, state) {
     return [when, comp].filter(Boolean).join(' · ');
   }
   // Pour un fait du jour, l’âge précis vaut mieux que le marqueur (« il y a
-  // 3 h » plutôt que « Aujourd’hui »). Passé 24 h, le marqueur dit déjà « Hier »
-  // et le répéter ici ne sert à rien : on montre plutôt la fraîcheur de la banque.
+  // 3 h » plutôt que « Aujourd’hui »). Hier : le marqueur porte déjà le jour,
+  // on montre la compétition + fraîcheur banque plutôt que de répéter « Hier ».
   const freshness = (state === 'result' || state === 'live') && age < 86400000
     ? sportsRelativeAge(sportsGameMs(g))
     : sportsUpdatedShort();

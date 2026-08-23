@@ -1276,6 +1276,15 @@ assert(
     && !/SPORTS_CTA_FRESH_RESULT_MS\s*=\s*48/.test(appJs),
   'app.js : filet CTA = jours civils aujourd’hui+hier (plus de 48 h glissantes)',
 );
+assert(
+  /function sportsCtaEyebrow/.test(appJs)
+    && appJs.includes("return 'Hier'")
+    && appJs.includes("return 'Prochain'")
+    && !/return 'Reprise'/.test(appJs)
+    && !/return 'Avant-hier'/.test(appJs)
+    && !appJs.includes('function sportsHasAnyResult'),
+  'app.js : CTA Hier/Prochain (jour civil) — Reprise n’est pas un score rassis',
+);
 // CTA pool = aujourd’hui/hier + (en saison jour lead | hors saison 1er match × 7 j).
 assert(
   appJs.includes('function sportsCtaLeadDayKey')
