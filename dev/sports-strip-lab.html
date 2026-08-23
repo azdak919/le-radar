@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Labo cartes sports — LE RADAR (local)</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../style-masthead.css">
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      margin: 0;
+      background: #0c0d10;
+      color: #f1f2f4;
+      font: 15px/1.45 Inter, system-ui, sans-serif;
+    }
+    main { max-width: 980px; margin: 0 auto; padding: 28px 18px 64px; }
+    h1 { margin: 0; font: 700 32px/1.1 "Source Serif 4", Georgia, serif; }
+    .lede { color: #a9acb5; max-width: 42em; margin: 10px 0 8px; }
+    .hub { color: #e1b95e; }
+    .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(390px, 1fr)); gap: 28px; margin-top: 28px; }
+    .col h2 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #e1b95e; margin: 0 0 12px; }
+    .phone {
+      width: 390px;
+      max-width: 100%;
+      background: #111317;
+      border: 1px solid #2a2d34;
+      border-radius: 12px;
+      padding: 10px 0 12px;
+    }
+    .phone.w430 { width: 430px; }
+    .phone .masthead-sports-strip {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      overflow: visible;
+      padding: 0 12px;
+      min-height: 56px;
+      gap: 8px;
+    }
+    /* Forcer la grille 390/430 même si la fenêtre hôte est plus large. */
+    .phone .sports-chip--cta {
+      display: grid !important;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      align-items: center;
+      column-gap: 8px;
+      row-gap: 2px;
+    }
+    .phone .sports-chip__cta-rail {
+      display: flex !important;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      gap: 3px;
+      grid-column: 1;
+      grid-row: 1 / span 2;
+    }
+    .phone .sports-chip__cta-eyebrow--rail {
+      display: block !important;
+      text-align: center;
+      font-size: 8px;
+    }
+    .phone .sports-chip__cta-eyebrow--rail[hidden],
+    .phone .sports-chip__cta-eyebrow--rail:empty {
+      display: none !important;
+    }
+    .phone .sports-chip__cta-head .sports-chip__cta-eyebrow {
+      display: none !important;
+    }
+    .phone .sports-chip--cta .sports-chip__line {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      min-width: 0;
+    }
+    .case { margin: 0 0 18px; }
+    .case p { margin: 0 0 6px; font-size: 12px; color: #c3c6ce; }
+    .case p strong { color: #fff; }
+    .hint { font-size: 12px; color: #888d96; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <main>
+    <p><a class="hub" href="./">← Labo</a></p>
+    <h1>Cartes sports — 390 / 430</h1>
+    <p class="lede">PROCHAIN au-dessus de SPORTS, deux colonnes. Accroche sur une ligne : défilement L→R, aller-retour, pause à l’origine, puis l’info peut changer.</p>
+
+    <div class="cols">
+      <section class="col">
+        <h2>390</h2>
+        <div class="phone" id="p390"></div>
+      </section>
+      <section class="col">
+        <h2>430</h2>
+        <div class="phone w430" id="p430"></div>
+      </section>
+    </div>
+    <p class="hint">Local seulement. Même CSS que le site. Hard-refresh si le cache shell est resté collé.</p>
+  </main>
+  <script>
+    const cases = [
+      {
+        title: 'En saison — prochain',
+        html: stripCta({
+          state: 'next',
+          tone: '#2e7d4f',
+          eyebrow: 'Prochain',
+          glyph: '⚽',
+          text: 'Saint-Hyacinthe reçoit Vanier College',
+          sub: 'dim. 23 août, 17 h 00 · Soccer collégial masculin D1',
+          extra: matchChip({
+            tone: '#2e7d4f',
+            glyph: '⚽',
+            inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__vs">reçoit</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
+            sub: 'aujourd’hui, 19 h 00 · Soccer univ.',
+          }),
+        }),
+      },
+      {
+        title: 'Résultat — aujourd’hui',
+        html: stripCta({
+          state: 'result',
+          tone: '#3d6fa8',
+          eyebrow: 'Aujourd’hui',
+          glyph: '🏀',
+          text: 'UdeM 78–71 Concordia',
+          sub: 'Basket univ. · il y a 3 h',
+          extra: matchChip({
+            tone: '#3d6fa8',
+            glyph: '🏀',
+            badge: 'V',
+            badgeMod: 'w',
+            inner: '<span class="sports-chip__name">UdeM</span> <span class="sports-chip__score">78–71</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
+            sub: 'aujourd’hui · Basket univ.',
+          }),
+        }),
+      },
+      {
+        title: 'En direct',
+        html: stripCta({
+          state: 'live',
+          tone: '#c8102e',
+          eyebrow: '',
+          tag: 'En cours',
+          glyph: '🏒',
+          text: 'McGill 2–1 Concordia',
+          sub: 'Hockey univ. · 2e période',
+        }),
+      },
+      {
+        title: 'Hors saison — reprise',
+        html: stripCta({
+          state: 'next',
+          tone: '#6a7580',
+          eyebrow: 'Reprise',
+          glyph: '🏈',
+          text: 'Rouge et Or à Carabins',
+          sub: 'ven. 4 sept., 19 h 00 · Football univ.',
+        }),
+      },
+      {
+        title: 'Creux — carte idle',
+        html: stripCta({
+          state: 'idle',
+          tone: '#6a7580',
+          eyebrow: '',
+          glyph: '',
+          text: 'Scores collégiaux et universitaires',
+          sub: 'MAJ 15 h 50',
+        }),
+      },
+    ];
+
+    function matchChip({ tone, glyph, inner, sub, badge, badgeMod }) {
+      const b = badge
+        ? `<span class="sports-chip__badge sports-chip__badge--${badgeMod}" aria-hidden="true">${badge}</span>`
+        : '';
+      return `<a class="sports-chip sports-chip--match" href="#lab" style="--sports-tone:${tone}">
+        <span class="sports-chip__glyph" aria-hidden="true">${glyph}</span>${b}
+        <span class="sports-chip__body">
+          <span class="sports-chip__line"><span class="sports-chip__line-inner">${inner}</span></span>
+          <span class="sports-chip__sub"><span class="sports-chip__sub-text">${sub}</span></span>
+        </span>
+      </a>`;
+    }
+
+    function stripCta({ state, tone, eyebrow, tag, glyph, text, sub, extra }) {
+      const tagLabel = tag || 'Sports';
+      const headEb = eyebrow
+        ? `<span class="sports-chip__cta-eyebrow sports-chip__cta-eyebrow--head">${eyebrow}</span>`
+        : '';
+      const railEb = eyebrow
+        ? `<span class="sports-chip__cta-eyebrow sports-chip__cta-eyebrow--rail">${eyebrow}</span>`
+        : `<span class="sports-chip__cta-eyebrow sports-chip__cta-eyebrow--rail" hidden></span>`;
+      const g = glyph ? `<span class="sports-chip__cta-glyph" aria-hidden="true">${glyph}</span>` : '';
+      return `<div class="masthead-sports-strip" data-count="${extra ? 2 : 1}" data-cta-pinned="1">
+        ${extra || ''}
+        <a class="sports-chip sports-chip--cta" data-cta-state="${state}" href="#lab" style="--sports-tone:${tone}">
+          <span class="sports-chip__cta-rail">
+            ${railEb}
+            <span class="sports-chip__cta-tag" data-cta-tag="${tagLabel}">${tagLabel}</span>
+          </span>
+          <span class="sports-chip__line">
+            <span class="sports-chip__cta-stack">
+              <span class="sports-chip__cta-label is-front">
+                <span class="sports-chip__cta-head">${headEb}${g}<span class="sports-chip__cta-line"><span class="sports-chip__cta-text">${text}</span></span></span>
+                <span class="sports-chip__cta-sub"><span class="sports-chip__cta-sub-text">${sub}</span></span>
+              </span>
+            </span>
+          </span>
+        </a>
+      </div>`;
+    }
+
+    function paint(host) {
+      host.innerHTML = cases.map((c) => `<article class="case"><p><strong>${c.title}</strong></p>${c.html}</article>`).join('');
+    }
+    paint(document.getElementById('p390'));
+    paint(document.getElementById('p430'));
+
+    function armMarquee(root) {
+      root.querySelectorAll('.sports-chip--cta').forEach((chip) => {
+        const titleView = chip.querySelector('.sports-chip__cta-line');
+        const titleInner = chip.querySelector('.sports-chip__cta-text');
+        const subView = chip.querySelector('.sports-chip__cta-sub');
+        const subInner = chip.querySelector('.sports-chip__cta-sub-text');
+        if (titleView && titleInner) {
+          const ov = titleInner.scrollWidth - titleView.clientWidth;
+          if (ov > 2) {
+            chip.style.setProperty('--sports-scroll', `${ov}px`);
+            chip.classList.add('is-overflowing');
+          }
+        }
+        if (subView && subInner) {
+          const ov = subInner.scrollWidth - subView.clientWidth;
+          if (ov > 2) {
+            chip.style.setProperty('--sports-scroll-sub', `${ov}px`);
+            chip.classList.add('is-sub-overflowing');
+          }
+        }
+      });
+    }
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        armMarquee(document.getElementById('p390'));
+        armMarquee(document.getElementById('p430'));
+      });
+    });
+  </script>
+</body>
+</html>

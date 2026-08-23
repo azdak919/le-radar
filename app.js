@@ -584,12 +584,12 @@ const MARQUEE_TRIPS_MAX = 4;
 /** Pause de lecture après le retour, avant de changer de texte. */
 const MARQUEE_REST_MS = 2000;
 
-/** Combien d’itérations `alternate` pour couvrir le temps de lecture. */
-function marqueeAlternateCount(oneWayMs, readMs) {
-  const oneWay = Math.max(0, Number(oneWayMs) || 0);
-  const oneTrip = MARQUEE_READ_DELAY_MS + oneWay * MARQUEE_ROUND_TRIPS + MARQUEE_REST_MS;
-  const read = Math.max(0, Number(readMs) || 0);
-  return read > oneTrip + 400 ? MARQUEE_TRIPS_MAX : MARQUEE_ROUND_TRIPS;
+/**
+ * Itérations `alternate` : toujours 1 aller-retour (×2).
+ * Un 2ᵉ tour collé ferait l’impasse sur la pause à l’origine.
+ */
+function marqueeAlternateCount() {
+  return MARQUEE_ROUND_TRIPS;
 }
 
 function marqueeCycleMs(oneWayMs, trips) {
@@ -5470,7 +5470,7 @@ function fillSportsCtaLayer(layer, slide) {
   const eyebrow = slide.ctaEyebrow || '';
   if (eyebrow) {
     const el = document.createElement('span');
-    el.className = 'sports-chip__cta-eyebrow';
+    el.className = 'sports-chip__cta-eyebrow sports-chip__cta-eyebrow--head';
     el.textContent = eyebrow;
     head.append(el);
   }
@@ -5532,7 +5532,18 @@ function fillSportsCtaLayer(layer, slide) {
     el.append(subText);
     layer.append(el);
   }
+  const chip = layer.closest?.('.sports-chip--cta');
+  if (chip) syncSportsCtaRail(chip, slide);
   return layer;
+}
+
+/** Marqueur PROCHAIN / Résultat sur le rail (390/430 : au-dessus de SPORTS). */
+function syncSportsCtaRail(chip, slide) {
+  const railEb = chip?.querySelector('.sports-chip__cta-eyebrow--rail');
+  if (!railEb) return;
+  const text = String(slide?.ctaEyebrow || '').trim();
+  railEb.textContent = text;
+  railEb.hidden = !text;
 }
 
 /**
@@ -5659,10 +5670,12 @@ function applySportsCtaState(chip, slide) {
   const tag = chip.querySelector('.sports-chip__cta-tag');
   if (!tag) return;
   const wanted = live ? SPORTS_CTA_TAG_LIVE : SPORTS_CTA_TAG;
-  if (tag.dataset.ctaTag === wanted) return;
-  tag.dataset.ctaTag = wanted;
-  tag.replaceChildren();
-  tag.append(document.createTextNode(wanted));
+  if (tag.dataset.ctaTag !== wanted) {
+    tag.dataset.ctaTag = wanted;
+    tag.replaceChildren();
+    tag.append(document.createTextNode(wanted));
+  }
+  syncSportsCtaRail(chip, slide);
 }
 
 /**
@@ -5972,6 +5985,12 @@ function paintSportsChip(slide, animate = false) {
     const tag = document.createElement('span');
     tag.className = 'sports-chip__cta-tag';
     tag.setAttribute('aria-hidden', 'true');
+    const rail = document.createElement('span');
+    rail.className = 'sports-chip__cta-rail';
+    const railEyebrow = document.createElement('span');
+    railEyebrow.className = 'sports-chip__cta-eyebrow sports-chip__cta-eyebrow--rail';
+    railEyebrow.setAttribute('aria-hidden', 'true');
+    rail.append(railEyebrow, tag);
 
     const line = document.createElement('span');
     line.className = 'sports-chip__line';
@@ -5984,7 +6003,7 @@ function paintSportsChip(slide, animate = false) {
     stack.append(layer);
     line.append(stack);
 
-    a.append(tag, line);
+    a.append(rail, line);
     applySportsCtaState(a, slide);
     bindSportsCtaPause(a);
     if (animate && !sportsReducedMotion) {
