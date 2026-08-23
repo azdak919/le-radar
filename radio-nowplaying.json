@@ -1,61 +1,54 @@
 {
-  "updatedAt": "2026-08-23T15:46:41.613Z",
+  "updatedAt": "2026-08-23T16:21:27.714Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Le Ré-Show : Deuxième Service",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
-      },
+      "current": null,
       "next": {
         "title": "Radio Futura",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "13:00",
         "end": "16:00",
         "url": "https://chyz.ca/emission/radio-futura/"
       },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième Service",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-23T15:46:14.412Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Yallah lâcher prise",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
-      },
-      "next": {
-        "title": "Basses fréquences",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
-      },
-      "track": "",
-      "showTitle": "Yallah lâcher prise",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T15:46:16.767Z"
+      "checkedAt": "2026-08-23T16:21:02.437Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Basses fréquences",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/basses-frequences"
+      },
+      "next": {
+        "title": "Le char de marge",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
+      },
+      "track": "",
+      "showTitle": "Basses fréquences",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-08-23T16:21:04.869Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T15:46:19.967Z"
+      "checkedAt": "2026-08-23T16:21:07.649Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Rigged Sessions",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/rigged-sessions"
-      },
-      "next": {
         "title": "Brave Little Emo Girl",
         "source": "schedule-live",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
       },
+      "next": {
+        "title": "Northern Stagelights",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/northern-stagelights"
+      },
       "track": "",
-      "showTitle": "Rigged Sessions",
+      "showTitle": "Brave Little Emo Girl",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T15:46:34.260Z"
+      "checkedAt": "2026-08-23T16:21:21.641Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T15:46:35.042Z"
+      "checkedAt": "2026-08-23T16:21:22.302Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Status/Non-Status - Arnold",
+      "track": "Makthaverskan - Shatter",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-23T15:46:41.262Z"
+      "checkedAt": "2026-08-23T16:21:27.363Z"
     }
   }
 }
