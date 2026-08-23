@@ -442,9 +442,10 @@ body {
  * la CTA seule (ci-dessous). Scores : fit JS (−1 puce) si overflow texte.
  */
 @keyframes sports-chip-scroll {
-  /* Holds plus longs au début / fin pour lire l’info au calme. */
-  0%, 18% { transform: translateX(0); }
-  82%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
+  /* Hold à l’origine (début + retour) puis à l’extrémité. Le JS attend
+   * encore une pause au repos après le cycle avant de changer l’info. */
+  0%, 24% { transform: translateX(0); }
+  76%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
 }
 /* CTA hors marquee : clip sur le texte seul — jamais d’ellipsis, jamais sur
  * toute la couche (sinon head+sub se collapsaient sans marquee). */
@@ -579,6 +580,13 @@ body {
     rgba(60, 48, 52, 0.94);
 }
 /* Pastille : rubrique stable au repos, « En cours » pendant un match. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-rail {
+  flex: 0 0 auto;
+  display: contents;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail {
+  display: none;
+}
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
   flex: 0 0 auto;
   align-self: center;
@@ -759,8 +767,8 @@ body {
   will-change: transform;
 }
 @keyframes sports-chip-scroll-sub {
-  0%, 32% { transform: translateX(0); }
-  68%, 100% { transform: translateX(calc(var(--sports-scroll-sub, 0) * -1)); }
+  0%, 28% { transform: translateX(0); }
+  72%, 100% { transform: translateX(calc(var(--sports-scroll-sub, 0) * -1)); }
 }
 .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-rolling-out .sports-chip__cta-text,
 .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-rolling-out .sports-chip__cta-sub-text {
@@ -843,6 +851,62 @@ body {
   }
   .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-front {
     opacity: 1;
+  }
+}
+/*
+ * 390 / 430 : 2 colonnes × 2 lignes.
+ * Col. 1 = PROCHAIN au-dessus de SPORTS ; col. 2 = accroche + sous-ligne.
+ */
+@media (max-width: 430.98px) {
+  .masthead-sports-strip .sports-chip--cta {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 8px;
+    row-gap: 2px;
+    min-width: 0;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-rail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 3px;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail {
+    display: block;
+    text-align: center;
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail:empty,
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail[hidden] {
+    display: none;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-head .sports-chip__cta-eyebrow {
+    display: none;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
+    justify-content: center;
+    align-self: stretch;
+    padding-inline: 6px;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__line {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-stack {
+    height: auto;
+    min-height: 3.15em;
   }
 }
 /* Mobile : même 8 px haut/bas (pas de padding bas réduit). */
@@ -1578,8 +1642,8 @@ html.is-tuner-presentation-paused .is-marquee > .tuner-now-sub-text {
   animation-play-state: paused;
 }
 @keyframes tunerMarquee {
-  0%, 14%   { transform: translate3d(0, 0, 0); }
-  86%, 100% { transform: translate3d(var(--marquee-shift, 0), 0, 0); }
+  0%, 18%   { transform: translate3d(0, 0, 0); }
+  82%, 100% { transform: translate3d(var(--marquee-shift, 0), 0, 0); }
 }
 /* Panneau antenne : même défilement doux que le dial lorsqu'un titre déborde.
  * Bureau ≥1100 : le titre passe sur 2 lignes (voir media plus bas). */

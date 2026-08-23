@@ -1006,9 +1006,9 @@ a { color: inherit; }
   animation: weather-name-scroll 5.5s ease-in-out 0.8s var(--weather-scroll-trips, 2) alternate both;
 }
 @keyframes weather-name-scroll {
-  /* Hold court au début/fin pour lire, sans 28 % trop long */
-  0%, 18% { transform: translateX(0); }
-  82%, 100% { transform: translateX(calc(var(--weather-scroll, 0) * -1)); }
+  /* Hold à l’origine au départ et au retour, puis pause JS avant de changer. */
+  0%, 22% { transform: translateX(0); }
+  78%, 100% { transform: translateX(calc(var(--weather-scroll, 0) * -1)); }
 }
 .masthead-weather__temp {
   flex: 0 0 auto;
