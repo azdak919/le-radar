@@ -55,6 +55,8 @@ test('labo cartes sports : iframe formats + marquee L→R', async ({ page }) => 
 
   const frame = page.frameLocator('#preview');
   await expect(frame.locator('.sports-chip--cta').first()).toBeVisible({ timeout: 10000 });
+  await expect(frame.locator('.sports-chip--match')).toHaveCount(0);
+  await expect(frame.locator('.masthead-sports-strip').first()).toHaveAttribute('data-count', '1');
   await expect(frame.locator('.sports-chip__cta-eyebrow--rail', { hasText: /^Hier$/ })).toBeVisible();
   await expect(frame.locator('.sports-chip__cta-eyebrow', { hasText: /^Reprise$/ })).toHaveCount(0);
   const overflowing = frame.locator('.sports-chip--cta.is-overflowing').first();
@@ -82,6 +84,7 @@ test('labo cartes sports : iframe formats + marquee L→R', async ({ page }) => 
   await page.locator('#formats button[data-w="768"]').click();
   await expect(iframe).toHaveAttribute('data-w', '768');
   await expect(frame.locator('.sports-chip--cta').first()).toBeVisible();
+  await expect.poll(async () => frame.locator('.sports-chip--match').count()).toBeGreaterThan(0);
   await expect.poll(async () => frame.locator('.sports-chip__cta-eyebrow--rail').first().evaluate(
     (el) => getComputedStyle(el).display,
   )).toBe('none');
