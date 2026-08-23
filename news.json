@@ -1,6 +1,6 @@
 {
-  "updated": "2026-08-23T16:28:29.910Z",
-  "updatedSlot": "2026-08-23T16:00:00.000Z",
+  "updated": "2026-08-23T17:47:49.616Z",
+  "updatedSlot": "2026-08-23T17:30:00.000Z",
   "count": 185,
   "freshnessSessions": 3,
   "sources": {
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-08-23T16:27:56.779Z"
+      "lastFetchOk": "2026-08-23T17:47:21.293Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-08-23T16:28:00.905Z"
+      "lastFetchOk": "2026-08-23T17:47:25.350Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-07-31T12:00:00.000Z",
-      "lastFetchOk": "2026-08-23T16:28:01.452Z"
+      "lastFetchOk": "2026-08-23T17:47:26.091Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,15 +42,15 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-08-19T22:00:00.000Z",
-      "lastFetchOk": "2026-08-23T16:28:02.609Z"
+      "lastFetchOk": "2026-08-23T17:47:26.734Z"
     },
     "Zone Campus": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-08-23T16:28:03.614Z"
+      "lastFetchOk": null
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,15 +58,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-08-23T16:28:04.684Z"
+      "lastFetchOk": "2026-08-23T17:47:27.945Z"
     },
     "Le Collectif": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-08-22T15:46:25.000Z",
-      "lastFetchOk": "2026-08-23T16:28:05.786Z"
+      "lastFetchOk": null
     },
     "Exil": {
       "fetchOk": true,
@@ -74,15 +74,15 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-08-23T16:28:05.953Z"
+      "lastFetchOk": "2026-08-23T17:47:28.557Z"
     },
     "La Pige": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-06-22T14:36:10.000Z",
-      "lastFetchOk": "2026-08-23T16:28:07.700Z"
+      "lastFetchOk": null
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-08-23T16:28:09.045Z"
+      "lastFetchOk": "2026-08-23T17:47:30.358Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-08-18T02:00:41.000Z",
-      "lastFetchOk": "2026-08-23T16:28:09.195Z"
+      "lastFetchOk": "2026-08-23T17:47:30.535Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-08-23T16:28:09.398Z"
+      "lastFetchOk": "2026-08-23T17:47:30.768Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-08-23T16:28:09.505Z"
+      "lastFetchOk": "2026-08-23T17:47:30.978Z"
     }
   },
   "items": [
@@ -138,10 +138,10 @@
       "sourceImageCreditImageKey": "sportsetbienetre_mauvaise-nutrition-et-maladies-chroniques_source-sante-education.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
-      "leadExcerpt": "Les repas à forte teneur calorique, glycémique et lipidique regorgent dans la plupart des marchés d’alimentation et des restaurants-minute. Plusieurs personnes consomment des aliments et des repas moins nourrissants faute de moyens ou de temps. Cette alimentation non saine peut entrainer des carences en plusieurs nutriments et minéraux. À la longue, ces aliments peuvent même engendrer des maladies",
       "imageLocal": "assets/news-images/2d70221ae15f4fa4.jpg",
       "imageLocalKey": "2d70221ae15f4fa4",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -162,11 +162,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_conduite-a-risque-des-automobilistes_source-lassurance-en-mouvement.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Téléphone au volant, distraction avec un animal de compagnie, téléphone à l’oreille, ceinture non attachée, oubli de mettre les clignotants, conduite à basse ou haute vitesse, dépassements sur la route la liste des conduites à risque des automobilistes est longue. Pourquoi plusieurs automobilistes ne suivent-ils pas à la lettre les règles de conduite automobile au Québec?",
       "imageLocal": "assets/news-images/c65109be16a771e1.jpg",
       "imageLocalKey": "c65109be16a771e1",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -187,11 +188,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_personnes-creatrices-de-contenu_source-mjm-graphic-design.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Le rôle des personnes influenceuses est de développer une communauté où elles pourront partager leurs opinions, leurs expériences ou leurs recommandations. Parfois, elles auront à présenter des produits et des services et, au fil de leur notoriété, certaines entreprises paieront pour que les créatrices de contenu leur fassent de la publicité.",
       "imageLocal": "assets/news-images/450d0b7a816f1c46.jpg",
       "imageLocalKey": "450d0b7a816f1c46",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -216,7 +218,8 @@
       "leadExcerpt": "La sélection rassemble des œuvres marquantes de la cinématographie québécoise, allant de Léolo à C.R.A.Z.Y. , en passant par Monsieur Lazhar , Ru , Incendies et Vampire humaniste cherche suicidaire consentant . Les films abordent ainsi différentes époques, réalités sociales et sensibilités qui ont contribué à façonner le paysage culturel québécois.",
       "imageLocal": "assets/news-images/9f04415f806320c0.png",
       "imageLocalKey": "9f04415f806320c0",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -237,9 +240,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "culture_lesrendezvousgourmandsautomne_facebooklescomptonales.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/f18b95ce0dc00236.jpg",
-      "imageLocalKey": "f18b95ce0dc00236"
+      "imageLocalKey": "f18b95ce0dc00236",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -254,7 +259,7 @@
       "excerpt": "Au Festival des traditions du monde de Sherbrooke (FTMS), certes, les spectacles, l’art et la gastronomie sont à l’honneur, mais l’événement offre également une multitude d’ateliers et d’activités pour tous les goûts. Cette année, on en comptait une trentaine, dont des ateliers",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/CULTURE_FTMS_Atelier_Matcha_AyaHirose_Photo2_CreditSarahGendreauSimoneau-edited.jpg",
       "leadExcerpt": "Le Collectif s’est immergé dans la culture japonaise lors de la dernière journée du Festival, le 16 août dernier. Aya Hirose, Japonaise d’origine, a d’abord expliqué à la quarantaine de personnes présentes, ce qu’est le matcha, l’origine et les coutumes de cette poudre de thé vert, en plus de le préparer devant le public avec les instruments traditionnels.",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/f82ae8e29d65cdce.jpg",
       "imageLocalKey": "f82ae8e29d65cdce",
       "sourceImageCredit": "Photo : ItSarahGendreauSimoneau",
@@ -263,7 +268,9 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "culture_ftms_atelier_matcha_ayahirose_photo2_creditsarahgendreausimoneau-edited.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -284,8 +291,9 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_vers-un-centre-de-donnees-a-sherbrooke_google-earth.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Dans une vidéo diffusée par la mairesse de Sherbrooke, David Seminaro, directeur d’Hydro-Sherbrooke, affirme que la venue possible de l’entreprise pourrait « essentiellement permettre à des clients qui exploitent des centres de cryptomonnaie d’utiliser la même énergie, la même puissance, mais pour exploiter des centres de données »."
+      "leadImageReady": false,
+      "leadExcerpt": "Dans une vidéo diffusée par la mairesse de Sherbrooke, David Seminaro, directeur d’Hydro-Sherbrooke, affirme que la venue possible de l’entreprise pourrait « essentiellement permettre à des clients qui exploitent des centres de cryptomonnaie d’utiliser la même énergie, la même puissance, mais pour exploiter des centres de données ».",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -306,10 +314,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "772868757_2190927092306300_8826211073640342084_n.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "« Le 12 août, j’achète un livre québécois » est une journée de mobilisation qui invite à découvrir et à soutenir la culture d’ici. Cette année, elle a porté deux revendications supplémentaires : protéger l’achat de livres dans les écoles et appuyer la création humaine. Cette dernière initiative, portée par le RAH – Regroupement pour l’Art Humain, a trouvé notamment écho à la Librairie Appalaches.",
       "imageLocal": "assets/news-images/3da97e9e7c5f772a.jpg",
-      "imageLocalKey": "3da97e9e7c5f772a"
+      "imageLocalKey": "3da97e9e7c5f772a",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -334,7 +344,8 @@
       "leadExcerpt": "La République démocratique du Congo (RDC) et l’Ouganda font face à une hausse du nombre de personnes touchées par une souche du virus Ebola. Le gouvernement de la RDC semble avoir caché des informations clés, alors que les Nations unies mettent leurs efforts en marche pour résoudre la situation.",
       "imageLocal": "assets/news-images/63056df8f3dd486f.jpg",
       "imageLocalKey": "63056df8f3dd486f",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -354,8 +365,9 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "environnement_ftms_ecoresponsabilite_sourceftms.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Un plan d’action qui touche aux trois volets du développement durable (environnemental, social et économique) a été bâti et des sanctions et objectifs à court, moyen et long terme ont été développés, explique Carolina Lopez Salvador, responsable des bénévoles, du développement durable, des kiosques et des restaurants, en plus d’être coordonnatrice et adjointe au financement."
+      "leadImageReady": false,
+      "leadExcerpt": "Un plan d’action qui touche aux trois volets du développement durable (environnemental, social et économique) a été bâti et des sanctions et objectifs à court, moyen et long terme ont été développés, explique Carolina Lopez Salvador, responsable des bénévoles, du développement durable, des kiosques et des restaurants, en plus d’être coordonnatrice et adjointe au financement.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -380,7 +392,8 @@
       "leadImageReady": true,
       "leadExcerpt": "A motion calling on the city of Montreal to cut institutional ties with Israel will be heard on Aug. 24, after being pushed back from June. The motion introduced by Projet Montréal, the official municipal opposition, on June 4 calls on the city to suspend institutional ties with the Israeli government, its institutions and municipalities. This includes not inviting Israeli state representatives to",
       "imageLocal": "assets/news-images/9ea5a45b85e82681.jpg",
-      "imageLocalKey": "9ea5a45b85e82681"
+      "imageLocalKey": "9ea5a45b85e82681",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Tribune",
@@ -431,7 +444,8 @@
       "leadImageReady": true,
       "leadExcerpt": "At first, the algorithm doesn’t know what the boy wants, but at some point he and his friends start liking videos promoting self-improvement, going to the gym and how to get girls. He starts to echo views from creators such as Andrew Tate .",
       "imageLocal": "assets/news-images/b70ae1c93fc85795.jpg",
-      "imageLocalKey": "b70ae1c93fc85795"
+      "imageLocalKey": "b70ae1c93fc85795",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Tribune",
@@ -482,7 +496,8 @@
       "leadImageReady": true,
       "leadExcerpt": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-before-printed photographs of protests and posters to add to the AGQ’s collection.",
       "imageLocal": "assets/news-images/16fb882bbf473cf0.jpg",
-      "imageLocalKey": "16fb882bbf473cf0"
+      "imageLocalKey": "16fb882bbf473cf0",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Tribune",
@@ -786,9 +801,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "joanne-normandin_retraite-benevole.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/13463c587fd35910.jpg",
-      "imageLocalKey": "13463c587fd35910"
+      "imageLocalKey": "13463c587fd35910",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Tribune",
@@ -839,7 +856,8 @@
       "leadImageReady": true,
       "leadExcerpt": "The Canadian men's national soccer team hosted the Republic of Ireland at Saputo Stadium for a friendly match on June 5, drawing a sold-out crowd of 19,619 fans for the team's final home match ahead of the 2026 FIFA World Cup.",
       "imageLocal": "assets/news-images/9291241d3c3ede01.jpg",
-      "imageLocalKey": "9291241d3c3ede01"
+      "imageLocalKey": "9291241d3c3ede01",
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -859,11 +877,19 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "shared-image-5.jpg",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Mylène Sasseville est la proche aidante de ses deux fils, Maïk et Travis, tous les deux atteints du syndrome rare Allan Herndon Dudley causant une déficience physique et intellectuelle. Son conjoint, l’accompagne également dans son parcours de proche aidante. (Photo : Mathilde Bellon)",
       "imageLocal": "assets/news-images/3b738155c39d092b.jpg",
       "imageLocalKey": "3b738155c39d092b",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true,
+      "stockImage": "https://cdn.stocksnap.io/img-thumbs/960w/PMZZ7WLOAJ.jpg",
+      "imageTitle": "Caregiver Nurse",
+      "imageCredit": "Photo : Direct Media / CC0 · Openverse",
+      "imageCreator": "Direct Media",
+      "imageLicense": "cc0",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://stocksnap.io/photo/caregiver-nurse-PMZZ7WLOAJ"
     },
     {
       "source": "The Tribune",
@@ -911,7 +937,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Thousands of people filled the seats of Salle Wilfrid-Pelletier at Place-des-Arts for a panel featuring the astronauts of the Artemis II mission on Friday, May 15. Hosted by the Chamber of Commerce of Metropolitan Montreal (CCMM), the discussion marked the final stop on the group’s Canada tour , which featured a meeting with Prime Minister Mark Carney.",
       "imageLocal": "assets/news-images/1f02270f4f3edd35.jpg",
-      "imageLocalKey": "1f02270f4f3edd35"
+      "imageLocalKey": "1f02270f4f3edd35",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -977,11 +1004,19 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "shared-image-1.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "La présidente du groupe Accro-Vélo Alma, Anne Lafrance, et Sylvie Beaumont, la mairesse d’Alma, étaient sur place pour le départ des cyclistes. (Crédit : Colin Perron) Quatre commémorations pour les cyclistes décédés ont eu lieu mercredi soir au Saguenay-Lac-Saint-Jean, dont une à Alma. C’était la 3e édition du Tour du Silence, qui débutait à l’hôtel de ville.",
       "imageLocal": "assets/news-images/b52cb98fdf0de965.jpg",
       "imageLocalKey": "b52cb98fdf0de965",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/3116/2750714149_36a7b7bfe0_b.jpg",
+      "imageTitle": "Ghost Bicycle @ 20th/R & Ct. Ave. NW in Memory of Alice Swanson",
+      "imageCredit": "Photo : dbking / CC BY · Openverse",
+      "imageCreator": "dbking",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/65193799@N00/2750714149"
     },
     {
       "source": "La Pige",
@@ -1002,8 +1037,16 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "image-17.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
-      "leadExcerpt": "Après 40 ans, les coiffeuses Kathy Blackburn et Manon Tremblay accrochent leur paire de ciseaux. Le Salon L’image, situé à Place Centre-Ville Jonquière, fermera définitivement ses portes le 29 mai prochain."
+      "leadImageReady": false,
+      "leadExcerpt": "Après 40 ans, les coiffeuses Kathy Blackburn et Manon Tremblay accrochent leur paire de ciseaux. Le Salon L’image, situé à Place Centre-Ville Jonquière, fermera définitivement ses portes le 29 mai prochain.",
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/2630/3909102032_627000c926_b.jpg",
+      "imageTitle": "Car Crash Studies (detail) by Nicolai Howalt, Chelsea Art Galleries Openings / 20090910.10D.53391 / SML",
+      "imageCredit": "Photo : See-ming Lee (SML) / CC BY-SA · Openverse",
+      "imageCreator": "See-ming Lee (SML)",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/48973657@N00/3909102032"
     },
     {
       "source": "La Pige",
@@ -1023,11 +1066,12 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image-mamik.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Le Centre Mamik a déposé une demande de projet pilote pour donner accès à des services de halte garderie, spécifiquement pour les parents qui sont étudiants. (Crédit : Tirée de Facebook / Centre Mamik)",
       "imageLocal": "assets/news-images/cd26304af044029a.jpg",
       "imageLocalKey": "cd26304af044029a",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -1047,8 +1091,9 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "erd.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Le départ de huit des onze membres du conseil d’administration a failli mener la dissolution de l’Équipe du renouveau démocratique de Saguenay (ERD), mercredi soir. In extrémis, quatre membres pourraient secourir le parti."
+      "leadImageReady": false,
+      "leadExcerpt": "Le départ de huit des onze membres du conseil d’administration a failli mener la dissolution de l’Équipe du renouveau démocratique de Saguenay (ERD), mercredi soir. In extrémis, quatre membres pourraient secourir le parti.",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -1069,8 +1114,16 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "3-credit-photo-marc-andre-houde.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Le concours « Jeunes auteurs à vos crayons! » était dans la région mardi, en compagnie de sa marraine Frédérique Dufort, écrivaine et comédienne, pour distribuer des prix destinés aux élèves. La thématique cette année, « Le pouvoir des mots », orientera le travail de 2346 participants provenant de 160 écoles à travers le Québec et le Canada francophone."
+      "leadImageReady": false,
+      "leadExcerpt": "Le concours « Jeunes auteurs à vos crayons! » était dans la région mardi, en compagnie de sa marraine Frédérique Dufort, écrivaine et comédienne, pour distribuer des prix destinés aux élèves. La thématique cette année, « Le pouvoir des mots », orientera le travail de 2346 participants provenant de 160 écoles à travers le Québec et le Canada francophone.",
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/749/31981589415_82676de532_b.jpg",
+      "imageTitle": "A girl in a library",
+      "imageCredit": "Photo : freestocks.org / CC0 · Openverse",
+      "imageCreator": "freestocks.org",
+      "imageLicense": "cc0",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/135396164@N05/31981589415"
     },
     {
       "source": "La Pige",
@@ -1091,11 +1144,19 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "image-16.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Le pont de Sainte-Anne ne se contente plus de relier deux rives ; il relie désormais les citoyens à une réalité souvent invisible. Jusqu’au 4 octobre prochain, l’exposition de photographie et de témoignages Ici on se rencontre met en lumière une vocation de l’ombre : celle des travailleurs de rue.",
       "imageLocal": "assets/news-images/e66dde8ccf18ba77.jpg",
       "imageLocalKey": "e66dde8ccf18ba77",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/3428/3910073006_fd789a9c80_b.jpg",
+      "imageTitle": "DMe TER KOPA FiSH",
+      "imageCredit": "Photo : Jamiecat * / CC BY · Openverse",
+      "imageCreator": "Jamiecat *",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/27330325@N08/3910073006"
     },
     {
       "source": "La Pige",
@@ -1116,7 +1177,15 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "pexels-fatih-turan-63325184-12413177.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/1147/707867671_a6497fc5f6_b.jpg",
+      "imageTitle": "El Nino",
+      "imageCredit": "Photo : paris_tx / CC BY · Openverse",
+      "imageCreator": "paris_tx",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/35213891@N00/707867671"
     },
     {
       "source": "La Pige",
@@ -1137,8 +1206,9 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "image-1-6.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
-      "leadExcerpt": "Mélissa Girard, Cindy Duchesne, Mireille Fortin, Claudia Boily et Julie Guay, du programme d’Assistance technique en pharmacie, étaient présentes pour la Journée portes ouvertes, mercredi. (Crédit : Étienne Harvey-Soucy)"
+      "leadImageReady": false,
+      "leadExcerpt": "Mélissa Girard, Cindy Duchesne, Mireille Fortin, Claudia Boily et Julie Guay, du programme d’Assistance technique en pharmacie, étaient présentes pour la Journée portes ouvertes, mercredi. (Crédit : Étienne Harvey-Soucy)",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -1181,7 +1251,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "photo-5_img_3586.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "_retainedFromCache": true
     },
     {
@@ -1257,7 +1327,7 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "12-13_statuts-politique-parents-proche-aidants.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 ( PL394 ) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s.",
       "imageLocal": "assets/news-images/a50bcc72f82c0178.jpg",
       "imageLocalKey": "a50bcc72f82c0178",
@@ -1361,7 +1431,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "10-11_faecum_photo-assemblee.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté.",
       "imageLocal": "assets/news-images/75faed9047858c77.jpg",
       "imageLocalKey": "75faed9047858c77",
@@ -1550,7 +1620,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "21_montreal-mystere.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère , un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais.",
       "imageLocal": "assets/news-images/2e20cf914d14b398.jpg",
       "imageLocalKey": "2e20cf914d14b398",
@@ -1672,13 +1742,13 @@
       "sourceImageCreditImageKey": "image-1-1.jpeg",
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/43/Marine_Stage_at_Summer_Sonic_Festival.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "File:Marine Stage at Summer Sonic Festival.jpg",
-      "imageCredit": "Photo : LuxTonnerre / CC BY 2.0 · Wikimedia Commons",
-      "imageCreator": "LuxTonnerre",
-      "imageLicense": "CC BY 2.0",
-      "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Marine_Stage_at_Summer_Sonic_Festival.jpg",
+      "stockImage": "https://live.staticflickr.com/3907/14575571714_699088529c_b.jpg",
+      "imageTitle": "saugeile Stelle Fusion Festival Festival Summer at Fusion Festival",
+      "imageCredit": "Photo : _Tasmo / CC BY-SA · Openverse",
+      "imageCreator": "_Tasmo",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/73942751@N00/14575571714",
       "imageLocal": "assets/news-images/642182c28d092414.webp",
       "imageLocalKey": "642182c28d092414",
       "imageLocalVia": "origin"
@@ -1776,7 +1846,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/870cb1894ff8b3e6.png",
-      "imageLocalKey": "870cb1894ff8b3e6"
+      "imageLocalKey": "870cb1894ff8b3e6",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Plant",
@@ -1822,7 +1893,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "16-17_cdm-1.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/9570aaea4dc36d1a.jpg",
       "imageLocalKey": "9570aaea4dc36d1a",
       "imageLocalVia": "origin",
@@ -1847,7 +1918,7 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "6-7_soutien-technique.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé plusieurs difficultés que lui et ses collègues ont vécues, notamment liées aux délais, aux procédures et à la complexité de certains outils numériques.",
       "imageLocal": "assets/news-images/ee87629ac347e229.jpg",
       "imageLocalKey": "ee87629ac347e229",
@@ -1877,7 +1948,8 @@
       "leadImageReady": true,
       "leadExcerpt": "The vigil on May 5 this year included speeches, performances and a march through downtown Montreal. Around 300 people attended the events, in contrast to the thousands who gathered in other Canadian cities. Among the speakers was Wet’suwet’en chef, activist and filmmaker Marlene Hale, who noted that similar demonstrations in Vancouver consistently draw significantly larger crowds.",
       "imageLocal": "assets/news-images/32ab04722436dd85.jpg",
-      "imageLocalKey": "32ab04722436dd85"
+      "imageLocalKey": "32ab04722436dd85",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -1923,7 +1995,7 @@
       "sourceImageCreditRev": 10,
       "imageLocal": "assets/news-images/77ea3179702d93d2.jpg",
       "imageLocalKey": "77ea3179702d93d2",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocalVia": "origin",
       "_retainedFromCache": true
     },
@@ -1945,9 +2017,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "1.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/7aa5ab9dd7648781.jpg",
-      "imageLocalKey": "7aa5ab9dd7648781"
+      "imageLocalKey": "7aa5ab9dd7648781",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "L'Exemplaire",
@@ -2066,10 +2140,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3417.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/23af229881dbdeec.jpg",
       "imageLocalKey": "23af229881dbdeec",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -2165,9 +2240,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "17c4541a-839d-48b8-b5aa-2cc81e91e3c8.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/16a813216f7afeb2.jpg",
-      "imageLocalKey": "16a813216f7afeb2"
+      "imageLocalKey": "16a813216f7afeb2",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -2307,7 +2384,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3939.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2328,7 +2406,15 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_9786.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/3505/3973947773_f685cd523c_b.jpg",
+      "imageTitle": "Installation (Detail) FASTFORWARDFOSSIL: Part 2 by Ellen Driscoll at Smack Mellon / Dumbo Arts Center: Art Under the Bridge Festival 2009 / 20090926.10D.54754.P1.L1.BW / SML",
+      "imageCredit": "Photo : See-ming Lee (SML) / CC BY-SA · Openverse",
+      "imageCreator": "See-ming Lee (SML)",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/48973657@N00/3973947773"
     },
     {
       "source": "The Tribune",
@@ -2400,10 +2486,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3397-1.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/7428914d1b64d542.jpg",
       "imageLocalKey": "7428914d1b64d542",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2424,10 +2511,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3405.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/7f86c6d6d4e73d30.jpg",
       "imageLocalKey": "7f86c6d6d4e73d30",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -2447,9 +2535,11 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/df8807d73a194404.jpg",
-      "imageLocalKey": "df8807d73a194404"
+      "imageLocalKey": "df8807d73a194404",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -2469,9 +2559,11 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/4828a1e7cbf0e7ff.jpg",
-      "imageLocalKey": "4828a1e7cbf0e7ff"
+      "imageLocalKey": "4828a1e7cbf0e7ff",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -2491,7 +2583,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "Exil",
@@ -2559,7 +2652,8 @@
       "leadImageReady": true,
       "leadExcerpt": "The first day saw the regroupment of a number of commissions, namely the Indigenous Peoples' Commission, the National Women’s Liberal Commission, the Senior Liberals' Commission and the Young Liberals of Canada (YLC) commission.",
       "imageLocal": "assets/news-images/0bdd597768e50e6a.jpg",
-      "imageLocalKey": "0bdd597768e50e6a"
+      "imageLocalKey": "0bdd597768e50e6a",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2608,7 +2702,8 @@
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/891b9ee70dc7654a.jpg",
-      "imageLocalKey": "891b9ee70dc7654a"
+      "imageLocalKey": "891b9ee70dc7654a",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2632,7 +2727,8 @@
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/a4bb70a32fb1257f.jpg",
-      "imageLocalKey": "a4bb70a32fb1257f"
+      "imageLocalKey": "a4bb70a32fb1257f",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Tribune",
@@ -2744,6 +2840,7 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/c34d91afb7378837.jpg",
       "imageLocalKey": "c34d91afb7378837",
+      "imageLocalVia": "origin",
       "sourceImageCredit": "Photo: Courtesy of Joe Fuda",
       "sourceImageCreator": "Joe Fuda",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16318",
@@ -2774,7 +2871,8 @@
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/7b44024add6da15f.jpg",
-      "imageLocalKey": "7b44024add6da15f"
+      "imageLocalKey": "7b44024add6da15f",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2798,7 +2896,8 @@
       "sourceImageCreditRev": 4,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/7a7761841228a115.jpg",
-      "imageLocalKey": "7a7761841228a115"
+      "imageLocalKey": "7a7761841228a115",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2816,6 +2915,7 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/ed63a7ef08244b69.png",
       "imageLocalKey": "ed63a7ef08244b69",
+      "imageLocalVia": "origin",
       "sourceImageCredit": "Illustration: Halle Keays",
       "sourceImageCreator": "Halle Keays",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16315",
@@ -3764,13 +3864,13 @@
       "image": "",
       "authorCheckedAt": "2026-08-23T11:23:29.070Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/47/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288689651802%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "File:Masters Tournament - 2013 - Dogwood Cabin, August National Golf Club (8689651802).jpg",
-      "imageCredit": "Photo : Dan Perry from Atlanta, USA / CC BY 2.0 · Wikimedia Commons",
-      "imageCreator": "Dan Perry from Atlanta, USA",
-      "imageLicense": "CC BY 2.0",
-      "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Masters_Tournament_-_2013_-_Dogwood_Cabin,_August_National_Golf_Club_(8689651802).jpg"
+      "stockImage": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg",
+      "imageTitle": "The Donald & Mark Wahlberg",
+      "imageCredit": "Photo : jurvetson / CC BY · Openverse",
+      "imageCreator": "jurvetson",
+      "imageLicense": "by",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/44124348109@N01/99099986"
     },
     {
       "source": "The Campus",
@@ -4043,22 +4143,24 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "Ce que nous devons aux femmes",
-      "link": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
-      "author": "Eugénie St-Pierre",
+      "title": "Des initiatives qui rassemblent",
+      "link": "https://www.delitfrancais.com/2026/03/18/des-initiatives-qui-rassemblent/",
+      "author": "Héloïse Durning et Elie Nguyen",
       "date": "2026-03-18T07:00:00.000Z",
-      "excerpt": "Votre entourage, en tant qu’étudiantes et étudiants de l’Université McGill, est peut-être composé en majorité de personnes qui se revendiquent comme féministes. Certaines le sont, d’autres le prétendent, mais relativement rares sont les McGillois qui refusent ouvertement le féminisme.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Capture-decran-le-2026-03-22-a-17.22.07.png",
+      "excerpt": "À McGill, des projets pour célébrer et soutenir les femmes.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/annonces.png",
       "featured": true,
-      "authorCheckedAt": "2026-08-23T14:26:40.421Z",
-      "_pageAuthor": "Eugénie St-Pierre",
+      "_pageAuthor": "Héloïse Durning et Elie Nguyen",
+      "authorCheckedAt": "2026-08-23T17:48:01.490Z",
       "leadImageReady": true,
-      "sourceImageCredit": "Photo : Alexandre Gontier",
-      "sourceImageCreator": "Alexandre Gontier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "capture-decran-le-2026-03-22-a-17.22.07.png",
+      "imageLocal": "assets/news-images/1f8b3b95383f201a.png",
+      "imageLocalKey": "1f8b3b95383f201a",
+      "sourceImageCredit": "Crédit photo : Le Délit",
+      "sourceImageCreator": "",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/des-initiatives-qui-rassemblent/",
+      "sourceImageCreditFrom": "media",
+      "sourceImageCreditCited": false,
+      "sourceImageCreditImageKey": "annonces.png",
       "sourceImageCreditRev": 10
     },
     {
@@ -4067,23 +4169,23 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
-      "author": "Anonyme",
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "author": "Timotée Allouch-Chantepie, Héloïse Durning, Aurélien Quéméner et Eugénie St-Pierre",
       "date": "2026-03-18T07:00:00.000Z",
-      "excerpt": "Kristi Noem et Erika Kirk comme figures de proue du néo-fascisme américain.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Capture-decran-le-2026-03-22-a-17.22.07.png",
+      "excerpt": "Présentation des candidats à l’exécutif de l’AÉUM.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2025/11/P1160269-scaled.jpeg",
       "featured": true,
-      "authorCheckedAt": "2026-08-23T14:26:40.765Z",
-      "_pageAuthor": "Anonyme",
-      "leadExcerpt": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer en instrumentalisant certaines femmes pour reproduire les structures qui les subordonnent. C’est à travers ce mécanisme d’opacité que sa présence se resserre sur la société, et que ses contradictions se dissimulent sous le couvert de liberté individuelle, de traditions ou de choix personnels.",
+      "_pageAuthor": "Timotée Allouch-Chantepie, Héloïse Durning, Aurélien Quéméner et Eugénie St-Pierre",
+      "authorCheckedAt": "2026-08-23T17:48:01.788Z",
+      "leadExcerpt": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « plus politique ». L’étudiante de deuxième année en études sur le genre explique qu’elle ne se sentait pas représentée par les élus de l’AÉUM et que c’est ce qui a motivé sa décision de se présenter. « On [les candidats du S.T.A.N.D.] est là depuis deux, trois, quatre ans et on voit comment l’AÉUM n’e",
       "leadImageReady": true,
-      "sourceImageCredit": "Photo : Stu Doré",
-      "sourceImageCreator": "Stu Doré",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
+      "sourceImageCredit": "Photo : Toscane Ralaimongo",
+      "sourceImageCreator": "Toscane Ralaimongo",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "capture-decran-le-2026-03-22-a-17.22.07.png",
+      "sourceImageCreditImageKey": "p1160269.jpeg",
       "sourceImageCreditRev": 10
     },
     {

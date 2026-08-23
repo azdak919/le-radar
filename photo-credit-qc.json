@@ -1,24 +1,17 @@
 {
-  "updated": "2026-08-23T16:34:19.611Z",
+  "updated": "2026-08-23T17:53:37.955Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 132,
-  "pending": 12,
+  "cited": 131,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 9,
-  "citedNew": 9,
-  "fallbackNew": 12,
+  "checked": 19,
+  "updatedCount": 7,
+  "citedNew": 6,
+  "fallbackNew": 13,
   "samples": [
-    {
-      "title": "À la découverte du matcha et du kohakutou",
-      "source": "Le Collectif",
-      "credit": "Photo : ItSarahGendreauSimoneau",
-      "cited": true,
-      "method": "filename-credit"
-    },
     {
       "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
@@ -34,16 +27,16 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Ce que nous devons aux femmes",
+      "title": "Des initiatives qui rassemblent",
       "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
-      "cited": true,
-      "method": "media-credit-near"
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Les femmes MAGA au service du patriarcat",
+      "title": "Élections de l’exécutif de l’AÉUM",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
+      "credit": "Photo : Toscane Ralaimongo",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -60,13 +53,6 @@
       "credit": "Illustration: Halle Keays",
       "cited": true,
       "method": "figcaption-trailing"
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
     },
     {
       "title": "Leave the Children Out of This",
