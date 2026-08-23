@@ -455,34 +455,25 @@ test('CTA sports téléphone : sous-ligne trop longue défile L→R', async ({ p
   expect(pageErrors).toEqual([]);
 });
 
-test('390 / 430 : PROCHAIN au-dessus de SPORTS, deux colonnes', async ({ page }) => {
+test('390 / 430 : pastille Prochain/Hier/Aujourd’hui à gauche de l’accroche', async ({ page }) => {
   for (const width of [390, 430]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     const strip = page.locator('#masthead-sports-strip');
     await expect(strip.locator('.sports-chip--cta')).toBeVisible({ timeout: 8000 });
+    const tag = strip.locator('.sports-chip--cta .sports-chip__cta-tag');
+    await expect(tag).toContainText(/prochain|hier|aujourd|en cours|sports|août|avant-hier/i);
     const geo = await page.evaluate(() => {
       const chip = document.querySelector('.sports-chip--cta');
-      const railEb = chip?.querySelector('.sports-chip__cta-eyebrow--rail');
-      const tag = chip?.querySelector('.sports-chip__cta-tag');
+      const tagEl = chip?.querySelector('.sports-chip__cta-tag');
       const copy = chip?.querySelector('.sports-chip__line');
-      if (!chip || !railEb || !tag || !copy) return { ok: false };
-      railEb.hidden = false;
-      if (!railEb.textContent.trim()) railEb.textContent = 'Prochain';
-      const er = railEb.getBoundingClientRect();
-      const tr = tag.getBoundingClientRect();
+      if (!chip || !tagEl || !copy) return { ok: false };
+      const tr = tagEl.getBoundingClientRect();
       const cr = copy.getBoundingClientRect();
-      return {
-        ok: true,
-        eyebrowAbove: er.bottom <= tr.top + 3,
-        tagLeftOfCopy: tr.right <= cr.left + 3,
-        sameColumn: Math.abs(er.left - tr.left) < 14,
-      };
+      return { ok: true, tagLeftOfCopy: tr.right <= cr.left + 3 };
     });
-    expect(geo.ok, `${width}: rail CTA présent`).toBe(true);
-    expect(geo.eyebrowAbove, `${width}: PROCHAIN au-dessus de SPORTS`).toBe(true);
+    expect(geo.ok, `${width}: CTA présent`).toBe(true);
     expect(geo.tagLeftOfCopy, `${width}: pastille à gauche de l’accroche`).toBe(true);
-    expect(geo.sameColumn, `${width}: marqueur et pastille même colonne`).toBe(true);
   }
 });
 

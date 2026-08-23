@@ -5007,33 +5007,43 @@ function sportsCtaLabelFromSlide(slide) {
 }
 
 /**
- * Marqueur temporel en tête d’accroche — focus-group `le-radar-cta-sports-badge`.
- * Vide en direct : la pastille porte déjà « En cours » (override mainteneur).
+ * Plus de marqueur à côté / au-dessus de la pastille : Prochain / Hier /
+ * Aujourd’hui vivent **dans** la pastille (`sportsCtaTagLabel`).
  */
-function sportsCtaEyebrow(slide, state) {
-  if (state === 'live' || state === 'result') return '';
-  // Hors saison comme en saison : c’est le prochain coup d’envoi, pas un résultat rassis.
-  if (state === 'next') return 'Prochain';
+function sportsCtaEyebrow(_slide, _state) {
   return '';
 }
 
+/** Pastille d’un résultat : Aujourd’hui, Hier, Avant-hier, sinon date courte. */
+function sportsCtaResultTag(src) {
+  const day = sportsSlideDayKey(src);
+  if (!day) return SPORTS_CTA_TAG;
+  const today = torontoDayKey();
+  if (day === today) return 'Aujourd’hui';
+  if (day === sportsCivilDayShift(today, -1)) return 'Hier';
+  if (day === sportsCivilDayShift(today, -2)) return 'Avant-hier';
+  const iso = src?.game?.date || day;
+  try {
+    return new Intl.DateTimeFormat('fr-CA', {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short',
+      timeZone: 'America/Toronto',
+    }).format(new Date(`${iso}T12:00:00`));
+  } catch {
+    return iso;
+  }
+}
+
 /**
- * Pastille CTA : « Sports » au repos, « En cours » en direct,
- * « Hier » / « Aujourd’hui » pour un résultat du filet civil (remplace SPORTS).
+ * Pastille CTA : Prochain / En cours / Hier / Aujourd’hui / date.
+ * « Sports » seulement en creux idle.
  */
 function sportsCtaTagLabel(slide, state) {
   const st = state || sportsCtaState(slide);
   if (st === 'live') return SPORTS_CTA_TAG_LIVE;
-  if (st === 'result') {
-    const src = slide?.ctaFrom || slide;
-    const day = sportsSlideDayKey(src);
-    if (!day) return 'Résultat';
-    const today = torontoDayKey();
-    if (day === today) return 'Aujourd’hui';
-    if (day === sportsCivilDayShift(today, -1)) return 'Hier';
-    // Plus vieux : modèle standard (pastille Sports), date dans la sous-ligne.
-    return SPORTS_CTA_TAG;
-  }
+  if (st === 'next') return 'Prochain';
+  if (st === 'result') return sportsCtaResultTag(slide?.ctaFrom || slide);
   return SPORTS_CTA_TAG;
 }
 
