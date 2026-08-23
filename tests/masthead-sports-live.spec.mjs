@@ -82,11 +82,12 @@ function yesterdayResultGame() {
   };
 }
 
-function livePayload({ score, period } = {}) {
+function livePayload({ score, period, offsetMs = -8 * 60 * 1000 } = {}) {
   const game = liveKickGame({
     opponent: 'Vanier',
     opponentCode: 'VAN',
     opponentFullName: 'Vanier College',
+    offsetMs,
     extra: {
       gameId: 'c4635a89-92f1-42b9-bb3a-b2604bbf36d6',
       url: 'https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4635a89-92f1-42b9-bb3a-b2604bbf36d6',
@@ -166,6 +167,30 @@ function yesterdayOnlyPayload() {
   };
 }
 
+function upcomingTodayPayload(offsetMs = 3 * 3600 * 1000) {
+  const kick = torontoParts(Date.now() + offsetMs);
+  const game = liveKickGame({
+    opponent: 'Vanier',
+    opponentCode: 'VAN',
+    opponentFullName: 'Vanier College',
+    offsetMs,
+    extra: { live: false },
+  });
+  const team = teamShell('collegial:soccer:sth-next', {
+    name: 'Saint-Hyacinthe',
+    fullName: 'Cégep de Saint-Hyacinthe',
+    code: 'STH',
+  });
+  team.nextGame = game;
+  team.nextGames = [game];
+  return {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [team.id]: team },
+    _kick: kick,
+  };
+}
+
 async function openWithSports(page, payload) {
   await page.route('**/sports.json', async (route) => {
     await route.fulfill({
@@ -214,6 +239,17 @@ test('CTA live : En cours, équipes, pas « dans 15 min »', async ({ page }) =>
   expect(sub.toLowerCase()).not.toMatch(/dans \d/);
   expect(sub.toLowerCase()).not.toMatch(/à l[’']instant/);
   expect(sub.toLowerCase()).not.toMatch(/il y a/);
+});
+
+test('CTA live : pas « il y a 2 min » sous En cours', async ({ page }) => {
+  const cta = await openWithSports(page, livePayload({ offsetMs: -2 * 60 * 1000 }));
+  await expect(cta).toHaveAttribute('data-cta-state', 'live');
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En cours');
+  const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
+  expect(sub).toMatch(/Soccer collégial masculin D1/);
+  expect(sub.toLowerCase()).not.toMatch(/il y a/);
+  expect(sub.toLowerCase()).not.toMatch(/à l[’']instant/);
+  expect(sub.toLowerCase()).not.toMatch(/dans \d/);
 });
 
 test('CTA live : score et période dès qu’ils sont collés', async ({ page }) => {
@@ -297,6 +333,8 @@ test('CTA : sans direct, le cycle reprend (résultat hier)', async ({ page }) =>
   expect(tag).toMatch(/hier|aujourd/i);
   const text = await cta.locator('.sports-chip__cta-text').innerText();
   expect(text).toMatch(/Saint-Hyacinthe|Concordia/);
+  const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
+  expect(sub.toLowerCase()).not.toMatch(/il y a/);
   const pool = await page.evaluate(() => sportsCtaCandidateSlides().map((s) => ({
     live: sportsGameIsLive(s.game),
     mode: s.mode,
@@ -304,4 +342,16 @@ test('CTA : sans direct, le cycle reprend (résultat hier)', async ({ page }) =>
   expect(pool.length).toBeGreaterThanOrEqual(1);
   expect(pool.every((s) => !s.live)).toBe(true);
   expect(pool.some((s) => s.mode === 'result')).toBe(true);
+});
+
+test('CTA prochain du jour : heure de coup d’envoi, pas « dans 3 h »', async ({ page }) => {
+  const payload = upcomingTodayPayload(3 * 3600 * 1000);
+  const cta = await openWithSports(page, payload);
+  await expect(cta).toHaveAttribute('data-cta-state', 'next');
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('Prochain');
+  const clock = payload._kick.time.replace(':', ' h ');
+  const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
+  expect(sub).toMatch(new RegExp(clock.replace(' ', '\\s+')));
+  expect(sub.toLowerCase()).not.toMatch(/dans \d/);
+  expect(sub.toLowerCase()).not.toMatch(/il y a/);
 });
