@@ -1,12 +1,21 @@
-# Layouts viewport — grand écran
+# Labo — viewport local
 
-**Prod / main :** E s’active tout seul dès **1281 px**. Aucun `?wide=e`.
+Outil **local** pour voir le site aux largeurs téléphone / tablette / bureau.
+Ce n’est pas « labo E » : E est juste le layout prod (≥1281 px). Ici on dit **le Labo**.
+
+**Prod / main :** le layout large s’active tout seul dès **1281 px**. Aucun `?wide=e`.
 Les densités 1440 / 1600 / 1920 / 2560 / 3440 / 3840 suivent le viewport.
 Téléphone, mid et bureau compact (≤1280) restent les layouts existants.
 
-Lab local seulement : barre Format (Base + Grand). E s’applique tout seul.
+Barre Format (Base + Grand) : **localhost seulement**.
 
-## Lancer (lab)
+Revue photos (cadrage Y, tags, crédits) : **Labo photo** — `npm run lab:photos`.
+
+Tableau de bord (tous les labos) : `npm run lab` → http://127.0.0.1:8777/dev/
+
+Cartes sports (variantes CTA et puces, colonne mobile) : `/dev/sports-strip-lab.html` — carte **Cartes sports** du tableau de bord.
+
+## Lancer
 
 ```bash
 cd VisualCode/le-radar

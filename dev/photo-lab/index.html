@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Labo photo — LE RADAR (local)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700&family=Inter:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./photo-lab.css">
+</head>
+<body class="mode-grid">
+  <header class="top">
+    <div class="brand">
+      <a href="../" class="hub-link">Labo</a>
+      <strong>Labo photo</strong>
+      <span class="muted" id="brand-sub">grille</span>
+    </div>
+    <button type="button" class="btn ghost detail-only" id="grid-btn" title="Retour grille (g ou Échap)">Grille</button>
+    <button type="button" class="btn nav detail-only" id="prev-btn" title="Précédente (←)">←</button>
+    <div class="counter" id="counter">—</div>
+    <button type="button" class="btn nav primary detail-only" id="next-btn" title="Suivante (→)">→</button>
+    <div class="stats" id="stats"></div>
+    <div class="cache" id="cache-status">Cache…</div>
+    <span class="dirty-pill" id="dirty-pill" hidden>non enregistré</span>
+    <button type="button" class="btn ghost" id="undo-btn" title="Annuler (z)">Annuler</button>
+  </header>
+
+  <div class="filters" role="search">
+    <label>Où
+      <select id="f-surface">
+        <option value="">Toutes</option>
+        <option value="masthead">Mât</option>
+        <option value="pomo">Pomo</option>
+        <option value="solitaire">Solitaire</option>
+      </select>
+    </label>
+    <label>Tag
+      <select id="f-tag">
+        <option value="">Tous</option>
+        <option value="campus">Campus</option>
+        <option value="favori">Favori</option>
+        <option value="nations">Nations</option>
+      </select>
+    </label>
+    <label>Saison
+      <select id="f-season">
+        <option value="">Toutes</option>
+        <option value="untagged">Sans saison</option>
+        <option value="printemps">Printemps</option>
+        <option value="ete">Été</option>
+        <option value="automne">Automne</option>
+        <option value="hiver">Hiver</option>
+      </select>
+    </label>
+    <label class="grow">Recherche
+      <input id="f-q" type="search" placeholder="titre, lieu, crédit…">
+    </label>
+  </div>
+
+  <p class="empty" id="panel-empty" hidden>Aucune photo dans ce filtre.</p>
+
+  <div class="grid-wrap" id="grid-view">
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <div class="page" id="panel-body" hidden>
+    <div class="crop-stage is-loading" id="crop-stage" title="Glisser verticalement pour le cadrage Y">
+      <div class="crop-inner" id="crop-inner">
+        <img id="full-photo" alt="">
+        <div class="band band--desktop" id="band-desktop" title="Visible au mât bureau"></div>
+        <div class="band band--mobile" id="band-mobile" title="Visible au mât mobile"></div>
+      </div>
+      <p class="load-msg" id="load-msg">Chargement de la photo…</p>
+    </div>
+    <p class="legend"><span class="swatch desk"></span> mât ordinateur &nbsp; <span class="swatch mob"></span> mât téléphone — glisser ou curseur</p>
+    <label class="focal-row">Cadrage Y
+      <input id="focal" type="range" min="0" max="1000" value="500">
+      <code id="focal-val">0.50</code>
+      <span class="focal-state" id="focal-state">enregistré</span>
+    </label>
+
+    <div class="previews mast">
+      <figure>
+        <figcaption>Mât — ordinateur (1280)</figcaption>
+        <div class="mini-frame mast-desk" id="preview-desktop"></div>
+      </figure>
+      <figure>
+        <figcaption>Mât — téléphone (390)</figcaption>
+        <div class="mini-frame mast-phone" id="preview-mobile"></div>
+      </figure>
+    </div>
+    <div class="previews full">
+      <figure>
+        <figcaption>Pomo / solitaire — ordinateur</figcaption>
+        <div class="mini-frame wide" id="preview-full"></div>
+      </figure>
+      <figure>
+        <figcaption>Pomo / solitaire — téléphone</figcaption>
+        <div class="mini-frame tall" id="preview-phone"></div>
+      </figure>
+    </div>
+
+    <section class="edit">
+      <p class="meta" id="photo-meta"></p>
+      <div class="chips" id="photo-chips"></div>
+      <div class="fields">
+        <label>Crédit (nom)
+          <input id="credit" type="text" autocomplete="off">
+        </label>
+        <label>Lieu
+          <input id="place" type="text" autocomplete="off">
+        </label>
+      </div>
+      <p class="credit-preview" id="credit-preview"></p>
+
+      <fieldset class="tag-set">
+        <legend>Où l’afficher</legend>
+        <label class="tag"><input type="checkbox" id="tag-mat" value="mat"> Mât</label>
+        <label class="tag"><input type="checkbox" id="tag-pomo" value="pomo"> Pomo</label>
+        <label class="tag"><input type="checkbox" id="tag-solitaire" value="solitaire"> Solitaire</label>
+      </fieldset>
+      <fieldset class="tag-set protect">
+        <legend>Hors moisson</legend>
+        <label class="tag gold"><input type="checkbox" id="tag-favori" value="favori"> Favori</label>
+        <label class="tag gold"><input type="checkbox" id="tag-campus" value="campus"> Campus</label>
+        <label class="tag"><input type="checkbox" id="tag-nations" value="nations"> Nations</label>
+      </fieldset>
+
+      <fieldset class="seasons">
+        <legend>Saison</legend>
+        <label><input type="radio" name="season" value=""> —</label>
+        <label><input type="radio" name="season" value="printemps"> Printemps</label>
+        <label><input type="radio" name="season" value="ete"> Été</label>
+        <label><input type="radio" name="season" value="automne"> Automne</label>
+        <label><input type="radio" name="season" value="hiver"> Hiver</label>
+      </fieldset>
+      <fieldset class="seasons" id="season6-wrap">
+        <legend>Saison Nunavik</legend>
+        <label><input type="radio" name="season6" value=""> —</label>
+        <label><input type="radio" name="season6" value="ukiuq"> Ukiuq (hiver)</label>
+        <label><input type="radio" name="season6" value="upingaksaaq"> Upingaksaaq (hiver / printemps)</label>
+        <label><input type="radio" name="season6" value="upingaaq"> Upingaaq (printemps)</label>
+        <label><input type="radio" name="season6" value="aujaq"> Aujaq (été)</label>
+        <label><input type="radio" name="season6" value="ukiaqsaaq"> Ukiaqsaaq (été / automne)</label>
+        <label><input type="radio" name="season6" value="ukiaq"> Ukiaq (automne)</label>
+      </fieldset>
+    </section>
+  </div>
+
+  <div class="dock">
+    <button type="button" class="btn" id="save-meta-btn" title="Enregistre Y, crédit, saison et tags sur le disque local">Enregistrer tout</button>
+    <button type="button" class="btn gold" id="pin-btn" title="Coche Favori + enregistre (hors purge moisson)">Marquer favori</button>
+    <button type="button" class="btn danger" id="reject-btn" title="Retire de la banque, ne reviendra pas">Retirer</button>
+    <p class="hint" id="persist-hint">Écrit les fichiers locaux. Ce n’est pas le-radar.ca tant que la PR n’est pas mergée.</p>
+    <p class="hint" id="status"></p>
+  </div>
+  <script src="./photo-lab.js"></script>
+</body>
+</html>

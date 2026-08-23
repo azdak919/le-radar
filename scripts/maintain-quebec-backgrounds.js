@@ -79,6 +79,8 @@ const ROOT = path.join(__dirname, '..');
 const args = process.argv.slice(2);
 const doUpdate = args.includes('--update');
 const forceSession = args.includes('--force');
+/** Garde le stock actuel ; n’ajoute que des URL neuves (pas de ménage / purge). */
+const keepExisting = args.includes('--keep');
 
 /** Plafond large : les saisons ont besoin de profondeur, pas d’un cap 50. */
 function readMaxBankArg() {
@@ -92,7 +94,7 @@ function readMaxBankArg() {
     const n = parseInt(args[i + 1], 10);
     if (Number.isFinite(n) && n >= 20) return Math.min(n, 500);
   }
-  return 200;
+  return keepExisting ? 320 : 200;
 }
 const MAX_BANK = readMaxBankArg();
 const MIN_ASPECT = 1.25;
@@ -912,11 +914,22 @@ function sortByAge(photos) {
 /** Photos favorites / permanent: true — hors plafond et hors ménage. */
 function loadFavoriteUrlSet() {
   try {
-    if (!fs.existsSync(FAVORITES_JSON)) return new Set();
-    const bank = JSON.parse(fs.readFileSync(FAVORITES_JSON, 'utf8'));
-    return new Set(
-      (bank.photos || []).map((p) => p.url).filter(Boolean)
-    );
+    const urls = [];
+    if (fs.existsSync(FAVORITES_JSON)) {
+      const bank = JSON.parse(fs.readFileSync(FAVORITES_JSON, 'utf8'));
+      urls.push(...(bank.photos || []).map((p) => p.url).filter(Boolean));
+    }
+    const unifiedPath = path.join(ROOT, 'data', 'photo-bank.json');
+    if (fs.existsSync(unifiedPath)) {
+      const uni = JSON.parse(fs.readFileSync(unifiedPath, 'utf8'));
+      for (const p of uni.photos || []) {
+        const tags = Array.isArray(p.tags) ? p.tags : [];
+        if (p.permanent || p.campus || tags.includes('favori') || tags.includes('campus')) {
+          if (p.url) urls.push(p.url);
+        }
+      }
+    }
+    return new Set(urls);
   } catch {
     return new Set();
   }
@@ -924,7 +937,9 @@ function loadFavoriteUrlSet() {
 
 function isPermanentPhoto(entry, favoriteUrls = null) {
   if (!entry) return false;
-  if (entry.permanent === true) return true;
+  if (entry.permanent === true || entry.campus === true) return true;
+  const tags = Array.isArray(entry.tags) ? entry.tags : [];
+  if (tags.includes('favori') || tags.includes('campus')) return true;
   const favs = favoriteUrls || loadFavoriteUrlSet();
   return !!(entry.url && favs.has(entry.url));
 }
@@ -1210,6 +1225,17 @@ function writeJsonBank(bank) {
   bank.maxBank = MAX_BANK;
   bank.profile = PROFILE.id;
   fs.writeFileSync(JSON_PATH, JSON.stringify(bank, null, 2) + '\n', 'utf8');
+  try {
+    const photosLib = require('./photo-bank-lib');
+    if (typeof photosLib.absorbHarvest === 'function') {
+      const r = photosLib.absorbHarvest(PROFILE.id, bank.photos || []);
+      console.log(
+        `  photo-bank : ${r.total} fiches (+${r.added} neuves, tags ${PROFILE.id})`,
+      );
+    }
+  } catch (err) {
+    console.warn('  photo-bank absorb ignoré :', err.message || err);
+  }
 }
 
 async function main() {
@@ -1236,8 +1262,9 @@ async function main() {
   console.log(`Banque actuelle : ${bank.photos.length} / ${MAX_BANK}`);
   console.log(`Dernier ménage session : ${bank.lastSessionCleanup || 'jamais'}\n`);
 
-  const needSessionCleanup =
-    forceSession || !bank.lastSessionCleanup || bank.lastSessionCleanup !== sessionKey;
+  const needSessionCleanup = keepExisting
+    ? false
+    : forceSession || !bank.lastSessionCleanup || bank.lastSessionCleanup !== sessionKey;
 
   let photos = [...bank.photos];
   const report = {
@@ -1306,7 +1333,7 @@ async function main() {
   photos = photos.map((p) => enrichPhotoSeasons({ ...p }, PROFILE.id));
 
   // ── 2. Plafond : purge surplus seulement (protège planchers saisonniers) ─
-  {
+  if (!keepExisting) {
     const before = photos.length;
     const { photos: next, removed } =
       PROFILE.id === 'nations'
@@ -1320,6 +1347,8 @@ async function main() {
     if (before !== photos.length) {
       console.log(`  plafond : ${before} → ${photos.length}`);
     }
+  } else {
+    console.log('▸ --keep : pas de purge plafond (stock actuel conservé)');
   }
 
   // ── 3. Découverte : session / sous-remplissage / trous de saison / nations ──
@@ -1337,10 +1366,20 @@ async function main() {
       coverageBefore.missing.length > 0);
 
   const existing = new Set(photos.map((p) => p.url));
-  const existingIds = new Set(photos.map((p) => p.id));
+  const existingIds = new Set(photos.map((p) => p.id).filter(Boolean));
+  try {
+    const photosLib = require('./photo-bank-lib');
+    for (const p of photosLib.loadPhotos().photos || []) {
+      if (p.url) existing.add(p.url);
+      if (p.id) existingIds.add(p.id);
+    }
+  } catch {
+    /* banque unique absente */
+  }
   const nowIso = new Date().toISOString();
 
   function tryFreeSlotForCoverage() {
+    if (keepExisting) return photos.length < MAX_BANK;
     if (PROFILE.id !== 'nations') return false;
     if (photos.length < MAX_BANK) return true;
     const cov = nationsTaxonomy.coverageReport(photos);
@@ -1360,6 +1399,7 @@ async function main() {
 
   /** Libère une place en retirant le surplus d’une saison au-dessus du plancher. */
   function tryFreeSlotForSeasonGap() {
+    if (keepExisting) return photos.length < MAX_BANK;
     if (photos.length < MAX_BANK) return true;
     const floors = seasonFloorsForProfile(PROFILE.id);
     const favs = loadFavoriteUrlSet();
@@ -1818,7 +1858,7 @@ async function main() {
   }
 
   // Re-cap après découverte (purge protège encore les planchers)
-  {
+  if (!keepExisting) {
     const { photos: next, removed } =
       PROFILE.id === 'nations'
         ? purgeOldestPreferNationCoverage(photos, MAX_BANK)

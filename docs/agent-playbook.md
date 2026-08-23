@@ -105,6 +105,12 @@ blacklist    →  scripts/quebec-backgrounds-blacklist.js  (ne revient jamais)
 
 Puis : `npm run bank:sync` → vérifier `npm run bank:check` → si `*-data.js` shell changent, **bump SW**.
 
+Revue visuelle de tout le corpus (mât / pomo / solitaire, crop bureau+mobile) : `npm run lab:photos` → http://127.0.0.1:8777/dev/photo-lab/ (voir `dev/PHOTO-LAB.md`). Banque unique : `data/photo-bank.json`. Les rejets vont dans `data/quebec-backgrounds-rejected.json`, fusionné à `HARD_BANNED`.
+
+**Tableau de bord local** : `npm run lab` → http://127.0.0.1:8777/dev/ (labos, pages, commandes). Voir `dev/index.html`.
+
+**Labo** (viewport, pas « labo E ») : `python3 -m http.server 8766 --bind 127.0.0.1` → http://127.0.0.1:8766/ — voir `dev/LAB.md`.
+
 ---
 
 ## 3. Commandes npm à retenir
@@ -125,6 +131,7 @@ npm run maintain:backgrounds:all   # les 4 profils maintain
 
 npm run audit:backgrounds     # audit visuel Python mât (optionnel, réseau images)
 npm run pin-background -- --from-bank masthead --match "Percé"
+npm run lab:photos            # labo local 127.0.0.1:8777 — revue mât/pomo/solitaire
 ```
 
 Alias historiques : `maintain:backgrounds` = masthead ; `…:pomo` etc. inchangés.

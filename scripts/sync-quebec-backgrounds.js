@@ -78,7 +78,7 @@ const BANKS = [
     jsonRel: 'data/quebec-favorites-backgrounds.json',
     jsRel: 'quebec-favorites-backgrounds-data.js',
     globalName: 'QUEBEC_FAVORITES_BACKGROUNDS',
-    consumers: 'mât (+ pomo si surfaces inclut « pomo »)',
+    consumers: 'mât (+ pomo / solitaire si surfaces les inclut)',
     kind: 'favorites',
   },
 ];
@@ -158,6 +158,9 @@ function photoToJsObject(p, bank) {
       `    surfaces: [${p.surfaces.map((s) => `"${esc(s)}"`).join(', ')}]`
     );
   }
+  if (Array.isArray(p.tags) && p.tags.length) {
+    lines.push(`    tags: [${p.tags.map((t) => `"${esc(t)}"`).join(', ')}]`);
+  }
   return `  {\n${lines.join(',\n')},\n  }`;
 }
 
@@ -212,18 +215,42 @@ function purgeBanned(photos) {
   return { kept, removed };
 }
 
-function main() {
-  const banks = profileFilter
-    ? BANKS.filter((b) => b.id === profileFilter || (profileFilter === 'landscape' && b.id === 'masthead'))
+function syncBanks(opts = {}) {
+  const root = opts.root || ROOT;
+  const checkOnlyFlag = opts.checkOnly != null ? opts.checkOnly : checkOnly;
+  const photosLib = require('./photo-bank-lib');
+  const unifiedPath = path.join(root, photosLib.PHOTOS_REL);
+  const hasUnified = fs.existsSync(unifiedPath);
+  if (hasUnified && !checkOnlyFlag && opts.materialize !== false) {
+    const uni = photosLib.loadPhotos(root);
+    const before = (uni.photos || []).length;
+    uni.photos = (uni.photos || []).filter((p) => !matchHardBanned(p));
+    if (uni.photos.length !== before) {
+      photosLib.savePhotos(uni, root);
+      console.log(`  − photo-bank : ${before - uni.photos.length} hard-ban`);
+    }
+    photosLib.materializeLegacySlices(root);
+  }
+  if (opts.skipScrub == null && hasUnified) opts.skipScrub = true;
+  const profile = opts.profile != null ? opts.profile : profileFilter;
+  const quiet = !!opts.quiet;
+  const log = (...args) => {
+    if (!quiet) console.log(...args);
+  };
+
+  const banks = profile
+    ? BANKS.filter((b) => b.id === profile || (profile === 'landscape' && b.id === 'masthead'))
     : BANKS;
 
-  if (profileFilter && !banks.length) {
-    console.error(`Profil inconnu « ${profileFilter} ».`);
+  if (profile && !banks.length) {
+    const msg = `Profil inconnu « ${profile} ».`;
+    if (opts.throwOnError) throw new Error(msg);
+    console.error(msg);
     process.exit(2);
   }
 
-  console.log(
-    `LE RADAR — bank ${checkOnly ? 'check' : 'sync'} (${banks.map((b) => b.id).join(', ')})\n`
+  log(
+    `LE RADAR — bank ${checkOnlyFlag ? 'check' : 'sync'} (${banks.map((b) => b.id).join(', ')})\n`
   );
 
   let exitCode = 0;
@@ -232,12 +259,12 @@ function main() {
   let creditScrubTotal = 0;
 
   for (const bank of banks) {
-    const jsonPath = path.join(ROOT, bank.jsonRel);
-    const jsPath = path.join(ROOT, bank.jsRel);
+    const jsonPath = path.join(root, bank.jsonRel);
+    const jsPath = path.join(root, bank.jsRel);
     const data = loadBank(jsonPath);
 
     if (data._missing) {
-      console.log(`  ⚠ ${bank.id}: JSON manquant (${bank.jsonRel})`);
+      log(`  ⚠ ${bank.id}: JSON manquant (${bank.jsonRel})`);
       exitCode = 1;
       continue;
     }
@@ -246,14 +273,16 @@ function main() {
     const { kept, removed } = purgeBanned(data.photos || []);
     purgedTotal += removed.length;
     // Crédits Commons « machine-readable author… » → nom court
-    const creditFixed = scrubBankCredits({ photos: kept });
+    // Le labo photo passe skipScrub : sinon un save manuel est écrasé
+    // (lieu recalculé depuis le titre, crédit re-sanitisé).
+    const creditFixed = opts.skipScrub ? 0 : scrubBankCredits({ photos: kept });
     creditScrubTotal += creditFixed;
 
     for (const r of removed) {
-      console.log(`  − ${bank.id}: hard-ban « ${r.title} » (${r.reason})`);
+      log(`  − ${bank.id}: hard-ban « ${r.title} » (${r.reason})`);
     }
     if (creditFixed) {
-      console.log(`  ✎ ${bank.id}: ${creditFixed} crédit(s) Commons normalisé(s)`);
+      log(`  ✎ ${bank.id}: ${creditFixed} crédit(s) Commons normalisé(s)`);
     }
 
     const jsonUrls = kept.map((p) => p.url).filter(Boolean);
@@ -274,23 +303,28 @@ function main() {
 
     if (removed.length || drift || creditFixed) {
       if (drift && !removed.length && !creditFixed) {
-        console.log(
+        log(
           `  ± ${bank.id}: drift JSON↔JS (json=${jsonUrls.length} js=${jsUrls.length}` +
             `${onlyJson.length ? ` +json=${onlyJson.length}` : ''}` +
             `${onlyJs.length ? ` +js=${onlyJs.length}` : ''})`
         );
       }
-      if (checkOnly) {
+      if (checkOnlyFlag) {
         exitCode = 1;
-        console.log(`  ✗ ${bank.id}: ${before} photos — action requise (bank:sync)`);
+        log(`  ✗ ${bank.id}: ${before} photos — action requise (bank:sync)`);
         continue;
       }
-    } else if (checkOnly) {
-      console.log(`  ✓ ${bank.id}: ${kept.length} photos, JSON↔JS OK, aucun ban`);
+    } else if (checkOnlyFlag) {
+      log(`  ✓ ${bank.id}: ${kept.length} photos, JSON↔JS OK, aucun ban`);
       continue;
     }
 
-    if (checkOnly) continue;
+    if (checkOnlyFlag) continue;
+
+    if (!removed.length && !drift && !creditFixed) {
+      log(`  · ${bank.id}: inchangé`);
+      continue;
+    }
 
     data.photos = kept;
     data.updated = new Date().toISOString();
@@ -301,7 +335,7 @@ function main() {
     const jsOut = buildJs(bank, kept);
     fs.writeFileSync(jsPath, jsOut, 'utf8');
     wrote += 1;
-    console.log(
+    log(
       `  ✅ ${bank.id}: ${kept.length} photos` +
         (removed.length ? ` (−${removed.length} ban)` : '') +
         (creditFixed ? ` (crédits ✎${creditFixed})` : '') +
@@ -309,25 +343,42 @@ function main() {
     );
   }
 
-  if (checkOnly) {
+  if (checkOnlyFlag) {
     if (exitCode === 0) {
-      console.log('\nCheck OK — JSON et JS alignés, aucun hard-ban en banque.');
+      log('\nCheck OK — JSON et JS alignés, aucun hard-ban en banque.');
     } else {
-      console.log('\nCheck ÉCHEC — lancer : npm run bank:sync');
+      log('\nCheck ÉCHEC — lancer : npm run bank:sync');
     }
+    if (opts.returnResult) return { exitCode, wrote, purgedTotal, creditScrubTotal };
     process.exit(exitCode);
   }
 
-  console.log(
+  log(
     `\nSync terminé : ${wrote} banque(s) écrite(s), ${purgedTotal} hard-ban purgé(s)` +
       (creditScrubTotal ? `, ${creditScrubTotal} crédit(s) normalisé(s)` : '') +
       '.'
   );
   if (wrote > 0) {
-    console.log(
+    log(
       'Si des *-data.js shell ont changé : bump SW (radar-shell + pomo-shell si pomo/nations/favorites).'
     );
   }
+  return { exitCode, wrote, purgedTotal, creditScrubTotal };
 }
 
-main();
+function main() {
+  const result = syncBanks();
+  if (result && result.exitCode) process.exit(result.exitCode);
+}
+
+if (require.main === module) {
+  main();
+}
+
+module.exports = {
+  BANKS,
+  syncBanks,
+  photoToJsObject,
+  buildJs,
+  purgeBanned,
+};

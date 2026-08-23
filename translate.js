@@ -888,7 +888,7 @@
    *    seulement hors Original / FR / EN (ex. ES : Universidad…, Colegio…)
    *  - Libellés UI (« Par », « À la une », « Toutes les sources ») → traduits
    */
-  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-author|filter-btn__name|article-media-credit(?:__creator)?|sports-(?:panel|chip)__code)\b/;
+  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-author|filter-btn__name|article-media-credit(?:__creator)?|sports-(?:panel|chip)__code|site-foot__signature)\b/;
 
   /**
    * Sigles d'équipes sportives (THE, SL, OUT, LAF, ÉTS, UQAC…) : ce sont des

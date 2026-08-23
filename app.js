@@ -287,6 +287,8 @@ const TUNER_SUB_ROTATE_VERY_NARROW_MQ = window.matchMedia?.('(max-width: 359.98p
 const TUNER_DIAL_MID_MQ = window.matchMedia?.('(min-width: 768px) and (max-width: 1099.98px)');
 /** Embed : panneau latéral « À l'antenne » masqué (voir embed.css @media max-width 639.98px). */
 const TUNER_EMBED_NOWAIR_HIDDEN_MQ = window.matchMedia?.('(max-width: 639.98px)');
+/** Même seuil que seo-page-theme / data-wide-preview (shell E). */
+const WIDE_TUNER_MQ = window.matchMedia?.('(min-width: 1281px)');
 const TUNER_VOLUME   = document.getElementById('tuner-volume');
 const TUNER_VOL      = document.getElementById('tuner-vol');
 const TUNER_VOL_TOGGLE = document.getElementById('tuner-vol-toggle');
@@ -531,7 +533,7 @@ let nowAirPreviewTimer = null;
 let nowAirPreviewRadio = null;
 let lastNowAirPreviewId = null;
 let lastDialCarouselText = '';
-let lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null };
+let lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null, shell: null };
 let tunerSubMeta = '';
 let tunerSubAirText = '';
 let tunerSubRotateTimer = null;
@@ -568,16 +570,32 @@ const TUNER_SUB_ROTATE_VERY_NARROW_MS = 18000;
 const AIR_PANEL_ROTATE_MS = 8000;
 /**
  * Marquee site-wide (dial, à l’antenne, sports, météo, embed) :
- * 1) délai de lecture au repos  2) **un** aller-retour (`alternate` × 2)
- * 3) pause au repos  4) seulement alors changer le texte.
- * Jamais `infinite` : un 2ᵉ cycle pendant l’attente de rotation est illisible.
+ * 1) délai de lecture au repos  2) aller L→R puis retour à l’origine
+ * 3) si ce tour est trop court pour lire, un 2ᵉ aller-retour
+ * 4) pause au repos  5) seulement alors changer le texte.
+ * Jamais `infinite`.
  */
 /** Pause initiale avant le 1er pixel de scroll (CSS animation-delay). */
 const MARQUEE_READ_DELAY_MS = 1600;
-/** Aller + retour : l'animation marquee est `alternate` (2 itérations, pas infinite). */
+/** Un aller-retour = `alternate` × 2 (pas infinite). */
 const MARQUEE_ROUND_TRIPS = 2;
+/** Plafond : 2 aller-retour (4 itérations) si le premier tour est trop vite. */
+const MARQUEE_TRIPS_MAX = 4;
 /** Pause de lecture après le retour, avant de changer de texte. */
 const MARQUEE_REST_MS = 2000;
+
+/**
+ * Itérations `alternate` : toujours 1 aller-retour (×2).
+ * Un 2ᵉ tour collé ferait l’impasse sur la pause à l’origine.
+ */
+function marqueeAlternateCount() {
+  return MARQUEE_ROUND_TRIPS;
+}
+
+function marqueeCycleMs(oneWayMs, trips) {
+  const n = Number(trips) >= 2 ? Number(trips) : MARQUEE_ROUND_TRIPS;
+  return MARQUEE_READ_DELAY_MS + Math.max(0, Number(oneWayMs) || 0) * n + MARQUEE_REST_MS;
+}
 /** L'émission en ondes reste plus longtemps que les autres phases. */
 const AIR_LIVE_DWELL_FACTOR = 2;
 const NOW_AIR_CROSSFADE_MS = 700;
@@ -1928,6 +1946,13 @@ function isWideTunerLayout() {
   return isWideNoMarqueeMode();
 }
 
+/** Clé de coque du synthé — un resize qui la change doit tout repeindre. */
+function tunerShellLayoutKey() {
+  if (isWideTunerLayout()) return 'wide';
+  if (isDialCompactLayout()) return isTunerDialMidLayout() ? 'mid' : 'compact';
+  return 'desktop';
+}
+
 /** Bureau : titre « À l'antenne » sur deux lignes, pas de marquee. */
 function isNowAirTwoLineMode() {
   try {
@@ -1936,7 +1961,6 @@ function isNowAirTwoLineMode() {
     return false;
   }
 }
-
 
 /** Offset sticky du rail sources = hauteur réelle du synthé (+ petit entrefer). */
 function syncWideStickyTop() {
@@ -2020,9 +2044,20 @@ function measureWideDialNeedPx() {
  * Pose une fois la largeur du carré = plus longue L1/L2 de tous les postes.
  * Recalcule seulement si `force` (resize / 1er paint).
  */
+function clearWideDialInlineSize() {
+  wideDialFixedPx = 0;
+  const dial = document.querySelector('.tuner-dial');
+  const now = document.querySelector('.tuner-now');
+  if (dial) {
+    dial.style.minWidth = '';
+    dial.style.width = '';
+  }
+  if (now) now.style.width = '';
+}
+
 function fitWideDialWidth({ force = false } = {}) {
   if (!isWideTunerLayout()) {
-    wideDialFixedPx = 0;
+    clearWideDialInlineSize();
     return;
   }
   const dial = document.querySelector('.tuner-dial');
@@ -2059,8 +2094,7 @@ function paintWideDial(radio) {
     instEl.textContent = '';
   }
   if (!isWideTunerLayout()) {
-    const dial = document.querySelector('.tuner-dial');
-    if (dial) dial.style.minWidth = '';
+    clearWideDialInlineSize();
     return false;
   }
   if (!radio) {
@@ -2937,9 +2971,12 @@ function measureWeatherNameOverflows() {
       if (had) {
         el.classList.remove('is-overflowing');
         el.style.removeProperty('--weather-scroll');
+        el.style.removeProperty('--weather-scroll-trips');
       }
       return;
     }
+    const trips = marqueeAlternateCount(WEATHER_SCROLL_ONE_WAY_MS, WEATHER_ROTATE_BASE_MS);
+    el.style.setProperty('--weather-scroll-trips', String(trips));
     el.style.setProperty('--weather-scroll', next);
     const prevN = parseFloat(prev) || 0;
     if (had && Math.abs(prevN - overflow) < 6) return;
@@ -2973,11 +3010,14 @@ function weatherBoardDwellMs() {
     '.masthead-weather__city.is-active.is-overflowing',
   );
   if (!anyOverflow) return base;
+  const trips = parseFloat(
+    MASTHEAD_WEATHER.querySelector('.masthead-weather__city.is-active.is-overflowing')
+      ?.style.getPropertyValue('--weather-scroll-trips'),
+  ) || MARQUEE_ROUND_TRIPS;
+  const n = trips >= 2 ? trips : MARQUEE_ROUND_TRIPS;
   return Math.max(
     base,
-    WEATHER_SCROLL_READ_DELAY_MS
-      + WEATHER_SCROLL_ONE_WAY_MS * 2
-      + WEATHER_SCROLL_POST_PAUSE_MS,
+    WEATHER_SCROLL_READ_DELAY_MS + WEATHER_SCROLL_ONE_WAY_MS * n + WEATHER_SCROLL_POST_PAUSE_MS,
   );
 }
 
@@ -2985,11 +3025,11 @@ function weatherCardDwellMs(el) {
   const base = isWideNoMarqueeMode() ? 9000 : WEATHER_ROTATE_BASE_MS;
   if (!el || sportsReducedMotion || PREFERS_REDUCED_MOTION?.matches) return base;
   if (!el.classList.contains('is-overflowing')) return base;
-  // 1 aller + retour à l’origine + courte pause, puis on change la carte.
+  const trips = parseFloat(el.style.getPropertyValue('--weather-scroll-trips')) || MARQUEE_ROUND_TRIPS;
   return Math.max(
     base,
     WEATHER_SCROLL_READ_DELAY_MS
-      + WEATHER_SCROLL_ONE_WAY_MS * 2
+      + WEATHER_SCROLL_ONE_WAY_MS * trips
       + WEATHER_SCROLL_POST_PAUSE_MS
       + 160,
   );
@@ -3511,6 +3551,8 @@ const SPORTS_CTA_IDLE_LABELS = [
   'Scores collégiaux et universitaires',
   'Voir le tableau des scores',
 ];
+const RADAR_BRAND_SHORT = 'LE-RADAR.ca';
+const RADAR_BRAND_LONG = 'Le Réseau Académique de Découverte et d’Agrégation de Ressources';
 let sportsData = null;
 let sportsSlides = [];
 /** Slides actuellement affichées (1 par slot), comme mastheadWeatherSlots. */
@@ -3525,12 +3567,13 @@ let sportsWaveSlot = 0;
 let sportsCtaPaused = false;
 /**
  * La rotation n’existe que là où un mécanisme de pause existe (garde-fou
- * `rotation-pointeur-fin`). Sur tactile il n’y a ni survol ni focus : WCAG 2.2.2
- * ne serait pas satisfait, donc l’accroche s’y fige au chargement.
+ * `rotation-pointeur-fin`). Souris : survol/focus. Téléphone (≤700 px) : doigt
+ * posé sur la carte (pointerdown). Sans ça l’accroche défilait sans jamais
+ * changer sur tactile.
  * ⚠️ Doit être déclaré **avant** l’init de `sportsCtaRotateMq` (sinon TDZ →
  * matchMedia avalé par try/catch → mq null → CTA jamais en rotation).
  */
-const SPORTS_CTA_ROTATE_MEDIA = '(hover: hover) and (pointer: fine)';
+const SPORTS_CTA_ROTATE_MEDIA = '(hover: hover) and (pointer: fine), (max-width: 700px)';
 /** Surfaces où un mécanisme de pause existe réellement (souris, pas doigt). */
 let sportsCtaRotateMq = null;
 try {
@@ -3685,6 +3728,24 @@ function sportsResultTone(result) {
   if (result === 'L') return '#c45c5c';
   if (result === 'D' || result === 'T') return '#8fa3b0';
   return SPORTS_SPORT_TONES.default;
+}
+
+/** Pastille V / D / N — puces scores et CTA. */
+function sportsResultBadgeSpec(game) {
+  const r = String(game?.result || '');
+  if (r === 'W') return { letter: 'V', mod: 'w' };
+  if (r === 'L') return { letter: 'D', mod: 'l' };
+  if (r === 'D' || r === 'T') return { letter: 'N', mod: 'd' };
+  return { letter: 'N', mod: 'd' };
+}
+
+function sportsResultBadgeEl(game) {
+  const spec = sportsResultBadgeSpec(game);
+  const el = document.createElement('span');
+  el.className = `sports-chip__badge sports-chip__badge--${spec.mod}`;
+  el.textContent = spec.letter;
+  el.setAttribute('aria-hidden', 'true');
+  return el;
 }
 
 function sportsSportTone(sport) {
@@ -4462,6 +4523,39 @@ function sportsGameHref(slide) {
  * sports-board.js filtre le sport, ouvre la section, surbrille et scroll
  * jusqu’à la carte formation (parité sélection d’une station radio).
  */
+function radarHomeHref() {
+  const home = document.querySelector('a.masthead-home, a[data-home-nav]');
+  const href = home?.getAttribute('href');
+  if (href) return href;
+  return new URL('.', window.location.href).pathname;
+}
+
+function radarIconSrc() {
+  const img = document.querySelector('.wordmark-logo, .site-foot__logo');
+  const src = img?.getAttribute('src');
+  if (src) return src;
+  return new URL('assets/icon.svg', window.location.href).pathname;
+}
+
+function radarBrandLogoEl() {
+  const img = document.createElement('img');
+  img.className = 'sports-chip__cta-logo';
+  img.src = radarIconSrc();
+  img.width = 18;
+  img.height = 18;
+  img.alt = '';
+  img.decoding = 'async';
+  img.setAttribute('aria-hidden', 'true');
+  return img;
+}
+
+function markNoTranslate(el) {
+  if (!el) return el;
+  el.classList.add('notranslate');
+  el.setAttribute('translate', 'no');
+  return el;
+}
+
 function sportsBoardHref(slide) {
   const base = new URL('sports/', window.location.href).pathname;
   // CTA avec match en accroche : deep-link vers ce match / sport.
@@ -4886,6 +4980,20 @@ function sportsRelativeAge(ms, now = Date.now()) {
   return days <= 1 ? 'hier' : `il y a ${days} j`;
 }
 
+/** Échéance lisible — passé : « il y a 5 h » ; futur : « dans 3 h », « demain ». */
+function sportsRelativeWhen(ms, now = Date.now()) {
+  if (!Number.isFinite(ms)) return '';
+  if (ms <= now) return sportsRelativeAge(ms, now);
+  const min = Math.round((ms - now) / 60000);
+  if (min < 2) return 'imminent';
+  if (min < 60) return `dans ${min} min`;
+  const hours = Math.round((ms - now) / 3600000);
+  if (hours < 24) return `dans ${hours} h`;
+  const days = Math.round((ms - now) / 86400000);
+  if (days <= 1) return 'demain';
+  return `dans ${days} j`;
+}
+
 /**
  * Horodatage de la banque, **rendu dans la carte** — garde-fou
  * `fraicheur-visible`. Il n’existait que dans `title`/`aria-label` : au doigt il
@@ -4931,11 +5039,6 @@ function sportsMatchSubLine(slide) {
   return [when, meta, prior ? 'Saison précédente' : ''].filter(Boolean).join(' · ');
 }
 
-/** Existe-t-il un résultat exploitable à la banque ? Sinon : hors saison. */
-function sportsHasAnyResult() {
-  return sportsSlides.some((s) => s?.mode === 'result');
-}
-
 /**
  * Accroche principale de la CTA — noms en clair, score lisible, sans sigle.
  * Le marqueur temporel vit à part (`sportsCtaEyebrow`) pour rester hors de la
@@ -4964,49 +5067,82 @@ function sportsCtaLabelFromSlide(slide) {
 }
 
 /**
- * Marqueur temporel en tête d’accroche — focus-group `le-radar-cta-sports-badge`.
- * Vide en direct : la pastille porte déjà « En cours » (override mainteneur).
+ * Plus de marqueur à côté / au-dessus de la pastille : Prochain / Hier /
+ * Aujourd’hui vivent **dans** la pastille (`sportsCtaTagLabel`).
  */
-function sportsCtaEyebrow(slide, state) {
-  if (state === 'live') return '';
-  const g = slide?.game;
-  if (state === 'result') {
-    const ms = sportsGameMs(g);
-    if (!Number.isFinite(ms)) return 'Résultat';
-    const day = torontoDayKey(ms);
-    if (day === torontoDayKey()) return 'Aujourd’hui';
-    if (day === torontoDayKey(Date.now() - 86400000)) return 'Hier';
-    return 'Avant-hier';
-  }
-  if (state === 'next') return sportsHasAnyResult() ? 'Prochain' : 'Reprise';
+function sportsCtaEyebrow(_slide, _state) {
   return '';
 }
 
+/** Pastille d’un résultat : Aujourd’hui, Hier, Avant-hier, sinon date courte. */
+function sportsCtaResultTag(src) {
+  const day = sportsSlideDayKey(src);
+  if (!day) return SPORTS_CTA_TAG;
+  const today = torontoDayKey();
+  if (day === today) return 'Aujourd’hui';
+  if (day === sportsCivilDayShift(today, -1)) return 'Hier';
+  if (day === sportsCivilDayShift(today, -2)) return 'Avant-hier';
+  const iso = src?.game?.date || day;
+  try {
+    return new Intl.DateTimeFormat('fr-CA', {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short',
+      timeZone: 'America/Toronto',
+    }).format(new Date(`${iso}T12:00:00`));
+  } catch {
+    return iso;
+  }
+}
+
 /**
- * Sous-ligne : date match / compétition / fraîcheur.
- *
- * Next : date + compétition seulement. L’horodatage banque (« mis à jour à… »)
- * n’est plus inscrit ici — la carte CTA animée (rim-glow + roulement) signale
- * déjà qu’elle porte l’info éditoriale la plus fraîche ; le `title` garde MAJ
- * pour le survol / a11y (garde-fou fraicheur-visible assoupli pour next).
- * Résultat / live du jour : âge relatif (« il y a 3 h »).
- * Idle / plus vieux : horodatage banque via sportsUpdatedShort().
+ * Pastille CTA : Prochain / En cours / Hier / Aujourd’hui / date.
+ * Creux : LE-RADAR.ca (logo PWA), pas « Sports ».
+ */
+function sportsCtaTagLabel(slide, state) {
+  const st = state || sportsCtaState(slide);
+  if (st === 'live') return SPORTS_CTA_TAG_LIVE;
+  if (st === 'next') return 'Prochain';
+  if (st === 'result') return sportsCtaResultTag(slide?.ctaFrom || slide);
+  return RADAR_BRAND_SHORT;
+}
+
+/** Couleur du voyant : live / today (rouge) · next (ambre) · past (vert). */
+function sportsCtaLamp(slide, state) {
+  const st = state || sportsCtaState(slide);
+  if (st === 'live') return 'live';
+  if (st === 'next') return 'next';
+  if (st === 'result') {
+    const src = slide?.ctaFrom || slide;
+    const day = sportsSlideDayKey(src);
+    if (day && day === torontoDayKey()) return 'today';
+    return 'past';
+  }
+  return 'idle';
+}
+
+/**
+ * Sous-ligne CTA : d’abord le relatif (« il y a 5 h », « dans 3 h »),
+ * puis la compétition. La pastille porte déjà Hier / Prochain / la date :
+ * on ne répète pas le même mot. Prochain lointain : relatif + jour/heure.
  */
 function sportsCtaSubLine(slide, state) {
   const comp = sportsCompetitionLabel(slide);
   const g = slide?.game;
-  const age = sportsResultAgeMs(g);
-  const when = state === 'next' ? sportsWhenLong(g?.date, g?.time) : '';
+  const ms = sportsGameMs(g);
+  const rel = sportsRelativeWhen(ms);
+  const tag = sportsCtaTagLabel(slide, state);
+  const relShown = rel && rel.toLowerCase() !== String(tag || '').toLowerCase();
   if (state === 'next') {
-    return [when, comp].filter(Boolean).join(' · ');
+    const when = sportsWhenLong(g?.date, g?.time);
+    const near = Number.isFinite(ms) && Math.abs(ms - Date.now()) < 36 * 3600 * 1000;
+    if (near) return [relShown ? rel : '', comp].filter(Boolean).join(' · ');
+    return [relShown ? rel : '', when, comp].filter(Boolean).join(' · ');
   }
-  // Pour un fait du jour, l’âge précis vaut mieux que le marqueur (« il y a
-  // 3 h » plutôt que « Aujourd’hui »). Passé 24 h, le marqueur dit déjà « Hier »
-  // et le répéter ici ne sert à rien : on montre plutôt la fraîcheur de la banque.
-  const freshness = (state === 'result' || state === 'live') && age < 86400000
-    ? sportsRelativeAge(sportsGameMs(g))
-    : sportsUpdatedShort();
-  return [comp, freshness].filter(Boolean).join(' · ');
+  if (state === 'live' || state === 'result') {
+    return [relShown ? rel : '', comp].filter(Boolean).join(' · ');
+  }
+  return [comp, sportsUpdatedShort()].filter(Boolean).join(' · ');
 }
 
 /**
@@ -5146,7 +5282,7 @@ function sportsSoftSportDiversity(slides) {
  * + gates mainteneur (civil aujourd’hui/hier ; hors saison 7 j) :
  *
  *  CTA (droite)
- *   • **résultats** : jour civil = aujourd’hui ou hier (QC)
+ *   • **résultats** : aujourd’hui / hier seulement (plus vieux → puces scores)
  *   • **en saison** (il y a des résultats frais) : prochains du **jour lead** seul
  *   • **hors saison** (pas de résultat aujourd’hui/hier) : **1er match** de
  *     chacun des **7 premiers jours** d’action à partir du jour lead, en
@@ -5194,7 +5330,6 @@ function sportsCtaCandidateSlides() {
     seen.add(s.key);
 
     if (s.mode === 'result') {
-      // Filet civil aujourd’hui + hier (Toronto) — plus de 48 h glissantes.
       if (!sportsCtaResultIsTodayOrYesterday(s.game, now)) continue;
       freshResults.push(s);
       continue;
@@ -5281,7 +5416,7 @@ function sportsCtaLabelPool() {
     .map(sportsCtaLabelFromSlide)
     .filter(Boolean);
   if (hot.length) return hot;
-  return SPORTS_CTA_IDLE_LABELS.slice();
+  return [RADAR_BRAND_SHORT];
 }
 
 /**
@@ -5304,22 +5439,19 @@ function sportsCtaState(slide) {
 function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
   const candidates = sportsCtaCandidateSlides();
   if (!candidates.length) {
-    const idle = SPORTS_CTA_IDLE_LABELS;
-    const idx = ((labelIndex % idle.length) + idle.length) % idle.length;
     return {
       mode: 'cta',
-      // Clé unique par index — plusieurs CTAs idle sans collision DOM
-      key: `${SPORTS_CTA_KEY}:${idx}`,
-      label: idle[idx],
-      labelIndex: idx,
+      key: `${SPORTS_CTA_KEY}:brand`,
+      label: RADAR_BRAND_SHORT,
+      labelIndex: 0,
       tone: SPORTS_CTA_REST_TONE,
-      team: { sport: 'board', name: 'Sports', code: 'RSEQ' },
+      team: { sport: 'board', name: RADAR_BRAND_SHORT, code: 'RADAR' },
       game: { sport: 'board' },
       ctaIdle: true,
       ctaState: 'idle',
       ctaEyebrow: '',
-      ctaSub: sportsUpdatedShort(),
-      titleExtra: idle[idx],
+      ctaSub: RADAR_BRAND_LONG,
+      titleExtra: RADAR_BRAND_LONG,
     };
   }
   const idx = ((labelIndex % candidates.length) + candidates.length) % candidates.length;
@@ -5355,7 +5487,7 @@ function pickDistinctSportsCtas(n) {
   const out = [];
   const used = new Set();
   const candidates = sportsCtaCandidateSlides();
-  const poolLen = Math.max(1, candidates.length || SPORTS_CTA_IDLE_LABELS.length);
+  const poolLen = Math.max(1, candidates.length || 1);
 
   for (let i = 0; i < poolLen && out.length < want; i += 1) {
     const slide = sportsCtaSlide(i);
@@ -5396,10 +5528,11 @@ function sportsCtaA11y(slide) {
     title = [sportsChipTitle({ ...slide.ctaFrom, mode: slide.ctaFrom.mode || 'next' }), updated ? `MAJ ${updated}` : '']
       .filter(Boolean).join(' · ');
   } else {
-    const detail = slide?.titleExtra || slide?.label || 'Scores collégiaux et universitaires';
-    title = [`Sports · ${detail}`, updated ? `MAJ ${updated}` : ''].filter(Boolean).join(' · ');
+    title = [RADAR_BRAND_SHORT, RADAR_BRAND_LONG].join(' · ');
   }
-  const aria = `Sports : ${slide?.label || 'résultats sportifs étudiants du Québec'} (nouvel onglet)`;
+  const aria = slide?.ctaIdle
+    ? `${RADAR_BRAND_SHORT} — ${RADAR_BRAND_LONG}`
+    : `Sports : ${slide?.label || 'résultats sportifs étudiants du Québec'} (nouvel onglet)`;
   return { title, aria };
 }
 
@@ -5429,7 +5562,7 @@ function fillSportsCtaLayer(layer, slide) {
   const eyebrow = slide.ctaEyebrow || '';
   if (eyebrow) {
     const el = document.createElement('span');
-    el.className = 'sports-chip__cta-eyebrow';
+    el.className = 'sports-chip__cta-eyebrow sports-chip__cta-eyebrow--head';
     el.textContent = eyebrow;
     head.append(el);
   }
@@ -5444,6 +5577,9 @@ function fillSportsCtaLayer(layer, slide) {
     gEl.setAttribute('aria-hidden', 'true');
     gEl.textContent = glyph;
     head.append(gEl);
+  }
+  if (src?.mode === 'result' && src.game) {
+    head.append(sportsResultBadgeEl(src.game));
   }
   const line = document.createElement('span');
   line.className = 'sports-chip__cta-line';
@@ -5474,8 +5610,8 @@ function fillSportsCtaLayer(layer, slide) {
         + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
     }
   } else {
-    // Idle / repli : pas de glyphe sport — libellé entier dans la fenêtre.
-    text.textContent = slide.label || 'Scores étudiants QC';
+    markNoTranslate(text);
+    text.textContent = RADAR_BRAND_SHORT;
   }
   line.append(text);
   head.append(line);
@@ -5488,10 +5624,23 @@ function fillSportsCtaLayer(layer, slide) {
     const subText = document.createElement('span');
     subText.className = 'sports-chip__cta-sub-text';
     subText.textContent = sub;
+    if (slide?.ctaIdle || sub === RADAR_BRAND_LONG) markNoTranslate(subText);
     el.append(subText);
     layer.append(el);
   }
+  const chip = layer.closest?.('.sports-chip--cta');
+  if (chip) syncSportsCtaRail(chip, slide);
   return layer;
+}
+
+/** Marqueur PROCHAIN sur le rail (390/430 : au-dessus de SPORTS).
+ *  Hier / Aujourd’hui vivent dans la pastille, pas ici. */
+function syncSportsCtaRail(chip, slide) {
+  const railEb = chip?.querySelector('.sports-chip__cta-eyebrow--rail');
+  if (!railEb) return;
+  const text = String(slide?.ctaEyebrow || '').trim();
+  railEb.textContent = text;
+  railEb.hidden = !text;
 }
 
 /**
@@ -5499,10 +5648,9 @@ function fillSportsCtaLayer(layer, slide) {
  * `le-radar-cta-sports-rhythm` D, garde-fou `rotation-pointeur-fin`.
  *
  * WCAG 2.2.2 réclame un mécanisme de pause pour tout contenu qui se met à jour
- * seul au-delà de 5 s. Le survol et le focus en sont un — sur une souris. Sur
- * tactile il n’y en a aucun, donc l’accroche s’y fige au chargement : elle
- * change d’une visite à l’autre (le tirage initial est aléatoire), pas sous les
- * yeux du lecteur.
+ * seul au-delà de 5 s. Souris : survol/focus. Téléphone : doigt posé sur la
+ * carte. Sans pause tactile l’accroche restait figée, et le marquee donnait
+ * l’impression que l’info allait changer après le défilement.
  */
 function sportsCtaMayRotate() {
   if (sportsReducedMotion) return false;
@@ -5612,17 +5760,28 @@ function rollSportsCtaLabel(chip, slide) {
 function applySportsCtaState(chip, slide) {
   if (!chip) return;
   const state = slide?.ctaState || sportsCtaState(slide);
-  const live = state === 'live';
   chip.dataset.ctaState = state;
   chip.style.setProperty('--sports-tone', sportsCtaTone({ ...slide, ctaState: state }));
 
   const tag = chip.querySelector('.sports-chip__cta-tag');
   if (!tag) return;
-  const wanted = live ? SPORTS_CTA_TAG_LIVE : SPORTS_CTA_TAG;
-  if (tag.dataset.ctaTag === wanted) return;
-  tag.dataset.ctaTag = wanted;
-  tag.replaceChildren();
-  tag.append(document.createTextNode(wanted));
+  const wanted = sportsCtaTagLabel(slide, state);
+  tag.dataset.ctaLamp = sportsCtaLamp(slide, state);
+  if (state === 'idle') {
+    tag.classList.add('sports-chip__cta-tag--brand');
+    markNoTranslate(tag);
+    tag.dataset.ctaTag = RADAR_BRAND_SHORT;
+    tag.replaceChildren(radarBrandLogoEl());
+  } else {
+    tag.classList.remove('sports-chip__cta-tag--brand', 'notranslate');
+    tag.removeAttribute('translate');
+    if (tag.dataset.ctaTag !== wanted) {
+      tag.dataset.ctaTag = wanted;
+      tag.replaceChildren();
+      tag.append(document.createTextNode(wanted));
+    }
+  }
+  syncSportsCtaRail(chip, slide);
 }
 
 /**
@@ -5641,6 +5800,9 @@ function bindSportsCtaPause(chip) {
   };
   chip.addEventListener('pointerenter', hold, { passive: true });
   chip.addEventListener('pointerleave', release, { passive: true });
+  chip.addEventListener('pointerdown', hold, { passive: true });
+  chip.addEventListener('pointerup', release, { passive: true });
+  chip.addEventListener('pointercancel', release, { passive: true });
   chip.addEventListener('focusin', hold);
   chip.addEventListener('focusout', release);
 }
@@ -5792,6 +5954,18 @@ function refreshSportsChipScroll(chipOrRoot = null) {
       prop: '--sports-scroll-sub',
       overflow: subOverflow,
     });
+    if (titleOverflow > 2 || subOverflow > 2) {
+      const label = [titleInner?.textContent || '', subInner?.textContent || '']
+        .filter(Boolean)
+        .join(' · ');
+      const trips = marqueeAlternateCount(
+        SPORTS_SCROLL_ONE_WAY_MS,
+        sportsLabelReadingMs(label),
+      );
+      chip.style.setProperty('--sports-scroll-trips', String(trips));
+    } else {
+      chip.style.removeProperty('--sports-scroll-trips');
+    }
   });
 }
 
@@ -5902,8 +6076,12 @@ function paintSportsChip(slide, animate = false) {
   if (slide.mode === 'cta') {
     const a = document.createElement('a');
     a.className = 'sports-chip sports-chip--cta';
-    a.href = sportsBoardHref(slide);
-    markSportsBoardLink(a);
+    if (slide.ctaIdle) {
+      a.href = radarHomeHref();
+    } else {
+      a.href = sportsBoardHref(slide);
+      markSportsBoardLink(a);
+    }
     if (animate && !sportsReducedMotion) a.classList.add('is-arriving');
     a.dataset.sportsKey = slide.key || SPORTS_CTA_KEY;
     a.dataset.sportsMode = 'cta';
@@ -5913,10 +6091,16 @@ function paintSportsChip(slide, animate = false) {
     a.title = title;
     a.setAttribute('aria-label', aria);
 
-    // Pastille : rubrique stable au repos, « En cours » pendant un match.
+    // Pastille : Sports / En cours / Hier / Aujourd’hui (jour du résultat).
     const tag = document.createElement('span');
     tag.className = 'sports-chip__cta-tag';
     tag.setAttribute('aria-hidden', 'true');
+    const rail = document.createElement('span');
+    rail.className = 'sports-chip__cta-rail';
+    const railEyebrow = document.createElement('span');
+    railEyebrow.className = 'sports-chip__cta-eyebrow sports-chip__cta-eyebrow--rail';
+    railEyebrow.setAttribute('aria-hidden', 'true');
+    rail.append(railEyebrow, tag);
 
     const line = document.createElement('span');
     line.className = 'sports-chip__line';
@@ -5929,7 +6113,7 @@ function paintSportsChip(slide, animate = false) {
     stack.append(layer);
     line.append(stack);
 
-    a.append(tag, line);
+    a.append(rail, line);
     applySportsCtaState(a, slide);
     bindSportsCtaPause(a);
     if (animate && !sportsReducedMotion) {
@@ -5982,13 +6166,7 @@ function paintSportsChip(slide, animate = false) {
   const subLine = sportsMatchSubLine(slide);
 
   if (slide.mode === 'result') {
-    const badge = g.result === 'W' ? 'V' : g.result === 'L' ? 'D' : 'N';
-    const badgeMod = g.result === 'W' ? 'w' : g.result === 'L' ? 'l' : 'd';
-    const badgeEl = document.createElement('span');
-    badgeEl.className = `sports-chip__badge sports-chip__badge--${badgeMod}`;
-    badgeEl.textContent = badge;
-    badgeEl.setAttribute('aria-hidden', 'true');
-    a.append(glyph, badgeEl);
+    a.append(glyph, sportsResultBadgeEl(g));
     const placeKind = sportsIsPlaceResult(g, sport);
     const prior = g.priorSeason || team.lastGamePriorSeason;
     if (placeKind) {
@@ -6410,13 +6588,14 @@ function sportsSlotDwellMs(slot) {
   // CTA : plancher propre (un cran plus posé que les scores, sans 24 s collants).
   const floor = isCta ? SPORTS_CTA_DWELL_MS : readMs;
   if (sportsChipNeedsMarquee(chip)) {
-    // Lecture → 1 aller-retour (pas infinite) → pause repos — synchro CSS.
     const oneWay = chip.classList.contains('sports-chip--match')
       ? SPORTS_MATCH_SCROLL_ONE_WAY_MS
       : SPORTS_SCROLL_ONE_WAY_MS;
+    const trips = parseFloat(chip.style.getPropertyValue('--sports-scroll-trips')) || marqueeAlternateCount(oneWay, floor);
+    const n = trips >= 2 ? trips : MARQUEE_ROUND_TRIPS;
     return Math.max(
       floor,
-      SPORTS_SCROLL_READ_DELAY_MS + oneWay * 2 + SPORTS_SCROLL_POST_PAUSE_MS,
+      SPORTS_SCROLL_READ_DELAY_MS + oneWay * n + SPORTS_SCROLL_POST_PAUSE_MS,
     );
   }
   return floor;
@@ -7293,7 +7472,7 @@ function advanceAirPhase(phaseCount) {
   if (!(phaseCount > 1)) return;
   airPhaseIndex = (airPhaseIndex + 1) % phaseCount;
   nowAirCrossfadePending = true;
-  lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null };
+  lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null, shell: null };
 }
 
 /**
@@ -7528,6 +7707,7 @@ window.RadarAir = {
     airPhaseDwellMs,
     marqueeRoundTripMs,
     getTunerSubRotateDelayMs,
+    marqueeAlternateCount,
     trackForAirDisplay,
     liveCopyFromPhases,
     splitChoqSongLines,
@@ -7863,17 +8043,18 @@ function stopNowAirPreview() {
 /**
  * Temps qu'il faut à un texte qui défile pour : lire → partir → revenir → reposer.
  *
- * L'animation est `alternate` × 2 (pas infinite) + `animation-delay` lecture.
- * Un cycle complet = delay + 2 × `--marquee-duration` + pause repos.
+ * L'animation est `alternate` × `--marquee-trips` (2 ou 4) + delay lecture.
+ * Un cycle complet = delay + trips × `--marquee-duration` + pause repos.
  *
- * Règle générale du site : **on ne change jamais un texte avant la fin de son
- * aller-retour**, et on ne relance pas un 2ᵉ cycle pendant l’attente.
+ * On ne change jamais un texte avant la fin de ses aller-retour.
  */
 function marqueeRoundTripMs(el) {
   if (!el?.classList.contains('is-marquee')) return 0;
   const sec = parseFloat(el.style.getPropertyValue('--marquee-duration'));
   if (!Number.isFinite(sec) || sec <= 0) return 0;
-  return Math.ceil(sec * 1000 * MARQUEE_ROUND_TRIPS)
+  const tripsRaw = parseFloat(el.style.getPropertyValue('--marquee-trips'));
+  const trips = Number.isFinite(tripsRaw) && tripsRaw >= 2 ? tripsRaw : MARQUEE_ROUND_TRIPS;
+  return Math.ceil(sec * 1000 * trips)
     + MARQUEE_READ_DELAY_MS
     + MARQUEE_REST_MS;
 }
@@ -8334,12 +8515,24 @@ function syncTunerSubRotate(title, sub, empty, crossfade = false, kind = 'idle')
 }
 
 function onTunerSubRotateLayoutChange() {
+  syncTunerShellLayout();
+}
+
+/** Repeint le synthé pour la coque courante (wide ↔ bureau ↔ compact). */
+function syncTunerShellLayout() {
+  ensureWideNowAirPair();
+  if (!isWideTunerLayout()) clearWideDialInlineSize();
+  lastNowAir = {
+    title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null, shell: null,
+  };
   renderTunerNowAir();
   scheduleMarqueeRefresh();
   restartTunerSubRotateTimer();
   if (isNowAirPanelPreviewMode()) {
     scheduleNowAirPreviewTick();
   }
+  try { updateVolumeUI(); } catch { /* ignore */ }
+  try { syncWideStickyTop(); } catch { /* ignore */ }
 }
 
 function initTunerSubRotateListeners() {
@@ -8349,6 +8542,7 @@ function initTunerSubRotateListeners() {
   onMediaQueryChange(TUNER_SUB_ROTATE_NARROW_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(TUNER_SUB_ROTATE_VERY_NARROW_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(TUNER_EMBED_NOWAIR_HIDDEN_MQ, onTunerSubRotateLayoutChange);
+  onMediaQueryChange(WIDE_TUNER_MQ, onTunerSubRotateLayoutChange);
   onMediaQueryChange(PREFERS_REDUCED_MOTION, onTunerSubRotateLayoutChange);
 }
 
@@ -8386,10 +8580,14 @@ function renderTunerNowAir() {
       const { title, sub } = nowAirLines(currentStation);
       updateMediaSession(currentStation, { title, sub });
     }
+    lastNowAir = { ...lastNowAir, shell: 'wide' };
     return;
   }
 
-  // Quitter le mode wide : restaurer le panneau single.
+  // Quitter le mode wide : wrappers + largeur inline, sinon la barre casse
+  // jusqu’au prochain refresh (resize 1920 → 1280).
+  ensureWideNowAirPair();
+  clearWideDialInlineSize();
   const wideWrap = document.getElementById('tuner-nowair-wide');
   if (wideWrap) wideWrap.hidden = true;
   TUNER_NOWAIR.classList.remove('tuner-nowair--legacy-slot');
@@ -8435,12 +8633,14 @@ function renderTunerNowAir() {
     : (currentStation?.id ?? null);
 
   // Rien n'a changé : on n'écrase pas le DOM.
+  const shell = tunerShellLayoutKey();
   if (lastNowAir.title === title
     && lastNowAir.sub === sub
     && lastNowAir.empty === empty
     && lastNowAir.previewId === previewId
     && lastNowAir.kind === kind
     && lastNowAir.stationId === stationId
+    && lastNowAir.shell === shell
     && !nowAirCrossfadePending) {
     if (previewing) startNowAirPreview();
     else stopNowAirPreview();
@@ -8461,7 +8661,7 @@ function renderTunerNowAir() {
   const shouldFade = nowAirCrossfadePending || stationChanged;
   nowAirCrossfadePending = false;
 
-  lastNowAir = { title, sub, empty, previewId, kind, stationId };
+  lastNowAir = { title, sub, empty, previewId, kind, stationId, shell };
 
   // Toujours visible sur bureau (placeholder HTML dès le paint).
   TUNER_NOWAIR.classList.remove('hidden');
@@ -8588,7 +8788,7 @@ function resumeTunerPresentation() {
       dialRotateSlotB = false;
       nowAirCrossfadePending = false;
       nowAirFadeGen += 1;
-      lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null };
+      lastNowAir = { title: null, sub: null, empty: null, previewId: null, kind: null, stationId: null, shell: null };
       renderTunerNowAir();
       scheduleMarqueeRefresh();
     });
@@ -9325,6 +9525,7 @@ function measureMarquee(el) {
     el.style.removeProperty('--marquee-shift');
     el.style.removeProperty('--marquee-duration');
     el.style.removeProperty('--marquee-delay');
+    el.style.removeProperty('--marquee-trips');
     return;
   }
 
@@ -9337,6 +9538,7 @@ function measureMarquee(el) {
     el.style.removeProperty('--marquee-shift');
     el.style.removeProperty('--marquee-duration');
     el.style.removeProperty('--marquee-delay');
+    el.style.removeProperty('--marquee-trips');
     return;
   }
 
@@ -9346,9 +9548,17 @@ function measureMarquee(el) {
   // deux extrémités, là où l'animation marque une pause pour qu'on lise.
   const distance = Math.round(overflow + 12);
   const duration = Math.max(7, distance / 16);
+  const oneWayMs = duration * 1000;
+  let readMs = TUNER_SUB_ROTATE_MS;
+  if (TUNER_SUB_ROTATE_MQ?.matches) {
+    if (TUNER_SUB_ROTATE_VERY_NARROW_MQ?.matches) readMs = TUNER_SUB_ROTATE_VERY_NARROW_MS;
+    else if (TUNER_SUB_ROTATE_NARROW_MQ?.matches) readMs = TUNER_SUB_ROTATE_NARROW_MS;
+  }
+  const trips = marqueeAlternateCount(oneWayMs, readMs);
   el.style.setProperty('--marquee-shift', `-${distance}px`);
   el.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
   el.style.setProperty('--marquee-delay', `${(MARQUEE_READ_DELAY_MS / 1000).toFixed(1)}s`);
+  el.style.setProperty('--marquee-trips', String(trips));
   el.classList.add('is-marquee');
 }
 
@@ -9450,6 +9660,7 @@ function applyMarquee(el, text) {
   el.style.removeProperty('--marquee-shift');
   el.style.removeProperty('--marquee-duration');
   el.style.removeProperty('--marquee-delay');
+  el.style.removeProperty('--marquee-trips');
 
   if (!value) {
     marqueeTextByEl.delete(el);
@@ -11216,9 +11427,9 @@ function bindFiltersPanel() {
         window.requestAnimationFrame(() => refreshSportsChipScroll());
       }
     } catch { /* ignore */ }
-    // Synthé wide : dual antenne + dial institution/slogan
+    // Synthé : wrappers wide + largeur inline (sinon barre cassée jusqu’au refresh).
     try {
-      renderTunerNowAir();
+      syncTunerShellLayout();
     } catch { /* ignore */ }
     try {
       syncWideStickyTop();
@@ -11229,6 +11440,8 @@ function bindFiltersPanel() {
     if (isWideTunerLayout()) {
       syncWideStickyTop();
       fitWideDialWidth({ force: true });
+    } else {
+      clearWideDialInlineSize();
     }
   }, { passive: true });
 }

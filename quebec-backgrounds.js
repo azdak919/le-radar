@@ -37,12 +37,39 @@
    * Favorites : surfaces masthead (défaut) ou liste explicite.
    */
   function _mastheadPool() {
+    if (typeof PHOTO_BANK !== "undefined" && Array.isArray(PHOTO_BANK) && PHOTO_BANK.length) {
+      const out = [];
+      const seen = new Set();
+      for (const p of PHOTO_BANK) {
+        if (!p || !p.url) continue;
+        const tags = Array.isArray(p.tags) ? p.tags : [];
+        if (!tags.includes("mat") && !tags.includes("campus") && !tags.includes("nations")) continue;
+        if (tags.includes("campus") || tags.includes("nations") || tags.includes("mat")) {
+          /* ok */
+        }
+        if (Array.isArray(p.surfaces) && p.surfaces.length) {
+          if (!p.surfaces.includes("masthead") && !p.surfaces.includes("*") && !tags.includes("mat")) continue;
+        }
+        if (seen.has(p.url)) continue;
+        seen.add(p.url);
+        let bank = "masthead";
+        if (tags.includes("campus")) bank = "universities";
+        else if (tags.includes("nations")) bank = "nations";
+        else if (tags.includes("favori")) bank = "favorites";
+        out.push({ ...p, bank, campus: p.campus || tags.includes("campus") });
+      }
+      return out;
+    }
     const out = [];
     const seen = new Set();
     function pushAll(arr, bank) {
       if (!arr || !Array.isArray(arr)) return;
       for (const p of arr) {
         if (!p || !p.url) continue;
+        if (Array.isArray(p.surfaces)) {
+          if (!p.surfaces.length) continue;
+          if (!p.surfaces.includes("masthead") && !p.surfaces.includes("*")) continue;
+        }
         if (seen.has(p.url)) continue;
         seen.add(p.url);
         out.push({ ...p, bank: p.bank || bank });

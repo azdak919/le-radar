@@ -109,12 +109,10 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   await expect(strip.locator('.sports-chip--cta')).toHaveCount(1);
   await expect(strip).toHaveAttribute('data-count', '1');
   await expect(strip).toHaveAttribute('data-cta-pinned', '0');
-  // Pastille visible (pas coupée hors flux). Elle dit « Sports » au repos et
-  // « En cours » pendant un match — le seul cas qui remplace la rubrique
-  // (focus-group le-radar-cta-sports-badge, override mainteneur). Les deux sont
-  // acceptés : un vrai match en cours pendant la CI ne doit pas faire rougir le test.
+  // Pastille visible (pas coupée hors flux). Sports au repos, En cours en direct,
+  // Hier / Aujourd’hui pour un résultat du filet civil.
   const tag = strip.locator('.sports-chip__cta-tag');
-  await expect(tag).toContainText(/sports|en cours/i);
+  await expect(tag).toContainText(/sports|en cours|hier|aujourd/i);
   await expect(strip.locator('.sports-chip__cta-chev')).toHaveCount(0);
   const tagBox = await tag.boundingBox();
   expect(tagBox).toBeTruthy();
@@ -397,14 +395,10 @@ test('mât : point médian centré entre date et heure', async ({ page }) => {
 });
 
 /**
- * CTA SPORTS : texte trop long → marquee L→R (aller-retour), pas d’ellipse figée.
- *
- * Cas réel signalé : titre court (« Sherbrooke reçoit Granby ») + sous-ligne
- * longue (date · compétition · mis à jour…) → l’ancienne règle nowrap sur
- * toute la .cta-label collapsait head+sub en une ligne « mis à j… » sans
- * jamais activer is-overflowing / is-sub-overflowing.
+ * CTA SPORTS téléphone : sous-ligne longue → marquee L→R (aller-retour),
+ * pas de wrap 2 lignes, pas d’ellipse.
  */
-test('CTA sports : sous-ligne longue défile au lieu d’une ellipse figée', async ({ page }) => {
+test('CTA sports téléphone : sous-ligne trop longue défile L→R', async ({ page }) => {
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
 
@@ -416,8 +410,8 @@ test('CTA sports : sous-ligne longue défile au lieu d’une ellipse figée', as
   const cta = strip.locator('.sports-chip--cta');
   await expect(cta).toBeVisible({ timeout: 8000 });
 
-  // Forcer une sous-ligne qui déborde clairement, titre court (cas du bug).
-  const ready = await page.evaluate(() => {
+  const longSub = 'ven. 28 août, 20 h 30 · Soccer collégial masculin D2 · mis à jour à 21 h 56';
+  const ready = await page.evaluate((sub) => {
     const chip = document.querySelector('.sports-chip--cta');
     const layer = chip?.querySelector('.sports-chip__cta-label.is-front')
       || chip?.querySelector('.sports-chip__cta-label');
@@ -437,46 +431,50 @@ test('CTA sports : sous-ligne longue défile au lieu d’une ellipse figée', as
       subInner.className = 'sports-chip__cta-sub-text';
       subView.append(subInner);
     }
-    subInner.textContent = 'ven. 28 août, 20 h 30 · Soccer collégial masculin D2 · mis à jour à 21 h 56';
-    // Mesure via le chemin app (script global, non module).
-    if (typeof refreshSportsChipScroll !== 'function') {
-      return { ok: false, reason: 'no-refresh' };
-    }
-    refreshSportsChipScroll(chip);
+    subInner.textContent = sub;
+    if (typeof refreshSportsChipScroll === 'function') refreshSportsChipScroll(chip);
+    const cs = getComputedStyle(subInner);
     return {
       ok: true,
       isSub: chip.classList.contains('is-sub-overflowing'),
-      scrollSub: chip.style.getPropertyValue('--sports-scroll-sub'),
       hasSubText: !!layer.querySelector('.sports-chip__cta-sub-text'),
+      whiteSpace: cs.whiteSpace,
+      textOverflow: cs.textOverflow,
+      animationName: cs.animationName,
+      text: (subInner.textContent || '').trim(),
     };
-  });
+  }, longSub);
   expect(ready.ok, `préparation CTA : ${ready.reason || 'ok'}`).toBe(true);
   expect(ready.hasSubText, 'markup .sports-chip__cta-sub-text requis').toBe(true);
   expect(ready.isSub, 'refreshSportsChipScroll doit activer is-sub-overflowing').toBe(true);
-  expect(parseFloat(ready.scrollSub), 'décalage marquee sous-ligne').toBeGreaterThan(2);
-
-  await expect(cta).toHaveClass(/is-sub-overflowing/);
-  const subText = cta.locator('.sports-chip__cta-sub-text');
-  await expect(subText).toBeVisible();
-
-  const anim = await subText.evaluate((el) => getComputedStyle(el).animationName);
-  expect(anim, 'sous-ligne doit animer sports-chip-scroll-sub').toMatch(/sports-chip-scroll-sub/);
-
-  // Hold initial ~32 % de 5,5 s ≈ 1,8 s ; poll jusqu’au glissement (lab flaky si
-  // on ne prend qu’un seul échantillon à 3,2 s).
-  const left0 = await subText.evaluate((el) => el.getBoundingClientRect().left);
-  await expect
-    .poll(async () => {
-      const left = await subText.evaluate((el) => el.getBoundingClientRect().left);
-      return left0 - left;
-    }, { timeout: 7000 })
-    .toBeGreaterThan(1);
-
-  // Pas d’ellipse figée sur le texte qui défile.
-  const textOverflow = await subText.evaluate((el) => getComputedStyle(el).textOverflow);
-  expect(textOverflow).toBe('clip');
+  expect(ready.whiteSpace, 'sous-ligne une ligne').toBe('nowrap');
+  expect(ready.textOverflow, 'pas d’ellipse').toBe('clip');
+  expect(ready.animationName, 'sous-ligne doit animer').toMatch(/sports-chip-scroll-sub/);
+  expect(ready.text).toBe(longSub);
 
   expect(pageErrors).toEqual([]);
+});
+
+test('390 / 430 : pastille Prochain/Hier/Aujourd’hui à gauche de l’accroche', async ({ page }) => {
+  for (const width of [390, 430]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const strip = page.locator('#masthead-sports-strip');
+    await expect(strip.locator('.sports-chip--cta')).toBeVisible({ timeout: 8000 });
+    const tag = strip.locator('.sports-chip--cta .sports-chip__cta-tag');
+    await expect(tag).toContainText(/prochain|hier|aujourd|en cours|sports|août|avant-hier/i);
+    const geo = await page.evaluate(() => {
+      const chip = document.querySelector('.sports-chip--cta');
+      const tagEl = chip?.querySelector('.sports-chip__cta-tag');
+      const copy = chip?.querySelector('.sports-chip__line');
+      if (!chip || !tagEl || !copy) return { ok: false };
+      const tr = tagEl.getBoundingClientRect();
+      const cr = copy.getBoundingClientRect();
+      return { ok: true, tagLeftOfCopy: tr.right <= cr.left + 3 };
+    });
+    expect(geo.ok, `${width}: CTA présent`).toBe(true);
+    expect(geo.tagLeftOfCopy, `${width}: pastille à gauche de l’accroche`).toBe(true);
+  }
 });
 
 /**

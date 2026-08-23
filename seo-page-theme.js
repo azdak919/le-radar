@@ -62,10 +62,19 @@
       var off = raw === 'off' || raw === 'prod' || raw === '0' || raw === 'false';
       var letter = (raw === 'b' || raw === 'c' || raw === 'd') ? raw : 'e';
       var wideOk = window.matchMedia && window.matchMedia(WIDE_MQ).matches;
-      if (!off && wideOk) {
-        document.documentElement.setAttribute('data-wide-preview', letter);
+      var next = (!off && wideOk) ? letter : '';
+      var prev = document.documentElement.getAttribute('data-wide-preview') || '';
+      if (next) {
+        document.documentElement.setAttribute('data-wide-preview', next);
       } else {
         document.documentElement.removeAttribute('data-wide-preview');
+      }
+      if (prev !== next) {
+        try {
+          window.dispatchEvent(new CustomEvent('radar-wide-preview-change', {
+            detail: { id: next || 'off' },
+          }));
+        } catch (err2) { /* ignore */ }
       }
     } catch (err) { /* ignore */ }
   }
