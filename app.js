@@ -5309,6 +5309,9 @@ function sportsSoftSportDiversity(slides) {
  * + gates mainteneur (civil aujourd’hui/hier ; hors saison 7 j) :
  *
  *  CTA (droite)
+ *   • **en direct** : uniquement les matchs en cours. Un seul → carte figée ;
+ *     plusieurs → rotation entre eux. Dès qu’il n’y a plus de live, le cycle
+ *     normal reprend.
  *   • **résultats** : aujourd’hui / hier seulement (plus vieux → puces scores)
  *   • **en saison** (il y a des résultats frais) : prochains du **jour lead** seul
  *   • **hors saison** (pas de résultat aujourd’hui/hier) : **1er match** de
@@ -5344,6 +5347,23 @@ function sportsCtaLeadDayKey(nextSlides = []) {
     bestDay = day;
   }
   return bestDay;
+}
+
+/**
+ * Matchs réellement en cours — source de vérité pour la CTA live.
+ * Indépendant du pool mixte (résultats / prochains).
+ */
+function sportsCtaLiveSources(now = Date.now()) {
+  const seen = new Set();
+  const out = [];
+  for (const s of sportsSlides) {
+    if (!s || s.mode === 'cta' || !s.game || !s.key || seen.has(s.key)) continue;
+    if (s.mode !== 'next' && s.mode !== 'result') continue;
+    if (!sportsGameIsLive(s.game, now)) continue;
+    seen.add(s.key);
+    out.push(s);
+  }
+  return sportsDedupeMatchSlides(out);
 }
 
 function sportsCtaCandidateSlides() {
@@ -5423,17 +5443,17 @@ function sportsCtaCandidateSlides() {
     if (weekFirsts.length) nextPool = weekFirsts;
   }
 
-  // Live toujours dans le pool, même si le jour lead est ailleurs.
-  const lives = nexts.filter((s) => sportsGameIsLive(s.game, now));
-  const nextWithoutLive = nextPool.filter((s) => !sportsGameIsLive(s.game, now));
+  // Direct : la CTA n’affiche que les matchs en cours (un ou plusieurs).
+  // Le cycle aujourd’hui/hier + prochains reprend dès qu’il n’y a plus de live.
+  const lives = sportsCtaLiveSources(now);
+  if (lives.length) {
+    lives.sort(bySoonest);
+    return lives.slice(0, SPORTS_CTA_MAX_POOL);
+  }
 
-  // Pool : live d’abord, puis résultats aujourd’hui/hier, puis prochains.
-  const raw = lives.concat(freshResults, nextWithoutLive);
+  const raw = freshResults.concat(nextPool);
   const deduped = sportsDedupeMatchSlides(raw);
   deduped.sort((a, b) => {
-    const liveA = sportsGameIsLive(a.game, now) ? 0 : 1;
-    const liveB = sportsGameIsLive(b.game, now) ? 0 : 1;
-    if (liveA !== liveB) return liveA - liveB;
     const modeRank = (s) => (s.mode === 'result' ? 0 : 1);
     if (modeRank(a) !== modeRank(b)) return modeRank(a) - modeRank(b);
     if (a.mode === 'result') {
@@ -5442,11 +5462,6 @@ function sportsCtaCandidateSlides() {
     return bySoonest(a, b);
   });
   return sportsSoftSportDiversity(deduped).slice(0, SPORTS_CTA_MAX_POOL);
-}
-
-/** Matchs en cours dans le pool CTA (pour épingler la carte). */
-function sportsCtaLiveSources() {
-  return sportsCtaCandidateSlides().filter((s) => sportsGameIsLive(s.game));
 }
 
 /** Libellés CTA : matchs chauds, sinon messages hors saison / creux. */
@@ -5469,6 +5484,11 @@ function sportsCtaState(slide) {
   if (src.mode === 'result') return 'result';
   if (src.mode === 'next') return 'next';
   return 'idle';
+}
+
+/** Un seul direct : la CTA reste dessus. Plusieurs : elle tourne entre eux. */
+function sportsCtaHoldOnLive(slide) {
+  return sportsCtaState(slide) === 'live' && sportsCtaLiveSources().length < 2;
 }
 
 /**
@@ -6694,13 +6714,22 @@ function rotateSportsSlot(slot) {
   let replacement = null;
   if (!pinned || isCtaSlot) {
     // CTA : cycle pool en évitant les matchs déjà portés par d’autres CTAs.
+    // En live, un direct peut déjà être à gauche : on le prend quand même
+    // (la puce score est remplacée plus bas). Sinon le 2ᵉ match resterait coincé.
     const poolLen = Math.max(1, sportsCtaCandidateSlides().length || sportsCtaLabelPool().length);
     const curIdx = Number(sportsVisible[slot]?.labelIndex) || 0;
+    const liveN = sportsCtaLiveSources().length;
+    const ctaUsed = new Set();
+    sportsVisible.forEach((s, i) => {
+      if (i === slot || s?.mode !== 'cta') return;
+      for (const k of sportsSlideOccupyKeys(s)) ctaUsed.add(k);
+    });
+    const avoid = liveN ? ctaUsed : used;
     let found = null;
     for (let step = 1; step <= poolLen; step += 1) {
       const idx = (curIdx + step) % poolLen;
       const cand = sportsCtaSlide(idx);
-      if (sportsSlideIsUsed(cand, used)) continue;
+      if (sportsSlideIsUsed(cand, avoid)) continue;
       // Idle : éviter le même label qu’une autre CTA
       if (cand.ctaIdle) {
         const otherLabels = sportsVisible
@@ -6818,7 +6847,7 @@ function scheduleSportsSlot(slot, { initialStagger = 0 } = {}) {
   // La carte CTA ne tourne que là où on peut l’arrêter, et pas pendant qu’on la
   // survole ou qu’elle a le focus (garde-fous `rotation-pointeur-fin` et
   // `pause-survol-focus`). Ailleurs, l’accroche reste celle du chargement.
-  if (sportsVisible[slot]?.mode === 'cta' && sportsGameIsLive(sportsVisible[slot].game)) return;
+  if (sportsVisible[slot]?.mode === 'cta' && sportsCtaHoldOnLive(sportsVisible[slot])) return;
   if (sportsVisible[slot]?.mode === 'cta' && (!sportsCtaMayRotate() || sportsCtaPaused)) return;
   // Mesurer le marquee avant de fixer le dwell (classe peut être absente un instant).
   const chipNow = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip')?.[slot];
@@ -6897,8 +6926,8 @@ function scheduleSportsWave({ fromSlot = 0, firstWait = true } = {}) {
     }
     const slot = index;
     const slide = sportsVisible[slot];
-    // Direct : la carte qui porte le match en cours ne tourne pas.
-    if (slide?.mode === 'cta' && sportsGameIsLive(slide.game)) {
+    // Direct unique : la carte En cours ne tourne pas. Plusieurs lives : cycle.
+    if (slide?.mode === 'cta' && sportsCtaHoldOnLive(slide)) {
       sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
       return;
     }

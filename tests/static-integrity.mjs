@@ -1238,9 +1238,17 @@ assert(
     && appJs.includes('SPORTS_LIVE_VISUAL_TAIL_MS')
     && appJs.includes('function sportsGameHasScore')
     && appJs.includes('function sportsCtaLiveSources')
+    && appJs.includes('function sportsCtaHoldOnLive')
+    && /const lives = sportsCtaLiveSources\(now\)/.test(appJs)
     && appJs.includes('function pollLiveSportsJson')
     && appJs.includes("if (state === 'live')"),
   'app.js : direct = pastille En cours + score collé + sondage sports.json',
+);
+assert(
+  /const lives = sportsCtaLiveSources\(now\);\s*if \(lives\.length\)/.test(appFlat)
+    && appJs.includes('sportsCtaHoldOnLive(sportsVisible[slot])')
+    && appJs.includes('sportsCtaHoldOnLive(slide)'),
+  'app.js : CTA live exclusive — pool = directs ; 1 figé / plusieurs en cycle ; sinon cycle normal',
 );
 assert(
   !/state === 'live'[\s\S]{0,200}sportsRelativeAge/.test(appFlat)
