@@ -15,6 +15,8 @@
   const SPORTS = new URL('sports/', location.href).href;
   const SLOGAN = 'Journaux, radios et sports étudiants du Québec';
   const BRAND_LONG = 'Le Réseau Académique de Découverte et d’Agrégation de Ressources';
+  const RIBBON = 'Sports étudiants collégiaux et universitaires du Québec';
+  const RIBBON_SHORT = 'Sports étudiants · Québec';
   const ACCENT_TONE = '#6c2163';
 
   const TONES = {
@@ -60,6 +62,9 @@
   const params = new URLSearchParams(location.search);
   const html = document.documentElement;
   const fmt = FORMATS.has(params.get('fmt')) ? params.get('fmt') : '300x250';
+  const fgRaw = String(params.get('fg') || '').toUpperCase();
+  const fg = /^[ABCDE]$/.test(fgRaw) ? fgRaw : '';
+  const still = params.get('still') === '1';
 
   function applyChrome() {
     let theme = params.get('theme');
@@ -68,6 +73,8 @@
     }
     html.dataset.fmt = fmt;
     html.dataset.theme = theme;
+    if (fg) html.dataset.fg = fg;
+    else html.removeAttribute('data-fg');
     html.style.width = fmt.split('x')[0] + 'px';
     html.style.height = fmt.split('x')[1] + 'px';
     const meta = document.querySelector('meta[name="theme-color"]');
@@ -154,8 +161,50 @@
       const n = String(team.name || team.code || 'Équipe');
       return compact ? String(team.code || n).slice(0, 10) : n;
     }
+    const full = String(game.opponentFullName || '').trim();
     const opp = String(game.opponent || game.opponentCode || 'Adversaire');
-    return compact ? String(game.opponentCode || opp).slice(0, 10) : opp;
+    if (compact) return String(game.opponentCode || opp).slice(0, 10);
+    if (full && full.length <= 28 && fmt !== '728x90') return full;
+    return opp;
+  }
+
+  function sectorWord(team, game) {
+    const s = String(game?.opponentSector || team?.sector || '').toLowerCase();
+    if (s.includes('univ')) return 'Universitaire';
+    if (s.includes('colleg') || s.includes('cégep') || s.includes('cegep')) return 'Collégial';
+    return '';
+  }
+
+  function ribbonOf() {
+    return fmt === '320x50' ? RIBBON_SHORT : RIBBON;
+  }
+
+  function dayWhen(game) {
+    const when = game.time ? String(game.time).replace(':', ' h ') : '';
+    const iso = game.date || '';
+    const today = ymdToronto();
+    let day = iso;
+    if (iso === today) day = 'Aujourd’hui';
+    else if (iso === ymdToronto(new Date(Date.now() - 86400000))) day = 'Hier';
+    else {
+      try {
+        day = new Intl.DateTimeFormat('fr-CA', {
+          weekday: 'short', day: 'numeric', month: 'short', timeZone: TZ,
+        }).format(new Date(`${iso}T12:00:00`));
+      } catch { /* keep iso */ }
+    }
+    return [day, when].filter(Boolean).join(' · ');
+  }
+
+  function matchChrome(slide, t, g) {
+    const gph = glyph(g.sport || t.sport);
+    const sector = sectorWord(t, g);
+    const sportN = String(t.sportLabel || g.sport || '').split(/[\s·,]/)[0];
+    const comp = String(g.competition || t.leagueLabel || t.sportLabel || '');
+    const school = String(t.school || t.institution || '');
+    const venue = g.home === true ? 'À domicile' : g.home === false ? 'À l’extérieur' : '';
+    const kicker = [gph, sector, sportN].filter(Boolean).join(' · ');
+    return { gph, sector, comp, school, venue, kicker, ribbon: ribbonOf() };
   }
 
   function gameMs(game) {
@@ -243,6 +292,30 @@
       n += 1;
       if (n % BRAND_EVERY === 0) out.push({ kind: 'brand' });
     }
+    if (fg === 'A') {
+      const forced = [];
+      for (const s of mix.slice(0, 4)) {
+        forced.push({ kind: 'brand' }, s);
+      }
+      return forced.length ? forced : [{ kind: 'brand' }];
+    }
+    if (fg === 'C') return mix.length ? mix : [{ kind: 'brand' }];
+    if (fg === 'D') {
+      const deck = mix.slice(0, 8);
+      if (deck.length) deck.push({ kind: 'brand' });
+      return deck.length ? deck : [{ kind: 'brand' }];
+    }
+    if (fg === 'E') {
+      if (lives.length) return diverse(lives, 8);
+      const rest = [];
+      let n = 0;
+      for (const s of mix) {
+        rest.push(s);
+        n += 1;
+        if (n % BRAND_EVERY === 0) rest.push({ kind: 'brand' });
+      }
+      return rest.length ? rest : [{ kind: 'brand' }];
+    }
     if (!out.length) out.push({ kind: 'brand' });
     return out;
   }
@@ -256,6 +329,8 @@
 
   function meta(slide) {
     if (!slide || slide.kind === 'brand') {
+      if (fg === 'A') return { tag: 'LE-RADAR.ca', lamp: 'brand', state: 'idle', res: '', foot: SLOGAN };
+      if (fg === 'C') return { tag: 'Sports', lamp: 'next', state: 'idle', res: '', foot: 'LE-RADAR.ca' };
       return { tag: 'Sports', lamp: 'next', state: 'idle', res: '', foot: '' };
     }
     const g = slide.game || {};
@@ -278,53 +353,71 @@
 
   function faceHtml(slide) {
     if (!slide || slide.kind === 'brand') {
-      return `<span class="ad-brand-lockup notranslate" translate="no">
+      if (fg === 'A') {
+        return `<span class="ad-kicker">Québec</span>
+          <span class="ad-board">
+            <span class="ad-hero notranslate" translate="no">LE-RADAR.ca</span>
+            <span class="ad-verb">réunis au même endroit</span>
+          </span>
+          <span class="ad-sub">Journaux, radios et sports étudiants</span>`;
+      }
+      if (fg === 'C' || fg === 'E') {
+        return `<span class="ad-sub">${esc(SLOGAN)}</span>`;
+      }
+      return `<span class="ad-kicker">Sports étudiants</span>
+        <span class="ad-brand-lockup notranslate" translate="no">
           <img class="ad-logo" src="assets/icon.svg" width="28" height="28" alt="" decoding="async">
           <span class="ad-word">LE-RADAR.ca</span>
         </span>
         <span class="ad-brand-long">${esc(BRAND_LONG)}</span>
-        <span class="ad-sub">${esc(SLOGAN)}</span>`;
+        <span class="ad-ribbon">${esc(ribbonOf())}</span>`;
     }
     const g = slide.game || {};
     const t = slide.team || {};
     const home = labelOf(t, g, g.home);
     const away = labelOf(t, g, !g.home);
-    const gph = glyph(g.sport || t.sport);
-    const comp = String(g.competition || t.leagueLabel || t.sportLabel || '');
+    const ch = matchChrome(slide, t, g);
+    const school = ch.school ? `<span class="ad-school">${esc(ch.school)}</span>` : '';
     if (slide.kind === 'result') {
       const left = g.home ? g.scoreFor : g.scoreAgainst;
       const right = g.home ? g.scoreAgainst : g.scoreFor;
       const b = badgeSpec(g.result);
-      return `<span class="ad-kicker">${gph}</span>
-        <span class="ad-board">
+      const when = g.date === ymdToronto() ? 'Aujourd’hui' : 'Hier';
+      return `<span class="ad-kicker">${esc(ch.kicker)}</span>
+        <span class="ad-fill">
+          <span class="ad-board">
+            <span class="ad-hero">${esc(home)}</span>
+            <span class="ad-score">${left}–${right}<span class="ad-badge ad-badge--${b.mod}">${b.letter}</span></span>
+            <span class="ad-hero">${esc(away)}</span>
+          </span>
+          ${school}
+          <span class="ad-meta">${esc([when, ch.venue, ch.comp].filter(Boolean).join(' · '))}</span>
+        </span>
+        <span class="ad-ribbon">${esc(ch.ribbon)}</span>`;
+    }
+    const verb = (fg === 'C' || fg === 'D' || fg === 'B' || !fg)
+      ? (g.home ? 'reçoit' : 'à')
+      : (slide.kind === 'live' ? 'contre' : (g.home ? 'reçoit' : 'à'));
+    if (fg === 'C') {
+      return `<span class="ad-board ad-board--line">
           <span class="ad-hero">${esc(home)}</span>
-          <span class="ad-score">${left}–${right}<span class="ad-badge ad-badge--${b.mod}">${b.letter}</span></span>
+          <span class="ad-verb">${verb}</span>
           <span class="ad-hero">${esc(away)}</span>
         </span>
-        <span class="ad-sub">${esc(comp)}</span>`;
+        <span class="ad-meta">${esc(ch.comp)}</span>
+        <span class="ad-ribbon">${esc(ch.ribbon)}</span>`;
     }
-    const when = g.time ? String(g.time).replace(':', ' h ') : '';
-    const day = (() => {
-      const iso = g.date || '';
-      const today = ymdToronto();
-      if (iso === today) return 'Aujourd’hui';
-      if (iso === ymdToronto(new Date(Date.now() - 86400000))) return 'Hier';
-      try {
-        return new Intl.DateTimeFormat('fr-CA', {
-          weekday: 'short', day: 'numeric', month: 'short', timeZone: TZ,
-        }).format(new Date(`${iso}T12:00:00`));
-      } catch {
-        return iso;
-      }
-    })();
-    const verb = slide.kind === 'live' ? 'contre' : (g.home ? 'reçoit' : 'à');
-    return `<span class="ad-kicker">${gph}</span>
-      <span class="ad-board">
-        <span class="ad-hero">${esc(home)}</span>
-        <span class="ad-verb">${verb}</span>
-        <span class="ad-hero">${esc(away)}</span>
+    return `<span class="ad-kicker">${esc(ch.kicker)}</span>
+      <span class="ad-fill">
+        <span class="ad-board">
+          <span class="ad-hero">${esc(home)}</span>
+          <span class="ad-verb">${verb}</span>
+          <span class="ad-hero">${esc(away)}</span>
+        </span>
+        ${school}
+        <span class="ad-meta">${esc([dayWhen(g), ch.venue, ch.comp].filter(Boolean).join(' · '))}</span>
       </span>
-      <span class="ad-sub">${esc([day, when, comp].filter(Boolean).join(' · '))}</span>`;
+      <span class="ad-ribbon">${esc(ch.ribbon)}</span>`;
   }
 
   function gameIdOf(game) {
@@ -363,11 +456,27 @@
     const m = meta(slide);
     if (tagEl) {
       tagEl.dataset.lamp = m.lamp;
-      tagEl.textContent = m.tag;
+      if (fg === 'A' && m.lamp === 'brand') {
+        tagEl.replaceChildren();
+        const img = document.createElement('img');
+        img.className = 'ad-tag-logo';
+        img.src = 'assets/icon.svg';
+        img.width = 18;
+        img.height = 18;
+        img.alt = '';
+        tagEl.append(img);
+      } else {
+        tagEl.textContent = m.tag;
+      }
     }
     if (footEl) {
-      footEl.textContent = m.foot;
-      footEl.hidden = !m.foot;
+      if (fg === 'C' && slide && slide.kind !== 'brand') {
+        footEl.hidden = false;
+        footEl.innerHTML = `<span class="ad-lockup notranslate" translate="no"><img class="ad-logo" src="assets/icon.svg" width="16" height="16" alt=""><span class="ad-word">LE-RADAR.ca</span></span>`;
+      } else {
+        footEl.textContent = m.foot;
+        footEl.hidden = !m.foot;
+      }
     }
     root.dataset.state = m.state;
     if (m.res) root.dataset.res = m.res;
@@ -433,7 +542,7 @@
   function boot() {
     if (!slides.length) return;
     show(0);
-    if (slides.length > 1) {
+    if (slides.length > 1 && !still) {
       window.setInterval(() => {
         if (!paused && !swapping) flipTo(idx + 1);
       }, DWELL_MS);
@@ -456,6 +565,10 @@
       }
       slides = collect(data);
       if (params.get('face') === 'brand') slides = [{ kind: 'brand' }];
+      if (params.get('face') === 'match') {
+        const games = slides.filter((s) => s.kind !== 'brand');
+        slides = games.length ? [games[0]] : [{ kind: 'brand' }];
+      }
     } catch (_) {
       slides = [{ kind: 'brand' }];
     }

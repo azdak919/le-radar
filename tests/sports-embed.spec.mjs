@@ -9,7 +9,7 @@ test.describe('Embed sports IAB', () => {
     await expect(page.locator('html')).toHaveAttribute('data-embed', 'sports-ad');
     await expect(page.locator('html')).toHaveAttribute('data-fmt', '300x250');
     await expect.poll(() => page.locator('#ad-front').innerText(), { timeout: 15_000 })
-      .toMatch(/LE-RADAR|–|reçoit|contre|Prochain|Aujourd|Journaux/i);
+      .toMatch(/LE-RADAR|–|reçoit|à|contre|Prochain|Aujourd|Sports étudiants|Journaux/i);
     const lockup = page.locator('.ad-lockup');
     await expect(lockup.locator('.ad-logo')).toBeVisible();
     await expect(lockup.locator('.ad-word')).toHaveText('LE-RADAR.ca');
@@ -19,6 +19,19 @@ test.describe('Embed sports IAB', () => {
     expect(href).toMatch(/\/sports\//);
     expect(href).toMatch(/[?&]sport=/);
     expect(href).toMatch(/[?&]team=/);
+  });
+
+  test('tous les formats IAB portent « Sports étudiants »', async ({ page }) => {
+    for (const fmt of ['300x250', '728x90', '320x50', '336x280', '300x600', '160x600']) {
+      const [w, h] = fmt.split('x').map(Number);
+      await page.setViewportSize({ width: w + 24, height: h + 24 });
+      await page.goto(`/sports-ad-embed.html?fmt=${fmt}&still=1`, { waitUntil: 'domcontentloaded' });
+      await expect.poll(() => page.locator('#ad-front').innerText(), { timeout: 15_000 })
+        .toMatch(/Sports étudiants/i);
+      const box = await page.locator('#ad').boundingBox();
+      expect(box?.width, fmt).toBeGreaterThan(w * 0.9);
+      expect(box?.height, fmt).toBeGreaterThan(h * 0.85);
+    }
   });
 
   test('carte marque : lockup + nom complet', async ({ page }) => {
@@ -76,8 +89,9 @@ test.describe('Embed sports IAB', () => {
     const darkPre = await page.locator('.iframe-snippet pre').first().evaluate((el) => getComputedStyle(el).backgroundColor);
     expect(lightPre).not.toBe(darkPre);
 
-    await page.getByRole('button', { name: 'Copier le code radio' }).click();
-    await expect(page.getByRole('button', { name: /Copié/ })).toBeVisible();
+    const copyBtn = page.getByRole('button', { name: /Copier le code radio|Copié/ });
+    await copyBtn.click();
+    await expect(copyBtn).toHaveText(/Copié/, { timeout: 5_000 });
     const clip = await page.evaluate(() => navigator.clipboard.readText());
     expect(clip).toMatch(/tuner-embed\.html/);
   });
