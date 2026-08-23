@@ -55,8 +55,12 @@ test('labo cartes sports : iframe formats + marquee L→R', async ({ page }) => 
 
   const frame = page.frameLocator('#preview');
   await expect(frame.locator('.sports-chip--cta').first()).toBeVisible({ timeout: 10000 });
-  await expect(frame.locator('.sports-chip--match')).toHaveCount(0);
-  await expect(frame.locator('.masthead-sports-strip').first()).toHaveAttribute('data-count', '1');
+  await expect(frame.locator('#cta-band .sports-chip--match')).toHaveCount(0);
+  await expect(frame.locator('#standard-chips .sports-chip--match').first()).toBeVisible();
+  await expect(frame.getByText('avant-hier', { exact: false }).first()).toBeVisible();
+  await expect(frame.getByText('mer. 19 août', { exact: false }).first()).toBeVisible();
+  await expect(frame.locator('#cta-band .sports-chip__cta-tag', { hasText: /^Sports$/ }).first()).toBeVisible();
+  await expect(frame.locator('#cta-band .masthead-sports-strip').first()).toHaveAttribute('data-count', '1');
   await expect(frame.locator('.sports-chip__cta-tag', { hasText: /^Hier$/ }).first()).toBeVisible();
   await expect(frame.locator('.sports-chip__cta-tag', { hasText: /^Aujourd’hui$/ }).first()).toBeVisible();
   await expect(frame.locator('.sports-chip__cta-eyebrow--rail', { hasText: /^Hier$/ })).toHaveCount(0);
