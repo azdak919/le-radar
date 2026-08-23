@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" class="lab-app">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,45 +12,54 @@
   <link rel="stylesheet" href="../seo-pages.css">
   <style>
     /*
-     * Chrome du labo seulement. Les cartes elles-mêmes = CSS prod
-     * (seo-pages.css). Exception : .sports-result--live n’existe pas encore
-     * sur /sports/ — proposition pour travailler le match en cours.
+     * Établi du labo. Les cartes = CSS prod (seo-pages.css).
+     * .sports-result--live = proposition, pas encore émis par seo-pages.js.
      */
-    .lab-chrome {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      background: color-mix(in srgb, var(--bg) 92%, transparent);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--rule);
-      padding: 12px 16px 14px;
+    html.lab-app, html.lab-app body {
+      height: 100%;
+      max-width: none;
+      overflow: hidden;
     }
-    .lab-chrome a { color: var(--accent); }
+    body.lab-app {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      margin: 0;
+    }
+    .lab-chrome {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 14px;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--rule);
+      background: var(--bg);
+    }
     .lab-chrome h1 {
-      margin: 4px 0 0;
-      font: 700 1.45rem/1.15 var(--serif);
+      margin: 0;
+      font: 700 1.05rem/1.2 var(--serif);
       color: var(--ink);
       letter-spacing: -0.02em;
+      white-space: nowrap;
     }
-    .lab-lede {
-      margin: 6px 0 0;
-      font: 400 13px/1.45 var(--sans);
-      color: var(--muted);
-      max-width: 46rem;
+    .lab-chrome .lab-links {
+      margin: 0;
+      font: 500 12px/1.2 var(--sans);
     }
+    .lab-chrome a { color: var(--accent); }
     .lab-bar {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px 8px;
+      gap: 5px 6px;
       align-items: center;
-      margin-top: 12px;
     }
     .lab-bar span.k {
       font: 800 10px/1 var(--sans);
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-right: 2px;
+      margin: 0 2px 0 8px;
     }
     .lab-bar button {
       appearance: none;
@@ -58,7 +67,7 @@
       background: var(--bg-soft);
       color: var(--ink-soft);
       font: 600 12px/1.2 var(--sans);
-      padding: 6px 10px;
+      padding: 5px 9px;
       border-radius: 999px;
       cursor: pointer;
     }
@@ -67,15 +76,56 @@
       background: color-mix(in srgb, var(--accent) 12%, var(--bg));
       color: var(--accent);
     }
-    #stage {
-      width: var(--lab-w, 390px);
-      max-width: calc(100% - 24px);
-      margin: 18px auto 48px;
+    #lab-nav {
+      overflow: auto;
+      border-right: 1px solid var(--rule);
+      background: var(--bg-soft);
+      padding: 8px 0 24px;
     }
-    body.lab-full #stage {
-      width: min(1180px, calc(100% - 24px));
+    #lab-nav p {
+      margin: 8px 12px 6px;
+      font: 800 10px/1 var(--sans);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
-    .lab-case { margin: 0 0 22px; }
+    #lab-nav a {
+      display: block;
+      padding: 6px 12px;
+      font: 600 12.5px/1.3 var(--sans);
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #lab-nav a:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 5%, transparent); }
+    #lab-nav a.is-on {
+      color: var(--ink);
+      border-left-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+    }
+    #lab-main {
+      overflow: auto;
+      min-width: 0;
+      padding: 16px 18px 40px;
+      background: var(--bg);
+    }
+    #stage { --lab-w: 390px; }
+    #fiches {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--lab-w)), var(--lab-w)));
+      gap: 18px 16px;
+      align-items: start;
+    }
+    body.lab-full #fiches {
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 288px), 1fr));
+    }
+    .lab-case {
+      min-width: 0;
+      scroll-margin-top: 12px;
+    }
     .lab-case > p {
       margin: 0 0 8px;
       font: 600 12px/1.35 var(--sans);
@@ -87,21 +137,21 @@
       color: var(--muted);
       font-weight: 500;
     }
-    h2.lab-h {
-      font: 800 11px/1 var(--sans);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 28px 0 12px;
+    .lab-case.is-on .sports-panel {
+      outline: 2px solid color-mix(in srgb, var(--accent) 70%, var(--rule));
+      outline-offset: 2px;
     }
     #formats {
-      max-width: 1180px;
-      margin: 0 auto 64px;
-      padding: 0 12px;
+      margin: 28px 0 0;
+      border-top: 1px solid var(--rule);
+      padding-top: 12px;
     }
-    .lab-frame {
-      margin: 0 0 22px;
+    #formats > summary {
+      cursor: pointer;
+      font: 700 13px/1.3 var(--sans);
+      color: var(--ink-soft);
     }
+    .lab-frame { margin: 14px 0 0; }
     .lab-frame p {
       margin: 0 0 6px;
       font: 600 12px/1.3 var(--sans);
@@ -112,26 +162,37 @@
       border: 1px solid var(--rule);
       border-radius: 10px;
       background: var(--bg);
-      height: 640px;
+      height: 520px;
     }
     html.lab-embed, html.lab-embed body {
+      height: auto;
+      overflow: auto;
+      display: block;
       background: var(--bg);
     }
     html.lab-embed .lab-chrome,
+    html.lab-embed #lab-nav,
     html.lab-embed #formats,
     html.lab-embed .lab-case > p,
-    html.lab-embed h2.lab-h,
     html.lab-embed #fiches {
       display: none !important;
     }
-    html.lab-embed #stage {
-      width: 100%;
-      max-width: none;
-      margin: 12px;
-    }
+    html.lab-embed #lab-main { overflow: visible; padding: 12px; }
+    html.lab-embed #stage { margin: 0; }
     #fiches[hidden],
     #grille[hidden] {
       display: none !important;
+    }
+    @media (max-width: 720px) {
+      body.lab-app {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto minmax(0, 1fr);
+      }
+      #lab-nav {
+        border-right: 0;
+        border-bottom: 1px solid var(--rule);
+        max-height: 28vh;
+      }
     }
 
     /* Proposition — match en cours. Pas encore émis par seo-pages.js. */
@@ -160,20 +221,18 @@
     }
   </style>
 </head>
-<body>
+<body class="lab-app">
   <div class="lab-chrome">
-    <p><a href="./">← Labo</a> · <a href="../sports/">page /sports/</a> · <a href="./sports-strip-lab.html">cartes mât</a></p>
-    <h1>Cartes page Sports</h1>
-    <p class="lab-lede">Même HTML/CSS que <code>/sports/</code> (<code>sports-panel</code>). En août la page réelle n’a presque que « à venir » et des creux — ici toutes les variantes, y compris V / D / N.</p>
-    <div class="lab-bar" role="toolbar" aria-label="Largeur du plateau">
-      <span class="k">Largeur</span>
+    <h1>Cartes /sports/</h1>
+    <p class="lab-links"><a href="./">Labo</a> · <a href="../sports/">page réelle</a> · <a href="./sports-strip-lab.html">mât</a></p>
+    <div class="lab-bar" role="toolbar" aria-label="Largeur de carte">
+      <span class="k">Carte</span>
       <button type="button" data-w="288">288</button>
       <button type="button" data-w="340">340</button>
       <button type="button" data-w="390" class="is-on">390</button>
       <button type="button" data-w="430">430</button>
       <button type="button" data-w="560">560</button>
       <button type="button" data-w="768">768</button>
-      <button type="button" data-w="1280">1280</button>
       <button type="button" data-w="full">Plein</button>
     </div>
     <div class="lab-bar" role="toolbar" aria-label="Thème et vue">
@@ -181,22 +240,20 @@
       <button type="button" data-theme-btn="light" class="is-on">Clair</button>
       <button type="button" data-theme-btn="dark">Sombre</button>
       <span class="k">Vue</span>
-      <button type="button" data-view="fiches" class="is-on">Fiches</button>
-      <button type="button" data-view="grille">Grille</button>
+      <button type="button" data-view="fiches" class="is-on">Banc</button>
+      <button type="button" data-view="grille">Comme /sports/</button>
     </div>
   </div>
-
-  <div id="stage">
-    <div class="seo-wire seo-wire--sports" style="max-width:none;padding:0;margin:0">
+  <nav id="lab-nav" aria-label="Variantes"></nav>
+  <div id="lab-main">
+    <div id="stage">
       <div id="fiches"></div>
       <div id="grille" class="sports-board" role="list" hidden></div>
     </div>
+    <details id="formats">
+      <summary>Iframes 390 / 430 / 768 / 1280 — media queries réelles</summary>
+    </details>
   </div>
-
-  <section id="formats">
-    <h2 class="lab-h">Mêmes cartes, vrais viewports</h2>
-    <p class="lab-lede" style="margin:0 0 16px">Iframes : les media queries CSS (560 px) s’appliquent. Le repli noms longs est un <code>@container</code> à 340 px de carte.</p>
-  </section>
 
   <script>
     const TONE = {
@@ -617,15 +674,43 @@
 
     const params = new URLSearchParams(location.search);
     const embed = params.get('embed') === '1';
-    if (embed) document.documentElement.classList.add('lab-embed');
-
     const fiches = document.getElementById('fiches');
     const grille = document.getElementById('grille');
-    fiches.innerHTML = cases.map((c) => {
+    const nav = document.getElementById('lab-nav');
+
+    if (embed) {
+      document.documentElement.classList.remove('lab-app');
+      document.documentElement.classList.add('lab-embed');
+      document.body.classList.remove('lab-app');
+    }
+
+    fiches.innerHTML = cases.map((c, i) => {
       const note = c.note ? ` <em>— ${c.note}</em>` : '';
-      return `<article class="lab-case"><p><strong>${c.title}</strong>${note}</p>${panel(c.panel)}</article>`;
+      return `<article class="lab-case" id="case-${i}" data-case="${i}"><p><strong>${c.title}</strong>${note}</p>${panel(c.panel)}</article>`;
     }).join('');
     grille.innerHTML = cases.map((c) => panel(c.panel)).join('');
+    nav.innerHTML = '<p>Variantes</p>' + cases.map((c, i) =>
+      `<a href="#case-${i}" data-case="${i}" title="${c.title}">${c.title}</a>`
+    ).join('');
+
+    function setCurrent(i) {
+      nav.querySelectorAll('a').forEach((a) => {
+        a.classList.toggle('is-on', a.getAttribute('data-case') === String(i));
+      });
+      fiches.querySelectorAll('.lab-case').forEach((el) => {
+        el.classList.toggle('is-on', el.getAttribute('data-case') === String(i));
+      });
+    }
+
+    nav.addEventListener('click', (e) => {
+      const a = e.target.closest('a[data-case]');
+      if (!a) return;
+      e.preventDefault();
+      const i = a.getAttribute('data-case');
+      setCurrent(i);
+      const el = document.getElementById(`case-${i}`);
+      if (el) el.scrollIntoView({ block: 'start' });
+    });
 
     function setWidth(w) {
       document.querySelectorAll('[data-w]').forEach((b) => {
@@ -676,6 +761,14 @@
       setWidth(savedW || '390');
       setTheme(savedTheme || 'light');
       setView(savedView || 'fiches');
+      setCurrent(0);
+      const io = new IntersectionObserver((entries) => {
+        const vis = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (vis) setCurrent(vis.target.getAttribute('data-case'));
+      }, { root: document.getElementById('lab-main'), threshold: [0.25, 0.5, 0.75] });
+      fiches.querySelectorAll('.lab-case').forEach((el) => io.observe(el));
 
       const formats = document.getElementById('formats');
       [390, 430, 768, 1280].forEach((w) => {
