@@ -55,6 +55,10 @@
   const surface = params.get('surface') === 'kiosque-v1' ? 'kiosque-v1' : 'legacy';
   const EMBED_H = surface === 'kiosque-v1' ? 68 : 62;
   document.documentElement.dataset.surface = surface;
+  const themeParam = params.get('theme');
+  if (themeParam === 'light' || themeParam === 'dark') {
+    document.documentElement.dataset.theme = themeParam;
+  }
   if (surface === 'kiosque-v1') {
     document.documentElement.dataset.theme = 'dark';
     // data-uni-session (fraîcheur) : le fond de barre ne varie plus.

@@ -1,9 +1,6 @@
-/* Page iFrames — aperçus + snippets copiables */
+/* Page iFrames — aperçus, snippets, galerie formats pub */
 
-.iframe-block {
-  margin: 0 0 28px;
-}
-
+.iframe-block { margin: 0 0 28px; }
 .iframe-block h3 {
   font-family: var(--serif);
   font-size: 1.15rem;
@@ -13,36 +10,17 @@
 .iframe-preview {
   border: 1px solid var(--rule);
   border-radius: 14px;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--bg-soft) 70%, #1a1c22) 0%, var(--bg-soft) 100%);
+  background: var(--bg-soft);
   padding: 14px;
-  overflow: hidden;
+  overflow: auto;
 }
-
-.iframe-preview--light {
-  background: #eef0f4;
-}
-
 .iframe-preview iframe {
   display: block;
   width: 100%;
   border: 0;
   background: transparent;
 }
-
-.iframe-preview--radio iframe {
-  height: 68px;
-}
-
-.iframe-preview--sports {
-  max-width: 422px;
-}
-
-.iframe-preview--sports iframe {
-  height: 520px;
-  max-width: 390px;
-  margin: 0 auto;
-}
+.iframe-preview--radio iframe { height: 62px; }
 
 .iframe-snippet {
   position: relative;
@@ -50,23 +28,18 @@
   max-width: 100%;
   min-width: 0;
 }
-
 .iframe-snippet pre {
   margin: 0;
   padding: 14px 16px 44px;
   border: 1px solid var(--rule);
   border-radius: 12px;
-  background: #0e0f12;
-  color: #e8eaef;
+  background: var(--bg-soft);
+  color: var(--ink);
   overflow-x: auto;
   font: 12.5px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   white-space: pre;
 }
-
-.iframe-snippet pre code {
-  font: inherit;
-  color: inherit;
-}
+.iframe-snippet pre code { font: inherit; color: inherit; }
 
 .iframe-copy {
   position: absolute;
@@ -75,21 +48,19 @@
   font-family: var(--sans);
   font-size: 12.5px;
   font-weight: 600;
-  color: var(--accent, #cf7ec1);
-  background: color-mix(in srgb, #0e0f12 20%, #1c1e24);
-  border: 1px solid color-mix(in srgb, var(--accent, #cf7ec1) 40%, #3a3d46);
+  color: var(--accent);
+  background: var(--bg);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--rule));
   border-radius: 999px;
   padding: 5px 12px;
   cursor: pointer;
 }
-
 .iframe-copy:hover,
 .iframe-copy:focus-visible {
-  background: color-mix(in srgb, var(--accent, #cf7ec1) 18%, #1c1e24);
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg));
 }
-
 .iframe-copy:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--accent, #cf7ec1) 70%, #fff);
+  outline: 2px solid color-mix(in srgb, var(--accent) 70%, #fff);
   outline-offset: 2px;
 }
 
@@ -100,6 +71,67 @@
   max-width: 46rem;
 }
 
+.sat-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+.sat-toolbar button {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--bg-soft);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.sat-toolbar button[aria-pressed="true"] {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--rule));
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg));
+}
+
+.ad-board {
+  display: grid;
+  gap: 28px;
+  margin: 8px 0 12px;
+}
+.ad-unit h3 {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  margin: 0 0 4px;
+}
+.ad-unit .ad-meta {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+.ad-stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 22px 16px;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  overflow: auto;
+  background-image:
+    linear-gradient(45deg, color-mix(in srgb, var(--ink) 8%, transparent) 25%, transparent 25%),
+    linear-gradient(-45deg, color-mix(in srgb, var(--ink) 8%, transparent) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, color-mix(in srgb, var(--ink) 8%, transparent) 75%),
+    linear-gradient(-45deg, transparent 75%, color-mix(in srgb, var(--ink) 8%, transparent) 75%);
+  background-size: 18px 18px;
+  background-position: 0 0, 0 9px, 9px -9px, -9px 0;
+  background-color: var(--bg-soft);
+}
+.ad-stage iframe {
+  display: block;
+  border: 0;
+  flex: 0 0 auto;
+}
+
 .iframe-params {
   width: 100%;
   max-width: 46rem;
@@ -107,7 +139,6 @@
   font-size: 14px;
   margin: 12px 0 0;
 }
-
 .iframe-params th,
 .iframe-params td {
   text-align: left;
@@ -115,7 +146,6 @@
   border-bottom: 1px solid var(--rule);
   vertical-align: top;
 }
-
 .iframe-params th {
   font-size: 12px;
   letter-spacing: 0.04em;
@@ -123,7 +153,6 @@
   color: var(--muted);
   font-weight: 700;
 }
-
 .iframe-params code {
   font: 12.5px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }

@@ -37,6 +37,7 @@ const NO_PLAYER = new Set([
   'easter-egg.html',
   'tuner-embed.html', // est le lecteur, pas un consommateur
   'sports-embed.html', // iframe sports, pas un consommateur radio
+  'sports-ad-embed.html',
 ]);
 
 const pages = walkHtml(root);

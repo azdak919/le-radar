@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr-CA" data-embed="sports-ad" data-fmt="300x250" data-skin="amber" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#0a0b08" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <title>LE-RADAR — Sports SAT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="sports-ad-embed.css?v=4" />
+  </head>
+  <body>
+    <a id="sat" class="sat" href="https://le-radar.ca/sports/" target="_blank" rel="noopener noreferrer">
+      <span class="sat-bezel">
+        <span class="sat-chrome">
+          <span class="sat-led" aria-hidden="true"></span>
+          <span class="sat-word">LE-RADAR</span>
+          <span class="sat-clock" id="sat-clock"></span>
+        </span>
+        <span class="sat-lcd">
+          <span class="sat-scan" aria-hidden="true"></span>
+          <span class="sat-grid" aria-hidden="true"></span>
+          <span class="sat-flip" id="sat-flip">
+            <span class="sat-face sat-face--front" id="sat-front"></span>
+            <span class="sat-face sat-face--back" id="sat-back" aria-hidden="true"></span>
+          </span>
+        </span>
+        <span class="sat-foot">
+          <span class="sat-badge">SAT</span>
+          <span class="sat-home">le-radar.ca</span>
+        </span>
+      </span>
+    </a>
+    <script src="scripts/session-freshness-lib.js" defer></script>
+    <script src="scripts/sports-freshness-lib.js" defer></script>
+    <script src="sports-ad-embed.js?v=3" defer></script>
+  </body>
+</html>

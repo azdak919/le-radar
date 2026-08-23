@@ -1080,11 +1080,19 @@ for (const rel of ['index.html', 'tuner-embed.html', 'feeds.html']) {
   const iframes = readFileSync(join(root, 'iframes/index.html'), 'utf8');
   assert(iframes.includes('iFrames'), 'iframes : titre iFrames requis');
   assert(iframes.includes('tuner-embed.html'), 'iframes : snippet radio requis');
-  assert(iframes.includes('sports-embed.html'), 'iframes : snippet sports requis');
+  assert(iframes.includes('sports-ad-embed.html'), 'iframes : snippet sports SAT requis');
   assert(iframes.includes('id="snippet-radio"'), 'iframes : bloc copiable radio requis');
-  assert(iframes.includes('id="snippet-sports"'), 'iframes : bloc copiable sports requis');
+  assert(iframes.includes('id="snippet-300x250"'), 'iframes : bloc copiable 300×250 requis');
   assert(iframes.includes('Copier le code radio'), 'iframes : bouton copier radio requis');
-  assert(iframes.includes('Copier le code sports'), 'iframes : bouton copier sports requis');
+  assert(iframes.includes('fmt=300x250'), 'iframes : format MPU 300×250 requis');
+  assert(iframes.includes('fmt=728x90'), 'iframes : format leaderboard requis');
+  assert(iframes.includes('fmt=320x50'), 'iframes : format mobile requis');
+  assert(iframes.includes('fmt=300x600'), 'iframes : format half-page requis');
+}
+{
+  const ad = readFileSync(join(root, 'sports-ad-embed.html'), 'utf8');
+  assert(/data-embed="sports-ad"/.test(ad), 'sports-ad-embed : data-embed=sports-ad requis');
+  assert(ad.includes('sports-ad-embed.js'), 'sports-ad-embed : script requis');
 }
 // Pages avec lecteur natif : sans media-src https:, les flux radio sont bloqués
 // par default-src 'self' (silence au play sur SEO / feeds).
