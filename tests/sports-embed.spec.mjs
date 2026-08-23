@@ -1,30 +1,31 @@
 import { expect, test } from '@playwright/test';
 
-test.describe('Embed sports SAT', () => {
-  test('300×250 flippe un LCD et une promo LE-RADAR', async ({ page }) => {
+test.describe('Embed sports IAB', () => {
+  test('300×250 montre une carte LE-RADAR (match ou marque)', async ({ page }) => {
     const messages = [];
     page.on('pageerror', (error) => messages.push(error.message));
     await page.setViewportSize({ width: 400, height: 400 });
     await page.goto('/sports-ad-embed.html?fmt=300x250', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('html')).toHaveAttribute('data-embed', 'sports-ad');
     await expect(page.locator('html')).toHaveAttribute('data-fmt', '300x250');
-    await expect.poll(() => page.locator('#sat-front').innerText(), { timeout: 15_000 })
-      .toMatch(/LE-RADAR|–|REÇOIT|Prochain|Aujourd/);
+    await expect.poll(() => page.locator('#ad-front').innerText(), { timeout: 15_000 })
+      .toMatch(/LE-RADAR|–|reçoit|contre|Prochain|Aujourd/i);
     expect(messages).toEqual([]);
   });
 
-  test('page iFrames : formats IAB + copie + thème', async ({ page, context }) => {
+  test('page iFrames : formats IAB + copie + thème, sans Flipper', async ({ page, context }) => {
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
     await page.setViewportSize({ width: 1200, height: 900 });
     await page.goto('/iframes/', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('h1')).toHaveText(/iFrames/);
+    await expect(page.locator('body')).not.toContainText(/Flipper|phosphore|Sports SAT/i);
     await expect(page.locator('#snippet-radio')).toContainText('tuner-embed.html');
     await expect(page.locator('#snippet-300x250')).toContainText('sports-ad-embed.html?fmt=300x250');
     await expect(page.locator('iframe[data-embed-kind="sports-ad"]')).toHaveCount(6);
 
     const mpu = page.locator('#fmt-300x250 iframe');
     const frame = mpu.contentFrame();
-    await expect(frame.locator('#sat-front')).toBeVisible({ timeout: 15_000 });
+    await expect(frame.locator('#ad-front')).toBeVisible({ timeout: 15_000 });
 
     await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'light'));
     await page.waitForTimeout(300);

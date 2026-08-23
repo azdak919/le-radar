@@ -71,29 +71,6 @@
   max-width: 46rem;
 }
 
-.sat-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0 0 18px;
-}
-.sat-toolbar button {
-  font-family: var(--sans);
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--ink-soft);
-  background: var(--bg-soft);
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  padding: 6px 12px;
-  cursor: pointer;
-}
-.sat-toolbar button[aria-pressed="true"] {
-  color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--rule));
-  background: color-mix(in srgb, var(--accent) 10%, var(--bg));
-}
-
 .ad-board {
   display: grid;
   gap: 28px;

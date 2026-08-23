@@ -33,7 +33,7 @@
       <header class="kit-head">
         <p class="kit-eyebrow">Embed</p>
         <h1 class="kit-title">iFrames</h1>
-        <p class="kit-lead">Two HTML frames to put LE-RADAR.ca on a campus site: the radio bar, and a column of sports cards. No account. No required script.</p>
+        <p class="kit-lead">Two HTML frames for a campus site: the radio bar, and a sports card in IAB ad sizes. Same identity as the site — purple, Inter and Source Serif, Prochain / Aujourd’hui / Hier tags. No account.</p>
       </header>
       <p><a href="../../iframes/">Version française</a></p>
       <section class="kit-section" id="radio">
@@ -62,27 +62,59 @@
         </div>
       </section>
       <section class="kit-section" id="sports">
-        <h2>Sports cards</h2>
-        <p>The masthead CTA card, stacked. Every few results, a LE-RADAR.ca card appears and opens le-radar.ca in a new tab. Suggested width 390 px.</p>
-        <div class="iframe-preview iframe-preview--sports iframe-preview--light">
-          <iframe
-            data-embed-kind="sports"
-            src="../../sports-embed.html?every=4&amp;n=8"
-            title="Preview — LE-RADAR.ca sports cards"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-          ></iframe>
-        </div>
-        <div class="iframe-snippet">
-          <pre><code id="snippet-sports">&lt;iframe
-  src="https://le-radar.ca/sports-embed.html"
+        <h2>Sports cards — ad sizes</h2>
+        <p>The masthead card, cropped to an IAB slot. Every 4 matches, a LE-RADAR.ca brand card. Click opens le-radar.ca in a new tab. Use <code>?theme=light</code> or <code>dark</code> for the host site.</p>
+        <div class="ad-board">
+          <article class="ad-unit" id="fmt-300x250">
+            <h3>300×250 — medium rectangle</h3>
+            <div class="ad-stage">
+              <iframe data-embed-kind="sports-ad" src="../../sports-ad-embed.html?fmt=300x250" width="300" height="250" title="Sports 300×250 — LE-RADAR.ca" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <div class="iframe-snippet">
+              <pre><code id="snippet-300x250">&lt;iframe
+  src="https://le-radar.ca/sports-ad-embed.html?fmt=300x250"
   title="Student sports — LE-RADAR.ca"
-  loading="lazy"
-  referrerpolicy="strict-origin-when-cross-origin"
-  style="width:100%;max-width:390px;height:520px;border:0;overflow:hidden;"
+  width="300" height="250"
+  loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+  style="width:300px;height:250px;border:0;overflow:hidden;"
 &gt;&lt;/iframe&gt;</code></pre>
-          <button type="button" class="iframe-copy" data-copy="#snippet-sports" data-copied="Copied" data-idle="Copy sports code">Copy sports code</button>
+              <button type="button" class="iframe-copy" data-copy="#snippet-300x250" data-copied="Copied" data-idle="Copy 300×250">Copy 300×250</button>
+            </div>
+          </article>
+          <article class="ad-unit" id="fmt-728x90">
+            <h3>728×90 — leaderboard</h3>
+            <div class="ad-stage">
+              <iframe data-embed-kind="sports-ad" src="../../sports-ad-embed.html?fmt=728x90" width="728" height="90" title="Sports 728×90 — LE-RADAR.ca" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <div class="iframe-snippet">
+              <pre><code id="snippet-728x90">&lt;iframe
+  src="https://le-radar.ca/sports-ad-embed.html?fmt=728x90"
+  title="Student sports — LE-RADAR.ca"
+  width="728" height="90"
+  loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+  style="width:728px;height:90px;border:0;overflow:hidden;"
+&gt;&lt;/iframe&gt;</code></pre>
+              <button type="button" class="iframe-copy" data-copy="#snippet-728x90" data-copied="Copied" data-idle="Copy 728×90">Copy 728×90</button>
+            </div>
+          </article>
+          <article class="ad-unit" id="fmt-320x50">
+            <h3>320×50 — mobile banner</h3>
+            <div class="ad-stage">
+              <iframe data-embed-kind="sports-ad" src="../../sports-ad-embed.html?fmt=320x50" width="320" height="50" title="Sports 320×50 — LE-RADAR.ca" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <div class="iframe-snippet">
+              <pre><code id="snippet-320x50">&lt;iframe
+  src="https://le-radar.ca/sports-ad-embed.html?fmt=320x50"
+  title="Student sports — LE-RADAR.ca"
+  width="320" height="50"
+  loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+  style="width:320px;height:50px;border:0;overflow:hidden;"
+&gt;&lt;/iframe&gt;</code></pre>
+              <button type="button" class="iframe-copy" data-copy="#snippet-320x50" data-copied="Copied" data-idle="Copy 320×50">Copy 320×50</button>
+            </div>
+          </article>
         </div>
+        <p class="iframe-note">Also: <code>336x280</code>, <code>300x600</code>, <code>160x600</code> — same URL, change <code>fmt</code>.</p>
       </section>
       <!-- RADAR:FOOTER:START -->
       <footer class="site-foot">

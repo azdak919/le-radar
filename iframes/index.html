@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="description" content="Intégrez LE-RADAR.ca : barre radio et gadget sports SAT aux formats pub IAB (300×250, 728×90, 320×50…), code HTML à copier-coller." />
+    <meta name="description" content="Intégrez LE-RADAR.ca : barre radio et cartes sports aux formats pub IAB (300×250, 728×90, 320×50…), code HTML à copier-coller." />
     <meta name="robots" content="index,follow" />
     <meta name="theme-color" content="#ffffff" />
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"iFrames — LE-RADAR.ca","url":"https://le-radar.ca/iframes/","inLanguage":"fr-CA","isPartOf":{"@type":"WebSite","name":"LE-RADAR.ca","url":"https://le-radar.ca/"}}</script>
@@ -87,7 +87,7 @@
       <header class="kit-head">
         <p class="kit-eyebrow">À intégrer</p>
         <h1 class="kit-title">iFrames</h1>
-        <p class="kit-lead">Deux gadgets HTML pour un site de campus : la barre radio, et un récepteur SAT de scores aux formats pub IAB. Aucun compte. Un flip, et l’info suivante.</p>
+        <p class="kit-lead">Deux cadres HTML pour un site de campus : la barre radio, et une carte sports aux formats pub IAB. Même identité que le site — pourpre, Inter et Source Serif, pastilles Prochain / Aujourd’hui / Hier. Aucun compte.</p>
       </header>
 
       <section class="kit-section" id="radio">
@@ -121,21 +121,16 @@
       </section>
 
       <section class="kit-section" id="sports">
-        <h2>Sports SAT — formats pub</h2>
-        <p>Un LCD qui flippe, comme un gadget de poche. Tailles IAB pour glisser le cadre dans une zone pub (MPU, bandeau, mobile, gratte-ciel). Tous les 4 matchs, l’écran devient LE-RADAR.ca. Clic = le-radar.ca (nouvel onglet).</p>
-        <p class="iframe-note">Peau : ambre (Flipper), pourpre Radar, ou encre claire pour un site blanc. Changez aussi le thème de la page (soleil / lune) : les gadgets suivent.</p>
-        <div class="sat-toolbar" role="group" aria-label="Peau du gadget">
-          <button type="button" data-sat-skin="amber" aria-pressed="true">Phosphore ambre</button>
-          <button type="button" data-sat-skin="violet" aria-pressed="false">Phosphore Radar</button>
-          <button type="button" data-sat-skin="eink" aria-pressed="false">Encre claire</button>
-        </div>
+        <h2>Cartes sports — formats pub</h2>
+        <p>La carte du mât, recadrée pour une zone pub. Tailles IAB pour la glisser dans un MPU, un bandeau, une bannière mobile ou un gratte-ciel. Tous les 4 matchs, une carte LE-RADAR.ca. Clic = le-radar.ca (nouvel onglet).</p>
+        <p class="iframe-note">Le thème de cette page (soleil / lune) est envoyé aux cartes. Pour un site hôte, passez <code>?theme=light</code> ou <code>dark</code> dans l’URL.</p>
 
         <div class="ad-board">
           <article class="ad-unit" id="fmt-300x250">
-            <h3>Pocket · 300×250</h3>
+            <h3>300×250 — rectangle moyen</h3>
             <p class="ad-meta">IAB Medium Rectangle (MPU) — la zone la plus courante en colonne de journal.</p>
             <div class="ad-stage">
-              <iframe data-embed-kind="sports-ad" src="../sports-ad-embed.html?fmt=300x250" width="300" height="250" title="SAT 300×250" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              <iframe data-embed-kind="sports-ad" src="../sports-ad-embed.html?fmt=300x250" width="300" height="250" title="Sports 300×250 — LE-RADAR.ca" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
             </div>
             <div class="iframe-snippet">
               <pre><code id="snippet-300x250">&lt;iframe
@@ -150,10 +145,10 @@
           </article>
 
           <article class="ad-unit" id="fmt-728x90">
-            <h3>Ticker · 728×90</h3>
-            <p class="ad-meta">IAB Leaderboard — bandeau sous un en-tête, flip horizontal.</p>
+            <h3>728×90 — bandeau</h3>
+            <p class="ad-meta">IAB Leaderboard — bandeau sous un en-tête.</p>
             <div class="ad-stage">
-              <iframe data-embed-kind="sports-ad" src="../sports-ad-embed.html?fmt=728x90" width="728" height="90" title="SAT 728×90" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              <iframe data-embed-kind="sports-ad" src="../sports-ad-embed.html?fmt=728x90" width="728" height="90" title="Sports 728×90 — LE-RADAR.ca" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
             </div>
             <div class="iframe-snippet">
               <pre><code id="snippet-728x90">&lt;iframe
@@ -168,10 +163,10 @@
           </article>
 
           <article class="ad-unit" id="fmt-320x50">
-            <h3>Stamp · 320×50</h3>
+            <h3>320×50 — bannière mobile</h3>
             <p class="ad-meta">IAB Mobile banner — une ligne, pour le haut d’un article téléphone.</p>
             <div class="ad-stage">
-              <iframe data-embed-kind="sports-ad" src="../sports-ad-embed.html?fmt=320x50" width="320" height="50" title="SAT 320×50" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              <iframe data-embed-kind="sports-ad" src="../sports-ad-embed.html?fmt=320x50" width="320" height="50" title="Sports 320×50 — LE-RADAR.ca" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
             </div>
             <div class="iframe-snippet">
               <pre><code id="snippet-320x50">&lt;iframe
@@ -186,10 +181,10 @@
           </article>
 
           <article class="ad-unit" id="fmt-336x280">
-            <h3>Slab · 336×280</h3>
-            <p class="ad-meta">IAB Large Rectangle — un MPU un peu plus large, même flip.</p>
+            <h3>336×280 — grand rectangle</h3>
+            <p class="ad-meta">IAB Large Rectangle — un MPU un peu plus large.</p>
             <div class="ad-stage">
-              <iframe data-embed-kind="sports-ad" src="../sports-ad-embed.html?fmt=336x280" width="336" height="280" title="SAT 336×280" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              <iframe data-embed-kind="sports-ad" src="../sports-ad-embed.html?fmt=336x280" width="336" height="280" title="Sports 336×280 — LE-RADAR.ca" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
             </div>
             <div class="iframe-snippet">
               <pre><code id="snippet-336x280">&lt;iframe
@@ -204,10 +199,10 @@
           </article>
 
           <article class="ad-unit" id="fmt-300x600">
-            <h3>Gadget · 300×600</h3>
-            <p class="ad-meta">IAB Half Page — le SAT debout, comme un appareil de poche. La pièce maîtresse.</p>
+            <h3>300×600 — demi-page</h3>
+            <p class="ad-meta">IAB Half Page — carte debout, noms en Source Serif. La pièce maîtresse.</p>
             <div class="ad-stage">
-              <iframe data-embed-kind="sports-ad" src="../sports-ad-embed.html?fmt=300x600" width="300" height="600" title="SAT 300×600" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              <iframe data-embed-kind="sports-ad" src="../sports-ad-embed.html?fmt=300x600" width="300" height="600" title="Sports 300×600 — LE-RADAR.ca" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
             </div>
             <div class="iframe-snippet">
               <pre><code id="snippet-300x600">&lt;iframe
@@ -222,10 +217,10 @@
           </article>
 
           <article class="ad-unit" id="fmt-160x600">
-            <h3>Antenne · 160×600</h3>
+            <h3>160×600 — gratte-ciel</h3>
             <p class="ad-meta">IAB Wide Skyscraper — rail de droite, matchs à la verticale.</p>
             <div class="ad-stage">
-              <iframe data-embed-kind="sports-ad" src="../sports-ad-embed.html?fmt=160x600" width="160" height="600" title="SAT 160×600" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              <iframe data-embed-kind="sports-ad" src="../sports-ad-embed.html?fmt=160x600" width="160" height="600" title="Sports 160×600 — LE-RADAR.ca" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
             </div>
             <div class="iframe-snippet">
               <pre><code id="snippet-160x600">&lt;iframe
@@ -248,17 +243,12 @@
             <tr>
               <td><code>fmt</code></td>
               <td>300x250 · 728x90 · 320x50 · 336x280 · 300x600 · 160x600</td>
-              <td>Taille IAB du gadget (largeur × hauteur, pixels).</td>
+              <td>Taille IAB de la carte (largeur × hauteur, pixels).</td>
             </tr>
             <tr>
               <td><code>theme</code></td>
               <td>dark · light</td>
-              <td>Phosphore sur noir, ou encre sur LCD crème.</td>
-            </tr>
-            <tr>
-              <td><code>skin</code></td>
-              <td>amber · violet · eink</td>
-              <td>Ambre Flipper, pourpre LE-RADAR, ou papier.</td>
+              <td>Verre sombre (mât), ou papier blanc (site journal).</td>
             </tr>
           </tbody>
         </table>

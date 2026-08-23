@@ -1,5 +1,5 @@
 /**
- * Page /iframes/ : copier les snippets, synchro thème, peaux SAT.
+ * Page /iframes/ : copier les snippets, synchro thème clair/sombre.
  */
 (function () {
   'use strict';
@@ -55,12 +55,8 @@
 
   function syncSportsAd(iframe) {
     const theme = pageTheme();
-    const skin = document.documentElement.getAttribute('data-sat-skin') || 'amber';
     try {
-      const win = iframe.contentWindow;
-      if (!win) return;
-      win.postMessage({ type: 'radar-sports-ad-theme', theme }, originOf(iframe));
-      win.postMessage({ type: 'radar-sports-ad-skin', skin }, originOf(iframe));
+      iframe.contentWindow?.postMessage({ type: 'radar-sports-ad-theme', theme }, originOf(iframe));
     } catch (_) { /* ignore */ }
   }
 
@@ -69,19 +65,14 @@
     document.querySelectorAll('iframe[data-embed-kind="sports-ad"]').forEach(syncSportsAd);
   }
 
-  function stampRadioSrc() {
-    document.querySelectorAll('iframe[data-embed-kind="radio"]').forEach((iframe) => {
-      try {
-        const u = new URL(iframe.getAttribute('src') || iframe.src, location.href);
-        u.searchParams.set('theme', pageTheme());
-        const next = u.pathname + u.search;
-        const cur = iframe.getAttribute('src') || '';
-        if (!cur.includes('theme=')) iframe.setAttribute('src', next);
-      } catch (_) { /* ignore */ }
-    });
-  }
-
-  stampRadioSrc();
+  document.querySelectorAll('iframe[data-embed-kind="radio"], iframe[data-embed-kind="sports-ad"]').forEach((iframe) => {
+    try {
+      const u = new URL(iframe.getAttribute('src') || iframe.src, location.href);
+      u.searchParams.set('theme', pageTheme());
+      const cur = iframe.getAttribute('src') || '';
+      if (!cur.includes('theme=')) iframe.setAttribute('src', u.pathname + u.search);
+    } catch (_) { /* ignore */ }
+  });
 
   document.querySelectorAll('iframe').forEach((iframe) => {
     iframe.addEventListener('load', () => {
@@ -92,33 +83,6 @@
 
   new MutationObserver(syncAll).observe(document.documentElement, {
     attributes: true,
-    attributeFilter: ['data-theme', 'data-sat-skin'],
-  });
-
-  document.querySelectorAll('button[data-sat-skin]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const skin = btn.getAttribute('data-sat-skin');
-      document.documentElement.setAttribute('data-sat-skin', skin);
-      document.querySelectorAll('button[data-sat-skin]').forEach((b) => {
-        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
-      });
-      syncAll();
-    });
-  });
-
-  window.addEventListener('message', (event) => {
-    if (event.origin !== window.location.origin) return;
-    const data = event.data;
-    if (!data || typeof data.height !== 'number' || data.height < 40) return;
-    const kind = data.type === 'radar-sports-embed'
-      ? 'sports'
-      : data.type === 'radar-embed'
-        ? 'radio'
-        : '';
-    if (!kind) return;
-    document.querySelectorAll(`iframe[data-embed-kind="${kind}"]`).forEach((frame) => {
-      if (frame.contentWindow !== event.source) return;
-      frame.style.height = `${Math.ceil(data.height)}px`;
-    });
+    attributeFilter: ['data-theme'],
   });
 })();

@@ -1,18 +1,42 @@
 /**
- * LE-RADAR SAT — widget sports formats IAB.
- * Flip LCD (style gadget) entre résultats, prochains, et promo marque.
+ * LE-RADAR — carte sports IAB (identité du site : pourpre, Inter, Source Serif).
  */
 (function () {
   'use strict';
 
   const FORMATS = new Set(['300x250', '336x280', '728x90', '320x50', '300x600', '160x600']);
-  const SKINS = new Set(['amber', 'violet', 'eink']);
   const TZ = 'America/Toronto';
   const BRAND_EVERY = 4;
-  const FLIP_MS = 180;
-  const DWELL_MS = 4800;
+  const ROLL_MS = 280;
+  const DWELL_MS = 5200;
+  const LIVE_LEAD_MS = 15 * 60 * 1000;
+  const LIVE_TAIL_MS = 3 * 3600 * 1000;
   const HOME = 'https://le-radar.ca/';
   const SPORTS = 'https://le-radar.ca/sports/';
+  const SLOGAN = 'Journaux, radios et sports étudiants du Québec';
+  const ACCENT_TONE = '#6c2163';
+
+  const TONES = {
+    football: '#c45c2a',
+    basketball: '#d88a0a',
+    soccer: '#3d9a6a',
+    'soccer-interieur': '#15803d',
+    futsal: '#166534',
+    volleyball: '#3b82c4',
+    hockey: '#5498bb',
+    sailing: '#0e7490',
+    rugby: '#7c2d12',
+    badminton: '#0f766e',
+    baseball: '#9a3412',
+    'flag-football': '#854d0e',
+    athletisme: '#b45309',
+    'cross-country': '#92400e',
+    natation: '#0369a1',
+    golf: '#15803d',
+    cheerleading: '#be185d',
+    ultimate: '#7c3aed',
+    default: '#66839e',
+  };
 
   const GLYPH = [
     [/basket/i, '🏀'],
@@ -34,40 +58,32 @@
 
   const params = new URLSearchParams(location.search);
   const html = document.documentElement;
+  const fmt = FORMATS.has(params.get('fmt')) ? params.get('fmt') : '300x250';
 
   function applyChrome() {
-    const fmt = FORMATS.has(params.get('fmt')) ? params.get('fmt') : '300x250';
-    let skin = SKINS.has(params.get('skin')) ? params.get('skin') : 'amber';
     let theme = params.get('theme');
     if (theme !== 'light' && theme !== 'dark') {
       theme = html.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
     }
-    if (skin === 'eink') theme = 'light';
     html.dataset.fmt = fmt;
-    html.dataset.skin = skin;
     html.dataset.theme = theme;
     html.style.width = fmt.split('x')[0] + 'px';
     html.style.height = fmt.split('x')[1] + 'px';
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = theme === 'light' ? '#ffffff' : '#0e0f12';
     const [w, h] = fmt.split('x').map(Number);
     try {
       parent.postMessage({ type: 'radar-sports-ad', protocol: 1, width: w, height: h, fmt, ready: true }, '*');
     } catch (_) { /* ignore */ }
   }
-
   applyChrome();
 
   window.addEventListener('message', (event) => {
     const data = event.data;
-    if (!data || typeof data !== 'object') return;
-    if (data.type === 'radar-sports-ad-theme' && (data.theme === 'light' || data.theme === 'dark')) {
+    if (data?.type === 'radar-sports-ad-theme' && (data.theme === 'light' || data.theme === 'dark')) {
       html.dataset.theme = data.theme;
-      if (data.theme === 'light' && html.dataset.skin === 'amber') {
-        /* eink phosphor on light hosts — still amber-capable if skin=violet */
-      }
-    }
-    if (data.type === 'radar-sports-ad-skin' && SKINS.has(data.skin)) {
-      html.dataset.skin = data.skin;
-      if (data.skin === 'eink') html.dataset.theme = 'light';
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.content = data.theme === 'light' ? '#ffffff' : '#0e0f12';
     }
   });
 
@@ -81,27 +97,81 @@
     }
   }
 
-  function clockToronto() {
-    try {
-      return new Intl.DateTimeFormat('fr-CA', {
-        timeZone: TZ, hour: '2-digit', minute: '2-digit', hour12: false,
-      }).format(new Date()).replace('h', ':');
-    } catch {
-      return '';
-    }
-  }
-
   function glyph(sport) {
     const s = String(sport || '');
     for (const [re, g] of GLYPH) if (re.test(s)) return g;
     return '🏅';
   }
 
-  function shortOf(team, game, us) {
+  function sportTone(sport) {
+    const s = String(sport || '').toLowerCase();
+    if (s.includes('basket')) return TONES.basketball;
+    if (s.includes('hockey')) return TONES.hockey;
+    if (s.includes('sail') || s.includes('voile')) return TONES.sailing;
+    if (s.includes('badminton')) return TONES.badminton;
+    if (s.includes('baseball') || s.includes('base-ball')) return TONES.baseball;
+    if (s.includes('ultimate')) return TONES.ultimate;
+    if (s.includes('rugby')) return TONES.rugby;
+    if (s.includes('volley')) return TONES.volleyball;
+    if (s.includes('futsal')) return TONES.futsal;
+    if (s.includes('interieur') || s.includes('intérieur')) return TONES['soccer-interieur'];
+    if (s.includes('soccer')) return TONES.soccer;
+    if (s.includes('flag')) return TONES['flag-football'];
+    if (s.includes('football')) return TONES.football;
+    if (s.includes('natat') || s.includes('swim')) return TONES.natation;
+    if (s.includes('golf')) return TONES.golf;
+    if (s.includes('cheer')) return TONES.cheerleading;
+    if (s.includes('cross')) return TONES['cross-country'];
+    if (s.includes('athlet')) return TONES.athletisme;
+    return TONES.default;
+  }
+
+  function resultTone(result) {
+    if (result === 'W') return '#3d9a6a';
+    if (result === 'L') return '#c45c5c';
+    if (result === 'D' || result === 'T') return '#8fa3b0';
+    return TONES.default;
+  }
+
+  function slideTone(slide) {
+    if (!slide || slide.kind === 'brand') return ACCENT_TONE;
+    if (slide.kind === 'live') return '#c8102e';
+    if (slide.kind === 'result' && slide.game?.result) return resultTone(slide.game.result);
+    return sportTone(slide.game?.sport || slide.team?.sport);
+  }
+
+  function badgeSpec(result) {
+    if (result === 'W') return { letter: 'V', mod: 'w' };
+    if (result === 'L') return { letter: 'D', mod: 'l' };
+    if (result === 'D' || result === 'T') return { letter: 'N', mod: 'd' };
+    return { letter: 'N', mod: 'd' };
+  }
+
+  function labelOf(team, game, us) {
+    const compact = fmt === '320x50';
     if (us) {
-      return String(team.code || team.name || 'ÉQ').slice(0, 8);
+      const n = String(team.name || team.code || 'Équipe');
+      return compact ? String(team.code || n).slice(0, 10) : n;
     }
-    return String(game.opponentCode || game.opponent || 'ADV').slice(0, 8);
+    const opp = String(game.opponent || game.opponentCode || 'Adversaire');
+    return compact ? String(game.opponentCode || opp).slice(0, 10) : opp;
+  }
+
+  function gameMs(game) {
+    if (!game?.date) return NaN;
+    const raw = String(game.time || '12:00').trim();
+    const m = raw.match(/(\d{1,2}):(\d{2})/);
+    const hh = m ? String(m[1]).padStart(2, '0') : '12';
+    const mm = m ? m[2] : '00';
+    const t = Date.parse(`${game.date}T${hh}:${mm}:00`);
+    return Number.isFinite(t) ? t : NaN;
+  }
+
+  function isLiveVisual(game) {
+    const t = gameMs(game);
+    if (!Number.isFinite(t)) return false;
+    const now = Date.now();
+    return t <= now + LIVE_LEAD_MS && t >= now - LIVE_TAIL_MS;
   }
 
   function collect(data) {
@@ -110,6 +180,7 @@
     const teams = Object.values(data.teams || {});
     const results = [];
     const nexts = [];
+    const lives = [];
     const seen = new Set();
     const keyOf = (g, t) => g.gameId || `${t.id}:${g.date}:${g.opponentCode || g.opponent}`;
 
@@ -125,27 +196,25 @@
       const nxt = team.nextGame || (Array.isArray(team.nextGames) ? team.nextGames[0] : null);
       if (nxt && nxt.date && nxt.date >= today) {
         const k = keyOf(nxt, team);
-        if (!seen.has(k)) {
-          seen.add(k);
+        if (seen.has(k)) continue;
+        seen.add(k);
+        if (isLiveVisual(nxt) && last?.date !== today) {
+          lives.push({ kind: 'live', team, game: nxt });
+        } else {
           nexts.push({ kind: 'next', team, game: nxt });
         }
       }
     }
-
     results.sort((a, b) => String(b.game.date).localeCompare(String(a.game.date)));
-    nexts.sort((a, b) => {
-      const da = `${a.game.date}T${a.game.time || '99:99'}`;
-      const db = `${b.game.date}T${b.game.time || '99:99'}`;
-      return da.localeCompare(db);
-    });
+    nexts.sort((a, b) => `${a.game.date}T${a.game.time || '99'}`.localeCompare(`${b.game.date}T${b.game.time || '99'}`));
 
     function diverse(list, limit) {
       const out = [];
-      const seen = new Set();
+      const had = new Set();
       for (const s of list) {
         const sp = String(s.game.sport || s.team.sport || '');
-        if (seen.has(sp)) continue;
-        seen.add(sp);
+        if (had.has(sp)) continue;
+        had.add(sp);
         out.push(s);
         if (out.length >= limit) return out;
       }
@@ -156,8 +225,9 @@
       }
       return out;
     }
-    const mix = diverse(results, 6).concat(diverse(nexts, 6)).slice(0, 10);
-
+    const mix = lives.length
+      ? diverse(lives, 8)
+      : diverse(results, 6).concat(diverse(nexts, 6)).slice(0, 10);
     const out = [];
     let n = 0;
     for (const s of mix) {
@@ -170,58 +240,72 @@
     return out;
   }
 
-  function faceHtml(slide) {
-    if (!slide || slide.kind === 'brand') {
-      return `<span class="face face--brand">
-        <span class="face-kicker">SAT · QC</span>
-        <span class="face-board">
-          <span class="face-title">LE-RADAR.ca</span>
-        </span>
-        <span class="face-sub">journaux · radios · sports</span>
-      </span>`;
-    }
-    const g = slide.game || {};
-    const t = slide.team || {};
-    const us = shortOf(t, g, true);
-    const them = shortOf(t, g, false);
-    const home = g.home ? us : them;
-    const away = g.home ? them : us;
-    const gph = glyph(g.sport || t.sport);
-    const comp = String(g.competition || t.leagueLabel || t.sportLabel || '').slice(0, 42);
-    if (slide.kind === 'result') {
-      const left = g.home ? g.scoreFor : g.scoreAgainst;
-      const right = g.home ? g.scoreAgainst : g.scoreFor;
-      const tag = g.date === ymdToronto() ? 'Aujourd’hui' : 'Hier';
-      const res = g.result === 'W' || g.result === 'L' ? g.result : 'D';
-      return `<span class="face face--result" data-res="${res}">
-        <span class="face-kicker">${gph} ${tag}</span>
-        <span class="face-board">
-          <span class="face-hero">${esc(home)}</span>
-          <span class="face-mid face-score">${left}–${right}</span>
-          <span class="face-hero">${esc(away)}</span>
-        </span>
-        <span class="face-sub">${esc(comp)}</span>
-      </span>`;
-    }
-    const when = g.time ? String(g.time).replace(':', ' h ') : '';
-    const day = g.date === ymdToronto() ? 'Aujourd’hui' : (g.date || '');
-    return `<span class="face face--next">
-      <span class="face-kicker">${gph} Prochain</span>
-      <span class="face-board">
-        <span class="face-hero">${esc(home)}</span>
-        <span class="face-mid face-verb">${g.home ? 'reçoit' : 'à'}</span>
-        <span class="face-hero">${esc(away)}</span>
-      </span>
-      <span class="face-sub">${esc([day, when, comp].filter(Boolean).join(' · '))}</span>
-    </span>`;
-  }
-
   function esc(s) {
     return String(s || '')
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+      .replace(/>/g, '&gt;');
+  }
+
+  function meta(slide) {
+    if (!slide || slide.kind === 'brand') {
+      return { tag: 'LE-RADAR.ca', lamp: 'brand', state: 'idle', res: '', foot: SLOGAN };
+    }
+    const g = slide.game || {};
+    const today = ymdToronto();
+    if (slide.kind === 'live') {
+      return { tag: 'En cours', lamp: 'live', state: 'live', res: '', foot: 'le-radar.ca' };
+    }
+    if (slide.kind === 'result') {
+      const tag = g.date === today ? 'Aujourd’hui' : 'Hier';
+      return {
+        tag,
+        lamp: g.date === today ? 'today' : 'past',
+        state: 'result',
+        res: g.result === 'W' || g.result === 'L' ? g.result : 'D',
+        foot: 'le-radar.ca',
+      };
+    }
+    return { tag: 'Prochain', lamp: 'next', state: 'next', res: '', foot: 'le-radar.ca' };
+  }
+
+  function faceHtml(slide) {
+    if (!slide || slide.kind === 'brand') {
+      return `<span class="ad-kicker">Québec</span>
+        <span class="ad-board">
+          <span class="ad-hero notranslate" translate="no">LE-RADAR.ca</span>
+          <span class="ad-verb">réunis au même endroit</span>
+        </span>
+        <span class="ad-sub">Journaux, radios et sports étudiants</span>`;
+    }
+    const g = slide.game || {};
+    const t = slide.team || {};
+    const home = labelOf(t, g, g.home);
+    const away = labelOf(t, g, !g.home);
+    const gph = glyph(g.sport || t.sport);
+    const comp = String(g.competition || t.leagueLabel || t.sportLabel || '');
+    if (slide.kind === 'result') {
+      const left = g.home ? g.scoreFor : g.scoreAgainst;
+      const right = g.home ? g.scoreAgainst : g.scoreFor;
+      const b = badgeSpec(g.result);
+      return `<span class="ad-kicker">${gph}</span>
+        <span class="ad-board">
+          <span class="ad-hero">${esc(home)}</span>
+          <span class="ad-score">${left}–${right}<span class="ad-badge ad-badge--${b.mod}">${b.letter}</span></span>
+          <span class="ad-hero">${esc(away)}</span>
+        </span>
+        <span class="ad-sub">${esc(comp)}</span>`;
+    }
+    const when = g.time ? String(g.time).replace(':', ' h ') : '';
+    const day = g.date === ymdToronto() ? 'Aujourd’hui' : (g.date || '');
+    const verb = slide.kind === 'live' ? 'contre' : (g.home ? 'reçoit' : 'à');
+    return `<span class="ad-kicker">${gph}</span>
+      <span class="ad-board">
+        <span class="ad-hero">${esc(home)}</span>
+        <span class="ad-verb">${verb}</span>
+        <span class="ad-hero">${esc(away)}</span>
+      </span>
+      <span class="ad-sub">${esc([day, when, comp].filter(Boolean).join(' · '))}</span>`;
   }
 
   function hrefFor(slide) {
@@ -235,62 +319,110 @@
     return qs ? `${SPORTS}?${qs}` : SPORTS;
   }
 
-  const front = document.getElementById('sat-front');
-  const back = document.getElementById('sat-back');
-  const flipEl = document.getElementById('sat-flip');
-  const root = document.getElementById('sat');
-  const clockEl = document.getElementById('sat-clock');
+  const stage = document.getElementById('ad-stage');
+  const tagEl = document.getElementById('ad-tag');
+  const footEl = document.getElementById('ad-foot');
+  const root = document.getElementById('ad');
+  const reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
   let slides = [{ kind: 'brand' }];
   let idx = 0;
-  let flipping = false;
-  const reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  let swapping = false;
+  let paused = false;
 
-  function paint(el, slide) {
-    el.innerHTML = faceHtml(slide);
-  }
-
-  function show(i) {
-    idx = ((i % slides.length) + slides.length) % slides.length;
-    const slide = slides[idx];
-    paint(front, slide);
+  function paintChrome(slide) {
+    const m = meta(slide);
+    if (tagEl) {
+      tagEl.dataset.lamp = m.lamp;
+      if (m.lamp === 'brand') {
+        tagEl.replaceChildren();
+        const img = document.createElement('img');
+        img.className = 'ad-tag-logo';
+        img.src = 'assets/icon.svg';
+        img.width = 18;
+        img.height = 18;
+        img.alt = '';
+        img.decoding = 'async';
+        tagEl.append(img);
+      } else {
+        tagEl.textContent = m.tag;
+      }
+    }
+    if (footEl) footEl.textContent = m.foot;
+    root.dataset.state = m.state;
+    if (m.res) root.dataset.res = m.res;
+    else root.removeAttribute('data-res');
+    root.style.setProperty('--sports-tone', slideTone(slide));
     root.href = hrefFor(slide);
     root.title = slide.kind === 'brand'
       ? 'LE-RADAR.ca — journaux, radios et sports étudiants du Québec'
       : 'Sports étudiants — LE-RADAR.ca';
   }
 
-  function tickClock() {
-    if (clockEl) clockEl.textContent = clockToronto();
+  function paintFace(el, slide) {
+    el.innerHTML = faceHtml(slide);
+  }
+
+  function frontEl() {
+    return document.getElementById('ad-front') || stage.querySelector('.ad-face.is-front');
+  }
+
+  function show(i) {
+    idx = ((i % slides.length) + slides.length) % slides.length;
+    const slide = slides[idx];
+    let front = frontEl();
+    if (!front) {
+      front = document.createElement('span');
+      front.id = 'ad-front';
+      front.className = 'ad-face is-front';
+      stage.append(front);
+    }
+    paintFace(front, slide);
+    paintChrome(slide);
   }
 
   function flipTo(next) {
-    if (flipping || slides.length < 2) {
+    if (swapping || slides.length < 2 || reduced) {
       show(next);
       return;
     }
-    if (reduced) {
-      show(next);
-      return;
+    swapping = true;
+    const nextIdx = ((next % slides.length) + slides.length) % slides.length;
+    const front = frontEl();
+    const back = document.createElement('span');
+    back.className = 'ad-face is-rolling-in';
+    back.id = 'ad-front';
+    if (front) front.removeAttribute('id');
+    paintFace(back, slides[nextIdx]);
+    paintChrome(slides[nextIdx]);
+    stage.append(back);
+    void back.offsetWidth;
+    if (front) {
+      front.classList.add('is-rolling-out');
+      front.classList.remove('is-front');
     }
-    flipping = true;
-    const lcd = document.querySelector('.sat-lcd');
-    lcd?.classList.add('is-wipe');
+    back.classList.add('is-front');
+    idx = nextIdx;
     window.setTimeout(() => {
-      show(next);
-      lcd?.classList.remove('is-wipe');
-      flipping = false;
-    }, FLIP_MS);
+      if (front && front.isConnected) front.remove();
+      back.classList.remove('is-rolling-in');
+      swapping = false;
+    }, ROLL_MS);
   }
 
   function boot() {
-    tickClock();
-    window.setInterval(tickClock, 15000);
     show(0);
     if (slides.length > 1) {
-      window.setInterval(() => flipTo(idx + 1), DWELL_MS);
+      window.setInterval(() => {
+        if (!paused && !swapping) flipTo(idx + 1);
+      }, DWELL_MS);
     }
   }
+
+  root.addEventListener('pointerenter', () => { paused = true; }, { passive: true });
+  root.addEventListener('pointerleave', () => { paused = false; }, { passive: true });
+  root.addEventListener('focusin', () => { paused = true; });
+  root.addEventListener('focusout', () => { paused = false; });
 
   async function load() {
     try {
