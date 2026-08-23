@@ -25,6 +25,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 ### Corrigé
 
 - Sous-ligne « En cours » : plus d’âge relatif du coup d’envoi (« dans 15 min », « à l’instant »). Compétition, et la période si l’API la donne.
+- Verbe « reçoit / à » de la CTA : plus pâle que les noms (poids 500, blanc ~50 %) — 650/800 tombaient tous deux sur Inter 700, d’où un « reçoit » aussi blanc que Saint-Hyacinthe.
 - Un 0-0 encore dans la fenêtre n’est plus classé résultat fini. Le jour civil des prochains matchs est celui de Québec, pas UTC (un crawl à 20 h EDT ne fait plus disparaître le match du jour).
 - Panneau latéral du navigateur (Firefox, Chrome, Edge, Arc, Vivaldi…) : le shell large restait actif alors que la rangée du mât n’avait plus la place. Les cartes météo passaient sous les icônes ; les puces sports pouvaient sortir du bandeau. Valable à **toutes** les largeurs (téléphone docké → 1280 → 1920 → QHD/UW) : on mesure le reliquat réel, on rétrécit les slots, et on ne remonte le nombre de cartes que si la fenêtre s’élargit.
 - Edge (et tout Chromium) sur un bureau tactile — ex. IdeaPad Flex 5 + Philips 1920 : `pointer: coarse` classait la session comme un téléphone. La carte proposait « Sur l’écran d’accueil » au lieu d’installer la PWA fenêtre. Un viewport ≥ 1024 px hors iOS/Android est du bureau ; le titre spatial mobile (focus-group B) reste pour les vrais téléphones.

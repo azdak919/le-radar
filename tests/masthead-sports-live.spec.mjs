@@ -90,6 +90,24 @@ test('CTA live : En cours, équipes, pas « dans 15 min »', async ({ page }) =>
   expect(text).toMatch(/Saint-Hyacinthe/);
   expect(text).toMatch(/Vanier/);
   expect(text).toMatch(/reçoit/);
+  const vs = cta.locator('.sports-chip__vs');
+  await expect(vs).toHaveText('reçoit');
+  const pale = await cta.evaluate((root) => {
+    const vsEl = root.querySelector('.sports-chip__vs');
+    const nameEl = root.querySelector('.sports-chip__name');
+    const vsCs = getComputedStyle(vsEl);
+    const nameCs = getComputedStyle(nameEl);
+    return {
+      vsWeight: Number(vsCs.fontWeight),
+      nameWeight: Number(nameCs.fontWeight),
+      vsColor: vsCs.color,
+      vsSize: Number.parseFloat(vsCs.fontSize),
+      nameSize: Number.parseFloat(nameCs.fontSize),
+    };
+  });
+  expect(pale.vsWeight, 'verbe Inter 500, pas le 700 des noms').toBe(500);
+  expect(pale.nameWeight, 'noms plus gras que le verbe').toBeGreaterThanOrEqual(700);
+  expect(pale.vsSize, 'verbe un peu plus petit que les noms').toBeLessThan(pale.nameSize);
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
   expect(sub).toMatch(/Soccer collégial masculin D1/);
   expect(sub.toLowerCase()).not.toMatch(/dans \d/);
