@@ -218,11 +218,12 @@
         },
       },
       {
-        title: 'CTA — creux',
+        title: 'CTA — marque (creux)',
         cta: {
-          state: 'idle', tone: '#6a7580', glyph: '',
-          text: 'Scores collégiaux et universitaires du Québec',
-          sub: 'MAJ 15 h 50',
+          state: 'idle', tone: '#6a7580', brand: true,
+          tag: 'LE-RADAR.ca',
+          text: 'LE-RADAR.ca',
+          sub: 'Le Réseau Académique de Découverte et d’Agrégation de Ressources',
         },
       },
     ];
@@ -291,7 +292,7 @@
       </a>`;
     }
 
-    function stripCta({ state, tone, tag, glyph, text, sub, badge, badgeMod }) {
+    function stripCta({ state, tone, tag, glyph, text, sub, badge, badgeMod, brand }) {
       const tagLabel = tag || 'Sports';
       const lamp = state === 'live' ? 'live'
         : tagLabel === 'Aujourd’hui' ? 'today'
@@ -302,17 +303,30 @@
       const b = badge
         ? `<span class="sports-chip__badge sports-chip__badge--${badgeMod}" aria-hidden="true">${badge}</span>`
         : '';
+      const tagInner = brand
+        ? '<img class="sports-chip__cta-logo" src="../assets/icon.svg" width="18" height="18" alt="" decoding="async" aria-hidden="true">'
+        : tagLabel;
+      const tagClass = brand
+        ? 'sports-chip__cta-tag sports-chip__cta-tag--brand notranslate'
+        : 'sports-chip__cta-tag';
+      const nt = brand ? ' translate="no"' : '';
+      const ntText = brand
+        ? ` class="sports-chip__cta-text notranslate" translate="no"`
+        : ' class="sports-chip__cta-text"';
+      const ntSub = brand
+        ? ' class="sports-chip__cta-sub-text notranslate" translate="no"'
+        : ' class="sports-chip__cta-sub-text"';
       return `<div class="masthead-sports-strip" data-count="1" data-cta-pinned="0" data-ready="1">
         <a class="sports-chip sports-chip--cta" data-cta-state="${state}" href="#lab" style="--sports-tone:${tone}">
           <span class="sports-chip__cta-rail">
             <span class="sports-chip__cta-eyebrow sports-chip__cta-eyebrow--rail" hidden></span>
-            <span class="sports-chip__cta-tag" data-cta-tag="${tagLabel}" data-cta-lamp="${lamp}">${tagLabel}</span>
+            <span class="${tagClass}" data-cta-tag="${tagLabel}" data-cta-lamp="${lamp}"${nt}>${tagInner}</span>
           </span>
           <span class="sports-chip__line">
             <span class="sports-chip__cta-stack">
               <span class="sports-chip__cta-label is-front">
-                <span class="sports-chip__cta-head">${g}${b}<span class="sports-chip__cta-line"><span class="sports-chip__cta-text">${text}</span></span></span>
-                <span class="sports-chip__cta-sub"><span class="sports-chip__cta-sub-text">${sub}</span></span>
+                <span class="sports-chip__cta-head">${g}${b}<span class="sports-chip__cta-line"><span${ntText}>${text}</span></span></span>
+                <span class="sports-chip__cta-sub"><span${ntSub}>${sub}</span></span>
               </span>
             </span>
           </span>

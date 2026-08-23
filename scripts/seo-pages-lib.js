@@ -943,7 +943,7 @@ function renderSiteFooter({
     return `<footer class="site-foot site-foot--maintenance">
 ${p}  <div class="site-foot__brand">
 ${p}    <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="${up}assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">${BRAND_NAME}</p>
-${p}    <p class="site-foot__signature" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
+${p}    <p class="site-foot__signature notranslate" translate="no" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
 ${p}  </div>
 ${p}  <p class="site-foot__contact"><a href="${CONTACT_URL}" data-contact-channel="email" aria-label="${escapeHtml(t.contactAria)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>${escapeHtml(t.contactLabel)}</a></p>
 ${p}  <details class="site-foot__details">
@@ -971,7 +971,7 @@ ${p}</footer>`;
   return `<footer class="site-foot">
 ${p}  <div class="site-foot__brand">
 ${p}    <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="${up}assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">${BRAND_NAME}</p>
-${p}    <p class="site-foot__signature" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
+${p}    <p class="site-foot__signature notranslate" translate="no" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
 ${p}  </div>
 ${p}  <p>${escapeHtml(t.unofficial)}</p>
 ${p}  <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">

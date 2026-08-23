@@ -3551,6 +3551,8 @@ const SPORTS_CTA_IDLE_LABELS = [
   'Scores collégiaux et universitaires',
   'Voir le tableau des scores',
 ];
+const RADAR_BRAND_SHORT = 'LE-RADAR.ca';
+const RADAR_BRAND_LONG = 'Le Réseau Académique de Découverte et d’Agrégation de Ressources';
 let sportsData = null;
 let sportsSlides = [];
 /** Slides actuellement affichées (1 par slot), comme mastheadWeatherSlots. */
@@ -4528,6 +4530,39 @@ function sportsGameHref(slide) {
  * sports-board.js filtre le sport, ouvre la section, surbrille et scroll
  * jusqu’à la carte formation (parité sélection d’une station radio).
  */
+function radarHomeHref() {
+  const home = document.querySelector('a.masthead-home, a[data-home-nav]');
+  const href = home?.getAttribute('href');
+  if (href) return href;
+  return new URL('.', window.location.href).pathname;
+}
+
+function radarIconSrc() {
+  const img = document.querySelector('.wordmark-logo, .site-foot__logo');
+  const src = img?.getAttribute('src');
+  if (src) return src;
+  return new URL('assets/icon.svg', window.location.href).pathname;
+}
+
+function radarBrandLogoEl() {
+  const img = document.createElement('img');
+  img.className = 'sports-chip__cta-logo';
+  img.src = radarIconSrc();
+  img.width = 18;
+  img.height = 18;
+  img.alt = '';
+  img.decoding = 'async';
+  img.setAttribute('aria-hidden', 'true');
+  return img;
+}
+
+function markNoTranslate(el) {
+  if (!el) return el;
+  el.classList.add('notranslate');
+  el.setAttribute('translate', 'no');
+  return el;
+}
+
 function sportsBoardHref(slide) {
   const base = new URL('sports/', window.location.href).pathname;
   // CTA avec match en accroche : deep-link vers ce match / sport.
@@ -5069,14 +5104,14 @@ function sportsCtaResultTag(src) {
 
 /**
  * Pastille CTA : Prochain / En cours / Hier / Aujourd’hui / date.
- * « Sports » seulement en creux idle.
+ * Creux : LE-RADAR.ca (logo PWA), pas « Sports ».
  */
 function sportsCtaTagLabel(slide, state) {
   const st = state || sportsCtaState(slide);
   if (st === 'live') return SPORTS_CTA_TAG_LIVE;
   if (st === 'next') return 'Prochain';
   if (st === 'result') return sportsCtaResultTag(slide?.ctaFrom || slide);
-  return SPORTS_CTA_TAG;
+  return RADAR_BRAND_SHORT;
 }
 
 /** Couleur du voyant : live / today (rouge) · next (ambre) · past (vert). */
@@ -5388,7 +5423,7 @@ function sportsCtaLabelPool() {
     .map(sportsCtaLabelFromSlide)
     .filter(Boolean);
   if (hot.length) return hot;
-  return SPORTS_CTA_IDLE_LABELS.slice();
+  return [RADAR_BRAND_SHORT];
 }
 
 /**
@@ -5411,22 +5446,19 @@ function sportsCtaState(slide) {
 function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
   const candidates = sportsCtaCandidateSlides();
   if (!candidates.length) {
-    const idle = SPORTS_CTA_IDLE_LABELS;
-    const idx = ((labelIndex % idle.length) + idle.length) % idle.length;
     return {
       mode: 'cta',
-      // Clé unique par index — plusieurs CTAs idle sans collision DOM
-      key: `${SPORTS_CTA_KEY}:${idx}`,
-      label: idle[idx],
-      labelIndex: idx,
+      key: `${SPORTS_CTA_KEY}:brand`,
+      label: RADAR_BRAND_SHORT,
+      labelIndex: 0,
       tone: SPORTS_CTA_REST_TONE,
-      team: { sport: 'board', name: 'Sports', code: 'RSEQ' },
+      team: { sport: 'board', name: RADAR_BRAND_SHORT, code: 'RADAR' },
       game: { sport: 'board' },
       ctaIdle: true,
       ctaState: 'idle',
       ctaEyebrow: '',
-      ctaSub: sportsUpdatedShort(),
-      titleExtra: idle[idx],
+      ctaSub: RADAR_BRAND_LONG,
+      titleExtra: RADAR_BRAND_LONG,
     };
   }
   const idx = ((labelIndex % candidates.length) + candidates.length) % candidates.length;
@@ -5462,7 +5494,7 @@ function pickDistinctSportsCtas(n) {
   const out = [];
   const used = new Set();
   const candidates = sportsCtaCandidateSlides();
-  const poolLen = Math.max(1, candidates.length || SPORTS_CTA_IDLE_LABELS.length);
+  const poolLen = Math.max(1, candidates.length || 1);
 
   for (let i = 0; i < poolLen && out.length < want; i += 1) {
     const slide = sportsCtaSlide(i);
@@ -5503,10 +5535,11 @@ function sportsCtaA11y(slide) {
     title = [sportsChipTitle({ ...slide.ctaFrom, mode: slide.ctaFrom.mode || 'next' }), updated ? `MAJ ${updated}` : '']
       .filter(Boolean).join(' · ');
   } else {
-    const detail = slide?.titleExtra || slide?.label || 'Scores collégiaux et universitaires';
-    title = [`Sports · ${detail}`, updated ? `MAJ ${updated}` : ''].filter(Boolean).join(' · ');
+    title = [RADAR_BRAND_SHORT, RADAR_BRAND_LONG].join(' · ');
   }
-  const aria = `Sports : ${slide?.label || 'résultats sportifs étudiants du Québec'} (nouvel onglet)`;
+  const aria = slide?.ctaIdle
+    ? `${RADAR_BRAND_SHORT} — ${RADAR_BRAND_LONG}`
+    : `Sports : ${slide?.label || 'résultats sportifs étudiants du Québec'} (nouvel onglet)`;
   return { title, aria };
 }
 
@@ -5584,8 +5617,8 @@ function fillSportsCtaLayer(layer, slide) {
         + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
     }
   } else {
-    // Idle / repli : pas de glyphe sport — libellé entier dans la fenêtre.
-    text.textContent = slide.label || 'Scores étudiants QC';
+    markNoTranslate(text);
+    text.textContent = RADAR_BRAND_SHORT;
   }
   line.append(text);
   head.append(line);
@@ -5598,6 +5631,7 @@ function fillSportsCtaLayer(layer, slide) {
     const subText = document.createElement('span');
     subText.className = 'sports-chip__cta-sub-text';
     subText.textContent = sub;
+    if (slide?.ctaIdle || sub === RADAR_BRAND_LONG) markNoTranslate(subText);
     el.append(subText);
     layer.append(el);
   }
@@ -5739,12 +5773,21 @@ function applySportsCtaState(chip, slide) {
   const tag = chip.querySelector('.sports-chip__cta-tag');
   if (!tag) return;
   const wanted = sportsCtaTagLabel(slide, state);
-  if (tag.dataset.ctaTag !== wanted) {
-    tag.dataset.ctaTag = wanted;
-    tag.replaceChildren();
-    tag.append(document.createTextNode(wanted));
-  }
   tag.dataset.ctaLamp = sportsCtaLamp(slide, state);
+  if (state === 'idle') {
+    tag.classList.add('sports-chip__cta-tag--brand');
+    markNoTranslate(tag);
+    tag.dataset.ctaTag = RADAR_BRAND_SHORT;
+    tag.replaceChildren(radarBrandLogoEl());
+  } else {
+    tag.classList.remove('sports-chip__cta-tag--brand', 'notranslate');
+    tag.removeAttribute('translate');
+    if (tag.dataset.ctaTag !== wanted) {
+      tag.dataset.ctaTag = wanted;
+      tag.replaceChildren();
+      tag.append(document.createTextNode(wanted));
+    }
+  }
   syncSportsCtaRail(chip, slide);
 }
 
@@ -6040,8 +6083,12 @@ function paintSportsChip(slide, animate = false) {
   if (slide.mode === 'cta') {
     const a = document.createElement('a');
     a.className = 'sports-chip sports-chip--cta';
-    a.href = sportsBoardHref(slide);
-    markSportsBoardLink(a);
+    if (slide.ctaIdle) {
+      a.href = radarHomeHref();
+    } else {
+      a.href = sportsBoardHref(slide);
+      markSportsBoardLink(a);
+    }
     if (animate && !sportsReducedMotion) a.classList.add('is-arriving');
     a.dataset.sportsKey = slide.key || SPORTS_CTA_KEY;
     a.dataset.sportsMode = 'cta';
