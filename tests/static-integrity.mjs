@@ -1268,8 +1268,9 @@ assert(
 assert(
   appJs.includes('sports-chip__cta-eyebrow')
     && appJs.includes('sports-chip__cta-sub')
-    && appJs.includes('function sportsUpdatedShort'),
-  'app.js : marqueur temporel + horodatage rendus dans la carte CTA',
+    && appJs.includes('function sportsUpdatedShort')
+    && appJs.includes('function sportsRelativeWhen'),
+  'app.js : CTA sous-ligne = relatif (il y a / dans) + compétition',
 );
 assert(
   appJs.includes('function sportsCtaResultIsTodayOrYesterday')

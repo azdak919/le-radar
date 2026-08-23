@@ -4934,6 +4934,20 @@ function sportsRelativeAge(ms, now = Date.now()) {
   return days <= 1 ? 'hier' : `il y a ${days} j`;
 }
 
+/** Échéance lisible — passé : « il y a 5 h » ; futur : « dans 3 h », « demain ». */
+function sportsRelativeWhen(ms, now = Date.now()) {
+  if (!Number.isFinite(ms)) return '';
+  if (ms <= now) return sportsRelativeAge(ms, now);
+  const min = Math.round((ms - now) / 60000);
+  if (min < 2) return 'imminent';
+  if (min < 60) return `dans ${min} min`;
+  const hours = Math.round((ms - now) / 3600000);
+  if (hours < 24) return `dans ${hours} h`;
+  const days = Math.round((ms - now) / 86400000);
+  if (days <= 1) return 'demain';
+  return `dans ${days} j`;
+}
+
 /**
  * Horodatage de la banque, **rendu dans la carte** — garde-fou
  * `fraicheur-visible`. Il n’existait que dans `title`/`aria-label` : au doigt il
@@ -5048,29 +5062,25 @@ function sportsCtaTagLabel(slide, state) {
 }
 
 /**
- * Sous-ligne : date match / compétition / fraîcheur.
- *
- * Next : date + compétition seulement. L’horodatage banque (« mis à jour à… »)
- * n’est plus inscrit ici — la carte CTA animée (rim-glow + roulement) signale
- * déjà qu’elle porte l’info éditoriale la plus fraîche ; le `title` garde MAJ
- * pour le survol / a11y (garde-fou fraicheur-visible assoupli pour next).
- * Résultat / live du jour : âge relatif (« il y a 3 h »).
- * Idle / plus vieux : horodatage banque via sportsUpdatedShort().
+ * Sous-ligne CTA : d’abord le relatif (« il y a 5 h », « dans 3 h »),
+ * puis la compétition. La pastille porte déjà Hier / Prochain / la date :
+ * on ne répète pas le même mot. Prochain lointain : relatif + jour/heure.
  */
 function sportsCtaSubLine(slide, state) {
   const comp = sportsCompetitionLabel(slide);
   const g = slide?.game;
-  const age = sportsResultAgeMs(g);
-  const when = state === 'next' ? sportsWhenLong(g?.date, g?.time) : '';
+  const ms = sportsGameMs(g);
+  const rel = sportsRelativeWhen(ms);
+  const tag = sportsCtaTagLabel(slide, state);
+  const relShown = rel && rel.toLowerCase() !== String(tag || '').toLowerCase();
   if (state === 'next') {
-    return [when, comp].filter(Boolean).join(' · ');
+    const when = sportsWhenLong(g?.date, g?.time);
+    const near = Number.isFinite(ms) && Math.abs(ms - Date.now()) < 36 * 3600 * 1000;
+    if (near) return [relShown ? rel : '', comp].filter(Boolean).join(' · ');
+    return [relShown ? rel : '', when, comp].filter(Boolean).join(' · ');
   }
-  if (state === 'live' || (state === 'result' && sportsCtaResultIsTodayOrYesterday(g))) {
-    const freshness = age < 86400000 ? sportsRelativeAge(sportsGameMs(g)) : '';
-    return [comp, freshness].filter(Boolean).join(' · ');
-  }
-  if (state === 'result') {
-    return [formatSportsWhen(g?.date, g?.time), comp].filter(Boolean).join(' · ');
+  if (state === 'live' || state === 'result') {
+    return [relShown ? rel : '', comp].filter(Boolean).join(' · ');
   }
   return [comp, sportsUpdatedShort()].filter(Boolean).join(' · ');
 }

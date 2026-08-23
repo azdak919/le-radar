@@ -57,6 +57,8 @@ test('labo cartes sports : iframe formats + marquee L→R', async ({ page }) => 
   await expect(frame.locator('.sports-chip--cta').first()).toBeVisible({ timeout: 10000 });
   await expect(frame.locator('#cta-band .sports-chip--match')).toHaveCount(0);
   await expect(frame.locator('#standard-chips .sports-chip--match').first()).toBeVisible();
+  await expect(frame.locator('#cta-band').getByText('il y a 5 h', { exact: false })).toBeVisible();
+  await expect(frame.locator('#cta-band').getByText('dans 3 h', { exact: false })).toBeVisible();
   await expect(frame.getByText('avant-hier', { exact: false }).first()).toBeVisible();
   await expect(frame.getByText('mer. 19 août', { exact: false }).first()).toBeVisible();
   await expect(frame.locator('#cta-band .masthead-sports-strip').first()).toHaveAttribute('data-count', '1');
