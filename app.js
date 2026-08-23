@@ -5004,19 +5004,29 @@ function sportsCtaLabelFromSlide(slide) {
  * Vide en direct : la pastille porte déjà « En cours » (override mainteneur).
  */
 function sportsCtaEyebrow(slide, state) {
-  if (state === 'live') return '';
-  if (state === 'result') {
-    const day = sportsSlideDayKey(slide);
+  if (state === 'live' || state === 'result') return '';
+  // Hors saison comme en saison : c’est le prochain coup d’envoi, pas un résultat rassis.
+  if (state === 'next') return 'Prochain';
+  return '';
+}
+
+/**
+ * Pastille CTA : « Sports » au repos, « En cours » en direct,
+ * « Hier » / « Aujourd’hui » pour un résultat du filet civil (remplace SPORTS).
+ */
+function sportsCtaTagLabel(slide, state) {
+  const st = state || sportsCtaState(slide);
+  if (st === 'live') return SPORTS_CTA_TAG_LIVE;
+  if (st === 'result') {
+    const src = slide?.ctaFrom || slide;
+    const day = sportsSlideDayKey(src);
     if (!day) return 'Résultat';
     const today = torontoDayKey();
     if (day === today) return 'Aujourd’hui';
     if (day === sportsCivilDayShift(today, -1)) return 'Hier';
-    // Plus vieux que hier : hors pool CTA. Pas « Reprise » (ça n’est pas un score).
     return 'Résultat';
   }
-  // Hors saison comme en saison : c’est le prochain coup d’envoi, pas un résultat rassis.
-  if (state === 'next') return 'Prochain';
-  return '';
+  return SPORTS_CTA_TAG;
 }
 
 /**
@@ -5533,7 +5543,8 @@ function fillSportsCtaLayer(layer, slide) {
   return layer;
 }
 
-/** Marqueur PROCHAIN / Résultat sur le rail (390/430 : au-dessus de SPORTS). */
+/** Marqueur PROCHAIN sur le rail (390/430 : au-dessus de SPORTS).
+ *  Hier / Aujourd’hui vivent dans la pastille, pas ici. */
 function syncSportsCtaRail(chip, slide) {
   const railEb = chip?.querySelector('.sports-chip__cta-eyebrow--rail');
   if (!railEb) return;
@@ -5659,13 +5670,12 @@ function rollSportsCtaLabel(chip, slide) {
 function applySportsCtaState(chip, slide) {
   if (!chip) return;
   const state = slide?.ctaState || sportsCtaState(slide);
-  const live = state === 'live';
   chip.dataset.ctaState = state;
   chip.style.setProperty('--sports-tone', sportsCtaTone({ ...slide, ctaState: state }));
 
   const tag = chip.querySelector('.sports-chip__cta-tag');
   if (!tag) return;
-  const wanted = live ? SPORTS_CTA_TAG_LIVE : SPORTS_CTA_TAG;
+  const wanted = sportsCtaTagLabel(slide, state);
   if (tag.dataset.ctaTag !== wanted) {
     tag.dataset.ctaTag = wanted;
     tag.replaceChildren();
@@ -5977,7 +5987,7 @@ function paintSportsChip(slide, animate = false) {
     a.title = title;
     a.setAttribute('aria-label', aria);
 
-    // Pastille : rubrique stable au repos, « En cours » pendant un match.
+    // Pastille : Sports / En cours / Hier / Aujourd’hui (jour du résultat).
     const tag = document.createElement('span');
     tag.className = 'sports-chip__cta-tag';
     tag.setAttribute('aria-hidden', 'true');

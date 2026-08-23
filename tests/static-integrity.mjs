@@ -1136,8 +1136,9 @@ assert(
   'app.js : pastille CTA mât = « Sports » au repos (pas le nom long de la section)',
 );
 assert(
-  /const SPORTS_CTA_TAG_LIVE\s*=\s*['"]En cours['"]/.test(appJs),
-  'app.js : le direct est le seul cas qui remplace « Sports » (override mainteneur)',
+  /const SPORTS_CTA_TAG_LIVE\s*=\s*['"]En cours['"]/.test(appJs)
+    && appJs.includes('function sportsCtaTagLabel'),
+  'app.js : pastille CTA = En cours / Hier / Aujourd’hui / Sports',
 );
 // Voyant CTA : CSS persistant (pas un span JS, pas lié à la radio).
 assert(
@@ -1278,12 +1279,14 @@ assert(
 );
 assert(
   /function sportsCtaEyebrow/.test(appJs)
+    && /function sportsCtaTagLabel/.test(appJs)
     && appJs.includes("return 'Hier'")
     && appJs.includes("return 'Prochain'")
+    && appJs.includes("return 'Aujourd’hui'")
     && !/return 'Reprise'/.test(appJs)
     && !/return 'Avant-hier'/.test(appJs)
     && !appJs.includes('function sportsHasAnyResult'),
-  'app.js : CTA Hier/Prochain (jour civil) — Reprise n’est pas un score rassis',
+  'app.js : pastille Hier/Aujourd’hui, eyebrow Prochain — pas Reprise',
 );
 // CTA pool = aujourd’hui/hier + (en saison jour lead | hors saison 1er match × 7 j).
 assert(
