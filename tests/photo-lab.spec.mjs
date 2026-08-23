@@ -74,9 +74,9 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   expect(pr - pg, 'Prochain : voyant ambre, pas rouge').toBeLessThan(80);
   expect(hr - hg, 'Hier : voyant ambre, pas rouge').toBeLessThan(80);
   await expect(page.locator('.sports-chip__cta-eyebrow--head', { hasText: /^Prochain$/ })).toHaveCount(0);
-  await expect(page.locator('.sports-chip__badge', { hasText: /^V$/ }).first()).toBeVisible();
-  await expect(page.locator('.sports-chip__badge', { hasText: /^D$/ }).first()).toBeVisible();
-  await expect(page.locator('.sports-chip__badge', { hasText: /^N$/ }).first()).toBeVisible();
+  await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^V$/ }).first()).toBeVisible();
+  await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^D$/ }).first()).toBeVisible();
+  await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^N$/ }).first()).toBeVisible();
   const labCopy = await page.locator('body').innerText();
   expect(labCopy, 'pas d’abréviation univ. — le marquee porte le mot entier').not.toMatch(/\buniv\./);
 

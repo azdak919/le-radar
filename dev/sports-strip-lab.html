@@ -142,6 +142,7 @@
         title: 'CTA — hier (victoire)',
         cta: {
           state: 'result', tone: '#3d9a6a', tag: 'Hier', glyph: '🏈',
+          badge: 'V', badgeMod: 'w',
           text: 'Carabins 24–21 Rouge et Or',
           sub: 'il y a 18 h · Football universitaire',
         },
@@ -150,6 +151,7 @@
         title: 'CTA — aujourd’hui (victoire)',
         cta: {
           state: 'result', tone: '#3d9a6a', tag: 'Aujourd’hui', glyph: '🏀',
+          badge: 'V', badgeMod: 'w',
           text: 'UdeM 78–71 Concordia',
           sub: 'il y a 3 h · Basketball universitaire',
         },
@@ -158,6 +160,7 @@
         title: 'CTA — aujourd’hui (défaite)',
         cta: {
           state: 'result', tone: '#c45c5c', tag: 'Aujourd’hui', glyph: '🏒',
+          badge: 'D', badgeMod: 'l',
           text: 'Bishop’s 2–5 McGill',
           sub: 'il y a 5 h · Hockey universitaire',
         },
@@ -166,6 +169,7 @@
         title: 'CTA — aujourd’hui (match nul)',
         cta: {
           state: 'result', tone: '#8fa3b0', tag: 'Aujourd’hui', glyph: '⚽',
+          badge: 'N', badgeMod: 'd',
           text: 'ULaval 1–1 UdeM',
           sub: 'il y a 2 h · Soccer universitaire masculin',
         },
@@ -174,6 +178,7 @@
         title: 'CTA — aujourd’hui (place)',
         cta: {
           state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', glyph: '⛵',
+          badge: 'V', badgeMod: 'w',
           text: 'McGill 7e/12',
           sub: 'il y a 6 h · Voile universitaire',
         },
@@ -182,6 +187,7 @@
         title: 'CTA — avant-hier',
         cta: {
           state: 'result', tone: '#3d9a6a', tag: 'Avant-hier', glyph: '🏀',
+          badge: 'V', badgeMod: 'w',
           text: 'Concordia 64–59 McGill',
           sub: 'il y a 2 j · Basketball universitaire',
         },
@@ -190,6 +196,7 @@
         title: 'CTA — mer. 19 août',
         cta: {
           state: 'result', tone: '#c45c5c', tag: 'mer. 19 août', glyph: '⚽',
+          badge: 'D', badgeMod: 'l',
           text: 'UQTR 0–2 ULaval',
           sub: 'il y a 4 j · Soccer universitaire féminin',
         },
@@ -284,9 +291,12 @@
       </a>`;
     }
 
-    function stripCta({ state, tone, tag, glyph, text, sub }) {
+    function stripCta({ state, tone, tag, glyph, text, sub, badge, badgeMod }) {
       const tagLabel = tag || 'Sports';
       const g = glyph ? `<span class="sports-chip__cta-glyph" aria-hidden="true">${glyph}</span>` : '';
+      const b = badge
+        ? `<span class="sports-chip__badge sports-chip__badge--${badgeMod}" aria-hidden="true">${badge}</span>`
+        : '';
       return `<div class="masthead-sports-strip" data-count="1" data-cta-pinned="0" data-ready="1">
         <a class="sports-chip sports-chip--cta" data-cta-state="${state}" href="#lab" style="--sports-tone:${tone}">
           <span class="sports-chip__cta-rail">
@@ -296,7 +306,7 @@
           <span class="sports-chip__line">
             <span class="sports-chip__cta-stack">
               <span class="sports-chip__cta-label is-front">
-                <span class="sports-chip__cta-head">${g}<span class="sports-chip__cta-line"><span class="sports-chip__cta-text">${text}</span></span></span>
+                <span class="sports-chip__cta-head">${g}${b}<span class="sports-chip__cta-line"><span class="sports-chip__cta-text">${text}</span></span></span>
                 <span class="sports-chip__cta-sub"><span class="sports-chip__cta-sub-text">${sub}</span></span>
               </span>
             </span>

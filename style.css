@@ -681,6 +681,10 @@ body {
   line-height: 1;
   align-self: center;
 }
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-head .sports-chip__badge {
+  flex: 0 0 auto;
+  align-self: center;
+}
 /* Fenêtre de défilement : borne les noms, jamais le marqueur ni le glyphe. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-line {
   display: block;
