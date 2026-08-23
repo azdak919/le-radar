@@ -226,21 +226,14 @@
       const idle = score.getAttribute('data-idle-html') || '';
       const isUpcoming = /à venir|upcoming/i.test(score.textContent || '')
         || /à venir|upcoming/i.test(idle);
-      if (isUpcoming && !score.querySelector('.sports-result__live-flag')) {
+      if (isUpcoming) {
         score.className = 'sports-result__score sports-result__score--live';
         score.setAttribute('aria-label', t.live);
-        score.innerHTML = `<span class="sports-result__live-flag">${t.live}</span>`;
-      } else if (!score.querySelector('.sports-result__live-flag')) {
-        const pts = (score.textContent || '').trim();
-        score.classList.add('sports-result__score--live');
-        score.classList.remove('sports-result__score--next');
-        score.setAttribute('aria-label', t.live);
-        score.innerHTML = `<span class="sports-result__live-flag">${t.live}</span>`
-          + (pts ? `<span class="sports-result__live-score">${pts}</span>` : '');
+        score.textContent = t.live;
       }
     }
     if (badge) {
-      badge.textContent = t.live;
+      badge.textContent = '';
       badge.setAttribute('title', t.live);
       badge.classList.remove('sports-result__badge--next');
     }

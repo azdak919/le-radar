@@ -1226,14 +1226,15 @@ function sportsResultRows(team, t, lang) {
     if (live) {
       const liveLabel = t.sportsLive || 'En cours';
       const hasScore = next.scoreFor != null && next.scoreAgainst != null;
-      const scoreInner = hasScore
-        ? `<span class="sports-result__live-flag">${escapeHtml(liveLabel)}</span><span class="sports-result__live-score">${escapeHtml(`${next.scoreFor}–${next.scoreAgainst}`)}</span>`
-        : `<span class="sports-result__live-flag">${escapeHtml(liveLabel)}</span>`;
+      const scoreText = hasScore ? `${next.scoreFor}–${next.scoreAgainst}` : liveLabel;
+      const scoreClass = hasScore
+        ? 'sports-result__score'
+        : 'sports-result__score sports-result__score--live';
       rows.push(`<li class="sports-result sports-result--live">
   <time class="sports-result__time" datetime="${escapeHtml(next.date || '')}">${timeHtml}</time>
-  <span class="sports-result__score sports-result__score--live" aria-label="${escapeHtml(liveLabel)}">${scoreInner}</span>
+  <span class="${scoreClass}" aria-label="${escapeHtml(liveLabel)}">${escapeHtml(scoreText)}</span>
   <span class="sports-result__title">${formatTitle(next, opp, venue)}</span>
-  <span class="sports-result__badge" title="${escapeHtml(liveLabel)}">${escapeHtml(liveLabel)}</span>
+  <span class="sports-result__badge" title="${escapeHtml(liveLabel)}"></span>
 </li>`);
     } else {
       rows.push(`<li class="sports-result sports-result--next">
