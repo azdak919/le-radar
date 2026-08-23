@@ -2391,6 +2391,40 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   /* Popover cast : visible quand le SDK l'active (retirant .hidden). */
   .tuner-cast--popover:not(.hidden):not([hidden]) { display: flex; }
 }
+
+/*
+ * 390 / 430 : plus de skip gauche. Le suivant se colle au cadran
+ * (onglet skip, pas un second carré 42 px). Embed kiosque inchangé.
+ */
+@media (max-width: 430.98px) {
+  html:not([data-embed="tuner"]) #tuner-prev {
+    display: none !important;
+  }
+  html:not([data-embed="tuner"]) #tuner-next.tuner-step {
+    width: 32px;
+    height: auto;
+    min-height: 36px;
+    align-self: stretch;
+    margin-left: -6px;
+    border-radius: 0 9px 9px 0;
+    border-left: 0;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: none;
+  }
+  html:not([data-embed="tuner"]) #tuner-next.tuner-step:hover,
+  html:not([data-embed="tuner"]) #tuner-next.tuner-step:active {
+    transform: none;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  html:not([data-embed="tuner"]) #tuner-next.tuner-step svg {
+    width: 18px;
+    height: 18px;
+  }
+  html:not([data-embed="tuner"]) .tuner-dial .tuner-now {
+    border-radius: 9px 0 0 9px;
+    padding-right: 18px;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .tuner-vol-slot { transition: none; }
 }
