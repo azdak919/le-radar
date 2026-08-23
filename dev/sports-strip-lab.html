@@ -293,6 +293,11 @@
 
     function stripCta({ state, tone, tag, glyph, text, sub, badge, badgeMod }) {
       const tagLabel = tag || 'Sports';
+      const lamp = state === 'live' ? 'live'
+        : tagLabel === 'Aujourd’hui' ? 'today'
+        : (state === 'next' || tagLabel === 'Prochain') ? 'next'
+        : state === 'result' ? 'past'
+        : 'idle';
       const g = glyph ? `<span class="sports-chip__cta-glyph" aria-hidden="true">${glyph}</span>` : '';
       const b = badge
         ? `<span class="sports-chip__badge sports-chip__badge--${badgeMod}" aria-hidden="true">${badge}</span>`
@@ -301,7 +306,7 @@
         <a class="sports-chip sports-chip--cta" data-cta-state="${state}" href="#lab" style="--sports-tone:${tone}">
           <span class="sports-chip__cta-rail">
             <span class="sports-chip__cta-eyebrow sports-chip__cta-eyebrow--rail" hidden></span>
-            <span class="sports-chip__cta-tag" data-cta-tag="${tagLabel}">${tagLabel}</span>
+            <span class="sports-chip__cta-tag" data-cta-tag="${tagLabel}" data-cta-lamp="${lamp}">${tagLabel}</span>
           </span>
           <span class="sports-chip__line">
             <span class="sports-chip__cta-stack">

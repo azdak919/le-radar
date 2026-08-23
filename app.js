@@ -5079,6 +5079,20 @@ function sportsCtaTagLabel(slide, state) {
   return SPORTS_CTA_TAG;
 }
 
+/** Couleur du voyant : live / today (rouge) · next (ambre) · past (vert). */
+function sportsCtaLamp(slide, state) {
+  const st = state || sportsCtaState(slide);
+  if (st === 'live') return 'live';
+  if (st === 'next') return 'next';
+  if (st === 'result') {
+    const src = slide?.ctaFrom || slide;
+    const day = sportsSlideDayKey(src);
+    if (day && day === torontoDayKey()) return 'today';
+    return 'past';
+  }
+  return 'idle';
+}
+
 /**
  * Sous-ligne CTA : d’abord le relatif (« il y a 5 h », « dans 3 h »),
  * puis la compétition. La pastille porte déjà Hier / Prochain / la date :
@@ -5730,6 +5744,7 @@ function applySportsCtaState(chip, slide) {
     tag.replaceChildren();
     tag.append(document.createTextNode(wanted));
   }
+  tag.dataset.ctaLamp = sportsCtaLamp(slide, state);
   syncSportsCtaRail(chip, slide);
 }
 
