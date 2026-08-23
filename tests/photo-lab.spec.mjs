@@ -59,12 +59,13 @@ test('labo cartes sports : iframe formats + marquee L→R', async ({ page }) => 
   await expect(frame.locator('#standard-chips .sports-chip--match').first()).toBeVisible();
   await expect(frame.getByText('avant-hier', { exact: false }).first()).toBeVisible();
   await expect(frame.getByText('mer. 19 août', { exact: false }).first()).toBeVisible();
-  await expect(frame.locator('#cta-band .sports-chip__cta-tag', { hasText: /^Sports$/ }).first()).toBeVisible();
   await expect(frame.locator('#cta-band .masthead-sports-strip').first()).toHaveAttribute('data-count', '1');
+  await expect(frame.locator('#cta-band .sports-chip__cta-tag', { hasText: /^Prochain$/ }).first()).toBeVisible();
   await expect(frame.locator('.sports-chip__cta-tag', { hasText: /^Hier$/ }).first()).toBeVisible();
   await expect(frame.locator('.sports-chip__cta-tag', { hasText: /^Aujourd’hui$/ }).first()).toBeVisible();
-  await expect(frame.locator('.sports-chip__cta-eyebrow--rail', { hasText: /^Hier$/ })).toHaveCount(0);
-  await expect(frame.locator('.sports-chip__cta-eyebrow--rail', { hasText: /^Prochain$/ }).first()).toBeVisible();
+  await expect(frame.locator('.sports-chip__cta-tag', { hasText: /^Avant-hier$/ }).first()).toBeVisible();
+  await expect(frame.locator('.sports-chip__cta-eyebrow--rail', { hasText: /^Prochain$/ })).toHaveCount(0);
+  await expect(frame.locator('.sports-chip__cta-eyebrow--head', { hasText: /^Prochain$/ })).toHaveCount(0);
   await expect(frame.locator('.sports-chip__cta-eyebrow', { hasText: /^Reprise$/ })).toHaveCount(0);
   await expect(frame.getByText('défaite', { exact: false }).first()).toBeVisible();
   await expect(frame.getByText('match nul', { exact: false }).first()).toBeVisible();
@@ -87,11 +88,6 @@ test('labo cartes sports : iframe formats + marquee L→R', async ({ page }) => 
     return Math.abs(Number(m[1].split(',')[4]));
   }), { timeout: 6000 }).toBeGreaterThan(4);
 
-  const railAt390 = await frame.locator('.sports-chip__cta-eyebrow--rail').first().evaluate(
-    (el) => getComputedStyle(el).display,
-  );
-  expect(railAt390, '390 : PROCHAIN au-dessus de SPORTS').not.toBe('none');
-
   await page.locator('#formats button[data-w="768"]').click();
   await expect(iframe).toHaveAttribute('data-w', '768');
   await expect(frame.locator('.sports-chip--cta').first()).toBeVisible();
@@ -99,9 +95,8 @@ test('labo cartes sports : iframe formats + marquee L→R', async ({ page }) => 
   await expect(frame.locator('.sports-chip__badge', { hasText: /^V$/ }).first()).toBeVisible();
   await expect(frame.locator('.sports-chip__badge', { hasText: /^D$/ }).first()).toBeVisible();
   await expect(frame.locator('.sports-chip__badge', { hasText: /^N$/ }).first()).toBeVisible();
-  await expect.poll(async () => frame.locator('.sports-chip__cta-eyebrow--rail').first().evaluate(
-    (el) => getComputedStyle(el).display,
-  )).toBe('none');
+  await expect(frame.locator('#cta-band .sports-chip__cta-tag').first()).toHaveText(/prochain/i);
+  await expect(frame.locator('.sports-chip__cta-eyebrow--head', { hasText: /^Prochain$/ })).toHaveCount(0);
 });
 
 test('labo photo : grille puis fiche, suivant en barre', async ({ page }) => {

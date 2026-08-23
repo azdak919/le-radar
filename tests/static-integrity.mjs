@@ -1282,13 +1282,14 @@ assert(
 assert(
   /function sportsCtaEyebrow/.test(appJs)
     && /function sportsCtaTagLabel/.test(appJs)
+    && appJs.includes('function sportsCtaResultTag')
     && appJs.includes("return 'Hier'")
     && appJs.includes("return 'Prochain'")
     && appJs.includes("return 'Aujourd’hui'")
+    && appJs.includes("return 'Avant-hier'")
     && !/return 'Reprise'/.test(appJs)
-    && !/return 'Avant-hier'/.test(appJs)
     && !appJs.includes('function sportsHasAnyResult'),
-  'app.js : pastille Hier/Aujourd’hui, eyebrow Prochain — pas Reprise',
+  'app.js : pastille Prochain/Hier/Aujourd’hui/date — plus de SPORTS+eyebrow',
 );
 // CTA pool = aujourd’hui/hier + (en saison jour lead | hors saison 1er match × 7 j).
 assert(

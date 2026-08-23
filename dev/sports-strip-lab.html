@@ -103,7 +103,7 @@
   <div id="host">
     <p><a class="hub" href="./">← Labo</a></p>
     <h1>Cartes sports</h1>
-    <p class="lede">Bandeau : à 390/430, CTA seule. Pastille <strong>Hier</strong> / <strong>Aujourd’hui</strong> pour ces deux jours ; les autres résultats gardent <strong>Sports</strong> et la date en sous-ligne. En dessous : puces scores (modèle standard, toujours visibles). Libellés complets ; marquee L→R si trop long.</p>
+    <p class="lede">La pastille CTA dit <strong>Prochain</strong>, <strong>Hier</strong>, <strong>Aujourd’hui</strong>, <strong>Avant-hier</strong> ou la date — plus de doublon SPORTS + marqueur. « Sports » seulement en creux. En dessous : puces scores (modèle standard).</p>
     <div class="formats" id="formats" role="toolbar" aria-label="Formats d’écran"></div>
     <p class="meta" id="meta"></p>
     <div class="clip" id="clip">
@@ -135,7 +135,8 @@
         cta: {
           state: 'next',
           tone: '#2e7d4f',
-          eyebrow: 'Prochain',
+          eyebrow: '',
+          tag: 'Prochain',
           glyph: '⚽',
           text: 'Patriotes de Saint-Hyacinthe reçoivent Vanier College',
           sub: 'dim. 23 août, 17 h 00 · Soccer collégial masculin division 1',
@@ -152,7 +153,8 @@
         cta: {
           state: 'next',
           tone: '#2e7d4f',
-          eyebrow: 'Prochain',
+          eyebrow: '',
+          tag: 'Prochain',
           glyph: '⚽',
           text: 'McGill à Concordia',
           sub: 'lun. 24 août, 15 h 00 · Soccer universitaire féminin',
@@ -259,7 +261,7 @@
         },
       },
       {
-        title: 'Résultat — avant-hier (pastille Sports)',
+        title: 'Résultat — avant-hier',
         extra: () => matchChip({
           tone: '#3d9a6a',
           glyph: '🏀',
@@ -272,14 +274,14 @@
           state: 'result',
           tone: '#3d9a6a',
           eyebrow: '',
-          tag: 'Sports',
+          tag: 'Avant-hier',
           glyph: '🏀',
           text: 'Concordia 64–59 McGill',
           sub: 'ven. 21 août · Basketball universitaire',
         },
       },
       {
-        title: 'Résultat — mer. 19 août (pastille Sports)',
+        title: 'Résultat — mer. 19 août',
         extra: () => matchChip({
           tone: '#c45c5c',
           glyph: '⚽',
@@ -292,7 +294,7 @@
           state: 'result',
           tone: '#c45c5c',
           eyebrow: '',
-          tag: 'Sports',
+          tag: 'mer. 19 août',
           glyph: '⚽',
           text: 'UQTR 0–2 ULaval',
           sub: 'mer. 19 août · Soccer universitaire féminin',
@@ -315,7 +317,8 @@
         cta: {
           state: 'next',
           tone: '#6a7580',
-          eyebrow: 'Prochain',
+          eyebrow: '',
+          tag: 'Prochain',
           glyph: '🏈',
           text: 'Rouge et Or à Carabins',
           sub: 'ven. 4 sept., 19 h 00 · Football universitaire',
