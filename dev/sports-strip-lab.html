@@ -5,100 +5,114 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>Labo cartes sports — LE RADAR (local)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="../style-masthead.css">
   <style>
     :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       background: #0c0d10;
       color: #f1f2f4;
       font: 15px/1.45 Inter, system-ui, sans-serif;
     }
-    main { max-width: 980px; margin: 0 auto; padding: 28px 18px 64px; }
+    #host { max-width: 1100px; margin: 0 auto; padding: 28px 18px 64px; }
     h1 { margin: 0; font: 700 32px/1.1 "Source Serif 4", Georgia, serif; }
-    .lede { color: #a9acb5; max-width: 42em; margin: 10px 0 8px; }
+    .lede { color: #a9acb5; max-width: 46em; margin: 10px 0 8px; }
     .hub { color: #e1b95e; }
-    .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(390px, 1fr)); gap: 28px; margin-top: 28px; }
-    .col h2 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #e1b95e; margin: 0 0 12px; }
-    .phone {
-      width: 390px;
-      max-width: 100%;
-      background: #111317;
+    .formats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0 10px;
+    }
+    .formats button {
+      appearance: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font: 600 12px/1 Inter, system-ui, sans-serif;
+      border: 1px solid #3a3f48;
+      background: #1a1d24;
+      color: #e8eaed;
+    }
+    .formats button[aria-pressed="true"] {
+      border-color: #e1b95e;
+      background: #e1b95e;
+      color: #1a1408;
+    }
+    .meta { font-size: 12px; color: #888d96; margin: 0 0 12px; }
+    .clip { width: 100%; overflow: hidden; }
+    .shell { transform-origin: top left; }
+    #preview {
+      display: block;
       border: 1px solid #2a2d34;
       border-radius: 12px;
-      padding: 10px 0 12px;
+      background: #111317;
     }
-    .phone.w430 { width: 430px; }
-    .phone .masthead-sports-strip {
+    .hint { font-size: 12px; color: #888d96; margin-top: 16px; }
+
+    /* Embed : media queries réelles (largeur de l’iframe). */
+    html.embed body { background: #111317; }
+    html.embed #host { display: none; }
+    html:not(.embed) #board { display: none; }
+    #board { padding: 12px 12px 20px; }
+    .case { margin: 0 0 16px; }
+    .case p { margin: 0 0 6px; font-size: 12px; color: #c3c6ce; }
+    .case p strong { color: #fff; }
+    html.embed .masthead-sports-strip {
       display: flex !important;
       visibility: visible !important;
       opacity: 1 !important;
-      overflow: visible;
-      padding: 0 12px;
+      overflow: hidden;
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 0;
       min-height: 56px;
       gap: 8px;
+      /* Labo : délai court + boucle pour voir l’aller-retour. Prod = 1 cycle. */
+      --sports-scroll-duration: 4.2s;
+      --sports-scroll-delay: 0.45s;
     }
-    /* Forcer la grille 390/430 même si la fenêtre hôte est plus large. */
-    .phone .sports-chip--cta {
-      display: grid !important;
-      grid-template-columns: auto minmax(0, 1fr);
-      grid-template-rows: auto auto;
-      align-items: center;
-      column-gap: 8px;
-      row-gap: 2px;
+    html.embed .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text,
+    html.embed .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
+      animation-iteration-count: infinite;
     }
-    .phone .sports-chip__cta-rail {
-      display: flex !important;
-      flex-direction: column;
-      justify-content: center;
-      align-items: stretch;
-      gap: 3px;
-      grid-column: 1;
-      grid-row: 1 / span 2;
+    @media (prefers-reduced-motion: reduce) {
+      html.embed .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text {
+        animation: sports-chip-scroll var(--sports-scroll-duration, 4.2s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.45s) infinite alternate both !important;
+      }
+      html.embed .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
+        animation: sports-chip-scroll-sub var(--sports-scroll-duration, 4.2s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.45s) infinite alternate both !important;
+      }
     }
-    .phone .sports-chip__cta-eyebrow--rail {
-      display: block !important;
-      text-align: center;
-      font-size: 8px;
-    }
-    .phone .sports-chip__cta-eyebrow--rail[hidden],
-    .phone .sports-chip__cta-eyebrow--rail:empty {
-      display: none !important;
-    }
-    .phone .sports-chip__cta-head .sports-chip__cta-eyebrow {
-      display: none !important;
-    }
-    .phone .sports-chip--cta .sports-chip__line {
-      grid-column: 2;
-      grid-row: 1 / span 2;
-      min-width: 0;
-    }
-    .case { margin: 0 0 18px; }
-    .case p { margin: 0 0 6px; font-size: 12px; color: #c3c6ce; }
-    .case p strong { color: #fff; }
-    .hint { font-size: 12px; color: #888d96; margin-top: 20px; }
   </style>
 </head>
 <body>
-  <main>
+  <div id="host">
     <p><a class="hub" href="./">← Labo</a></p>
-    <h1>Cartes sports — 390 / 430</h1>
-    <p class="lede">PROCHAIN au-dessus de SPORTS, deux colonnes. Accroche sur une ligne : défilement L→R, aller-retour, pause à l’origine, puis l’info peut changer.</p>
-
-    <div class="cols">
-      <section class="col">
-        <h2>390</h2>
-        <div class="phone" id="p390"></div>
-      </section>
-      <section class="col">
-        <h2>430</h2>
-        <div class="phone w430" id="p430"></div>
-      </section>
+    <h1>Cartes sports</h1>
+    <p class="lede">Même CSS que le site. PROCHAIN au-dessus de SPORTS sous 431&nbsp;px. Accroche sur une ligne : défilement gauche → droite, aller-retour, pause à l’origine. Ici le marquee boucle pour qu’on le voie ; en prod il ne fait qu’un cycle puis l’info peut changer.</p>
+    <div class="formats" id="formats" role="toolbar" aria-label="Formats d’écran"></div>
+    <p class="meta" id="meta"></p>
+    <div class="clip" id="clip">
+      <div class="shell" id="shell">
+        <iframe id="preview" title="Cartes sports au format choisi" scrolling="no"></iframe>
+      </div>
     </div>
-    <p class="hint">Local seulement. Même CSS que le site. Hard-refresh si le cache shell est resté collé.</p>
-  </main>
+    <p class="hint">Local seulement. Hard-refresh si le cache shell est resté collé. Tableau de bord : <a class="hub" href="./">Labo</a>.</p>
+  </div>
+  <main id="board"></main>
   <script>
+    const FORMATS = [390, 430, 768, 900, 1280, 1440, 1920];
+    const params = new URLSearchParams(location.search);
+    const embed = params.has('embed');
+    document.documentElement.classList.toggle('embed', embed);
+
     const cases = [
       {
         title: 'En saison — prochain',
@@ -194,7 +208,7 @@
         ? `<span class="sports-chip__cta-eyebrow sports-chip__cta-eyebrow--rail">${eyebrow}</span>`
         : `<span class="sports-chip__cta-eyebrow sports-chip__cta-eyebrow--rail" hidden></span>`;
       const g = glyph ? `<span class="sports-chip__cta-glyph" aria-hidden="true">${glyph}</span>` : '';
-      return `<div class="masthead-sports-strip" data-count="${extra ? 2 : 1}" data-cta-pinned="1">
+      return `<div class="masthead-sports-strip" data-count="${extra ? 2 : 1}" data-cta-pinned="1" data-ready="1">
         ${extra || ''}
         <a class="sports-chip sports-chip--cta" data-cta-state="${state}" href="#lab" style="--sports-tone:${tone}">
           <span class="sports-chip__cta-rail">
@@ -213,11 +227,14 @@
       </div>`;
     }
 
-    function paint(host) {
-      host.innerHTML = cases.map((c) => `<article class="case"><p><strong>${c.title}</strong></p>${c.html}</article>`).join('');
+    function overflowPx(view, inner) {
+      if (!view || !inner) return 0;
+      const prev = inner.style.maxWidth;
+      inner.style.maxWidth = 'none';
+      const ov = Math.max(0, inner.scrollWidth - view.clientWidth);
+      inner.style.maxWidth = prev;
+      return ov;
     }
-    paint(document.getElementById('p390'));
-    paint(document.getElementById('p430'));
 
     function armMarquee(root) {
       root.querySelectorAll('.sports-chip--cta').forEach((chip) => {
@@ -225,28 +242,128 @@
         const titleInner = chip.querySelector('.sports-chip__cta-text');
         const subView = chip.querySelector('.sports-chip__cta-sub');
         const subInner = chip.querySelector('.sports-chip__cta-sub-text');
-        if (titleView && titleInner) {
-          const ov = titleInner.scrollWidth - titleView.clientWidth;
-          if (ov > 2) {
-            chip.style.setProperty('--sports-scroll', `${ov}px`);
-            chip.classList.add('is-overflowing');
-          }
+        const titleOv = overflowPx(titleView, titleInner);
+        const subOv = overflowPx(subView, subInner);
+        if (titleOv > 2) {
+          chip.style.setProperty('--sports-scroll', `${titleOv}px`);
+          chip.classList.add('is-overflowing');
+        } else {
+          chip.style.removeProperty('--sports-scroll');
+          chip.classList.remove('is-overflowing');
         }
-        if (subView && subInner) {
-          const ov = subInner.scrollWidth - subView.clientWidth;
-          if (ov > 2) {
-            chip.style.setProperty('--sports-scroll-sub', `${ov}px`);
-            chip.classList.add('is-sub-overflowing');
-          }
+        if (subOv > 2) {
+          chip.style.setProperty('--sports-scroll-sub', `${subOv}px`);
+          chip.classList.add('is-sub-overflowing');
+        } else {
+          chip.style.removeProperty('--sports-scroll-sub');
+          chip.classList.remove('is-sub-overflowing');
         }
       });
     }
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        armMarquee(document.getElementById('p390'));
-        armMarquee(document.getElementById('p430'));
+
+    function reportHeight() {
+      if (window.parent === window) return;
+      const board = document.getElementById('board');
+      const h = Math.ceil(Math.max(
+        board.scrollHeight,
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+      )) + 8;
+      parent.postMessage({ type: 'sports-lab-size', height: h }, '*');
+    }
+
+    function paintEmbed() {
+      const board = document.getElementById('board');
+      document.getElementById('host').remove();
+      board.innerHTML = cases.map((c) => `<article class="case"><p><strong>${c.title}</strong></p>${c.html}</article>`).join('');
+      const run = () => {
+        armMarquee(board);
+        reportHeight();
+      };
+      requestAnimationFrame(() => requestAnimationFrame(run));
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+      window.addEventListener('resize', run);
+      window.addEventListener('message', (ev) => {
+        if (ev.data && ev.data.type === 'sports-lab-arm') run();
       });
-    });
+      new ResizeObserver(reportHeight).observe(board);
+    }
+
+    function parseWidth() {
+      const q = Number(params.get('w'));
+      if (FORMATS.includes(q)) return q;
+      const hash = Number(String(location.hash || '').replace('#', ''));
+      if (FORMATS.includes(hash)) return hash;
+      return 390;
+    }
+
+    function paintHost() {
+      document.getElementById('board').remove();
+      const bar = document.getElementById('formats');
+      const iframe = document.getElementById('preview');
+      const shell = document.getElementById('shell');
+      const clip = document.getElementById('clip');
+      const meta = document.getElementById('meta');
+      let width = parseWidth();
+
+      FORMATS.forEach((w) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.dataset.w = String(w);
+        btn.textContent = String(w);
+        btn.addEventListener('click', () => setWidth(w, true));
+        bar.appendChild(btn);
+      });
+
+      function layout(opts = {}) {
+        iframe.style.width = `${width}px`;
+        iframe.dataset.w = String(width);
+        const h = Number(iframe.dataset.h || 740);
+        iframe.style.height = `${h}px`;
+        const avail = clip.clientWidth || width;
+        const scale = Math.min(1, avail / width);
+        shell.style.width = `${width}px`;
+        shell.style.height = `${h}px`;
+        shell.style.transform = `scale(${scale})`;
+        clip.style.height = `${Math.ceil(h * scale)}px`;
+        const scaled = scale < 0.999;
+        meta.textContent = scaled
+          ? `${width} px · media queries réelles · réduit à ${Math.round(scale * 100)} % pour tenir dans la fenêtre`
+          : `${width} px · media queries réelles dans l’iframe`;
+        bar.querySelectorAll('button').forEach((btn) => {
+          btn.setAttribute('aria-pressed', btn.dataset.w === String(width) ? 'true' : 'false');
+        });
+        if (opts.arm) {
+          try { iframe.contentWindow?.postMessage({ type: 'sports-lab-arm' }, '*'); } catch (_) {}
+        }
+      }
+
+      function setWidth(w, push) {
+        width = w;
+        if (push) {
+          const url = new URL(location.href);
+          url.searchParams.delete('embed');
+          url.searchParams.set('w', String(w));
+          history.replaceState(null, '', `${url.pathname}${url.search}`);
+        }
+        layout({ arm: true });
+      }
+
+      iframe.src = './sports-strip-lab.html?embed=1';
+      setWidth(width, false);
+      window.addEventListener('resize', () => layout());
+      window.addEventListener('message', (ev) => {
+        if (!ev.data || ev.data.type !== 'sports-lab-size') return;
+        const h = Number(ev.data.height);
+        if (!Number.isFinite(h) || h < 120) return;
+        if (iframe.dataset.h === String(h)) return;
+        iframe.dataset.h = String(h);
+        layout();
+      });
+    }
+
+    if (embed) paintEmbed();
+    else paintHost();
   </script>
 </body>
 </html>
