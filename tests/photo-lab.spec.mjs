@@ -63,6 +63,16 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(page.locator('#cta-band .sports-chip__cta-tag', { hasText: /^Prochain$/ }).first()).toBeVisible();
   await expect(page.locator('.sports-chip__cta-tag', { hasText: /^Hier$/ }).first()).toBeVisible();
   await expect(page.locator('.sports-chip__cta-tag', { hasText: /^Aujourd’hui$/ }).first()).toBeVisible();
+  const dotRgb = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => {
+    const m = (getComputedStyle(el, '::before').backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+    return m;
+  });
+  const [pr, pg] = await dotRgb('Prochain');
+  const [hr, hg] = await dotRgb('Hier');
+  const [ar, ag] = await dotRgb('Aujourd’hui');
+  expect(ar - ag, 'Aujourd’hui : voyant rouge').toBeGreaterThan(80);
+  expect(pr - pg, 'Prochain : voyant ambre, pas rouge').toBeLessThan(80);
+  expect(hr - hg, 'Hier : voyant ambre, pas rouge').toBeLessThan(80);
   await expect(page.locator('.sports-chip__cta-eyebrow--head', { hasText: /^Prochain$/ })).toHaveCount(0);
   await expect(page.locator('.sports-chip__badge', { hasText: /^V$/ }).first()).toBeVisible();
   await expect(page.locator('.sports-chip__badge', { hasText: /^D$/ }).first()).toBeVisible();

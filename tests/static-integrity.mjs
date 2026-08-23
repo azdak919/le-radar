@@ -1154,8 +1154,10 @@ assert(
   !/data-radar-playing="1"[^{]*sports-chip__cta-tag::before/.test(cssFlat)
     && !/tuner\.is-playing\s*~[^{]*sports-chip__cta-tag::before/.test(cssFlat)
     && /\.sports-chip__cta-tag::before/.test(cssFlat)
-    && /onairPulse/.test(styleCss),
-  'style : voyant rouge CTA persistant (pas lié à la radio)',
+    && /onairPulse/.test(styleCss)
+    && /sports-cta-dot-upcoming/.test(styleCss)
+    && /data-cta-tag="Aujourd’hui"/.test(styleCss),
+  'style : voyant CTA ambre (Prochain/Hier), rouge Aujourd’hui, pas lié à la radio',
 );
 {
   const wideCss = readFileSync(join(root, 'dev/wide-desktop-preview.css'), 'utf8');
