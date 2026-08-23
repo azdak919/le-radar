@@ -1,31 +1,19 @@
 {
-  "updated": "2026-08-23T19:41:26.309Z",
+  "updated": "2026-08-23T20:30:45.820Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 21,
   "withCampusBank": 12,
   "fullyCovered": 185,
   "leadReadyPhotos": 148,
-  "pageScraped": 28,
-  "photosRecovered": 28,
+  "pageScraped": 29,
+  "photosRecovered": 29,
   "imagesCleared": 17,
-  "stockSearches": 37,
-  "stockFound": 13,
-  "campusBankFound": 7,
+  "stockSearches": 33,
+  "stockFound": 9,
+  "campusBankFound": 3,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "CSU fails to reach quorum at first special council meeting of new mandate",
-      "link": "https://thelinknewspaper.ca/article/16335",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
-    },
-    {
-      "title": "The Cruel Optimism of Summer",
-      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2d/McGill_University_Montr%C3%A9al.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
     {
       "title": "CSU terminates council’s chief election officer",
       "link": "https://thelinknewspaper.ca/article/16334",
@@ -51,18 +39,6 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Vague-de-deces-lies-a-lEbola-en-Afrique_Getty-Images.jpg"
     },
     {
-      "title": "Mars enters Aries",
-      "link": "https://thebucampus.ca/2026/04/06/mars-enters-aries/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
-    },
-    {
-      "title": "Spotlighting Powerful McGill Alumnae",
-      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
-    },
-    {
       "title": "National Golf tournament",
       "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
       "reason": "stock-too-small",
@@ -78,13 +54,37 @@
       "title": "The Gentrification of Online Fandom Spaces",
       "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2d/McGill_University_Montr%C3%A9al.jpeg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Avenue_McGill_College_07.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Le pays avant tout – esquisse",
       "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
+    },
+    {
+      "title": "Oui au budget, oui au programme FIL et non à la grève",
+      "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
+    },
+    {
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "link": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg"
+    },
+    {
+      "title": "Recettes musicales québécoises pour l’été",
+      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
     }
   ]
 }
