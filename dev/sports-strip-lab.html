@@ -63,6 +63,13 @@
     .case { margin: 0 0 16px; }
     .case p { margin: 0 0 6px; font-size: 12px; color: #c3c6ce; }
     .case p strong { color: #fff; }
+    html.embed h2 {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #e1b95e;
+      margin: 18px 0 10px;
+    }
     html.embed .masthead-sports-strip {
       display: flex !important;
       visibility: visible !important;
@@ -96,7 +103,7 @@
   <div id="host">
     <p><a class="hub" href="./">← Labo</a></p>
     <h1>Cartes sports</h1>
-    <p class="lede">Même CSS que le site. À 390/430, <strong>CTA seule</strong>. Dès 768, puce score (V / D / N) + CTA. La pastille dit <strong>Sports</strong>, <strong>En cours</strong>, <strong>Hier</strong> ou <strong>Aujourd’hui</strong> — PROCHAIN reste au-dessus de SPORTS. Libellés complets ; le défilement L→R couvre le trop-long.</p>
+    <p class="lede">Bandeau : à 390/430, CTA seule. Pastille <strong>Hier</strong> / <strong>Aujourd’hui</strong> pour ces deux jours ; les autres résultats gardent <strong>Sports</strong> et la date en sous-ligne. En dessous : puces scores (modèle standard, toujours visibles). Libellés complets ; marquee L→R si trop long.</p>
     <div class="formats" id="formats" role="toolbar" aria-label="Formats d’écran"></div>
     <p class="meta" id="meta"></p>
     <div class="clip" id="clip">
@@ -252,6 +259,46 @@
         },
       },
       {
+        title: 'Résultat — avant-hier (pastille Sports)',
+        extra: () => matchChip({
+          tone: '#3d9a6a',
+          glyph: '🏀',
+          badge: 'V',
+          badgeMod: 'w',
+          inner: '<span class="sports-chip__name">Concordia</span> <span class="sports-chip__score">64–59</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
+          sub: 'ven. 21 août · Basketball universitaire',
+        }),
+        cta: {
+          state: 'result',
+          tone: '#3d9a6a',
+          eyebrow: '',
+          tag: 'Sports',
+          glyph: '🏀',
+          text: 'Concordia 64–59 McGill',
+          sub: 'ven. 21 août · Basketball universitaire',
+        },
+      },
+      {
+        title: 'Résultat — mer. 19 août (pastille Sports)',
+        extra: () => matchChip({
+          tone: '#c45c5c',
+          glyph: '⚽',
+          badge: 'D',
+          badgeMod: 'l',
+          inner: '<span class="sports-chip__name">UQTR</span> <span class="sports-chip__score">0–2</span> <span class="sports-chip__name sports-chip__opp">ULaval</span>',
+          sub: 'mer. 19 août · Soccer universitaire féminin',
+        }),
+        cta: {
+          state: 'result',
+          tone: '#c45c5c',
+          eyebrow: '',
+          tag: 'Sports',
+          glyph: '⚽',
+          text: 'UQTR 0–2 ULaval',
+          sub: 'mer. 19 août · Soccer universitaire féminin',
+        },
+      },
+      {
         title: 'En direct',
         cta: {
           state: 'live',
@@ -284,6 +331,73 @@
           text: 'Scores collégiaux et universitaires du Québec',
           sub: 'MAJ 15 h 50',
         },
+      },
+    ];
+
+    const standardChips = [
+      {
+        title: 'Standard — prochain (reçoit)',
+        html: () => matchChip({
+          tone: '#2e7d4f',
+          glyph: '⚽',
+          inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__vs">reçoit</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
+          sub: 'aujourd’hui, 19 h 00 · Soccer universitaire masculin',
+        }),
+      },
+      {
+        title: 'Standard — victoire aujourd’hui',
+        html: () => matchChip({
+          tone: '#3d9a6a',
+          glyph: '🏀',
+          badge: 'V',
+          badgeMod: 'w',
+          inner: '<span class="sports-chip__name">UdeM</span> <span class="sports-chip__score">78–71</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
+          sub: 'aujourd’hui · Basketball universitaire',
+        }),
+      },
+      {
+        title: 'Standard — défaite hier',
+        html: () => matchChip({
+          tone: '#c45c5c',
+          glyph: '🏒',
+          badge: 'D',
+          badgeMod: 'l',
+          inner: '<span class="sports-chip__name">Bishop’s</span> <span class="sports-chip__score">2–5</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
+          sub: 'hier · Hockey universitaire',
+        }),
+      },
+      {
+        title: 'Standard — match nul avant-hier',
+        html: () => matchChip({
+          tone: '#8fa3b0',
+          glyph: '⚽',
+          badge: 'N',
+          badgeMod: 'd',
+          inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__score">1–1</span> <span class="sports-chip__name sports-chip__opp">UdeM</span>',
+          sub: 'avant-hier · Soccer universitaire masculin',
+        }),
+      },
+      {
+        title: 'Standard — mer. 19 août',
+        html: () => matchChip({
+          tone: '#c45c5c',
+          glyph: '🏈',
+          badge: 'D',
+          badgeMod: 'l',
+          inner: '<span class="sports-chip__name">Carabins</span> <span class="sports-chip__score">17–24</span> <span class="sports-chip__name sports-chip__opp">Rouge et Or</span>',
+          sub: 'mer. 19 août · Football universitaire',
+        }),
+      },
+      {
+        title: 'Standard — sam. 16 août',
+        html: () => matchChip({
+          tone: '#3d9a6a',
+          glyph: '🏐',
+          badge: 'V',
+          badgeMod: 'w',
+          inner: '<span class="sports-chip__name">Sherbrooke</span> <span class="sports-chip__score">3–1</span> <span class="sports-chip__name sports-chip__opp">UQAM</span>',
+          sub: 'sam. 16 août · Volleyball universitaire',
+        }),
       },
     ];
 
@@ -375,10 +489,15 @@
 
     function paintBoard(root) {
       const withLeft = window.innerWidth >= PHONE_CTA_ONLY;
-      root.innerHTML = cases.map((c) => {
+      const ctaHtml = cases.map((c) => {
         const extra = withLeft && c.extra ? c.extra() : '';
         return `<article class="case"><p><strong>${c.title}</strong></p>${stripCta({ ...c.cta, extra })}</article>`;
       }).join('');
+      const stdHtml = standardChips.map((c) =>
+        `<article class="case"><p><strong>${c.title}</strong></p><div class="masthead-sports-strip" data-count="1" data-cta-pinned="0" data-ready="1">${c.html()}</div></article>`
+      ).join('');
+      root.innerHTML = `<section id="cta-band"><h2>Carte CTA</h2>${ctaHtml}</section>`
+        + `<section id="standard-chips"><h2>Puces scores — modèle standard</h2>${stdHtml}</section>`;
     }
 
     function paintEmbed() {
