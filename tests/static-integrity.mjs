@@ -1080,6 +1080,7 @@ for (const rel of ['index.html', 'tuner-embed.html', 'feeds.html']) {
   const iframes = readFileSync(join(root, 'iframes/index.html'), 'utf8');
   assert(iframes.includes('iFrames'), 'iframes : titre iFrames requis');
   assert(iframes.includes('tuner-embed.html'), 'iframes : snippet radio requis');
+  assert(iframes.includes('surface=bar'), 'iframes : surface=bar pour la barre campus');
   assert(iframes.includes('sports-ad-embed.html'), 'iframes : snippet sports IAB requis');
   assert(!/Flipper|phosphore|Sports SAT|data-sat-skin/.test(iframes), 'iframes : plus de copy Flipper / SAT');
   assert(iframes.includes('id="snippet-radio"'), 'iframes : bloc copiable radio requis');

@@ -1797,3 +1797,98 @@ html[data-embed="sports"] .masthead-sports-strip .sports-chip--cta.is-overflowin
 html[data-embed="sports"] .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
   animation-iteration-count: infinite;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   surface=bar — barre campus opaque (clair / sombre).
+   Distincte de Pomo/Solitaire (legacy, transparent) et du kiosque (68 px sombre).
+   ═══════════════════════════════════════════════════════════════════════════ */
+html[data-embed="tuner"][data-surface="bar"] {
+  --embed-bar-h: 62px;
+  --embed-cols: minmax(0, 1fr);
+  --embed-vol-track: 88px;
+  --embed-gap: 8px;
+  --embed-ink: #f1f2f4;
+  --embed-muted: rgba(241, 242, 244, 0.55);
+  --embed-muted-strong: rgba(241, 242, 244, 0.86);
+  --embed-control-bg: rgba(255, 255, 255, 0.08);
+  --embed-control-bg-hover: rgba(255, 255, 255, 0.14);
+  --embed-control-border: rgba(255, 255, 255, 0.18);
+  --embed-control-border-hover: rgba(255, 255, 255, 0.32);
+  --embed-radio: #cf7ec1;
+  --tuner-onair-live: #ff7d6e;
+  --tuner-onair-idle: rgba(241, 242, 244, 0.55);
+  --bar-face: #111317;
+  background: transparent !important;
+  color-scheme: dark;
+}
+html[data-embed="tuner"][data-surface="bar"][data-theme="light"] {
+  --embed-ink: #16181c;
+  --embed-muted: #5f646c;
+  --embed-muted-strong: #44474d;
+  --embed-control-bg: #f6f6f4;
+  --embed-control-bg-hover: #ecece8;
+  --embed-control-border: #d9d9d4;
+  --embed-control-border-hover: #c4c4be;
+  --embed-radio: #6c2163;
+  --tuner-onair-live: #c8102e;
+  --tuner-onair-idle: #5f646c;
+  --bar-face: #ffffff;
+  color-scheme: light;
+}
+html[data-embed="tuner"][data-surface="bar"] body {
+  background: transparent !important;
+  color: var(--embed-ink);
+}
+html[data-embed="tuner"][data-surface="bar"] .tuner {
+  background: var(--bar-face) !important;
+  color: var(--embed-ink);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--embed-ink) 10%, transparent);
+}
+html[data-embed="tuner"][data-surface="bar"] .tuner-inner {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+html[data-embed="tuner"][data-surface="bar"] .tuner-nowair,
+html[data-embed="tuner"][data-surface="bar"] .tuner-nowair.hidden {
+  display: none !important;
+}
+html[data-embed="tuner"][data-surface="bar"] .tuner-dial {
+  background: var(--embed-control-bg);
+  border: 1px solid var(--embed-control-border);
+}
+html[data-embed="tuner"][data-surface="bar"] .tuner-now-name,
+html[data-embed="tuner"][data-surface="bar"] .tuner-now-sub,
+html[data-embed="tuner"][data-surface="bar"] .tuner-select,
+html[data-embed="tuner"][data-surface="bar"] .tuner-onair {
+  color: var(--embed-ink);
+}
+html[data-embed="tuner"][data-surface="bar"] .tuner-play {
+  background: var(--live, #c8102e);
+  color: #fff;
+}
+html[data-embed="tuner"][data-surface="bar"] .tuner-step {
+  color: var(--embed-ink);
+  border-color: var(--embed-control-border);
+  background: var(--embed-control-bg);
+}
+@media (min-width: 1100px) {
+  html[data-embed="tuner"][data-surface="bar"] {
+    --embed-cols: minmax(0, 1.15fr) minmax(240px, 320px);
+  }
+  html[data-embed="tuner"][data-surface="bar"] .tuner-inner {
+    grid-template-columns: var(--embed-cols);
+  }
+  html[data-embed="tuner"][data-surface="bar"] .tuner-nowair,
+  html[data-embed="tuner"][data-surface="bar"] .tuner-nowair.hidden {
+    display: flex !important;
+    max-width: none;
+    width: 100%;
+  }
+  html[data-embed="tuner"][data-surface="bar"] .tuner-nowair-label,
+  html[data-embed="tuner"][data-surface="bar"] .tuner-nowair-sub {
+    color: var(--embed-muted);
+  }
+  html[data-embed="tuner"][data-surface="bar"] .tuner-nowair-title {
+    color: var(--embed-radio);
+  }
+}

@@ -20,7 +20,15 @@
   border: 0;
   background: transparent;
 }
-.iframe-preview--radio iframe { height: 62px; }
+.iframe-preview--radio {
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+}
+.iframe-preview--radio iframe {
+  height: 62px;
+  min-height: 62px;
+}
 
 .iframe-snippet {
   position: relative;

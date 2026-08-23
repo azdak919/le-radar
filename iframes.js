@@ -1,5 +1,6 @@
 /**
  * Page /iframes/ : copier les snippets, synchro thème clair/sombre.
+ * Pomo / Solitaire ne passent pas par ici — leur iframe reste indépendante.
  */
 (function () {
   'use strict';
@@ -63,9 +64,22 @@
   function syncAll() {
     document.querySelectorAll('iframe[data-embed-kind="radio"]').forEach(syncRadio);
     document.querySelectorAll('iframe[data-embed-kind="sports-ad"]').forEach(syncSportsAd);
+    const snippet = document.getElementById('snippet-radio');
+    if (snippet) {
+      snippet.textContent = snippet.textContent.replace(/theme=(dark|light)/, `theme=${pageTheme()}`);
+    }
   }
 
-  document.querySelectorAll('iframe[data-embed-kind="radio"], iframe[data-embed-kind="sports-ad"]').forEach((iframe) => {
+  document.querySelectorAll('iframe[data-embed-kind="radio"]').forEach((iframe) => {
+    try {
+      const u = new URL(iframe.getAttribute('src') || iframe.src, location.href);
+      u.searchParams.set('surface', 'bar');
+      u.searchParams.set('theme', pageTheme());
+      iframe.setAttribute('src', u.pathname + u.search);
+    } catch (_) { /* ignore */ }
+  });
+
+  document.querySelectorAll('iframe[data-embed-kind="sports-ad"]').forEach((iframe) => {
     try {
       const u = new URL(iframe.getAttribute('src') || iframe.src, location.href);
       u.searchParams.set('theme', pageTheme());
@@ -78,6 +92,19 @@
     iframe.addEventListener('load', () => {
       if (iframe.dataset.embedKind === 'radio') syncRadio(iframe);
       if (iframe.dataset.embedKind === 'sports-ad') syncSportsAd(iframe);
+    });
+  });
+
+  window.addEventListener('message', (event) => {
+    const data = event && event.data;
+    if (!data || data.type !== 'radar-embed') return;
+    if (typeof data.height !== 'number' || data.height <= 0) return;
+    document.querySelectorAll('iframe[data-embed-kind="radio"]').forEach((iframe) => {
+      try {
+        if (iframe.contentWindow === event.source) {
+          iframe.style.height = Math.round(data.height) + 'px';
+        }
+      } catch (_) { /* ignore */ }
     });
   });
 

@@ -51,7 +51,13 @@ test.describe('Embed sports IAB', () => {
     await page.goto('/iframes/', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('h1')).toHaveText(/iFrames/);
     await expect(page.locator('body')).not.toContainText(/Flipper|phosphore|Sports SAT/i);
-    await expect(page.locator('#snippet-radio')).toContainText('tuner-embed.html');
+    await expect(page.locator('#snippet-radio')).toContainText('tuner-embed.html?surface=bar');
+
+    const radio = page.locator('iframe[data-embed-kind="radio"]');
+    const radioFrame = radio.contentFrame();
+    await expect(radioFrame.locator('#tuner-play')).toBeVisible({ timeout: 15_000 });
+    await expect(radioFrame.locator('#tuner-select')).toBeVisible();
+    await expect(radioFrame.locator('html')).toHaveAttribute('data-surface', 'bar');
     await expect(page.locator('#snippet-300x250')).toContainText('sports-ad-embed.html?fmt=300x250');
     await expect(page.locator('iframe[data-embed-kind="sports-ad"]')).toHaveCount(6);
 
@@ -60,10 +66,13 @@ test.describe('Embed sports IAB', () => {
     await expect(frame.locator('#ad-front')).toBeVisible({ timeout: 15_000 });
 
     await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'light'));
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(400);
+    await expect(radioFrame.locator('html')).toHaveAttribute('data-theme', 'light');
+    await expect(radioFrame.locator('#tuner-play')).toBeVisible();
     const lightPre = await page.locator('.iframe-snippet pre').first().evaluate((el) => getComputedStyle(el).backgroundColor);
     await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'dark'));
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(400);
+    await expect(radioFrame.locator('html')).toHaveAttribute('data-theme', 'dark');
     const darkPre = await page.locator('.iframe-snippet pre').first().evaluate((el) => getComputedStyle(el).backgroundColor);
     expect(lightPre).not.toBe(darkPre);
 

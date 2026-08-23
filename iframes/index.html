@@ -87,18 +87,18 @@
       <header class="kit-head">
         <p class="kit-eyebrow">À intégrer</p>
         <h1 class="kit-title">iFrames</h1>
-        <p class="kit-lead">Deux cadres HTML pour un site de campus : la barre radio, et une carte sports aux formats pub IAB. Même identité que le site — pourpre, Inter et Source Serif, pastilles Prochain / Aujourd’hui / Hier. Aucun compte.</p>
+        <p class="kit-lead">Deux cadres HTML pour un site de campus : la barre radio, et une carte sports aux formats pub IAB. Même identité que le site — pourpre, Inter et Source Serif. Le thème de cette page (soleil / lune) est envoyé aux cadres. Aucun compte. Pomo et Solitaire gardent leur propre iframe, indépendante.</p>
       </header>
 
       <section class="kit-section" id="radio">
         <h2>Barre radio</h2>
-        <p>Le même synthétiseur que sur le site. Hauteur fixe 62 px. Le thème de cette page (clair / sombre, icône soleil-lune) est envoyé à l’iframe.</p>
+        <p>Le même synthétiseur que sur le site, en barre opaque 62 px. Le bouton soleil / lune de cette page bascule clair et sombre. <code>surface=bar</code> est la version campus — Pomo et Solitaire n’utilisent pas cette surface.</p>
         <div class="iframe-block">
           <h3>Aperçu</h3>
           <div class="iframe-preview iframe-preview--radio">
             <iframe
               data-embed-kind="radio"
-              src="../tuner-embed.html"
+              src="../tuner-embed.html?surface=bar&amp;theme=dark"
               title="Aperçu — barre radio LE-RADAR.ca"
               loading="lazy"
               referrerpolicy="strict-origin-when-cross-origin"
@@ -107,7 +107,7 @@
           </div>
           <div class="iframe-snippet">
             <pre><code id="snippet-radio">&lt;iframe
-  src="https://le-radar.ca/tuner-embed.html?theme=dark"
+  src="https://le-radar.ca/tuner-embed.html?surface=bar&amp;theme=dark"
   title="Radios étudiantes — LE-RADAR.ca"
   loading="lazy"
   referrerpolicy="strict-origin-when-cross-origin"
@@ -116,7 +116,7 @@
 &gt;&lt;/iframe&gt;</code></pre>
             <button type="button" class="iframe-copy" data-copy="#snippet-radio" data-copied="Copié">Copier le code radio</button>
           </div>
-          <p class="iframe-note"><code>?theme=light</code> ou <code>dark</code> selon le fond du site hôte. Option bureau : <code>?surface=kiosque-v1</code> et hauteur <code>68px</code>.</p>
+          <p class="iframe-note"><code>?theme=light</code> ou <code>dark</code> selon le fond du site hôte. Les mini-apps Pomo et Solitaire gardent <code>tuner-embed.html</code> sans <code>surface=</code>.</p>
         </div>
       </section>
 

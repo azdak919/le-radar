@@ -1,6 +1,7 @@
 // Iframe embed :
-// · tuner legacy (Pomo/Solitaire, sans surface=) — barre compacte 62 px
-// · tuner kiosque-v1 — parité barre bureau LE-RADAR (+ crédit), 68 px
+// · tuner legacy (Pomo/Solitaire, sans surface=) — barre compacte 62 px, indépendante
+// · tuner bar — barre opaque campus (clair/sombre), 62 px
+// · tuner kiosque-v1 — parité barre bureau LE-RADAR (+ crédit), 68 px, sombre
 // · sports — colonne de cartes CTA (+ promo LE-RADAR tous les N)
 // Signale le parent via postMessage (hauteur, ready, available).
 (function () {
@@ -52,12 +53,16 @@
   }
 
   const params = new URLSearchParams(window.location.search);
-  const surface = params.get('surface') === 'kiosque-v1' ? 'kiosque-v1' : 'legacy';
+  const rawSurface = params.get('surface');
+  const surface = (rawSurface === 'kiosque-v1' || rawSurface === 'bar') ? rawSurface : 'legacy';
   const EMBED_H = surface === 'kiosque-v1' ? 68 : 62;
   document.documentElement.dataset.surface = surface;
   const themeParam = params.get('theme');
   if (themeParam === 'light' || themeParam === 'dark') {
     document.documentElement.dataset.theme = themeParam;
+  }
+  if (surface === 'bar' && themeParam !== 'light' && themeParam !== 'dark') {
+    document.documentElement.dataset.theme = 'dark';
   }
   if (surface === 'kiosque-v1') {
     document.documentElement.dataset.theme = 'dark';
@@ -112,6 +117,7 @@
     if (event.origin !== window.location.origin) return;
     const data = event.data;
     if (data?.type === 'radar-embed-theme' && (data.theme === 'light' || data.theme === 'dark')) {
+      if (surface === 'kiosque-v1') return;
       document.documentElement.dataset.theme = data.theme;
     }
   });
