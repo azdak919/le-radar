@@ -570,16 +570,32 @@ const TUNER_SUB_ROTATE_VERY_NARROW_MS = 18000;
 const AIR_PANEL_ROTATE_MS = 8000;
 /**
  * Marquee site-wide (dial, à l’antenne, sports, météo, embed) :
- * 1) délai de lecture au repos  2) **un** aller-retour (`alternate` × 2)
- * 3) pause au repos  4) seulement alors changer le texte.
- * Jamais `infinite` : un 2ᵉ cycle pendant l’attente de rotation est illisible.
+ * 1) délai de lecture au repos  2) aller L→R puis retour à l’origine
+ * 3) si ce tour est trop court pour lire, un 2ᵉ aller-retour
+ * 4) pause au repos  5) seulement alors changer le texte.
+ * Jamais `infinite`.
  */
 /** Pause initiale avant le 1er pixel de scroll (CSS animation-delay). */
 const MARQUEE_READ_DELAY_MS = 1600;
-/** Aller + retour : l'animation marquee est `alternate` (2 itérations, pas infinite). */
+/** Un aller-retour = `alternate` × 2 (pas infinite). */
 const MARQUEE_ROUND_TRIPS = 2;
+/** Plafond : 2 aller-retour (4 itérations) si le premier tour est trop vite. */
+const MARQUEE_TRIPS_MAX = 4;
 /** Pause de lecture après le retour, avant de changer de texte. */
 const MARQUEE_REST_MS = 2000;
+
+/** Combien d’itérations `alternate` pour couvrir le temps de lecture. */
+function marqueeAlternateCount(oneWayMs, readMs) {
+  const oneWay = Math.max(0, Number(oneWayMs) || 0);
+  const oneTrip = MARQUEE_READ_DELAY_MS + oneWay * MARQUEE_ROUND_TRIPS + MARQUEE_REST_MS;
+  const read = Math.max(0, Number(readMs) || 0);
+  return read > oneTrip + 400 ? MARQUEE_TRIPS_MAX : MARQUEE_ROUND_TRIPS;
+}
+
+function marqueeCycleMs(oneWayMs, trips) {
+  const n = Number(trips) >= 2 ? Number(trips) : MARQUEE_ROUND_TRIPS;
+  return MARQUEE_READ_DELAY_MS + Math.max(0, Number(oneWayMs) || 0) * n + MARQUEE_REST_MS;
+}
 /** L'émission en ondes reste plus longtemps que les autres phases. */
 const AIR_LIVE_DWELL_FACTOR = 2;
 const NOW_AIR_CROSSFADE_MS = 700;
@@ -613,8 +629,6 @@ const FILTERS_COLLAPSED_ROWS_COMPACT = 1;
 const FILTERS_COMPACT_MQ = window.matchMedia(
   '(max-width: 1099.98px) and (orientation: portrait)',
 );
-/** Téléphone : 2 lignes au lieu d’un marquee. L’info change au rythme de lecture. */
-const PHONE_TEXT_WRAP_MQ = window.matchMedia('(max-width: 700px)');
 const FILTERS_ROW_CAPACITY = 3;
 const FILTERS_COLS_NARROW = 420;
 /** Max colonnes bureau (grand écran). */
@@ -1948,20 +1962,6 @@ function isNowAirTwoLineMode() {
   }
 }
 
-/**
- * Téléphone (≤700 px) : le texte tient en 2 lignes, sans défilement.
- * Sur une carte étroite le marquee allongeait le dwell (aller-retour + pause)
- * avant de changer météo / CTA / synthé — illisible, et l’info tardait.
- */
-function isPhoneTextWrapMode() {
-  try {
-    return !!PHONE_TEXT_WRAP_MQ?.matches;
-  } catch {
-    return false;
-  }
-}
-
-
 /** Offset sticky du rail sources = hauteur réelle du synthé (+ petit entrefer). */
 function syncWideStickyTop() {
   try {
@@ -2948,13 +2948,6 @@ function fitWideWeatherSecondarySlots() {
 }
 
 function measureWeatherNameOverflows() {
-  if (isPhoneTextWrapMode()) {
-    MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-overflowing').forEach((el) => {
-      el.classList.remove('is-overflowing');
-      el.style.removeProperty('--weather-scroll');
-    });
-    return;
-  }
   MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-active').forEach((el) => {
     const viewport = el.querySelector('.masthead-weather__name');
     const name = el.querySelector('.masthead-weather__name-text');
@@ -2978,9 +2971,12 @@ function measureWeatherNameOverflows() {
       if (had) {
         el.classList.remove('is-overflowing');
         el.style.removeProperty('--weather-scroll');
+        el.style.removeProperty('--weather-scroll-trips');
       }
       return;
     }
+    const trips = marqueeAlternateCount(WEATHER_SCROLL_ONE_WAY_MS, WEATHER_ROTATE_BASE_MS);
+    el.style.setProperty('--weather-scroll-trips', String(trips));
     el.style.setProperty('--weather-scroll', next);
     const prevN = parseFloat(prev) || 0;
     if (had && Math.abs(prevN - overflow) < 6) return;
@@ -3014,11 +3010,14 @@ function weatherBoardDwellMs() {
     '.masthead-weather__city.is-active.is-overflowing',
   );
   if (!anyOverflow) return base;
+  const trips = parseFloat(
+    MASTHEAD_WEATHER.querySelector('.masthead-weather__city.is-active.is-overflowing')
+      ?.style.getPropertyValue('--weather-scroll-trips'),
+  ) || MARQUEE_ROUND_TRIPS;
+  const n = trips >= 2 ? trips : MARQUEE_ROUND_TRIPS;
   return Math.max(
     base,
-    WEATHER_SCROLL_READ_DELAY_MS
-      + WEATHER_SCROLL_ONE_WAY_MS * 2
-      + WEATHER_SCROLL_POST_PAUSE_MS,
+    WEATHER_SCROLL_READ_DELAY_MS + WEATHER_SCROLL_ONE_WAY_MS * n + WEATHER_SCROLL_POST_PAUSE_MS,
   );
 }
 
@@ -3026,11 +3025,11 @@ function weatherCardDwellMs(el) {
   const base = isWideNoMarqueeMode() ? 9000 : WEATHER_ROTATE_BASE_MS;
   if (!el || sportsReducedMotion || PREFERS_REDUCED_MOTION?.matches) return base;
   if (!el.classList.contains('is-overflowing')) return base;
-  // 1 aller + retour à l’origine + courte pause, puis on change la carte.
+  const trips = parseFloat(el.style.getPropertyValue('--weather-scroll-trips')) || MARQUEE_ROUND_TRIPS;
   return Math.max(
     base,
     WEATHER_SCROLL_READ_DELAY_MS
-      + WEATHER_SCROLL_ONE_WAY_MS * 2
+      + WEATHER_SCROLL_ONE_WAY_MS * trips
       + WEATHER_SCROLL_POST_PAUSE_MS
       + 160,
   );
@@ -5748,17 +5747,6 @@ function refreshSportsChipScroll(chipOrRoot = null) {
   if (!MASTHEAD_SPORTS_STRIP && !chipOrRoot) return;
   const root = chipOrRoot || MASTHEAD_SPORTS_STRIP;
   if (!root) return;
-  if (isPhoneTextWrapMode()) {
-    const chips = root.classList?.contains('sports-chip')
-      ? [root]
-      : Array.from(root.querySelectorAll?.('.sports-chip') || []);
-    chips.forEach((chip) => {
-      chip.classList.remove('is-overflowing', 'is-sub-overflowing');
-      chip.style.removeProperty('--sports-scroll');
-      chip.style.removeProperty('--sports-scroll-sub');
-    });
-    return;
-  }
   // Wide étroit : aucun marquee. ≥1440 : mesurer et défiler si ça dépasse.
   if (isWideNoMarqueeMode() && !isWideDesktopComfort()) {
     clearWideSportsMarqueeClasses();
@@ -5847,6 +5835,18 @@ function refreshSportsChipScroll(chipOrRoot = null) {
       prop: '--sports-scroll-sub',
       overflow: subOverflow,
     });
+    if (titleOverflow > 2 || subOverflow > 2) {
+      const label = [titleInner?.textContent || '', subInner?.textContent || '']
+        .filter(Boolean)
+        .join(' · ');
+      const trips = marqueeAlternateCount(
+        SPORTS_SCROLL_ONE_WAY_MS,
+        sportsLabelReadingMs(label),
+      );
+      chip.style.setProperty('--sports-scroll-trips', String(trips));
+    } else {
+      chip.style.removeProperty('--sports-scroll-trips');
+    }
   });
 }
 
@@ -6417,7 +6417,6 @@ function sportsLabelReadingMs(text) {
  */
 function sportsChipNeedsMarquee(chip) {
   if (!chip || sportsReducedMotion) return false;
-  if (isPhoneTextWrapMode()) return false;
   // Scores : anti-marquee — overflow géré par −1 puce, pas par scroll.
   if (!chip.classList.contains('sports-chip--cta')) return false;
   if (
@@ -6466,13 +6465,14 @@ function sportsSlotDwellMs(slot) {
   // CTA : plancher propre (un cran plus posé que les scores, sans 24 s collants).
   const floor = isCta ? SPORTS_CTA_DWELL_MS : readMs;
   if (sportsChipNeedsMarquee(chip)) {
-    // Lecture → 1 aller-retour (pas infinite) → pause repos — synchro CSS.
     const oneWay = chip.classList.contains('sports-chip--match')
       ? SPORTS_MATCH_SCROLL_ONE_WAY_MS
       : SPORTS_SCROLL_ONE_WAY_MS;
+    const trips = parseFloat(chip.style.getPropertyValue('--sports-scroll-trips')) || marqueeAlternateCount(oneWay, floor);
+    const n = trips >= 2 ? trips : MARQUEE_ROUND_TRIPS;
     return Math.max(
       floor,
-      SPORTS_SCROLL_READ_DELAY_MS + oneWay * 2 + SPORTS_SCROLL_POST_PAUSE_MS,
+      SPORTS_SCROLL_READ_DELAY_MS + oneWay * n + SPORTS_SCROLL_POST_PAUSE_MS,
     );
   }
   return floor;
@@ -7584,7 +7584,7 @@ window.RadarAir = {
     airPhaseDwellMs,
     marqueeRoundTripMs,
     getTunerSubRotateDelayMs,
-    isPhoneTextWrapMode,
+    marqueeAlternateCount,
     trackForAirDisplay,
     liveCopyFromPhases,
     splitChoqSongLines,
@@ -7920,17 +7920,18 @@ function stopNowAirPreview() {
 /**
  * Temps qu'il faut à un texte qui défile pour : lire → partir → revenir → reposer.
  *
- * L'animation est `alternate` × 2 (pas infinite) + `animation-delay` lecture.
- * Un cycle complet = delay + 2 × `--marquee-duration` + pause repos.
+ * L'animation est `alternate` × `--marquee-trips` (2 ou 4) + delay lecture.
+ * Un cycle complet = delay + trips × `--marquee-duration` + pause repos.
  *
- * Règle générale du site : **on ne change jamais un texte avant la fin de son
- * aller-retour**, et on ne relance pas un 2ᵉ cycle pendant l’attente.
+ * On ne change jamais un texte avant la fin de ses aller-retour.
  */
 function marqueeRoundTripMs(el) {
   if (!el?.classList.contains('is-marquee')) return 0;
   const sec = parseFloat(el.style.getPropertyValue('--marquee-duration'));
   if (!Number.isFinite(sec) || sec <= 0) return 0;
-  return Math.ceil(sec * 1000 * MARQUEE_ROUND_TRIPS)
+  const tripsRaw = parseFloat(el.style.getPropertyValue('--marquee-trips'));
+  const trips = Number.isFinite(tripsRaw) && tripsRaw >= 2 ? tripsRaw : MARQUEE_ROUND_TRIPS;
+  return Math.ceil(sec * 1000 * trips)
     + MARQUEE_READ_DELAY_MS
     + MARQUEE_REST_MS;
 }
@@ -9395,17 +9396,13 @@ function measureMarquee(el) {
 
   // Wide : texte fixe. Bureau ≥1100 : le titre d’antenne passe sur 2 lignes
   // au lieu de défiler (phrases CHOQ / longues émissions).
-  // Téléphone : wrap 2 lignes, pas de marquee (sinon le dwell attend l’aller-retour).
   const nowAirWrap = el === TUNER_NOWAIR_TITLE || el === TUNER_NOWAIR_SUB;
-  if (
-    isPhoneTextWrapMode()
-    || isWideNoMarqueeMode()
-    || (nowAirWrap && isNowAirTwoLineMode())
-  ) {
+  if (isWideNoMarqueeMode() || (nowAirWrap && isNowAirTwoLineMode())) {
     el.classList.remove('is-marquee');
     el.style.removeProperty('--marquee-shift');
     el.style.removeProperty('--marquee-duration');
     el.style.removeProperty('--marquee-delay');
+    el.style.removeProperty('--marquee-trips');
     return;
   }
 
@@ -9418,6 +9415,7 @@ function measureMarquee(el) {
     el.style.removeProperty('--marquee-shift');
     el.style.removeProperty('--marquee-duration');
     el.style.removeProperty('--marquee-delay');
+    el.style.removeProperty('--marquee-trips');
     return;
   }
 
@@ -9427,9 +9425,17 @@ function measureMarquee(el) {
   // deux extrémités, là où l'animation marque une pause pour qu'on lise.
   const distance = Math.round(overflow + 12);
   const duration = Math.max(7, distance / 16);
+  const oneWayMs = duration * 1000;
+  let readMs = TUNER_SUB_ROTATE_MS;
+  if (TUNER_SUB_ROTATE_MQ?.matches) {
+    if (TUNER_SUB_ROTATE_VERY_NARROW_MQ?.matches) readMs = TUNER_SUB_ROTATE_VERY_NARROW_MS;
+    else if (TUNER_SUB_ROTATE_NARROW_MQ?.matches) readMs = TUNER_SUB_ROTATE_NARROW_MS;
+  }
+  const trips = marqueeAlternateCount(oneWayMs, readMs);
   el.style.setProperty('--marquee-shift', `-${distance}px`);
   el.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
   el.style.setProperty('--marquee-delay', `${(MARQUEE_READ_DELAY_MS / 1000).toFixed(1)}s`);
+  el.style.setProperty('--marquee-trips', String(trips));
   el.classList.add('is-marquee');
 }
 
@@ -9440,10 +9446,6 @@ function scheduleMarqueeMeasure(el, attempt = 0) {
     requestAnimationFrame(() => {
       const span = el.querySelector('.tuner-now-sub-text');
       if (!span || PREFERS_REDUCED_MOTION?.matches) return;
-      if (isPhoneTextWrapMode()) {
-        measureMarquee(el);
-        return;
-      }
 
       const available = getMarqueeAvailableWidth(el);
       if (!available) {
@@ -9515,11 +9517,6 @@ function initMarqueeResizeListeners() {
   });
 
   window.addEventListener('resize', scheduleMarqueeRefresh, { passive: true });
-  onMediaQueryChange(PHONE_TEXT_WRAP_MQ, () => {
-    refreshAllMarquees();
-    refreshSportsChipScroll();
-    refreshWeatherNameScroll();
-  });
   onMediaQueryChange(PREFERS_REDUCED_MOTION, () => {
     getMarqueeElements().forEach((el) => {
       const text = marqueeTextByEl.get(el);
@@ -9540,6 +9537,7 @@ function applyMarquee(el, text) {
   el.style.removeProperty('--marquee-shift');
   el.style.removeProperty('--marquee-duration');
   el.style.removeProperty('--marquee-delay');
+  el.style.removeProperty('--marquee-trips');
 
   if (!value) {
     marqueeTextByEl.delete(el);

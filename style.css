@@ -747,7 +747,7 @@ body {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) 2 alternate both;
+  animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both;
   will-change: transform;
 }
 .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
@@ -755,7 +755,7 @@ body {
   overflow: visible;
   text-overflow: clip;
   /* Fallback 5.5s (pas 8.5s) : --sports-scroll-duration hérite déjà du strip. */
-  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) 2 alternate both;
+  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both;
   will-change: transform;
 }
 @keyframes sports-chip-scroll-sub {
@@ -766,34 +766,6 @@ body {
 .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-rolling-out .sports-chip__cta-sub-text {
   animation: none !important;
   transform: none;
-}
-/*
- * Téléphone : 2 lignes, clip net, pas de marquee. L’accroche change au rythme
- * de lecture au lieu d’attendre un aller-retour de 11 s+. Jamais d’ellipsis.
- */
-@media (max-width: 700px) {
-  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text,
-  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub-text {
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: clip;
-    max-width: 100%;
-    display: block;
-    animation: none !important;
-    transform: none;
-  }
-  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text {
-    max-height: calc(1.35em * 2);
-  }
-  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub-text {
-    max-height: calc(1.35em * 2);
-  }
-  .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text,
-  .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
-    max-width: 100%;
-    animation: none !important;
-    transform: none;
-  }
 }
 /* Plus de flèche : la place va au texte.
  * Voyant rouge persistant (comme EN ONDES), indépendant de la radio. */
@@ -1597,7 +1569,7 @@ html[data-script-dir="rtl"] .wordmark-full {
 .is-marquee { text-overflow: clip; }
 /* 1 cycle (delay lecture + aller-retour), puis repos — pas infinite. */
 .is-marquee > .tuner-now-sub-text {
-  animation: tunerMarquee var(--marquee-duration, 12s) linear var(--marquee-delay, 1.6s) 2 alternate both;
+  animation: tunerMarquee var(--marquee-duration, 12s) linear var(--marquee-delay, 1.6s) var(--marquee-trips, 2) alternate both;
   will-change: transform;
 }
 /* L'audio reste actif en arrière-plan; seules les animations de lecture sont
@@ -1627,39 +1599,6 @@ html.is-tuner-presentation-paused .is-marquee > .tuner-now-sub-text {
   .tuner-now-sub-rotate.is-rotating > .tuner-now-sub { transition: none; }
   .tuner-nowair-body { transition: none; }
   .tuner-play.is-buffering::after { animation: none; }
-}
-@media (max-width: 700px) {
-  .tuner-now-name,
-  .tuner-now-sub {
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: clip;
-  }
-  .tuner-now-name {
-    max-height: calc(1.2em * 2);
-  }
-  .tuner-now-sub {
-    max-height: calc(1.35em * 2);
-  }
-  .tuner-now-sub-text {
-    display: block;
-    white-space: normal;
-    max-width: 100%;
-    max-height: calc(1.35em * 2);
-    overflow: hidden;
-  }
-  .is-marquee > .tuner-now-sub-text {
-    animation: none;
-    transform: none;
-    will-change: auto;
-  }
-  .tuner-nowair-title,
-  .tuner-nowair-sub {
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: clip;
-    max-height: calc(1.35em * 2);
-  }
 }
 
 .tuner-play {
@@ -2460,15 +2399,6 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-@media (max-width: 700px) {
-  .tuner-nowair-title,
-  .tuner-nowair-sub {
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: clip;
-    max-height: calc(1.35em * 2);
-  }
 }
 
 .tuner-nowair.is-empty .tuner-nowair-title {

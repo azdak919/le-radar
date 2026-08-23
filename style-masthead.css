@@ -1003,7 +1003,7 @@ a { color: inherit; }
  */
 .masthead-weather__city.is-overflowing .masthead-weather__name-text {
   max-width: none;
-  animation: weather-name-scroll 5.5s ease-in-out 0.8s 2 alternate both;
+  animation: weather-name-scroll 5.5s ease-in-out 0.8s var(--weather-scroll-trips, 2) alternate both;
 }
 @keyframes weather-name-scroll {
   /* Hold court au début/fin pour lire, sans 28 % trop long */
@@ -1160,22 +1160,6 @@ a { color: inherit; }
   .masthead-weather__city.is-arriving,
   .masthead-weather__city.is-leaving {
     animation: none;
-  }
-}
-/* Téléphone : nom de ville sur 2 lignes, pas de marquee avant de changer de carte. */
-@media (max-width: 700px) {
-  .masthead-weather__name-text {
-    white-space: normal;
-    max-width: 100%;
-    display: block;
-    max-height: calc(1.15em * 2);
-    overflow: hidden;
-    text-overflow: clip;
-  }
-  .masthead-weather__city.is-overflowing .masthead-weather__name-text {
-    max-width: 100%;
-    animation: none;
-    transform: none;
   }
 }
 
