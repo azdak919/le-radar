@@ -1118,6 +1118,40 @@
   background: var(--bg-soft);
   border: 1px solid var(--rule);
 }
+/* Match en cours — pastille à côté du sexe, même registre que la CTA « En cours ». */
+.sports-panel__live {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: #fff;
+  background: var(--status-live, #c8102e);
+  border-radius: 999px;
+  padding: 3px 8px 3px 7px;
+  flex: 0 0 auto;
+}
+.sports-panel--live .sports-panel__live,
+.sports-panel__live:not([hidden]) {
+  display: inline-flex;
+}
+.sports-panel__live[hidden] { display: none !important; }
+.sports-panel__live::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  flex: 0 0 auto;
+  animation: sports-cta-live-dot 1.4s ease-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sports-panel__live::before { animation: none; }
+}
 /* Ligne 2 : établissement (registre). */
 .sports-panel__school {
   margin: 0 0 3px;
@@ -1303,6 +1337,76 @@
 }
 .sports-result--next .sports-result__badge--next {
   color: var(--status-upcoming, #9a6900);
+}
+.sports-result--live {
+  border-left: 3px solid var(--status-live, #c8102e);
+  margin-inline: -6px;
+  padding-inline: 6px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--status-live, #c8102e) 9%, transparent);
+}
+.sports-result--live .sports-result__badge {
+  color: var(--status-live, #c8102e);
+  font-size: 0;
+  width: 8px;
+  height: 8px;
+  align-self: center;
+  border-radius: 50%;
+  background: var(--status-live, #c8102e);
+  animation: sports-cta-live-dot 1.4s ease-out infinite;
+}
+.sports-result__score--live {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  color: var(--status-live, #c8102e);
+  font-weight: 800;
+  white-space: normal;
+  line-height: 1.2;
+}
+.sports-result__live-flag {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.sports-result__live-score {
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+}
+[data-theme="dark"] .sports-result--live {
+  border-left-color: var(--status-live-soft, #ff7d6e);
+  background: color-mix(in srgb, var(--status-live-soft, #ff7d6e) 12%, transparent);
+}
+[data-theme="dark"] .sports-result--live .sports-result__badge {
+  background: var(--status-live-soft, #ff7d6e);
+  color: var(--status-live-soft, #ff7d6e);
+}
+[data-theme="dark"] .sports-result__score--live,
+[data-theme="dark"] .sports-result__live-flag {
+  color: var(--status-live-soft, #ff7d6e);
+}
+.sports-filter[data-filter-period="live"] {
+  color: var(--status-live, #c8102e);
+}
+.sports-filter[data-filter-period="live"]::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: 1px;
+}
+.sports-filter[data-filter-period="live"][aria-pressed="true"],
+.sports-filter[data-filter-period="live"].is-active {
+  border-color: color-mix(in srgb, var(--status-live, #c8102e) 55%, var(--rule));
+  background: color-mix(in srgb, var(--status-live, #c8102e) 12%, var(--bg));
+  color: var(--status-live, #c8102e);
+}
+[data-theme="dark"] .sports-filter[data-filter-period="live"] {
+  color: var(--status-live-soft, #ff7d6e);
 }
 /* Ancienne note sources (retirée du HTML) — garde le sélecteur inoffensif. */
 .sports-board-note { display: none; }
