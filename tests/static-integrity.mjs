@@ -1235,8 +1235,17 @@ assert(
   appJs.includes('function sportsGameIsLive')
     && appJs.includes('function sportsCtaState')
     && appJs.includes('SPORTS_LIVE_VISUAL_LEAD_MS')
-    && appJs.includes('SPORTS_LIVE_VISUAL_TAIL_MS'),
-  'app.js : prédicat « en cours » dédié au registre visuel (pas le tri)',
+    && appJs.includes('SPORTS_LIVE_VISUAL_TAIL_MS')
+    && appJs.includes('function sportsGameHasScore')
+    && appJs.includes('function sportsCtaLiveSources')
+    && appJs.includes('function pollLiveSportsJson')
+    && appJs.includes("if (state === 'live')"),
+  'app.js : direct = pastille En cours + score collé + sondage sports.json',
+);
+assert(
+  !/state === 'live'[\s\S]{0,200}sportsRelativeAge/.test(appFlat)
+    && appJs.includes('sportsLivePeriodLabel'),
+  'app.js : sous-ligne live = période / compétition (pas « dans 15 min »)',
 );
 assert(
   /\[data-cta-state="live"\][^{]*\{[^}]*sports-cta-ring-pulse/.test(cssFlat),
