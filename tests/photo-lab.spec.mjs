@@ -42,6 +42,9 @@ test('tableau de bord local', async ({ page }) => {
   const sports = page.locator('a.card[href="./sports-strip-lab.html"]');
   await expect(sports).toBeVisible();
   await expect(sports.locator('strong')).toContainText('Cartes sports');
+  const pageLab = page.locator('a.card[href="./sports-page-lab.html"]');
+  await expect(pageLab).toBeVisible();
+  await expect(pageLab.locator('strong')).toContainText('Cartes page Sports');
 });
 
 test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ page }) => {
@@ -99,6 +102,31 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
     if (!m) return 0;
     return Math.abs(Number(m[1].split(',')[4]));
   }), { timeout: 6000 }).toBeGreaterThan(4);
+});
+
+test('labo cartes page sports : variantes V D N prochain creux', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(`${BASE}/dev/sports-page-lab.html`, { waitUntil: 'domcontentloaded' });
+  const stage = page.locator('#stage');
+  await expect(stage).toBeVisible();
+  await expect.poll(async () => Math.round((await stage.boundingBox()).width)).toBeLessThanOrEqual(390);
+  await expect(page.locator('#fiches .sports-result--W').first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-result--L').first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-result--D').first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-result--next').first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-result--live').first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-result__badge', { hasText: /^V$/ }).first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-result__badge', { hasText: /^D$/ }).first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-result__badge', { hasText: /^N$/ }).first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-result__venue', { hasText: 'domicile' }).first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-result__venue', { hasText: 'extérieur' }).first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-result__vs', { hasText: 'régate' }).first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-panel__empty').first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-panel__empty--club').first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-panel--external').first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-result--prior-season').first()).toBeVisible();
+  await expect(page.locator('#fiches .is-spotlight').first()).toBeVisible();
+  await expect(page.locator('#formats iframe')).toHaveCount(4);
 });
 
 test('labo photo : grille puis fiche, suivant en barre', async ({ page }) => {
