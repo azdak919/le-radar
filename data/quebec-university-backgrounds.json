@@ -1,7 +1,7 @@
 {
   "version": 1,
   "profile": "universities",
-  "updated": "2026-08-21T05:12:53.128Z",
+  "updated": "2026-08-23T19:28:15.574Z",
   "photos": [
     {
       "id": "186769a5aeb5",
@@ -1318,54 +1318,6 @@
       "campus": true
     },
     {
-      "id": "5e86355f1f74",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/8/8a/BajaSAE_UQTR1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "link": "https://commons.wikimedia.org/wiki/File:BajaSAE%20UQTR1.jpg",
-      "title": "BajaSAE UQTR1",
-      "credit": "Cephas",
-      "license": "CC BY-SA 3.0",
-      "description": "Sixth edition of the Northern Challenge Baja SAE race in Laval University , Quebec, Canada. Université du Québec à Trois-Rivières vehicle, February 12, 2011.",
-      "categories": "GFDL|Taken with Canon EOS 40D|Université du Québec à Trois-Rivières|CC-BY-SA-3.0,2.5,2.0,1.0|License migration redundant|Baja SAE|Self-published work",
-      "width": 3888,
-      "height": 2592,
-      "aspect": 1.5,
-      "mime": "image/jpeg",
-      "source": "commons-cat",
-      "addedAt": "2026-08-21T05:00:58.287Z",
-      "sessionId": "ete",
-      "bank": "universities",
-      "season": "hiver",
-      "tags": [
-        "mat",
-        "campus"
-      ],
-      "campus": true
-    },
-    {
-      "id": "084d0f90b1f8",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/b/b3/BajaSAE_UQTR2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "link": "https://commons.wikimedia.org/wiki/File:BajaSAE%20UQTR2.jpg",
-      "title": "BajaSAE UQTR2",
-      "credit": "Cephas",
-      "license": "CC BY-SA 3.0",
-      "description": "Sixth edition of the Northern Challenge Baja SAE race in Laval University , Quebec, Canada. Université du Québec à Trois-Rivières vehicle, February 12, 2011.",
-      "categories": "GFDL|Taken with Canon EOS 40D|Université du Québec à Trois-Rivières|CC-BY-SA-3.0,2.5,2.0,1.0|License migration redundant|Baja SAE|Self-published work",
-      "width": 3888,
-      "height": 2592,
-      "aspect": 1.5,
-      "mime": "image/jpeg",
-      "source": "commons-cat",
-      "addedAt": "2026-08-21T05:00:58.287Z",
-      "sessionId": "ete",
-      "bank": "universities",
-      "season": "hiver",
-      "tags": [
-        "mat",
-        "campus"
-      ],
-      "campus": true
-    },
-    {
       "id": "cfe7e508740c",
       "url": "https://upload.wikimedia.org/wikipedia/commons/e/ee/UQAM_Pavillon_des_Sciences_de_la_gestion_07.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
       "link": "https://commons.wikimedia.org/wiki/File:UQAM%20Pavillon%20des%20Sciences%20de%20la%20gestion%2007.jpg",
@@ -1852,10 +1804,18 @@
       "bank": "universities",
       "season": "hiver",
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
-      "campus": true
+      "campus": true,
+      "focalY": 0.0731586752347998,
+      "place": "",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     }
   ]
 }
