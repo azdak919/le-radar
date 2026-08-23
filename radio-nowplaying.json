@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-23T01:07:35.324Z",
+  "updatedAt": "2026-08-23T02:43:58.784Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T01:06:58.757Z"
+      "checkedAt": "2026-08-23T02:43:29.891Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les criquets crinqués (reprise)",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/les-criquets-crinques"
-      },
-      "next": {
         "title": "Mix anglo",
         "source": "schedule",
         "start": "22:00",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "Basses fréquences (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/basses-frequences"
+      },
       "track": "",
-      "showTitle": "Les criquets crinqués (reprise)",
+      "showTitle": "Mix anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T01:07:00.754Z"
+      "checkedAt": "2026-08-23T02:43:31.864Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,35 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T01:07:02.971Z"
+      "checkedAt": "2026-08-23T02:43:36.101Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Spacious Astrology Playlist",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-spacious-astrology-playlist"
-      },
-      "next": {
         "title": "Brave New Jams",
         "source": "schedule-live",
         "start": "22:00",
         "end": "00:00",
         "url": "http://www.cjlo.com/shows/brave-new-jams"
       },
+      "next": {
+        "title": "Floydian Slip",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "01:00",
+        "url": "http://www.cjlo.com/shows/floydian-slip"
+      },
       "track": "",
-      "showTitle": "The Spacious Astrology Playlist",
+      "showTitle": "Brave New Jams",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T01:07:16.298Z"
+      "checkedAt": "2026-08-23T02:43:50.482Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,21 +121,27 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T01:07:29.017Z"
+      "checkedAt": "2026-08-23T02:43:52.121Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "D'amour et de sexe",
         "source": "api-live",
         "start": "22:00",
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Jimmie D - No Love",
-      "showTitle": "",
+      "next": {
+        "title": "Bitume",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "bitume"
+      },
+      "track": "Surprise - Bad & Boujee",
+      "showTitle": "D'amour et de sexe",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -146,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-23T01:07:34.973Z"
+      "checkedAt": "2026-08-23T02:43:58.434Z"
     }
   }
 }
