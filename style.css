@@ -780,7 +780,7 @@ body {
   transform: none;
 }
 /* Plus de flèche : la place va au texte.
- * Voyant : ambre (Prochain, Hier, dates) ; rouge seulement Aujourd’hui.
+ * Voyant : ambre Prochain ; rouge Aujourd’hui ; vert Hier / passé.
  * En cours : point blanc sur pastille rouge. Indépendant de la radio. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-chev {
   display: none !important;
@@ -794,9 +794,14 @@ body {
   background: var(--status-upcoming-soft, #e8c07a);
   animation: sports-cta-dot-upcoming 1.8s ease-out infinite;
 }
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="today"]::before,
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-tag="Aujourd’hui"]::before {
   background: var(--live, #c8102e);
   animation: onairPulse 1.6s ease-out infinite;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="past"]::before {
+  background: #3d9a6a;
+  animation: sports-cta-dot-past 1.8s ease-out infinite;
 }
 .masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag::before {
   background: #fff;
@@ -805,6 +810,10 @@ body {
 @keyframes sports-cta-dot-upcoming {
   0% { box-shadow: 0 0 0 0 rgba(232, 192, 122, 0.5); }
   100% { box-shadow: 0 0 0 7px rgba(232, 192, 122, 0); }
+}
+@keyframes sports-cta-dot-past {
+  0% { box-shadow: 0 0 0 0 rgba(61, 154, 106, 0.55); }
+  100% { box-shadow: 0 0 0 7px rgba(61, 154, 106, 0); }
 }
 /* Halo / bordure seulement — la carte ne grossit pas. */
 @keyframes sports-cta-ring-pulse {

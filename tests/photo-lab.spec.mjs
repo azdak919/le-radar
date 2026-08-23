@@ -72,7 +72,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   const [ar, ag] = await dotRgb('Aujourd’hui');
   expect(ar - ag, 'Aujourd’hui : voyant rouge').toBeGreaterThan(80);
   expect(pr - pg, 'Prochain : voyant ambre, pas rouge').toBeLessThan(80);
-  expect(hr - hg, 'Hier : voyant ambre, pas rouge').toBeLessThan(80);
+  expect(hg - hr, 'Hier : voyant vert').toBeGreaterThan(20);
   await expect(page.locator('.sports-chip__cta-eyebrow--head', { hasText: /^Prochain$/ })).toHaveCount(0);
   await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^V$/ }).first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^D$/ }).first()).toBeVisible();
