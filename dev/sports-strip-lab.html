@@ -96,7 +96,7 @@
   <div id="host">
     <p><a class="hub" href="./">← Labo</a></p>
     <h1>Cartes sports</h1>
-    <p class="lede">Même CSS que le site. PROCHAIN / HIER / AUJOURD’HUI au-dessus de SPORTS sous 431&nbsp;px. Accroche sur une ligne : défilement gauche → droite, aller-retour, pause à l’origine. Ici le marquee boucle pour qu’on le voie ; en prod il ne fait qu’un cycle puis l’info peut changer. Les scores plus vieux qu’hier ne sont pas sur cette carte.</p>
+    <p class="lede">Même CSS que le site. À 390/430, <strong>CTA seule</strong> (le fit prod retire les puces scores). Dès 768, une puce à gauche + la CTA. PROCHAIN / HIER / AUJOURD’HUI au-dessus de SPORTS sous 431&nbsp;px. Accroche sur une ligne : défilement gauche → droite, aller-retour, pause à l’origine. Ici le marquee boucle ; en prod il ne fait qu’un cycle.</p>
     <div class="formats" id="formats" role="toolbar" aria-label="Formats d’écran"></div>
     <p class="meta" id="meta"></p>
     <div class="clip" id="clip">
@@ -113,65 +113,68 @@
     const embed = params.has('embed');
     document.documentElement.classList.toggle('embed', embed);
 
+    /** Prod 390/430 : fit retire les puces scores, CTA seule. */
+    const PHONE_CTA_ONLY = 431;
+
     const cases = [
       {
         title: 'En saison — prochain',
-        html: stripCta({
+        extra: () => matchChip({
+          tone: '#2e7d4f',
+          glyph: '⚽',
+          inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__vs">reçoit</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
+          sub: 'aujourd’hui, 19 h 00 · Soccer univ.',
+        }),
+        cta: {
           state: 'next',
           tone: '#2e7d4f',
           eyebrow: 'Prochain',
           glyph: '⚽',
-          text: 'Saint-Hyacinthe reçoit Vanier College',
-          sub: 'dim. 23 août, 17 h 00 · Soccer collégial masculin D1',
-          extra: matchChip({
-            tone: '#2e7d4f',
-            glyph: '⚽',
-            inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__vs">reçoit</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
-            sub: 'aujourd’hui, 19 h 00 · Soccer univ.',
-          }),
-        }),
+          text: 'Patriotes de Saint-Hyacinthe reçoivent Vanier College',
+          sub: 'dim. 23 août, 17 h 00 · Soccer collégial masculin division 1',
+        },
       },
       {
         title: 'Matin — résultats d’hier',
-        html: stripCta({
+        extra: () => matchChip({
+          tone: '#3d6fa8',
+          glyph: '🏈',
+          badge: 'V',
+          badgeMod: 'w',
+          inner: '<span class="sports-chip__name">Carabins</span> <span class="sports-chip__score">24–21</span> <span class="sports-chip__name sports-chip__opp">Rouge et Or</span>',
+          sub: 'hier · Football univ.',
+        }),
+        cta: {
           state: 'result',
           tone: '#3d6fa8',
           eyebrow: 'Hier',
           glyph: '🏈',
           text: 'Carabins 24–21 Rouge et Or',
           sub: 'Football univ. · sam. soir',
-          extra: matchChip({
-            tone: '#3d6fa8',
-            glyph: '🏈',
-            badge: 'V',
-            badgeMod: 'w',
-            inner: '<span class="sports-chip__name">Carabins</span> <span class="sports-chip__score">24–21</span> <span class="sports-chip__name sports-chip__opp">Rouge et Or</span>',
-            sub: 'hier · Football univ.',
-          }),
-        }),
+        },
       },
       {
         title: 'Résultat — aujourd’hui',
-        html: stripCta({
+        extra: () => matchChip({
+          tone: '#3d6fa8',
+          glyph: '🏀',
+          badge: 'V',
+          badgeMod: 'w',
+          inner: '<span class="sports-chip__name">UdeM</span> <span class="sports-chip__score">78–71</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
+          sub: 'aujourd’hui · Basket univ.',
+        }),
+        cta: {
           state: 'result',
           tone: '#3d6fa8',
           eyebrow: 'Aujourd’hui',
           glyph: '🏀',
           text: 'UdeM 78–71 Concordia',
           sub: 'Basket univ. · il y a 3 h',
-          extra: matchChip({
-            tone: '#3d6fa8',
-            glyph: '🏀',
-            badge: 'V',
-            badgeMod: 'w',
-            inner: '<span class="sports-chip__name">UdeM</span> <span class="sports-chip__score">78–71</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
-            sub: 'aujourd’hui · Basket univ.',
-          }),
-        }),
+        },
       },
       {
         title: 'En direct',
-        html: stripCta({
+        cta: {
           state: 'live',
           tone: '#c8102e',
           eyebrow: '',
@@ -179,29 +182,29 @@
           glyph: '🏒',
           text: 'McGill 2–1 Concordia',
           sub: 'Hockey univ. · 2e période',
-        }),
+        },
       },
       {
         title: 'Hors saison — prochain (pas un score rassis)',
-        html: stripCta({
+        cta: {
           state: 'next',
           tone: '#6a7580',
           eyebrow: 'Prochain',
           glyph: '🏈',
           text: 'Rouge et Or à Carabins',
           sub: 'ven. 4 sept., 19 h 00 · Football univ.',
-        }),
+        },
       },
       {
         title: 'Creux — carte idle',
-        html: stripCta({
+        cta: {
           state: 'idle',
           tone: '#6a7580',
           eyebrow: '',
           glyph: '',
-          text: 'Scores collégiaux et universitaires',
+          text: 'Scores collégiaux et universitaires du Québec',
           sub: 'MAJ 15 h 50',
-        }),
+        },
       },
     ];
 
@@ -227,7 +230,7 @@
         ? `<span class="sports-chip__cta-eyebrow sports-chip__cta-eyebrow--rail">${eyebrow}</span>`
         : `<span class="sports-chip__cta-eyebrow sports-chip__cta-eyebrow--rail" hidden></span>`;
       const g = glyph ? `<span class="sports-chip__cta-glyph" aria-hidden="true">${glyph}</span>` : '';
-      return `<div class="masthead-sports-strip" data-count="${extra ? 2 : 1}" data-cta-pinned="1" data-ready="1">
+      return `<div class="masthead-sports-strip" data-count="${extra ? 2 : 1}" data-cta-pinned="${extra ? 1 : 0}" data-ready="1">
         ${extra || ''}
         <a class="sports-chip sports-chip--cta" data-cta-state="${state}" href="#lab" style="--sports-tone:${tone}">
           <span class="sports-chip__cta-rail">
@@ -291,14 +294,28 @@
       parent.postMessage({ type: 'sports-lab-size', height: h }, '*');
     }
 
+    function paintBoard(root) {
+      const withLeft = window.innerWidth >= PHONE_CTA_ONLY;
+      root.innerHTML = cases.map((c) => {
+        const extra = withLeft && c.extra ? c.extra() : '';
+        return `<article class="case"><p><strong>${c.title}</strong></p>${stripCta({ ...c.cta, extra })}</article>`;
+      }).join('');
+    }
+
     function paintEmbed() {
       const board = document.getElementById('board');
       document.getElementById('host').remove();
-      board.innerHTML = cases.map((c) => `<article class="case"><p><strong>${c.title}</strong></p>${c.html}</article>`).join('');
+      let lastWithLeft = null;
       const run = () => {
+        const withLeft = window.innerWidth >= PHONE_CTA_ONLY;
+        if (lastWithLeft !== withLeft) {
+          lastWithLeft = withLeft;
+          paintBoard(board);
+        }
         armMarquee(board);
         reportHeight();
       };
+      run();
       requestAnimationFrame(() => requestAnimationFrame(run));
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
       window.addEventListener('resize', run);
