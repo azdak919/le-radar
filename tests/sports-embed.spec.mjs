@@ -9,7 +9,11 @@ test.describe('Embed sports IAB', () => {
     await expect(page.locator('html')).toHaveAttribute('data-embed', 'sports-ad');
     await expect(page.locator('html')).toHaveAttribute('data-fmt', '300x250');
     await expect.poll(() => page.locator('#ad-front').innerText(), { timeout: 15_000 })
-      .toMatch(/LE-RADAR|–|reçoit|contre|Prochain|Aujourd/i);
+      .toMatch(/LE-RADAR|–|reçoit|contre|Prochain|Aujourd|Journaux/i);
+    const lockup = page.locator('.ad-lockup');
+    await expect(lockup.locator('.ad-logo')).toBeVisible();
+    await expect(lockup.locator('.ad-word')).toHaveText('LE-RADAR.ca');
+    await expect(page.locator('#ad-tag img')).toHaveCount(0);
     expect(messages).toEqual([]);
   });
 

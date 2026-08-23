@@ -225,9 +225,16 @@
       }
       return out;
     }
-    const mix = lives.length
-      ? diverse(lives, 8)
-      : diverse(results, 6).concat(diverse(nexts, 6)).slice(0, 10);
+    const raw = diverse(lives, 4).concat(diverse(results, 5), diverse(nexts, 6));
+    const mix = [];
+    const mixSeen = new Set();
+    for (const s of raw) {
+      const k = keyOf(s.game, s.team);
+      if (mixSeen.has(k)) continue;
+      mixSeen.add(k);
+      mix.push(s);
+      if (mix.length >= 10) break;
+    }
     const out = [];
     let n = 0;
     for (const s of mix) {
@@ -236,7 +243,6 @@
       if (n % BRAND_EVERY === 0) out.push({ kind: 'brand' });
     }
     if (!out.length) out.push({ kind: 'brand' });
-    else if (!out.some((s) => s.kind === 'brand')) out.push({ kind: 'brand' });
     return out;
   }
 
@@ -249,12 +255,12 @@
 
   function meta(slide) {
     if (!slide || slide.kind === 'brand') {
-      return { tag: 'LE-RADAR.ca', lamp: 'brand', state: 'idle', res: '', foot: SLOGAN };
+      return { tag: 'Sports', lamp: 'next', state: 'idle', res: '', foot: '' };
     }
     const g = slide.game || {};
     const today = ymdToronto();
     if (slide.kind === 'live') {
-      return { tag: 'En cours', lamp: 'live', state: 'live', res: '', foot: 'le-radar.ca' };
+      return { tag: 'En cours', lamp: 'live', state: 'live', res: '', foot: '' };
     }
     if (slide.kind === 'result') {
       const tag = g.date === today ? 'Aujourd’hui' : 'Hier';
@@ -263,20 +269,20 @@
         lamp: g.date === today ? 'today' : 'past',
         state: 'result',
         res: g.result === 'W' || g.result === 'L' ? g.result : 'D',
-        foot: 'le-radar.ca',
+        foot: '',
       };
     }
-    return { tag: 'Prochain', lamp: 'next', state: 'next', res: '', foot: 'le-radar.ca' };
+    return { tag: 'Prochain', lamp: 'next', state: 'next', res: '', foot: '' };
   }
 
   function faceHtml(slide) {
     if (!slide || slide.kind === 'brand') {
       return `<span class="ad-kicker">Québec</span>
         <span class="ad-board">
-          <span class="ad-hero notranslate" translate="no">LE-RADAR.ca</span>
+          <span class="ad-hero">Journaux, radios et sports</span>
           <span class="ad-verb">réunis au même endroit</span>
         </span>
-        <span class="ad-sub">Journaux, radios et sports étudiants</span>`;
+        <span class="ad-sub">Cégeps et universités</span>`;
     }
     const g = slide.game || {};
     const t = slide.team || {};
@@ -297,7 +303,19 @@
         <span class="ad-sub">${esc(comp)}</span>`;
     }
     const when = g.time ? String(g.time).replace(':', ' h ') : '';
-    const day = g.date === ymdToronto() ? 'Aujourd’hui' : (g.date || '');
+    const day = (() => {
+      const iso = g.date || '';
+      const today = ymdToronto();
+      if (iso === today) return 'Aujourd’hui';
+      if (iso === ymdToronto(new Date(Date.now() - 86400000))) return 'Hier';
+      try {
+        return new Intl.DateTimeFormat('fr-CA', {
+          weekday: 'short', day: 'numeric', month: 'short', timeZone: TZ,
+        }).format(new Date(`${iso}T12:00:00`));
+      } catch {
+        return iso;
+      }
+    })();
     const verb = slide.kind === 'live' ? 'contre' : (g.home ? 'reçoit' : 'à');
     return `<span class="ad-kicker">${gph}</span>
       <span class="ad-board">
@@ -325,7 +343,7 @@
   const root = document.getElementById('ad');
   const reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
-  let slides = [{ kind: 'brand' }];
+  let slides = [];
   let idx = 0;
   let swapping = false;
   let paused = false;
@@ -334,21 +352,12 @@
     const m = meta(slide);
     if (tagEl) {
       tagEl.dataset.lamp = m.lamp;
-      if (m.lamp === 'brand') {
-        tagEl.replaceChildren();
-        const img = document.createElement('img');
-        img.className = 'ad-tag-logo';
-        img.src = 'assets/icon.svg';
-        img.width = 18;
-        img.height = 18;
-        img.alt = '';
-        img.decoding = 'async';
-        tagEl.append(img);
-      } else {
-        tagEl.textContent = m.tag;
-      }
+      tagEl.textContent = m.tag;
     }
-    if (footEl) footEl.textContent = m.foot;
+    if (footEl) {
+      footEl.textContent = m.foot;
+      footEl.hidden = !m.foot;
+    }
     root.dataset.state = m.state;
     if (m.res) root.dataset.res = m.res;
     else root.removeAttribute('data-res');
@@ -411,6 +420,7 @@
   }
 
   function boot() {
+    if (!slides.length) return;
     show(0);
     if (slides.length > 1) {
       window.setInterval(() => {
