@@ -11,9 +11,10 @@
   const DWELL_MS = 5200;
   const LIVE_LEAD_MS = 15 * 60 * 1000;
   const LIVE_TAIL_MS = 3 * 3600 * 1000;
-  const HOME = 'https://le-radar.ca/';
-  const SPORTS = 'https://le-radar.ca/sports/';
+  const HOME = new URL('./', location.href).href;
+  const SPORTS = new URL('sports/', location.href).href;
   const SLOGAN = 'Journaux, radios et sports étudiants du Québec';
+  const BRAND_LONG = 'Le Réseau Académique de Découverte et d’Agrégation de Ressources';
   const ACCENT_TONE = '#6c2163';
 
   const TONES = {
@@ -277,12 +278,12 @@
 
   function faceHtml(slide) {
     if (!slide || slide.kind === 'brand') {
-      return `<span class="ad-kicker">Québec</span>
-        <span class="ad-board">
-          <span class="ad-hero">Journaux, radios et sports</span>
-          <span class="ad-verb">réunis au même endroit</span>
+      return `<span class="ad-brand-lockup notranslate" translate="no">
+          <img class="ad-logo" src="assets/icon.svg" width="28" height="28" alt="" decoding="async">
+          <span class="ad-word">LE-RADAR.ca</span>
         </span>
-        <span class="ad-sub">Cégeps et universités</span>`;
+        <span class="ad-brand-long">${esc(BRAND_LONG)}</span>
+        <span class="ad-sub">${esc(SLOGAN)}</span>`;
     }
     const g = slide.game || {};
     const t = slide.team || {};
@@ -326,15 +327,25 @@
       <span class="ad-sub">${esc([day, when, comp].filter(Boolean).join(' · '))}</span>`;
   }
 
+  function gameIdOf(game) {
+    if (!game) return '';
+    const id = String(game.gameId || '').trim();
+    if (id) return id;
+    const m = String(game.url || '').match(/GameId=([0-9a-f-]{8,})/i);
+    return m ? m[1] : '';
+  }
+
   function hrefFor(slide) {
     if (!slide || slide.kind === 'brand') return HOME;
     const sport = String(slide.game?.sport || slide.team?.sport || '').toLowerCase();
     const id = String(slide.team?.id || '').trim();
-    const q = new URLSearchParams();
-    if (sport) q.set('sport', sport);
-    if (id) q.set('team', id);
-    const qs = q.toString();
-    return qs ? `${SPORTS}?${qs}` : SPORTS;
+    const gid = gameIdOf(slide.game);
+    const url = new URL(SPORTS, location.href);
+    if (sport) url.searchParams.set('sport', sport);
+    if (id) url.searchParams.set('team', id);
+    if (gid) url.searchParams.set('game', gid);
+    if (sport) url.hash = `sport-${sport}`;
+    return url.href;
   }
 
   const stage = document.getElementById('ad-stage');
@@ -444,6 +455,7 @@
         data = RadarSportsFreshness.pruneSportsPayload(data);
       }
       slides = collect(data);
+      if (params.get('face') === 'brand') slides = [{ kind: 'brand' }];
     } catch (_) {
       slides = [{ kind: 'brand' }];
     }

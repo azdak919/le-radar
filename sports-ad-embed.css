@@ -313,6 +313,27 @@ html[data-theme="light"] .ad-tag[data-lamp="brand"] {
 }
 .ad-badge--l { background: #b84848; }
 .ad-badge--d { background: #6b7c8c; }
+.ad-brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.ad-brand-lockup .ad-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+}
+.ad-brand-lockup .ad-word {
+  font-size: 1.35rem;
+}
+.ad-brand-long {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
 .ad-sub, .ad-foot {
   font-size: 11px;
   font-weight: 500;
@@ -355,6 +376,8 @@ html[data-fmt="728x90"] .ad-stage { flex: 1 1 auto; min-width: 0; }
 html[data-fmt="728x90"] .ad-face { flex-direction: row; align-items: center; gap: 16px; }
 html[data-fmt="728x90"] .ad-board { flex: 1 1 auto; flex-direction: row; align-items: baseline; gap: 12px; min-width: 0; }
 html[data-fmt="728x90"] .ad-hero { font-size: 1.25rem; white-space: nowrap; }
+html[data-fmt="728x90"] .ad-brand-lockup .ad-word { font-size: 1.15rem; }
+html[data-fmt="728x90"] .ad-brand-long { font-size: 0.8rem; max-width: 22rem; }
 html[data-fmt="728x90"] .ad-score { font-size: 1.3rem; }
 html[data-fmt="728x90"] .ad-verb { font-size: 12px; }
 
@@ -369,7 +392,10 @@ html[data-fmt="320x50"] .ad {
 }
 html[data-fmt="320x50"] .ad-top { align-self: center; gap: 6px; }
 html[data-fmt="320x50"] .ad-word,
-html[data-fmt="320x50"] .ad-foot { display: none; }
+html[data-fmt="320x50"] .ad-foot,
+html[data-fmt="320x50"] .ad-brand-long { display: none; }
+html[data-fmt="320x50"] .ad-brand-lockup .ad-word { display: inline; font-size: 13px; }
+html[data-fmt="320x50"] .ad-brand-lockup .ad-logo { width: 16px; height: 16px; }
 html[data-fmt="320x50"] .ad-logo { width: 16px; height: 16px; }
 html[data-fmt="320x50"] .ad-tag { font-size: 8px; padding: 1px 5px; }
 html[data-fmt="320x50"] .ad-tag-logo { width: 14px; height: 14px; }

@@ -1017,6 +1017,17 @@
       0 6px 18px -12px color-mix(in srgb, var(--sports-panel-c, var(--accent)) 32%, transparent);
   }
 }
+/* Ligne de match cliquée depuis l’iframe (?game=). */
+.sports-result.is-spotlight {
+  background: color-mix(in srgb, var(--sports-panel-c, var(--accent)) 16%, var(--bg-soft));
+  box-shadow: inset 3px 0 0 var(--sports-panel-c, var(--accent));
+  border-radius: 6px;
+  outline: 2px solid color-mix(in srgb, var(--sports-panel-c, var(--accent)) 50%, transparent);
+  outline-offset: 1px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sports-result.is-spotlight { outline-width: 2px; }
+}
 /* Carte « liens officiels » (hockey hors API S1) : un peu plus large. */
 .sports-panel--external {
   grid-column: 1 / -1;
