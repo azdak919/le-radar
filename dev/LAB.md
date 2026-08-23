@@ -13,6 +13,8 @@ Revue photos (cadrage Y, tags, crédits) : **Labo photo** — `npm run lab:photo
 
 Tableau de bord (tous les labos) : `npm run lab` → http://127.0.0.1:8777/dev/
 
+Cartes sports (variantes CTA, marquee, formats iframe) : `/dev/sports-strip-lab.html` — carte **Cartes sports** du tableau de bord.
+
 ## Lancer
 
 ```bash

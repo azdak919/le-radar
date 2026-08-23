@@ -39,6 +39,50 @@ test('tableau de bord local', async ({ page }) => {
   await expect(page.locator('h1')).toContainText('Labo');
   await expect(page.locator('a.card.featured')).toHaveAttribute('href', './photo-lab/');
   await expect(page.locator('a.card[href="../index.html"]').first()).toBeVisible();
+  const sports = page.locator('a.card[href="./sports-strip-lab.html"]');
+  await expect(sports).toBeVisible();
+  await expect(sports.locator('strong')).toContainText('Cartes sports');
+});
+
+test('labo cartes sports : iframe formats + marquee L→R', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto(`${BASE}/dev/sports-strip-lab.html`, { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#formats')).toBeVisible();
+  await expect(page.locator('#formats button[data-w="390"]')).toHaveAttribute('aria-pressed', 'true');
+  const iframe = page.locator('#preview');
+  await expect(iframe).toBeVisible();
+  await expect(iframe).toHaveAttribute('data-w', '390');
+
+  const frame = page.frameLocator('#preview');
+  await expect(frame.locator('.sports-chip--cta').first()).toBeVisible({ timeout: 10000 });
+  const overflowing = frame.locator('.sports-chip--cta.is-overflowing').first();
+  await expect(overflowing).toBeVisible({ timeout: 8000 });
+
+  const title = overflowing.locator('.sports-chip__cta-text').first();
+  await expect.poll(async () => title.evaluate((el) => {
+    const s = getComputedStyle(el);
+    return `${s.animationName}|${s.animationIterationCount}|${s.whiteSpace}`;
+  })).toMatch(/sports-chip-scroll\|infinite\|nowrap/);
+
+  await expect.poll(async () => title.evaluate((el) => {
+    const t = getComputedStyle(el).transform;
+    if (!t || t === 'none') return 0;
+    const m = t.match(/matrix\(([^)]+)\)/);
+    if (!m) return 0;
+    return Math.abs(Number(m[1].split(',')[4]));
+  }), { timeout: 6000 }).toBeGreaterThan(4);
+
+  const railAt390 = await frame.locator('.sports-chip__cta-eyebrow--rail').first().evaluate(
+    (el) => getComputedStyle(el).display,
+  );
+  expect(railAt390, '390 : PROCHAIN au-dessus de SPORTS').not.toBe('none');
+
+  await page.locator('#formats button[data-w="768"]').click();
+  await expect(iframe).toHaveAttribute('data-w', '768');
+  await expect(frame.locator('.sports-chip--cta').first()).toBeVisible();
+  await expect.poll(async () => frame.locator('.sports-chip__cta-eyebrow--rail').first().evaluate(
+    (el) => getComputedStyle(el).display,
+  )).toBe('none');
 });
 
 test('labo photo : grille puis fiche, suivant en barre', async ({ page }) => {
