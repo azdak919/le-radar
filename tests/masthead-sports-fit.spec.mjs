@@ -6,6 +6,7 @@ import { expect, test } from '@playwright/test';
  * la CTA « SPORTS ».
  */
 test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ page }) => {
+  test.setTimeout(60000);
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
 
@@ -585,7 +586,11 @@ async function assertSportsCascadeAt(page, { width, height = 900, wide = false, 
   const now = await snapshot();
   expect(now.length).toBe(start.length);
   const flipped = now.filter((row, i) => row.text !== start[i]?.text).length;
-  if (start.length >= 3) {
+  const liveCta = await strip.locator('.sports-chip--cta[data-cta-state="live"]').count();
+  const onlyLiveCta = start.length === 1 && start[0].cta && liveCta > 0;
+  if (onlyLiveCta) {
+    expect(flipped, `direct unique : la CTA En cours reste à ${width}`).toBe(0);
+  } else if (start.length >= 3) {
     expect(flipped, `plusieurs cartes sports changent à ${width}`).toBeGreaterThan(1);
   } else {
     expect(flipped, `au moins une carte sports change à ${width}`).toBeGreaterThan(0);

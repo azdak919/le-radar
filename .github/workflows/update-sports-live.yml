@@ -1,0 +1,55 @@
+name: Update Student Sports (live)
+
+on:
+  schedule:
+    # Rafraîchit seulement les ligues avec un match dans la fenêtre live
+    # (coup d’envoi −15 min / +3 h). GitHub Actions = UTC.
+    #
+    # | UTC              | ≈ EDT            | Intention                    |
+    # |------------------|------------------|------------------------------|
+    # | 19:00–23:45 /15  | 15:00–19:45      | après-midi / début de soirée |
+    # | 00:00–02:45 /15  | 20:00–22:45      | soirée matchs                |
+    - cron: '0,15,30,45 19-23 * * *'
+    - cron: '0,15,30,45 0-2 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: update-sports-live-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Fetch live RSEQ scores (ligues en fenêtre seulement)
+        run: node scripts/fetch-sports.js --update --live
+
+      - name: Commit sports.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sports.json
+          if git diff --staged --quiet; then
+            echo "No live sports changes."
+            exit 0
+          fi
+          git commit -m "chore(sports): refresh live RSEQ scores"
+          for i in 1 2 3; do
+            git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
+            git rebase --abort 2>/dev/null || true
+            echo "push attempt $i failed, retrying…"
+            sleep $((i * 3))
+          done
+          echo "::error::could not push live sports update after retries"
+          exit 1
