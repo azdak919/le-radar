@@ -107,9 +107,14 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
 test('labo cartes page sports : variantes V D N prochain creux', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto(`${BASE}/dev/sports-page-lab.html`, { waitUntil: 'domcontentloaded' });
-  const stage = page.locator('#stage');
-  await expect(stage).toBeVisible();
-  await expect.poll(async () => Math.round((await stage.boundingBox()).width)).toBeLessThanOrEqual(390);
+  await expect(page.locator('#lab-nav a')).toHaveCount(18);
+  const firstBrand = page.locator('#fiches .sports-panel__brand').first();
+  await expect(firstBrand).toBeVisible();
+  const chromeBox = await page.locator('.lab-chrome').boundingBox();
+  const brandBox = await firstBrand.boundingBox();
+  expect(brandBox.y, 'entête de carte sous la barre, pas dessous').toBeGreaterThan(chromeBox.y + chromeBox.height - 1);
+  const card = page.locator('#fiches .lab-case .sports-panel').first();
+  await expect.poll(async () => Math.round((await card.boundingBox()).width)).toBeLessThanOrEqual(390);
   await expect(page.locator('#fiches .sports-result--W').first()).toBeVisible();
   await expect(page.locator('#fiches .sports-result--L').first()).toBeVisible();
   await expect(page.locator('#fiches .sports-result--D').first()).toBeVisible();
@@ -127,6 +132,8 @@ test('labo cartes page sports : variantes V D N prochain creux', async ({ page }
   await expect(page.locator('#fiches .sports-result--prior-season').first()).toBeVisible();
   await expect(page.locator('#fiches .is-spotlight').first()).toBeVisible();
   await expect(page.locator('#formats iframe')).toHaveCount(4);
+  await page.locator('#lab-nav a', { hasText: 'Victoire (V, vert)' }).click();
+  await expect(page.locator('#case-2')).toBeInViewport();
 });
 
 test('labo photo : grille puis fiche, suivant en barre', async ({ page }) => {
