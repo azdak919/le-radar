@@ -1430,6 +1430,8 @@ assert(
     && appJs.includes('SPORTS_TEAM_COLOR_SUFFIX_RE')
     && styleCss.includes('.sports-chip__vs')
     && styleCss.includes('.sports-chip--cta .sports-chip__cta-text .sports-chip__vs')
+    && /\.sports-chip__vs\s*\{[^}]*font-weight:\s*500/.test(cssFlat)
+    && /\.sports-chip--cta \.sports-chip__cta-text \.sports-chip__vs\s*\{[^}]*rgba\(255,\s*255,\s*255,\s*0\.52\)/.test(cssFlat)
     && styleCss.includes('.sports-chip__cta-glyph')
     && appJs.includes('sports-chip__cta-glyph')
     && appJs.includes('function sportsMatchChipTextOverflows')

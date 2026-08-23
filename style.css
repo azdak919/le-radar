@@ -483,12 +483,14 @@ body {
 .masthead-sports-strip .sports-chip__name {
   color: rgba(245, 246, 248, 0.96);
 }
-/* Verbe « reçoit / à » — gris doux, gauche **et** CTA (même classe). */
+/* Verbe « reçoit / à » — plus pâle que les noms (poids 500 réel d’Inter ;
+ * 650/800 tombaient tous deux sur 700 et le 0,72 se lisait blanc sur le live). */
 .masthead-sports-strip .sports-chip__vs {
-  opacity: 0.72;
-  font-weight: 650;
-  font-size: 0.92em;
-  margin: 0 0.12em;
+  color: rgba(245, 246, 248, 0.55);
+  font-weight: 500;
+  font-size: 0.88em;
+  letter-spacing: 0.01em;
+  margin: 0 0.14em;
   /* pas de forced lowercase — verbe FR lisible */
 }
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text .sports-chip__name {
@@ -496,9 +498,11 @@ body {
   letter-spacing: 0.01em;
 }
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text .sports-chip__vs {
-  opacity: 0.72;
-  font-weight: 650;
-  font-size: 0.92em;
+  color: rgba(255, 255, 255, 0.52);
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.52);
+  font-weight: 500;
+  font-size: 0.88em;
+  letter-spacing: 0;
 }
 .masthead-sports-strip .sports-chip__when {
   opacity: 0.88;
