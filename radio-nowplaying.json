@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-23T04:34:03.173Z",
+  "updatedAt": "2026-08-23T05:26:11.429Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T04:33:37.879Z"
+      "checkedAt": "2026-08-23T05:25:47.037Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T04:33:40.115Z"
+      "checkedAt": "2026-08-23T05:25:49.045Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T04:33:43.130Z"
+      "checkedAt": "2026-08-23T05:25:51.846Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Floydian Slip",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "01:00",
-        "url": "http://www.cjlo.com/shows/floydian-slip"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "01:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Sun Ra, Sun Rise",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
+      },
       "track": "",
-      "showTitle": "Floydian Slip",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T04:33:57.766Z"
+      "checkedAt": "2026-08-23T05:26:06.727Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T04:33:58.495Z"
+      "checkedAt": "2026-08-23T05:26:07.752Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "MIRAR - Leclerc",
+      "track": "Dogo Suicide - OUBLIER LE SOLEIL",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-23T04:34:02.822Z"
+      "checkedAt": "2026-08-23T05:26:11.079Z"
     }
   }
 }
