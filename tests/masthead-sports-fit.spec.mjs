@@ -109,12 +109,10 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   await expect(strip.locator('.sports-chip--cta')).toHaveCount(1);
   await expect(strip).toHaveAttribute('data-count', '1');
   await expect(strip).toHaveAttribute('data-cta-pinned', '0');
-  // Pastille visible (pas coupée hors flux). Elle dit « Sports » au repos et
-  // « En cours » pendant un match — le seul cas qui remplace la rubrique
-  // (focus-group le-radar-cta-sports-badge, override mainteneur). Les deux sont
-  // acceptés : un vrai match en cours pendant la CI ne doit pas faire rougir le test.
+  // Pastille visible (pas coupée hors flux). Sports au repos, En cours en direct,
+  // Hier / Aujourd’hui pour un résultat du filet civil.
   const tag = strip.locator('.sports-chip__cta-tag');
-  await expect(tag).toContainText(/sports|en cours/i);
+  await expect(tag).toContainText(/sports|en cours|hier|aujourd/i);
   await expect(strip.locator('.sports-chip__cta-chev')).toHaveCount(0);
   const tagBox = await tag.boundingBox();
   expect(tagBox).toBeTruthy();
