@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-23T20:48:26.966Z",
+  "updatedAt": "2026-08-23T21:18:32.341Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T20:47:57.255Z"
+      "checkedAt": "2026-08-23T21:18:06.748Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Vibrance",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/vibrance"
-      },
-      "next": {
         "title": "L'Avenue des concerts",
         "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "https://cism893.ca/emissions/lavenue-des-concerts"
       },
+      "next": {
+        "title": "Symbiose",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/symbiose"
+      },
       "track": "",
-      "showTitle": "Vibrance",
+      "showTitle": "L'Avenue des concerts",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T20:47:59.706Z"
+      "checkedAt": "2026-08-23T21:18:08.824Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T20:48:02.780Z"
+      "checkedAt": "2026-08-23T21:18:11.288Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T20:48:16.828Z"
+      "checkedAt": "2026-08-23T21:18:25.445Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +126,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T20:48:17.381Z"
+      "checkedAt": "2026-08-23T21:18:26.408Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mutations",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Slint - Good Morning, Captain",
-      "showTitle": "",
+      "next": {
+        "title": "Les rois de l'arène",
+        "source": "api-live",
+        "start": "05:00",
+        "end": "07:00",
+        "slug": "les-rois-de-larene"
+      },
+      "track": "Mutations - episode-du-23 aout-2026",
+      "showTitle": "Mutations",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-23T20:48:26.616Z"
+      "checkedAt": "2026-08-23T21:18:31.990Z"
     }
   }
 }
