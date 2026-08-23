@@ -2973,12 +2973,9 @@ html[data-translate-busy="1"] .translate-toggle {
  * puis fondu/flou en bas — pas un flou opaque sur le nom.
  */
 .filters-panel {
-  /* Hauteur du *titre* seul (pad-top 6px + nom 12px/1.2 ≈ 14px) : cette
-     partie du peek reste toujours nette. */
-  --filters-title-h: 20px;
-  /* Peek plus bas : moins de « fausse » 2ᵉ rangée avant « Plus de sources ». */
-  --filters-peek: 22px;
-  --filters-title-h: 16px;
+  /* Peek : assez pour le nom, trop court pour une 2ᵉ rangée entière. */
+  --filters-peek: 24px;
+  --filters-title-h: 0px;
 }
 
 .filters-panel:not(.is-expanded):not(.is-compact) .filters {
@@ -3006,23 +3003,21 @@ html[data-translate-busy="1"] .translate-toggle {
   position: absolute;
   left: 0;
   right: 0;
-  /* Commence juste sous le titre (net) : le nom d'institution qui suit,
-     lui, est flouté/estompé jusqu'à la coupure. */
-  top: calc(var(--filters-collapsed-h) + var(--filters-title-h));
-  height: calc(var(--filters-peek) - var(--filters-title-h));
+  /* Toute la peek. Haut transparent = nom net. Pas de backdrop-filter :
+     son amorce faisait une bande nette au milieu des pastilles. */
+  top: var(--filters-collapsed-h);
+  height: var(--filters-peek);
   z-index: 2;
   pointer-events: none;
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--bg) 0%, transparent) 0%,
-    color-mix(in srgb, var(--bg) 40%, transparent) 45%,
-    color-mix(in srgb, var(--bg) 85%, transparent) 80%,
+    transparent 0%,
+    transparent 28%,
+    color-mix(in srgb, var(--bg) 22%, transparent) 55%,
+    color-mix(in srgb, var(--bg) 62%, transparent) 78%,
     var(--bg) 100%
   );
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 40%, #000 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 40%, #000 100%);
   opacity: 0;
-  /* visibility coupe aussi le backdrop-filter (que l'opacité seule n'éteint pas) */
   visibility: hidden;
   transition: opacity 0.12s ease, visibility 0s linear 0.12s;
 }
@@ -3030,8 +3025,6 @@ html[data-translate-busy="1"] .translate-toggle {
 .filters-panel.has-overflow:not(.is-expanded):not(.is-compact)::after {
   opacity: 1;
   visibility: visible;
-  -webkit-backdrop-filter: blur(1px);
-  backdrop-filter: blur(1px);
   transition: opacity 0.18s ease 0.3s, visibility 0s linear 0.3s;
 }
 
@@ -5708,15 +5701,12 @@ body.external-listen-open {
   pointer-events: none;
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--bg) 0%, transparent) 0%,
-    color-mix(in srgb, var(--bg) 35%, transparent) 40%,
-    color-mix(in srgb, var(--bg) 80%, transparent) 75%,
+    transparent 0%,
+    transparent 28%,
+    color-mix(in srgb, var(--bg) 22%, transparent) 55%,
+    color-mix(in srgb, var(--bg) 62%, transparent) 78%,
     var(--bg) 100%
   );
-  -webkit-backdrop-filter: blur(1px);
-  backdrop-filter: blur(1px);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 45%, #000 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 45%, #000 100%);
 }
 .news-tail.is-expanded .news-tail-body::after {
   display: none;
