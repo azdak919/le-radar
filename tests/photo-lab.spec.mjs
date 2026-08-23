@@ -37,8 +37,8 @@ test.afterAll(async () => {
 test('tableau de bord local', async ({ page }) => {
   await page.goto(`${BASE}/dev/`, { waitUntil: 'domcontentloaded' });
   await expect(page.locator('h1')).toContainText('Labo');
-  await expect(page.locator('a.card.featured')).toHaveAttribute('href', '/dev/photo-lab/');
-  await expect(page.locator('a.card[href="/index.html"]').first()).toBeVisible();
+  await expect(page.locator('a.card.featured')).toHaveAttribute('href', './photo-lab/');
+  await expect(page.locator('a.card[href="../index.html"]').first()).toBeVisible();
 });
 
 test('labo photo : grille puis fiche, suivant en barre', async ({ page }) => {
@@ -61,4 +61,5 @@ test('labo photo : grille puis fiche, suivant en barre', async ({ page }) => {
   await page.locator('#grid-btn').click();
   await expect(page.locator('#grid .card').first()).toBeVisible();
   await expect(page.locator('#save-meta-btn')).toContainText('Enregistrer tout');
+  await expect(page.locator('#persist-hint')).toContainText('fichiers locaux');
 });

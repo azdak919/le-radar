@@ -397,14 +397,10 @@ test('mât : point médian centré entre date et heure', async ({ page }) => {
 });
 
 /**
- * CTA SPORTS : texte trop long → marquee L→R (aller-retour), pas d’ellipse figée.
- *
- * Cas réel signalé : titre court (« Sherbrooke reçoit Granby ») + sous-ligne
- * longue (date · compétition · mis à jour…) → l’ancienne règle nowrap sur
- * toute la .cta-label collapsait head+sub en une ligne « mis à j… » sans
- * jamais activer is-overflowing / is-sub-overflowing.
+ * CTA SPORTS téléphone : sous-ligne longue → wrap 2 lignes, pas d’ellipse,
+ * pas de marquee. (≤700 px le défilement retardait le changement d’accroche.)
  */
-test('CTA sports : sous-ligne longue défile au lieu d’une ellipse figée', async ({ page }) => {
+test('CTA sports téléphone : sous-ligne wrappe, pas d’ellipse ni marquee', async ({ page }) => {
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
 
@@ -416,8 +412,8 @@ test('CTA sports : sous-ligne longue défile au lieu d’une ellipse figée', as
   const cta = strip.locator('.sports-chip--cta');
   await expect(cta).toBeVisible({ timeout: 8000 });
 
-  // Forcer une sous-ligne qui déborde clairement, titre court (cas du bug).
-  const ready = await page.evaluate(() => {
+  const longSub = 'ven. 28 août, 20 h 30 · Soccer collégial masculin D2 · mis à jour à 21 h 56';
+  const ready = await page.evaluate((sub) => {
     const chip = document.querySelector('.sports-chip--cta');
     const layer = chip?.querySelector('.sports-chip__cta-label.is-front')
       || chip?.querySelector('.sports-chip__cta-label');
@@ -437,44 +433,28 @@ test('CTA sports : sous-ligne longue défile au lieu d’une ellipse figée', as
       subInner.className = 'sports-chip__cta-sub-text';
       subView.append(subInner);
     }
-    subInner.textContent = 'ven. 28 août, 20 h 30 · Soccer collégial masculin D2 · mis à jour à 21 h 56';
-    // Mesure via le chemin app (script global, non module).
-    if (typeof refreshSportsChipScroll !== 'function') {
-      return { ok: false, reason: 'no-refresh' };
-    }
-    refreshSportsChipScroll(chip);
+    subInner.textContent = sub;
+    if (typeof refreshSportsChipScroll === 'function') refreshSportsChipScroll(chip);
+    const cs = getComputedStyle(subInner);
     return {
       ok: true,
+      wrap: typeof isPhoneTextWrapMode === 'function' ? isPhoneTextWrapMode() : false,
       isSub: chip.classList.contains('is-sub-overflowing'),
-      scrollSub: chip.style.getPropertyValue('--sports-scroll-sub'),
       hasSubText: !!layer.querySelector('.sports-chip__cta-sub-text'),
+      whiteSpace: cs.whiteSpace,
+      textOverflow: cs.textOverflow,
+      animationName: cs.animationName,
+      text: (subInner.textContent || '').trim(),
     };
-  });
+  }, longSub);
   expect(ready.ok, `préparation CTA : ${ready.reason || 'ok'}`).toBe(true);
+  expect(ready.wrap, 'mode wrap téléphone').toBe(true);
   expect(ready.hasSubText, 'markup .sports-chip__cta-sub-text requis').toBe(true);
-  expect(ready.isSub, 'refreshSportsChipScroll doit activer is-sub-overflowing').toBe(true);
-  expect(parseFloat(ready.scrollSub), 'décalage marquee sous-ligne').toBeGreaterThan(2);
-
-  await expect(cta).toHaveClass(/is-sub-overflowing/);
-  const subText = cta.locator('.sports-chip__cta-sub-text');
-  await expect(subText).toBeVisible();
-
-  const anim = await subText.evaluate((el) => getComputedStyle(el).animationName);
-  expect(anim, 'sous-ligne doit animer sports-chip-scroll-sub').toMatch(/sports-chip-scroll-sub/);
-
-  // Hold initial ~32 % de 5,5 s ≈ 1,8 s ; poll jusqu’au glissement (lab flaky si
-  // on ne prend qu’un seul échantillon à 3,2 s).
-  const left0 = await subText.evaluate((el) => el.getBoundingClientRect().left);
-  await expect
-    .poll(async () => {
-      const left = await subText.evaluate((el) => el.getBoundingClientRect().left);
-      return left0 - left;
-    }, { timeout: 7000 })
-    .toBeGreaterThan(1);
-
-  // Pas d’ellipse figée sur le texte qui défile.
-  const textOverflow = await subText.evaluate((el) => getComputedStyle(el).textOverflow);
-  expect(textOverflow).toBe('clip');
+  expect(ready.isSub, 'pas de marquee sous-ligne sur téléphone').toBe(false);
+  expect(ready.whiteSpace, 'sous-ligne wrap').toBe('normal');
+  expect(ready.textOverflow, 'pas d’ellipse').toBe('clip');
+  expect(ready.animationName === 'none' || !ready.animationName, `anim=${ready.animationName}`).toBe(true);
+  expect(ready.text).toBe(longSub);
 
   expect(pageErrors).toEqual([]);
 });

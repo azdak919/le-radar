@@ -44,4 +44,4 @@ Bind **127.0.0.1** seulement. Pas de lien prod, pas de service worker.
 
 Campus et favori ne sont **jamais** purgés à la prochaine moisson.
 
-Après une session de revue destinée à la prod : `npm run bank:check` puis PR (bump SW si les `*-data.js` du shell ont changé).
+**Oui, ça s’enregistre** — sur le **disque local** (`data/photo-bank.json` + miroirs `*-data.js`). Ça n’est **pas** le-radar.ca. Un « Enregistrer tout » ne déploie pas. Pour le site public : `npm run bank:check` puis PR (bump SW si les `*-data.js` du shell ont changé). Hard-refresh (Ctrl+Shift+R) sur un aperçu local pour vider l’ancien service worker.

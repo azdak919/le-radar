@@ -460,7 +460,9 @@
       const result = await fn();
       const keep = state.selected && state.selected.key;
       await reload(keep);
-      $('status').textContent = result && result.error ? result.error : 'Enregistré.';
+      $('status').textContent = result && result.error
+        ? result.error
+        : 'Enregistré sur ce disque. Pas encore sur le-radar.ca.';
     } catch (err) {
       $('status').textContent = err.message || String(err);
     } finally {

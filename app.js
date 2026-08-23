@@ -611,6 +611,8 @@ const FILTERS_COLLAPSED_ROWS_COMPACT = 1;
 const FILTERS_COMPACT_MQ = window.matchMedia(
   '(max-width: 1099.98px) and (orientation: portrait)',
 );
+/** Téléphone : 2 lignes au lieu d’un marquee. L’info change au rythme de lecture. */
+const PHONE_TEXT_WRAP_MQ = window.matchMedia('(max-width: 700px)');
 const FILTERS_ROW_CAPACITY = 3;
 const FILTERS_COLS_NARROW = 420;
 /** Max colonnes bureau (grand écran). */
@@ -1937,6 +1939,19 @@ function isNowAirTwoLineMode() {
   }
 }
 
+/**
+ * Téléphone (≤700 px) : le texte tient en 2 lignes, sans défilement.
+ * Sur une carte étroite le marquee allongeait le dwell (aller-retour + pause)
+ * avant de changer météo / CTA / synthé — illisible, et l’info tardait.
+ */
+function isPhoneTextWrapMode() {
+  try {
+    return !!PHONE_TEXT_WRAP_MQ?.matches;
+  } catch {
+    return false;
+  }
+}
+
 
 /** Offset sticky du rail sources = hauteur réelle du synthé (+ petit entrefer). */
 function syncWideStickyTop() {
@@ -2914,6 +2929,13 @@ function fitWideWeatherSecondarySlots() {
 }
 
 function measureWeatherNameOverflows() {
+  if (isPhoneTextWrapMode()) {
+    MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-overflowing').forEach((el) => {
+      el.classList.remove('is-overflowing');
+      el.style.removeProperty('--weather-scroll');
+    });
+    return;
+  }
   MASTHEAD_WEATHER?.querySelectorAll('.masthead-weather__city.is-active').forEach((el) => {
     const viewport = el.querySelector('.masthead-weather__name');
     const name = el.querySelector('.masthead-weather__name-text');
@@ -3525,12 +3547,13 @@ let sportsWaveSlot = 0;
 let sportsCtaPaused = false;
 /**
  * La rotation n’existe que là où un mécanisme de pause existe (garde-fou
- * `rotation-pointeur-fin`). Sur tactile il n’y a ni survol ni focus : WCAG 2.2.2
- * ne serait pas satisfait, donc l’accroche s’y fige au chargement.
+ * `rotation-pointeur-fin`). Souris : survol/focus. Téléphone (≤700 px) : doigt
+ * posé sur la carte (pointerdown). Sans ça l’accroche défilait sans jamais
+ * changer sur tactile.
  * ⚠️ Doit être déclaré **avant** l’init de `sportsCtaRotateMq` (sinon TDZ →
  * matchMedia avalé par try/catch → mq null → CTA jamais en rotation).
  */
-const SPORTS_CTA_ROTATE_MEDIA = '(hover: hover) and (pointer: fine)';
+const SPORTS_CTA_ROTATE_MEDIA = '(hover: hover) and (pointer: fine), (max-width: 700px)';
 /** Surfaces où un mécanisme de pause existe réellement (souris, pas doigt). */
 let sportsCtaRotateMq = null;
 try {
@@ -5499,10 +5522,9 @@ function fillSportsCtaLayer(layer, slide) {
  * `le-radar-cta-sports-rhythm` D, garde-fou `rotation-pointeur-fin`.
  *
  * WCAG 2.2.2 réclame un mécanisme de pause pour tout contenu qui se met à jour
- * seul au-delà de 5 s. Le survol et le focus en sont un — sur une souris. Sur
- * tactile il n’y en a aucun, donc l’accroche s’y fige au chargement : elle
- * change d’une visite à l’autre (le tirage initial est aléatoire), pas sous les
- * yeux du lecteur.
+ * seul au-delà de 5 s. Souris : survol/focus. Téléphone : doigt posé sur la
+ * carte. Sans pause tactile l’accroche restait figée, et le marquee donnait
+ * l’impression que l’info allait changer après le défilement.
  */
 function sportsCtaMayRotate() {
   if (sportsReducedMotion) return false;
@@ -5641,6 +5663,9 @@ function bindSportsCtaPause(chip) {
   };
   chip.addEventListener('pointerenter', hold, { passive: true });
   chip.addEventListener('pointerleave', release, { passive: true });
+  chip.addEventListener('pointerdown', hold, { passive: true });
+  chip.addEventListener('pointerup', release, { passive: true });
+  chip.addEventListener('pointercancel', release, { passive: true });
   chip.addEventListener('focusin', hold);
   chip.addEventListener('focusout', release);
 }
@@ -5704,6 +5729,17 @@ function refreshSportsChipScroll(chipOrRoot = null) {
   if (!MASTHEAD_SPORTS_STRIP && !chipOrRoot) return;
   const root = chipOrRoot || MASTHEAD_SPORTS_STRIP;
   if (!root) return;
+  if (isPhoneTextWrapMode()) {
+    const chips = root.classList?.contains('sports-chip')
+      ? [root]
+      : Array.from(root.querySelectorAll?.('.sports-chip') || []);
+    chips.forEach((chip) => {
+      chip.classList.remove('is-overflowing', 'is-sub-overflowing');
+      chip.style.removeProperty('--sports-scroll');
+      chip.style.removeProperty('--sports-scroll-sub');
+    });
+    return;
+  }
   // Wide étroit : aucun marquee. ≥1440 : mesurer et défiler si ça dépasse.
   if (isWideNoMarqueeMode() && !isWideDesktopComfort()) {
     clearWideSportsMarqueeClasses();
@@ -6362,6 +6398,7 @@ function sportsLabelReadingMs(text) {
  */
 function sportsChipNeedsMarquee(chip) {
   if (!chip || sportsReducedMotion) return false;
+  if (isPhoneTextWrapMode()) return false;
   // Scores : anti-marquee — overflow géré par −1 puce, pas par scroll.
   if (!chip.classList.contains('sports-chip--cta')) return false;
   if (
@@ -7528,6 +7565,7 @@ window.RadarAir = {
     airPhaseDwellMs,
     marqueeRoundTripMs,
     getTunerSubRotateDelayMs,
+    isPhoneTextWrapMode,
     trackForAirDisplay,
     liveCopyFromPhases,
     splitChoqSongLines,
@@ -9319,8 +9357,13 @@ function measureMarquee(el) {
 
   // Wide : texte fixe. Bureau ≥1100 : le titre d’antenne passe sur 2 lignes
   // au lieu de défiler (phrases CHOQ / longues émissions).
+  // Téléphone : wrap 2 lignes, pas de marquee (sinon le dwell attend l’aller-retour).
   const nowAirWrap = el === TUNER_NOWAIR_TITLE || el === TUNER_NOWAIR_SUB;
-  if (isWideNoMarqueeMode() || (nowAirWrap && isNowAirTwoLineMode())) {
+  if (
+    isPhoneTextWrapMode()
+    || isWideNoMarqueeMode()
+    || (nowAirWrap && isNowAirTwoLineMode())
+  ) {
     el.classList.remove('is-marquee');
     el.style.removeProperty('--marquee-shift');
     el.style.removeProperty('--marquee-duration');
@@ -9359,6 +9402,10 @@ function scheduleMarqueeMeasure(el, attempt = 0) {
     requestAnimationFrame(() => {
       const span = el.querySelector('.tuner-now-sub-text');
       if (!span || PREFERS_REDUCED_MOTION?.matches) return;
+      if (isPhoneTextWrapMode()) {
+        measureMarquee(el);
+        return;
+      }
 
       const available = getMarqueeAvailableWidth(el);
       if (!available) {
@@ -9430,6 +9477,11 @@ function initMarqueeResizeListeners() {
   });
 
   window.addEventListener('resize', scheduleMarqueeRefresh, { passive: true });
+  onMediaQueryChange(PHONE_TEXT_WRAP_MQ, () => {
+    refreshAllMarquees();
+    refreshSportsChipScroll();
+    refreshWeatherNameScroll();
+  });
   onMediaQueryChange(PREFERS_REDUCED_MOTION, () => {
     getMarqueeElements().forEach((el) => {
       const text = marqueeTextByEl.get(el);
