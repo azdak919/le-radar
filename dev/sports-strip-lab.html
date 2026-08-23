@@ -19,58 +19,28 @@
       color: #f1f2f4;
       font: 15px/1.45 Inter, system-ui, sans-serif;
     }
-    #host { max-width: 1100px; margin: 0 auto; padding: 28px 18px 64px; }
-    h1 { margin: 0; font: 700 32px/1.1 "Source Serif 4", Georgia, serif; }
-    .lede { color: #a9acb5; max-width: 46em; margin: 10px 0 8px; }
+    header { max-width: 390px; margin: 0 auto; padding: 28px 12px 8px; }
+    h1 { margin: 0; font: 700 28px/1.1 "Source Serif 4", Georgia, serif; }
+    .lede { color: #a9acb5; margin: 10px 0 0; font-size: 14px; }
     .hub { color: #e1b95e; }
-    .formats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 18px 0 10px;
+    .hint { font-size: 12px; color: #888d96; margin-top: 8px; }
+    #col {
+      width: 390px;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 12px 12px 64px;
     }
-    .formats button {
-      appearance: none;
-      cursor: pointer;
-      border-radius: 999px;
-      padding: 7px 12px;
-      font: 600 12px/1 Inter, system-ui, sans-serif;
-      border: 1px solid #3a3f48;
-      background: #1a1d24;
-      color: #e8eaed;
-    }
-    .formats button[aria-pressed="true"] {
-      border-color: #e1b95e;
-      background: #e1b95e;
-      color: #1a1408;
-    }
-    .meta { font-size: 12px; color: #888d96; margin: 0 0 12px; }
-    .clip { width: 100%; overflow: hidden; }
-    .shell { transform-origin: top left; }
-    #preview {
-      display: block;
-      border: 1px solid #2a2d34;
-      border-radius: 12px;
-      background: #111317;
-    }
-    .hint { font-size: 12px; color: #888d96; margin-top: 16px; }
-
-    /* Embed : media queries réelles (largeur de l’iframe). */
-    html.embed body { background: #111317; }
-    html.embed #host { display: none; }
-    html:not(.embed) #board { display: none; }
-    #board { padding: 12px 12px 20px; }
-    .case { margin: 0 0 16px; }
-    .case p { margin: 0 0 6px; font-size: 12px; color: #c3c6ce; }
-    .case p strong { color: #fff; }
-    html.embed h2 {
+    h2 {
       font-size: 11px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: #e1b95e;
-      margin: 18px 0 10px;
+      margin: 22px 0 10px;
     }
-    html.embed .masthead-sports-strip {
+    .case { margin: 0 0 14px; }
+    .case p { margin: 0 0 6px; font-size: 12px; color: #c3c6ce; }
+    .case p strong { color: #fff; }
+    #col .masthead-sports-strip {
       display: flex !important;
       visibility: visible !important;
       opacity: 1 !important;
@@ -81,256 +51,169 @@
       padding: 0;
       min-height: 56px;
       gap: 8px;
-      /* Labo : délai court + boucle pour voir l’aller-retour. Prod = 1 cycle. */
       --sports-scroll-duration: 4.2s;
       --sports-scroll-delay: 0.45s;
     }
-    html.embed .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text,
-    html.embed .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
+    /* Même grille 390 que le site, même si la fenêtre du labo est large. */
+    #col .masthead-sports-strip .sports-chip--cta {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      align-items: center;
+      column-gap: 8px;
+      row-gap: 2px;
+      min-width: 0;
+    }
+    #col .masthead-sports-strip .sports-chip--cta .sports-chip__cta-rail {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      gap: 3px;
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      align-self: center;
+    }
+    #col .masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail:empty,
+    #col .masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail[hidden] {
+      display: none;
+    }
+    #col .masthead-sports-strip .sports-chip--cta .sports-chip__cta-head .sports-chip__cta-eyebrow {
+      display: none;
+    }
+    #col .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
+      justify-content: center;
+      align-self: stretch;
+      padding-inline: 6px;
+    }
+    #col .masthead-sports-strip .sports-chip--cta .sports-chip__line {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    #col .masthead-sports-strip .sports-chip--cta .sports-chip__cta-stack {
+      height: auto;
+      min-height: 3.15em;
+    }
+    #col .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text,
+    #col .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
       animation-iteration-count: infinite;
     }
     @media (prefers-reduced-motion: reduce) {
-      html.embed .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text {
+      #col .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text {
         animation: sports-chip-scroll var(--sports-scroll-duration, 4.2s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.45s) infinite alternate both !important;
       }
-      html.embed .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
+      #col .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
         animation: sports-chip-scroll-sub var(--sports-scroll-duration, 4.2s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.45s) infinite alternate both !important;
       }
     }
   </style>
 </head>
 <body>
-  <div id="host">
+  <header>
     <p><a class="hub" href="./">← Labo</a></p>
     <h1>Cartes sports</h1>
-    <p class="lede">La pastille CTA dit <strong>Prochain</strong>, <strong>Hier</strong>, <strong>Aujourd’hui</strong>, <strong>Avant-hier</strong> ou la date — plus de doublon SPORTS + marqueur. « Sports » seulement en creux. En dessous : puces scores (modèle standard).</p>
-    <div class="formats" id="formats" role="toolbar" aria-label="Formats d’écran"></div>
-    <p class="meta" id="meta"></p>
-    <div class="clip" id="clip">
-      <div class="shell" id="shell">
-        <iframe id="preview" title="Cartes sports au format choisi" scrolling="no"></iframe>
-      </div>
-    </div>
-    <p class="hint">Local seulement. Hard-refresh si le cache shell est resté collé. Tableau de bord : <a class="hub" href="./">Labo</a>.</p>
-  </div>
-  <main id="board"></main>
+    <p class="lede">Colonne mobile (390). Une carte à la fois. Pastille = Prochain / Hier / Aujourd’hui / date. Relatif en sous-ligne (il y a… / dans…).</p>
+    <p class="hint">Local seulement.</p>
+  </header>
+  <main id="col"></main>
   <script>
-    const FORMATS = [390, 430, 768, 900, 1280, 1440, 1920];
-    const params = new URLSearchParams(location.search);
-    const embed = params.has('embed');
-    document.documentElement.classList.toggle('embed', embed);
-
-    /** Prod 390/430 : fit retire les puces scores, CTA seule. */
-    const PHONE_CTA_ONLY = 431;
-
-    const cases = [
+    const ctaCases = [
       {
-        title: 'En saison — prochain (reçoit)',
-        extra: () => matchChip({
-          tone: '#2e7d4f',
-          glyph: '⚽',
-          inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__vs">reçoit</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
-          sub: 'aujourd’hui, 19 h 00 · Soccer universitaire masculin',
-        }),
+        title: 'CTA — prochain (reçoit)',
         cta: {
-          state: 'next',
-          tone: '#2e7d4f',
-          eyebrow: '',
-          tag: 'Prochain',
-          glyph: '⚽',
+          state: 'next', tone: '#2e7d4f', tag: 'Prochain', glyph: '⚽',
           text: 'Patriotes de Saint-Hyacinthe reçoivent Vanier College',
           sub: 'dans 3 h · Soccer collégial masculin division 1',
         },
       },
       {
-        title: 'En saison — prochain (visiteur)',
-        extra: () => matchChip({
-          tone: '#2e7d4f',
-          glyph: '⚽',
-          inner: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__vs">à</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
-          sub: 'demain, 15 h 00 · Soccer universitaire féminin',
-        }),
+        title: 'CTA — prochain (visiteur)',
         cta: {
-          state: 'next',
-          tone: '#2e7d4f',
-          eyebrow: '',
-          tag: 'Prochain',
-          glyph: '⚽',
+          state: 'next', tone: '#2e7d4f', tag: 'Prochain', glyph: '⚽',
           text: 'McGill à Concordia',
           sub: 'demain · Soccer universitaire féminin',
         },
       },
       {
-        title: 'Matin — résultats d’hier (victoire)',
-        extra: () => matchChip({
-          tone: '#3d9a6a',
-          glyph: '🏈',
-          badge: 'V',
-          badgeMod: 'w',
-          inner: '<span class="sports-chip__name">Carabins</span> <span class="sports-chip__score">24–21</span> <span class="sports-chip__name sports-chip__opp">Rouge et Or</span>',
-          sub: 'hier · Football universitaire',
-        }),
+        title: 'CTA — hier (victoire)',
         cta: {
-          state: 'result',
-          tone: '#3d9a6a',
-          eyebrow: '',
-          tag: 'Hier',
-          glyph: '🏈',
+          state: 'result', tone: '#3d9a6a', tag: 'Hier', glyph: '🏈',
           text: 'Carabins 24–21 Rouge et Or',
           sub: 'il y a 18 h · Football universitaire',
         },
       },
       {
-        title: 'Résultat — victoire',
-        extra: () => matchChip({
-          tone: '#3d9a6a',
-          glyph: '🏀',
-          badge: 'V',
-          badgeMod: 'w',
-          inner: '<span class="sports-chip__name">UdeM</span> <span class="sports-chip__score">78–71</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
-          sub: 'aujourd’hui · Basketball universitaire',
-        }),
+        title: 'CTA — aujourd’hui (victoire)',
         cta: {
-          state: 'result',
-          tone: '#3d9a6a',
-          eyebrow: '',
-          tag: 'Aujourd’hui',
-          glyph: '🏀',
+          state: 'result', tone: '#3d9a6a', tag: 'Aujourd’hui', glyph: '🏀',
           text: 'UdeM 78–71 Concordia',
           sub: 'il y a 3 h · Basketball universitaire',
         },
       },
       {
-        title: 'Résultat — défaite',
-        extra: () => matchChip({
-          tone: '#c45c5c',
-          glyph: '🏒',
-          badge: 'D',
-          badgeMod: 'l',
-          inner: '<span class="sports-chip__name">Bishop’s</span> <span class="sports-chip__score">2–5</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
-          sub: 'aujourd’hui · Hockey universitaire',
-        }),
+        title: 'CTA — aujourd’hui (défaite)',
         cta: {
-          state: 'result',
-          tone: '#c45c5c',
-          eyebrow: '',
-          tag: 'Aujourd’hui',
-          glyph: '🏒',
+          state: 'result', tone: '#c45c5c', tag: 'Aujourd’hui', glyph: '🏒',
           text: 'Bishop’s 2–5 McGill',
           sub: 'il y a 5 h · Hockey universitaire',
         },
       },
       {
-        title: 'Résultat — match nul',
-        extra: () => matchChip({
-          tone: '#8fa3b0',
-          glyph: '⚽',
-          badge: 'N',
-          badgeMod: 'd',
-          inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__score">1–1</span> <span class="sports-chip__name sports-chip__opp">UdeM</span>',
-          sub: 'aujourd’hui · Soccer universitaire masculin',
-        }),
+        title: 'CTA — aujourd’hui (match nul)',
         cta: {
-          state: 'result',
-          tone: '#8fa3b0',
-          eyebrow: '',
-          tag: 'Aujourd’hui',
-          glyph: '⚽',
+          state: 'result', tone: '#8fa3b0', tag: 'Aujourd’hui', glyph: '⚽',
           text: 'ULaval 1–1 UdeM',
           sub: 'il y a 2 h · Soccer universitaire masculin',
         },
       },
       {
-        title: 'Résultat — place (régate)',
-        extra: () => matchChip({
-          tone: '#3d6fa8',
-          glyph: '⛵',
-          badge: 'V',
-          badgeMod: 'w',
-          inner: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__score">7e/12</span>',
-          sub: 'aujourd’hui · Voile universitaire',
-        }),
+        title: 'CTA — aujourd’hui (place)',
         cta: {
-          state: 'result',
-          tone: '#3d6fa8',
-          eyebrow: '',
-          tag: 'Aujourd’hui',
-          glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', glyph: '⛵',
           text: 'McGill 7e/12',
           sub: 'il y a 6 h · Voile universitaire',
         },
       },
       {
-        title: 'Résultat — avant-hier',
-        extra: () => matchChip({
-          tone: '#3d9a6a',
-          glyph: '🏀',
-          badge: 'V',
-          badgeMod: 'w',
-          inner: '<span class="sports-chip__name">Concordia</span> <span class="sports-chip__score">64–59</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
-          sub: 'ven. 21 août · Basketball universitaire',
-        }),
+        title: 'CTA — avant-hier',
         cta: {
-          state: 'result',
-          tone: '#3d9a6a',
-          eyebrow: '',
-          tag: 'Avant-hier',
-          glyph: '🏀',
+          state: 'result', tone: '#3d9a6a', tag: 'Avant-hier', glyph: '🏀',
           text: 'Concordia 64–59 McGill',
           sub: 'il y a 2 j · Basketball universitaire',
         },
       },
       {
-        title: 'Résultat — mer. 19 août',
-        extra: () => matchChip({
-          tone: '#c45c5c',
-          glyph: '⚽',
-          badge: 'D',
-          badgeMod: 'l',
-          inner: '<span class="sports-chip__name">UQTR</span> <span class="sports-chip__score">0–2</span> <span class="sports-chip__name sports-chip__opp">ULaval</span>',
-          sub: 'mer. 19 août · Soccer universitaire féminin',
-        }),
+        title: 'CTA — mer. 19 août',
         cta: {
-          state: 'result',
-          tone: '#c45c5c',
-          eyebrow: '',
-          tag: 'mer. 19 août',
-          glyph: '⚽',
+          state: 'result', tone: '#c45c5c', tag: 'mer. 19 août', glyph: '⚽',
           text: 'UQTR 0–2 ULaval',
           sub: 'il y a 4 j · Soccer universitaire féminin',
         },
       },
       {
-        title: 'En direct',
+        title: 'CTA — en direct',
         cta: {
-          state: 'live',
-          tone: '#c8102e',
-          eyebrow: '',
-          tag: 'En cours',
-          glyph: '🏒',
+          state: 'live', tone: '#c8102e', tag: 'En cours', glyph: '🏒',
           text: 'McGill 2–1 Concordia',
           sub: 'Hockey universitaire · 2e période',
         },
       },
       {
-        title: 'Hors saison — prochain (pas un score rassis)',
+        title: 'CTA — hors saison',
         cta: {
-          state: 'next',
-          tone: '#6a7580',
-          eyebrow: '',
-          tag: 'Prochain',
-          glyph: '🏈',
+          state: 'next', tone: '#6a7580', tag: 'Prochain', glyph: '🏈',
           text: 'Rouge et Or à Carabins',
           sub: 'dans 12 j · ven. 4 sept., 19 h 00 · Football universitaire',
         },
       },
       {
-        title: 'Creux — carte idle',
+        title: 'CTA — creux',
         cta: {
-          state: 'idle',
-          tone: '#6a7580',
-          eyebrow: '',
-          glyph: '',
+          state: 'idle', tone: '#6a7580', glyph: '',
           text: 'Scores collégiaux et universitaires du Québec',
           sub: 'MAJ 15 h 50',
         },
@@ -339,65 +222,49 @@
 
     const standardChips = [
       {
-        title: 'Standard — prochain (reçoit)',
+        title: 'Puce — prochain (reçoit)',
         html: () => matchChip({
-          tone: '#2e7d4f',
-          glyph: '⚽',
+          tone: '#2e7d4f', glyph: '⚽',
           inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__vs">reçoit</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
           sub: 'aujourd’hui, 19 h 00 · Soccer universitaire masculin',
         }),
       },
       {
-        title: 'Standard — victoire aujourd’hui',
+        title: 'Puce — victoire aujourd’hui',
         html: () => matchChip({
-          tone: '#3d9a6a',
-          glyph: '🏀',
-          badge: 'V',
-          badgeMod: 'w',
+          tone: '#3d9a6a', glyph: '🏀', badge: 'V', badgeMod: 'w',
           inner: '<span class="sports-chip__name">UdeM</span> <span class="sports-chip__score">78–71</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
           sub: 'aujourd’hui · Basketball universitaire',
         }),
       },
       {
-        title: 'Standard — défaite hier',
+        title: 'Puce — défaite hier',
         html: () => matchChip({
-          tone: '#c45c5c',
-          glyph: '🏒',
-          badge: 'D',
-          badgeMod: 'l',
+          tone: '#c45c5c', glyph: '🏒', badge: 'D', badgeMod: 'l',
           inner: '<span class="sports-chip__name">Bishop’s</span> <span class="sports-chip__score">2–5</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
           sub: 'hier · Hockey universitaire',
         }),
       },
       {
-        title: 'Standard — match nul avant-hier',
+        title: 'Puce — match nul avant-hier',
         html: () => matchChip({
-          tone: '#8fa3b0',
-          glyph: '⚽',
-          badge: 'N',
-          badgeMod: 'd',
+          tone: '#8fa3b0', glyph: '⚽', badge: 'N', badgeMod: 'd',
           inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__score">1–1</span> <span class="sports-chip__name sports-chip__opp">UdeM</span>',
           sub: 'avant-hier · Soccer universitaire masculin',
         }),
       },
       {
-        title: 'Standard — mer. 19 août',
+        title: 'Puce — mer. 19 août',
         html: () => matchChip({
-          tone: '#c45c5c',
-          glyph: '🏈',
-          badge: 'D',
-          badgeMod: 'l',
+          tone: '#c45c5c', glyph: '🏈', badge: 'D', badgeMod: 'l',
           inner: '<span class="sports-chip__name">Carabins</span> <span class="sports-chip__score">17–24</span> <span class="sports-chip__name sports-chip__opp">Rouge et Or</span>',
           sub: 'mer. 19 août · Football universitaire',
         }),
       },
       {
-        title: 'Standard — sam. 16 août',
+        title: 'Puce — sam. 16 août',
         html: () => matchChip({
-          tone: '#3d9a6a',
-          glyph: '🏐',
-          badge: 'V',
-          badgeMod: 'w',
+          tone: '#3d9a6a', glyph: '🏐', badge: 'V', badgeMod: 'w',
           inner: '<span class="sports-chip__name">Sherbrooke</span> <span class="sports-chip__score">3–1</span> <span class="sports-chip__name sports-chip__opp">UQAM</span>',
           sub: 'sam. 16 août · Volleyball universitaire',
         }),
@@ -417,26 +284,19 @@
       </a>`;
     }
 
-    function stripCta({ state, tone, eyebrow, tag, glyph, text, sub, extra }) {
+    function stripCta({ state, tone, tag, glyph, text, sub }) {
       const tagLabel = tag || 'Sports';
-      const headEb = eyebrow
-        ? `<span class="sports-chip__cta-eyebrow sports-chip__cta-eyebrow--head">${eyebrow}</span>`
-        : '';
-      const railEb = eyebrow
-        ? `<span class="sports-chip__cta-eyebrow sports-chip__cta-eyebrow--rail">${eyebrow}</span>`
-        : `<span class="sports-chip__cta-eyebrow sports-chip__cta-eyebrow--rail" hidden></span>`;
       const g = glyph ? `<span class="sports-chip__cta-glyph" aria-hidden="true">${glyph}</span>` : '';
-      return `<div class="masthead-sports-strip" data-count="${extra ? 2 : 1}" data-cta-pinned="${extra ? 1 : 0}" data-ready="1">
-        ${extra || ''}
+      return `<div class="masthead-sports-strip" data-count="1" data-cta-pinned="0" data-ready="1">
         <a class="sports-chip sports-chip--cta" data-cta-state="${state}" href="#lab" style="--sports-tone:${tone}">
           <span class="sports-chip__cta-rail">
-            ${railEb}
+            <span class="sports-chip__cta-eyebrow sports-chip__cta-eyebrow--rail" hidden></span>
             <span class="sports-chip__cta-tag" data-cta-tag="${tagLabel}">${tagLabel}</span>
           </span>
           <span class="sports-chip__line">
             <span class="sports-chip__cta-stack">
               <span class="sports-chip__cta-label is-front">
-                <span class="sports-chip__cta-head">${headEb}${g}<span class="sports-chip__cta-line"><span class="sports-chip__cta-text">${text}</span></span></span>
+                <span class="sports-chip__cta-head">${g}<span class="sports-chip__cta-line"><span class="sports-chip__cta-text">${text}</span></span></span>
                 <span class="sports-chip__cta-sub"><span class="sports-chip__cta-sub-text">${sub}</span></span>
               </span>
             </span>
@@ -479,128 +339,20 @@
       });
     }
 
-    function reportHeight() {
-      if (window.parent === window) return;
-      const board = document.getElementById('board');
-      const h = Math.ceil(Math.max(
-        board.scrollHeight,
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight,
-      )) + 8;
-      parent.postMessage({ type: 'sports-lab-size', height: h }, '*');
-    }
+    const col = document.getElementById('col');
+    const ctaHtml = ctaCases.map((c) =>
+      `<article class="case"><p><strong>${c.title}</strong></p>${stripCta(c.cta)}</article>`
+    ).join('');
+    const stdHtml = standardChips.map((c) =>
+      `<article class="case"><p><strong>${c.title}</strong></p><div class="masthead-sports-strip" data-count="1" data-cta-pinned="0" data-ready="1">${c.html()}</div></article>`
+    ).join('');
+    col.innerHTML = `<section id="cta-band"><h2>Carte CTA</h2>${ctaHtml}</section>`
+      + `<section id="standard-chips"><h2>Puces scores</h2>${stdHtml}</section>`;
 
-    function paintBoard(root) {
-      const withLeft = window.innerWidth >= PHONE_CTA_ONLY;
-      const ctaHtml = cases.map((c) => {
-        const extra = withLeft && c.extra ? c.extra() : '';
-        return `<article class="case"><p><strong>${c.title}</strong></p>${stripCta({ ...c.cta, extra })}</article>`;
-      }).join('');
-      const stdHtml = standardChips.map((c) =>
-        `<article class="case"><p><strong>${c.title}</strong></p><div class="masthead-sports-strip" data-count="1" data-cta-pinned="0" data-ready="1">${c.html()}</div></article>`
-      ).join('');
-      root.innerHTML = `<section id="cta-band"><h2>Carte CTA</h2>${ctaHtml}</section>`
-        + `<section id="standard-chips"><h2>Puces scores — modèle standard</h2>${stdHtml}</section>`;
-    }
-
-    function paintEmbed() {
-      const board = document.getElementById('board');
-      document.getElementById('host').remove();
-      let lastWithLeft = null;
-      const run = () => {
-        const withLeft = window.innerWidth >= PHONE_CTA_ONLY;
-        if (lastWithLeft !== withLeft) {
-          lastWithLeft = withLeft;
-          paintBoard(board);
-        }
-        armMarquee(board);
-        reportHeight();
-      };
-      run();
-      requestAnimationFrame(() => requestAnimationFrame(run));
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
-      window.addEventListener('resize', run);
-      window.addEventListener('message', (ev) => {
-        if (ev.data && ev.data.type === 'sports-lab-arm') run();
-      });
-      new ResizeObserver(reportHeight).observe(board);
-    }
-
-    function parseWidth() {
-      const q = Number(params.get('w'));
-      if (FORMATS.includes(q)) return q;
-      const hash = Number(String(location.hash || '').replace('#', ''));
-      if (FORMATS.includes(hash)) return hash;
-      return 390;
-    }
-
-    function paintHost() {
-      document.getElementById('board').remove();
-      const bar = document.getElementById('formats');
-      const iframe = document.getElementById('preview');
-      const shell = document.getElementById('shell');
-      const clip = document.getElementById('clip');
-      const meta = document.getElementById('meta');
-      let width = parseWidth();
-
-      FORMATS.forEach((w) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.dataset.w = String(w);
-        btn.textContent = String(w);
-        btn.addEventListener('click', () => setWidth(w, true));
-        bar.appendChild(btn);
-      });
-
-      function layout(opts = {}) {
-        iframe.style.width = `${width}px`;
-        iframe.dataset.w = String(width);
-        const h = Number(iframe.dataset.h || 740);
-        iframe.style.height = `${h}px`;
-        const avail = clip.clientWidth || width;
-        const scale = Math.min(1, avail / width);
-        shell.style.width = `${width}px`;
-        shell.style.height = `${h}px`;
-        shell.style.transform = `scale(${scale})`;
-        clip.style.height = `${Math.ceil(h * scale)}px`;
-        const scaled = scale < 0.999;
-        meta.textContent = scaled
-          ? `${width} px · media queries réelles · réduit à ${Math.round(scale * 100)} % pour tenir dans la fenêtre`
-          : `${width} px · media queries réelles dans l’iframe`;
-        bar.querySelectorAll('button').forEach((btn) => {
-          btn.setAttribute('aria-pressed', btn.dataset.w === String(width) ? 'true' : 'false');
-        });
-        if (opts.arm) {
-          try { iframe.contentWindow?.postMessage({ type: 'sports-lab-arm' }, '*'); } catch (_) {}
-        }
-      }
-
-      function setWidth(w, push) {
-        width = w;
-        if (push) {
-          const url = new URL(location.href);
-          url.searchParams.delete('embed');
-          url.searchParams.set('w', String(w));
-          history.replaceState(null, '', `${url.pathname}${url.search}`);
-        }
-        layout({ arm: true });
-      }
-
-      iframe.src = './sports-strip-lab.html?embed=1';
-      setWidth(width, false);
-      window.addEventListener('resize', () => layout());
-      window.addEventListener('message', (ev) => {
-        if (!ev.data || ev.data.type !== 'sports-lab-size') return;
-        const h = Number(ev.data.height);
-        if (!Number.isFinite(h) || h < 120) return;
-        if (iframe.dataset.h === String(h)) return;
-        iframe.dataset.h = String(h);
-        layout();
-      });
-    }
-
-    if (embed) paintEmbed();
-    else paintHost();
+    const run = () => armMarquee(col);
+    run();
+    requestAnimationFrame(() => requestAnimationFrame(run));
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
   </script>
 </body>
 </html>
