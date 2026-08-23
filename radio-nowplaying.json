@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-23T14:20:56.595Z",
+  "updatedAt": "2026-08-23T14:49:10.654Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Palmarès CHYZ",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
-      },
+      "current": null,
       "next": {
         "title": "Le Ré-Show : Deuxième Service",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
       },
       "track": "",
-      "showTitle": "Palmarès CHYZ",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T14:20:31.168Z"
+      "checkedAt": "2026-08-23T14:48:46.474Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T14:20:33.196Z"
+      "checkedAt": "2026-08-23T14:48:48.446Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Latin Time",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "10:30"
-      },
-      "next": {
         "title": "International Radio Report",
         "source": "api-live",
         "start": "10:30",
         "end": "11:00"
       },
+      "next": {
+        "title": "Free Kick",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "13:00"
+      },
       "track": "",
-      "showTitle": "Latin Time",
+      "showTitle": "International Radio Report",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T14:20:35.518Z"
+      "checkedAt": "2026-08-23T14:48:52.752Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T14:20:52.888Z"
+      "checkedAt": "2026-08-23T14:49:06.669Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-23T14:20:53.690Z"
+      "checkedAt": "2026-08-23T14:49:07.595Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Kelela - idea 1",
+      "track": "Weird Nightmare - Pay No Mind",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-23T14:20:56.245Z"
+      "checkedAt": "2026-08-23T14:49:10.302Z"
     }
   }
 }
