@@ -56,10 +56,8 @@ QR_PX = int(2.25 * DPI)
 VARIANTS = ("standard", "minimal", "bilingue", "standard-qr", "minimal-qr", "bilingue-qr")
 
 TITLE = "LE-RADAR.ca"
-SUB_1 = "Journaux, radios et sports étudiants"
-SUB_2 = "du Québec, réunis au même endroit"
+SLOGAN = "Journaux, radios et sports étudiants du Québec, réunis au même endroit"
 NAME_FULL = "Le Réseau Académique de Découverte et d’Agrégation de Ressources"
-USE = "Vous pouvez lire les journaux et écouter la radio"
 SLOGAN_EN = "Student media on your radar"
 INDEP_1 = "LE-RADAR.ca est un projet indépendant et non officiel."
 INDEP_2 = "Il n’est affilié à aucun des médias ni des établissements recensés."
@@ -70,12 +68,16 @@ CAMPUSES = [
         "slug": "generique",
         "name": None,
         "line": None,
+        "papers": [],
+        "radio": None,
         "grounds": [{"key": "nophoto", "photo_id": None, "label": "Fond uni"}],
     },
     {
         "slug": "laval",
         "name": "Université Laval",
         "line": "Université Laval",
+        "papers": ["L’Exemplaire"],
+        "radio": {"name": "CHYZ 94,3", "slogan": "La radio des étudiants de l’Université Laval"},
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "pouliot", "photo_id": "68ae0e12a3ec", "label": "Pavillon Adrien-Pouliot", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.58},
@@ -86,6 +88,9 @@ CAMPUSES = [
         "slug": "mcgill",
         "name": "McGill University",
         "line": "McGill University",
+        "bilingual": True,
+        "papers": ["The McGill Daily", "The Tribune", "Le Délit"],
+        "radio": {"name": "CKUT 90,3", "slogan": "McGill campus-community radio"},
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "arts", "photo_id": "52c687b5d843", "label": "Arts Building", "focal": (0.50, 0.36), "crop_scale": 0.88, "desaturate": 0.50, "overlay": 0.58},
@@ -96,6 +101,8 @@ CAMPUSES = [
         "slug": "udem",
         "name": "Université de Montréal",
         "line": "Université de Montréal",
+        "papers": ["Quartier Libre"],
+        "radio": {"name": "CISM 89,3", "slogan": "La Marge"},
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "gaudry", "photo_id": "a7697051c0fc", "label": "Pavillon Roger-Gaudry", "focal": (0.50, 0.32), "crop_scale": 0.95, "desaturate": 0.55, "overlay": 0.52},
@@ -105,6 +112,8 @@ CAMPUSES = [
         "slug": "uqam",
         "name": "Université du Québec à Montréal",
         "line": "Université du Québec à Montréal",
+        "papers": ["Montréal Campus"],
+        "radio": {"name": "CHOQ.ca", "slogan": "La radio numérique des étudiants de l’UQAM"},
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "jasmin", "photo_id": "a5acbe3af178", "label": "Pavillon Judith-Jasmin", "focal": (0.48, 0.40), "crop_scale": 0.88, "desaturate": 0.52, "overlay": 0.58},
@@ -114,6 +123,9 @@ CAMPUSES = [
         "slug": "concordia",
         "name": "Concordia University",
         "line": "Concordia University",
+        "bilingual": True,
+        "papers": ["The Link"],
+        "radio": {"name": "CJLO 1690AM", "slogan": "Concordia’s only radio"},
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "hall", "photo_id": "582ef31c6453", "label": "Henry F. Hall Building", "focal": (0.52, 0.36), "crop_scale": 0.90, "desaturate": 0.48, "overlay": 0.60},
@@ -124,6 +136,8 @@ CAMPUSES = [
         "slug": "sherbrooke",
         "name": "Université de Sherbrooke",
         "line": "Université de Sherbrooke",
+        "papers": ["Le Collectif"],
+        "radio": {"name": "CFAK 88,3", "slogan": "Ça part ici"},
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "longueuil", "photo_id": "912fa583aa5b", "label": "Campus de Longueuil", "focal": (0.42, 0.42), "crop_scale": 0.88, "desaturate": 0.50, "overlay": 0.58},
@@ -133,6 +147,9 @@ CAMPUSES = [
         "slug": "bishops",
         "name": "Bishop’s University",
         "line": "Bishop’s University",
+        "bilingual": True,
+        "papers": ["The Campus"],
+        "radio": None,
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "brick", "photo_id": "186769a5aeb5", "label": "Bâtiment principal", "focal": (0.45, 0.42), "crop_scale": 0.92, "desaturate": 0.55, "overlay": 0.58},
@@ -253,6 +270,24 @@ def grade_photo(im, desaturate, overlay):
     return Image.blend(rgb, Image.new("RGB", rgb.size, BG), overlay)
 
 
+def wrap_text(text: str, fnt: ImageFont.FreeTypeFont, max_w: int) -> list[str]:
+    if fnt.getlength(text) <= max_w:
+        return [text]
+    words = text.split()
+    lines, cur = [], ""
+    for w in words:
+        t = f"{cur} {w}".strip()
+        if fnt.getlength(t) <= max_w:
+            cur = t
+        else:
+            if cur:
+                lines.append(cur)
+            cur = w
+    if cur:
+        lines.append(cur)
+    return lines or [text]
+
+
 def variant_kind(name: str) -> tuple[str, bool]:
     qr = name.endswith("-qr")
     base = name[:-3] if qr else name
@@ -311,10 +346,9 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
     logo_foot = raster_logo(foot_logo)
 
     f_title = font(SERIF, int(round(56 * scale)))
-    f_sub = font(SANS, int(round(20 * scale)))
     f_en = font(SANS, int(round(17 * scale)))
     f_uni = font(SANS, int(round(18 * scale)))
-    f_use = font(SANS, int(round(17 * scale)))
+    f_media = font(SANS, int(round(16 * scale)))
     f_name = font(SANS, 32)
     f_mark = font(SERIF, 40)
     f_body = font(SANS, 36)
@@ -336,14 +370,26 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
         draw.text(((W - tw) // 2, y), text, font=fnt, fill=fill)
         y += th + dy
 
+    max_w = W - 2 * SAFE - 80
+    slogan_size = int(round(18 * scale))
+    f_slogan = font(SANS, slogan_size)
+    while f_slogan.getlength(SLOGAN) > max_w and slogan_size > 30:
+        slogan_size -= 2
+        f_slogan = font(SANS, slogan_size)
     if kind != "minimal":
-        line(SUB_1, f_sub, SOFT, 8)
-        line(SUB_2, f_sub, SOFT, 22)
+        line(SLOGAN, f_slogan, SOFT, 16)
         if kind == "bilingue":
-            line(SLOGAN_EN, f_en, MUTED, 22)
+            line(SLOGAN_EN, f_en, MUTED, 16)
     if campus.get("line"):
-        line(campus["line"], f_uni, SOFT, 16)
-    line(USE, f_use, SOFT, 20)
+        line(campus["line"], f_uni, SOFT, 14)
+    papers = campus.get("papers") or []
+    if papers:
+        line(" · ".join(papers), f_media, SOFT, 8)
+    radio = campus.get("radio")
+    if radio:
+        radio_line = f"{radio['name']} · {radio['slogan']}"
+        for part in wrap_text(radio_line, f_media, max_w):
+            line(part, f_media, MUTED, 6)
 
     # Footer from the bottom — never leaves the 0.5 in safety.
     credit = ""
@@ -436,7 +482,8 @@ def generate_one(campus, ground, bank, formats, variants, kit_alias=False):
         preview = OUT_DIR / f"{name}-preview.jpg"
         img.save(jpg, "JPEG", quality=95, dpi=(DPI, DPI), subsampling=0, optimize=True)
         img.resize((PREVIEW_W, PREVIEW_H), Image.Resampling.LANCZOS).save(preview, "JPEG", quality=86, optimize=True)
-        if kit_alias and variant == "standard" and ground["key"] != "nophoto":
+        alias_kind = "bilingue" if campus.get("bilingual") else "standard"
+        if kit_alias and variant == alias_kind and ground["key"] != "nophoto":
             img.save(OUT_DIR / f"affiche-{campus['slug']}.jpg", "JPEG", quality=95, dpi=(DPI, DPI), subsampling=0, optimize=True)
             img.resize((PREVIEW_W, PREVIEW_H), Image.Resampling.LANCZOS).save(
                 OUT_DIR / f"affiche-{campus['slug']}-preview.jpg", "JPEG", quality=86, optimize=True

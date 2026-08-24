@@ -104,9 +104,9 @@
         <button type="button" data-ground="photo">Avec photo</button>
       </div>
       <div class="filters" role="tablist" aria-label="Variante">
-        <button type="button" data-kind="standard" class="is-on">Standard</button>
+        <button type="button" data-kind="standard">Français</button>
         <button type="button" data-kind="minimal">Minimal</button>
-        <button type="button" data-kind="bilingue">Bilingue</button>
+        <button type="button" data-kind="bilingue" class="is-on">Bilingue</button>
         <button type="button" id="toggle-qr">Zone QR</button>
       </div>
       <div class="modes" role="tablist" aria-label="Vue">
@@ -172,7 +172,7 @@
       document.getElementById("lab").hidden = false;
     }
 
-    let kind = "standard";
+    let kind = "bilingue";
     let withQr = false;
     let groundMode = "nophoto";
     let index = 0;
