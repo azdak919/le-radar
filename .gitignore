@@ -4,10 +4,14 @@ node_modules/
 # Labo photo : thumbs locales (ne pas committer)
 dev/photo-lab/cache/
 
-# Affiches campus : originaux Wikimedia + PNG/PDF trop lourds
+# Affiches campus : originaux Wikimedia + PNG/PDF / variantes pleine res trop lourds
 scripts/poster-cache/
 assets/kit/affiches/*.png
 assets/kit/affiches/*.pdf
+assets/kit/affiches/*-print.jpg
+assets/kit/affiches/affiche-*-minimal.jpg
+assets/kit/affiches/affiche-*-bilingue.jpg
+assets/kit/affiches/affiche-*-qr.jpg
 
 # Local debug / scratch
 scripts/_dbg.js

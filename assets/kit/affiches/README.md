@@ -1,13 +1,22 @@
 # Affiches campus 11 × 17
 
-JPEG **3300 × 5100 px** (11 × 17 po à 300 dpi), ratio exact 11:17.
+Trim **3300 × 5100 px** (11 × 17 po à 300 dpi), ratio exact 11:17.
+Zone de sécurité 0,5 po. Bleed 0,125 po : `python3 scripts/generate-campus-posters.py --formats print`.
 
-Photos Wikimedia de la banque `data/quebec-university-backgrounds.json`, overlay `#0E0F12`, pictogramme PWA, Source Serif 4 Display + Inter.
+QR vectoriel officiel : `assets/kit/qr-le-radar.svg` (le-radar.ca).
+
+## Variantes
+
+| Clé | Contenu |
+|---|---|
+| `standard` | Slogan FR + université + URL |
+| `minimal` | Logo, mot-symbole, université, URL |
+| `bilingue` | Standard + « Student media on your radar » |
+| `*-qr` | Les trois + QR 2,25 po, quiet zone blanche |
 
 ```
-python3 scripts/generate-campus-posters.py --formats jpg,preview
 python3 scripts/generate-campus-posters.py --only laval
-python3 scripts/generate-campus-posters.py          # + PNG et PDF locaux
+python3 scripts/generate-campus-posters.py --variant standard-qr
 ```
 
-Les PNG et PDF sont trop lourds pour git : les régénérer en local avant d’imprimer.
+Labo local : `http://127.0.0.1:8777/dev/affiche-lab.html`
