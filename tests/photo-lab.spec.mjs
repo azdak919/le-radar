@@ -45,6 +45,9 @@ test('tableau de bord local', async ({ page }) => {
   const pageLab = page.locator('a.card[href="./sports-page-lab.html"]');
   await expect(pageLab).toBeVisible();
   await expect(pageLab.locator('strong')).toContainText('Cartes page Sports');
+  const posters = page.locator('a.card[href="./affiche-lab.html"]');
+  await expect(posters).toBeVisible();
+  await expect(posters.locator('strong')).toContainText('Affiches 11×17');
 });
 
 test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ page }) => {
