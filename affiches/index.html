@@ -124,10 +124,18 @@
 
     <section class="dash-preview" aria-label="Aperçu">
       <div class="preview-frame" id="preview"></div>
+      <div class="crop-tools" id="crop-tools" hidden>
+        <p class="crop-lead">Glissez l’affiche pour cadrer. Le JPEG reprend le même cadrage.</p>
+        <label>Horizontal <input type="range" id="focal-x" min="0" max="100" value="50"></label>
+        <label>Vertical <input type="range" id="focal-y" min="0" max="100" value="42"></label>
+        <label>Angle <input type="range" id="photo-angle" min="-18" max="18" value="0"></label>
+        <label>Zoom <input type="range" id="photo-zoom" min="70" max="100" value="90"></label>
+        <button type="button" class="btn-quiet" id="crop-reset">Réinitialiser le cadrage</button>
+      </div>
       <p class="recipe" id="recipe"></p>
       <p class="preview-hint">L’aperçu suit vos choix. Le fichier téléchargé est l’impression 300 dpi, à 100 %, sans « ajuster à la page ».</p>
     </section>
   </div>
-  <script src="./poster-builder.js"></script>
+  <script src="./poster-builder.js?v=crop"></script>
 </body>
 </html>
