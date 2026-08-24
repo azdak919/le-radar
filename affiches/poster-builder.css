@@ -357,16 +357,22 @@ select.greeting:focus {
   }
   .dash-preview,
   .dash-preview.has-crop {
+    order: -1;
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+    grid-template-rows: minmax(42vh, auto) auto;
     position: sticky;
     top: var(--top);
     z-index: 3;
+    min-height: 46vh;
     height: auto;
     max-height: none;
     padding: 12px;
     overflow: auto;
     border-bottom: 1px solid var(--line);
+  }
+  .preview-stage {
+    min-height: 42vh;
+    height: 42vh;
   }
   .preview-frame,
   .preview-frame canvas {
@@ -379,5 +385,11 @@ select.greeting:focus {
   .dash-controls {
     border-right: 0;
     overflow: visible;
+    padding-bottom: 120px;
   }
+}
+
+/* Barre Format locale : ne pas masquer les téléchargements. */
+body:has(#local-lab-format-bar) .dash-controls {
+  padding-bottom: 120px;
 }

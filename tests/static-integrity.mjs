@@ -552,6 +552,7 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(posterScript.includes('Le Réseau Académique de Découverte'), 'affiches campus : nom complet au footer');
   assert(existsSync(join(root, 'assets/kit/qr-le-radar.svg')), 'affiches campus : QR vectoriel officiel requis');
   assert(builder.includes('Imprimer une affiche'), 'générateur public : titre');
+  assert(builder.includes('midwidth-preview.js'), 'générateur public : barre Format du labo local');
   assert(builder.includes('Lettre 8,5 × 11'), 'générateur public : format lettre');
   assert(builder.includes('Légal 8,5 × 14'), 'générateur public : format légal');
   assert(builderJs.includes('photo-bank.json'), 'générateur public : banque unique du labo photo');
