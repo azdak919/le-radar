@@ -66,6 +66,11 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(bilingue).toBeHidden();
   await page.locator('label:has(input[name="campus"][value="mcgill"])').click();
   await expect(bilingue).toBeVisible();
+  await page.locator('label:has(input[name="campus"][value="udem"])').click();
+  const udemTitles = (await page.locator('#photo-grid label').evaluateAll((els) => els.map((e) => e.getAttribute('title') || ''))).join(' ').toLowerCase();
+  expect(udemTitles).not.toContain('uqam');
+  expect(udemTitles).not.toContain('hall building');
+  expect(udemTitles).not.toContain('mcgill');
   await page.locator('label:has(input[name="campus"][value="laval"])').click();
   await expect(bilingue).toBeHidden();
   await expect(page.locator('#greeting')).toContainText('Bonne rentrée');
