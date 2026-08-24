@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-24T04:41:09.513Z",
+  "updatedAt": "2026-08-24T05:35:25.952Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T04:40:44.085Z"
+      "checkedAt": "2026-08-24T05:35:02.665Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T04:40:45.919Z"
+      "checkedAt": "2026-08-24T05:35:04.759Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Sound Of Soul",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "01:00"
-      },
-      "next": {
         "title": "Roots, Rock, Reggae",
         "source": "api-live",
         "start": "01:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "Adventures In Music",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Sound Of Soul",
+      "showTitle": "Roots, Rock, Reggae",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T04:40:48.194Z"
+      "checkedAt": "2026-08-24T05:35:08.302Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T04:41:01.683Z"
+      "checkedAt": "2026-08-24T05:35:22.118Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T04:41:02.724Z"
+      "checkedAt": "2026-08-24T05:35:22.816Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "bitume"
       },
-      "track": "coffret de bijoux - her haven",
+      "track": "MIRAR - Heksebal",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-24T04:41:09.162Z"
+      "checkedAt": "2026-08-24T05:35:25.601Z"
     }
   }
 }
