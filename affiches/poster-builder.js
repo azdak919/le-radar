@@ -54,6 +54,11 @@ const GREETINGS = {
   patriotes: 'Journée des Patriotes',
   'saint-jean': 'Bonne Saint-Jean',
   canada: 'Bonne fête du Canada',
+  nopub: 'Pas de publicité',
+  gpl: 'Code libre GPL 2.0',
+  gratuit: 'Gratuit, pour toujours',
+  independant: 'Indépendant',
+  ncompte: 'Sans compte à créer',
 };
 
 const GREETINGS_EN = {
@@ -71,97 +76,102 @@ const GREETINGS_EN = {
   patriotes: 'Patriots’ Day',
   'saint-jean': 'Happy Fête nationale',
   canada: 'Happy Canada Day',
+  nopub: 'No ads',
+  gpl: 'Free software — GPL 2.0',
+  gratuit: 'Free, forever',
+  independant: 'Independent',
+  ncompte: 'No account needed',
 };
 
 const CAMPUSES = [
   { slug: 'generique', line: null, lineEn: null, bilingual: false, places: null, hints: null, label: 'Générique' },
   {
-    slug: 'laval', line: 'Université Laval', bilingual: false, label: 'Université Laval',
+    slug: 'laval', line: 'Université Laval', prefix: 'Université ', core: 'Laval', bilingual: false, label: 'Université Laval',
     places: ['université laval'],
     hints: ['université laval', 'adrien-pouliot', 'alphonse-marie-parent', 'biermans', 'ernest-lemieux', 'pavillon dkn', 'casault', 'palasis', 'bonenfant', 'grand axe'],
   },
   {
-    slug: 'mcgill', line: 'Université McGill', lineEn: 'McGill University', core: 'McGill', bilingual: true, label: 'Université McGill',
+    slug: 'mcgill', line: 'Université McGill', lineEn: 'McGill University', prefix: 'Université ', core: 'McGill', bilingual: true, label: 'Université McGill',
     places: ['mcgill'],
     hints: ['mcgill'],
   },
   {
-    slug: 'udem', line: 'Université de Montréal', bilingual: false, label: 'Université de Montréal',
+    slug: 'udem', line: 'Université de Montréal', prefix: 'Université de ', core: 'Montréal', bilingual: false, label: 'Université de Montréal',
     places: ['université de montréal'],
     hints: ['université de montréal', 'roger-gaudry', 'école polytechnique de montréal'],
   },
   {
-    slug: 'uqam', line: 'Université du Québec à Montréal', bilingual: false, label: 'Université du Québec à Montréal',
+    slug: 'uqam', line: 'Université du Québec à Montréal', prefix: 'Université du Québec à ', core: 'Montréal', bilingual: false, label: 'Université du Québec à Montréal',
     places: ['uqam'],
     hints: ['uqam', 'judith-jasmin'],
   },
   {
-    slug: 'concordia', line: 'Université Concordia', lineEn: 'Concordia University', core: 'Concordia', bilingual: true, label: 'Université Concordia',
+    slug: 'concordia', line: 'Université Concordia', lineEn: 'Concordia University', prefix: 'Université ', core: 'Concordia', bilingual: true, label: 'Université Concordia',
     places: ['concordia'],
     hints: ['concordia', 'hall building', 'loyola'],
   },
   {
-    slug: 'sherbrooke', line: 'Université de Sherbrooke', bilingual: false, label: 'Université de Sherbrooke',
+    slug: 'sherbrooke', line: 'Université de Sherbrooke', prefix: 'Université de ', core: 'Sherbrooke', bilingual: false, label: 'Université de Sherbrooke',
     places: ['sherbrooke', 'longueuil'],
     hints: ['université de sherbrooke', 'udes', 'georges-cabana', 'univestrie'],
   },
   {
-    slug: 'bishops', line: 'Université Bishop’s', lineEn: 'Bishop’s University', core: 'Bishop’s', bilingual: true, label: 'Université Bishop’s',
+    slug: 'bishops', line: 'Université Bishop’s', lineEn: 'Bishop’s University', prefix: 'Université ', core: 'Bishop’s', bilingual: true, label: 'Université Bishop’s',
     places: ['bishop'],
     hints: ['bishop'],
   },
   {
-    slug: 'uqtr', line: 'Université du Québec à Trois-Rivières', bilingual: false, label: 'UQTR',
+    slug: 'uqtr', line: 'Université du Québec à Trois-Rivières', prefix: 'Université du Québec à ', core: 'Trois-Rivières', bilingual: false, label: 'UQTR',
     places: ['uqtr', 'trois-rivières', 'trois-rivieres'],
     hints: ['uqtr', 'trois-rivières', 'trois rivieres'],
   },
   {
-    slug: 'uqac', line: 'Université du Québec à Chicoutimi', bilingual: false, label: 'UQAC',
+    slug: 'uqac', line: 'Université du Québec à Chicoutimi', prefix: 'Université du Québec à ', core: 'Chicoutimi', bilingual: false, label: 'UQAC',
     places: ['uqac', 'chicoutimi'],
     hints: ['uqac', 'chicoutimi'],
   },
   {
-    slug: 'uqar', line: 'Université du Québec à Rimouski', bilingual: false, label: 'UQAR',
+    slug: 'uqar', line: 'Université du Québec à Rimouski', prefix: 'Université du Québec à ', core: 'Rimouski', bilingual: false, label: 'UQAR',
     places: ['uqar', 'rimouski'],
     hints: ['uqar', 'rimouski', 'ursulines'],
   },
   {
-    slug: 'uqo', line: 'Université du Québec en Outaouais', bilingual: false, label: 'UQO',
+    slug: 'uqo', line: 'Université du Québec en Outaouais', prefix: 'Université du Québec en ', core: 'Outaouais', bilingual: false, label: 'UQO',
     places: ['uqo', 'outaouais'],
     hints: ['uqo', 'outaouais', 'lucien-brault'],
   },
   {
-    slug: 'uqat', line: 'Université du Québec en Abitibi-Témiscamingue', bilingual: false, label: 'UQAT',
+    slug: 'uqat', line: 'Université du Québec en Abitibi-Témiscamingue', prefix: 'Université du Québec en ', core: 'Abitibi-Témiscamingue', bilingual: false, label: 'UQAT',
     places: ['uqat', 'abitibi', 'rouyn'],
     hints: ['uqat', 'abitibi', 'rouyn', 'premiers peuples'],
   },
   {
-    slug: 'teluq', line: 'TÉLUQ', bilingual: false, label: 'TÉLUQ',
+    slug: 'teluq', line: 'TÉLUQ', prefix: '', core: 'TÉLUQ', bilingual: false, label: 'TÉLUQ',
     places: ['téluq', 'teluq'],
     hints: ['téluq', 'teluq'],
   },
   {
-    slug: 'ets', line: 'École de technologie supérieure', bilingual: false, label: 'ÉTS',
+    slug: 'ets', line: 'École de technologie supérieure', prefix: 'École de ', core: 'technologie supérieure', bilingual: false, label: 'ÉTS',
     places: ['éts', 'ets', 'technologie supérieure'],
     hints: ['technologie superieure', 'technologie supérieure', 'école de technologie'],
   },
   {
-    slug: 'enap', line: 'ENAP', bilingual: false, label: 'ENAP',
+    slug: 'enap', line: 'ENAP', prefix: '', core: 'ENAP', bilingual: false, label: 'ENAP',
     places: ['enap'],
     hints: ['enap'],
   },
   {
-    slug: 'inrs', line: 'INRS', bilingual: false, label: 'INRS',
+    slug: 'inrs', line: 'INRS', prefix: '', core: 'INRS', bilingual: false, label: 'INRS',
     places: ['inrs'],
     hints: ['inrs'],
   },
   {
-    slug: 'poly', line: 'Polytechnique Montréal', bilingual: false, label: 'Polytechnique Montréal',
+    slug: 'poly', line: 'Polytechnique Montréal', prefix: '', core: 'Polytechnique Montréal', bilingual: false, label: 'Polytechnique Montréal',
     places: ['polytechnique'],
     hints: ['polytechnique'],
   },
   {
-    slug: 'hec', line: 'HEC Montréal', bilingual: false, label: 'HEC Montréal',
+    slug: 'hec', line: 'HEC Montréal', prefix: '', core: 'HEC Montréal', bilingual: false, label: 'HEC Montréal',
     places: ['hec'],
     hints: ['hec montréal', 'hec montreal', 'decelles'],
   },
@@ -171,8 +181,8 @@ const state = {
   format: 'tabloid',
   campus: 'generique',
   lang: 'standard',
-  greeting: 'none',
-  langs: false,
+  greeting: 'nopub',
+  langs: true,
   showUni: true,
   qr: true,
   dpi: DEFAULT_DPI,
@@ -369,9 +379,33 @@ function wrapWords(ctx, text, maxW) {
   return lines;
 }
 
-function fillUniLockup(ctx, core, y, small, large) {
-  const left = 'Université ';
-  const right = ' University';
+function uniLockupParts(campus, kind) {
+  if (!campus || !campus.core) return null;
+  if (kind === 'bilingue' && campus.bilingual) {
+    return {
+      left: campus.prefix != null ? campus.prefix : 'Université ',
+      core: campus.core,
+      right: ' University',
+    };
+  }
+  return { left: '', core: campus.line || campus.core, right: '' };
+}
+
+function fillUniLockup(ctx, parts, y, small, large) {
+  const left = parts.left || '';
+  const right = parts.right || '';
+  const core = parts.core;
+  const maxW = ctx.canvas.width * 0.86;
+  ctx.fillStyle = INK;
+  if (!left && !right) {
+    ctx.font = `600 ${large}px "LR Sans Semi"`;
+    const lines = wrapWords(ctx, core, maxW);
+    let yy = y;
+    lines.forEach((line) => {
+      yy += fillCentered(ctx, line, yy, INK) + large * 0.12;
+    });
+    return Math.max(large, yy - y);
+  }
   ctx.textBaseline = 'alphabetic';
   ctx.font = `400 ${small}px "LR Sans"`;
   const wLeft = textW(ctx, left);
@@ -380,7 +414,6 @@ function fillUniLockup(ctx, core, y, small, large) {
   const wCore = textW(ctx, core);
   let x = (ctx.canvas.width - (wLeft + wCore + wRight)) / 2;
   const base = y + large * 0.82;
-  ctx.fillStyle = INK;
   ctx.font = `400 ${small}px "LR Sans"`;
   ctx.fillText(left, x, base);
   x += wLeft;
@@ -489,15 +522,16 @@ function compose(opts) {
     const m = ctx.measureText(text);
     return (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || size;
   };
-  /* Pied = site-foot : mot-symbole, signature discrète, mentions plus petites. */
-  const fMark = 40 * fit;
-  const fSign = 22 * fit;
-  const fLegal = 20 * fit;
-  const fCredit = 17 * fit;
-  const fEn = 16 * fit;
-  const footLogo = 44 * fit;
-  const markGap = 10 * fit;
-  const legalMax = w - 2 * safe - 280 * fit;
+  /* Pied : plus lisible à l’impression, toujours sous le slogan / nom d’établissement. */
+  const footCap = Math.round(62 * fit);
+  const fMark = Math.min(52 * fit, footCap);
+  const fSign = Math.min(36 * fit, footCap * 0.62);
+  const fLegal = Math.min(28 * fit, footCap * 0.5);
+  const fCredit = Math.min(26 * fit, footCap * 0.48);
+  const fEn = Math.min(22 * fit, footCap * 0.4);
+  const footLogo = Math.min(56 * fit, footCap + 4 * fit);
+  const markGap = 12 * fit;
+  const legalMax = w - 2 * safe - 160 * fit;
   ctx.font = `400 ${fLegal}px "LR Sans"`;
   const legalLines = wrapWords(ctx, `${INDEP_1} ${INDEP_2}`, legalMax);
   const legalLineH = measure(legalLines[0] || INDEP_1, fLegal);
@@ -508,11 +542,11 @@ function compose(opts) {
     + (enLines.length ? 8 * fit + enLines.length * (enLineH + 4) - 4 : 0);
   const nameH = measure(NAME_FULL, fSign);
   const creditH = credit ? measure(credit, fCredit) : 0;
-  const fLang = 22 * fit;
-  const iconS = 36 * fit;
+  const fLang = Math.min(28 * fit, footCap * 0.5);
+  const iconS = Math.min(40 * fit, footCap * 0.7);
   const langFont = `400 ${fLang}px "Noto Sans", "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", "Noto Sans Arabic", "Noto Sans Devanagari", "LR Sans"`;
   ctx.font = langFont;
-  const langMax = w - 2 * safe - 240 * fit;
+  const langMax = w - 2 * safe - 80 * fit;
   const langLines = opts.langs ? wrapJoin(ctx, TRANSLATE_LANGS, langMax) : [];
   const langLineH = langLines.length ? measure(langLines[0] || 'Français', fLang) : 0;
   const langsH = opts.langs
@@ -523,80 +557,76 @@ function compose(opts) {
   const qrPx = Math.round(qrIn * REF_DPI * fit);
   const qrPad = Math.round(36 * fit);
   const qrSide = qrPx;
-
-  let contentBottom = h - safe;
-  if (credit) contentBottom -= creditH + safe;
-  if (opts.langs && langsH) contentBottom -= langsH + 16 * fit;
-  contentBottom -= legalH + 14 * fit + nameH + 6 * fit + markH;
-  if (opts.qr && assets.qr) contentBottom -= 24 * fit + qrSide;
   const playTop = barH + 12 * fit;
   const big = Math.round(816 * fit);
   const logoY = playTop + Math.round(700 * fit);
+  const qrTop = playTop + Math.round(3680 * fit);
   if (!photo) drawRadar(ctx, w, h, w / 2, logoY + big / 2);
 
   ctx.fillStyle = PURPLE;
   ctx.fillRect(0, 0, w, barH);
 
-  const fadeTop = Math.max(barH, contentBottom - 70 * fit);
+  const fadeTop = Math.max(barH, qrTop - 70 * fit);
   const fade = ctx.createLinearGradient(0, fadeTop, 0, h);
   fade.addColorStop(0, 'rgba(14, 15, 18, 0)');
   fade.addColorStop(0.4, 'rgba(14, 15, 18, 0.22)');
-  fade.addColorStop(1, 'rgba(14, 15, 18, 0.58)');
+  fade.addColorStop(1, 'rgba(14, 15, 18, 0.72)');
   ctx.fillStyle = fade;
   ctx.fillRect(0, fadeTop, w, h - fadeTop);
 
-  let cy = h - safe;
-  if (credit) {
-    cy -= creditH;
-    ctx.font = `400 ${fCredit}px "LR Sans"`;
-    fillCentered(ctx, credit, cy, MUTED);
-    cy -= safe;
+  if (opts.qr && assets.qr) {
+    const card = qrSide;
+    ctx.fillStyle = '#fff';
+    ctx.fillRect((w - card) / 2, qrTop, card, card);
+    const inner = card - 2 * qrPad;
+    ctx.drawImage(assets.qr, (w - inner) / 2, qrTop + qrPad, inner, inner);
   }
-  if (opts.langs && langsH) {
-    cy -= langsH;
-    const langTop = cy;
-    if (assets.translate) {
-      ctx.drawImage(assets.translate, (w - iconS) / 2, langTop, iconS, iconS);
-    }
-    let ly = langTop + iconS + 8;
-    ctx.font = langFont;
-    langLines.forEach((line) => {
-      fillCentered(ctx, line, ly, SOFT);
-      ly += langLineH + 5;
-    });
-    cy -= 16 * fit;
-  }
-  cy -= legalH;
-  let ty = cy;
-  legalLines.forEach((line) => {
-    ctx.font = `400 ${fLegal}px "LR Sans"`;
-    fillCentered(ctx, line, ty, SOFT);
-    ty += legalLineH + 6;
-  });
-  enLines.forEach((line, i) => {
-    if (i === 0) ty += 2 * fit;
-    ctx.font = `400 ${fEn}px "LR Sans"`;
-    fillCentered(ctx, line, ty, MUTED);
-    ty += enLineH + 4;
-  });
-  cy -= 14 * fit;
-  cy -= nameH;
-  ctx.font = `400 ${fSign}px "LR Sans"`;
-  fillCentered(ctx, NAME_FULL, cy, SOFT);
-  cy -= 6 * fit;
-  cy -= markH;
+
+  const qrBottom = ((opts.qr && assets.qr) || opts.langs) ? qrTop + qrSide : qrTop;
+  const pad = 32 * fit;
+  const gMark = 14 * fit;
+  const gName = 18 * fit;
+  const gLegal = 18 * fit;
+
+  let cy = qrBottom + pad;
   const markW = trackedWidth(ctx, TITLE, fMark);
   const rowW = footLogo + markGap + markW;
   const mx = (w - rowW) / 2;
   if (assets.logo) ctx.drawImage(assets.logo, mx, cy + (markH - footLogo) / 2, footLogo, footLogo);
   fillTracked(ctx, TITLE, cy + (markH - fMark) / 2, fMark, INK, mx + footLogo + markGap);
-  if (opts.qr && assets.qr) {
-    const card = qrSide;
-    cy -= 24 * fit + card;
-    ctx.fillStyle = '#fff';
-    ctx.fillRect((w - card) / 2, cy, card, card);
-    const inner = card - 2 * qrPad;
-    ctx.drawImage(assets.qr, (w - inner) / 2, cy + qrPad, inner, inner);
+  cy += markH + gMark;
+  ctx.font = `400 ${fSign}px "LR Sans"`;
+  fillCentered(ctx, NAME_FULL, cy, SOFT);
+  cy += nameH + gName;
+  const legalStart = cy;
+  legalLines.forEach((line) => {
+    ctx.font = `400 ${fLegal}px "LR Sans"`;
+    fillCentered(ctx, line, cy, SOFT);
+    cy += legalLineH + 6;
+  });
+  enLines.forEach((line, i) => {
+    if (i === 0) cy += 2 * fit;
+    ctx.font = `400 ${fEn}px "LR Sans"`;
+    fillCentered(ctx, line, cy, SOFT);
+    cy += enLineH + 4;
+  });
+  cy = legalStart + legalH + (langsH ? gLegal : 0);
+  if (opts.langs && langsH) {
+    if (assets.translate) {
+      ctx.drawImage(assets.translate, (w - iconS) / 2, cy, iconS, iconS);
+    }
+    let ly = cy + iconS + 8;
+    ctx.font = langFont;
+    langLines.forEach((line) => {
+      fillCentered(ctx, line, ly, SOFT);
+      ly += langLineH + 5;
+    });
+    cy = ly;
+  }
+  if (credit) {
+    const creditY = cy + (h - cy - creditH) / 2;
+    ctx.font = `400 ${fCredit}px "LR Sans"`;
+    fillCentered(ctx, credit, creditY, SOFT);
   }
 
   if (assets.logo) ctx.drawImage(assets.logo, (w - big) / 2, logoY, big, big);
@@ -627,11 +657,9 @@ function compose(opts) {
     });
   }
   if (opts.showUni !== false) {
-    if (kind === 'bilingue' && campus.core) {
-      y += fillUniLockup(ctx, campus.core, y, uniSize, uniCore) + gapBlock;
-    } else if (campus.line) {
-      ctx.font = `400 ${uniSize}px "LR Sans"`;
-      y += fillCentered(ctx, campus.line, y, INK) + gapBlock;
+    const uniParts = uniLockupParts(campus, kind);
+    if (uniParts) {
+      y += fillUniLockup(ctx, uniParts, y, uniSize, uniCore) + gapBlock;
     }
   }
   const greet = GREETINGS[opts.greeting];
@@ -723,7 +751,7 @@ function escapeAttr(s) {
 function specLine() {
   const fmt = FORMATS[state.format];
   const { w, h } = px(fmt);
-  return `${fmt.label} · ${w} × ${h} px · ${outputDpi()} dpi · JPEG`;
+  return `${fmt.label} · ${w} × ${h} px · ${outputDpi()} dpi · PDF`;
 }
 
 function recipeLine() {
@@ -850,8 +878,8 @@ function jpegToPdfBlob(jpeg, imgW, imgH, wIn, hIn) {
   return new Blob([out], { type: 'application/pdf' });
 }
 
-async function downloadPrint(kind = 'jpeg') {
-  const buttons = [document.getElementById('dl'), document.getElementById('dl-pdf'), document.getElementById('dl-bottom'), document.getElementById('dl-pdf-bottom')];
+async function downloadPrint(kind = 'pdf') {
+  const buttons = [document.getElementById('dl'), document.getElementById('dl-jpg'), document.getElementById('dl-bottom'), document.getElementById('dl-jpg-bottom')];
   const status = document.getElementById('status');
   buttons.forEach((b) => { if (b) b.disabled = true; });
   status.textContent = kind === 'pdf' ? 'Composition du PDF…' : 'Composition du JPEG…';
@@ -932,11 +960,11 @@ function syncDpiLabels() {
   const dpi = outputDpi();
   for (const id of ['dl', 'dl-bottom']) {
     const el = document.getElementById(id);
-    if (el) el.textContent = `JPEG ${dpi} dpi`;
-  }
-  for (const id of ['dl-pdf', 'dl-pdf-bottom']) {
-    const el = document.getElementById(id);
     if (el) el.textContent = `PDF ${dpi} dpi`;
+  }
+  for (const id of ['dl-jpg', 'dl-jpg-bottom']) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = `JPEG ${dpi} dpi`;
   }
 }
 
@@ -981,6 +1009,25 @@ function syncCropUi() {
   if (z) z.value = String(Math.round(state.zoom * 100));
 }
 
+function applyQuery() {
+  let q;
+  try { q = new URLSearchParams(location.search); } catch { return; }
+  const campus = q.get('campus');
+  if (campus && CAMPUSES.some((c) => c.slug === campus)) {
+    state.campus = campus;
+    const input = document.querySelector(`input[name="campus"][value="${campus}"]`);
+    if (input) input.checked = true;
+  }
+  syncGenericLangs();
+}
+
+function syncGenericLangs() {
+  if (state.campus !== 'generique') return;
+  state.langs = true;
+  const oui = document.querySelector('input[name="langs"][value="oui"]');
+  if (oui) oui.checked = true;
+}
+
 function applyChoice(name, value) {
   if (name === 'format') state.format = value;
   if (name === 'dpi') {
@@ -991,6 +1038,7 @@ function applyChoice(name, value) {
   if (name === 'campus') {
     state.campus = value;
     state.photoOpen = false;
+    syncGenericLangs();
     syncLangChoice();
     renderChoices();
   }
@@ -1062,10 +1110,10 @@ function bind() {
     state.photoOpen = !state.photoOpen;
     renderChoices();
   });
-  document.getElementById('dl').addEventListener('click', () => downloadPrint('jpeg'));
-  document.getElementById('dl-pdf').addEventListener('click', () => downloadPrint('pdf'));
-  document.getElementById('dl-bottom').addEventListener('click', () => downloadPrint('jpeg'));
-  document.getElementById('dl-pdf-bottom').addEventListener('click', () => downloadPrint('pdf'));
+  document.getElementById('dl').addEventListener('click', () => downloadPrint('pdf'));
+  document.getElementById('dl-jpg').addEventListener('click', () => downloadPrint('jpeg'));
+  document.getElementById('dl-bottom').addEventListener('click', () => downloadPrint('pdf'));
+  document.getElementById('dl-jpg-bottom').addEventListener('click', () => downloadPrint('jpeg'));
   const stage = document.getElementById('preview-stage');
   let fitTimer = 0;
   const refit = () => {
@@ -1085,6 +1133,7 @@ function bind() {
 
 async function main() {
   bind();
+  applyQuery();
   syncDpiLab();
   syncDpiLabels();
   syncLangChoice();

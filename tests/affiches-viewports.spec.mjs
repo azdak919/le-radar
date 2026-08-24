@@ -37,10 +37,18 @@ function reportOverflow(page) {
 }
 
 test.describe('affiches — largeurs labo', () => {
+  test('?campus=laval depuis le kit média', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto('/affiches/?campus=laval', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('input[name="campus"][value="laval"]')).toBeChecked();
+    await expect(page.locator('label:has(input[name="lang"][value="bilingue"])')).toBeHidden();
+  });
+
   test('barre Format du labo locale', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/affiches/', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('#local-lab-format-bar')).toBeVisible();
+    await expect(page.locator('#local-lab-format-bar a[href="/dev/"]')).toHaveText('Tableau');
     await expect(page.locator('#local-lab-format-bar button[data-format-id="phone"]')).toHaveText('390');
     await expect(page.locator('#local-lab-format-bar button[data-format-id="wide1920"]')).toHaveText('1920');
   });
@@ -62,6 +70,7 @@ test.describe('affiches — largeurs labo', () => {
       expect(box.height, `${vp.name}: aperçu pas portrait`).toBeGreaterThan(box.width * 1.05);
       const ov = await reportOverflow(page);
       expect(ov.overflowX, `${vp.name}: overflow horizontal ${ov.overflowX}px`).toBeLessThan(8);
+      await expect(page.getByRole('button', { name: /PDF 600 dpi/ }).first()).toBeVisible();
       await expect(page.getByRole('button', { name: /JPEG 600 dpi/ }).first()).toBeVisible();
       expect(pageErrors, `${vp.name}: ${pageErrors.join(' | ')}`).toEqual([]);
     });
