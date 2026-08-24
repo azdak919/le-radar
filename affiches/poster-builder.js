@@ -582,23 +582,11 @@ function compose(opts) {
     ctx.drawImage(assets.qr, (w - inner) / 2, qrTop + qrPad, inner, inner);
   }
 
-  const qrBottom = qrTop + qrSide;
-  let pad = 32 * fit;
-  let gMark = 14 * fit;
-  let gName = 18 * fit;
-  let gLegal = 18 * fit;
-  const creditReserve = credit ? creditH + 48 * fit : safe;
-  const blockH = markH + gMark + nameH + gName + legalH
-    + (langsH ? gLegal + langsH : 0);
-  const room = (h - creditReserve) - (qrBottom + pad);
-  if (room > blockH && blockH > 0) {
-    const slots = 2 + (langsH ? 1 : 0);
-    const add = (room - blockH) / slots;
-    pad += add * 0.4;
-    gMark += add * 0.3;
-    gName += add * 0.3;
-    if (langsH) gLegal += add * 0.2;
-  }
+  const qrBottom = ((opts.qr && assets.qr) || opts.langs) ? qrTop + qrSide : qrTop;
+  const pad = 32 * fit;
+  const gMark = 14 * fit;
+  const gName = 18 * fit;
+  const gLegal = 18 * fit;
 
   let cy = qrBottom + pad;
   const markW = trackedWidth(ctx, TITLE, fMark);
