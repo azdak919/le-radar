@@ -64,6 +64,7 @@ const FOOTER_AIR_ROUTES = [
   '/sports/',
   '/feeds.html',
   '/kit-media/',
+  '/affiches/',
   '/journaux/la-pige/',
 ];
 

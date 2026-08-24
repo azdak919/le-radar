@@ -70,6 +70,7 @@ const PAGES = [
   { loc: '/', changefreq: 'hourly', priority: '1.0', file: 'index.html' },
   { loc: '/feeds.html', changefreq: 'monthly', priority: '0.5', file: 'feeds.html' },
   { loc: '/kit-media/', changefreq: 'monthly', priority: '0.4', file: 'kit-media/index.html' },
+  { loc: '/affiches/', changefreq: 'monthly', priority: '0.4', file: 'affiches/index.html' },
   { loc: '/en/media-kit/', changefreq: 'monthly', priority: '0.3', file: 'en/media-kit/index.html' },
   { loc: '/pomo/', changefreq: 'monthly', priority: '0.3', file: 'pomo/index.html' },
   { loc: '/solitaire/', changefreq: 'monthly', priority: '0.3', file: 'solitaire/index.html' },

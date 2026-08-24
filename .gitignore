@@ -4,6 +4,22 @@ node_modules/
 # Labo photo : thumbs locales (ne pas committer)
 dev/photo-lab/cache/
 
+# Affiches campus : originaux Wikimedia + pleine res photo trop lourde
+scripts/poster-cache/
+assets/kit/affiches/*.png
+assets/kit/affiches/*.pdf
+assets/kit/affiches/*-print.jpg
+assets/kit/affiches/*.jpg
+!assets/kit/affiches/*-preview.jpg
+!assets/kit/affiches/*-nophoto-*.jpg
+!assets/kit/affiches/affiche-laval.jpg
+!assets/kit/affiches/affiche-mcgill.jpg
+!assets/kit/affiches/affiche-udem.jpg
+!assets/kit/affiches/affiche-uqam.jpg
+!assets/kit/affiches/affiche-concordia.jpg
+!assets/kit/affiches/affiche-sherbrooke.jpg
+!assets/kit/affiches/affiche-bishops.jpg
+
 # Local debug / scratch
 scripts/_dbg.js
 scripts/_*.tmp.js

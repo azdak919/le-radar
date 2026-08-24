@@ -237,22 +237,34 @@ const fsQc = readFileSync(join(root, 'fullscreen-wallpaper-qc.js'), 'utf8');
 assert(fsQc.includes('FullscreenWallpaperQc'), 'module QC wallpapers plein écran requis');
 assert(fsQc.includes('1457269449834-928af64c684d'), 'hard-ban Snowy Branch (Aaron Burden) requis');
 
-// Fonds campus : Casault ULaval hard-ban + détection religieuse multi-tours
-const bgBlacklist = require('../scripts/quebec-backgrounds-blacklist.js');
+// Fonds campus : Casault / pavillons = exception au détecteur d’église
+const facadeLib = require('../scripts/religious-facade-lib.js');
 assert(
-  bgBlacklist.matchHardBanned({ id: 'd80fc225abc1' })?.reason === 'reads_as_church_casault',
-  'hard-ban Casault id d80fc225abc1 requis',
+  !facadeLib.RELIGIOUS_SUBJECT_RE.test('Pavillon Louis-Jacques-Casault'),
+  'Casault n’est pas un mot de culte',
 );
 assert(
-  bgBlacklist.allFragments().some((f) => /casault|Canada_3/i.test(f)),
-  'fragments hard-ban Casault / Canada_3 requis',
+  facadeLib.isCampusBuildingException({
+    title: 'Pavillon Louis-Jacques-Casault Université Laval',
+    campus: true,
+  }),
+  'Casault campus excepté',
 );
 const bgJsRelig = readFileSync(join(root, 'quebec-backgrounds.js'), 'utf8');
-assert(bgJsRelig.includes('casault'), 'mât RELIGIOUS_SUBJECT_RE : casault');
-assert(bgJsRelig.includes('solidStone'), 'détecteur visuel pierre grise (Casault)');
+assert(bgJsRelig.includes('isCampusBuildingException'), 'mât : exception pavillons campus');
+assert(bgJsRelig.includes('CAMPUS_BUILDING_EXCEPTION_RE'), 'mât : regex pavillons campus');
+assert(bgJsRelig.includes('solidStone'), 'détecteur visuel pierre grise (clochers inconnus)');
 assert(bgJsRelig.includes('multiPeaks'), 'détecteur multi-tours / flèches');
 const uniData = readFileSync(join(root, 'quebec-university-backgrounds-data.js'), 'utf8');
-assert(!/Quebec_Canada_3\.jpg/i.test(uniData), 'banque universities sans Casault Canada_3');
+const photoBankJson = readFileSync(join(root, 'data/photo-bank.json'), 'utf8');
+assert(
+  /Pavillon_Louis-Jacques-Casault_3/i.test(photoBankJson),
+  'banque unique : Pavillon Casault',
+);
+assert(
+  !/Pavillon_Adrien-Pouliot_0[789]\.jpg/i.test(photoBankJson),
+  'Pouliot 07/08/09 restent les rejets labo',
+);
 assert(
   /Park_in_Universit|Ferdinand-Vandry/i.test(uniData),
   'banque universities : remplacement ULaval (parc ou Vandry)',
@@ -510,6 +522,81 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   }
   const mediaKitCheck = spawnSync(process.execPath, [join(root, 'scripts/generate-media-kit-assets.mjs'), '--check'], { encoding: 'utf8' });
   assert.equal(mediaKitCheck.status, 0, mediaKitCheck.stderr || 'kit-media : fichiers générés désynchronisés');
+  const campusSlugs = ['laval', 'mcgill', 'udem', 'uqam', 'concordia', 'sherbrooke', 'bishops'];
+  for (const slug of campusSlugs) {
+    assert(kit.includes(`affiche-${slug}.jpg`), `kit-media : affiche ${slug} téléchargeable requise`);
+    assert(kit.includes(`affiche-${slug}-preview.jpg`), `kit-media : aperçu ${slug} requis`);
+  }
+  const posterScript = readFileSync(join(root, 'scripts/generate-campus-posters.py'), 'utf8');
+  assert(posterScript.includes('TITLE = "LE-RADAR.ca"'), 'affiches campus : mot-symbole LE-RADAR.ca');
+  assert(posterScript.includes('draw_footer_wordmark'), 'affiches campus : petit logo PWA au footer seulement');
+  assert(!/Rentrée 2026/.test(posterScript), 'affiches campus : pas de Rentrée 2026');
+  assert(posterScript.includes('SLOGAN = "Journaux, radios et sports étudiants du Québec, réunis au même endroit"'), 'affiches campus : slogan sur une ligne');
+  assert(posterScript.includes('Université McGill'), 'affiches campus : nom français OQLF pour McGill');
+  assert(posterScript.includes('netement prédominant') || posterScript.includes('nettement prédominant'), 'affiches campus : bilingue OQLF (français prédominant)');
+  assert(!posterScript.includes('Votre journal'), 'affiches campus : plus de liste journaux');
+  assert(!posterScript.includes('Votre radio'), 'affiches campus : plus de liste radios');
+  assert(/draw\.rectangle\(\(0, 0, W, BAR_H\)/.test(posterScript), 'affiches campus : barre pourpre en haut');
+  assert(!posterScript.includes('paint_chip'), 'affiches campus : plus de pastilles autour du texte');
+  assert(posterScript.includes('raster_qr'), 'affiches campus : QR officiel collé, pas un carré vide');
+  assert(posterScript.includes('Student newspapers, radio and sports from Quebec'), 'affiches campus : slogan EN = traduction du français');
+  const builder = readFileSync(join(root, 'affiches/index.html'), 'utf8');
+  const builderJs = readFileSync(join(root, 'affiches/poster-builder.js'), 'utf8');
+  assert(builderJs.includes('fillCentered(ctx, NAME_FULL, cy, SOFT)'), 'pied d’affiche : nom développé discret comme le site');
+  assert(builderJs.includes('fillUniLockup'), 'générateur public : Université McGill University');
+  assert(builderJs.includes('GREETINGS_EN'), 'générateur public : messages manuscrits bilingues OQLF');
+  assert(posterScript.includes('non officiel et sans affiliation'), 'affiches campus : « et » plutôt qu’un tiret');
+  assert(posterScript.includes('Les contenus appartiennent à leurs publications'), 'affiches campus : contenus d’origine');
+  assert(!posterScript.includes('Azdak'), 'affiches campus : pas de mention Azdak');
+  assert(!/GPL-2/.test(posterScript), 'affiches campus : pas de GPL au pied');
+  assert(posterScript.includes('Le Réseau Académique de Découverte'), 'affiches campus : nom complet au footer');
+  assert(existsSync(join(root, 'assets/kit/qr-le-radar.svg')), 'affiches campus : QR vectoriel officiel requis');
+  assert(builder.includes('Imprimer une affiche'), 'générateur public : titre');
+  assert(!builder.includes('n’apparaît qu’en local'), 'affiches : pas de mention labo dans le texte public');
+  assert(!builder.includes('barre de tailles'), 'affiches : pas de notice Format dans le lead');
+  assert(builder.includes('class="masthead"'), 'affiches : mât SEO comme les autres pages');
+  assert(builder.includes('class="site-foot"'), 'affiches : pied SEO comme les autres pages');
+  assert(builder.includes('seo-page-theme.js'), 'affiches : thème clair/sombre du site');
+  assert(!builder.includes('lab-photo-link'), 'affiches : pas de lien Labo photo (labo = /dev/)');
+  assert(builder.includes('midwidth-preview.js'), 'générateur public : barre Format du labo local');
+  assert(builder.includes('Lettre 8,5 × 11'), 'générateur public : format lettre');
+  assert(builder.includes('Légal 8,5 × 14'), 'générateur public : format légal');
+  assert(builderJs.includes('photo-bank.json'), 'générateur public : banque unique du labo photo');
+  assert(builderJs.includes('quebec-backgrounds-rejected.json'), 'générateur public : exclusions du labo');
+  assert(builderJs.includes('wIn: 8.5') && builderJs.includes('hIn: 11'), 'générateur public : lettre 8,5×11');
+  assert(builderJs.includes('REF_DPI = 300'), 'générateur public : 300 dpi de référence');
+  assert(builderJs.includes('PREVIEW_DPI'), 'générateur public : aperçu plus léger que le JPEG');
+  assert(builderJs.includes('DPI_PUBLIC'), 'générateur public : 300 et 600 dpi en prod');
+  assert(builderJs.includes('DPI_LAB'), 'générateur public : 1200 dpi réservé au labo local');
+  assert(builderJs.includes('DEFAULT_DPI = 600'), 'générateur public : 600 dpi par défaut');
+  assert(builder.includes('name="dpi"'), 'générateur public : choix de résolution');
+  assert(builder.includes('id="dpi-1200-choice" hidden'), '1200 dpi masqué hors labo local');
+  assert(builder.includes('value="600" checked'), 'générateur public : 600 dpi coché');
+  assert(builderJs.includes('jpegToPdfBlob'), 'générateur public : PDF dans le navigateur');
+  assert(builderJs.includes('previewFit'), 'générateur public : aperçu dimensionné à la zone');
+  assert(builderJs.includes('view.style.width'), 'générateur public : canvas d’aperçu pas 300×150 par défaut');
+  assert(builder.includes('PDF 600 dpi'), 'générateur public : bouton PDF 600 dpi');
+  assert(builderJs.includes('TITLE = \'LE-RADAR.ca\''), 'générateur public : mot-symbole');
+  assert(builderJs.includes('printUrl'), 'générateur public : photos Wikimedia CORS pour l’aperçu');
+  assert(builderJs.includes('function drawRadar(ctx, w, h, cx, cy)'), 'fond radar centré sur le gros logo');
+  assert(builderJs.includes('816 * fit'), 'identité d’affiche figée : le pied ne rapetisse pas le logo');
+  assert(builderJs.includes('photo-angle'), 'générateur public : angle de photo');
+  assert(builder.includes('solid--radar') || builderJs.includes('solid--radar'), 'générateur public : pastille fond radar');
+  assert(builderJs.includes('syncLangChoice'), 'générateur public : bilingue réservé aux campus anglophones');
+  assert(builderJs.includes('non officiel et sans affiliation'), 'générateur public : « et » plutôt qu’un tiret');
+  assert(builderJs.includes('TRANSLATE_LANGS'), 'générateur public : langues du module de traduction');
+  assert(existsSync(join(root, 'assets/kit/translate-mark.svg')), 'icône de traduction pour le pied d’affiche');
+  assert(
+    !/stroke-width/.test(readFileSync(join(root, 'assets/kit/translate-mark.svg'), 'utf8')),
+    'icône traduction : pas de stroke (plus en gras)',
+  );
+  assert(builderJs.includes('Bonne rentrée'), 'générateur public : message manuscrit rentrée');
+  assert(builderJs.includes('LR Script'), 'générateur public : fonte signature');
+  assert(existsSync(join(root, 'assets/kit/fonts/Caveat-Bold.ttf')), 'fonte Caveat pour signature manuscrite');
+  assert(builderJs.includes("slug: 'mcgill'") && builderJs.includes('bilingual: true'), 'générateur public : McGill bilingue');
+  assert(builderJs.includes("slug: 'laval'") && builderJs.includes("slug: 'laval', line: 'Université Laval', bilingual: false"), 'générateur public : Laval français seulement');
+  const postersCheck = spawnSync('python3', [join(root, 'scripts/generate-campus-posters.py'), '--check'], { encoding: 'utf8' });
+  assert.equal(postersCheck.status, 0, postersCheck.stderr || postersCheck.stdout || 'affiches campus : JPEG 11×17 manquants');
 }
 const traitPage = readFileSync(join(root, 'journaux/le-trait-dunion/index.html'), 'utf8');
 assert(traitPage.includes('>Derniers articles<'), 'journal sans fil frais : même H2 que les autres fiches');
