@@ -169,6 +169,7 @@ const state = {
   lang: 'standard',
   greeting: 'none',
   langs: false,
+  showUni: true,
   qr: true,
   photoId: null,
   photos: [],
@@ -440,7 +441,7 @@ function compose(opts) {
   const safe = Math.round(0.45 * DPI * (h / refH));
   const barH = Math.max(28, Math.round(42 * (w / refW)));
   const campus = campusOf(opts.campus);
-  const kind = campus.bilingual || opts.lang !== 'bilingue' ? opts.lang : 'standard'; // FR : jamais de bilingue
+  const kind = campus.bilingual && opts.lang === 'bilingue' ? 'bilingue' : 'standard';
   const photo = opts.photoImg || null;
 
   if (photo) {
@@ -502,7 +503,7 @@ function compose(opts) {
   const playTop = barH + 12 * fit;
   const playBot = contentBottom - 28 * fit;
   const play = Math.max(200, playBot - playTop);
-  const big = Math.round(play * (kind === 'minimal' ? 0.24 : 0.21));
+  const big = Math.round(play * 0.21);
   const logoY = playTop + play * 0.18;
   if (!photo) drawRadar(ctx, w, h, w / 2, logoY + big / 2);
 
@@ -585,23 +586,23 @@ function compose(opts) {
   const uniCore = Math.round(uniSize * 1.22);
   const gapBlock = Math.round(play * 0.022);
   const gapLang = Math.round(play * 0.012);
-  if (kind !== 'minimal') {
-    ctx.font = `400 ${sloganSize}px "LR Sans"`;
-    y += fillCentered(ctx, SLOGAN, y, INK) + (kind === 'bilingue' ? gapLang : gapBlock);
-    if (kind === 'bilingue') {
-      ctx.font = `400 ${enSize}px "LR Sans"`;
-      const enLines = wrapWords(ctx, SLOGAN_EN, maxW);
-      enLines.forEach((line, i) => {
-        const extra = i === enLines.length - 1 ? gapBlock : Math.round(enSize * 0.25);
-        y += fillCentered(ctx, line, y, SOFT) + extra;
-      });
-    }
+  ctx.font = `400 ${sloganSize}px "LR Sans"`;
+  y += fillCentered(ctx, SLOGAN, y, INK) + (kind === 'bilingue' ? gapLang : gapBlock);
+  if (kind === 'bilingue') {
+    ctx.font = `400 ${enSize}px "LR Sans"`;
+    const enLines = wrapWords(ctx, SLOGAN_EN, maxW);
+    enLines.forEach((line, i) => {
+      const extra = i === enLines.length - 1 ? gapBlock : Math.round(enSize * 0.25);
+      y += fillCentered(ctx, line, y, SOFT) + extra;
+    });
   }
-  if (kind === 'bilingue' && campus.core) {
-    y += fillUniLockup(ctx, campus.core, y, uniSize, uniCore) + gapBlock;
-  } else if (campus.line) {
-    ctx.font = `400 ${uniSize}px "LR Sans"`;
-    y += fillCentered(ctx, campus.line, y, INK) + gapBlock;
+  if (opts.showUni !== false) {
+    if (kind === 'bilingue' && campus.core) {
+      y += fillUniLockup(ctx, campus.core, y, uniSize, uniCore) + gapBlock;
+    } else if (campus.line) {
+      ctx.font = `400 ${uniSize}px "LR Sans"`;
+      y += fillCentered(ctx, campus.line, y, INK) + gapBlock;
+    }
   }
   const greet = GREETINGS[opts.greeting];
   if (greet) {
@@ -699,7 +700,7 @@ function recipeLine() {
   const bits = [
     FORMATS[state.format].label,
     campusOf(state.campus).label,
-    state.lang === 'bilingue' ? 'Bilingue' : (state.lang === 'minimal' ? 'Minimal' : 'Français'),
+    state.lang === 'bilingue' ? 'Bilingue' : 'Français',
   ];
   if (state.greeting !== 'none' && GREETINGS[state.greeting]) bits.push(GREETINGS[state.greeting]);
   if (state.qr) bits.push('QR');
@@ -716,6 +717,7 @@ function paintPreview(img, photo) {
     lang: state.lang,
     greeting: state.greeting,
     langs: state.langs,
+    showUni: state.showUni,
     qr: state.qr,
     photoImg: img || null,
     credit: photo?.credit,
@@ -780,6 +782,7 @@ async function downloadPrint() {
       lang: state.lang,
       greeting: state.greeting,
       langs: state.langs,
+      showUni: state.showUni,
       qr: state.qr,
       photoImg: img,
       credit: photo?.credit,
@@ -796,11 +799,12 @@ async function downloadPrint() {
       canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('JPEG'))), 'image/jpeg', 0.95);
     });
     const campus = campusOf(state.campus);
-    const lang = state.lang === 'bilingue' ? 'bilingue' : (state.lang === 'minimal' ? 'minimal' : 'fr');
+    const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
+    const uni = state.showUni ? '' : '-sans-etab';
     const qr = state.qr ? '-qr' : '';
     const greet = state.greeting !== 'none' ? `-${state.greeting}` : '';
     const langs = state.langs ? '-langues' : '';
-    const name = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${greet}${langs}${qr}.jpg`;
+    const name = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}.jpg`;
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = name;
@@ -816,7 +820,8 @@ async function downloadPrint() {
 }
 
 function syncLangChoice() {
-  const allowed = campusOf(state.campus).bilingual;
+  const campus = campusOf(state.campus);
+  const allowed = campus.bilingual;
   const bi = document.querySelector('label:has(input[name="lang"][value="bilingue"])');
   if (bi) bi.hidden = !allowed;
   if (!allowed && state.lang === 'bilingue') {
@@ -824,6 +829,8 @@ function syncLangChoice() {
     const fr = document.querySelector('input[name="lang"][value="standard"]');
     if (fr) fr.checked = true;
   }
+  const uniBox = document.getElementById('uni-toggle');
+  if (uniBox) uniBox.hidden = !campus.line;
 }
 
 function resetCrop(photo) {
@@ -862,6 +869,7 @@ function applyChoice(name, value) {
   if (name === 'lang') state.lang = value;
   if (name === 'qr') state.qr = value === 'oui';
   if (name === 'langs') state.langs = value === 'oui';
+  if (name === 'showUni') state.showUni = value === 'oui';
   if (name === 'photo') {
     state.photoId = value || null;
     resetCrop(currentPhoto());
