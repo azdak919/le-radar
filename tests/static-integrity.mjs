@@ -1690,11 +1690,12 @@ assert(
   'app.js : cascade météo/sports tous écrans + marquee 1 cycle',
 );
 // Marquee site : alternate both + delay — jamais infinite. 2 = 1 aller-retour ;
-// --*-trips peut passer à 4 si le premier tour est trop court pour lire.
+// CTA : 4 aller-retour (noms longs), delay 0.7s ; strip 1.6s pour le dial.
 assert(
   !/sports-chip-scroll[^;]*infinite/.test(cssFlat)
     && !/sports-chip-scroll-sub[^;]*infinite/.test(cssFlat)
-    && /sports-chip-scroll[^;]*alternate\s+both/.test(cssFlat)
+    && !/sports-cta-scroll[^;]*infinite/.test(cssFlat)
+    && /sports-cta-scroll[^;]*alternate\s+both/.test(cssFlat)
     && /--sports-scroll-delay:\s*1\.6s/.test(cssFlat)
     && /tunerMarquee[^;]*alternate\s+both/.test(cssFlat)
     && /MARQUEE_ROUND_TRIPS\s*=\s*2/.test(appJs)

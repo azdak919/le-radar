@@ -610,6 +610,13 @@ body {
   white-space: nowrap;
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 28%, transparent);
 }
+/* Prochain : pastille jaune (pas l’ambre radio). Encre sombre pour le contraste. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="next"],
+.masthead-sports-strip .sports-chip--cta[data-cta-state="next"] .sports-chip__cta-tag:not(.sports-chip__cta-tag--brand) {
+  background: #f5d000;
+  color: #1a1500;
+  box-shadow: inset 0 0 0 1px rgba(255, 236, 70, 0.45);
+}
 .masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag {
   background: #c8102e;
   color: #fff;
@@ -759,19 +766,30 @@ body {
 }
 /* Marquee : le texte de la couche visible seulement, jamais la couche sortante.
  * Titre → --sports-scroll ; sous-ligne → --sports-scroll-sub (décalages distincts). */
+.masthead-sports-strip .sports-chip--cta {
+  --sports-scroll-delay: 0.7s;
+  --sports-scroll-trips: 4;
+}
+@keyframes sports-cta-scroll {
+  0%, 10% { transform: translateX(0); }
+  90%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
+}
+@keyframes sports-cta-scroll-sub {
+  0%, 12% { transform: translateX(0); }
+  88%, 100% { transform: translateX(calc(var(--sports-scroll-sub, 0) * -1)); }
+}
 .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-chip-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both;
+  animation: sports-cta-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) var(--sports-scroll-trips, 4) alternate both;
   will-change: transform;
 }
 .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  /* Fallback 5.5s (pas 8.5s) : --sports-scroll-duration hérite déjà du strip. */
-  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both;
+  animation: sports-cta-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) var(--sports-scroll-trips, 4) alternate both;
   will-change: transform;
 }
 @keyframes sports-chip-scroll-sub {
@@ -784,7 +802,7 @@ body {
   transform: none;
 }
 /* Plus de flèche : la place va au texte.
- * Voyant : ambre Prochain ; rouge Aujourd’hui ; vert Hier / passé.
+ * Voyant : jaune Prochain ; rouge Aujourd’hui ; vert Hier / passé.
  * En cours : point blanc sur pastille rouge. Indépendant de la radio. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-chev {
   display: none !important;
@@ -797,6 +815,11 @@ body {
   border-radius: 50%;
   background: var(--status-upcoming-soft, #e8c07a);
   animation: sports-cta-dot-upcoming 1.8s ease-out infinite;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="next"]::before,
+.masthead-sports-strip .sports-chip--cta[data-cta-state="next"] .sports-chip__cta-tag::before {
+  background: #fff8c2;
+  box-shadow: 0 0 0 1px rgba(26, 21, 0, 0.22);
 }
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="today"]::before,
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-tag="Aujourd’hui"]::before {
