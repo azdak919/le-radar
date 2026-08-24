@@ -26,8 +26,6 @@ const {
   isWeakImageUrl,
   imageRejectPatternsFromHints,
   imageOptionsFromHints,
-} = require('./article-image-lib');
-const {
   resolveLeadReadyPhoto,
   meetsLeadDisplaySize,
   meetsFeatureDisplaySize,
@@ -36,6 +34,8 @@ const {
   fetchText,
   articleImageIsValidOnPage,
   sleep,
+  isBannerLikeRatio,
+  imageUrlsMatch,
 } = require('./article-image-lib');
 const { findStockPhoto, cleanCreatorName, stockStillFits } = require('./stock-photo-lib');
 const { pickCampusPhoto, hasCampusBank, diversifyCampusBankItems } = require('./campus-photo-bank');
@@ -379,6 +379,26 @@ async function main() {
 
       if (await photoIsLeadReady(item)) {
         if (doUpdate) {
+          // Bannière campagne lead-ready (ratio ~2.3:1) : une autre photo du
+          // corps peut mieux remplir le crop 3:2 de la une.
+          if (item.image && ok(item.image)) {
+            const dims = await probeRemoteImageSize(item.image);
+            if (dims && isBannerLikeRatio(dims.width, dims.height)) {
+              const resolved = await resolveLeadReadyPhoto(item, reject, opts);
+              if (
+                resolved?.url
+                && resolved.leadReady !== false
+                && !imageUrlsMatch(resolved.url, item.image)
+              ) {
+                item.image = resolved.url;
+                item.leadImageReady = true;
+                clearLegacyFallback(item);
+                clearStockPhoto(item);
+                pageScraped += 1;
+                photosRecovered += 1;
+              }
+            }
+          }
           // Ne retirer le stock QUE si la photo SOURCE seule est lead-ready.
           // Sinon (stock Assemblée + logo Exil) on effaçait le bon visuel.
           const sourceLead = item.image && ok(item.image) && await probeLeadReady(item.image);
