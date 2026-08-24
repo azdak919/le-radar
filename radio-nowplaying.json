@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-24T08:44:07.335Z",
+  "updatedAt": "2026-08-24T09:43:47.638Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T08:43:41.766Z"
+      "checkedAt": "2026-08-24T09:43:20.602Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le char de marge (reprise)",
-        "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/le-char-de-marge"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "05:00",
         "end": "06:30",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Le terrain sportif",
+        "source": "schedule",
+        "start": "06:30",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/le-terrain-sportif"
+      },
       "track": "",
-      "showTitle": "Le char de marge (reprise)",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T08:43:43.893Z"
+      "checkedAt": "2026-08-24T09:43:22.887Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T08:43:46.650Z"
+      "checkedAt": "2026-08-24T09:43:26.506Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T08:44:00.431Z"
+      "checkedAt": "2026-08-24T09:43:40.504Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T08:44:01.686Z"
+      "checkedAt": "2026-08-24T09:43:41.689Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "bitume"
       },
-      "track": "The New Pornographers - Votive",
+      "track": "Thundercat - Anakin Learns His Fate",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-24T08:44:06.985Z"
+      "checkedAt": "2026-08-24T09:43:47.287Z"
     }
   }
 }
