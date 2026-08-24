@@ -281,9 +281,10 @@ function compose(opts) {
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
 
-  const scale = w / 792;
-  const safe = Math.round(0.5 * DPI);
-  const barH = 42;
+  const refW = 3300;
+  const refH = 5100;
+  const safe = Math.round(0.45 * DPI * (h / refH));
+  const barH = Math.max(28, Math.round(42 * (w / refW)));
   const campus = campusOf(opts.campus);
   const kind = campus.bilingual || opts.lang !== 'bilingue' ? opts.lang : 'standard'; // FR : jamais de bilingue
   const photo = opts.photoImg || null;
@@ -305,28 +306,117 @@ function compose(opts) {
   ctx.fillStyle = PURPLE;
   ctx.fillRect(0, 0, w, barH);
 
-  const big = Math.round((kind === 'minimal' ? 220 : 200) * scale);
-  const logoY = Math.round(236 * scale);
+  const credit = photo && opts.credit
+    ? `Photo : ${opts.credit}${opts.license ? ` · ${opts.license}` : ''}`
+    : '';
+  const legal = [INDEP_1, INDEP_2];
+  if (kind === 'bilingue') legal.push(INDEP_EN);
+  const fit = Math.min(w / 3300, h / 5100);
+  const fName = 32 * fit;
+  const fBody = 28 * fit;
+  const fCredit = 24 * fit;
+  const measure = (text, size) => {
+    ctx.font = `400 ${size}px "LR Sans"`;
+    const m = ctx.measureText(text);
+    return (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || size;
+  };
+  const nameH = measure(NAME_FULL, fName);
+  const legalRows = legal.map((t, i) => {
+    const sz = (kind === 'bilingue' && i === legal.length - 1) ? fCredit : fBody;
+    return { t, sz, th: measure(t, sz) };
+  });
+  const legalH = legalRows.reduce((s, r) => s + r.th, 0) + 10 * (legalRows.length - 1);
+  const creditH = credit ? measure(credit, fCredit) : 0;
+  const fLang = 26 * fit;
+  const iconS = 26 * fit;
+  const langFont = `600 ${fLang}px "Noto Sans", "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", "Noto Sans Arabic", "Noto Sans Devanagari", "LR Sans Semi"`;
+  ctx.font = langFont;
+  const langMax = w - 2 * safe - 240;
+  const langLines = opts.langs ? wrapJoin(ctx, TRANSLATE_LANGS, langMax) : [];
+  const langLineH = langLines.length ? measure(langLines[0] || 'Français', fLang) : 0;
+  const langsH = opts.langs
+    ? iconS + 8 + langLines.length * (langLineH + 6)
+    : 0;
+  const footLogo = 72 * fit;
+  const markH = Math.max(footLogo, 40 * fit);
+  const qrIn = fmt.id === 'tabloid' ? 2.25 : 1.65;
+  const qrPx = Math.round(qrIn * DPI * fit);
+  const qrPad = Math.round(36 * fit);
+  const qrSide = qrPx;
+
+  let cy = h - safe;
+  if (credit) {
+    cy -= creditH;
+    ctx.font = `400 ${fCredit}px "LR Sans"`;
+    fillCentered(ctx, credit, cy, MUTED);
+    cy -= 40 * fit;
+  }
+  if (opts.langs && langsH) {
+    cy -= langsH;
+    const langTop = cy;
+    if (assets.translate) {
+      ctx.drawImage(assets.translate, (w - iconS) / 2, langTop, iconS, iconS);
+    }
+    let ly = langTop + iconS + 8;
+    ctx.font = langFont;
+    ctx.fillStyle = MUTED;
+    langLines.forEach((line) => {
+      fillCentered(ctx, line, ly, MUTED);
+      ly += langLineH + 6;
+    });
+    cy -= 20 * fit;
+  }
+  cy -= legalH;
+  let ty = cy;
+  legalRows.forEach((row) => {
+    ctx.font = `400 ${row.sz}px "LR Sans"`;
+    fillCentered(ctx, row.t, ty, MUTED);
+    ty += row.th + 10;
+  });
+  cy -= 16 * fit;
+  cy -= nameH;
+  ctx.font = `400 ${fName}px "LR Sans"`;
+  fillCentered(ctx, NAME_FULL, cy, SOFT);
+  cy -= 10 * fit;
+  cy -= markH;
+  const markSize = 40 * fit;
+  const markGap = 16 * fit;
+  const markW = trackedWidth(ctx, TITLE, markSize);
+  const rowW = footLogo + markGap + markW;
+  const mx = (w - rowW) / 2;
+  if (assets.logo) ctx.drawImage(assets.logo, mx, cy, footLogo, footLogo);
+  fillTracked(ctx, TITLE, cy + (footLogo - markSize) / 2, markSize, INK, mx + footLogo + markGap);
+  if (opts.qr && assets.qr) {
+    const card = qrSide;
+    cy -= 24 * fit + card;
+    ctx.fillStyle = '#fff';
+    ctx.fillRect((w - card) / 2, cy, card, card);
+    const inner = card - 2 * qrPad;
+    ctx.drawImage(assets.qr, (w - inner) / 2, cy + qrPad, inner, inner);
+  }
+
+  const playTop = barH + 12 * fit;
+  const playBot = cy - 28 * fit;
+  const play = Math.max(200, playBot - playTop);
+  const big = Math.round(play * (kind === 'minimal' ? 0.24 : 0.21));
+  const logoY = playTop + play * 0.18;
   if (assets.logo) ctx.drawImage(assets.logo, (w - big) / 2, logoY, big, big);
-
-  const titleSize = Math.round(56 * scale);
-  const titleY = Math.round(560 * scale);
+  const titleSize = Math.round(play * 0.058);
+  const titleY = playTop + play * 0.48;
   fillTracked(ctx, TITLE, titleY, titleSize, INK);
-
-  let y = titleY + titleSize + Math.round(28 * scale);
-  const maxW = w - 2 * safe - 120;
-  let sloganSize = Math.round(18 * scale);
+  let y = titleY + titleSize + Math.round(play * 0.028);
+  const maxW = w - 2 * safe - 80;
+  let sloganSize = Math.round(play * 0.019);
   ctx.font = `400 ${sloganSize}px "LR Sans"`;
-  while (textW(ctx, SLOGAN) > maxW && sloganSize > 30) {
-    sloganSize -= 2;
+  while (textW(ctx, SLOGAN) > maxW && sloganSize > 22) {
+    sloganSize -= 1;
     ctx.font = `400 ${sloganSize}px "LR Sans"`;
   }
-  const enSize = Math.max(28, Math.floor(sloganSize / 2));
-  const uniSize = Math.round(18 * scale);
-  const uniEnSize = Math.max(26, Math.round(9 * scale));
-  const gapBlock = Math.round(28 * scale);
-  const gapLang = Math.round(18 * scale);
-
+  const enSize = Math.max(16, Math.floor(sloganSize / 2));
+  const uniSize = Math.round(play * 0.018);
+  const uniEnSize = Math.max(14, Math.round(play * 0.01));
+  const gapBlock = Math.round(play * 0.022);
+  const gapLang = Math.round(play * 0.014);
   if (kind !== 'minimal') {
     ctx.font = `400 ${sloganSize}px "LR Sans"`;
     y += fillCentered(ctx, SLOGAN, y, INK) + (kind === 'bilingue' ? gapLang : gapBlock);
@@ -345,8 +435,8 @@ function compose(opts) {
   }
   const greet = GREETINGS[opts.greeting];
   if (greet) {
-    const gSize = Math.round(52 * scale);
-    y += Math.round(12 * scale);
+    const gSize = Math.round(play * 0.048);
+    y += Math.round(play * 0.012);
     ctx.save();
     ctx.translate(w / 2, y + gSize * 0.2);
     ctx.rotate((-8 * Math.PI) / 180);
@@ -356,94 +446,6 @@ function compose(opts) {
     ctx.textBaseline = 'top';
     ctx.fillText(greet, 0, 0);
     ctx.restore();
-  }
-
-  const credit = photo && opts.credit
-    ? `Photo : ${opts.credit}${opts.license ? ` · ${opts.license}` : ''}`
-    : '';
-  const legal = [INDEP_1, INDEP_2];
-  if (kind === 'bilingue') legal.push(INDEP_EN);
-  const fName = 32 * (w / 3300);
-  const fBody = 28 * (w / 3300);
-  const fCredit = 24 * (w / 3300);
-  const measure = (text, size) => {
-    ctx.font = `400 ${size}px "LR Sans"`;
-    const m = ctx.measureText(text);
-    return (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || size;
-  };
-  const nameH = measure(NAME_FULL, fName);
-  const legalRows = legal.map((t, i) => {
-    const sz = (kind === 'bilingue' && i === legal.length - 1) ? fCredit : fBody;
-    return { t, sz, th: measure(t, sz) };
-  });
-  const legalH = legalRows.reduce((s, r) => s + r.th, 0) + 10 * (legalRows.length - 1);
-  const creditH = credit ? measure(credit, fCredit) : 0;
-  const fLang = 28 * (w / 3300);
-  const iconS = 28 * (w / 3300);
-  const langFont = `600 ${fLang}px "Noto Sans", "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", "Noto Sans Arabic", "Noto Sans Devanagari", "LR Sans Semi"`;
-  ctx.font = langFont;
-  const langMax = w - 2 * safe - 240;
-  const langLines = opts.langs ? wrapJoin(ctx, TRANSLATE_LANGS, langMax) : [];
-  const langLineH = langLines.length ? measure(langLines[0] || 'Français', fLang) : 0;
-  const langsH = opts.langs
-    ? iconS + 8 + langLines.length * (langLineH + 6)
-    : 0;
-  const footLogo = 72 * (w / 3300);
-  const markH = Math.max(footLogo, 40 * (w / 3300));
-  const qrIn = fmt.id === 'tabloid' ? 2.25 : 1.75;
-  const qrPx = Math.round(qrIn * DPI * (w / 3300));
-  const qrPad = Math.round(36 * (w / 3300));
-  const qrSide = qrPx;
-
-  let cy = h - safe;
-  if (credit) {
-    cy -= creditH;
-    ctx.font = `400 ${fCredit}px "LR Sans"`;
-    fillCentered(ctx, credit, cy, MUTED);
-    cy -= 56 * (w / 3300);
-  }
-  if (opts.langs && langsH) {
-    cy -= langsH;
-    const langTop = cy;
-    if (assets.translate) {
-      ctx.drawImage(assets.translate, (w - iconS) / 2, langTop, iconS, iconS);
-    }
-    let ly = langTop + iconS + 8;
-    ctx.font = langFont;
-    ctx.fillStyle = MUTED;
-    langLines.forEach((line) => {
-      fillCentered(ctx, line, ly, MUTED);
-      ly += langLineH + 6;
-    });
-    cy -= 28 * (w / 3300);
-  }
-  cy -= legalH;
-  let ty = cy;
-  legalRows.forEach((row) => {
-    ctx.font = `400 ${row.sz}px "LR Sans"`;
-    fillCentered(ctx, row.t, ty, MUTED);
-    ty += row.th + 10;
-  });
-  cy -= 22 * (w / 3300);
-  cy -= nameH;
-  ctx.font = `400 ${fName}px "LR Sans"`;
-  fillCentered(ctx, NAME_FULL, cy, SOFT);
-  cy -= 12 * (w / 3300);
-  cy -= markH;
-  const markSize = 40 * (w / 3300);
-  const markGap = 16 * (w / 3300);
-  const markW = trackedWidth(ctx, TITLE, markSize);
-  const rowW = footLogo + markGap + markW;
-  const mx = (w - rowW) / 2;
-  if (assets.logo) ctx.drawImage(assets.logo, mx, cy, footLogo, footLogo);
-  fillTracked(ctx, TITLE, cy + (footLogo - markSize) / 2, markSize, INK, mx + footLogo + markGap);
-  if (opts.qr && assets.qr) {
-    const card = qrSide;
-    cy -= 32 * (w / 3300) + card;
-    ctx.fillStyle = '#fff';
-    ctx.fillRect((w - card) / 2, cy, card, card);
-    const inner = card - 2 * qrPad;
-    ctx.drawImage(assets.qr, (w - inner) / 2, cy + qrPad, inner, inner);
   }
 
   return canvas;
@@ -541,7 +543,7 @@ async function preview() {
   const frame = document.getElementById('preview');
   const gen = ++previewGen;
   const photo = currentPhoto();
-  recipe.textContent = recipeLine();
+  if (recipe) recipe.textContent = recipeLine();
   frame.classList.add('is-busy');
   try {
     paintPreview(null, photo);
