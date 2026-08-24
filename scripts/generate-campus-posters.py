@@ -59,9 +59,9 @@ TITLE = "LE-RADAR.ca"
 SLOGAN = "Journaux, radios et sports étudiants du Québec, réunis au même endroit"
 NAME_FULL = "Le Réseau Académique de Découverte et d’Agrégation de Ressources"
 SLOGAN_EN = "Student media on your radar"
-INDEP_1 = "LE-RADAR.ca est un projet indépendant et non officiel."
-INDEP_2 = "Il n’est affilié à aucun des médias ni des établissements recensés."
-META = "le-radar.ca  ·  Conçu avec ♡ par Azdak · 2026  ·  GPL-2.0"
+INDEP_1 = "Projet indépendant, non officiel — sans affiliation aux médias ni aux établissements."
+INDEP_2 = "Les contenus appartiennent à leurs publications d’origine."
+INDEP_EN = "Independent, unofficial, not affiliated. Content belongs to the original publications."
 
 CAMPUSES = [
     {
@@ -388,8 +388,7 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
     f_media = font(SANS, int(round(16 * scale)))
     f_name = font(SANS, 32)
     f_mark = font(SERIF, 40)
-    f_body = font(SANS, 36)
-    f_meta = font(SANS_SEMI, 32)
+    f_body = font(SANS, 34)
     f_credit = font(SANS, 26)
 
     logo_y = int(round(236 * scale))
@@ -450,18 +449,19 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
         cy -= th
         draw.text(((W - tw) // 2, cy), credit, font=f_credit, fill=MUTED)
         cy -= 18
-    tw, th = text_size(draw, META, f_meta)
-    cy -= th
-    draw.text(((W - tw) // 2, cy), META, font=f_meta, fill=MUTED)
-    cy -= 14
+    if kind == "bilingue":
+        tw, th = text_size(draw, INDEP_EN, f_credit)
+        cy -= th
+        draw.text(((W - tw) // 2, cy), INDEP_EN, font=f_credit, fill=MUTED)
+        cy -= 8
     tw, th = text_size(draw, INDEP_2, f_body)
     cy -= th
     draw.text(((W - tw) // 2, cy), INDEP_2, font=f_body, fill=MUTED)
-    cy -= 6
+    cy -= 8
     tw, th = text_size(draw, INDEP_1, f_body)
     cy -= th
     draw.text(((W - tw) // 2, cy), INDEP_1, font=f_body, fill=MUTED)
-    cy -= 10
+    cy -= 12
     tw, th = text_size(draw, NAME_FULL, f_name)
     cy -= th
     draw.text(((W - tw) // 2, cy), NAME_FULL, font=f_name, fill=MUTED)
