@@ -4,9 +4,8 @@
  * Horaire du bot d'actualités.
  *
  * Fréquence calée sur les heures de publication des articles du fil
- * (America/Toronto) : presque rien 0 h–6 h ; masse 7 h–21 h, pics 8 h et 16 h.
- * Huit passages **toutes les 2 h de 7 h à 21 h** Québec — pas 5 h 30 (créneau
- * mort) ni un 16 h pile (on raterait le pic 16 h–17 h).
+ * (America/Toronto) : presque rien 0 h–5 h ; masse 7 h–21 h, pics 8 h et 16 h.
+ * Premier scan **6 h**, midi **12 h**, plus toutes les 2 h de 7 h à 21 h.
  *
  * GitHub retarde souvent 20–40 min et le fetch prend ~10 min : on déclenche
  * CRON_LEAD_MINUTES *avant* l'heure affichée.
@@ -17,9 +16,11 @@
 // Heure affichée, en horloge UTC d'été.
 const TARGET_PASSES_UTC = [
   [1, 0],   // 21:00 QC
+  [10, 0],  // 06:00 QC
   [11, 0],  // 07:00 QC
   [13, 0],  // 09:00 QC
   [15, 0],  // 11:00 QC
+  [16, 0],  // 12:00 QC
   [17, 0],  // 13:00 QC
   [19, 0],  // 15:00 QC
   [21, 0],  // 17:00 QC
