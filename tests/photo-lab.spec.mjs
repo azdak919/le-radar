@@ -69,6 +69,11 @@ test('générateur d’affiches public', async ({ page }) => {
   await page.locator('label:has(input[name="campus"][value="laval"])').click();
   await expect(bilingue).toBeHidden();
   await expect(page.locator('#greeting')).toContainText('Bonne rentrée');
+  await expect(page.locator('.solid--radar')).toBeVisible();
+  await page.locator('label:has(input[name="campus"][value="concordia"])').click();
+  await page.locator('#photo-grid label').nth(1).click();
+  await expect(page.locator('#status')).toContainText('aperçu', { timeout: 20000 });
+  await expect(page.locator('#status')).not.toContainText('Aperçu : image');
 });
 
 test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ page }) => {

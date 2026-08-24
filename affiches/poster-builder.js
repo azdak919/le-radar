@@ -62,6 +62,8 @@ const state = {
 };
 
 const assets = { logo: null, qr: null };
+const imageCache = new Map();
+let previewGen = 0;
 
 function px(fmt) {
   return { w: Math.round(fmt.wIn * DPI), h: Math.round(fmt.hIn * DPI) };
@@ -87,18 +89,29 @@ function fileNameFromUrl(url) {
 
 function thumbUrl(photo, width) {
   const name = fileNameFromUrl(photo.url);
-  if (!name) return photo.url;
+  if (!name) return photo.url.split('?')[0];
   return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(name)}?width=${width}`;
 }
 
+function printUrl(photo) {
+  return (photo.url || '').split('?')[0];
+}
+
 function loadImage(src, cors = true) {
-  return new Promise((resolve, reject) => {
+  const key = `${cors ? 'c' : 'n'}:${src}`;
+  if (imageCache.has(key)) return imageCache.get(key);
+  const job = new Promise((resolve, reject) => {
     const img = new Image();
     if (cors) img.crossOrigin = 'anonymous';
     img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error(`image: ${src}`));
+    img.onerror = () => {
+      imageCache.delete(key);
+      reject(new Error(`image: ${src}`));
+    };
     img.src = src;
   });
+  imageCache.set(key, job);
+  return job;
 }
 
 async function loadFonts() {
@@ -363,20 +376,14 @@ function renderChoices() {
   const grid = document.getElementById('photo-grid');
   const selectedStillValid = state.photoId && photos.some((p) => p.id === state.photoId);
   if (!selectedStillValid) state.photoId = null;
-  const items = [{ id: null, label: 'Fond uni' }, ...photos];
+  const items = [{ id: null, label: 'Fond radar' }, ...photos];
   grid.innerHTML = items.map((p) => {
     const on = (p.id || null) === state.photoId;
     if (!p.id) {
-      return `<label><input type="radio" name="photo" value="" ${on ? 'checked' : ''}><span class="solid">Fond #0E0F12</span></label>`;
+      return `<label class="thumb-radar"><input type="radio" name="photo" value="" ${on ? 'checked' : ''}><span class="solid solid--radar" title="Fond radar"><img src="../assets/icon.svg" width="40" height="40" alt=""><span>Fond radar</span></span></label>`;
     }
     return `<label title="${escapeAttr(p.title || '')}"><input type="radio" name="photo" value="${p.id}" ${on ? 'checked' : ''}><img src="${thumbUrl(p, 280)}" width="92" height="142" alt="" loading="lazy"></label>`;
   }).join('');
-  grid.querySelectorAll('input').forEach((el) => {
-    el.addEventListener('change', () => {
-      state.photoId = el.value || null;
-      preview();
-    });
-  });
   const n = photos.length;
   document.getElementById('photo-meta').textContent = state.campus === 'generique'
     ? `${n} photos de la banque campus`
@@ -396,10 +403,12 @@ function specLine() {
 async function preview() {
   const status = document.getElementById('status');
   const out = document.getElementById('preview');
+  const gen = ++previewGen;
   try {
     const photo = currentPhoto();
     let img = null;
-    if (photo) img = await loadImage(thumbUrl(photo, 1600));
+    if (photo) img = await loadImage(printUrl(photo), true);
+    if (gen !== previewGen) return;
     const canvas = compose({
       format: state.format,
       campus: state.campus,
@@ -437,7 +446,7 @@ async function downloadPrint() {
     const { w, h } = px(fmt);
     const photo = currentPhoto();
     let img = null;
-    if (photo) img = await loadImage(photo.url);
+    if (photo) img = await loadImage(printUrl(photo), true);
     const canvas = compose({
       format: state.format,
       campus: state.campus,
@@ -507,6 +516,11 @@ function bind() {
     preview();
   });
   document.getElementById('dl').addEventListener('click', downloadPrint);
+  document.getElementById('photo-grid').addEventListener('change', (ev) => {
+    if (ev.target.name !== 'photo') return;
+    state.photoId = ev.target.value || null;
+    preview();
+  });
 }
 
 async function main() {
