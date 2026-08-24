@@ -937,6 +937,8 @@ function bind() {
     renderChoices();
   });
   document.getElementById('dl').addEventListener('click', downloadPrint);
+  const dlBottom = document.getElementById('dl-bottom');
+  if (dlBottom) dlBottom.addEventListener('click', downloadPrint);
 }
 
 async function main() {

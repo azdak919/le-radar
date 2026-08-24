@@ -219,6 +219,9 @@ select.greeting:focus {
   gap: 8px;
   margin: 0 0 22px;
 }
+.dash-actions--end {
+  margin: 8px 0 16px;
+}
 .btn {
   appearance: none;
   cursor: pointer;
