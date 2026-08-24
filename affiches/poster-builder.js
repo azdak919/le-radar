@@ -89,6 +89,61 @@ const CAMPUSES = [
     places: ['bishop'],
     hints: ['bishop'],
   },
+  {
+    slug: 'uqtr', line: 'Université du Québec à Trois-Rivières', bilingual: false, label: 'UQTR',
+    places: ['uqtr', 'trois-rivières', 'trois-rivieres'],
+    hints: ['uqtr', 'trois-rivières', 'trois rivieres'],
+  },
+  {
+    slug: 'uqac', line: 'Université du Québec à Chicoutimi', bilingual: false, label: 'UQAC',
+    places: ['uqac', 'chicoutimi'],
+    hints: ['uqac', 'chicoutimi'],
+  },
+  {
+    slug: 'uqar', line: 'Université du Québec à Rimouski', bilingual: false, label: 'UQAR',
+    places: ['uqar', 'rimouski'],
+    hints: ['uqar', 'rimouski', 'ursulines'],
+  },
+  {
+    slug: 'uqo', line: 'Université du Québec en Outaouais', bilingual: false, label: 'UQO',
+    places: ['uqo', 'outaouais'],
+    hints: ['uqo', 'outaouais', 'lucien-brault'],
+  },
+  {
+    slug: 'uqat', line: 'Université du Québec en Abitibi-Témiscamingue', bilingual: false, label: 'UQAT',
+    places: ['uqat', 'abitibi', 'rouyn'],
+    hints: ['uqat', 'abitibi', 'rouyn', 'premiers peuples'],
+  },
+  {
+    slug: 'teluq', line: 'TÉLUQ', bilingual: false, label: 'TÉLUQ',
+    places: ['téluq', 'teluq'],
+    hints: ['téluq', 'teluq'],
+  },
+  {
+    slug: 'ets', line: 'École de technologie supérieure', bilingual: false, label: 'ÉTS',
+    places: ['éts', 'ets', 'technologie supérieure'],
+    hints: ['technologie superieure', 'technologie supérieure', 'école de technologie'],
+  },
+  {
+    slug: 'enap', line: 'ENAP', bilingual: false, label: 'ENAP',
+    places: ['enap'],
+    hints: ['enap'],
+  },
+  {
+    slug: 'inrs', line: 'INRS', bilingual: false, label: 'INRS',
+    places: ['inrs'],
+    hints: ['inrs'],
+  },
+  {
+    slug: 'poly', line: 'Polytechnique Montréal', bilingual: false, label: 'Polytechnique Montréal',
+    places: ['polytechnique'],
+    hints: ['polytechnique'],
+  },
+  {
+    slug: 'hec', line: 'HEC Montréal', bilingual: false, label: 'HEC Montréal',
+    places: ['hec'],
+    hints: ['hec montréal', 'hec montreal', 'decelles'],
+  },
 ];
 
 const state = {
@@ -500,11 +555,13 @@ function compose(opts) {
 
 function filteredPhotos() {
   const campus = campusOf(state.campus);
-  return state.photos.filter((p) => minSide(p) >= 1400 && photoMatches(p, campus));
+  return state.photos.filter((p) => printWorthy(p) && photoMatches(p, campus));
 }
 
-function minSide(p) {
-  return Math.min(p.width || 0, p.height || 0);
+function printWorthy(p) {
+  const w = p.width || 0;
+  const h = p.height || 0;
+  return Math.max(w, h) >= 1400 && Math.min(w, h) >= 800;
 }
 
 function currentPhoto() {
