@@ -545,7 +545,7 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('DPI = 300'), 'générateur public : 300 dpi');
   assert(builderJs.includes('TITLE = \'LE-RADAR.ca\''), 'générateur public : mot-symbole');
   assert(builderJs.includes('printUrl'), 'générateur public : photos Wikimedia CORS pour l’aperçu');
-  assert(builderJs.includes('const qrSide = qrPx'), 'générateur public : QR défini (plus de qrSide manquant)');
+  assert(builderJs.includes('function drawRadar(ctx, w, h, cx, cy)'), 'fond radar centré sur le gros logo');
   assert(builderJs.includes('photo-angle'), 'générateur public : angle de photo');
   assert(builder.includes('solid--radar') || builderJs.includes('solid--radar'), 'générateur public : pastille fond radar');
   assert(builderJs.includes('syncLangChoice'), 'générateur public : bilingue réservé aux campus anglophones');
