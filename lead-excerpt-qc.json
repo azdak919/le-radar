@@ -1,21 +1,30 @@
 {
-  "updated": "2026-08-24T13:14:35.850Z",
+  "updated": "2026-08-24T14:45:30.940Z",
   "total": 185,
   "pool": 58,
   "incomplete": 10,
-  "withLeadExcerpt": 83,
+  "withLeadExcerpt": 84,
   "candidates": 10,
-  "enriched": 1,
-  "failed": 1,
+  "enriched": 2,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
       "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
+      "score": 96,
+      "chars": 295,
+      "sample": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez r",
+      "changed": true
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
+      "ok": true,
+      "score": 100,
+      "chars": 396,
+      "sample": "« L’Université McGill est à la recherche de patrouilleurs dynamiques et engagés pour assurer la sécu",
       "changed": true
     },
     {
@@ -70,15 +79,6 @@
       "score": 66,
       "chars": 400,
       "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
-      "changed": false
-    },
-    {
-      "title": "Foire aux questions",
-      "link": "https://lecollectif.ca/campus/foire-aux-questions/",
-      "ok": true,
-      "score": 96,
-      "chars": 169,
-      "sample": "Attention cependant aux exceptions ! Consulte le site Web de ta faculté ou de ton centre universitai",
       "changed": false
     }
   ]
