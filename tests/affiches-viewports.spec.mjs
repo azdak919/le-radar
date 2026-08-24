@@ -48,6 +48,7 @@ test.describe('affiches — largeurs labo', () => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/affiches/', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('#local-lab-format-bar')).toBeVisible();
+    await expect(page.locator('#local-lab-format-bar a[href="/dev/"]')).toHaveText('Tableau');
     await expect(page.locator('#local-lab-format-bar button[data-format-id="phone"]')).toHaveText('390');
     await expect(page.locator('#local-lab-format-bar button[data-format-id="wide1920"]')).toHaveText('1920');
   });

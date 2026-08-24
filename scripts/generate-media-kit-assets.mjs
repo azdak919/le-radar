@@ -103,16 +103,62 @@ const rasters = [
 const iconJpg = join(root, 'assets/icon-512.jpg');
 const iconPng = join(root, 'assets/icon-512.png');
 
-function rasterize(src, dest) {
-  const r = spawnSync('magick', ['-density', '144', src, '-quality', '92', dest], { encoding: 'utf8' });
+const SERIF = join(root, 'scripts/og-fonts/SourceSerif4Display-Bold.ttf');
+const SANS = join(root, 'scripts/og-fonts/Inter-Regular.ttf');
+const ICON_SVG = join(root, 'assets/icon.svg');
+
+function magick(args) {
+  const r = spawnSync('magick', args, { encoding: 'utf8' });
   if (r.status !== 0) {
-    throw new Error(`magick ${src}: ${r.stderr || r.stdout || 'échec'}`);
+    throw new Error(`magick: ${r.stderr || r.stdout || 'échec'}`);
   }
 }
 
+function rasterizePng(src, dest) {
+  magick(['-density', '144', src, '-quality', '92', dest]);
+}
+
+function rasterWordmark(dest, { bg, fill, w, h, icon, ix, iy, tx, ty, point }) {
+  magick([
+    '-size', `${w}x${h}`, `xc:${bg}`,
+    '(', '-background', 'none', ICON_SVG, '-resize', `${icon}x${icon}`, ')',
+    '-geometry', `+${ix}+${iy}`, '-composite',
+    '-font', SERIF, '-fill', fill, '-pointsize', String(point), '-kerning', '-1.4',
+    '-annotate', `+${tx}+${ty}`, 'LE-RADAR.ca',
+    '-quality', '92', dest,
+  ]);
+}
+
 if (!check) {
-  for (const { svg, jpg } of rasters) rasterize(svg, jpg);
-  rasterize(iconPng, iconJpg);
+  rasterWordmark(join(kitDir, 'wordmark-on-dark.jpg'), {
+    bg: '#0E0F12', fill: '#F1F2F4', w: 960, h: 240, icon: 168, ix: 36, iy: 36, tx: 232, ty: 148, point: 72,
+  });
+  rasterWordmark(join(kitDir, 'wordmark-on-light.jpg'), {
+    bg: '#FFFFFF', fill: '#16181C', w: 960, h: 240, icon: 168, ix: 36, iy: 36, tx: 232, ty: 148, point: 72,
+  });
+  magick([
+    '-size', '1500x500', 'xc:#0E0F12',
+    '-fill', '#6C2163', '-draw', 'rectangle 0,0 12,500',
+    '(', '-background', 'none', ICON_SVG, '-resize', '200x200', ')',
+    '-geometry', '+72+150', '-composite',
+    '-font', SERIF, '-fill', '#F1F2F4', '-pointsize', '72', '-kerning', '-1.4',
+    '-annotate', '+308+248', 'LE-RADAR.ca',
+    '-font', SANS, '-fill', '#C2C6CD', '-pointsize', '26', '-kerning', '0',
+    '-annotate', '+308+302', 'Journaux, radios et sports étudiants du Québec, réunis au même endroit',
+    '-quality', '92', join(kitDir, 'banner-web.jpg'),
+  ]);
+  magick([
+    '-size', '1080x1080', 'xc:#0E0F12',
+    '(', '-background', 'none', ICON_SVG, '-resize', '400x400', ')',
+    '-geometry', '+340+220', '-composite',
+    '-font', SERIF, '-fill', '#F1F2F4', '-pointsize', '64', '-kerning', '-1.4',
+    '-gravity', 'North', '-annotate', '+0+700', 'LE-RADAR.ca',
+    '-font', SANS, '-fill', '#C2C6CD', '-pointsize', '24', '-kerning', '0',
+    '-annotate', '+0+780', 'Journaux · radios · sports étudiants',
+    '-quality', '92', join(kitDir, 'banner-square.jpg'),
+  ]);
+  rasterizePng(join(kitDir, 'affiche-11x17.svg'), join(kitDir, 'affiche-11x17.jpg'));
+  rasterizePng(iconPng, iconJpg);
 } else {
   for (const { jpg } of rasters) {
     if (!existsSync(jpg)) {
