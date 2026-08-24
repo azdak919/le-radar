@@ -34,7 +34,11 @@
   <div class="dash">
     <form class="dash-controls" id="form" onsubmit="return false;">
       <h1>Imprimer une affiche</h1>
-      <p class="dash-lead">Vos choix à gauche. L’affiche reste à droite. Le fichier est un JPEG 300 dpi aux dimensions exactes de la feuille.</p>
+      <p class="dash-lead">Vos choix à gauche. L’affiche reste à droite. Cadrage à côté de l’aperçu.</p>
+      <div class="dash-actions">
+        <button class="btn" type="button" id="dl">Télécharger JPEG 300 dpi</button>
+        <p class="status" id="status">Chargement…</p>
+      </div>
 
       <fieldset>
         <legend>Format</legend>
@@ -125,27 +129,26 @@
         </div>
       </fieldset>
 
-      <div class="dash-actions">
-        <button class="btn" type="button" id="dl">Télécharger JPEG 300 dpi</button>
-        <p class="status" id="status">Chargement…</p>
-      </div>
       <footer class="dash-foot">
         <p>LE-RADAR.ca est un projet indépendant, non officiel et sans affiliation aux médias ni aux établissements. Les contenus appartiennent à leurs publications d’origine. Photos Wikimedia Commons, crédits sur l’affiche.</p>
       </footer>
     </form>
 
     <section class="dash-preview" aria-label="Aperçu">
-      <div class="preview-frame" id="preview"></div>
-      <div class="crop-tools" id="crop-tools" hidden>
-        <p class="crop-lead">Glissez l’affiche pour cadrer. Le JPEG reprend le même cadrage.</p>
+      <div class="preview-stage">
+        <div class="preview-frame" id="preview"></div>
+      </div>
+      <aside class="crop-tools" id="crop-tools" hidden>
+        <p class="crop-lead">Cadrage</p>
+        <p class="crop-hint">Glissez l’affiche, ou les curseurs.</p>
         <label>Horizontal <input type="range" id="focal-x" min="0" max="100" value="50"></label>
         <label>Vertical <input type="range" id="focal-y" min="0" max="100" value="42"></label>
         <label>Angle <input type="range" id="photo-angle" min="-18" max="18" value="0"></label>
         <label>Zoom <input type="range" id="photo-zoom" min="70" max="100" value="90"></label>
-        <button type="button" class="btn-quiet" id="crop-reset">Réinitialiser le cadrage</button>
-      </div>
+        <button type="button" class="btn-quiet" id="crop-reset">Réinitialiser</button>
+      </aside>
     </section>
   </div>
-  <script src="./poster-builder.js?v=voir-plus"></script>
+  <script src="./poster-builder.js?v=layout-side"></script>
 </body>
 </html>
