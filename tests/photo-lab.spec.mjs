@@ -55,6 +55,8 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.locator('h1')).toContainText('Imprimer une affiche');
   await expect(page.locator('label:has(input[name="format"][value="letter"])')).toBeVisible();
   await expect(page.locator('label:has(input[name="format"][value="legal"])')).toBeVisible();
+  await expect(page.locator('label:has(input[name="campus"][value="uqtr"])')).toBeVisible();
+  await expect(page.locator('label:has(input[name="campus"][value="hec"])')).toBeVisible();
   await expect(page.getByRole('button', { name: /JPEG 300 dpi/ })).toBeVisible();
   await page.locator('#preview canvas').waitFor({ timeout: 20000 });
   await page.locator('label:has(input[name="format"][value="letter"])').click();
