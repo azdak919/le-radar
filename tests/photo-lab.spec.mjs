@@ -150,10 +150,30 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   });
   const [pr, pg] = await dotRgb('Prochain');
   const [hr, hg] = await dotRgb('Hier');
-  const [ar, ag] = await dotRgb('Aujourd’hui');
-  expect(ar - ag, 'Aujourd’hui : voyant rouge').toBeGreaterThan(80);
+  const [ar] = await dotRgb('Aujourd’hui');
+  expect(ar, 'Aujourd’hui : voyant pâle sur fill rouge').toBeGreaterThan(200);
   expect(pr - pg, 'Prochain : voyant ambre, pas rouge').toBeLessThan(80);
   expect(hg - hr, 'Hier : voyant vert').toBeGreaterThan(20);
+  const pillRgb = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => {
+    const m = (getComputedStyle(el).backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+    return m;
+  });
+  const pillWidth = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => el.getBoundingClientRect().width);
+  const [ppr, ppg, ppb] = await pillRgb('Prochain');
+  const [phr, phg] = await pillRgb('Hier');
+  const [par, pag] = await pillRgb('Aujourd’hui');
+  const [elr, elg] = await pillRgb('En cours');
+  expect(ppr, 'Prochain : pastille jaune').toBeGreaterThan(200);
+  expect(ppg, 'Prochain : pastille jaune').toBeGreaterThan(180);
+  expect(ppb, 'Prochain : pastille jaune (pas crème)').toBeLessThan(80);
+  expect(phg - phr, 'Hier : pastille verte').toBeGreaterThan(40);
+  expect(par - pag, 'Aujourd’hui : pastille rouge saturée').toBeGreaterThan(80);
+  expect(elr - elg, 'En cours : pastille rouge inchangée').toBeGreaterThan(80);
+  const [wProchain, wHier, wToday] = await Promise.all([
+    pillWidth('Prochain'), pillWidth('Hier'), pillWidth('Aujourd’hui'),
+  ]);
+  expect(Math.abs(wProchain - wHier), 'Prochain et Hier : même largeur de rail').toBeLessThan(2);
+  expect(Math.abs(wProchain - wToday), 'Prochain et Aujourd’hui : même largeur de rail').toBeLessThan(2);
   await expect(page.locator('.sports-chip__cta-eyebrow--head', { hasText: /^Prochain$/ })).toHaveCount(0);
   await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^V$/ }).first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^D$/ }).first()).toBeVisible();
