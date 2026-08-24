@@ -559,6 +559,8 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('wIn: 8.5') && builderJs.includes('hIn: 11'), 'générateur public : lettre 8,5×11');
   assert(builderJs.includes('DPI = 300'), 'générateur public : 300 dpi');
   assert(builderJs.includes('jpegToPdfBlob'), 'générateur public : PDF dans le navigateur');
+  assert(builderJs.includes('previewFit'), 'générateur public : aperçu dimensionné à la zone');
+  assert(builderJs.includes('view.style.width'), 'générateur public : canvas d’aperçu pas 300×150 par défaut');
   assert(builder.includes('PDF 300 dpi'), 'générateur public : bouton PDF');
   assert(builderJs.includes('TITLE = \'LE-RADAR.ca\''), 'générateur public : mot-symbole');
   assert(builderJs.includes('printUrl'), 'générateur public : photos Wikimedia CORS pour l’aperçu');
