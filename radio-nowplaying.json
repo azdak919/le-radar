@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-24T07:55:46.019Z",
+  "updatedAt": "2026-08-24T08:44:07.335Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T07:55:19.730Z"
+      "checkedAt": "2026-08-24T08:43:41.766Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T07:55:22.161Z"
+      "checkedAt": "2026-08-24T08:43:43.893Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Roots, Rock, Reggae",
-        "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "Adventures In Music",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Unmuted with Svetlana and Miss Trish",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Roots, Rock, Reggae",
+      "showTitle": "Adventures In Music",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T07:55:25.474Z"
+      "checkedAt": "2026-08-24T08:43:46.650Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T07:55:39.534Z"
+      "checkedAt": "2026-08-24T08:44:00.431Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T07:55:40.650Z"
+      "checkedAt": "2026-08-24T08:44:01.686Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "bitume"
       },
-      "track": "Carences - Bal des contraires",
+      "track": "The New Pornographers - Votive",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-24T07:55:45.668Z"
+      "checkedAt": "2026-08-24T08:44:06.985Z"
     }
   }
 }
