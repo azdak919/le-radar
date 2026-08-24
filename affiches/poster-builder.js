@@ -53,14 +53,42 @@ const GREETINGS = {
 };
 
 const CAMPUSES = [
-  { slug: 'generique', line: null, lineEn: null, bilingual: false, keys: null, label: 'Générique' },
-  { slug: 'laval', line: 'Université Laval', bilingual: false, keys: ['laval', 'pouliot', 'casault', 'vachon', 'koninck', 'palasis', 'bonenfant', 'grand axe', 'parent', 'biermans', 'moraud', 'lemieux', 'lacerte'], label: 'Université Laval' },
-  { slug: 'mcgill', line: 'Université McGill', lineEn: 'McGill University', bilingual: true, keys: ['mcgill'], label: 'Université McGill' },
-  { slug: 'udem', line: 'Université de Montréal', bilingual: false, keys: ['montréal', 'montreal', 'udem', 'gaudry'], label: 'Université de Montréal' },
-  { slug: 'uqam', line: 'Université du Québec à Montréal', bilingual: false, keys: ['uqam', 'jasmin'], label: 'Université du Québec à Montréal' },
-  { slug: 'concordia', line: 'Université Concordia', lineEn: 'Concordia University', bilingual: true, keys: ['concordia', 'loyola'], label: 'Université Concordia' },
-  { slug: 'sherbrooke', line: 'Université de Sherbrooke', bilingual: false, keys: ['sherbrooke', 'longueuil', 'cabana'], label: 'Université de Sherbrooke' },
-  { slug: 'bishops', line: 'Université Bishop’s', lineEn: 'Bishop’s University', bilingual: true, keys: ['bishop'], label: 'Université Bishop’s' },
+  { slug: 'generique', line: null, lineEn: null, bilingual: false, places: null, hints: null, label: 'Générique' },
+  {
+    slug: 'laval', line: 'Université Laval', bilingual: false, label: 'Université Laval',
+    places: ['université laval'],
+    hints: ['université laval', 'adrien-pouliot', 'alphonse-marie-parent', 'biermans', 'ernest-lemieux', 'pavillon dkn'],
+  },
+  {
+    slug: 'mcgill', line: 'Université McGill', lineEn: 'McGill University', bilingual: true, label: 'Université McGill',
+    places: ['mcgill'],
+    hints: ['mcgill'],
+  },
+  {
+    slug: 'udem', line: 'Université de Montréal', bilingual: false, label: 'Université de Montréal',
+    places: ['université de montréal'],
+    hints: ['université de montréal', 'roger-gaudry', 'école polytechnique de montréal'],
+  },
+  {
+    slug: 'uqam', line: 'Université du Québec à Montréal', bilingual: false, label: 'Université du Québec à Montréal',
+    places: ['uqam'],
+    hints: ['uqam', 'judith-jasmin'],
+  },
+  {
+    slug: 'concordia', line: 'Université Concordia', lineEn: 'Concordia University', bilingual: true, label: 'Université Concordia',
+    places: ['concordia'],
+    hints: ['concordia', 'hall building', 'loyola'],
+  },
+  {
+    slug: 'sherbrooke', line: 'Université de Sherbrooke', bilingual: false, label: 'Université de Sherbrooke',
+    places: ['sherbrooke', 'longueuil'],
+    hints: ['université de sherbrooke', 'udes', 'georges-cabana', 'univestrie'],
+  },
+  {
+    slug: 'bishops', line: 'Université Bishop’s', lineEn: 'Bishop’s University', bilingual: true, label: 'Université Bishop’s',
+    places: ['bishop'],
+    hints: ['bishop'],
+  },
 ];
 
 const state = {
@@ -92,10 +120,21 @@ function campusOf(slug) {
   return CAMPUSES.find((c) => c.slug === slug) || CAMPUSES[0];
 }
 
+function fold(s) {
+  return String(s || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '');
+}
+
 function photoMatches(photo, campus) {
-  if (!campus.keys) return true;
-  const hay = `${photo.place || ''} ${photo.title || ''} ${photo.description || ''}`.toLowerCase();
-  return campus.keys.some((k) => hay.includes(k));
+  if (!campus.places) return true;
+  const place = fold(photo.place);
+  if (place) {
+    return campus.places.some((p) => place === fold(p) || place.includes(fold(p)));
+  }
+  const hay = fold(`${photo.title || ''} ${photo.description || ''}`);
+  return (campus.hints || []).some((h) => hay.includes(fold(h)));
 }
 
 function fileNameFromUrl(url) {
