@@ -587,6 +587,7 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('uniLockupParts'), 'générateur public : même lockup pour tous les campus');
   assert(builderJs.includes("core: 'Laval'"), 'générateur public : Laval en gras comme McGill');
   assert(builderJs.includes("kind === 'bilingue' && campus.bilingual"), 'University seulement si bilingue anglophone');
+  assert(builderJs.includes('campus.line || campus.core'), 'francophone : nom entier en gras');
   assert(builderJs.includes('GREETINGS_EN'), 'générateur public : messages manuscrits bilingues OQLF');
   assert(posterScript.includes('non officiel et sans affiliation'), 'affiches campus : « et » plutôt qu’un tiret');
   assert(posterScript.includes('Les contenus appartiennent à leurs publications'), 'affiches campus : contenus d’origine');

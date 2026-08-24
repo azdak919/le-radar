@@ -371,36 +371,47 @@ function wrapWords(ctx, text, maxW) {
 
 function uniLockupParts(campus, kind) {
   if (!campus || !campus.core) return null;
-  const left = campus.prefix != null ? campus.prefix : 'Université ';
-  const right = (kind === 'bilingue' && campus.bilingual) ? ' University' : (campus.suffix || '');
-  return { left, core: campus.core, right };
+  if (kind === 'bilingue' && campus.bilingual) {
+    return {
+      left: campus.prefix != null ? campus.prefix : 'Université ',
+      core: campus.core,
+      right: ' University',
+    };
+  }
+  return { left: '', core: campus.line || campus.core, right: '' };
 }
 
 function fillUniLockup(ctx, parts, y, small, large) {
   const left = parts.left || '';
   const right = parts.right || '';
   const core = parts.core;
+  const maxW = ctx.canvas.width * 0.86;
+  ctx.fillStyle = INK;
+  if (!left && !right) {
+    ctx.font = `600 ${large}px "LR Sans Semi"`;
+    const lines = wrapWords(ctx, core, maxW);
+    let yy = y;
+    lines.forEach((line) => {
+      yy += fillCentered(ctx, line, yy, INK) + large * 0.12;
+    });
+    return Math.max(large, yy - y);
+  }
   ctx.textBaseline = 'alphabetic';
   ctx.font = `400 ${small}px "LR Sans"`;
-  const wLeft = left ? textW(ctx, left) : 0;
-  const wRight = right ? textW(ctx, right) : 0;
+  const wLeft = textW(ctx, left);
+  const wRight = textW(ctx, right);
   ctx.font = `600 ${large}px "LR Sans Semi"`;
   const wCore = textW(ctx, core);
   let x = (ctx.canvas.width - (wLeft + wCore + wRight)) / 2;
   const base = y + large * 0.82;
-  ctx.fillStyle = INK;
-  if (left) {
-    ctx.font = `400 ${small}px "LR Sans"`;
-    ctx.fillText(left, x, base);
-    x += wLeft;
-  }
+  ctx.font = `400 ${small}px "LR Sans"`;
+  ctx.fillText(left, x, base);
+  x += wLeft;
   ctx.font = `600 ${large}px "LR Sans Semi"`;
   ctx.fillText(core, x, base);
   x += wCore;
-  if (right) {
-    ctx.font = `400 ${small}px "LR Sans"`;
-    ctx.fillText(right, x, base);
-  }
+  ctx.font = `400 ${small}px "LR Sans"`;
+  ctx.fillText(right, x, base);
   ctx.textBaseline = 'top';
   return large;
 }
