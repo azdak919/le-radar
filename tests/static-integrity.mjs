@@ -532,6 +532,12 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   const mediaKitCheck = spawnSync(process.execPath, [join(root, 'scripts/generate-media-kit-assets.mjs'), '--check'], { encoding: 'utf8' });
   assert.equal(mediaKitCheck.status, 0, mediaKitCheck.stderr || 'kit-media : fichiers générés désynchronisés');
   assert(kit.includes('../affiches/'), 'kit-media : lien vers l’atelier d’affiches');
+  assert(
+    kit.indexOf('id="affiches"') < kit.indexOf('id="logos"'),
+    'kit-media : section Affiches en premier',
+  );
+  assert(kit.includes('Pour les babillards'), 'kit-media : phrase affiches claire');
+  assert(!kit.includes('à imprimer à 100'), 'kit-media : plus de consigne dpi/100 % dans le lead');
   assert(kit.includes('?campus=laval'), 'kit-media : raccourci campus Laval');
   assert(!kit.includes('affiche-laval.jpg'), 'kit-media : plus de JPEG campus figés');
   assert(!/Rentrée 2026/.test(kit), 'kit-media : plus de Rentrée 2026');
