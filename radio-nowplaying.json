@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-24T11:24:58.526Z",
+  "updatedAt": "2026-08-24T11:54:12.059Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T11:24:29.873Z"
+      "checkedAt": "2026-08-24T11:53:48.231Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T11:24:32.336Z"
+      "checkedAt": "2026-08-24T11:53:50.439Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T11:24:35.335Z"
+      "checkedAt": "2026-08-24T11:53:53.173Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Experiments",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/experiments"
       },
       "next": {
         "title": "Death of the Midrange",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/death-of-the-midrange"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "Experiments",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T11:24:49.219Z"
+      "checkedAt": "2026-08-24T11:54:08.016Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T11:24:50.274Z"
+      "checkedAt": "2026-08-24T11:54:09.087Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "bitume"
       },
-      "track": "Tele Novella - Ring of Stones",
+      "track": "BoBo OnO - Desole",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-24T11:24:58.174Z"
+      "checkedAt": "2026-08-24T11:54:11.708Z"
     }
   }
 }
