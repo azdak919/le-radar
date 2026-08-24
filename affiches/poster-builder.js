@@ -523,21 +523,16 @@ function compose(opts) {
   const qrPx = Math.round(qrIn * REF_DPI * fit);
   const qrPad = Math.round(36 * fit);
   const qrSide = qrPx;
-
-  let contentBottom = h - safe;
-  if (credit) contentBottom -= creditH + safe;
-  if (opts.langs && langsH) contentBottom -= langsH + 16 * fit;
-  contentBottom -= legalH + 14 * fit + nameH + 6 * fit + markH;
-  if (opts.qr && assets.qr) contentBottom -= 24 * fit + qrSide;
   const playTop = barH + 12 * fit;
   const big = Math.round(816 * fit);
   const logoY = playTop + Math.round(700 * fit);
+  const qrTop = playTop + Math.round(3935 * fit);
   if (!photo) drawRadar(ctx, w, h, w / 2, logoY + big / 2);
 
   ctx.fillStyle = PURPLE;
   ctx.fillRect(0, 0, w, barH);
 
-  const fadeTop = Math.max(barH, contentBottom - 70 * fit);
+  const fadeTop = Math.max(barH, qrTop - 70 * fit);
   const fade = ctx.createLinearGradient(0, fadeTop, 0, h);
   fade.addColorStop(0, 'rgba(14, 15, 18, 0)');
   fade.addColorStop(0.4, 'rgba(14, 15, 18, 0.22)');
@@ -545,26 +540,20 @@ function compose(opts) {
   ctx.fillStyle = fade;
   ctx.fillRect(0, fadeTop, w, h - fadeTop);
 
+  if (opts.qr && assets.qr) {
+    const card = qrSide;
+    ctx.fillStyle = '#fff';
+    ctx.fillRect((w - card) / 2, qrTop, card, card);
+    const inner = card - 2 * qrPad;
+    ctx.drawImage(assets.qr, (w - inner) / 2, qrTop + qrPad, inner, inner);
+  }
+
   let cy = h - safe;
   if (credit) {
     cy -= creditH;
     ctx.font = `400 ${fCredit}px "LR Sans"`;
     fillCentered(ctx, credit, cy, MUTED);
-    cy -= safe;
-  }
-  if (opts.langs && langsH) {
-    cy -= langsH;
-    const langTop = cy;
-    if (assets.translate) {
-      ctx.drawImage(assets.translate, (w - iconS) / 2, langTop, iconS, iconS);
-    }
-    let ly = langTop + iconS + 8;
-    ctx.font = langFont;
-    langLines.forEach((line) => {
-      fillCentered(ctx, line, ly, SOFT);
-      ly += langLineH + 5;
-    });
-    cy -= 16 * fit;
+    cy -= 18 * fit;
   }
   cy -= legalH;
   let ty = cy;
@@ -590,13 +579,20 @@ function compose(opts) {
   const mx = (w - rowW) / 2;
   if (assets.logo) ctx.drawImage(assets.logo, mx, cy + (markH - footLogo) / 2, footLogo, footLogo);
   fillTracked(ctx, TITLE, cy + (markH - fMark) / 2, fMark, INK, mx + footLogo + markGap);
-  if (opts.qr && assets.qr) {
-    const card = qrSide;
-    cy -= 24 * fit + card;
-    ctx.fillStyle = '#fff';
-    ctx.fillRect((w - card) / 2, cy, card, card);
-    const inner = card - 2 * qrPad;
-    ctx.drawImage(assets.qr, (w - inner) / 2, cy + qrPad, inner, inner);
+
+  if (opts.langs && langsH) {
+    const langTop = qrTop + qrSide + 24 * fit;
+    const maxLangBottom = cy - 16 * fit;
+    if (assets.translate && langTop + iconS <= maxLangBottom) {
+      ctx.drawImage(assets.translate, (w - iconS) / 2, langTop, iconS, iconS);
+    }
+    let ly = langTop + iconS + 8;
+    ctx.font = langFont;
+    langLines.forEach((line) => {
+      if (ly + langLineH > maxLangBottom) return;
+      fillCentered(ctx, line, ly, SOFT);
+      ly += langLineH + 5;
+    });
   }
 
   if (assets.logo) ctx.drawImage(assets.logo, (w - big) / 2, logoY, big, big);
