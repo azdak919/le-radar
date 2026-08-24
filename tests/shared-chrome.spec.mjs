@@ -85,3 +85,18 @@ for (const path of FOOTER_AIR_ROUTES) {
     expect(air.gap, `${path} : air sous le filet`).toBeGreaterThanOrEqual(24);
   });
 }
+
+const WORDMARK_FONT_ROUTES = ['/', '/affiches/', '/kit-media/', '/en/media-kit/', '/sports/'];
+
+for (const path of WORDMARK_FONT_ROUTES) {
+  test(`footer : mot-symbole Source Serif — ${path}`, async ({ page }) => {
+    await page.goto(path, { waitUntil: 'domcontentloaded' });
+    const mark = page.locator('.site-foot__wordmark').first();
+    await expect(mark).toBeVisible();
+    const family = await mark.evaluate((el) => getComputedStyle(el).fontFamily);
+    expect(family, `${path} : ${family}`).toMatch(/Source Serif/i);
+    expect(family, `${path} : pas Inter`).not.toMatch(/Inter/i);
+    const nested = await page.locator('main.seo-wire .site-foot').count();
+    expect(nested, `${path} : pied hors de .seo-wire`).toBe(0);
+  });
+}
