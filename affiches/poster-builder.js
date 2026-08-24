@@ -981,6 +981,17 @@ function syncCropUi() {
   if (z) z.value = String(Math.round(state.zoom * 100));
 }
 
+function applyQuery() {
+  let q;
+  try { q = new URLSearchParams(location.search); } catch { return; }
+  const campus = q.get('campus');
+  if (campus && CAMPUSES.some((c) => c.slug === campus)) {
+    state.campus = campus;
+    const input = document.querySelector(`input[name="campus"][value="${campus}"]`);
+    if (input) input.checked = true;
+  }
+}
+
 function applyChoice(name, value) {
   if (name === 'format') state.format = value;
   if (name === 'dpi') {
@@ -1085,6 +1096,7 @@ function bind() {
 
 async function main() {
   bind();
+  applyQuery();
   syncDpiLab();
   syncDpiLabels();
   syncLangChoice();
