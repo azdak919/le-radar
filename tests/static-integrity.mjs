@@ -515,6 +515,13 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(kit.includes('assets/icon.svg'), 'kit-media : pictogramme téléchargeable requis');
   assert(kit.includes('wordmark-on-dark.svg'), 'kit-media : mot-symbole sombre requis');
   assert(kit.includes('wordmark-on-light.svg'), 'kit-media : mot-symbole clair requis');
+  assert(kit.includes('wordmark-on-dark.jpg'), 'kit-media : JPG mot-symbole sombre');
+  assert(kit.includes('wordmark-on-light.jpg'), 'kit-media : JPG mot-symbole clair');
+  assert(kit.includes('banner-web.jpg'), 'kit-media : JPG bannière web');
+  assert(kit.includes('banner-square.jpg'), 'kit-media : JPG carré réseaux');
+  assert(kit.includes('icon-512.jpg'), 'kit-media : JPG pictogramme');
+  assert(kit.includes('src="../assets/kit/wordmark-on-dark.jpg"'), 'kit-media : preview = fichier sombre');
+  assert(kit.includes('src="../assets/kit/banner-square.jpg"'), 'kit-media : preview = carré réseaux');
   for (const asset of ['wordmark-on-dark.svg', 'wordmark-on-light.svg', 'banner-web.svg', 'banner-square.svg', 'affiche-11x17.svg']) {
     const svg = readFileSync(join(root, 'assets/kit', asset), 'utf8');
     assert(svg.includes('data:image/svg+xml;base64,'), `kit-media : ${asset} doit être autonome après téléchargement`);
