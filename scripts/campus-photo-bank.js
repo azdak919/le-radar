@@ -250,7 +250,14 @@ const BANK = {
     },
   ],
   'universite laval': [
-    // Pas Casault (style église) — voir hard-ban reads_as_church_casault
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Pavillon_Louis-Jacques-Casault_3.jpg',
+      title: 'Pavillon Louis-Jacques-Casault, Université Laval',
+      creator: 'Wilfredor',
+      license: 'CC BY-SA 4.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Pavillon_Louis-Jacques-Casault_3.jpg',
+      tags: 'exterior campus quebec city casault pavilion',
+    },
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Park_in_Universit%C3%A9_Laval.jpg',
       title: 'Park in Université Laval',

@@ -79,17 +79,13 @@ function stripMastTags(p) {
 
 /**
  * Banque unique (labo + affiches) : les rejets labo sortent toujours.
- * Un hard-ban mât (Casault « église ») reste en banque si la photo est campus,
- * sans tag mat — pour les affiches, pas le bandeau.
+ * Casault et pavillons campus ne sont plus un hard-ban « église ».
  */
 function retainUnifiedPhoto(p) {
   if (!p) return null;
   const hit = matchHardBanned(p);
   if (!hit) return destineCampusPhoto(p);
   if (hit.reason === 'user_curated_photo_rejected') return null;
-  if (isCampusTagged(p) && hit.reason === 'reads_as_church_casault') {
-    return destineCampusPhoto(stripMastTags(p));
-  }
   return null;
 }
 

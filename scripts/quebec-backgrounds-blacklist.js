@@ -204,38 +204,6 @@ const HARD_BANNED = [
     note: 'Découverte 2026-07-25 nations — filtré + ban',
   },
   {
-    // Pavillon Casault ULaval — se lit comme église (tours, croix, flèches).
-    // Titre Commons sans « église » ; pierre grise multi-tours (pas clocher blanc).
-    // Mât / pomo : rester hard-ban. Affiches : photo-bank.json peut la garder
-    // en tag campus sans mat (retainUnifiedPhoto).
-    fragments: [
-      'Université_Laval,_Quebec_Canada_3',
-      'Universit%C3%A9_Laval%2C_Quebec_Canada_3',
-      'Universit%C3%A9_Laval,_Quebec_Canada_3',
-      'Quebec_Canada_3.jpg',
-      'd80fc225abc1',
-    ],
-    reason: 'reads_as_church_casault',
-    note: 'pavillon Casault ULaval, architecture cultuelle ; purge 2026-07-25',
-  },
-  {
-    // Même bâtiment (vue frontale twin towers + croix) — ban préventif
-    fragments: [
-      'Université_Laval,_Quebec,_Canada_01',
-      'Universit%C3%A9_Laval%2C_Quebec%2C_Canada_01',
-      'Universit%C3%A9_Laval,_Quebec,_Canada_01',
-      'Quebec,_Canada_01.jpg',
-      'Quebec%2C_Canada_01.jpg',
-      '8063829c7ba9',
-      'Pavillon_Louis-Jacques-Casault',
-      'Louis-Jacques-Casault',
-      'Louis_Jacques_Casault',
-      'Louis-Jacques Casault',
-    ],
-    reason: 'reads_as_church_casault',
-    note: 'Casault multi-tours/croix — ban mât 2026-07-25 ; affiches : campus sans mat',
-  },
-  {
     // Panneau d’entrée communauté — pas un wallpaper (titre = toponyme seul).
     // Ne pas bannir Gesgapegiag4 / Gesgapegiag5 (tipi / structures, OK nations).
     fragments: [

@@ -1138,5 +1138,17 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     place: "Université Laval",
     campus: true,
     tags: ["mat", "campus"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/d/de/Pavillon_Louis-Jacques-Casault_3.jpg",
+    credit: "Wilfredor",
+    link: "https://commons.wikimedia.org/wiki/File:Pavillon_Louis-Jacques-Casault_3.jpg",
+    license: "CC BY-SA 4.0",
+    title: "Pavillon Louis-Jacques-Casault 3",
+    width: 5137,
+    height: 3252,
+    place: "Université Laval",
+    campus: true,
+    tags: ["campus", "mat"],
   }
 ];

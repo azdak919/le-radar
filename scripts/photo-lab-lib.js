@@ -13,7 +13,6 @@ const crypto = require('crypto');
 const vm = require('vm');
 const { BANKS, syncBanks } = require('./sync-quebec-backgrounds');
 const { sanitizeCommonsCredit, placeFromPhotoMeta } = require('./commons-credit-lib');
-const { matchHardBanned } = require('./quebec-backgrounds-blacklist');
 const photosLib = require('./photo-bank-lib');
 
 const DEFAULT_ROOT = path.join(__dirname, '..');
@@ -940,14 +939,7 @@ function createPhotoLab(opts = {}) {
       const allowed = photosLib.TAGS;
       let tags = [...new Set(payload.tags.filter((t) => allowed.includes(t)))];
       if (payload.permanent && !tags.includes('favori')) tags.push('favori');
-      if (tags.includes('campus') && !tags.includes('mat')) {
-        const hit = matchHardBanned({
-          url: photo.url,
-          title: photo.title,
-          id: photo.id,
-        });
-        if (!(hit && hit.reason === 'reads_as_church_casault')) tags.push('mat');
-      }
+      if (tags.includes('campus') && !tags.includes('mat')) tags.push('mat');
       extra.permanent = extra.permanent || tags.includes('favori');
       patchUnified(photo.url, (p) => {
         p.tags = tags;
