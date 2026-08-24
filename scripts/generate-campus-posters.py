@@ -59,7 +59,7 @@ VARIANTS = ("standard", "minimal", "bilingue", "standard-qr", "minimal-qr", "bil
 TITLE = "LE-RADAR.ca"
 SLOGAN = "Journaux, radios et sports étudiants du Québec, réunis au même endroit"
 NAME_FULL = "Le Réseau Académique de Découverte et d’Agrégation de Ressources"
-SLOGAN_EN = "Student media on your radar"
+SLOGAN_EN = "Student newspapers, radio and sports from Quebec, all in one place"
 INDEP_1 = "Projet indépendant, non officiel et sans affiliation aux médias ni aux établissements."
 INDEP_2 = "Les contenus appartiennent à leurs publications d’origine."
 INDEP_EN = "Independent, unofficial and not affiliated. Content belongs to the original publications."
@@ -94,6 +94,7 @@ CAMPUSES = [
         "name": "Université McGill",
         "line": "Université McGill",
         "line_en": "McGill University",
+        "core": "McGill",
         "bilingual": True,
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
@@ -128,6 +129,7 @@ CAMPUSES = [
         "name": "Université Concordia",
         "line": "Université Concordia",
         "line_en": "Concordia University",
+        "core": "Concordia",
         "bilingual": True,
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
@@ -151,6 +153,7 @@ CAMPUSES = [
         "name": "Université Bishop’s",
         "line": "Université Bishop’s",
         "line_en": "Bishop’s University",
+        "core": "Bishop’s",
         "bilingual": True,
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
@@ -394,14 +397,22 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
         if kind == "bilingue":
             y = draw_centered(draw, SLOGAN_EN, f_en, SOFT, y, gap_after_title_block)
     uni_line = ground.get("line") or campus.get("line")
-    if uni_line:
-        has_en_name = kind == "bilingue" and campus.get("line_en") and not ground.get("line")
-        y = draw_centered(
-            draw, uni_line, f_uni, INK, y,
-            gap_lang if has_en_name else gap_after_title_block,
-        )
-        if has_en_name:
-            y = draw_centered(draw, campus["line_en"], f_uni_en, SOFT, y, gap_after_title_block)
+    if kind == "bilingue" and campus.get("core") and not ground.get("line"):
+        core = campus["core"]
+        left, right = "Université ", " University"
+        uni_px = int(round(18 * scale))
+        small, large = font(SANS, uni_px), font(SANS_SEMI, int(round(uni_px * 1.22)))
+        w_left = small.getlength(left)
+        w_core = large.getlength(core)
+        w_right = small.getlength(right)
+        x = (W - (w_left + w_core + w_right)) // 2
+        h = text_size(draw, core, large)[1]
+        draw.text((x, y), left, font=small, fill=INK)
+        draw.text((x + w_left, y), core, font=large, fill=INK)
+        draw.text((x + w_left + w_core, y), right, font=small, fill=INK)
+        y += h + gap_after_title_block
+    elif uni_line:
+        y = draw_centered(draw, uni_line, f_uni, INK, y, gap_after_title_block)
 
     # Pied sans pastille, sous le QR. Crédit photo isolé tout en bas.
     credit = ""

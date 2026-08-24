@@ -527,7 +527,9 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(/draw\.rectangle\(\(0, 0, W, BAR_H\)/.test(posterScript), 'affiches campus : barre pourpre en haut');
   assert(!posterScript.includes('paint_chip'), 'affiches campus : plus de pastilles autour du texte');
   assert(posterScript.includes('raster_qr'), 'affiches campus : QR officiel collé, pas un carré vide');
-  assert(posterScript.includes('Student media on your radar'), 'affiches campus : slogan EN officiel');
+  assert(posterScript.includes('Student newspapers, radio and sports from Quebec'), 'affiches campus : slogan EN = traduction du français');
+  assert(builderJs.includes('fillUniLockup'), 'générateur public : Université McGill University');
+  assert(builderJs.includes('GREETINGS_EN'), 'générateur public : messages manuscrits bilingues OQLF');
   assert(posterScript.includes('non officiel et sans affiliation'), 'affiches campus : « et » plutôt qu’un tiret');
   assert(posterScript.includes('Les contenus appartiennent à leurs publications'), 'affiches campus : contenus d’origine');
   assert(!posterScript.includes('Azdak'), 'affiches campus : pas de mention Azdak');
