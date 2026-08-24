@@ -11,9 +11,9 @@ const TITLE = 'LE-RADAR.ca';
 const SLOGAN = 'Journaux, radios et sports étudiants du Québec, réunis au même endroit';
 const NAME_FULL = 'Le Réseau Académique de Découverte et d’Agrégation de Ressources';
 const SLOGAN_EN = 'Student media on your radar';
-const INDEP_1 = 'Projet indépendant, non officiel — sans affiliation aux médias ni aux établissements.';
+const INDEP_1 = 'Projet indépendant, non officiel et sans affiliation aux médias ni aux établissements.';
 const INDEP_2 = 'Les contenus appartiennent à leurs publications d’origine.';
-const INDEP_EN = 'Independent, unofficial, not affiliated. Content belongs to the original publications.';
+const INDEP_EN = 'Independent, unofficial and not affiliated. Content belongs to the original publications.';
 
 const INK = '#F1F2F4';
 const SOFT = '#C2C6CD';
@@ -297,46 +297,48 @@ function compose(opts) {
   const credit = photo && opts.credit
     ? `Photo : ${opts.credit}${opts.license ? ` · ${opts.license}` : ''}`
     : '';
-  const foot = [NAME_FULL, INDEP_1, INDEP_2];
-  if (kind === 'bilingue') foot.push(INDEP_EN);
-  const fName = 36 * (w / 3300);
-  const fBody = 38 * (w / 3300);
-  const fCredit = 26 * (w / 3300);
-  const innerF = 16 * (w / 3300);
-  ctx.font = `400 ${fName}px "LR Sans"`;
-  let copyH = 0;
-  const sizes = foot.map((t, i) => {
-    const sz = i === 0 ? fName : (i === foot.length - 1 && kind === 'bilingue' ? fCredit : fBody);
-    ctx.font = `400 ${sz}px "LR Sans"`;
-    const m = ctx.measureText(t);
-    const th = (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || sz;
-    copyH += th + (i < foot.length - 1 ? innerF : 0);
-    return { t, sz, th };
+  const legal = [INDEP_1, INDEP_2];
+  if (kind === 'bilingue') legal.push(INDEP_EN);
+  const fName = 32 * (w / 3300);
+  const fBody = 28 * (w / 3300);
+  const fCredit = 24 * (w / 3300);
+  const measure = (text, size) => {
+    ctx.font = `400 ${size}px "LR Sans"`;
+    const m = ctx.measureText(text);
+    return (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || size;
+  };
+  const nameH = measure(NAME_FULL, fName);
+  const legalRows = legal.map((t, i) => {
+    const sz = (kind === 'bilingue' && i === legal.length - 1) ? fCredit : fBody;
+    return { t, sz, th: measure(t, sz) };
   });
-  ctx.font = `400 ${fCredit}px "LR Sans"`;
-  const creditH = credit ? ((ctx.measureText(credit).actualBoundingBoxAscent || 0) + (ctx.measureText(credit).actualBoundingBoxDescent || 0) || fCredit) : 0;
+  const legalH = legalRows.reduce((s, r) => s + r.th, 0) + 10 * (legalRows.length - 1);
+  const creditH = credit ? measure(credit, fCredit) : 0;
   const footLogo = 72 * (w / 3300);
   const markH = Math.max(footLogo, 40 * (w / 3300));
   const qrIn = fmt.id === 'tabloid' ? 2.25 : 1.75;
   const qrPx = Math.round(qrIn * DPI);
   const qrPad = Math.round(36 * (w / 3300));
-  const qrSide = opts.qr ? qrPx : 0;
 
   let cy = h - safe;
   if (credit) {
     cy -= creditH;
     ctx.font = `400 ${fCredit}px "LR Sans"`;
     fillCentered(ctx, credit, cy, MUTED);
-    cy -= 56 * (w / 3300);
+    cy -= 64 * (w / 3300);
   }
-  cy -= copyH;
+  cy -= legalH;
   let ty = cy;
-  sizes.forEach((row, i) => {
+  legalRows.forEach((row) => {
     ctx.font = `400 ${row.sz}px "LR Sans"`;
-    fillCentered(ctx, row.t, ty, i === 0 || (kind === 'bilingue' && i === sizes.length - 1) ? MUTED : SOFT);
-    ty += row.th + innerF;
+    fillCentered(ctx, row.t, ty, MUTED);
+    ty += row.th + 10;
   });
-  cy -= 28 * (w / 3300);
+  cy -= 22 * (w / 3300);
+  cy -= nameH;
+  ctx.font = `400 ${fName}px "LR Sans"`;
+  fillCentered(ctx, NAME_FULL, cy, SOFT);
+  cy -= 12 * (w / 3300);
   cy -= markH;
   const markSize = 40 * (w / 3300);
   const markGap = 16 * (w / 3300);

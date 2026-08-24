@@ -528,6 +528,7 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(!posterScript.includes('paint_chip'), 'affiches campus : plus de pastilles autour du texte');
   assert(posterScript.includes('raster_qr'), 'affiches campus : QR officiel collé, pas un carré vide');
   assert(posterScript.includes('Student media on your radar'), 'affiches campus : slogan EN officiel');
+  assert(posterScript.includes('non officiel et sans affiliation'), 'affiches campus : « et » plutôt qu’un tiret');
   assert(posterScript.includes('Les contenus appartiennent à leurs publications'), 'affiches campus : contenus d’origine');
   assert(!posterScript.includes('Azdak'), 'affiches campus : pas de mention Azdak');
   assert(!/GPL-2/.test(posterScript), 'affiches campus : pas de GPL au pied');
@@ -545,6 +546,7 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('printUrl'), 'générateur public : photos Wikimedia CORS pour l’aperçu');
   assert(builder.includes('solid--radar') || builderJs.includes('solid--radar'), 'générateur public : pastille fond radar');
   assert(builderJs.includes('syncLangChoice'), 'générateur public : bilingue réservé aux campus anglophones');
+  assert(builderJs.includes('non officiel et sans affiliation'), 'générateur public : « et » plutôt qu’un tiret');
   assert(builderJs.includes('Bonne rentrée'), 'générateur public : message manuscrit rentrée');
   assert(builderJs.includes('LR Script'), 'générateur public : fonte signature');
   assert(existsSync(join(root, 'assets/kit/fonts/Caveat-Bold.ttf')), 'fonte Caveat pour signature manuscrite');
