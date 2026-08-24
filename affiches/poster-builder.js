@@ -505,7 +505,7 @@ function compose(opts) {
 
   if (assets.logo) ctx.drawImage(assets.logo, (w - big) / 2, logoY, big, big);
   const titleSize = Math.round(play * 0.058);
-  const titleY = playTop + play * 0.48;
+  const titleY = playTop + play * 0.42;
   fillTracked(ctx, TITLE, titleY, titleSize, INK);
   let y = titleY + titleSize + Math.round(play * 0.028);
   const maxW = w - 2 * safe - 80;
