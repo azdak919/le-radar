@@ -564,13 +564,15 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('wIn: 8.5') && builderJs.includes('hIn: 11'), 'générateur public : lettre 8,5×11');
   assert(builderJs.includes('REF_DPI = 300'), 'générateur public : 300 dpi de référence');
   assert(builderJs.includes('PREVIEW_DPI'), 'générateur public : aperçu plus léger que le JPEG');
-  assert(builderJs.includes('DPI_CHOICES'), 'générateur public : 300 et 600 dpi');
+  assert(builderJs.includes('DPI_CHOICES'), 'générateur public : 300, 600 et 1200 dpi');
+  assert(builderJs.includes('DEFAULT_DPI = 600'), 'générateur public : 600 dpi par défaut');
   assert(builder.includes('name="dpi"'), 'générateur public : choix de résolution');
-  assert(builder.includes('600 dpi'), 'générateur public : 600 dpi');
+  assert(builder.includes('1200 dpi'), 'générateur public : 1200 dpi');
+  assert(builder.includes('value="600" checked'), 'générateur public : 600 dpi coché');
   assert(builderJs.includes('jpegToPdfBlob'), 'générateur public : PDF dans le navigateur');
   assert(builderJs.includes('previewFit'), 'générateur public : aperçu dimensionné à la zone');
   assert(builderJs.includes('view.style.width'), 'générateur public : canvas d’aperçu pas 300×150 par défaut');
-  assert(builder.includes('PDF 300 dpi'), 'générateur public : bouton PDF');
+  assert(builder.includes('PDF 600 dpi'), 'générateur public : bouton PDF 600 dpi');
   assert(builderJs.includes('TITLE = \'LE-RADAR.ca\''), 'générateur public : mot-symbole');
   assert(builderJs.includes('printUrl'), 'générateur public : photos Wikimedia CORS pour l’aperçu');
   assert(builderJs.includes('function drawRadar(ctx, w, h, cx, cy)'), 'fond radar centré sur le gros logo');
@@ -581,6 +583,10 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('non officiel et sans affiliation'), 'générateur public : « et » plutôt qu’un tiret');
   assert(builderJs.includes('TRANSLATE_LANGS'), 'générateur public : langues du module de traduction');
   assert(existsSync(join(root, 'assets/kit/translate-mark.svg')), 'icône de traduction pour le pied d’affiche');
+  assert(
+    !/stroke-width/.test(readFileSync(join(root, 'assets/kit/translate-mark.svg'), 'utf8')),
+    'icône traduction : pas de stroke (plus en gras)',
+  );
   assert(builderJs.includes('Bonne rentrée'), 'générateur public : message manuscrit rentrée');
   assert(builderJs.includes('LR Script'), 'générateur public : fonte signature');
   assert(existsSync(join(root, 'assets/kit/fonts/Caveat-Bold.ttf')), 'fonte Caveat pour signature manuscrite');

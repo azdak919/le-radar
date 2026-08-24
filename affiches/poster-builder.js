@@ -1,8 +1,9 @@
-/* Générateur public d’affiches LE-RADAR.ca — JPEG 300 ou 600 dpi, dans le navigateur. */
+/* Générateur public d’affiches LE-RADAR.ca — JPEG 300 / 600 / 1200 dpi. */
 
 const REF_DPI = 300;
 const PREVIEW_DPI = 150;
-const DPI_CHOICES = [300, 600];
+const DPI_CHOICES = [300, 600, 1200];
+const DEFAULT_DPI = 600;
 const FORMATS = {
   tabloid: { id: 'tabloid', label: '11 × 17 po', file: '11x17', wIn: 11, hIn: 17 },
   letter: { id: 'letter', label: 'Lettre 8,5 × 11 po', file: 'lettre', wIn: 8.5, hIn: 11 },
@@ -173,7 +174,7 @@ const state = {
   langs: false,
   showUni: true,
   qr: true,
-  dpi: 300,
+  dpi: DEFAULT_DPI,
   photoId: null,
   photos: [],
   focalX: 0.5,
@@ -190,7 +191,7 @@ const imageCache = new Map();
 let previewGen = 0;
 
 function outputDpi() {
-  return DPI_CHOICES.includes(state.dpi) ? state.dpi : 300;
+  return DPI_CHOICES.includes(state.dpi) ? state.dpi : DEFAULT_DPI;
 }
 
 function px(fmt, dpi = outputDpi()) {
@@ -441,7 +442,7 @@ function compose(opts) {
   canvas.width = w;
   canvas.height = h;
   if (canvas.width !== w || canvas.height !== h) {
-    throw new Error(`canevas ${w}×${h} refusé par le navigateur`);
+    throw new Error(`canevas ${w}×${h} trop grand pour ce navigateur — choisissez 600 dpi`);
   }
   const ctx = canvas.getContext('2d', { alpha: false });
   if (!ctx) throw new Error('canevas 2D indisponible');
@@ -959,7 +960,7 @@ function applyChoice(name, value) {
   if (name === 'format') state.format = value;
   if (name === 'dpi') {
     const n = Number(value);
-    state.dpi = DPI_CHOICES.includes(n) ? n : 300;
+    state.dpi = DPI_CHOICES.includes(n) ? n : DEFAULT_DPI;
     syncDpiLabels();
   }
   if (name === 'campus') {
@@ -1065,7 +1066,7 @@ async function main() {
   await document.fonts.ready;
   assets.logo = await loadImage('../assets/icon.svg', false);
   assets.qr = await loadImage('../assets/kit/qr-le-radar.svg', false);
-  assets.translate = await loadImage('../assets/kit/translate-mark.svg?v=bold', false);
+  assets.translate = await loadImage('../assets/kit/translate-mark.svg?v=regular', false);
   const [bank, rejected] = await Promise.all([
     fetch('../data/photo-bank.json').then((r) => r.json()),
     fetch('../data/quebec-backgrounds-rejected.json').then((r) => r.json()).catch(() => ({ entries: [] })),
