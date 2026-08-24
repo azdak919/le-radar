@@ -36,6 +36,8 @@ const {
   sleep,
   isBannerLikeRatio,
   imageUrlsMatch,
+  imageUrlLooksBannerLike,
+  clearMirroredLead,
 } = require('./article-image-lib');
 const { findStockPhoto, cleanCreatorName, stockStillFits } = require('./stock-photo-lib');
 const { pickCampusPhoto, hasCampusBank, diversifyCampusBankItems } = require('./campus-photo-bank');
@@ -62,6 +64,14 @@ function readJson(p, fallback) {
 
 function clearLegacyFallback(item) {
   delete item.fallbackImage;
+}
+
+function assignSourceImage(item, url, leadReady) {
+  if (item.image && url && !imageUrlsMatch(url, item.image)) {
+    clearMirroredLead(item);
+  }
+  item.image = url;
+  if (leadReady !== undefined) item.leadImageReady = leadReady;
 }
 
 function clearStockPhoto(item) {
@@ -143,8 +153,7 @@ async function tryUpgradeExistingImage(item, sourceMap = new Map()) {
     const dims = await probeRemoteImageSize(candidate);
     if (!dims || !meetsLeadDisplaySize(dims.width, dims.height)) continue;
     if (doUpdate) {
-      item.image = candidate;
-      item.leadImageReady = true;
+      assignSourceImage(item, candidate, true);
       clearLegacyFallback(item);
       clearStockPhoto(item);
     }
@@ -308,6 +317,41 @@ async function main() {
     await sleep(120);
   }
 
+  // Avant la file « sans photo » (jusqu’à 40 scrapes, timeout CI 6 min) :
+  // les unes du fil dont l’image est un bandeau campagne (Fondation UdeS
+  // 1139×500) doivent céder à la 16:9 du corps. Sinon le miroir local fige
+  // le bandeau même si le sélecteur sait déjà choisir photo-2.
+  const bannerHeroes = items
+    .filter((item) => item.link && item.image)
+    .sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0))
+    .slice(0, Math.max(HERO_MIN_POOL, 12));
+  for (const item of bannerHeroes) {
+    try {
+      const { reject, opts, ok } = isCandidateForItem(item, sourceMap);
+      if (!ok(item.image)) continue;
+      const urlBanner = imageUrlLooksBannerLike(item.image);
+      const dims = urlBanner ? null : await probeRemoteImageSize(item.image);
+      if (!urlBanner && !(dims && isBannerLikeRatio(dims.width, dims.height))) continue;
+      const resolved = await resolveLeadReadyPhoto(item, reject, opts);
+      if (
+        resolved?.url
+        && resolved.leadReady !== false
+        && !imageUrlsMatch(resolved.url, item.image)
+      ) {
+        if (doUpdate) {
+          assignSourceImage(item, resolved.url, true);
+          clearLegacyFallback(item);
+          clearStockPhoto(item);
+        }
+        pageScraped += 1;
+        photosRecovered += 1;
+      }
+    } catch (err) {
+      console.warn(`  ⚠ banner upgrade skip ${item.source}: ${(err && err.message) || err}`);
+    }
+    await sleep(200);
+  }
+
   // Priorité : articles sans aucune photo (ex. Tribune RSS vide) d'abord,
   // les plus récents en tête — récupère les vraies og:image avant la banque.
   const scrapeQueue = items
@@ -331,8 +375,7 @@ async function main() {
       if (!resolved?.url) continue;
       pageScraped += 1;
       if (doUpdate) {
-        item.image = resolved.url;
-        item.leadImageReady = resolved.leadReady !== false;
+        assignSourceImage(item, resolved.url, resolved.leadReady !== false);
         clearLegacyFallback(item);
         if (resolved.leadReady !== false) clearStockPhoto(item);
       }
@@ -390,8 +433,7 @@ async function main() {
                 && resolved.leadReady !== false
                 && !imageUrlsMatch(resolved.url, item.image)
               ) {
-                item.image = resolved.url;
-                item.leadImageReady = true;
+                assignSourceImage(item, resolved.url, true);
                 clearLegacyFallback(item);
                 clearStockPhoto(item);
                 pageScraped += 1;
@@ -419,8 +461,7 @@ async function main() {
           // leadReady : vraie photo → garder. Sinon défaut de site faible
           // (logo partagé) : ne pas l'imposer, laisser la file stock.
           if (resolved.leadReady !== false) {
-            item.image = resolved.url;
-            item.leadImageReady = true;
+            assignSourceImage(item, resolved.url, true);
             clearLegacyFallback(item);
             clearStockPhoto(item);
             pageScraped += 1;
@@ -438,8 +479,7 @@ async function main() {
             || resolved.url !== item.image
             || !item.leadImageReady;
           if (better && resolved.leadReady !== false) {
-            item.image = resolved.url;
-            item.leadImageReady = true;
+            assignSourceImage(item, resolved.url, true);
             clearLegacyFallback(item);
             // Une vraie photo d'article remplace toujours la banque campus / stock.
             clearStockPhoto(item);
@@ -448,8 +488,7 @@ async function main() {
           } else if (better && resolved.leadReady === false && resolved.url !== item.image) {
             // Amélioration faible seulement si on n'a pas encore de stock thématique
             if (!item.stockImage || item.imageProvider === 'campus-bank') {
-              item.image = resolved.url;
-              item.leadImageReady = false;
+              assignSourceImage(item, resolved.url, false);
               clearLegacyFallback(item);
               pageScraped += 1;
             }

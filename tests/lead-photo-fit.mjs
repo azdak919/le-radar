@@ -6,6 +6,7 @@
  * Run: node tests/lead-photo-fit.mjs
  */
 import { createRequire } from 'module';
+import { readFileSync } from 'node:fs';
 const require = createRequire(import.meta.url);
 
 const { fixDropCapSpacing } = require('../scripts/html-entities-lib.js');
@@ -28,6 +29,9 @@ const {
   captionLooksLikeCampaignGraphic,
   compareLeadCandidates,
   stripStyleAndScript,
+  needsImageEnrichment,
+  imageUrlLooksBannerLike,
+  clearMirroredLead,
 } = require('../scripts/article-image-lib.js');
 
 let failed = 0;
@@ -333,6 +337,42 @@ assert(
   /FondationUdeS_Source_UdeS/i.test(bannerOnly.url),
   'seule photo = bandeau : on le garde (pas de rejet dur)',
 );
+assert(
+  imageUrlLooksBannerLike(BANNER_HTML),
+  'URL WordPress -1024x450 reconnue bandeau sans probe',
+);
+assert(
+  !imageUrlLooksBannerLike(PHOTO2),
+  'URL WordPress -1024x576 (16:9) n’est pas un bandeau',
+);
+assert(
+  needsImageEnrichment({ link: 'https://lecollectif.ca/campus/la-fondation-de-ludes/', image: BANNER_HTML }),
+  'bandeau déjà en cache → re-scraper le corps',
+);
+assert(
+  needsImageEnrichment({
+    link: 'https://lecollectif.ca/campus/la-fondation-de-ludes/',
+    image: BANNER_PNG,
+    leadImageReady: false,
+  }),
+  'leadImageReady false (bandeau full-size) → re-scraper',
+);
+{
+  const sticky = {
+    image: BANNER_PNG,
+    imageLocal: 'assets/news-images/fab5440fb7fab137.png',
+    imageLocalKey: 'fab5440fb7fab137',
+  };
+  clearMirroredLead(sticky);
+  assert(!sticky.imageLocal, 'changer d’URL source vide le miroir local du bandeau');
+}
+{
+  const ensureSrc = readFileSync(new URL('../scripts/ensure-lead-images.js', import.meta.url), 'utf8');
+  assert(
+    ensureSrc.includes('bannerHeroes') && ensureSrc.includes('clearMirroredLead'),
+    'ensure-lead-images : unes bandeau avant la file « sans photo »',
+  );
+}
 
 const sixteenNineOg = `<!doctype html><html><head>
   <meta property="og:image" content="https://exemple.org/uploads/2026/08/concert.jpg" />
