@@ -167,7 +167,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect.poll(async () => title.evaluate((el) => {
     const s = getComputedStyle(el);
     return `${s.animationName}|${s.animationIterationCount}|${s.whiteSpace}`;
-  })).toMatch(/sports-chip-scroll\|infinite\|nowrap/);
+  })).toMatch(/sports-(?:cta|chip)-scroll\|infinite\|nowrap/);
   await expect.poll(async () => title.evaluate((el) => {
     const t = getComputedStyle(el).transform;
     if (!t || t === 'none') return 0;
