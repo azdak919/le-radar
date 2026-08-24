@@ -1352,7 +1352,7 @@ assert(
 );
 assert(
   /data-cta-lamp="past"[^{]*\{[^}]*background:\s*#3d9a6a/.test(cssFlat)
-    && /data-cta-lamp="today"[^{]*\{[^}]*background:\s*#efe6d2/.test(cssFlat)
+    && /data-cta-lamp="today"[^{]*\{[^}]*background:\s*#c8102e/.test(cssFlat)
     && /data-cta-lamp="next"[^{]*\{[^}]*background:\s*#f5d000/.test(cssFlat)
     && /cta-tag:not\(\.sports-chip__cta-tag--brand\)[^{]*\{[^}]*min-width:\s*8rem/.test(cssFlat)
     && /\[data-cta-state="live"\][^{]*\.sports-chip__cta-tag[^{]*\{[^}]*background:\s*#c8102e/.test(cssFlat),
