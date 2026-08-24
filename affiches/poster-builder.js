@@ -194,7 +194,7 @@ function compose(opts) {
   const safe = Math.round(0.5 * DPI);
   const barH = 42;
   const campus = campusOf(opts.campus);
-  const kind = opts.lang;
+  const kind = campus.bilingual || opts.lang !== 'bilingue' ? opts.lang : 'standard'; // FR : jamais de bilingue
   const photo = opts.photoImg || null;
 
   if (photo) {
@@ -436,6 +436,17 @@ async function downloadPrint() {
   }
 }
 
+function syncLangChoice() {
+  const allowed = campusOf(state.campus).bilingual;
+  const bi = document.querySelector('label:has(input[name="lang"][value="bilingue"])');
+  if (bi) bi.hidden = !allowed;
+  if (!allowed && state.lang === 'bilingue') {
+    state.lang = 'standard';
+    const fr = document.querySelector('input[name="lang"][value="standard"]');
+    if (fr) fr.checked = true;
+  }
+}
+
 function bind() {
   document.querySelectorAll('[name="format"]').forEach((el) => {
     el.addEventListener('change', () => { state.format = el.value; preview(); });
@@ -443,10 +454,7 @@ function bind() {
   document.querySelectorAll('[name="campus"]').forEach((el) => {
     el.addEventListener('change', () => {
       state.campus = el.value;
-      const c = campusOf(state.campus);
-      if (c.bilingual && state.lang === 'standard') {
-        /* OQLF : bilingue proposé, le français reste dispo. */
-      }
+      syncLangChoice();
       renderChoices();
       preview();
     });
@@ -462,6 +470,7 @@ function bind() {
 
 async function main() {
   bind();
+  syncLangChoice();
   await loadFonts();
   assets.logo = await loadImage('../assets/icon.svg', false);
   assets.qr = await loadImage('../assets/kit/qr-le-radar.svg', false);

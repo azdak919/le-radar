@@ -450,6 +450,8 @@ def generate_one(campus, ground, bank, formats, variants, kit_alias=False):
         photo = Image.open(raw)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    if not campus.get("bilingual"):
+        variants = tuple(v for v in variants if variant_kind(v)[0] != "bilingue")
     for variant in variants:
         img = compose(campus, ground, meta, photo, variant)
         if img.size != (W, H) or img.size[0] * 17 != img.size[1] * 11:
