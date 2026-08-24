@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-24T05:35:25.952Z",
+  "updatedAt": "2026-08-24T06:51:44.896Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T05:35:02.665Z"
+      "checkedAt": "2026-08-24T06:51:20.843Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "L'Alter Ego (reprise)",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/lalter-ego"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "schedule",
         "start": "02:00",
         "end": "03:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Le char de marge (reprise)",
+        "source": "schedule",
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
+      },
       "track": "",
-      "showTitle": "L'Alter Ego (reprise)",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T05:35:04.759Z"
+      "checkedAt": "2026-08-24T06:51:22.775Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T05:35:08.302Z"
+      "checkedAt": "2026-08-24T06:51:24.992Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T05:35:22.118Z"
+      "checkedAt": "2026-08-24T06:51:38.549Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T05:35:22.816Z"
+      "checkedAt": "2026-08-24T06:51:39.385Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "bitume"
       },
-      "track": "MIRAR - Heksebal",
+      "track": "coffret de bijoux - i look for you everywhere",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-24T05:35:25.601Z"
+      "checkedAt": "2026-08-24T06:51:44.545Z"
     }
   }
 }
