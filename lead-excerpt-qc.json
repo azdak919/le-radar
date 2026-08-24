@@ -1,21 +1,30 @@
 {
-  "updated": "2026-08-24T16:42:10.062Z",
+  "updated": "2026-08-24T18:00:16.974Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 9,
+  "incomplete": 10,
   "withLeadExcerpt": 83,
-  "candidates": 9,
-  "enriched": 1,
+  "candidates": 10,
+  "enriched": 2,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
       "ok": true,
       "score": 100,
-      "chars": 393,
-      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
+      "chars": 396,
+      "sample": "« L’Université McGill est à la recherche de patrouilleurs dynamiques et engagés pour assurer la sécu",
+      "changed": true
+    },
+    {
+      "title": "Un match préparatoire à oublier pour les jeunes Sags",
+      "link": "https://lapige.atmjonquiere.com/2026/08/24/un-match-preparatoire-a-oublier-pour-les-jeunes-sags/?utm_source=rss&utm_medium=rss&utm_campaign=un-match-preparatoire-a-oublier-pour-les-jeunes-sags",
+      "ok": true,
+      "score": 100,
+      "chars": 288,
+      "sample": "Après un deuxième match préparatoire d’espoirs chaudement disputé la veille à Baie-Comeau, les Sags ",
       "changed": true
     },
     {
@@ -70,15 +79,6 @@
       "score": 66,
       "chars": 400,
       "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
-      "changed": false
-    },
-    {
-      "title": "Foire aux questions",
-      "link": "https://lecollectif.ca/campus/foire-aux-questions/",
-      "ok": true,
-      "score": 96,
-      "chars": 169,
-      "sample": "Attention cependant aux exceptions ! Consulte le site Web de ta faculté ou de ton centre universitai",
       "changed": false
     }
   ]
