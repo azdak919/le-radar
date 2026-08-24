@@ -421,10 +421,10 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
         lic = photo_meta.get("license") or ""
         credit = f"Photo : {who}" + (f" · {lic}" if lic else "")
     # Nom développé = légende du mot-symbole (SOFT). Mentions = plus petites, MUTED.
-    name_line = (NAME_FULL, f_name, SOFT)
-    legal = [(INDEP_1, f_body, MUTED), (INDEP_2, f_body, MUTED)]
+    name_line = (NAME_FULL, f_name, INK)
+    legal = [(INDEP_1, f_body, INK), (INDEP_2, f_body, INK)]
     if kind == "bilingue":
-        legal.append((INDEP_EN, f_credit, MUTED))
+        legal.append((INDEP_EN, f_credit, SOFT))
     mark_h = max(foot_logo, text_size(draw, TITLE, f_mark)[1])
     credit_h = text_size(draw, credit, f_credit)[1] if credit else 0
     name_h = text_size(draw, name_line[0], f_name)[1]
@@ -432,9 +432,18 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
     if with_qr:
         qr = raster_qr(QR_PX - 2 * QR_PAD)
     cy = H - SAFE
+    fade_top = max(BAR_H, cy - 520)
+    scrim = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    sd = ImageDraw.Draw(scrim)
+    span = max(1, H - fade_top)
+    for yy in range(fade_top, H):
+        t = (yy - fade_top) / span
+        a = int(210 * (t ** 1.15))
+        sd.line((0, yy, W, yy), fill=(14, 15, 18, a))
+    canvas.alpha_composite(scrim)
     if credit:
         cy -= credit_h
-        draw.text(((W - text_size(draw, credit, f_credit)[0]) // 2, cy), credit, font=f_credit, fill=MUTED)
+        draw.text(((W - text_size(draw, credit, f_credit)[0]) // 2, cy), credit, font=f_credit, fill=SOFT)
         cy -= 64
     cy -= legal_h
     ty = cy
