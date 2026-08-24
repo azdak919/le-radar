@@ -709,6 +709,14 @@ function recipeLine() {
   return bits.join(' · ');
 }
 
+function previewFit() {
+  const stage = document.getElementById('preview-stage') || document.getElementById('preview-pane');
+  const pad = 8;
+  const maxW = Math.max(160, (stage?.clientWidth || window.innerWidth * 0.45) - pad);
+  const maxH = Math.max(220, (stage?.clientHeight || window.innerHeight - 72) - pad);
+  return { maxW, maxH };
+}
+
 function paintPreview(img, photo) {
   const out = document.getElementById('preview');
   const canvas = compose({
@@ -727,11 +735,17 @@ function paintPreview(img, photo) {
     cropScale: state.zoom,
     angle: state.angle,
   });
+  const { maxW, maxH } = previewFit();
+  const cssScale = Math.min(maxW / canvas.width, maxH / canvas.height);
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const cssW = Math.max(1, Math.round(canvas.width * cssScale));
+  const cssH = Math.max(1, Math.round(canvas.height * cssScale));
   const view = document.createElement('canvas');
-  const maxH = Math.max(280, window.innerHeight - 72);
-  const maxW = Math.max(220, (document.getElementById('preview-stage') || document.getElementById('preview-pane'))?.clientWidth || window.innerWidth * 0.42);
-  const scale = Math.min(maxW / canvas.width, maxH / canvas.height, 1);
-  const vctx = view.getContext('2d');
+  view.width = Math.max(1, Math.round(cssW * dpr));
+  view.height = Math.max(1, Math.round(cssH * dpr));
+  view.style.width = `${cssW}px`;
+  view.style.height = `${cssH}px`;
+  const vctx = view.getContext('2d', { alpha: false });
   vctx.imageSmoothingEnabled = true;
   vctx.imageSmoothingQuality = 'high';
   vctx.drawImage(canvas, 0, 0, view.width, view.height);
@@ -988,6 +1002,21 @@ function bind() {
   document.getElementById('dl-pdf').addEventListener('click', () => downloadPrint('pdf'));
   document.getElementById('dl-bottom').addEventListener('click', () => downloadPrint('jpeg'));
   document.getElementById('dl-pdf-bottom').addEventListener('click', () => downloadPrint('pdf'));
+  const stage = document.getElementById('preview-stage');
+  let fitTimer = 0;
+  const refit = () => {
+    if (!previewGen) return;
+    clearTimeout(fitTimer);
+    fitTimer = setTimeout(() => {
+      if (lastPhotoImg) paintPreview(lastPhotoImg, currentPhoto());
+      else paintPreview(null, currentPhoto());
+    }, 80);
+  };
+  if (stage && typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(refit).observe(stage);
+  } else {
+    window.addEventListener('resize', refit);
+  }
 }
 
 async function main() {

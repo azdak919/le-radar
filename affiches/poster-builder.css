@@ -291,11 +291,8 @@ select.greeting:focus {
 }
 .preview-frame canvas {
   display: block;
-  width: auto;
-  height: auto;
   max-width: 100%;
-  max-height: calc(100vh - var(--top) - 24px);
-  object-fit: contain;
+  max-height: 100%;
 }
 .preview-frame { cursor: grab; }
 .preview-frame:active { cursor: grabbing; }

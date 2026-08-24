@@ -60,6 +60,11 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.getByRole('button', { name: /JPEG 300 dpi/ }).first()).toBeVisible();
   await expect(page.getByRole('button', { name: /PDF 300 dpi/ }).first()).toBeVisible();
   await page.locator('#preview canvas').waitFor({ timeout: 20000 });
+  const previewBox = await page.locator('#preview canvas').boundingBox();
+  expect(previewBox).toBeTruthy();
+  expect(previewBox.height).toBeGreaterThan(360);
+  expect(previewBox.width).toBeGreaterThan(200);
+  expect(previewBox.height).toBeGreaterThan(previewBox.width);
   await page.locator('label:has(input[name="format"][value="letter"])').click();
   await expect(page.locator('#status')).toContainText('Lettre', { timeout: 15000 });
   await expect(page.locator('#status')).toContainText('2550 × 3300');
