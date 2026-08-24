@@ -94,6 +94,29 @@
   margin: 0 0 16px;
 }
 
+/*
+ * `.seo-wire p` (0,1,1) bat `.site-foot__wordmark` (0,1,0). Les pages
+ * générées sortent le pied en frère de <main> ; affiches / kit média le
+ * nichaient encore dans `.seo-wire` — LE-RADAR.ca tombait alors en Inter.
+ */
+.seo-wire .site-foot p {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin: 0 0 8px;
+}
+.seo-wire .site-foot .site-foot__wordmark {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
+  color: var(--ink);
+  font-optical-sizing: none;
+  font-variation-settings: "opsz" 48;
+}
+
 .seo-section {
   margin-top: 38px;
   padding-top: 22px;
