@@ -45,11 +45,21 @@ jobs:
       - name: Fetch RSEQ sports (tous sports, sans exception)
         run: node scripts/fetch-sports.js --update
 
+      # /sports/ est du HTML prérendu (sports-board.js ne refetch pas).
+      # Sans cette passe, le tampon « Mise à jour » et les cartes restent
+      # figés même si sports.json est frais.
+      - name: Refresh /sports/ HTML from sports.json
+        continue-on-error: true
+        timeout-minutes: 3
+        run: node scripts/generate-seo.js --update --sports-only
+        env:
+          CI: true
+
       - name: Commit sports.json
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sports.json
+          git add sports.json sports/index.html en/sports/index.html
           if git diff --staged --quiet; then
             echo "No sports changes (payload identique après re-fetch)."
             exit 0
