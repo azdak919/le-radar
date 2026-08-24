@@ -1,0 +1,197 @@
+/* Tableau de bord public — imprimer une affiche LE-RADAR.ca */
+
+:root {
+  color-scheme: dark;
+  --bg: #0e0f12;
+  --panel: #16181e;
+  --line: #26282d;
+  --ink: #f1f2f4;
+  --soft: #c2c6cd;
+  --muted: #888d96;
+  --purple: #6c2163;
+  --sans: Inter, ui-sans-serif, system-ui, sans-serif;
+  --serif: "Source Serif 4", Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.45 var(--sans);
+}
+a { color: var(--soft); }
+a:hover { color: var(--ink); }
+
+.dash-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+}
+.dash-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.dash-brand img { width: 32px; height: 32px; border-radius: 8px; }
+.dash-nav { display: flex; gap: 14px; margin-left: auto; font-size: 13px; }
+
+.dash {
+  display: grid;
+  grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+  gap: 0;
+  min-height: calc(100vh - 58px);
+}
+@media (max-width: 900px) {
+  .dash { grid-template-columns: 1fr; }
+}
+
+.dash-controls {
+  padding: 20px 18px 48px;
+  border-right: 1px solid var(--line);
+  background: var(--panel);
+}
+@media (max-width: 900px) {
+  .dash-controls { border-right: 0; border-bottom: 1px solid var(--line); }
+}
+
+.dash-controls h1 {
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  line-height: 1.15;
+  margin: 0 0 8px;
+}
+.dash-lead { margin: 0 0 22px; color: var(--muted); font-size: 14px; }
+
+fieldset {
+  border: 0;
+  margin: 0 0 18px;
+  padding: 0;
+}
+legend {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.choices label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--soft);
+  font: 600 12.5px/1.2 var(--sans);
+  padding: 7px 11px;
+  border-radius: 999px;
+}
+.choices input { position: absolute; opacity: 0; pointer-events: none; }
+.choices label:has(input:checked) {
+  border-color: var(--purple);
+  color: var(--ink);
+  background: color-mix(in srgb, var(--purple) 22%, var(--bg));
+}
+.choices label:has(input:focus-visible) {
+  outline: 2px solid var(--purple);
+  outline-offset: 2px;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  gap: 8px;
+  max-height: 320px;
+  overflow: auto;
+  padding: 2px;
+}
+.photo-grid label {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #111;
+}
+.photo-grid label:has(input:checked) { border-color: var(--purple); }
+.photo-grid img, .photo-grid .solid {
+  display: block;
+  width: 100%;
+  aspect-ratio: 11 / 17;
+  object-fit: cover;
+}
+.photo-grid .solid {
+  background: #0e0f12;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 10px;
+  text-align: center;
+  padding: 6px;
+}
+.photo-meta { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+
+.dash-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.btn {
+  appearance: none;
+  cursor: pointer;
+  border: 1px solid var(--purple);
+  background: var(--purple);
+  color: #fff;
+  font: 650 13px/1 var(--sans);
+  padding: 10px 14px;
+  border-radius: 999px;
+}
+.btn:disabled { opacity: 0.45; cursor: wait; }
+.btn-ghost {
+  background: transparent;
+  color: var(--soft);
+  border-color: var(--line);
+}
+.status { margin: 10px 0 0; font-size: 12.5px; color: var(--muted); }
+.status strong { color: var(--ink); font-weight: 650; }
+
+.dash-preview {
+  padding: 24px 16px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.preview-frame {
+  width: min(100%, 420px);
+  box-shadow: 0 24px 70px #000a;
+  background: #111;
+}
+.preview-frame canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.preview-hint { font-size: 12.5px; color: var(--muted); text-align: center; max-width: 36rem; }
+
+.dash-foot {
+  grid-column: 1 / -1;
+  padding: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+}
+.dash-foot p { margin: 0 0 8px; }
