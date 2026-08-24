@@ -74,7 +74,7 @@ const CAMPUSES = [
   {
     slug: 'laval', line: 'Université Laval', bilingual: false, label: 'Université Laval',
     places: ['université laval'],
-    hints: ['université laval', 'adrien-pouliot', 'alphonse-marie-parent', 'biermans', 'ernest-lemieux', 'pavillon dkn'],
+    hints: ['université laval', 'adrien-pouliot', 'alphonse-marie-parent', 'biermans', 'ernest-lemieux', 'pavillon dkn', 'casault', 'palasis', 'bonenfant', 'grand axe'],
   },
   {
     slug: 'mcgill', line: 'Université McGill', lineEn: 'McGill University', core: 'McGill', bilingual: true, label: 'Université McGill',

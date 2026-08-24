@@ -206,6 +206,8 @@ const HARD_BANNED = [
   {
     // Pavillon Casault ULaval — se lit comme église (tours, croix, flèches).
     // Titre Commons sans « église » ; pierre grise multi-tours (pas clocher blanc).
+    // Mât / pomo : rester hard-ban. Affiches : photo-bank.json peut la garder
+    // en tag campus sans mat (retainUnifiedPhoto).
     fragments: [
       'Université_Laval,_Quebec_Canada_3',
       'Universit%C3%A9_Laval%2C_Quebec_Canada_3',
@@ -231,7 +233,7 @@ const HARD_BANNED = [
       'Louis-Jacques Casault',
     ],
     reason: 'reads_as_church_casault',
-    note: 'Casault multi-tours/croix — ban curaté campus style-église 2026-07-25',
+    note: 'Casault multi-tours/croix — ban mât 2026-07-25 ; affiches : campus sans mat',
   },
   {
     // Panneau d’entrée communauté — pas un wallpaper (titre = toponyme seul).

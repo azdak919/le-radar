@@ -78,6 +78,15 @@ test('générateur d’affiches public', async ({ page }) => {
   expect(udemTitles).not.toContain('mcgill');
   await page.locator('label:has(input[name="campus"][value="laval"])').click();
   await expect(bilingue).toBeHidden();
+  await page.locator('#photo-more').click();
+  const lavalTitles = (await page.locator('#photo-grid label').evaluateAll((els) => els.map((e) => e.getAttribute('title') || ''))).join(' ').toLowerCase();
+  expect(lavalTitles).toContain('casault');
+  expect(lavalTitles).toContain('grand axe');
+  expect(lavalTitles).toContain('palasis');
+  expect(lavalTitles).toContain('bonenfant');
+  expect(lavalTitles).not.toContain('pouliot 07');
+  expect(lavalTitles).not.toContain('pouliot 08');
+  expect(lavalTitles).not.toContain('pouliot 09');
   await expect(page.locator('#greeting')).toContainText('Bonne rentrée');
   await expect(page.locator('label:has(input[name="langs"][value="oui"])')).toContainText('Langues du site');
   await expect(page.locator('.solid--radar')).toBeVisible();

@@ -224,10 +224,26 @@ function syncBanks(opts = {}) {
   if (hasUnified && !checkOnlyFlag && opts.materialize !== false) {
     const uni = photosLib.loadPhotos(root);
     const before = (uni.photos || []).length;
-    uni.photos = (uni.photos || []).filter((p) => !matchHardBanned(p));
-    if (uni.photos.length !== before) {
+    const kept = [];
+    let strippedMat = 0;
+    let mutated = 0;
+    for (const p of uni.photos || []) {
+      const retained = photosLib.retainUnifiedPhoto(p);
+      if (!retained) continue;
+      if (retained !== p) mutated += 1;
+      if (matchHardBanned(p) && retained !== p) strippedMat += 1;
+      kept.push(retained);
+    }
+    uni.photos = kept;
+    if (uni.photos.length !== before || mutated) {
       photosLib.savePhotos(uni, root);
-      console.log(`  − photo-bank : ${before - uni.photos.length} hard-ban`);
+      const dropped = before - uni.photos.length;
+      if (dropped) console.log(`  − photo-bank : ${dropped} hard-ban (rejets labo / hors campus)`);
+      if (strippedMat) {
+        console.log(`  · photo-bank : ${strippedMat} campus hors mât (Casault et assimilés)`);
+      } else if (mutated) {
+        console.log(`  · photo-bank : ${mutated} photo(s) destinée(s) affiches hors mât`);
+      }
     }
     photosLib.materializeLegacySlices(root);
   }

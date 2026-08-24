@@ -1,7 +1,7 @@
 {
   "version": 1,
   "profile": "unified",
-  "updated": "2026-08-24T05:40:50.949Z",
+  "updated": "2026-08-24T06:23:50.255Z",
   "photos": [
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg/1920px-%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg",
@@ -1211,8 +1211,11 @@
         "masthead"
       ],
       "tags": [
+        "favori",
         "mat"
-      ]
+      ],
+      "campus": false,
+      "permanent": true
     },
     {
       "id": "89db61f5f5cd",
@@ -3785,36 +3788,6 @@
         "mat",
         "pomo",
         "nations"
-      ]
-    },
-    {
-      "id": "076d21e386b4",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Montagnais_Indians_at_Pointe_Bleue.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Montagnais%20Indians%20at%20Pointe%20Bleue.jpg",
-      "title": "Montagnais Indians at Pointe Bleue",
-      "credit": "Jules-Ernest Livernois",
-      "license": "Public domain",
-      "description": "Montagnais Indians at Pointe Bleue",
-      "categories": "Quebec in the 1890s|Mashteuiatsh|Innu|PD-old-70-expired|CC-PD-Mark|PD-old missing SDC copyright status|Photographs by Livernois",
-      "width": 2295,
-      "height": 1424,
-      "aspect": 1.612,
-      "mime": "image/jpeg",
-      "addedAt": "2026-08-18T05:39:07.847Z",
-      "sessionId": "ete",
-      "bank": "masthead",
-      "place": "Mashteuiatsh",
-      "focalY": 0.495,
-      "season": "automne",
-      "seasonSource": "manual",
-      "seasonConfidence": 1,
-      "seasonDetectedAt": "2026-08-21T02:56:49.260Z",
-      "faces": 0,
-      "faceRatio": 0,
-      "faceDetectedAt": "2026-08-06T20:47:26.791Z",
-      "tags": [
-        "mat",
-        "pomo"
       ]
     },
     {
@@ -7296,30 +7269,6 @@
       "permanent": false
     },
     {
-      "id": "2ca939addcaf",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Erythronium_americanum_%285674606148%29.jpg",
-      "link": "https://commons.wikimedia.org/w/index.php?curid=37095009",
-      "title": "File:Erythronium americanum (5674606148)",
-      "credit": "Charles de Mille-Isles",
-      "license": "CC BY",
-      "description": "",
-      "categories": "",
-      "width": 1600,
-      "height": 1200,
-      "aspect": 1.333,
-      "mime": "image/jpeg",
-      "source": "openverse",
-      "addedAt": "2026-08-21T04:57:25.828Z",
-      "sessionId": "ete",
-      "bank": "masthead",
-      "season": "printemps",
-      "seasonSource": "balance-query",
-      "seasonConfidence": 0.55,
-      "tags": [
-        "mat"
-      ]
-    },
-    {
       "id": "8a564ee971ec",
       "url": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Cap_Tournente.jpg",
       "link": "https://commons.wikimedia.org/w/index.php?curid=114681894",
@@ -8226,42 +8175,6 @@
       "mime": "image/jpeg"
     },
     {
-      "id": "d71f40220144",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Semaine_de_la_recherche_%C3%A0_l%27Universit%C3%A9_du_Qu%C3%A9bec_en_Outaouais_07.JPG",
-      "link": "https://commons.wikimedia.org/wiki/File:Semaine_de_la_recherche_%C3%A0_l'Universit%C3%A9_du_Qu%C3%A9bec_en_Outaouais_07.JPG",
-      "title": "Semaine de la recherche à l'Université du Québec en Outaouais 07",
-      "credit": "Benoit Rochon",
-      "license": "CC BY-SA 3.0",
-      "width": 3264,
-      "height": 2448,
-      "place": "UQO",
-      "campus": true,
-      "tags": [
-        "mat",
-        "campus"
-      ],
-      "source": "commons-cat",
-      "mime": "image/jpeg"
-    },
-    {
-      "id": "bdda8bb86aad",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/4/47/Semaine_de_la_recherche_%C3%A0_l%27Universit%C3%A9_du_Qu%C3%A9bec_en_Outaouais_02.JPG",
-      "link": "https://commons.wikimedia.org/wiki/File:Semaine_de_la_recherche_%C3%A0_l'Universit%C3%A9_du_Qu%C3%A9bec_en_Outaouais_02.JPG",
-      "title": "Semaine de la recherche à l'Université du Québec en Outaouais 02",
-      "credit": "Benoit Rochon",
-      "license": "CC BY-SA 3.0",
-      "width": 3264,
-      "height": 2448,
-      "place": "UQO",
-      "campus": true,
-      "tags": [
-        "mat",
-        "campus"
-      ],
-      "source": "commons-cat",
-      "mime": "image/jpeg"
-    },
-    {
       "id": "e1c9baf7b9d5",
       "url": "https://upload.wikimedia.org/wikipedia/commons/a/af/UQAT_campusRouyn-Noranada.jpg",
       "link": "https://commons.wikimedia.org/wiki/File:UQAT_campusRouyn-Noranada.jpg",
@@ -8399,7 +8312,6 @@
       "place": "TÉLUQ",
       "campus": true,
       "tags": [
-        "mat",
         "campus"
       ],
       "source": "commons-cat",
@@ -8435,7 +8347,6 @@
       "place": "ENAP",
       "campus": true,
       "tags": [
-        "mat",
         "campus"
       ],
       "source": "commons-cat",
@@ -8471,25 +8382,6 @@
       "place": "INRS",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
-      ],
-      "source": "commons-cat",
-      "mime": "image/jpeg"
-    },
-    {
-      "id": "da894689ea99",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/9/92/INRS-UCS-Devant.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:INRS-UCS-Devant.jpg",
-      "title": "INRS-UCS-Devant",
-      "credit": "Seeris",
-      "license": "CC BY-SA 4.0",
-      "width": 2548,
-      "height": 3314,
-      "place": "INRS",
-      "campus": true,
-      "tags": [
-        "mat",
         "campus"
       ],
       "source": "commons-cat",
@@ -8507,7 +8399,6 @@
       "place": "INRS",
       "campus": true,
       "tags": [
-        "mat",
         "campus"
       ],
       "source": "commons-cat",
@@ -8543,7 +8434,6 @@
       "place": "HEC Montréal",
       "campus": true,
       "tags": [
-        "mat",
         "campus"
       ],
       "source": "commons-cat",
@@ -8586,42 +8476,6 @@
       "mime": "image/jpeg"
     },
     {
-      "id": "91315dc09cf3",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/9/94/Polytechnique_Montr%C3%A9al_M%C3%A9tro.jpg",
-      "link": "https://commons.wikimedia.org/wiki/Special:FilePath/Polytechnique%20Montr%C3%A9al%20M%C3%A9tro.jpg",
-      "title": "Polytechnique Montréal Métro",
-      "credit": "Andrepoiy",
-      "license": "CC BY-SA 4.0",
-      "width": 4160,
-      "height": 3120,
-      "place": "Polytechnique Montréal",
-      "campus": true,
-      "tags": [
-        "mat",
-        "campus"
-      ],
-      "source": "commons-cat",
-      "mime": "image/jpeg"
-    },
-    {
-      "id": "c536c0b6516e",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Ancienne_%C3%89cole_Polytechnique_IMG_4489.jpg",
-      "link": "https://commons.wikimedia.org/wiki/Special:FilePath/Ancienne%20%C3%89cole%20Polytechnique%20IMG%204489.jpg",
-      "title": "Ancienne École Polytechnique IMG 4489",
-      "credit": "William Jexpire",
-      "license": "CC BY-SA 4.0",
-      "width": 3888,
-      "height": 5184,
-      "place": "Polytechnique Montréal",
-      "campus": true,
-      "tags": [
-        "mat",
-        "campus"
-      ],
-      "source": "commons-cat",
-      "mime": "image/jpeg"
-    },
-    {
       "id": "c053bd661573",
       "url": "https://upload.wikimedia.org/wikipedia/commons/1/15/Enap_teluq_uq.jpg",
       "link": "https://commons.wikimedia.org/wiki/Special:FilePath/Enap%20teluq%20uq.jpg",
@@ -8634,6 +8488,77 @@
       "campus": true,
       "tags": [
         "mat",
+        "campus"
+      ],
+      "source": "commons-cat",
+      "mime": "image/jpeg"
+    },
+    {
+      "id": "638f8d74ce92",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Grand_Axe_ULaval.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Grand_Axe_ULaval.jpg",
+      "title": "Grand Axe ULaval",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "width": 5472,
+      "height": 3648,
+      "place": "Université Laval",
+      "campus": true,
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "source": "commons-cat",
+      "mime": "image/jpeg"
+    },
+    {
+      "id": "afa99a753be4",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/60/Pavillon_Palasis-Prince_10.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_Palasis-Prince_10.jpg",
+      "title": "Pavillon Palasis-Prince 10",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "width": 5472,
+      "height": 3648,
+      "place": "Université Laval",
+      "campus": true,
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "source": "commons-cat",
+      "mime": "image/jpeg"
+    },
+    {
+      "id": "aa5df3626551",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_Jean-Charles-Bonenfant_02.jpg",
+      "title": "Pavillon Jean-Charles-Bonenfant 02",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "width": 5472,
+      "height": 3648,
+      "place": "Université Laval",
+      "campus": true,
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "source": "commons-cat",
+      "mime": "image/jpeg"
+    },
+    {
+      "id": "06fbe98e6eda",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/de/Pavillon_Louis-Jacques-Casault_3.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_Louis-Jacques-Casault_3.jpg",
+      "title": "Pavillon Louis-Jacques-Casault 3",
+      "credit": "Wilfredor",
+      "license": "CC BY-SA 4.0",
+      "width": 5137,
+      "height": 3252,
+      "place": "Université Laval",
+      "campus": true,
+      "tags": [
         "campus"
       ],
       "source": "commons-cat",

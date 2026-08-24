@@ -252,7 +252,20 @@ assert(bgJsRelig.includes('casault'), 'mât RELIGIOUS_SUBJECT_RE : casault');
 assert(bgJsRelig.includes('solidStone'), 'détecteur visuel pierre grise (Casault)');
 assert(bgJsRelig.includes('multiPeaks'), 'détecteur multi-tours / flèches');
 const uniData = readFileSync(join(root, 'quebec-university-backgrounds-data.js'), 'utf8');
+const photoBankJson = readFileSync(join(root, 'data/photo-bank.json'), 'utf8');
 assert(!/Quebec_Canada_3\.jpg/i.test(uniData), 'banque universities sans Casault Canada_3');
+assert(
+  !/Pavillon_Louis-Jacques-Casault/i.test(uniData),
+  'mât universities : Casault hors bandeau',
+);
+assert(
+  /Pavillon_Louis-Jacques-Casault_3/i.test(photoBankJson),
+  'banque unique : Pavillon Casault pour les affiches',
+);
+assert(
+  !/Pavillon_Adrien-Pouliot_0[789]\.jpg/i.test(photoBankJson),
+  'Pouliot 07/08/09 restent les rejets labo',
+);
 assert(
   /Park_in_Universit|Ferdinand-Vandry/i.test(uniData),
   'banque universities : remplacement ULaval (parc ou Vandry)',
@@ -528,6 +541,8 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(!posterScript.includes('paint_chip'), 'affiches campus : plus de pastilles autour du texte');
   assert(posterScript.includes('raster_qr'), 'affiches campus : QR officiel collé, pas un carré vide');
   assert(posterScript.includes('Student newspapers, radio and sports from Quebec'), 'affiches campus : slogan EN = traduction du français');
+  const builder = readFileSync(join(root, 'affiches/index.html'), 'utf8');
+  const builderJs = readFileSync(join(root, 'affiches/poster-builder.js'), 'utf8');
   assert(builderJs.includes('fillUniLockup'), 'générateur public : Université McGill University');
   assert(builderJs.includes('GREETINGS_EN'), 'générateur public : messages manuscrits bilingues OQLF');
   assert(posterScript.includes('non officiel et sans affiliation'), 'affiches campus : « et » plutôt qu’un tiret');
@@ -536,8 +551,6 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(!/GPL-2/.test(posterScript), 'affiches campus : pas de GPL au pied');
   assert(posterScript.includes('Le Réseau Académique de Découverte'), 'affiches campus : nom complet au footer');
   assert(existsSync(join(root, 'assets/kit/qr-le-radar.svg')), 'affiches campus : QR vectoriel officiel requis');
-  const builder = readFileSync(join(root, 'affiches/index.html'), 'utf8');
-  const builderJs = readFileSync(join(root, 'affiches/poster-builder.js'), 'utf8');
   assert(builder.includes('Imprimer une affiche'), 'générateur public : titre');
   assert(builder.includes('Lettre 8,5 × 11'), 'générateur public : format lettre');
   assert(builder.includes('Légal 8,5 × 14'), 'générateur public : format légal');
