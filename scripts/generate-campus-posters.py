@@ -346,6 +346,40 @@ def draw_radar_motif(canvas: Image.Image) -> None:
     canvas.alpha_composite(layer)
 
 
+def paint_chip(canvas: Image.Image, x0: int, y0: int, bw: int, bh: int) -> None:
+    """Pastille verre du mât (météo / date sur photo)."""
+    r = max(12, min(bh // 4, 28))
+    layer = Image.new("RGBA", (bw, bh), (0, 0, 0, 0))
+    d = ImageDraw.Draw(layer)
+    d.rounded_rectangle((1, 1, bw - 2, bh - 2), radius=r, fill=(22, 24, 30, 210))
+    d.rounded_rectangle((1, 1, bw - 2, bh - 2), radius=r, outline=(255, 255, 255, 40), width=3)
+    canvas.alpha_composite(layer, (x0, y0))
+
+
+def chip_block(canvas, draw, lines: list[tuple[str, ImageFont.FreeTypeFont, tuple]], y: int, gap_after: int) -> int:
+    """Dessine une pastille centrée (une ou plusieurs lignes) et avance y."""
+    if not lines:
+        return y
+    pad_x, pad_y, inner = 36, 18, 10
+    sizes = [text_size(draw, t, f) for t, f, _ in lines]
+    tw = max(s[0] for s in sizes)
+    th = sum(s[1] for s in sizes) + inner * (len(lines) - 1)
+    bw = tw + 2 * pad_x
+    bh = th + 2 * pad_y
+    x0 = (W - bw) // 2
+    paint_chip(canvas, x0, y, bw, bh)
+    ty = y + pad_y
+    for (text, fnt, fill), (lw, lh) in zip(lines, sizes):
+        draw.text(((W - lw) // 2, ty), text, font=fnt, fill=fill)
+        ty += lh + inner
+    return y + bh + gap_after
+
+
+def chip_lines(canvas, draw, text: str, fnt, fill, y: int, max_w: int, gap_after: int) -> int:
+    wrapped = wrap_text(text, fnt, max_w)
+    return chip_block(canvas, draw, [(part, fnt, fill) for part in wrapped], y, gap_after)
+
+
 def draw_footer_wordmark(canvas, draw, f_mark, y_top, small):
     """Petit logo PWA à gauche de LE-RADAR.ca — footer seulement."""
     gap = 16
@@ -400,82 +434,67 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
     draw_tracked(draw, ((W - title_w) // 2, title_y), TITLE, f_title, INK)
     y = title_y + (box[3] - box[1]) + int(round(36 * scale))
 
-    def line(text, fnt, fill, dy=12):
-        nonlocal y
-        tw, th = text_size(draw, text, fnt)
-        draw.text(((W - tw) // 2, y), text, font=fnt, fill=fill)
-        y += th + dy
-
-    def block(text, fnt, fill, dy, max_w):
-        nonlocal y
-        for part in wrap_text(text, fnt, max_w):
-            line(part, fnt, fill, 8)
-        y += dy - 8
-
-    max_w = W - 2 * SAFE - 80
+    max_w = W - 2 * SAFE - 120
     slogan_size = int(round(18 * scale))
     f_slogan = font(SANS, slogan_size)
     while f_slogan.getlength(SLOGAN) > max_w and slogan_size > 30:
         slogan_size -= 2
         f_slogan = font(SANS, slogan_size)
-    gap_s = int(round(22 * scale))
-    gap_m = int(round(18 * scale))
+    gap_s = int(round(16 * scale))
+    gap_m = int(round(12 * scale))
     if kind != "minimal":
-        line(SLOGAN, f_slogan, SOFT, gap_s)
+        y = chip_lines(canvas, draw, SLOGAN, f_slogan, INK, y, max_w, gap_s)
         if kind == "bilingue":
-            line(SLOGAN_EN, f_en, MUTED, gap_s)
+            y = chip_lines(canvas, draw, SLOGAN_EN, f_en, SOFT, y, max_w, gap_s)
     if campus.get("line"):
-        line(campus["line"], f_uni, SOFT, gap_m + 8)
+        y = chip_lines(canvas, draw, campus["line"], f_uni, INK, y, max_w, gap_m)
     papers = campus.get("papers") or []
     if papers:
-        block(papers_line_fr(papers), f_media, SOFT, gap_m, max_w)
+        y = chip_lines(canvas, draw, papers_line_fr(papers), f_media, INK, y, max_w, gap_m)
         if kind == "bilingue":
-            block(papers_line_en(papers), f_en, MUTED, gap_m, max_w)
+            y = chip_lines(canvas, draw, papers_line_en(papers), f_en, SOFT, y, max_w, gap_m)
     radio = campus.get("radio")
     if radio:
-        block(f"Votre radio {radio['name']} s’y trouve", f_media, SOFT, 6, max_w)
+        radio_bits = [(f"Votre radio {radio['name']} s’y trouve", f_media, INK)]
         if radio.get("slogan"):
-            block(radio["slogan"], f_en, MUTED, gap_m, max_w)
+            radio_bits.append((radio["slogan"], f_en, SOFT))
+        y = chip_block(canvas, draw, radio_bits, y, gap_m)
 
-    # Footer from the bottom — never leaves the 0.5 in safety.
+    # Pied : pastille d’indépendance juste au-dessus du QR (ou du bas).
     credit = ""
     if photo_meta:
         who = photo_meta.get("credit") or "Wikimedia Commons"
         lic = photo_meta.get("license") or ""
         credit = f"Photo : {who}" + (f" · {lic}" if lic else "")
-    cy = H - SAFE
-    if credit:
-        tw, th = text_size(draw, credit, f_credit)
-        cy -= th
-        draw.text(((W - tw) // 2, cy), credit, font=f_credit, fill=MUTED)
-        cy -= 18
+    foot_lines = [(NAME_FULL, f_name, SOFT), (INDEP_1, f_body, INK), (INDEP_2, f_body, INK)]
     if kind == "bilingue":
-        tw, th = text_size(draw, INDEP_EN, f_credit)
-        cy -= th
-        draw.text(((W - tw) // 2, cy), INDEP_EN, font=f_credit, fill=MUTED)
-        cy -= 8
-    tw, th = text_size(draw, INDEP_2, f_body)
-    cy -= th
-    draw.text(((W - tw) // 2, cy), INDEP_2, font=f_body, fill=MUTED)
-    cy -= 8
-    tw, th = text_size(draw, INDEP_1, f_body)
-    cy -= th
-    draw.text(((W - tw) // 2, cy), INDEP_1, font=f_body, fill=MUTED)
-    cy -= 12
-    tw, th = text_size(draw, NAME_FULL, f_name)
-    cy -= th
-    draw.text(((W - tw) // 2, cy), NAME_FULL, font=f_name, fill=MUTED)
-    cy -= 16
+        foot_lines.append((INDEP_EN, f_credit, MUTED))
+    pad_x, pad_y, inner = 36, 18, 10
+    sizes = [text_size(draw, t, f) for t, f, _ in foot_lines]
+    tw = max(s[0] for s in sizes)
+    th = sum(s[1] for s in sizes) + inner * (len(foot_lines) - 1)
+    foot_h = th + 2 * pad_y
     mark_h = max(foot_logo, text_size(draw, TITLE, f_mark)[1])
-    cy -= mark_h
-    draw_footer_wordmark(canvas, draw, f_mark, cy, logo_foot)
-
+    credit_h = text_size(draw, credit, f_credit)[1] if credit else 0
+    qr_h = 0
     if with_qr:
         qr = raster_qr(QR_PX - 2 * QR_PAD)
+        qr_h = qr.size[1] + 28
+    cy = H - SAFE
+    if credit:
+        cy -= credit_h
+        draw.text(((W - text_size(draw, credit, f_credit)[0]) // 2, cy), credit, font=f_credit, fill=MUTED)
+        cy -= 16
+    cy -= mark_h
+    draw_footer_wordmark(canvas, draw, f_mark, cy, logo_foot)
+    cy -= 16
+    if with_qr:
         qw, qh = qr.size
+        cy -= qh
+        canvas.paste(qr, ((W - qw) // 2, cy))
         cy -= 28
-        qr_y = cy - qh
-        canvas.paste(qr, ((W - qw) // 2, qr_y))
+    cy -= foot_h
+    chip_block(canvas, draw, foot_lines, cy, 0)
 
     return canvas.convert("RGB")
 
