@@ -64,6 +64,22 @@ function expandCron(expr) {
 }
 
 const workflow = readFileSync(new URL('../.github/workflows/update-news.yml', import.meta.url), 'utf8');
+assert.match(
+  workflow,
+  /github\.event_name == 'workflow_dispatch' && 'manual'/,
+  'filet :20 ne doit pas annuler une passe manuelle',
+);
+assert.match(
+  workflow,
+  /Manual dispatch — always publish so the live stamp moves/,
+  'passe manuelle : toujours publier le tampon live',
+);
+const fetchNews = readFileSync(new URL('../scripts/fetch-news.js', import.meta.url), 'utf8');
+assert.match(
+  fetchNews,
+  /GITHUB_EVENT_NAME === 'workflow_dispatch'/,
+  'passe manuelle : pas de créneau, l’UI montre l’heure réelle',
+);
 const cronExprs = [...workflow.matchAll(/- cron:\s*'([^']+)'/g)].map((m) => m[1]);
 assert.ok(cronExprs.includes(SAFETY_NET_CRON), 'filet :20 toujours déclaré');
 
