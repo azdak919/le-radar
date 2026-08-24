@@ -229,6 +229,7 @@
 }
 .kit-grid--poster {
   max-width: none;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
 .kit-card__link {
   display: block;
@@ -252,6 +253,12 @@
   aspect-ratio: 11 / 17;
   object-fit: cover;
   display: block;
+}
+
+@media (min-width: 700px) {
+  .kit-grid--poster > .kit-card--feature {
+    grid-column: span 2;
+  }
 }
 
 @media (min-width: 1100px) {

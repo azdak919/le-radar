@@ -214,6 +214,48 @@ function outputDpi() {
   return dpiChoices().includes(state.dpi) ? state.dpi : DEFAULT_DPI;
 }
 
+/* iPadOS 13+ se présente comme un Mac. Safari plafonne le canevas ~4096 px / 16 Mpx. */
+function isAppleTouch() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && Number(navigator.maxTouchPoints) > 1);
+}
+
+function maxSafeDpi(fmt) {
+  const maxSide = isAppleTouch() ? 4096 : 16384;
+  const maxArea = isAppleTouch() ? 16_777_216 : 268_435_456;
+  let dpi = 1200;
+  while (dpi >= 72) {
+    const w = Math.round(fmt.wIn * dpi);
+    const h = Math.round(fmt.hIn * dpi);
+    if (w <= maxSide && h <= maxSide && w * h <= maxArea) return dpi;
+    dpi -= 10;
+  }
+  return 72;
+}
+
+function exportDpi(fmt = FORMATS[state.format]) {
+  return Math.min(outputDpi(), maxSafeDpi(fmt));
+}
+
+function canvasAllocates(w, h) {
+  try {
+    const c = document.createElement('canvas');
+    c.width = w;
+    c.height = h;
+    if (c.width !== w || c.height !== h) return false;
+    const ctx = c.getContext('2d', { alpha: false });
+    if (!ctx) return false;
+    ctx.fillStyle = '#111111';
+    ctx.fillRect(w - 1, h - 1, 1, 1);
+    const ok = ctx.getImageData(w - 1, h - 1, 1, 1).data[0] === 0x11;
+    c.width = 0;
+    c.height = 0;
+    return ok;
+  } catch {
+    return false;
+  }
+}
+
 function px(fmt, dpi = outputDpi()) {
   return { w: Math.round(fmt.wIn * dpi), h: Math.round(fmt.hIn * dpi) };
 }
@@ -485,7 +527,7 @@ function compose(opts) {
   canvas.width = w;
   canvas.height = h;
   if (canvas.width !== w || canvas.height !== h) {
-    throw new Error(`canevas ${w}×${h} trop grand pour ce navigateur — choisissez 600 dpi`);
+    throw new Error(`canevas ${w}×${h} trop grand pour ce navigateur`);
   }
   const ctx = canvas.getContext('2d', { alpha: false });
   if (!ctx) throw new Error('canevas 2D indisponible');
@@ -750,8 +792,9 @@ function escapeAttr(s) {
 
 function specLine() {
   const fmt = FORMATS[state.format];
-  const { w, h } = px(fmt);
-  return `${fmt.label} · ${w} × ${h} px · ${outputDpi()} dpi · PDF`;
+  const dpi = exportDpi(fmt);
+  const { w, h } = px(fmt, dpi);
+  return `${fmt.label} · ${w} × ${h} px · ${dpi} dpi · PDF`;
 }
 
 function recipeLine() {
@@ -878,6 +921,52 @@ function jpegToPdfBlob(jpeg, imgW, imgH, wIn, hIn) {
   return new Blob([out], { type: 'application/pdf' });
 }
 
+async function saveBlob(blob, name) {
+  const file = new File([blob], name, { type: blob.type || 'application/octet-stream' });
+  if (typeof navigator.canShare === 'function') {
+    try {
+      if (navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: name });
+        return 'share';
+      }
+    } catch (err) {
+      if (err && err.name === 'AbortError') return 'abort';
+    }
+  }
+  const url = URL.createObjectURL(blob);
+  try {
+    if (isAppleTouch()) {
+      const opened = window.open(url, '_blank');
+      if (!opened) {
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+    } else {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name;
+      a.rel = 'noopener';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+  } finally {
+    setTimeout(() => URL.revokeObjectURL(url), 60_000);
+  }
+  return 'link';
+}
+
+async function jpegOfCanvas(canvas) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('JPEG'))), 'image/jpeg', 0.95);
+  });
+}
+
 async function downloadPrint(kind = 'pdf') {
   const buttons = [document.getElementById('dl'), document.getElementById('dl-jpg'), document.getElementById('dl-bottom'), document.getElementById('dl-jpg-bottom')];
   const status = document.getElementById('status');
@@ -885,40 +974,60 @@ async function downloadPrint(kind = 'pdf') {
   status.textContent = kind === 'pdf' ? 'Composition du PDF…' : 'Composition du JPEG…';
   try {
     const fmt = FORMATS[state.format];
-    const { w, h } = px(fmt);
+    const wanted = outputDpi();
     const photo = currentPhoto();
     let img = null;
     if (photo) img = await loadImage(printUrl(photo), true);
-    const canvas = compose({
-      format: state.format,
-      campus: state.campus,
-      lang: state.lang,
-      greeting: state.greeting,
-      langs: state.langs,
-      showUni: state.showUni,
-      qr: state.qr,
-      dpi: outputDpi(),
-      photoImg: img,
-      credit: photo?.credit,
-      license: photo?.license,
-      focalX: state.focalX,
-      focalY: state.focalY,
-      cropScale: state.zoom,
-      angle: state.angle,
-    });
-    if (canvas.width !== w || canvas.height !== h) {
-      throw new Error(`dimensions ${canvas.width}×${canvas.height}, attendu ${w}×${h}`);
+    let dpi = exportDpi(fmt);
+    let jpegBlob = null;
+    let w = 0;
+    let h = 0;
+    let lastErr = null;
+    while (dpi >= 120) {
+      ({ w, h } = px(fmt, dpi));
+      if (!canvasAllocates(w, h)) {
+        lastErr = new Error(`canevas ${w}×${h} trop grand pour ce navigateur`);
+        dpi -= 20;
+        continue;
+      }
+      try {
+        const canvas = compose({
+          format: state.format,
+          campus: state.campus,
+          lang: state.lang,
+          greeting: state.greeting,
+          langs: state.langs,
+          showUni: state.showUni,
+          qr: state.qr,
+          dpi,
+          photoImg: img,
+          credit: photo?.credit,
+          license: photo?.license,
+          focalX: state.focalX,
+          focalY: state.focalY,
+          cropScale: state.zoom,
+          angle: state.angle,
+        });
+        if (canvas.width !== w || canvas.height !== h) {
+          throw new Error(`dimensions ${canvas.width}×${canvas.height}, attendu ${w}×${h}`);
+        }
+        jpegBlob = await jpegOfCanvas(canvas);
+        break;
+      } catch (err) {
+        lastErr = err;
+        dpi -= 20;
+      }
     }
-    const jpegBlob = await new Promise((resolve, reject) => {
-      canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('JPEG'))), 'image/jpeg', 0.95);
-    });
+    if (!jpegBlob) {
+      throw lastErr || new Error('mémoire insuffisante pour composer l’affiche');
+    }
     const campus = campusOf(state.campus);
     const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
     const uni = state.showUni ? '' : '-sans-etab';
     const qr = state.qr ? '-qr' : '';
     const greet = state.greeting !== 'none' ? `-${state.greeting}` : '';
     const langs = state.langs ? '-langues' : '';
-    const stem = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}-${outputDpi()}dpi`;
+    const stem = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}-${dpi}dpi`;
     let blob;
     let name;
     if (kind === 'pdf') {
@@ -929,13 +1038,17 @@ async function downloadPrint(kind = 'pdf') {
       blob = jpegBlob;
       name = `${stem}.jpg`;
     }
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = name;
-    a.click();
-    URL.revokeObjectURL(a.href);
+    const how = await saveBlob(blob, name);
+    if (how === 'abort') {
+      status.textContent = 'Téléchargement annulé.';
+      return;
+    }
     const mb = (blob.size / 1_048_576).toFixed(1);
-    status.innerHTML = `Fichier <strong>${name}</strong> · ${fmt.label} · ${outputDpi()} dpi · ${mb} Mo. Imprimez à 100 %, sans « ajuster à la page ».`;
+    const limited = dpi < wanted
+      ? ` Safari sur tablette limite la mémoire : ${dpi} dpi au lieu de ${wanted}.`
+      : '';
+    const shareHint = how === 'share' ? ' Choisissez Enregistrer dans Fichiers (ou Imprimer).' : '';
+    status.innerHTML = `Fichier <strong>${name}</strong> · ${fmt.label} · ${dpi} dpi · ${mb} Mo.${limited}${shareHint} Imprimez à 100 %, sans « ajuster à la page ».`;
   } catch (err) {
     status.textContent = `Téléchargement impossible : ${err.message}`;
   } finally {
@@ -948,16 +1061,22 @@ function syncDpiLab() {
   const hint = document.getElementById('dpi-hint');
   const local = isLocalHost();
   if (lab) lab.hidden = !local;
-  if (hint) {
-    hint.textContent = local
-      ? '600 dpi par défaut. 300 pour un babillard, 1200 pour un tirage photo.'
-      : '600 dpi par défaut. 300 pour un babillard.';
-  }
   if (!local && state.dpi === 1200) state.dpi = DEFAULT_DPI;
+  if (hint) {
+    const fmt = FORMATS[state.format];
+    const cap = maxSafeDpi(fmt);
+    if (isAppleTouch() && cap < outputDpi()) {
+      hint.textContent = `Safari sur iPad plafonne à ${cap} dpi pour ${fmt.label} (mémoire du canevas).`;
+    } else if (local) {
+      hint.textContent = '600 dpi par défaut. 300 pour un babillard, 1200 pour un tirage photo.';
+    } else {
+      hint.textContent = '600 dpi par défaut. 300 pour un babillard.';
+    }
+  }
 }
 
 function syncDpiLabels() {
-  const dpi = outputDpi();
+  const dpi = exportDpi();
   for (const id of ['dl', 'dl-bottom']) {
     const el = document.getElementById(id);
     if (el) el.textContent = `PDF ${dpi} dpi`;
@@ -1029,10 +1148,15 @@ function syncGenericLangs() {
 }
 
 function applyChoice(name, value) {
-  if (name === 'format') state.format = value;
+  if (name === 'format') {
+    state.format = value;
+    syncDpiLab();
+    syncDpiLabels();
+  }
   if (name === 'dpi') {
     const n = Number(value);
     state.dpi = dpiChoices().includes(n) ? n : DEFAULT_DPI;
+    syncDpiLab();
     syncDpiLabels();
   }
   if (name === 'campus') {
@@ -1114,7 +1238,7 @@ function bind() {
   document.getElementById('dl-jpg').addEventListener('click', () => downloadPrint('jpeg'));
   document.getElementById('dl-bottom').addEventListener('click', () => downloadPrint('pdf'));
   document.getElementById('dl-jpg-bottom').addEventListener('click', () => downloadPrint('jpeg'));
-  const stage = document.getElementById('preview-stage');
+  const pane = document.getElementById('preview-pane');
   let fitTimer = 0;
   const refit = () => {
     if (!previewGen) return;
@@ -1124,8 +1248,8 @@ function bind() {
       else paintPreview(null, currentPhoto());
     }, 80);
   };
-  if (stage && typeof ResizeObserver !== 'undefined') {
-    new ResizeObserver(refit).observe(stage);
+  if (pane && typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(refit).observe(pane);
   } else {
     window.addEventListener('resize', refit);
   }
