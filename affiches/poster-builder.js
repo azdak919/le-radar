@@ -10,7 +10,7 @@ const FORMATS = {
 const TITLE = 'LE-RADAR.ca';
 const SLOGAN = 'Journaux, radios et sports étudiants du Québec, réunis au même endroit';
 const NAME_FULL = 'Le Réseau Académique de Découverte et d’Agrégation de Ressources';
-const SLOGAN_EN = 'Student media on your radar';
+const SLOGAN_EN = 'Student newspapers, radio and sports from Quebec, all in one place';
 const INDEP_1 = 'Projet indépendant, non officiel et sans affiliation aux médias ni aux établissements.';
 const INDEP_2 = 'Les contenus appartiennent à leurs publications d’origine.';
 const INDEP_EN = 'Independent, unofficial and not affiliated. Content belongs to the original publications.';
@@ -52,6 +52,23 @@ const GREETINGS = {
   canada: 'Bonne fête du Canada',
 };
 
+const GREETINGS_EN = {
+  rentree: 'Have a great start',
+  'mi-session': 'You’ve got this — midterms',
+  motivation: 'You’ve got this',
+  'fin-session': 'Good luck with finals',
+  relache: 'Enjoy the break',
+  'action-grace': 'Happy Thanksgiving',
+  verite: 'Truth and Reconciliation',
+  souvenir: 'Lest we forget',
+  fetes: 'Happy Holidays',
+  annee: 'Happy New Year',
+  paques: 'Happy Easter',
+  patriotes: 'Patriots’ Day',
+  'saint-jean': 'Happy Fête nationale',
+  canada: 'Happy Canada Day',
+};
+
 const CAMPUSES = [
   { slug: 'generique', line: null, lineEn: null, bilingual: false, places: null, hints: null, label: 'Générique' },
   {
@@ -60,7 +77,7 @@ const CAMPUSES = [
     hints: ['université laval', 'adrien-pouliot', 'alphonse-marie-parent', 'biermans', 'ernest-lemieux', 'pavillon dkn'],
   },
   {
-    slug: 'mcgill', line: 'Université McGill', lineEn: 'McGill University', bilingual: true, label: 'Université McGill',
+    slug: 'mcgill', line: 'Université McGill', lineEn: 'McGill University', core: 'McGill', bilingual: true, label: 'Université McGill',
     places: ['mcgill'],
     hints: ['mcgill'],
   },
@@ -75,7 +92,7 @@ const CAMPUSES = [
     hints: ['uqam', 'judith-jasmin'],
   },
   {
-    slug: 'concordia', line: 'Université Concordia', lineEn: 'Concordia University', bilingual: true, label: 'Université Concordia',
+    slug: 'concordia', line: 'Université Concordia', lineEn: 'Concordia University', core: 'Concordia', bilingual: true, label: 'Université Concordia',
     places: ['concordia'],
     hints: ['concordia', 'hall building', 'loyola'],
   },
@@ -85,7 +102,7 @@ const CAMPUSES = [
     hints: ['université de sherbrooke', 'udes', 'georges-cabana', 'univestrie'],
   },
   {
-    slug: 'bishops', line: 'Université Bishop’s', lineEn: 'Bishop’s University', bilingual: true, label: 'Université Bishop’s',
+    slug: 'bishops', line: 'Université Bishop’s', lineEn: 'Bishop’s University', core: 'Bishop’s', bilingual: true, label: 'Université Bishop’s',
     places: ['bishop'],
     hints: ['bishop'],
   },
@@ -317,6 +334,46 @@ function textW(ctx, text) {
   return ctx.measureText(text).width;
 }
 
+function wrapWords(ctx, text, maxW) {
+  const words = String(text).split(/\s+/);
+  const lines = [];
+  let cur = '';
+  for (const word of words) {
+    const next = cur ? `${cur} ${word}` : word;
+    if (ctx.measureText(next).width <= maxW) cur = next;
+    else {
+      if (cur) lines.push(cur);
+      cur = word;
+    }
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+
+function fillUniLockup(ctx, core, y, small, large) {
+  const left = 'Université ';
+  const right = ' University';
+  ctx.textBaseline = 'alphabetic';
+  ctx.font = `400 ${small}px "LR Sans"`;
+  const wLeft = textW(ctx, left);
+  const wRight = textW(ctx, right);
+  ctx.font = `600 ${large}px "LR Sans Semi"`;
+  const wCore = textW(ctx, core);
+  let x = (ctx.canvas.width - (wLeft + wCore + wRight)) / 2;
+  const base = y + large * 0.82;
+  ctx.fillStyle = INK;
+  ctx.font = `400 ${small}px "LR Sans"`;
+  ctx.fillText(left, x, base);
+  x += wLeft;
+  ctx.font = `600 ${large}px "LR Sans Semi"`;
+  ctx.fillText(core, x, base);
+  x += wCore;
+  ctx.font = `400 ${small}px "LR Sans"`;
+  ctx.fillText(right, x, base);
+  ctx.textBaseline = 'top';
+  return large;
+}
+
 function wrapJoin(ctx, parts, maxW) {
   const lines = [];
   let cur = '';
@@ -515,39 +572,47 @@ function compose(opts) {
     sloganSize -= 1;
     ctx.font = `400 ${sloganSize}px "LR Sans"`;
   }
-  const enSize = Math.max(16, Math.floor(sloganSize / 2));
+  const enSize = Math.max(14, Math.floor(sloganSize * 0.48));
   const uniSize = Math.round(play * 0.018);
-  const uniEnSize = Math.max(14, Math.round(play * 0.01));
+  const uniCore = Math.round(uniSize * 1.22);
   const gapBlock = Math.round(play * 0.022);
-  const gapLang = Math.round(play * 0.014);
+  const gapLang = Math.round(play * 0.012);
   if (kind !== 'minimal') {
     ctx.font = `400 ${sloganSize}px "LR Sans"`;
     y += fillCentered(ctx, SLOGAN, y, INK) + (kind === 'bilingue' ? gapLang : gapBlock);
     if (kind === 'bilingue') {
       ctx.font = `400 ${enSize}px "LR Sans"`;
-      y += fillCentered(ctx, SLOGAN_EN, y, SOFT) + gapBlock;
+      const enLines = wrapWords(ctx, SLOGAN_EN, maxW);
+      enLines.forEach((line, i) => {
+        const extra = i === enLines.length - 1 ? gapBlock : Math.round(enSize * 0.25);
+        y += fillCentered(ctx, line, y, SOFT) + extra;
+      });
     }
   }
-  if (campus.line) {
+  if (kind === 'bilingue' && campus.core) {
+    y += fillUniLockup(ctx, campus.core, y, uniSize, uniCore) + gapBlock;
+  } else if (campus.line) {
     ctx.font = `400 ${uniSize}px "LR Sans"`;
-    y += fillCentered(ctx, campus.line, y, INK) + (kind === 'bilingue' && campus.lineEn ? gapLang : gapBlock);
-    if (kind === 'bilingue' && campus.lineEn) {
-      ctx.font = `400 ${uniEnSize}px "LR Sans"`;
-      y += fillCentered(ctx, campus.lineEn, y, SOFT) + gapBlock;
-    }
+    y += fillCentered(ctx, campus.line, y, INK) + gapBlock;
   }
   const greet = GREETINGS[opts.greeting];
   if (greet) {
-    const gSize = Math.round(play * 0.048);
-    y += Math.round(play * 0.012);
+    const biGreet = kind === 'bilingue' && GREETINGS_EN[opts.greeting];
+    const gSize = Math.round(play * (biGreet ? 0.04 : 0.048));
+    y += Math.round(play * 0.01);
     ctx.save();
-    ctx.translate(w / 2, y + gSize * 0.2);
+    ctx.translate(w / 2, y + gSize * 0.15);
     ctx.rotate((-8 * Math.PI) / 180);
-    ctx.font = `700 ${gSize}px "LR Script"`;
-    ctx.fillStyle = INK;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
+    ctx.font = `700 ${gSize}px "LR Script"`;
+    ctx.fillStyle = INK;
     ctx.fillText(greet, 0, 0);
+    if (biGreet) {
+      ctx.font = `700 ${Math.round(gSize * 0.5)}px "LR Script"`;
+      ctx.fillStyle = SOFT;
+      ctx.fillText(GREETINGS_EN[opts.greeting], 0, gSize * 0.95);
+    }
     ctx.restore();
   }
 
