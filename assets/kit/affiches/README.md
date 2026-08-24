@@ -1,22 +1,15 @@
 # Affiches campus 11 × 17
 
-Trim **3300 × 5100 px** (11 × 17 po à 300 dpi), ratio exact 11:17.
-Zone de sécurité 0,5 po. Bleed 0,125 po : `python3 scripts/generate-campus-posters.py --formats print`.
+Trim **3300 × 5100 px** (11 × 17 po @ 300 dpi). Pas de barre colorée.
+Grand pictogramme satellite + wordmark **[logo PWA | LE-RADAR.ca]**.
 
-QR vectoriel officiel : `assets/kit/qr-le-radar.svg` (le-radar.ca).
-
-## Variantes
-
-| Clé | Contenu |
-|---|---|
-| `standard` | Slogan FR + université + URL |
-| `minimal` | Logo, mot-symbole, université, URL |
-| `bilingue` | Standard + « Student media on your radar » |
-| `*-qr` | Les trois + QR 2,25 po, quiet zone blanche |
+- Sans photo : fond `#0E0F12` + motif radar très léger
+- Avec photo : overlay `#0E0F12` 55–70 %
+- Zone QR : carré blanc 2,25 po (quiet zone pour coller le SVG `assets/kit/qr-le-radar.svg`)
 
 ```
-python3 scripts/generate-campus-posters.py --only laval
-python3 scripts/generate-campus-posters.py --variant standard-qr
+python3 scripts/generate-campus-posters.py --ground nophoto --only generique,laval,mcgill,udem
+python3 scripts/generate-campus-posters.py
 ```
 
-Labo local : `http://127.0.0.1:8777/dev/affiche-lab.html`
+Labo : http://127.0.0.1:8777/dev/affiche-lab.html

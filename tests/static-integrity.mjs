@@ -517,8 +517,10 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   }
   const posterScript = readFileSync(join(root, 'scripts/generate-campus-posters.py'), 'utf8');
   assert(posterScript.includes('TITLE = "LE-RADAR.ca"'), 'affiches campus : mot-symbole LE-RADAR.ca');
-  assert(posterScript.includes('#6C2163') || posterScript.includes('(108, 33, 99'), 'affiches campus : pourpre de marque');
+  assert(posterScript.includes('draw_wordmark'), 'affiches campus : petit logo à gauche du mot-symbole');
+  assert(!/draw\.rectangle\(\(0, 0, W, BAR/.test(posterScript), 'affiches campus : pas de barre colorée en haut');
   assert(posterScript.includes('Student media on your radar'), 'affiches campus : slogan EN officiel');
+  assert(posterScript.includes('Le Réseau Académique de Découverte'), 'affiches campus : nom complet');
   assert(existsSync(join(root, 'assets/kit/qr-le-radar.svg')), 'affiches campus : QR vectoriel officiel requis');
   const postersCheck = spawnSync('python3', [join(root, 'scripts/generate-campus-posters.py'), '--check'], { encoding: 'utf8' });
   assert.equal(postersCheck.status, 0, postersCheck.stderr || postersCheck.stdout || 'affiches campus : JPEG 11×17 manquants');
