@@ -499,7 +499,7 @@ function compose(opts) {
   const creditH = credit ? measure(credit, fCredit) : 0;
   const fLang = 22 * fit;
   const iconS = 36 * fit;
-  const langFont = `600 ${fLang}px "Noto Sans", "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", "Noto Sans Arabic", "Noto Sans Devanagari", "LR Sans Semi"`;
+  const langFont = `400 ${fLang}px "Noto Sans", "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", "Noto Sans Arabic", "Noto Sans Devanagari", "LR Sans"`;
   ctx.font = langFont;
   const langMax = w - 2 * safe - 240 * fit;
   const langLines = opts.langs ? wrapJoin(ctx, TRANSLATE_LANGS, langMax) : [];
@@ -507,7 +507,7 @@ function compose(opts) {
   const langsH = opts.langs
     ? iconS + 8 + langLines.length * (langLineH + 5)
     : 0;
-  const markH = Math.max(footLogo, fMark);
+  const markH = Math.max(footLogo, measure(TITLE, fMark));
   const qrIn = fmt.id === 'tabloid' ? 2.25 : 1.65;
   const qrPx = Math.round(qrIn * REF_DPI * fit);
   const qrPad = Math.round(36 * fit);
@@ -577,11 +577,14 @@ function compose(opts) {
   fillCentered(ctx, NAME_FULL, cy, SOFT);
   cy -= 6 * fit;
   cy -= markH;
-  const markW = trackedWidth(ctx, TITLE, fMark);
+  ctx.font = `400 ${fMark}px "LR Sans"`;
+  const markW = textW(ctx, TITLE);
   const rowW = footLogo + markGap + markW;
   const mx = (w - rowW) / 2;
   if (assets.logo) ctx.drawImage(assets.logo, mx, cy + (markH - footLogo) / 2, footLogo, footLogo);
-  fillTracked(ctx, TITLE, cy + (markH - fMark) / 2, fMark, INK, mx + footLogo + markGap);
+  ctx.fillStyle = INK;
+  ctx.textBaseline = 'top';
+  ctx.fillText(TITLE, mx + footLogo + markGap, cy + (markH - fMark) / 2);
   const ruleY = cy - 12 * fit;
   ctx.strokeStyle = 'rgba(241, 242, 244, 0.22)';
   ctx.lineWidth = Math.max(1, Math.round(fit));
