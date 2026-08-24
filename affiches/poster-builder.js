@@ -503,10 +503,10 @@ function compose(opts) {
   };
   /* Pied = site-foot : mot-symbole, signature discrète, mentions plus petites. */
   const fMark = 40 * fit;
-  const fSign = 22 * fit;
-  const fLegal = 20 * fit;
-  const fCredit = 17 * fit;
-  const fEn = 16 * fit;
+  const fSign = 24 * fit;
+  const fLegal = 22 * fit;
+  const fCredit = 19 * fit;
+  const fEn = 18 * fit;
   const footLogo = 44 * fit;
   const markGap = 10 * fit;
   const legalMax = w - 2 * safe - 280 * fit;
@@ -520,11 +520,11 @@ function compose(opts) {
     + (enLines.length ? 8 * fit + enLines.length * (enLineH + 4) - 4 : 0);
   const nameH = measure(NAME_FULL, fSign);
   const creditH = credit ? measure(credit, fCredit) : 0;
-  const fLang = 22 * fit;
+  const fLang = 24 * fit;
   const iconS = 36 * fit;
   const langFont = `400 ${fLang}px "Noto Sans", "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", "Noto Sans Arabic", "Noto Sans Devanagari", "LR Sans"`;
   ctx.font = langFont;
-  const langMax = w - 2 * safe - 240 * fit;
+  const langMax = w - 2 * safe - 80 * fit;
   const langLines = opts.langs ? wrapJoin(ctx, TRANSLATE_LANGS, langMax) : [];
   const langLineH = langLines.length ? measure(langLines[0] || 'Français', fLang) : 0;
   const langsH = opts.langs
@@ -538,7 +538,7 @@ function compose(opts) {
   const playTop = barH + 12 * fit;
   const big = Math.round(816 * fit);
   const logoY = playTop + Math.round(700 * fit);
-  const qrTop = playTop + Math.round(3935 * fit);
+  const qrTop = playTop + Math.round(3680 * fit);
   if (!photo) drawRadar(ctx, w, h, w / 2, logoY + big / 2);
 
   ctx.fillStyle = PURPLE;
@@ -548,7 +548,7 @@ function compose(opts) {
   const fade = ctx.createLinearGradient(0, fadeTop, 0, h);
   fade.addColorStop(0, 'rgba(14, 15, 18, 0)');
   fade.addColorStop(0.4, 'rgba(14, 15, 18, 0.22)');
-  fade.addColorStop(1, 'rgba(14, 15, 18, 0.58)');
+  fade.addColorStop(1, 'rgba(14, 15, 18, 0.72)');
   ctx.fillStyle = fade;
   ctx.fillRect(0, fadeTop, w, h - fadeTop);
 
@@ -564,8 +564,22 @@ function compose(opts) {
   if (credit) {
     cy -= creditH;
     ctx.font = `400 ${fCredit}px "LR Sans"`;
-    fillCentered(ctx, credit, cy, MUTED);
+    fillCentered(ctx, credit, cy, SOFT);
     cy -= 18 * fit;
+  }
+  if (opts.langs && langsH) {
+    cy -= langsH;
+    const langTop = cy;
+    if (assets.translate) {
+      ctx.drawImage(assets.translate, (w - iconS) / 2, langTop, iconS, iconS);
+    }
+    let ly = langTop + iconS + 8;
+    ctx.font = langFont;
+    langLines.forEach((line) => {
+      fillCentered(ctx, line, ly, SOFT);
+      ly += langLineH + 5;
+    });
+    cy -= 16 * fit;
   }
   cy -= legalH;
   let ty = cy;
@@ -577,7 +591,7 @@ function compose(opts) {
   enLines.forEach((line, i) => {
     if (i === 0) ty += 2 * fit;
     ctx.font = `400 ${fEn}px "LR Sans"`;
-    fillCentered(ctx, line, ty, MUTED);
+    fillCentered(ctx, line, ty, SOFT);
     ty += enLineH + 4;
   });
   cy -= 14 * fit;
@@ -591,21 +605,6 @@ function compose(opts) {
   const mx = (w - rowW) / 2;
   if (assets.logo) ctx.drawImage(assets.logo, mx, cy + (markH - footLogo) / 2, footLogo, footLogo);
   fillTracked(ctx, TITLE, cy + (markH - fMark) / 2, fMark, INK, mx + footLogo + markGap);
-
-  if (opts.langs && langsH) {
-    const langTop = qrTop + qrSide + 24 * fit;
-    const maxLangBottom = cy - 16 * fit;
-    if (assets.translate && langTop + iconS <= maxLangBottom) {
-      ctx.drawImage(assets.translate, (w - iconS) / 2, langTop, iconS, iconS);
-    }
-    let ly = langTop + iconS + 8;
-    ctx.font = langFont;
-    langLines.forEach((line) => {
-      if (ly + langLineH > maxLangBottom) return;
-      fillCentered(ctx, line, ly, SOFT);
-      ly += langLineH + 5;
-    });
-  }
 
   if (assets.logo) ctx.drawImage(assets.logo, (w - big) / 2, logoY, big, big);
   const titleSize = Math.round(226 * fit);
