@@ -36,7 +36,7 @@ test.afterAll(async () => {
 
 test('tableau de bord local', async ({ page }) => {
   await page.goto(`${BASE}/dev/`, { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('h1')).toContainText('Labo');
+  await expect(page.locator('h1')).toContainText('Tableau de bord');
   await expect(page.locator('a.card.featured')).toHaveAttribute('href', './photo-lab/');
   await expect(page.locator('a.card[href="../index.html"]').first()).toBeVisible();
   const sports = page.locator('a.card[href="./sports-strip-lab.html"]');
@@ -60,8 +60,8 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.locator('label:has(input[name="format"][value="legal"])')).toBeVisible();
   await expect(page.locator('label:has(input[name="campus"][value="uqtr"])')).toBeVisible();
   await expect(page.locator('label:has(input[name="campus"][value="hec"])')).toBeVisible();
-  await expect(page.getByRole('button', { name: /JPEG 600 dpi/ }).first()).toBeVisible();
   await expect(page.getByRole('button', { name: /PDF 600 dpi/ }).first()).toBeVisible();
+  await expect(page.getByRole('button', { name: /JPEG 600 dpi/ }).first()).toBeVisible();
   await page.locator('#preview canvas').waitFor({ timeout: 20000 });
   const previewBox = await page.locator('#preview canvas').boundingBox();
   expect(previewBox).toBeTruthy();
@@ -79,6 +79,7 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.locator('#status')).toContainText('10200 × 13200');
   await page.locator('label:has(input[name="dpi"][value="300"])').click();
   await expect(page.locator('#status')).toContainText('2550 × 3300');
+  await expect(page.getByRole('button', { name: /PDF 300 dpi/ }).first()).toBeVisible();
   await expect(page.getByRole('button', { name: /JPEG 300 dpi/ }).first()).toBeVisible();
   await expect(page.locator('#photo-grid label')).toHaveCount(6);
   await page.locator('#photo-more').click();
@@ -106,6 +107,7 @@ test('générateur d’affiches public', async ({ page }) => {
   expect(lavalTitles).not.toContain('pouliot 09');
   await expect(page.locator('#greeting')).toContainText('Bonne rentrée');
   await expect(page.locator('label:has(input[name="langs"][value="oui"])')).toContainText('Langues du site');
+  await expect(page.locator('input[name="langs"][value="oui"]')).toBeChecked();
   await expect(page.locator('.solid--radar')).toBeVisible();
   await expect(page.locator('#uni-toggle')).toBeVisible();
   await page.locator('label:has(input[name="campus"][value="concordia"])').click();

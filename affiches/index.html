@@ -24,9 +24,9 @@
   <link rel="stylesheet" href="../style-masthead.css">
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="../seo-pages.css">
-  <link rel="stylesheet" href="./poster-builder.css?v=dpi-lab">
-  <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e91">
-  <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e91">
+  <link rel="stylesheet" href="./poster-builder.css?v=params-first">
+  <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e92">
+  <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e92">
 </head>
 <body>
   <header class="masthead">
@@ -76,11 +76,11 @@
 
     <div class="dash">
       <form class="dash-controls" id="form" onsubmit="return false;">
-        <p class="dash-lead">Vos choix à gauche. L’affiche reste à droite. Cadrage à côté de l’aperçu.</p>
+        <p class="dash-lead">Paramètres d’abord, photo ensuite. L’affiche reste à droite.</p>
         <div class="dash-actions">
           <div class="btn-row">
-            <button class="btn" type="button" id="dl">JPEG 600 dpi</button>
-            <button class="btn btn-ghost" type="button" id="dl-pdf">PDF 600 dpi</button>
+            <button class="btn" type="button" id="dl">PDF 600 dpi</button>
+            <button class="btn btn-ghost" type="button" id="dl-jpg">JPEG 600 dpi</button>
           </div>
           <p class="status" id="status">Chargement…</p>
         </div>
@@ -130,13 +130,6 @@
         </fieldset>
 
         <fieldset>
-          <legend>Photo</legend>
-          <div class="photo-grid" id="photo-grid"></div>
-          <button type="button" class="photo-more" id="photo-more" hidden>Voir plus de photos</button>
-          <p class="photo-meta" id="photo-meta"></p>
-        </fieldset>
-
-        <fieldset>
           <legend>Texte</legend>
           <div class="choices">
             <label><input type="radio" name="lang" value="standard" checked> Français</label>
@@ -155,30 +148,39 @@
         <fieldset>
           <legend>Message manuscrit</legend>
           <select class="greeting" name="greeting" id="greeting" aria-describedby="greeting-hint">
-            <option value="none" selected>Aucun</option>
-            <option value="rentree">Bonne rentrée</option>
-            <option value="mi-session">Courage — mi-session</option>
-            <option value="motivation">Tu vas y arriver</option>
-            <option value="fin-session">Bonne fin de session</option>
-            <option value="relache">Bonne relâche</option>
-            <option value="action-grace">Bonne Action de grâce</option>
-            <option value="verite">Vérité et réconciliation</option>
-            <option value="souvenir">Souvenons-nous</option>
-            <option value="fetes">Joyeuses Fêtes</option>
-            <option value="annee">Bonne année</option>
-            <option value="paques">Joyeuses Pâques</option>
-            <option value="patriotes">Journée des Patriotes</option>
-            <option value="saint-jean">Bonne Saint-Jean</option>
-            <option value="canada">Bonne fête du Canada</option>
+            <option value="none">Aucun</option>
+            <optgroup label="Le projet">
+              <option value="nopub" selected>Pas de publicité</option>
+              <option value="gpl">Code libre GPL 2.0</option>
+              <option value="gratuit">Gratuit, pour toujours</option>
+              <option value="independant">Indépendant</option>
+              <option value="ncompte">Sans compte à créer</option>
+            </optgroup>
+            <optgroup label="Saison">
+              <option value="rentree">Bonne rentrée</option>
+              <option value="mi-session">Courage — mi-session</option>
+              <option value="motivation">Tu vas y arriver</option>
+              <option value="fin-session">Bonne fin de session</option>
+              <option value="relache">Bonne relâche</option>
+              <option value="action-grace">Bonne Action de grâce</option>
+              <option value="verite">Vérité et réconciliation</option>
+              <option value="souvenir">Souvenons-nous</option>
+              <option value="fetes">Joyeuses Fêtes</option>
+              <option value="annee">Bonne année</option>
+              <option value="paques">Joyeuses Pâques</option>
+              <option value="patriotes">Journée des Patriotes</option>
+              <option value="saint-jean">Bonne Saint-Jean</option>
+              <option value="canada">Bonne fête du Canada</option>
+            </optgroup>
           </select>
-          <p class="field-hint" id="greeting-hint">Signature à la main, en français.</p>
+          <p class="field-hint" id="greeting-hint">Signature à la main. En bilingue, une ligne anglaise s’ajoute.</p>
         </fieldset>
 
         <fieldset>
           <legend>Langues</legend>
           <div class="choices">
-            <label><input type="radio" name="langs" value="non" checked> Sans</label>
-            <label><input type="radio" name="langs" value="oui"> Langues du site</label>
+            <label><input type="radio" name="langs" value="non"> Sans</label>
+            <label><input type="radio" name="langs" value="oui" checked> Langues du site</label>
           </div>
           <p class="field-hint">Pied d’affiche : icône de traduction, puis les langues dans leur écriture.</p>
         </fieldset>
@@ -191,10 +193,17 @@
           </div>
         </fieldset>
 
+        <fieldset>
+          <legend>Photo</legend>
+          <div class="photo-grid" id="photo-grid"></div>
+          <button type="button" class="photo-more" id="photo-more" hidden>Voir plus de photos</button>
+          <p class="photo-meta" id="photo-meta"></p>
+        </fieldset>
+
         <div class="dash-actions dash-actions--end">
           <div class="btn-row">
-            <button class="btn" type="button" id="dl-bottom">JPEG 600 dpi</button>
-            <button class="btn btn-ghost" type="button" id="dl-pdf-bottom">PDF 600 dpi</button>
+            <button class="btn" type="button" id="dl-bottom">PDF 600 dpi</button>
+            <button class="btn btn-ghost" type="button" id="dl-jpg-bottom">JPEG 600 dpi</button>
           </div>
         </div>
       </form>
@@ -265,8 +274,8 @@
   <script src="../nav-shell.js" defer></script>
   <script src="../native-tuner.js" defer></script>
   <script src="../engage-prompt.js" defer></script>
-  <script src="../dev/midwidth-preview.js?v=wide-auto-e91"></script>
-  <script src="../dev/wide-desktop-preview.js?v=wide-auto-e91"></script>
-  <script src="./poster-builder.js?v=no-lab-copy"></script>
+  <script src="../dev/midwidth-preview.js?v=wide-auto-e92"></script>
+  <script src="../dev/wide-desktop-preview.js?v=wide-auto-e92"></script>
+  <script src="./poster-builder.js?v=foot-tight2"></script>
 </body>
 </html>

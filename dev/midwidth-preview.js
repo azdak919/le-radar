@@ -439,6 +439,12 @@
     // ── Rangée 1 : formats de base (plein → 1280) ──
     const fmtBase = rowEl();
     fmtBase.setAttribute('aria-label', 'Formats téléphone à bureau');
+    const home = document.createElement('a');
+    home.href = '/dev/';
+    home.textContent = 'Tableau';
+    home.title = 'Tableau de bord';
+    home.style.cssText = formatBtnStyle(false) + ';text-decoration:none;display:inline-flex;align-items:center;margin-right:6px';
+    fmtBase.appendChild(home);
     const tagB = document.createElement('span');
     tagB.textContent = 'Base';
     tagB.style.cssText = tagStyle;

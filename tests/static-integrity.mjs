@@ -515,18 +515,58 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(kit.includes('assets/icon.svg'), 'kit-media : pictogramme téléchargeable requis');
   assert(kit.includes('wordmark-on-dark.svg'), 'kit-media : mot-symbole sombre requis');
   assert(kit.includes('wordmark-on-light.svg'), 'kit-media : mot-symbole clair requis');
+  assert(kit.includes('wordmark-on-dark.jpg'), 'kit-media : JPG mot-symbole sombre');
+  assert(kit.includes('wordmark-on-light.jpg'), 'kit-media : JPG mot-symbole clair');
+  assert(kit.includes('banner-web.jpg'), 'kit-media : JPG bannière web');
+  assert(kit.includes('banner-square.jpg'), 'kit-media : JPG carré réseaux');
+  assert(kit.includes('icon-512.jpg'), 'kit-media : JPG pictogramme');
+  assert(kit.includes('src="../assets/kit/wordmark-on-dark.jpg"'), 'kit-media : preview = fichier sombre');
+  assert(kit.includes('src="../assets/kit/banner-square.jpg"'), 'kit-media : preview = carré réseaux');
   for (const asset of ['wordmark-on-dark.svg', 'wordmark-on-light.svg', 'banner-web.svg', 'banner-square.svg', 'affiche-11x17.svg']) {
     const svg = readFileSync(join(root, 'assets/kit', asset), 'utf8');
     assert(svg.includes('data:image/svg+xml;base64,'), `kit-media : ${asset} doit être autonome après téléchargement`);
     assert(!svg.includes('href="../icon.svg"'), `kit-media : ${asset} ne doit pas dépendre d'un chemin local`);
+    assert(svg.includes("font-family:'LR Serif'"), `kit-media : ${asset} embarque Source Serif 4`);
+    assert(!/font-family="Georgia, serif"/.test(svg), `kit-media : ${asset} n’utilise plus Georgia pour LE-RADAR.ca`);
   }
   const mediaKitCheck = spawnSync(process.execPath, [join(root, 'scripts/generate-media-kit-assets.mjs'), '--check'], { encoding: 'utf8' });
   assert.equal(mediaKitCheck.status, 0, mediaKitCheck.stderr || 'kit-media : fichiers générés désynchronisés');
-  const campusSlugs = ['laval', 'mcgill', 'udem', 'uqam', 'concordia', 'sherbrooke', 'bishops'];
-  for (const slug of campusSlugs) {
-    assert(kit.includes(`affiche-${slug}.jpg`), `kit-media : affiche ${slug} téléchargeable requise`);
-    assert(kit.includes(`affiche-${slug}-preview.jpg`), `kit-media : aperçu ${slug} requis`);
+  assert(kit.includes('../affiches/'), 'kit-media : lien vers l’atelier d’affiches');
+  assert(
+    kit.indexOf('id="affiches"') < kit.indexOf('id="logos"'),
+    'kit-media : section Affiches en premier',
+  );
+  assert(kit.includes('Pour les babillards'), 'kit-media : phrase affiches claire');
+  assert(kit.includes('id="kit-poster-grid"'), 'kit-media : grille d’exemples d’affiches');
+  assert(kit.includes('kit-poster-examples.js'), 'kit-media : tirage aléatoire d’exemples');
+  assert(existsSync(join(root, 'assets/kit/affiches/examples.json')), 'kit-media : catalogue d’exemples');
+  {
+    const catalog = JSON.parse(readFileSync(join(root, 'assets/kit/affiches/examples.json'), 'utf8'));
+    for (const ex of catalog.examples || []) {
+      const prev = join(root, 'assets/kit/affiches', `affiche-ex-${ex.id}-preview.jpg`);
+      assert(existsSync(prev), `kit-media : aperçu local ${ex.id}`);
+    }
   }
+  assert(!kit.includes('à imprimer à 100'), 'kit-media : plus de consigne dpi/100 % dans le lead');
+  assert(kit.includes('?campus=laval'), 'kit-media : raccourci campus Laval');
+  assert(!kit.includes('affiche-laval.jpg'), 'kit-media : plus de JPEG campus figés');
+  assert(!/Rentrée 2026/.test(kit), 'kit-media : plus de Rentrée 2026');
+  for (const name of [
+    'affiche-generique-11x17-600dpi.pdf',
+    'affiche-generique-lettre-600dpi.pdf',
+    'affiche-generique-legal-600dpi.pdf',
+    'affiche-generique-preview.jpg',
+  ]) {
+    assert(existsSync(join(root, 'assets/kit/affiches', name)), `kit-media : ${name} requis`);
+    assert(kit.includes(name), `kit-media : lien ${name}`);
+  }
+  assert(!kit.includes('affiche-generique-11x17-600dpi.jpg'), 'kit-media : téléchargements génériques en PDF');
+  assert(kit.includes('>11 × 17<') || kit.includes('11 × 17</a>'), 'kit-media : téléchargement 11 × 17');
+  assert(kit.includes('>Lettre<') || kit.includes('Lettre</a>'), 'kit-media : téléchargement lettre');
+  assert(kit.includes('>Légal<') || kit.includes('Légal</a>'), 'kit-media : téléchargement légal');
+  const mediaKitEn = readFileSync(join(root, 'en/media-kit/index.html'), 'utf8');
+  assert(mediaKitEn.includes('../../affiches/'), 'media-kit EN : lien vers l’atelier');
+  assert(!mediaKitEn.includes('affiche-laval.jpg'), 'media-kit EN : plus de JPEG campus figés');
   const posterScript = readFileSync(join(root, 'scripts/generate-campus-posters.py'), 'utf8');
   assert(posterScript.includes('TITLE = "LE-RADAR.ca"'), 'affiches campus : mot-symbole LE-RADAR.ca');
   assert(posterScript.includes('draw_footer_wordmark'), 'affiches campus : petit logo PWA au footer seulement');
@@ -543,7 +583,11 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   const builder = readFileSync(join(root, 'affiches/index.html'), 'utf8');
   const builderJs = readFileSync(join(root, 'affiches/poster-builder.js'), 'utf8');
   assert(builderJs.includes('fillCentered(ctx, NAME_FULL, cy, SOFT)'), 'pied d’affiche : nom développé discret comme le site');
-  assert(builderJs.includes('fillUniLockup'), 'générateur public : Université McGill University');
+  assert(builderJs.includes('fillUniLockup'), 'générateur public : nom d’établissement plus grand / gras');
+  assert(builderJs.includes('uniLockupParts'), 'générateur public : même lockup pour tous les campus');
+  assert(builderJs.includes("core: 'Laval'"), 'générateur public : Laval en gras comme McGill');
+  assert(builderJs.includes("kind === 'bilingue' && campus.bilingual"), 'University seulement si bilingue anglophone');
+  assert(builderJs.includes('campus.line || campus.core'), 'francophone : nom entier en gras');
   assert(builderJs.includes('GREETINGS_EN'), 'générateur public : messages manuscrits bilingues OQLF');
   assert(posterScript.includes('non officiel et sans affiliation'), 'affiches campus : « et » plutôt qu’un tiret');
   assert(posterScript.includes('Les contenus appartiennent à leurs publications'), 'affiches campus : contenus d’origine');
@@ -552,6 +596,10 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(posterScript.includes('Le Réseau Académique de Découverte'), 'affiches campus : nom complet au footer');
   assert(existsSync(join(root, 'assets/kit/qr-le-radar.svg')), 'affiches campus : QR vectoriel officiel requis');
   assert(builder.includes('Imprimer une affiche'), 'générateur public : titre');
+  assert(
+    builder.indexOf('<legend>Code QR</legend>') < builder.indexOf('<legend>Photo</legend>'),
+    'affiches : paramètres avant la grille photo',
+  );
   assert(!builder.includes('n’apparaît qu’en local'), 'affiches : pas de mention labo dans le texte public');
   assert(!builder.includes('barre de tailles'), 'affiches : pas de notice Format dans le lead');
   assert(builder.includes('class="masthead"'), 'affiches : mât SEO comme les autres pages');
@@ -559,8 +607,12 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builder.includes('seo-page-theme.js'), 'affiches : thème clair/sombre du site');
   assert(!builder.includes('lab-photo-link'), 'affiches : pas de lien Labo photo (labo = /dev/)');
   assert(builder.includes('midwidth-preview.js'), 'générateur public : barre Format du labo local');
+  const hubHtml = readFileSync(join(root, 'dev/index.html'), 'utf8');
+  assert(hubHtml.includes('Tableau de bord'), 'hub local : titre Tableau de bord');
+  assert(readFileSync(join(root, 'dev/midwidth-preview.js'), 'utf8').includes("textContent = 'Tableau'"), 'barre Format : retour Tableau de bord');
   assert(builder.includes('Lettre 8,5 × 11'), 'générateur public : format lettre');
   assert(builder.includes('Légal 8,5 × 14'), 'générateur public : format légal');
+  assert(builderJs.includes('function applyQuery'), 'générateur public : ?campus= depuis le kit média');
   assert(builderJs.includes('photo-bank.json'), 'générateur public : banque unique du labo photo');
   assert(builderJs.includes('quebec-backgrounds-rejected.json'), 'générateur public : exclusions du labo');
   assert(builderJs.includes('wIn: 8.5') && builderJs.includes('hIn: 11'), 'générateur public : lettre 8,5×11');
@@ -570,16 +622,24 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('DPI_LAB'), 'générateur public : 1200 dpi réservé au labo local');
   assert(builderJs.includes('DEFAULT_DPI = 600'), 'générateur public : 600 dpi par défaut');
   assert(builder.includes('name="dpi"'), 'générateur public : choix de résolution');
+  assert(builder.includes('name="langs" value="oui" checked'), 'affiche générique : langues du site par défaut');
+  assert(builderJs.includes('syncGenericLangs'), 'affiche générique : langues rétablies sur Générique');
   assert(builder.includes('id="dpi-1200-choice" hidden'), '1200 dpi masqué hors labo local');
   assert(builder.includes('value="600" checked'), 'générateur public : 600 dpi coché');
   assert(builderJs.includes('jpegToPdfBlob'), 'générateur public : PDF dans le navigateur');
   assert(builderJs.includes('previewFit'), 'générateur public : aperçu dimensionné à la zone');
   assert(builderJs.includes('view.style.width'), 'générateur public : canvas d’aperçu pas 300×150 par défaut');
   assert(builder.includes('PDF 600 dpi'), 'générateur public : bouton PDF 600 dpi');
+  assert(builder.includes('id="dl-jpg"'), 'générateur public : JPEG en second');
+  assert(builderJs.includes("downloadPrint(kind = 'pdf')") || builderJs.includes('downloadPrint(kind = "pdf")') || builderJs.includes("kind = 'pdf'"), 'générateur public : PDF par défaut');
   assert(builderJs.includes('TITLE = \'LE-RADAR.ca\''), 'générateur public : mot-symbole');
   assert(builderJs.includes('printUrl'), 'générateur public : photos Wikimedia CORS pour l’aperçu');
   assert(builderJs.includes('function drawRadar(ctx, w, h, cx, cy)'), 'fond radar centré sur le gros logo');
   assert(builderJs.includes('816 * fit'), 'identité d’affiche figée : le pied ne rapetisse pas le logo');
+  assert(builderJs.includes('3680 * fit'), 'QR figé un peu plus haut : langues entières sous le pied');
+  assert(builderJs.includes('opts.langs) ? qrTop + qrSide : qrTop'), 'sans QR ni langues : pied serré, pas étiré');
+  assert(builderJs.includes('footCap'), 'pied d’affiche : corps agrandi sans dépasser le haut');
+  assert(builderJs.includes('(h - cy - creditH) / 2'), 'crédit photo : milieu entre langues et bas de page');
   assert(builderJs.includes('photo-angle'), 'générateur public : angle de photo');
   assert(builder.includes('solid--radar') || builderJs.includes('solid--radar'), 'générateur public : pastille fond radar');
   assert(builderJs.includes('syncLangChoice'), 'générateur public : bilingue réservé aux campus anglophones');
@@ -591,10 +651,19 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
     'icône traduction : pas de stroke (plus en gras)',
   );
   assert(builderJs.includes('Bonne rentrée'), 'générateur public : message manuscrit rentrée');
+  assert(builderJs.includes('Pas de publicité'), 'générateur public : phrase manuscrite sans pub');
+  assert(builderJs.includes("greeting: 'nopub'"), 'affiche générique : Pas de publicité par défaut');
+  assert(builder.includes('value="nopub" selected'), 'affiche générique : Pas de publicité coché');
+  assert(builderJs.includes('Code libre GPL 2.0'), 'générateur public : phrase manuscrite GPL');
+  assert(builderJs.includes('Gratuit, pour toujours'), 'générateur public : phrase manuscrite gratuit');
+  assert(builder.includes('optgroup label="Le projet"'), 'générateur public : groupe de phrases projet');
   assert(builderJs.includes('LR Script'), 'générateur public : fonte signature');
   assert(existsSync(join(root, 'assets/kit/fonts/Caveat-Bold.ttf')), 'fonte Caveat pour signature manuscrite');
   assert(builderJs.includes("slug: 'mcgill'") && builderJs.includes('bilingual: true'), 'générateur public : McGill bilingue');
-  assert(builderJs.includes("slug: 'laval'") && builderJs.includes("slug: 'laval', line: 'Université Laval', bilingual: false"), 'générateur public : Laval français seulement');
+  assert(
+    /slug: 'laval', line: 'Université Laval', prefix: 'Université ', core: 'Laval', bilingual: false/.test(builderJs),
+    'générateur public : Laval français seulement',
+  );
   const postersCheck = spawnSync('python3', [join(root, 'scripts/generate-campus-posters.py'), '--check'], { encoding: 'utf8' });
   assert.equal(postersCheck.status, 0, postersCheck.stderr || postersCheck.stdout || 'affiches campus : JPEG 11×17 manquants');
 }
