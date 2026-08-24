@@ -48,6 +48,7 @@ async function main() {
     await page.goto(`${BASE}/affiches/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
     await page.locator('#preview canvas').waitFor({ timeout: 20000 });
     await page.evaluate(() => document.fonts.ready);
+    await page.selectOption('#greeting', 'gratuit');
     for (const fmt of FORMATS) {
       await page.locator(`label:has(input[name="format"][value="${fmt.value}"])`).click();
       await page.waitForTimeout(400);

@@ -82,14 +82,14 @@
       "id": "uqam-jasmin",
       "campus": "uqam",
       "photo": "jasmin",
-      "greeting": "none",
+      "greeting": "gpl",
       "langs": false,
       "lang": "standard",
       "qr": true,
       "labelFr": "UQAM",
       "labelEn": "UQAM",
-      "metaFr": "Judith-Jasmin",
-      "metaEn": "Judith-Jasmin"
+      "metaFr": "Judith-Jasmin · GPL 2.0",
+      "metaEn": "Judith-Jasmin · GPL 2.0"
     },
     {
       "id": "udem-gaudry",
@@ -108,27 +108,27 @@
       "id": "sherbrooke",
       "campus": "sherbrooke",
       "photo": "sherbrooke",
-      "greeting": "none",
+      "greeting": "nopub",
       "langs": true,
       "lang": "standard",
       "qr": true,
       "labelFr": "Université de Sherbrooke",
       "labelEn": "Université de Sherbrooke",
-      "metaFr": "Langues du site",
-      "metaEn": "Site languages"
+      "metaFr": "Pas de publicité · langues",
+      "metaEn": "No ads · languages"
     },
     {
       "id": "hec",
       "campus": "hec",
       "photo": "hec",
-      "greeting": "none",
+      "greeting": "gratuit",
       "langs": false,
       "lang": "standard",
       "qr": true,
       "labelFr": "HEC Montréal",
       "labelEn": "HEC Montréal",
-      "metaFr": "Campus",
-      "metaEn": "Campus"
+      "metaFr": "Gratuit, pour toujours",
+      "metaEn": "Free, forever"
     }
   ]
 }
