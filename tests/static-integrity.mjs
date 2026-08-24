@@ -500,7 +500,10 @@ assert(!laPigePage.includes('Chaque titre renvoie à l’article original'), 'jo
 assert(laPigePage.includes('class="seo-headline__by">Par '), 'journal : byline préfixée requise');
 assert(laPigePage.includes('class="seo-headline__brief"'), 'journal : bref article requis');
 assert(laPigePage.includes('class="seo-headline__more"'), 'journal : lien lire la suite requis');
-assert(/datetime="2026-05-20T/.test(laPigePage), 'journal : heure de publication machine requise');
+assert(
+  /<time datetime="\d{4}-\d{2}-\d{2}T[^"]+"/.test(laPigePage),
+  'journal : heure de publication machine requise',
+);
 assert(laPigePage.includes(' · '), 'journal : heure de publication visible requise');
 assert(!/Crédit photo\s*:/i.test(laPigePage), 'journal : crédits photo absents des extraits SEO requis');
 assert(!/Cégep de Jonquière \(Saguenay/u.test(laPigePage), 'journal : région redondante dans le chapeau interdite');
