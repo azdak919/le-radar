@@ -626,6 +626,8 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('previewFit'), 'générateur public : aperçu dimensionné à la zone');
   assert(builderJs.includes('view.style.width'), 'générateur public : canvas d’aperçu pas 300×150 par défaut');
   assert(builder.includes('PDF 600 dpi'), 'générateur public : bouton PDF 600 dpi');
+  assert(builder.includes('id="dl-jpg"'), 'générateur public : JPEG en second');
+  assert(builderJs.includes("downloadPrint(kind = 'pdf')") || builderJs.includes('downloadPrint(kind = "pdf")') || builderJs.includes("kind = 'pdf'"), 'générateur public : PDF par défaut');
   assert(builderJs.includes('TITLE = \'LE-RADAR.ca\''), 'générateur public : mot-symbole');
   assert(builderJs.includes('printUrl'), 'générateur public : photos Wikimedia CORS pour l’aperçu');
   assert(builderJs.includes('function drawRadar(ctx, w, h, cx, cy)'), 'fond radar centré sur le gros logo');

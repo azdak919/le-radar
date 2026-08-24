@@ -60,8 +60,8 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.locator('label:has(input[name="format"][value="legal"])')).toBeVisible();
   await expect(page.locator('label:has(input[name="campus"][value="uqtr"])')).toBeVisible();
   await expect(page.locator('label:has(input[name="campus"][value="hec"])')).toBeVisible();
-  await expect(page.getByRole('button', { name: /JPEG 600 dpi/ }).first()).toBeVisible();
   await expect(page.getByRole('button', { name: /PDF 600 dpi/ }).first()).toBeVisible();
+  await expect(page.getByRole('button', { name: /JPEG 600 dpi/ }).first()).toBeVisible();
   await page.locator('#preview canvas').waitFor({ timeout: 20000 });
   const previewBox = await page.locator('#preview canvas').boundingBox();
   expect(previewBox).toBeTruthy();
@@ -79,6 +79,7 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.locator('#status')).toContainText('10200 × 13200');
   await page.locator('label:has(input[name="dpi"][value="300"])').click();
   await expect(page.locator('#status')).toContainText('2550 × 3300');
+  await expect(page.getByRole('button', { name: /PDF 300 dpi/ }).first()).toBeVisible();
   await expect(page.getByRole('button', { name: /JPEG 300 dpi/ }).first()).toBeVisible();
   await expect(page.locator('#photo-grid label')).toHaveCount(6);
   await page.locator('#photo-more').click();

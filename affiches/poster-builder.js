@@ -729,7 +729,7 @@ function escapeAttr(s) {
 function specLine() {
   const fmt = FORMATS[state.format];
   const { w, h } = px(fmt);
-  return `${fmt.label} · ${w} × ${h} px · ${outputDpi()} dpi · JPEG`;
+  return `${fmt.label} · ${w} × ${h} px · ${outputDpi()} dpi · PDF`;
 }
 
 function recipeLine() {
@@ -856,8 +856,8 @@ function jpegToPdfBlob(jpeg, imgW, imgH, wIn, hIn) {
   return new Blob([out], { type: 'application/pdf' });
 }
 
-async function downloadPrint(kind = 'jpeg') {
-  const buttons = [document.getElementById('dl'), document.getElementById('dl-pdf'), document.getElementById('dl-bottom'), document.getElementById('dl-pdf-bottom')];
+async function downloadPrint(kind = 'pdf') {
+  const buttons = [document.getElementById('dl'), document.getElementById('dl-jpg'), document.getElementById('dl-bottom'), document.getElementById('dl-jpg-bottom')];
   const status = document.getElementById('status');
   buttons.forEach((b) => { if (b) b.disabled = true; });
   status.textContent = kind === 'pdf' ? 'Composition du PDF…' : 'Composition du JPEG…';
@@ -938,11 +938,11 @@ function syncDpiLabels() {
   const dpi = outputDpi();
   for (const id of ['dl', 'dl-bottom']) {
     const el = document.getElementById(id);
-    if (el) el.textContent = `JPEG ${dpi} dpi`;
-  }
-  for (const id of ['dl-pdf', 'dl-pdf-bottom']) {
-    const el = document.getElementById(id);
     if (el) el.textContent = `PDF ${dpi} dpi`;
+  }
+  for (const id of ['dl-jpg', 'dl-jpg-bottom']) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = `JPEG ${dpi} dpi`;
   }
 }
 
@@ -1088,10 +1088,10 @@ function bind() {
     state.photoOpen = !state.photoOpen;
     renderChoices();
   });
-  document.getElementById('dl').addEventListener('click', () => downloadPrint('jpeg'));
-  document.getElementById('dl-pdf').addEventListener('click', () => downloadPrint('pdf'));
-  document.getElementById('dl-bottom').addEventListener('click', () => downloadPrint('jpeg'));
-  document.getElementById('dl-pdf-bottom').addEventListener('click', () => downloadPrint('pdf'));
+  document.getElementById('dl').addEventListener('click', () => downloadPrint('pdf'));
+  document.getElementById('dl-jpg').addEventListener('click', () => downloadPrint('jpeg'));
+  document.getElementById('dl-bottom').addEventListener('click', () => downloadPrint('pdf'));
+  document.getElementById('dl-jpg-bottom').addEventListener('click', () => downloadPrint('jpeg'));
   const stage = document.getElementById('preview-stage');
   let fitTimer = 0;
   const refit = () => {
