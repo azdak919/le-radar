@@ -36,7 +36,7 @@ test.afterAll(async () => {
 
 test('tableau de bord local', async ({ page }) => {
   await page.goto(`${BASE}/dev/`, { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('h1')).toContainText('Labo');
+  await expect(page.locator('h1')).toContainText('Tableau de bord');
   await expect(page.locator('a.card.featured')).toHaveAttribute('href', './photo-lab/');
   await expect(page.locator('a.card[href="../index.html"]').first()).toBeVisible();
   const sports = page.locator('a.card[href="./sports-strip-lab.html"]');
