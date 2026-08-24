@@ -181,7 +181,7 @@ const state = {
   format: 'tabloid',
   campus: 'generique',
   lang: 'standard',
-  greeting: 'nopub',
+  greeting: 'none',
   langs: true,
   showUni: true,
   qr: true,
@@ -212,6 +212,57 @@ function dpiChoices() {
 
 function outputDpi() {
   return dpiChoices().includes(state.dpi) ? state.dpi : DEFAULT_DPI;
+}
+
+/* iPadOS 13+ se présente comme un Mac. Safari plafonne le canevas ~4096 px / 16 Mpx. */
+function isAppleTouch() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && Number(navigator.maxTouchPoints) > 1);
+}
+
+function maxSafeDpi(fmt) {
+  const maxSide = isAppleTouch() ? 4096 : 16384;
+  const maxArea = isAppleTouch() ? 16_777_216 : 268_435_456;
+  let dpi = 1200;
+  while (dpi >= 72) {
+    const w = Math.round(fmt.wIn * dpi);
+    const h = Math.round(fmt.hIn * dpi);
+    if (w <= maxSide && h <= maxSide && w * h <= maxArea) return dpi;
+    dpi -= 10;
+  }
+  return 72;
+}
+
+function exportDpi(fmt = FORMATS[state.format]) {
+  return Math.min(outputDpi(), maxSafeDpi(fmt));
+}
+
+function mustTile(w, h) {
+  if (isAppleTouch()) {
+    const maxSide = 4096;
+    const maxArea = 16_777_216;
+    if (w > maxSide || h > maxSide || w * h > maxArea) return true;
+  }
+  return !canvasAllocates(w, h);
+}
+
+function canvasAllocates(w, h) {
+  try {
+    const c = document.createElement('canvas');
+    c.width = w;
+    c.height = h;
+    if (c.width !== w || c.height !== h) return false;
+    const ctx = c.getContext('2d', { alpha: false });
+    if (!ctx) return false;
+    ctx.fillStyle = '#111111';
+    ctx.fillRect(w - 1, h - 1, 1, 1);
+    const ok = ctx.getImageData(w - 1, h - 1, 1, 1).data[0] === 0x11;
+    c.width = 0;
+    c.height = 0;
+    return ok;
+  } catch {
+    return false;
+  }
 }
 
 function px(fmt, dpi = outputDpi()) {
@@ -391,11 +442,15 @@ function uniLockupParts(campus, kind) {
   return { left: '', core: campus.line || campus.core, right: '' };
 }
 
+function pageWidth(ctx) {
+  return ctx._pageW || ctx.canvas.width;
+}
+
 function fillUniLockup(ctx, parts, y, small, large) {
   const left = parts.left || '';
   const right = parts.right || '';
   const core = parts.core;
-  const maxW = ctx.canvas.width * 0.86;
+  const maxW = pageWidth(ctx) * 0.86;
   ctx.fillStyle = INK;
   if (!left && !right) {
     ctx.font = `600 ${large}px "LR Sans Semi"`;
@@ -412,7 +467,7 @@ function fillUniLockup(ctx, parts, y, small, large) {
   const wRight = textW(ctx, right);
   ctx.font = `600 ${large}px "LR Sans Semi"`;
   const wCore = textW(ctx, core);
-  let x = (ctx.canvas.width - (wLeft + wCore + wRight)) / 2;
+  let x = (pageWidth(ctx) - (wLeft + wCore + wRight)) / 2;
   const base = y + large * 0.82;
   ctx.font = `400 ${small}px "LR Sans"`;
   ctx.fillText(left, x, base);
@@ -445,7 +500,7 @@ function fillCentered(ctx, text, y, color) {
   ctx.fillStyle = color;
   ctx.textBaseline = 'top';
   const w = textW(ctx, text);
-  ctx.fillText(text, (ctx.canvas.width - w) / 2, y);
+  ctx.fillText(text, (pageWidth(ctx) - w) / 2, y);
   const m = ctx.measureText(text);
   const h = (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || parseInt(ctx.font, 10);
   return h;
@@ -468,7 +523,7 @@ function fillTracked(ctx, text, y, size, color, xStart) {
   ctx.fillStyle = color;
   ctx.textBaseline = 'top';
   let x = xStart;
-  if (x == null) x = (ctx.canvas.width - trackedWidth(ctx, text, size)) / 2;
+  if (x == null) x = (pageWidth(ctx) - trackedWidth(ctx, text, size)) / 2;
   for (const ch of text) {
     ctx.fillText(ch, x, y);
     x += ctx.measureText(ch).width + extra;
@@ -481,16 +536,23 @@ function compose(opts) {
   const fmt = FORMATS[opts.format];
   const dpi = Number(opts.dpi) || outputDpi();
   const { w, h } = px(fmt, dpi);
+  const clipX = Math.max(0, Math.round(Number(opts.clipX) || 0));
+  const clipY = Math.max(0, Math.round(Number(opts.clipY) || 0));
+  const clipW = Math.round(Number(opts.clipW) || w);
+  const clipH = Math.round(Number(opts.clipH) || h);
   const canvas = document.createElement('canvas');
-  canvas.width = w;
-  canvas.height = h;
-  if (canvas.width !== w || canvas.height !== h) {
-    throw new Error(`canevas ${w}×${h} trop grand pour ce navigateur — choisissez 600 dpi`);
+  canvas.width = clipW;
+  canvas.height = clipH;
+  if (canvas.width !== clipW || canvas.height !== clipH) {
+    throw new Error(`canevas ${clipW}×${clipH} trop grand pour ce navigateur`);
   }
   const ctx = canvas.getContext('2d', { alpha: false });
   if (!ctx) throw new Error('canevas 2D indisponible');
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
+  ctx._pageW = w;
+  ctx.save();
+  ctx.translate(-clipX, -clipY);
 
   const refW = 11 * REF_DPI;
   const refH = 17 * REF_DPI;
@@ -683,6 +745,7 @@ function compose(opts) {
     ctx.restore();
   }
 
+  ctx.restore();
   return canvas;
 }
 
@@ -841,6 +904,10 @@ async function preview() {
 }
 
 function jpegToPdfBlob(jpeg, imgW, imgH, wIn, hIn) {
+  return jpegTilesToPdfBlob([{ jpeg, x: 0, y: 0, w: imgW, h: imgH }], imgW, imgH, wIn, hIn);
+}
+
+function jpegTilesToPdfBlob(tiles, pageWpx, pageHpx, wIn, hIn) {
   const pw = wIn * 72;
   const ph = hIn * 72;
   const enc = (s) => new TextEncoder().encode(s);
@@ -849,33 +916,122 @@ function jpegToPdfBlob(jpeg, imgW, imgH, wIn, hIn) {
   let pos = 0;
   const push = (u8) => { chunks.push(u8); pos += u8.length; };
   const pushStr = (s) => push(enc(s));
+  const nImg = tiles.length;
   pushStr('%PDF-1.4\n');
   const start = () => { offs.push(pos); };
   start();
   pushStr('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
   start();
   pushStr('2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n');
+  let xobj = '';
+  for (let i = 0; i < nImg; i += 1) xobj += `/Im${i} ${5 + i} 0 R `;
   start();
-  pushStr(`3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pw} ${ph}] /Resources << /XObject << /Im0 5 0 R >> >> /Contents 4 0 R >>\nendobj\n`);
-  const stream = `q ${pw} 0 0 ${ph} 0 0 cm /Im0 Do Q\n`;
+  pushStr(`3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pw} ${ph}] /Resources << /XObject << ${xobj}>> >> /Contents 4 0 R >>\nendobj\n`);
+  let stream = '';
+  for (let i = 0; i < nImg; i += 1) {
+    const t = tiles[i];
+    const tw = (t.w / pageWpx) * pw;
+    const th = (t.h / pageHpx) * ph;
+    const x = (t.x / pageWpx) * pw;
+    const y = ((pageHpx - t.y - t.h) / pageHpx) * ph;
+    stream += `q ${tw} 0 0 ${th} ${x} ${y} cm /Im${i} Do Q\n`;
+  }
   start();
   pushStr(`4 0 obj\n<< /Length ${stream.length} >>\nstream\n${stream}endstream\nendobj\n`);
-  start();
-  pushStr(`5 0 obj\n<< /Type /XObject /Subtype /Image /Width ${imgW} /Height ${imgH} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>\nstream\n`);
-  push(jpeg);
-  pushStr('\nendstream\nendobj\n');
+  for (let i = 0; i < nImg; i += 1) {
+    const t = tiles[i];
+    start();
+    pushStr(`${5 + i} 0 obj\n<< /Type /XObject /Subtype /Image /Width ${t.w} /Height ${t.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${t.jpeg.length} >>\nstream\n`);
+    push(t.jpeg);
+    pushStr('\nendstream\nendobj\n');
+  }
+  const lastObj = 4 + nImg;
   const xrefPos = pos;
-  let xref = 'xref\n0 6\n0000000000 65535 f \n';
-  for (let i = 1; i <= 5; i += 1) {
+  let xref = `xref\n0 ${lastObj + 1}\n0000000000 65535 f \n`;
+  for (let i = 1; i <= lastObj; i += 1) {
     xref += `${String(offs[i]).padStart(10, '0')} 00000 n \n`;
   }
   pushStr(xref);
-  pushStr(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xrefPos}\n%%EOF\n`);
+  pushStr(`trailer\n<< /Size ${lastObj + 1} /Root 1 0 R >>\nstartxref\n${xrefPos}\n%%EOF\n`);
   const total = chunks.reduce((n, c) => n + c.length, 0);
   const out = new Uint8Array(total);
   let o = 0;
   for (const c of chunks) { out.set(c, o); o += c.length; }
   return new Blob([out], { type: 'application/pdf' });
+}
+
+async function saveBlob(blob, name) {
+  const file = new File([blob], name, { type: blob.type || 'application/octet-stream' });
+  if (typeof navigator.canShare === 'function') {
+    try {
+      if (navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: name });
+        return 'share';
+      }
+    } catch (err) {
+      if (err && err.name === 'AbortError') return 'abort';
+    }
+  }
+  const url = URL.createObjectURL(blob);
+  try {
+    if (isAppleTouch()) {
+      const opened = window.open(url, '_blank');
+      if (!opened) {
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+    } else {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name;
+      a.rel = 'noopener';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+  } finally {
+    setTimeout(() => URL.revokeObjectURL(url), 60_000);
+  }
+  return 'link';
+}
+
+async function jpegOfCanvas(canvas) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('JPEG'))), 'image/jpeg', 0.95);
+  });
+}
+
+async function rasterTiles(opts, w, h) {
+  const maxSide = isAppleTouch() ? 4096 : 16384;
+  const maxArea = isAppleTouch() ? 16_777_216 : 268_435_456;
+  const tw = Math.min(w, maxSide);
+  const th = Math.max(1, Math.min(h, maxSide, Math.floor(maxArea / Math.max(1, tw))));
+  const tiles = [];
+  for (let y = 0; y < h; y += th) {
+    for (let x = 0; x < w; x += tw) {
+      const cw = Math.min(tw, w - x);
+      const ch = Math.min(th, h - y);
+      if (!canvasAllocates(cw, ch)) {
+        throw new Error(`tuile ${cw}×${ch} trop grande pour ce navigateur`);
+      }
+      const canvas = compose({ ...opts, clipX: x, clipY: y, clipW: cw, clipH: ch });
+      const jpegBlob = await jpegOfCanvas(canvas);
+      tiles.push({
+        jpeg: new Uint8Array(await jpegBlob.arrayBuffer()),
+        x,
+        y,
+        w: cw,
+        h: ch,
+      });
+    }
+  }
+  if (!tiles.length) throw new Error('aucune tuile composée');
+  return tiles;
 }
 
 async function downloadPrint(kind = 'pdf') {
@@ -885,11 +1041,12 @@ async function downloadPrint(kind = 'pdf') {
   status.textContent = kind === 'pdf' ? 'Composition du PDF…' : 'Composition du JPEG…';
   try {
     const fmt = FORMATS[state.format];
-    const { w, h } = px(fmt);
+    const dpi = outputDpi();
     const photo = currentPhoto();
     let img = null;
     if (photo) img = await loadImage(printUrl(photo), true);
-    const canvas = compose({
+    const { w, h } = px(fmt, dpi);
+    const composeOpts = {
       format: state.format,
       campus: state.campus,
       lang: state.lang,
@@ -897,7 +1054,7 @@ async function downloadPrint(kind = 'pdf') {
       langs: state.langs,
       showUni: state.showUni,
       qr: state.qr,
-      dpi: outputDpi(),
+      dpi,
       photoImg: img,
       credit: photo?.credit,
       license: photo?.license,
@@ -905,37 +1062,69 @@ async function downloadPrint(kind = 'pdf') {
       focalY: state.focalY,
       cropScale: state.zoom,
       angle: state.angle,
-    });
-    if (canvas.width !== w || canvas.height !== h) {
-      throw new Error(`dimensions ${canvas.width}×${canvas.height}, attendu ${w}×${h}`);
+    };
+    let jpegBlob = null;
+    let tiles = null;
+    if (!mustTile(w, h)) {
+      const canvas = compose(composeOpts);
+      if (canvas.width !== w || canvas.height !== h) {
+        throw new Error(`dimensions ${canvas.width}×${canvas.height}, attendu ${w}×${h}`);
+      }
+      jpegBlob = await jpegOfCanvas(canvas);
+    } else if (kind === 'pdf') {
+      tiles = await rasterTiles(composeOpts, w, h);
+    } else {
+      const safe = exportDpi(fmt);
+      const { w: sw, h: sh } = px(fmt, safe);
+      const canvas = compose({ ...composeOpts, dpi: safe });
+      jpegBlob = await jpegOfCanvas(canvas);
+      const campus = campusOf(state.campus);
+      const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
+      const uni = state.showUni ? '' : '-sans-etab';
+      const qr = state.qr ? '-qr' : '';
+      const greet = state.greeting !== 'none' ? `-${state.greeting}` : '';
+      const langs = state.langs ? '-langues' : '';
+      const stem = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}-${safe}dpi`;
+      const how = await saveBlob(jpegBlob, `${stem}.jpg`);
+      if (how === 'abort') {
+        status.textContent = 'Téléchargement annulé.';
+        return;
+      }
+      const mb = (jpegBlob.size / 1_048_576).toFixed(1);
+      const shareHint = how === 'share' ? ' Choisissez Enregistrer dans Fichiers (ou Imprimer).' : '';
+      status.innerHTML = `JPEG <strong>${stem}.jpg</strong> · ${fmt.label} · ${safe} dpi · ${mb} Mo (Safari ne tient pas un JPEG ${dpi} dpi). Le PDF reste à ${dpi} dpi.${shareHint}`;
+      return;
     }
-    const jpegBlob = await new Promise((resolve, reject) => {
-      canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('JPEG'))), 'image/jpeg', 0.95);
-    });
     const campus = campusOf(state.campus);
     const lang = state.lang === 'bilingue' ? 'bilingue' : 'fr';
     const uni = state.showUni ? '' : '-sans-etab';
     const qr = state.qr ? '-qr' : '';
     const greet = state.greeting !== 'none' ? `-${state.greeting}` : '';
     const langs = state.langs ? '-langues' : '';
-    const stem = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}-${outputDpi()}dpi`;
+    const stem = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}-${dpi}dpi`;
     let blob;
     let name;
     if (kind === 'pdf') {
-      const jpeg = new Uint8Array(await jpegBlob.arrayBuffer());
-      blob = jpegToPdfBlob(jpeg, w, h, fmt.wIn, fmt.hIn);
+      if (tiles) {
+        blob = jpegTilesToPdfBlob(tiles, w, h, fmt.wIn, fmt.hIn);
+      } else {
+        const jpeg = new Uint8Array(await jpegBlob.arrayBuffer());
+        blob = jpegToPdfBlob(jpeg, w, h, fmt.wIn, fmt.hIn);
+      }
       name = `${stem}.pdf`;
     } else {
       blob = jpegBlob;
       name = `${stem}.jpg`;
     }
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = name;
-    a.click();
-    URL.revokeObjectURL(a.href);
+    const how = await saveBlob(blob, name);
+    if (how === 'abort') {
+      status.textContent = 'Téléchargement annulé.';
+      return;
+    }
     const mb = (blob.size / 1_048_576).toFixed(1);
-    status.innerHTML = `Fichier <strong>${name}</strong> · ${fmt.label} · ${outputDpi()} dpi · ${mb} Mo. Imprimez à 100 %, sans « ajuster à la page ».`;
+    const tiled = tiles ? ' Composé en tuiles (limite Safari).' : '';
+    const shareHint = how === 'share' ? ' Choisissez Enregistrer dans Fichiers (ou Imprimer).' : '';
+    status.innerHTML = `Fichier <strong>${name}</strong> · ${fmt.label} · ${dpi} dpi · ${mb} Mo.${tiled}${shareHint} Imprimez à 100 %, sans « ajuster à la page ».`;
   } catch (err) {
     status.textContent = `Téléchargement impossible : ${err.message}`;
   } finally {
@@ -948,12 +1137,16 @@ function syncDpiLab() {
   const hint = document.getElementById('dpi-hint');
   const local = isLocalHost();
   if (lab) lab.hidden = !local;
-  if (hint) {
-    hint.textContent = local
-      ? '600 dpi par défaut. 300 pour un babillard, 1200 pour un tirage photo.'
-      : '600 dpi par défaut. 300 pour un babillard.';
-  }
   if (!local && state.dpi === 1200) state.dpi = DEFAULT_DPI;
+  if (hint) {
+    if (isAppleTouch()) {
+      hint.textContent = '600 dpi par défaut. Sur iPad, le PDF est composé en tuiles ; le JPEG peut descendre si Safari refuse le canevas plein.';
+    } else if (local) {
+      hint.textContent = '600 dpi par défaut. 300 pour un babillard, 1200 pour un tirage photo.';
+    } else {
+      hint.textContent = '600 dpi par défaut. 300 pour un babillard.';
+    }
+  }
 }
 
 function syncDpiLabels() {
@@ -1029,10 +1222,15 @@ function syncGenericLangs() {
 }
 
 function applyChoice(name, value) {
-  if (name === 'format') state.format = value;
+  if (name === 'format') {
+    state.format = value;
+    syncDpiLab();
+    syncDpiLabels();
+  }
   if (name === 'dpi') {
     const n = Number(value);
     state.dpi = dpiChoices().includes(n) ? n : DEFAULT_DPI;
+    syncDpiLab();
     syncDpiLabels();
   }
   if (name === 'campus') {
@@ -1114,7 +1312,7 @@ function bind() {
   document.getElementById('dl-jpg').addEventListener('click', () => downloadPrint('jpeg'));
   document.getElementById('dl-bottom').addEventListener('click', () => downloadPrint('pdf'));
   document.getElementById('dl-jpg-bottom').addEventListener('click', () => downloadPrint('jpeg'));
-  const stage = document.getElementById('preview-stage');
+  const pane = document.getElementById('preview-pane');
   let fitTimer = 0;
   const refit = () => {
     if (!previewGen) return;
@@ -1124,8 +1322,8 @@ function bind() {
       else paintPreview(null, currentPhoto());
     }, 80);
   };
-  if (stage && typeof ResizeObserver !== 'undefined') {
-    new ResizeObserver(refit).observe(stage);
+  if (pane && typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(refit).observe(pane);
   } else {
     window.addEventListener('resize', refit);
   }

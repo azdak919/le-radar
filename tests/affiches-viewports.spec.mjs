@@ -40,6 +40,7 @@ test.describe('affiches — largeurs labo', () => {
   test('?campus=laval depuis le kit média', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/affiches/?campus=laval', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('#greeting')).toHaveValue('none');
     await expect(page.locator('input[name="campus"][value="laval"]')).toBeChecked();
     await expect(page.locator('label:has(input[name="lang"][value="bilingue"])')).toBeHidden();
   });
@@ -118,5 +119,37 @@ test.describe('affiches — largeurs labo', () => {
     expect(canvas.height).toBeGreaterThan(280);
     expect(crop.x).toBeGreaterThan(canvas.x + canvas.width - 8);
     expect(crop.x - (canvas.x + canvas.width)).toBeLessThan(48);
+  });
+
+  test('iPad 11 portrait : l’aperçu remplit la scène', async ({ page }) => {
+    await page.setViewportSize({ width: 834, height: 1194 });
+    await page.goto('/affiches/', { waitUntil: 'domcontentloaded' });
+    const canvas = await waitPreview(page);
+    const pane = await page.locator('#preview-pane').boundingBox();
+    expect(pane, 'scène d’aperçu').toBeTruthy();
+    expect(canvas.height, `aperçu trop petit (${canvas.height} / ${pane.height})`).toBeGreaterThan(pane.height * 0.72);
+    expect(canvas.height).toBeGreaterThan(500);
+  });
+
+  test('iPad : 11 × 17 s’exporte à 600 dpi', async ({ page }) => {
+    test.setTimeout(120_000);
+    await page.addInitScript(() => {
+      Object.defineProperty(navigator, 'userAgent', {
+        get: () => 'Mozilla/5.0 (iPad; CPU OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1',
+      });
+      Object.defineProperty(navigator, 'platform', { get: () => 'iPad' });
+      Object.defineProperty(navigator, 'maxTouchPoints', { get: () => 5 });
+    });
+    await page.setViewportSize({ width: 834, height: 1194 });
+    await page.goto('/affiches/', { waitUntil: 'domcontentloaded' });
+    await waitPreview(page);
+    await expect(page.getByRole('button', { name: /PDF 600 dpi/ }).first()).toBeVisible();
+    await expect(page.locator('#status')).toContainText('6600 × 10200');
+    await expect(page.locator('#status')).toContainText('600 dpi');
+    page.on('popup', (p) => p.close().catch(() => {}));
+    await page.locator('#dl').click();
+    await expect(page.locator('#status')).toContainText(/600 dpi/, { timeout: 90_000 });
+    await expect(page.locator('#status')).toContainText(/Mo/);
+    await expect(page.locator('#status')).not.toContainText('Téléchargement impossible');
   });
 });
