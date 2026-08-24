@@ -43,10 +43,9 @@
       for (const p of PHOTO_BANK) {
         if (!p || !p.url) continue;
         const tags = Array.isArray(p.tags) ? p.tags : [];
-        if (!tags.includes("mat") && !tags.includes("campus") && !tags.includes("nations")) continue;
-        if (tags.includes("campus") || tags.includes("nations") || tags.includes("mat")) {
-          /* ok */
-        }
+        // Mât = tag mat (ou nations). Un pavillon campus-only (Casault affiches)
+        // ne doit pas entrer dans le bandeau même s’il reste dans la banque unique.
+        if (!tags.includes("mat") && !tags.includes("nations")) continue;
         if (Array.isArray(p.surfaces) && p.surfaces.length) {
           if (!p.surfaces.includes("masthead") && !p.surfaces.includes("*") && !tags.includes("mat")) continue;
         }

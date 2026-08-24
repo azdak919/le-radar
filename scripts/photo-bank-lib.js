@@ -12,6 +12,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const vm = require('vm');
+const { matchHardBanned } = require('./quebec-backgrounds-blacklist');
 
 const DEFAULT_ROOT = path.join(__dirname, '..');
 const PHOTOS_REL = 'data/photo-bank.json';
@@ -53,6 +54,59 @@ function isProtectedPhoto(p) {
   if (!p) return false;
   if (p.permanent === true || p.campus === true) return true;
   return hasTag(p, 'favori') || hasTag(p, 'campus');
+}
+
+function isCampusTagged(p) {
+  return !!(p && (p.campus === true || hasTag(p, 'campus')));
+}
+
+function stripMastTags(p) {
+  const tags = (p.tags || []).filter((t) => t !== 'mat');
+  const hasSurfaces = Array.isArray(p.surfaces);
+  const surfaces = hasSurfaces
+    ? p.surfaces.filter((s) => s !== 'masthead' && s !== 'mat')
+    : [];
+  const tagsSame = tags.length === (p.tags || []).length;
+  const surfSame = !hasSurfaces || surfaces.length === p.surfaces.length;
+  if (tagsSame && surfSame) return p;
+  const out = { ...p, tags };
+  if (hasSurfaces) {
+    if (surfaces.length) out.surfaces = surfaces;
+    else delete out.surfaces;
+  }
+  return out;
+}
+
+/**
+ * Banque unique (labo + affiches) : les rejets labo sortent toujours.
+ * Un hard-ban mât (Casault « église ») reste en banque si la photo est campus,
+ * sans tag mat — pour les affiches, pas le bandeau.
+ */
+function retainUnifiedPhoto(p) {
+  if (!p) return null;
+  const hit = matchHardBanned(p);
+  if (!hit) return destineCampusPhoto(p);
+  if (hit.reason === 'user_curated_photo_rejected') return null;
+  if (isCampusTagged(p) && hit.reason === 'reads_as_church_casault') {
+    return destineCampusPhoto(stripMastTags(p));
+  }
+  return null;
+}
+
+const MAST_MIN_ASPECT = 1.25;
+
+function isMastAspectOk(p) {
+  const w = Number(p && p.width) || 0;
+  const h = Number(p && p.height) || 0;
+  if (!w || !h) return true;
+  return w / h >= MAST_MIN_ASPECT;
+}
+
+/** Portrait campus → affiches seulement (11×17), pas le bandeau mât. */
+function destineCampusPhoto(p) {
+  if (!p || !isCampusTagged(p)) return p;
+  if (isMastAspectOk(p)) return p;
+  return stripMastTags(p);
 }
 
 function preferUrl(a, b) {
@@ -292,7 +346,7 @@ function materializeLegacySlices(root = DEFAULT_ROOT) {
     {
       rel: 'data/quebec-university-backgrounds.json',
       profile: 'universities',
-      pred: (p) => hasTag(p, 'campus'),
+      pred: (p) => hasTag(p, 'campus') && hasTag(p, 'mat'),
     },
     {
       rel: 'data/quebec-pomo-backgrounds.json',
@@ -376,6 +430,12 @@ module.exports = {
   photoKey,
   hasTag,
   isProtectedPhoto,
+  isCampusTagged,
+  stripMastTags,
+  retainUnifiedPhoto,
+  destineCampusPhoto,
+  isMastAspectOk,
+  MAST_MIN_ASPECT,
   mergeRecord,
   pickFocalY,
   loadPhotos,
