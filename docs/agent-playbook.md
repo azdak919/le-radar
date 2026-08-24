@@ -76,8 +76,10 @@ blacklist    →  scripts/quebec-backgrounds-blacklist.js  (ne revient jamais)
     pour les saisons où elle va ; l’hiver réel reste l’hiver.
   - `seasonSource: sessionId-fallback` = **jamais analysée** (saison de la session
     de moisson). Traitée comme saison inconnue et **non exportée** vers les
-    `*-data.js` : sans ce garde-fou une scène enneigée entrait dans le tier strict
-    de juillet. La re-taguer via le bot visuel ou à la main, pas en la bannissant.
+    `*-data.js` **ni** `photo-bank-data.js` : sans ce garde-fou une scène enneigée
+    entrait dans le tier strict de juillet (ex. *Beaver dam… Jan 14* taguée
+    « ete »). `Jan 14` / `Jan_14` compte comme janvier. La re-taguer via le bot
+    (`detect:seasons` lit la banque unique) ou à la main, pas en la bannissant.
 - **Visages** (`scripts/detect-photo-faces.js` + `.py`) — la politique interdit les
   personnes reconnaissables, mais `PEOPLE_RE` ne lit que titre/URL/lien : un
   toponyme numéroté passait avec un visage au premier plan.

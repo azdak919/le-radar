@@ -99,6 +99,90 @@
   }
 
   /**
+   * Mois 0–11 depuis « Jan 14 », « Jan_14 », « Jan%2014 », « 14 janv ».
+   * Exige un jour 1–31 pour ne pas prendre « mars 2014 » pour le 20.
+   */
+  const MONTH_TOKEN_TO_INDEX = {
+    january: 0,
+    janvier: 0,
+    janv: 0,
+    jan: 0,
+    february: 1,
+    fevrier: 1,
+    fevr: 1,
+    feb: 1,
+    fev: 1,
+    march: 2,
+    mars: 2,
+    mar: 2,
+    april: 3,
+    avril: 3,
+    apr: 3,
+    avr: 3,
+    may: 4,
+    mai: 4,
+    june: 5,
+    juin: 5,
+    jun: 5,
+    july: 6,
+    juillet: 6,
+    juil: 6,
+    jul: 6,
+    august: 7,
+    aout: 7,
+    aug: 7,
+    aou: 7,
+    september: 8,
+    septembre: 8,
+    sept: 8,
+    sep: 8,
+    october: 9,
+    octobre: 9,
+    oct: 9,
+    november: 10,
+    novembre: 10,
+    nov: 10,
+    december: 11,
+    decembre: 11,
+    dec: 11,
+  };
+  const MONTH_TOKEN_RE = Object.keys(MONTH_TOKEN_TO_INDEX)
+    .sort((a, b) => b.length - a.length)
+    .join('|');
+  const MONTH_THEN_DAY_RE = new RegExp(
+    `(?:^|[^a-z0-9])(${MONTH_TOKEN_RE})\\.?(?:[\\s._-]|%20)+(0?[1-9]|[12]\\d|3[01])(?!\\d)`,
+    'i'
+  );
+  const MONTH_THEN_YEAR_RE = new RegExp(
+    `(?:^|[^a-z0-9])(${MONTH_TOKEN_RE})\\.?(?:[\\s._-]|%20)+((?:19|20)\\d{2})(?!\\d)`,
+    'i'
+  );
+  const DAY_THEN_MONTH_RE = new RegExp(
+    `(?:^|[^a-z0-9])(0?[1-9]|[12]\\d|3[01])(?:[\\s._-]|%20)+(${MONTH_TOKEN_RE})\\.?(?![a-z])`,
+    'i'
+  );
+
+  function monthFromAbbrevHaystack(t) {
+    if (!t) return null;
+    const md = t.match(MONTH_THEN_DAY_RE);
+    if (md) {
+      const idx = MONTH_TOKEN_TO_INDEX[md[1].toLowerCase()];
+      if (idx != null) return idx;
+    }
+    const my = t.match(MONTH_THEN_YEAR_RE);
+    if (my) {
+      const idx = MONTH_TOKEN_TO_INDEX[my[1].toLowerCase()];
+      if (idx != null) return idx;
+    }
+    const dm = t.match(DAY_THEN_MONTH_RE);
+    if (dm) {
+      const idx = MONTH_TOKEN_TO_INDEX[dm[2].toLowerCase()];
+      if (idx != null) return idx;
+    }
+    return null;
+  }
+
+  /**
    * Infère la saison visuelle 4 à partir du texte / méta.
    * @returns {string|null}
    */
@@ -140,6 +224,11 @@
       /\b(ete|summer|estival|canicule|plage|beach|feuillage vert|juillet|aout|june|july|august|juin)\b/i.test(t)
     ) {
       return 'ete';
+    }
+
+    const abbrMonth = monthFromAbbrevHaystack(t);
+    if (abbrMonth != null) {
+      return getCurrentSeason4(new Date(2000, abbrMonth, 15));
     }
 
     // Date dans le nom de fichier Commons …-2022-09-22…
@@ -326,10 +415,12 @@
 
     // Évite l’opposé *certain* (neige en juillet) tant qu’il reste autre chose.
     // Un tag non fiable ne compte pas comme opposé.
+    // Calendrier 6 : ukiuq (déc–jan) n’est pas à +3 de ukiaqsaaq (août–sep),
+    // mais c’est bien de l’hiver météo — l’exclure aussi via season4.
     const soft = pickTier((a) => {
       if (a.nations) {
-        // pour 6 saisons, « opposé » ≈ +3 dans le cycle
         if (!a.s6) return true;
+        if (season6ToSeason4(a.s6) === opp4) return false;
         const i = SEASON6.indexOf(a.s6);
         const j = SEASON6.indexOf(season6);
         if (i < 0 || j < 0) return true;
@@ -449,6 +540,12 @@
     } else if (compact) {
       dateSeason = getCurrentSeason4(new Date(2000, parseInt(compact[2], 10) - 1, 15));
       reasons.push(`date_compact:${compact[2]}`);
+    } else {
+      const abbrMonth = monthFromAbbrevHaystack(t);
+      if (abbrMonth != null) {
+        dateSeason = getCurrentSeason4(new Date(2000, abbrMonth, 15));
+        reasons.push(`date_abbrev:${String(abbrMonth + 1).padStart(2, '0')}`);
+      }
     }
 
     // Mots-clés (signaux forts)

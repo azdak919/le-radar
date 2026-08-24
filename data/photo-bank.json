@@ -1,7 +1,7 @@
 {
   "version": 1,
   "profile": "unified",
-  "updated": "2026-08-24T06:45:07.280Z",
+  "updated": "2026-08-24T09:24:26.075Z",
   "photos": [
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg/1920px-%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg",
@@ -160,7 +160,14 @@
         "pomo",
         "solitaire"
       ],
-      "id": "6494d5edce01"
+      "id": "6494d5edce01",
+      "season": "hiver",
+      "seasonConfidence": 0.9,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_hiver"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.071Z"
     },
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/John_Martin_-_The_Great_Day_of_His_Wrath_-_Google_Art_Project.jpg/1920px-John_Martin_-_The_Great_Day_of_His_Wrath_-_Google_Art_Project.jpg",
@@ -253,7 +260,14 @@
         "pomo",
         "solitaire"
       ],
-      "id": "1536e44aa550"
+      "id": "1536e44aa550",
+      "season": "automne",
+      "seasonConfidence": 0.88,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_automne"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.073Z"
     },
     {
       "url": "https://images.pexels.com/photos/417173/pexels-photo-417173.jpeg?auto=compress&cs=tinysrgb&w=1920",
@@ -265,7 +279,14 @@
         "pomo",
         "solitaire"
       ],
-      "id": "011d1489f273"
+      "id": "011d1489f273",
+      "season": "automne",
+      "seasonConfidence": 0.88,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_automne"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.073Z"
     },
     {
       "url": "https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?w=1920&q=90&auto=format&fit=max",
@@ -277,7 +298,14 @@
         "pomo",
         "solitaire"
       ],
-      "id": "2d186108efb0"
+      "id": "2d186108efb0",
+      "season": "automne",
+      "seasonConfidence": 0.88,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_automne"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.073Z"
     },
     {
       "url": "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=1920&q=90&auto=format&fit=max",
@@ -289,7 +317,14 @@
         "pomo",
         "solitaire"
       ],
-      "id": "075488b51855"
+      "id": "075488b51855",
+      "season": "automne",
+      "seasonConfidence": 0.88,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_automne"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.073Z"
     },
     {
       "id": "1eb2382981cc",
@@ -1395,7 +1430,14 @@
         "pomo",
         "solitaire"
       ],
-      "id": "89f62db6579c"
+      "id": "89f62db6579c",
+      "season": "hiver",
+      "seasonConfidence": 0.9,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_hiver"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "url": "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1920&q=90&auto=format&fit=max",
@@ -1407,7 +1449,14 @@
         "pomo",
         "solitaire"
       ],
-      "id": "5fed3f82a16c"
+      "id": "5fed3f82a16c",
+      "season": "hiver",
+      "seasonConfidence": 0.9,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_hiver"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "url": "https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=1920&q=90&auto=format&fit=max",
@@ -1419,7 +1468,14 @@
         "pomo",
         "solitaire"
       ],
-      "id": "f3c6b1702f3d"
+      "id": "f3c6b1702f3d",
+      "season": "hiver",
+      "seasonConfidence": 0.9,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_hiver"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "url": "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1920&q=90&auto=format&fit=max",
@@ -1432,7 +1488,14 @@
         "solitaire"
       ],
       "culture": "indigenous",
-      "id": "3587d17c136f"
+      "id": "3587d17c136f",
+      "season": "hiver",
+      "seasonConfidence": 0.9,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_hiver"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "id": "eae4b6ac07dc",
@@ -1681,7 +1744,14 @@
       "tags": [
         "solitaire"
       ],
-      "id": "7ea6344e4c10"
+      "id": "7ea6344e4c10",
+      "season": "ete",
+      "seasonConfidence": 0.85,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_ete"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "url": "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=1920&q=90&auto=format&fit=max",
@@ -1821,7 +1891,14 @@
         "pomo",
         "solitaire"
       ],
-      "id": "3441ebde7fa1"
+      "id": "3441ebde7fa1",
+      "season": "hiver",
+      "seasonConfidence": 0.9,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_hiver"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "url": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=90&auto=format&fit=max",
@@ -1834,7 +1911,14 @@
         "solitaire"
       ],
       "culture": "indigenous",
-      "id": "63156ec68015"
+      "id": "63156ec68015",
+      "season": "hiver",
+      "seasonConfidence": 0.9,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "kw_hiver"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "id": "0f041b10866e",
@@ -2992,10 +3076,10 @@
       "bank": "nations",
       "nationId": "algonquin",
       "nation": "Algonquins (Anishinaabeg)",
-      "season": "ete",
-      "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback",
-      "season6": "aujaq",
+      "season": "hiver",
+      "seasonConfidence": 0.62,
+      "seasonSource": "date",
+      "season6": "ukiuq",
       "faces": 0,
       "faceRatio": 0,
       "faceDetectedAt": "2026-08-06T20:50:43.166Z",
@@ -3004,7 +3088,12 @@
         "mat",
         "pomo",
         "nations"
-      ]
+      ],
+      "seasonReasons": [
+        "date_abbrev:01",
+        "date_only"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "id": "1642af488fda",
@@ -7312,7 +7401,15 @@
       "season": "hiver",
       "tags": [
         "mat"
-      ]
+      ],
+      "seasonConfidence": 0.98,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:12",
+        "kw_hiver",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "id": "1700195db8ce",
@@ -7334,7 +7431,15 @@
       "season": "hiver",
       "tags": [
         "mat"
-      ]
+      ],
+      "seasonConfidence": 0.98,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_abbrev:01",
+        "kw_hiver",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "id": "ebcfede6b764",
@@ -7387,7 +7492,15 @@
       "season": "hiver",
       "tags": [
         "mat"
-      ]
+      ],
+      "seasonConfidence": 0.78,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:03",
+        "kw_hiver",
+        "date_disagrees"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "id": "d329173009ad",
@@ -7408,7 +7521,15 @@
       "season": "hiver",
       "tags": [
         "mat"
-      ]
+      ],
+      "seasonConfidence": 0.78,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:03",
+        "kw_hiver",
+        "date_disagrees"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "id": "cfe7e508740c",
@@ -8565,5 +8686,6 @@
       "source": "commons-cat",
       "mime": "image/jpeg"
     }
-  ]
+  ],
+  "lastSeasonDetect": "2026-08-24T09:24:26.075Z"
 }
