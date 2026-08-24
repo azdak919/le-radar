@@ -94,15 +94,19 @@
         <img src="../assets/icon.svg" width="28" height="28" alt="">
         <div>
           <h1>Affiches 11×17</h1>
-          <div class="hint">42 épreuves · 11×17 · 300 dpi · QR officiel</div>
+          <div class="hint">Sans barre · wordmark logo à gauche · 11×17 · 300 dpi</div>
         </div>
       </div>
       <a href="./">← Labo</a>
+      <div class="filters" role="tablist" aria-label="Fond">
+        <button type="button" data-ground="nophoto" class="is-on">Sans photo</button>
+        <button type="button" data-ground="photo">Avec photo</button>
+      </div>
       <div class="filters" role="tablist" aria-label="Variante">
-        <button type="button" data-kind="standard" class="is-on">A Standard</button>
-        <button type="button" data-kind="minimal">B Minimal</button>
-        <button type="button" data-kind="bilingue">C Bilingue</button>
-        <button type="button" id="toggle-qr">D QR</button>
+        <button type="button" data-kind="standard" class="is-on">Standard</button>
+        <button type="button" data-kind="minimal">Minimal</button>
+        <button type="button" data-kind="bilingue">Bilingue</button>
+        <button type="button" id="toggle-qr">Zone QR</button>
       </div>
       <div class="modes" role="tablist" aria-label="Vue">
         <button type="button" id="mode-wall" class="is-on">Mur</button>
@@ -122,16 +126,50 @@
     </section>
   </div>
   <script>
-    const POSTERS = [
-      { slug: "laval", name: "Université Laval", place: "Pavillon Adrien-Pouliot" },
-      { slug: "mcgill", name: "Université McGill", place: "Arts Building" },
-      { slug: "udem", name: "Université de Montréal", place: "Pavillon Roger-Gaudry" },
-      { slug: "uqam", name: "UQAM", place: "Pavillon Judith-Jasmin" },
-      { slug: "concordia", name: "Concordia University", place: "Henry F. Hall Building" },
-      { slug: "sherbrooke", name: "Université de Sherbrooke", place: "Campus de Longueuil" },
-      { slug: "bishops", name: "Bishop’s University", place: "Campus Lennoxville" },
+    const CAMPUSES = [
+      { slug: "generique", name: "Générique", grounds: [{ key: "nophoto", place: "Fond uni" }] },
+      { slug: "laval", name: "Université Laval", grounds: [
+        { key: "nophoto", place: "Fond uni" },
+        { key: "pouliot", place: "Adrien-Pouliot" },
+        { key: "dkn", place: "Charles-De Koninck" },
+        { key: "vandry", place: "Ferdinand-Vandry" },
+        { key: "parc", place: "Campus central" },
+      ]},
+      { slug: "mcgill", name: "McGill University", grounds: [
+        { key: "nophoto", place: "Fond uni" },
+        { key: "arts", place: "Arts Building" },
+        { key: "roddick", place: "Roddick Gates" },
+        { key: "downtown", place: "Campus downtown" },
+      ]},
+      { slug: "udem", name: "Université de Montréal", grounds: [
+        { key: "nophoto", place: "Fond uni" },
+        { key: "gaudry", place: "Roger-Gaudry" },
+        { key: "tour", place: "Tour principale" },
+        { key: "campus", place: "Campus" },
+      ]},
+      { slug: "uqam", name: "Université du Québec à Montréal", grounds: [
+        { key: "nophoto", place: "Fond uni" },
+        { key: "jasmin", place: "Judith-Jasmin" },
+        { key: "agora", place: "Agora" },
+        { key: "urbain", place: "Vue urbaine" },
+      ]},
+      { slug: "concordia", name: "Concordia University", grounds: [
+        { key: "nophoto", place: "Fond uni" },
+        { key: "hall", place: "Henry F. Hall" },
+        { key: "hall02", place: "Hall Building" },
+      ]},
+      { slug: "sherbrooke", name: "Université de Sherbrooke", grounds: [
+        { key: "nophoto", place: "Fond uni" },
+        { key: "genie", place: "Campus principal" },
+        { key: "longueuil", place: "Longueuil" },
+      ]},
+      { slug: "bishops", name: "Bishop’s University", grounds: [
+        { key: "nophoto", place: "Fond uni" },
+        { key: "brick", place: "Bâtiment principal" },
+        { key: "quad", place: "Campus Lennoxville" },
+      ]},
     ];
-    const KIND_LABEL = { standard: "A Standard", minimal: "B Minimal", bilingue: "C Bilingue" };
+    const KIND_LABEL = { standard: "Standard", minimal: "Minimal", bilingue: "Bilingue" };
 
     const local = ["127.0.0.1", "localhost", "[::1]"].includes(location.hostname);
     if (!local) {
@@ -142,6 +180,7 @@
 
     let kind = "standard";
     let withQr = false;
+    let groundMode = "nophoto";
     let index = 0;
     const wall = document.getElementById("wall");
     const stageImg = document.getElementById("stage-img");
@@ -150,35 +189,49 @@
     function variantKey() {
       return withQr ? `${kind}-qr` : kind;
     }
-    function fileStem(slug) {
-      const v = variantKey();
-      return v === "standard" ? `affiche-${slug}` : `affiche-${slug}-${v}`;
+    function items() {
+      const list = [];
+      CAMPUSES.forEach((c) => {
+        c.grounds.forEach((g) => {
+          const isPhoto = g.key !== "nophoto";
+          if (groundMode === "nophoto" && isPhoto) return;
+          if (groundMode === "photo" && !isPhoto) return;
+          list.push({ slug: c.slug, name: c.name, ground: g.key, place: g.place });
+        });
+      });
+      return list;
     }
-    function previewSrc(slug) {
-      return `../assets/kit/affiches/${fileStem(slug)}-preview.jpg`;
+    function fileStem(it) {
+      return `affiche-${it.slug}-${it.ground}-${variantKey()}`;
     }
-    function fullSrc(slug) {
-      return `../assets/kit/affiches/${fileStem(slug)}.jpg`;
+    function previewSrc(it) {
+      return `../assets/kit/affiches/${fileStem(it)}-preview.jpg`;
+    }
+    function fullSrc(it) {
+      return `../assets/kit/affiches/${fileStem(it)}.jpg`;
     }
 
     function renderWall() {
       wall.innerHTML = "";
-      POSTERS.forEach((p, i) => {
+      items().forEach((p, i) => {
         const btn = document.createElement("button");
         btn.className = "poster";
         btn.type = "button";
-        const v = KIND_LABEL[kind] + (withQr ? " + QR" : "");
-        btn.innerHTML = `<img src="${previewSrc(p.slug)}" width="792" height="1224" alt="Affiche ${p.name}"><span class="cap"><strong>${p.name}</strong>${p.place} · ${v}</span>`;
+        const v = KIND_LABEL[kind] + (withQr ? " + zone QR" : "");
+        btn.innerHTML = `<img src="${previewSrc(p)}" width="792" height="1224" alt="Affiche ${p.name}"><span class="cap"><strong>${p.name}</strong>${p.place} · ${v}</span>`;
         btn.addEventListener("click", () => openStage(i));
         wall.appendChild(btn);
       });
     }
 
     function renderStage() {
-      const p = POSTERS[index];
-      const v = KIND_LABEL[kind] + (withQr ? " + QR" : "");
-      stageImg.onerror = () => { stageImg.src = previewSrc(p.slug); };
-      stageImg.src = fullSrc(p.slug);
+      const list = items();
+      if (!list.length) return;
+      index = Math.min(index, list.length - 1);
+      const p = list[index];
+      const v = KIND_LABEL[kind] + (withQr ? " + zone QR" : "");
+      stageImg.onerror = () => { stageImg.src = previewSrc(p); };
+      stageImg.src = fullSrc(p);
       stageImg.alt = `Affiche ${p.name}`;
       stageMeta.innerHTML = `<strong>${p.name}</strong> · ${v} · ${p.place}`;
     }
@@ -200,11 +253,13 @@
     document.getElementById("mode-wall").addEventListener("click", openWall);
     document.getElementById("mode-stage").addEventListener("click", () => openStage(index));
     document.getElementById("prev").addEventListener("click", () => {
-      index = (index + POSTERS.length - 1) % POSTERS.length;
+      const n = items().length;
+      index = (index + n - 1) % n;
       renderStage();
     });
     document.getElementById("next").addEventListener("click", () => {
-      index = (index + 1) % POSTERS.length;
+      const n = items().length;
+      index = (index + 1) % n;
       renderStage();
     });
     document.addEventListener("keydown", (e) => {
@@ -226,6 +281,15 @@
       document.getElementById("toggle-qr").classList.toggle("is-on", withQr);
       renderWall();
       if (document.body.classList.contains("mode-stage")) renderStage();
+    });
+    document.querySelectorAll(".filters [data-ground]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        groundMode = btn.getAttribute("data-ground");
+        document.querySelectorAll(".filters [data-ground]").forEach((b) => b.classList.toggle("is-on", b === btn));
+        index = 0;
+        renderWall();
+        if (document.body.classList.contains("mode-stage")) renderStage();
+      });
     });
 
     renderWall();
