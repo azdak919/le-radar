@@ -21,9 +21,18 @@
  * Spiritualité autochtone (tipi, inuksuk, pow-wow) volontairement hors regex.
  */
 const RELIGIOUS_SUBJECT_SOURCE =
-  String.raw`(?:église|eglise|church|cathedral|cathédrale|basilique|basilica|chapelle|chapel|coll[eé]giale|collegiale|crucifix|\bcroix\b|crosses?\b|mosquée|mosquee|mosque|synagogue|monastère|monastere|monastery|couvent|convent|calvaire|cimetière|cimetiere|cemetery|minaret|clocher|steeple|bell[\s-]?tower|paroisse|parish|presbyt[eè]re|presbytery|lieu de culte|place of worship|\bjésus\b|\bjesus\b|\bchrist\b|crucifi|temple\s+(?:bouddh|hindou|sikh)|tabernacle|casault|casseault|louis[\s_-]?jacques[\s_-]?casault)`;
+  String.raw`(?:église|eglise|church|cathedral|cathédrale|basilique|basilica|chapelle|chapel|coll[eé]giale|collegiale|crucifix|\bcroix\b|crosses?\b|mosquée|mosquee|mosque|synagogue|monastère|monastere|monastery|couvent|convent|calvaire|cimetière|cimetiere|cemetery|minaret|clocher|steeple|bell[\s-]?tower|paroisse|parish|presbyt[eè]re|presbytery|lieu de culte|place of worship|\bjésus\b|\bjesus\b|\bchrist\b|crucifi|temple\s+(?:bouddh|hindou|sikh)|tabernacle)`;
 
 const RELIGIOUS_SUBJECT_RE = new RegExp(RELIGIOUS_SUBJECT_SOURCE, 'i');
+
+/**
+ * Pavillons campus (Casault, etc.) : tours / pierre grise ≠ lieu de culte.
+ * Une chapelle / église nommée dans le titre n’est pas exceptée.
+ */
+const CAMPUS_BUILDING_EXCEPTION_SOURCE =
+  String.raw`(?:casault|casseault|louis[\s_-]?jacques[\s_-]?casault|pavillon|palasis|bonenfant|adrien[\s_-]?pouliot|ferdinand[\s_-]?vandry|de[\s_-]?koninck|\bdkn\b|alphonse[\s_-]?marie[\s_-]?parent|biermans|ernest[\s_-]?lemieux|roger[\s_-]?gaudry|judith[\s_-]?jasmin|mcgreer|arts[\s_-]?building|henry[\s_.-]?f[.\s_-]?hall|loyola)`;
+
+const CAMPUS_BUILDING_EXCEPTION_RE = new RegExp(CAMPUS_BUILDING_EXCEPTION_SOURCE, 'i');
 
 /** Façades municipales type clocher — paysage mât/pomo seulement. */
 const TOWN_HALL_FACADE_SOURCE =
@@ -67,19 +76,39 @@ const SPIRE_THRESHOLDS = Object.freeze({
   peakSepFrac: 0.12,
 });
 
-function looksReligiousSubject(entry) {
-  if (!entry) return false;
-  const hay = [
+function entrySubjectHay(entry) {
+  if (!entry) return '';
+  return [
     entry.title,
     entry.url,
     entry.link,
     entry.credit,
     entry.description,
     entry.categories,
+    entry.place,
   ]
     .filter(Boolean)
     .join(' ');
-  return RELIGIOUS_SUBJECT_RE.test(hay);
+}
+
+function isCampusTaggedPhoto(entry) {
+  if (!entry) return false;
+  if (entry.campus === true || entry.bank === 'universities') return true;
+  return Array.isArray(entry.tags) && entry.tags.includes('campus');
+}
+
+function isCampusBuildingException(entry) {
+  if (!entry) return false;
+  const hay = entrySubjectHay(entry);
+  if (RELIGIOUS_SUBJECT_RE.test(hay)) return false;
+  if (isCampusTaggedPhoto(entry)) return true;
+  return CAMPUS_BUILDING_EXCEPTION_RE.test(hay);
+}
+
+function looksReligiousSubject(entry) {
+  if (!entry) return false;
+  if (isCampusBuildingException(entry)) return false;
+  return RELIGIOUS_SUBJECT_RE.test(entrySubjectHay(entry));
 }
 
 function looksTownHallFacade(entry) {
@@ -137,9 +166,14 @@ function spireMetricsReject(m) {
 module.exports = {
   RELIGIOUS_SUBJECT_SOURCE,
   RELIGIOUS_SUBJECT_RE,
+  CAMPUS_BUILDING_EXCEPTION_SOURCE,
+  CAMPUS_BUILDING_EXCEPTION_RE,
   TOWN_HALL_FACADE_SOURCE,
   TOWN_HALL_FACADE_RE,
   SPIRE_THRESHOLDS,
+  entrySubjectHay,
+  isCampusTaggedPhoto,
+  isCampusBuildingException,
   looksReligiousSubject,
   looksTownHallFacade,
   spireMetricsReject,

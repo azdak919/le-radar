@@ -20,6 +20,8 @@ const {
   TOWN_HALL_FACADE_RE: TOWN_HALL_SHARED,
   SPIRE_THRESHOLDS,
   spireMetricsReject,
+  isCampusBuildingException,
+  looksReligiousSubject,
 } = require('../scripts/religious-facade-lib');
 const { matchHardBanned } = require('../scripts/quebec-backgrounds-blacklist');
 
@@ -65,7 +67,26 @@ assert(
   'spireMetricsReject multi-tours pierre',
 );
 assert(RELIGIOUS_RE.test('Église Notre-Dame'), 'religious RE église');
-assert(RELIGIOUS_RE.test('Pavillon Louis-Jacques-Casault'), 'religious RE casault');
+assert(!RELIGIOUS_RE.test('Pavillon Louis-Jacques-Casault'), 'casault n’est pas un sujet religieux');
+assert(
+  isCampusBuildingException({
+    title: 'Pavillon Louis-Jacques-Casault Université Laval',
+    campus: true,
+  }),
+  'Casault campus : exception au détecteur d’église',
+);
+assert(
+  !looksReligiousSubject({ title: 'Pavillon Louis-Jacques-Casault Université Laval', campus: true }),
+  'Casault campus : pas un sujet religieux',
+);
+assert(
+  looksReligiousSubject({ title: 'Chapelle du campus Université Laval' }),
+  'chapelle nommée : toujours religieuse',
+);
+assert(
+  !isCampusBuildingException({ title: 'Chapelle du campus Université Laval', campus: true }),
+  'chapelle campus : pas d’exception',
+);
 assert(TOWN_HALL_FACADE_RE.test('Town hall of Vaudreuil'), 'town hall RE');
 
 const bannedHit = matchHardBanned({

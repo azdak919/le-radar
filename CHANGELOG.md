@@ -7,6 +7,9 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Ajouté
 
+- Affiches campus 11 × 17 : pas de barre colorée, grand pictogramme + wordmark logo à gauche, versions sans photo et multi-pavillons, zone QR blanche.
+- Générateur public `/affiches/` : 11×17, lettre, légal, banque de photos, JPEG 300 dpi.
+- Messages manuscrits sur les affiches (Bonne rentrée, mi-session, fêtes du Québec).
 - La ligne d’antenne défile désormais sur une **liste de phases** — émission en cours → à venir → piste → slogan — au lieu d’alterner entre deux seules lignes. « À venir » était jusqu’ici inaccessible dès qu’une émission était en ondes ; le slogan revenait une fois sur deux.
 - Libellé « À l’antenne · » sur la ligne compacte du poste syntonisé, là où le panneau latéral est masqué.
 - Au repos, la ligne d’aperçu suit un ordre explicite — **poste + bande de diffusion (FM, AM ou Web) → à l’antenne / à venir → émission → horaire → établissement en acronyme**.

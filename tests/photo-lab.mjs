@@ -205,4 +205,38 @@ assert.match(
 );
 assert.ok(!existsSync(join(root, 'nope')));
 
+const {
+  retainUnifiedPhoto,
+} = require('../scripts/photo-bank-lib.js');
+const casaultKept = retainUnifiedPhoto({
+  url: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Pavillon_Louis-Jacques-Casault_3.jpg',
+  title: 'Pavillon Louis-Jacques-Casault 3',
+  campus: true,
+  tags: ['mat', 'campus'],
+});
+assert.ok(casaultKept, 'Casault campus reste dans la banque unique');
+assert.ok(casaultKept.tags.includes('mat'), 'Casault : tag mat (exception église)');
+assert.ok(casaultKept.tags.includes('campus'), 'Casault : tag campus');
+assert.equal(
+  retainUnifiedPhoto({
+    url: 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Pavillon_Adrien-Pouliot_07.jpg',
+    title: 'Pavillon Adrien-Pouliot 07',
+    campus: true,
+    tags: ['mat', 'campus'],
+  }),
+  null,
+  'Pouliot 07 rejeté au labo : hors banque unique',
+);
+const portrait = retainUnifiedPhoto({
+  url: 'https://upload.wikimedia.org/wikipedia/commons/x/x1/Teluq_headquarters_in_Quebec_City.jpg',
+  title: 'Teluq headquarters in Quebec City',
+  campus: true,
+  tags: ['mat', 'campus'],
+  width: 1619,
+  height: 2483,
+});
+assert.ok(portrait, 'portrait campus reste pour les affiches');
+assert.ok(!portrait.tags.includes('mat'), 'portrait campus : hors mât');
+assert.ok(portrait.tags.includes('campus'), 'portrait campus : tag campus');
+
 console.log('OK photo-lab (crop + mutations + undo)');

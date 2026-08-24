@@ -174,7 +174,7 @@ assert(
     multiPeaks: 2,
     notGrid: true,
   }),
-  'Casault-like grey multi-tower → religious_architecture',
+  'unknown grey multi-tower → religious_architecture',
 );
 assert(
   wouldRejectReligiousSpire({
@@ -186,7 +186,7 @@ assert(
     multiPeaks: 3,
     notGrid: true,
   }),
-  'Casault multiPeaks path → reject',
+  'unknown multiPeaks stone path → reject',
 );
 assert(
   !wouldRejectReligiousSpire({
@@ -212,28 +212,32 @@ assert(
   'single modern pavilion peak → keep',
 );
 
-// Texte religieux : casault / collégiale (filtre titre Commons)
+// Texte religieux : collégiale reste un culte ; Casault est un pavillon campus
 assert(
-  require('../scripts/photo-visual-qc-lib.js').RELIGIOUS_SUBJECT_RE.test(
+  !require('../scripts/photo-visual-qc-lib.js').RELIGIOUS_SUBJECT_RE.test(
     'Pavillon Louis-Jacques-Casault Université Laval'
   ),
-  'casault in title → RELIGIOUS_SUBJECT_RE',
+  'casault in title → pas RELIGIOUS_SUBJECT_RE',
 );
 assert(
   require('../scripts/photo-visual-qc-lib.js').RELIGIOUS_SUBJECT_RE.test('collégiale de Québec'),
   'collégiale → RELIGIOUS_SUBJECT_RE',
 );
 
-// Hard-ban Casault fragments
-const { matchHardBanned } = require('../scripts/quebec-backgrounds-blacklist.js');
+const { isCampusBuildingException } = require('../scripts/religious-facade-lib.js');
 assert(
-  matchHardBanned({
-    id: 'd80fc225abc1',
-    url: 'https://upload.wikimedia.org/wikipedia/commons/f/f9/Universit%C3%A9_Laval%2C_Quebec_Canada_3.jpg',
-    title: 'Université Laval, Quebec Canada',
-  })?.reason === 'reads_as_church_casault',
-  'Casault Canada_3 hard-ban',
+  isCampusBuildingException({
+    title: 'Pavillon Louis-Jacques-Casault Université Laval',
+    campus: true,
+  }),
+  'Casault campus excepté du détecteur d’église',
 );
+assert(
+  !isCampusBuildingException({ title: 'Chapelle du campus Université Laval', campus: true }),
+  'chapelle campus : pas d’exception',
+);
+
+const { matchHardBanned } = require('../scripts/quebec-backgrounds-blacklist.js');
 assert(
   matchHardBanned({
     url: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Universit%C3%A9_Laval%2C_Quebec%2C_Canada_02.jpg',
@@ -242,10 +246,10 @@ assert(
   'Canada_02 Maison Eugène-Roberge NOT banned',
 );
 assert(
-  !require('../scripts/campus-photo-bank.js').BANK['universite laval']?.some((e) =>
-    /Canada_3|Casault/i.test(e.url + e.title)
+  require('../scripts/campus-photo-bank.js').BANK['universite laval']?.some((e) =>
+    /Casault/i.test(e.url + e.title)
   ),
-  'campus seed ULaval sans Casault Canada_3',
+  'campus seed ULaval inclut Casault',
 );
 assert(
   require('../scripts/campus-photo-bank.js').BANK['universite laval']?.some((e) =>
