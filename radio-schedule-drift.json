@@ -1,19 +1,21 @@
 {
-  "checkedAt": "2026-08-23T23:32:17.015Z",
+  "checkedAt": "2026-08-24T23:32:08.443Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 6,
+    "stable": 5,
     "drift": [],
-    "overhaul": [],
+    "overhaul": [
+      "choq"
+    ],
     "unreachable": []
   },
   "stations": [
     {
       "id": "chyz",
-      "published": 29,
-      "fresh": 29,
+      "published": 30,
+      "fresh": 30,
       "added": [],
       "removed": [],
       "changed": 0,
@@ -32,8 +34,8 @@
     },
     {
       "id": "ckut",
-      "published": 101,
-      "fresh": 101,
+      "published": 100,
+      "fresh": 100,
       "added": [],
       "removed": [],
       "changed": 0,
@@ -63,12 +65,26 @@
     {
       "id": "choq",
       "published": 18,
-      "fresh": 18,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 12,
+      "added": [
+        "lun 17:00–18:00 Bitume",
+        "mar 11:00–12:00 Le Monde Dans Mes Oreilles",
+        "jeu 20:00–21:00 La nouvelle école des surdoués"
+      ],
+      "removed": [
+        "dim 17:00–18:00 Mutations",
+        "lun 17:00–18:00 Faire avec",
+        "mar 19:30–20:30 Les Amazones",
+        "mar 20:30–22:30 10 sur 10 : un podcast 100% rap",
+        "mer 11:00–12:00 In Vélo Veritas",
+        "mer 17:00–18:00 Podcast Nomade: L'art de se rencontrer",
+        "mer 19:00–20:00 Le CHOC des Générations",
+        "jeu 18:30–19:40 Les Apatrides Anonymes",
+        "sam 22:00–00:00 D'amour et de sexe"
+      ],
+      "changed": 12,
+      "ratio": 0.667,
+      "status": "overhaul"
     }
   ]
 }
