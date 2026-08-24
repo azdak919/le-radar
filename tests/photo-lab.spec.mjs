@@ -71,6 +71,7 @@ test('générateur d’affiches public', async ({ page }) => {
   await page.locator('label:has(input[name="format"][value="letter"])').click();
   await expect(page.locator('#status')).toContainText('Lettre', { timeout: 15000 });
   await expect(page.locator('#status')).toContainText('5100 × 6600');
+  await expect(page.locator('#dpi-1200-choice')).toBeVisible();
   await page.locator('label:has(input[name="dpi"][value="1200"])').click();
   await expect(page.getByRole('button', { name: /JPEG 1200 dpi/ }).first()).toBeVisible();
   await expect(page.getByRole('button', { name: /PDF 1200 dpi/ }).first()).toBeVisible();

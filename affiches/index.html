@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Composez et téléchargez une affiche LE-RADAR.ca à imprimer : 11 × 17, lettre ou légal, 300, 600 ou 1200 dpi.">
+  <meta name="description" content="Composez et téléchargez une affiche LE-RADAR.ca à imprimer : 11 × 17, lettre ou légal, 300 ou 600 dpi.">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#ffffff">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Imprimer une affiche — LE-RADAR.ca","url":"https://le-radar.ca/affiches/","inLanguage":"fr-CA","isPartOf":{"@type":"WebSite","name":"LE-RADAR.ca","url":"https://le-radar.ca/"}}</script>
@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="../style-masthead.css">
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="../seo-pages.css">
-  <link rel="stylesheet" href="./poster-builder.css?v=crop-near">
+  <link rel="stylesheet" href="./poster-builder.css?v=dpi-lab">
   <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e91">
   <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e91">
 </head>
@@ -99,9 +99,9 @@
           <div class="choices">
             <label><input type="radio" name="dpi" value="300"> 300 dpi</label>
             <label><input type="radio" name="dpi" value="600" checked> 600 dpi</label>
-            <label><input type="radio" name="dpi" value="1200"> 1200 dpi</label>
+            <label id="dpi-1200-choice" hidden><input type="radio" name="dpi" value="1200"> 1200 dpi</label>
           </div>
-          <p class="field-hint">600 dpi par défaut. 300 pour un babillard, 1200 pour un tirage photo (fichier très lourd).</p>
+          <p class="field-hint" id="dpi-hint">600 dpi par défaut. 300 pour un babillard.</p>
         </fieldset>
 
         <fieldset>
@@ -267,6 +267,6 @@
   <script src="../engage-prompt.js" defer></script>
   <script src="../dev/midwidth-preview.js?v=wide-auto-e91"></script>
   <script src="../dev/wide-desktop-preview.js?v=wide-auto-e91"></script>
-  <script src="./poster-builder.js?v=crop-near"></script>
+  <script src="./poster-builder.js?v=dpi-lab"></script>
 </body>
 </html>

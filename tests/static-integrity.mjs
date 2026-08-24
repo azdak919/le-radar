@@ -564,10 +564,11 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('wIn: 8.5') && builderJs.includes('hIn: 11'), 'générateur public : lettre 8,5×11');
   assert(builderJs.includes('REF_DPI = 300'), 'générateur public : 300 dpi de référence');
   assert(builderJs.includes('PREVIEW_DPI'), 'générateur public : aperçu plus léger que le JPEG');
-  assert(builderJs.includes('DPI_CHOICES'), 'générateur public : 300, 600 et 1200 dpi');
+  assert(builderJs.includes('DPI_PUBLIC'), 'générateur public : 300 et 600 dpi en prod');
+  assert(builderJs.includes('DPI_LAB'), 'générateur public : 1200 dpi réservé au labo local');
   assert(builderJs.includes('DEFAULT_DPI = 600'), 'générateur public : 600 dpi par défaut');
   assert(builder.includes('name="dpi"'), 'générateur public : choix de résolution');
-  assert(builder.includes('1200 dpi'), 'générateur public : 1200 dpi');
+  assert(builder.includes('id="dpi-1200-choice" hidden'), '1200 dpi masqué hors labo local');
   assert(builder.includes('value="600" checked'), 'générateur public : 600 dpi coché');
   assert(builderJs.includes('jpegToPdfBlob'), 'générateur public : PDF dans le navigateur');
   assert(builderJs.includes('previewFit'), 'générateur public : aperçu dimensionné à la zone');
