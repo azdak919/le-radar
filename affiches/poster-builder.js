@@ -76,92 +76,92 @@ const GREETINGS_EN = {
 const CAMPUSES = [
   { slug: 'generique', line: null, lineEn: null, bilingual: false, places: null, hints: null, label: 'Générique' },
   {
-    slug: 'laval', line: 'Université Laval', bilingual: false, label: 'Université Laval',
+    slug: 'laval', line: 'Université Laval', prefix: 'Université ', core: 'Laval', bilingual: false, label: 'Université Laval',
     places: ['université laval'],
     hints: ['université laval', 'adrien-pouliot', 'alphonse-marie-parent', 'biermans', 'ernest-lemieux', 'pavillon dkn', 'casault', 'palasis', 'bonenfant', 'grand axe'],
   },
   {
-    slug: 'mcgill', line: 'Université McGill', lineEn: 'McGill University', core: 'McGill', bilingual: true, label: 'Université McGill',
+    slug: 'mcgill', line: 'Université McGill', lineEn: 'McGill University', prefix: 'Université ', core: 'McGill', bilingual: true, label: 'Université McGill',
     places: ['mcgill'],
     hints: ['mcgill'],
   },
   {
-    slug: 'udem', line: 'Université de Montréal', bilingual: false, label: 'Université de Montréal',
+    slug: 'udem', line: 'Université de Montréal', prefix: 'Université de ', core: 'Montréal', bilingual: false, label: 'Université de Montréal',
     places: ['université de montréal'],
     hints: ['université de montréal', 'roger-gaudry', 'école polytechnique de montréal'],
   },
   {
-    slug: 'uqam', line: 'Université du Québec à Montréal', bilingual: false, label: 'Université du Québec à Montréal',
+    slug: 'uqam', line: 'Université du Québec à Montréal', prefix: 'Université du Québec à ', core: 'Montréal', bilingual: false, label: 'Université du Québec à Montréal',
     places: ['uqam'],
     hints: ['uqam', 'judith-jasmin'],
   },
   {
-    slug: 'concordia', line: 'Université Concordia', lineEn: 'Concordia University', core: 'Concordia', bilingual: true, label: 'Université Concordia',
+    slug: 'concordia', line: 'Université Concordia', lineEn: 'Concordia University', prefix: 'Université ', core: 'Concordia', bilingual: true, label: 'Université Concordia',
     places: ['concordia'],
     hints: ['concordia', 'hall building', 'loyola'],
   },
   {
-    slug: 'sherbrooke', line: 'Université de Sherbrooke', bilingual: false, label: 'Université de Sherbrooke',
+    slug: 'sherbrooke', line: 'Université de Sherbrooke', prefix: 'Université de ', core: 'Sherbrooke', bilingual: false, label: 'Université de Sherbrooke',
     places: ['sherbrooke', 'longueuil'],
     hints: ['université de sherbrooke', 'udes', 'georges-cabana', 'univestrie'],
   },
   {
-    slug: 'bishops', line: 'Université Bishop’s', lineEn: 'Bishop’s University', core: 'Bishop’s', bilingual: true, label: 'Université Bishop’s',
+    slug: 'bishops', line: 'Université Bishop’s', lineEn: 'Bishop’s University', prefix: 'Université ', core: 'Bishop’s', bilingual: true, label: 'Université Bishop’s',
     places: ['bishop'],
     hints: ['bishop'],
   },
   {
-    slug: 'uqtr', line: 'Université du Québec à Trois-Rivières', bilingual: false, label: 'UQTR',
+    slug: 'uqtr', line: 'Université du Québec à Trois-Rivières', prefix: 'Université du Québec à ', core: 'Trois-Rivières', bilingual: false, label: 'UQTR',
     places: ['uqtr', 'trois-rivières', 'trois-rivieres'],
     hints: ['uqtr', 'trois-rivières', 'trois rivieres'],
   },
   {
-    slug: 'uqac', line: 'Université du Québec à Chicoutimi', bilingual: false, label: 'UQAC',
+    slug: 'uqac', line: 'Université du Québec à Chicoutimi', prefix: 'Université du Québec à ', core: 'Chicoutimi', bilingual: false, label: 'UQAC',
     places: ['uqac', 'chicoutimi'],
     hints: ['uqac', 'chicoutimi'],
   },
   {
-    slug: 'uqar', line: 'Université du Québec à Rimouski', bilingual: false, label: 'UQAR',
+    slug: 'uqar', line: 'Université du Québec à Rimouski', prefix: 'Université du Québec à ', core: 'Rimouski', bilingual: false, label: 'UQAR',
     places: ['uqar', 'rimouski'],
     hints: ['uqar', 'rimouski', 'ursulines'],
   },
   {
-    slug: 'uqo', line: 'Université du Québec en Outaouais', bilingual: false, label: 'UQO',
+    slug: 'uqo', line: 'Université du Québec en Outaouais', prefix: 'Université du Québec en ', core: 'Outaouais', bilingual: false, label: 'UQO',
     places: ['uqo', 'outaouais'],
     hints: ['uqo', 'outaouais', 'lucien-brault'],
   },
   {
-    slug: 'uqat', line: 'Université du Québec en Abitibi-Témiscamingue', bilingual: false, label: 'UQAT',
+    slug: 'uqat', line: 'Université du Québec en Abitibi-Témiscamingue', prefix: 'Université du Québec en ', core: 'Abitibi-Témiscamingue', bilingual: false, label: 'UQAT',
     places: ['uqat', 'abitibi', 'rouyn'],
     hints: ['uqat', 'abitibi', 'rouyn', 'premiers peuples'],
   },
   {
-    slug: 'teluq', line: 'TÉLUQ', bilingual: false, label: 'TÉLUQ',
+    slug: 'teluq', line: 'TÉLUQ', prefix: '', core: 'TÉLUQ', bilingual: false, label: 'TÉLUQ',
     places: ['téluq', 'teluq'],
     hints: ['téluq', 'teluq'],
   },
   {
-    slug: 'ets', line: 'École de technologie supérieure', bilingual: false, label: 'ÉTS',
+    slug: 'ets', line: 'École de technologie supérieure', prefix: 'École de ', core: 'technologie supérieure', bilingual: false, label: 'ÉTS',
     places: ['éts', 'ets', 'technologie supérieure'],
     hints: ['technologie superieure', 'technologie supérieure', 'école de technologie'],
   },
   {
-    slug: 'enap', line: 'ENAP', bilingual: false, label: 'ENAP',
+    slug: 'enap', line: 'ENAP', prefix: '', core: 'ENAP', bilingual: false, label: 'ENAP',
     places: ['enap'],
     hints: ['enap'],
   },
   {
-    slug: 'inrs', line: 'INRS', bilingual: false, label: 'INRS',
+    slug: 'inrs', line: 'INRS', prefix: '', core: 'INRS', bilingual: false, label: 'INRS',
     places: ['inrs'],
     hints: ['inrs'],
   },
   {
-    slug: 'poly', line: 'Polytechnique Montréal', bilingual: false, label: 'Polytechnique Montréal',
+    slug: 'poly', line: 'Polytechnique Montréal', prefix: '', core: 'Polytechnique Montréal', bilingual: false, label: 'Polytechnique Montréal',
     places: ['polytechnique'],
     hints: ['polytechnique'],
   },
   {
-    slug: 'hec', line: 'HEC Montréal', bilingual: false, label: 'HEC Montréal',
+    slug: 'hec', line: 'HEC Montréal', prefix: '', core: 'HEC Montréal', bilingual: false, label: 'HEC Montréal',
     places: ['hec'],
     hints: ['hec montréal', 'hec montreal', 'decelles'],
   },
@@ -369,26 +369,38 @@ function wrapWords(ctx, text, maxW) {
   return lines;
 }
 
-function fillUniLockup(ctx, core, y, small, large) {
-  const left = 'Université ';
-  const right = ' University';
+function uniLockupParts(campus, kind) {
+  if (!campus || !campus.core) return null;
+  const left = campus.prefix != null ? campus.prefix : 'Université ';
+  const right = (kind === 'bilingue' && campus.bilingual) ? ' University' : (campus.suffix || '');
+  return { left, core: campus.core, right };
+}
+
+function fillUniLockup(ctx, parts, y, small, large) {
+  const left = parts.left || '';
+  const right = parts.right || '';
+  const core = parts.core;
   ctx.textBaseline = 'alphabetic';
   ctx.font = `400 ${small}px "LR Sans"`;
-  const wLeft = textW(ctx, left);
-  const wRight = textW(ctx, right);
+  const wLeft = left ? textW(ctx, left) : 0;
+  const wRight = right ? textW(ctx, right) : 0;
   ctx.font = `600 ${large}px "LR Sans Semi"`;
   const wCore = textW(ctx, core);
   let x = (ctx.canvas.width - (wLeft + wCore + wRight)) / 2;
   const base = y + large * 0.82;
   ctx.fillStyle = INK;
-  ctx.font = `400 ${small}px "LR Sans"`;
-  ctx.fillText(left, x, base);
-  x += wLeft;
+  if (left) {
+    ctx.font = `400 ${small}px "LR Sans"`;
+    ctx.fillText(left, x, base);
+    x += wLeft;
+  }
   ctx.font = `600 ${large}px "LR Sans Semi"`;
   ctx.fillText(core, x, base);
   x += wCore;
-  ctx.font = `400 ${small}px "LR Sans"`;
-  ctx.fillText(right, x, base);
+  if (right) {
+    ctx.font = `400 ${small}px "LR Sans"`;
+    ctx.fillText(right, x, base);
+  }
   ctx.textBaseline = 'top';
   return large;
 }
@@ -623,11 +635,9 @@ function compose(opts) {
     });
   }
   if (opts.showUni !== false) {
-    if (kind === 'bilingue' && campus.core) {
-      y += fillUniLockup(ctx, campus.core, y, uniSize, uniCore) + gapBlock;
-    } else if (campus.line) {
-      ctx.font = `400 ${uniSize}px "LR Sans"`;
-      y += fillCentered(ctx, campus.line, y, INK) + gapBlock;
+    const uniParts = uniLockupParts(campus, kind);
+    if (uniParts) {
+      y += fillUniLockup(ctx, uniParts, y, uniSize, uniCore) + gapBlock;
     }
   }
   const greet = GREETINGS[opts.greeting];

@@ -583,7 +583,10 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   const builder = readFileSync(join(root, 'affiches/index.html'), 'utf8');
   const builderJs = readFileSync(join(root, 'affiches/poster-builder.js'), 'utf8');
   assert(builderJs.includes('fillCentered(ctx, NAME_FULL, cy, SOFT)'), 'pied d’affiche : nom développé discret comme le site');
-  assert(builderJs.includes('fillUniLockup'), 'générateur public : Université McGill University');
+  assert(builderJs.includes('fillUniLockup'), 'générateur public : nom d’établissement plus grand / gras');
+  assert(builderJs.includes('uniLockupParts'), 'générateur public : même lockup pour tous les campus');
+  assert(builderJs.includes("core: 'Laval'"), 'générateur public : Laval en gras comme McGill');
+  assert(builderJs.includes("kind === 'bilingue' && campus.bilingual"), 'University seulement si bilingue anglophone');
   assert(builderJs.includes('GREETINGS_EN'), 'générateur public : messages manuscrits bilingues OQLF');
   assert(posterScript.includes('non officiel et sans affiliation'), 'affiches campus : « et » plutôt qu’un tiret');
   assert(posterScript.includes('Les contenus appartiennent à leurs publications'), 'affiches campus : contenus d’origine');
@@ -642,7 +645,10 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('LR Script'), 'générateur public : fonte signature');
   assert(existsSync(join(root, 'assets/kit/fonts/Caveat-Bold.ttf')), 'fonte Caveat pour signature manuscrite');
   assert(builderJs.includes("slug: 'mcgill'") && builderJs.includes('bilingual: true'), 'générateur public : McGill bilingue');
-  assert(builderJs.includes("slug: 'laval'") && builderJs.includes("slug: 'laval', line: 'Université Laval', bilingual: false"), 'générateur public : Laval français seulement');
+  assert(
+    /slug: 'laval', line: 'Université Laval', prefix: 'Université ', core: 'Laval', bilingual: false/.test(builderJs),
+    'générateur public : Laval français seulement',
+  );
   const postersCheck = spawnSync('python3', [join(root, 'scripts/generate-campus-posters.py'), '--check'], { encoding: 'utf8' });
   assert.equal(postersCheck.status, 0, postersCheck.stderr || postersCheck.stdout || 'affiches campus : JPEG 11×17 manquants');
 }
