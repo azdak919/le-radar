@@ -69,7 +69,7 @@ const state = {
   lang: 'standard',
   greeting: 'none',
   langs: false,
-  qr: false,
+  qr: true,
   photoId: null,
   photos: [],
   focalX: 0.5,
