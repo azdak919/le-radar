@@ -86,7 +86,14 @@
         <div class="choices">
           <label><input type="radio" name="lang" value="standard" checked> Français</label>
           <label hidden><input type="radio" name="lang" value="bilingue"> Bilingue</label>
-          <label><input type="radio" name="lang" value="minimal"> Minimal</label>
+        </div>
+      </fieldset>
+
+      <fieldset id="uni-toggle" hidden>
+        <legend>Nom de l’établissement</legend>
+        <div class="choices">
+          <label><input type="radio" name="showUni" value="oui" checked> Afficher</label>
+          <label><input type="radio" name="showUni" value="non"> Masquer</label>
         </div>
       </fieldset>
 
@@ -149,6 +156,6 @@
       </aside>
     </section>
   </div>
-  <script src="./poster-builder.js?v=footer-read"></script>
+  <script src="./poster-builder.js?v=show-uni"></script>
 </body>
 </html>

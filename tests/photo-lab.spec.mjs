@@ -80,6 +80,7 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.locator('#greeting')).toContainText('Bonne rentrée');
   await expect(page.locator('label:has(input[name="langs"][value="oui"])')).toContainText('Langues du site');
   await expect(page.locator('.solid--radar')).toBeVisible();
+  await expect(page.locator('#uni-toggle')).toBeVisible();
   await page.locator('label:has(input[name="campus"][value="concordia"])').click();
   await page.locator('#photo-grid label').nth(1).click();
   await expect(page.locator('#status')).toContainText('300 dpi', { timeout: 20000 });
