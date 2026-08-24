@@ -517,11 +517,13 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   }
   const posterScript = readFileSync(join(root, 'scripts/generate-campus-posters.py'), 'utf8');
   assert(posterScript.includes('TITLE = "LE-RADAR.ca"'), 'affiches campus : mot-symbole LE-RADAR.ca');
-  assert(posterScript.includes('draw_wordmark'), 'affiches campus : petit logo à gauche du mot-symbole');
+  assert(posterScript.includes('draw_footer_wordmark'), 'affiches campus : petit logo PWA au footer seulement');
+  assert(!/Rentrée 2026/.test(posterScript), 'affiches campus : pas de Rentrée 2026');
+  assert(posterScript.includes('Vous pouvez lire les journaux et écouter la radio'), 'affiches campus : ligne d’usage');
   assert(/draw\.rectangle\(\(0, 0, W, BAR_H\)/.test(posterScript), 'affiches campus : barre pourpre en haut');
   assert(posterScript.includes('raster_qr'), 'affiches campus : QR officiel collé, pas un carré vide');
   assert(posterScript.includes('Student media on your radar'), 'affiches campus : slogan EN officiel');
-  assert(posterScript.includes('Le Réseau Académique de Découverte'), 'affiches campus : nom complet');
+  assert(posterScript.includes('Le Réseau Académique de Découverte'), 'affiches campus : nom complet au footer');
   assert(existsSync(join(root, 'assets/kit/qr-le-radar.svg')), 'affiches campus : QR vectoriel officiel requis');
   const postersCheck = spawnSync('python3', [join(root, 'scripts/generate-campus-posters.py'), '--check'], { encoding: 'utf8' });
   assert.equal(postersCheck.status, 0, postersCheck.stderr || postersCheck.stdout || 'affiches campus : JPEG 11×17 manquants');

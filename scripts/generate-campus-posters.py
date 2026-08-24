@@ -58,8 +58,8 @@ VARIANTS = ("standard", "minimal", "bilingue", "standard-qr", "minimal-qr", "bil
 TITLE = "LE-RADAR.ca"
 SUB_1 = "Journaux, radios et sports étudiants"
 SUB_2 = "du Québec, réunis au même endroit"
-NAME_1 = "Le Réseau Académique de Découverte"
-NAME_2 = "et d’Agrégation de Ressources"
+NAME_FULL = "Le Réseau Académique de Découverte et d’Agrégation de Ressources"
+USE = "Vous pouvez lire les journaux et écouter la radio"
 SLOGAN_EN = "Student media on your radar"
 INDEP_1 = "LE-RADAR.ca est un projet indépendant et non officiel."
 INDEP_2 = "Il n’est affilié à aucun des médias ni des établissements recensés."
@@ -75,7 +75,7 @@ CAMPUSES = [
     {
         "slug": "laval",
         "name": "Université Laval",
-        "line": "Université Laval · Rentrée 2026",
+        "line": "Université Laval",
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "pouliot", "photo_id": "68ae0e12a3ec", "label": "Pavillon Adrien-Pouliot", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.58},
@@ -85,7 +85,7 @@ CAMPUSES = [
     {
         "slug": "mcgill",
         "name": "McGill University",
-        "line": "McGill University · Rentrée 2026",
+        "line": "McGill University",
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "arts", "photo_id": "52c687b5d843", "label": "Arts Building", "focal": (0.50, 0.36), "crop_scale": 0.88, "desaturate": 0.50, "overlay": 0.58},
@@ -95,7 +95,7 @@ CAMPUSES = [
     {
         "slug": "udem",
         "name": "Université de Montréal",
-        "line": "Université de Montréal · Rentrée 2026",
+        "line": "Université de Montréal",
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "gaudry", "photo_id": "a7697051c0fc", "label": "Pavillon Roger-Gaudry", "focal": (0.50, 0.32), "crop_scale": 0.95, "desaturate": 0.55, "overlay": 0.52},
@@ -104,7 +104,7 @@ CAMPUSES = [
     {
         "slug": "uqam",
         "name": "Université du Québec à Montréal",
-        "line": "Université du Québec à Montréal · Rentrée 2026",
+        "line": "Université du Québec à Montréal",
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "jasmin", "photo_id": "a5acbe3af178", "label": "Pavillon Judith-Jasmin", "focal": (0.48, 0.40), "crop_scale": 0.88, "desaturate": 0.52, "overlay": 0.58},
@@ -113,7 +113,7 @@ CAMPUSES = [
     {
         "slug": "concordia",
         "name": "Concordia University",
-        "line": "Concordia University · Rentrée 2026",
+        "line": "Concordia University",
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "hall", "photo_id": "582ef31c6453", "label": "Henry F. Hall Building", "focal": (0.52, 0.36), "crop_scale": 0.90, "desaturate": 0.48, "overlay": 0.60},
@@ -123,7 +123,7 @@ CAMPUSES = [
     {
         "slug": "sherbrooke",
         "name": "Université de Sherbrooke",
-        "line": "Université de Sherbrooke · Rentrée 2026",
+        "line": "Université de Sherbrooke",
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "longueuil", "photo_id": "912fa583aa5b", "label": "Campus de Longueuil", "focal": (0.42, 0.42), "crop_scale": 0.88, "desaturate": 0.50, "overlay": 0.58},
@@ -132,7 +132,7 @@ CAMPUSES = [
     {
         "slug": "bishops",
         "name": "Bishop’s University",
-        "line": "Bishop’s University · Rentrée 2026",
+        "line": "Bishop’s University",
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "brick", "photo_id": "186769a5aeb5", "label": "Bâtiment principal", "focal": (0.45, 0.42), "crop_scale": 0.92, "desaturate": 0.55, "overlay": 0.58},
@@ -274,18 +274,18 @@ def draw_radar_motif(canvas: Image.Image) -> None:
     canvas.alpha_composite(layer)
 
 
-def draw_wordmark(canvas, draw, f_title, y_top, small):
-    """Petit logo PWA toujours à gauche de LE-RADAR.ca. Groupe centré."""
-    gap = 28
-    title_w = tracked_width(TITLE, f_title)
-    box = draw.textbbox((0, 0), TITLE, font=f_title)
+def draw_footer_wordmark(canvas, draw, f_mark, y_top, small):
+    """Petit logo PWA à gauche de LE-RADAR.ca — footer seulement."""
+    gap = 16
+    title_w = tracked_width(TITLE, f_mark)
+    box = draw.textbbox((0, 0), TITLE, font=f_mark)
     title_h = box[3] - box[1]
     total_w = small.width + gap + title_w
     x = (W - total_w) // 2
     row_h = max(small.height, title_h)
     canvas.alpha_composite(small, (x, y_top + (row_h - small.height) // 2))
     text_y = y_top + (row_h - title_h) // 2 - box[1]
-    draw_tracked(draw, (x + small.width + gap, text_y), TITLE, f_title, INK)
+    draw_tracked(draw, (x + small.width + gap, text_y), TITLE, f_mark, INK)
     return y_top + row_h
 
 
@@ -305,24 +305,29 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
 
     # Ancien rythme : logo dans le tiers supérieur, pas collé au haut.
     big = 780 if kind == "minimal" else 720
-    small = 168
+    foot_logo = 72
     logo_big = raster_logo(big)
-    logo_small = raster_logo(small)
+    logo_foot = raster_logo(foot_logo)
 
-    f_title = font(SERIF, 160 if kind == "minimal" else 148)
+    f_title = font(SERIF, 168 if kind == "minimal" else 156)
     f_sub = font(SANS, 52 if kind != "minimal" else 48)
-    f_name = font(SANS, 36)
     f_en = font(SANS, 40)
     f_uni = font(SANS, 52)
-    f_body = font(SANS, 42)
-    f_meta = font(SANS_SEMI, 36)
-    f_credit = font(SANS, 28)
+    f_use = font(SANS, 44)
+    f_name = font(SANS, 32)
+    f_mark = font(SERIF, 40)
+    f_body = font(SANS, 36)
+    f_meta = font(SANS_SEMI, 32)
+    f_credit = font(SANS, 26)
 
     y = BAR_H + 280
     canvas.alpha_composite(logo_big, ((W - big) // 2, y))
-    y = y + big + 44
-    y = draw_wordmark(canvas, draw, f_title, y, logo_small)
-    y += 48
+    y = y + big + 48
+    box = draw.textbbox((0, 0), TITLE, font=f_title)
+    title_h = box[3] - box[1]
+    title_w = tracked_width(TITLE, f_title)
+    draw_tracked(draw, ((W - title_w) // 2, y - box[1]), TITLE, f_title, INK)
+    y += title_h + 48
 
     def line(text, fnt, fill, dy=12):
         nonlocal y
@@ -332,17 +337,12 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
 
     if kind != "minimal":
         line(SUB_1, f_sub, SOFT, 8)
-        line(SUB_2, f_sub, SOFT, 28)
+        line(SUB_2, f_sub, SOFT, 22)
         if kind == "bilingue":
-            line(SLOGAN_EN, f_en, MUTED, 28)
-        line(NAME_1, f_name, MUTED, 6)
-        line(NAME_2, f_name, MUTED, 36)
-    else:
-        line(NAME_1, f_name, MUTED, 6)
-        line(NAME_2, f_name, MUTED, 36)
-
+            line(SLOGAN_EN, f_en, MUTED, 22)
     if campus.get("line"):
-        line(campus["line"], f_uni, SOFT, 20)
+        line(campus["line"], f_uni, SOFT, 16)
+    line(USE, f_use, SOFT, 20)
 
     # Footer from the bottom — never leaves the 0.5 in safety.
     credit = ""
@@ -355,18 +355,26 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
         tw, th = text_size(draw, credit, f_credit)
         cy -= th
         draw.text(((W - tw) // 2, cy), credit, font=f_credit, fill=MUTED)
-        cy -= 22
+        cy -= 18
     tw, th = text_size(draw, META, f_meta)
     cy -= th
     draw.text(((W - tw) // 2, cy), META, font=f_meta, fill=MUTED)
-    cy -= 18
+    cy -= 14
     tw, th = text_size(draw, INDEP_2, f_body)
     cy -= th
     draw.text(((W - tw) // 2, cy), INDEP_2, font=f_body, fill=MUTED)
-    cy -= 8
+    cy -= 6
     tw, th = text_size(draw, INDEP_1, f_body)
     cy -= th
     draw.text(((W - tw) // 2, cy), INDEP_1, font=f_body, fill=MUTED)
+    cy -= 10
+    tw, th = text_size(draw, NAME_FULL, f_name)
+    cy -= th
+    draw.text(((W - tw) // 2, cy), NAME_FULL, font=f_name, fill=MUTED)
+    cy -= 16
+    mark_h = max(foot_logo, text_size(draw, TITLE, f_mark)[1])
+    cy -= mark_h
+    draw_footer_wordmark(canvas, draw, f_mark, cy, logo_foot)
 
     if with_qr:
         qr = raster_qr(QR_PX - 2 * QR_PAD)
