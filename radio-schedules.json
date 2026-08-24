@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20T09:39:20.762Z",
+  "updatedAt": "2026-08-24T21:28:32.141Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,8 +8,8 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-08-20T09:39:20.762Z",
-      "verifiedWeekOf": "2026-08-17",
+      "checkedAt": "2026-08-24T21:28:32.141Z",
+      "verifiedWeekOf": "2026-08-24",
       "grid": [
         {
           "day": 0,
@@ -33,6 +33,13 @@
           "url": "https://chyz.ca/emission/radio-futura/"
         },
         {
+          "day": 0,
+          "start": "16:50",
+          "end": "20:30",
+          "title": "Capitales de Québec",
+          "url": "https://chyz.ca/emission/capitales-de-quebec/"
+        },
+        {
           "day": 1,
           "start": "08:00",
           "end": "10:00",
@@ -52,13 +59,6 @@
           "end": "18:30",
           "title": "Les Arshitechs du Son",
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-        },
-        {
-          "day": 1,
-          "start": "18:30",
-          "end": "19:30",
-          "title": "La Lanterne",
-          "url": "https://chyz.ca/emission/la-lanterne/"
         },
         {
           "day": 1,
@@ -167,17 +167,17 @@
         },
         {
           "day": 5,
-          "start": "11:00",
-          "end": "12:00",
-          "title": "Punk-o-rama",
-          "url": "https://chyz.ca/emission/punk-o-rama/"
-        },
-        {
-          "day": 5,
           "start": "13:00",
           "end": "14:00",
           "title": "Détour",
           "url": "https://chyz.ca/emission/detour/"
+        },
+        {
+          "day": 5,
+          "start": "18:50",
+          "end": "23:00",
+          "title": "Capitales de Québec",
+          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         },
         {
           "day": 5,
@@ -203,9 +203,9 @@
         {
           "day": 6,
           "start": "12:00",
-          "end": "12:30",
-          "title": "Un Monde de Couleurs et de Son",
-          "url": "https://chyz.ca/emission/un-monde-de-couleurs-et-de-son/"
+          "end": "13:00",
+          "title": "Un Samedi d'Ici",
+          "url": "https://chyz.ca/emission/un-samedi-dici/"
         },
         {
           "day": 6,
@@ -213,6 +213,13 @@
           "end": "16:00",
           "title": "Radio Futura",
           "url": "https://chyz.ca/emission/radio-futura/"
+        },
+        {
+          "day": 6,
+          "start": "18:50",
+          "end": "23:00",
+          "title": "Capitales de Québec",
+          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         }
       ]
     },
@@ -222,8 +229,8 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-08-20T09:39:20.762Z",
-      "verifiedWeekOf": "2026-08-17",
+      "checkedAt": "2026-08-24T21:28:32.141Z",
+      "verifiedWeekOf": "2026-08-24",
       "grid": [
         {
           "day": 0,
@@ -705,8 +712,8 @@
           "day": 4,
           "start": "07:00",
           "end": "08:00",
-          "title": "Retour sur Ilesoniq 2026",
-          "url": "https://cism893.ca/emissions/retour-sur-ilesoniq-2026"
+          "title": "Plus de guit présente: un retour sur le Warped tour 2026",
+          "url": "https://cism893.ca/emissions/plus-de-guit"
         },
         {
           "day": 4,
@@ -996,8 +1003,8 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-08-20T09:39:20.762Z",
-      "verifiedWeekOf": "2026-08-17",
+      "checkedAt": "2026-08-24T21:28:32.141Z",
+      "verifiedWeekOf": "2026-08-24",
       "grid": [
         {
           "day": 0,
@@ -1159,7 +1166,7 @@
           "day": 1,
           "start": "19:00",
           "end": "20:00",
-          "title": "Lesbo-sons"
+          "title": "Dykes on Mykes"
         },
         {
           "day": 1,
@@ -1255,7 +1262,7 @@
           "day": 2,
           "start": "18:00",
           "end": "19:00",
-          "title": "Rez Rock Radio"
+          "title": "Prison Radio"
         },
         {
           "day": 2,
@@ -1429,7 +1436,7 @@
           "day": 4,
           "start": "17:00",
           "end": "18:00",
-          "title": "Off the Hour: Labour Radio"
+          "title": "Off the Hour"
         },
         {
           "day": 4,
@@ -1459,7 +1466,7 @@
           "day": 4,
           "start": "23:00",
           "end": "01:00",
-          "title": "You Need A Heart To Live 2"
+          "title": "L'aire du Diable"
         },
         {
           "day": 5,
@@ -1524,14 +1531,8 @@
         {
           "day": 5,
           "start": "19:00",
-          "end": "20:00",
-          "title": "Listening to Latin America: Blanca-Victoria"
-        },
-        {
-          "day": 5,
-          "start": "20:00",
           "end": "22:00",
-          "title": "Macondo"
+          "title": "LLA/Macondo"
         },
         {
           "day": 5,
@@ -1613,8 +1614,8 @@
       "sources": [
         "cjlo:http://www.cjlo.com/schedule"
       ],
-      "checkedAt": "2026-08-20T09:39:20.762Z",
-      "verifiedWeekOf": "2026-08-17",
+      "checkedAt": "2026-08-24T21:28:32.141Z",
+      "verifiedWeekOf": "2026-08-24",
       "grid": [
         {
           "day": 0,
@@ -4221,8 +4222,8 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-08-20T09:39:20.762Z",
-      "verifiedWeekOf": "2026-08-17",
+      "checkedAt": "2026-08-24T21:28:32.141Z",
+      "verifiedWeekOf": "2026-08-24",
       "grid": [
         {
           "day": 0,
