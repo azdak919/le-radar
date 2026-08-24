@@ -14,7 +14,7 @@ const {
   primaryFireUtc,
 } = require('../scripts/news-schedule-lib.js');
 
-assert.equal(TARGET_PASSES_UTC.length, 8, 'huit créneaux affichés requis');
+assert.equal(TARGET_PASSES_UTC.length, 10, 'dix créneaux affichés requis');
 assert.equal(CRON_LEAD_MINUTES, 35, 'avance cron 35 min (retard GitHub + fetch)');
 assert.equal(SCHEDULE_TOLERANCE_MINUTES, 75);
 assert.equal(SAFETY_NET_CRON, '20 * * * *');
@@ -38,8 +38,15 @@ assert.equal(slotIso('2026-08-24T22:16:00.000Z'), null, 'hors tolérance 75 min 
 assert.equal(slotIso('2026-08-24T16:25:00.000Z'), '2026-08-24T17:00:00.000Z');
 assert.equal(slotIso('2026-08-24T17:58:00.000Z'), '2026-08-24T17:00:00.000Z');
 
+// 06 h QC = 10:00 UTC, cron 09:25.
+assert.equal(slotIso('2026-08-24T09:25:00.000Z'), '2026-08-24T10:00:00.000Z');
+
 // 07 h QC = 11:00 UTC, cron 10:25.
 assert.equal(slotIso('2026-08-24T10:25:00.000Z'), '2026-08-24T11:00:00.000Z');
+
+// 12 h QC = 16:00 UTC, cron 15:25.
+assert.equal(slotIso('2026-08-24T15:25:00.000Z'), '2026-08-24T16:00:00.000Z');
+assert.equal(slotIso('2026-08-24T16:10:00.000Z'), '2026-08-24T16:00:00.000Z');
 
 // 21 h QC = 01:00 UTC le lendemain, cron 00:25.
 assert.equal(slotIso('2026-08-25T00:25:00.000Z'), '2026-08-25T01:00:00.000Z');
@@ -77,8 +84,8 @@ assert.deepEqual(
 const feeds = readFileSync(new URL('../feeds.html', import.meta.url), 'utf8');
 assert.match(
   feeds,
-  /<li>7:00<\/li><li>9:00<\/li><li>11:00<\/li><li>13:00<\/li>\s*<li>15:00<\/li><li>17:00<\/li><li>19:00<\/li><li>21:00<\/li>/,
-  'feeds.html : les 8 heures affichées suivent les créneaux 7 h–21 h / 2 h',
+  /<li>6:00<\/li><li>7:00<\/li><li>9:00<\/li><li>11:00<\/li><li>12:00<\/li>\s*<li>13:00<\/li><li>15:00<\/li><li>17:00<\/li><li>19:00<\/li><li>21:00<\/li>/,
+  'feeds.html : 6 h, midi, et toutes les 2 h de 7 h à 21 h',
 );
 
 console.log('OK news-schedule');
