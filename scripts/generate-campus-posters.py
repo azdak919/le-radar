@@ -303,31 +303,32 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
     draw = ImageDraw.Draw(canvas)
     draw.rectangle((0, 0, W, BAR_H), fill=PURPLE)
 
-    # Ancien rythme : logo dans le tiers supérieur, pas collé au haut.
-    big = 780 if kind == "minimal" else 720
+    # Première cuvée : logo haut, grand air, texte au milieu (échelle 792→3300).
+    scale = W / 792
+    big = int(round((220 if kind == "minimal" else 200) * scale))
     foot_logo = 72
     logo_big = raster_logo(big)
     logo_foot = raster_logo(foot_logo)
 
-    f_title = font(SERIF, 168 if kind == "minimal" else 156)
-    f_sub = font(SANS, 52 if kind != "minimal" else 48)
-    f_en = font(SANS, 40)
-    f_uni = font(SANS, 52)
-    f_use = font(SANS, 44)
+    f_title = font(SERIF, int(round(56 * scale)))
+    f_sub = font(SANS, int(round(20 * scale)))
+    f_en = font(SANS, int(round(17 * scale)))
+    f_uni = font(SANS, int(round(18 * scale)))
+    f_use = font(SANS, int(round(17 * scale)))
     f_name = font(SANS, 32)
     f_mark = font(SERIF, 40)
     f_body = font(SANS, 36)
     f_meta = font(SANS_SEMI, 32)
     f_credit = font(SANS, 26)
 
-    y = BAR_H + 280
-    canvas.alpha_composite(logo_big, ((W - big) // 2, y))
-    y = y + big + 48
+    logo_y = int(round(236 * scale))
+    canvas.alpha_composite(logo_big, ((W - big) // 2, logo_y))
+
     box = draw.textbbox((0, 0), TITLE, font=f_title)
-    title_h = box[3] - box[1]
     title_w = tracked_width(TITLE, f_title)
-    draw_tracked(draw, ((W - title_w) // 2, y - box[1]), TITLE, f_title, INK)
-    y += title_h + 48
+    title_y = int(round(560 * scale)) - box[1]
+    draw_tracked(draw, ((W - title_w) // 2, title_y), TITLE, f_title, INK)
+    y = title_y + (box[3] - box[1]) + int(round(24 * scale))
 
     def line(text, fnt, fill, dy=12):
         nonlocal y
