@@ -83,6 +83,10 @@ CAMPUSES = [
             {"key": "pouliot", "photo_id": "68ae0e12a3ec", "label": "Pavillon Adrien-Pouliot", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.58},
             {"key": "parc", "photo_id": "0733bf6bce32", "label": "Campus central", "focal": (0.48, 0.45), "crop_scale": 0.88, "desaturate": 0.58, "overlay": 0.55},
             {"key": "dkn", "photo_id": "e3a38d175a72", "label": "Pavillon Charles-De Koninck", "focal": (0.68, 0.36), "crop_scale": 0.85, "desaturate": 0.52, "overlay": 0.58},
+            {"key": "grandaxe", "url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Grand_Axe_ULaval.jpg", "credit": "Cephas", "license": "CC BY-SA 4.0", "title": "Grand Axe", "focal": (0.50, 0.42), "crop_scale": 0.92, "desaturate": 0.58, "overlay": 0.52},
+            {"key": "casault", "url": "https://upload.wikimedia.org/wikipedia/commons/d/de/Pavillon_Louis-Jacques-Casault_3.jpg", "credit": "Wilfredor", "license": "CC BY-SA 4.0", "title": "Pavillon Louis-Jacques-Casault", "focal": (0.48, 0.38), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.55},
+            {"key": "palasis", "url": "https://upload.wikimedia.org/wikipedia/commons/6/60/Pavillon_Palasis-Prince_10.jpg", "credit": "Cephas", "license": "CC BY-SA 4.0", "title": "Pavillon Palasis-Prince", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.55, "overlay": 0.52},
+            {"key": "bonenfant", "url": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg", "credit": "Cephas", "license": "CC BY-SA 4.0", "title": "Pavillon Jean-Charles-Bonenfant", "focal": (0.50, 0.36), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.55},
         ],
     },
     {
