@@ -59,9 +59,9 @@ TITLE = "LE-RADAR.ca"
 SLOGAN = "Journaux, radios et sports étudiants du Québec, réunis au même endroit"
 NAME_FULL = "Le Réseau Académique de Découverte et d’Agrégation de Ressources"
 SLOGAN_EN = "Student media on your radar"
-INDEP_1 = "Projet indépendant, non officiel — sans affiliation aux médias ni aux établissements."
+INDEP_1 = "Projet indépendant, non officiel et sans affiliation aux médias ni aux établissements."
 INDEP_2 = "Les contenus appartiennent à leurs publications d’origine."
-INDEP_EN = "Independent, unofficial, not affiliated. Content belongs to the original publications."
+INDEP_EN = "Independent, unofficial and not affiliated. Content belongs to the original publications."
 
 CAMPUSES = [
     {
@@ -383,27 +383,33 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
         who = photo_meta.get("credit") or "Wikimedia Commons"
         lic = photo_meta.get("license") or ""
         credit = f"Photo : {who}" + (f" · {lic}" if lic else "")
-    foot_copy = [(NAME_FULL, f_name, MUTED), (INDEP_1, f_body, SOFT), (INDEP_2, f_body, SOFT)]
+    # Nom développé = légende du mot-symbole (SOFT). Mentions = plus petites, MUTED.
+    name_line = (NAME_FULL, f_name, SOFT)
+    legal = [(INDEP_1, f_body, MUTED), (INDEP_2, f_body, MUTED)]
     if kind == "bilingue":
-        foot_copy.append((INDEP_EN, f_credit, MUTED))
+        legal.append((INDEP_EN, f_credit, MUTED))
     mark_h = max(foot_logo, text_size(draw, TITLE, f_mark)[1])
     credit_h = text_size(draw, credit, f_credit)[1] if credit else 0
-    inner_f = 16
-    copy_h = sum(text_size(draw, t, f)[1] for t, f, _ in foot_copy) + inner_f * (len(foot_copy) - 1)
+    name_h = text_size(draw, name_line[0], f_name)[1]
+    legal_h = sum(text_size(draw, t, f)[1] for t, f, _ in legal) + 10 * (len(legal) - 1)
     if with_qr:
         qr = raster_qr(QR_PX - 2 * QR_PAD)
     cy = H - SAFE
     if credit:
         cy -= credit_h
         draw.text(((W - text_size(draw, credit, f_credit)[0]) // 2, cy), credit, font=f_credit, fill=MUTED)
-        cy -= 56
-    cy -= copy_h
+        cy -= 64
+    cy -= legal_h
     ty = cy
-    for text, fnt, fill in foot_copy:
+    for text, fnt, fill in legal:
         tw, th = text_size(draw, text, fnt)
         draw.text(((W - tw) // 2, ty), text, font=fnt, fill=fill)
-        ty += th + inner_f
-    cy -= 28
+        ty += th + 10
+    cy -= 22
+    cy -= name_h
+    tw, th = text_size(draw, NAME_FULL, f_name)
+    draw.text(((W - tw) // 2, cy), NAME_FULL, font=f_name, fill=SOFT)
+    cy -= 12
     cy -= mark_h
     draw_footer_wordmark(canvas, draw, f_mark, cy, logo_foot)
     if with_qr:
