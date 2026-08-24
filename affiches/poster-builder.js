@@ -1,8 +1,9 @@
-/* Générateur public d’affiches LE-RADAR.ca — JPEG 300 / 600 / 1200 dpi. */
+/* Générateur public d’affiches LE-RADAR.ca — JPEG 300 ou 600 dpi (1200 en labo local). */
 
 const REF_DPI = 300;
 const PREVIEW_DPI = 150;
-const DPI_CHOICES = [300, 600, 1200];
+const DPI_PUBLIC = [300, 600];
+const DPI_LAB = [300, 600, 1200];
 const DEFAULT_DPI = 600;
 const FORMATS = {
   tabloid: { id: 'tabloid', label: '11 × 17 po', file: '11x17', wIn: 11, hIn: 17 },
@@ -190,8 +191,17 @@ const assets = { logo: null, qr: null, translate: null };
 const imageCache = new Map();
 let previewGen = 0;
 
+function isLocalHost() {
+  const h = location.hostname;
+  return h === '127.0.0.1' || h === 'localhost' || h === '[::1]';
+}
+
+function dpiChoices() {
+  return isLocalHost() ? DPI_LAB : DPI_PUBLIC;
+}
+
 function outputDpi() {
-  return DPI_CHOICES.includes(state.dpi) ? state.dpi : DEFAULT_DPI;
+  return dpiChoices().includes(state.dpi) ? state.dpi : DEFAULT_DPI;
 }
 
 function px(fmt, dpi = outputDpi()) {
@@ -905,6 +915,19 @@ async function downloadPrint(kind = 'jpeg') {
   }
 }
 
+function syncDpiLab() {
+  const lab = document.getElementById('dpi-1200-choice');
+  const hint = document.getElementById('dpi-hint');
+  const local = isLocalHost();
+  if (lab) lab.hidden = !local;
+  if (hint) {
+    hint.textContent = local
+      ? '600 dpi par défaut. 300 pour un babillard, 1200 pour un tirage photo (labo local).'
+      : '600 dpi par défaut. 300 pour un babillard.';
+  }
+  if (!local && state.dpi === 1200) state.dpi = DEFAULT_DPI;
+}
+
 function syncDpiLabels() {
   const dpi = outputDpi();
   for (const id of ['dl', 'dl-bottom']) {
@@ -962,7 +985,7 @@ function applyChoice(name, value) {
   if (name === 'format') state.format = value;
   if (name === 'dpi') {
     const n = Number(value);
-    state.dpi = DPI_CHOICES.includes(n) ? n : DEFAULT_DPI;
+    state.dpi = dpiChoices().includes(n) ? n : DEFAULT_DPI;
     syncDpiLabels();
   }
   if (name === 'campus') {
@@ -1062,6 +1085,7 @@ function bind() {
 
 async function main() {
   bind();
+  syncDpiLab();
   syncDpiLabels();
   syncLangChoice();
   await loadFonts();
