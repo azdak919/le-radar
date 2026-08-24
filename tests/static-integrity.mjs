@@ -625,8 +625,10 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builder.includes('Légal 8,5 × 14'), 'générateur public : format légal');
   assert(builderJs.includes('function applyQuery'), 'générateur public : ?campus= depuis le kit média');
   assert(builderJs.includes('function isAppleTouch'), 'générateur public : iPadOS desktop-UA');
-  assert(builderJs.includes('function maxSafeDpi'), 'générateur public : plafond canevas Safari');
-  assert(builderJs.includes('function exportDpi'), 'générateur public : dpi réel d’export');
+  assert(builderJs.includes('function mustTile'), 'générateur public : tuilage forcé sous le plafond iOS');
+  assert(builderJs.includes('function rasterTiles'), 'générateur public : PDF 600 dpi en tuiles sur iPad');
+  assert(builderJs.includes('function jpegTilesToPdfBlob'), 'générateur public : assemblage PDF tuilé');
+  assert(builderJs.includes('clipX'), 'générateur public : composition par clip');
   assert(builderJs.includes('function saveBlob'), 'générateur public : partage iOS / lien différé');
   assert(builderJs.includes('setTimeout(() => URL.revokeObjectURL'), 'générateur public : ne pas révoquer le blob tout de suite');
   assert(builderJs.includes('16_777_216') || builderJs.includes('16777216'), 'générateur public : plafond 16 Mpx iOS');

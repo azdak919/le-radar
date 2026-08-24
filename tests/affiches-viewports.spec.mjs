@@ -130,8 +130,8 @@ test.describe('affiches — largeurs labo', () => {
     expect(canvas.height).toBeGreaterThan(500);
   });
 
-  test('iPad : 11 × 17 s’exporte sous 600 dpi', async ({ page }) => {
-    test.setTimeout(90_000);
+  test('iPad : 11 × 17 s’exporte à 600 dpi', async ({ page }) => {
+    test.setTimeout(120_000);
     await page.addInitScript(() => {
       Object.defineProperty(navigator, 'userAgent', {
         get: () => 'Mozilla/5.0 (iPad; CPU OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1',
@@ -142,13 +142,12 @@ test.describe('affiches — largeurs labo', () => {
     await page.setViewportSize({ width: 834, height: 1194 });
     await page.goto('/affiches/', { waitUntil: 'domcontentloaded' });
     await waitPreview(page);
-    await expect(page.getByRole('button', { name: /PDF 240 dpi/ }).first()).toBeVisible();
-    await expect(page.locator('#status')).toContainText('2640 × 4080');
-    await expect(page.locator('#status')).toContainText('240 dpi');
-    await expect(page.locator('#dpi-hint')).toContainText('240 dpi');
+    await expect(page.getByRole('button', { name: /PDF 600 dpi/ }).first()).toBeVisible();
+    await expect(page.locator('#status')).toContainText('6600 × 10200');
+    await expect(page.locator('#status')).toContainText('600 dpi');
     page.on('popup', (p) => p.close().catch(() => {}));
     await page.locator('#dl').click();
-    await expect(page.locator('#status')).toContainText(/240 dpi/, { timeout: 60_000 });
+    await expect(page.locator('#status')).toContainText(/600 dpi/, { timeout: 90_000 });
     await expect(page.locator('#status')).toContainText(/Mo/);
     await expect(page.locator('#status')).not.toContainText('Téléchargement impossible');
   });
