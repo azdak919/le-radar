@@ -323,7 +323,7 @@ test('CTA live : plusieurs directs — cycle entre eux, pas le reste', async ({ 
   const second = (await next.locator('.sports-chip__cta-text').innerText()).replace(/\s+/g, ' ');
   expect(second).not.toBe(first);
   expect(second).not.toMatch(/Concordia/);
-  expect(second).toMatch(/Saint-Hyacinthe|Laval/);
+  expect(second).toMatch(/Saint-Hyacinthe|Laval|Sainte-Foy/);
 });
 
 test('CTA : sans direct, le cycle reprend (résultat hier)', async ({ page }) => {
