@@ -519,10 +519,8 @@ function compose(opts) {
   contentBottom -= legalH + 14 * fit + nameH + 6 * fit + markH;
   if (opts.qr && assets.qr) contentBottom -= 24 * fit + qrSide;
   const playTop = barH + 12 * fit;
-  const playBot = contentBottom - 28 * fit;
-  const play = Math.max(200, playBot - playTop);
-  const big = Math.round(play * 0.21);
-  const logoY = playTop + play * 0.18;
+  const big = Math.round(816 * fit);
+  const logoY = playTop + Math.round(700 * fit);
   if (!photo) drawRadar(ctx, w, h, w / 2, logoY + big / 2);
 
   ctx.fillStyle = PURPLE;
@@ -591,22 +589,22 @@ function compose(opts) {
   }
 
   if (assets.logo) ctx.drawImage(assets.logo, (w - big) / 2, logoY, big, big);
-  const titleSize = Math.round(play * 0.058);
-  const titleY = playTop + play * 0.42;
+  const titleSize = Math.round(226 * fit);
+  const titleY = playTop + Math.round(1630 * fit);
   fillTracked(ctx, TITLE, titleY, titleSize, INK);
-  let y = titleY + titleSize + Math.round(play * 0.028);
+  let y = titleY + titleSize + Math.round(109 * fit);
   const maxW = w - 2 * safe - 80;
-  let sloganSize = Math.round(play * 0.019);
+  let sloganSize = Math.round(74 * fit);
   ctx.font = `400 ${sloganSize}px "LR Sans"`;
   while (textW(ctx, SLOGAN) > maxW && sloganSize > 22) {
     sloganSize -= 1;
     ctx.font = `400 ${sloganSize}px "LR Sans"`;
   }
   const enSize = Math.max(14, Math.floor(sloganSize * 0.48));
-  const uniSize = Math.round(play * 0.018);
+  const uniSize = Math.round(70 * fit);
   const uniCore = Math.round(uniSize * 1.22);
-  const gapBlock = Math.round(play * 0.022);
-  const gapLang = Math.round(play * 0.012);
+  const gapBlock = Math.round(86 * fit);
+  const gapLang = Math.round(47 * fit);
   ctx.font = `400 ${sloganSize}px "LR Sans"`;
   y += fillCentered(ctx, SLOGAN, y, INK) + (kind === 'bilingue' ? gapLang : gapBlock);
   if (kind === 'bilingue') {
@@ -628,8 +626,8 @@ function compose(opts) {
   const greet = GREETINGS[opts.greeting];
   if (greet) {
     const biGreet = kind === 'bilingue' && GREETINGS_EN[opts.greeting];
-    const gSize = Math.round(play * (biGreet ? 0.04 : 0.048));
-    y += Math.round(play * 0.01);
+    const gSize = Math.round((biGreet ? 156 : 187) * fit);
+    y += Math.round(39 * fit);
     ctx.save();
     ctx.translate(w / 2, y + gSize * 0.15);
     ctx.rotate((-8 * Math.PI) / 180);
