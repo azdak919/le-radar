@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-24T18:49:54.840Z",
+  "updatedAt": "2026-08-24T19:27:01.647Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T18:49:25.156Z"
+      "checkedAt": "2026-08-24T19:26:37.545Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "next": {
         "title": "Les garçons pleurent aussi",
         "source": "schedule",
         "start": "15:00",
         "end": "17:00",
         "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
       },
+      "next": {
+        "title": "Les criquets crinqués",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/les-criquets-crinques"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Les garçons pleurent aussi",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T18:49:27.491Z"
+      "checkedAt": "2026-08-24T19:26:40.058Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Radio Is Dead",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Whose Vibe Is It Anyway",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "En Profondeur",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Radio Is Dead",
+      "showTitle": "Whose Vibe Is It Anyway",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T18:49:30.736Z"
+      "checkedAt": "2026-08-24T19:26:42.885Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Eldest Daughter",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/eldest-daughter"
-      },
-      "next": {
         "title": "Whip Appeal",
         "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/whip-appeal"
       },
+      "next": {
+        "title": "Dreamscapes",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/dreamscapes"
+      },
       "track": "",
-      "showTitle": "Eldest Daughter",
+      "showTitle": "Whip Appeal",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T18:49:45.470Z"
+      "checkedAt": "2026-08-24T19:26:56.902Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T18:49:46.680Z"
+      "checkedAt": "2026-08-24T19:26:58.099Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "bitume"
       },
-      "track": "Cannelle - TtyL",
+      "track": "Jimmie D - All Nighter",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-24T18:49:54.489Z"
+      "checkedAt": "2026-08-24T19:27:01.296Z"
     }
   }
 }
