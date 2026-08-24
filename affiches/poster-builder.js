@@ -22,6 +22,18 @@ const BG = '#0E0F12';
 const PURPLE = '#6C2163';
 const TRACK = -0.02;
 
+/* Noms français — Inter les rend tous ; les endonymes non latins casseraient en tofu. */
+const TRANSLATE_LANGS = [
+  'Français', 'Anglais', 'Inuktitut', 'Inuktut',
+  'Amharique', 'Arabe', 'Bengali', 'Allemand', 'Grec', 'Espagnol',
+  'Persan', 'Gujarati', 'Haoussa', 'Hébreu', 'Hindi', 'Créole haïtien',
+  'Indonésien', 'Igbo', 'Italien', 'Japonais', 'Kannada', 'Coréen',
+  'Malayalam', 'Marathi', 'Malais', 'Néerlandais', 'Pendjabi', 'Polonais',
+  'Portugais', 'Roumain', 'Russe', 'Suédois', 'Swahili', 'Tamoul',
+  'Télougou', 'Thaï', 'Tagalog', 'Turc', 'Ukrainien', 'Ourdou',
+  'Vietnamien', 'Yoruba', 'Chinois simplifié', 'Chinois traditionnel',
+];
+
 const GREETINGS = {
   none: null,
   rentree: 'Bonne rentrée',
@@ -56,12 +68,13 @@ const state = {
   campus: 'generique',
   lang: 'standard',
   greeting: 'none',
+  langs: false,
   qr: false,
   photoId: null,
   photos: [],
 };
 
-const assets = { logo: null, qr: null };
+const assets = { logo: null, qr: null, translate: null };
 const imageCache = new Map();
 let previewGen = 0;
 
@@ -175,6 +188,21 @@ function drawRadar(ctx, w, h) {
 
 function textW(ctx, text) {
   return ctx.measureText(text).width;
+}
+
+function wrapJoin(ctx, parts, maxW) {
+  const lines = [];
+  let cur = '';
+  for (const part of parts) {
+    const next = cur ? `${cur}  ·  ${part}` : part;
+    if (ctx.measureText(next).width <= maxW) cur = next;
+    else {
+      if (cur) lines.push(cur);
+      cur = part;
+    }
+  }
+  if (cur) lines.push(cur);
+  return lines;
 }
 
 function fillCentered(ctx, text, y, color) {
@@ -314,6 +342,15 @@ function compose(opts) {
   });
   const legalH = legalRows.reduce((s, r) => s + r.th, 0) + 10 * (legalRows.length - 1);
   const creditH = credit ? measure(credit, fCredit) : 0;
+  const fLang = 28 * (w / 3300);
+  const iconS = 28 * (w / 3300);
+  ctx.font = `600 ${fLang}px "LR Sans Semi"`;
+  const langMax = w - 2 * safe - 240;
+  const langLines = opts.langs ? wrapJoin(ctx, TRANSLATE_LANGS, langMax) : [];
+  const langLineH = langLines.length ? measure(langLines[0] || 'Français', fLang) : 0;
+  const langsH = opts.langs
+    ? iconS + 8 + langLines.length * (langLineH + 6)
+    : 0;
   const footLogo = 72 * (w / 3300);
   const markH = Math.max(footLogo, 40 * (w / 3300));
   const qrIn = fmt.id === 'tabloid' ? 2.25 : 1.75;
@@ -325,7 +362,22 @@ function compose(opts) {
     cy -= creditH;
     ctx.font = `400 ${fCredit}px "LR Sans"`;
     fillCentered(ctx, credit, cy, MUTED);
-    cy -= 64 * (w / 3300);
+    cy -= 56 * (w / 3300);
+  }
+  if (opts.langs && langsH) {
+    cy -= langsH;
+    const langTop = cy;
+    if (assets.translate) {
+      ctx.drawImage(assets.translate, (w - iconS) / 2, langTop, iconS, iconS);
+    }
+    let ly = langTop + iconS + 8;
+    ctx.font = `600 ${fLang}px "LR Sans Semi"`;
+    ctx.fillStyle = MUTED;
+    langLines.forEach((line) => {
+      fillCentered(ctx, line, ly, MUTED);
+      ly += langLineH + 6;
+    });
+    cy -= 28 * (w / 3300);
   }
   cy -= legalH;
   let ty = cy;
@@ -348,7 +400,7 @@ function compose(opts) {
   if (assets.logo) ctx.drawImage(assets.logo, mx, cy, footLogo, footLogo);
   fillTracked(ctx, TITLE, cy + (footLogo - markSize) / 2, markSize, INK, mx + footLogo + markGap);
   if (opts.qr && assets.qr) {
-    const card = qrSide;
+    const card = qrPx;
     cy -= 32 * (w / 3300) + card;
     ctx.fillStyle = '#fff';
     ctx.fillRect((w - card) / 2, cy, card, card);
@@ -416,6 +468,7 @@ async function preview() {
       campus: state.campus,
       lang: state.lang,
       greeting: state.greeting,
+      langs: state.langs,
       qr: state.qr,
       photoImg: img,
       credit: photo?.credit,
@@ -454,6 +507,7 @@ async function downloadPrint() {
       campus: state.campus,
       lang: state.lang,
       greeting: state.greeting,
+      langs: state.langs,
       qr: state.qr,
       photoImg: img,
       credit: photo?.credit,
@@ -469,7 +523,8 @@ async function downloadPrint() {
     const lang = state.lang === 'bilingue' ? 'bilingue' : (state.lang === 'minimal' ? 'minimal' : 'fr');
     const qr = state.qr ? '-qr' : '';
     const greet = state.greeting !== 'none' ? `-${state.greeting}` : '';
-    const name = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${greet}${qr}.jpg`;
+    const langs = state.langs ? '-langues' : '';
+    const name = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${greet}${langs}${qr}.jpg`;
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = name;
@@ -517,6 +572,9 @@ function bind() {
     state.greeting = ev.target.value;
     preview();
   });
+  document.querySelectorAll('[name="langs"]').forEach((el) => {
+    el.addEventListener('change', () => { state.langs = el.value === 'oui'; preview(); });
+  });
   document.getElementById('dl').addEventListener('click', downloadPrint);
   document.getElementById('photo-grid').addEventListener('change', (ev) => {
     if (ev.target.name !== 'photo') return;
@@ -531,6 +589,7 @@ async function main() {
   await loadFonts();
   assets.logo = await loadImage('../assets/icon.svg', false);
   assets.qr = await loadImage('../assets/kit/qr-le-radar.svg', false);
+  assets.translate = await loadImage('../assets/kit/translate-mark.svg', false);
   const bank = await fetch('../data/quebec-university-backgrounds.json').then((r) => r.json());
   state.photos = (bank.photos || []).filter((p) => p.url && p.width && p.height);
   renderChoices();

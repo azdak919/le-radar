@@ -69,6 +69,7 @@ test('générateur d’affiches public', async ({ page }) => {
   await page.locator('label:has(input[name="campus"][value="laval"])').click();
   await expect(bilingue).toBeHidden();
   await expect(page.locator('#greeting')).toContainText('Bonne rentrée');
+  await expect(page.locator('input[name="langs"][value="oui"]')).toBeVisible();
   await expect(page.locator('.solid--radar')).toBeVisible();
   await page.locator('label:has(input[name="campus"][value="concordia"])').click();
   await page.locator('#photo-grid label').nth(1).click();
