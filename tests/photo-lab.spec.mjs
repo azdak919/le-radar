@@ -53,8 +53,8 @@ test('tableau de bord local', async ({ page }) => {
 test('générateur d’affiches public', async ({ page }) => {
   await page.goto(`${BASE}/affiches/`, { waitUntil: 'networkidle' });
   await expect(page.locator('h1')).toContainText('Imprimer une affiche');
-  await expect(page.locator('input[name="format"][value="letter"]')).toBeVisible();
-  await expect(page.locator('input[name="format"][value="legal"]')).toBeVisible();
+  await expect(page.locator('label:has(input[name="format"][value="letter"])')).toBeVisible();
+  await expect(page.locator('label:has(input[name="format"][value="legal"])')).toBeVisible();
   await expect(page.getByRole('button', { name: /JPEG 300 dpi/ })).toBeVisible();
   await page.locator('#preview canvas').waitFor({ timeout: 20000 });
   await page.locator('label:has(input[name="format"][value="letter"])').click();
@@ -69,12 +69,15 @@ test('générateur d’affiches public', async ({ page }) => {
   await page.locator('label:has(input[name="campus"][value="laval"])').click();
   await expect(bilingue).toBeHidden();
   await expect(page.locator('#greeting')).toContainText('Bonne rentrée');
-  await expect(page.locator('input[name="langs"][value="oui"]')).toBeVisible();
+  await expect(page.locator('label:has(input[name="langs"][value="oui"])')).toBeVisible();
   await expect(page.locator('.solid--radar')).toBeVisible();
   await page.locator('label:has(input[name="campus"][value="concordia"])').click();
   await page.locator('#photo-grid label').nth(1).click();
-  await expect(page.locator('#status')).toContainText('aperçu', { timeout: 20000 });
+  await expect(page.locator('#recipe')).toContainText('Concordia', { timeout: 15000 });
+  await expect(page.locator('#status')).toContainText('300 dpi', { timeout: 20000 });
   await expect(page.locator('#status')).not.toContainText('Aperçu : image');
+  await page.selectOption('#greeting', 'relache');
+  await expect(page.locator('#recipe')).toContainText('Bonne relâche');
 });
 
 test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ page }) => {

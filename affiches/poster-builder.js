@@ -110,14 +110,23 @@ function printUrl(photo) {
   return (photo.url || '').split('?')[0];
 }
 
+function photoKeyId(photo) {
+  return photo.id || printUrl(photo);
+}
+
 function loadImage(src, cors = true) {
   const key = `${cors ? 'c' : 'n'}:${src}`;
   if (imageCache.has(key)) return imageCache.get(key);
   const job = new Promise((resolve, reject) => {
     const img = new Image();
     if (cors) img.crossOrigin = 'anonymous';
-    img.onload = () => resolve(img);
+    const t = setTimeout(() => {
+      imageCache.delete(key);
+      reject(new Error('timeout'));
+    }, 14000);
+    img.onload = () => { clearTimeout(t); resolve(img); };
     img.onerror = () => {
+      clearTimeout(t);
       imageCache.delete(key);
       reject(new Error(`image: ${src}`));
     };
@@ -422,21 +431,22 @@ function minSide(p) {
 
 function currentPhoto() {
   if (!state.photoId) return null;
-  return state.photos.find((p) => p.id === state.photoId) || null;
+  return state.photos.find((p) => photoKeyId(p) === state.photoId) || null;
 }
 
 function renderChoices() {
   const photos = filteredPhotos();
   const grid = document.getElementById('photo-grid');
-  const selectedStillValid = state.photoId && photos.some((p) => p.id === state.photoId);
+  const selectedStillValid = state.photoId && photos.some((p) => photoKeyId(p) === state.photoId);
   if (!selectedStillValid) state.photoId = null;
-  const items = [{ id: null, label: 'Fond radar' }, ...photos];
+  const items = [{ id: '', title: 'Fond radar' }, ...photos];
   grid.innerHTML = items.map((p) => {
-    const on = (p.id || null) === state.photoId;
-    if (!p.id) {
+    const id = p.id === '' ? '' : photoKeyId(p);
+    const on = (id || null) === state.photoId || (!id && !state.photoId);
+    if (!id) {
       return `<label class="thumb-radar"><input type="radio" name="photo" value="" ${on ? 'checked' : ''}><span class="solid solid--radar" title="Fond radar"><img src="../assets/icon.svg" width="40" height="40" alt=""><span>Fond radar</span></span></label>`;
     }
-    return `<label title="${escapeAttr(p.title || '')}"><input type="radio" name="photo" value="${p.id}" ${on ? 'checked' : ''}><img src="${thumbUrl(p, 280)}" width="92" height="142" alt="" loading="lazy"></label>`;
+    return `<label title="${escapeAttr(p.title || '')}"><input type="radio" name="photo" value="${escapeAttr(id)}" ${on ? 'checked' : ''}><img src="${thumbUrl(p, 280)}" width="92" height="142" alt="" loading="lazy"></label>`;
   }).join('');
   const n = photos.length;
   document.getElementById('photo-meta').textContent = state.campus === 'generique'
@@ -454,40 +464,68 @@ function specLine() {
   return `${fmt.label} · ${w} × ${h} px · 300 dpi · JPEG`;
 }
 
+function recipeLine() {
+  const bits = [
+    FORMATS[state.format].label,
+    campusOf(state.campus).label,
+    state.lang === 'bilingue' ? 'Bilingue' : (state.lang === 'minimal' ? 'Minimal' : 'Français'),
+  ];
+  if (state.greeting !== 'none' && GREETINGS[state.greeting]) bits.push(GREETINGS[state.greeting]);
+  if (state.qr) bits.push('QR');
+  const photo = currentPhoto();
+  bits.push(photo ? (photo.title || 'Photo') : 'Fond radar');
+  return bits.join(' · ');
+}
+
+function paintPreview(img, photo) {
+  const out = document.getElementById('preview');
+  const canvas = compose({
+    format: state.format,
+    campus: state.campus,
+    lang: state.lang,
+    greeting: state.greeting,
+    langs: state.langs,
+    qr: state.qr,
+    photoImg: img || null,
+    credit: photo?.credit,
+    license: photo?.license,
+    focalX: 0.5,
+    focalY: typeof photo?.focalY === 'number' ? photo.focalY : 0.42,
+  });
+  const view = document.createElement('canvas');
+  const scale = Math.min(440 / canvas.width, 1);
+  view.width = Math.round(canvas.width * scale);
+  view.height = Math.round(canvas.height * scale);
+  const vctx = view.getContext('2d');
+  vctx.imageSmoothingEnabled = true;
+  vctx.imageSmoothingQuality = 'high';
+  vctx.drawImage(canvas, 0, 0, view.width, view.height);
+  out.replaceChildren(view);
+}
+
 async function preview() {
   const status = document.getElementById('status');
-  const out = document.getElementById('preview');
+  const recipe = document.getElementById('recipe');
+  const frame = document.getElementById('preview');
   const gen = ++previewGen;
+  const photo = currentPhoto();
+  recipe.textContent = recipeLine();
+  frame.classList.add('is-busy');
   try {
-    const photo = currentPhoto();
-    let img = null;
-    if (photo) img = await loadImage(printUrl(photo), true);
+    paintPreview(null, photo);
+    if (photo) {
+      const img = await loadImage(printUrl(photo), true);
+      if (gen !== previewGen) return;
+      paintPreview(img, photo);
+    }
     if (gen !== previewGen) return;
-    const canvas = compose({
-      format: state.format,
-      campus: state.campus,
-      lang: state.lang,
-      greeting: state.greeting,
-      langs: state.langs,
-      qr: state.qr,
-      photoImg: img,
-      credit: photo?.credit,
-      license: photo?.license,
-      focalX: 0.5,
-      focalY: 0.42,
-    });
-    const view = document.createElement('canvas');
-    const scale = 420 / canvas.width;
-    view.width = Math.round(canvas.width * scale);
-    view.height = Math.round(canvas.height * scale);
-    const vctx = view.getContext('2d');
-    vctx.imageSmoothingEnabled = true;
-    vctx.imageSmoothingQuality = 'high';
-    vctx.drawImage(canvas, 0, 0, view.width, view.height);
-    out.replaceChildren(view);
-    status.innerHTML = `<strong>${specLine()}</strong> — aperçu. Le téléchargement est le fichier d’impression.`;
+    status.innerHTML = `<strong>${specLine()}</strong>`;
   } catch (err) {
-    status.textContent = `Aperçu : ${err.message}`;
+    if (gen !== previewGen) return;
+    paintPreview(null, null);
+    status.textContent = `Photo indisponible — fond radar. ${err.message}`;
+  } finally {
+    if (gen === previewGen) frame.classList.remove('is-busy');
   }
 }
 
@@ -512,6 +550,7 @@ async function downloadPrint() {
       photoImg: img,
       credit: photo?.credit,
       license: photo?.license,
+      focalY: typeof photo?.focalY === 'number' ? photo.focalY : 0.42,
     });
     if (canvas.width !== w || canvas.height !== h) {
       throw new Error(`dimensions ${canvas.width}×${canvas.height}, attendu ${w}×${h}`);
@@ -550,37 +589,41 @@ function syncLangChoice() {
   }
 }
 
+function applyChoice(name, value) {
+  if (name === 'format') state.format = value;
+  if (name === 'campus') {
+    state.campus = value;
+    syncLangChoice();
+    renderChoices();
+  }
+  if (name === 'lang') state.lang = value;
+  if (name === 'qr') state.qr = value === 'oui';
+  if (name === 'langs') state.langs = value === 'oui';
+  if (name === 'photo') state.photoId = value || null;
+  preview();
+}
+
 function bind() {
-  document.querySelectorAll('[name="format"]').forEach((el) => {
-    el.addEventListener('change', () => { state.format = el.value; preview(); });
-  });
-  document.querySelectorAll('[name="campus"]').forEach((el) => {
-    el.addEventListener('change', () => {
-      state.campus = el.value;
-      syncLangChoice();
-      renderChoices();
+  document.getElementById('form').addEventListener('change', (ev) => {
+    const t = ev.target;
+    if (!t.name) return;
+    if (t.name === 'greeting') {
+      state.greeting = t.value;
       preview();
-    });
+      return;
+    }
+    applyChoice(t.name, t.value);
   });
-  document.querySelectorAll('[name="lang"]').forEach((el) => {
-    el.addEventListener('change', () => { state.lang = el.value; preview(); });
-  });
-  document.querySelectorAll('[name="qr"]').forEach((el) => {
-    el.addEventListener('change', () => { state.qr = el.value === 'oui'; preview(); });
-  });
-  document.getElementById('greeting').addEventListener('change', (ev) => {
-    state.greeting = ev.target.value;
+  document.getElementById('photo-grid').addEventListener('click', (ev) => {
+    const label = ev.target.closest('label');
+    if (!label) return;
+    const input = label.querySelector('input[name="photo"]');
+    if (!input) return;
+    input.checked = true;
+    state.photoId = input.value || null;
     preview();
-  });
-  document.querySelectorAll('[name="langs"]').forEach((el) => {
-    el.addEventListener('change', () => { state.langs = el.value === 'oui'; preview(); });
   });
   document.getElementById('dl').addEventListener('click', downloadPrint);
-  document.getElementById('photo-grid').addEventListener('change', (ev) => {
-    if (ev.target.name !== 'photo') return;
-    state.photoId = ev.target.value || null;
-    preview();
-  });
 }
 
 async function main() {

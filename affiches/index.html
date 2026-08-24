@@ -34,7 +34,7 @@
   <div class="dash">
     <form class="dash-controls" id="form" onsubmit="return false;">
       <h1>Imprimer une affiche</h1>
-      <p class="dash-lead">Choisissez le format, le campus, la photo et le texte. Le fichier téléchargé est un JPEG 300 dpi, aux dimensions exactes de la feuille.</p>
+      <p class="dash-lead">Vos choix à gauche. L’affiche reste à droite. Le fichier est un JPEG 300 dpi aux dimensions exactes de la feuille.</p>
 
       <fieldset>
         <legend>Format</legend>
@@ -57,6 +57,12 @@
           <label><input type="radio" name="campus" value="sherbrooke"> Université de Sherbrooke</label>
           <label><input type="radio" name="campus" value="bishops"> Université Bishop’s</label>
         </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Photo</legend>
+        <div class="photo-grid" id="photo-grid"></div>
+        <p class="photo-meta" id="photo-meta"></p>
       </fieldset>
 
       <fieldset>
@@ -107,28 +113,21 @@
         </div>
       </fieldset>
 
-      <fieldset>
-        <legend>Photo</legend>
-        <div class="photo-grid" id="photo-grid"></div>
-        <p class="photo-meta" id="photo-meta"></p>
-      </fieldset>
-
       <div class="dash-actions">
         <button class="btn" type="button" id="dl">Télécharger JPEG 300 dpi</button>
+        <p class="status" id="status">Chargement…</p>
       </div>
-      <p class="status" id="status">Chargement…</p>
+      <footer class="dash-foot">
+        <p>LE-RADAR.ca est un projet indépendant, non officiel et sans affiliation aux médias ni aux établissements. Les contenus appartiennent à leurs publications d’origine. Photos Wikimedia Commons, crédits sur l’affiche.</p>
+      </footer>
     </form>
 
     <section class="dash-preview" aria-label="Aperçu">
       <div class="preview-frame" id="preview"></div>
-      <p class="preview-hint">L’aperçu est réduit. Le téléchargement est le fichier d’impression (300 dpi, dimensions exactes). Imprimez à 100 %, sans « ajuster à la page ».</p>
+      <p class="recipe" id="recipe"></p>
+      <p class="preview-hint">L’aperçu suit vos choix. Le fichier téléchargé est l’impression 300 dpi, à 100 %, sans « ajuster à la page ».</p>
     </section>
   </div>
-
-  <footer class="dash-foot">
-    <p>LE-RADAR.ca est un projet indépendant, non officiel et sans affiliation aux médias ni aux établissements. Les contenus appartiennent à leurs publications d’origine. Photos Wikimedia Commons, crédits sur l’affiche.</p>
-    <p><a href="../kit-media/">Kit média</a> · <a href="../">Accueil</a></p>
-  </footer>
   <script src="./poster-builder.js"></script>
 </body>
 </html>
