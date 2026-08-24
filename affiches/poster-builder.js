@@ -472,45 +472,52 @@ function compose(opts) {
   const credit = photo && opts.credit
     ? `Photo : ${opts.credit}${opts.license ? ` · ${opts.license}` : ''}`
     : '';
-  const legal = [INDEP_1, INDEP_2];
-  if (kind === 'bilingue') legal.push(INDEP_EN);
   const fit = Math.min(w / refW, h / refH);
-  const fName = 40 * fit;
-  const fBody = 34 * fit;
-  const fCredit = 28 * fit;
   const measure = (text, size) => {
     ctx.font = `400 ${size}px "LR Sans"`;
     const m = ctx.measureText(text);
     return (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || size;
   };
-  const nameH = measure(NAME_FULL, fName);
-  const legalRows = legal.map((t, i) => {
-    const sz = (kind === 'bilingue' && i === legal.length - 1) ? fCredit : fBody;
-    return { t, sz, th: measure(t, sz) };
-  });
-  const legalH = legalRows.reduce((s, r) => s + r.th, 0) + 10 * (legalRows.length - 1);
+  /* Pied = site-foot : mot-symbole, signature discrète, mentions plus petites. */
+  const fMark = 40 * fit;
+  const fSign = 22 * fit;
+  const fLegal = 20 * fit;
+  const fCredit = 17 * fit;
+  const fEn = 16 * fit;
+  const footLogo = 44 * fit;
+  const markGap = 10 * fit;
+  const legalMax = w - 2 * safe - 280 * fit;
+  ctx.font = `400 ${fLegal}px "LR Sans"`;
+  const legalLines = wrapWords(ctx, `${INDEP_1} ${INDEP_2}`, legalMax);
+  const legalLineH = measure(legalLines[0] || INDEP_1, fLegal);
+  ctx.font = `400 ${fEn}px "LR Sans"`;
+  const enLines = kind === 'bilingue' ? wrapWords(ctx, INDEP_EN, legalMax) : [];
+  const enLineH = enLines.length ? measure(enLines[0], fEn) : 0;
+  const legalH = legalLines.length * (legalLineH + 6) - 6
+    + (enLines.length ? 8 * fit + enLines.length * (enLineH + 4) - 4 : 0);
+  const nameH = measure(NAME_FULL, fSign);
   const creditH = credit ? measure(credit, fCredit) : 0;
-  const fLang = 30 * fit;
-  const iconS = 48 * fit;
+  const fLang = 22 * fit;
+  const iconS = 36 * fit;
   const langFont = `600 ${fLang}px "Noto Sans", "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", "Noto Sans Arabic", "Noto Sans Devanagari", "LR Sans Semi"`;
   ctx.font = langFont;
-  const langMax = w - 2 * safe - 240;
+  const langMax = w - 2 * safe - 240 * fit;
   const langLines = opts.langs ? wrapJoin(ctx, TRANSLATE_LANGS, langMax) : [];
   const langLineH = langLines.length ? measure(langLines[0] || 'Français', fLang) : 0;
   const langsH = opts.langs
-    ? iconS + 8 + langLines.length * (langLineH + 6)
+    ? iconS + 8 + langLines.length * (langLineH + 5)
     : 0;
-  const footLogo = 72 * fit;
-  const markH = Math.max(footLogo, 40 * fit);
+  const markH = Math.max(footLogo, fMark);
   const qrIn = fmt.id === 'tabloid' ? 2.25 : 1.65;
   const qrPx = Math.round(qrIn * REF_DPI * fit);
   const qrPad = Math.round(36 * fit);
   const qrSide = qrPx;
+  const ruleGap = 22 * fit;
 
   let contentBottom = h - safe;
-  if (credit) contentBottom -= creditH + 40 * fit;
-  if (opts.langs && langsH) contentBottom -= langsH + 20 * fit;
-  contentBottom -= legalH + 16 * fit + nameH + 10 * fit + markH;
+  if (credit) contentBottom -= creditH + 18 * fit;
+  if (opts.langs && langsH) contentBottom -= langsH + 16 * fit;
+  contentBottom -= legalH + 14 * fit + nameH + 6 * fit + markH + ruleGap;
   if (opts.qr && assets.qr) contentBottom -= 24 * fit + qrSide;
   const playTop = barH + 12 * fit;
   const playBot = contentBottom - 28 * fit;
@@ -522,11 +529,11 @@ function compose(opts) {
   ctx.fillStyle = PURPLE;
   ctx.fillRect(0, 0, w, barH);
 
-  const fadeTop = Math.max(barH, contentBottom - 160 * fit);
+  const fadeTop = Math.max(barH, contentBottom - 70 * fit);
   const fade = ctx.createLinearGradient(0, fadeTop, 0, h);
   fade.addColorStop(0, 'rgba(14, 15, 18, 0)');
-  fade.addColorStop(0.28, 'rgba(14, 15, 18, 0.42)');
-  fade.addColorStop(1, 'rgba(14, 15, 18, 0.82)');
+  fade.addColorStop(0.4, 'rgba(14, 15, 18, 0.22)');
+  fade.addColorStop(1, 'rgba(14, 15, 18, 0.58)');
   ctx.fillStyle = fade;
   ctx.fillRect(0, fadeTop, w, h - fadeTop);
 
@@ -534,8 +541,8 @@ function compose(opts) {
   if (credit) {
     cy -= creditH;
     ctx.font = `400 ${fCredit}px "LR Sans"`;
-    fillCentered(ctx, credit, cy, SOFT);
-    cy -= 40 * fit;
+    fillCentered(ctx, credit, cy, MUTED);
+    cy -= 18 * fit;
   }
   if (opts.langs && langsH) {
     cy -= langsH;
@@ -545,33 +552,43 @@ function compose(opts) {
     }
     let ly = langTop + iconS + 8;
     ctx.font = langFont;
-    ctx.fillStyle = SOFT;
     langLines.forEach((line) => {
       fillCentered(ctx, line, ly, SOFT);
-      ly += langLineH + 6;
+      ly += langLineH + 5;
     });
-    cy -= 20 * fit;
+    cy -= 16 * fit;
   }
   cy -= legalH;
   let ty = cy;
-  legalRows.forEach((row) => {
-    ctx.font = `600 ${row.sz}px "LR Sans Semi"`;
-    fillCentered(ctx, row.t, ty, INK);
-    ty += row.th + 10;
+  legalLines.forEach((line) => {
+    ctx.font = `400 ${fLegal}px "LR Sans"`;
+    fillCentered(ctx, line, ty, SOFT);
+    ty += legalLineH + 6;
   });
-  cy -= 16 * fit;
+  enLines.forEach((line, i) => {
+    if (i === 0) ty += 2 * fit;
+    ctx.font = `400 ${fEn}px "LR Sans"`;
+    fillCentered(ctx, line, ty, MUTED);
+    ty += enLineH + 4;
+  });
+  cy -= 14 * fit;
   cy -= nameH;
-  ctx.font = `600 ${fName}px "LR Sans Semi"`;
-  fillCentered(ctx, NAME_FULL, cy, INK);
-  cy -= 10 * fit;
+  ctx.font = `400 ${fSign}px "LR Sans"`;
+  fillCentered(ctx, NAME_FULL, cy, SOFT);
+  cy -= 6 * fit;
   cy -= markH;
-  const markSize = 40 * fit;
-  const markGap = 16 * fit;
-  const markW = trackedWidth(ctx, TITLE, markSize);
+  const markW = trackedWidth(ctx, TITLE, fMark);
   const rowW = footLogo + markGap + markW;
   const mx = (w - rowW) / 2;
-  if (assets.logo) ctx.drawImage(assets.logo, mx, cy, footLogo, footLogo);
-  fillTracked(ctx, TITLE, cy + (footLogo - markSize) / 2, markSize, INK, mx + footLogo + markGap);
+  if (assets.logo) ctx.drawImage(assets.logo, mx, cy + (markH - footLogo) / 2, footLogo, footLogo);
+  fillTracked(ctx, TITLE, cy + (markH - fMark) / 2, fMark, INK, mx + footLogo + markGap);
+  const ruleY = cy - 12 * fit;
+  ctx.strokeStyle = 'rgba(241, 242, 244, 0.22)';
+  ctx.lineWidth = Math.max(1, Math.round(fit));
+  ctx.beginPath();
+  ctx.moveTo(w * 0.32, ruleY);
+  ctx.lineTo(w * 0.68, ruleY);
+  ctx.stroke();
   if (opts.qr && assets.qr) {
     const card = qrSide;
     cy -= 24 * fit + card;
