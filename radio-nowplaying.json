@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-24T22:53:19.725Z",
+  "updatedAt": "2026-08-24T23:19:57.530Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T22:52:51.700Z"
+      "checkedAt": "2026-08-24T23:19:33.588Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les criquets crinqués",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-criquets-crinques"
-      },
-      "next": {
         "title": "Les vinyles versatiles",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
       },
+      "next": {
+        "title": "Rock à la casbah",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "https://cism893.ca/emissions/rock-a-la-casbah"
+      },
       "track": "",
-      "showTitle": "Les criquets crinqués",
+      "showTitle": "Les vinyles versatiles",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T22:52:54.003Z"
+      "checkedAt": "2026-08-24T23:19:35.950Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Queercorps",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Dykes on Mykes",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Underground Sounds",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Queercorps",
+      "showTitle": "Dykes on Mykes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T22:52:57.180Z"
+      "checkedAt": "2026-08-24T23:19:38.873Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Voice of the Voiceless",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
-      },
-      "next": {
         "title": "Monday Mass with Father Kate",
         "source": "schedule-live",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/monday-mass-with-father-kate"
       },
+      "next": {
+        "title": "In The Garage",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/in-the-garage"
+      },
       "track": "",
-      "showTitle": "Voice of the Voiceless",
+      "showTitle": "Monday Mass with Father Kate",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T22:53:11.762Z"
+      "checkedAt": "2026-08-24T23:19:52.984Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T22:53:13.039Z"
+      "checkedAt": "2026-08-24T23:19:54.127Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "EENO T, Waahli - Tard le soir",
+      "track": "Chaude Chaleur - Chambre noire",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -151,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-24T22:53:19.375Z"
+      "checkedAt": "2026-08-24T23:19:57.180Z"
     }
   }
 }
