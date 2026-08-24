@@ -1235,8 +1235,28 @@ assert(
   appJs.includes('function sportsGameIsLive')
     && appJs.includes('function sportsCtaState')
     && appJs.includes('SPORTS_LIVE_VISUAL_LEAD_MS')
-    && appJs.includes('SPORTS_LIVE_VISUAL_TAIL_MS'),
-  'app.js : prédicat « en cours » dédié au registre visuel (pas le tri)',
+    && appJs.includes('SPORTS_LIVE_VISUAL_TAIL_MS')
+    && appJs.includes('function sportsGameHasScore')
+    && appJs.includes('function sportsCtaLiveSources')
+    && appJs.includes('function sportsCtaHoldOnLive')
+    && /const lives = sportsCtaLiveSources\(now\)/.test(appJs)
+    && appJs.includes('function pollLiveSportsJson')
+    && /const SPORTS_LIVE_POLL_MS\s*=\s*15000/.test(appJs)
+    && appJs.includes("if (state === 'live')"),
+  'app.js : direct = pastille En cours + score collé + sondage sports.json aux 15 s',
+);
+assert(
+  /const lives = sportsCtaLiveSources\(now\);\s*if \(lives\.length\)/.test(appFlat)
+    && appJs.includes('sportsCtaHoldOnLive(sportsVisible[slot])')
+    && appJs.includes('sportsCtaHoldOnLive(slide)'),
+  'app.js : CTA live exclusive — pool = directs ; 1 figé / plusieurs en cycle ; sinon cycle normal',
+);
+assert(
+  !/state === 'live'[\s\S]{0,200}sportsRelativeAge/.test(appFlat)
+    && !/state === 'live'[\s\S]{0,200}sportsRelativeWhen/.test(appFlat)
+    && appJs.includes('sportsLivePeriodLabel')
+    && appJs.includes('function sportsKickoffClock'),
+  'app.js : sous-ligne live = période / compétition (pas « il y a 2 min »)',
 );
 assert(
   /\[data-cta-state="live"\][^{]*\{[^}]*sports-cta-ring-pulse/.test(cssFlat),
@@ -1421,6 +1441,8 @@ assert(
     && appJs.includes('SPORTS_TEAM_COLOR_SUFFIX_RE')
     && styleCss.includes('.sports-chip__vs')
     && styleCss.includes('.sports-chip--cta .sports-chip__cta-text .sports-chip__vs')
+    && /\.sports-chip__vs\s*\{[^}]*font-weight:\s*500/.test(cssFlat)
+    && /\.sports-chip--cta \.sports-chip__cta-text \.sports-chip__vs\s*\{[^}]*rgba\(255,\s*255,\s*255,\s*0\.52\)/.test(cssFlat)
     && styleCss.includes('.sports-chip__cta-glyph')
     && appJs.includes('sports-chip__cta-glyph')
     && appJs.includes('function sportsMatchChipTextOverflows')

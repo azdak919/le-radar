@@ -1,11 +1,11 @@
 {
-  "updated": "2026-08-23T20:59:16.290Z",
-  "fetchedAt": "2026-08-23T20:59:16.290Z",
+  "updated": "2026-08-24T00:46:14.883Z",
+  "fetchedAt": "2026-08-24T00:46:14.883Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-23T20:59:16.290Z"
+    "referenceDate": "2026-08-24T00:46:14.883Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 790,
@@ -57246,23 +57246,46 @@
       "division": "D1",
       "usports": false,
       "leagueLabel": "Soccer collégial masculin D1",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
+      "results": [
         {
           "date": "2026-08-23",
           "time": "17:00",
           "opponent": "Vanier",
           "opponentCode": "VAN",
           "home": true,
+          "scoreFor": 3,
+          "scoreAgainst": 0,
+          "result": "W",
           "sport": "soccer",
           "competition": "Soccer collégial masculin D1",
           "gameId": "c4635a89-92f1-42b9-bb3a-b2604bbf36d6",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4635a89-92f1-42b9-bb3a-b2604bbf36d6",
           "opponentFullName": "Vanier College",
           "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "vanier"
-        },
+          "opponentRegistryId": "vanier",
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-08-23",
+        "time": "17:00",
+        "opponent": "Vanier",
+        "opponentCode": "VAN",
+        "home": true,
+        "scoreFor": 3,
+        "scoreAgainst": 0,
+        "result": "W",
+        "sport": "soccer",
+        "competition": "Soccer collégial masculin D1",
+        "gameId": "c4635a89-92f1-42b9-bb3a-b2604bbf36d6",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4635a89-92f1-42b9-bb3a-b2604bbf36d6",
+        "opponentFullName": "Vanier College",
+        "opponentNickname": "Cheetahs",
+        "opponentRegistryId": "vanier",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
+      "nextGames": [
         {
           "date": "2026-09-04",
           "time": "19:00",
@@ -57389,31 +57412,32 @@
         }
       ],
       "nextGame": {
-        "date": "2026-08-23",
-        "time": "17:00",
-        "opponent": "Vanier",
-        "opponentCode": "VAN",
+        "date": "2026-09-04",
+        "time": "19:00",
+        "opponent": "Champlain St-Lambert",
+        "opponentCode": "SLA",
         "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D1",
-        "gameId": "c4635a89-92f1-42b9-bb3a-b2604bbf36d6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4635a89-92f1-42b9-bb3a-b2604bbf36d6",
-        "opponentFullName": "Vanier College",
-        "opponentNickname": "Cheetahs",
-        "opponentRegistryId": "vanier",
+        "gameId": "110426f6-ec03-4783-830d-7999df6d4448",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=110426f6-ec03-4783-830d-7999df6d4448",
+        "opponentFullName": "Champlain College Saint-Lambert",
+        "opponentNickname": "Barons",
+        "opponentRegistryId": "champlain-st-lambert",
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "1-0"
       },
       "source": "rseq-s1",
       "priority": 34,
       "fullName": "Cégep de Saint-Hyacinthe",
-      "registryId": "saint-hyacinthe"
+      "registryId": "saint-hyacinthe",
+      "lastGamePriorSeason": false
     },
     "collegial:soccer:3f4585ce-0bbf-41b0-a726-7a294098a074:40e9464d-53a8-4380-a90f-09a19eb968f7": {
       "id": "collegial:soccer:3f4585ce-0bbf-41b0-a726-7a294098a074:40e9464d-53a8-4380-a90f-09a19eb968f7",
@@ -57635,6 +57659,23 @@
       "leagueLabel": "Soccer collégial masculin D1",
       "results": [
         {
+          "date": "2026-08-23",
+          "time": "17:00",
+          "opponent": "Saint-Hyacinthe",
+          "opponentCode": "STH",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 3,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D1",
+          "gameId": "c4635a89-92f1-42b9-bb3a-b2604bbf36d6",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4635a89-92f1-42b9-bb3a-b2604bbf36d6",
+          "opponentFullName": "Cégep de Saint-Hyacinthe",
+          "opponentRegistryId": "saint-hyacinthe",
+          "priorSeason": false
+        },
+        {
           "date": "2026-08-21",
           "time": "21:00",
           "opponent": "Cégep Trois-Rivières",
@@ -57654,38 +57695,24 @@
         }
       ],
       "lastGame": {
-        "date": "2026-08-21",
-        "time": "21:00",
-        "opponent": "Cégep Trois-Rivières",
-        "opponentCode": "TRV",
+        "date": "2026-08-23",
+        "time": "17:00",
+        "opponent": "Saint-Hyacinthe",
+        "opponentCode": "STH",
         "home": false,
-        "scoreFor": 1,
-        "scoreAgainst": 1,
-        "result": "D",
+        "scoreFor": 0,
+        "scoreAgainst": 3,
+        "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D1",
-        "gameId": "393167e9-cabe-411a-8375-7160bde7a626",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=393167e9-cabe-411a-8375-7160bde7a626",
-        "opponentFullName": "Cégep de Trois-Rivières",
-        "opponentNickname": "Diablos",
-        "opponentRegistryId": "trois-rivieres",
+        "gameId": "c4635a89-92f1-42b9-bb3a-b2604bbf36d6",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4635a89-92f1-42b9-bb3a-b2604bbf36d6",
+        "opponentFullName": "Cégep de Saint-Hyacinthe",
+        "opponentRegistryId": "saint-hyacinthe",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-08-23",
-          "time": "17:00",
-          "opponent": "Saint-Hyacinthe",
-          "opponentCode": "STH",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D1",
-          "gameId": "c4635a89-92f1-42b9-bb3a-b2604bbf36d6",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4635a89-92f1-42b9-bb3a-b2604bbf36d6",
-          "opponentFullName": "Cégep de Saint-Hyacinthe",
-          "opponentRegistryId": "saint-hyacinthe"
-        },
         {
           "date": "2026-09-04",
           "time": "21:00",
@@ -57797,25 +57824,26 @@
         }
       ],
       "nextGame": {
-        "date": "2026-08-23",
-        "time": "17:00",
-        "opponent": "Saint-Hyacinthe",
-        "opponentCode": "STH",
-        "home": false,
+        "date": "2026-09-04",
+        "time": "21:00",
+        "opponent": "Sainte-Foy",
+        "opponentCode": "CSF",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D1",
-        "gameId": "c4635a89-92f1-42b9-bb3a-b2604bbf36d6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4635a89-92f1-42b9-bb3a-b2604bbf36d6",
-        "opponentFullName": "Cégep de Saint-Hyacinthe",
-        "opponentRegistryId": "saint-hyacinthe",
+        "gameId": "ca81fcd7-b457-43d0-80b2-c20c78f6fbcc",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ca81fcd7-b457-43d0-80b2-c20c78f6fbcc",
+        "opponentFullName": "Cégep de Sainte-Foy",
+        "opponentNickname": "Géants",
+        "opponentRegistryId": "sainte-foy",
         "opponentSector": "collegial"
       },
       "record": {
         "wins": 0,
-        "losses": 0,
+        "losses": 1,
         "draws": 1,
-        "played": 1,
-        "label": "0-0-1"
+        "played": 2,
+        "label": "0-1-1"
       },
       "source": "rseq-s1",
       "priority": 10,

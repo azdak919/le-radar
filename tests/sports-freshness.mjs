@@ -24,6 +24,12 @@ test('sports-freshness : nextGame horizon session+1', () => {
   assert.equal(SpF.isNextGameInHorizon({ date: '2027-02-01' }, REF), false);
 });
 
+test('sports-freshness : nextGame jour civil Toronto (pas UTC 20 h EDT)', () => {
+  const utcNextDay = new Date('2026-08-24T00:30:00.000Z'); // 20:30 EDT le 23
+  assert.equal(SpF.torontoDayKey(utcNextDay), '2026-08-23');
+  assert.equal(SpF.isNextGameInHorizon({ date: '2026-08-23' }, utcNextDay), true);
+});
+
 test('sports-freshness : payload sports.json prune sans casser', () => {
   const data = require(join(ROOT, 'sports.json'));
   const pruned = SpF.pruneSportsPayload(data, REF);

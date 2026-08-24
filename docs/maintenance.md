@@ -133,6 +133,7 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 | Flux radio + promotion candidats | `discover-streams.js` | Quotidien + hebdo |
 | Agrégation articles | `fetch-news.js` | 7×/jour |
 | Résultats sportifs RSEQ | `fetch-sports.js` | **6×/jour + sam/dim 14 h** (`update-sports.yml`) — heures de consultation QC (matin, midi, fin de cours, soirée matchs, post-match, rattrapage) ; source en panne → snapshot précédent conservé |
+| Scores **en direct** RSEQ | `fetch-sports.js --live` | **Toutes les 5 min** 12 h–minuit Québec (`update-sports-live.yml`) — ligues avec un match dans la fenêtre seulement ; le mât relit `sports.json` aux 15 s |
 | Extrait « à la une » | `enrich-lead-excerpts.js` | 7×/jour (après `fetch-news`) |
 | En cours + à venir (API / grille / ICY) | `fetch-radio-nowplaying.js` | Aux 30 min |
 | Dérive des grilles (rapport) | `detect-schedule-drift.js` | **Quotidien** (23:10 UTC ≈ 19:10 HAE) |

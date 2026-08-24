@@ -31,8 +31,11 @@ const {
 } = require('./sports-teams-lib');
 
 const SportsFreshness = require('./sports-freshness-lib');
+const SportsLive = require('./sports-live-lib');
 
 const update = process.argv.includes('--update');
+const liveOnly = process.argv.includes('--live');
+const GAME_API = 'https://s1.rseq.ca/api/GameApi/GetGameDiffusion/?gameId=';
 
 function getJson(url) {
   return new Promise((resolve, reject) => {
@@ -98,6 +101,24 @@ function allGames(league) {
     .concat(league.ConferenceChampionshipGames || []);
 }
 
+async function liveDetailsForGames(games) {
+  const map = {};
+  const ids = [...new Set(
+    (games || [])
+      .filter((g) => SportsLive.isLiveRaw(g))
+      .map((g) => g.GameId)
+      .filter(Boolean),
+  )];
+  for (const id of ids) {
+    try {
+      map[id] = await getJson(GAME_API + id);
+    } catch (err) {
+      process.stderr.write(`(live ${String(id).slice(0, 8)}: ${err.message}) `);
+    }
+  }
+  return map;
+}
+
 function gamePageUrl(gameId, leagueId) {
   if (gameId) {
     return `https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=${gameId}`;
@@ -145,12 +166,20 @@ function normalizeGame(game, teamId, meta, reg) {
   return out;
 }
 
-/** Prochains matchs bruts (avant prune fraîcheur B). */
-function nextGamesForTeam(games, teamId, meta, reg) {
-  const today = new Date().toISOString().slice(0, 10);
+/** Prochains matchs bruts (avant prune fraîcheur B). Inclut les matchs en cours. */
+function nextGamesForTeam(games, teamId, meta, reg, liveById = {}) {
+  const today = SportsLive.torontoDayKey();
+  const now = Date.now();
   return games
-    .filter((g) => (g.HomeTeamId === teamId || g.VisitingTeamId === teamId) && !hasScore(g))
-    .filter((g) => gameDate(g) >= today || !gameDate(g))
+    .filter((g) => g.HomeTeamId === teamId || g.VisitingTeamId === teamId)
+    .map((g) => SportsLive.overlayLiveDetail(g, liveById[g.GameId]))
+    .filter((g) => !SportsLive.isFinalRaw(g, now))
+    .filter((g) => {
+      const day = gameDate(g);
+      if (!day) return true;
+      if (day >= today) return true;
+      return SportsLive.isLiveRaw(g, now);
+    })
     .sort((a, b) => gameDate(a).localeCompare(gameDate(b)))
     .map((g) => {
       const home = g.HomeTeamId === teamId;
@@ -177,6 +206,7 @@ function nextGamesForTeam(games, teamId, meta, reg) {
       if (opp.fullName) out.opponentFullName = opp.fullName;
       if (opp.nickname) out.opponentNickname = opp.nickname;
       if (opp.registryId) out.opponentRegistryId = opp.registryId;
+      SportsLive.annotateNextGame(out, g, { home, sport: meta.sport, now });
       return out;
     });
 }
@@ -185,10 +215,13 @@ function nextGameForTeam(games, teamId, meta, reg) {
   return nextGamesForTeam(games, teamId, meta, reg)[0] || null;
 }
 
-/** Résultats passés bruts (tous scores), plus récent d’abord — prune B ensuite. */
-function pastGamesForTeam(games, teamId, meta, reg) {
+/** Résultats passés bruts (scores *finaux*), plus récent d’abord — prune B ensuite. */
+function pastGamesForTeam(games, teamId, meta, reg, liveById = {}) {
+  const now = Date.now();
   return games
-    .filter((g) => (g.HomeTeamId === teamId || g.VisitingTeamId === teamId) && hasScore(g))
+    .filter((g) => g.HomeTeamId === teamId || g.VisitingTeamId === teamId)
+    .map((g) => SportsLive.overlayLiveDetail(g, liveById[g.GameId]))
+    .filter((g) => SportsLive.isFinalRaw(g, now) && SportsLive.rseqHasScore(g))
     .map((g) => normalizeGame(g, teamId, meta, reg))
     .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
 }
@@ -770,11 +803,24 @@ function preserveBySource(previousTeams, source, reason) {
 
 async function main() {
   const catalog = JSON.parse(fs.readFileSync(LEAGUES_PATH, 'utf8'));
-  // Tous les sports du catalogue S1, sans exception (hockey S1 inclus en plus de Spordle).
-  const leagues = catalog.leagues || [];
   const previousTeams = loadPreviousTeams();
+  let leagues = catalog.leagues || [];
+  if (liveOnly) {
+    const ids = new Set(SportsLive.findLiveLeagueIds(previousTeams));
+    leagues = leagues.filter((l) => ids.has(l.id));
+    if (!leagues.length) {
+      console.error('sports: --live aucun match en fenêtre — pas d’écriture.');
+      process.exit(0);
+    }
+    process.stderr.write(`sports: --live ${leagues.length} ligue(s)\n`);
+  }
   const reg = loadSportsTeamsRegistry();
   const teams = {};
+  if (liveOnly) {
+    for (const [id, team] of Object.entries(previousTeams)) {
+      if (team && typeof team === 'object') teams[id] = { ...team };
+    }
+  }
   const errors = [];
   let registryHits = 0;
   let leaguesWithTeams = 0;
@@ -805,6 +851,7 @@ async function main() {
         continue;
       }
       const games = allGames(data);
+      const liveById = await liveDetailsForGames(games);
       const standings = data.Standings || [];
       let teamCount = 0;
       for (const t of data.Teams || []) {
@@ -821,8 +868,8 @@ async function main() {
         if (resolved.matched) registryHits += 1;
         // Clé stable : ligue + équipe (évite collision multi-divisions).
         const key = `${meta.sector}:${meta.sport}:${meta.id}:${id}`;
-        const results = pastGamesForTeam(games, id, meta, reg);
-        const nextGames = nextGamesForTeam(games, id, meta, reg);
+        const results = pastGamesForTeam(games, id, meta, reg, liveById);
+        const nextGames = nextGamesForTeam(games, id, meta, reg, liveById);
         const record = standingForTeam(standings, id);
         // Sexe : méta ligue, sinon inféré de SexType S1.
         let sex = meta.sex || null;
@@ -887,8 +934,8 @@ async function main() {
     }
   }
 
-  // Hockey RSEQ via Spordle (scoreboard public) — complète S1 souvent vide.
-  const hockey = await fetchHockeyTeams(reg);
+  // Hockey / voile : ignorés en --live (S1 seulement, pour rester sous la minute).
+  const hockey = liveOnly ? { teams: {}, errors: [] } : await fetchHockeyTeams(reg);
   if (Object.keys(hockey.teams).length) {
     for (const [key, team] of Object.entries(hockey.teams)) {
       if (Array.isArray(team.results)) {
@@ -917,7 +964,7 @@ async function main() {
   sportsFetched.add('hockey');
 
   // Voile campus QC (ICSA + watchlist) — sport hors S1.
-  const sailing = await fetchSailingTeams(reg);
+  const sailing = liveOnly ? { teams: {}, errors: [] } : await fetchSailingTeams(reg);
   if (Object.keys(sailing.teams).length) {
     for (const [key, team] of Object.entries(sailing.teams)) {
       let entry = mergePreservedPast(team, previousTeams);
@@ -961,26 +1008,29 @@ async function main() {
   const prevCount = Object.keys(previousTeams).length;
 
   // Garde-fous : ne jamais publier un payload catastrophique (cartes vides / panne massive).
+  // --live fusionne le snapshot précédent : ces seuils ne s’appliquent qu’au crawl complet.
   const failRatio = leagues.length
     ? leaguesFailed / leagues.length
     : 0;
-  if (teamCount < 50) {
-    console.error(
-      `sports: ABORT — trop peu d’équipes (${teamCount}). Refus d’écraser sports.json.`,
-    );
-    process.exit(1);
-  }
-  if (prevCount >= 100 && teamCount < prevCount * 0.5) {
-    console.error(
-      `sports: ABORT — chute d’équipes ${prevCount} → ${teamCount} (>50 %). Refus d’écraser.`,
-    );
-    process.exit(1);
-  }
-  if (leaguesFailed > 0 && failRatio > 0.5) {
-    console.error(
-      `sports: ABORT — majorité des ligues S1 en erreur (${leaguesFailed}/${leagues.length}).`,
-    );
-    process.exit(1);
+  if (!liveOnly) {
+    if (teamCount < 50) {
+      console.error(
+        `sports: ABORT — trop peu d’équipes (${teamCount}). Refus d’écraser sports.json.`,
+      );
+      process.exit(1);
+    }
+    if (prevCount >= 100 && teamCount < prevCount * 0.5) {
+      console.error(
+        `sports: ABORT — chute d’équipes ${prevCount} → ${teamCount} (>50 %). Refus d’écraser.`,
+      );
+      process.exit(1);
+    }
+    if (leaguesFailed > 0 && failRatio > 0.5) {
+      console.error(
+        `sports: ABORT — majorité des ligues S1 en erreur (${leaguesFailed}/${leagues.length}).`,
+      );
+      process.exit(1);
+    }
   }
 
   const payload = SportsFreshness.pruneSportsPayload({
