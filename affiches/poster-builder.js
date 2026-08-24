@@ -462,9 +462,9 @@ function compose(opts) {
   const legal = [INDEP_1, INDEP_2];
   if (kind === 'bilingue') legal.push(INDEP_EN);
   const fit = Math.min(w / 3300, h / 5100);
-  const fName = 32 * fit;
-  const fBody = 28 * fit;
-  const fCredit = 24 * fit;
+  const fName = 40 * fit;
+  const fBody = 34 * fit;
+  const fCredit = 28 * fit;
   const measure = (text, size) => {
     ctx.font = `400 ${size}px "LR Sans"`;
     const m = ctx.measureText(text);
@@ -477,7 +477,7 @@ function compose(opts) {
   });
   const legalH = legalRows.reduce((s, r) => s + r.th, 0) + 10 * (legalRows.length - 1);
   const creditH = credit ? measure(credit, fCredit) : 0;
-  const fLang = 26 * fit;
+  const fLang = 30 * fit;
   const iconS = 48 * fit;
   const langFont = `600 ${fLang}px "Noto Sans", "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", "Noto Sans Arabic", "Noto Sans Devanagari", "LR Sans Semi"`;
   ctx.font = langFont;
@@ -509,11 +509,19 @@ function compose(opts) {
   ctx.fillStyle = PURPLE;
   ctx.fillRect(0, 0, w, barH);
 
+  const fadeTop = Math.max(barH, contentBottom - 160 * fit);
+  const fade = ctx.createLinearGradient(0, fadeTop, 0, h);
+  fade.addColorStop(0, 'rgba(14, 15, 18, 0)');
+  fade.addColorStop(0.28, 'rgba(14, 15, 18, 0.42)');
+  fade.addColorStop(1, 'rgba(14, 15, 18, 0.82)');
+  ctx.fillStyle = fade;
+  ctx.fillRect(0, fadeTop, w, h - fadeTop);
+
   let cy = h - safe;
   if (credit) {
     cy -= creditH;
     ctx.font = `400 ${fCredit}px "LR Sans"`;
-    fillCentered(ctx, credit, cy, MUTED);
+    fillCentered(ctx, credit, cy, SOFT);
     cy -= 40 * fit;
   }
   if (opts.langs && langsH) {
@@ -524,9 +532,9 @@ function compose(opts) {
     }
     let ly = langTop + iconS + 8;
     ctx.font = langFont;
-    ctx.fillStyle = MUTED;
+    ctx.fillStyle = SOFT;
     langLines.forEach((line) => {
-      fillCentered(ctx, line, ly, MUTED);
+      fillCentered(ctx, line, ly, SOFT);
       ly += langLineH + 6;
     });
     cy -= 20 * fit;
@@ -534,14 +542,14 @@ function compose(opts) {
   cy -= legalH;
   let ty = cy;
   legalRows.forEach((row) => {
-    ctx.font = `400 ${row.sz}px "LR Sans"`;
-    fillCentered(ctx, row.t, ty, MUTED);
+    ctx.font = `600 ${row.sz}px "LR Sans Semi"`;
+    fillCentered(ctx, row.t, ty, INK);
     ty += row.th + 10;
   });
   cy -= 16 * fit;
   cy -= nameH;
-  ctx.font = `400 ${fName}px "LR Sans"`;
-  fillCentered(ctx, NAME_FULL, cy, SOFT);
+  ctx.font = `600 ${fName}px "LR Sans Semi"`;
+  fillCentered(ctx, NAME_FULL, cy, INK);
   cy -= 10 * fit;
   cy -= markH;
   const markSize = 40 * fit;
