@@ -365,7 +365,7 @@ function compose(opts) {
   const legalH = legalRows.reduce((s, r) => s + r.th, 0) + 10 * (legalRows.length - 1);
   const creditH = credit ? measure(credit, fCredit) : 0;
   const fLang = 26 * fit;
-  const iconS = 26 * fit;
+  const iconS = 48 * fit;
   const langFont = `600 ${fLang}px "Noto Sans", "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", "Noto Sans Arabic", "Noto Sans Devanagari", "LR Sans Semi"`;
   ctx.font = langFont;
   const langMax = w - 2 * safe - 240;
@@ -782,7 +782,7 @@ async function main() {
   await document.fonts.ready;
   assets.logo = await loadImage('../assets/icon.svg', false);
   assets.qr = await loadImage('../assets/kit/qr-le-radar.svg', false);
-  assets.translate = await loadImage('../assets/kit/translate-mark.svg', false);
+  assets.translate = await loadImage('../assets/kit/translate-mark.svg?v=bold', false);
   const [bank, rejected] = await Promise.all([
     fetch('../data/photo-bank.json').then((r) => r.json()),
     fetch('../data/quebec-backgrounds-rejected.json').then((r) => r.json()).catch(() => ({ entries: [] })),
