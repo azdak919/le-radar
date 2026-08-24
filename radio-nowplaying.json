@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-24T09:43:47.638Z",
+  "updatedAt": "2026-08-24T10:34:30.046Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T09:43:20.602Z"
+      "checkedAt": "2026-08-24T10:34:02.712Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "05:00",
-        "end": "06:30",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "Le terrain sportif",
         "source": "schedule",
         "start": "06:30",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/le-terrain-sportif"
       },
+      "next": {
+        "title": "Ya Raï (reprise)",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/ya-rai"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Le terrain sportif",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T09:43:22.887Z"
+      "checkedAt": "2026-08-24T10:34:04.970Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T09:43:26.506Z"
+      "checkedAt": "2026-08-24T10:34:07.501Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Experiments",
         "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/experiments"
       },
+      "next": {
+        "title": "Death of the Midrange",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/death-of-the-midrange"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Experiments",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T09:43:40.504Z"
+      "checkedAt": "2026-08-24T10:34:22.465Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T09:43:41.689Z"
+      "checkedAt": "2026-08-24T10:34:23.744Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "bitume"
       },
-      "track": "Thundercat - Anakin Learns His Fate",
+      "track": "Chinese American Bear - All The People",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-24T09:43:47.287Z"
+      "checkedAt": "2026-08-24T10:34:29.695Z"
     }
   }
 }
