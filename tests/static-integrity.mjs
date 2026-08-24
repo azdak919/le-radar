@@ -525,6 +525,9 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(/draw\.rectangle\(\(0, 0, W, BAR_H\)/.test(posterScript), 'affiches campus : barre pourpre en haut');
   assert(posterScript.includes('raster_qr'), 'affiches campus : QR officiel collé, pas un carré vide');
   assert(posterScript.includes('Student media on your radar'), 'affiches campus : slogan EN officiel');
+  assert(posterScript.includes('Les contenus appartiennent à leurs publications'), 'affiches campus : contenus d’origine');
+  assert(!posterScript.includes('Azdak'), 'affiches campus : pas de mention Azdak');
+  assert(!/GPL-2/.test(posterScript), 'affiches campus : pas de GPL au pied');
   assert(posterScript.includes('Le Réseau Académique de Découverte'), 'affiches campus : nom complet au footer');
   assert(existsSync(join(root, 'assets/kit/qr-le-radar.svg')), 'affiches campus : QR vectoriel officiel requis');
   const postersCheck = spawnSync('python3', [join(root, 'scripts/generate-campus-posters.py'), '--check'], { encoding: 'utf8' });
