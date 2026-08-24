@@ -543,6 +543,7 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(posterScript.includes('Student newspapers, radio and sports from Quebec'), 'affiches campus : slogan EN = traduction du français');
   const builder = readFileSync(join(root, 'affiches/index.html'), 'utf8');
   const builderJs = readFileSync(join(root, 'affiches/poster-builder.js'), 'utf8');
+  assert(builderJs.includes('fillCentered(ctx, NAME_FULL, cy, SOFT)'), 'pied d’affiche : nom développé discret comme le site');
   assert(builderJs.includes('fillUniLockup'), 'générateur public : Université McGill University');
   assert(builderJs.includes('GREETINGS_EN'), 'générateur public : messages manuscrits bilingues OQLF');
   assert(posterScript.includes('non officiel et sans affiliation'), 'affiches campus : « et » plutôt qu’un tiret');
