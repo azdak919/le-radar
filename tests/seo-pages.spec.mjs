@@ -466,5 +466,5 @@ test('sports : filtre En cours', async ({ page }) => {
   await expect(live).toHaveAttribute('aria-pressed', 'true');
   const status = page.locator('[data-sports-status]');
   await expect(status).toBeVisible();
-  await expect(status).toContainText(/en cours|équipe/i);
+  await expect(status).toContainText(/en cours|entrée/i);
 });
