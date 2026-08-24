@@ -1,11 +1,11 @@
 {
-  "updated": "2026-08-24T16:54:17.912Z",
-  "fetchedAt": "2026-08-24T16:54:17.912Z",
+  "updated": "2026-08-24T21:05:58.419Z",
+  "fetchedAt": "2026-08-24T21:05:58.419Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-24T16:54:17.912Z"
+    "referenceDate": "2026-08-24T21:05:58.420Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 790,
@@ -39986,7 +39986,7 @@
       "nextGames": [
         {
           "date": "2026-08-30",
-          "time": "16:30",
+          "time": "15:00",
           "opponent": "Cégep Outaouais",
           "opponentCode": "OUT",
           "home": true,
@@ -40092,7 +40092,7 @@
       ],
       "nextGame": {
         "date": "2026-08-30",
-        "time": "16:30",
+        "time": "15:00",
         "opponent": "Cégep Outaouais",
         "opponentCode": "OUT",
         "home": true,
@@ -40134,7 +40134,7 @@
       "nextGames": [
         {
           "date": "2026-08-30",
-          "time": "16:30",
+          "time": "15:00",
           "opponent": "Lanaudière",
           "opponentCode": "LAN",
           "home": false,
@@ -40240,7 +40240,7 @@
       ],
       "nextGame": {
         "date": "2026-08-30",
-        "time": "16:30",
+        "time": "15:00",
         "opponent": "Lanaudière",
         "opponentCode": "LAN",
         "home": false,
