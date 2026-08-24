@@ -728,9 +728,9 @@ function paintPreview(img, photo) {
     angle: state.angle,
   });
   const view = document.createElement('canvas');
-  const scale = Math.min(440 / canvas.width, 1);
-  view.width = Math.round(canvas.width * scale);
-  view.height = Math.round(canvas.height * scale);
+  const maxH = Math.max(280, window.innerHeight - 72);
+  const maxW = Math.max(220, (document.getElementById('preview-stage') || document.getElementById('preview-pane'))?.clientWidth || window.innerWidth * 0.42);
+  const scale = Math.min(maxW / canvas.width, maxH / canvas.height, 1);
   const vctx = view.getContext('2d');
   vctx.imageSmoothingEnabled = true;
   vctx.imageSmoothingQuality = 'high';
@@ -844,9 +844,11 @@ function resetCrop(photo) {
 
 function syncCropUi() {
   const box = document.getElementById('crop-tools');
+  const pane = document.getElementById('preview-pane');
   if (!box) return;
   const on = Boolean(state.photoId);
   box.hidden = !on;
+  if (pane) pane.classList.toggle('has-crop', on);
   if (!on) return;
   const x = document.getElementById('focal-x');
   const y = document.getElementById('focal-y');
