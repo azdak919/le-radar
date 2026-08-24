@@ -22,16 +22,16 @@ const BG = '#0E0F12';
 const PURPLE = '#6C2163';
 const TRACK = -0.02;
 
-/* Noms français — Inter les rend tous ; les endonymes non latins casseraient en tofu. */
+/* Endonymes — mêmes libellés que le module de traduction du site. */
 const TRANSLATE_LANGS = [
-  'Français', 'Anglais', 'Inuktitut', 'Inuktut',
-  'Amharique', 'Arabe', 'Bengali', 'Allemand', 'Grec', 'Espagnol',
-  'Persan', 'Gujarati', 'Haoussa', 'Hébreu', 'Hindi', 'Créole haïtien',
-  'Indonésien', 'Igbo', 'Italien', 'Japonais', 'Kannada', 'Coréen',
-  'Malayalam', 'Marathi', 'Malais', 'Néerlandais', 'Pendjabi', 'Polonais',
-  'Portugais', 'Roumain', 'Russe', 'Suédois', 'Swahili', 'Tamoul',
-  'Télougou', 'Thaï', 'Tagalog', 'Turc', 'Ukrainien', 'Ourdou',
-  'Vietnamien', 'Yoruba', 'Chinois simplifié', 'Chinois traditionnel',
+  'Français', 'English', 'ᐃᓄᒃᑎᑐᑦ', 'Inuktut',
+  'አማርኛ', 'العربية', 'বাংলা', 'Deutsch', 'Ελληνικά', 'Español',
+  'فارسی', 'ગુજરાતી', 'Hausa', 'עברית', 'हिन्दी', 'Kreyòl ayisyen',
+  'Bahasa Indonesia', 'Igbo', 'Italiano', '日本語', 'ಕನ್ನಡ', '한국어',
+  'മലയാളം', 'मराठी', 'Bahasa Melayu', 'Nederlands', 'ਪੰਜਾਬੀ', 'Polski',
+  'Português', 'Română', 'Русский', 'Svenska', 'Kiswahili', 'தமிழ்',
+  'తెలుగు', 'ไทย', 'Tagalog', 'Türkçe', 'Українська', 'اردو',
+  'Tiếng Việt', 'Yorùbá', '简体中文', '繁體中文',
 ];
 
 const GREETINGS = {
@@ -380,7 +380,8 @@ function compose(opts) {
   const creditH = credit ? measure(credit, fCredit) : 0;
   const fLang = 28 * (w / 3300);
   const iconS = 28 * (w / 3300);
-  ctx.font = `600 ${fLang}px "LR Sans Semi"`;
+  const langFont = `600 ${fLang}px "Noto Sans", "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", "Noto Sans Arabic", "Noto Sans Devanagari", "LR Sans Semi"`;
+  ctx.font = langFont;
   const langMax = w - 2 * safe - 240;
   const langLines = opts.langs ? wrapJoin(ctx, TRANSLATE_LANGS, langMax) : [];
   const langLineH = langLines.length ? measure(langLines[0] || 'Français', fLang) : 0;
@@ -408,7 +409,7 @@ function compose(opts) {
       ctx.drawImage(assets.translate, (w - iconS) / 2, langTop, iconS, iconS);
     }
     let ly = langTop + iconS + 8;
-    ctx.font = `600 ${fLang}px "LR Sans Semi"`;
+    ctx.font = langFont;
     ctx.fillStyle = MUTED;
     langLines.forEach((line) => {
       fillCentered(ctx, line, ly, MUTED);
@@ -729,6 +730,7 @@ async function main() {
   bind();
   syncLangChoice();
   await loadFonts();
+  await document.fonts.ready;
   assets.logo = await loadImage('../assets/icon.svg', false);
   assets.qr = await loadImage('../assets/kit/qr-le-radar.svg', false);
   assets.translate = await loadImage('../assets/kit/translate-mark.svg', false);
