@@ -512,15 +512,16 @@ function compose(opts) {
     const m = ctx.measureText(text);
     return (m.actualBoundingBoxAscent || 0) + (m.actualBoundingBoxDescent || 0) || size;
   };
-  /* Pied = site-foot : mot-symbole, signature discrète, mentions plus petites. */
-  const fMark = 40 * fit;
-  const fSign = 24 * fit;
-  const fLegal = 22 * fit;
-  const fCredit = 19 * fit;
-  const fEn = 18 * fit;
-  const footLogo = 44 * fit;
-  const markGap = 10 * fit;
-  const legalMax = w - 2 * safe - 280 * fit;
+  /* Pied : plus lisible à l’impression, toujours sous le slogan / nom d’établissement. */
+  const footCap = Math.round(62 * fit);
+  const fMark = Math.min(52 * fit, footCap);
+  const fSign = Math.min(36 * fit, footCap * 0.62);
+  const fLegal = Math.min(28 * fit, footCap * 0.5);
+  const fCredit = Math.min(22 * fit, footCap * 0.4);
+  const fEn = Math.min(22 * fit, footCap * 0.4);
+  const footLogo = Math.min(56 * fit, footCap + 4 * fit);
+  const markGap = 12 * fit;
+  const legalMax = w - 2 * safe - 160 * fit;
   ctx.font = `400 ${fLegal}px "LR Sans"`;
   const legalLines = wrapWords(ctx, `${INDEP_1} ${INDEP_2}`, legalMax);
   const legalLineH = measure(legalLines[0] || INDEP_1, fLegal);
@@ -531,8 +532,8 @@ function compose(opts) {
     + (enLines.length ? 8 * fit + enLines.length * (enLineH + 4) - 4 : 0);
   const nameH = measure(NAME_FULL, fSign);
   const creditH = credit ? measure(credit, fCredit) : 0;
-  const fLang = 24 * fit;
-  const iconS = 36 * fit;
+  const fLang = Math.min(28 * fit, footCap * 0.5);
+  const iconS = Math.min(40 * fit, footCap * 0.7);
   const langFont = `400 ${fLang}px "Noto Sans", "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", "Noto Sans Arabic", "Noto Sans Devanagari", "LR Sans"`;
   ctx.font = langFont;
   const langMax = w - 2 * safe - 80 * fit;
@@ -571,51 +572,65 @@ function compose(opts) {
     ctx.drawImage(assets.qr, (w - inner) / 2, qrTop + qrPad, inner, inner);
   }
 
-  let cy = h - safe;
-  if (credit) {
-    cy -= creditH;
-    ctx.font = `400 ${fCredit}px "LR Sans"`;
-    fillCentered(ctx, credit, cy, SOFT);
-    cy -= 18 * fit;
+  const qrBottom = (opts.qr && assets.qr) ? qrTop + qrSide : qrTop;
+  let pad = 32 * fit;
+  let gMark = 14 * fit;
+  let gName = 18 * fit;
+  let gLegal = 18 * fit;
+  let gLang = 16 * fit;
+  const blockH = markH + gMark + nameH + gName + legalH
+    + (langsH ? gLegal + langsH : 0)
+    + (credit ? gLang + creditH : 0);
+  const room = (h - safe) - (qrBottom + pad);
+  if (room > blockH && blockH > 0) {
+    const slots = 2 + (langsH ? 1 : 0) + (credit ? 1 : 0);
+    const add = (room - blockH) / slots;
+    pad += add;
+    gMark += add * 0.35;
+    gName += add * 0.35;
+    if (langsH) gLegal += add * 0.2;
+    if (credit) gLang += add * 0.1;
   }
-  if (opts.langs && langsH) {
-    cy -= langsH;
-    const langTop = cy;
-    if (assets.translate) {
-      ctx.drawImage(assets.translate, (w - iconS) / 2, langTop, iconS, iconS);
-    }
-    let ly = langTop + iconS + 8;
-    ctx.font = langFont;
-    langLines.forEach((line) => {
-      fillCentered(ctx, line, ly, SOFT);
-      ly += langLineH + 5;
-    });
-    cy -= 16 * fit;
-  }
-  cy -= legalH;
-  let ty = cy;
-  legalLines.forEach((line) => {
-    ctx.font = `400 ${fLegal}px "LR Sans"`;
-    fillCentered(ctx, line, ty, SOFT);
-    ty += legalLineH + 6;
-  });
-  enLines.forEach((line, i) => {
-    if (i === 0) ty += 2 * fit;
-    ctx.font = `400 ${fEn}px "LR Sans"`;
-    fillCentered(ctx, line, ty, SOFT);
-    ty += enLineH + 4;
-  });
-  cy -= 14 * fit;
-  cy -= nameH;
-  ctx.font = `400 ${fSign}px "LR Sans"`;
-  fillCentered(ctx, NAME_FULL, cy, SOFT);
-  cy -= 6 * fit;
-  cy -= markH;
+
+  let cy = qrBottom + pad;
   const markW = trackedWidth(ctx, TITLE, fMark);
   const rowW = footLogo + markGap + markW;
   const mx = (w - rowW) / 2;
   if (assets.logo) ctx.drawImage(assets.logo, mx, cy + (markH - footLogo) / 2, footLogo, footLogo);
   fillTracked(ctx, TITLE, cy + (markH - fMark) / 2, fMark, INK, mx + footLogo + markGap);
+  cy += markH + gMark;
+  ctx.font = `400 ${fSign}px "LR Sans"`;
+  fillCentered(ctx, NAME_FULL, cy, SOFT);
+  cy += nameH + gName;
+  const legalStart = cy;
+  legalLines.forEach((line) => {
+    ctx.font = `400 ${fLegal}px "LR Sans"`;
+    fillCentered(ctx, line, cy, SOFT);
+    cy += legalLineH + 6;
+  });
+  enLines.forEach((line, i) => {
+    if (i === 0) cy += 2 * fit;
+    ctx.font = `400 ${fEn}px "LR Sans"`;
+    fillCentered(ctx, line, cy, SOFT);
+    cy += enLineH + 4;
+  });
+  cy = legalStart + legalH + (langsH ? gLegal : 0);
+  if (opts.langs && langsH) {
+    if (assets.translate) {
+      ctx.drawImage(assets.translate, (w - iconS) / 2, cy, iconS, iconS);
+    }
+    let ly = cy + iconS + 8;
+    ctx.font = langFont;
+    langLines.forEach((line) => {
+      fillCentered(ctx, line, ly, SOFT);
+      ly += langLineH + 5;
+    });
+    cy = ly + (credit ? gLang : 0);
+  }
+  if (credit) {
+    ctx.font = `400 ${fCredit}px "LR Sans"`;
+    fillCentered(ctx, credit, cy, SOFT);
+  }
 
   if (assets.logo) ctx.drawImage(assets.logo, (w - big) / 2, logoY, big, big);
   const titleSize = Math.round(226 * fit);
