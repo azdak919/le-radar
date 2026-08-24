@@ -51,7 +51,10 @@ test.describe('affiches — largeurs labo', () => {
       page.on('pageerror', (err) => pageErrors.push(String(err)));
       await page.setViewportSize({ width: vp.w, height: vp.h });
       await page.goto('/affiches/', { waitUntil: 'domcontentloaded' });
-      await expect(page.locator('h1')).toContainText('Imprimer une affiche');
+      await expect(page.locator('h1.seo-title')).toContainText('Imprimer une affiche');
+      await expect(page.locator('.masthead')).toBeVisible();
+      await expect(page.locator('.site-foot').first()).toBeVisible();
+      await expect(page.locator('#lab-photo-link')).toHaveCount(0);
       const box = await waitPreview(page);
       expect(box, `${vp.name}: canvas présent`).toBeTruthy();
       expect(box.height, `${vp.name}: canvas trop petit (${box.height})`).toBeGreaterThan(120);

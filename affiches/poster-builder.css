@@ -1,7 +1,12 @@
-/* Studio d’affiches — aperçu collé, choix qui défilent. */
+/* Studio d’affiches — chrome SEO autour, outil sombre dans .dash. */
 
-:root {
-  color-scheme: dark;
+.affiche-wire {
+  padding-bottom: 0;
+}
+.affiche-wire .seo-title { margin-bottom: 8px; }
+
+.dash {
+  --studio-bg: #0e0f12;
   --bg: #0e0f12;
   --panel: #14161c;
   --line: #26282d;
@@ -11,50 +16,22 @@
   --purple: #6c2163;
   --sans: Inter, ui-sans-serif, system-ui, sans-serif;
   --serif: "Source Serif 4", Georgia, serif;
-  --top: 56px;
-}
-
-* { box-sizing: border-box; }
-html, body {
-  margin: 0;
-  height: 100%;
-  background: var(--bg);
+  --top: 0px;
+  color-scheme: dark;
   color: var(--ink);
-  font: 15px/1.45 var(--sans);
-}
-body { display: flex; flex-direction: column; overflow: hidden; }
-a { color: var(--soft); }
-a:hover { color: var(--ink); }
-
-.dash-top {
-  flex: 0 0 var(--top);
-  display: flex;
-  align-items: center;
-  gap: 12px 20px;
-  padding: 0 20px;
-  border-bottom: 1px solid var(--line);
-  background: var(--bg);
-  z-index: 5;
-}
-.dash-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--ink);
-  text-decoration: none;
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: 1.12rem;
-}
-.dash-brand img { width: 28px; height: 28px; border-radius: 7px; }
-.dash-nav { display: flex; gap: 14px; margin-left: auto; font-size: 13px; }
-
-.dash {
-  flex: 1;
-  min-height: 0;
+  background: var(--studio-bg);
   display: grid;
   grid-template-columns: minmax(300px, 400px) minmax(0, 1fr);
+  min-height: 72vh;
+  height: 72vh;
+  width: 100%;
+  margin: 0 0 36px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
 }
+.dash a { color: var(--soft); }
+.dash a:hover { color: var(--ink); }
 
 .dash-controls {
   overflow-y: auto;
@@ -275,7 +252,7 @@ select.greeting:focus {
 }
 .preview-frame {
   max-width: 100%;
-  max-height: calc(100vh - var(--top) - 24px);
+  max-height: calc(72vh - 24px);
   width: auto;
   height: auto;
   box-shadow: 0 28px 80px #000c, 0 0 0 1px #ffffff10;
@@ -349,11 +326,14 @@ select.greeting:focus {
 .dash-foot p { margin: 0 0 8px; }
 
 @media (max-width: 900px) {
-  body { overflow: auto; height: auto; }
   .dash {
     display: flex;
     flex-direction: column;
     height: auto;
+    min-height: 0;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
   }
   .dash-preview,
   .dash-preview.has-crop {

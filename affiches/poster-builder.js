@@ -1058,9 +1058,6 @@ function bind() {
 }
 
 async function main() {
-  const local = ['127.0.0.1', 'localhost', '[::1]'].includes(location.hostname);
-  const labLink = document.getElementById('lab-photo-link');
-  if (labLink && local) labLink.hidden = false;
   bind();
   syncDpiLabels();
   syncLangChoice();
