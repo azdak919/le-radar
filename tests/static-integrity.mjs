@@ -537,6 +537,16 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
     'kit-media : section Affiches en premier',
   );
   assert(kit.includes('Pour les babillards'), 'kit-media : phrase affiches claire');
+  assert(kit.includes('id="kit-poster-grid"'), 'kit-media : grille d’exemples d’affiches');
+  assert(kit.includes('kit-poster-examples.js'), 'kit-media : tirage aléatoire d’exemples');
+  assert(existsSync(join(root, 'assets/kit/affiches/examples.json')), 'kit-media : catalogue d’exemples');
+  {
+    const catalog = JSON.parse(readFileSync(join(root, 'assets/kit/affiches/examples.json'), 'utf8'));
+    for (const ex of catalog.examples || []) {
+      const prev = join(root, 'assets/kit/affiches', `affiche-ex-${ex.id}-preview.jpg`);
+      assert(existsSync(prev), `kit-media : aperçu local ${ex.id}`);
+    }
+  }
   assert(!kit.includes('à imprimer à 100'), 'kit-media : plus de consigne dpi/100 % dans le lead');
   assert(kit.includes('?campus=laval'), 'kit-media : raccourci campus Laval');
   assert(!kit.includes('affiche-laval.jpg'), 'kit-media : plus de JPEG campus figés');
