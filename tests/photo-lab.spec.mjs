@@ -78,6 +78,9 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.locator('#status')).not.toContainText('Aperçu : image');
   await page.selectOption('#greeting', 'relache');
   await expect(page.locator('#recipe')).toContainText('Bonne relâche');
+  await expect(page.locator('#crop-tools')).toBeVisible();
+  await page.locator('#photo-angle').fill('8');
+  await expect(page.locator('#status')).not.toContainText('qrSide');
 });
 
 test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ page }) => {

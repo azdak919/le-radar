@@ -72,7 +72,13 @@ const state = {
   qr: false,
   photoId: null,
   photos: [],
+  focalX: 0.5,
+  focalY: 0.42,
+  angle: 0,
+  zoom: 0.9,
 };
+
+let lastPhotoImg = null;
 
 const assets = { logo: null, qr: null, translate: null };
 const imageCache = new Map();
@@ -149,17 +155,26 @@ async function loadFonts() {
   }));
 }
 
-function coverDraw(ctx, img, tw, th, fx = 0.5, fy = 0.42, scale = 0.9) {
+function clamp(n, a, b) {
+  return Math.max(a, Math.min(b, n));
+}
+
+function coverDraw(ctx, img, tw, th, fx = 0.5, fy = 0.42, scale = 0.9, angleDeg = 0) {
   const sw = img.naturalWidth;
   const sh = img.naturalHeight;
-  const ratio = tw / th;
+  const ang = (angleDeg || 0) * Math.PI / 180;
+  const pad = Math.abs(Math.sin(ang)) + Math.abs(Math.cos(ang));
+  const dw = tw * pad;
+  const dh = th * pad;
+  const ratio = dw / dh;
+  const cover = clamp(scale, 0.55, 1);
   let cw;
   let ch;
   if (sw / sh > ratio) {
-    ch = sh * scale;
+    ch = sh * cover;
     cw = ch * ratio;
   } else {
-    cw = sw * scale;
+    cw = sw * cover;
     ch = cw / ratio;
   }
   cw = Math.max(1, Math.min(Math.round(cw), sw));
@@ -168,9 +183,15 @@ function coverDraw(ctx, img, tw, th, fx = 0.5, fy = 0.42, scale = 0.9) {
   else ch = Math.max(1, Math.min(Math.round(cw / ratio), sh));
   const left = Math.max(0, Math.min(Math.round(fx * sw - cw / 2), sw - cw));
   const top = Math.max(0, Math.min(Math.round(fy * sh - ch / 2), sh - ch));
+  ctx.save();
+  ctx.fillStyle = BG;
+  ctx.fillRect(0, 0, tw, th);
+  ctx.translate(tw / 2, th / 2);
+  ctx.rotate(ang);
   ctx.filter = 'saturate(0.52) contrast(1.04)';
-  ctx.drawImage(img, left, top, cw, ch, 0, 0, tw, th);
+  ctx.drawImage(img, left, top, cw, ch, -dw / 2, -dh / 2, dw, dh);
   ctx.filter = 'none';
+  ctx.restore();
   ctx.fillStyle = 'rgba(14, 15, 18, 0.58)';
   ctx.fillRect(0, 0, tw, th);
 }
@@ -268,7 +289,13 @@ function compose(opts) {
   const photo = opts.photoImg || null;
 
   if (photo) {
-    coverDraw(ctx, photo, w, h, opts.focalX ?? 0.5, opts.focalY ?? 0.42, opts.cropScale ?? 0.9);
+    coverDraw(
+      ctx, photo, w, h,
+      opts.focalX ?? 0.5,
+      opts.focalY ?? 0.42,
+      opts.cropScale ?? 0.9,
+      opts.angle ?? 0,
+    );
   } else {
     ctx.fillStyle = BG;
     ctx.fillRect(0, 0, w, h);
@@ -363,8 +390,9 @@ function compose(opts) {
   const footLogo = 72 * (w / 3300);
   const markH = Math.max(footLogo, 40 * (w / 3300));
   const qrIn = fmt.id === 'tabloid' ? 2.25 : 1.75;
-  const qrPx = Math.round(qrIn * DPI);
+  const qrPx = Math.round(qrIn * DPI * (w / 3300));
   const qrPad = Math.round(36 * (w / 3300));
+  const qrSide = qrPx;
 
   let cy = h - safe;
   if (credit) {
@@ -409,7 +437,7 @@ function compose(opts) {
   if (assets.logo) ctx.drawImage(assets.logo, mx, cy, footLogo, footLogo);
   fillTracked(ctx, TITLE, cy + (footLogo - markSize) / 2, markSize, INK, mx + footLogo + markGap);
   if (opts.qr && assets.qr) {
-    const card = qrPx;
+    const card = qrSide;
     cy -= 32 * (w / 3300) + card;
     ctx.fillStyle = '#fff';
     ctx.fillRect((w - card) / 2, cy, card, card);
@@ -452,6 +480,7 @@ function renderChoices() {
   document.getElementById('photo-meta').textContent = state.campus === 'generique'
     ? `${n} photos de la banque campus`
     : `${n} photos pour ${campusOf(state.campus).label}`;
+  syncCropUi();
 }
 
 function escapeAttr(s) {
@@ -489,8 +518,10 @@ function paintPreview(img, photo) {
     photoImg: img || null,
     credit: photo?.credit,
     license: photo?.license,
-    focalX: 0.5,
-    focalY: typeof photo?.focalY === 'number' ? photo.focalY : 0.42,
+    focalX: state.focalX,
+    focalY: state.focalY,
+    cropScale: state.zoom,
+    angle: state.angle,
   });
   const view = document.createElement('canvas');
   const scale = Math.min(440 / canvas.width, 1);
@@ -516,6 +547,7 @@ async function preview() {
     if (photo) {
       const img = await loadImage(printUrl(photo), true);
       if (gen !== previewGen) return;
+      lastPhotoImg = img;
       paintPreview(img, photo);
     }
     if (gen !== previewGen) return;
@@ -550,7 +582,10 @@ async function downloadPrint() {
       photoImg: img,
       credit: photo?.credit,
       license: photo?.license,
-      focalY: typeof photo?.focalY === 'number' ? photo.focalY : 0.42,
+      focalX: state.focalX,
+      focalY: state.focalY,
+      cropScale: state.zoom,
+      angle: state.angle,
     });
     if (canvas.width !== w || canvas.height !== h) {
       throw new Error(`dimensions ${canvas.width}×${canvas.height}, attendu ${w}×${h}`);
@@ -589,6 +624,31 @@ function syncLangChoice() {
   }
 }
 
+function resetCrop(photo) {
+  state.focalX = 0.5;
+  state.focalY = typeof photo?.focalY === 'number' ? photo.focalY : 0.42;
+  state.angle = 0;
+  state.zoom = 0.9;
+  lastPhotoImg = null;
+  syncCropUi();
+}
+
+function syncCropUi() {
+  const box = document.getElementById('crop-tools');
+  if (!box) return;
+  const on = Boolean(state.photoId);
+  box.hidden = !on;
+  if (!on) return;
+  const x = document.getElementById('focal-x');
+  const y = document.getElementById('focal-y');
+  const a = document.getElementById('photo-angle');
+  const z = document.getElementById('photo-zoom');
+  if (x) x.value = String(Math.round(state.focalX * 100));
+  if (y) y.value = String(Math.round(state.focalY * 100));
+  if (a) a.value = String(state.angle);
+  if (z) z.value = String(Math.round(state.zoom * 100));
+}
+
 function applyChoice(name, value) {
   if (name === 'format') state.format = value;
   if (name === 'campus') {
@@ -599,7 +659,10 @@ function applyChoice(name, value) {
   if (name === 'lang') state.lang = value;
   if (name === 'qr') state.qr = value === 'oui';
   if (name === 'langs') state.langs = value === 'oui';
-  if (name === 'photo') state.photoId = value || null;
+  if (name === 'photo') {
+    state.photoId = value || null;
+    resetCrop(currentPhoto());
+  }
   preview();
 }
 
@@ -620,9 +683,42 @@ function bind() {
     const input = label.querySelector('input[name="photo"]');
     if (!input) return;
     input.checked = true;
-    state.photoId = input.value || null;
-    preview();
+    applyChoice('photo', input.value || null);
   });
+  ['focal-x', 'focal-y', 'photo-angle', 'photo-zoom'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', () => {
+      if (id === 'focal-x') state.focalX = Number(el.value) / 100;
+      if (id === 'focal-y') state.focalY = Number(el.value) / 100;
+      if (id === 'photo-angle') state.angle = Number(el.value);
+      if (id === 'photo-zoom') state.zoom = Number(el.value) / 100;
+      if (lastPhotoImg) paintPreview(lastPhotoImg, currentPhoto());
+      else preview();
+    });
+  });
+  document.getElementById('crop-reset').addEventListener('click', () => {
+    resetCrop(currentPhoto());
+    if (lastPhotoImg) paintPreview(lastPhotoImg, currentPhoto());
+    else preview();
+  });
+  const frame = document.getElementById('preview');
+  let drag = null;
+  frame.addEventListener('pointerdown', (ev) => {
+    if (!currentPhoto()) return;
+    drag = { x: ev.clientX, y: ev.clientY, fx: state.focalX, fy: state.focalY };
+    frame.setPointerCapture(ev.pointerId);
+  });
+  frame.addEventListener('pointermove', (ev) => {
+    if (!drag) return;
+    const box = frame.getBoundingClientRect();
+    state.focalX = clamp(drag.fx - (ev.clientX - drag.x) / box.width, 0, 1);
+    state.focalY = clamp(drag.fy - (ev.clientY - drag.y) / box.height, 0, 1);
+    syncCropUi();
+    if (lastPhotoImg) paintPreview(lastPhotoImg, currentPhoto());
+  });
+  frame.addEventListener('pointerup', () => { drag = null; });
+  frame.addEventListener('pointercancel', () => { drag = null; });
   document.getElementById('dl').addEventListener('click', downloadPrint);
 }
 
