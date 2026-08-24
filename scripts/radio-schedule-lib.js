@@ -281,6 +281,11 @@ function resolveNextSlot(grid, date = new Date(), timeZone = DEFAULT_TZ) {
  *
  * @returns {{ perDay: number[], weekPercent: number, slots: number, gaps: Array }}
  */
+/** Planchers de couverture hebdo — partagés bot + data-integrity. Ne pas baisser sans diagnostic. */
+const COVERAGE_FLOOR = {
+  cism: 95, cjlo: 95, ckut: 95, cfak: 80, chyz: 20, choq: 10,
+};
+
 function gridCoverage(grid) {
   const perDay = [0, 0, 0, 0, 0, 0, 0];
   const gaps = [];
@@ -1168,6 +1173,7 @@ module.exports = {
   isTruncatedShowTitle,
   titleFromShowSlug,
   expandTruncatedTitle,
+  COVERAGE_FLOOR,
   gridCoverage,
   normalizeSlot,
   stripTransientFlags,
