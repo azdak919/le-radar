@@ -543,6 +543,9 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('DPI = 300'), 'générateur public : 300 dpi');
   assert(builderJs.includes('TITLE = \'LE-RADAR.ca\''), 'générateur public : mot-symbole');
   assert(builderJs.includes('syncLangChoice'), 'générateur public : bilingue réservé aux campus anglophones');
+  assert(builderJs.includes('Bonne rentrée'), 'générateur public : message manuscrit rentrée');
+  assert(builderJs.includes('LR Script'), 'générateur public : fonte signature');
+  assert(existsSync(join(root, 'assets/kit/fonts/Caveat-Bold.ttf')), 'fonte Caveat pour signature manuscrite');
   assert(builderJs.includes("slug: 'mcgill'") && builderJs.includes('bilingual: true'), 'générateur public : McGill bilingue');
   assert(builderJs.includes("slug: 'laval'") && builderJs.includes("slug: 'laval', line: 'Université Laval', bilingual: false"), 'générateur public : Laval français seulement');
   const postersCheck = spawnSync('python3', [join(root, 'scripts/generate-campus-posters.py'), '--check'], { encoding: 'utf8' });

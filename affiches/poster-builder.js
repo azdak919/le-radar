@@ -22,6 +22,24 @@ const BG = '#0E0F12';
 const PURPLE = '#6C2163';
 const TRACK = -0.02;
 
+const GREETINGS = {
+  none: null,
+  rentree: 'Bonne rentrée',
+  'mi-session': 'Courage — mi-session',
+  motivation: 'Tu vas y arriver',
+  'fin-session': 'Bonne fin de session',
+  relache: 'Bonne relâche',
+  'action-grace': 'Bonne Action de grâce',
+  verite: 'Vérité et réconciliation',
+  souvenir: 'Souvenons-nous',
+  fetes: 'Joyeuses Fêtes',
+  annee: 'Bonne année',
+  paques: 'Joyeuses Pâques',
+  patriotes: 'Journée des Patriotes',
+  'saint-jean': 'Bonne Saint-Jean',
+  canada: 'Bonne fête du Canada',
+};
+
 const CAMPUSES = [
   { slug: 'generique', line: null, lineEn: null, bilingual: false, keys: null, label: 'Générique' },
   { slug: 'laval', line: 'Université Laval', bilingual: false, keys: ['laval', 'pouliot', 'casault', 'vachon', 'koninck', 'palasis', 'bonenfant', 'grand axe', 'parent', 'biermans', 'moraud', 'lemieux', 'lacerte'], label: 'Université Laval' },
@@ -37,6 +55,7 @@ const state = {
   format: 'tabloid',
   campus: 'generique',
   lang: 'standard',
+  greeting: 'none',
   qr: false,
   photoId: null,
   photos: [],
@@ -87,6 +106,7 @@ async function loadFonts() {
     new FontFace('LR Serif', 'url(../scripts/og-fonts/SourceSerif4Display-Bold.ttf)'),
     new FontFace('LR Sans', 'url(../scripts/og-fonts/Inter-Regular.ttf)'),
     new FontFace('LR Sans Semi', 'url(../scripts/og-fonts/Inter-SemiBold.ttf)'),
+    new FontFace('LR Script', 'url(../assets/kit/fonts/Caveat-Bold.ttf)'),
   ];
   await Promise.all(faces.map(async (f) => {
     await f.load();
@@ -243,8 +263,22 @@ function compose(opts) {
     y += fillCentered(ctx, campus.line, y, INK) + (kind === 'bilingue' && campus.lineEn ? gapLang : gapBlock);
     if (kind === 'bilingue' && campus.lineEn) {
       ctx.font = `400 ${uniEnSize}px "LR Sans"`;
-      fillCentered(ctx, campus.lineEn, y, SOFT);
+      y += fillCentered(ctx, campus.lineEn, y, SOFT) + gapBlock;
     }
+  }
+  const greet = GREETINGS[opts.greeting];
+  if (greet) {
+    const gSize = Math.round(52 * scale);
+    y += Math.round(12 * scale);
+    ctx.save();
+    ctx.translate(w / 2, y + gSize * 0.2);
+    ctx.rotate((-8 * Math.PI) / 180);
+    ctx.font = `700 ${gSize}px "LR Script"`;
+    ctx.fillStyle = INK;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillText(greet, 0, 0);
+    ctx.restore();
   }
 
   const credit = photo && opts.credit
@@ -370,6 +404,7 @@ async function preview() {
       format: state.format,
       campus: state.campus,
       lang: state.lang,
+      greeting: state.greeting,
       qr: state.qr,
       photoImg: img,
       credit: photo?.credit,
@@ -407,6 +442,7 @@ async function downloadPrint() {
       format: state.format,
       campus: state.campus,
       lang: state.lang,
+      greeting: state.greeting,
       qr: state.qr,
       photoImg: img,
       credit: photo?.credit,
@@ -421,7 +457,8 @@ async function downloadPrint() {
     const campus = campusOf(state.campus);
     const lang = state.lang === 'bilingue' ? 'bilingue' : (state.lang === 'minimal' ? 'minimal' : 'fr');
     const qr = state.qr ? '-qr' : '';
-    const name = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${qr}.jpg`;
+    const greet = state.greeting !== 'none' ? `-${state.greeting}` : '';
+    const name = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${greet}${qr}.jpg`;
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = name;
@@ -464,6 +501,10 @@ function bind() {
   });
   document.querySelectorAll('[name="qr"]').forEach((el) => {
     el.addEventListener('change', () => { state.qr = el.value === 'oui'; preview(); });
+  });
+  document.getElementById('greeting').addEventListener('change', (ev) => {
+    state.greeting = ev.target.value;
+    preview();
   });
   document.getElementById('dl').addEventListener('click', downloadPrint);
 }

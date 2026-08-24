@@ -15,6 +15,7 @@
   <link rel="preload" href="../scripts/og-fonts/SourceSerif4Display-Bold.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="../scripts/og-fonts/Inter-Regular.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="../scripts/og-fonts/Inter-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="../assets/kit/fonts/Caveat-Bold.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="./poster-builder.css">
 </head>
 <body>
@@ -64,6 +65,28 @@
           <label hidden><input type="radio" name="lang" value="bilingue"> Bilingue</label>
           <label><input type="radio" name="lang" value="minimal"> Minimal</label>
         </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Message manuscrit</legend>
+        <select class="greeting" name="greeting" id="greeting" aria-describedby="greeting-hint">
+          <option value="none" selected>Aucun</option>
+          <option value="rentree">Bonne rentrée</option>
+          <option value="mi-session">Courage — mi-session</option>
+          <option value="motivation">Tu vas y arriver</option>
+          <option value="fin-session">Bonne fin de session</option>
+          <option value="relache">Bonne relâche</option>
+          <option value="action-grace">Bonne Action de grâce</option>
+          <option value="verite">Vérité et réconciliation</option>
+          <option value="souvenir">Souvenons-nous</option>
+          <option value="fetes">Joyeuses Fêtes</option>
+          <option value="annee">Bonne année</option>
+          <option value="paques">Joyeuses Pâques</option>
+          <option value="patriotes">Journée des Patriotes</option>
+          <option value="saint-jean">Bonne Saint-Jean</option>
+          <option value="canada">Bonne fête du Canada</option>
+        </select>
+        <p class="field-hint" id="greeting-hint">Signature à la main, en français.</p>
       </fieldset>
 
       <fieldset>
