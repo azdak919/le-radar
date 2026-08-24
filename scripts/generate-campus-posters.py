@@ -319,11 +319,17 @@ def paint_chip(canvas: Image.Image, x0: int, y0: int, bw: int, bh: int) -> None:
     canvas.alpha_composite(layer, (x0, y0))
 
 
-def chip_block(canvas, draw, lines: list[tuple[str, ImageFont.FreeTypeFont, tuple]], y: int, gap_after: int) -> int:
+def chip_size(draw, lines, pad_x=36, pad_y=18, inner=10) -> tuple[int, int]:
+    sizes = [text_size(draw, t, f) for t, f, _ in lines]
+    tw = max(s[0] for s in sizes)
+    th = sum(s[1] for s in sizes) + inner * (len(lines) - 1)
+    return tw + 2 * pad_x, th + 2 * pad_y
+
+
+def chip_block(canvas, draw, lines: list[tuple[str, ImageFont.FreeTypeFont, tuple]], y: int, gap_after: int, pad_x=36, pad_y=18, inner=10) -> int:
     """Dessine une pastille centrée (une ou plusieurs lignes) et avance y."""
     if not lines:
         return y
-    pad_x, pad_y, inner = 36, 18, 10
     sizes = [text_size(draw, t, f) for t, f, _ in lines]
     tw = max(s[0] for s in sizes)
     th = sum(s[1] for s in sizes) + inner * (len(lines) - 1)
@@ -381,9 +387,9 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
 
     f_title = font(SERIF, int(round(56 * scale)))
     f_uni = font(SANS, int(round(18 * scale)))
-    f_name = font(SANS, 32)
+    f_name = font(SANS, 36)
     f_mark = font(SERIF, 40)
-    f_body = font(SANS, 34)
+    f_body = font(SANS, 38)
     f_credit = font(SANS, 26)
 
     logo_y = int(round(236 * scale))
@@ -419,41 +425,42 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
         if has_en_name:
             y = chip_lines(canvas, draw, campus["line_en"], f_uni_en, SOFT, y, max_w, gap_after_title_block)
 
-    # Pied : pastille d’indépendance juste au-dessus du QR (ou du bas).
+    # Pied aéré : nom, puis note d’indépendance, puis QR / wordmark.
     credit = ""
     if photo_meta:
         who = photo_meta.get("credit") or "Wikimedia Commons"
         lic = photo_meta.get("license") or ""
         credit = f"Photo : {who}" + (f" · {lic}" if lic else "")
-    foot_lines = [(NAME_FULL, f_name, SOFT), (INDEP_1, f_body, INK), (INDEP_2, f_body, INK)]
+    name_chip = [(NAME_FULL, f_name, SOFT)]
+    indep_chip = [(INDEP_1, f_body, INK), (INDEP_2, f_body, INK)]
     if kind == "bilingue":
-        foot_lines.append((INDEP_EN, f_credit, MUTED))
-    pad_x, pad_y, inner = 36, 18, 10
-    sizes = [text_size(draw, t, f) for t, f, _ in foot_lines]
-    tw = max(s[0] for s in sizes)
-    th = sum(s[1] for s in sizes) + inner * (len(foot_lines) - 1)
-    foot_h = th + 2 * pad_y
+        indep_chip.append((INDEP_EN, f_credit, MUTED))
+    name_h = chip_size(draw, name_chip, pad_y=24, inner=12)[1]
+    indep_h = chip_size(draw, indep_chip, pad_y=32, inner=22)[1]
     mark_h = max(foot_logo, text_size(draw, TITLE, f_mark)[1])
     credit_h = text_size(draw, credit, f_credit)[1] if credit else 0
-    qr_h = 0
+    gap_chip = 28
+    gap_mark = 40
+    gap_qr = 36
     if with_qr:
         qr = raster_qr(QR_PX - 2 * QR_PAD)
-        qr_h = qr.size[1] + 28
     cy = H - SAFE
     if credit:
         cy -= credit_h
         draw.text(((W - text_size(draw, credit, f_credit)[0]) // 2, cy), credit, font=f_credit, fill=MUTED)
-        cy -= 16
+        cy -= 24
     cy -= mark_h
     draw_footer_wordmark(canvas, draw, f_mark, cy, logo_foot)
-    cy -= 16
+    cy -= gap_mark
     if with_qr:
         qw, qh = qr.size
         cy -= qh
         canvas.paste(qr, ((W - qw) // 2, cy))
-        cy -= 28
-    cy -= foot_h
-    chip_block(canvas, draw, foot_lines, cy, 0)
+        cy -= gap_qr
+    cy -= indep_h
+    chip_block(canvas, draw, indep_chip, cy, 0, pad_y=32, inner=22)
+    cy -= gap_chip + name_h
+    chip_block(canvas, draw, name_chip, cy, 0, pad_y=24, inner=12)
 
     return canvas.convert("RGB")
 
