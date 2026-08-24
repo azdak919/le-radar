@@ -23,6 +23,11 @@ const {
   imageOptionsFromHints,
   imageRejectPatternsFromHints,
   isPathDemoted,
+  isBannerLikeRatio,
+  cardFitBonus,
+  captionLooksLikeCampaignGraphic,
+  compareLeadCandidates,
+  stripStyleAndScript,
 } = require('../scripts/article-image-lib.js');
 
 let failed = 0;
@@ -238,6 +243,121 @@ const rejected = imageFromArticleHtml(
   'https://exemple.org/a/',
 );
 assert(!rejected.url, 'motif reject (logo Daily.png) toujours disqualifiant');
+
+// ── Bandeau campagne vs 2e photo (Collectif / Fondation UdeS) ──
+assert(isBannerLikeRatio(1139, 500), '1139×500 (campagne UdeS) = bandeau');
+assert(!isBannerLikeRatio(1280, 720), '1280×720 (16:9) n’est pas un bandeau');
+assert(!isBannerLikeRatio(1200, 630), '1200×630 (og:image classique) n’est pas un bandeau');
+assert(cardFitBonus(1280, 720) > cardFitBonus(1139, 500), '16:9 cadre mieux que 2.28:1');
+assert(
+  captionLooksLikeCampaignGraphic(
+    'Le slogan « Choisir de changer l’avenir » fait référence à la dernière campagne de financement',
+  ),
+  'légende « slogan / campagne de financement » = visuel de campagne',
+);
+assert(
+  !captionLooksLikeCampaignGraphic(
+    'Des projets comme les espaces dédiés au bien-être de toute la communauté en génie',
+  ),
+  'légende de photo de projet : pas un visuel de campagne',
+);
+
+const BANNER_PNG = 'https://lecollectif.ca/wp-content/uploads/2026/08/FondationUdeS_Source_UdeS.png';
+const BANNER_HTML = 'https://lecollectif.ca/wp-content/uploads/2026/08/FondationUdeS_Source_UdeS-1024x450.png';
+const PHOTO2 = 'https://lecollectif.ca/wp-content/uploads/2026/08/GUIDERENTREE2026_FondationUdeSphoto-2Source-Site-internet-de-lUdeS-1024x576.png';
+
+function collectifLikeHtml({ padCss = 0, withSecond = true } = {}) {
+  const css = padCss > 0 ? `<style>${'x'.repeat(padCss)}</style>` : '';
+  const second = withSecond
+    ? `<figure class="wp-block-image size-large">
+        <img width="1024" height="576" src="${PHOTO2}" />
+        <figcaption>Des projets comme les « espaces dédiés au bien-être de toute la communauté en génie » sont prévus dans les années à venir.</figcaption>
+      </figure>`
+    : '';
+  return `<!doctype html><html><head>${css}
+    <meta property="og:image" content="${BANNER_PNG}" />
+    <meta property="og:image:width" content="1139" />
+    <meta property="og:image:height" content="500" />
+    </head><body><main><article>
+    <div class="entry-content clear" data-ast-blocks-layout="true" itemprop="text">
+    <p>${'Paragraphe de contenu éditorial assez long pour le parseur. '.repeat(6)}</p>
+    <figure class="wp-block-image aligncenter size-large">
+      <img width="1024" height="450" src="${BANNER_HTML}" />
+      <figcaption>Le slogan « Choisir de changer l’avenir » fait référence à la dernière campagne de financement, visant à soutenir un total de 150 projets.</figcaption>
+    </figure>
+    <p>${'Autre paragraphe du corps de l’article, toujours assez long. '.repeat(6)}</p>
+    ${second}
+    </div></article></main></body></html>`;
+}
+
+const collectifPicked = imageFromArticleHtml(
+  collectifLikeHtml(),
+  [],
+  {},
+  'https://lecollectif.ca/campus/la-fondation-de-ludes/',
+);
+assert(
+  /FondationUdeSphoto-2/i.test(collectifPicked.url),
+  `2e photo 16:9 retenue plutôt que le bandeau campagne (got ${collectifPicked.url})`,
+);
+
+const padded = collectifLikeHtml({ padCss: 160_000 });
+assert(padded.length > 160_000, 'fixture CSS > 160k (repro du plafond de parse)');
+assert(
+  !padded.slice(0, 150_000).includes('FondationUdeSphoto-2'),
+  'sans strip, la 2e photo est au-delà de 150k',
+);
+const stripped = stripStyleAndScript(padded);
+assert(
+  stripped.includes('FondationUdeSphoto-2') && stripped.length < 20_000,
+  'strip CSS/JS fait réapparaître la 2e photo sous le plafond',
+);
+const paddedPicked = imageFromArticleHtml(
+  padded,
+  [],
+  {},
+  'https://lecollectif.ca/campus/la-fondation-de-ludes/',
+);
+assert(
+  /FondationUdeSphoto-2/i.test(paddedPicked.url),
+  `même choix après 160k de CSS inline (got ${paddedPicked.url})`,
+);
+
+const bannerOnly = imageFromArticleHtml(
+  collectifLikeHtml({ withSecond: false }),
+  [],
+  {},
+  'https://lecollectif.ca/campus/la-fondation-de-ludes/',
+);
+assert(
+  /FondationUdeS_Source_UdeS/i.test(bannerOnly.url),
+  'seule photo = bandeau : on le garde (pas de rejet dur)',
+);
+
+const sixteenNineOg = `<!doctype html><html><head>
+  <meta property="og:image" content="https://exemple.org/uploads/2026/08/concert.jpg" />
+  <meta property="og:image:width" content="1600" />
+  <meta property="og:image:height" content="900" />
+  </head><body><article><div class="entry-content">
+  <p>${'Texte de l’article assez long pour dépasser le seuil de contenu utile. '.repeat(4)}</p>
+  <figure class="wp-block-image"><img width="1600" height="900" src="https://exemple.org/uploads/2026/08/concert.jpg" />
+  <figcaption>Le pianiste en concert à la salle Gesú, samedi soir dernier.</figcaption></figure>
+  <figure class="wp-block-image"><img width="1024" height="576" src="https://exemple.org/uploads/2026/08/coulisses.jpg" />
+  <figcaption>En coulisses après le récital, les musiciens discutent.</figcaption></figure>
+  </div></article></body></html>`;
+const concertPick = imageFromArticleHtml(sixteenNineOg, [], {}, 'https://exemple.org/a/');
+assert(
+  /concert\.jpg$/.test(concertPick.url),
+  `og:image 16:9 reste prioritaire s’il cadre bien (got ${concertPick.url})`,
+);
+
+assert(
+  compareLeadCandidates(
+    { url: 'banner', w: 1139, h: 500, score: 200, campaignGraphic: true },
+    { url: 'photo', w: 1024, h: 576, score: 80 },
+  ) > 0,
+  'score og élevé ne bat pas une photo mieux cadrée',
+);
 
 if (failed) {
   console.error(`\n${failed} failure(s)`);

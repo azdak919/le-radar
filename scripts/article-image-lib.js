@@ -263,6 +263,18 @@ function metaContent(html, key) {
   return '';
 }
 
+/**
+ * CSS/JS inline (Astra, CMP, cookies…) gonflent souvent la page au-delà du
+ * plafond de parse : sur Le Collectif, `<article>` commençait ~188k et la 2e
+ * photo ~194k — le slice(0, 150k) ne gardait que og:image (bandeau campagne).
+ */
+function stripStyleAndScript(html = '') {
+  return String(html)
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '')
+    .replace(/<noscript\b[^>]*>[\s\S]*?<\/noscript>/gi, '');
+}
+
 function stripBoilerplateRegions(html = '') {
   return String(html)
     .replace(/<div[^>]*\bwp-block-query\b[\s\S]*?<\/div>\s*(?=<div|<\/main|<\/body|$)/gi, '')
@@ -429,27 +441,53 @@ function imgTagSrc(tag = '') {
   return '';
 }
 
+function figureCaptionText(fig = '') {
+  const cap = fig.match(/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/i);
+  if (!cap) return '';
+  return cap[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+/** Légende qui décrit un visuel de campagne / slogan, pas une photo de presse. */
+function captionLooksLikeCampaignGraphic(text = '') {
+  return /\b(?:slogans?|visuel(?:s)? de campagne|campagne de financement|fundraising campaign|campaign (?:banner|graphic|visual|poster))\b/i.test(
+    String(text || ''),
+  );
+}
+
 /** URLs (normalisées) des images placées dans une <figure> avec légende réelle. */
 function captionedFigureImageKeys(content = '') {
   const keys = new Set();
-  for (const fig of content.match(/<figure[^>]*>[\s\S]*?<\/figure>/gi) || []) {
-    const cap = fig.match(/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/i);
-    if (!cap) continue;
-    const text = cap[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-    if (text.length < 12) continue;
-    for (const img of fig.match(/<img[^>]*>/gi) || []) {
-      const key = normalizeImagePath(imgTagSrc(img));
-      if (key) keys.add(key);
-    }
+  for (const [key, meta] of captionedFigureMeta(content)) {
+    if (meta.hasCaption) keys.add(key);
   }
   return keys;
+}
+
+function captionedFigureMeta(content = '') {
+  const byKey = new Map();
+  for (const fig of content.match(/<figure[^>]*>[\s\S]*?<\/figure>/gi) || []) {
+    const text = figureCaptionText(fig);
+    const campaignGraphic = captionLooksLikeCampaignGraphic(text);
+    const hasCaption = text.length >= 12;
+    if (!hasCaption && !campaignGraphic) continue;
+    for (const img of fig.match(/<img[^>]*>/gi) || []) {
+      const key = normalizeImagePath(imgTagSrc(img));
+      if (!key) continue;
+      const prev = byKey.get(key) || { hasCaption: false, campaignGraphic: false };
+      byKey.set(key, {
+        hasCaption: prev.hasCaption || hasCaption,
+        campaignGraphic: prev.campaignGraphic || campaignGraphic,
+      });
+    }
+  }
+  return byKey;
 }
 
 function collectContentImages(content = '', extraRejectPatterns = [], options = {}, baseUrl = '') {
   const urls = [];
   const preferSizeFull = !!options.preferSizeFull;
   const demotePatterns = Array.isArray(options.demotePathPatterns) ? options.demotePathPatterns : [];
-  const captionedKeys = captionedFigureImageKeys(content);
+  const captionedMeta = captionedFigureMeta(content);
   for (const m of content.matchAll(/<img[^>]*>/gi)) {
     const tag = m[0];
     const rawSrc = imgTagSrc(tag);
@@ -461,15 +499,21 @@ function collectContentImages(content = '', extraRejectPatterns = [], options = 
     if (promoted) src = promoted;
     else if (isWeakImageUrl(src, options)) continue;
     const w = parseInt((tag.match(/width=["'](\d+)["']/i) || [])[1], 10) || 0;
+    const h = parseInt((tag.match(/height=["'](\d+)["']/i) || [])[1], 10) || 0;
     // Ne pas jeter une image dont on a promu l'URL (w HTML peut rester 150)
     if (w > 0 && w < 400 && promoted === rawSrc) continue;
     if (w > 0 && w < 400 && !promoted) continue;
     const isFull = /\bsize-full\b/i.test(tag) || !/-\d{2,4}x\d{2,4}\./i.test(src);
     const isCropThumb = /-\d{2,4}x\d{2,4}\./i.test(src);
-    const hasCaption = captionedKeys.has(normalizeImagePath(src))
-      || captionedKeys.has(normalizeImagePath(toAbsoluteImageUrl(rawSrc, baseUrl)));
+    const figMeta = captionedMeta.get(normalizeImagePath(src))
+      || captionedMeta.get(normalizeImagePath(toAbsoluteImageUrl(rawSrc, baseUrl)))
+      || {};
+    const hasCaption = !!figMeta.hasCaption;
+    const campaignGraphic = !!figMeta.campaignGraphic;
     const demoted = isPathDemoted(src, demotePatterns);
-    urls.push({ url: src, tag, w, isFull, isCropThumb, hasCaption, demoted });
+    urls.push({
+      url: src, tag, w, h, isFull, isCropThumb, hasCaption, campaignGraphic, demoted,
+    });
   }
   if (preferSizeFull) {
     const fullOnly = urls.filter((img) => img.isFull || !img.isCropThumb);
@@ -623,9 +667,51 @@ function meetsFeatureDisplaySize(width = 0, height = 0) {
   );
 }
 
-function imageFromArticleHtml(html = '', extraRejectPatterns = [], options = {}, baseUrl = '') {
-  // Plafond : parsers HTML WP sur pages monstrueuses (hang CPU / CI).
-  if (html && html.length > 150_000) html = html.slice(0, 150_000);
+/**
+ * La une recadre en 3:2 (object-fit:cover). Un bandeau ~2.3:1 (campagne UdeS
+ * 1139×500) perd le slogan à gauche → « OTRE ENÉROSITÉ HANGE AVENIR ».
+ * Au-delà de 2.12 on préfère une autre photo du corps si elle existe.
+ */
+const BANNER_RATIO_MIN = 2.12;
+const HTML_PARSE_CAP = 250_000;
+
+function isBannerLikeRatio(width = 0, height = 0) {
+  if (!width || !height) return false;
+  return width / height >= BANNER_RATIO_MIN;
+}
+
+function cardFitBonus(width = 0, height = 0) {
+  if (!width || !height) return 0;
+  const r = width / height;
+  if (r >= 1.25 && r <= 1.85) return 28;
+  if (r >= 1.1 && r <= 2.0) return 10;
+  if (r >= BANNER_RATIO_MIN) return -40;
+  if (r > 2.0) return -20;
+  if (r < 0.95) return -18;
+  return 0;
+}
+
+function leadFitTier(c = {}) {
+  if (c.demoted) return 2;
+  const w = c.width || c.w || 0;
+  const h = c.height || c.h || 0;
+  if (c.campaignGraphic || isBannerLikeRatio(w, h)) return 1;
+  return 0;
+}
+
+function compareLeadCandidates(a = {}, b = {}) {
+  const tier = leadFitTier(a) - leadFitTier(b);
+  if (tier) return tier;
+  const aLead = a.leadReady === false ? 1 : 0;
+  const bLead = b.leadReady === false ? 1 : 0;
+  if (aLead !== bLead) return aLead - bLead;
+  return (b.score || 0) - (a.score || 0);
+}
+
+function listArticleImageCandidates(html = '', extraRejectPatterns = [], options = {}, baseUrl = '') {
+  html = stripStyleAndScript(html);
+  // Plafond après strip : le CSS inline ne cache plus <article>.
+  if (html && html.length > HTML_PARSE_CAP) html = html.slice(0, HTML_PARSE_CAP);
   const preferFirstContentImage = !!options.preferFirstContentImage;
   const imageRegion = preferFirstContentImage
     ? (articleBodyHtml(html) || articleImageRegions(html))
@@ -634,7 +720,7 @@ function imageFromArticleHtml(html = '', extraRejectPatterns = [], options = {},
   const demotePatterns = Array.isArray(options.demotePathPatterns) ? options.demotePathPatterns : [];
 
   const candidates = [];
-  const pushMeta = (raw, scoreBase, w = 0, h = 0) => {
+  const pushMeta = (raw, scoreBase, w = 0, h = 0, extra = {}) => {
     if (!raw) return;
     const unwrapped = unwrapCdnImageUrl(raw);
     for (const seed of [unwrapped, raw]) {
@@ -643,15 +729,20 @@ function imageFromArticleHtml(html = '', extraRejectPatterns = [], options = {},
       // avant de rejeter comme weak, sinon → Openverse hors sujet.
       const url = promoteImageUrl(seed, options) || (!isWeakImageUrl(seed, options) ? seed : '');
       if (!url) continue;
+      const dimW = url !== seed ? 0 : w;
+      const dimH = url !== seed ? 0 : h;
       candidates.push({
         url,
         score: scoreBase
           + (url !== seed ? 25 : 0)
           + (url === unwrapped && unwrapped !== raw ? 15 : 0)
-          + Math.min(w, 2400) / 10,
-        w: url !== seed ? 0 : w,
-        h: url !== seed ? 0 : h,
+          + Math.min(dimW, 1600) / 20
+          + cardFitBonus(dimW, dimH)
+          + (extra.campaignGraphic ? -25 : 0),
+        w: dimW,
+        h: dimH,
         demoted: isPathDemoted(url, demotePatterns),
+        campaignGraphic: !!extra.campaignGraphic,
       });
       break;
     }
@@ -663,14 +754,19 @@ function imageFromArticleHtml(html = '', extraRejectPatterns = [], options = {},
     const ogImage = metaContent(html, 'og:image');
     const ogW = parseInt(metaContent(html, 'og:image:width'), 10) || 0;
     const ogH = parseInt(metaContent(html, 'og:image:height'), 10) || 0;
-    const ogInContent = ogImage && contentImages.some((img) => imageUrlsMatch(img.url, ogImage));
+    const ogMatch = ogImage && contentImages.find((img) => imageUrlsMatch(img.url, ogImage));
+    const ogInContent = !!ogMatch;
     // Bonus fort si aussi dans le corps ; sinon on accepte quand même (Substack).
-    pushMeta(ogImage, ogInContent ? 110 : 95, ogW, ogH);
+    pushMeta(ogImage, ogInContent ? 110 : 95, ogW, ogH, {
+      campaignGraphic: !!(ogMatch && ogMatch.campaignGraphic),
+    });
 
     for (const key of ['twitter:image', 'twitter:image:src']) {
       const tw = metaContent(html, key);
-      const twIn = tw && contentImages.some((img) => imageUrlsMatch(img.url, tw));
-      pushMeta(tw, twIn ? 95 : 85, 0, 0);
+      const twMatch = tw && contentImages.find((img) => imageUrlsMatch(img.url, tw));
+      pushMeta(tw, twMatch ? 95 : 85, 0, 0, {
+        campaignGraphic: !!(twMatch && twMatch.campaignGraphic),
+      });
     }
   }
 
@@ -687,20 +783,28 @@ function imageFromArticleHtml(html = '', extraRejectPatterns = [], options = {},
     if (preferFirstContentImage && index === 0) score += 40;
     if (options.preferSizeFull && img.isFull) score += 20;
     if (options.preferSizeFull && isThumb) score -= 30;
+    score += cardFitBonus(img.w, img.h);
+    if (img.campaignGraphic) score -= 25;
     const unwrapped = unwrapCdnImageUrl(img.url);
     candidates.push({
       url: unwrapped || img.url,
       score,
       w: img.w,
-      h: 0,
+      h: img.h || 0,
       demoted: !!img.demoted,
+      campaignGraphic: !!img.campaignGraphic,
     });
   }
 
+  // Bandeau / visuel de campagne derrière une photo mieux cadrée ; demote
+  // (screenshot Daily) toujours dernier, quel que soit le score.
+  candidates.sort(compareLeadCandidates);
+  return candidates;
+}
+
+function imageFromArticleHtml(html = '', extraRejectPatterns = [], options = {}, baseUrl = '') {
+  const candidates = listArticleImageCandidates(html, extraRejectPatterns, options, baseUrl);
   if (!candidates.length) return { url: '', w: 0, h: 0 };
-  // Les photos « demote » passent après toutes les autres, quel que soit leur
-  // score : dernier recours, jamais premier choix.
-  candidates.sort((a, b) => (a.demoted ? 1 : 0) - (b.demoted ? 1 : 0) || b.score - a.score);
   const best = candidates[0];
   return { url: best.url, w: best.w || 0, h: best.h || 0 };
 }
@@ -787,61 +891,59 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     return null;
   };
 
-  // 1) Image RSS déjà en format vedette
+  // Classer toutes les photos (RSS + corps) : un bandeau campagne lead-ready
+  // ne doit plus court-circuiter une 2e photo 16:9 / 3:2 du corps.
+  const html = item.link ? await fetchText(item.link) : '';
+  const fromPage = html && html.length > 200
+    ? listArticleImageCandidates(html, extraRejectPatterns, options, item.link)
+    : [];
+
+  const seen = new Set();
+  const ranked = [];
+  const addCandidate = (c) => {
+    if (!c?.url) return;
+    const key = normalizeImagePath(c.url) || c.url;
+    if (seen.has(key)) return;
+    seen.add(key);
+    ranked.push(c);
+  };
+  for (const c of fromPage) addCandidate(c);
   if (item.image) {
-    const hit = await tryUrlLeadReady(item.image);
-    if (hit) return hit;
+    addCandidate({
+      url: item.image,
+      score: 50,
+      w: 0,
+      h: 0,
+      demoted: false,
+      campaignGraphic: false,
+    });
   }
+  ranked.sort(compareLeadCandidates);
 
-  // 2) Scraper la page : l'image RSS peut être un panorama trop large ou une
-  //    vignette, alors qu'une autre photo du corps est parfaitement utilisable
-  //    (ex. La Pige : Bruno 1661×527 rejeté, Joanne 2560×1707 OK).
-  //    Ne PAS renvoyer l'image RSS « petite » avant d'avoir cherché mieux.
-  const scraped = await scrapeArticleImage(item, extraRejectPatterns, options);
-  if (scraped?.url) {
-    const hit = await tryUrlLeadReady(scraped.url, scraped.w, scraped.h);
-    if (hit) return hit;
-  }
-
-  // 3) Plusieurs images du corps : tenter les meilleures candidates collectées
-  //    via un second passage HTML (og + content), pas seulement le top score.
-  if (item.link) {
-    const html = await fetchText(item.link);
-    if (html && html.length > 200) {
-      const region = options.preferFirstContentImage
-        ? (articleBodyHtml(html) || articleImageRegions(html))
-        : articleImageRegions(html);
-      const contentImages = collectContentImages(region, extraRejectPatterns, options, item.link);
-      // Prioriser les plus larges / non-cropped, motifs « demote » en dernier
-      const ranked = [...contentImages].sort((a, b) => {
-        const aDemoted = a.demoted ? 1 : 0;
-        const bDemoted = b.demoted ? 1 : 0;
-        if (aDemoted !== bDemoted) return aDemoted - bDemoted;
-        const aFull = a.isFull ? 1 : 0;
-        const bFull = b.isFull ? 1 : 0;
-        if (aFull !== bFull) return bFull - aFull;
-        return (b.w || 0) - (a.w || 0);
-      });
-      for (const img of ranked.slice(0, 8)) {
-        if (item.image && imageUrlsMatch(img.url, item.image)) continue;
-        if (scraped?.url && imageUrlsMatch(img.url, scraped.url)) continue;
-        const hit = await tryUrlLeadReady(img.url, img.w || 0, 0);
-        if (hit) return hit;
-      }
+  let bannerFallback = null;
+  let weakFallback = null;
+  for (const c of ranked.slice(0, 8)) {
+    const hit = await tryUrlLeadReady(c.url, c.w || 0, c.h || 0);
+    if (hit) {
+      const merged = {
+        ...c,
+        ...hit,
+        width: hit.width,
+        height: hit.height,
+        w: hit.width,
+        h: hit.height,
+      };
+      if (leadFitTier(merged) === 0) return hit;
+      if (!bannerFallback) bannerFallback = hit;
+      continue;
+    }
+    if (!weakFallback) {
+      const weak = await tryUrlAny(c.url, c.w || 0, c.h || 0);
+      if (weak) weakFallback = weak;
     }
   }
-
-  // 4) Repli : image RSS ou scrape même si pas « lead ready » (mieux que rien
-  //    pour les vignettes ; la banque campus ne doit pas les écraser).
-  if (item.image) {
-    const hit = await tryUrlAny(item.image);
-    if (hit) return hit;
-  }
-  if (scraped?.url) {
-    const hit = await tryUrlAny(scraped.url, scraped.w, scraped.h);
-    if (hit) return hit;
-  }
-
+  if (bannerFallback) return bannerFallback;
+  if (weakFallback) return weakFallback;
   return null;
 }
 
@@ -865,19 +967,28 @@ module.exports = {
   FEATURE_MIN_WIDTH,
   FEATURE_MIN_HEIGHT,
   FEATURE_MIN_PIXELS,
+  BANNER_RATIO_MIN,
+  HTML_PARSE_CAP,
   fetchText,
   fetchBinaryPrefix,
   probeRemoteImageSize,
   parseImageSize,
   metaContent,
+  stripStyleAndScript,
   articleBodyHtml,
   articleImageRegions,
   articleImageIsValidOnPage,
   imageUrlsMatch,
   isCandidateImageUrl,
   isWeakImageUrl,
+  isBannerLikeRatio,
+  cardFitBonus,
+  captionLooksLikeCampaignGraphic,
+  compareLeadCandidates,
+  leadFitTier,
   meetsLeadDisplaySize,
   meetsFeatureDisplaySize,
+  listArticleImageCandidates,
   imageFromArticleHtml,
   needsImageEnrichment,
   scrapeArticleImage,
