@@ -27,6 +27,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Photo d’article : un bandeau campagne (slogan + aplats, ratio ~2.3:1) n’est plus choisi à la une quand le corps a une vraie photo 16:9 / 3:2. Le plafond de parse 150k coupait `<article>` derrière le CSS Astra (Collectif : 2e photo à ~194k) ; on retire style/script avant de classer, et on recadre selon le crop 3:2 de la une.
 - Sous-ligne « En cours » : plus d’âge relatif du coup d’envoi (« il y a 2 min », « dans 15 min », « à l’instant ») — ça se lisait comme un match déjà joué. Période si l’API la donne, sinon la compétition. Prochain du jour : heure (19 h 00), compte à rebours seulement dans l’heure qui précède. Résultat : compétition (la pastille dit déjà Aujourd’hui / Hier).
 - Verbe « reçoit / à » de la CTA : plus pâle que les noms (poids 500, blanc ~50 %) — 650/800 tombaient tous deux sur Inter 700, d’où un « reçoit » aussi blanc que Saint-Hyacinthe.
 - Un 0-0 encore dans la fenêtre n’est plus classé résultat fini. Le jour civil des prochains matchs est celui de Québec, pas UTC (un crawl à 20 h EDT ne fait plus disparaître le match du jour).
