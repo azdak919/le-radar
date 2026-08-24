@@ -27,6 +27,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Page `/sports/` : le tampon « Mise à jour » et les cartes suivaient le dernier `seo:update` (17 août) alors que `sports.json` était rafraîchi plusieurs fois par jour. Le bot scores régénère maintenant `/sports/` et `/en/sports/` à chaque passe.
 - Tableau sports : le compteur du bandeau dit « 815 entrées », pas « équipes » (ce sont des fiches, pas autant de clubs).
 
 - Photo d’article : un bandeau campagne (slogan + aplats, ratio ~2.3:1) n’est plus choisi à la une quand le corps a une vraie photo 16:9 / 3:2. Le plafond de parse 150k coupait `<article>` derrière le CSS Astra (Collectif : 2e photo à ~194k) ; on retire style/script avant de classer, et on recadre selon le crop 3:2 de la une.
