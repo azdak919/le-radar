@@ -1,30 +1,54 @@
 {
-  "updated": "2026-08-24T18:05:48.469Z",
+  "updated": "2026-08-24T21:35:01.371Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 21,
+  "withStock": 28,
   "withCampusBank": 12,
   "fullyCovered": 185,
-  "leadReadyPhotos": 149,
-  "pageScraped": 28,
-  "photosRecovered": 27,
-  "imagesCleared": 17,
-  "stockSearches": 34,
-  "stockFound": 10,
-  "campusBankFound": 4,
+  "leadReadyPhotos": 116,
+  "pageScraped": 30,
+  "photosRecovered": 26,
+  "imagesCleared": 16,
+  "stockSearches": 62,
+  "stockFound": 14,
+  "campusBankFound": 1,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "CSU terminates council’s chief election officer",
-      "link": "https://thelinknewspaper.ca/article/16334",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
     {
       "title": "Un match préparatoire à oublier pour les jeunes Sags",
       "link": "https://lapige.atmjonquiere.com/2026/08/24/un-match-preparatoire-a-oublier-pour-les-jeunes-sags/?utm_source=rss&utm_medium=rss&utm_campaign=un-match-preparatoire-a-oublier-pour-les-jeunes-sags",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2024/10/Image-Sags.jpg"
+    },
+    {
+      "title": "La Fondation de l’UdeS",
+      "link": "https://lecollectif.ca/campus/la-fondation-de-ludes/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/FondationUdeS_Source_UdeS.png"
+    },
+    {
+      "title": "Histoire des traditions UdeS",
+      "link": "https://lecollectif.ca/campus/histoire-des-traditions-udes/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/GUIDEDELARENTREE2026_TraditionsUdeS_Campus_principal_1960_Source-Fonds-darchives-du-Service-des-communications-de-lUniversite-de-Sherbrooke.jpg"
+    },
+    {
+      "title": "Foire aux questions",
+      "link": "https://lecollectif.ca/campus/foire-aux-questions/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/GUIDERENTREE2026_FAQ2_CreditMichel-Caron.jpg"
+    },
+    {
+      "title": "Études de 2ᵉ et de 3ᵉ cycles",
+      "link": "https://lecollectif.ca/campus/etudes-de-2%e1%b5%89-et-de-3%e1%b5%89-cycles/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/GUIDEDELARENTREE2026_Etudes2eEt3eCycles_Photo2_CreditKarineCouillard.png"
+    },
+    {
+      "title": "Le Vert & Or : une tradition sportive",
+      "link": "https://lecollectif.ca/edition-papier/le-vert-or-une-tradition-sportive/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/279436724-_dsc4085.jpg"
     },
     {
       "title": "La mauvaise nutrition et les maladies chroniques",
@@ -33,58 +57,34 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SPORTSETBIENETRE_Mauvaise-nutrition-et-maladies-chroniques_Source-Sante-education.jpg"
     },
     {
+      "title": "La conduite à risque des automobilistes",
+      "link": "https://lecollectif.ca/a-la-une/la-conduite-a-risque-des-automobilistes/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Conduite-a-risque-des-automobilistes_Source-Lassurance-en-mouvement.jpg"
+    },
+    {
+      "title": "La création de contenu et l’influence, un métier contemporain",
+      "link": "https://lecollectif.ca/a-la-une/la-creation-de-contenu-et-linfluence-un-metier-contemporain/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Personnes-creatrices-de-contenu_Source-MJM-Graphic-Design.jpg"
+    },
+    {
       "title": "Le cinéma québécois fait son entrée en classe avec Ciné Panache",
       "link": "https://lecollectif.ca/a-la-une/le-cinema-quebecois-fait-son-entree-en-classe-avec-cine-panache/",
       "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/CULTURE_CinemaQuebecois_SourceCinePanache.png"
     },
     {
-      "title": "Spotlighting Powerful McGill Alumnae",
-      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
-    },
-    {
-      "title": "Gaiters wrap up hard-fought season with eyes on next year",
-      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "The Gentrification of Online Fandom Spaces",
-      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
-    },
-    {
-      "title": "Le pays avant tout – esquisse",
-      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
+      "title": "Les rendez-vous gourmands de la région cet automne",
+      "link": "https://lecollectif.ca/a-la-une/les-rendez-vous-gourmands-de-la-region-cet-automne/",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/CULTURE_lesrendezvousgourmandsautomne_FacebookLesComptonales.jpg"
     },
     {
-      "title": "Oui au budget, oui au programme FIL et non à la grève",
-      "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
+      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
+      "link": "https://lapige.atmjonquiere.com/2026/06/22/se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille/?utm_source=rss&utm_medium=rss&utm_campaign=se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
-    },
-    {
-      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
-      "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
-    },
-    {
-      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
-      "link": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg"
-    },
-    {
-      "title": "Recettes musicales québécoises pour l’été",
-      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/06/Joanne-Normandin_retraite-benevole-scaled.jpg"
     }
   ]
 }

@@ -1,40 +1,22 @@
 {
-  "updated": "2026-08-24T18:00:16.974Z",
+  "updated": "2026-08-24T21:27:41.236Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 10,
-  "withLeadExcerpt": 83,
-  "candidates": 10,
-  "enriched": 2,
-  "failed": 0,
+  "incomplete": 9,
+  "withLeadExcerpt": 84,
+  "candidates": 9,
+  "enriched": 1,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
-      "title": "Qui sont les agents qui patrouillent notre campus ?",
-      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
       "ok": true,
-      "score": 100,
-      "chars": 396,
-      "sample": "« L’Université McGill est à la recherche de patrouilleurs dynamiques et engagés pour assurer la sécu",
+      "score": 96,
+      "chars": 295,
+      "sample": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez r",
       "changed": true
-    },
-    {
-      "title": "Un match préparatoire à oublier pour les jeunes Sags",
-      "link": "https://lapige.atmjonquiere.com/2026/08/24/un-match-preparatoire-a-oublier-pour-les-jeunes-sags/?utm_source=rss&utm_medium=rss&utm_campaign=un-match-preparatoire-a-oublier-pour-les-jeunes-sags",
-      "ok": true,
-      "score": 100,
-      "chars": 288,
-      "sample": "Après un deuxième match préparatoire d’espoirs chaudement disputé la veille à Baie-Comeau, les Sags ",
-      "changed": true
-    },
-    {
-      "title": "La mauvaise nutrition et les maladies chroniques",
-      "link": "https://lecollectif.ca/a-la-une/la-mauvaise-nutrition-et-les-maladies-chroniques/",
-      "ok": true,
-      "score": 76,
-      "chars": 400,
-      "sample": "Les repas à forte teneur calorique, glycémique et lipidique regorgent dans la plupart des marchés d’",
-      "changed": false
     },
     {
       "title": "Montreal city council to debate motion to cut ties with Israel on August 24",
@@ -79,6 +61,15 @@
       "score": 66,
       "chars": 400,
       "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
+      "changed": false
+    },
+    {
+      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
+      "link": "https://thelinknewspaper.ca/article/16338",
+      "ok": true,
+      "score": 90,
+      "chars": 177,
+      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
     }
   ]
