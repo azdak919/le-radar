@@ -37,6 +37,13 @@ function reportOverflow(page) {
 }
 
 test.describe('affiches — largeurs labo', () => {
+  test('?campus=laval depuis le kit média', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto('/affiches/?campus=laval', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('input[name="campus"][value="laval"]')).toBeChecked();
+    await expect(page.locator('label:has(input[name="lang"][value="bilingue"])')).toBeHidden();
+  });
+
   test('barre Format du labo locale', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/affiches/', { waitUntil: 'domcontentloaded' });

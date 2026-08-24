@@ -522,11 +522,13 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   }
   const mediaKitCheck = spawnSync(process.execPath, [join(root, 'scripts/generate-media-kit-assets.mjs'), '--check'], { encoding: 'utf8' });
   assert.equal(mediaKitCheck.status, 0, mediaKitCheck.stderr || 'kit-media : fichiers générés désynchronisés');
-  const campusSlugs = ['laval', 'mcgill', 'udem', 'uqam', 'concordia', 'sherbrooke', 'bishops'];
-  for (const slug of campusSlugs) {
-    assert(kit.includes(`affiche-${slug}.jpg`), `kit-media : affiche ${slug} téléchargeable requise`);
-    assert(kit.includes(`affiche-${slug}-preview.jpg`), `kit-media : aperçu ${slug} requis`);
-  }
+  assert(kit.includes('../affiches/'), 'kit-media : lien vers l’atelier d’affiches');
+  assert(kit.includes('?campus=laval'), 'kit-media : raccourci campus Laval');
+  assert(!kit.includes('affiche-laval.jpg'), 'kit-media : plus de JPEG campus figés');
+  assert(!/Rentrée 2026/.test(kit), 'kit-media : plus de Rentrée 2026');
+  const mediaKitEn = readFileSync(join(root, 'en/media-kit/index.html'), 'utf8');
+  assert(mediaKitEn.includes('../../affiches/'), 'media-kit EN : lien vers l’atelier');
+  assert(!mediaKitEn.includes('affiche-laval.jpg'), 'media-kit EN : plus de JPEG campus figés');
   const posterScript = readFileSync(join(root, 'scripts/generate-campus-posters.py'), 'utf8');
   assert(posterScript.includes('TITLE = "LE-RADAR.ca"'), 'affiches campus : mot-symbole LE-RADAR.ca');
   assert(posterScript.includes('draw_footer_wordmark'), 'affiches campus : petit logo PWA au footer seulement');
@@ -565,6 +567,7 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builder.includes('midwidth-preview.js'), 'générateur public : barre Format du labo local');
   assert(builder.includes('Lettre 8,5 × 11'), 'générateur public : format lettre');
   assert(builder.includes('Légal 8,5 × 14'), 'générateur public : format légal');
+  assert(builderJs.includes('function applyQuery'), 'générateur public : ?campus= depuis le kit média');
   assert(builderJs.includes('photo-bank.json'), 'générateur public : banque unique du labo photo');
   assert(builderJs.includes('quebec-backgrounds-rejected.json'), 'générateur public : exclusions du labo');
   assert(builderJs.includes('wIn: 8.5') && builderJs.includes('hIn: 11'), 'générateur public : lettre 8,5×11');

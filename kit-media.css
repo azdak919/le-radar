@@ -143,6 +143,53 @@
 
 .kit-dl a:hover { text-decoration: underline; }
 
+.kit-cta { margin: 0 0 18px; }
+.kit-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #fff;
+  background: var(--accent);
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+}
+.kit-cta__btn:hover {
+  filter: brightness(1.08);
+  text-decoration: none;
+  color: #fff;
+}
+.kit-campus-lead {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.kit-campus {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 22px;
+}
+.kit-campus a {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 7px 12px;
+  background: var(--bg-soft);
+}
+.kit-campus a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.kit-grid--svg {
+  max-width: 280px;
+}
+
 .kit-card__preview--photo {
   padding: 0;
   min-height: 0;
