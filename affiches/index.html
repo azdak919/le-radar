@@ -16,7 +16,7 @@
   <link rel="preload" href="../scripts/og-fonts/Inter-Regular.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="../scripts/og-fonts/Inter-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="../assets/kit/fonts/Caveat-Bold.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="./poster-builder.css?v=dl-bottom">
+  <link rel="stylesheet" href="./poster-builder.css?v=pdf">
 </head>
 <body>
   <header class="dash-top">
@@ -36,7 +36,10 @@
       <h1>Imprimer une affiche</h1>
       <p class="dash-lead">Vos choix à gauche. L’affiche reste à droite. Cadrage à côté de l’aperçu.</p>
       <div class="dash-actions">
-        <button class="btn" type="button" id="dl">Télécharger JPEG 300 dpi</button>
+        <div class="btn-row">
+          <button class="btn" type="button" id="dl">JPEG 300 dpi</button>
+          <button class="btn btn-ghost" type="button" id="dl-pdf">PDF 300 dpi</button>
+        </div>
         <p class="status" id="status">Chargement…</p>
       </div>
 
@@ -137,7 +140,10 @@
       </fieldset>
 
       <div class="dash-actions dash-actions--end">
-        <button class="btn" type="button" id="dl-bottom">Télécharger JPEG 300 dpi</button>
+        <div class="btn-row">
+          <button class="btn" type="button" id="dl-bottom">JPEG 300 dpi</button>
+          <button class="btn btn-ghost" type="button" id="dl-pdf-bottom">PDF 300 dpi</button>
+        </div>
       </div>
 
       <footer class="dash-foot">
@@ -160,6 +166,6 @@
       </aside>
     </section>
   </div>
-  <script src="./poster-builder.js?v=dl-bottom"></script>
+  <script src="./poster-builder.js?v=pdf"></script>
 </body>
 </html>
