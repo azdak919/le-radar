@@ -28,6 +28,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 ### Corrigé
 
 - CTA sports : pastille **Prochain** en jaune (plus d’ambre). Un titre trop long (« Champlain Lennoxville reçoit Cégep François-Xavier-Garneau ») défile L→R en boucle, y compris en shell large 1920 — le CSS wide forçait `ellipsis` + `animation: none`.
+- Page `/sports/` : le tampon « Mise à jour » et les cartes suivaient le dernier `seo:update` (17 août) alors que `sports.json` était rafraîchi plusieurs fois par jour. Le bot scores régénère maintenant `/sports/` et `/en/sports/` à chaque passe.
+- Tableau sports : le compteur du bandeau dit « 815 entrées », pas « équipes » (ce sont des fiches, pas autant de clubs).
 
 - Photo d’article : un bandeau campagne (slogan + aplats, ratio ~2.3:1) n’est plus choisi à la une quand le corps a une vraie photo 16:9 / 3:2. Le plafond de parse 150k coupait `<article>` derrière le CSS Astra (Collectif : 2e photo à ~194k) ; on retire style/script avant de classer, et on recadre selon le crop 3:2 de la une.
 - Plein écran → demi-écran : le rail large laissait sa hauteur et la largeur de « Plus de sources » en style inline. Toutes les pastilles restaient visibles alors que le bouton disait encore « Plus de sources ». On retire ces styles dès que le shell E s’éteint.
