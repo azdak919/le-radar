@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-08-24T19:55:37.523Z",
+  "updatedAt": "2026-08-24T20:26:41.396Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, Jme Mobilise!",
-        "source": "schedule",
+        "source": "api-live",
         "start": "16:00",
         "end": "17:00",
         "url": "https://chyz.ca/emission/cheri-e-jmorganise/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, Jme Mobilise!",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T19:55:08.948Z"
+      "checkedAt": "2026-08-24T20:26:19.633Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T19:55:11.229Z"
+      "checkedAt": "2026-08-24T20:26:21.667Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T19:55:13.826Z"
+      "checkedAt": "2026-08-24T20:26:23.916Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Whip Appeal",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/whip-appeal"
-      },
-      "next": {
         "title": "Dreamscapes",
         "source": "schedule-live",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/dreamscapes"
       },
+      "next": {
+        "title": "The Pressure Drop",
+        "source": "schedule-live",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-pressure-drop"
+      },
       "track": "",
-      "showTitle": "Whip Appeal",
+      "showTitle": "Dreamscapes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T19:55:27.801Z"
+      "checkedAt": "2026-08-24T20:26:37.692Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T19:55:29.154Z"
+      "checkedAt": "2026-08-24T20:26:38.578Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "18:00",
         "slug": "bitume"
       },
-      "track": "Julie Aubé - J",
+      "track": "Angelique Kidjo - For Me (feat. Charlie Wilson)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-24T19:55:37.172Z"
+      "checkedAt": "2026-08-24T20:26:41.046Z"
     }
   }
 }
