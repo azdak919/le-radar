@@ -518,7 +518,8 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   const posterScript = readFileSync(join(root, 'scripts/generate-campus-posters.py'), 'utf8');
   assert(posterScript.includes('TITLE = "LE-RADAR.ca"'), 'affiches campus : mot-symbole LE-RADAR.ca');
   assert(posterScript.includes('draw_wordmark'), 'affiches campus : petit logo à gauche du mot-symbole');
-  assert(!/draw\.rectangle\(\(0, 0, W, BAR/.test(posterScript), 'affiches campus : pas de barre colorée en haut');
+  assert(/draw\.rectangle\(\(0, 0, W, BAR_H\)/.test(posterScript), 'affiches campus : barre pourpre en haut');
+  assert(posterScript.includes('raster_qr'), 'affiches campus : QR officiel collé, pas un carré vide');
   assert(posterScript.includes('Student media on your radar'), 'affiches campus : slogan EN officiel');
   assert(posterScript.includes('Le Réseau Académique de Découverte'), 'affiches campus : nom complet');
   assert(existsSync(join(root, 'assets/kit/qr-le-radar.svg')), 'affiches campus : QR vectoriel officiel requis');

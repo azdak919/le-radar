@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Affiches campus 11×17 (3300×5100 @ 300 dpi).
 
-Pas de barre colorée. Grand pictogramme + wordmark [logo | LE-RADAR.ca].
-Fonds : uni #0E0F12 (motif radar très léger) ou photo campus + overlay.
+Barre pourpre #6C2163. Grand pictogramme + wordmark [logo | LE-RADAR.ca].
+Fonds : uni #0E0F12 ou photo d’été + overlay. QR officiel collé (pas un carré vide).
 
     python3 scripts/generate-campus-posters.py --ground nophoto --only generique,laval,mcgill,udem
     python3 scripts/generate-campus-posters.py --check
@@ -26,6 +26,7 @@ OUT_DIR = ASSETS / "kit" / "affiches"
 CACHE = Path(__file__).resolve().parent / "poster-cache"
 ICON_SVG = ASSETS / "icon.svg"
 ICON_PNG = ASSETS / "icon-512.png"
+QR_SVG = ASSETS / "kit" / "qr-le-radar.svg"
 BANK = ROOT / "data" / "quebec-university-backgrounds.json"
 
 UA = "LE-RADAR/1.0 (https://le-radar.ca; mailto:azdak-qc@proton.me) campus-posters"
@@ -42,6 +43,9 @@ SOFT = (194, 198, 205, 255)
 MUTED = (136, 141, 150, 255)
 BG = (14, 15, 18)
 WHITE = (255, 255, 255, 255)
+PURPLE = (108, 33, 99, 255)  # #6C2163
+BAR_H = 42
+QR_PAD = 28
 
 TRACK = -0.02
 SERIF = FONTS / "SourceSerif4Display-Bold.ttf"
@@ -74,10 +78,8 @@ CAMPUSES = [
         "line": "Université Laval · Rentrée 2026",
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
-            {"key": "pouliot", "photo_id": "68ae0e12a3ec", "label": "Pavillon Adrien-Pouliot", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.50, "overlay": 0.62},
-            {"key": "dkn", "photo_id": "57e176d26a4f", "label": "Pavillon Charles-De Koninck", "focal": (0.50, 0.38), "crop_scale": 0.88, "desaturate": 0.48, "overlay": 0.64},
-            {"key": "vandry", "photo_id": "f1a23eb08d38", "label": "Pavillon Ferdinand-Vandry", "focal": (0.55, 0.28), "crop_scale": 0.70, "desaturate": 0.50, "overlay": 0.62},
-            {"key": "parc", "photo_id": "0733bf6bce32", "label": "Campus central", "focal": (0.48, 0.45), "crop_scale": 0.88, "desaturate": 0.55, "overlay": 0.60},
+            {"key": "pouliot", "photo_id": "68ae0e12a3ec", "label": "Pavillon Adrien-Pouliot", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.58},
+            {"key": "parc", "photo_id": "0733bf6bce32", "label": "Campus central", "focal": (0.48, 0.45), "crop_scale": 0.88, "desaturate": 0.58, "overlay": 0.55},
         ],
     },
     {
@@ -86,9 +88,8 @@ CAMPUSES = [
         "line": "McGill University · Rentrée 2026",
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
-            {"key": "arts", "photo_id": "52c687b5d843", "label": "Arts Building", "focal": (0.50, 0.36), "crop_scale": 0.88, "desaturate": 0.48, "overlay": 0.64},
-            {"key": "roddick", "photo_id": "498a0563f137", "label": "Roddick Gates", "focal": (0.50, 0.42), "crop_scale": 0.90, "desaturate": 0.50, "overlay": 0.62},
-            {"key": "downtown", "photo_id": "d83f724160b3", "label": "Campus downtown", "focal": (0.50, 0.42), "crop_scale": 0.90, "desaturate": 0.50, "overlay": 0.64},
+            {"key": "arts", "photo_id": "52c687b5d843", "label": "Arts Building", "focal": (0.50, 0.36), "crop_scale": 0.88, "desaturate": 0.50, "overlay": 0.58},
+            {"key": "pelouse", "url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Lawn_-_McGill_University_-_Montreal%2C_Canada_-_DSC08283.jpg", "credit": "Daderot", "license": "CC0", "title": "McGill University lawn", "focal": (0.50, 0.58), "crop_scale": 0.92, "desaturate": 0.58, "overlay": 0.52},
         ],
     },
     {
@@ -97,9 +98,7 @@ CAMPUSES = [
         "line": "Université de Montréal · Rentrée 2026",
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
-            {"key": "gaudry", "photo_id": "a7697051c0fc", "label": "Pavillon Roger-Gaudry", "focal": (0.50, 0.32), "crop_scale": 0.95, "desaturate": 0.52, "overlay": 0.56},
-            {"key": "tour", "photo_id": "11d4f8ef54c3", "label": "Tour principale", "focal": (0.48, 0.42), "crop_scale": 0.90, "desaturate": 0.50, "overlay": 0.60},
-            {"key": "campus", "photo_id": "7742751f9132", "label": "Campus", "focal": (0.58, 0.40), "crop_scale": 0.88, "desaturate": 0.50, "overlay": 0.62},
+            {"key": "gaudry", "photo_id": "a7697051c0fc", "label": "Pavillon Roger-Gaudry", "focal": (0.50, 0.32), "crop_scale": 0.95, "desaturate": 0.55, "overlay": 0.52},
         ],
     },
     {
@@ -108,9 +107,7 @@ CAMPUSES = [
         "line": "Université du Québec à Montréal · Rentrée 2026",
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
-            {"key": "jasmin", "photo_id": "1247733e67f7", "label": "Pavillon Judith-Jasmin", "focal": (0.50, 0.42), "crop_scale": 0.90, "desaturate": 0.50, "overlay": 0.64},
-            {"key": "agora", "photo_id": "f01aab488e1d", "label": "Agora Judith-Jasmin", "focal": (0.50, 0.50), "crop_scale": 0.88, "desaturate": 0.48, "overlay": 0.62},
-            {"key": "urbain", "photo_id": "d0eec221cb26", "label": "Vue urbaine", "focal": (0.50, 0.45), "crop_scale": 0.90, "desaturate": 0.50, "overlay": 0.64},
+            {"key": "jasmin", "photo_id": "a5acbe3af178", "label": "Pavillon Judith-Jasmin", "focal": (0.48, 0.40), "crop_scale": 0.88, "desaturate": 0.52, "overlay": 0.58},
         ],
     },
     {
@@ -119,8 +116,8 @@ CAMPUSES = [
         "line": "Concordia University · Rentrée 2026",
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
-            {"key": "hall", "photo_id": "582ef31c6453", "label": "Henry F. Hall Building", "focal": (0.52, 0.36), "crop_scale": 0.90, "desaturate": 0.45, "overlay": 0.62},
-            {"key": "hall02", "photo_id": "5cb1a80f9f09", "label": "Hall Building", "focal": (0.50, 0.38), "crop_scale": 0.90, "desaturate": 0.48, "overlay": 0.62},
+            {"key": "hall", "photo_id": "582ef31c6453", "label": "Henry F. Hall Building", "focal": (0.52, 0.36), "crop_scale": 0.90, "desaturate": 0.48, "overlay": 0.60},
+            {"key": "loyola", "url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Loyola_College_Building_9.JPG", "credit": "Jean Gagnon", "license": "CC BY-SA 3.0", "title": "Loyola College Building", "focal": (0.50, 0.48), "crop_scale": 0.90, "desaturate": 0.55, "overlay": 0.55},
         ],
     },
     {
@@ -129,8 +126,7 @@ CAMPUSES = [
         "line": "Université de Sherbrooke · Rentrée 2026",
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
-            {"key": "genie", "photo_id": "a4ea993dc054", "label": "Campus principal — Génie", "focal": (0.50, 0.42), "crop_scale": 0.90, "desaturate": 0.50, "overlay": 0.62},
-            {"key": "longueuil", "photo_id": "912fa583aa5b", "label": "Campus de Longueuil", "focal": (0.42, 0.46), "crop_scale": 0.90, "desaturate": 0.48, "overlay": 0.62},
+            {"key": "longueuil", "photo_id": "912fa583aa5b", "label": "Campus de Longueuil", "focal": (0.42, 0.42), "crop_scale": 0.88, "desaturate": 0.50, "overlay": 0.58},
         ],
     },
     {
@@ -225,6 +221,32 @@ def raster_logo(size: int) -> Image.Image:
     return Image.open(dest).convert("RGBA")
 
 
+def raster_qr(inner: int) -> Image.Image:
+    """QR officiel le-radar.ca, quiet zone blanche."""
+    CACHE.mkdir(parents=True, exist_ok=True)
+    dest = CACHE / f"qr-{inner}.png"
+    if not dest.is_file():
+        if not QR_SVG.is_file():
+            raise SystemExit(f"affiche: QR manquant {QR_SVG}")
+        magick = shutil.which("magick") or shutil.which("convert")
+        if not magick:
+            raise SystemExit("affiche: magick requis pour le QR")
+        subprocess.run(
+            [
+                magick, "-density", "300", "-background", "white", str(QR_SVG),
+                "-resize", f"{inner}x{inner}", "-background", "white",
+                "-alpha", "remove", "-alpha", "off", "-colorspace", "sRGB",
+                f"PNG24:{dest}",
+            ],
+            check=True,
+        )
+    qr = Image.open(dest).convert("RGB")
+    side = inner + 2 * QR_PAD
+    card = Image.new("RGB", (side, side), (255, 255, 255))
+    card.paste(qr, (QR_PAD, QR_PAD))
+    return card
+
+
 def grade_photo(im, desaturate, overlay):
     rgb = ImageEnhance.Color(im.convert("RGB")).enhance(desaturate)
     rgb = ImageEnhance.Contrast(rgb).enhance(1.04)
@@ -269,7 +291,7 @@ def draw_wordmark(canvas, draw, f_title, y_top, small):
 
 def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
     kind, with_qr = variant_kind(variant)
-    if ground.get("photo_id") and photo is not None:
+    if photo is not None:
         fx, fy = ground.get("focal", (0.5, 0.42))
         bg = cover_crop(photo, W, H, fx, fy, ground.get("crop_scale", 0.9))
         bg = grade_photo(bg, ground.get("desaturate", 0.5), ground.get("overlay", 0.62))
@@ -279,12 +301,15 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
         draw_radar_motif(canvas)
 
     draw = ImageDraw.Draw(canvas)
-    big = 1040 if kind == "minimal" else 900
-    small = 176
+    draw.rectangle((0, 0, W, BAR_H), fill=PURPLE)
+
+    # Ancien rythme : logo dans le tiers supérieur, pas collé au haut.
+    big = 780 if kind == "minimal" else 720
+    small = 168
     logo_big = raster_logo(big)
     logo_small = raster_logo(small)
 
-    f_title = font(SERIF, 168 if kind == "minimal" else 156)
+    f_title = font(SERIF, 160 if kind == "minimal" else 148)
     f_sub = font(SANS, 52 if kind != "minimal" else 48)
     f_name = font(SANS, 36)
     f_en = font(SANS, 40)
@@ -293,11 +318,11 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
     f_meta = font(SANS_SEMI, 36)
     f_credit = font(SANS, 28)
 
-    y = SAFE + 40
+    y = BAR_H + 280
     canvas.alpha_composite(logo_big, ((W - big) // 2, y))
-    y = y + big + (56 if kind == "minimal" else 48)
+    y = y + big + 44
     y = draw_wordmark(canvas, draw, f_title, y, logo_small)
-    y += 56
+    y += 48
 
     def line(text, fnt, fill, dy=12):
         nonlocal y
@@ -344,10 +369,11 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
     draw.text(((W - tw) // 2, cy), INDEP_1, font=f_body, fill=MUTED)
 
     if with_qr:
-        cy -= 36
-        qr_y = cy - QR_PX
-        qr_x = (W - QR_PX) // 2
-        draw.rounded_rectangle((qr_x, qr_y, qr_x + QR_PX, qr_y + QR_PX), radius=18, fill=WHITE[:3])
+        qr = raster_qr(QR_PX - 2 * QR_PAD)
+        qw, qh = qr.size
+        cy -= 28
+        qr_y = cy - qh
+        canvas.paste(qr, ((W - qw) // 2, qr_y))
 
     return canvas.convert("RGB")
 
@@ -372,13 +398,23 @@ def stem(campus, ground, variant) -> str:
 def generate_one(campus, ground, bank, formats, variants, kit_alias=False):
     meta = None
     photo = None
+    CACHE.mkdir(parents=True, exist_ok=True)
     if ground.get("photo_id"):
         meta = bank.get(ground["photo_id"])
         if not meta:
             raise SystemExit(f"affiche: photo {ground['photo_id']} absente")
-        CACHE.mkdir(parents=True, exist_ok=True)
         raw = CACHE / f"{campus['slug']}-{ground['key']}-{ground['photo_id']}.jpg"
         download(meta["url"], raw)
+        photo = Image.open(raw)
+    elif ground.get("url"):
+        meta = {
+            "url": ground["url"],
+            "credit": ground.get("credit"),
+            "license": ground.get("license"),
+            "title": ground.get("title"),
+        }
+        raw = CACHE / f"ext-{campus['slug']}-{ground['key']}.jpg"
+        download(ground["url"], raw)
         photo = Image.open(raw)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -445,7 +481,7 @@ def main():
     if args.check:
         check_outputs()
         return
-    for path in (SERIF, SANS, SANS_SEMI, ICON_SVG, BANK):
+    for path in (SERIF, SANS, SANS_SEMI, ICON_SVG, QR_SVG, BANK):
         if not path.is_file():
             raise SystemExit(f"affiche: manquant {path}")
     bank = load_bank()
