@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Exporte l’affiche générique aux réglages par défaut de /affiches/
- * (fond radar, FR, QR, 600 dpi) en 11×17, lettre et légal.
+ * (fond radar, FR, QR, sans message manuscrit, 600 dpi) en 11×17, lettre et légal.
  */
 import { spawn } from 'node:child_process';
 import { writeFileSync } from 'node:fs';
@@ -48,7 +48,7 @@ async function main() {
     await page.goto(`${BASE}/affiches/`, { waitUntil: 'domcontentloaded', timeout: 30000 });
     await page.locator('#preview canvas').waitFor({ timeout: 20000 });
     await page.evaluate(() => document.fonts.ready);
-    await page.selectOption('#greeting', 'nopub');
+    await page.selectOption('#greeting', 'none');
     for (const fmt of FORMATS) {
       await page.locator(`label:has(input[name="format"][value="${fmt.value}"])`).click();
       await page.waitForTimeout(400);
@@ -63,6 +63,13 @@ async function main() {
       await new Promise((resolve, reject) => {
         magick.on('exit', (code) => (code === 0 ? resolve() : reject(new Error(`magick ${pdf}`))));
       });
+      if (fmt.value === 'tabloid') {
+        const preview = join(outDir, 'affiche-generique-preview.jpg');
+        const thumb = spawn('magick', [dest, '-resize', '330x510', preview], { stdio: 'inherit' });
+        await new Promise((resolve, reject) => {
+          thumb.on('exit', (code) => (code === 0 ? resolve() : reject(new Error('preview'))));
+        });
+      }
       console.log('OK', dest, '→', pdf);
     }
   } finally {

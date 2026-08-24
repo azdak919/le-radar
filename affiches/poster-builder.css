@@ -339,21 +339,21 @@ select.greeting:focus {
     position: sticky;
     top: var(--top);
     z-index: 3;
-    min-height: 46vh;
-    height: auto;
+    min-height: 48vh;
+    height: 48vh;
     max-height: none;
     padding: 12px;
-    overflow: auto;
+    overflow: hidden;
     border-bottom: 1px solid var(--line);
   }
   .preview-stage {
     width: 100%;
-    min-height: 42vh;
-    height: 42vh;
+    min-height: 0;
+    height: 100%;
   }
   .preview-frame,
   .preview-frame canvas {
-    max-height: 42vh;
+    max-height: calc(48vh - 24px);
   }
   .crop-tools {
     flex: none;
@@ -364,6 +364,19 @@ select.greeting:focus {
     border-right: 0;
     overflow: visible;
     padding-bottom: 120px;
+  }
+}
+
+/* iPad portrait (768–900) : l’affiche occupait ~42 vh, trop petite dans la scène. */
+@media (min-width: 700px) and (max-width: 900px) {
+  .dash-preview,
+  .dash-preview.has-crop {
+    min-height: 62vh;
+    height: 62vh;
+  }
+  .preview-frame,
+  .preview-frame canvas {
+    max-height: calc(62vh - 24px);
   }
 }
 
