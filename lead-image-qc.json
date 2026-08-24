@@ -1,54 +1,36 @@
 {
-  "updated": "2026-08-24T21:35:01.371Z",
+  "updated": "2026-08-24T22:55:27.222Z",
   "total": 185,
   "withPhoto": 168,
-  "withStock": 28,
+  "withStock": 21,
   "withCampusBank": 12,
   "fullyCovered": 185,
-  "leadReadyPhotos": 116,
-  "pageScraped": 30,
-  "photosRecovered": 26,
+  "leadReadyPhotos": 147,
+  "pageScraped": 42,
+  "photosRecovered": 35,
   "imagesCleared": 16,
-  "stockSearches": 62,
-  "stockFound": 14,
-  "campusBankFound": 1,
+  "stockSearches": 32,
+  "stockFound": 10,
+  "campusBankFound": 4,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "Un match préparatoire à oublier pour les jeunes Sags",
-      "link": "https://lapige.atmjonquiere.com/2026/08/24/un-match-preparatoire-a-oublier-pour-les-jeunes-sags/?utm_source=rss&utm_medium=rss&utm_campaign=un-match-preparatoire-a-oublier-pour-les-jeunes-sags",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2024/10/Image-Sags.jpg"
+      "title": "CSU terminates council’s chief election officer",
+      "link": "https://thelinknewspaper.ca/article/16334",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "La Fondation de l’UdeS",
-      "link": "https://lecollectif.ca/campus/la-fondation-de-ludes/",
+      "title": "Tarifs douaniers : le choc n’est pas là où on l’attend",
+      "link": "https://lapige.atmjonquiere.com/2026/08/24/tarifs-douaniers-le-choc-nest-pas-la-ou-on-lattend/?utm_source=rss&utm_medium=rss&utm_campaign=tarifs-douaniers-le-choc-nest-pas-la-ou-on-lattend",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/FondationUdeS_Source_UdeS.png"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/processed-EBB7A212-6BF6-4B2D-A504-4219D52D02F6.jpeg"
     },
     {
-      "title": "Histoire des traditions UdeS",
-      "link": "https://lecollectif.ca/campus/histoire-des-traditions-udes/",
+      "title": "Plusieurs candidats provinciaux manquant dans la région",
+      "link": "https://lapige.atmjonquiere.com/2026/08/24/plusieurs-candidats-provinciaux-manquant-dans-la-region/?utm_source=rss&utm_medium=rss&utm_campaign=plusieurs-candidats-provinciaux-manquant-dans-la-region",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/GUIDEDELARENTREE2026_TraditionsUdeS_Campus_principal_1960_Source-Fonds-darchives-du-Service-des-communications-de-lUniversite-de-Sherbrooke.jpg"
-    },
-    {
-      "title": "Foire aux questions",
-      "link": "https://lecollectif.ca/campus/foire-aux-questions/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/GUIDERENTREE2026_FAQ2_CreditMichel-Caron.jpg"
-    },
-    {
-      "title": "Études de 2ᵉ et de 3ᵉ cycles",
-      "link": "https://lecollectif.ca/campus/etudes-de-2%e1%b5%89-et-de-3%e1%b5%89-cycles/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/GUIDEDELARENTREE2026_Etudes2eEt3eCycles_Photo2_CreditKarineCouillard.png"
-    },
-    {
-      "title": "Le Vert & Or : une tradition sportive",
-      "link": "https://lecollectif.ca/edition-papier/le-vert-or-une-tradition-sportive/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/279436724-_dsc4085.jpg"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2022/11/1-Depot-urne.jpg"
     },
     {
       "title": "La mauvaise nutrition et les maladies chroniques",
@@ -57,34 +39,52 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SPORTSETBIENETRE_Mauvaise-nutrition-et-maladies-chroniques_Source-Sante-education.jpg"
     },
     {
-      "title": "La conduite à risque des automobilistes",
-      "link": "https://lecollectif.ca/a-la-une/la-conduite-a-risque-des-automobilistes/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Conduite-a-risque-des-automobilistes_Source-Lassurance-en-mouvement.jpg"
-    },
-    {
-      "title": "La création de contenu et l’influence, un métier contemporain",
-      "link": "https://lecollectif.ca/a-la-une/la-creation-de-contenu-et-linfluence-un-metier-contemporain/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Personnes-creatrices-de-contenu_Source-MJM-Graphic-Design.jpg"
-    },
-    {
       "title": "Le cinéma québécois fait son entrée en classe avec Ciné Panache",
       "link": "https://lecollectif.ca/a-la-une/le-cinema-quebecois-fait-son-entree-en-classe-avec-cine-panache/",
       "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/CULTURE_CinemaQuebecois_SourceCinePanache.png"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/02/couverture_lecollectif_linkedin.png"
     },
     {
-      "title": "Les rendez-vous gourmands de la région cet automne",
-      "link": "https://lecollectif.ca/a-la-une/les-rendez-vous-gourmands-de-la-region-cet-automne/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/CULTURE_lesrendezvousgourmandsautomne_FacebookLesComptonales.jpg"
+      "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
+      "link": "https://thelinknewspaper.ca/article/16326",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
     },
     {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "link": "https://lapige.atmjonquiere.com/2026/06/22/se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille/?utm_source=rss&utm_medium=rss&utm_campaign=se-preparer-et-vivre-sa-retraite-un-long-fleuve-pas-si-tranquille",
+      "title": "Spotlighting Powerful McGill Alumnae",
+      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
+    },
+    {
+      "title": "National Golf tournament",
+      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531487%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Gaiters wrap up hard-fought season with eyes on next year",
+      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "The Gentrification of Online Fandom Spaces",
+      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
+    },
+    {
+      "title": "Second-Class Citizens",
+      "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/7056/6831154200_b7057b4237_b.jpg"
+    },
+    {
+      "title": "Le pays avant tout – esquisse",
+      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
       "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/06/Joanne-Normandin_retraite-benevole-scaled.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
     }
   ]
 }

@@ -1,17 +1,87 @@
 {
-  "updated": "2026-08-24T21:34:12.616Z",
+  "updated": "2026-08-24T22:56:01.439Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
   "cited": 130,
-  "pending": 12,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 20,
-  "updatedCount": 8,
-  "citedNew": 7,
-  "fallbackNew": 13,
+  "checked": 31,
+  "updatedCount": 26,
+  "citedNew": 17,
+  "fallbackNew": 14,
   "samples": [
+    {
+      "title": "L’efficacité des travaux publics au cœur de la plateforme électorale de l’AFG",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Célébrer l’Ukraine, même à plus de 6 500 km",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Course à six candidats : le vote par anticipation prend fin ce soir",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Tarifs douaniers : le choc n’est pas là où on l’attend",
+      "source": "La Pige",
+      "credit": "Photo : Aglaé Delisle",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Une vente-débarras pour la bonne cause",
+      "source": "La Pige",
+      "credit": "Photo : Colin Perron",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Plusieurs candidats provinciaux manquant dans la région",
+      "source": "La Pige",
+      "credit": "Photo : Archive Lapige",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Il y a 30 ans : un grand spectacle solidaire pour le Saguenay",
+      "source": "La Pige",
+      "credit": "Photo : Le monde en images Gilles Potvin",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Héma-Québec cherche de nouveaux donneurs dans la région",
+      "source": "La Pige",
+      "credit": "Photo : Étienne Harvey-Soucy",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "La semaine d’intégration de l’UQAC débute",
+      "source": "La Pige",
+      "credit": "Photo : site de l’UQAC",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Présences invisibles : écrire la ville sans permission",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
@@ -25,48 +95,6 @@
       "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "La performance de l’homosexualité : un privilège ?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Sois belle et tais-toi",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Qui sont les agents qui patrouillent notre campus ?",
-      "source": "Le Délit",
-      "credit": "Photo : Stu Doré/Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Iulian Ciobanu : découvrir « un autre monde » grâce au boccia",
-      "source": "Montréal Campus",
-      "credit": "Photo : Allyson Caron-Pelletier",
-      "cited": true,
-      "method": "figcaption"
-    },
-    {
-      "title": "Inside Mile End Kicks",
-      "source": "The Link",
-      "credit": "Photo: Courtesy of Joe Fuda",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "The apprenticeship of public voice",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
     }
   ]
 }
