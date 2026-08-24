@@ -181,7 +181,7 @@ const state = {
   format: 'tabloid',
   campus: 'generique',
   lang: 'standard',
-  greeting: 'none',
+  greeting: 'nopub',
   langs: true,
   showUni: true,
   qr: true,

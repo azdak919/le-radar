@@ -652,6 +652,8 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   );
   assert(builderJs.includes('Bonne rentrée'), 'générateur public : message manuscrit rentrée');
   assert(builderJs.includes('Pas de publicité'), 'générateur public : phrase manuscrite sans pub');
+  assert(builderJs.includes("greeting: 'nopub'"), 'affiche générique : Pas de publicité par défaut');
+  assert(builder.includes('value="nopub" selected'), 'affiche générique : Pas de publicité coché');
   assert(builderJs.includes('Code libre GPL 2.0'), 'générateur public : phrase manuscrite GPL');
   assert(builderJs.includes('Gratuit, pour toujours'), 'générateur public : phrase manuscrite gratuit');
   assert(builder.includes('optgroup label="Le projet"'), 'générateur public : groupe de phrases projet');
