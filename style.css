@@ -610,12 +610,31 @@ body {
   white-space: nowrap;
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 28%, transparent);
 }
+/* Même rail que PROCHAIN : Hier / Aujourd’hui / En cours / date ne font pas sauter l’accroche. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag:not(.sports-chip__cta-tag--brand) {
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 8rem;
+}
 /* Prochain : pastille jaune (pas l’ambre radio). Encre sombre pour le contraste. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="next"],
 .masthead-sports-strip .sports-chip--cta[data-cta-state="next"] .sports-chip__cta-tag:not(.sports-chip__cta-tag--brand) {
   background: #f5d000;
   color: #1a1500;
   box-shadow: inset 0 0 0 1px rgba(255, 236, 70, 0.45);
+}
+/* Hier / Avant-hier / date : même fill opaque que Prochain, vert du voyant. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="past"] {
+  background: #3d9a6a;
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(180, 240, 205, 0.35);
+}
+/* Aujourd’hui (résultat) : fill opaque, pas le rouge alerte du direct. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="today"],
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-tag="Aujourd’hui"] {
+  background: #efe6d2;
+  color: #1a1500;
+  box-shadow: inset 0 0 0 1px rgba(200, 16, 46, 0.28);
 }
 .masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag {
   background: #c8102e;
@@ -802,8 +821,8 @@ body {
   transform: none;
 }
 /* Plus de flèche : la place va au texte.
- * Voyant : jaune Prochain ; rouge Aujourd’hui ; vert Hier / passé.
- * En cours : point blanc sur pastille rouge. Indépendant de la radio. */
+ * Pastille : jaune Prochain ; crème Aujourd’hui (voyant rouge) ; vert Hier / date.
+ * En cours : fill rouge + point blanc. Indépendant de la radio. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-chev {
   display: none !important;
 }
@@ -827,7 +846,8 @@ body {
   animation: onairPulse 1.6s ease-out infinite;
 }
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="past"]::before {
-  background: #3d9a6a;
+  background: #d4f5e4;
+  box-shadow: 0 0 0 1px rgba(10, 40, 24, 0.28);
   animation: sports-cta-dot-past 1.8s ease-out infinite;
 }
 .masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag::before {

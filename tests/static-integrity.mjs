@@ -1350,6 +1350,14 @@ assert(
     && appJs.includes('function sportsCtaLamp'),
   'style : voyant CTA ambre Prochain, rouge Aujourd’hui, vert passé',
 );
+assert(
+  /data-cta-lamp="past"[^{]*\{[^}]*background:\s*#3d9a6a/.test(cssFlat)
+    && /data-cta-lamp="today"[^{]*\{[^}]*background:\s*#efe6d2/.test(cssFlat)
+    && /data-cta-lamp="next"[^{]*\{[^}]*background:\s*#f5d000/.test(cssFlat)
+    && /cta-tag:not\(\.sports-chip__cta-tag--brand\)[^{]*\{[^}]*min-width:\s*8rem/.test(cssFlat)
+    && /\[data-cta-state="live"\][^{]*\.sports-chip__cta-tag[^{]*\{[^}]*background:\s*#c8102e/.test(cssFlat),
+  'style : pastilles Prochain/Hier/Aujourd’hui en fill opaque, même rail ; direct inchangé',
+);
 {
   const wideCss = readFileSync(join(root, 'dev/wide-desktop-preview.css'), 'utf8');
   assert(
