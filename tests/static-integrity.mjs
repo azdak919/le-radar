@@ -510,6 +510,16 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   }
   const mediaKitCheck = spawnSync(process.execPath, [join(root, 'scripts/generate-media-kit-assets.mjs'), '--check'], { encoding: 'utf8' });
   assert.equal(mediaKitCheck.status, 0, mediaKitCheck.stderr || 'kit-media : fichiers générés désynchronisés');
+  const campusSlugs = ['laval', 'mcgill', 'udem', 'uqam', 'concordia', 'sherbrooke', 'bishops'];
+  for (const slug of campusSlugs) {
+    assert(kit.includes(`affiche-${slug}.jpg`), `kit-media : affiche ${slug} téléchargeable requise`);
+    assert(kit.includes(`affiche-${slug}-preview.jpg`), `kit-media : aperçu ${slug} requis`);
+  }
+  const posterScript = readFileSync(join(root, 'scripts/generate-campus-posters.py'), 'utf8');
+  assert(posterScript.includes('TITLE = "LE-RADAR.ca"'), 'affiches campus : mot-symbole LE-RADAR.ca');
+  assert(posterScript.includes('#6C2163') || posterScript.includes('(108, 33, 99'), 'affiches campus : pourpre de marque');
+  const postersCheck = spawnSync('python3', [join(root, 'scripts/generate-campus-posters.py'), '--check'], { encoding: 'utf8' });
+  assert.equal(postersCheck.status, 0, postersCheck.stderr || postersCheck.stdout || 'affiches campus : JPEG 11×17 manquants');
 }
 const traitPage = readFileSync(join(root, 'journaux/le-trait-dunion/index.html'), 'utf8');
 assert(traitPage.includes('>Derniers articles<'), 'journal sans fil frais : même H2 que les autres fiches');

@@ -143,6 +143,21 @@
 
 .kit-dl a:hover { text-decoration: underline; }
 
+.kit-card__preview--photo {
+  padding: 0;
+  min-height: 0;
+  display: block;
+  background: #0e0f12;
+}
+
+.kit-card__preview--photo img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 11 / 17;
+  object-fit: cover;
+  display: block;
+}
+
 @media (min-width: 1100px) {
   .kit-card__preview--poster {
     min-height: 200px;
