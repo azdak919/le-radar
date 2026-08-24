@@ -1375,9 +1375,17 @@ assert(
     'wide E : liste ouverte sans plafond --filters-rail-avail (flex jusqu’en bas)',
   );
   assert(
-    /const keepWideOpen = !!\(filtersExpanded && document\.getElementById\('wide-rail-stack'\)\)/.test(appJs)
+    /const keepWideOpen = !!\(filtersExpanded && isWideRailFiltersActive\(\)\)/.test(appJs)
       && /has-overflow',\s*overflow \|\| keepWideOpen/.test(appJs),
     'wide E : Réduire reste si le rail était ouvert (scroll ne referme pas)',
+  );
+  assert(
+    appJs.includes('function clearWideRailFiltersFit')
+      && appJs.includes("removeProperty('--filters-collapsed-h')")
+      && appJs.includes("removeProperty('--filters-peek')")
+      && /FILTERS_TOGGLE\.style\.removeProperty\('align-self'\)/.test(appJs)
+      && /if \(isWideRailFiltersActive\(\)\) \{\s*return syncWideRailFiltersFit/.test(appJs.replace(/\s+/g, ' ')),
+    'wide E → bureau : retirer hauteur rail et largeur pilule (sinon toutes les sources restent visibles)',
   );
 }
 assert(

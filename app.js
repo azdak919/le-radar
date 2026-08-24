@@ -11278,6 +11278,27 @@ function syncFiltersColumns() {
   FILTERS_PANEL.style.setProperty('--filters-collapsed-rows', String(rows));
 }
 
+function isWideRailFiltersActive() {
+  return typeof isWideNoMarqueeMode === 'function'
+    && isWideNoMarqueeMode()
+    && !!document.getElementById('wide-rail-stack');
+}
+
+/** Hors rail E : la hauteur / peek / largeur inline sinon survivent au resize. */
+function clearWideRailFiltersFit() {
+  if (FILTERS_PANEL) {
+    FILTERS_PANEL.style.removeProperty('--filters-collapsed-h');
+    FILTERS_PANEL.style.removeProperty('--filters-peek');
+    FILTERS_PANEL.style.removeProperty('--filters-title-h');
+    FILTERS_PANEL.style.removeProperty('--filters-rail-avail');
+  }
+  if (FILTERS_TOGGLE) {
+    FILTERS_TOGGLE.style.removeProperty('width');
+    FILTERS_TOGGLE.style.removeProperty('max-width');
+    FILTERS_TOGGLE.style.removeProperty('align-self');
+  }
+}
+
 /**
  * Rail wide E : calcule combien de pastilles tiennent sous le titre,
  * pour afficher « Plus de sources » plutôt que de scroller tout le rail.
@@ -11285,9 +11306,15 @@ function syncFiltersColumns() {
  */
 function syncWideRailFiltersFit() {
   if (!FILTERS_PANEL || !NEWS_FILTERS) return false;
-  if (typeof isWideNoMarqueeMode !== 'function' || !isWideNoMarqueeMode()) return false;
+  if (!isWideRailFiltersActive()) {
+    clearWideRailFiltersFit();
+    return false;
+  }
   const stack = document.getElementById('wide-rail-stack');
-  if (!stack) return false;
+  if (!stack) {
+    clearWideRailFiltersFit();
+    return false;
+  }
   const sections = stack.querySelector('.site-sections');
   const head = stack.querySelector('.wire-head');
   const stackTop = stack.getBoundingClientRect().top;
@@ -11324,9 +11351,10 @@ function syncWideRailFiltersFit() {
 /** Plus de sources / Réduire : même largeur et même axe que les pastilles. */
 function syncWideFiltersToggleWidth() {
   if (!FILTERS_TOGGLE || !NEWS_FILTERS) return;
-  if (typeof isWideNoMarqueeMode !== 'function' || !isWideNoMarqueeMode()) {
+  if (!isWideRailFiltersActive()) {
     FILTERS_TOGGLE.style.removeProperty('width');
     FILTERS_TOGGLE.style.removeProperty('max-width');
+    FILTERS_TOGGLE.style.removeProperty('align-self');
     return;
   }
   const pill = NEWS_FILTERS.querySelector('.filter-btn');
@@ -11340,10 +11368,10 @@ function syncWideFiltersToggleWidth() {
 
 function filtersOverflow() {
   if (!NEWS_FILTERS) return false;
-  if (typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode()
-    && document.getElementById('wide-rail-stack')) {
+  if (isWideRailFiltersActive()) {
     return syncWideRailFiltersFit();
   }
+  clearWideRailFiltersFit();
   const count = NEWS_FILTERS.querySelectorAll('.filter-btn').length;
   return count > filtersCollapsedRows() * filtersColumnCount();
 }
@@ -11412,7 +11440,7 @@ function syncFiltersPanel() {
   FILTERS_COMPACT?.setAttribute('hidden', '');
   /* Un rail déjà ouvert reste « en débordement » pour garder Réduire,
      même si un scroll agrandit l’espace et que tout tiendrait. */
-  const keepWideOpen = !!(filtersExpanded && document.getElementById('wide-rail-stack'));
+  const keepWideOpen = !!(filtersExpanded && isWideRailFiltersActive());
   FILTERS_PANEL.classList.toggle('has-overflow', overflow || keepWideOpen);
 
   if (overflow || keepWideOpen) {
@@ -11430,7 +11458,7 @@ function syncFiltersPanel() {
   }
 
   scheduleFilterMarqueeRefresh();
-  if (typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode()) {
+  if (isWideRailFiltersActive()) {
     window.requestAnimationFrame(() => syncWideFiltersToggleWidth());
   }
 }
