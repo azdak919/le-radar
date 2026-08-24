@@ -62,6 +62,8 @@ test('générateur d’affiches public', async ({ page }) => {
   await page.locator('label:has(input[name="format"][value="letter"])').click();
   await expect(page.locator('#status')).toContainText('Lettre', { timeout: 15000 });
   await expect(page.locator('#status')).toContainText('2550 × 3300');
+  await expect(page.locator('#photo-grid label')).toHaveCount(6);
+  await page.locator('#photo-more').click();
   const n = await page.locator('#photo-grid label').count();
   expect(n).toBeGreaterThan(20);
   const bilingue = page.locator('label:has(input[name="lang"][value="bilingue"])');

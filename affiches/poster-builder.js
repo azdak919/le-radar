@@ -159,6 +159,7 @@ const state = {
   focalY: 0.42,
   angle: 0,
   zoom: 0.9,
+  photoOpen: false,
 };
 
 let lastPhotoImg = null;
@@ -553,9 +554,16 @@ function compose(opts) {
   return canvas;
 }
 
+function isCampusPhoto(p) {
+  return p.campus === true || (Array.isArray(p.tags) && p.tags.includes('campus'));
+}
+
 function filteredPhotos() {
   const campus = campusOf(state.campus);
-  return state.photos.filter((p) => printWorthy(p) && photoMatches(p, campus));
+  const pool = campus.places
+    ? state.photos.filter((p) => isCampusPhoto(p) && photoMatches(p, campus))
+    : state.photos;
+  return pool.filter(printWorthy);
 }
 
 function printWorthy(p) {
@@ -572,9 +580,14 @@ function currentPhoto() {
 function renderChoices() {
   const photos = filteredPhotos();
   const grid = document.getElementById('photo-grid');
+  const moreBtn = document.getElementById('photo-more');
   const selectedStillValid = state.photoId && photos.some((p) => photoKeyId(p) === state.photoId);
   if (!selectedStillValid) state.photoId = null;
-  const items = [{ id: '', title: 'Fond radar' }, ...photos];
+  const previewN = 5;
+  const selectedIdx = state.photoId ? photos.findIndex((p) => photoKeyId(p) === state.photoId) : -1;
+  if (selectedIdx >= previewN) state.photoOpen = true;
+  const shown = state.photoOpen ? photos : photos.slice(0, previewN);
+  const items = [{ id: '', title: 'Fond radar' }, ...shown];
   grid.innerHTML = items.map((p) => {
     const id = p.id === '' ? '' : photoKeyId(p);
     const on = (id || null) === state.photoId || (!id && !state.photoId);
@@ -583,9 +596,18 @@ function renderChoices() {
     }
     return `<label title="${escapeAttr(p.title || '')}"><input type="radio" name="photo" value="${escapeAttr(id)}" ${on ? 'checked' : ''}><img src="${thumbUrl(p, 280)}" width="92" height="142" alt="" loading="lazy"></label>`;
   }).join('');
+  const hiddenN = photos.length - shown.length;
+  if (photos.length > previewN) {
+    moreBtn.hidden = false;
+    moreBtn.textContent = state.photoOpen
+      ? 'Voir moins'
+      : `Voir plus de photos (${hiddenN})`;
+  } else {
+    moreBtn.hidden = true;
+  }
   const n = photos.length;
   document.getElementById('photo-meta').textContent = state.campus === 'generique'
-    ? `${n} photos de la banque campus`
+    ? `${n} photos de toute la banque`
     : `${n} photos pour ${campusOf(state.campus).label}`;
   syncCropUi();
 }
@@ -760,6 +782,7 @@ function applyChoice(name, value) {
   if (name === 'format') state.format = value;
   if (name === 'campus') {
     state.campus = value;
+    state.photoOpen = false;
     syncLangChoice();
     renderChoices();
   }
@@ -826,6 +849,10 @@ function bind() {
   });
   frame.addEventListener('pointerup', () => { drag = null; });
   frame.addEventListener('pointercancel', () => { drag = null; });
+  document.getElementById('photo-more').addEventListener('click', () => {
+    state.photoOpen = !state.photoOpen;
+    renderChoices();
+  });
   document.getElementById('dl').addEventListener('click', downloadPrint);
 }
 
@@ -851,8 +878,6 @@ async function main() {
   }
   state.photos = (bank.photos || []).filter((p) => {
     if (!p.url || !p.width || !p.height) return false;
-    const campus = p.campus === true || (Array.isArray(p.tags) && p.tags.includes('campus'));
-    if (!campus) return false;
     const url = String(p.url).split('?')[0];
     const file = fileNameFromUrl(p.url);
     if (banned.has(url) || banned.has(p.id) || (file && banned.has(file))) return false;

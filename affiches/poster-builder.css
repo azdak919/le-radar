@@ -193,6 +193,24 @@ select.greeting:focus {
   bottom: 8px;
   left: 6px;
 }
+.photo-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  font: 700 12px/1.2 var(--sans);
+  cursor: pointer;
+}
+.photo-more:hover {
+  border-color: var(--purple);
+  background: color-mix(in srgb, var(--purple) 18%, var(--bg));
+}
+.photo-more[hidden] { display: none !important; }
 .photo-meta { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
 
 .dash-actions {
