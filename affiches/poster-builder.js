@@ -172,7 +172,7 @@ const state = {
   campus: 'generique',
   lang: 'standard',
   greeting: 'none',
-  langs: false,
+  langs: true,
   showUni: true,
   qr: true,
   dpi: DEFAULT_DPI,
@@ -990,6 +990,14 @@ function applyQuery() {
     const input = document.querySelector(`input[name="campus"][value="${campus}"]`);
     if (input) input.checked = true;
   }
+  syncGenericLangs();
+}
+
+function syncGenericLangs() {
+  if (state.campus !== 'generique') return;
+  state.langs = true;
+  const oui = document.querySelector('input[name="langs"][value="oui"]');
+  if (oui) oui.checked = true;
 }
 
 function applyChoice(name, value) {
@@ -1002,6 +1010,7 @@ function applyChoice(name, value) {
   if (name === 'campus') {
     state.campus = value;
     state.photoOpen = false;
+    syncGenericLangs();
     syncLangChoice();
     renderChoices();
   }
