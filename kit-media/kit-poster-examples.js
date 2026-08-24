@@ -56,7 +56,7 @@
   fetch(`${base}examples.json`, { cache: 'no-cache' })
     .then((r) => r.json())
     .then((data) => {
-      pool = (data.examples || []).filter((ex) => ex.id);
+      pool = (data.examples || []).filter((ex) => ex.id && ex.campus && ex.campus !== 'generique');
       render();
       let t = 0;
       window.addEventListener('resize', () => {
