@@ -519,6 +519,8 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
     const svg = readFileSync(join(root, 'assets/kit', asset), 'utf8');
     assert(svg.includes('data:image/svg+xml;base64,'), `kit-media : ${asset} doit être autonome après téléchargement`);
     assert(!svg.includes('href="../icon.svg"'), `kit-media : ${asset} ne doit pas dépendre d'un chemin local`);
+    assert(svg.includes("font-family:'LR Serif'"), `kit-media : ${asset} embarque Source Serif 4`);
+    assert(!/font-family="Georgia, serif"/.test(svg), `kit-media : ${asset} n’utilise plus Georgia pour LE-RADAR.ca`);
   }
   const mediaKitCheck = spawnSync(process.execPath, [join(root, 'scripts/generate-media-kit-assets.mjs'), '--check'], { encoding: 'utf8' });
   assert.equal(mediaKitCheck.status, 0, mediaKitCheck.stderr || 'kit-media : fichiers générés désynchronisés');
