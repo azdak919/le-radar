@@ -270,24 +270,6 @@ def grade_photo(im, desaturate, overlay):
     return Image.blend(rgb, Image.new("RGB", rgb.size, BG), overlay)
 
 
-def wrap_text(text: str, fnt: ImageFont.FreeTypeFont, max_w: int) -> list[str]:
-    if fnt.getlength(text) <= max_w:
-        return [text]
-    words = text.split()
-    lines, cur = [], ""
-    for w in words:
-        t = f"{cur} {w}".strip()
-        if fnt.getlength(t) <= max_w:
-            cur = t
-        else:
-            if cur:
-                lines.append(cur)
-            cur = w
-    if cur:
-        lines.append(cur)
-    return lines or [text]
-
-
 def variant_kind(name: str) -> tuple[str, bool]:
     qr = name.endswith("-qr")
     base = name[:-3] if qr else name
@@ -309,44 +291,10 @@ def draw_radar_motif(canvas: Image.Image) -> None:
     canvas.alpha_composite(layer)
 
 
-def paint_chip(canvas: Image.Image, x0: int, y0: int, bw: int, bh: int) -> None:
-    """Pastille verre du mât (météo / date sur photo)."""
-    r = max(12, min(bh // 4, 28))
-    layer = Image.new("RGBA", (bw, bh), (0, 0, 0, 0))
-    d = ImageDraw.Draw(layer)
-    d.rounded_rectangle((1, 1, bw - 2, bh - 2), radius=r, fill=(22, 24, 30, 210))
-    d.rounded_rectangle((1, 1, bw - 2, bh - 2), radius=r, outline=(255, 255, 255, 40), width=3)
-    canvas.alpha_composite(layer, (x0, y0))
-
-
-def chip_size(draw, lines, pad_x=36, pad_y=18, inner=10) -> tuple[int, int]:
-    sizes = [text_size(draw, t, f) for t, f, _ in lines]
-    tw = max(s[0] for s in sizes)
-    th = sum(s[1] for s in sizes) + inner * (len(lines) - 1)
-    return tw + 2 * pad_x, th + 2 * pad_y
-
-
-def chip_block(canvas, draw, lines: list[tuple[str, ImageFont.FreeTypeFont, tuple]], y: int, gap_after: int, pad_x=36, pad_y=18, inner=10) -> int:
-    """Dessine une pastille centrée (une ou plusieurs lignes) et avance y."""
-    if not lines:
-        return y
-    sizes = [text_size(draw, t, f) for t, f, _ in lines]
-    tw = max(s[0] for s in sizes)
-    th = sum(s[1] for s in sizes) + inner * (len(lines) - 1)
-    bw = tw + 2 * pad_x
-    bh = th + 2 * pad_y
-    x0 = (W - bw) // 2
-    paint_chip(canvas, x0, y, bw, bh)
-    ty = y + pad_y
-    for (text, fnt, fill), (lw, lh) in zip(lines, sizes):
-        draw.text(((W - lw) // 2, ty), text, font=fnt, fill=fill)
-        ty += lh + inner
-    return y + bh + gap_after
-
-
-def chip_lines(canvas, draw, text: str, fnt, fill, y: int, max_w: int, gap_after: int) -> int:
-    wrapped = wrap_text(text, fnt, max_w)
-    return chip_block(canvas, draw, [(part, fnt, fill) for part in wrapped], y, gap_after)
+def draw_centered(draw, text, fnt, fill, y, gap_after) -> int:
+    tw, th = text_size(draw, text, fnt)
+    draw.text(((W - tw) // 2, y), text, font=fnt, fill=fill)
+    return y + th + gap_after
 
 
 def draw_footer_wordmark(canvas, draw, f_mark, y_top, small):
@@ -411,56 +359,53 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
     f_en = font(SANS, max(28, slogan_size // 2))
     f_uni_en = font(SANS, max(26, int(round(9 * scale))))
     gap_after_title_block = int(round(28 * scale))
-    gap_lang = int(round(14 * scale))
+    gap_lang = int(round(18 * scale))
     if kind != "minimal":
-        y = chip_lines(canvas, draw, SLOGAN, f_slogan, INK, y, max_w, gap_lang if kind == "bilingue" else gap_after_title_block)
+        y = draw_centered(draw, SLOGAN, f_slogan, INK, y, gap_lang if kind == "bilingue" else gap_after_title_block)
         if kind == "bilingue":
-            y = chip_lines(canvas, draw, SLOGAN_EN, f_en, SOFT, y, max_w, gap_after_title_block)
+            y = draw_centered(draw, SLOGAN_EN, f_en, SOFT, y, gap_after_title_block)
     if campus.get("line"):
         has_en_name = kind == "bilingue" and campus.get("line_en")
-        y = chip_lines(
-            canvas, draw, campus["line"], f_uni, INK, y, max_w,
+        y = draw_centered(
+            draw, campus["line"], f_uni, INK, y,
             gap_lang if has_en_name else gap_after_title_block,
         )
         if has_en_name:
-            y = chip_lines(canvas, draw, campus["line_en"], f_uni_en, SOFT, y, max_w, gap_after_title_block)
+            y = draw_centered(draw, campus["line_en"], f_uni_en, SOFT, y, gap_after_title_block)
 
-    # Pied aéré : nom, puis note d’indépendance, puis QR / wordmark.
+    # Pied sans pastille, sous le QR. Crédit photo isolé tout en bas.
     credit = ""
     if photo_meta:
         who = photo_meta.get("credit") or "Wikimedia Commons"
         lic = photo_meta.get("license") or ""
         credit = f"Photo : {who}" + (f" · {lic}" if lic else "")
-    name_chip = [(NAME_FULL, f_name, SOFT)]
-    indep_chip = [(INDEP_1, f_body, INK), (INDEP_2, f_body, INK)]
+    foot_copy = [(NAME_FULL, f_name, MUTED), (INDEP_1, f_body, SOFT), (INDEP_2, f_body, SOFT)]
     if kind == "bilingue":
-        indep_chip.append((INDEP_EN, f_credit, MUTED))
-    name_h = chip_size(draw, name_chip, pad_y=24, inner=12)[1]
-    indep_h = chip_size(draw, indep_chip, pad_y=32, inner=22)[1]
+        foot_copy.append((INDEP_EN, f_credit, MUTED))
     mark_h = max(foot_logo, text_size(draw, TITLE, f_mark)[1])
     credit_h = text_size(draw, credit, f_credit)[1] if credit else 0
-    gap_chip = 28
-    gap_mark = 40
-    gap_qr = 36
+    inner_f = 16
+    copy_h = sum(text_size(draw, t, f)[1] for t, f, _ in foot_copy) + inner_f * (len(foot_copy) - 1)
     if with_qr:
         qr = raster_qr(QR_PX - 2 * QR_PAD)
     cy = H - SAFE
     if credit:
         cy -= credit_h
         draw.text(((W - text_size(draw, credit, f_credit)[0]) // 2, cy), credit, font=f_credit, fill=MUTED)
-        cy -= 24
+        cy -= 56
+    cy -= copy_h
+    ty = cy
+    for text, fnt, fill in foot_copy:
+        tw, th = text_size(draw, text, fnt)
+        draw.text(((W - tw) // 2, ty), text, font=fnt, fill=fill)
+        ty += th + inner_f
+    cy -= 28
     cy -= mark_h
     draw_footer_wordmark(canvas, draw, f_mark, cy, logo_foot)
-    cy -= gap_mark
     if with_qr:
         qw, qh = qr.size
-        cy -= qh
+        cy -= 32 + qh
         canvas.paste(qr, ((W - qw) // 2, cy))
-        cy -= gap_qr
-    cy -= indep_h
-    chip_block(canvas, draw, indep_chip, cy, 0, pad_y=32, inner=22)
-    cy -= gap_chip + name_h
-    chip_block(canvas, draw, name_chip, cy, 0, pad_y=24, inner=12)
 
     return canvas.convert("RGB")
 

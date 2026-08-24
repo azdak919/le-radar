@@ -525,7 +525,7 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(!posterScript.includes('Votre journal'), 'affiches campus : plus de liste journaux');
   assert(!posterScript.includes('Votre radio'), 'affiches campus : plus de liste radios');
   assert(/draw\.rectangle\(\(0, 0, W, BAR_H\)/.test(posterScript), 'affiches campus : barre pourpre en haut');
-  assert(posterScript.includes('paint_chip'), 'affiches campus : pastilles du mât sous le titre et au-dessus du QR');
+  assert(!posterScript.includes('paint_chip'), 'affiches campus : plus de pastilles autour du texte');
   assert(posterScript.includes('raster_qr'), 'affiches campus : QR officiel collé, pas un carré vide');
   assert(posterScript.includes('Student media on your radar'), 'affiches campus : slogan EN officiel');
   assert(posterScript.includes('Les contenus appartiennent à leurs publications'), 'affiches campus : contenus d’origine');
