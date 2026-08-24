@@ -40,8 +40,8 @@
   const labels = {
     fr: {
       status: (n, total) => (n === total
-        ? `${n} équipe${n > 1 ? 's' : ''}`
-        : `${n} équipe${n > 1 ? 's' : ''} sur ${total}`),
+        ? `${n} entrée${n > 1 ? 's' : ''}`
+        : `${n} entrée${n > 1 ? 's' : ''} sur ${total}`),
       boardsOnly: 'Tableaux officiels (liens)',
       empty: 'Aucune équipe pour ce filtre.',
       live: 'En cours',
@@ -59,8 +59,8 @@
     },
     en: {
       status: (n, total) => (n === total
-        ? `${n} team${n > 1 ? 's' : ''}`
-        : `${n} of ${total} team${total > 1 ? 's' : ''}`),
+        ? `${n} ${n > 1 ? 'entries' : 'entry'}`
+        : `${n} of ${total} ${total > 1 ? 'entries' : 'entry'}`),
       boardsOnly: 'Official boards (links)',
       empty: 'No teams match this filter.',
       live: 'Live',
