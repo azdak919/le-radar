@@ -637,7 +637,7 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('function drawRadar(ctx, w, h, cx, cy)'), 'fond radar centré sur le gros logo');
   assert(builderJs.includes('816 * fit'), 'identité d’affiche figée : le pied ne rapetisse pas le logo');
   assert(builderJs.includes('3680 * fit'), 'QR figé un peu plus haut : langues entières sous le pied');
-  assert(builderJs.includes('const qrBottom = qrTop + qrSide'), 'sans QR : même emplacement du pied qu’avec QR');
+  assert(builderJs.includes('opts.langs) ? qrTop + qrSide : qrTop'), 'sans QR ni langues : pied serré, pas étiré');
   assert(builderJs.includes('footCap'), 'pied d’affiche : corps agrandi sans dépasser le haut');
   assert(builderJs.includes('(h - cy - creditH) / 2'), 'crédit photo : milieu entre langues et bas de page');
   assert(builderJs.includes('photo-angle'), 'générateur public : angle de photo');
