@@ -374,7 +374,7 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
 
     box = draw.textbbox((0, 0), TITLE, font=f_title)
     title_w = tracked_width(TITLE, f_title)
-    title_y = int(round(560 * scale)) - box[1]
+    title_y = int(round(500 * scale)) - box[1]
     draw_tracked(draw, ((W - title_w) // 2, title_y), TITLE, f_title, INK)
     y = title_y + (box[3] - box[1]) + int(round(48 * scale))
 
