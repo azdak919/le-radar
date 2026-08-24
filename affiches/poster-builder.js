@@ -507,7 +507,7 @@ function compose(opts) {
   const langsH = opts.langs
     ? iconS + 8 + langLines.length * (langLineH + 5)
     : 0;
-  const markH = Math.max(footLogo, measure(TITLE, fMark));
+  const markH = Math.max(footLogo, fMark);
   const qrIn = fmt.id === 'tabloid' ? 2.25 : 1.65;
   const qrPx = Math.round(qrIn * REF_DPI * fit);
   const qrPad = Math.round(36 * fit);
@@ -576,14 +576,11 @@ function compose(opts) {
   fillCentered(ctx, NAME_FULL, cy, SOFT);
   cy -= 6 * fit;
   cy -= markH;
-  ctx.font = `400 ${fMark}px "LR Sans"`;
-  const markW = textW(ctx, TITLE);
+  const markW = trackedWidth(ctx, TITLE, fMark);
   const rowW = footLogo + markGap + markW;
   const mx = (w - rowW) / 2;
   if (assets.logo) ctx.drawImage(assets.logo, mx, cy + (markH - footLogo) / 2, footLogo, footLogo);
-  ctx.fillStyle = INK;
-  ctx.textBaseline = 'top';
-  ctx.fillText(TITLE, mx + footLogo + markGap, cy + (markH - fMark) / 2);
+  fillTracked(ctx, TITLE, cy + (markH - fMark) / 2, fMark, INK, mx + footLogo + markGap);
   if (opts.qr && assets.qr) {
     const card = qrSide;
     cy -= 24 * fit + card;
