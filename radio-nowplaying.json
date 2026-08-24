@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-24T22:22:39.623Z",
+  "updatedAt": "2026-08-24T22:53:19.725Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
+      "current": null,
       "next": {
         "title": "La Voie des Droits",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "20:30",
         "end": "21:30",
         "url": "https://chyz.ca/emission/la-voie-des-droits/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T22:22:10.039Z"
+      "checkedAt": "2026-08-24T22:52:51.700Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T22:22:12.342Z"
+      "checkedAt": "2026-08-24T22:52:54.003Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T22:22:15.157Z"
+      "checkedAt": "2026-08-24T22:52:57.180Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T22:22:29.997Z"
+      "checkedAt": "2026-08-24T22:53:11.762Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T22:22:31.135Z"
+      "checkedAt": "2026-08-24T22:53:13.039Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "oui merci - Gants blancs",
+      "track": "EENO T, Waahli - Tard le soir",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -158,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-24T22:22:39.272Z"
+      "checkedAt": "2026-08-24T22:53:19.375Z"
     }
   }
 }
