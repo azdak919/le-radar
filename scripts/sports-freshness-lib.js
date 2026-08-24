@@ -42,6 +42,22 @@
     return `${y}-${m}-${d}`;
   }
 
+  /** Jour civil America/Toronto (GitHub Actions = UTC). */
+  function torontoDayKey(msOrDate = Date.now()) {
+    const d = msOrDate instanceof Date ? msOrDate : new Date(msOrDate);
+    if (!Number.isFinite(d.getTime())) return '';
+    try {
+      return new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/Toronto',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }).format(d);
+    } catch {
+      return dayKey(d);
+    }
+  }
+
   /** Début de la session universitaire suivante (A→H, H→É, É→A). */
   function getNextUniversitySessionStart(sessionStart) {
     const year = sessionStart.getFullYear();
@@ -79,8 +95,8 @@
   function isNextGameInHorizon(game, referenceDate = new Date()) {
     const d = parseGameDay(game);
     if (!d) return false;
-    const todayKey = dayKey(referenceDate);
-    const gameKey = dayKey(d);
+    const todayKey = torontoDayKey(referenceDate);
+    const gameKey = String(game?.date || '').slice(0, 10) || dayKey(d);
     if (gameKey < todayKey) return false;
     const end = nextGameHorizonEnd(referenceDate);
     return d.getTime() <= end.getTime();
@@ -218,6 +234,7 @@
     nextGameHorizonEnd,
     parseGameDay,
     dayKey,
+    torontoDayKey,
     isPastGameFresh,
     isPastGameKeepable,
     isNextGameInHorizon,
