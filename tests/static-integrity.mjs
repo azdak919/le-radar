@@ -607,6 +607,9 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builder.includes('seo-page-theme.js'), 'affiches : thème clair/sombre du site');
   assert(!builder.includes('lab-photo-link'), 'affiches : pas de lien Labo photo (labo = /dev/)');
   assert(builder.includes('midwidth-preview.js'), 'générateur public : barre Format du labo local');
+  const hubHtml = readFileSync(join(root, 'dev/index.html'), 'utf8');
+  assert(hubHtml.includes('Tableau de bord'), 'hub local : titre Tableau de bord');
+  assert(readFileSync(join(root, 'dev/midwidth-preview.js'), 'utf8').includes("textContent = 'Tableau'"), 'barre Format : retour Tableau de bord');
   assert(builder.includes('Lettre 8,5 × 11'), 'générateur public : format lettre');
   assert(builder.includes('Légal 8,5 × 14'), 'générateur public : format légal');
   assert(builderJs.includes('function applyQuery'), 'générateur public : ?campus= depuis le kit média');
