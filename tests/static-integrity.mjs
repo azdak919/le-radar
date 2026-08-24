@@ -539,6 +539,16 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(kit.includes('Pour les babillards'), 'kit-media : phrase affiches claire');
   assert(kit.includes('id="kit-poster-grid"'), 'kit-media : grille d’exemples d’affiches');
   assert(kit.includes('kit-poster-examples.js'), 'kit-media : tirage aléatoire d’exemples');
+  assert(kit.includes('kit-card--feature'), 'kit-media : affiche générique en carte vedette');
+  assert(kit.includes('download="le-radar-affiche-11x17.pdf"'), 'kit-media : nom de fichier PDF 11 × 17');
+  assert(kit.includes('type="application/pdf"'), 'kit-media : type PDF explicite pour iOS');
+  {
+    const examplesJs = readFileSync(join(root, 'kit-media/kit-poster-examples.js'), 'utf8');
+    assert(examplesJs.includes('function isAppleTouch'), 'kit-media : détection iPad/iOS');
+    assert(examplesJs.includes('function saveKitFile'), 'kit-media : enregistrement iOS (partage / nouvel onglet)');
+    assert(examplesJs.includes('featureSpan'), 'kit-media : la vedette compte pour deux colonnes');
+    assert(examplesJs.includes('minmax(280px') || examplesJs.includes('const min = 280'), 'kit-media : cartes plus larges sur tablette');
+  }
   assert(existsSync(join(root, 'assets/kit/affiches/examples.json')), 'kit-media : catalogue d’exemples');
   {
     const catalog = JSON.parse(readFileSync(join(root, 'assets/kit/affiches/examples.json'), 'utf8'));
@@ -566,6 +576,7 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(kit.includes('>Légal<') || kit.includes('Légal</a>'), 'kit-media : téléchargement légal');
   const mediaKitEn = readFileSync(join(root, 'en/media-kit/index.html'), 'utf8');
   assert(mediaKitEn.includes('../../affiches/'), 'media-kit EN : lien vers l’atelier');
+  assert(mediaKitEn.includes('kit-card--feature'), 'media-kit EN : affiche générique en carte vedette');
   assert(!mediaKitEn.includes('affiche-laval.jpg'), 'media-kit EN : plus de JPEG campus figés');
   const posterScript = readFileSync(join(root, 'scripts/generate-campus-posters.py'), 'utf8');
   assert(posterScript.includes('TITLE = "LE-RADAR.ca"'), 'affiches campus : mot-symbole LE-RADAR.ca');
@@ -613,6 +624,12 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builder.includes('Lettre 8,5 × 11'), 'générateur public : format lettre');
   assert(builder.includes('Légal 8,5 × 14'), 'générateur public : format légal');
   assert(builderJs.includes('function applyQuery'), 'générateur public : ?campus= depuis le kit média');
+  assert(builderJs.includes('function isAppleTouch'), 'générateur public : iPadOS desktop-UA');
+  assert(builderJs.includes('function maxSafeDpi'), 'générateur public : plafond canevas Safari');
+  assert(builderJs.includes('function exportDpi'), 'générateur public : dpi réel d’export');
+  assert(builderJs.includes('function saveBlob'), 'générateur public : partage iOS / lien différé');
+  assert(builderJs.includes('setTimeout(() => URL.revokeObjectURL'), 'générateur public : ne pas révoquer le blob tout de suite');
+  assert(builderJs.includes('16_777_216') || builderJs.includes('16777216'), 'générateur public : plafond 16 Mpx iOS');
   assert(builderJs.includes('photo-bank.json'), 'générateur public : banque unique du labo photo');
   assert(builderJs.includes('quebec-backgrounds-rejected.json'), 'générateur public : exclusions du labo');
   assert(builderJs.includes('wIn: 8.5') && builderJs.includes('hIn: 11'), 'générateur public : lettre 8,5×11');
