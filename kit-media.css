@@ -89,6 +89,24 @@
   font-family: var(--serif);
   font-size: 1.25rem;
   font-weight: 700;
+  letter-spacing: -0.02em;
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 48;
+}
+.kit-card__preview--wordmark {
+  padding: 0;
+  min-height: 96px;
+  background: #0e0f12;
+}
+.kit-card__preview--wordmark.kit-card__preview--light {
+  background: #fff;
+}
+.kit-card__preview--wordmark img {
+  width: 100%;
+  height: auto;
+  max-height: 120px;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .kit-card__preview--dark {
