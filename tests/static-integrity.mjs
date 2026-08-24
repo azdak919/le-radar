@@ -542,6 +542,8 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('wIn: 8.5') && builderJs.includes('hIn: 11'), 'générateur public : lettre 8,5×11');
   assert(builderJs.includes('DPI = 300'), 'générateur public : 300 dpi');
   assert(builderJs.includes('TITLE = \'LE-RADAR.ca\''), 'générateur public : mot-symbole');
+  assert(builderJs.includes('printUrl'), 'générateur public : photos Wikimedia CORS pour l’aperçu');
+  assert(builder.includes('solid--radar') || builderJs.includes('solid--radar'), 'générateur public : pastille fond radar');
   assert(builderJs.includes('syncLangChoice'), 'générateur public : bilingue réservé aux campus anglophones');
   assert(builderJs.includes('Bonne rentrée'), 'générateur public : message manuscrit rentrée');
   assert(builderJs.includes('LR Script'), 'générateur public : fonte signature');
