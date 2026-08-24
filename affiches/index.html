@@ -149,22 +149,31 @@
           <legend>Message manuscrit</legend>
           <select class="greeting" name="greeting" id="greeting" aria-describedby="greeting-hint">
             <option value="none" selected>Aucun</option>
-            <option value="rentree">Bonne rentrée</option>
-            <option value="mi-session">Courage — mi-session</option>
-            <option value="motivation">Tu vas y arriver</option>
-            <option value="fin-session">Bonne fin de session</option>
-            <option value="relache">Bonne relâche</option>
-            <option value="action-grace">Bonne Action de grâce</option>
-            <option value="verite">Vérité et réconciliation</option>
-            <option value="souvenir">Souvenons-nous</option>
-            <option value="fetes">Joyeuses Fêtes</option>
-            <option value="annee">Bonne année</option>
-            <option value="paques">Joyeuses Pâques</option>
-            <option value="patriotes">Journée des Patriotes</option>
-            <option value="saint-jean">Bonne Saint-Jean</option>
-            <option value="canada">Bonne fête du Canada</option>
+            <optgroup label="Le projet">
+              <option value="nopub">Pas de publicité</option>
+              <option value="gpl">Code libre GPL 2.0</option>
+              <option value="gratuit">Gratuit, pour toujours</option>
+              <option value="independant">Indépendant</option>
+              <option value="ncompte">Sans compte à créer</option>
+            </optgroup>
+            <optgroup label="Saison">
+              <option value="rentree">Bonne rentrée</option>
+              <option value="mi-session">Courage — mi-session</option>
+              <option value="motivation">Tu vas y arriver</option>
+              <option value="fin-session">Bonne fin de session</option>
+              <option value="relache">Bonne relâche</option>
+              <option value="action-grace">Bonne Action de grâce</option>
+              <option value="verite">Vérité et réconciliation</option>
+              <option value="souvenir">Souvenons-nous</option>
+              <option value="fetes">Joyeuses Fêtes</option>
+              <option value="annee">Bonne année</option>
+              <option value="paques">Joyeuses Pâques</option>
+              <option value="patriotes">Journée des Patriotes</option>
+              <option value="saint-jean">Bonne Saint-Jean</option>
+              <option value="canada">Bonne fête du Canada</option>
+            </optgroup>
           </select>
-          <p class="field-hint" id="greeting-hint">Signature à la main, en français.</p>
+          <p class="field-hint" id="greeting-hint">Signature à la main. En bilingue, une ligne anglaise s’ajoute.</p>
         </fieldset>
 
         <fieldset>
@@ -267,6 +276,6 @@
   <script src="../engage-prompt.js" defer></script>
   <script src="../dev/midwidth-preview.js?v=wide-auto-e92"></script>
   <script src="../dev/wide-desktop-preview.js?v=wide-auto-e92"></script>
-  <script src="./poster-builder.js?v=credit-mid"></script>
+  <script src="./poster-builder.js?v=greet-values"></script>
 </body>
 </html>

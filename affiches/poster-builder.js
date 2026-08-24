@@ -54,6 +54,11 @@ const GREETINGS = {
   patriotes: 'Journée des Patriotes',
   'saint-jean': 'Bonne Saint-Jean',
   canada: 'Bonne fête du Canada',
+  nopub: 'Pas de publicité',
+  gpl: 'Code libre GPL 2.0',
+  gratuit: 'Gratuit, pour toujours',
+  independant: 'Indépendant',
+  ncompte: 'Sans compte à créer',
 };
 
 const GREETINGS_EN = {
@@ -71,6 +76,11 @@ const GREETINGS_EN = {
   patriotes: 'Patriots’ Day',
   'saint-jean': 'Happy Fête nationale',
   canada: 'Happy Canada Day',
+  nopub: 'No ads',
+  gpl: 'Free software — GPL 2.0',
+  gratuit: 'Free, forever',
+  independant: 'Independent',
+  ncompte: 'No account needed',
 };
 
 const CAMPUSES = [

@@ -650,6 +650,10 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
     'icône traduction : pas de stroke (plus en gras)',
   );
   assert(builderJs.includes('Bonne rentrée'), 'générateur public : message manuscrit rentrée');
+  assert(builderJs.includes('Pas de publicité'), 'générateur public : phrase manuscrite sans pub');
+  assert(builderJs.includes('Code libre GPL 2.0'), 'générateur public : phrase manuscrite GPL');
+  assert(builderJs.includes('Gratuit, pour toujours'), 'générateur public : phrase manuscrite gratuit');
+  assert(builder.includes('optgroup label="Le projet"'), 'générateur public : groupe de phrases projet');
   assert(builderJs.includes('LR Script'), 'générateur public : fonte signature');
   assert(existsSync(join(root, 'assets/kit/fonts/Caveat-Bold.ttf')), 'fonte Caveat pour signature manuscrite');
   assert(builderJs.includes("slug: 'mcgill'") && builderJs.includes('bilingual: true'), 'générateur public : McGill bilingue');
