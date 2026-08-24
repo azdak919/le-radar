@@ -922,7 +922,7 @@ function syncDpiLab() {
   if (lab) lab.hidden = !local;
   if (hint) {
     hint.textContent = local
-      ? '600 dpi par défaut. 300 pour un babillard, 1200 pour un tirage photo (labo local).'
+      ? '600 dpi par défaut. 300 pour un babillard, 1200 pour un tirage photo.'
       : '600 dpi par défaut. 300 pour un babillard.';
   }
   if (!local && state.dpi === 1200) state.dpi = DEFAULT_DPI;
