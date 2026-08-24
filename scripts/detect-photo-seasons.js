@@ -3,7 +3,7 @@
  * LE RADAR — bot de détection de saison des fonds photo
  *
  * Rôle (source de vérité tags) :
- *   - Parcourt data/quebec-*-backgrounds.json
+ *   - Parcourt data/photo-bank.json (banque unique) ; sinon les JSON par banque
  *   - Détecte season (4) + season6 (nations/Inuit)
  *   - Écrit seasonConfidence, seasonSource, seasonReasons
  *   - Ne touche PAS aux entrées seasonSource === 'manual'
@@ -36,6 +36,7 @@ const {
   SEASON4,
   SEASON6,
 } = require('./season-lib');
+const photosLib = require('./photo-bank-lib');
 
 const ROOT = path.join(__dirname, '..');
 const args = process.argv.slice(2);
@@ -191,9 +192,14 @@ function applyDetection(photo, bank, visualRow) {
 }
 
 function main() {
-  const banks = profileFilter
-    ? BANKS.filter((b) => b.id === profileFilter)
-    : BANKS;
+  const unifiedRel = photosLib.PHOTOS_REL;
+  const unifiedExists = fs.existsSync(path.join(ROOT, unifiedRel));
+  const useUnified = unifiedExists && !profileFilter;
+  const banks = useUnified
+    ? [{ id: 'unified', jsonRel: unifiedRel, nations: false }]
+    : profileFilter
+      ? BANKS.filter((b) => b.id === profileFilter)
+      : BANKS;
 
   if (profileFilter && !banks.length) {
     console.error(`Profil inconnu : ${profileFilter}`);
@@ -301,6 +307,11 @@ function main() {
 
   if (dryJson) {
     console.log(JSON.stringify(report, null, 2));
+  }
+
+  if (doUpdate && useUnified) {
+    const n = photosLib.materializeLegacySlices(ROOT);
+    console.log(`\n→ materialize photo-bank → slices JSON + photo-bank-data.js (${n} photos)`);
   }
 
   if (doUpdate && doSync) {
