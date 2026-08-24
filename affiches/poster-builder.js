@@ -514,7 +514,7 @@ function compose(opts) {
   const qrSide = qrPx;
 
   let contentBottom = h - safe;
-  if (credit) contentBottom -= creditH + 18 * fit;
+  if (credit) contentBottom -= creditH + safe;
   if (opts.langs && langsH) contentBottom -= langsH + 16 * fit;
   contentBottom -= legalH + 14 * fit + nameH + 6 * fit + markH;
   if (opts.qr && assets.qr) contentBottom -= 24 * fit + qrSide;
@@ -541,7 +541,7 @@ function compose(opts) {
     cy -= creditH;
     ctx.font = `400 ${fCredit}px "LR Sans"`;
     fillCentered(ctx, credit, cy, MUTED);
-    cy -= 18 * fit;
+    cy -= safe;
   }
   if (opts.langs && langsH) {
     cy -= langsH;
