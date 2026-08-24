@@ -1,6 +1,8 @@
-/* Générateur public d’affiches LE-RADAR.ca — JPEG 300 dpi, dans le navigateur. */
+/* Générateur public d’affiches LE-RADAR.ca — JPEG 300 ou 600 dpi, dans le navigateur. */
 
-const DPI = 300;
+const REF_DPI = 300;
+const PREVIEW_DPI = 150;
+const DPI_CHOICES = [300, 600];
 const FORMATS = {
   tabloid: { id: 'tabloid', label: '11 × 17 po', file: '11x17', wIn: 11, hIn: 17 },
   letter: { id: 'letter', label: 'Lettre 8,5 × 11 po', file: 'lettre', wIn: 8.5, hIn: 11 },
@@ -171,6 +173,7 @@ const state = {
   langs: false,
   showUni: true,
   qr: true,
+  dpi: 300,
   photoId: null,
   photos: [],
   focalX: 0.5,
@@ -186,8 +189,12 @@ const assets = { logo: null, qr: null, translate: null };
 const imageCache = new Map();
 let previewGen = 0;
 
-function px(fmt) {
-  return { w: Math.round(fmt.wIn * DPI), h: Math.round(fmt.hIn * DPI) };
+function outputDpi() {
+  return DPI_CHOICES.includes(state.dpi) ? state.dpi : 300;
+}
+
+function px(fmt, dpi = outputDpi()) {
+  return { w: Math.round(fmt.wIn * dpi), h: Math.round(fmt.hIn * dpi) };
 }
 
 function campusOf(slug) {
@@ -428,17 +435,22 @@ function fillTracked(ctx, text, y, size, color, xStart) {
 
 function compose(opts) {
   const fmt = FORMATS[opts.format];
-  const { w, h } = px(fmt);
+  const dpi = Number(opts.dpi) || outputDpi();
+  const { w, h } = px(fmt, dpi);
   const canvas = document.createElement('canvas');
   canvas.width = w;
   canvas.height = h;
+  if (canvas.width !== w || canvas.height !== h) {
+    throw new Error(`canevas ${w}×${h} refusé par le navigateur`);
+  }
   const ctx = canvas.getContext('2d', { alpha: false });
+  if (!ctx) throw new Error('canevas 2D indisponible');
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
 
-  const refW = 3300;
-  const refH = 5100;
-  const safe = Math.round(0.45 * DPI * (h / refH));
+  const refW = 11 * REF_DPI;
+  const refH = 17 * REF_DPI;
+  const safe = Math.round(0.45 * REF_DPI * (h / refH));
   const barH = Math.max(28, Math.round(42 * (w / refW)));
   const campus = campusOf(opts.campus);
   const kind = campus.bilingual && opts.lang === 'bilingue' ? 'bilingue' : 'standard';
@@ -462,7 +474,7 @@ function compose(opts) {
     : '';
   const legal = [INDEP_1, INDEP_2];
   if (kind === 'bilingue') legal.push(INDEP_EN);
-  const fit = Math.min(w / 3300, h / 5100);
+  const fit = Math.min(w / refW, h / refH);
   const fName = 40 * fit;
   const fBody = 34 * fit;
   const fCredit = 28 * fit;
@@ -491,7 +503,7 @@ function compose(opts) {
   const footLogo = 72 * fit;
   const markH = Math.max(footLogo, 40 * fit);
   const qrIn = fmt.id === 'tabloid' ? 2.25 : 1.65;
-  const qrPx = Math.round(qrIn * DPI * fit);
+  const qrPx = Math.round(qrIn * REF_DPI * fit);
   const qrPad = Math.round(36 * fit);
   const qrSide = qrPx;
 
@@ -693,7 +705,7 @@ function escapeAttr(s) {
 function specLine() {
   const fmt = FORMATS[state.format];
   const { w, h } = px(fmt);
-  return `${fmt.label} · ${w} × ${h} px · 300 dpi · JPEG`;
+  return `${fmt.label} · ${w} × ${h} px · ${outputDpi()} dpi · JPEG`;
 }
 
 function recipeLine() {
@@ -727,6 +739,7 @@ function paintPreview(img, photo) {
     langs: state.langs,
     showUni: state.showUni,
     qr: state.qr,
+    dpi: PREVIEW_DPI,
     photoImg: img || null,
     credit: photo?.credit,
     license: photo?.license,
@@ -836,6 +849,7 @@ async function downloadPrint(kind = 'jpeg') {
       langs: state.langs,
       showUni: state.showUni,
       qr: state.qr,
+      dpi: outputDpi(),
       photoImg: img,
       credit: photo?.credit,
       license: photo?.license,
@@ -856,7 +870,7 @@ async function downloadPrint(kind = 'jpeg') {
     const qr = state.qr ? '-qr' : '';
     const greet = state.greeting !== 'none' ? `-${state.greeting}` : '';
     const langs = state.langs ? '-langues' : '';
-    const stem = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}`;
+    const stem = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}-${outputDpi()}dpi`;
     let blob;
     let name;
     if (kind === 'pdf') {
@@ -873,11 +887,23 @@ async function downloadPrint(kind = 'jpeg') {
     a.click();
     URL.revokeObjectURL(a.href);
     const mb = (blob.size / 1_048_576).toFixed(1);
-    status.innerHTML = `Fichier <strong>${name}</strong> · ${fmt.label} · 300 dpi · ${mb} Mo. Imprimez à 100 %, sans « ajuster à la page ».`;
+    status.innerHTML = `Fichier <strong>${name}</strong> · ${fmt.label} · ${outputDpi()} dpi · ${mb} Mo. Imprimez à 100 %, sans « ajuster à la page ».`;
   } catch (err) {
     status.textContent = `Téléchargement impossible : ${err.message}`;
   } finally {
     buttons.forEach((b) => { if (b) b.disabled = false; });
+  }
+}
+
+function syncDpiLabels() {
+  const dpi = outputDpi();
+  for (const id of ['dl', 'dl-bottom']) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = `JPEG ${dpi} dpi`;
+  }
+  for (const id of ['dl-pdf', 'dl-pdf-bottom']) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = `PDF ${dpi} dpi`;
   }
 }
 
@@ -924,6 +950,11 @@ function syncCropUi() {
 
 function applyChoice(name, value) {
   if (name === 'format') state.format = value;
+  if (name === 'dpi') {
+    const n = Number(value);
+    state.dpi = DPI_CHOICES.includes(n) ? n : 300;
+    syncDpiLabels();
+  }
   if (name === 'campus') {
     state.campus = value;
     state.photoOpen = false;
@@ -1024,6 +1055,7 @@ async function main() {
   const labLink = document.getElementById('lab-photo-link');
   if (labLink && local) labLink.hidden = false;
   bind();
+  syncDpiLabels();
   syncLangChoice();
   await loadFonts();
   await document.fonts.ready;
