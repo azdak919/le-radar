@@ -2,183 +2,270 @@
 <html lang="fr-CA">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Composez et téléchargez une affiche LE-RADAR.ca à imprimer : 11 × 17, lettre ou légal, 300 ou 600 dpi.">
   <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#ffffff">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Imprimer une affiche — LE-RADAR.ca","url":"https://le-radar.ca/affiches/","inLanguage":"fr-CA","isPartOf":{"@type":"WebSite","name":"LE-RADAR.ca","url":"https://le-radar.ca/"}}</script>
   <title>Imprimer une affiche — LE-RADAR.ca</title>
   <link rel="canonical" href="https://le-radar.ca/affiches/">
   <link rel="icon" href="../assets/icon-32.png" type="image/png" sizes="32x32">
   <link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/icon-192.png">
+  <link rel="manifest" href="../manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700&family=Inter:wght@400;600;700&family=Noto+Sans:wght@600&family=Noto+Sans+JP:wght@500&family=Noto+Sans+SC:wght@500&family=Noto+Sans+TC:wght@500&family=Noto+Sans+Arabic:wght@500&family=Noto+Sans+Devanagari:wght@500&display=swap" rel="stylesheet">
+  <script src="../seo-page-theme.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=Noto+Sans:wght@400;600&family=Noto+Sans+JP:wght@500&family=Noto+Sans+SC:wght@500&family=Noto+Sans+TC:wght@500&family=Noto+Sans+Arabic:wght@500&family=Noto+Sans+Devanagari:wght@500&display=swap" rel="stylesheet">
   <link rel="preload" href="../scripts/og-fonts/SourceSerif4Display-Bold.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="../scripts/og-fonts/Inter-Regular.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="../scripts/og-fonts/Inter-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="../assets/kit/fonts/Caveat-Bold.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="./poster-builder.css?v=lab-vp">
+  <link rel="stylesheet" href="../style-masthead.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../seo-pages.css">
+  <link rel="stylesheet" href="./poster-builder.css?v=seo-chrome">
   <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e91">
   <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e91">
 </head>
 <body>
-  <header class="dash-top">
-    <a class="dash-brand" href="../">
-      <img src="../assets/icon.svg" width="32" height="32" alt="">
-      LE-RADAR.ca
-    </a>
-    <nav class="dash-nav" aria-label="Sections">
-      <a href="../kit-media/">Kit média</a>
-      <a href="../">Accueil</a>
-      <a href="../dev/photo-lab/" id="lab-photo-link" hidden>Labo photo</a>
-    </nav>
+  <header class="masthead">
+    <div id="bg-photo-layer" aria-hidden="true"></div>
+    <div class="bg-photo-scrim" aria-hidden="true"></div>
+    <div class="bg-photo-credit" id="bg-photo-credit"></div>
+    <div class="masthead-inner">
+      <div class="masthead-top">
+        <span class="masthead-date notranslate" translate="no">
+          <span id="today-date"></span>
+          <time id="today-time" class="masthead-time" aria-label="Heure actuelle"></time>
+        </span>
+        <div id="masthead-weather" class="masthead-weather hidden" aria-label="Météo du Québec" aria-live="polite">
+          <span class="masthead-weather__board" aria-label="Conditions actuelles"></span>
+        </div>
+        <div class="masthead-actions">
+          <a href="../" class="masthead-icon masthead-home" data-home-nav title="Accueil" aria-label="Accueil — LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
+          <a href="../feeds.html" class="masthead-icon masthead-rss" title="Flux RSS" aria-label="S’abonner au flux RSS de LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
+          <a href="../pomo/" class="masthead-icon masthead-pomo" title="Pomodoro" aria-label="Pomodoro"><img class="app-emoji" src="../assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+          <a href="../solitaire/" class="masthead-icon masthead-solitaire" title="Solitaire" aria-label="Solitaire"><img class="app-emoji" src="../assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+          <a href="../sports/" class="masthead-icon masthead-sports" title="Sports" aria-label="Sports"><img class="app-emoji" src="../assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+          <button id="theme-toggle" class="masthead-icon theme-toggle" type="button" aria-label="Changer de thème" title="Mode clair / sombre"><svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><svg class="ico-moon hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        </div>
+      </div>
+      <div class="masthead-brand">
+        <a href="../" class="wordmark">
+          <span class="wordmark-mark"><img class="wordmark-logo" src="../assets/icon.svg" width="48" height="48" alt="" aria-hidden="true"><span class="wordmark-brand notranslate" translate="no">LE‑RADAR.ca</span></span>
+          <span class="wordmark-full"><span class="wordmark-full__lead">Journaux, radios et sports étudiants du Québec,</span> <span class="wordmark-full__tag">réunis au même endroit</span></span>
+        </a>
+      </div>
+    </div>
   </header>
 
-  <div class="dash">
-    <form class="dash-controls" id="form" onsubmit="return false;">
-      <h1>Imprimer une affiche</h1>
-      <p class="dash-lead">Vos choix à gauche. L’affiche reste à droite. Cadrage à côté de l’aperçu.</p>
-      <div class="dash-actions">
-        <div class="btn-row">
-          <button class="btn" type="button" id="dl">JPEG 300 dpi</button>
-          <button class="btn btn-ghost" type="button" id="dl-pdf">PDF 300 dpi</button>
+  <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+  <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Résultats sportifs étudiants du Québec" aria-live="polite"></div>
+
+  <main class="seo-wire affiche-wire">
+    <nav class="seo-crumbs" aria-label="Fil d’Ariane">
+      <a href="../">Accueil</a>
+      <span aria-hidden="true">/</span>
+      <a href="../kit-media/">Kit média</a>
+      <span aria-hidden="true">/</span>
+      <span>Imprimer une affiche</span>
+    </nav>
+    <h1 class="seo-title">Imprimer une affiche</h1>
+    <p class="seo-lead">Composez une affiche campus à imprimer. La barre de tailles d’écran en bas n’apparaît qu’en local.</p>
+
+    <div class="dash">
+      <form class="dash-controls" id="form" onsubmit="return false;">
+        <p class="dash-lead">Vos choix à gauche. L’affiche reste à droite. Cadrage à côté de l’aperçu.</p>
+        <div class="dash-actions">
+          <div class="btn-row">
+            <button class="btn" type="button" id="dl">JPEG 300 dpi</button>
+            <button class="btn btn-ghost" type="button" id="dl-pdf">PDF 300 dpi</button>
+          </div>
+          <p class="status" id="status">Chargement…</p>
         </div>
-        <p class="status" id="status">Chargement…</p>
+
+        <fieldset>
+          <legend>Format</legend>
+          <div class="choices">
+            <label><input type="radio" name="format" value="tabloid" checked> 11 × 17 po</label>
+            <label><input type="radio" name="format" value="letter"> Lettre 8,5 × 11</label>
+            <label><input type="radio" name="format" value="legal"> Légal 8,5 × 14</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Résolution</legend>
+          <div class="choices">
+            <label><input type="radio" name="dpi" value="300" checked> 300 dpi</label>
+            <label><input type="radio" name="dpi" value="600"> 600 dpi</label>
+          </div>
+          <p class="field-hint">300 dpi convient à un babillard. 600 dpi pour un tirage plus net (fichier plus lourd).</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Établissement</legend>
+          <div class="choices">
+            <label><input type="radio" name="campus" value="generique" checked> Générique</label>
+            <label><input type="radio" name="campus" value="laval"> Université Laval</label>
+            <label><input type="radio" name="campus" value="mcgill"> Université McGill</label>
+            <label><input type="radio" name="campus" value="udem"> Université de Montréal</label>
+            <label><input type="radio" name="campus" value="uqam"> UQAM</label>
+            <label><input type="radio" name="campus" value="concordia"> Université Concordia</label>
+            <label><input type="radio" name="campus" value="sherbrooke"> Université de Sherbrooke</label>
+            <label><input type="radio" name="campus" value="bishops"> Université Bishop’s</label>
+            <label><input type="radio" name="campus" value="uqtr"> UQTR</label>
+            <label><input type="radio" name="campus" value="uqac"> UQAC</label>
+            <label><input type="radio" name="campus" value="uqar"> UQAR</label>
+            <label><input type="radio" name="campus" value="uqo"> UQO</label>
+            <label><input type="radio" name="campus" value="uqat"> UQAT</label>
+            <label><input type="radio" name="campus" value="teluq"> TÉLUQ</label>
+            <label><input type="radio" name="campus" value="ets"> ÉTS</label>
+            <label><input type="radio" name="campus" value="enap"> ENAP</label>
+            <label><input type="radio" name="campus" value="inrs"> INRS</label>
+            <label><input type="radio" name="campus" value="poly"> Polytechnique</label>
+            <label><input type="radio" name="campus" value="hec"> HEC Montréal</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Photo</legend>
+          <div class="photo-grid" id="photo-grid"></div>
+          <button type="button" class="photo-more" id="photo-more" hidden>Voir plus de photos</button>
+          <p class="photo-meta" id="photo-meta"></p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Texte</legend>
+          <div class="choices">
+            <label><input type="radio" name="lang" value="standard" checked> Français</label>
+            <label hidden><input type="radio" name="lang" value="bilingue"> Bilingue</label>
+          </div>
+        </fieldset>
+
+        <fieldset id="uni-toggle" hidden>
+          <legend>Nom de l’établissement</legend>
+          <div class="choices">
+            <label><input type="radio" name="showUni" value="oui" checked> Afficher</label>
+            <label><input type="radio" name="showUni" value="non"> Masquer</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Message manuscrit</legend>
+          <select class="greeting" name="greeting" id="greeting" aria-describedby="greeting-hint">
+            <option value="none" selected>Aucun</option>
+            <option value="rentree">Bonne rentrée</option>
+            <option value="mi-session">Courage — mi-session</option>
+            <option value="motivation">Tu vas y arriver</option>
+            <option value="fin-session">Bonne fin de session</option>
+            <option value="relache">Bonne relâche</option>
+            <option value="action-grace">Bonne Action de grâce</option>
+            <option value="verite">Vérité et réconciliation</option>
+            <option value="souvenir">Souvenons-nous</option>
+            <option value="fetes">Joyeuses Fêtes</option>
+            <option value="annee">Bonne année</option>
+            <option value="paques">Joyeuses Pâques</option>
+            <option value="patriotes">Journée des Patriotes</option>
+            <option value="saint-jean">Bonne Saint-Jean</option>
+            <option value="canada">Bonne fête du Canada</option>
+          </select>
+          <p class="field-hint" id="greeting-hint">Signature à la main, en français.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Langues</legend>
+          <div class="choices">
+            <label><input type="radio" name="langs" value="non" checked> Sans</label>
+            <label><input type="radio" name="langs" value="oui"> Langues du site</label>
+          </div>
+          <p class="field-hint">Pied d’affiche : icône de traduction, puis les langues dans leur écriture.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Code QR</legend>
+          <div class="choices">
+            <label><input type="radio" name="qr" value="non"> Sans</label>
+            <label><input type="radio" name="qr" value="oui" checked> Avec (le-radar.ca)</label>
+          </div>
+        </fieldset>
+
+        <div class="dash-actions dash-actions--end">
+          <div class="btn-row">
+            <button class="btn" type="button" id="dl-bottom">JPEG 300 dpi</button>
+            <button class="btn btn-ghost" type="button" id="dl-pdf-bottom">PDF 300 dpi</button>
+          </div>
+        </div>
+      </form>
+
+      <section class="dash-preview" id="preview-pane" aria-label="Aperçu">
+        <div class="preview-stage" id="preview-stage">
+          <div class="preview-frame" id="preview"></div>
+        </div>
+        <aside class="crop-tools" id="crop-tools" hidden>
+          <p class="crop-lead">Cadrage</p>
+          <p class="crop-hint">Glissez l’affiche, ou les curseurs.</p>
+          <label>Horizontal <input type="range" id="focal-x" min="0" max="100" value="50"></label>
+          <label>Vertical <input type="range" id="focal-y" min="0" max="100" value="42"></label>
+          <label>Angle <input type="range" id="photo-angle" min="-18" max="18" value="0"></label>
+          <label>Zoom <input type="range" id="photo-zoom" min="70" max="100" value="90"></label>
+          <button type="button" class="btn-quiet" id="crop-reset">Réinitialiser</button>
+        </aside>
+      </section>
+    </div>
+
+    <footer class="site-foot">
+      <div class="site-foot__brand">
+        <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="../assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">LE-RADAR.ca</p>
+        <p class="site-foot__signature notranslate" translate="no" lang="fr">Le Réseau Académique de Découverte et d’Agrégation de Ressources</p>
       </div>
-
-      <fieldset>
-        <legend>Format</legend>
-        <div class="choices">
-          <label><input type="radio" name="format" value="tabloid" checked> 11 × 17 po</label>
-          <label><input type="radio" name="format" value="letter"> Lettre 8,5 × 11</label>
-          <label><input type="radio" name="format" value="legal"> Légal 8,5 × 14</label>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Résolution</legend>
-        <div class="choices">
-          <label><input type="radio" name="dpi" value="300" checked> 300 dpi</label>
-          <label><input type="radio" name="dpi" value="600"> 600 dpi</label>
-        </div>
-        <p class="field-hint">300 dpi convient à un babillard. 600 dpi pour un tirage plus net (fichier plus lourd).</p>
-      </fieldset>
-
-      <fieldset>
-        <legend>Établissement</legend>
-        <div class="choices">
-          <label><input type="radio" name="campus" value="generique" checked> Générique</label>
-          <label><input type="radio" name="campus" value="laval"> Université Laval</label>
-          <label><input type="radio" name="campus" value="mcgill"> Université McGill</label>
-          <label><input type="radio" name="campus" value="udem"> Université de Montréal</label>
-          <label><input type="radio" name="campus" value="uqam"> UQAM</label>
-          <label><input type="radio" name="campus" value="concordia"> Université Concordia</label>
-          <label><input type="radio" name="campus" value="sherbrooke"> Université de Sherbrooke</label>
-          <label><input type="radio" name="campus" value="bishops"> Université Bishop’s</label>
-          <label><input type="radio" name="campus" value="uqtr"> UQTR</label>
-          <label><input type="radio" name="campus" value="uqac"> UQAC</label>
-          <label><input type="radio" name="campus" value="uqar"> UQAR</label>
-          <label><input type="radio" name="campus" value="uqo"> UQO</label>
-          <label><input type="radio" name="campus" value="uqat"> UQAT</label>
-          <label><input type="radio" name="campus" value="teluq"> TÉLUQ</label>
-          <label><input type="radio" name="campus" value="ets"> ÉTS</label>
-          <label><input type="radio" name="campus" value="enap"> ENAP</label>
-          <label><input type="radio" name="campus" value="inrs"> INRS</label>
-          <label><input type="radio" name="campus" value="poly"> Polytechnique</label>
-          <label><input type="radio" name="campus" value="hec"> HEC Montréal</label>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Photo</legend>
-        <div class="photo-grid" id="photo-grid"></div>
-        <button type="button" class="photo-more" id="photo-more" hidden>Voir plus de photos</button>
-        <p class="photo-meta" id="photo-meta"></p>
-      </fieldset>
-
-      <fieldset>
-        <legend>Texte</legend>
-        <div class="choices">
-          <label><input type="radio" name="lang" value="standard" checked> Français</label>
-          <label hidden><input type="radio" name="lang" value="bilingue"> Bilingue</label>
-        </div>
-      </fieldset>
-
-      <fieldset id="uni-toggle" hidden>
-        <legend>Nom de l’établissement</legend>
-        <div class="choices">
-          <label><input type="radio" name="showUni" value="oui" checked> Afficher</label>
-          <label><input type="radio" name="showUni" value="non"> Masquer</label>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Message manuscrit</legend>
-        <select class="greeting" name="greeting" id="greeting" aria-describedby="greeting-hint">
-          <option value="none" selected>Aucun</option>
-          <option value="rentree">Bonne rentrée</option>
-          <option value="mi-session">Courage — mi-session</option>
-          <option value="motivation">Tu vas y arriver</option>
-          <option value="fin-session">Bonne fin de session</option>
-          <option value="relache">Bonne relâche</option>
-          <option value="action-grace">Bonne Action de grâce</option>
-          <option value="verite">Vérité et réconciliation</option>
-          <option value="souvenir">Souvenons-nous</option>
-          <option value="fetes">Joyeuses Fêtes</option>
-          <option value="annee">Bonne année</option>
-          <option value="paques">Joyeuses Pâques</option>
-          <option value="patriotes">Journée des Patriotes</option>
-          <option value="saint-jean">Bonne Saint-Jean</option>
-          <option value="canada">Bonne fête du Canada</option>
-        </select>
-        <p class="field-hint" id="greeting-hint">Signature à la main, en français.</p>
-      </fieldset>
-
-      <fieldset>
-        <legend>Langues</legend>
-        <div class="choices">
-          <label><input type="radio" name="langs" value="non" checked> Sans</label>
-          <label><input type="radio" name="langs" value="oui"> Langues du site</label>
-        </div>
-        <p class="field-hint">Pied d’affiche : icône de traduction, puis les langues dans leur écriture.</p>
-      </fieldset>
-
-      <fieldset>
-        <legend>Code QR</legend>
-        <div class="choices">
-          <label><input type="radio" name="qr" value="non"> Sans</label>
-          <label><input type="radio" name="qr" value="oui" checked> Avec (le-radar.ca)</label>
-        </div>
-      </fieldset>
-
-      <div class="dash-actions dash-actions--end">
-        <div class="btn-row">
-          <button class="btn" type="button" id="dl-bottom">JPEG 300 dpi</button>
-          <button class="btn btn-ghost" type="button" id="dl-pdf-bottom">PDF 300 dpi</button>
-        </div>
+      <p>LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine.</p>
+      <nav class="site-foot__links" aria-label="Liens de pied de page">
+        <a href="../" data-home-nav>Accueil</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../medias/">Médias</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../medias/#journaux">Journaux</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../horaires/">Radios</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../archives/">Archives</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../kit-media/">Kit média</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../en/media-kit/" hreflang="en-CA">English</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <button type="button" class="site-foot__link-btn" data-install-app="radar">Installer LE-RADAR.ca</button>
+      </nav>
+      <p>Ce projet est distribué sous <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" rel="noopener noreferrer license">licence publique générale GNU, version 2</a>.</p>
+      <div class="site-foot__credit">
+        <p class="site-foot__author">
+          Conçu avec <a href="../easter-egg.html" class="site-foot__heart" aria-label="Ouvrir l’easter egg">♡</a>
+          par <a href="https://www.buymeacoffee.com/azdak" class="site-foot__author-link" target="_blank" rel="noopener noreferrer" title="Offrir un café — Buy me a coffee">Azdak</a>
+          en 2026
+        </p>
+        <p class="site-foot__contact"><a href="mailto:azdak-qc@proton.me" data-contact-channel="email" aria-label="Nous joindre par courriel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>Nous joindre</a></p>
+        <p class="site-foot__legal">Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.</p>
+        <p class="site-foot__bot"><span class="site-foot__bot-ico" aria-hidden="true">🤖</span> Agrégateur automatisé de contenus.</p>
       </div>
+    </footer>
+  </main>
 
-      <footer class="dash-foot">
-        <p>LE-RADAR.ca est un projet indépendant, non officiel et sans affiliation aux médias ni aux établissements. Les contenus appartiennent à leurs publications d’origine. Photos Wikimedia Commons, crédits sur l’affiche.</p>
-      </footer>
-    </form>
-
-    <section class="dash-preview" id="preview-pane" aria-label="Aperçu">
-      <div class="preview-stage" id="preview-stage">
-        <div class="preview-frame" id="preview"></div>
-      </div>
-      <aside class="crop-tools" id="crop-tools" hidden>
-        <p class="crop-lead">Cadrage</p>
-        <p class="crop-hint">Glissez l’affiche, ou les curseurs.</p>
-        <label>Horizontal <input type="range" id="focal-x" min="0" max="100" value="50"></label>
-        <label>Vertical <input type="range" id="focal-y" min="0" max="100" value="42"></label>
-        <label>Angle <input type="range" id="photo-angle" min="-18" max="18" value="0"></label>
-        <label>Zoom <input type="range" id="photo-zoom" min="70" max="100" value="90"></label>
-        <button type="button" class="btn-quiet" id="crop-reset">Réinitialiser</button>
-      </aside>
-    </section>
-  </div>
+  <script src="../scripts/season-lib.js" defer></script>
+  <script src="../bg-rotation-lib.js" defer></script>
+  <script src="../quebec-backgrounds-data.js" defer></script>
+  <script src="../quebec-university-backgrounds-data.js" defer></script>
+  <script src="../quebec-nations-backgrounds-data.js" defer></script>
+  <script src="../quebec-favorites-backgrounds-data.js" defer></script>
+  <script src="../quebec-backgrounds.js" defer></script>
+  <script src="../institution-acronyms-data.js" defer></script>
+  <script src="../nav-shell.js" defer></script>
+  <script src="../native-tuner.js" defer></script>
+  <script src="../engage-prompt.js" defer></script>
   <script src="../dev/midwidth-preview.js?v=wide-auto-e91"></script>
   <script src="../dev/wide-desktop-preview.js?v=wide-auto-e91"></script>
-  <script src="./poster-builder.js?v=lab-vp"></script>
+  <script src="./poster-builder.js?v=seo-chrome"></script>
 </body>
 </html>

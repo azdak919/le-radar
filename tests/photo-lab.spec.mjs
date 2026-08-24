@@ -53,6 +53,9 @@ test('tableau de bord local', async ({ page }) => {
 test('générateur d’affiches public', async ({ page }) => {
   await page.goto(`${BASE}/affiches/`, { waitUntil: 'networkidle' });
   await expect(page.locator('h1')).toContainText('Imprimer une affiche');
+  await expect(page.locator('.masthead .wordmark-brand')).toBeVisible();
+  await expect(page.locator('.site-foot').first()).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Labo photo' })).toHaveCount(0);
   await expect(page.locator('label:has(input[name="format"][value="letter"])')).toBeVisible();
   await expect(page.locator('label:has(input[name="format"][value="legal"])')).toBeVisible();
   await expect(page.locator('label:has(input[name="campus"][value="uqtr"])')).toBeVisible();
