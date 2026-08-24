@@ -1,14 +1,23 @@
 {
-  "updated": "2026-08-23T23:24:18.663Z",
+  "updated": "2026-08-24T01:59:16.308Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 7,
-  "withLeadExcerpt": 84,
-  "candidates": 7,
-  "enriched": 0,
+  "incomplete": 8,
+  "withLeadExcerpt": 83,
+  "candidates": 8,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Les femmes MAGA au service du patriarcat",
+      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
+      "ok": true,
+      "score": 100,
+      "chars": 393,
+      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
+      "changed": true
+    },
     {
       "title": "La mauvaise nutrition et les maladies chroniques",
       "link": "https://lecollectif.ca/a-la-une/la-mauvaise-nutrition-et-les-maladies-chroniques/",
