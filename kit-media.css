@@ -79,6 +79,30 @@
   height: 64px;
   flex: 0 0 auto;
 }
+.kit-card__preview--mark {
+  min-height: 140px;
+}
+.kit-card__preview--mark img {
+  width: 96px;
+  height: 96px;
+}
+.kit-card__preview--asset {
+  padding: 0;
+  min-height: 0;
+  display: block;
+  background: #0e0f12;
+}
+.kit-card__preview--asset.kit-card__preview--light {
+  background: #fff;
+}
+.kit-card__preview--asset img {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
 
 .kit-card__preview--wide img {
   width: 56px;

@@ -6,9 +6,10 @@
  * Chaque SVG incorpore le pictogramme : un fichier téléchargé reste donc
  * complet une fois sorti de /assets/kit/ (où ../icon.svg n'existerait plus).
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const kitDir = join(root, 'assets', 'kit');
@@ -91,4 +92,38 @@ for (const [name, output] of Object.entries(files)) {
 }
 
 if (stale && check) process.exit(1);
+
+const rasters = [
+  { svg: join(kitDir, 'wordmark-on-dark.svg'), jpg: join(kitDir, 'wordmark-on-dark.jpg') },
+  { svg: join(kitDir, 'wordmark-on-light.svg'), jpg: join(kitDir, 'wordmark-on-light.jpg') },
+  { svg: join(kitDir, 'banner-web.svg'), jpg: join(kitDir, 'banner-web.jpg') },
+  { svg: join(kitDir, 'banner-square.svg'), jpg: join(kitDir, 'banner-square.jpg') },
+  { svg: join(kitDir, 'affiche-11x17.svg'), jpg: join(kitDir, 'affiche-11x17.jpg') },
+];
+const iconJpg = join(root, 'assets/icon-512.jpg');
+const iconPng = join(root, 'assets/icon-512.png');
+
+function rasterize(src, dest) {
+  const r = spawnSync('magick', ['-density', '144', src, '-quality', '92', dest], { encoding: 'utf8' });
+  if (r.status !== 0) {
+    throw new Error(`magick ${src}: ${r.stderr || r.stdout || 'échec'}`);
+  }
+}
+
+if (!check) {
+  for (const { svg, jpg } of rasters) rasterize(svg, jpg);
+  rasterize(iconPng, iconJpg);
+} else {
+  for (const { jpg } of rasters) {
+    if (!existsSync(jpg)) {
+      console.error(`Kit média : ${jpg} manquant`);
+      process.exit(1);
+    }
+  }
+  if (!existsSync(iconJpg)) {
+    console.error('Kit média : assets/icon-512.jpg manquant');
+    process.exit(1);
+  }
+}
+
 console.log(check ? 'OK kit média autonome' : 'Kit média généré');
