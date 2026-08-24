@@ -450,7 +450,7 @@ test('CTA sports téléphone : sous-ligne trop longue défile L→R', async ({ p
   expect(ready.isSub, 'refreshSportsChipScroll doit activer is-sub-overflowing').toBe(true);
   expect(ready.whiteSpace, 'sous-ligne une ligne').toBe('nowrap');
   expect(ready.textOverflow, 'pas d’ellipse').toBe('clip');
-  expect(ready.animationName, 'sous-ligne doit animer').toMatch(/sports-chip-scroll-sub/);
+  expect(ready.animationName, 'sous-ligne doit animer').toMatch(/sports-cta-scroll-sub|sports-chip-scroll-sub/);
   expect(ready.text).toBe(longSub);
 
   expect(pageErrors).toEqual([]);
@@ -529,7 +529,7 @@ test('CTA sports : titre long défile, jamais d’ellipsis …', async ({ page }
   expect(ready.isOverflowing, 'titre long doit activer is-overflowing').toBe(true);
   expect(parseFloat(ready.scroll), 'décalage marquee titre').toBeGreaterThan(2);
   expect(ready.textOverflow, 'jamais text-overflow:ellipsis').toBe('clip');
-  expect(ready.animation, 'titre doit animer sports-chip-scroll').toMatch(/sports-chip-scroll/);
+  expect(ready.animation, 'titre doit animer sports-cta-scroll').toMatch(/sports-cta-scroll|sports-chip-scroll/);
 
   await expect(cta).toHaveClass(/is-overflowing/);
   const titleEl = cta.locator('.sports-chip__cta-text');
@@ -538,14 +538,63 @@ test('CTA sports : titre long défile, jamais d’ellipsis …', async ({ page }
   const computedOverflow = await titleEl.evaluate((el) => getComputedStyle(el).textOverflow);
   expect(computedOverflow).toBe('clip');
 
-  // Delay CSS 1.6 s + hold 18 % de 5,5 s ≈ 1 s → mouvement après ~2,6 s.
-  // (Un wait 2,2 s tombait encore dans le hold : flocon ~0,7 px.)
+  // Delay CTA 0,7 s + hold ~10 % de 5,5 s → mouvement après ~1,3 s.
   const left0 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
-  await page.waitForTimeout(3400);
+  await page.waitForTimeout(2200);
   const left1 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
   expect(left1, 'le titre doit glisser (marquee L→R)').toBeLessThan(left0 - 1);
 
   expect(pageErrors).toEqual([]);
+});
+
+test('CTA sports 1920 : pastille Prochain jaune + titre long défile', async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const strip = page.locator('#masthead-sports-strip');
+  await expect(strip).toBeVisible({ timeout: 8000 });
+  const cta = strip.locator('.sports-chip--cta');
+  await expect(cta).toBeVisible({ timeout: 8000 });
+
+  const longTitle = 'Champlain College Lennoxville reçoit Cégep François-Xavier-Garneau';
+  const ready = await page.evaluate((title) => {
+    const chip = document.querySelector('.sports-chip--cta');
+    const tag = chip?.querySelector('.sports-chip__cta-tag');
+    const layer = chip?.querySelector('.sports-chip__cta-label.is-front')
+      || chip?.querySelector('.sports-chip__cta-label');
+    const text = layer?.querySelector('.sports-chip__cta-text');
+    if (!chip || !tag || !text) return { ok: false, reason: 'no-cta' };
+    chip.dataset.ctaState = 'next';
+    tag.dataset.ctaLamp = 'next';
+    tag.dataset.ctaTag = 'Prochain';
+    tag.textContent = 'Prochain';
+    tag.classList.remove('sports-chip__cta-tag--brand');
+    text.textContent = title;
+    if (typeof refreshSportsChipScroll === 'function') refreshSportsChipScroll(chip);
+    const tagCs = getComputedStyle(tag);
+    const textCs = getComputedStyle(text);
+    const rgb = tagCs.backgroundColor.match(/[\d.]+/g)?.map(Number) || [];
+    return {
+      ok: true,
+      lamp: tag.dataset.ctaLamp,
+      isOverflowing: chip.classList.contains('is-overflowing'),
+      animation: textCs.animationName,
+      textOverflow: textCs.textOverflow,
+      bg: tagCs.backgroundColor,
+      yellow: rgb.length >= 3 && rgb[0] > 180 && rgb[1] > 150 && rgb[2] < 80,
+    };
+  }, longTitle);
+  expect(ready.ok, ready.reason || 'ok').toBe(true);
+  expect(ready.lamp).toBe('next');
+  expect(ready.yellow, `pastille jaune, bg=${ready.bg}`).toBe(true);
+  expect(ready.isOverflowing, 'titre long → marquee même en shell E 1920').toBe(true);
+  expect(ready.animation).toMatch(/sports-cta-scroll|sports-chip-scroll/);
+  expect(ready.textOverflow).toBe('clip');
+
+  const titleEl = cta.locator('.sports-chip__cta-text');
+  const left0 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
+  await page.waitForTimeout(2200);
+  const left1 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
+  expect(left1, 'défilement L→R à 1920').toBeLessThan(left0 - 1);
 });
 
 test('wide E ≥3440 : 3 CTA sports distinctes', async ({ page }) => {

@@ -4228,9 +4228,8 @@ function sportsStripCramped() {
 /** Wide : purge toute classe marquee sports (sécurité après paint / rotation). */
 function clearWideSportsMarqueeClasses() {
   if (!isWideNoMarqueeMode() || !MASTHEAD_SPORTS_STRIP) return;
-  // ≥1440 : marquee L→R autorisé si un peu de texte reste masqué.
-  if (isWideDesktopComfort()) return;
-  MASTHEAD_SPORTS_STRIP.querySelectorAll('.is-overflowing, .is-sub-overflowing').forEach((el) => {
+  // CTA : marquee L→R conservé à toute largeur. Scores : pas de marquee.
+  MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip:not(.sports-chip--cta)').forEach((el) => {
     el.classList.remove('is-overflowing', 'is-sub-overflowing');
     el.style.removeProperty('--sports-scroll');
     el.style.removeProperty('--sports-scroll-sub');
@@ -5666,7 +5665,7 @@ function fillSportsCtaLayer(layer, slide) {
     && sportsGameHasScore(src.game);
   if (src?.mode === 'next' && src.team && src.game && !liveScore) {
     const g = src.game;
-    const home = sportsChipTeamShort(src.team);
+    const home = sportsPlainTeamName(src.team);
     const opp = sportsPlainOpponentName(g);
     const verb = sportsMatchVerb(g);
     text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
@@ -5895,10 +5894,16 @@ function bindSportsCtaPause(chip) {
 function sportsMeasureOverflow(viewport, inner, _hadOverflow) {
   if (!viewport || !inner) return 0;
   const prevMax = inner.style.maxWidth;
+  const prevOverflow = inner.style.overflow;
+  const prevTextOverflow = inner.style.textOverflow;
   inner.style.maxWidth = 'none';
+  inner.style.overflow = 'visible';
+  inner.style.textOverflow = 'clip';
   // scrollWidth du texte à largeur naturelle vs fenêtre de clip.
   const overflow = Math.max(0, inner.scrollWidth - viewport.clientWidth);
   inner.style.maxWidth = prevMax;
+  inner.style.overflow = prevOverflow;
+  inner.style.textOverflow = prevTextOverflow;
   return overflow;
 }
 
@@ -5912,8 +5917,12 @@ function sportsApplyScrollState(chip, {
   overflow,
 } = {}) {
   if (!chip || !flag || !prop) return;
-  // Wide étroit (1281–1439) : pas de marquee. ≥1440 : fallback si texte masqué.
-  if (isWideNoMarqueeMode() && !isWideDesktopComfort()) {
+  // Scores : pas de marquee en wide étroit. CTA : toujours, le nom complet doit défiler.
+  if (
+    !chip.classList.contains('sports-chip--cta')
+    && isWideNoMarqueeMode()
+    && !isWideDesktopComfort()
+  ) {
     chip.classList.remove(flag);
     chip.style.removeProperty(prop);
     return;
@@ -5944,10 +5953,9 @@ function refreshSportsChipScroll(chipOrRoot = null) {
   if (!MASTHEAD_SPORTS_STRIP && !chipOrRoot) return;
   const root = chipOrRoot || MASTHEAD_SPORTS_STRIP;
   if (!root) return;
-  // Wide étroit : aucun marquee. ≥1440 : mesurer et défiler si ça dépasse.
+  // Wide étroit : scores sans marquee. CTA mesurée plus bas dans la boucle.
   if (isWideNoMarqueeMode() && !isWideDesktopComfort()) {
     clearWideSportsMarqueeClasses();
-    return;
   }
   const chips = root.classList?.contains('sports-chip')
     ? [root]

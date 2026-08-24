@@ -42,7 +42,7 @@ const CONTACT_URL = `mailto:${CONTACT_MAIL}`;
  * CSS critique du synthé (copie de index.html) — FOUC sur pages SEO sans ce bloc.
  * Sans lui, la colonne « À l'antenne » peut rester figée / mal calée avant style.css.
  */
-const WIDE_LAYOUT_ASSET_V = 'wide-auto-e86';
+const WIDE_LAYOUT_ASSET_V = 'wide-auto-e93';
 
 function renderWideLayoutAssets(up) {
   return `    <link rel="stylesheet" href="${up}dev/midwidth-preview.css?v=${WIDE_LAYOUT_ASSET_V}" />
