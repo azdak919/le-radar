@@ -7,7 +7,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Ajouté
 
-- Affiches campus 11 × 17 (Laval, McGill, UdeM, UQAM, Concordia, Sherbrooke, Bishop’s) dans le kit média : photo Wikimedia, overlay `#0E0F12`, pictogramme officiel.
+- Affiches campus 11 × 17 (Laval, McGill, UdeM, UQAM, Concordia, Sherbrooke, Bishop’s) : variantes standard / minimal / bilingue ± QR officiel `le-radar.ca`.
 - La ligne d’antenne défile désormais sur une **liste de phases** — émission en cours → à venir → piste → slogan — au lieu d’alterner entre deux seules lignes. « À venir » était jusqu’ici inaccessible dès qu’une émission était en ondes ; le slogan revenait une fois sur deux.
 - Libellé « À l’antenne · » sur la ligne compacte du poste syntonisé, là où le panneau latéral est masqué.
 - Au repos, la ligne d’aperçu suit un ordre explicite — **poste + bande de diffusion (FM, AM ou Web) → à l’antenne / à venir → émission → horaire → établissement en acronyme**.

@@ -35,13 +35,14 @@
     h1 { margin: 0; font: 700 1.15rem/1.1 "Source Serif 4", Georgia, serif; }
     .bar a { color: var(--soft); text-decoration: none; font-size: 13px; }
     .bar a:hover { color: var(--ink); }
+    .filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
     .modes { display: flex; gap: 6px; margin-left: auto; }
-    .modes button, .nav button {
+    .modes button, .nav button, .filters button {
       appearance: none; cursor: pointer;
       border: 1px solid var(--line); background: var(--panel); color: var(--soft);
       font: 600 12px/1 Inter, sans-serif; padding: 6px 11px; border-radius: 999px;
     }
-    .modes button.is-on { border-color: var(--purple); color: var(--ink); background: color-mix(in srgb, var(--purple) 22%, var(--bg)); }
+    .modes button.is-on, .filters button.is-on { border-color: var(--purple); color: var(--ink); background: color-mix(in srgb, var(--purple) 22%, var(--bg)); }
     .hint { color: var(--muted); font-size: 12px; }
     .wall {
       display: grid;
@@ -93,10 +94,16 @@
         <img src="../assets/icon.svg" width="28" height="28" alt="">
         <div>
           <h1>Affiches 11×17</h1>
-          <div class="hint">Épreuve campus · JPEG 3300×5100 · 300 dpi</div>
+          <div class="hint">42 épreuves · 11×17 · 300 dpi · QR officiel</div>
         </div>
       </div>
       <a href="./">← Labo</a>
+      <div class="filters" role="tablist" aria-label="Variante">
+        <button type="button" data-kind="standard" class="is-on">A Standard</button>
+        <button type="button" data-kind="minimal">B Minimal</button>
+        <button type="button" data-kind="bilingue">C Bilingue</button>
+        <button type="button" id="toggle-qr">D QR</button>
+      </div>
       <div class="modes" role="tablist" aria-label="Vue">
         <button type="button" id="mode-wall" class="is-on">Mur</button>
         <button type="button" id="mode-stage">Épreuve</button>
@@ -124,6 +131,7 @@
       { slug: "sherbrooke", name: "Université de Sherbrooke", place: "Campus de Longueuil" },
       { slug: "bishops", name: "Bishop’s University", place: "Campus Lennoxville" },
     ];
+    const KIND_LABEL = { standard: "A Standard", minimal: "B Minimal", bilingue: "C Bilingue" };
 
     const local = ["127.0.0.1", "localhost", "[::1]"].includes(location.hostname);
     if (!local) {
@@ -132,25 +140,47 @@
       document.getElementById("lab").hidden = false;
     }
 
-    const wall = document.getElementById("wall");
-    POSTERS.forEach((p, i) => {
-      const btn = document.createElement("button");
-      btn.className = "poster";
-      btn.type = "button";
-      btn.innerHTML = `<img src="../assets/kit/affiches/affiche-${p.slug}-preview.jpg" width="792" height="1224" alt="Affiche ${p.name}"><span class="cap"><strong>${p.name}</strong>${p.place} · Rentrée 2026</span>`;
-      btn.addEventListener("click", () => openStage(i));
-      wall.appendChild(btn);
-    });
-
+    let kind = "standard";
+    let withQr = false;
     let index = 0;
+    const wall = document.getElementById("wall");
     const stageImg = document.getElementById("stage-img");
     const stageMeta = document.getElementById("stage-meta");
 
+    function variantKey() {
+      return withQr ? `${kind}-qr` : kind;
+    }
+    function fileStem(slug) {
+      const v = variantKey();
+      return v === "standard" ? `affiche-${slug}` : `affiche-${slug}-${v}`;
+    }
+    function previewSrc(slug) {
+      return `../assets/kit/affiches/${fileStem(slug)}-preview.jpg`;
+    }
+    function fullSrc(slug) {
+      return `../assets/kit/affiches/${fileStem(slug)}.jpg`;
+    }
+
+    function renderWall() {
+      wall.innerHTML = "";
+      POSTERS.forEach((p, i) => {
+        const btn = document.createElement("button");
+        btn.className = "poster";
+        btn.type = "button";
+        const v = KIND_LABEL[kind] + (withQr ? " + QR" : "");
+        btn.innerHTML = `<img src="${previewSrc(p.slug)}" width="792" height="1224" alt="Affiche ${p.name}"><span class="cap"><strong>${p.name}</strong>${p.place} · ${v}</span>`;
+        btn.addEventListener("click", () => openStage(i));
+        wall.appendChild(btn);
+      });
+    }
+
     function renderStage() {
       const p = POSTERS[index];
-      stageImg.src = `../assets/kit/affiches/affiche-${p.slug}.jpg`;
+      const v = KIND_LABEL[kind] + (withQr ? " + QR" : "");
+      stageImg.onerror = () => { stageImg.src = previewSrc(p.slug); };
+      stageImg.src = fullSrc(p.slug);
       stageImg.alt = `Affiche ${p.name}`;
-      stageMeta.innerHTML = `<strong>${p.name}</strong> · ${p.place} · cadre CSS 11 po (taille réelle sur un écran ~96 dpi)`;
+      stageMeta.innerHTML = `<strong>${p.name}</strong> · ${v} · ${p.place}`;
     }
 
     function openStage(i) {
@@ -182,6 +212,23 @@
       if (e.key === "ArrowLeft") document.getElementById("prev").click();
       if (e.key === "ArrowRight") document.getElementById("next").click();
     });
+
+    document.querySelectorAll(".filters [data-kind]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        kind = btn.getAttribute("data-kind");
+        document.querySelectorAll(".filters [data-kind]").forEach((b) => b.classList.toggle("is-on", b === btn));
+        renderWall();
+        if (document.body.classList.contains("mode-stage")) renderStage();
+      });
+    });
+    document.getElementById("toggle-qr").addEventListener("click", () => {
+      withQr = !withQr;
+      document.getElementById("toggle-qr").classList.toggle("is-on", withQr);
+      renderWall();
+      if (document.body.classList.contains("mode-stage")) renderStage();
+    });
+
+    renderWall();
   </script>
 </body>
 </html>
