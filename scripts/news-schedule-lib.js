@@ -3,10 +3,13 @@
 /**
  * Horaire du bot d'actualités.
  *
- * Les heures *annoncées* (Québec, affichées sur /feeds/) restent fixes.
- * GitHub Actions part souvent 20–40 min après le cron, et un fetch prend
- * ~10 min : on déclenche donc CRON_LEAD_MINUTES *avant* l'heure affichée
- * pour que le fil soit en ligne vers le créneau promis.
+ * Fréquence calée sur les heures de publication des articles du fil
+ * (America/Toronto) : presque rien 0 h–6 h ; masse 7 h–21 h, pics 8 h et 16 h.
+ * Huit passages **toutes les 2 h de 7 h à 21 h** Québec — pas 5 h 30 (créneau
+ * mort) ni un 16 h pile (on raterait le pic 16 h–17 h).
+ *
+ * GitHub retarde souvent 20–40 min et le fetch prend ~10 min : on déclenche
+ * CRON_LEAD_MINUTES *avant* l'heure affichée.
  *
  * UTC = Québec EDT (UTC−4) en été ; en EST les créneaux glissent d'une heure.
  */
@@ -14,12 +17,12 @@
 // Heure affichée, en horloge UTC d'été.
 const TARGET_PASSES_UTC = [
   [1, 0],   // 21:00 QC
-  [9, 30],  // 05:30 QC
   [11, 0],  // 07:00 QC
-  [14, 0],  // 10:00 QC
-  [16, 0],  // 12:00 QC
-  [17, 30], // 13:30 QC
-  [20, 0],  // 16:00 QC
+  [13, 0],  // 09:00 QC
+  [15, 0],  // 11:00 QC
+  [17, 0],  // 13:00 QC
+  [19, 0],  // 15:00 QC
+  [21, 0],  // 17:00 QC
   [23, 0],  // 19:00 QC
 ];
 

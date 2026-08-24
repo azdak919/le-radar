@@ -27,7 +27,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
-- Fil d’articles : le cron part 35 min avant l’heure affichée (GitHub retarde souvent 20–40 min, le fetch ~10 min). Un test d’intégrité calé sur une date La Pige de mai bloquait tout le push dès qu’elle sortait de la fiche ; le fil JS lit `news.json`, donc un échec HTML ne retient plus les articles.
+- Fil d’articles : 8 passages **toutes les 2 h de 7 h à 21 h** Québec (heures de publication du fil : pics 8 h et 16 h ; rien à 5 h 30). Le cron part 35 min avant. Un test d’intégrité calé sur une date La Pige de mai bloquait tout le push dès qu’elle sortait de la fiche ; le fil JS lit `news.json`, donc un échec HTML ne retient plus les articles.
 
 - Photo d’article : un bandeau campagne (slogan + aplats, ratio ~2.3:1) n’est plus choisi à la une quand le corps a une vraie photo 16:9 / 3:2. Le plafond de parse 150k coupait `<article>` derrière le CSS Astra (Collectif : 2e photo à ~194k) ; on retire style/script avant de classer, et on recadre selon le crop 3:2 de la une.
 - Plein écran → demi-écran : le rail large laissait sa hauteur et la largeur de « Plus de sources » en style inline. Toutes les pastilles restaient visibles alors que le bouton disait encore « Plus de sources ». On retire ces styles dès que le shell E s’éteint.

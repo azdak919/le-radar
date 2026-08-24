@@ -27,25 +27,25 @@ function slotIso(iso) {
   return scheduledSlotFor(utc(iso));
 }
 
-// 16 h QC = 20:00 UTC. Cron à 19:25. Un fetch de 10 min atterrit vers 19:35.
-assert.equal(slotIso('2026-08-24T19:25:00.000Z'), '2026-08-24T20:00:00.000Z');
-assert.equal(slotIso('2026-08-24T19:40:00.000Z'), '2026-08-24T20:00:00.000Z');
-assert.equal(slotIso('2026-08-24T20:00:00.000Z'), '2026-08-24T20:00:00.000Z');
-assert.equal(slotIso('2026-08-24T20:40:00.000Z'), '2026-08-24T20:00:00.000Z');
-assert.equal(slotIso('2026-08-24T21:16:00.000Z'), null, 'hors tolérance 75 min après 16 h');
+// 17 h QC = 21:00 UTC. Cron à 20:25. Un fetch de 10 min atterrit vers 20:35.
+assert.equal(slotIso('2026-08-24T20:25:00.000Z'), '2026-08-24T21:00:00.000Z');
+assert.equal(slotIso('2026-08-24T20:40:00.000Z'), '2026-08-24T21:00:00.000Z');
+assert.equal(slotIso('2026-08-24T21:00:00.000Z'), '2026-08-24T21:00:00.000Z');
+assert.equal(slotIso('2026-08-24T21:40:00.000Z'), '2026-08-24T21:00:00.000Z');
+assert.equal(slotIso('2026-08-24T22:16:00.000Z'), null, 'hors tolérance 75 min après 17 h');
 
-// 13 h 30 QC = 17:30 UTC, cron 16:55.
-assert.equal(slotIso('2026-08-24T16:55:00.000Z'), '2026-08-24T17:30:00.000Z');
-assert.equal(slotIso('2026-08-24T17:58:00.000Z'), '2026-08-24T17:30:00.000Z');
+// 13 h QC = 17:00 UTC, cron 16:25.
+assert.equal(slotIso('2026-08-24T16:25:00.000Z'), '2026-08-24T17:00:00.000Z');
+assert.equal(slotIso('2026-08-24T17:58:00.000Z'), '2026-08-24T17:00:00.000Z');
 
-// 05 h 30 QC = 09:30 UTC, cron 08:55.
-assert.equal(slotIso('2026-08-24T08:55:00.000Z'), '2026-08-24T09:30:00.000Z');
+// 07 h QC = 11:00 UTC, cron 10:25.
+assert.equal(slotIso('2026-08-24T10:25:00.000Z'), '2026-08-24T11:00:00.000Z');
 
 // 21 h QC = 01:00 UTC le lendemain, cron 00:25.
 assert.equal(slotIso('2026-08-25T00:25:00.000Z'), '2026-08-25T01:00:00.000Z');
 assert.equal(slotIso('2026-08-25T01:10:00.000Z'), '2026-08-25T01:00:00.000Z');
 
-// Filet :20 hors de toute fenêtre (12:20 UTC : 11 h QC fini, 12 h pas encore).
+// Filet :20 hors de toute fenêtre (12:20 UTC : 7 h QC fini, 9 h pas encore).
 assert.equal(slotIso('2026-08-24T12:20:00.000Z'), null);
 
 function expandCron(expr) {
@@ -72,6 +72,13 @@ assert.deepEqual(
   fireFromYml,
   fireFromLib,
   'les crons primaires de update-news.yml doivent partir 35 min avant les créneaux affichés',
+);
+
+const feeds = readFileSync(new URL('../feeds.html', import.meta.url), 'utf8');
+assert.match(
+  feeds,
+  /<li>7:00<\/li><li>9:00<\/li><li>11:00<\/li><li>13:00<\/li>\s*<li>15:00<\/li><li>17:00<\/li><li>19:00<\/li><li>21:00<\/li>/,
+  'feeds.html : les 8 heures affichées suivent les créneaux 7 h–21 h / 2 h',
 );
 
 console.log('OK news-schedule');
