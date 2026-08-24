@@ -57,7 +57,12 @@ async function main() {
       ]);
       const dest = join(outDir, `affiche-generique-${fmt.file}-600dpi.jpg`);
       await download.saveAs(dest);
-      console.log('OK', dest);
+      const pdf = dest.replace(/\.jpg$/, '.pdf');
+      const magick = spawn('magick', [dest, '-units', 'PixelsPerInch', '-density', '600', pdf], { stdio: 'inherit' });
+      await new Promise((resolve, reject) => {
+        magick.on('exit', (code) => (code === 0 ? resolve() : reject(new Error(`magick ${pdf}`))));
+      });
+      console.log('OK', dest, '→', pdf);
     }
   } finally {
     await browser.close();

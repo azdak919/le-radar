@@ -552,14 +552,15 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(!kit.includes('affiche-laval.jpg'), 'kit-media : plus de JPEG campus figés');
   assert(!/Rentrée 2026/.test(kit), 'kit-media : plus de Rentrée 2026');
   for (const name of [
-    'affiche-generique-11x17-600dpi.jpg',
-    'affiche-generique-lettre-600dpi.jpg',
-    'affiche-generique-legal-600dpi.jpg',
+    'affiche-generique-11x17-600dpi.pdf',
+    'affiche-generique-lettre-600dpi.pdf',
+    'affiche-generique-legal-600dpi.pdf',
     'affiche-generique-preview.jpg',
   ]) {
     assert(existsSync(join(root, 'assets/kit/affiches', name)), `kit-media : ${name} requis`);
     assert(kit.includes(name), `kit-media : lien ${name}`);
   }
+  assert(!kit.includes('affiche-generique-11x17-600dpi.jpg'), 'kit-media : téléchargements génériques en PDF');
   assert(kit.includes('>11 × 17<') || kit.includes('11 × 17</a>'), 'kit-media : téléchargement 11 × 17');
   assert(kit.includes('>Lettre<') || kit.includes('Lettre</a>'), 'kit-media : téléchargement lettre');
   assert(kit.includes('>Légal<') || kit.includes('Légal</a>'), 'kit-media : téléchargement légal');
