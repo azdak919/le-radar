@@ -150,8 +150,8 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   });
   const [pr, pg] = await dotRgb('Prochain');
   const [hr, hg] = await dotRgb('Hier');
-  const [ar, ag] = await dotRgb('Aujourd’hui');
-  expect(ar - ag, 'Aujourd’hui : voyant rouge').toBeGreaterThan(80);
+  const [ar] = await dotRgb('Aujourd’hui');
+  expect(ar, 'Aujourd’hui : voyant pâle sur fill rouge').toBeGreaterThan(200);
   expect(pr - pg, 'Prochain : voyant ambre, pas rouge').toBeLessThan(80);
   expect(hg - hr, 'Hier : voyant vert').toBeGreaterThan(20);
   const pillRgb = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => {
@@ -161,15 +161,13 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   const pillWidth = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => el.getBoundingClientRect().width);
   const [ppr, ppg, ppb] = await pillRgb('Prochain');
   const [phr, phg] = await pillRgb('Hier');
-  const [par, pag, pab] = await pillRgb('Aujourd’hui');
+  const [par, pag] = await pillRgb('Aujourd’hui');
   const [elr, elg] = await pillRgb('En cours');
   expect(ppr, 'Prochain : pastille jaune').toBeGreaterThan(200);
   expect(ppg, 'Prochain : pastille jaune').toBeGreaterThan(180);
   expect(ppb, 'Prochain : pastille jaune (pas crème)').toBeLessThan(80);
   expect(phg - phr, 'Hier : pastille verte').toBeGreaterThan(40);
-  expect(par, 'Aujourd’hui : pastille crème').toBeGreaterThan(200);
-  expect(pag, 'Aujourd’hui : pastille crème').toBeGreaterThan(180);
-  expect(pab, 'Aujourd’hui : pastille crème').toBeGreaterThan(160);
+  expect(par - pag, 'Aujourd’hui : pastille rouge saturée').toBeGreaterThan(80);
   expect(elr - elg, 'En cours : pastille rouge inchangée').toBeGreaterThan(80);
   const [wProchain, wHier, wToday] = await Promise.all([
     pillWidth('Prochain'), pillWidth('Hier'), pillWidth('Aujourd’hui'),
