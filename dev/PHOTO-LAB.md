@@ -4,7 +4,7 @@ Curation des fonds (mât / pomo / solitaire). Distinct du **Labo** viewport (`de
 
 Banque unique : `data/photo-bank.json` (`PHOTO_BANK` dans `photo-bank-data.js`).
 
-Revue de **toutes** les photos (mât, pomo, solitaire) : rejeter, saisons, crédits, focale, collection permanente.
+Revue de **toutes** les photos (mât, pomo, solitaire, campus / affiches) : rejeter, saisons, crédits, focale, collection permanente. Le générateur public `/affiches/` lit la même banque (`data/photo-bank.json`, tag campus) et ignore les rejets du labo.
 
 ```bash
 cd VisualCode/le-radar
