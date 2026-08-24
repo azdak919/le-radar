@@ -62,7 +62,7 @@ test.describe('affiches — largeurs labo', () => {
       expect(box.height, `${vp.name}: aperçu pas portrait`).toBeGreaterThan(box.width * 1.05);
       const ov = await reportOverflow(page);
       expect(ov.overflowX, `${vp.name}: overflow horizontal ${ov.overflowX}px`).toBeLessThan(8);
-      await expect(page.getByRole('button', { name: /JPEG 300 dpi/ }).first()).toBeVisible();
+      await expect(page.getByRole('button', { name: /JPEG 600 dpi/ }).first()).toBeVisible();
       expect(pageErrors, `${vp.name}: ${pageErrors.join(' | ')}`).toEqual([]);
     });
   }
