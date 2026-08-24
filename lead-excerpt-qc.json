@@ -1,57 +1,21 @@
 {
-  "updated": "2026-08-24T10:14:17.881Z",
+  "updated": "2026-08-24T11:32:26.353Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 13,
+  "incomplete": 9,
   "withLeadExcerpt": 83,
-  "candidates": 13,
-  "enriched": 6,
+  "candidates": 9,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
       "ok": true,
       "score": 100,
-      "chars": 393,
-      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
-      "changed": true
-    },
-    {
-      "title": "La Fondation de l’UdeS",
-      "link": "https://lecollectif.ca/campus/la-fondation-de-ludes/",
-      "ok": true,
-      "score": 96,
-      "chars": 330,
-      "sample": "À titre d’exemple, la plus récente campagne a permis d’amasser une somme totale de 250 millions de d",
-      "changed": true
-    },
-    {
-      "title": "Histoire des traditions UdeS",
-      "link": "https://lecollectif.ca/campus/histoire-des-traditions-udes/",
-      "ok": true,
-      "score": 100,
-      "chars": 336,
-      "sample": "L’Université de Sherbrooke est reconnue à travers le Québec, et pas seulement grâce à ses 5@8. La vi",
-      "changed": true
-    },
-    {
-      "title": "Études de 2ᵉ et de 3ᵉ cycles",
-      "link": "https://lecollectif.ca/campus/etudes-de-2%e1%b5%89-et-de-3%e1%b5%89-cycles/",
-      "ok": true,
-      "score": 96,
-      "chars": 323,
-      "sample": "Certaines facultés ou certains programmes peuvent également exiger des documents supplémentaires, co",
-      "changed": true
-    },
-    {
-      "title": "Le Vert & Or : une tradition sportive",
-      "link": "https://lecollectif.ca/edition-papier/le-vert-or-une-tradition-sportive/",
-      "ok": true,
-      "score": 96,
-      "chars": 293,
-      "sample": "Au-delà des performances sportives, le Vert & Or joue également un rôle important dans le sentiment ",
+      "chars": 396,
+      "sample": "« L’Université McGill est à la recherche de patrouilleurs dynamiques et engagés pour assurer la sécu",
       "changed": true
     },
     {
@@ -79,6 +43,42 @@
       "score": 74,
       "chars": 399,
       "sample": "Seated at a Kawai grand piano, he began with a crowd favourite, “Don’t You Worry ’Bout a Thing” by S",
+      "changed": false
+    },
+    {
+      "title": "A conversation with Ehab Lotayef: A lifelong voyage to the conscience of humanity",
+      "link": "https://www.thetribune.ca/news/a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026/?utm_source=rss&utm_medium=rss&utm_campaign=a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026",
+      "ok": true,
+      "score": 70,
+      "chars": 400,
+      "sample": "On May 14, 429 activists carrying more than 11,000 kilograms of humanitarian aid set sail to Gaza fr",
+      "changed": false
+    },
+    {
+      "title": "The Cruel Optimism of Summer",
+      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt t",
+      "changed": false
+    },
+    {
+      "title": "Ask the Trib: How do I survive summer in my hometown?",
+      "link": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
+      "changed": false
+    },
+    {
+      "title": "Foire aux questions",
+      "link": "https://lecollectif.ca/campus/foire-aux-questions/",
+      "ok": true,
+      "score": 96,
+      "chars": 169,
+      "sample": "Attention cependant aux exceptions ! Consulte le site Web de ta faculté ou de ton centre universitai",
       "changed": false
     }
   ]
