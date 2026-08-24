@@ -1,19 +1,19 @@
 {
-  "updated": "2026-08-24T03:30:40.234Z",
-  "fetchedAt": "2026-08-24T03:30:40.234Z",
+  "updated": "2026-08-24T05:02:24.774Z",
+  "fetchedAt": "2026-08-24T05:02:24.774Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-24T03:30:40.234Z"
+    "referenceDate": "2026-08-24T05:02:24.774Z"
   },
   "registry": "sports-teams.json",
-  "registryMatched": 507,
+  "registryMatched": 790,
   "leagueCatalog": 109,
   "leaguesWithTeams": 100,
-  "leaguesOk": 73,
-  "leaguesFailed": 36,
-  "teamsPreservedOnError": 300,
+  "leaguesOk": 109,
+  "leaguesFailed": 0,
+  "teamsPreservedOnError": 17,
   "sportsCovered": [
     "athletisme",
     "badminton",
@@ -76,186 +76,6 @@
   "teamCount": 810,
   "errors": [
     {
-      "leagueId": "1e6e37eb-bbd3-4c47-8afb-d2247eb95803",
-      "label": "Athlétisme universitaire féminin",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1e6e37eb-bbd3-4c47-8afb-d2247eb95803"
-    },
-    {
-      "leagueId": "6b486662-44cb-4d5d-99f1-aa18e34a1c0f",
-      "label": "Athlétisme universitaire masculin",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=6b486662-44cb-4d5d-99f1-aa18e34a1c0f"
-    },
-    {
-      "leagueId": "cf8a85ed-70a7-4760-8066-52d8a8daea87",
-      "label": "Badminton collégial mixte D2",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=cf8a85ed-70a7-4760-8066-52d8a8daea87"
-    },
-    {
-      "leagueId": "49d51761-fadd-4c28-800b-63815289eb53",
-      "label": "Badminton collégial mixte D2",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=49d51761-fadd-4c28-800b-63815289eb53"
-    },
-    {
-      "leagueId": "2649fbf2-7d0e-42e8-bcfe-e76125a1798c",
-      "label": "Badminton collégial mixte D2",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2649fbf2-7d0e-42e8-bcfe-e76125a1798c"
-    },
-    {
-      "leagueId": "eb5ee4f9-3860-4efd-b535-2024284dec68",
-      "label": "Badminton collégial mixte D3",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=eb5ee4f9-3860-4efd-b535-2024284dec68"
-    },
-    {
-      "leagueId": "931a996f-95a4-489d-b81d-0b2a781374f3",
-      "label": "Badminton universitaire mixte",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=931a996f-95a4-489d-b81d-0b2a781374f3"
-    },
-    {
-      "leagueId": "b30acc8a-4be1-4d58-917e-59d7d3aa4a88",
-      "label": "Baseball collégial masculin",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b30acc8a-4be1-4d58-917e-59d7d3aa4a88"
-    },
-    {
-      "leagueId": "501c476d-a72e-4bef-afb8-0501680559c3",
-      "label": "Basketball collégial féminin D1",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=501c476d-a72e-4bef-afb8-0501680559c3"
-    },
-    {
-      "leagueId": "c4149f03-48a2-48f0-9400-2d6459eaa0c5",
-      "label": "Basketball collégial féminin D2",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=c4149f03-48a2-48f0-9400-2d6459eaa0c5"
-    },
-    {
-      "leagueId": "9816d17c-843e-423a-b2ee-93a8864a529e",
-      "label": "Basketball collégial féminin D2",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9816d17c-843e-423a-b2ee-93a8864a529e"
-    },
-    {
-      "leagueId": "112f19a5-e775-4ea7-8a4d-d290e89be80f",
-      "label": "Basketball collégial féminin D2",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=112f19a5-e775-4ea7-8a4d-d290e89be80f"
-    },
-    {
-      "leagueId": "bc41537a-452b-4284-b2ba-9d5cff758cba",
-      "label": "Basketball collégial féminin D2",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bc41537a-452b-4284-b2ba-9d5cff758cba"
-    },
-    {
-      "leagueId": "b54a8411-0eed-4ec4-853d-68f7451e6691",
-      "label": "Basketball collégial féminin D3",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b54a8411-0eed-4ec4-853d-68f7451e6691"
-    },
-    {
-      "leagueId": "fa4cdca6-cd02-4808-96b3-2ff546cb4ac5",
-      "label": "Basketball collégial féminin D3",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
-    },
-    {
-      "leagueId": "03379141-30ad-4961-aa29-0d9c0e1692f9",
-      "label": "Basketball collégial masculin D1",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03379141-30ad-4961-aa29-0d9c0e1692f9"
-    },
-    {
-      "leagueId": "e7a44a26-71f6-4d1b-a0d8-3205f0e816d5",
-      "label": "Basketball collégial masculin D2",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e7a44a26-71f6-4d1b-a0d8-3205f0e816d5"
-    },
-    {
-      "leagueId": "25fb9faf-6c04-4c60-b83c-155bf7de7d7a",
-      "label": "Basketball collégial masculin D2",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=25fb9faf-6c04-4c60-b83c-155bf7de7d7a"
-    },
-    {
-      "leagueId": "3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9",
-      "label": "Basketball collégial masculin D2",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9"
-    },
-    {
-      "leagueId": "7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee",
-      "label": "Basketball collégial masculin D2",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee"
-    },
-    {
-      "leagueId": "b789a3e0-33ed-400b-87cc-287ab9819540",
-      "label": "Basketball collégial masculin D3",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b789a3e0-33ed-400b-87cc-287ab9819540"
-    },
-    {
-      "leagueId": "d6728720-cf42-4c9f-83cd-568b5ddd1f27",
-      "label": "Basketball collégial masculin D3",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d6728720-cf42-4c9f-83cd-568b5ddd1f27"
-    },
-    {
-      "leagueId": "60f78173-5961-4507-8726-0c1fc362af91",
-      "label": "Basketball collégial masculin D3",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91"
-    },
-    {
-      "leagueId": "69d65ae8-d390-45a8-8b69-f0080287bef2",
-      "label": "Basketball collégial masculin D3",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=69d65ae8-d390-45a8-8b69-f0080287bef2"
-    },
-    {
-      "leagueId": "2ba7cfa8-5e21-4351-b179-f6adf08f053e",
-      "label": "Basketball universitaire féminin",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2ba7cfa8-5e21-4351-b179-f6adf08f053e"
-    },
-    {
-      "leagueId": "b1f083ac-4748-4563-b3bf-b3369204417b",
-      "label": "Basketball universitaire masculin",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b1f083ac-4748-4563-b3bf-b3369204417b"
-    },
-    {
-      "leagueId": "0dd4e9bb-cec2-4c8f-8868-78acc54a572c",
-      "label": "Cheerleading collégial mixte",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0dd4e9bb-cec2-4c8f-8868-78acc54a572c"
-    },
-    {
-      "leagueId": "8c98e70e-83c5-4f01-a013-d91c4eb8e82e",
-      "label": "Cheerleading universitaire mixte",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=8c98e70e-83c5-4f01-a013-d91c4eb8e82e"
-    },
-    {
-      "leagueId": "bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
-      "label": "Cross-country collégial mixte",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
-    },
-    {
-      "leagueId": "5973efde-0184-4bdc-baa5-57d460b756d0",
-      "label": "Cross-country collégial mixte",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
-    },
-    {
-      "leagueId": "d5c1b71b-8741-4485-90e4-7c28666a2270",
-      "label": "Cross-country universitaire féminin",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d5c1b71b-8741-4485-90e4-7c28666a2270"
-    },
-    {
-      "leagueId": "263716c3-348b-4a18-8ebd-a81ced5cbd80",
-      "label": "Cross-country universitaire masculin",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=263716c3-348b-4a18-8ebd-a81ced5cbd80"
-    },
-    {
-      "leagueId": "9b8a3ee0-667b-43ba-9377-30176c5f5ce3",
-      "label": "Flag football collégial féminin D2",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9b8a3ee0-667b-43ba-9377-30176c5f5ce3"
-    },
-    {
-      "leagueId": "bb172f86-5983-4fab-9cdc-5be7f33cadca",
-      "label": "Flag football collégial féminin D2",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bb172f86-5983-4fab-9cdc-5be7f33cadca"
-    },
-    {
-      "leagueId": "4e5998ab-0f02-4601-b4da-a656fb5dd6d8",
-      "label": "Flag football collégial féminin D2",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=4e5998ab-0f02-4601-b4da-a656fb5dd6d8"
-    },
-    {
-      "leagueId": "a8084a9c-3ef1-43a4-a5e5-aaffea92224a",
-      "label": "Flag football collégial féminin D3",
-      "error": "HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=a8084a9c-3ef1-43a4-a5e5-aaffea92224a"
-    },
-    {
       "leagueId": "spordle-collegial",
       "label": "Hockey collegial",
       "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
@@ -289,9 +109,7 @@
       "priority": 80,
       "fullName": "Carleton University",
       "nickname": "Ravens",
-      "registryId": "carleton",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1e6e37eb-bbd3-4c47-8afb-d2247eb95803"
+      "registryId": "carleton"
     },
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:a21ca3d9-3528-42d7-8483-fe2986af8999": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:a21ca3d9-3528-42d7-8483-fe2986af8999",
@@ -314,9 +132,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Collège militaire royal du Canada",
-      "registryId": "college-militaire-royal",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1e6e37eb-bbd3-4c47-8afb-d2247eb95803"
+      "registryId": "college-militaire-royal"
     },
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:1b23dbca-26a3-4d17-bbce-d7341b9463aa": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:1b23dbca-26a3-4d17-bbce-d7341b9463aa",
@@ -340,9 +156,7 @@
       "priority": 3,
       "fullName": "Université Concordia",
       "nickname": "Stingers",
-      "registryId": "concordia",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1e6e37eb-bbd3-4c47-8afb-d2247eb95803"
+      "registryId": "concordia"
     },
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:b0e073c0-5114-4594-bc7c-b0accec17ce2": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:b0e073c0-5114-4594-bc7c-b0accec17ce2",
@@ -365,9 +179,7 @@
       "source": "rseq-s1",
       "priority": 12,
       "fullName": "École de technologie supérieure",
-      "registryId": "ets",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1e6e37eb-bbd3-4c47-8afb-d2247eb95803"
+      "registryId": "ets"
     },
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f1a1590d-7899-46a7-8a8f-de63270062c0": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f1a1590d-7899-46a7-8a8f-de63270062c0",
@@ -391,9 +203,7 @@
       "priority": 1,
       "fullName": "Université Laval",
       "nickname": "Rouge et Or",
-      "registryId": "ulaval",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1e6e37eb-bbd3-4c47-8afb-d2247eb95803"
+      "registryId": "ulaval"
     },
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:657c4463-b4f1-4b08-9117-6c7cbb15c8e0": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:657c4463-b4f1-4b08-9117-6c7cbb15c8e0",
@@ -417,9 +227,7 @@
       "priority": 4,
       "fullName": "Université de Montréal",
       "nickname": "Carabins",
-      "registryId": "udem",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1e6e37eb-bbd3-4c47-8afb-d2247eb95803"
+      "registryId": "udem"
     },
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:48265aed-63fb-4373-8d30-f7052934a712": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:48265aed-63fb-4373-8d30-f7052934a712",
@@ -443,9 +251,7 @@
       "priority": 6,
       "fullName": "Université de Sherbrooke",
       "nickname": "Vert & Or",
-      "registryId": "usherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1e6e37eb-bbd3-4c47-8afb-d2247eb95803"
+      "registryId": "usherbrooke"
     },
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:43bb3824-004f-4545-8274-f9d0d9af6f93": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:43bb3824-004f-4545-8274-f9d0d9af6f93",
@@ -468,9 +274,7 @@
       "source": "rseq-s1",
       "priority": 13,
       "fullName": "Université du Québec à Chicoutimi",
-      "registryId": "uqac",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1e6e37eb-bbd3-4c47-8afb-d2247eb95803"
+      "registryId": "uqac"
     },
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:dc805401-6da6-46c5-a3f9-d22a1ff58f74": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:dc805401-6da6-46c5-a3f9-d22a1ff58f74",
@@ -494,9 +298,7 @@
       "priority": 5,
       "fullName": "Université du Québec à Montréal",
       "nickname": "Citadins",
-      "registryId": "uqam",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1e6e37eb-bbd3-4c47-8afb-d2247eb95803"
+      "registryId": "uqam"
     },
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:6d3ae1b7-1586-4191-9bc3-aa2986aa5462": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:6d3ae1b7-1586-4191-9bc3-aa2986aa5462",
@@ -520,9 +322,7 @@
       "priority": 11,
       "fullName": "Université du Québec à Trois-Rivières",
       "nickname": "Patriotes",
-      "registryId": "uqtr",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=1e6e37eb-bbd3-4c47-8afb-d2247eb95803"
+      "registryId": "uqtr"
     },
     "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:2bdde087-bca8-41ee-b58a-cbb7b0b02338": {
       "id": "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:2bdde087-bca8-41ee-b58a-cbb7b0b02338",
@@ -546,9 +346,7 @@
       "priority": 80,
       "fullName": "Carleton University",
       "nickname": "Ravens",
-      "registryId": "carleton",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=6b486662-44cb-4d5d-99f1-aa18e34a1c0f"
+      "registryId": "carleton"
     },
     "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:90a3ff4f-29b4-40ed-a855-f7dcc67f0ecc": {
       "id": "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:90a3ff4f-29b4-40ed-a855-f7dcc67f0ecc",
@@ -571,9 +369,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Collège militaire royal du Canada",
-      "registryId": "college-militaire-royal",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=6b486662-44cb-4d5d-99f1-aa18e34a1c0f"
+      "registryId": "college-militaire-royal"
     },
     "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:06a6ebe1-34be-40f2-883a-81338a65195e": {
       "id": "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:06a6ebe1-34be-40f2-883a-81338a65195e",
@@ -597,9 +393,7 @@
       "priority": 3,
       "fullName": "Université Concordia",
       "nickname": "Stingers",
-      "registryId": "concordia",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=6b486662-44cb-4d5d-99f1-aa18e34a1c0f"
+      "registryId": "concordia"
     },
     "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:90c49758-33af-4a6b-bb76-504b528ed295": {
       "id": "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:90c49758-33af-4a6b-bb76-504b528ed295",
@@ -622,9 +416,7 @@
       "source": "rseq-s1",
       "priority": 12,
       "fullName": "École de technologie supérieure",
-      "registryId": "ets",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=6b486662-44cb-4d5d-99f1-aa18e34a1c0f"
+      "registryId": "ets"
     },
     "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:ac21da40-660a-4cee-b532-1c8b3637342d": {
       "id": "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:ac21da40-660a-4cee-b532-1c8b3637342d",
@@ -648,9 +440,7 @@
       "priority": 1,
       "fullName": "Université Laval",
       "nickname": "Rouge et Or",
-      "registryId": "ulaval",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=6b486662-44cb-4d5d-99f1-aa18e34a1c0f"
+      "registryId": "ulaval"
     },
     "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:558d9381-2fac-417c-ae93-44b95e8d1008": {
       "id": "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:558d9381-2fac-417c-ae93-44b95e8d1008",
@@ -674,9 +464,7 @@
       "priority": 4,
       "fullName": "Université de Montréal",
       "nickname": "Carabins",
-      "registryId": "udem",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=6b486662-44cb-4d5d-99f1-aa18e34a1c0f"
+      "registryId": "udem"
     },
     "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:41f44cf0-a661-45df-a8f2-8066c914ab43": {
       "id": "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:41f44cf0-a661-45df-a8f2-8066c914ab43",
@@ -700,9 +488,7 @@
       "priority": 6,
       "fullName": "Université de Sherbrooke",
       "nickname": "Vert & Or",
-      "registryId": "usherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=6b486662-44cb-4d5d-99f1-aa18e34a1c0f"
+      "registryId": "usherbrooke"
     },
     "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:7938d950-ac44-4553-b5e8-01deafa9d2e6": {
       "id": "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:7938d950-ac44-4553-b5e8-01deafa9d2e6",
@@ -725,9 +511,7 @@
       "source": "rseq-s1",
       "priority": 13,
       "fullName": "Université du Québec à Chicoutimi",
-      "registryId": "uqac",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=6b486662-44cb-4d5d-99f1-aa18e34a1c0f"
+      "registryId": "uqac"
     },
     "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:d3574fe0-9328-4934-842e-ee846e420bc8": {
       "id": "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:d3574fe0-9328-4934-842e-ee846e420bc8",
@@ -751,9 +535,7 @@
       "priority": 5,
       "fullName": "Université du Québec à Montréal",
       "nickname": "Citadins",
-      "registryId": "uqam",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=6b486662-44cb-4d5d-99f1-aa18e34a1c0f"
+      "registryId": "uqam"
     },
     "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:5393bc21-2a7e-47f9-98d7-5acceda8246a": {
       "id": "universitaire:athletisme:6b486662-44cb-4d5d-99f1-aa18e34a1c0f:5393bc21-2a7e-47f9-98d7-5acceda8246a",
@@ -777,9 +559,7 @@
       "priority": 11,
       "fullName": "Université du Québec à Trois-Rivières",
       "nickname": "Patriotes",
-      "registryId": "uqtr",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=6b486662-44cb-4d5d-99f1-aa18e34a1c0f"
+      "registryId": "uqtr"
     },
     "collegial:badminton:cf8a85ed-70a7-4760-8066-52d8a8daea87:588dfa95-36af-47e4-8684-f4024875b431": {
       "id": "collegial:badminton:cf8a85ed-70a7-4760-8066-52d8a8daea87:588dfa95-36af-47e4-8684-f4024875b431",
@@ -875,9 +655,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Drummondville",
-      "registryId": "drummondville",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=cf8a85ed-70a7-4760-8066-52d8a8daea87"
+      "registryId": "drummondville"
     },
     "collegial:badminton:cf8a85ed-70a7-4760-8066-52d8a8daea87:c88074ce-bad0-4ad3-b384-d80368b7c422": {
       "id": "collegial:badminton:cf8a85ed-70a7-4760-8066-52d8a8daea87:c88074ce-bad0-4ad3-b384-d80368b7c422",
@@ -973,9 +751,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Granby",
-      "registryId": "granby",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=cf8a85ed-70a7-4760-8066-52d8a8daea87"
+      "registryId": "granby"
     },
     "collegial:badminton:cf8a85ed-70a7-4760-8066-52d8a8daea87:e4184f05-2c9b-42d1-90e3-840d50fc03b9": {
       "id": "collegial:badminton:cf8a85ed-70a7-4760-8066-52d8a8daea87:e4184f05-2c9b-42d1-90e3-840d50fc03b9",
@@ -1072,9 +848,7 @@
       "source": "rseq-s1",
       "priority": 38,
       "fullName": "Cégep de Sherbrooke",
-      "registryId": "cegep-sherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=cf8a85ed-70a7-4760-8066-52d8a8daea87"
+      "registryId": "cegep-sherbrooke"
     },
     "collegial:badminton:cf8a85ed-70a7-4760-8066-52d8a8daea87:1203ef51-0888-4c63-9edd-8eda9e4583af": {
       "id": "collegial:badminton:cf8a85ed-70a7-4760-8066-52d8a8daea87:1203ef51-0888-4c63-9edd-8eda9e4583af",
@@ -1170,9 +944,7 @@
       "priority": 40,
       "fullName": "Cégep de Trois-Rivières",
       "nickname": "Diablos",
-      "registryId": "trois-rivieres",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=cf8a85ed-70a7-4760-8066-52d8a8daea87"
+      "registryId": "trois-rivieres"
     },
     "collegial:badminton:cf8a85ed-70a7-4760-8066-52d8a8daea87:ec32ba96-b1a9-4052-994a-e1816ca5fb96": {
       "id": "collegial:badminton:cf8a85ed-70a7-4760-8066-52d8a8daea87:ec32ba96-b1a9-4052-994a-e1816ca5fb96",
@@ -1268,9 +1040,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Victoriaville",
-      "registryId": "victoriaville",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=cf8a85ed-70a7-4760-8066-52d8a8daea87"
+      "registryId": "victoriaville"
     },
     "collegial:badminton:49d51761-fadd-4c28-800b-63815289eb53:32ac5fff-5a0e-4597-9165-5be3b4b817d0": {
       "id": "collegial:badminton:49d51761-fadd-4c28-800b-63815289eb53:32ac5fff-5a0e-4597-9165-5be3b4b817d0",
@@ -1420,9 +1190,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Beauce-Appalaches",
-      "registryId": "beauce-appalaches",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=49d51761-fadd-4c28-800b-63815289eb53"
+      "registryId": "beauce-appalaches"
     },
     "collegial:badminton:49d51761-fadd-4c28-800b-63815289eb53:5d3d6acf-e986-473e-a4fc-e60816220f91": {
       "id": "collegial:badminton:49d51761-fadd-4c28-800b-63815289eb53:5d3d6acf-e986-473e-a4fc-e60816220f91",
@@ -1571,9 +1339,7 @@
       "priority": 8,
       "fullName": "Cégep François-Xavier-Garneau",
       "nickname": "Boomerang",
-      "registryId": "garneau",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=49d51761-fadd-4c28-800b-63815289eb53"
+      "registryId": "garneau"
     },
     "collegial:badminton:49d51761-fadd-4c28-800b-63815289eb53:ef075248-ffed-4ac4-b165-70621926912f": {
       "id": "collegial:badminton:49d51761-fadd-4c28-800b-63815289eb53:ef075248-ffed-4ac4-b165-70621926912f",
@@ -1724,9 +1490,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de La Pocatière",
-      "registryId": "la-pocatiere",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=49d51761-fadd-4c28-800b-63815289eb53"
+      "registryId": "la-pocatiere"
     },
     "collegial:badminton:49d51761-fadd-4c28-800b-63815289eb53:9cd62fc0-31bc-4a88-aea7-845c69758fd1": {
       "id": "collegial:badminton:49d51761-fadd-4c28-800b-63815289eb53:9cd62fc0-31bc-4a88-aea7-845c69758fd1",
@@ -1876,9 +1640,7 @@
       "source": "rseq-s1",
       "priority": 50,
       "fullName": "Cégep de Lévis",
-      "registryId": "levis",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=49d51761-fadd-4c28-800b-63815289eb53"
+      "registryId": "levis"
     },
     "collegial:badminton:49d51761-fadd-4c28-800b-63815289eb53:16742cae-1883-4c4d-93dd-df4735c4741c": {
       "id": "collegial:badminton:49d51761-fadd-4c28-800b-63815289eb53:16742cae-1883-4c4d-93dd-df4735c4741c",
@@ -2029,9 +1791,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Matane",
-      "registryId": "matane",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=49d51761-fadd-4c28-800b-63815289eb53"
+      "registryId": "matane"
     },
     "collegial:badminton:49d51761-fadd-4c28-800b-63815289eb53:3db6b273-09ae-4f73-a010-79afe1397cdb": {
       "id": "collegial:badminton:49d51761-fadd-4c28-800b-63815289eb53:3db6b273-09ae-4f73-a010-79afe1397cdb",
@@ -2180,9 +1940,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Rimouski",
-      "registryId": "rimouski",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=49d51761-fadd-4c28-800b-63815289eb53"
+      "registryId": "rimouski"
     },
     "collegial:badminton:49d51761-fadd-4c28-800b-63815289eb53:21ffe7f2-0a59-4785-bd5c-d660584d889e": {
       "id": "collegial:badminton:49d51761-fadd-4c28-800b-63815289eb53:21ffe7f2-0a59-4785-bd5c-d660584d889e",
@@ -2331,9 +2089,7 @@
       "priority": 37,
       "fullName": "Cégep de Sainte-Foy",
       "nickname": "Géants",
-      "registryId": "sainte-foy",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=49d51761-fadd-4c28-800b-63815289eb53"
+      "registryId": "sainte-foy"
     },
     "collegial:badminton:2649fbf2-7d0e-42e8-bcfe-e76125a1798c:39c4e62e-c5d5-44d5-afcc-3553aa07aaa3": {
       "id": "collegial:badminton:2649fbf2-7d0e-42e8-bcfe-e76125a1798c:39c4e62e-c5d5-44d5-afcc-3553aa07aaa3",
@@ -2536,9 +2292,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de l'Abitibi-Témiscamingue",
-      "registryId": "abitibi-temisc",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2649fbf2-7d0e-42e8-bcfe-e76125a1798c"
+      "registryId": "abitibi-temisc"
     },
     "collegial:badminton:2649fbf2-7d0e-42e8-bcfe-e76125a1798c:e40a772f-04fe-4286-874d-ff7e9a2cd49c": {
       "id": "collegial:badminton:2649fbf2-7d0e-42e8-bcfe-e76125a1798c:e40a772f-04fe-4286-874d-ff7e9a2cd49c",
@@ -2740,9 +2494,7 @@
       "source": "rseq-s1",
       "priority": 23,
       "fullName": "Collège de Bois-de-Boulogne",
-      "registryId": "bois-de-boulogne",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2649fbf2-7d0e-42e8-bcfe-e76125a1798c"
+      "registryId": "bois-de-boulogne"
     },
     "collegial:badminton:2649fbf2-7d0e-42e8-bcfe-e76125a1798c:69767a19-b7d7-4693-92a3-e6c8765fd76e": {
       "id": "collegial:badminton:2649fbf2-7d0e-42e8-bcfe-e76125a1798c:69767a19-b7d7-4693-92a3-e6c8765fd76e",
@@ -2942,9 +2694,7 @@
       "priority": 42,
       "fullName": "Cégep Édouard-Montpetit",
       "nickname": "Cougars",
-      "registryId": "edouard-montpetit",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2649fbf2-7d0e-42e8-bcfe-e76125a1798c"
+      "registryId": "edouard-montpetit"
     },
     "collegial:badminton:2649fbf2-7d0e-42e8-bcfe-e76125a1798c:20ad934d-c313-43dd-9967-c5e8897fa8bb": {
       "id": "collegial:badminton:2649fbf2-7d0e-42e8-bcfe-e76125a1798c:20ad934d-c313-43dd-9967-c5e8897fa8bb",
@@ -3094,9 +2844,7 @@
       "source": "rseq-s1",
       "priority": 30,
       "fullName": "Collège Lionel-Groulx",
-      "registryId": "lionel-groulx",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2649fbf2-7d0e-42e8-bcfe-e76125a1798c"
+      "registryId": "lionel-groulx"
     },
     "collegial:badminton:2649fbf2-7d0e-42e8-bcfe-e76125a1798c:7a335aea-b32b-4f69-b484-388ad888c6ad": {
       "id": "collegial:badminton:2649fbf2-7d0e-42e8-bcfe-e76125a1798c:7a335aea-b32b-4f69-b484-388ad888c6ad",
@@ -3245,9 +2993,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Marianopolis College",
-      "registryId": "marianopolis",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2649fbf2-7d0e-42e8-bcfe-e76125a1798c"
+      "registryId": "marianopolis"
     },
     "collegial:badminton:2649fbf2-7d0e-42e8-bcfe-e76125a1798c:4d1c22e9-6d1b-4ef7-a867-e579d18fb03b": {
       "id": "collegial:badminton:2649fbf2-7d0e-42e8-bcfe-e76125a1798c:4d1c22e9-6d1b-4ef7-a867-e579d18fb03b",
@@ -3396,9 +3142,7 @@
       "source": "rseq-s1",
       "priority": 33,
       "fullName": "Cégep de l'Outaouais",
-      "registryId": "outaouais",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2649fbf2-7d0e-42e8-bcfe-e76125a1798c"
+      "registryId": "outaouais"
     },
     "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:ad986bf1-3ed5-43fa-8398-424e0254cfa2": {
       "id": "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:ad986bf1-3ed5-43fa-8398-424e0254cfa2",
@@ -3601,9 +3345,7 @@
       "priority": 25,
       "fullName": "Champlain College Saint-Lambert",
       "nickname": "Barons",
-      "registryId": "champlain-st-lambert",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=eb5ee4f9-3860-4efd-b535-2024284dec68"
+      "registryId": "champlain-st-lambert"
     },
     "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:86e9a25b-9e94-462b-b4c9-27064fa228ee": {
       "id": "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:86e9a25b-9e94-462b-b4c9-27064fa228ee",
@@ -3808,9 +3550,7 @@
       "priority": 26,
       "fullName": "Dawson College",
       "nickname": "Blues",
-      "registryId": "dawson",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=eb5ee4f9-3860-4efd-b535-2024284dec68"
+      "registryId": "dawson"
     },
     "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:2aa07ff1-7d3d-4a84-ba1d-cc5a1dc608f8": {
       "id": "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:2aa07ff1-7d3d-4a84-ba1d-cc5a1dc608f8",
@@ -4015,9 +3755,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Gérald-Godin",
-      "registryId": "gerald-godin",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=eb5ee4f9-3860-4efd-b535-2024284dec68"
+      "registryId": "gerald-godin"
     },
     "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:9a7dc9f2-d2cc-4b1d-86f2-81a292544ddb": {
       "id": "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:9a7dc9f2-d2cc-4b1d-86f2-81a292544ddb",
@@ -4221,9 +3959,7 @@
       "source": "rseq-s1",
       "priority": 27,
       "fullName": "Collège Jean-de-Brébeuf",
-      "registryId": "brebeuf",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=eb5ee4f9-3860-4efd-b535-2024284dec68"
+      "registryId": "brebeuf"
     },
     "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:bd55ed19-4682-4347-954a-5771a2b239f1": {
       "id": "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:bd55ed19-4682-4347-954a-5771a2b239f1",
@@ -4426,9 +4162,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Marie-Victorin",
-      "registryId": "marie-victorin",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=eb5ee4f9-3860-4efd-b535-2024284dec68"
+      "registryId": "marie-victorin"
     },
     "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:5de5989a-3eb0-431e-9ba2-bc76c6bbcf56": {
       "id": "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:5de5989a-3eb0-431e-9ba2-bc76c6bbcf56",
@@ -4632,9 +4366,7 @@
       "priority": 31,
       "fullName": "Collège Montmorency",
       "nickname": "Nomades",
-      "registryId": "montmorency",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=eb5ee4f9-3860-4efd-b535-2024284dec68"
+      "registryId": "montmorency"
     },
     "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:f72018be-2052-4c2e-8778-bd3e4d8255bd": {
       "id": "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:f72018be-2052-4c2e-8778-bd3e4d8255bd",
@@ -4840,9 +4572,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Sainte-Anne",
-      "registryId": "sainte-anne",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=eb5ee4f9-3860-4efd-b535-2024284dec68"
+      "registryId": "sainte-anne"
     },
     "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:95902150-8251-4e8e-817e-b3c5954ffb88": {
       "id": "collegial:badminton:eb5ee4f9-3860-4efd-b535-2024284dec68:95902150-8251-4e8e-817e-b3c5954ffb88",
@@ -5046,9 +4776,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Valleyfield",
-      "registryId": "valleyfield",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=eb5ee4f9-3860-4efd-b535-2024284dec68"
+      "registryId": "valleyfield"
     },
     "universitaire:badminton:931a996f-95a4-489d-b81d-0b2a781374f3:039d7c18-ffab-4b43-a3f5-2c3367f93c3c": {
       "id": "universitaire:badminton:931a996f-95a4-489d-b81d-0b2a781374f3:039d7c18-ffab-4b43-a3f5-2c3367f93c3c",
@@ -5071,9 +4799,7 @@
       "source": "rseq-s1",
       "priority": 12,
       "fullName": "École de technologie supérieure",
-      "registryId": "ets",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=931a996f-95a4-489d-b81d-0b2a781374f3"
+      "registryId": "ets"
     },
     "universitaire:badminton:931a996f-95a4-489d-b81d-0b2a781374f3:2746c1b7-eb9e-41ed-9d56-f28b9b64c792": {
       "id": "universitaire:badminton:931a996f-95a4-489d-b81d-0b2a781374f3:2746c1b7-eb9e-41ed-9d56-f28b9b64c792",
@@ -5097,9 +4823,7 @@
       "priority": 1,
       "fullName": "Université Laval",
       "nickname": "Rouge et Or",
-      "registryId": "ulaval",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=931a996f-95a4-489d-b81d-0b2a781374f3"
+      "registryId": "ulaval"
     },
     "universitaire:badminton:931a996f-95a4-489d-b81d-0b2a781374f3:5df5c28f-8462-41ec-a6f2-bdf382960221": {
       "id": "universitaire:badminton:931a996f-95a4-489d-b81d-0b2a781374f3:5df5c28f-8462-41ec-a6f2-bdf382960221",
@@ -5123,9 +4847,7 @@
       "priority": 4,
       "fullName": "Université de Montréal",
       "nickname": "Carabins",
-      "registryId": "udem",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=931a996f-95a4-489d-b81d-0b2a781374f3"
+      "registryId": "udem"
     },
     "universitaire:badminton:931a996f-95a4-489d-b81d-0b2a781374f3:3ca9a5ba-2511-41d8-b935-e1127201ee2c": {
       "id": "universitaire:badminton:931a996f-95a4-489d-b81d-0b2a781374f3:3ca9a5ba-2511-41d8-b935-e1127201ee2c",
@@ -5149,9 +4871,7 @@
       "priority": 6,
       "fullName": "Université de Sherbrooke",
       "nickname": "Vert & Or",
-      "registryId": "usherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=931a996f-95a4-489d-b81d-0b2a781374f3"
+      "registryId": "usherbrooke"
     },
     "universitaire:badminton:931a996f-95a4-489d-b81d-0b2a781374f3:90ca87c7-2d0d-49db-b9c0-175b3bad5748": {
       "id": "universitaire:badminton:931a996f-95a4-489d-b81d-0b2a781374f3:90ca87c7-2d0d-49db-b9c0-175b3bad5748",
@@ -5175,9 +4895,7 @@
       "priority": 5,
       "fullName": "Université du Québec à Montréal",
       "nickname": "Citadins",
-      "registryId": "uqam",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=931a996f-95a4-489d-b81d-0b2a781374f3"
+      "registryId": "uqam"
     },
     "universitaire:badminton:931a996f-95a4-489d-b81d-0b2a781374f3:dc451e11-edf7-4093-a5bf-be8d06baf144": {
       "id": "universitaire:badminton:931a996f-95a4-489d-b81d-0b2a781374f3:dc451e11-edf7-4093-a5bf-be8d06baf144",
@@ -5201,9 +4919,7 @@
       "priority": 11,
       "fullName": "Université du Québec à Trois-Rivières",
       "nickname": "Patriotes",
-      "registryId": "uqtr",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=931a996f-95a4-489d-b81d-0b2a781374f3"
+      "registryId": "uqtr"
     },
     "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:75d3749d-c79f-4b5f-bc54-f1dd13fae290": {
       "id": "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:75d3749d-c79f-4b5f-bc54-f1dd13fae290",
@@ -5410,9 +5126,7 @@
       "priority": 22,
       "fullName": "Cégep André-Laurendeau",
       "nickname": "Cheetahs",
-      "registryId": "andre-laurendeau",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b30acc8a-4be1-4d58-917e-59d7d3aa4a88"
+      "registryId": "andre-laurendeau"
     },
     "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:d4e804cb-0fbb-4a6a-902b-864e6bb1a71d": {
       "id": "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:d4e804cb-0fbb-4a6a-902b-864e6bb1a71d",
@@ -5620,9 +5334,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Beauce-Appalaches",
-      "registryId": "beauce-appalaches",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b30acc8a-4be1-4d58-917e-59d7d3aa4a88"
+      "registryId": "beauce-appalaches"
     },
     "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:8786ecb1-046c-427b-9beb-2da3ef5e7170": {
       "id": "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:8786ecb1-046c-427b-9beb-2da3ef5e7170",
@@ -5830,9 +5542,7 @@
       "priority": 26,
       "fullName": "Dawson College",
       "nickname": "Blues",
-      "registryId": "dawson",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b30acc8a-4be1-4d58-917e-59d7d3aa4a88"
+      "registryId": "dawson"
     },
     "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:5099f0a7-8d8f-4dc5-a53b-9d77dd8687af": {
       "id": "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:5099f0a7-8d8f-4dc5-a53b-9d77dd8687af",
@@ -6042,9 +5752,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Drummondville",
-      "registryId": "drummondville",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b30acc8a-4be1-4d58-917e-59d7d3aa4a88"
+      "registryId": "drummondville"
     },
     "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:d8553a87-d53f-4cae-a740-33269eae0354": {
       "id": "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:d8553a87-d53f-4cae-a740-33269eae0354",
@@ -6250,9 +5958,7 @@
       "priority": 42,
       "fullName": "Cégep Édouard-Montpetit",
       "nickname": "Cougars",
-      "registryId": "edouard-montpetit",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b30acc8a-4be1-4d58-917e-59d7d3aa4a88"
+      "registryId": "edouard-montpetit"
     },
     "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:11475f0b-100e-48b6-99f3-cf7a7fc22eea": {
       "id": "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:11475f0b-100e-48b6-99f3-cf7a7fc22eea",
@@ -6460,9 +6166,7 @@
       "priority": 28,
       "fullName": "John Abbott College",
       "nickname": "Islanders",
-      "registryId": "john-abbott",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b30acc8a-4be1-4d58-917e-59d7d3aa4a88"
+      "registryId": "john-abbott"
     },
     "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:817d1119-b2ec-4c4a-bfa6-d41b6dcc6511": {
       "id": "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:817d1119-b2ec-4c4a-bfa6-d41b6dcc6511",
@@ -6669,9 +6373,7 @@
       "priority": 9,
       "fullName": "Cégep Limoilou",
       "nickname": "Titans",
-      "registryId": "limoilou",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b30acc8a-4be1-4d58-917e-59d7d3aa4a88"
+      "registryId": "limoilou"
     },
     "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:7d18c4cc-fb1e-43ee-b5c8-8ee128322d6b": {
       "id": "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:7d18c4cc-fb1e-43ee-b5c8-8ee128322d6b",
@@ -6881,9 +6583,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Rivière-du-Loup",
-      "registryId": "riviere-du-loup",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b30acc8a-4be1-4d58-917e-59d7d3aa4a88"
+      "registryId": "riviere-du-loup"
     },
     "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:39982553-5c70-47ad-af63-3eae456dd80d": {
       "id": "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:39982553-5c70-47ad-af63-3eae456dd80d",
@@ -7038,9 +6738,7 @@
       "source": "rseq-s1",
       "priority": 20,
       "fullName": "Collège Ahuntsic",
-      "registryId": "ahuntsic",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=501c476d-a72e-4bef-afb8-0501680559c3"
+      "registryId": "ahuntsic"
     },
     "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:33c8aa74-14c1-4b67-bf19-63784cb94bb7": {
       "id": "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:33c8aa74-14c1-4b67-bf19-63784cb94bb7",
@@ -7195,9 +6893,7 @@
       "source": "rseq-s1",
       "priority": 24,
       "fullName": "Champlain College Lennoxville",
-      "registryId": "champlain-lennoxville",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=501c476d-a72e-4bef-afb8-0501680559c3"
+      "registryId": "champlain-lennoxville"
     },
     "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:23c214a6-fac5-44ba-a985-cb84d3d11ee0": {
       "id": "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:23c214a6-fac5-44ba-a985-cb84d3d11ee0",
@@ -7352,9 +7048,7 @@
       "priority": 25,
       "fullName": "Champlain College Saint-Lambert",
       "nickname": "Barons",
-      "registryId": "champlain-st-lambert",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=501c476d-a72e-4bef-afb8-0501680559c3"
+      "registryId": "champlain-st-lambert"
     },
     "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:fd2cf6ef-e882-4820-b48e-7a1890812fef": {
       "id": "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:fd2cf6ef-e882-4820-b48e-7a1890812fef",
@@ -7509,9 +7203,7 @@
       "priority": 26,
       "fullName": "Dawson College",
       "nickname": "Blues",
-      "registryId": "dawson",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=501c476d-a72e-4bef-afb8-0501680559c3"
+      "registryId": "dawson"
     },
     "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:fe0d20db-6b42-4218-9c01-11d6da0b8139": {
       "id": "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:fe0d20db-6b42-4218-9c01-11d6da0b8139",
@@ -7665,9 +7357,7 @@
       "priority": 31,
       "fullName": "Collège Montmorency",
       "nickname": "Nomades",
-      "registryId": "montmorency",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=501c476d-a72e-4bef-afb8-0501680559c3"
+      "registryId": "montmorency"
     },
     "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:7b9a1777-c69f-4831-9da1-d4ba20c7cc40": {
       "id": "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:7b9a1777-c69f-4831-9da1-d4ba20c7cc40",
@@ -7822,9 +7512,7 @@
       "priority": 37,
       "fullName": "Cégep de Sainte-Foy",
       "nickname": "Géants",
-      "registryId": "sainte-foy",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=501c476d-a72e-4bef-afb8-0501680559c3"
+      "registryId": "sainte-foy"
     },
     "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:d07d119f-66ae-4c91-a029-517229960aa6": {
       "id": "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:d07d119f-66ae-4c91-a029-517229960aa6",
@@ -7979,9 +7667,7 @@
       "priority": 35,
       "fullName": "Cégep Saint-Jean-sur-Richelieu",
       "nickname": "Dragons",
-      "registryId": "saint-jean-sur-richelieu",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=501c476d-a72e-4bef-afb8-0501680559c3"
+      "registryId": "saint-jean-sur-richelieu"
     },
     "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:c09d8a8c-7d83-4577-a6c9-06f988f87376": {
       "id": "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:c09d8a8c-7d83-4577-a6c9-06f988f87376",
@@ -8135,9 +7821,7 @@
       "priority": 40,
       "fullName": "Cégep de Trois-Rivières",
       "nickname": "Diablos",
-      "registryId": "trois-rivieres",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=501c476d-a72e-4bef-afb8-0501680559c3"
+      "registryId": "trois-rivieres"
     },
     "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:ab7cdf54-c6b3-43f3-8a7d-78bb463bfea4": {
       "id": "collegial:basketball:501c476d-a72e-4bef-afb8-0501680559c3:ab7cdf54-c6b3-43f3-8a7d-78bb463bfea4",
@@ -8292,9 +7976,7 @@
       "priority": 10,
       "fullName": "Vanier College",
       "nickname": "Cheetahs",
-      "registryId": "vanier",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=501c476d-a72e-4bef-afb8-0501680559c3"
+      "registryId": "vanier"
     },
     "collegial:basketball:c4149f03-48a2-48f0-9400-2d6459eaa0c5:ca0983e7-85d6-4d8b-9684-89eef3418a9a": {
       "id": "collegial:basketball:c4149f03-48a2-48f0-9400-2d6459eaa0c5:ca0983e7-85d6-4d8b-9684-89eef3418a9a",
@@ -8429,9 +8111,7 @@
       "source": "rseq-s1",
       "priority": 34,
       "fullName": "Cégep de Saint-Hyacinthe",
-      "registryId": "saint-hyacinthe",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=c4149f03-48a2-48f0-9400-2d6459eaa0c5"
+      "registryId": "saint-hyacinthe"
     },
     "collegial:basketball:c4149f03-48a2-48f0-9400-2d6459eaa0c5:931b39c9-12d8-4df9-8072-01ace9ee1ce5": {
       "id": "collegial:basketball:c4149f03-48a2-48f0-9400-2d6459eaa0c5:931b39c9-12d8-4df9-8072-01ace9ee1ce5",
@@ -8566,9 +8246,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Shawinigan",
-      "registryId": "shawinigan",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=c4149f03-48a2-48f0-9400-2d6459eaa0c5"
+      "registryId": "shawinigan"
     },
     "collegial:basketball:c4149f03-48a2-48f0-9400-2d6459eaa0c5:68599a7b-b6d7-4b1b-bce7-caa55600af22": {
       "id": "collegial:basketball:c4149f03-48a2-48f0-9400-2d6459eaa0c5:68599a7b-b6d7-4b1b-bce7-caa55600af22",
@@ -8703,9 +8381,7 @@
       "source": "rseq-s1",
       "priority": 38,
       "fullName": "Cégep de Sherbrooke",
-      "registryId": "cegep-sherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=c4149f03-48a2-48f0-9400-2d6459eaa0c5"
+      "registryId": "cegep-sherbrooke"
     },
     "collegial:basketball:c4149f03-48a2-48f0-9400-2d6459eaa0c5:8c0749c7-13a0-4d3a-928a-cba989ca65ec": {
       "id": "collegial:basketball:c4149f03-48a2-48f0-9400-2d6459eaa0c5:8c0749c7-13a0-4d3a-928a-cba989ca65ec",
@@ -8840,9 +8516,7 @@
       "source": "rseq-s1",
       "priority": 52,
       "fullName": "Cégep de Sorel-Tracy",
-      "registryId": "sorel-tracy",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=c4149f03-48a2-48f0-9400-2d6459eaa0c5"
+      "registryId": "sorel-tracy"
     },
     "collegial:basketball:c4149f03-48a2-48f0-9400-2d6459eaa0c5:f4c5f91f-2ae4-4b71-a90d-52f160af3ef4": {
       "id": "collegial:basketball:c4149f03-48a2-48f0-9400-2d6459eaa0c5:f4c5f91f-2ae4-4b71-a90d-52f160af3ef4",
@@ -8990,9 +8664,7 @@
       "priority": 40,
       "fullName": "Cégep de Trois-Rivières",
       "nickname": "Diablos",
-      "registryId": "trois-rivieres",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=c4149f03-48a2-48f0-9400-2d6459eaa0c5"
+      "registryId": "trois-rivieres"
     },
     "collegial:basketball:9816d17c-843e-423a-b2ee-93a8864a529e:9465d0c7-810a-455d-b6f9-454238866818": {
       "id": "collegial:basketball:9816d17c-843e-423a-b2ee-93a8864a529e:9465d0c7-810a-455d-b6f9-454238866818",
@@ -9127,9 +8799,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Drummondville",
-      "registryId": "drummondville",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9816d17c-843e-423a-b2ee-93a8864a529e"
+      "registryId": "drummondville"
     },
     "collegial:basketball:9816d17c-843e-423a-b2ee-93a8864a529e:e065b589-421a-4ce7-833f-f6e0b9cb6acd": {
       "id": "collegial:basketball:9816d17c-843e-423a-b2ee-93a8864a529e:e065b589-421a-4ce7-833f-f6e0b9cb6acd",
@@ -9277,9 +8947,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Granby",
-      "registryId": "granby",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9816d17c-843e-423a-b2ee-93a8864a529e"
+      "registryId": "granby"
     },
     "collegial:basketball:9816d17c-843e-423a-b2ee-93a8864a529e:fda2c13a-ae9f-40e4-bb6a-be5f793f37a5": {
       "id": "collegial:basketball:9816d17c-843e-423a-b2ee-93a8864a529e:fda2c13a-ae9f-40e4-bb6a-be5f793f37a5",
@@ -9414,9 +9082,7 @@
       "source": "rseq-s1",
       "priority": 51,
       "fullName": "Collège Laflèche",
-      "registryId": "lafleche",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9816d17c-843e-423a-b2ee-93a8864a529e"
+      "registryId": "lafleche"
     },
     "collegial:basketball:9816d17c-843e-423a-b2ee-93a8864a529e:965299e0-f613-49eb-a01b-3ba6824a3202": {
       "id": "collegial:basketball:9816d17c-843e-423a-b2ee-93a8864a529e:965299e0-f613-49eb-a01b-3ba6824a3202",
@@ -9552,9 +9218,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Séminaire de Sherbrooke",
-      "registryId": "seminaire-de-sherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9816d17c-843e-423a-b2ee-93a8864a529e"
+      "registryId": "seminaire-de-sherbrooke"
     },
     "collegial:basketball:9816d17c-843e-423a-b2ee-93a8864a529e:1ade5725-9bf4-4e63-bbae-bb8ff6f0ca6e": {
       "id": "collegial:basketball:9816d17c-843e-423a-b2ee-93a8864a529e:1ade5725-9bf4-4e63-bbae-bb8ff6f0ca6e",
@@ -9688,9 +9352,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Victoriaville",
-      "registryId": "victoriaville",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9816d17c-843e-423a-b2ee-93a8864a529e"
+      "registryId": "victoriaville"
     },
     "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:c2cdf3d0-3232-4038-9ac1-fc039a6c7f4e": {
       "id": "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:c2cdf3d0-3232-4038-9ac1-fc039a6c7f4e",
@@ -9815,9 +9477,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Champlain College St. Lawrence",
-      "registryId": "ch-st-lawrence",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=112f19a5-e775-4ea7-8a4d-d290e89be80f"
+      "registryId": "ch-st-lawrence"
     },
     "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:4a44babc-a1e9-4665-a832-0eced706e4cf": {
       "id": "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:4a44babc-a1e9-4665-a832-0eced706e4cf",
@@ -9969,9 +9629,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Chicoutimi",
-      "registryId": "chicoutimi",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=112f19a5-e775-4ea7-8a4d-d290e89be80f"
+      "registryId": "chicoutimi"
     },
     "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:e98b64e1-a9ae-4e43-8f94-fa1e97f983b4": {
       "id": "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:e98b64e1-a9ae-4e43-8f94-fa1e97f983b4",
@@ -10110,9 +9768,7 @@
       "priority": 8,
       "fullName": "Cégep François-Xavier-Garneau",
       "nickname": "Boomerang",
-      "registryId": "garneau",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=112f19a5-e775-4ea7-8a4d-d290e89be80f"
+      "registryId": "garneau"
     },
     "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:adfeb517-41c0-4442-b000-44b208e0b060": {
       "id": "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:adfeb517-41c0-4442-b000-44b208e0b060",
@@ -10250,9 +9906,7 @@
       "source": "rseq-s1",
       "priority": 29,
       "fullName": "Cégep de Jonquière",
-      "registryId": "jonquiere",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=112f19a5-e775-4ea7-8a4d-d290e89be80f"
+      "registryId": "jonquiere"
     },
     "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:51150fc2-f89e-43bd-9c48-e4e0d10cc67a": {
       "id": "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:51150fc2-f89e-43bd-9c48-e4e0d10cc67a",
@@ -10391,9 +10045,7 @@
       "priority": 9,
       "fullName": "Cégep Limoilou",
       "nickname": "Titans",
-      "registryId": "limoilou",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=112f19a5-e775-4ea7-8a4d-d290e89be80f"
+      "registryId": "limoilou"
     },
     "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:d25d2d2f-5d3f-4f52-ae0b-ca022b076ec9": {
       "id": "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:d25d2d2f-5d3f-4f52-ae0b-ca022b076ec9",
@@ -10530,9 +10182,7 @@
       "priority": 37,
       "fullName": "Cégep de Sainte-Foy",
       "nickname": "Géants",
-      "registryId": "sainte-foy",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=112f19a5-e775-4ea7-8a4d-d290e89be80f"
+      "registryId": "sainte-foy"
     },
     "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:7e97d32a-3bd2-4a9f-a9ac-2fee1bec60fe": {
       "id": "collegial:basketball:112f19a5-e775-4ea7-8a4d-d290e89be80f:7e97d32a-3bd2-4a9f-a9ac-2fee1bec60fe",
@@ -10657,9 +10307,7 @@
       "source": "rseq-s1",
       "priority": 39,
       "fullName": "Cégep de Thetford",
-      "registryId": "thetford",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=112f19a5-e775-4ea7-8a4d-d290e89be80f"
+      "registryId": "thetford"
     },
     "collegial:basketball:bc41537a-452b-4284-b2ba-9d5cff758cba:4f2e79e5-5c06-484f-bbd9-6ffbaee5ad1f": {
       "id": "collegial:basketball:bc41537a-452b-4284-b2ba-9d5cff758cba:4f2e79e5-5c06-484f-bbd9-6ffbaee5ad1f",
@@ -10814,9 +10462,7 @@
       "source": "rseq-s1",
       "priority": 20,
       "fullName": "Collège Ahuntsic",
-      "registryId": "ahuntsic",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bc41537a-452b-4284-b2ba-9d5cff758cba"
+      "registryId": "ahuntsic"
     },
     "collegial:basketball:bc41537a-452b-4284-b2ba-9d5cff758cba:637a929d-b671-4f64-b5e8-e11959a84c71": {
       "id": "collegial:basketball:bc41537a-452b-4284-b2ba-9d5cff758cba:637a929d-b671-4f64-b5e8-e11959a84c71",
@@ -10968,9 +10614,7 @@
       "priority": 26,
       "fullName": "Dawson College",
       "nickname": "Blues",
-      "registryId": "dawson",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bc41537a-452b-4284-b2ba-9d5cff758cba"
+      "registryId": "dawson"
     },
     "collegial:basketball:bc41537a-452b-4284-b2ba-9d5cff758cba:9c51df59-5318-4de8-b3cd-d4d25720f51c": {
       "id": "collegial:basketball:bc41537a-452b-4284-b2ba-9d5cff758cba:9c51df59-5318-4de8-b3cd-d4d25720f51c",
@@ -11122,9 +10766,7 @@
       "priority": 42,
       "fullName": "Cégep Édouard-Montpetit",
       "nickname": "Cougars",
-      "registryId": "edouard-montpetit",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bc41537a-452b-4284-b2ba-9d5cff758cba"
+      "registryId": "edouard-montpetit"
     },
     "collegial:basketball:bc41537a-452b-4284-b2ba-9d5cff758cba:d4a6e19d-14f4-4501-852c-1cd3f355594e": {
       "id": "collegial:basketball:bc41537a-452b-4284-b2ba-9d5cff758cba:d4a6e19d-14f4-4501-852c-1cd3f355594e",
@@ -11278,9 +10920,7 @@
       "priority": 31,
       "fullName": "Collège Montmorency",
       "nickname": "Nomades",
-      "registryId": "montmorency",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bc41537a-452b-4284-b2ba-9d5cff758cba"
+      "registryId": "montmorency"
     },
     "collegial:basketball:bc41537a-452b-4284-b2ba-9d5cff758cba:f7c3c02a-84cc-4cf4-a14e-b0ae633814d2": {
       "id": "collegial:basketball:bc41537a-452b-4284-b2ba-9d5cff758cba:f7c3c02a-84cc-4cf4-a14e-b0ae633814d2",
@@ -11435,9 +11075,7 @@
       "source": "rseq-s1",
       "priority": 36,
       "fullName": "Cégep de Saint-Jérôme",
-      "registryId": "saint-jerome",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bc41537a-452b-4284-b2ba-9d5cff758cba"
+      "registryId": "saint-jerome"
     },
     "collegial:basketball:bc41537a-452b-4284-b2ba-9d5cff758cba:7ac00c82-836b-49d8-a6bb-10597f9dbbb8": {
       "id": "collegial:basketball:bc41537a-452b-4284-b2ba-9d5cff758cba:7ac00c82-836b-49d8-a6bb-10597f9dbbb8",
@@ -11591,9 +11229,7 @@
       "priority": 53,
       "fullName": "Cégep de Saint-Laurent",
       "nickname": "Cavaliers",
-      "registryId": "saint-laurent",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bc41537a-452b-4284-b2ba-9d5cff758cba"
+      "registryId": "saint-laurent"
     },
     "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:f46280e1-cf49-4e5a-abeb-9509da162db2": {
       "id": "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:f46280e1-cf49-4e5a-abeb-9509da162db2",
@@ -11740,9 +11376,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de l'Abitibi-Témiscamingue",
-      "registryId": "abitibi-temisc",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
+      "registryId": "abitibi-temisc"
     },
     "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:47dfe02a-e63f-4c3b-8be7-1196a7ff35d4": {
       "id": "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:47dfe02a-e63f-4c3b-8be7-1196a7ff35d4",
@@ -11904,9 +11538,7 @@
       "priority": 22,
       "fullName": "Cégep André-Laurendeau",
       "nickname": "Cheetahs",
-      "registryId": "andre-laurendeau",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
+      "registryId": "andre-laurendeau"
     },
     "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:d84bcc7c-f14c-406c-b796-316b82c06471": {
       "id": "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:d84bcc7c-f14c-406c-b796-316b82c06471",
@@ -12055,9 +11687,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Héritage College",
-      "registryId": "heritage",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
+      "registryId": "heritage"
     },
     "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:983f9654-c1a7-4a07-bbc3-fff8a4f981ce": {
       "id": "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:983f9654-c1a7-4a07-bbc3-fff8a4f981ce",
@@ -12231,9 +11861,7 @@
       "source": "rseq-s1",
       "priority": 27,
       "fullName": "Collège Jean-de-Brébeuf",
-      "registryId": "brebeuf",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
+      "registryId": "brebeuf"
     },
     "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:c955c398-cd87-4981-a807-e75f5a0ae974": {
       "id": "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:c955c398-cd87-4981-a807-e75f5a0ae974",
@@ -12382,9 +12010,7 @@
       "priority": 28,
       "fullName": "John Abbott College",
       "nickname": "Islanders",
-      "registryId": "john-abbott",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
+      "registryId": "john-abbott"
     },
     "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:16378795-955a-4ae2-a5f8-d763a564ffed": {
       "id": "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:16378795-955a-4ae2-a5f8-d763a564ffed",
@@ -12547,9 +12173,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de L'Assomption",
-      "registryId": "lassomption",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
+      "registryId": "lassomption"
     },
     "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:cad459e2-4a76-43ff-ab41-e4f16730bf04": {
       "id": "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:cad459e2-4a76-43ff-ab41-e4f16730bf04",
@@ -12698,9 +12322,7 @@
       "source": "rseq-s1",
       "priority": 30,
       "fullName": "Collège Lionel-Groulx",
-      "registryId": "lionel-groulx",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
+      "registryId": "lionel-groulx"
     },
     "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:744f5cae-f4f6-45ff-a951-1669b5bf71fa": {
       "id": "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:744f5cae-f4f6-45ff-a951-1669b5bf71fa",
@@ -12862,9 +12484,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Marie-Victorin",
-      "registryId": "marie-victorin",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
+      "registryId": "marie-victorin"
     },
     "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:3dab18f0-05bc-444d-bbca-de48df13a023": {
       "id": "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:3dab18f0-05bc-444d-bbca-de48df13a023",
@@ -13026,9 +12646,7 @@
       "source": "rseq-s1",
       "priority": 33,
       "fullName": "Cégep de l'Outaouais",
-      "registryId": "outaouais",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
+      "registryId": "outaouais"
     },
     "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:3655ea87-532f-44c5-acf5-3c95d703b520": {
       "id": "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:3655ea87-532f-44c5-acf5-3c95d703b520",
@@ -13190,9 +12808,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Rosemont",
-      "registryId": "rosemont",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
+      "registryId": "rosemont"
     },
     "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:eb85bd6c-025f-48f1-be26-aafd2329a558": {
       "id": "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:eb85bd6c-025f-48f1-be26-aafd2329a558",
@@ -13355,9 +12971,7 @@
       "source": "rseq-s1",
       "priority": 41,
       "fullName": "Cégep du Vieux Montréal",
-      "registryId": "vieux-montreal",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=fa4cdca6-cd02-4808-96b3-2ff546cb4ac5"
+      "registryId": "vieux-montreal"
     },
     "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:5b15e46b-5391-4b9d-8b85-329ac3de5fff": {
       "id": "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:5b15e46b-5391-4b9d-8b85-329ac3de5fff",
@@ -13509,9 +13123,7 @@
       "source": "rseq-s1",
       "priority": 20,
       "fullName": "Collège Ahuntsic",
-      "registryId": "ahuntsic",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03379141-30ad-4961-aa29-0d9c0e1692f9"
+      "registryId": "ahuntsic"
     },
     "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:2af2518f-9369-4ffc-a700-b3ac6b5938f3": {
       "id": "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:2af2518f-9369-4ffc-a700-b3ac6b5938f3",
@@ -13663,9 +13275,7 @@
       "priority": 25,
       "fullName": "Champlain College Saint-Lambert",
       "nickname": "Barons",
-      "registryId": "champlain-st-lambert",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03379141-30ad-4961-aa29-0d9c0e1692f9"
+      "registryId": "champlain-st-lambert"
     },
     "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:5a39a275-e149-4ee8-813e-074320eb3c47": {
       "id": "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:5a39a275-e149-4ee8-813e-074320eb3c47",
@@ -13818,9 +13428,7 @@
       "priority": 26,
       "fullName": "Dawson College",
       "nickname": "Blues",
-      "registryId": "dawson",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03379141-30ad-4961-aa29-0d9c0e1692f9"
+      "registryId": "dawson"
     },
     "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:00971491-439a-4ace-ae67-293a339b9fdb": {
       "id": "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:00971491-439a-4ace-ae67-293a339b9fdb",
@@ -13974,9 +13582,7 @@
       "priority": 42,
       "fullName": "Cégep Édouard-Montpetit",
       "nickname": "Cougars",
-      "registryId": "edouard-montpetit",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03379141-30ad-4961-aa29-0d9c0e1692f9"
+      "registryId": "edouard-montpetit"
     },
     "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:b11a61ce-4fb9-4e0f-82ee-92856f294053": {
       "id": "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:b11a61ce-4fb9-4e0f-82ee-92856f294053",
@@ -14130,9 +13736,7 @@
       "source": "rseq-s1",
       "priority": 27,
       "fullName": "Collège Jean-de-Brébeuf",
-      "registryId": "brebeuf",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03379141-30ad-4961-aa29-0d9c0e1692f9"
+      "registryId": "brebeuf"
     },
     "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:44121561-6789-4a1e-9db8-13c2d1614870": {
       "id": "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:44121561-6789-4a1e-9db8-13c2d1614870",
@@ -14285,9 +13889,7 @@
       "priority": 28,
       "fullName": "John Abbott College",
       "nickname": "Islanders",
-      "registryId": "john-abbott",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03379141-30ad-4961-aa29-0d9c0e1692f9"
+      "registryId": "john-abbott"
     },
     "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:206f8747-e053-48cd-82a7-d1512393bdcb": {
       "id": "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:206f8747-e053-48cd-82a7-d1512393bdcb",
@@ -14440,9 +14042,7 @@
       "priority": 31,
       "fullName": "Collège Montmorency",
       "nickname": "Nomades",
-      "registryId": "montmorency",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03379141-30ad-4961-aa29-0d9c0e1692f9"
+      "registryId": "montmorency"
     },
     "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:6e371403-ccca-4a36-bc52-d69d63236ff8": {
       "id": "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:6e371403-ccca-4a36-bc52-d69d63236ff8",
@@ -14593,9 +14193,7 @@
       "source": "rseq-s1",
       "priority": 33,
       "fullName": "Cégep de l'Outaouais",
-      "registryId": "outaouais",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03379141-30ad-4961-aa29-0d9c0e1692f9"
+      "registryId": "outaouais"
     },
     "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:5694e464-b633-4afa-8867-82c6af306546": {
       "id": "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:5694e464-b633-4afa-8867-82c6af306546",
@@ -14748,9 +14346,7 @@
       "priority": 37,
       "fullName": "Cégep de Sainte-Foy",
       "nickname": "Géants",
-      "registryId": "sainte-foy",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03379141-30ad-4961-aa29-0d9c0e1692f9"
+      "registryId": "sainte-foy"
     },
     "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:410d21fd-3258-4ef7-ad83-85aeea0f0a3d": {
       "id": "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:410d21fd-3258-4ef7-ad83-85aeea0f0a3d",
@@ -14903,9 +14499,7 @@
       "source": "rseq-s1",
       "priority": 38,
       "fullName": "Cégep de Sherbrooke",
-      "registryId": "cegep-sherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03379141-30ad-4961-aa29-0d9c0e1692f9"
+      "registryId": "cegep-sherbrooke"
     },
     "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:d8d10d51-05d5-4dd9-952e-e513f71863f7": {
       "id": "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:d8d10d51-05d5-4dd9-952e-e513f71863f7",
@@ -15057,9 +14651,7 @@
       "source": "rseq-s1",
       "priority": 39,
       "fullName": "Cégep de Thetford",
-      "registryId": "thetford",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03379141-30ad-4961-aa29-0d9c0e1692f9"
+      "registryId": "thetford"
     },
     "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:8f3d7e31-5303-4b6b-bca8-f7f0f8089a28": {
       "id": "collegial:basketball:03379141-30ad-4961-aa29-0d9c0e1692f9:8f3d7e31-5303-4b6b-bca8-f7f0f8089a28",
@@ -15213,9 +14805,7 @@
       "priority": 10,
       "fullName": "Vanier College",
       "nickname": "Cheetahs",
-      "registryId": "vanier",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=03379141-30ad-4961-aa29-0d9c0e1692f9"
+      "registryId": "vanier"
     },
     "collegial:basketball:e7a44a26-71f6-4d1b-a0d8-3205f0e816d5:73e3a35a-e00a-41d9-828a-ac7ef5ac7214": {
       "id": "collegial:basketball:e7a44a26-71f6-4d1b-a0d8-3205f0e816d5:73e3a35a-e00a-41d9-828a-ac7ef5ac7214",
@@ -15350,9 +14940,7 @@
       "source": "rseq-s1",
       "priority": 24,
       "fullName": "Champlain College Lennoxville",
-      "registryId": "champlain-lennoxville",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e7a44a26-71f6-4d1b-a0d8-3205f0e816d5"
+      "registryId": "champlain-lennoxville"
     },
     "collegial:basketball:e7a44a26-71f6-4d1b-a0d8-3205f0e816d5:8d15b218-9005-4513-b2d8-17a5ed4fbd71": {
       "id": "collegial:basketball:e7a44a26-71f6-4d1b-a0d8-3205f0e816d5:8d15b218-9005-4513-b2d8-17a5ed4fbd71",
@@ -15487,9 +15075,7 @@
       "source": "rseq-s1",
       "priority": 34,
       "fullName": "Cégep de Saint-Hyacinthe",
-      "registryId": "saint-hyacinthe",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e7a44a26-71f6-4d1b-a0d8-3205f0e816d5"
+      "registryId": "saint-hyacinthe"
     },
     "collegial:basketball:e7a44a26-71f6-4d1b-a0d8-3205f0e816d5:028950e6-34ca-4f08-b8b5-7337529be45c": {
       "id": "collegial:basketball:e7a44a26-71f6-4d1b-a0d8-3205f0e816d5:028950e6-34ca-4f08-b8b5-7337529be45c",
@@ -15625,9 +15211,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Séminaire de Sherbrooke",
-      "registryId": "seminaire-de-sherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e7a44a26-71f6-4d1b-a0d8-3205f0e816d5"
+      "registryId": "seminaire-de-sherbrooke"
     },
     "collegial:basketball:e7a44a26-71f6-4d1b-a0d8-3205f0e816d5:9f7f1bf2-11a8-4a56-ab47-6561f199989d": {
       "id": "collegial:basketball:e7a44a26-71f6-4d1b-a0d8-3205f0e816d5:9f7f1bf2-11a8-4a56-ab47-6561f199989d",
@@ -15762,9 +15346,7 @@
       "source": "rseq-s1",
       "priority": 38,
       "fullName": "Cégep de Sherbrooke",
-      "registryId": "cegep-sherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e7a44a26-71f6-4d1b-a0d8-3205f0e816d5"
+      "registryId": "cegep-sherbrooke"
     },
     "collegial:basketball:e7a44a26-71f6-4d1b-a0d8-3205f0e816d5:2a991ddd-1782-4bbb-993e-d16c67db5e84": {
       "id": "collegial:basketball:e7a44a26-71f6-4d1b-a0d8-3205f0e816d5:2a991ddd-1782-4bbb-993e-d16c67db5e84",
@@ -15899,9 +15481,7 @@
       "priority": 40,
       "fullName": "Cégep de Trois-Rivières",
       "nickname": "Diablos",
-      "registryId": "trois-rivieres",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=e7a44a26-71f6-4d1b-a0d8-3205f0e816d5"
+      "registryId": "trois-rivieres"
     },
     "collegial:basketball:25fb9faf-6c04-4c60-b83c-155bf7de7d7a:7aa13584-7f16-4501-ae58-e2ed1a8fc1a7": {
       "id": "collegial:basketball:25fb9faf-6c04-4c60-b83c-155bf7de7d7a:7aa13584-7f16-4501-ae58-e2ed1a8fc1a7",
@@ -16036,9 +15616,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Drummondville",
-      "registryId": "drummondville",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=25fb9faf-6c04-4c60-b83c-155bf7de7d7a"
+      "registryId": "drummondville"
     },
     "collegial:basketball:25fb9faf-6c04-4c60-b83c-155bf7de7d7a:49982f3f-0175-4959-be05-8bbb04688404": {
       "id": "collegial:basketball:25fb9faf-6c04-4c60-b83c-155bf7de7d7a:49982f3f-0175-4959-be05-8bbb04688404",
@@ -16172,9 +15750,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Granby",
-      "registryId": "granby",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=25fb9faf-6c04-4c60-b83c-155bf7de7d7a"
+      "registryId": "granby"
     },
     "collegial:basketball:25fb9faf-6c04-4c60-b83c-155bf7de7d7a:893301a6-f8e0-4263-bc82-d0a026fd1b24": {
       "id": "collegial:basketball:25fb9faf-6c04-4c60-b83c-155bf7de7d7a:893301a6-f8e0-4263-bc82-d0a026fd1b24",
@@ -16309,9 +15885,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Shawinigan",
-      "registryId": "shawinigan",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=25fb9faf-6c04-4c60-b83c-155bf7de7d7a"
+      "registryId": "shawinigan"
     },
     "collegial:basketball:25fb9faf-6c04-4c60-b83c-155bf7de7d7a:d56b4e0a-d4a4-4c68-9423-2a4675378eb4": {
       "id": "collegial:basketball:25fb9faf-6c04-4c60-b83c-155bf7de7d7a:d56b4e0a-d4a4-4c68-9423-2a4675378eb4",
@@ -16445,9 +16019,7 @@
       "source": "rseq-s1",
       "priority": 52,
       "fullName": "Cégep de Sorel-Tracy",
-      "registryId": "sorel-tracy",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=25fb9faf-6c04-4c60-b83c-155bf7de7d7a"
+      "registryId": "sorel-tracy"
     },
     "collegial:basketball:25fb9faf-6c04-4c60-b83c-155bf7de7d7a:3a3bc42a-323b-4c83-968e-309541f46058": {
       "id": "collegial:basketball:25fb9faf-6c04-4c60-b83c-155bf7de7d7a:3a3bc42a-323b-4c83-968e-309541f46058",
@@ -16582,9 +16154,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Victoriaville",
-      "registryId": "victoriaville",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=25fb9faf-6c04-4c60-b83c-155bf7de7d7a"
+      "registryId": "victoriaville"
     },
     "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:1c816156-ab1c-4aa3-9d35-34b9e9971478": {
       "id": "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:1c816156-ab1c-4aa3-9d35-34b9e9971478",
@@ -16722,9 +16292,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Alma",
-      "registryId": "alma",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9"
+      "registryId": "alma"
     },
     "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:be8463de-e00e-4c62-a64c-153ba9720ba7": {
       "id": "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:be8463de-e00e-4c62-a64c-153ba9720ba7",
@@ -16862,9 +16430,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Champlain College St. Lawrence",
-      "registryId": "ch-st-lawrence",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9"
+      "registryId": "ch-st-lawrence"
     },
     "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:cda9b085-2c0d-4b2d-8620-c25eb1d9f226": {
       "id": "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:cda9b085-2c0d-4b2d-8620-c25eb1d9f226",
@@ -17001,9 +16567,7 @@
       "priority": 8,
       "fullName": "Cégep François-Xavier-Garneau",
       "nickname": "Boomerang",
-      "registryId": "garneau",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9"
+      "registryId": "garneau"
     },
     "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:c124a90f-c484-4df4-b5ff-723e3eab8225": {
       "id": "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:c124a90f-c484-4df4-b5ff-723e3eab8225",
@@ -17140,9 +16704,7 @@
       "source": "rseq-s1",
       "priority": 29,
       "fullName": "Cégep de Jonquière",
-      "registryId": "jonquiere",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9"
+      "registryId": "jonquiere"
     },
     "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:dcbfbcb3-6d8f-4e6a-bb19-ad39463afef6": {
       "id": "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:dcbfbcb3-6d8f-4e6a-bb19-ad39463afef6",
@@ -17279,9 +16841,7 @@
       "priority": 9,
       "fullName": "Cégep Limoilou",
       "nickname": "Titans",
-      "registryId": "limoilou",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9"
+      "registryId": "limoilou"
     },
     "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:15bff569-b580-4b7a-b941-ab4ebd3d4867": {
       "id": "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:15bff569-b580-4b7a-b941-ab4ebd3d4867",
@@ -17405,9 +16965,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Rimouski",
-      "registryId": "rimouski",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9"
+      "registryId": "rimouski"
     },
     "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:06112e90-4936-4ac0-91f0-da2532467cbb": {
       "id": "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:06112e90-4936-4ac0-91f0-da2532467cbb",
@@ -17544,9 +17102,7 @@
       "priority": 37,
       "fullName": "Cégep de Sainte-Foy",
       "nickname": "Géants",
-      "registryId": "sainte-foy",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9"
+      "registryId": "sainte-foy"
     },
     "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:9982bac5-16c9-4246-9e65-be26457145a1": {
       "id": "collegial:basketball:3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9:9982bac5-16c9-4246-9e65-be26457145a1",
@@ -17697,9 +17253,7 @@
       "source": "rseq-s1",
       "priority": 39,
       "fullName": "Cégep de Thetford",
-      "registryId": "thetford",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=3b9e2e05-e4d7-44ae-8720-5a3b6ee601a9"
+      "registryId": "thetford"
     },
     "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:addc0b26-da3a-4867-882f-537b12620b9d": {
       "id": "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:addc0b26-da3a-4867-882f-537b12620b9d",
@@ -17852,9 +17406,7 @@
       "source": "rseq-s1",
       "priority": 20,
       "fullName": "Collège Ahuntsic",
-      "registryId": "ahuntsic",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee"
+      "registryId": "ahuntsic"
     },
     "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:a45a4153-d87f-42a1-ac59-a8d0f37f4a6f": {
       "id": "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:a45a4153-d87f-42a1-ac59-a8d0f37f4a6f",
@@ -18006,9 +17558,7 @@
       "priority": 22,
       "fullName": "Cégep André-Laurendeau",
       "nickname": "Cheetahs",
-      "registryId": "andre-laurendeau",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee"
+      "registryId": "andre-laurendeau"
     },
     "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:add2e4fb-d457-45a0-9427-d40db44f1387": {
       "id": "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:add2e4fb-d457-45a0-9427-d40db44f1387",
@@ -18161,9 +17711,7 @@
       "priority": 26,
       "fullName": "Dawson College",
       "nickname": "Blues",
-      "registryId": "dawson",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee"
+      "registryId": "dawson"
     },
     "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:9058dcc3-bd44-4f6f-b056-1b4887507569": {
       "id": "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:9058dcc3-bd44-4f6f-b056-1b4887507569",
@@ -18302,9 +17850,7 @@
       "priority": 42,
       "fullName": "Cégep Édouard-Montpetit",
       "nickname": "Cougars",
-      "registryId": "edouard-montpetit",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee"
+      "registryId": "edouard-montpetit"
     },
     "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:bb946bed-ddd8-46db-894f-651816f5d37a": {
       "id": "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:bb946bed-ddd8-46db-894f-651816f5d37a",
@@ -18456,9 +18002,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Héritage College",
-      "registryId": "heritage",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee"
+      "registryId": "heritage"
     },
     "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:7f6e810a-5638-4c2b-9f2b-13ed6b208144": {
       "id": "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:7f6e810a-5638-4c2b-9f2b-13ed6b208144",
@@ -18611,9 +18155,7 @@
       "source": "rseq-s1",
       "priority": 27,
       "fullName": "Collège Jean-de-Brébeuf",
-      "registryId": "brebeuf",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee"
+      "registryId": "brebeuf"
     },
     "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:97c93275-4c4f-42a6-90b8-c13c4347eb88": {
       "id": "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:97c93275-4c4f-42a6-90b8-c13c4347eb88",
@@ -18766,9 +18308,7 @@
       "priority": 35,
       "fullName": "Cégep Saint-Jean-sur-Richelieu",
       "nickname": "Dragons",
-      "registryId": "saint-jean-sur-richelieu",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee"
+      "registryId": "saint-jean-sur-richelieu"
     },
     "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:718ba640-664c-40d5-993b-acc2fc1cfa1e": {
       "id": "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:718ba640-664c-40d5-993b-acc2fc1cfa1e",
@@ -18907,9 +18447,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Terrebonne",
-      "registryId": "terrebonne",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee"
+      "registryId": "terrebonne"
     },
     "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:fe037a3e-650c-4ed5-a147-4e953c52321e": {
       "id": "collegial:basketball:7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee:fe037a3e-650c-4ed5-a147-4e953c52321e",
@@ -19061,9 +18599,7 @@
       "priority": 10,
       "fullName": "Vanier College",
       "nickname": "Cheetahs",
-      "registryId": "vanier",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=7ffb692b-a74c-4eb7-b4e5-a0bb8f5b07ee"
+      "registryId": "vanier"
     },
     "collegial:basketball:d6728720-cf42-4c9f-83cd-568b5ddd1f27:7ad33e01-ef9b-4d01-9d35-ba387bb09e2e": {
       "id": "collegial:basketball:d6728720-cf42-4c9f-83cd-568b5ddd1f27:7ad33e01-ef9b-4d01-9d35-ba387bb09e2e",
@@ -19092,9 +18628,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Alma",
-      "registryId": "alma",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d6728720-cf42-4c9f-83cd-568b5ddd1f27"
+      "registryId": "alma"
     },
     "collegial:basketball:d6728720-cf42-4c9f-83cd-568b5ddd1f27:46427217-e1a3-418d-bda2-ea000a25e647": {
       "id": "collegial:basketball:d6728720-cf42-4c9f-83cd-568b5ddd1f27:46427217-e1a3-418d-bda2-ea000a25e647",
@@ -19123,9 +18657,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Baie-Comeau",
-      "registryId": "baie-comeau",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d6728720-cf42-4c9f-83cd-568b5ddd1f27"
+      "registryId": "baie-comeau"
     },
     "collegial:basketball:d6728720-cf42-4c9f-83cd-568b5ddd1f27:e540153a-2b6f-45fe-bda4-9922fa336f02": {
       "id": "collegial:basketball:d6728720-cf42-4c9f-83cd-568b5ddd1f27:e540153a-2b6f-45fe-bda4-9922fa336f02",
@@ -19154,9 +18686,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Chicoutimi",
-      "registryId": "chicoutimi",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d6728720-cf42-4c9f-83cd-568b5ddd1f27"
+      "registryId": "chicoutimi"
     },
     "collegial:basketball:d6728720-cf42-4c9f-83cd-568b5ddd1f27:d0daf331-b76d-4491-9668-cf9064a98f94": {
       "id": "collegial:basketball:d6728720-cf42-4c9f-83cd-568b5ddd1f27:d0daf331-b76d-4491-9668-cf9064a98f94",
@@ -19185,9 +18715,7 @@
       "source": "rseq-s1",
       "priority": 29,
       "fullName": "Cégep de Jonquière",
-      "registryId": "jonquiere",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d6728720-cf42-4c9f-83cd-568b5ddd1f27"
+      "registryId": "jonquiere"
     },
     "collegial:basketball:d6728720-cf42-4c9f-83cd-568b5ddd1f27:a2067e2b-6606-4dba-b49e-d4a0773cb31b": {
       "id": "collegial:basketball:d6728720-cf42-4c9f-83cd-568b5ddd1f27:a2067e2b-6606-4dba-b49e-d4a0773cb31b",
@@ -19216,9 +18744,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Saint-Félicien",
-      "registryId": "saint-felicien",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d6728720-cf42-4c9f-83cd-568b5ddd1f27"
+      "registryId": "saint-felicien"
     },
     "collegial:basketball:d6728720-cf42-4c9f-83cd-568b5ddd1f27:5a3b64c6-2639-4675-8868-572202ea2c90": {
       "id": "collegial:basketball:d6728720-cf42-4c9f-83cd-568b5ddd1f27:5a3b64c6-2639-4675-8868-572202ea2c90",
@@ -19247,9 +18773,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Sept-Îles",
-      "registryId": "sept-iles",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d6728720-cf42-4c9f-83cd-568b5ddd1f27"
+      "registryId": "sept-iles"
     },
     "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:4c16001a-c1e5-4124-8575-54b9fb31d0d1": {
       "id": "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:4c16001a-c1e5-4124-8575-54b9fb31d0d1",
@@ -19398,9 +18922,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de l'Abitibi-Témiscamingue",
-      "registryId": "abitibi-temisc",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91"
+      "registryId": "abitibi-temisc"
     },
     "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:79582975-2ed8-419c-8ae8-097299e4ffe9": {
       "id": "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:79582975-2ed8-419c-8ae8-097299e4ffe9",
@@ -19562,9 +19084,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de L'Assomption",
-      "registryId": "lassomption",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91"
+      "registryId": "lassomption"
     },
     "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:c6c0d877-b06a-4c75-acd4-d67587011836": {
       "id": "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:c6c0d877-b06a-4c75-acd4-d67587011836",
@@ -19727,9 +19247,7 @@
       "source": "rseq-s1",
       "priority": 30,
       "fullName": "Collège Lionel-Groulx",
-      "registryId": "lionel-groulx",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91"
+      "registryId": "lionel-groulx"
     },
     "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:a3947d15-2c2d-489d-b01d-2cf7c0afb26d": {
       "id": "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:a3947d15-2c2d-489d-b01d-2cf7c0afb26d",
@@ -19878,9 +19396,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Maisonneuve",
-      "registryId": "maisonneuve",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91"
+      "registryId": "maisonneuve"
     },
     "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:648abe74-d790-4111-b85c-9b434f38e919": {
       "id": "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:648abe74-d790-4111-b85c-9b434f38e919",
@@ -20042,9 +19558,7 @@
       "priority": 31,
       "fullName": "Collège Montmorency",
       "nickname": "Nomades",
-      "registryId": "montmorency",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91"
+      "registryId": "montmorency"
     },
     "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:42357e18-2659-4dcf-b119-e6ad344221af": {
       "id": "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:42357e18-2659-4dcf-b119-e6ad344221af",
@@ -20206,9 +19720,7 @@
       "source": "rseq-s1",
       "priority": 33,
       "fullName": "Cégep de l'Outaouais",
-      "registryId": "outaouais",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91"
+      "registryId": "outaouais"
     },
     "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:9a35f7c6-6192-4548-aa17-0b3e18a30015": {
       "id": "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:9a35f7c6-6192-4548-aa17-0b3e18a30015",
@@ -20358,9 +19870,7 @@
       "source": "rseq-s1",
       "priority": 36,
       "fullName": "Cégep de Saint-Jérôme",
-      "registryId": "saint-jerome",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91"
+      "registryId": "saint-jerome"
     },
     "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:49d2bbe7-b1e6-449d-a464-b441c50f646d": {
       "id": "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:49d2bbe7-b1e6-449d-a464-b441c50f646d",
@@ -20509,9 +20019,7 @@
       "priority": 53,
       "fullName": "Cégep de Saint-Laurent",
       "nickname": "Cavaliers",
-      "registryId": "saint-laurent",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91"
+      "registryId": "saint-laurent"
     },
     "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:8163037f-3ae5-45f5-bbc6-f9a6909cf617": {
       "id": "collegial:basketball:60f78173-5961-4507-8726-0c1fc362af91:8163037f-3ae5-45f5-bbc6-f9a6909cf617",
@@ -20660,9 +20168,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Universel",
-      "registryId": "universel",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=60f78173-5961-4507-8726-0c1fc362af91"
+      "registryId": "universel"
     },
     "collegial:basketball:69d65ae8-d390-45a8-8b69-f0080287bef2:01d9f693-ef0a-44e2-a3d7-4e13d6b945e2": {
       "id": "collegial:basketball:69d65ae8-d390-45a8-8b69-f0080287bef2:01d9f693-ef0a-44e2-a3d7-4e13d6b945e2",
@@ -20809,9 +20315,7 @@
       "source": "rseq-s1",
       "priority": 21,
       "fullName": "Collège André-Grasset",
-      "registryId": "andre-grasset",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=69d65ae8-d390-45a8-8b69-f0080287bef2"
+      "registryId": "andre-grasset"
     },
     "collegial:basketball:69d65ae8-d390-45a8-8b69-f0080287bef2:e24a6336-f0ef-42f1-9d23-ac25c3be786d": {
       "id": "collegial:basketball:69d65ae8-d390-45a8-8b69-f0080287bef2:e24a6336-f0ef-42f1-9d23-ac25c3be786d",
@@ -20958,9 +20462,7 @@
       "source": "rseq-s1",
       "priority": 23,
       "fullName": "Collège de Bois-de-Boulogne",
-      "registryId": "bois-de-boulogne",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=69d65ae8-d390-45a8-8b69-f0080287bef2"
+      "registryId": "bois-de-boulogne"
     },
     "collegial:basketball:69d65ae8-d390-45a8-8b69-f0080287bef2:bfe9daa9-6493-48bc-be79-38ad987eaeee": {
       "id": "collegial:basketball:69d65ae8-d390-45a8-8b69-f0080287bef2:bfe9daa9-6493-48bc-be79-38ad987eaeee",
@@ -21107,9 +20609,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Marianopolis College",
-      "registryId": "marianopolis",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=69d65ae8-d390-45a8-8b69-f0080287bef2"
+      "registryId": "marianopolis"
     },
     "collegial:basketball:69d65ae8-d390-45a8-8b69-f0080287bef2:39a61fee-635e-4d50-b924-03b3291498ef": {
       "id": "collegial:basketball:69d65ae8-d390-45a8-8b69-f0080287bef2:39a61fee-635e-4d50-b924-03b3291498ef",
@@ -21256,9 +20756,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Marie-Victorin",
-      "registryId": "marie-victorin",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=69d65ae8-d390-45a8-8b69-f0080287bef2"
+      "registryId": "marie-victorin"
     },
     "collegial:basketball:69d65ae8-d390-45a8-8b69-f0080287bef2:99056790-8669-4efe-8565-7f3ef6c8a71b": {
       "id": "collegial:basketball:69d65ae8-d390-45a8-8b69-f0080287bef2:99056790-8669-4efe-8565-7f3ef6c8a71b",
@@ -21405,9 +20903,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Rosemont",
-      "registryId": "rosemont",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=69d65ae8-d390-45a8-8b69-f0080287bef2"
+      "registryId": "rosemont"
     },
     "collegial:basketball:69d65ae8-d390-45a8-8b69-f0080287bef2:92eaa0b1-0b55-4e38-abfb-5df0b21f72db": {
       "id": "collegial:basketball:69d65ae8-d390-45a8-8b69-f0080287bef2:92eaa0b1-0b55-4e38-abfb-5df0b21f72db",
@@ -21554,9 +21050,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Valleyfield",
-      "registryId": "valleyfield",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=69d65ae8-d390-45a8-8b69-f0080287bef2"
+      "registryId": "valleyfield"
     },
     "universitaire:basketball:2ba7cfa8-5e21-4351-b179-f6adf08f053e:5f105854-cc41-42f8-9c0b-47b775302f30": {
       "id": "universitaire:basketball:2ba7cfa8-5e21-4351-b179-f6adf08f053e:5f105854-cc41-42f8-9c0b-47b775302f30",
@@ -21685,9 +21179,7 @@
       "priority": 7,
       "fullName": "Bishop's University",
       "nickname": "Gaiters",
-      "registryId": "bishops",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2ba7cfa8-5e21-4351-b179-f6adf08f053e"
+      "registryId": "bishops"
     },
     "universitaire:basketball:2ba7cfa8-5e21-4351-b179-f6adf08f053e:506592f6-2f7c-4d43-972b-94f18374c500": {
       "id": "universitaire:basketball:2ba7cfa8-5e21-4351-b179-f6adf08f053e:506592f6-2f7c-4d43-972b-94f18374c500",
@@ -21816,9 +21308,7 @@
       "priority": 3,
       "fullName": "Université Concordia",
       "nickname": "Stingers",
-      "registryId": "concordia",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2ba7cfa8-5e21-4351-b179-f6adf08f053e"
+      "registryId": "concordia"
     },
     "universitaire:basketball:2ba7cfa8-5e21-4351-b179-f6adf08f053e:774e3a85-9ec0-49ca-8ebb-4529a0c54989": {
       "id": "universitaire:basketball:2ba7cfa8-5e21-4351-b179-f6adf08f053e:774e3a85-9ec0-49ca-8ebb-4529a0c54989",
@@ -21947,9 +21437,7 @@
       "priority": 1,
       "fullName": "Université Laval",
       "nickname": "Rouge et Or",
-      "registryId": "ulaval",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2ba7cfa8-5e21-4351-b179-f6adf08f053e"
+      "registryId": "ulaval"
     },
     "universitaire:basketball:2ba7cfa8-5e21-4351-b179-f6adf08f053e:dfee85d0-adbe-434d-8bfc-5150ada604a9": {
       "id": "universitaire:basketball:2ba7cfa8-5e21-4351-b179-f6adf08f053e:dfee85d0-adbe-434d-8bfc-5150ada604a9",
@@ -22078,9 +21566,7 @@
       "priority": 2,
       "fullName": "Université McGill",
       "nickname": "Redbirds",
-      "registryId": "mcgill",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2ba7cfa8-5e21-4351-b179-f6adf08f053e"
+      "registryId": "mcgill"
     },
     "universitaire:basketball:2ba7cfa8-5e21-4351-b179-f6adf08f053e:6578caed-d641-471c-bf7b-833a298faa4c": {
       "id": "universitaire:basketball:2ba7cfa8-5e21-4351-b179-f6adf08f053e:6578caed-d641-471c-bf7b-833a298faa4c",
@@ -22209,9 +21695,7 @@
       "priority": 5,
       "fullName": "Université du Québec à Montréal",
       "nickname": "Citadins",
-      "registryId": "uqam",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=2ba7cfa8-5e21-4351-b179-f6adf08f053e"
+      "registryId": "uqam"
     },
     "universitaire:basketball:b1f083ac-4748-4563-b3bf-b3369204417b:3d80bae8-d346-4179-ba55-d424adb25e23": {
       "id": "universitaire:basketball:b1f083ac-4748-4563-b3bf-b3369204417b:3d80bae8-d346-4179-ba55-d424adb25e23",
@@ -22340,9 +21824,7 @@
       "priority": 7,
       "fullName": "Bishop's University",
       "nickname": "Gaiters",
-      "registryId": "bishops",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b1f083ac-4748-4563-b3bf-b3369204417b"
+      "registryId": "bishops"
     },
     "universitaire:basketball:b1f083ac-4748-4563-b3bf-b3369204417b:dc08dc63-1b69-4aa2-86f8-b444a532f39c": {
       "id": "universitaire:basketball:b1f083ac-4748-4563-b3bf-b3369204417b:dc08dc63-1b69-4aa2-86f8-b444a532f39c",
@@ -22471,9 +21953,7 @@
       "priority": 3,
       "fullName": "Université Concordia",
       "nickname": "Stingers",
-      "registryId": "concordia",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b1f083ac-4748-4563-b3bf-b3369204417b"
+      "registryId": "concordia"
     },
     "universitaire:basketball:b1f083ac-4748-4563-b3bf-b3369204417b:ada42b41-7c83-4b45-9386-3e62ffab6206": {
       "id": "universitaire:basketball:b1f083ac-4748-4563-b3bf-b3369204417b:ada42b41-7c83-4b45-9386-3e62ffab6206",
@@ -22602,9 +22082,7 @@
       "priority": 1,
       "fullName": "Université Laval",
       "nickname": "Rouge et Or",
-      "registryId": "ulaval",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b1f083ac-4748-4563-b3bf-b3369204417b"
+      "registryId": "ulaval"
     },
     "universitaire:basketball:b1f083ac-4748-4563-b3bf-b3369204417b:5ca94d05-bed5-46bc-85b9-be6fc69eaec1": {
       "id": "universitaire:basketball:b1f083ac-4748-4563-b3bf-b3369204417b:5ca94d05-bed5-46bc-85b9-be6fc69eaec1",
@@ -22733,9 +22211,7 @@
       "priority": 2,
       "fullName": "Université McGill",
       "nickname": "Redbirds",
-      "registryId": "mcgill",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b1f083ac-4748-4563-b3bf-b3369204417b"
+      "registryId": "mcgill"
     },
     "universitaire:basketball:b1f083ac-4748-4563-b3bf-b3369204417b:90877391-0df6-4345-a63b-cad6212fdb28": {
       "id": "universitaire:basketball:b1f083ac-4748-4563-b3bf-b3369204417b:90877391-0df6-4345-a63b-cad6212fdb28",
@@ -22864,9 +22340,7 @@
       "priority": 5,
       "fullName": "Université du Québec à Montréal",
       "nickname": "Citadins",
-      "registryId": "uqam",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=b1f083ac-4748-4563-b3bf-b3369204417b"
+      "registryId": "uqam"
     },
     "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:38874ddd-7aea-46b7-a24a-e5d3ab5b4a14": {
       "id": "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:38874ddd-7aea-46b7-a24a-e5d3ab5b4a14",
@@ -22889,9 +22363,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Alma",
-      "registryId": "alma",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0dd4e9bb-cec2-4c8f-8868-78acc54a572c"
+      "registryId": "alma"
     },
     "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:5381e300-14f5-4368-a21e-280a93def32a": {
       "id": "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:5381e300-14f5-4368-a21e-280a93def32a",
@@ -22914,9 +22386,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Chicoutimi",
-      "registryId": "chicoutimi",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0dd4e9bb-cec2-4c8f-8868-78acc54a572c"
+      "registryId": "chicoutimi"
     },
     "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:7e86ae7f-12bd-4a08-a6ba-d6782b21e035": {
       "id": "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:7e86ae7f-12bd-4a08-a6ba-d6782b21e035",
@@ -22940,9 +22410,7 @@
       "priority": 8,
       "fullName": "Cégep François-Xavier-Garneau",
       "nickname": "Boomerang",
-      "registryId": "garneau",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0dd4e9bb-cec2-4c8f-8868-78acc54a572c"
+      "registryId": "garneau"
     },
     "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:38fe4d52-c3d0-4612-b8fa-92134197b9f6": {
       "id": "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:38fe4d52-c3d0-4612-b8fa-92134197b9f6",
@@ -22965,9 +22433,7 @@
       "source": "rseq-s1",
       "priority": 29,
       "fullName": "Cégep de Jonquière",
-      "registryId": "jonquiere",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0dd4e9bb-cec2-4c8f-8868-78acc54a572c"
+      "registryId": "jonquiere"
     },
     "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:633e10a6-ff87-4ce8-b46c-071fdd1ca78a": {
       "id": "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:633e10a6-ff87-4ce8-b46c-071fdd1ca78a",
@@ -22990,9 +22456,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de La Pocatière",
-      "registryId": "la-pocatiere",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0dd4e9bb-cec2-4c8f-8868-78acc54a572c"
+      "registryId": "la-pocatiere"
     },
     "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:223bb910-777c-4cb8-8720-3bab981d8ce6": {
       "id": "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:223bb910-777c-4cb8-8720-3bab981d8ce6",
@@ -23015,9 +22479,7 @@
       "source": "rseq-s1",
       "priority": 50,
       "fullName": "Cégep de Lévis",
-      "registryId": "levis",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0dd4e9bb-cec2-4c8f-8868-78acc54a572c"
+      "registryId": "levis"
     },
     "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:c7756cd1-7b23-41db-a368-4242da844e56": {
       "id": "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:c7756cd1-7b23-41db-a368-4242da844e56",
@@ -23040,9 +22502,7 @@
       "source": "rseq-s1",
       "priority": 32,
       "fullName": "Campus Notre-Dame-de-Foy",
-      "registryId": "notre-dame-foy",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0dd4e9bb-cec2-4c8f-8868-78acc54a572c"
+      "registryId": "notre-dame-foy"
     },
     "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:631e619f-c928-494b-ac70-efd0cc469013": {
       "id": "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:631e619f-c928-494b-ac70-efd0cc469013",
@@ -23066,9 +22526,7 @@
       "priority": 37,
       "fullName": "Cégep de Sainte-Foy",
       "nickname": "Géants",
-      "registryId": "sainte-foy",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0dd4e9bb-cec2-4c8f-8868-78acc54a572c"
+      "registryId": "sainte-foy"
     },
     "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:41900184-84e1-48c5-9180-ac403b19ccbb": {
       "id": "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:41900184-84e1-48c5-9180-ac403b19ccbb",
@@ -23091,9 +22549,7 @@
       "source": "rseq-s1",
       "priority": 36,
       "fullName": "Cégep de Saint-Jérôme",
-      "registryId": "saint-jerome",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0dd4e9bb-cec2-4c8f-8868-78acc54a572c"
+      "registryId": "saint-jerome"
     },
     "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:9fa2593a-e668-47fd-826e-d59511c882a5": {
       "id": "collegial:cheerleading:0dd4e9bb-cec2-4c8f-8868-78acc54a572c:9fa2593a-e668-47fd-826e-d59511c882a5",
@@ -23116,9 +22572,7 @@
       "source": "rseq-s1",
       "priority": 38,
       "fullName": "Cégep de Sherbrooke",
-      "registryId": "cegep-sherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=0dd4e9bb-cec2-4c8f-8868-78acc54a572c"
+      "registryId": "cegep-sherbrooke"
     },
     "universitaire:cheerleading:8c98e70e-83c5-4f01-a013-d91c4eb8e82e:3b5ce58d-ce2e-4720-bfcc-f5ced46a2cb7": {
       "id": "universitaire:cheerleading:8c98e70e-83c5-4f01-a013-d91c4eb8e82e:3b5ce58d-ce2e-4720-bfcc-f5ced46a2cb7",
@@ -23142,9 +22596,7 @@
       "priority": 1,
       "fullName": "Université Laval",
       "nickname": "Rouge et Or",
-      "registryId": "ulaval",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=8c98e70e-83c5-4f01-a013-d91c4eb8e82e"
+      "registryId": "ulaval"
     },
     "universitaire:cheerleading:8c98e70e-83c5-4f01-a013-d91c4eb8e82e:6157a449-142d-4909-b26e-41b2f5576786": {
       "id": "universitaire:cheerleading:8c98e70e-83c5-4f01-a013-d91c4eb8e82e:6157a449-142d-4909-b26e-41b2f5576786",
@@ -23168,9 +22620,7 @@
       "priority": 2,
       "fullName": "Université McGill",
       "nickname": "Redbirds",
-      "registryId": "mcgill",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=8c98e70e-83c5-4f01-a013-d91c4eb8e82e"
+      "registryId": "mcgill"
     },
     "universitaire:cheerleading:8c98e70e-83c5-4f01-a013-d91c4eb8e82e:ec21b030-ea57-471a-b93b-418202c1a84a": {
       "id": "universitaire:cheerleading:8c98e70e-83c5-4f01-a013-d91c4eb8e82e:ec21b030-ea57-471a-b93b-418202c1a84a",
@@ -23194,9 +22644,7 @@
       "priority": 4,
       "fullName": "Université de Montréal",
       "nickname": "Carabins",
-      "registryId": "udem",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=8c98e70e-83c5-4f01-a013-d91c4eb8e82e"
+      "registryId": "udem"
     },
     "universitaire:cheerleading:8c98e70e-83c5-4f01-a013-d91c4eb8e82e:c6ff35a4-a28d-40a1-be18-9106443d1e6a": {
       "id": "universitaire:cheerleading:8c98e70e-83c5-4f01-a013-d91c4eb8e82e:c6ff35a4-a28d-40a1-be18-9106443d1e6a",
@@ -23220,9 +22668,7 @@
       "priority": 6,
       "fullName": "Université de Sherbrooke",
       "nickname": "Vert & Or",
-      "registryId": "usherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=8c98e70e-83c5-4f01-a013-d91c4eb8e82e"
+      "registryId": "usherbrooke"
     },
     "universitaire:cheerleading:8c98e70e-83c5-4f01-a013-d91c4eb8e82e:d17fca9f-5b81-4034-8bdd-7a0c3305e43c": {
       "id": "universitaire:cheerleading:8c98e70e-83c5-4f01-a013-d91c4eb8e82e:d17fca9f-5b81-4034-8bdd-7a0c3305e43c",
@@ -23246,9 +22692,7 @@
       "priority": 5,
       "fullName": "Université du Québec à Montréal",
       "nickname": "Citadins",
-      "registryId": "uqam",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=8c98e70e-83c5-4f01-a013-d91c4eb8e82e"
+      "registryId": "uqam"
     },
     "universitaire:cheerleading:8c98e70e-83c5-4f01-a013-d91c4eb8e82e:e9f33eaa-160a-4fb2-b224-eb59bd29bb3c": {
       "id": "universitaire:cheerleading:8c98e70e-83c5-4f01-a013-d91c4eb8e82e:e9f33eaa-160a-4fb2-b224-eb59bd29bb3c",
@@ -23272,9 +22716,7 @@
       "priority": 11,
       "fullName": "Université du Québec à Trois-Rivières",
       "nickname": "Patriotes",
-      "registryId": "uqtr",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=8c98e70e-83c5-4f01-a013-d91c4eb8e82e"
+      "registryId": "uqtr"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:b43fc17a-7622-44f1-bb58-805a58404017": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:b43fc17a-7622-44f1-bb58-805a58404017",
@@ -23297,9 +22739,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Alma",
-      "registryId": "alma",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "alma"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:95ff29ee-5766-4a32-813c-08da3e0ab29e": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:95ff29ee-5766-4a32-813c-08da3e0ab29e",
@@ -23322,9 +22762,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Baie-Comeau",
-      "registryId": "baie-comeau",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "baie-comeau"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:c04735c6-4434-4204-b3c9-b92dbcc9ea51": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:c04735c6-4434-4204-b3c9-b92dbcc9ea51",
@@ -23347,9 +22785,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Beauce-Appalaches",
-      "registryId": "beauce-appalaches",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "beauce-appalaches"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:28867f3b-a0c7-457e-87fc-745bb879a634": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:28867f3b-a0c7-457e-87fc-745bb879a634",
@@ -23372,9 +22808,7 @@
       "source": "rseq-s1",
       "priority": 24,
       "fullName": "Champlain College Lennoxville",
-      "registryId": "champlain-lennoxville",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "champlain-lennoxville"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:05cf481a-7441-444d-98b1-17a13d59c1a0": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:05cf481a-7441-444d-98b1-17a13d59c1a0",
@@ -23397,9 +22831,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Champlain College St. Lawrence",
-      "registryId": "ch-st-lawrence",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "ch-st-lawrence"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:0a9c9922-e0fb-4561-a4a7-e1d8f2603798": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:0a9c9922-e0fb-4561-a4a7-e1d8f2603798",
@@ -23422,9 +22854,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Charlevoix",
-      "registryId": "charlevoix",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "charlevoix"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:529c962d-76c2-4f40-82dd-b5b5925692bf": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:529c962d-76c2-4f40-82dd-b5b5925692bf",
@@ -23447,9 +22877,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Chicoutimi",
-      "registryId": "chicoutimi",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "chicoutimi"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:b7204ad6-1fd0-4dad-9433-002a2457b789": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:b7204ad6-1fd0-4dad-9433-002a2457b789",
@@ -23473,9 +22901,7 @@
       "priority": 8,
       "fullName": "Cégep François-Xavier-Garneau",
       "nickname": "Boomerang",
-      "registryId": "garneau",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "garneau"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:9d31fd9f-df19-4c9c-9d01-67b2918cc862": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:9d31fd9f-df19-4c9c-9d01-67b2918cc862",
@@ -23498,9 +22924,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Granby",
-      "registryId": "granby",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "granby"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:8fdb6d46-4904-4946-b4d9-9fdb5cbe09ed": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:8fdb6d46-4904-4946-b4d9-9fdb5cbe09ed",
@@ -23523,9 +22947,7 @@
       "source": "rseq-s1",
       "priority": 29,
       "fullName": "Cégep de Jonquière",
-      "registryId": "jonquiere",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "jonquiere"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:2b65e6be-63a6-4b8d-b428-16d9c6780163": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:2b65e6be-63a6-4b8d-b428-16d9c6780163",
@@ -23548,9 +22970,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de La Pocatière",
-      "registryId": "la-pocatiere",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "la-pocatiere"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:974e3689-8669-4ba4-be2d-d98e63259d45": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:974e3689-8669-4ba4-be2d-d98e63259d45",
@@ -23573,9 +22993,7 @@
       "source": "rseq-s1",
       "priority": 50,
       "fullName": "Cégep de Lévis",
-      "registryId": "levis",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "levis"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:86b1f879-7a25-4e14-b744-5df3fbba61bc": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:86b1f879-7a25-4e14-b744-5df3fbba61bc",
@@ -23598,9 +23016,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Mérici",
-      "registryId": "merici",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "merici"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:5f16a48d-9336-4e64-ac54-603557975561": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:5f16a48d-9336-4e64-ac54-603557975561",
@@ -23623,9 +23039,7 @@
       "source": "rseq-s1",
       "priority": 32,
       "fullName": "Campus Notre-Dame-de-Foy",
-      "registryId": "notre-dame-foy",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "notre-dame-foy"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:09583df5-92fc-4acc-89a1-63c1e45265b4": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:09583df5-92fc-4acc-89a1-63c1e45265b4",
@@ -23648,9 +23062,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Rimouski",
-      "registryId": "rimouski",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "rimouski"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:b932f450-f0e3-4cd6-b7ab-f35759e6db61": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:b932f450-f0e3-4cd6-b7ab-f35759e6db61",
@@ -23673,9 +23085,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Rivière-du-Loup",
-      "registryId": "riviere-du-loup",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "riviere-du-loup"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:2d1f3e95-d892-4b2f-9a10-7875ac951d4c": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:2d1f3e95-d892-4b2f-9a10-7875ac951d4c",
@@ -23699,9 +23109,7 @@
       "priority": 37,
       "fullName": "Cégep de Sainte-Foy",
       "nickname": "Géants",
-      "registryId": "sainte-foy",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "sainte-foy"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:b7d28212-1411-495e-84e6-4549c28a1933": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:b7d28212-1411-495e-84e6-4549c28a1933",
@@ -23724,9 +23132,7 @@
       "source": "rseq-s1",
       "priority": 34,
       "fullName": "Cégep de Saint-Hyacinthe",
-      "registryId": "saint-hyacinthe",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "saint-hyacinthe"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:821aa878-0d70-4618-bb9a-542020c7bd93": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:821aa878-0d70-4618-bb9a-542020c7bd93",
@@ -23749,9 +23155,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Sept-Îles",
-      "registryId": "sept-iles",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "sept-iles"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:de192c9b-cfe6-4b00-bea1-6172125eec57": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:de192c9b-cfe6-4b00-bea1-6172125eec57",
@@ -23774,9 +23178,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Shawinigan",
-      "registryId": "shawinigan",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "shawinigan"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:f278e1e7-6a26-4a5b-a529-1e37354eeea4": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:f278e1e7-6a26-4a5b-a529-1e37354eeea4",
@@ -23799,9 +23201,7 @@
       "source": "rseq-s1",
       "priority": 38,
       "fullName": "Cégep de Sherbrooke",
-      "registryId": "cegep-sherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "cegep-sherbrooke"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:63fb4008-e425-45f7-88b4-654f6d689253": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:63fb4008-e425-45f7-88b4-654f6d689253",
@@ -23824,9 +23224,7 @@
       "source": "rseq-s1",
       "priority": 52,
       "fullName": "Cégep de Sorel-Tracy",
-      "registryId": "sorel-tracy",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "sorel-tracy"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:fe34e542-f233-4a10-8986-0dc9e159d9d9": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:fe34e542-f233-4a10-8986-0dc9e159d9d9",
@@ -23850,9 +23248,7 @@
       "priority": 40,
       "fullName": "Cégep de Trois-Rivières",
       "nickname": "Diablos",
-      "registryId": "trois-rivieres",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "trois-rivieres"
     },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:1d948ad9-5836-488e-bcef-5cbec8d84809": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:1d948ad9-5836-488e-bcef-5cbec8d84809",
@@ -23875,9 +23271,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Victoriaville",
-      "registryId": "victoriaville",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bcb2a117-9b55-4781-9d1d-e86e799c1d9d"
+      "registryId": "victoriaville"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:53e0ff8e-bce3-4c1c-a7d6-2604bbd609c7": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:53e0ff8e-bce3-4c1c-a7d6-2604bbd609c7",
@@ -23900,9 +23294,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de l'Abitibi-Témiscamingue",
-      "registryId": "abitibi-temisc",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "abitibi-temisc"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:1bf13ddc-5eb1-4c0f-8e55-24fd9bd7809c": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:1bf13ddc-5eb1-4c0f-8e55-24fd9bd7809c",
@@ -23925,9 +23317,7 @@
       "source": "rseq-s1",
       "priority": 20,
       "fullName": "Collège Ahuntsic",
-      "registryId": "ahuntsic",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "ahuntsic"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:7a4c3e0c-5e08-4ce8-99e0-08ef68338207": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:7a4c3e0c-5e08-4ce8-99e0-08ef68338207",
@@ -23950,9 +23340,7 @@
       "source": "rseq-s1",
       "priority": 21,
       "fullName": "Collège André-Grasset",
-      "registryId": "andre-grasset",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "andre-grasset"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:7688632c-3fbd-4522-b21b-918cbcc2ff83": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:7688632c-3fbd-4522-b21b-918cbcc2ff83",
@@ -23976,9 +23364,7 @@
       "priority": 25,
       "fullName": "Champlain College Saint-Lambert",
       "nickname": "Barons",
-      "registryId": "champlain-st-lambert",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "champlain-st-lambert"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:0e7d5ece-ca68-4f86-b5c4-38fb121833d0": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:0e7d5ece-ca68-4f86-b5c4-38fb121833d0",
@@ -24002,9 +23388,7 @@
       "priority": 26,
       "fullName": "Dawson College",
       "nickname": "Blues",
-      "registryId": "dawson",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "dawson"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:0da8a438-d107-43b5-8953-de3bf2bde50a": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:0da8a438-d107-43b5-8953-de3bf2bde50a",
@@ -24028,9 +23412,7 @@
       "priority": 42,
       "fullName": "Cégep Édouard-Montpetit",
       "nickname": "Cougars",
-      "registryId": "edouard-montpetit",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "edouard-montpetit"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:97532839-7cf8-41a5-b91d-fbbbe81422a8": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:97532839-7cf8-41a5-b91d-fbbbe81422a8",
@@ -24053,9 +23435,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Ellis",
-      "registryId": "ellis",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "ellis"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:1b563b7b-46b6-4122-a896-17f69bfd6d90": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:1b563b7b-46b6-4122-a896-17f69bfd6d90",
@@ -24078,9 +23458,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Gérald-Godin",
-      "registryId": "gerald-godin",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "gerald-godin"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:6a2ab61f-4087-4fab-9e16-f738d8af7d2b": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:6a2ab61f-4087-4fab-9e16-f738d8af7d2b",
@@ -24103,9 +23481,7 @@
       "source": "rseq-s1",
       "priority": 27,
       "fullName": "Collège Jean-de-Brébeuf",
-      "registryId": "brebeuf",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "brebeuf"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:a09f6046-8f4f-4760-9ec0-4d20844f6abe": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:a09f6046-8f4f-4760-9ec0-4d20844f6abe",
@@ -24129,9 +23505,7 @@
       "priority": 28,
       "fullName": "John Abbott College",
       "nickname": "Islanders",
-      "registryId": "john-abbott",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "john-abbott"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:5a7b9a1b-9073-4885-8cd3-d09d06e26fcc": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:5a7b9a1b-9073-4885-8cd3-d09d06e26fcc",
@@ -24154,9 +23528,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Joliette",
-      "registryId": "joliette",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "joliette"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:87083e57-4a0d-4b85-85c6-253067a9da14": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:87083e57-4a0d-4b85-85c6-253067a9da14",
@@ -24179,9 +23551,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de L'Assomption",
-      "registryId": "lassomption",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "lassomption"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:403d7adf-6e86-4471-893a-48e613345e19": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:403d7adf-6e86-4471-893a-48e613345e19",
@@ -24204,9 +23574,7 @@
       "source": "rseq-s1",
       "priority": 30,
       "fullName": "Collège Lionel-Groulx",
-      "registryId": "lionel-groulx",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "lionel-groulx"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:001c5ac2-d381-4f17-976a-05ecb2e079e7": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:001c5ac2-d381-4f17-976a-05ecb2e079e7",
@@ -24229,9 +23597,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Marie-Victorin",
-      "registryId": "marie-victorin",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "marie-victorin"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:c58db171-79db-4efe-a6d4-7174a93abcdf": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:c58db171-79db-4efe-a6d4-7174a93abcdf",
@@ -24255,9 +23621,7 @@
       "priority": 31,
       "fullName": "Collège Montmorency",
       "nickname": "Nomades",
-      "registryId": "montmorency",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "montmorency"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:bc316338-8df5-484d-bd50-0dc2f92cd02b": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:bc316338-8df5-484d-bd50-0dc2f92cd02b",
@@ -24280,9 +23644,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Rosemont",
-      "registryId": "rosemont",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "rosemont"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:14f4fa3a-37ad-4751-89cb-d2d7ca8989ea": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:14f4fa3a-37ad-4751-89cb-d2d7ca8989ea",
@@ -24305,9 +23667,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Sainte-Anne",
-      "registryId": "sainte-anne",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "sainte-anne"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:93703ac6-8125-4c98-a884-0d5f11bcb3df": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:93703ac6-8125-4c98-a884-0d5f11bcb3df",
@@ -24331,9 +23691,7 @@
       "priority": 35,
       "fullName": "Cégep Saint-Jean-sur-Richelieu",
       "nickname": "Dragons",
-      "registryId": "saint-jean-sur-richelieu",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "saint-jean-sur-richelieu"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:5c9d9dd4-2810-4270-b442-0f0a11083817": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:5c9d9dd4-2810-4270-b442-0f0a11083817",
@@ -24356,9 +23714,7 @@
       "source": "rseq-s1",
       "priority": 36,
       "fullName": "Cégep de Saint-Jérôme",
-      "registryId": "saint-jerome",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "saint-jerome"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:612311f9-0c31-462e-99b9-b69abc8d8c43": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:612311f9-0c31-462e-99b9-b69abc8d8c43",
@@ -24381,9 +23737,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Terrebonne",
-      "registryId": "terrebonne",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "terrebonne"
     },
     "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:30717450-50d7-41d7-82c9-8b2193307fd0": {
       "id": "collegial:cross-country:5973efde-0184-4bdc-baa5-57d460b756d0:30717450-50d7-41d7-82c9-8b2193307fd0",
@@ -24406,9 +23760,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Valleyfield",
-      "registryId": "valleyfield",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=5973efde-0184-4bdc-baa5-57d460b756d0"
+      "registryId": "valleyfield"
     },
     "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:fc4cd5eb-9659-4c83-aadd-b422b00ff78f": {
       "id": "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:fc4cd5eb-9659-4c83-aadd-b422b00ff78f",
@@ -24432,9 +23784,7 @@
       "priority": 80,
       "fullName": "Carleton University",
       "nickname": "Ravens",
-      "registryId": "carleton",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d5c1b71b-8741-4485-90e4-7c28666a2270"
+      "registryId": "carleton"
     },
     "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:0727ec7e-da62-4ddb-88f0-726af5cfc8d4": {
       "id": "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:0727ec7e-da62-4ddb-88f0-726af5cfc8d4",
@@ -24458,9 +23808,7 @@
       "priority": 3,
       "fullName": "Université Concordia",
       "nickname": "Stingers",
-      "registryId": "concordia",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d5c1b71b-8741-4485-90e4-7c28666a2270"
+      "registryId": "concordia"
     },
     "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:e0650fe1-9212-4288-b459-d8ae4432f58c": {
       "id": "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:e0650fe1-9212-4288-b459-d8ae4432f58c",
@@ -24483,9 +23831,7 @@
       "source": "rseq-s1",
       "priority": 12,
       "fullName": "École de technologie supérieure",
-      "registryId": "ets",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d5c1b71b-8741-4485-90e4-7c28666a2270"
+      "registryId": "ets"
     },
     "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:0cb66fbc-1d50-491a-b87c-1f6bb9d94139": {
       "id": "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:0cb66fbc-1d50-491a-b87c-1f6bb9d94139",
@@ -24509,9 +23855,7 @@
       "priority": 1,
       "fullName": "Université Laval",
       "nickname": "Rouge et Or",
-      "registryId": "ulaval",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d5c1b71b-8741-4485-90e4-7c28666a2270"
+      "registryId": "ulaval"
     },
     "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:93198a8b-f305-4435-84e2-d3dc48aae9e6": {
       "id": "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:93198a8b-f305-4435-84e2-d3dc48aae9e6",
@@ -24535,9 +23879,7 @@
       "priority": 2,
       "fullName": "Université McGill",
       "nickname": "Redbirds",
-      "registryId": "mcgill",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d5c1b71b-8741-4485-90e4-7c28666a2270"
+      "registryId": "mcgill"
     },
     "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:e953f4e1-629f-4d82-8c14-687ce9005238": {
       "id": "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:e953f4e1-629f-4d82-8c14-687ce9005238",
@@ -24561,9 +23903,7 @@
       "priority": 4,
       "fullName": "Université de Montréal",
       "nickname": "Carabins",
-      "registryId": "udem",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d5c1b71b-8741-4485-90e4-7c28666a2270"
+      "registryId": "udem"
     },
     "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:540f61d8-70c5-4b26-9ad2-5dced1d142be": {
       "id": "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:540f61d8-70c5-4b26-9ad2-5dced1d142be",
@@ -24587,9 +23927,7 @@
       "priority": 6,
       "fullName": "Université de Sherbrooke",
       "nickname": "Vert & Or",
-      "registryId": "usherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d5c1b71b-8741-4485-90e4-7c28666a2270"
+      "registryId": "usherbrooke"
     },
     "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:a92ee273-92a5-49e1-882e-b5d5c180d577": {
       "id": "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:a92ee273-92a5-49e1-882e-b5d5c180d577",
@@ -24612,9 +23950,7 @@
       "source": "rseq-s1",
       "priority": 13,
       "fullName": "Université du Québec à Chicoutimi",
-      "registryId": "uqac",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d5c1b71b-8741-4485-90e4-7c28666a2270"
+      "registryId": "uqac"
     },
     "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:8a8f515a-f523-4ca1-b41a-478882530c24": {
       "id": "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:8a8f515a-f523-4ca1-b41a-478882530c24",
@@ -24638,9 +23974,7 @@
       "priority": 5,
       "fullName": "Université du Québec à Montréal",
       "nickname": "Citadins",
-      "registryId": "uqam",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d5c1b71b-8741-4485-90e4-7c28666a2270"
+      "registryId": "uqam"
     },
     "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:cc80b423-a0af-4dfb-8a69-6c60b867bcfe": {
       "id": "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:cc80b423-a0af-4dfb-8a69-6c60b867bcfe",
@@ -24664,9 +23998,7 @@
       "priority": 11,
       "fullName": "Université du Québec à Trois-Rivières",
       "nickname": "Patriotes",
-      "registryId": "uqtr",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=d5c1b71b-8741-4485-90e4-7c28666a2270"
+      "registryId": "uqtr"
     },
     "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:7cecfaaf-8b37-423a-8233-2787b570ad3e": {
       "id": "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:7cecfaaf-8b37-423a-8233-2787b570ad3e",
@@ -24690,9 +24022,7 @@
       "priority": 80,
       "fullName": "Carleton University",
       "nickname": "Ravens",
-      "registryId": "carleton",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=263716c3-348b-4a18-8ebd-a81ced5cbd80"
+      "registryId": "carleton"
     },
     "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:f37c5f1e-0c9b-4b6d-860f-10f1377e9578": {
       "id": "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:f37c5f1e-0c9b-4b6d-860f-10f1377e9578",
@@ -24716,9 +24046,7 @@
       "priority": 3,
       "fullName": "Université Concordia",
       "nickname": "Stingers",
-      "registryId": "concordia",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=263716c3-348b-4a18-8ebd-a81ced5cbd80"
+      "registryId": "concordia"
     },
     "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:67847594-9cf0-48d8-97a5-39de13884bd1": {
       "id": "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:67847594-9cf0-48d8-97a5-39de13884bd1",
@@ -24741,9 +24069,7 @@
       "source": "rseq-s1",
       "priority": 12,
       "fullName": "École de technologie supérieure",
-      "registryId": "ets",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=263716c3-348b-4a18-8ebd-a81ced5cbd80"
+      "registryId": "ets"
     },
     "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:1f939c0c-40ed-4f87-a833-c123bae9781c": {
       "id": "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:1f939c0c-40ed-4f87-a833-c123bae9781c",
@@ -24767,9 +24093,7 @@
       "priority": 1,
       "fullName": "Université Laval",
       "nickname": "Rouge et Or",
-      "registryId": "ulaval",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=263716c3-348b-4a18-8ebd-a81ced5cbd80"
+      "registryId": "ulaval"
     },
     "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:9c309735-f109-404c-9f6e-9ee1621fb2c1": {
       "id": "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:9c309735-f109-404c-9f6e-9ee1621fb2c1",
@@ -24793,9 +24117,7 @@
       "priority": 2,
       "fullName": "Université McGill",
       "nickname": "Redbirds",
-      "registryId": "mcgill",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=263716c3-348b-4a18-8ebd-a81ced5cbd80"
+      "registryId": "mcgill"
     },
     "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:fa0c9925-241d-479e-af6d-9b36103f5f06": {
       "id": "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:fa0c9925-241d-479e-af6d-9b36103f5f06",
@@ -24819,9 +24141,7 @@
       "priority": 4,
       "fullName": "Université de Montréal",
       "nickname": "Carabins",
-      "registryId": "udem",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=263716c3-348b-4a18-8ebd-a81ced5cbd80"
+      "registryId": "udem"
     },
     "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:1e1baaa6-5ce4-4920-aaed-2c4a3fa7146e": {
       "id": "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:1e1baaa6-5ce4-4920-aaed-2c4a3fa7146e",
@@ -24845,9 +24165,7 @@
       "priority": 6,
       "fullName": "Université de Sherbrooke",
       "nickname": "Vert & Or",
-      "registryId": "usherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=263716c3-348b-4a18-8ebd-a81ced5cbd80"
+      "registryId": "usherbrooke"
     },
     "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:02811e91-3664-42cb-8a59-bb3c832e49b4": {
       "id": "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:02811e91-3664-42cb-8a59-bb3c832e49b4",
@@ -24870,9 +24188,7 @@
       "source": "rseq-s1",
       "priority": 13,
       "fullName": "Université du Québec à Chicoutimi",
-      "registryId": "uqac",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=263716c3-348b-4a18-8ebd-a81ced5cbd80"
+      "registryId": "uqac"
     },
     "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:2ee5620f-ee70-474c-8a11-a5df1ddff932": {
       "id": "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:2ee5620f-ee70-474c-8a11-a5df1ddff932",
@@ -24896,9 +24212,7 @@
       "priority": 5,
       "fullName": "Université du Québec à Montréal",
       "nickname": "Citadins",
-      "registryId": "uqam",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=263716c3-348b-4a18-8ebd-a81ced5cbd80"
+      "registryId": "uqam"
     },
     "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:4bdf936d-5df9-4fb4-8c40-1b054425be0d": {
       "id": "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:4bdf936d-5df9-4fb4-8c40-1b054425be0d",
@@ -24922,9 +24236,7 @@
       "priority": 11,
       "fullName": "Université du Québec à Trois-Rivières",
       "nickname": "Patriotes",
-      "registryId": "uqtr",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=263716c3-348b-4a18-8ebd-a81ced5cbd80"
+      "registryId": "uqtr"
     },
     "collegial:flag-football:9b8a3ee0-667b-43ba-9377-30176c5f5ce3:7f29fa90-2fb2-467e-a299-31fecb769e41": {
       "id": "collegial:flag-football:9b8a3ee0-667b-43ba-9377-30176c5f5ce3:7f29fa90-2fb2-467e-a299-31fecb769e41",
@@ -25099,9 +24411,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Drummondville",
-      "registryId": "drummondville",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9b8a3ee0-667b-43ba-9377-30176c5f5ce3"
+      "registryId": "drummondville"
     },
     "collegial:flag-football:9b8a3ee0-667b-43ba-9377-30176c5f5ce3:5a13d980-758e-4de4-ba9c-f48446305f16": {
       "id": "collegial:flag-football:9b8a3ee0-667b-43ba-9377-30176c5f5ce3:5a13d980-758e-4de4-ba9c-f48446305f16",
@@ -25277,9 +24587,7 @@
       "source": "rseq-s1",
       "priority": 34,
       "fullName": "Cégep de Saint-Hyacinthe",
-      "registryId": "saint-hyacinthe",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9b8a3ee0-667b-43ba-9377-30176c5f5ce3"
+      "registryId": "saint-hyacinthe"
     },
     "collegial:flag-football:9b8a3ee0-667b-43ba-9377-30176c5f5ce3:74ced5ab-9874-4a6c-a817-ebc0a46ce7f7": {
       "id": "collegial:flag-football:9b8a3ee0-667b-43ba-9377-30176c5f5ce3:74ced5ab-9874-4a6c-a817-ebc0a46ce7f7",
@@ -25455,9 +24763,7 @@
       "source": "rseq-s1",
       "priority": 38,
       "fullName": "Cégep de Sherbrooke",
-      "registryId": "cegep-sherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9b8a3ee0-667b-43ba-9377-30176c5f5ce3"
+      "registryId": "cegep-sherbrooke"
     },
     "collegial:flag-football:9b8a3ee0-667b-43ba-9377-30176c5f5ce3:8d9d3081-18d9-4ebd-b840-b03db8da5cda": {
       "id": "collegial:flag-football:9b8a3ee0-667b-43ba-9377-30176c5f5ce3:8d9d3081-18d9-4ebd-b840-b03db8da5cda",
@@ -25631,9 +24937,7 @@
       "priority": 40,
       "fullName": "Cégep de Trois-Rivières",
       "nickname": "Diablos",
-      "registryId": "trois-rivieres",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9b8a3ee0-667b-43ba-9377-30176c5f5ce3"
+      "registryId": "trois-rivieres"
     },
     "collegial:flag-football:9b8a3ee0-667b-43ba-9377-30176c5f5ce3:50b5e9a1-9464-4bf8-931d-5b0da02cb900": {
       "id": "collegial:flag-football:9b8a3ee0-667b-43ba-9377-30176c5f5ce3:50b5e9a1-9464-4bf8-931d-5b0da02cb900",
@@ -25809,9 +25113,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Victoriaville",
-      "registryId": "victoriaville",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=9b8a3ee0-667b-43ba-9377-30176c5f5ce3"
+      "registryId": "victoriaville"
     },
     "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:449c7245-ec36-43cb-ac6b-134e8b6809ec": {
       "id": "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:449c7245-ec36-43cb-ac6b-134e8b6809ec",
@@ -25984,9 +25286,7 @@
       "source": "rseq-s1",
       "priority": 24,
       "fullName": "Champlain College Lennoxville",
-      "registryId": "champlain-lennoxville",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bb172f86-5983-4fab-9cdc-5be7f33cadca"
+      "registryId": "champlain-lennoxville"
     },
     "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:16a1057c-b320-4b1a-a8db-c5aa49c3cc3e": {
       "id": "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:16a1057c-b320-4b1a-a8db-c5aa49c3cc3e",
@@ -26159,9 +25459,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Granby",
-      "registryId": "granby",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bb172f86-5983-4fab-9cdc-5be7f33cadca"
+      "registryId": "granby"
     },
     "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:2a480dfa-dac2-4087-a491-7cb649f3443d": {
       "id": "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:2a480dfa-dac2-4087-a491-7cb649f3443d",
@@ -26334,9 +25632,7 @@
       "source": "rseq-s1",
       "priority": 51,
       "fullName": "Collège Laflèche",
-      "registryId": "lafleche",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bb172f86-5983-4fab-9cdc-5be7f33cadca"
+      "registryId": "lafleche"
     },
     "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:efc24406-7fef-4f8b-8642-3981d0d9722c": {
       "id": "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:efc24406-7fef-4f8b-8642-3981d0d9722c",
@@ -26509,9 +25805,7 @@
       "source": "rseq-s1",
       "priority": 32,
       "fullName": "Campus Notre-Dame-de-Foy",
-      "registryId": "notre-dame-foy",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bb172f86-5983-4fab-9cdc-5be7f33cadca"
+      "registryId": "notre-dame-foy"
     },
     "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:f91d0a36-7e00-41dc-bbd4-1c1e34615b36": {
       "id": "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:f91d0a36-7e00-41dc-bbd4-1c1e34615b36",
@@ -26684,9 +25978,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Séminaire de Sherbrooke",
-      "registryId": "seminaire-de-sherbrooke",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bb172f86-5983-4fab-9cdc-5be7f33cadca"
+      "registryId": "seminaire-de-sherbrooke"
     },
     "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:05e0f5c8-7ee9-494c-a115-4c4e000d3054": {
       "id": "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:05e0f5c8-7ee9-494c-a115-4c4e000d3054",
@@ -26859,9 +26151,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Shawinigan",
-      "registryId": "shawinigan",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=bb172f86-5983-4fab-9cdc-5be7f33cadca"
+      "registryId": "shawinigan"
     },
     "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:0a2de31f-bb58-4730-b6ec-0f8c3c168c1e": {
       "id": "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:0a2de31f-bb58-4730-b6ec-0f8c3c168c1e",
@@ -27025,9 +26315,7 @@
       "source": "rseq-s1",
       "priority": 20,
       "fullName": "Collège Ahuntsic",
-      "registryId": "ahuntsic",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=4e5998ab-0f02-4601-b4da-a656fb5dd6d8"
+      "registryId": "ahuntsic"
     },
     "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:27fa235f-f37d-4506-b77b-b1112067d0d6": {
       "id": "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:27fa235f-f37d-4506-b77b-b1112067d0d6",
@@ -27192,9 +26480,7 @@
       "source": "rseq-s1",
       "priority": 21,
       "fullName": "Collège André-Grasset",
-      "registryId": "andre-grasset",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=4e5998ab-0f02-4601-b4da-a656fb5dd6d8"
+      "registryId": "andre-grasset"
     },
     "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:0a066e81-53bf-46c4-9347-3cc99c244d74": {
       "id": "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:0a066e81-53bf-46c4-9347-3cc99c244d74",
@@ -27359,9 +26645,7 @@
       "priority": 42,
       "fullName": "Cégep Édouard-Montpetit",
       "nickname": "Cougars",
-      "registryId": "edouard-montpetit",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=4e5998ab-0f02-4601-b4da-a656fb5dd6d8"
+      "registryId": "edouard-montpetit"
     },
     "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:ca78f7f9-fefe-44d4-9906-84b7e842a4bd": {
       "id": "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:ca78f7f9-fefe-44d4-9906-84b7e842a4bd",
@@ -27525,9 +26809,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de L'Assomption",
-      "registryId": "lassomption",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=4e5998ab-0f02-4601-b4da-a656fb5dd6d8"
+      "registryId": "lassomption"
     },
     "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:1041bdd3-d39e-49fa-ae1d-242f50df950f": {
       "id": "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:1041bdd3-d39e-49fa-ae1d-242f50df950f",
@@ -27692,9 +26974,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Maisonneuve",
-      "registryId": "maisonneuve",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=4e5998ab-0f02-4601-b4da-a656fb5dd6d8"
+      "registryId": "maisonneuve"
     },
     "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:f9994acc-85d9-4cd6-a119-e4d095ff3a05": {
       "id": "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:f9994acc-85d9-4cd6-a119-e4d095ff3a05",
@@ -27859,9 +27139,7 @@
       "priority": 31,
       "fullName": "Collège Montmorency",
       "nickname": "Nomades",
-      "registryId": "montmorency",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=4e5998ab-0f02-4601-b4da-a656fb5dd6d8"
+      "registryId": "montmorency"
     },
     "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:c224f7b8-2825-4479-8af7-50ee21f80275": {
       "id": "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:c224f7b8-2825-4479-8af7-50ee21f80275",
@@ -28025,9 +27303,7 @@
       "source": "rseq-s1",
       "priority": 33,
       "fullName": "Cégep de l'Outaouais",
-      "registryId": "outaouais",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=4e5998ab-0f02-4601-b4da-a656fb5dd6d8"
+      "registryId": "outaouais"
     },
     "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:c77450f2-b5e6-4516-8739-57d40b3dd448": {
       "id": "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:c77450f2-b5e6-4516-8739-57d40b3dd448",
@@ -28191,9 +27467,7 @@
       "priority": 35,
       "fullName": "Cégep Saint-Jean-sur-Richelieu",
       "nickname": "Dragons",
-      "registryId": "saint-jean-sur-richelieu",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=4e5998ab-0f02-4601-b4da-a656fb5dd6d8"
+      "registryId": "saint-jean-sur-richelieu"
     },
     "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:4d2bd2e5-6e3e-4d0b-82f0-c49c5dfc7dec": {
       "id": "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:4d2bd2e5-6e3e-4d0b-82f0-c49c5dfc7dec",
@@ -28357,9 +27631,7 @@
       "priority": 53,
       "fullName": "Cégep de Saint-Laurent",
       "nickname": "Cavaliers",
-      "registryId": "saint-laurent",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=4e5998ab-0f02-4601-b4da-a656fb5dd6d8"
+      "registryId": "saint-laurent"
     },
     "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:05509bb0-09b7-4930-83b9-7dddf3f66af8": {
       "id": "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:05509bb0-09b7-4930-83b9-7dddf3f66af8",
@@ -28523,9 +27795,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Valleyfield",
-      "registryId": "valleyfield",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=4e5998ab-0f02-4601-b4da-a656fb5dd6d8"
+      "registryId": "valleyfield"
     },
     "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:48b1a5dd-bed4-413e-8d63-929178bed685": {
       "id": "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:48b1a5dd-bed4-413e-8d63-929178bed685",
@@ -28724,9 +27994,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Beauce-Appalaches",
-      "registryId": "beauce-appalaches",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=a8084a9c-3ef1-43a4-a5e5-aaffea92224a"
+      "registryId": "beauce-appalaches"
     },
     "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:f687d3ca-5d4f-4e11-915a-0ba069134055": {
       "id": "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:f687d3ca-5d4f-4e11-915a-0ba069134055",
@@ -28925,9 +28193,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Charlevoix",
-      "registryId": "charlevoix",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=a8084a9c-3ef1-43a4-a5e5-aaffea92224a"
+      "registryId": "charlevoix"
     },
     "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:1a77a6f5-244a-4681-8f11-e0fa576cb42d": {
       "id": "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:1a77a6f5-244a-4681-8f11-e0fa576cb42d",
@@ -29126,9 +28392,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Chicoutimi",
-      "registryId": "chicoutimi",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=a8084a9c-3ef1-43a4-a5e5-aaffea92224a"
+      "registryId": "chicoutimi"
     },
     "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:33629fc0-205a-4279-a457-2830bdbd8156": {
       "id": "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:33629fc0-205a-4279-a457-2830bdbd8156",
@@ -29327,9 +28591,7 @@
       "source": "rseq-s1",
       "priority": 29,
       "fullName": "Cégep de Jonquière",
-      "registryId": "jonquiere",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=a8084a9c-3ef1-43a4-a5e5-aaffea92224a"
+      "registryId": "jonquiere"
     },
     "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:ea3c7f8d-5821-4a8b-a240-08abb32761aa": {
       "id": "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:ea3c7f8d-5821-4a8b-a240-08abb32761aa",
@@ -29528,9 +28790,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de La Pocatière",
-      "registryId": "la-pocatiere",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=a8084a9c-3ef1-43a4-a5e5-aaffea92224a"
+      "registryId": "la-pocatiere"
     },
     "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:0f1a06e4-391b-46c3-adb3-90928824bc00": {
       "id": "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:0f1a06e4-391b-46c3-adb3-90928824bc00",
@@ -29729,9 +28989,7 @@
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Mérici",
-      "registryId": "merici",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=a8084a9c-3ef1-43a4-a5e5-aaffea92224a"
+      "registryId": "merici"
     },
     "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:0b77da64-53a6-4042-a774-6257737f489f": {
       "id": "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:0b77da64-53a6-4042-a774-6257737f489f",
@@ -29930,9 +29188,7 @@
       "source": "rseq-s1",
       "priority": 32,
       "fullName": "Campus Notre-Dame-de-Foy",
-      "registryId": "notre-dame-foy",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=a8084a9c-3ef1-43a4-a5e5-aaffea92224a"
+      "registryId": "notre-dame-foy"
     },
     "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:282ae44b-f7a2-43d7-a740-8c94a5e3d1a7": {
       "id": "collegial:flag-football:a8084a9c-3ef1-43a4-a5e5-aaffea92224a:282ae44b-f7a2-43d7-a740-8c94a5e3d1a7",
@@ -30131,9 +29387,7 @@
       "source": "rseq-s1",
       "priority": 39,
       "fullName": "Cégep de Thetford",
-      "registryId": "thetford",
-      "staleSource": true,
-      "staleReason": "s1-error:HTTP 500 https://s1.rseq.ca/api/LeagueApi/GetLeagueDiffusion/?leagueId=a8084a9c-3ef1-43a4-a5e5-aaffea92224a"
+      "registryId": "thetford"
     },
     "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:c45ba072-cb42-4923-ac76-891d37f42481": {
       "id": "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:c45ba072-cb42-4923-ac76-891d37f42481",
