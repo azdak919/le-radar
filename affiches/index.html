@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="../style-masthead.css">
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="../seo-pages.css">
-  <link rel="stylesheet" href="./poster-builder.css?v=dpi-lab">
+  <link rel="stylesheet" href="./poster-builder.css?v=params-first">
   <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e91">
   <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e91">
 </head>
@@ -76,7 +76,7 @@
 
     <div class="dash">
       <form class="dash-controls" id="form" onsubmit="return false;">
-        <p class="dash-lead">Vos choix à gauche. L’affiche reste à droite. Cadrage à côté de l’aperçu.</p>
+        <p class="dash-lead">Paramètres d’abord, photo ensuite. L’affiche reste à droite.</p>
         <div class="dash-actions">
           <div class="btn-row">
             <button class="btn" type="button" id="dl">JPEG 600 dpi</button>
@@ -127,13 +127,6 @@
             <label><input type="radio" name="campus" value="poly"> Polytechnique</label>
             <label><input type="radio" name="campus" value="hec"> HEC Montréal</label>
           </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Photo</legend>
-          <div class="photo-grid" id="photo-grid"></div>
-          <button type="button" class="photo-more" id="photo-more" hidden>Voir plus de photos</button>
-          <p class="photo-meta" id="photo-meta"></p>
         </fieldset>
 
         <fieldset>
@@ -189,6 +182,13 @@
             <label><input type="radio" name="qr" value="non"> Sans</label>
             <label><input type="radio" name="qr" value="oui" checked> Avec (le-radar.ca)</label>
           </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Photo</legend>
+          <div class="photo-grid" id="photo-grid"></div>
+          <button type="button" class="photo-more" id="photo-more" hidden>Voir plus de photos</button>
+          <p class="photo-meta" id="photo-meta"></p>
         </fieldset>
 
         <div class="dash-actions dash-actions--end">
@@ -267,6 +267,6 @@
   <script src="../engage-prompt.js" defer></script>
   <script src="../dev/midwidth-preview.js?v=wide-auto-e91"></script>
   <script src="../dev/wide-desktop-preview.js?v=wide-auto-e91"></script>
-  <script src="./poster-builder.js?v=no-lab-copy"></script>
+  <script src="./poster-builder.js?v=params-first"></script>
 </body>
 </html>
