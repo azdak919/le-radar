@@ -82,6 +82,7 @@ CAMPUSES = [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "pouliot", "photo_id": "68ae0e12a3ec", "label": "Pavillon Adrien-Pouliot", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.58},
             {"key": "parc", "photo_id": "0733bf6bce32", "label": "Campus central", "focal": (0.48, 0.45), "crop_scale": 0.88, "desaturate": 0.58, "overlay": 0.55},
+            {"key": "dkn", "photo_id": "e3a38d175a72", "label": "Pavillon Charles-De Koninck", "focal": (0.68, 0.36), "crop_scale": 0.85, "desaturate": 0.52, "overlay": 0.58},
         ],
     },
     {
@@ -95,6 +96,8 @@ CAMPUSES = [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "arts", "photo_id": "52c687b5d843", "label": "Arts Building", "focal": (0.50, 0.36), "crop_scale": 0.88, "desaturate": 0.50, "overlay": 0.58},
             {"key": "pelouse", "url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Lawn_-_McGill_University_-_Montreal%2C_Canada_-_DSC08283.jpg", "credit": "Daderot", "license": "CC0", "title": "McGill University lawn", "focal": (0.50, 0.58), "crop_scale": 0.92, "desaturate": 0.58, "overlay": 0.52},
+            {"key": "roddick", "url": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Portail_Roddick_01.jpg", "credit": "Jean Gagnon", "license": "CC BY-SA 3.0", "title": "Portail Roddick", "focal": (0.50, 0.38), "crop_scale": 0.90, "desaturate": 0.55, "overlay": 0.55},
+            {"key": "downtown", "photo_id": "f2745be093ce", "label": "Campus downtown", "focal": (0.50, 0.42), "crop_scale": 0.90, "desaturate": 0.55, "overlay": 0.55},
         ],
     },
     {
@@ -106,6 +109,7 @@ CAMPUSES = [
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "gaudry", "photo_id": "a7697051c0fc", "label": "Pavillon Roger-Gaudry", "focal": (0.50, 0.32), "crop_scale": 0.95, "desaturate": 0.55, "overlay": 0.52},
+            {"key": "facade", "url": "https://upload.wikimedia.org/wikipedia/commons/d/db/UdeM_Roger_Gaudry.jpg", "credit": "Armanidesu", "license": "CC BY-SA 4.0", "title": "Pavillon Roger-Gaudry, façade", "focal": (0.50, 0.38), "crop_scale": 0.92, "desaturate": 0.55, "overlay": 0.52},
         ],
     },
     {
@@ -117,6 +121,7 @@ CAMPUSES = [
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "jasmin", "photo_id": "a5acbe3af178", "label": "Pavillon Judith-Jasmin", "focal": (0.48, 0.40), "crop_scale": 0.88, "desaturate": 0.52, "overlay": 0.58},
+            {"key": "agora", "photo_id": "017b41d9ba0d", "label": "Agora Judith-Jasmin", "focal": (0.50, 0.36), "crop_scale": 0.88, "desaturate": 0.52, "overlay": 0.58},
         ],
     },
     {
@@ -130,6 +135,7 @@ CAMPUSES = [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "hall", "photo_id": "582ef31c6453", "label": "Henry F. Hall Building", "focal": (0.52, 0.36), "crop_scale": 0.90, "desaturate": 0.48, "overlay": 0.60},
             {"key": "loyola", "url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Loyola_College_Building_9.JPG", "credit": "Jean Gagnon", "license": "CC BY-SA 3.0", "title": "Loyola College Building", "focal": (0.50, 0.48), "crop_scale": 0.90, "desaturate": 0.55, "overlay": 0.55},
+            {"key": "sgw", "photo_id": "4242d9aea59f", "label": "Campus Sir George Williams", "focal": (0.50, 0.28), "crop_scale": 0.90, "desaturate": 0.48, "overlay": 0.60},
         ],
     },
     {
@@ -141,6 +147,7 @@ CAMPUSES = [
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "longueuil", "photo_id": "912fa583aa5b", "label": "Campus de Longueuil", "focal": (0.42, 0.42), "crop_scale": 0.88, "desaturate": 0.50, "overlay": 0.58},
+            {"key": "cabana", "url": "https://upload.wikimedia.org/wikipedia/commons/7/72/Universit%C3%A9_de_Sherbrooke_-_Pavillon_Georges-Cabana.jpg", "credit": "Uncivil Fire", "license": "CC BY-SA 3.0", "title": "Pavillon Georges-Cabana", "focal": (0.50, 0.38), "crop_scale": 0.95, "desaturate": 0.52, "overlay": 0.58},
         ],
     },
     {
@@ -154,6 +161,8 @@ CAMPUSES = [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "brick", "photo_id": "186769a5aeb5", "label": "Bâtiment principal", "focal": (0.45, 0.42), "crop_scale": 0.92, "desaturate": 0.55, "overlay": 0.58},
             {"key": "quad", "photo_id": "ebea372c0dd2", "label": "Campus Lennoxville", "focal": (0.50, 0.45), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.58},
+            {"key": "mcgreer", "url": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg", "credit": "Jason Paris", "license": "CC BY 2.0", "title": "McGreer Hall", "focal": (0.52, 0.40), "crop_scale": 0.90, "desaturate": 0.55, "overlay": 0.52},
+            {"key": "chapelle", "photo_id": "95c4ae37ec2f", "label": "Chapelle du campus", "focal": (0.42, 0.40), "crop_scale": 0.90, "desaturate": 0.55, "overlay": 0.55},
         ],
     },
 ]
