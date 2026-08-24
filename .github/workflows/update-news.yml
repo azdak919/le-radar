@@ -2,16 +2,16 @@ name: Update Student News
 
 on:
   schedule:
-    # Passes cibles (Québec). Cron en UTC — heures locales en été (EDT, UTC−4) :
-    #   05:30 → 09:30 UTC   |  07:00 → 11:00 UTC  |  10:00 → 14:00 UTC
-    #   12:00 → 16:00 UTC   |  13:30 → 17:30 UTC  |  16:00 → 20:00 UTC
-    #   19:00 → 23:00 UTC   |  21:00 → 01:00 UTC (lendemain)
+    # Passes *affichées* (Québec, EDT) : 05:30 07:00 10:00 12:00 13:30 16:00 19:00 21:00
+    # Cron 35 min plus tôt (UTC) : GitHub retarde souvent 20–40 min et le fetch
+    # prend ~10 min, pour que le fil soit en ligne vers l'heure promise.
+    #   05:30 QC → 08:55 UTC  |  07:00 → 10:25  |  10:00 → 13:25  |  12:00 → 15:25
+    #   13:30 QC → 16:55 UTC  |  16:00 → 19:25  |  19:00 → 22:25  |  21:00 → 00:25
     #
-    # GitHub Actions peut retarder ou SAUTER des crons épars (charge, file d'attente).
-    # Filet : toutes les heures à :20 — ne s'exécute que si la dernière passe
-    # date de plus de 75 min (compense un 13h30 jamais parti, etc.).
-    - cron: '0 1,11,14,16,20,23 * * *'
-    - cron: '30 9,17 * * *'
+    # Filet : toutes les heures à :20 — seulement si la dernière mise à jour
+    # a plus de 75 min (compense un créneau sauté ou un gate qui a échoué).
+    - cron: '25 0,10,13,15,19,22 * * *'
+    - cron: '55 8,16 * * *'
     - cron: '20 * * * *'
   workflow_dispatch:   # Allow manual trigger
 
@@ -188,11 +188,15 @@ jobs:
           CI: true
         continue-on-error: true
 
-      # Gate locale avant push main : évite un Vérification rouge (mail) si
+      # Gate locale avant push HTML : évite un Vérification rouge (mail) si
       # generate-seo / données ont cassé l’intégrité statique.
+      # continue-on-error : un test figé (date d’article sortie de la fiche)
+      # ne doit plus retenir news.json — le fil JS lit ce fichier.
       - name: Pre-push integrity (bot gate)
+        id: prepush
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true'
         timeout-minutes: 8
+        continue-on-error: true
         run: bash scripts/bot-prepush-check.sh
 
       - name: Commit and push updates
@@ -200,13 +204,24 @@ jobs:
         run: |
           git config user.name "LE-RADAR News Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add news.json news-archive.json historical-catalog.config.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml news-sources.json index.html sitemap.xml sitemap-archives.xml llms.txt assets/news-images 2>/dev/null || true
-          # Pages d'entités : ce sont des DOSSIERS entièrement régénérés. `-A`
-          # est indispensable — sans lui, la suppression d'une page (journal
-          # retiré du registre) resterait non stagée et la page continuerait
-          # d'être servie et indexée.
-          git add -A radios journaux etablissements medias horaires en archives 2>/dev/null || true
-          git commit -m "bot: update student news feed, excerpts, images, photo credits, RSS and social (auto)" || exit 0
+          DATA_FILES=(
+            news.json news-archive.json historical-catalog.config.json
+            author-qc.json lead-excerpt-qc.json social-feed.json
+            lead-image-qc.json photo-credit-qc.json feed.xml
+            news-sources.json assets/news-images
+          )
+          if [ "${{ steps.prepush.outcome }}" = "success" ]; then
+            git add "${DATA_FILES[@]}" index.html sitemap.xml sitemap-archives.xml llms.txt 2>/dev/null || true
+            # Pages d'entités : dossiers entièrement régénérés. `-A` est
+            # indispensable — sans lui, une fiche retirée resterait en ligne.
+            git add -A radios journaux etablissements medias horaires en archives 2>/dev/null || true
+            MSG='bot: update student news feed, excerpts, images, photo credits, RSS and social (auto)'
+          else
+            echo "::warning::integrity check failed — publishing news data only so the live feed still updates"
+            git add "${DATA_FILES[@]}" 2>/dev/null || true
+            MSG='bot: update student news feed (auto; HTML gate deferred)'
+          fi
+          git commit -m "$MSG" || exit 0
           for i in 1 2 3; do
             git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
             git rebase --abort 2>/dev/null || true

@@ -64,36 +64,12 @@ const {
   getBotHints,
 } = require('./source-retention-lib');
 const { mergeHistoricalCatalog } = require('./historical-catalog-lib');
+const { scheduledSlotFor } = require('./news-schedule-lib');
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
 const ARCHIVE_PATH = path.join(__dirname, '..', 'news-archive.json');
 const SOURCES_PATH = path.join(__dirname, '..', 'news-sources.json');
 
-// Passes quotidiennes planifiées du bot d'actualités, en UTC — doit refléter
-// les crons primaires de .github/workflows/update-news.yml
-// (le filet horaire :20 n'est pas listé ici : hors créneau, updatedSlot = null
-//  → l'UI affiche l'heure réelle de la passe de rattrapage).
-const SCHEDULED_PASSES_UTC = [
-  [1, 0], [9, 30], [11, 0], [14, 0], [16, 0], [17, 30], [20, 0], [23, 0],
-];
-// Le cron GitHub part souvent en retard (jamais en avance) ; au-delà de cette
-// marge, la passe est considérée hors horaire (filet :20, manuel, etc.).
-const SCHEDULE_TOLERANCE_MS = 75 * 60 * 1000;
-
-/** ISO de la passe planifiée correspondant à cette exécution, ou null si hors horaire. */
-function scheduledSlotFor(now = new Date()) {
-  let best = null;
-  for (const dayOffset of [0, -1]) {
-    for (const [h, m] of SCHEDULED_PASSES_UTC) {
-      const slot = new Date(Date.UTC(
-        now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + dayOffset, h, m,
-      ));
-      if (slot <= now && (!best || slot > best)) best = slot;
-    }
-  }
-  if (!best || now - best > SCHEDULE_TOLERANCE_MS) return null;
-  return best.toISOString();
-}
 const IS_CI = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true';
 const TIMEOUT = 15000;
 /** En CI : timeouts plus courts — verify-authors / ensure-lead-images sont des steps séparés. */
@@ -1190,9 +1166,8 @@ async function main() {
   const runDate = new Date();
   const news = {
     updated: runDate.toISOString(),
-    // Heure de passe planifiée (update-news.yml) la plus proche : c'est elle
-    // que le site affiche, pour que « mis à jour » colle à l'horaire annoncé
-    // malgré les retards du cron GitHub Actions.
+    // Créneau affiché (ex. 16 h) même si le cron a part 35 min plus tôt.
+    // Hors fenêtre (filet :20, manuel) : null → l'UI montre l'heure réelle.
     updatedSlot: scheduledSlotFor(runDate),
     count: prunedAll.length,
     freshnessSessions: 3,
