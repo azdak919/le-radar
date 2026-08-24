@@ -512,12 +512,11 @@ function compose(opts) {
   const qrPx = Math.round(qrIn * REF_DPI * fit);
   const qrPad = Math.round(36 * fit);
   const qrSide = qrPx;
-  const ruleGap = 22 * fit;
 
   let contentBottom = h - safe;
   if (credit) contentBottom -= creditH + 18 * fit;
   if (opts.langs && langsH) contentBottom -= langsH + 16 * fit;
-  contentBottom -= legalH + 14 * fit + nameH + 6 * fit + markH + ruleGap;
+  contentBottom -= legalH + 14 * fit + nameH + 6 * fit + markH;
   if (opts.qr && assets.qr) contentBottom -= 24 * fit + qrSide;
   const playTop = barH + 12 * fit;
   const playBot = contentBottom - 28 * fit;
@@ -585,13 +584,6 @@ function compose(opts) {
   ctx.fillStyle = INK;
   ctx.textBaseline = 'top';
   ctx.fillText(TITLE, mx + footLogo + markGap, cy + (markH - fMark) / 2);
-  const ruleY = cy - 12 * fit;
-  ctx.strokeStyle = 'rgba(241, 242, 244, 0.22)';
-  ctx.lineWidth = Math.max(1, Math.round(fit));
-  ctx.beginPath();
-  ctx.moveTo(w * 0.32, ruleY);
-  ctx.lineTo(w * 0.68, ruleY);
-  ctx.stroke();
   if (opts.qr && assets.qr) {
     const card = qrSide;
     cy -= 24 * fit + card;
