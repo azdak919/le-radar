@@ -582,7 +582,7 @@ function compose(opts) {
     ctx.drawImage(assets.qr, (w - inner) / 2, qrTop + qrPad, inner, inner);
   }
 
-  const qrBottom = ((opts.qr && assets.qr) || opts.langs) ? qrTop + qrSide : qrTop;
+  const qrBottom = qrTop + qrSide;
   const pad = 32 * fit;
   const gMark = 14 * fit;
   const gName = 18 * fit;
