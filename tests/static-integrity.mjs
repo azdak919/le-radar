@@ -533,6 +533,15 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(!/GPL-2/.test(posterScript), 'affiches campus : pas de GPL au pied');
   assert(posterScript.includes('Le Réseau Académique de Découverte'), 'affiches campus : nom complet au footer');
   assert(existsSync(join(root, 'assets/kit/qr-le-radar.svg')), 'affiches campus : QR vectoriel officiel requis');
+  const builder = readFileSync(join(root, 'affiches/index.html'), 'utf8');
+  const builderJs = readFileSync(join(root, 'affiches/poster-builder.js'), 'utf8');
+  assert(builder.includes('Imprimer une affiche'), 'générateur public : titre');
+  assert(builder.includes('Lettre 8,5 × 11'), 'générateur public : format lettre');
+  assert(builder.includes('Légal 8,5 × 14'), 'générateur public : format légal');
+  assert(builderJs.includes('quebec-university-backgrounds.json'), 'générateur public : banque de photos');
+  assert(builderJs.includes('wIn: 8.5') && builderJs.includes('hIn: 11'), 'générateur public : lettre 8,5×11');
+  assert(builderJs.includes('DPI = 300'), 'générateur public : 300 dpi');
+  assert(builderJs.includes('TITLE = \'LE-RADAR.ca\''), 'générateur public : mot-symbole');
   const postersCheck = spawnSync('python3', [join(root, 'scripts/generate-campus-posters.py'), '--check'], { encoding: 'utf8' });
   assert.equal(postersCheck.status, 0, postersCheck.stderr || postersCheck.stdout || 'affiches campus : JPEG 11×17 manquants');
 }

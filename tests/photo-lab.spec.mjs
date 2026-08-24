@@ -45,9 +45,23 @@ test('tableau de bord local', async ({ page }) => {
   const pageLab = page.locator('a.card[href="./sports-page-lab.html"]');
   await expect(pageLab).toBeVisible();
   await expect(pageLab.locator('strong')).toContainText('Cartes page Sports');
-  const posters = page.locator('a.card[href="./affiche-lab.html"]');
+  const posters = page.locator('a.card[href="../affiches/"]');
   await expect(posters).toBeVisible();
-  await expect(posters.locator('strong')).toContainText('Affiches 11×17');
+  await expect(posters.locator('strong')).toContainText('Imprimer une affiche');
+});
+
+test('générateur d’affiches public', async ({ page }) => {
+  await page.goto(`${BASE}/affiches/`, { waitUntil: 'networkidle' });
+  await expect(page.locator('h1')).toContainText('Imprimer une affiche');
+  await expect(page.locator('input[name="format"][value="letter"]')).toBeVisible();
+  await expect(page.locator('input[name="format"][value="legal"]')).toBeVisible();
+  await expect(page.getByRole('button', { name: /JPEG 300 dpi/ })).toBeVisible();
+  await page.locator('#preview canvas').waitFor({ timeout: 20000 });
+  await page.locator('label:has(input[name="format"][value="letter"])').click();
+  await expect(page.locator('#status')).toContainText('Lettre', { timeout: 15000 });
+  await expect(page.locator('#status')).toContainText('2550 × 3300');
+  const n = await page.locator('#photo-grid label').count();
+  expect(n).toBeGreaterThan(20);
 });
 
 test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ page }) => {

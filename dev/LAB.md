@@ -17,7 +17,7 @@ Cartes sports du mât (CTA et puces, colonne mobile) : `/dev/sports-strip-lab.ht
 
 Cartes de la page `/sports/` (formations : victoire, défaite, nul, prochain, régate, en direct, creux) : `/dev/sports-page-lab.html`.
 
-Affiches campus 11×17 (mur + épreuve) : `/dev/affiche-lab.html`.
+Affiches à imprimer (11×17, lettre, légal) : `/affiches/`.
 
 ## Lancer
 

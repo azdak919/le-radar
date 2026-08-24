@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Composez et téléchargez une affiche LE-RADAR.ca à imprimer : 11 × 17, lettre ou légal, 300 dpi.">
+  <meta name="robots" content="index,follow">
+  <title>Imprimer une affiche — LE-RADAR.ca</title>
+  <link rel="canonical" href="https://le-radar.ca/affiches/">
+  <link rel="icon" href="../assets/icon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="../scripts/og-fonts/SourceSerif4Display-Bold.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="../scripts/og-fonts/Inter-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="../scripts/og-fonts/Inter-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="./poster-builder.css">
+</head>
+<body>
+  <header class="dash-top">
+    <a class="dash-brand" href="../">
+      <img src="../assets/icon.svg" width="32" height="32" alt="">
+      LE-RADAR.ca
+    </a>
+    <nav class="dash-nav" aria-label="Sections">
+      <a href="../kit-media/">Kit média</a>
+      <a href="../">Accueil</a>
+    </nav>
+  </header>
+
+  <div class="dash">
+    <form class="dash-controls" id="form" onsubmit="return false;">
+      <h1>Imprimer une affiche</h1>
+      <p class="dash-lead">Choisissez le format, le campus, la photo et le texte. Le fichier téléchargé est un JPEG 300 dpi, aux dimensions exactes de la feuille.</p>
+
+      <fieldset>
+        <legend>Format</legend>
+        <div class="choices">
+          <label><input type="radio" name="format" value="tabloid" checked> 11 × 17 po</label>
+          <label><input type="radio" name="format" value="letter"> Lettre 8,5 × 11</label>
+          <label><input type="radio" name="format" value="legal"> Légal 8,5 × 14</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Établissement</legend>
+        <div class="choices">
+          <label><input type="radio" name="campus" value="generique" checked> Générique</label>
+          <label><input type="radio" name="campus" value="laval"> Université Laval</label>
+          <label><input type="radio" name="campus" value="mcgill"> Université McGill</label>
+          <label><input type="radio" name="campus" value="udem"> Université de Montréal</label>
+          <label><input type="radio" name="campus" value="uqam"> UQAM</label>
+          <label><input type="radio" name="campus" value="concordia"> Université Concordia</label>
+          <label><input type="radio" name="campus" value="sherbrooke"> Université de Sherbrooke</label>
+          <label><input type="radio" name="campus" value="bishops"> Université Bishop’s</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Texte</legend>
+        <div class="choices">
+          <label><input type="radio" name="lang" value="standard" checked> Français</label>
+          <label><input type="radio" name="lang" value="bilingue"> Bilingue</label>
+          <label><input type="radio" name="lang" value="minimal"> Minimal</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Code QR</legend>
+        <div class="choices">
+          <label><input type="radio" name="qr" value="non" checked> Sans</label>
+          <label><input type="radio" name="qr" value="oui"> Avec (le-radar.ca)</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Photo</legend>
+        <div class="photo-grid" id="photo-grid"></div>
+        <p class="photo-meta" id="photo-meta"></p>
+      </fieldset>
+
+      <div class="dash-actions">
+        <button class="btn" type="button" id="dl">Télécharger JPEG 300 dpi</button>
+      </div>
+      <p class="status" id="status">Chargement…</p>
+    </form>
+
+    <section class="dash-preview" aria-label="Aperçu">
+      <div class="preview-frame" id="preview"></div>
+      <p class="preview-hint">L’aperçu est réduit. Le téléchargement est le fichier d’impression (300 dpi, dimensions exactes). Imprimez à 100 %, sans « ajuster à la page ».</p>
+    </section>
+  </div>
+
+  <footer class="dash-foot">
+    <p>LE-RADAR.ca est un projet indépendant, non officiel — sans affiliation aux médias ni aux établissements. Les contenus appartiennent à leurs publications d’origine. Photos Wikimedia Commons, crédits sur l’affiche.</p>
+    <p><a href="../kit-media/">Kit média</a> · <a href="../">Accueil</a></p>
+  </footer>
+  <script src="./poster-builder.js"></script>
+</body>
+</html>
