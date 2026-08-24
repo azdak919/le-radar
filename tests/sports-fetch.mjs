@@ -95,6 +95,8 @@ test('update-sports.yml couvre les heures de consultation QC', () => {
   assert.match(yml, /15 4 \* \* \*/);
   assert.match(yml, /0 18 \* \* 0,6/);
   assert.match(yml, /could not push sports update after retries/);
+  assert.match(yml, /generate-seo\.js --update --sports-only/);
+  assert.match(yml, /sports\/index\.html/);
 });
 
 test('update-sports-live.yml sonde les fenêtres de match', () => {
