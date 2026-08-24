@@ -44,4 +44,4 @@ Bind **127.0.0.1** seulement. Pas de lien prod, pas de service worker.
 
 Campus et favori ne sont **jamais** purgés à la prochaine moisson.
 
-**Oui, ça s’enregistre** — sur le **disque local** (`data/photo-bank.json` + miroirs `*-data.js`). Ça n’est **pas** le-radar.ca. Un « Enregistrer tout » ne déploie pas. Pour le site public : `npm run bank:check` puis PR (bump SW si les `*-data.js` du shell ont changé). Hard-refresh (Ctrl+Shift+R) sur un aperçu local pour vider l’ancien service worker.
+**Oui, ça s’enregistre** — sur le **disque local** (`data/photo-bank.json` + miroirs `*-data.js`). Ça n’est **pas** le-radar.ca. Un « Enregistrer tout » ne déploie pas. Cocher une saison sans `s` / Enregistrer (ou sans passer à la photo suivante) ne l’écrit pas. Pour le site public : `npm run bank:check` puis PR (bump SW si les `*-data.js` du shell ont changé — sinon le navigateur ressert l’ancienne banque). Hard-refresh (Ctrl+Shift+R) sur un aperçu local pour vider l’ancien service worker.

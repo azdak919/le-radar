@@ -307,6 +307,8 @@ function syncBanks(opts = {}) {
     const onlyJs = jsUrls.filter((u) => !jsonUrls.includes(u));
     // Drift crédit : JS a encore le gabarit long
     const jsText = fs.existsSync(jsPath) ? fs.readFileSync(jsPath, 'utf8') : '';
+    const jsOut = buildJs(bank, kept);
+    const contentDrift = jsOut !== jsText;
     const creditDrift =
       creditFixed > 0 ||
       /No machine-readable author provided/i.test(jsText) ||
@@ -315,7 +317,8 @@ function syncBanks(opts = {}) {
       onlyJson.length > 0 ||
       onlyJs.length > 0 ||
       jsonUrls.length !== jsUrls.length ||
-      creditDrift;
+      creditDrift ||
+      contentDrift;
 
     if (removed.length || drift || creditFixed) {
       if (drift && !removed.length && !creditFixed) {
@@ -348,7 +351,6 @@ function syncBanks(opts = {}) {
     fs.mkdirSync(path.dirname(jsonPath), { recursive: true });
     fs.writeFileSync(jsonPath, JSON.stringify(data, null, 2) + '\n', 'utf8');
 
-    const jsOut = buildJs(bank, kept);
     fs.writeFileSync(jsPath, jsOut, 'utf8');
     wrote += 1;
     log(

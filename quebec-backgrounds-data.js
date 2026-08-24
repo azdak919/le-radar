@@ -107,8 +107,9 @@ const QUEBEC_BACKGROUNDS = [
     width: 3472,
     height: 1896,
     season: "printemps",
+    permanent: true,
     surfaces: ["masthead"],
-    tags: ["mat"],
+    tags: ["favori", "mat"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/9/90/Paysage_d%60automne_-_panoramio.jpg",

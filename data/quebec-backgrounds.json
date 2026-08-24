@@ -1,7 +1,7 @@
 {
   "version": 1,
   "profile": "masthead",
-  "updated": "2026-08-24T06:45:43.016Z",
+  "updated": "2026-08-24T09:31:27.503Z",
   "photos": [
     {
       "id": "1eb2382981cc",
@@ -3505,7 +3505,15 @@
       "season": "hiver",
       "tags": [
         "mat"
-      ]
+      ],
+      "seasonConfidence": 0.98,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:12",
+        "kw_hiver",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "id": "1700195db8ce",
@@ -3527,7 +3535,15 @@
       "season": "hiver",
       "tags": [
         "mat"
-      ]
+      ],
+      "seasonConfidence": 0.98,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_abbrev:01",
+        "kw_hiver",
+        "date_agrees"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "id": "ebcfede6b764",
@@ -3580,7 +3596,15 @@
       "season": "hiver",
       "tags": [
         "mat"
-      ]
+      ],
+      "seasonConfidence": 0.78,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:03",
+        "kw_hiver",
+        "date_disagrees"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "id": "d329173009ad",
@@ -3601,7 +3625,15 @@
       "season": "hiver",
       "tags": [
         "mat"
-      ]
+      ],
+      "seasonConfidence": 0.78,
+      "seasonSource": "text",
+      "seasonReasons": [
+        "date_filename:03",
+        "kw_hiver",
+        "date_disagrees"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     }
   ]
 }
