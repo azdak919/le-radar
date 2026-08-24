@@ -68,6 +68,14 @@ test('générateur d’affiches public', async ({ page }) => {
   await page.locator('label:has(input[name="format"][value="letter"])').click();
   await expect(page.locator('#status')).toContainText('Lettre', { timeout: 15000 });
   await expect(page.locator('#status')).toContainText('2550 × 3300');
+  await page.locator('label:has(input[name="dpi"][value="600"])').click();
+  await expect(page.getByRole('button', { name: /JPEG 600 dpi/ }).first()).toBeVisible();
+  await expect(page.getByRole('button', { name: /PDF 600 dpi/ }).first()).toBeVisible();
+  await expect(page.locator('#status')).toContainText('600 dpi');
+  await expect(page.locator('#status')).toContainText('5100 × 6600');
+  await page.locator('label:has(input[name="dpi"][value="300"])').click();
+  await expect(page.locator('#status')).toContainText('2550 × 3300');
+  await expect(page.getByRole('button', { name: /JPEG 300 dpi/ }).first()).toBeVisible();
   await expect(page.locator('#photo-grid label')).toHaveCount(6);
   await page.locator('#photo-more').click();
   const n = await page.locator('#photo-grid label').count();

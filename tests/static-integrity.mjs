@@ -557,7 +557,11 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('photo-bank.json'), 'générateur public : banque unique du labo photo');
   assert(builderJs.includes('quebec-backgrounds-rejected.json'), 'générateur public : exclusions du labo');
   assert(builderJs.includes('wIn: 8.5') && builderJs.includes('hIn: 11'), 'générateur public : lettre 8,5×11');
-  assert(builderJs.includes('DPI = 300'), 'générateur public : 300 dpi');
+  assert(builderJs.includes('REF_DPI = 300'), 'générateur public : 300 dpi de référence');
+  assert(builderJs.includes('PREVIEW_DPI'), 'générateur public : aperçu plus léger que le JPEG');
+  assert(builderJs.includes('DPI_CHOICES'), 'générateur public : 300 et 600 dpi');
+  assert(builder.includes('name="dpi"'), 'générateur public : choix de résolution');
+  assert(builder.includes('600 dpi'), 'générateur public : 600 dpi');
   assert(builderJs.includes('jpegToPdfBlob'), 'générateur public : PDF dans le navigateur');
   assert(builderJs.includes('previewFit'), 'générateur public : aperçu dimensionné à la zone');
   assert(builderJs.includes('view.style.width'), 'générateur public : canvas d’aperçu pas 300×150 par défaut');

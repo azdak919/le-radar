@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Composez et téléchargez une affiche LE-RADAR.ca à imprimer : 11 × 17, lettre ou légal, 300 dpi.">
+  <meta name="description" content="Composez et téléchargez une affiche LE-RADAR.ca à imprimer : 11 × 17, lettre ou légal, 300 ou 600 dpi.">
   <meta name="robots" content="index,follow">
   <title>Imprimer une affiche — LE-RADAR.ca</title>
   <link rel="canonical" href="https://le-radar.ca/affiches/">
@@ -16,7 +16,7 @@
   <link rel="preload" href="../scripts/og-fonts/Inter-Regular.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="../scripts/og-fonts/Inter-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="../assets/kit/fonts/Caveat-Bold.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="./poster-builder.css?v=preview-fit">
+  <link rel="stylesheet" href="./poster-builder.css?v=dpi">
 </head>
 <body>
   <header class="dash-top">
@@ -50,6 +50,15 @@
           <label><input type="radio" name="format" value="letter"> Lettre 8,5 × 11</label>
           <label><input type="radio" name="format" value="legal"> Légal 8,5 × 14</label>
         </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Résolution</legend>
+        <div class="choices">
+          <label><input type="radio" name="dpi" value="300" checked> 300 dpi</label>
+          <label><input type="radio" name="dpi" value="600"> 600 dpi</label>
+        </div>
+        <p class="field-hint">300 dpi convient à un babillard. 600 dpi pour un tirage plus net (fichier plus lourd).</p>
       </fieldset>
 
       <fieldset>
@@ -166,6 +175,6 @@
       </aside>
     </section>
   </div>
-  <script src="./poster-builder.js?v=preview-fit"></script>
+  <script src="./poster-builder.js?v=dpi"></script>
 </body>
 </html>
