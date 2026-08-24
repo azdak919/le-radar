@@ -730,10 +730,12 @@ function recipeLine() {
 }
 
 function previewFit() {
-  const stage = document.getElementById('preview-stage') || document.getElementById('preview-pane');
+  const pane = document.getElementById('preview-pane');
+  const crop = document.getElementById('crop-tools');
   const pad = 8;
-  const maxW = Math.max(160, (stage?.clientWidth || window.innerWidth * 0.45) - pad);
-  const maxH = Math.max(220, (stage?.clientHeight || window.innerHeight - 72) - pad);
+  const cropW = crop && !crop.hidden ? crop.getBoundingClientRect().width + 16 : 0;
+  const maxW = Math.max(160, (pane?.clientWidth || window.innerWidth * 0.45) - cropW - pad * 2);
+  const maxH = Math.max(220, (pane?.clientHeight || window.innerHeight - 72) - pad);
   return { maxW, maxH };
 }
 

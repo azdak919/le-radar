@@ -108,5 +108,6 @@ test.describe('affiches — largeurs labo', () => {
     const crop = await page.locator('#crop-tools').boundingBox();
     expect(canvas.height).toBeGreaterThan(280);
     expect(crop.x).toBeGreaterThan(canvas.x + canvas.width - 8);
+    expect(crop.x - (canvas.x + canvas.width)).toBeLessThan(48);
   });
 });
