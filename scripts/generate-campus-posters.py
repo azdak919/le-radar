@@ -17,7 +17,10 @@ import subprocess
 import urllib.request
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageEnhance, ImageFont
+try:
+    from PIL import Image, ImageDraw, ImageEnhance, ImageFont
+except ImportError:  # --check n’a pas besoin de Pillow (CI)
+    Image = ImageDraw = ImageEnhance = ImageFont = None
 
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = ROOT / "assets"
@@ -572,6 +575,8 @@ def main():
     if args.check:
         check_outputs()
         return
+    if Image is None:
+        raise SystemExit("affiche: Pillow requis (pip install pillow)")
     for path in (SERIF, SANS, SANS_SEMI, ICON_SVG, QR_SVG, BANK):
         if not path.is_file():
             raise SystemExit(f"affiche: manquant {path}")
