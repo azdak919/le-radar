@@ -671,8 +671,11 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   );
   assert(builderJs.includes('Bonne rentrée'), 'générateur public : message manuscrit rentrée');
   assert(builderJs.includes('Pas de publicité'), 'générateur public : phrase manuscrite sans pub');
-  assert(builderJs.includes("greeting: 'nopub'"), 'affiche générique : Pas de publicité par défaut');
-  assert(builder.includes('value="nopub" selected'), 'affiche générique : Pas de publicité coché');
+  assert(builderJs.includes("greeting: 'none'"), 'affiche générique : pas de message manuscrit par défaut');
+  assert(builder.includes('value="none" selected'), 'affiche générique : Aucun coché');
+  assert(!builder.includes('value="nopub" selected'), 'affiche générique : Pas de publicité n’est plus le défaut');
+  assert(!kit.includes('Pas de publicité ·'), 'kit-media : métadonnée générique sans phrase manuscrite');
+  assert(!mediaKitEn.includes('No ads ·'), 'media-kit EN : métadonnée générique sans phrase manuscrite');
   assert(builderJs.includes('Code libre GPL 2.0'), 'générateur public : phrase manuscrite GPL');
   assert(builderJs.includes('Gratuit, pour toujours'), 'générateur public : phrase manuscrite gratuit');
   assert(builder.includes('optgroup label="Le projet"'), 'générateur public : groupe de phrases projet');
