@@ -90,6 +90,7 @@ legend {
   flex-wrap: wrap;
   gap: 6px;
 }
+.choices label[hidden] { display: none !important; }
 .choices label {
   display: inline-flex;
   align-items: center;

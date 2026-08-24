@@ -542,6 +542,9 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('wIn: 8.5') && builderJs.includes('hIn: 11'), 'générateur public : lettre 8,5×11');
   assert(builderJs.includes('DPI = 300'), 'générateur public : 300 dpi');
   assert(builderJs.includes('TITLE = \'LE-RADAR.ca\''), 'générateur public : mot-symbole');
+  assert(builderJs.includes('syncLangChoice'), 'générateur public : bilingue réservé aux campus anglophones');
+  assert(builderJs.includes("slug: 'mcgill'") && builderJs.includes('bilingual: true'), 'générateur public : McGill bilingue');
+  assert(builderJs.includes("slug: 'laval'") && builderJs.includes("slug: 'laval', line: 'Université Laval', bilingual: false"), 'générateur public : Laval français seulement');
   const postersCheck = spawnSync('python3', [join(root, 'scripts/generate-campus-posters.py'), '--check'], { encoding: 'utf8' });
   assert.equal(postersCheck.status, 0, postersCheck.stderr || postersCheck.stdout || 'affiches campus : JPEG 11×17 manquants');
 }

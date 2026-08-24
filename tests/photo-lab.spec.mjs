@@ -62,6 +62,12 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.locator('#status')).toContainText('2550 × 3300');
   const n = await page.locator('#photo-grid label').count();
   expect(n).toBeGreaterThan(20);
+  const bilingue = page.locator('label:has(input[name="lang"][value="bilingue"])');
+  await expect(bilingue).toBeHidden();
+  await page.locator('label:has(input[name="campus"][value="mcgill"])').click();
+  await expect(bilingue).toBeVisible();
+  await page.locator('label:has(input[name="campus"][value="laval"])').click();
+  await expect(bilingue).toBeHidden();
 });
 
 test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ page }) => {
