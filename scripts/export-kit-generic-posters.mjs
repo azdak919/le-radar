@@ -53,7 +53,7 @@ async function main() {
       await page.waitForTimeout(400);
       const [download] = await Promise.all([
         page.waitForEvent('download', { timeout: 60000 }),
-        page.locator('#dl').click(),
+        page.locator('#dl-jpg').click(),
       ]);
       const dest = join(outDir, `affiche-generique-${fmt.file}-600dpi.jpg`);
       await download.saveAs(dest);
