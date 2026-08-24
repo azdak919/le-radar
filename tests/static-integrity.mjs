@@ -520,7 +520,8 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(posterScript.includes('draw_footer_wordmark'), 'affiches campus : petit logo PWA au footer seulement');
   assert(!/Rentrée 2026/.test(posterScript), 'affiches campus : pas de Rentrée 2026');
   assert(posterScript.includes('SLOGAN = "Journaux, radios et sports étudiants du Québec, réunis au même endroit"'), 'affiches campus : slogan sur une ligne');
-  assert(posterScript.includes('L’Exemplaire') && posterScript.includes('CHYZ 94,3'), 'affiches campus : journaux et radio du campus');
+  assert(posterScript.includes('Votre journal'), 'affiches campus : « Votre journal … s’y trouve »');
+  assert(posterScript.includes('Votre radio'), 'affiches campus : « Votre radio … s’y trouve »');
   assert(/draw\.rectangle\(\(0, 0, W, BAR_H\)/.test(posterScript), 'affiches campus : barre pourpre en haut');
   assert(posterScript.includes('raster_qr'), 'affiches campus : QR officiel collé, pas un carré vide');
   assert(posterScript.includes('Student media on your radar'), 'affiches campus : slogan EN officiel');

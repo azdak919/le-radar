@@ -279,6 +279,34 @@ def grade_photo(im, desaturate, overlay):
     return Image.blend(rgb, Image.new("RGB", rgb.size, BG), overlay)
 
 
+def join_fr(names: list[str]) -> str:
+    if len(names) == 1:
+        return names[0]
+    if len(names) == 2:
+        return f"{names[0]} et {names[1]}"
+    return f"{', '.join(names[:-1])} et {names[-1]}"
+
+
+def join_en(names: list[str]) -> str:
+    if len(names) == 1:
+        return names[0]
+    if len(names) == 2:
+        return f"{names[0]} and {names[1]}"
+    return f"{', '.join(names[:-1])} and {names[-1]}"
+
+
+def papers_line_fr(names: list[str]) -> str:
+    if len(names) == 1:
+        return f"Votre journal {names[0]} s’y trouve"
+    return f"Vos journaux {join_fr(names)} s’y trouvent"
+
+
+def papers_line_en(names: list[str]) -> str:
+    if len(names) == 1:
+        return f"Your paper {names[0]} is here"
+    return f"Your papers {join_en(names)} are here"
+
+
 def wrap_text(text: str, fnt: ImageFont.FreeTypeFont, max_w: int) -> list[str]:
     if fnt.getlength(text) <= max_w:
         return [text]
@@ -371,7 +399,7 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
     title_w = tracked_width(TITLE, f_title)
     title_y = int(round(560 * scale)) - box[1]
     draw_tracked(draw, ((W - title_w) // 2, title_y), TITLE, f_title, INK)
-    y = title_y + (box[3] - box[1]) + int(round(24 * scale))
+    y = title_y + (box[3] - box[1]) + int(round(36 * scale))
 
     def line(text, fnt, fill, dy=12):
         nonlocal y
@@ -379,26 +407,36 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
         draw.text(((W - tw) // 2, y), text, font=fnt, fill=fill)
         y += th + dy
 
+    def block(text, fnt, fill, dy, max_w):
+        nonlocal y
+        for part in wrap_text(text, fnt, max_w):
+            line(part, fnt, fill, 8)
+        y += dy - 8
+
     max_w = W - 2 * SAFE - 80
     slogan_size = int(round(18 * scale))
     f_slogan = font(SANS, slogan_size)
     while f_slogan.getlength(SLOGAN) > max_w and slogan_size > 30:
         slogan_size -= 2
         f_slogan = font(SANS, slogan_size)
+    gap_s = int(round(22 * scale))
+    gap_m = int(round(18 * scale))
     if kind != "minimal":
-        line(SLOGAN, f_slogan, SOFT, 16)
+        line(SLOGAN, f_slogan, SOFT, gap_s)
         if kind == "bilingue":
-            line(SLOGAN_EN, f_en, MUTED, 16)
+            line(SLOGAN_EN, f_en, MUTED, gap_s)
     if campus.get("line"):
-        line(campus["line"], f_uni, SOFT, 14)
+        line(campus["line"], f_uni, SOFT, gap_m + 8)
     papers = campus.get("papers") or []
     if papers:
-        line(" · ".join(papers), f_media, SOFT, 8)
+        block(papers_line_fr(papers), f_media, SOFT, gap_m, max_w)
+        if kind == "bilingue":
+            block(papers_line_en(papers), f_en, MUTED, gap_m, max_w)
     radio = campus.get("radio")
     if radio:
-        radio_line = f"{radio['name']} · {radio['slogan']}"
-        for part in wrap_text(radio_line, f_media, max_w):
-            line(part, f_media, MUTED, 6)
+        block(f"Votre radio {radio['name']} s’y trouve", f_media, SOFT, 6, max_w)
+        if radio.get("slogan"):
+            block(radio["slogan"], f_en, MUTED, gap_m, max_w)
 
     # Footer from the bottom — never leaves the 0.5 in safety.
     credit = ""
