@@ -517,7 +517,7 @@ function compose(opts) {
   const fMark = Math.min(52 * fit, footCap);
   const fSign = Math.min(36 * fit, footCap * 0.62);
   const fLegal = Math.min(28 * fit, footCap * 0.5);
-  const fCredit = Math.min(22 * fit, footCap * 0.4);
+  const fCredit = Math.min(26 * fit, footCap * 0.48);
   const fEn = Math.min(22 * fit, footCap * 0.4);
   const footLogo = Math.min(56 * fit, footCap + 4 * fit);
   const markGap = 12 * fit;
@@ -577,19 +577,17 @@ function compose(opts) {
   let gMark = 14 * fit;
   let gName = 18 * fit;
   let gLegal = 18 * fit;
-  let gLang = 16 * fit;
+  const creditReserve = credit ? creditH + 48 * fit : safe;
   const blockH = markH + gMark + nameH + gName + legalH
-    + (langsH ? gLegal + langsH : 0)
-    + (credit ? gLang + creditH : 0);
-  const room = (h - safe) - (qrBottom + pad);
+    + (langsH ? gLegal + langsH : 0);
+  const room = (h - creditReserve) - (qrBottom + pad);
   if (room > blockH && blockH > 0) {
-    const slots = 2 + (langsH ? 1 : 0) + (credit ? 1 : 0);
+    const slots = 2 + (langsH ? 1 : 0);
     const add = (room - blockH) / slots;
-    pad += add;
-    gMark += add * 0.35;
-    gName += add * 0.35;
+    pad += add * 0.4;
+    gMark += add * 0.3;
+    gName += add * 0.3;
     if (langsH) gLegal += add * 0.2;
-    if (credit) gLang += add * 0.1;
   }
 
   let cy = qrBottom + pad;
@@ -625,11 +623,12 @@ function compose(opts) {
       fillCentered(ctx, line, ly, SOFT);
       ly += langLineH + 5;
     });
-    cy = ly + (credit ? gLang : 0);
+    cy = ly;
   }
   if (credit) {
+    const creditY = cy + (h - cy - creditH) / 2;
     ctx.font = `400 ${fCredit}px "LR Sans"`;
-    fillCentered(ctx, credit, cy, SOFT);
+    fillCentered(ctx, credit, creditY, SOFT);
   }
 
   if (assets.logo) ctx.drawImage(assets.logo, (w - big) / 2, logoY, big, big);

@@ -638,6 +638,7 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builderJs.includes('816 * fit'), 'identité d’affiche figée : le pied ne rapetisse pas le logo');
   assert(builderJs.includes('3680 * fit'), 'QR figé un peu plus haut : langues entières sous le pied');
   assert(builderJs.includes('footCap'), 'pied d’affiche : corps agrandi sans dépasser le haut');
+  assert(builderJs.includes('(h - cy - creditH) / 2'), 'crédit photo : milieu entre langues et bas de page');
   assert(builderJs.includes('photo-angle'), 'générateur public : angle de photo');
   assert(builder.includes('solid--radar') || builderJs.includes('solid--radar'), 'générateur public : pastille fond radar');
   assert(builderJs.includes('syncLangChoice'), 'générateur public : bilingue réservé aux campus anglophones');
