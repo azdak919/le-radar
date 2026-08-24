@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="fr" class="lab-app">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Labo cartes page Sports — LE RADAR (local)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../seo-pages.css">
+  <style>
+    /*
+     * Établi du labo. Les cartes = CSS prod (seo-pages.css).
+     * .sports-result--live = proposition, pas encore émis par seo-pages.js.
+     */
+    html.lab-app, html.lab-app body {
+      height: 100%;
+      max-width: none;
+      overflow: hidden;
+    }
+    body.lab-app {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      margin: 0;
+    }
+    .lab-chrome {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 14px;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--rule);
+      background: var(--bg);
+    }
+    .lab-chrome h1 {
+      margin: 0;
+      font: 700 1.05rem/1.2 var(--serif);
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+    .lab-chrome .lab-links {
+      margin: 0;
+      font: 500 12px/1.2 var(--sans);
+    }
+    .lab-chrome a { color: var(--accent); }
+    .lab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px 6px;
+      align-items: center;
+    }
+    .lab-bar span.k {
+      font: 800 10px/1 var(--sans);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 2px 0 8px;
+    }
+    .lab-bar button {
+      appearance: none;
+      border: 1px solid var(--rule);
+      background: var(--bg-soft);
+      color: var(--ink-soft);
+      font: 600 12px/1.2 var(--sans);
+      padding: 5px 9px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .lab-bar button.is-on {
+      border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
+      background: color-mix(in srgb, var(--accent) 12%, var(--bg));
+      color: var(--accent);
+    }
+    #lab-nav {
+      overflow: auto;
+      border-right: 1px solid var(--rule);
+      background: var(--bg-soft);
+      padding: 8px 0 24px;
+    }
+    #lab-nav p {
+      margin: 8px 12px 6px;
+      font: 800 10px/1 var(--sans);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    #lab-nav a {
+      display: block;
+      padding: 6px 12px;
+      font: 600 12.5px/1.3 var(--sans);
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #lab-nav a:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 5%, transparent); }
+    #lab-nav a.is-on {
+      color: var(--ink);
+      border-left-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+    }
+    #lab-main {
+      overflow: auto;
+      min-width: 0;
+      padding: 16px 18px 40px;
+      background: var(--bg);
+    }
+    #stage { --lab-w: 390px; }
+    #fiches {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--lab-w)), var(--lab-w)));
+      gap: 18px 16px;
+      align-items: start;
+    }
+    body.lab-full #fiches {
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 288px), 1fr));
+    }
+    .lab-case {
+      min-width: 0;
+      scroll-margin-top: 12px;
+    }
+    .lab-case > p {
+      margin: 0 0 8px;
+      font: 600 12px/1.35 var(--sans);
+      color: var(--ink-soft);
+    }
+    .lab-case > p strong { color: var(--ink); }
+    .lab-case > p em {
+      font-style: normal;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .lab-case.is-on .sports-panel {
+      outline: 2px solid color-mix(in srgb, var(--accent) 70%, var(--rule));
+      outline-offset: 2px;
+    }
+    #formats {
+      margin: 28px 0 0;
+      border-top: 1px solid var(--rule);
+      padding-top: 12px;
+    }
+    #formats > summary {
+      cursor: pointer;
+      font: 700 13px/1.3 var(--sans);
+      color: var(--ink-soft);
+    }
+    .lab-frame { margin: 14px 0 0; }
+    .lab-frame p {
+      margin: 0 0 6px;
+      font: 600 12px/1.3 var(--sans);
+      color: var(--muted);
+    }
+    .lab-frame iframe {
+      display: block;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      background: var(--bg);
+      height: 520px;
+    }
+    html.lab-embed, html.lab-embed body {
+      height: auto;
+      overflow: auto;
+      display: block;
+      background: var(--bg);
+    }
+    html.lab-embed .lab-chrome,
+    html.lab-embed #lab-nav,
+    html.lab-embed #lab-filters,
+    html.lab-embed #formats,
+    html.lab-embed .lab-case > p,
+    html.lab-embed #fiches {
+      display: none !important;
+    }
+    html.lab-embed #lab-main { overflow: visible; padding: 12px; }
+    html.lab-embed #stage { margin: 0; }
+    #fiches[hidden],
+    #grille[hidden] {
+      display: none !important;
+    }
+    @media (max-width: 720px) {
+      body.lab-app {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto minmax(0, 1fr);
+      }
+      #lab-nav {
+        border-right: 0;
+        border-bottom: 1px solid var(--rule);
+        max-height: 28vh;
+      }
+    }
+
+    #lab-filters {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      margin: 0 0 16px;
+      padding: 0 0 10px;
+      background: var(--bg);
+    }
+    .lab-case[hidden],
+    #grille .sports-panel[hidden] { display: none !important; }
+  </style>
+</head>
+<body class="lab-app">
+  <div class="lab-chrome">
+    <h1>Cartes /sports/</h1>
+    <p class="lab-links"><a href="./">Labo</a> · <a href="../sports/">page réelle</a> · <a href="./sports-strip-lab.html">mât</a></p>
+    <div class="lab-bar" role="toolbar" aria-label="Largeur de carte">
+      <span class="k">Carte</span>
+      <button type="button" data-w="288">288</button>
+      <button type="button" data-w="340">340</button>
+      <button type="button" data-w="390" class="is-on">390</button>
+      <button type="button" data-w="430">430</button>
+      <button type="button" data-w="560">560</button>
+      <button type="button" data-w="768">768</button>
+      <button type="button" data-w="full">Plein</button>
+    </div>
+    <div class="lab-bar" role="toolbar" aria-label="Thème et vue">
+      <span class="k">Thème</span>
+      <button type="button" data-theme-btn="light" class="is-on">Clair</button>
+      <button type="button" data-theme-btn="dark">Sombre</button>
+      <span class="k">Vue</span>
+      <button type="button" data-view="fiches" class="is-on">Banc</button>
+      <button type="button" data-view="grille">Comme /sports/</button>
+    </div>
+  </div>
+  <nav id="lab-nav" aria-label="Variantes"></nav>
+  <div id="lab-main">
+    <div class="sports-filters" id="lab-filters" role="group" aria-label="Filtres">
+      <div class="sports-filters__row" data-filter-period-row>
+        <span class="sports-filters__label">Période</span>
+        <button type="button" class="sports-filter is-active" data-filter-period="all" aria-pressed="true">Toutes</button>
+        <button type="button" class="sports-filter" data-filter-period="live" aria-pressed="false">En cours</button>
+        <button type="button" class="sports-filter" data-filter-period="week" aria-pressed="false">Cette semaine</button>
+        <button type="button" class="sports-filter" data-filter-period="next-week" aria-pressed="false">Semaine prochaine</button>
+        <button type="button" class="sports-filter" data-filter-period="month" aria-pressed="false">Ce mois-ci</button>
+        <button type="button" class="sports-filter" data-filter-period="session" aria-pressed="false">Cette session</button>
+      </div>
+    </div>
+    <div id="stage">
+      <div id="fiches"></div>
+      <div id="grille" class="sports-board" role="list" hidden></div>
+    </div>
+    <details id="formats">
+      <summary>Iframes 390 / 430 / 768 / 1280 — media queries réelles</summary>
+    </details>
+  </div>
+
+  <script>
+    const TONE = {
+      hockey: '#0b3d91', football: '#6b4f2a', soccer: '#1a7a4c',
+      basketball: '#c45c26', volleyball: '#6c2163', sailing: '#0e7490',
+      rugby: '#7c2d12', ultimate: '#7c3aed',
+    };
+    const GLYPH = {
+      hockey: '🏒', football: '🏈', soccer: '⚽', basketball: '🏀',
+      volleyball: '🏐', sailing: '⛵', rugby: '🏉', ultimate: '🥏',
+    };
+
+    function resultRow(r) {
+      const kind = r.kind; // next | W | L | D | live
+      const prior = r.prior ? ' sports-result--prior-season' : '';
+      const cls = `sports-result sports-result--${kind}${prior}`;
+      const data = kind === 'next' || kind === 'live'
+        ? ''
+        : ` data-result="${kind}"${r.prior ? ' data-prior-season="1"' : ''}`;
+      const time = r.clock
+        ? `<time class="sports-result__time" datetime="${r.date}"><span class="sports-result__day">${r.day}</span><span class="sports-result__clock">${r.clock}</span></time>`
+        : `<time class="sports-result__time" datetime="${r.date}">${r.day}</time>`;
+      let scoreCls = 'sports-result__score';
+      let score = r.score;
+      let scoreAria = r.scoreAria || '';
+      if (kind === 'next') {
+        scoreCls += ' sports-result__score--next';
+        score = 'À venir';
+        scoreAria = 'À venir';
+      } else if (kind === 'live') {
+        if (r.score) {
+          score = r.score;
+          scoreAria = r.scoreAria || 'En cours';
+        } else {
+          scoreCls += ' sports-result__score--live';
+          score = 'En cours';
+          scoreAria = 'En cours';
+        }
+      }
+      const vs = r.vs || 'vs';
+      const school = r.oppSchool
+        ? ` <span class="sports-result__opp-school">${r.oppSchool}</span>`
+        : '';
+      const full = r.oppFull
+        ? `<span class="sports-result__opp-full">${r.oppFull}</span>`
+        : '';
+      const venue = r.venue
+        ? `<span class="sports-result__venue">${r.venue}</span>`
+        : '';
+      const inner = `<span class="sports-result__vs">${vs}</span> <span class="sports-result__opp">${r.opp}</span>${school}${full}${venue}`;
+      const title = r.href
+        ? `<a href="${r.href}" target="_blank" rel="noopener noreferrer" title="${r.opp} — Ouvrir la source officielle">${inner}</a>`
+        : inner;
+      const badge = kind === 'next'
+        ? `<span class="sports-result__badge sports-result__badge--next" title="À venir">→</span>`
+        : kind === 'live'
+          ? `<span class="sports-result__badge" title="En cours"></span>`
+          : `<span class="sports-result__badge" title="${r.badgeTitle}">${r.badge}</span>`;
+      const priorMeta = r.prior
+        ? `\n  <span class="sports-result__season-meta">Saison précédente</span>`
+        : '';
+      return `<li class="${cls}"${data}>
+  ${time}
+  <span class="${scoreCls}" aria-label="${scoreAria}">${score}</span>
+  <span class="sports-result__title">${title}</span>
+  ${badge}${priorMeta}
+</li>`;
+    }
+
+    function panel(p) {
+      const tone = TONE[p.sport] || 'var(--accent)';
+      const glyph = GLYPH[p.sport] || '🏅';
+      const sexMod = p.sexKey === 'F' ? 'f' : p.sexKey === 'M' ? 'm' : 'x';
+      const isLive = !!(p.live || (p.rows || []).some((r) => r.kind === 'live'));
+      const sexBadge = p.sex
+        ? ` <span class="sports-panel__sex sports-panel__sex--${sexMod}"${p.sexKey === 'X' ? ' title="Mixte"' : ''}>${p.sex}</span>`
+        : '';
+      const livePill = isLive ? ' <span class="sports-panel__live">En cours</span>' : '';
+      const code = p.code
+        ? ` <span class="sports-panel__code notranslate" translate="no">${p.code}</span>`
+        : '';
+      let nameBlock;
+      if (p.nick) {
+        nameBlock = `<h3 class="sports-panel__name sports-panel__name--branded"><span class="sports-panel__brand">${p.nick}</span>${sexBadge}${livePill}</h3>
+      <p class="sports-panel__program"><span class="sports-panel__name-text">${p.name}</span>${code}</p>`;
+      } else {
+        nameBlock = `<h3 class="sports-panel__name"><span class="sports-panel__brand">${p.name}</span>${code}${sexBadge}${livePill}</h3>`;
+      }
+      const school = p.school
+        ? `<p class="sports-panel__school">${p.school}</p>`
+        : '';
+      const extra = [
+        p.external ? 'sports-panel--external' : '',
+        p.spotlight ? 'is-spotlight' : '',
+        isLive ? 'sports-panel--live' : '',
+      ].filter(Boolean).join(' ');
+      let body;
+      if (p.emptyClub) {
+        body = `<p class="sports-panel__empty sports-panel__empty--club">${p.emptyClub}</p>`;
+      } else if (p.empty) {
+        body = `<p class="sports-panel__empty">${p.empty}</p>`;
+      } else if (p.externalLinks) {
+        const list = p.externalLinks.map((l) => `<li class="sports-result sports-result--next">
+  <span class="sports-result__time" aria-hidden="true">${glyph}</span>
+  <span class="sports-result__score sports-result__score--next">Ouvrir le site officiel</span>
+  <span class="sports-result__title"><a href="${l.href}" target="_blank" rel="noopener noreferrer">${l.label}</a></span>
+  <span class="sports-result__badge sports-result__badge--next" aria-hidden="true">→</span>
+</li>`).join('\n');
+        body = `<ul class="sports-panel__list">\n${list}\n  </ul>`;
+      } else {
+        body = `<ul class="sports-panel__list">${(p.rows || []).map(resultRow).join('\n')}</ul>`;
+      }
+      return `<section class="sports-panel${extra ? ` ${extra}` : ''}" data-sport="${p.sport}" data-sector="${p.sector || ''}" data-sex="${(p.sexKey || '').toLowerCase()}"${isLive ? ' data-live="1"' : ''} style="--sports-panel-c:${tone}">
+  <header class="sports-panel__head">
+    <span class="sports-panel__glyph" aria-hidden="true">${glyph}</span>
+    <div class="sports-panel__identity">
+      ${nameBlock}
+      ${school}
+      <p class="sports-panel__meta">${p.meta}</p>
+    </div>
+  </header>
+  ${body}
+</section>`;
+    }
+
+    const RSEQ = 'https://universitaire.rseq.ca/';
+    const COL = 'https://collegial.rseqhockey.com/fr';
+
+    const cases = [
+      {
+        title: 'Prochain — reçoit (domicile)',
+        note: 'bandeau ambre · badge →',
+        panel: {
+          sport: 'soccer', sector: 'collegial', name: 'Patriotes',
+          nick: null, code: 'SHY', sex: 'Masculin', sexKey: 'M',
+          school: 'Cégep de Saint-Hyacinthe',
+          meta: 'Soccer · D1 · Collégial',
+          rows: [{
+            kind: 'next', date: '2026-08-23', day: '23 août', clock: '19 h 00',
+            opp: 'Vanier College', oppFull: 'Vanier College', venue: 'domicile',
+            href: COL,
+          }],
+        },
+      },
+      {
+        title: 'Prochain — visiteur (extérieur)',
+        note: 'même bandeau · « extérieur »',
+        panel: {
+          sport: 'soccer', sector: 'universitaire', name: 'McGill',
+          nick: 'Redbirds', code: 'MCG', sex: 'Féminin', sexKey: 'F',
+          school: 'Université McGill',
+          meta: 'Soccer · D1 · Universitaire',
+          rows: [{
+            kind: 'next', date: '2026-08-24', day: '24 août', clock: '13 h 00',
+            opp: 'Stingers', oppSchool: 'Concordia',
+            oppFull: 'Université Concordia', venue: 'extérieur',
+            href: RSEQ,
+          }],
+        },
+      },
+      {
+        title: 'Victoire (V, vert)',
+        note: 'sports-result--W · badge V',
+        panel: {
+          sport: 'football', sector: 'universitaire', name: 'Montréal',
+          nick: 'Carabins', code: 'MTL', sex: 'Masculin', sexKey: 'M',
+          school: 'Université de Montréal',
+          meta: 'Football · D1 · Universitaire · Fiche 1-0',
+          rows: [{
+            kind: 'W', date: '2026-08-22', day: '22 août',
+            score: '24–21', scoreAria: 'Victoire', badge: 'V', badgeTitle: 'Victoire',
+            opp: 'Rouge et Or', oppSchool: 'Laval',
+            oppFull: 'Université Laval', href: RSEQ,
+          }],
+        },
+      },
+      {
+        title: 'Défaite (D, rouge)',
+        note: 'sports-result--L · badge D',
+        panel: {
+          sport: 'hockey', sector: 'universitaire', name: 'Bishop’s',
+          nick: 'Gaiters', code: 'BIS', sex: 'Masculin', sexKey: 'M',
+          school: 'Bishop’s University',
+          meta: 'Hockey · D1 · Universitaire · Fiche 0-1',
+          rows: [{
+            kind: 'L', date: '2026-08-23', day: '23 août',
+            score: '2–5', scoreAria: 'Défaite', badge: 'D', badgeTitle: 'Défaite',
+            opp: 'Redbirds', oppSchool: 'McGill',
+            oppFull: 'Université McGill', href: RSEQ,
+          }],
+        },
+      },
+      {
+        title: 'Match nul (N, gris)',
+        note: 'sports-result--D · badge N',
+        panel: {
+          sport: 'soccer', sector: 'universitaire', name: 'Laval',
+          nick: 'Rouge et Or', code: 'LAV', sex: 'Masculin', sexKey: 'M',
+          school: 'Université Laval',
+          meta: 'Soccer · D1 · Universitaire · Fiche 0-0-1',
+          rows: [{
+            kind: 'D', date: '2026-08-23', day: '23 août',
+            score: '1–1', scoreAria: 'Match nul', badge: 'N', badgeTitle: 'Match nul',
+            opp: 'Carabins', oppSchool: 'Montréal',
+            oppFull: 'Université de Montréal', href: RSEQ,
+          }],
+        },
+      },
+      {
+        title: 'Victoire + prochain',
+        note: 'carte typique en saison : dernier résultat puis à venir',
+        panel: {
+          sport: 'basketball', sector: 'universitaire', name: 'Montréal',
+          nick: 'Carabins', code: 'MTL', sex: 'Féminin', sexKey: 'F',
+          school: 'Université de Montréal',
+          meta: 'Basketball · D1 · Universitaire · Fiche 1-0',
+          rows: [
+            {
+              kind: 'W', date: '2026-08-22', day: '22 août',
+              score: '78–71', scoreAria: 'Victoire', badge: 'V', badgeTitle: 'Victoire',
+              opp: 'Stingers', oppSchool: 'Concordia',
+              oppFull: 'Université Concordia', href: RSEQ,
+            },
+            {
+              kind: 'next', date: '2026-08-29', day: '29 août', clock: '18 h 00',
+              opp: 'Citadins', oppSchool: 'UQAM',
+              oppFull: 'Université du Québec à Montréal', venue: 'domicile',
+              href: RSEQ,
+            },
+          ],
+        },
+      },
+      {
+        title: 'Défaite + prochain',
+        panel: {
+          sport: 'volleyball', sector: 'universitaire', name: 'Sherbrooke',
+          nick: 'Vert & Or', code: 'SHE', sex: 'Féminin', sexKey: 'F',
+          school: 'Université de Sherbrooke',
+          meta: 'Volleyball · D1 · Universitaire · Fiche 0-1',
+          rows: [
+            {
+              kind: 'L', date: '2026-08-21', day: '21 août',
+              score: '1–3', scoreAria: 'Défaite', badge: 'D', badgeTitle: 'Défaite',
+              opp: 'Citadins', oppSchool: 'UQAM',
+              oppFull: 'Université du Québec à Montréal', href: RSEQ,
+            },
+            {
+              kind: 'next', date: '2026-08-28', day: '28 août', clock: '19 h 00',
+              opp: 'Carabins', oppSchool: 'Montréal',
+              oppFull: 'Université de Montréal', venue: 'extérieur',
+              href: RSEQ,
+            },
+          ],
+        },
+      },
+      {
+        title: 'Place / régate (voile)',
+        note: 'scoreKind place · vs → régate · 7/12',
+        panel: {
+          sport: 'sailing', sector: 'universitaire', name: 'McGill Sailing',
+          code: 'MCG', sex: 'Ouvert / mixte', sexKey: 'X',
+          school: 'Université McGill',
+          meta: 'Voile · NEISA · Universitaire · Fiche 5-4',
+          rows: [{
+            kind: 'L', date: '2026-04-25', day: '25 avr.',
+            score: '7/12', scoreAria: 'Place 7 / 12 · Défaite',
+            badge: 'D', badgeTitle: 'Défaite', vs: 'régate',
+            opp: 'ICSA Regional Teams National Invitational',
+            oppFull: 'ICSA Regional Teams National Invitational · Columbia',
+            href: 'https://scores.collegesailing.org/',
+          }],
+        },
+      },
+      {
+        title: 'Place / régate — victoire',
+        note: '2/12 · badge V',
+        panel: {
+          sport: 'sailing', sector: 'universitaire', name: 'McGill Sailing',
+          code: 'MCG', sex: 'Ouvert / mixte', sexKey: 'X',
+          school: 'Université McGill',
+          meta: 'Voile · NEISA · Universitaire · Fiche 6-4',
+          rows: [{
+            kind: 'W', date: '2026-04-18', day: '18 avr.',
+            score: '2/12', scoreAria: 'Place 2 / 12 · Victoire',
+            badge: 'V', badgeTitle: 'Victoire', vs: 'régate',
+            opp: 'NEISA Spring Championship',
+            oppFull: 'NEISA Spring Championship · MIT',
+            href: 'https://scores.collegesailing.org/',
+          }],
+        },
+      },
+      {
+        title: 'En cours',
+        note: 'pastille En cours + filtre Période',
+        panel: {
+          sport: 'hockey', sector: 'universitaire', name: 'McGill',
+          nick: 'Redbirds', code: 'MCG', sex: 'Masculin', sexKey: 'M',
+          live: true,
+          school: 'Université McGill',
+          meta: 'Hockey · D1 · Universitaire',
+          rows: [{
+            kind: 'live', date: '2026-08-23', day: '23 août', clock: '2e période',
+            score: '2–1', scoreAria: 'En cours',
+            opp: 'Stingers', oppSchool: 'Concordia',
+            oppFull: 'Université Concordia', venue: 'domicile',
+            href: RSEQ,
+          }],
+        },
+      },
+      {
+        title: 'Hors saison — prochain lointain',
+        note: 'même ligne « À venir », date en septembre',
+        panel: {
+          sport: 'football', sector: 'universitaire', name: 'Laval',
+          nick: 'Rouge et Or', code: 'LAV', sex: 'Masculin', sexKey: 'M',
+          school: 'Université Laval',
+          meta: 'Football · D1 · Universitaire',
+          rows: [{
+            kind: 'next', date: '2026-09-04', day: '4 sept.', clock: '19 h 00',
+            opp: 'Carabins', oppSchool: 'Montréal',
+            oppFull: 'Université de Montréal', venue: 'extérieur',
+            href: RSEQ,
+          }],
+        },
+      },
+      {
+        title: 'Hors saison — résultat saison précédente',
+        note: 'sports-result--prior-season + méta sous le score',
+        panel: {
+          sport: 'hockey', sector: 'universitaire', name: 'Laval',
+          nick: 'Rouge et Or', code: 'LAV', sex: 'Féminin', sexKey: 'F',
+          school: 'Université Laval',
+          meta: 'Hockey · D1 · Universitaire',
+          rows: [{
+            kind: 'W', date: '2026-03-12', day: '12 mars',
+            score: '3–2', scoreAria: 'Victoire', badge: 'V', badgeTitle: 'Victoire',
+            opp: 'Carabins', oppSchool: 'Montréal',
+            oppFull: 'Université de Montréal', href: RSEQ, prior: true,
+          }],
+        },
+      },
+      {
+        title: 'Creux',
+        note: 'aucun match dans le feed',
+        panel: {
+          sport: 'hockey', sector: 'collegial', name: 'Alma',
+          code: 'ALM', sex: 'Masculin', sexKey: 'M',
+          school: 'Cégep de Alma',
+          meta: 'Hockey · D1 · Collégial',
+          empty: 'Aucun résultat sportif disponible au moment de la dernière mise à jour.',
+        },
+      },
+      {
+        title: 'Club / association',
+        note: 'voile hors varsity',
+        panel: {
+          sport: 'sailing', sector: 'universitaire', name: 'ULaVoile',
+          code: 'LAV', sex: 'Ouvert / mixte', sexKey: 'X',
+          school: 'Université Laval',
+          meta: 'Voile · Association · à venir · Universitaire',
+          emptyClub: 'Club / association étudiante ULaVoile — distinct du programme d’excellence Rouge et Or. Découverte ICSA en attente.',
+        },
+      },
+      {
+        title: 'Liens officiels',
+        note: 'sports-panel--external · pleine largeur en grille',
+        panel: {
+          sport: 'hockey', sector: '', name: 'Hockey — tableaux officiels',
+          meta: 'Scores S1 absents : ouvrir les sources RSEQ / OUA.',
+          external: true,
+          externalLinks: [
+            { href: COL, label: 'Hockey collégial RSEQ' },
+            { href: 'https://oua.hockeytech.com/', label: 'Hockey universitaire masculin (OUA)' },
+          ],
+        },
+      },
+      {
+        title: 'Spotlight (deep-link ?team=)',
+        note: 'halo de sélection, pas de voile sur le texte',
+        panel: {
+          sport: 'football', sector: 'universitaire', name: 'Montréal',
+          nick: 'Carabins', code: 'MTL', sex: 'Masculin', sexKey: 'M',
+          school: 'Université de Montréal',
+          meta: 'Football · D1 · Universitaire · Fiche 1-0',
+          spotlight: true,
+          rows: [{
+            kind: 'W', date: '2026-08-22', day: '22 août',
+            score: '24–21', scoreAria: 'Victoire', badge: 'V', badgeTitle: 'Victoire',
+            opp: 'Rouge et Or', oppSchool: 'Laval',
+            oppFull: 'Université Laval', href: RSEQ,
+          }],
+        },
+      },
+      {
+        title: 'Nom long — repli conteneur 340 px',
+        note: 'Abitibi-Témiscamingue · tester 288 et 340',
+        panel: {
+          sport: 'hockey', sector: 'collegial',
+          name: 'Abitibi-Témiscamingue',
+          code: 'CAT', sex: 'Masculin', sexKey: 'M',
+          school: 'Cégep de l\'Abitibi-Témiscamingue',
+          meta: 'Hockey · D2 · Collégial',
+          rows: [{
+            kind: 'next', date: '2026-09-12', day: '12 sept.', clock: '19 h 30',
+            opp: 'André-Grasset',
+            oppFull: 'Collège André-Grasset', venue: 'extérieur',
+            href: COL,
+          }],
+        },
+      },
+      {
+        title: 'Mixte / ouvert (ultimate)',
+        panel: {
+          sport: 'ultimate', sector: 'collegial', name: 'Sainte-Anne',
+          code: 'CSA', sex: 'Ouvert / mixte', sexKey: 'X',
+          school: 'Cégep de Sainte-Anne',
+          meta: 'Ultimate · Collégial · Fiche 0-0',
+          rows: [{
+            kind: 'next', date: '2026-09-20', day: '20 sept.', clock: '11 h 10',
+            opp: 'Bois-de-Boulogne',
+            oppFull: 'Collège de Bois-de-Boulogne', venue: 'extérieur',
+            href: 'https://diffusion.rseq.ca/',
+          }],
+        },
+      },
+    ];
+
+    const params = new URLSearchParams(location.search);
+    const embed = params.get('embed') === '1';
+    const fiches = document.getElementById('fiches');
+    const grille = document.getElementById('grille');
+    const nav = document.getElementById('lab-nav');
+
+    if (embed) {
+      document.documentElement.classList.remove('lab-app');
+      document.documentElement.classList.add('lab-embed');
+      document.body.classList.remove('lab-app');
+    }
+
+    fiches.innerHTML = cases.map((c, i) => {
+      const note = c.note ? ` <em>— ${c.note}</em>` : '';
+      return `<article class="lab-case" id="case-${i}" data-case="${i}"><p><strong>${c.title}</strong>${note}</p>${panel(c.panel)}</article>`;
+    }).join('');
+    grille.innerHTML = cases.map((c) => panel(c.panel)).join('');
+    nav.innerHTML = '<p>Variantes</p>' + cases.map((c, i) =>
+      `<a href="#case-${i}" data-case="${i}" title="${c.title}">${c.title}</a>`
+    ).join('');
+
+    function setCurrent(i) {
+      nav.querySelectorAll('a').forEach((a) => {
+        a.classList.toggle('is-on', a.getAttribute('data-case') === String(i));
+      });
+      fiches.querySelectorAll('.lab-case').forEach((el) => {
+        el.classList.toggle('is-on', el.getAttribute('data-case') === String(i));
+      });
+    }
+
+    nav.addEventListener('click', (e) => {
+      const a = e.target.closest('a[data-case]');
+      if (!a) return;
+      e.preventDefault();
+      const i = a.getAttribute('data-case');
+      setCurrent(i);
+      const el = document.getElementById(`case-${i}`);
+      if (el) el.scrollIntoView({ block: 'start' });
+    });
+
+    function setWidth(w) {
+      document.querySelectorAll('[data-w]').forEach((b) => {
+        b.classList.toggle('is-on', b.getAttribute('data-w') === w);
+      });
+      if (w === 'full') {
+        document.body.classList.add('lab-full');
+        document.getElementById('stage').style.removeProperty('--lab-w');
+      } else {
+        document.body.classList.remove('lab-full');
+        document.getElementById('stage').style.setProperty('--lab-w', `${w}px`);
+      }
+      try { localStorage.setItem('sports-page-lab-w', w); } catch (_) {}
+    }
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      document.querySelectorAll('[data-theme-btn]').forEach((b) => {
+        b.classList.toggle('is-on', b.getAttribute('data-theme-btn') === theme);
+      });
+      try { localStorage.setItem('sports-page-lab-theme', theme); } catch (_) {}
+    }
+
+    function setView(view) {
+      document.querySelectorAll('[data-view]').forEach((b) => {
+        b.classList.toggle('is-on', b.getAttribute('data-view') === view);
+      });
+      const fichesOn = view === 'fiches';
+      fiches.hidden = !fichesOn;
+      grille.hidden = fichesOn;
+      try { localStorage.setItem('sports-page-lab-view', view); } catch (_) {}
+    }
+
+    document.querySelectorAll('[data-w]').forEach((b) => {
+      b.addEventListener('click', () => setWidth(b.getAttribute('data-w')));
+    });
+    document.querySelectorAll('[data-theme-btn]').forEach((b) => {
+      b.addEventListener('click', () => setTheme(b.getAttribute('data-theme-btn')));
+    });
+    document.querySelectorAll('[data-view]').forEach((b) => {
+      b.addEventListener('click', () => setView(b.getAttribute('data-view')));
+    });
+
+    if (!embed) {
+      const savedW = params.get('w') || (() => { try { return localStorage.getItem('sports-page-lab-w'); } catch { return null; } })();
+      const savedTheme = (() => { try { return localStorage.getItem('sports-page-lab-theme'); } catch { return null; } })();
+      const savedView = (() => { try { return localStorage.getItem('sports-page-lab-view'); } catch { return null; } })();
+      setWidth(savedW || '390');
+      setTheme(savedTheme || 'light');
+      setView(savedView || 'fiches');
+      setCurrent(0);
+
+      const labFilters = document.getElementById('lab-filters');
+      function applyLabPeriod(key) {
+        labFilters.querySelectorAll('[data-filter-period]').forEach((b) => {
+          const on = b.getAttribute('data-filter-period') === key;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        const liveOnly = key === 'live';
+        fiches.querySelectorAll('.lab-case').forEach((el) => {
+          const live = !!el.querySelector('[data-live="1"], .sports-panel--live');
+          el.hidden = liveOnly && !live;
+        });
+        grille.querySelectorAll('.sports-panel').forEach((el) => {
+          const live = el.classList.contains('sports-panel--live') || el.getAttribute('data-live') === '1';
+          el.hidden = liveOnly && !live;
+        });
+      }
+      labFilters.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-filter-period]');
+        if (!btn) return;
+        applyLabPeriod(btn.getAttribute('data-filter-period'));
+      });
+
+      const io = new IntersectionObserver((entries) => {
+        const vis = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (vis) setCurrent(vis.target.getAttribute('data-case'));
+      }, { root: document.getElementById('lab-main'), threshold: [0.25, 0.5, 0.75] });
+      fiches.querySelectorAll('.lab-case').forEach((el) => io.observe(el));
+
+      const formats = document.getElementById('formats');
+      [390, 430, 768, 1280].forEach((w) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'lab-frame';
+        wrap.innerHTML = `<p>${w} px</p>`;
+        const iframe = document.createElement('iframe');
+        iframe.src = './sports-page-lab.html?embed=1';
+        iframe.width = String(w);
+        iframe.style.maxWidth = '100%';
+        iframe.title = `Cartes sports à ${w} pixels`;
+        wrap.appendChild(iframe);
+        formats.appendChild(wrap);
+      });
+    } else {
+      setTheme((() => { try { return localStorage.getItem('sports-page-lab-theme'); } catch { return 'light'; } })() || 'light');
+      grille.hidden = false;
+      fiches.hidden = true;
+    }
+  </script>
+</body>
+</html>
