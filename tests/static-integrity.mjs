@@ -520,8 +520,10 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(posterScript.includes('draw_footer_wordmark'), 'affiches campus : petit logo PWA au footer seulement');
   assert(!/Rentrée 2026/.test(posterScript), 'affiches campus : pas de Rentrée 2026');
   assert(posterScript.includes('SLOGAN = "Journaux, radios et sports étudiants du Québec, réunis au même endroit"'), 'affiches campus : slogan sur une ligne');
-  assert(posterScript.includes('Votre journal'), 'affiches campus : « Votre journal … s’y trouve »');
-  assert(posterScript.includes('Votre radio'), 'affiches campus : « Votre radio … s’y trouve »');
+  assert(posterScript.includes('Université McGill'), 'affiches campus : nom français OQLF pour McGill');
+  assert(posterScript.includes('netement prédominant') || posterScript.includes('nettement prédominant'), 'affiches campus : bilingue OQLF (français prédominant)');
+  assert(!posterScript.includes('Votre journal'), 'affiches campus : plus de liste journaux');
+  assert(!posterScript.includes('Votre radio'), 'affiches campus : plus de liste radios');
   assert(/draw\.rectangle\(\(0, 0, W, BAR_H\)/.test(posterScript), 'affiches campus : barre pourpre en haut');
   assert(posterScript.includes('paint_chip'), 'affiches campus : pastilles du mât sous le titre et au-dessus du QR');
   assert(posterScript.includes('raster_qr'), 'affiches campus : QR officiel collé, pas un carré vide');

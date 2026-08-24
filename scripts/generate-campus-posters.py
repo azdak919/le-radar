@@ -68,16 +68,12 @@ CAMPUSES = [
         "slug": "generique",
         "name": None,
         "line": None,
-        "papers": [],
-        "radio": None,
         "grounds": [{"key": "nophoto", "photo_id": None, "label": "Fond uni"}],
     },
     {
         "slug": "laval",
         "name": "Université Laval",
         "line": "Université Laval",
-        "papers": ["L’Exemplaire"],
-        "radio": {"name": "CHYZ 94,3", "slogan": "La radio des étudiants de l’Université Laval"},
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "pouliot", "photo_id": "68ae0e12a3ec", "label": "Pavillon Adrien-Pouliot", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.58},
@@ -91,11 +87,10 @@ CAMPUSES = [
     },
     {
         "slug": "mcgill",
-        "name": "McGill University",
-        "line": "McGill University",
+        "name": "Université McGill",
+        "line": "Université McGill",
+        "line_en": "McGill University",
         "bilingual": True,
-        "papers": ["The McGill Daily", "The Tribune", "Le Délit"],
-        "radio": {"name": "CKUT 90,3", "slogan": "McGill campus-community radio"},
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "arts", "photo_id": "52c687b5d843", "label": "Arts Building", "focal": (0.50, 0.36), "crop_scale": 0.88, "desaturate": 0.50, "overlay": 0.58},
@@ -108,8 +103,6 @@ CAMPUSES = [
         "slug": "udem",
         "name": "Université de Montréal",
         "line": "Université de Montréal",
-        "papers": ["Quartier Libre"],
-        "radio": {"name": "CISM 89,3", "slogan": "La Marge"},
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "gaudry", "photo_id": "a7697051c0fc", "label": "Pavillon Roger-Gaudry", "focal": (0.50, 0.32), "crop_scale": 0.95, "desaturate": 0.55, "overlay": 0.52},
@@ -120,8 +113,6 @@ CAMPUSES = [
         "slug": "uqam",
         "name": "Université du Québec à Montréal",
         "line": "Université du Québec à Montréal",
-        "papers": ["Montréal Campus"],
-        "radio": {"name": "CHOQ.ca", "slogan": "La radio numérique des étudiants de l’UQAM"},
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "jasmin", "photo_id": "a5acbe3af178", "label": "Pavillon Judith-Jasmin", "focal": (0.48, 0.40), "crop_scale": 0.88, "desaturate": 0.52, "overlay": 0.58},
@@ -130,11 +121,10 @@ CAMPUSES = [
     },
     {
         "slug": "concordia",
-        "name": "Concordia University",
-        "line": "Concordia University",
+        "name": "Université Concordia",
+        "line": "Université Concordia",
+        "line_en": "Concordia University",
         "bilingual": True,
-        "papers": ["The Link"],
-        "radio": {"name": "CJLO 1690AM", "slogan": "Concordia’s only radio"},
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "hall", "photo_id": "582ef31c6453", "label": "Henry F. Hall Building", "focal": (0.52, 0.36), "crop_scale": 0.90, "desaturate": 0.48, "overlay": 0.60},
@@ -146,8 +136,6 @@ CAMPUSES = [
         "slug": "sherbrooke",
         "name": "Université de Sherbrooke",
         "line": "Université de Sherbrooke",
-        "papers": ["Le Collectif"],
-        "radio": {"name": "CFAK 88,3", "slogan": "Ça part ici"},
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "longueuil", "photo_id": "912fa583aa5b", "label": "Campus de Longueuil", "focal": (0.42, 0.42), "crop_scale": 0.88, "desaturate": 0.50, "overlay": 0.58},
@@ -156,11 +144,10 @@ CAMPUSES = [
     },
     {
         "slug": "bishops",
-        "name": "Bishop’s University",
-        "line": "Bishop’s University",
+        "name": "Université Bishop’s",
+        "line": "Université Bishop’s",
+        "line_en": "Bishop’s University",
         "bilingual": True,
-        "papers": ["The Campus"],
-        "radio": None,
         "grounds": [
             {"key": "nophoto", "photo_id": None, "label": "Fond uni"},
             {"key": "brick", "photo_id": "186769a5aeb5", "label": "Bâtiment principal", "focal": (0.45, 0.42), "crop_scale": 0.92, "desaturate": 0.55, "overlay": 0.58},
@@ -283,34 +270,6 @@ def grade_photo(im, desaturate, overlay):
     return Image.blend(rgb, Image.new("RGB", rgb.size, BG), overlay)
 
 
-def join_fr(names: list[str]) -> str:
-    if len(names) == 1:
-        return names[0]
-    if len(names) == 2:
-        return f"{names[0]} et {names[1]}"
-    return f"{', '.join(names[:-1])} et {names[-1]}"
-
-
-def join_en(names: list[str]) -> str:
-    if len(names) == 1:
-        return names[0]
-    if len(names) == 2:
-        return f"{names[0]} and {names[1]}"
-    return f"{', '.join(names[:-1])} and {names[-1]}"
-
-
-def papers_line_fr(names: list[str]) -> str:
-    if len(names) == 1:
-        return f"Votre journal {names[0]} s’y trouve"
-    return f"Vos journaux {join_fr(names)} s’y trouvent"
-
-
-def papers_line_en(names: list[str]) -> str:
-    if len(names) == 1:
-        return f"Your paper {names[0]} is here"
-    return f"Your papers {join_en(names)} are here"
-
-
 def wrap_text(text: str, fnt: ImageFont.FreeTypeFont, max_w: int) -> list[str]:
     if fnt.getlength(text) <= max_w:
         return [text]
@@ -421,9 +380,7 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
     logo_foot = raster_logo(foot_logo)
 
     f_title = font(SERIF, int(round(56 * scale)))
-    f_en = font(SANS, int(round(17 * scale)))
     f_uni = font(SANS, int(round(18 * scale)))
-    f_media = font(SANS, int(round(16 * scale)))
     f_name = font(SANS, 32)
     f_mark = font(SERIF, 40)
     f_body = font(SANS, 34)
@@ -436,7 +393,7 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
     title_w = tracked_width(TITLE, f_title)
     title_y = int(round(560 * scale)) - box[1]
     draw_tracked(draw, ((W - title_w) // 2, title_y), TITLE, f_title, INK)
-    y = title_y + (box[3] - box[1]) + int(round(36 * scale))
+    y = title_y + (box[3] - box[1]) + int(round(48 * scale))
 
     max_w = W - 2 * SAFE - 120
     slogan_size = int(round(18 * scale))
@@ -444,25 +401,23 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
     while f_slogan.getlength(SLOGAN) > max_w and slogan_size > 30:
         slogan_size -= 2
         f_slogan = font(SANS, slogan_size)
-    gap_s = int(round(16 * scale))
-    gap_m = int(round(12 * scale))
+    # OQLF : le français est nettement prédominant (EN ≈ la moitié de la taille).
+    f_en = font(SANS, max(28, slogan_size // 2))
+    f_uni_en = font(SANS, max(26, int(round(9 * scale))))
+    gap_after_title_block = int(round(28 * scale))
+    gap_lang = int(round(14 * scale))
     if kind != "minimal":
-        y = chip_lines(canvas, draw, SLOGAN, f_slogan, INK, y, max_w, gap_s)
+        y = chip_lines(canvas, draw, SLOGAN, f_slogan, INK, y, max_w, gap_lang if kind == "bilingue" else gap_after_title_block)
         if kind == "bilingue":
-            y = chip_lines(canvas, draw, SLOGAN_EN, f_en, SOFT, y, max_w, gap_s)
+            y = chip_lines(canvas, draw, SLOGAN_EN, f_en, SOFT, y, max_w, gap_after_title_block)
     if campus.get("line"):
-        y = chip_lines(canvas, draw, campus["line"], f_uni, INK, y, max_w, gap_m)
-    papers = campus.get("papers") or []
-    if papers:
-        y = chip_lines(canvas, draw, papers_line_fr(papers), f_media, INK, y, max_w, gap_m)
-        if kind == "bilingue":
-            y = chip_lines(canvas, draw, papers_line_en(papers), f_en, SOFT, y, max_w, gap_m)
-    radio = campus.get("radio")
-    if radio:
-        radio_bits = [(f"Votre radio {radio['name']} s’y trouve", f_media, INK)]
-        if radio.get("slogan"):
-            radio_bits.append((radio["slogan"], f_en, SOFT))
-        y = chip_block(canvas, draw, radio_bits, y, gap_m)
+        has_en_name = kind == "bilingue" and campus.get("line_en")
+        y = chip_lines(
+            canvas, draw, campus["line"], f_uni, INK, y, max_w,
+            gap_lang if has_en_name else gap_after_title_block,
+        )
+        if has_en_name:
+            y = chip_lines(canvas, draw, campus["line_en"], f_uni_en, SOFT, y, max_w, gap_after_title_block)
 
     # Pied : pastille d’indépendance juste au-dessus du QR (ou du bas).
     credit = ""
