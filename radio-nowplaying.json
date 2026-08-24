@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-08-24T20:59:42.436Z",
+  "updatedAt": "2026-08-24T21:36:19.032Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, Jme Mobilise!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://chyz.ca/emission/cheri-e-jmorganise/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "La Voie des Droits",
+        "source": "schedule-live",
+        "start": "20:30",
+        "end": "21:30",
+        "url": "https://chyz.ca/emission/la-voie-des-droits/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, Jme Mobilise!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T20:59:13.258Z"
+      "checkedAt": "2026-08-24T21:35:52.822Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les garçons pleurent aussi",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
-      },
-      "next": {
         "title": "Les criquets crinqués",
         "source": "schedule",
         "start": "17:00",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/les-criquets-crinques"
       },
+      "next": {
+        "title": "Les vinyles versatiles",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
+      },
       "track": "",
-      "showTitle": "Les garçons pleurent aussi",
+      "showTitle": "Les criquets crinqués",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T20:59:15.759Z"
+      "checkedAt": "2026-08-24T21:35:54.614Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Whose Vibe Is It Anyway",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "En Profondeur",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Queercorps",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Whose Vibe Is It Anyway",
+      "showTitle": "En Profondeur",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T20:59:19.212Z"
+      "checkedAt": "2026-08-24T21:35:56.989Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Dreamscapes",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/dreamscapes"
-      },
-      "next": {
         "title": "The Pressure Drop",
         "source": "schedule-live",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/the-pressure-drop"
       },
+      "next": {
+        "title": "Voice of the Voiceless",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
+      },
       "track": "",
-      "showTitle": "Dreamscapes",
+      "showTitle": "The Pressure Drop",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T20:59:33.704Z"
+      "checkedAt": "2026-08-24T21:36:11.522Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,31 +133,38 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-24T20:59:35.014Z"
+      "checkedAt": "2026-08-24T21:36:12.372Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Bitume",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00",
         "slug": "bitume"
       },
-      "track": "Coup dur - Bigger Fish In the Sea",
-      "showTitle": "",
+      "next": {
+        "title": "Les rois de l'arène",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
+      },
+      "track": "Rae Spoon - Hyper Country (feat Theodore Walker Robinson)",
+      "showTitle": "Bitume",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-24T20:59:42.086Z"
+      "checkedAt": "2026-08-24T21:36:18.682Z"
     }
   }
 }
