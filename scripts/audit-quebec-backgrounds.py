@@ -114,8 +114,20 @@ RELIGIOUS_SUBJECT_RE = re.compile(
     r"presbyt[eè]re|presbytery|lieu de culte|place of worship|"
     r"\bj[eé]sus\b|\bchrist\b|crucifi|"
     r"temple\s+(?:bouddh|hindou|sikh)|"
-    r"tabernacle|"
-    r"casault|casseault|louis[\s_-]?jacques[\s_-]?casault"
+    r"tabernacle"
+    r")"
+)
+
+# Pavillons campus (Casault, etc.) : tours / pierre grise ≠ lieu de culte.
+CAMPUS_BUILDING_EXCEPTION_RE = re.compile(
+    r"(?i)"
+    r"(?:"
+    r"casault|casseault|louis[\s_-]?jacques[\s_-]?casault|"
+    r"pavillon|palasis|bonenfant|adrien[\s_-]?pouliot|"
+    r"ferdinand[\s_-]?vandry|de[\s_-]?koninck|\bdkn\b|"
+    r"alphonse[\s_-]?marie[\s_-]?parent|biermans|ernest[\s_-]?lemieux|"
+    r"roger[\s_-]?gaudry|judith[\s_-]?jasmin|mcgreer|"
+    r"arts[\s_-]?building|henry[\s_.-]?f[.\s_-]?hall|loyola"
     r")"
 )
 
@@ -141,7 +153,23 @@ def _entry_hay(entry: dict) -> str:
     )
 
 
+def is_campus_building_exception(entry: dict | None) -> bool:
+    if not entry:
+        return False
+    hay = _entry_hay(entry) + " " + str(entry.get("place") or "")
+    if RELIGIOUS_SUBJECT_RE.search(hay):
+        return False
+    tags = entry.get("tags") or []
+    if entry.get("campus") is True or entry.get("bank") == "universities" or (
+        isinstance(tags, list) and "campus" in tags
+    ):
+        return True
+    return bool(CAMPUS_BUILDING_EXCEPTION_RE.search(hay))
+
+
 def looks_religious_subject(entry: dict) -> bool:
+    if is_campus_building_exception(entry):
+        return False
     return bool(RELIGIOUS_SUBJECT_RE.search(_entry_hay(entry)))
 
 
@@ -844,10 +872,12 @@ def score(metrics: dict, entry: dict | None = None) -> dict:
         hard = True
         reasons.append("HARD:competing_logo_zone")
 
-    # Croix + clocher blanc (architecture religieuse sans mot « église » au titre)
+    # Croix + clocher blanc (architecture religieuse sans mot « église » au titre).
+    # Casault / pavillons campus : exception (tours ≠ lieu de culte).
     if (
         not golden
         and metrics.get("spire_reject")
+        and not is_campus_building_exception(entry)
     ):
         hard = True
         reasons.append("HARD:religious_architecture")

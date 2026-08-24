@@ -162,7 +162,10 @@
    * (tipi, inuksuk, pow-wow…) — seulement l’architecture cultuelle classique.
    */
   const RELIGIOUS_SUBJECT_RE =
-    /(?:église|eglise|church|cathedral|cathédrale|basilique|basilica|chapelle|chapel|coll[eé]giale|collegiale|crucifix|\bcroix\b|crosses?\b|mosquée|mosquee|mosque|synagogue|monastère|monastere|monastery|couvent|convent|calvaire|cimetière|cimetiere|cemetery|minaret|clocher|steeple|bell[\s-]?tower|paroisse|parish|presbyt[eè]re|presbytery|lieu de culte|place of worship|\bjésus\b|\bjesus\b|\bchrist\b|crucifi|temple\s+(?:bouddh|hindou|sikh)|tabernacle|casault|casseault|louis[\s_-]?jacques[\s_-]?casault)/i;
+    /(?:église|eglise|church|cathedral|cathédrale|basilique|basilica|chapelle|chapel|coll[eé]giale|collegiale|crucifix|\bcroix\b|crosses?\b|mosquée|mosquee|mosque|synagogue|monastère|monastere|monastery|couvent|convent|calvaire|cimetière|cimetiere|cemetery|minaret|clocher|steeple|bell[\s-]?tower|paroisse|parish|presbyt[eè]re|presbytery|lieu de culte|place of worship|\bjésus\b|\bjesus\b|\bchrist\b|crucifi|temple\s+(?:bouddh|hindou|sikh)|tabernacle)/i;
+  /** SYNC religious-facade-lib CAMPUS_BUILDING_EXCEPTION_RE — Casault ≠ église. */
+  const CAMPUS_BUILDING_EXCEPTION_RE =
+    /(?:casault|casseault|louis[\s_-]?jacques[\s_-]?casault|pavillon|palasis|bonenfant|adrien[\s_-]?pouliot|ferdinand[\s_-]?vandry|de[\s_-]?koninck|\bdkn\b|alphonse[\s_-]?marie[\s_-]?parent|biermans|ernest[\s_-]?lemieux|roger[\s_-]?gaudry|judith[\s_-]?jasmin|mcgreer|arts[\s_-]?building|henry[\s_.-]?f[.\s_-]?hall|loyola)/i;
 
   /** Intérieurs / objets musée (canot, expo…) — pas un paysage de bandeau. */
   const INDOOR_OBJECT_RE =
@@ -187,8 +190,30 @@
   const NIGHT_SCENE_RE =
     /(?:\bnight\b|\bnuit\b|\btwilight\b|\bcrépuscule\b|\bcrepuscule\b|\bafter[\s-]?dark\b)/i;
 
+  function isCampusBuildingException(bg) {
+    if (!bg) return false;
+    const hay = [
+      bg.title,
+      bg.url,
+      bg.link,
+      bg.credit,
+      bg.description,
+      bg.categories,
+      bg.place,
+    ]
+      .filter(Boolean)
+      .join(" ");
+    if (RELIGIOUS_SUBJECT_RE.test(hay)) return false;
+    const tags = Array.isArray(bg.tags) ? bg.tags : [];
+    if (bg.campus === true || bg.bank === "universities" || tags.includes("campus")) {
+      return true;
+    }
+    return CAMPUS_BUILDING_EXCEPTION_RE.test(hay);
+  }
+
   function isReligiousSubject(bg) {
     if (!bg) return false;
+    if (isCampusBuildingException(bg)) return false;
     const hay = [
       bg.title,
       bg.url,
@@ -1958,8 +1983,8 @@
       ) {
         return { ok: false, reason: "competing_logo_zone", metrics };
       }
-      // Chapelle / église : croix + clocher blanc OU multi-tours pierre grise
-      // (ex. Wôlinak ; pavillon Casault ULaval — titre sans « église »).
+      // Chapelle / église : croix + clocher blanc OU multi-tours pierre grise.
+      // Casault et pavillons campus : exception (tours ≠ lieu de culte).
       const spireM = _religiousSpireMetrics(L, sampleW, sampleH);
       metrics.spireHits = spireM.hitCount;
       metrics.spireDense = spireM.dense;
@@ -1967,7 +1992,7 @@
       metrics.spireSolidStone = spireM.solidStone;
       metrics.spireMultiPeaks = spireM.multiPeaks;
       metrics.spireSkyAbove = spireM.skyAbove;
-      if (!goldenSilhouette && spireM.reject) {
+      if (!goldenSilhouette && spireM.reject && !isCampusBuildingException(bg)) {
         return { ok: false, reason: "religious_architecture", metrics };
       }
       // Batture / vase : grève dominante, quasi pas de ciel

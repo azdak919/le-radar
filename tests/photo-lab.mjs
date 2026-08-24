@@ -215,8 +215,8 @@ const casaultKept = retainUnifiedPhoto({
   tags: ['mat', 'campus'],
 });
 assert.ok(casaultKept, 'Casault campus reste dans la banque unique');
-assert.ok(!casaultKept.tags.includes('mat'), 'Casault : tag mat retiré (hors mât)');
-assert.ok(casaultKept.tags.includes('campus'), 'Casault : tag campus pour les affiches');
+assert.ok(casaultKept.tags.includes('mat'), 'Casault : tag mat (exception église)');
+assert.ok(casaultKept.tags.includes('campus'), 'Casault : tag campus');
 assert.equal(
   retainUnifiedPhoto({
     url: 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Pavillon_Adrien-Pouliot_07.jpg',

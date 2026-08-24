@@ -4073,6 +4073,7 @@ const PHOTO_BANK = [
     width: 5137,
     height: 3252,
     campus: true,
-    tags: ["campus"],
+    tags: ["campus", "mat"],
+    surfaces: ["masthead"],
   }
 ];

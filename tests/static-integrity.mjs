@@ -237,30 +237,29 @@ const fsQc = readFileSync(join(root, 'fullscreen-wallpaper-qc.js'), 'utf8');
 assert(fsQc.includes('FullscreenWallpaperQc'), 'module QC wallpapers plein écran requis');
 assert(fsQc.includes('1457269449834-928af64c684d'), 'hard-ban Snowy Branch (Aaron Burden) requis');
 
-// Fonds campus : Casault ULaval hard-ban + détection religieuse multi-tours
-const bgBlacklist = require('../scripts/quebec-backgrounds-blacklist.js');
+// Fonds campus : Casault / pavillons = exception au détecteur d’église
+const facadeLib = require('../scripts/religious-facade-lib.js');
 assert(
-  bgBlacklist.matchHardBanned({ id: 'd80fc225abc1' })?.reason === 'reads_as_church_casault',
-  'hard-ban Casault id d80fc225abc1 requis',
+  !facadeLib.RELIGIOUS_SUBJECT_RE.test('Pavillon Louis-Jacques-Casault'),
+  'Casault n’est pas un mot de culte',
 );
 assert(
-  bgBlacklist.allFragments().some((f) => /casault|Canada_3/i.test(f)),
-  'fragments hard-ban Casault / Canada_3 requis',
+  facadeLib.isCampusBuildingException({
+    title: 'Pavillon Louis-Jacques-Casault Université Laval',
+    campus: true,
+  }),
+  'Casault campus excepté',
 );
 const bgJsRelig = readFileSync(join(root, 'quebec-backgrounds.js'), 'utf8');
-assert(bgJsRelig.includes('casault'), 'mât RELIGIOUS_SUBJECT_RE : casault');
-assert(bgJsRelig.includes('solidStone'), 'détecteur visuel pierre grise (Casault)');
+assert(bgJsRelig.includes('isCampusBuildingException'), 'mât : exception pavillons campus');
+assert(bgJsRelig.includes('CAMPUS_BUILDING_EXCEPTION_RE'), 'mât : regex pavillons campus');
+assert(bgJsRelig.includes('solidStone'), 'détecteur visuel pierre grise (clochers inconnus)');
 assert(bgJsRelig.includes('multiPeaks'), 'détecteur multi-tours / flèches');
 const uniData = readFileSync(join(root, 'quebec-university-backgrounds-data.js'), 'utf8');
 const photoBankJson = readFileSync(join(root, 'data/photo-bank.json'), 'utf8');
-assert(!/Quebec_Canada_3\.jpg/i.test(uniData), 'banque universities sans Casault Canada_3');
-assert(
-  !/Pavillon_Louis-Jacques-Casault/i.test(uniData),
-  'mât universities : Casault hors bandeau',
-);
 assert(
   /Pavillon_Louis-Jacques-Casault_3/i.test(photoBankJson),
-  'banque unique : Pavillon Casault pour les affiches',
+  'banque unique : Pavillon Casault',
 );
 assert(
   !/Pavillon_Adrien-Pouliot_0[789]\.jpg/i.test(photoBankJson),
