@@ -300,16 +300,22 @@ def variant_kind(name: str) -> tuple[str, bool]:
     return base, qr
 
 
-def draw_radar_motif(canvas: Image.Image) -> None:
-    """Anneaux + croix très discrets, fond uni seulement."""
+def draw_radar_motif(canvas: Image.Image, cx: int, cy: int) -> None:
+    """Anneaux et rayons centrés sur le gros logo, jusqu’en bas de page."""
+    import math
     layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(layer)
-    cx, cy = W // 2, int(H * 0.34)
-    ring = (241, 242, 244, 16)
-    for r in (280, 520, 820, 1180, 1600, 2100):
+    reach = int(math.hypot(max(cx, W - cx), max(H - cy, cy)))
+    ring = (241, 242, 244, 18)
+    step = max(48, reach // 9)
+    r = step
+    while r <= reach + step:
         d.ellipse((cx - r, cy - r, cx + r, cy + r), outline=ring, width=2)
-    d.line((cx, cy - 2200, cx, cy + 2200), fill=(241, 242, 244, 12), width=1)
-    d.line((cx - 2200, cy, cx + 2200, cy), fill=(241, 242, 244, 12), width=1)
+        r += step
+    spoke = (241, 242, 244, 13)
+    for i in range(16):
+        a = i / 16 * math.pi * 2
+        d.line((cx, cy, cx + math.cos(a) * reach, cy + math.sin(a) * reach), fill=spoke, width=1)
     canvas.alpha_composite(layer)
 
 
@@ -343,10 +349,8 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
         canvas = bg.convert("RGBA")
     else:
         canvas = Image.new("RGBA", (W, H), BG + (255,))
-        draw_radar_motif(canvas)
 
     draw = ImageDraw.Draw(canvas)
-    draw.rectangle((0, 0, W, BAR_H), fill=PURPLE)
 
     # Première cuvée : logo haut, grand air, texte au milieu (échelle 792→3300).
     scale = W / 792
@@ -363,6 +367,9 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
     f_credit = font(SANS, 26)
 
     logo_y = int(round(236 * scale))
+    if photo is None:
+        draw_radar_motif(canvas, W // 2, logo_y + big // 2)
+    draw.rectangle((0, 0, W, BAR_H), fill=PURPLE)
     canvas.alpha_composite(logo_big, ((W - big) // 2, logo_y))
 
     box = draw.textbbox((0, 0), TITLE, font=f_title)

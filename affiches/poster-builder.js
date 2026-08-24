@@ -196,24 +196,26 @@ function coverDraw(ctx, img, tw, th, fx = 0.5, fy = 0.42, scale = 0.9, angleDeg 
   ctx.fillRect(0, 0, tw, th);
 }
 
-function drawRadar(ctx, w, h) {
-  const cx = w / 2;
-  const cy = h * 0.34;
-  ctx.strokeStyle = 'rgba(241, 242, 244, 0.06)';
-  ctx.lineWidth = 2;
-  for (const r of [280, 520, 820, 1180, 1600, 2100].map((n) => n * (w / 3300))) {
+function drawRadar(ctx, w, h, cx, cy) {
+  const reach = Math.hypot(Math.max(cx, w - cx), Math.max(h - cy, cy));
+  ctx.strokeStyle = 'rgba(241, 242, 244, 0.07)';
+  ctx.lineWidth = Math.max(1, w / 1600);
+  const step = Math.max(48, reach / 9);
+  for (let r = step; r <= reach + step; r += step) {
     ctx.beginPath();
-    ctx.ellipse(cx, cy, r, r, 0, 0, Math.PI * 2);
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
     ctx.stroke();
   }
   ctx.strokeStyle = 'rgba(241, 242, 244, 0.05)';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(cx, 0);
-  ctx.lineTo(cx, h);
-  ctx.moveTo(0, cy);
-  ctx.lineTo(w, cy);
-  ctx.stroke();
+  ctx.lineWidth = Math.max(1, w / 2200);
+  const rays = 16;
+  for (let i = 0; i < rays; i += 1) {
+    const a = (i / rays) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(a) * reach, cy + Math.sin(a) * reach);
+    ctx.stroke();
+  }
 }
 
 function textW(ctx, text) {
@@ -300,11 +302,7 @@ function compose(opts) {
   } else {
     ctx.fillStyle = BG;
     ctx.fillRect(0, 0, w, h);
-    drawRadar(ctx, w, h);
   }
-
-  ctx.fillStyle = PURPLE;
-  ctx.fillRect(0, 0, w, barH);
 
   const credit = photo && opts.credit
     ? `Photo : ${opts.credit}${opts.license ? ` · ${opts.license}` : ''}`
@@ -343,6 +341,21 @@ function compose(opts) {
   const qrPx = Math.round(qrIn * DPI * fit);
   const qrPad = Math.round(36 * fit);
   const qrSide = qrPx;
+
+  let contentBottom = h - safe;
+  if (credit) contentBottom -= creditH + 40 * fit;
+  if (opts.langs && langsH) contentBottom -= langsH + 20 * fit;
+  contentBottom -= legalH + 16 * fit + nameH + 10 * fit + markH;
+  if (opts.qr && assets.qr) contentBottom -= 24 * fit + qrSide;
+  const playTop = barH + 12 * fit;
+  const playBot = contentBottom - 28 * fit;
+  const play = Math.max(200, playBot - playTop);
+  const big = Math.round(play * (kind === 'minimal' ? 0.24 : 0.21));
+  const logoY = playTop + play * 0.18;
+  if (!photo) drawRadar(ctx, w, h, w / 2, logoY + big / 2);
+
+  ctx.fillStyle = PURPLE;
+  ctx.fillRect(0, 0, w, barH);
 
   let cy = h - safe;
   if (credit) {
@@ -395,11 +408,6 @@ function compose(opts) {
     ctx.drawImage(assets.qr, (w - inner) / 2, cy + qrPad, inner, inner);
   }
 
-  const playTop = barH + 12 * fit;
-  const playBot = cy - 28 * fit;
-  const play = Math.max(200, playBot - playTop);
-  const big = Math.round(play * (kind === 'minimal' ? 0.24 : 0.21));
-  const logoY = playTop + play * 0.18;
   if (assets.logo) ctx.drawImage(assets.logo, (w - big) / 2, logoY, big, big);
   const titleSize = Math.round(play * 0.058);
   const titleY = playTop + play * 0.48;
