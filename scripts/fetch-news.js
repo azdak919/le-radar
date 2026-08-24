@@ -45,6 +45,8 @@ const {
   imageRejectPatternsFromHints,
   imageOptionsFromHints,
   unwrapCdnImageUrl,
+  stripStyleAndScript,
+  imageUrlsMatch,
 } = require('./article-image-lib');
 const { isHtmlListSource, parseHtmlListPage } = require('./html-list-fetcher');
 const { isFirebaseSource, fetchFirebaseFeed } = require('./firebase-list-fetcher');
@@ -106,7 +108,8 @@ const MAX_ENRICH = IS_CI ? 28 : 45;
 const MAX_AUTHOR_PAGES = IS_CI ? 0 : 40;
 /** Budget wall-clock phase enrich (async) — un item lent ne doit pas manger le job. */
 const ENRICH_PHASE_BUDGET_MS = IS_CI ? 150_000 : 240_000;
-const ENRICH_HTML_CAP = IS_CI ? 80_000 : 200_000;
+/** Après strip CSS/JS : 80k coupait encore la 2e photo Collectif (~81k). */
+const ENRICH_HTML_CAP = IS_CI ? 180_000 : 280_000;
 
 const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|le collectif|tribune|link|daily|coordinating|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the concordian|the tribune|the mcgill daily|the campus|the plant|theplantnews)$/i;
 
@@ -740,8 +743,9 @@ function needsEnrichment(item, feedDefaults = new Map(), sourceByName = new Map(
 async function enrichItem(item, sourceByName = new Map()) {
   const html = await fetchText(item.link, 3, ENRICH_TIMEOUT);
   if (!html || html.length < 200) return item;
-  // HTML tronqué pour parsers regex (évite hangs pathologiques WP)
-  const slim = html.length > ENRICH_HTML_CAP ? html.slice(0, ENRICH_HTML_CAP) : html;
+  // Strip CSS/JS avant le plafond : sinon <article> (Collectif ~188k brut) disparaît.
+  const cleaned = stripStyleAndScript(html);
+  const slim = cleaned.length > ENRICH_HTML_CAP ? cleaned.slice(0, ENRICH_HTML_CAP) : cleaned;
 
   const src = sourceByName.get(item.source);
   const imageHints = getBotHints(src, 'images');
@@ -752,15 +756,20 @@ async function enrichItem(item, sourceByName = new Map()) {
   const next = { ...item };
   const body = articleBodyHtml(slim);
 
-  if (needsImageEnrichment(next, rejectPatterns, imageOptions)) {
-    try {
-      const found = imageFromArticleHtml(slim, rejectPatterns, imageOptions);
-      if (found?.url && isCandidateImageUrl(found.url, rejectPatterns)) next.image = found.url;
-      else if (next.image && !isCandidateImageUrl(next.image, rejectPatterns)) next.image = '';
-    } catch { /* parse image fail-safe */ }
-  } else if (next.image && !isCandidateImageUrl(next.image, rejectPatterns)) {
-    next.image = '';
-  }
+  try {
+    const found = imageFromArticleHtml(slim, rejectPatterns, imageOptions, item.link);
+    if (found?.url && isCandidateImageUrl(found.url, rejectPatterns)) {
+      if (
+        needsImageEnrichment(next, rejectPatterns, imageOptions)
+        || !next.image
+        || !imageUrlsMatch(found.url, next.image)
+      ) {
+        next.image = found.url;
+      }
+    } else if (next.image && !isCandidateImageUrl(next.image, rejectPatterns)) {
+      next.image = '';
+    }
+  } catch { /* parse image fail-safe */ }
 
   // Auteur page : toujours sur HTML plafonné (author-lib).
   let pageAuthor = '';
@@ -910,7 +919,7 @@ async function fetchPageAuthors(items, feedDefaults, existing = new Map(), sourc
     let author = '';
     try {
       author = authorFromArticleHtml(
-        (html || '').slice(0, ENRICH_HTML_CAP),
+        stripStyleAndScript(html || '').slice(0, ENRICH_HTML_CAP),
         item.lang === 'en' ? 'en' : 'fr',
         authorHints,
         item.source,
