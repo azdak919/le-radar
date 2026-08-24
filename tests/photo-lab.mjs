@@ -207,7 +207,34 @@ assert.ok(!existsSync(join(root, 'nope')));
 
 const {
   retainUnifiedPhoto,
+  photoToUnifiedJs,
 } = require('../scripts/photo-bank-lib.js');
+const harvestEte = photoToUnifiedJs({
+  url: 'https://upload.wikimedia.org/wikipedia/commons/2/29/Beaver_dam_in_Gatineau_Park_Jan_14.jpg',
+  title: 'Beaver dam in Gatineau Park Jan 14',
+  season: 'ete',
+  season6: 'aujaq',
+  seasonSource: 'sessionId-fallback',
+  seasonConfidence: 0.3,
+  tags: ['mat', 'nations'],
+});
+assert.doesNotMatch(
+  harvestEte,
+  /season:/,
+  'PHOTO_BANK n’exporte pas un été hérité de la session de moisson',
+);
+assert.match(
+  photoToUnifiedJs({
+    url: 'https://example.test/neige.jpg',
+    title: 'Campus sous la neige',
+    season: 'hiver',
+    seasonSource: 'manual',
+    seasonConfidence: 1,
+    tags: ['mat'],
+  }),
+  /season: "hiver"/,
+  'PHOTO_BANK exporte un hiver revu à la main',
+);
 const casaultKept = retainUnifiedPhoto({
   url: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Pavillon_Louis-Jacques-Casault_3.jpg',
   title: 'Pavillon Louis-Jacques-Casault 3',

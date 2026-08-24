@@ -13,6 +13,7 @@ const path = require('path');
 const crypto = require('crypto');
 const vm = require('vm');
 const { matchHardBanned } = require('./quebec-backgrounds-blacklist');
+const { seasonTagTrusted } = require('./season-lib');
 
 const DEFAULT_ROOT = path.join(__dirname, '..');
 const PHOTOS_REL = 'data/photo-bank.json';
@@ -296,8 +297,12 @@ function photoToUnifiedJs(p) {
   }
   if (typeof p.width === 'number' && p.width > 0) lines.push(`    width: ${Math.round(p.width)}`);
   if (typeof p.height === 'number' && p.height > 0) lines.push(`    height: ${Math.round(p.height)}`);
-  if (p.season) lines.push(`    season: "${escJs(p.season)}"`);
-  if (p.season6) lines.push(`    season6: "${escJs(p.season6)}"`);
+  // Même garde-fou que sync-quebec-backgrounds : un repli de session
+  // (neige moissonnée en juillet → season:ete) ne doit pas arriver au mât.
+  if (seasonTagTrusted(p)) {
+    if (p.season) lines.push(`    season: "${escJs(p.season)}"`);
+    if (p.season6) lines.push(`    season6: "${escJs(p.season6)}"`);
+  }
   if (p.nationId) lines.push(`    nationId: "${escJs(p.nationId)}"`);
   if (p.nation) lines.push(`    nation: "${escJs(p.nation)}"`);
   if (p.campus || hasTag(p, 'campus')) lines.push('    campus: true');

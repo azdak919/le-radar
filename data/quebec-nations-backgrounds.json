@@ -1,7 +1,7 @@
 {
   "version": 1,
   "profile": "nations",
-  "updated": "2026-08-24T06:45:43.018Z",
+  "updated": "2026-08-24T09:31:27.506Z",
   "photos": [
     {
       "id": "fa60bc1368e9",
@@ -211,10 +211,10 @@
       "bank": "nations",
       "nationId": "algonquin",
       "nation": "Algonquins (Anishinaabeg)",
-      "season": "ete",
-      "seasonConfidence": 0.3,
-      "seasonSource": "sessionId-fallback",
-      "season6": "aujaq",
+      "season": "hiver",
+      "seasonConfidence": 0.62,
+      "seasonSource": "date",
+      "season6": "ukiuq",
       "faces": 0,
       "faceRatio": 0,
       "faceDetectedAt": "2026-08-06T20:50:43.166Z",
@@ -223,7 +223,12 @@
         "mat",
         "pomo",
         "nations"
-      ]
+      ],
+      "seasonReasons": [
+        "date_abbrev:01",
+        "date_only"
+      ],
+      "seasonDetectedAt": "2026-08-24T09:24:26.074Z"
     },
     {
       "id": "a1e61ec2abac",
