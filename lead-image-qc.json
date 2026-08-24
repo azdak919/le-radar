@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-24T07:37:57.809Z",
+  "updated": "2026-08-24T10:20:51.131Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 21,
   "withCampusBank": 13,
   "fullyCovered": 185,
-  "leadReadyPhotos": 143,
-  "pageScraped": 29,
-  "photosRecovered": 29,
+  "leadReadyPhotos": 146,
+  "pageScraped": 28,
+  "photosRecovered": 28,
   "imagesCleared": 17,
-  "stockSearches": 34,
-  "stockFound": 10,
-  "campusBankFound": 4,
+  "stockSearches": 30,
+  "stockFound": 7,
+  "campusBankFound": 2,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -25,12 +25,6 @@
       "link": "https://lecollectif.ca/a-la-une/le-cinema-quebecois-fait-son-entree-en-classe-avec-cine-panache/",
       "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/CULTURE_CinemaQuebecois_SourceCinePanache.png"
-    },
-    {
-      "title": "Vague de décès liés à l’Ebola en Afrique",
-      "link": "https://lecollectif.ca/a-la-une/vague-de-deces-lies-a-lebola-en-afrique/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Vague-de-deces-lies-a-lEbola-en-Afrique_Getty-Images.jpg"
     },
     {
       "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
@@ -48,19 +42,7 @@
       "title": "Spotlighting Powerful McGill Alumnae",
       "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
-    },
-    {
-      "title": "National Golf tournament",
-      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531487%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "The Gentrification of Online Fandom Spaces",
-      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
       "title": "Second-Class Citizens",
@@ -85,6 +67,24 @@
       "link": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "reason": "no-stock-match",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg"
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "link": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg"
+    },
+    {
+      "title": "Recettes musicales québécoises pour l’été",
+      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg"
+    },
+    {
+      "title": "Gothic Cinema Rises from the Grave",
+      "link": "https://theplantnews.com/2026/05/11/gothic-cinema-rises-from-the-grave/",
+      "reason": "no-stock-match",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.png"
     }
   ]
 }

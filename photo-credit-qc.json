@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-24T07:36:55.787Z",
+  "updated": "2026-08-24T10:20:57.115Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,17 +7,31 @@
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 7,
-  "citedNew": 5,
-  "fallbackNew": 14,
+  "checked": 21,
+  "updatedCount": 9,
+  "citedNew": 6,
+  "fallbackNew": 15,
   "samples": [
     {
-      "title": "À la découverte du matcha et du kohakutou",
+      "title": "La Fondation de l’UdeS",
       "source": "Le Collectif",
       "credit": "Crédit photo : Le Collectif",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Histoire des traditions UdeS",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Le Vert & Or : une tradition sportive",
+      "source": "Le Collectif",
+      "credit": "Photo : Vert & Or",
+      "cited": true,
+      "method": "body-tail"
     },
     {
       "title": "L’épidémie de la nonchalance",
@@ -34,16 +48,16 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "title": "Ce que nous devons aux femmes",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
+      "credit": "Photo : Alexandre Gontier",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "media-credit-near"
     },
     {
-      "title": "Sois belle et tais-toi",
+      "title": "Les femmes MAGA au service du patriarcat",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
     },
