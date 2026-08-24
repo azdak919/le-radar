@@ -83,6 +83,9 @@ CAMPUSES = [
             {"key": "casault", "url": "https://upload.wikimedia.org/wikipedia/commons/d/de/Pavillon_Louis-Jacques-Casault_3.jpg", "credit": "Wilfredor", "license": "CC BY-SA 4.0", "title": "Pavillon Louis-Jacques-Casault", "focal": (0.48, 0.38), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.55},
             {"key": "palasis", "url": "https://upload.wikimedia.org/wikipedia/commons/6/60/Pavillon_Palasis-Prince_10.jpg", "credit": "Cephas", "license": "CC BY-SA 4.0", "title": "Pavillon Palasis-Prince", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.55, "overlay": 0.52},
             {"key": "bonenfant", "url": "https://upload.wikimedia.org/wikipedia/commons/d/df/Pavillon_Jean-Charles-Bonenfant_02.jpg", "credit": "Cephas", "license": "CC BY-SA 4.0", "title": "Pavillon Jean-Charles-Bonenfant", "focal": (0.50, 0.36), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.55},
+            {"key": "parent", "url": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Pavillon_Alphonse-Marie-Parent_05.jpg", "credit": "Cephas", "license": "CC BY-SA 4.0", "title": "Pavillon Alphonse-Marie-Parent", "line": "Université Laval · Alphonse-Marie-Parent", "focal": (0.48, 0.38), "crop_scale": 0.88, "desaturate": 0.55, "overlay": 0.52},
+            {"key": "biermans", "url": "https://upload.wikimedia.org/wikipedia/commons/4/46/Pavillon_H.-Biermans-L.-Moraud_01.jpg", "credit": "Cephas", "license": "CC BY-SA 4.0", "title": "Pavillon H.-Biermans-L.-Moraud", "line": "Université Laval · H.-Biermans-L.-Moraud", "focal": (0.52, 0.28), "crop_scale": 0.78, "desaturate": 0.55, "overlay": 0.55},
+            {"key": "lemieux", "url": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Pavillon_Ernest-Lemieux_06.jpg", "credit": "Cephas", "license": "CC BY-SA 4.0", "title": "Pavillon Ernest-Lemieux", "line": "Université Laval · Ernest-Lemieux", "focal": (0.45, 0.28), "crop_scale": 0.75, "desaturate": 0.52, "overlay": 0.58},
         ],
     },
     {
@@ -364,10 +367,11 @@ def compose(campus, ground, photo_meta, photo, variant: str) -> Image.Image:
         y = draw_centered(draw, SLOGAN, f_slogan, INK, y, gap_lang if kind == "bilingue" else gap_after_title_block)
         if kind == "bilingue":
             y = draw_centered(draw, SLOGAN_EN, f_en, SOFT, y, gap_after_title_block)
-    if campus.get("line"):
-        has_en_name = kind == "bilingue" and campus.get("line_en")
+    uni_line = ground.get("line") or campus.get("line")
+    if uni_line:
+        has_en_name = kind == "bilingue" and campus.get("line_en") and not ground.get("line")
         y = draw_centered(
-            draw, campus["line"], f_uni, INK, y,
+            draw, uni_line, f_uni, INK, y,
             gap_lang if has_en_name else gap_after_title_block,
         )
         if has_en_name:

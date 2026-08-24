@@ -24,7 +24,7 @@ const TRACK = -0.02;
 
 const CAMPUSES = [
   { slug: 'generique', line: null, lineEn: null, bilingual: false, keys: null, label: 'Générique' },
-  { slug: 'laval', line: 'Université Laval', bilingual: false, keys: ['laval', 'pouliot', 'casault', 'vachon', 'koninck', 'palasis', 'bonenfant', 'grand axe'], label: 'Université Laval' },
+  { slug: 'laval', line: 'Université Laval', bilingual: false, keys: ['laval', 'pouliot', 'casault', 'vachon', 'koninck', 'palasis', 'bonenfant', 'grand axe', 'parent', 'biermans', 'moraud', 'lemieux', 'lacerte'], label: 'Université Laval' },
   { slug: 'mcgill', line: 'Université McGill', lineEn: 'McGill University', bilingual: true, keys: ['mcgill'], label: 'Université McGill' },
   { slug: 'udem', line: 'Université de Montréal', bilingual: false, keys: ['montréal', 'montreal', 'udem', 'gaudry'], label: 'Université de Montréal' },
   { slug: 'uqam', line: 'Université du Québec à Montréal', bilingual: false, keys: ['uqam', 'jasmin'], label: 'Université du Québec à Montréal' },
