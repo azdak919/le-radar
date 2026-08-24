@@ -81,6 +81,7 @@
     .stage-frame img { width: 100%; height: auto; display: block; aspect-ratio: 11 / 17; }
     .stage-meta { color: var(--muted); font-size: 13px; text-align: center; }
     .stage-meta strong { color: var(--ink); }
+    .stage-meta a { color: var(--soft); }
     .nav { display: flex; gap: 8px; }
   </style>
 </head>
@@ -123,6 +124,7 @@
         <img id="stage-img" alt="">
       </figure>
       <p class="stage-meta" id="stage-meta"></p>
+      <p class="stage-meta" id="stage-qr-link" hidden><a href="https://le-radar.ca" target="_blank" rel="noopener">Tester le QR → le-radar.ca</a></p>
     </section>
   </div>
   <script>
@@ -131,36 +133,28 @@
       { slug: "laval", name: "Université Laval", grounds: [
         { key: "nophoto", place: "Fond uni" },
         { key: "pouliot", place: "Adrien-Pouliot" },
-        { key: "dkn", place: "Charles-De Koninck" },
-        { key: "vandry", place: "Ferdinand-Vandry" },
         { key: "parc", place: "Campus central" },
       ]},
       { slug: "mcgill", name: "McGill University", grounds: [
         { key: "nophoto", place: "Fond uni" },
         { key: "arts", place: "Arts Building" },
-        { key: "roddick", place: "Roddick Gates" },
-        { key: "downtown", place: "Campus downtown" },
+        { key: "pelouse", place: "Pelouse du campus" },
       ]},
       { slug: "udem", name: "Université de Montréal", grounds: [
         { key: "nophoto", place: "Fond uni" },
         { key: "gaudry", place: "Roger-Gaudry" },
-        { key: "tour", place: "Tour principale" },
-        { key: "campus", place: "Campus" },
       ]},
       { slug: "uqam", name: "Université du Québec à Montréal", grounds: [
         { key: "nophoto", place: "Fond uni" },
         { key: "jasmin", place: "Judith-Jasmin" },
-        { key: "agora", place: "Agora" },
-        { key: "urbain", place: "Vue urbaine" },
       ]},
       { slug: "concordia", name: "Concordia University", grounds: [
         { key: "nophoto", place: "Fond uni" },
         { key: "hall", place: "Henry F. Hall" },
-        { key: "hall02", place: "Hall Building" },
+        { key: "loyola", place: "Campus Loyola" },
       ]},
       { slug: "sherbrooke", name: "Université de Sherbrooke", grounds: [
         { key: "nophoto", place: "Fond uni" },
-        { key: "genie", place: "Campus principal" },
         { key: "longueuil", place: "Longueuil" },
       ]},
       { slug: "bishops", name: "Bishop’s University", grounds: [
@@ -234,6 +228,8 @@
       stageImg.src = fullSrc(p);
       stageImg.alt = `Affiche ${p.name}`;
       stageMeta.innerHTML = `<strong>${p.name}</strong> · ${v} · ${p.place}`;
+      const qrLink = document.getElementById("stage-qr-link");
+      qrLink.hidden = !withQr;
     }
 
     function openStage(i) {
