@@ -584,14 +584,33 @@ function bind() {
 }
 
 async function main() {
+  const local = ['127.0.0.1', 'localhost', '[::1]'].includes(location.hostname);
+  const labLink = document.getElementById('lab-photo-link');
+  if (labLink && local) labLink.hidden = false;
   bind();
   syncLangChoice();
   await loadFonts();
   assets.logo = await loadImage('../assets/icon.svg', false);
   assets.qr = await loadImage('../assets/kit/qr-le-radar.svg', false);
   assets.translate = await loadImage('../assets/kit/translate-mark.svg', false);
-  const bank = await fetch('../data/quebec-university-backgrounds.json').then((r) => r.json());
-  state.photos = (bank.photos || []).filter((p) => p.url && p.width && p.height);
+  const [bank, rejected] = await Promise.all([
+    fetch('../data/photo-bank.json').then((r) => r.json()),
+    fetch('../data/quebec-backgrounds-rejected.json').then((r) => r.json()).catch(() => ({ entries: [] })),
+  ]);
+  const banned = new Set();
+  for (const e of rejected.entries || []) {
+    if (e.url) banned.add(String(e.url).split('?')[0]);
+    for (const f of e.fragments || []) banned.add(String(f));
+  }
+  state.photos = (bank.photos || []).filter((p) => {
+    if (!p.url || !p.width || !p.height) return false;
+    const campus = p.campus === true || (Array.isArray(p.tags) && p.tags.includes('campus'));
+    if (!campus) return false;
+    const url = String(p.url).split('?')[0];
+    const file = fileNameFromUrl(p.url);
+    if (banned.has(url) || banned.has(p.id) || (file && banned.has(file))) return false;
+    return true;
+  });
   renderChoices();
   await preview();
 }

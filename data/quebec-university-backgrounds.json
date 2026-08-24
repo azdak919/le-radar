@@ -1,89 +1,8 @@
 {
   "version": 1,
   "profile": "universities",
-  "updated": "2026-08-24T12:00:00.000Z",
+  "updated": "2026-08-24T05:03:58.356Z",
   "photos": [
-    {
-      "id": "e99168bac1b8",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Pavillon_Ernest-Lemieux_06.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_Ernest-Lemieux_06.jpg",
-      "title": "Pavillon Ernest-Lemieux 06",
-      "credit": "Cephas",
-      "license": "CC BY-SA 4.0",
-      "description": "Pavillon Ernest-Lemieux 06 de l’Université Laval, Québec",
-      "categories": "Université Laval",
-      "width": 5514,
-      "height": 3676,
-      "aspect": 1.5,
-      "mime": "image/jpeg",
-      "source": "commons-cat",
-      "addedAt": "2026-08-24T12:00:00.000Z",
-      "sessionId": "printemps",
-      "bank": "universities",
-      "season": "printemps",
-      "place": "Université Laval",
-      "seasonConfidence": 0.9,
-      "seasonSource": "exif",
-      "tags": [
-        "mat",
-        "campus"
-      ],
-      "campus": true
-    },
-    {
-      "id": "0a185ba64d7a",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/4/46/Pavillon_H.-Biermans-L.-Moraud_01.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_H.-Biermans-L.-Moraud_01.jpg",
-      "title": "Pavillon H.-Biermans-L.-Moraud 01",
-      "credit": "Cephas",
-      "license": "CC BY-SA 4.0",
-      "description": "Pavillon H.-Biermans-L.-Moraud 01 de l’Université Laval, Québec",
-      "categories": "Université Laval",
-      "width": 5532,
-      "height": 3688,
-      "aspect": 1.5,
-      "mime": "image/jpeg",
-      "source": "commons-cat",
-      "addedAt": "2026-08-24T12:00:00.000Z",
-      "sessionId": "printemps",
-      "bank": "universities",
-      "season": "printemps",
-      "place": "Université Laval",
-      "seasonConfidence": 0.9,
-      "seasonSource": "exif",
-      "tags": [
-        "mat",
-        "campus"
-      ],
-      "campus": true
-    },
-    {
-      "id": "e6b44cd96036",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Pavillon_Alphonse-Marie-Parent_05.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_Alphonse-Marie-Parent_05.jpg",
-      "title": "Pavillon Alphonse-Marie-Parent 05",
-      "credit": "Cephas",
-      "license": "CC BY-SA 4.0",
-      "description": "Pavillon Alphonse-Marie-Parent 05 de l’Université Laval, Québec",
-      "categories": "Pavillon Alphonse-Marie-Parent|Université Laval",
-      "width": 5487,
-      "height": 3658,
-      "aspect": 1.5,
-      "mime": "image/jpeg",
-      "source": "commons-cat",
-      "addedAt": "2026-08-24T12:00:00.000Z",
-      "sessionId": "ete",
-      "bank": "universities",
-      "season": "ete",
-      "place": "Université Laval",
-      "seasonConfidence": 0.9,
-      "seasonSource": "exif",
-      "tags": [
-        "mat",
-        "campus"
-      ],
-      "campus": true
-    },
     {
       "id": "186769a5aeb5",
       "url": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg",
@@ -1897,6 +1816,57 @@
         "masthead"
       ],
       "permanent": false
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Pavillon_Alphonse-Marie-Parent_05.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_Alphonse-Marie-Parent_05.jpg",
+      "title": "Pavillon Alphonse-Marie-Parent 05",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5487,
+      "height": 3658,
+      "season": "ete",
+      "campus": true,
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "id": "0cd4a5226253"
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/46/Pavillon_H.-Biermans-L.-Moraud_01.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_H.-Biermans-L.-Moraud_01.jpg",
+      "title": "Pavillon H.-Biermans-L.-Moraud 01",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5532,
+      "height": 3688,
+      "season": "printemps",
+      "campus": true,
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "id": "edb0c03bd470"
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Pavillon_Ernest-Lemieux_06.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_Ernest-Lemieux_06.jpg",
+      "title": "Pavillon Ernest-Lemieux 06",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5514,
+      "height": 3676,
+      "season": "printemps",
+      "campus": true,
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "id": "0c9e04d1a3c8"
     }
   ]
 }

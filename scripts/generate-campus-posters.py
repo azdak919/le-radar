@@ -27,7 +27,8 @@ CACHE = Path(__file__).resolve().parent / "poster-cache"
 ICON_SVG = ASSETS / "icon.svg"
 ICON_PNG = ASSETS / "icon-512.png"
 QR_SVG = ASSETS / "kit" / "qr-le-radar.svg"
-BANK = ROOT / "data" / "quebec-university-backgrounds.json"
+BANK = ROOT / "data" / "photo-bank.json"
+REJECTED = ROOT / "data" / "quebec-backgrounds-rejected.json"
 
 UA = "LE-RADAR/1.0 (https://le-radar.ca; mailto:azdak-qc@proton.me) campus-posters"
 
@@ -194,7 +195,25 @@ def draw_tracked(draw, xy, text, fnt, fill):
 
 def load_bank():
     data = json.loads(BANK.read_text(encoding="utf-8"))
-    return {p["id"]: p for p in data.get("photos", [])}
+    banned = set()
+    if REJECTED.is_file():
+        rej = json.loads(REJECTED.read_text(encoding="utf-8"))
+        for entry in rej.get("entries") or []:
+            if entry.get("url"):
+                banned.add(str(entry["url"]).split("?")[0])
+            for frag in entry.get("fragments") or []:
+                banned.add(str(frag))
+    out = {}
+    for photo in data.get("photos", []):
+        tags = photo.get("tags") or []
+        if not (photo.get("campus") or "campus" in tags):
+            continue
+        url = str(photo.get("url") or "").split("?")[0]
+        if url in banned or photo.get("id") in banned:
+            continue
+        if photo.get("id"):
+            out[photo["id"]] = photo
+    return out
 
 
 def download(url: str, dest: Path) -> None:
