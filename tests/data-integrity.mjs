@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { resolveCurrentSlot, gridCoverage, fetchChoqGrid } = require('../scripts/radio-schedule-lib.js');
+const { resolveCurrentSlot, gridCoverage, fetchChoqGrid, COVERAGE_FLOOR } = require('../scripts/radio-schedule-lib.js');
 
 const root = new URL('../', import.meta.url);
 const readJson = (name) => JSON.parse(readFileSync(new URL(name, root), 'utf8'));
@@ -188,9 +188,11 @@ for (const [label, value] of airTextFields) {
  * COLLAPSE_RATIO), et ce test dit pourquoi. Les relever quand une station
  * publie mieux ; ne jamais les baisser sans savoir ce qui a été perdu.
  */
-const COVERAGE_FLOOR = {
-  cism: 95, cjlo: 95, ckut: 95, cfak: 80, chyz: 20, choq: 10,
-};
+assert.equal(COVERAGE_FLOOR.choq, 10, 'plancher CHOQ partagé bot / intégrité');
+assert(
+  readFileSync(new URL('scripts/fetch-radio-schedules.js', root), 'utf8').includes('belowCoverageFloor'),
+  'bot horaires : ne pas publier une grille sous le plancher d’intégrité',
+);
 
 for (const [id, floor] of Object.entries(COVERAGE_FLOOR)) {
   const station = schedules[id];

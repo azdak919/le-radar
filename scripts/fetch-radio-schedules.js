@@ -15,6 +15,7 @@ const path = require('path');
 const {
   collateStationGrid,
   gridCoverage,
+  COVERAGE_FLOOR,
   stripTransientFlags,
   DEFAULT_TZ,
 } = require('./radio-schedule-lib');
@@ -36,6 +37,14 @@ const doForce = process.argv.includes('--force');
  * (rentrée) se passe avec `--force`.
  */
 const COLLAPSE_RATIO = 0.6;
+
+function belowCoverageFloor(id, nextGrid, prevGrid) {
+  const floor = COVERAGE_FLOOR[id];
+  if (!floor) return false;
+  const next = gridCoverage(nextGrid).weekPercent;
+  const prev = gridCoverage(prevGrid).weekPercent;
+  return next < floor && prev >= floor;
+}
 
 function readJson(p, fallback) {
   try {
@@ -102,14 +111,20 @@ async function main() {
       !doForce
       && prevCount >= 10
       && finalGrid.length
-      && finalGrid.length < prevCount * COLLAPSE_RATIO
+      && (
+        finalGrid.length < prevCount * COLLAPSE_RATIO
+        || belowCoverageFloor(radio.id, finalGrid, prevGrid)
+      )
     ) {
       // Effondrement : la source répond, mais le parseur n'en tire presque
-      // plus rien — typiquement une refonte du site. Garder l'ancienne grille
-      // plutôt que de publier une semaine amputée.
+      // plus rien — typiquement une refonte du site — ou la semaine est trop
+      // mince pour passer data-integrity (CHOQ hors session). Garder l'ancienne
+      // grille plutôt que de faire échouer tout le bot.
+      const why = belowCoverageFloor(radio.id, finalGrid, prevGrid)
+        ? `${gridCoverage(finalGrid).weekPercent} % < plancher ${COVERAGE_FLOOR[radio.id]} %`
+        : `${finalGrid.length} plages contre ${prevCount} précédemment (< ${Math.round(COLLAPSE_RATIO * 100)} %)`;
       console.warn(
-        `  ⚠ ${radio.id}: ${finalGrid.length} plages contre ${prevCount} précédemment `
-        + `(< ${Math.round(COLLAPSE_RATIO * 100)} %) — grille conservée. `
+        `  ⚠ ${radio.id}: ${why} — grille conservée. `
         + 'Vérifier la source, puis relancer avec --force si le changement est réel.',
       );
       finalGrid = prevGrid;
