@@ -1102,6 +1102,18 @@ function sportsSexGroupOrder(lead) {
   return lead === 'F' ? ['F', 'M', ''] : ['M', 'F', ''];
 }
 
+/** Fenêtre visuelle « en cours » — mêmes bornes que app.js (CTA). */
+const SPORTS_LIVE_VISUAL_LEAD_MS = 15 * 60 * 1000;
+const SPORTS_LIVE_VISUAL_TAIL_MS = 3 * 3600 * 1000;
+
+function sportsNextIsLive(game, now = Date.now()) {
+  if (!game) return false;
+  if (game.live === true) return true;
+  const ts = sportsNextGameTs({ nextGame: game });
+  if (!Number.isFinite(ts) || ts === Number.POSITIVE_INFINITY) return false;
+  return ts <= now + SPORTS_LIVE_VISUAL_LEAD_MS && ts >= now - SPORTS_LIVE_VISUAL_TAIL_MS;
+}
+
 /** Timestamp prochain match (ms) — Infinity si aucun (va en bas). */
 function sportsNextGameTs(team) {
   const g = team?.nextGame;
@@ -1201,19 +1213,37 @@ function sportsResultRows(team, t, lang) {
   }
   const next = team.nextGame;
   if (next) {
-    const timeHtml = formatSportsTimeHtml(next.date, next.time, lang);
+    const live = sportsNextIsLive(next);
+    const timeHtml = live && next.period
+      ? `<span class="sports-result__day">${escapeHtml(formatSportsDate(next.date, lang) || next.date || '')}</span><span class="sports-result__clock">${escapeHtml(next.period)}</span>`
+      : formatSportsTimeHtml(next.date, next.time, lang);
     const opp = formatOpp(next);
     const venue = next.home === false
       ? `<span class="sports-result__venue">${escapeHtml(t.sportsAway)}</span>`
       : next.home
         ? `<span class="sports-result__venue">${escapeHtml(t.sportsHome)}</span>`
         : '';
-    rows.push(`<li class="sports-result sports-result--next">
+    if (live) {
+      const liveLabel = t.sportsLive || 'En cours';
+      const hasScore = next.scoreFor != null && next.scoreAgainst != null;
+      const scoreText = hasScore ? `${next.scoreFor}–${next.scoreAgainst}` : liveLabel;
+      const scoreClass = hasScore
+        ? 'sports-result__score'
+        : 'sports-result__score sports-result__score--live';
+      rows.push(`<li class="sports-result sports-result--live">
+  <time class="sports-result__time" datetime="${escapeHtml(next.date || '')}">${timeHtml}</time>
+  <span class="${scoreClass}" aria-label="${escapeHtml(liveLabel)}">${escapeHtml(scoreText)}</span>
+  <span class="sports-result__title">${formatTitle(next, opp, venue)}</span>
+  <span class="sports-result__badge" title="${escapeHtml(liveLabel)}"></span>
+</li>`);
+    } else {
+      rows.push(`<li class="sports-result sports-result--next">
   <time class="sports-result__time" datetime="${escapeHtml(next.date || '')}">${timeHtml}</time>
   <span class="sports-result__score sports-result__score--next" aria-label="${escapeHtml(t.sportsUpcoming)}">${escapeHtml(t.sportsUpcoming)}</span>
   <span class="sports-result__title">${formatTitle(next, opp, venue)}</span>
   <span class="sports-result__badge sports-result__badge--next" title="${escapeHtml(t.sportsUpcoming)}">→</span>
 </li>`);
+    }
   }
   if (!rows.length) {
     if (team.clubNote || team.status === 'club' || team.status === 'upcoming') {
@@ -1307,6 +1337,10 @@ function sportsPanelHtml(team, t, lang) {
   const sexBadge = sexLabel
     ? ` <span class="sports-panel__sex sports-panel__sex--${sexKey === 'F' ? 'f' : sexKey === 'M' ? 'm' : 'x'}"${sexKey === 'X' ? ' title="Mixte"' : ''}>${escapeHtml(sexLabel)}</span>`
     : '';
+  const liveNow = sportsNextIsLive(team.nextGame);
+  const livePill = team.nextGame
+    ? ` <span class="sports-panel__live"${liveNow ? '' : ' hidden'}>${escapeHtml(t.sportsLive || 'En cours')}</span>`
+    : '';
   // Associations de voile (ULaVoile, PolyVoile, McGill Sailing) : jamais le surnom varsity.
   const isSailingClub = sport === 'sailing'
     && (team.kind === 'association-etudiante'
@@ -1332,10 +1366,10 @@ function sportsPanelHtml(team, t, lang) {
    */
   let nameBlock;
   if (nick && nick.toLowerCase() !== shortName.toLowerCase()) {
-    nameBlock = `<h3 class="sports-panel__name sports-panel__name--branded"><span class="sports-panel__brand">${escapeHtml(nick)}</span>${sexBadge}</h3>\n`
+    nameBlock = `<h3 class="sports-panel__name sports-panel__name--branded"><span class="sports-panel__brand">${escapeHtml(nick)}</span>${sexBadge}${livePill}</h3>\n`
       + `      <p class="sports-panel__program"><span class="sports-panel__name-text">${escapeHtml(shortName)}</span>${codeHtml}</p>`;
   } else {
-    nameBlock = `<h3 class="sports-panel__name"><span class="sports-panel__brand">${escapeHtml(shortName)}</span>${codeHtml}${sexBadge}</h3>`;
+    nameBlock = `<h3 class="sports-panel__name"><span class="sports-panel__brand">${escapeHtml(shortName)}</span>${codeHtml}${sexBadge}${livePill}</h3>`;
   }
   const schoolHtml = team.fullName && team.fullName !== shortName && team.fullName !== nick
     ? `<p class="sports-panel__school">${escapeHtml(team.fullName)}</p>`
@@ -1366,7 +1400,9 @@ function sportsPanelHtml(team, t, lang) {
   const searchAttr = searchHay
     ? ` data-search="${escapeHtml(searchHay)}"`
     : '';
-  return `<section class="sports-panel" data-sport="${escapeHtml(sport)}" data-sector="${escapeHtml(team.sector || '')}" data-team="${escapeHtml(team.id || '')}"${sexAttr}${nextAttr}${lastAttr}${regAttr}${searchAttr} style="--sports-panel-c:${escapeHtml(tone)}">
+  const liveClass = liveNow ? ' sports-panel--live' : '';
+  const liveAttr = liveNow ? ' data-live="1"' : '';
+  return `<section class="sports-panel${liveClass}" data-sport="${escapeHtml(sport)}" data-sector="${escapeHtml(team.sector || '')}" data-team="${escapeHtml(team.id || '')}"${sexAttr}${nextAttr}${lastAttr}${liveAttr}${regAttr}${searchAttr} style="--sports-panel-c:${escapeHtml(tone)}">
   <header class="sports-panel__head">
     <span class="sports-panel__glyph" aria-hidden="true">${glyph}</span>
     <div class="sports-panel__identity">
@@ -1560,6 +1596,7 @@ function sportsHubPage(lang, ctx) {
     body += `          <div class="sports-filters__row" data-filter-period-row>\n`;
     body += `            <span class="sports-filters__label">${escapeHtml(t.sportsFilterPeriod)}</span>\n`;
     body += `            <button type="button" class="sports-filter is-active" data-filter-period="all" aria-pressed="true">${escapeHtml(t.sportsPeriodAll || t.sportsAll)}</button>\n`;
+    body += `            <button type="button" class="sports-filter" data-filter-period="live" aria-pressed="false">${escapeHtml(t.sportsPeriodLive || t.sportsLive)}</button>\n`;
     body += `            <button type="button" class="sports-filter" data-filter-period="week" aria-pressed="false">${escapeHtml(t.sportsPeriodWeek)}</button>\n`;
     body += `            <button type="button" class="sports-filter" data-filter-period="next-week" aria-pressed="false">${escapeHtml(t.sportsPeriodNextWeek)}</button>\n`;
     body += `            <button type="button" class="sports-filter" data-filter-period="month" aria-pressed="false">${escapeHtml(t.sportsPeriodMonth)}</button>\n`;

@@ -947,6 +947,7 @@ assert(
 const sportsHub = readFileSync(join(root, 'sports/index.html'), 'utf8');
 assert(sportsHub.includes('data-sports-board'), 'sports : racine filtrable requise');
 assert(sportsHub.includes('data-filter-sport="football"'), 'sports : filtre football requis');
+assert(sportsHub.includes('data-filter-period="live"'), 'sports : filtre En cours requis');
 assert(sportsHub.includes('class="sports-panel"'), 'sports : panneaux d’équipes requis');
 assert(sportsHub.includes('sports-board.js'), 'sports : script de filtres requis');
 assert(sportsHub.includes('À venir'), 'sports : lignes prochain match requises');

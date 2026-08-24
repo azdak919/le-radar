@@ -13,7 +13,9 @@ Revue photos (cadrage Y, tags, crédits) : **Labo photo** — `npm run lab:photo
 
 Tableau de bord (tous les labos) : `npm run lab` → http://127.0.0.1:8777/dev/
 
-Cartes sports (variantes CTA et puces, colonne mobile) : `/dev/sports-strip-lab.html` — carte **Cartes sports** du tableau de bord.
+Cartes sports du mât (CTA et puces, colonne mobile) : `/dev/sports-strip-lab.html`.
+
+Cartes de la page `/sports/` (formations : victoire, défaite, nul, prochain, régate, en direct, creux) : `/dev/sports-page-lab.html`.
 
 ## Lancer
 
