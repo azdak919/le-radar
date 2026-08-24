@@ -765,11 +765,49 @@ async function preview() {
   }
 }
 
-async function downloadPrint() {
-  const btn = document.getElementById('dl');
+function jpegToPdfBlob(jpeg, imgW, imgH, wIn, hIn) {
+  const pw = wIn * 72;
+  const ph = hIn * 72;
+  const enc = (s) => new TextEncoder().encode(s);
+  const chunks = [];
+  const offs = [0];
+  let pos = 0;
+  const push = (u8) => { chunks.push(u8); pos += u8.length; };
+  const pushStr = (s) => push(enc(s));
+  pushStr('%PDF-1.4\n');
+  const start = () => { offs.push(pos); };
+  start();
+  pushStr('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+  start();
+  pushStr('2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n');
+  start();
+  pushStr(`3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pw} ${ph}] /Resources << /XObject << /Im0 5 0 R >> >> /Contents 4 0 R >>\nendobj\n`);
+  const stream = `q ${pw} 0 0 ${ph} 0 0 cm /Im0 Do Q\n`;
+  start();
+  pushStr(`4 0 obj\n<< /Length ${stream.length} >>\nstream\n${stream}endstream\nendobj\n`);
+  start();
+  pushStr(`5 0 obj\n<< /Type /XObject /Subtype /Image /Width ${imgW} /Height ${imgH} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>\nstream\n`);
+  push(jpeg);
+  pushStr('\nendstream\nendobj\n');
+  const xrefPos = pos;
+  let xref = 'xref\n0 6\n0000000000 65535 f \n';
+  for (let i = 1; i <= 5; i += 1) {
+    xref += `${String(offs[i]).padStart(10, '0')} 00000 n \n`;
+  }
+  pushStr(xref);
+  pushStr(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xrefPos}\n%%EOF\n`);
+  const total = chunks.reduce((n, c) => n + c.length, 0);
+  const out = new Uint8Array(total);
+  let o = 0;
+  for (const c of chunks) { out.set(c, o); o += c.length; }
+  return new Blob([out], { type: 'application/pdf' });
+}
+
+async function downloadPrint(kind = 'jpeg') {
+  const buttons = [document.getElementById('dl'), document.getElementById('dl-pdf'), document.getElementById('dl-bottom'), document.getElementById('dl-pdf-bottom')];
   const status = document.getElementById('status');
-  btn.disabled = true;
-  status.textContent = 'Composition du fichier d’impression…';
+  buttons.forEach((b) => { if (b) b.disabled = true; });
+  status.textContent = kind === 'pdf' ? 'Composition du PDF…' : 'Composition du JPEG…';
   try {
     const fmt = FORMATS[state.format];
     const { w, h } = px(fmt);
@@ -795,7 +833,7 @@ async function downloadPrint() {
     if (canvas.width !== w || canvas.height !== h) {
       throw new Error(`dimensions ${canvas.width}×${canvas.height}, attendu ${w}×${h}`);
     }
-    const blob = await new Promise((resolve, reject) => {
+    const jpegBlob = await new Promise((resolve, reject) => {
       canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('JPEG'))), 'image/jpeg', 0.95);
     });
     const campus = campusOf(state.campus);
@@ -804,18 +842,28 @@ async function downloadPrint() {
     const qr = state.qr ? '-qr' : '';
     const greet = state.greeting !== 'none' ? `-${state.greeting}` : '';
     const langs = state.langs ? '-langues' : '';
-    const name = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}.jpg`;
+    const stem = `le-radar-affiche-${campus.slug}-${fmt.file}-${lang}${uni}${greet}${langs}${qr}`;
+    let blob;
+    let name;
+    if (kind === 'pdf') {
+      const jpeg = new Uint8Array(await jpegBlob.arrayBuffer());
+      blob = jpegToPdfBlob(jpeg, w, h, fmt.wIn, fmt.hIn);
+      name = `${stem}.pdf`;
+    } else {
+      blob = jpegBlob;
+      name = `${stem}.jpg`;
+    }
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = name;
     a.click();
     URL.revokeObjectURL(a.href);
     const mb = (blob.size / 1_048_576).toFixed(1);
-    status.innerHTML = `Fichier <strong>${name}</strong> · ${w} × ${h} px · 300 dpi · ${mb} Mo. Imprimez à 100 %, sans « ajuster à la page ».`;
+    status.innerHTML = `Fichier <strong>${name}</strong> · ${fmt.label} · 300 dpi · ${mb} Mo. Imprimez à 100 %, sans « ajuster à la page ».`;
   } catch (err) {
     status.textContent = `Téléchargement impossible : ${err.message}`;
   } finally {
-    btn.disabled = false;
+    buttons.forEach((b) => { if (b) b.disabled = false; });
   }
 }
 
@@ -936,9 +984,10 @@ function bind() {
     state.photoOpen = !state.photoOpen;
     renderChoices();
   });
-  document.getElementById('dl').addEventListener('click', downloadPrint);
-  const dlBottom = document.getElementById('dl-bottom');
-  if (dlBottom) dlBottom.addEventListener('click', downloadPrint);
+  document.getElementById('dl').addEventListener('click', () => downloadPrint('jpeg'));
+  document.getElementById('dl-pdf').addEventListener('click', () => downloadPrint('pdf'));
+  document.getElementById('dl-bottom').addEventListener('click', () => downloadPrint('jpeg'));
+  document.getElementById('dl-pdf-bottom').addEventListener('click', () => downloadPrint('pdf'));
 }
 
 async function main() {
