@@ -21,6 +21,8 @@
  *
  *   node scripts/generate-seo.js            # dry-run (n'écrit rien)
  *   node scripts/generate-seo.js --update   # écrit les fichiers
+ *   node scripts/generate-seo.js --update --sports-only
+ *     # seulement /sports/ et /en/sports/ (bot scores, sans purge du reste)
  */
 
 const fs = require('fs');
@@ -513,8 +515,14 @@ function buildItemListJsonLd(items) {
 //  Main
 // ═══════════════════════════════════════════════════════════════════════════
 
+function isSportsHubPath(pagePath) {
+  const rel = String(pagePath || '').replace(/\/$/, '');
+  return rel === 'sports' || rel === 'en/sports';
+}
+
 function main() {
   const doUpdate = process.argv.includes('--update');
+  const sportsOnly = process.argv.includes('--sports-only');
 
   const newsRaw = readJson(NEWS_PATH, {});
   const newsUpdated = newsRaw.updated || null;
@@ -554,42 +562,65 @@ function main() {
     archivePaths: archive.sourcePaths,
   });
 
+  const sportsPages = entityPages.filter((page) => isSportsHubPath(page.path));
   if (doUpdate) {
-    // Purge d'abord : un journal retiré du registre ne doit pas laisser une
-    // page orpheline indexée derrière lui.
-    // `en/` est généré, mais `en/media-kit/` est écrit à la main (miroir EN
-    // de kit-media/) — le garder hors de la purge.
-    const handmadeUnderGenerated = ['en/media-kit/index.html'];
-    const stashedHandmade = [];
-    for (const rel of handmadeUnderGenerated) {
-      const p = path.join(ROOT, rel);
-      if (fs.existsSync(p)) stashedHandmade.push({ rel, content: fs.readFileSync(p, 'utf8') });
-    }
-    for (const dir of GENERATED_DIRS) {
-      fs.rmSync(path.join(ROOT, dir), { recursive: true, force: true });
-    }
-    for (const { rel, content } of stashedHandmade) {
-      const out = path.join(ROOT, rel);
-      fs.mkdirSync(path.dirname(out), { recursive: true });
-      fs.writeFileSync(out, content, 'utf8');
-    }
-    for (const page of entityPages) {
-      const out = path.join(ROOT, page.path, 'index.html');
-      fs.mkdirSync(path.dirname(out), { recursive: true });
-      fs.writeFileSync(out, page.html, 'utf8');
-    }
-    for (const page of archive.pages) {
-      const out = path.join(ROOT, page.path, 'index.html');
-      fs.mkdirSync(path.dirname(out), { recursive: true });
-      fs.writeFileSync(out, page.html, 'utf8');
+    if (sportsOnly) {
+      // Bot scores : réécrire seulement le tableau, sans toucher journaux/radios.
+      for (const page of sportsPages) {
+        const out = path.join(ROOT, page.path, 'index.html');
+        fs.mkdirSync(path.dirname(out), { recursive: true });
+        fs.writeFileSync(out, page.html, 'utf8');
+      }
+    } else {
+      // Purge d'abord : un journal retiré du registre ne doit pas laisser une
+      // page orpheline indexée derrière lui.
+      // `en/` est généré, mais `en/media-kit/` est écrit à la main (miroir EN
+      // de kit-media/) — le garder hors de la purge.
+      const handmadeUnderGenerated = ['en/media-kit/index.html'];
+      const stashedHandmade = [];
+      for (const rel of handmadeUnderGenerated) {
+        const p = path.join(ROOT, rel);
+        if (fs.existsSync(p)) stashedHandmade.push({ rel, content: fs.readFileSync(p, 'utf8') });
+      }
+      for (const dir of GENERATED_DIRS) {
+        fs.rmSync(path.join(ROOT, dir), { recursive: true, force: true });
+      }
+      for (const { rel, content } of stashedHandmade) {
+        const out = path.join(ROOT, rel);
+        fs.mkdirSync(path.dirname(out), { recursive: true });
+        fs.writeFileSync(out, content, 'utf8');
+      }
+      for (const page of entityPages) {
+        const out = path.join(ROOT, page.path, 'index.html');
+        fs.mkdirSync(path.dirname(out), { recursive: true });
+        fs.writeFileSync(out, page.html, 'utf8');
+      }
+      for (const page of archive.pages) {
+        const out = path.join(ROOT, page.path, 'index.html');
+        fs.mkdirSync(path.dirname(out), { recursive: true });
+        fs.writeFileSync(out, page.html, 'utf8');
+      }
     }
   }
-  written.push({
-    file: 'pages d’entités',
-    note: `${entityPages.length} pages — ${model.groups.length} établissements, `
-      + `${model.paperEntries.length} journaux, ${model.radioEntries.length} radios (FR + EN)`,
-  });
-  written.push({ file: 'catalogue historique', note: `${archivePublicPages.length} page(s) indexable(s), ${archiveNoindexPages} hors index, ${archive.sample.records.length} entrée(s) vérifiée(s)` });
+  if (sportsOnly) {
+    written.push({
+      file: 'pages sports',
+      note: `${sportsPages.length} page(s) — /sports/ + /en/sports/ depuis sports.json`,
+    });
+  } else {
+    written.push({
+      file: 'pages d’entités',
+      note: `${entityPages.length} pages — ${model.groups.length} établissements, `
+        + `${model.paperEntries.length} journaux, ${model.radioEntries.length} radios (FR + EN)`,
+    });
+    written.push({ file: 'catalogue historique', note: `${archivePublicPages.length} page(s) indexable(s), ${archiveNoindexPages} hors index, ${archive.sample.records.length} entrée(s) vérifiée(s)` });
+  }
+
+  if (sportsOnly) {
+    console.log('\nÉcrit :');
+    for (const row of written) console.log(`  ${row.file}  ${row.note}`);
+    return;
+  }
 
   // ── sitemap.xml ──
   const sitemap = buildSitemap(newsUpdated, entityPages);

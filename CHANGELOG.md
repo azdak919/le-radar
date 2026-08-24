@@ -28,6 +28,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 ### Corrigé
 
 - Fil d’articles : 10 passages Québec — **6 h**, **midi**, et toutes les 2 h de 7 h à 21 h. Le cron part 35 min avant. Un test d’intégrité calé sur une date La Pige de mai bloquait tout le push dès qu’elle sortait de la fiche ; le fil JS lit `news.json`, donc un échec HTML ne retient plus les articles.
+- Page `/sports/` : le tampon « Mise à jour » et les cartes suivaient le dernier `seo:update` (17 août) alors que `sports.json` était rafraîchi plusieurs fois par jour. Le bot scores régénère maintenant `/sports/` et `/en/sports/` à chaque passe.
+- Tableau sports : le compteur du bandeau dit « 815 entrées », pas « équipes » (ce sont des fiches, pas autant de clubs).
 
 - Photo d’article : un bandeau campagne (slogan + aplats, ratio ~2.3:1) n’est plus choisi à la une quand le corps a une vraie photo 16:9 / 3:2. Le plafond de parse 150k coupait `<article>` derrière le CSS Astra (Collectif : 2e photo à ~194k) ; on retire style/script avant de classer, et on recadre selon le crop 3:2 de la une.
 - Plein écran → demi-écran : le rail large laissait sa hauteur et la largeur de « Plus de sources » en style inline. Toutes les pastilles restaient visibles alors que le bouton disait encore « Plus de sources ». On retire ces styles dès que le shell E s’éteint.
