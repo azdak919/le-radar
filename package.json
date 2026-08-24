@@ -9,6 +9,7 @@
     "check": "npm run check:syntax && npm run test:unit",
     "sw:bump": "node scripts/sw-shell-lock.mjs --write",
     "kit:generic-posters": "node scripts/export-kit-generic-posters.mjs",
+    "kit:example-posters": "node scripts/export-kit-example-posters.mjs",
     "media-kit:generate": "node scripts/generate-media-kit-assets.mjs",
     "media-kit:check": "node scripts/generate-media-kit-assets.mjs --check",
     "posters:campus": "python3 scripts/generate-campus-posters.py --formats jpg,preview",
