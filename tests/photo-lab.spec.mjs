@@ -68,6 +68,7 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(bilingue).toBeVisible();
   await page.locator('label:has(input[name="campus"][value="laval"])').click();
   await expect(bilingue).toBeHidden();
+  await expect(page.locator('#greeting')).toContainText('Bonne rentrée');
 });
 
 test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ page }) => {
