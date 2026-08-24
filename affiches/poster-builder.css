@@ -225,11 +225,10 @@ select.greeting:focus {
 .status strong { color: var(--ink); font-weight: 650; }
 
 .dash-preview {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr);
-  align-items: stretch;
-  gap: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
   padding: 12px 16px;
   min-width: 0;
   min-height: 0;
@@ -238,14 +237,11 @@ select.greeting:focus {
     radial-gradient(ellipse at 50% 30%, color-mix(in srgb, var(--purple) 14%, transparent), transparent 55%),
     var(--bg);
 }
-.dash-preview.has-crop {
-  grid-template-columns: minmax(0, 1fr) 210px;
-  gap: 20px;
-  padding-right: 20px;
-}
 .preview-stage {
   display: grid;
   place-items: center;
+  flex: 0 1 auto;
+  width: auto;
   min-width: 0;
   min-height: 0;
   height: 100%;
@@ -274,6 +270,7 @@ select.greeting:focus {
 .preview-frame { cursor: grab; }
 .preview-frame:active { cursor: grabbing; }
 .crop-tools {
+  flex: 0 0 210px;
   width: 210px;
   align-self: center;
   display: grid;
@@ -338,8 +335,7 @@ select.greeting:focus {
   .dash-preview,
   .dash-preview.has-crop {
     order: -1;
-    grid-template-columns: 1fr;
-    grid-template-rows: minmax(42vh, auto) auto;
+    flex-direction: column;
     position: sticky;
     top: var(--top);
     z-index: 3;
@@ -351,6 +347,7 @@ select.greeting:focus {
     border-bottom: 1px solid var(--line);
   }
   .preview-stage {
+    width: 100%;
     min-height: 42vh;
     height: 42vh;
   }
@@ -359,6 +356,7 @@ select.greeting:focus {
     max-height: 42vh;
   }
   .crop-tools {
+    flex: none;
     width: 100%;
     grid-template-columns: 1fr 1fr;
   }
