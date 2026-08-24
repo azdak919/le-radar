@@ -1,28 +1,28 @@
 {
-  "updated": "2026-08-24T18:06:18.783Z",
+  "updated": "2026-08-24T21:34:12.616Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 131,
+  "cited": 130,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 9,
-  "citedNew": 9,
-  "fallbackNew": 12,
+  "checked": 20,
+  "updatedCount": 8,
+  "citedNew": 7,
+  "fallbackNew": 13,
   "samples": [
-    {
-      "title": "Un match préparatoire à oublier pour les jeunes Sags",
-      "source": "La Pige",
-      "credit": "Photo : Archives La Pige",
-      "cited": true,
-      "method": "body-line"
-    },
     {
       "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
       "credit": "Photo : Elie Nguyen",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Le retard et les bienfaits du temps long",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -34,6 +34,13 @@
       "method": "media-credit-featured"
     },
     {
+      "title": "Sois belle et tais-toi",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
       "title": "Qui sont les agents qui patrouillent notre campus ?",
       "source": "Le Délit",
       "credit": "Photo : Stu Doré/Félix Fournier",
@@ -41,11 +48,11 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Ce que nous devons aux femmes",
-      "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
+      "title": "Iulian Ciobanu : découvrir « un autre monde » grâce au boccia",
+      "source": "Montréal Campus",
+      "credit": "Photo : Allyson Caron-Pelletier",
       "cited": true,
-      "method": "media-credit-near"
+      "method": "figcaption"
     },
     {
       "title": "Inside Mile End Kicks",
@@ -57,23 +64,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Se préparer et vivre sa retraite : un long fleuve, pas si tranquille",
-      "source": "La Pige",
-      "credit": "Photo : Léa Morin-Letort",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
