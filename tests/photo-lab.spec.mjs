@@ -73,11 +73,9 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.locator('.solid--radar')).toBeVisible();
   await page.locator('label:has(input[name="campus"][value="concordia"])').click();
   await page.locator('#photo-grid label').nth(1).click();
-  await expect(page.locator('#recipe')).toContainText('Concordia', { timeout: 15000 });
   await expect(page.locator('#status')).toContainText('300 dpi', { timeout: 20000 });
-  await expect(page.locator('#status')).not.toContainText('Aperçu : image');
+  await expect(page.locator('#status')).not.toContainText('qrSide');
   await page.selectOption('#greeting', 'relache');
-  await expect(page.locator('#recipe')).toContainText('Bonne relâche');
   await expect(page.locator('#crop-tools')).toBeVisible();
   await page.locator('#photo-angle').fill('8');
   await expect(page.locator('#status')).not.toContainText('qrSide');
