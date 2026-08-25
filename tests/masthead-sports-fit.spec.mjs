@@ -110,10 +110,10 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   await expect(strip.locator('.sports-chip--cta')).toHaveCount(1);
   await expect(strip).toHaveAttribute('data-count', '1');
   await expect(strip).toHaveAttribute('data-cta-pinned', '0');
-  // Pastille visible (pas coupée hors flux). Sports au repos, En cours en direct,
-  // Hier / Aujourd’hui pour un résultat du filet civil.
+  // Pastille visible (pas coupée hors flux). Marque possible : repos, direct,
+  // résultat civil ou prochain match.
   const tag = strip.locator('.sports-chip__cta-tag');
-  await expect(tag).toContainText(/sports|en cours|hier|aujourd/i);
+  await expect(tag).toContainText(/sports|en cours|hier|aujourd|prochain/i);
   await expect(strip.locator('.sports-chip__cta-chev')).toHaveCount(0);
   const tagBox = await tag.boundingBox();
   expect(tagBox).toBeTruthy();
