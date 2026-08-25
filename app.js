@@ -3565,21 +3565,10 @@ let sportsWaveSlot = 0;
 /** Rotation de la CTA suspendue (survol ou focus) — garde-fou `pause-survol-focus`. */
 let sportsCtaPaused = false;
 /**
- * La rotation n’existe que là où un mécanisme de pause existe (garde-fou
- * `rotation-pointeur-fin`). Souris : survol/focus. Téléphone (≤700 px) : doigt
- * posé sur la carte (pointerdown). Sans ça l’accroche défilait sans jamais
- * changer sur tactile.
- * ⚠️ Doit être déclaré **avant** l’init de `sportsCtaRotateMq` (sinon TDZ →
- * matchMedia avalé par try/catch → mq null → CTA jamais en rotation).
+ * La rotation dispose toujours d'un mécanisme de pause : survol/focus avec une
+ * souris, appui maintenu au doigt. Ne pas la borner à 700 px : iPad est tactile
+ * mais plus large, donc sa CTA quittait la cascade malgré `pointerdown`.
  */
-const SPORTS_CTA_ROTATE_MEDIA = '(hover: hover) and (pointer: fine), (max-width: 700px)';
-/** Surfaces où un mécanisme de pause existe réellement (souris, pas doigt). */
-let sportsCtaRotateMq = null;
-try {
-  sportsCtaRotateMq = window.matchMedia
-    ? window.matchMedia(SPORTS_CTA_ROTATE_MEDIA)
-    : null;
-} catch { /* ignore */ }
 /**
  * Plafond mesuré après paint (parité météo `mastheadWeatherFitCount`).
  * null = pas encore contraint ; sinon min(base largeur, fit).
@@ -5960,13 +5949,6 @@ function syncSportsCtaRail(chip, slide) {
  */
 function sportsCtaMayRotate() {
   if (sportsReducedMotion) return false;
-  // Lazy re-init : si l’init top-level a raté (TDZ, iframe, etc.), retenter.
-  if (!sportsCtaRotateMq && typeof window !== 'undefined' && window.matchMedia) {
-    try {
-      sportsCtaRotateMq = window.matchMedia(SPORTS_CTA_ROTATE_MEDIA);
-    } catch { /* ignore */ }
-  }
-  if (!sportsCtaRotateMq?.matches) return false;
   return sportsCtaLabelPool().length > 1;
 }
 
@@ -7277,7 +7259,7 @@ function scheduleSportsRotate() {
   scheduleSportsWave({ fromSlot: 0, firstWait: true });
 }
 
-/** Relit sports.json tant qu’un direct est à l’écran — le bot tourne aux 5 min. */
+/** Relit le snapshot léger du mât tant qu’un direct est à l’écran — le bot tourne aux 5 min. */
 const SPORTS_LIVE_POLL_MS = 15000;
 
 function sportsLivePollNeeded() {
@@ -7298,7 +7280,7 @@ function applySportsPayload(raw) {
 async function pollLiveSportsJson() {
   if (!sportsLivePollNeeded()) return;
   try {
-    const res = await fetch(appAsset('sports.json'), { cache: 'no-store' });
+    const res = await fetch(appAsset('sports-masthead.json'), { cache: 'no-store' });
     if (!res.ok) return;
     const raw = await res.json();
     const prev = sportsCtaSignature(sportsCtaSlide(sportsCtaLabelIndex));
@@ -7324,7 +7306,7 @@ function scheduleLiveSportsPoll() {
 async function initMastheadSports() {
   if (!MASTHEAD_SPORTS_STRIP) return;
   try {
-    const res = await fetch(appAsset('sports.json'), { cache: 'no-store' });
+    const res = await fetch(appAsset('sports-masthead.json'), { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const raw = await res.json();
     /* Focus-group B : même fenêtre de sessions que les articles + filet hors saison. */

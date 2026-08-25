@@ -49,6 +49,16 @@ test('sports.json a des équipes normalisées', () => {
   assert.ok(garneau.fullName, 'Garneau.fullName depuis le registre');
 });
 
+test('sports-masthead.json est le snapshot léger de l’accueil', () => {
+  const path = join(ROOT, 'sports-masthead.json');
+  assert.ok(existsSync(path), 'sports-masthead.json absent — lancer node scripts/build-sports-masthead.js --write');
+  const data = JSON.parse(readFileSync(path, 'utf8'));
+  assert.ok(data.updated);
+  assert.ok(data.masthead?.nextGameLimit >= 16);
+  assert.ok(data.teamCount > 0);
+  assert.equal(data.teamCount, Object.keys(data.teams || {}).length);
+});
+
 test('sports-teams.json registre des formations', () => {
   const reg = JSON.parse(readFileSync(join(ROOT, 'sports-teams.json'), 'utf8'));
   assert.ok(Array.isArray(reg.teams));
@@ -77,6 +87,7 @@ test('fetch-sports.js est du JS Node valide', () => {
   assert.match(src, /--live/);
   assert.match(src, /SCORE_NONE/);
   assert.match(src, /sports-live-lib/);
+  assert.match(src, /buildSportsMastheadPayload/);
   assert.match(src, /loadSportsTeamsRegistry|sports-teams-lib/);
   // Fraîcheur ops : préservation sur panne + abort si payload catastrophique.
   assert.match(src, /preserveByLeagueId|preservePreviousTeams/);
