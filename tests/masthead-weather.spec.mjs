@@ -18,7 +18,7 @@ const weather = [
   current: { temperature_2m, weather_code, is_day },
 }));
 
-test('météo campus : elle s’adapte à la largeur du masthead', async ({ page }) => {
+test('météo campus : elle s’adapte à la largeur du masthead @ci-critical', async ({ page }) => {
   await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => route.fulfill({
     contentType: 'application/json',
     headers: { 'access-control-allow-origin': '*' },

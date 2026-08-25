@@ -77,13 +77,12 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium
 
-      # PR / push main : filet UI critique (mât, chrome, smoke, antenne).
-      # Suite complète : workflow_dispatch seulement (trop longue pour chaque push).
+      # PR / push main : trois sentinelles UI (mât, chrome, smoke).
+      # Les specs exhaustives tournent dans la suite complète, manuelle : ne
+      # pas payer 111 tests séquentiels pour chaque push.
       - name: Browser checks (critical)
         if: github.event_name != 'workflow_dispatch'
-        # La série monoworker prend ~8 min 40 sur GitHub Actions; garder une
-        # marge suffisante évite de couper une suite encore en progrès.
-        timeout-minutes: 10
+        timeout-minutes: 6
         run: npm run test:browser:ci
 
       - name: Browser checks (full suite)
