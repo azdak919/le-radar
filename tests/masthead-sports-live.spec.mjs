@@ -397,6 +397,7 @@ test('CTA prochain du jour : heure de coup d’envoi, pas « dans 3 h »', async
   await expect(cta).toHaveAttribute('data-cta-lamp', 'soon');
   const clock = payload._kick.time.replace(':', ' h ');
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
+  expect(sub).toMatch(/Aujourd[’']hui/);
   expect(sub).toMatch(new RegExp(clock.replace(' ', '\\s+')));
   expect(sub.toLowerCase()).not.toMatch(/dans \d/);
   expect(sub.toLowerCase()).not.toMatch(/il y a/);

@@ -27,6 +27,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- CTA **À venir** (coup d’envoi aujourd’hui) : la sous-ligne dit **Aujourd’hui** à côté de l’heure ou du compte à rebours (« Aujourd’hui · 21 h 00 », « Aujourd’hui · dans 45 min »). La pastille reste À venir.
 - Pastille CTA **Hier** : pourpre de marque `#6c2163` (focus-group C, go humain). Plus le vert qui se lisait comme une victoire. Voyant lilas statique, filet inset blanc.
 - Visiteur CTA / puces : **chez** au lieu de **à**. « à » = un lieu (à Concordia, au CEPSUM) ; « chez » = le domicile d’une équipe. « Rouge et Or à Carabins » était le plus faible (Carabins n’est pas un lieu).
 - CTA sports : pastille **Prochain** en jaune (plus d’ambre). Un titre trop long (« Champlain Lennoxville reçoit Cégep François-Xavier-Garneau ») défile L→R en boucle, y compris en shell large 1920 — le CSS wide forçait `ellipsis` + `animation: none`.

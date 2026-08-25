@@ -5250,8 +5250,9 @@ function sportsCtaLamp(slide, state) {
  * Sous-ligne CTA — hiérarchie scorebug (ESPN / Flashscore / L’Équipe) :
  *   live    → période si l’API la donne, sinon compétition. Jamais l’âge
  *             du coup d’envoi (« il y a 2 min » sous En cours = match fini).
- *   prochain→ heure (19 h 00) ; compte à rebours seulement dans l’heure
- *             qui précède. Jamais « il y a » (ce serait déjà un live).
+ *   prochain→ aujourd’hui : « Aujourd’hui · 19 h 00 » (compte à rebours
+ *             seulement dans l’heure : « Aujourd’hui · dans 45 min »).
+ *             Demain / plus tard : heure ou date, sans redire la pastille.
  *   résultat→ compétition. La pastille dit déjà Aujourd’hui / Hier ;
  *             l’âge du coup d’envoi ment (2 h de jeu ≠ « il y a 2 h »).
  */
@@ -5276,6 +5277,11 @@ function sportsCtaSubLine(slide, state) {
       const today = day === torontoDayKey(now);
       const tomorrow = day === sportsCivilDayShift(torontoDayKey(now), 1);
       when = (today || tomorrow) ? clock : (sportsWhenLong(g?.date, g?.time) || clock);
+    }
+    if (sportsCtaGameIsToday(slide)) {
+      when = when
+        ? (/\baujourd/i.test(when) ? when : `Aujourd’hui · ${when}`)
+        : 'Aujourd’hui';
     }
     if (when && when.toLowerCase() === String(tag || '').toLowerCase()) when = '';
     return [when, comp].filter(Boolean).join(' · ');
