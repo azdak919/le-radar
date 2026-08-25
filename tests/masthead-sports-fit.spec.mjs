@@ -717,8 +717,7 @@ test('CTA sports : renouvellement carte entière comme les scores', async ({ pag
     };
   });
   expect(lamp.ok, 'pastille CTA présente').toBe(true);
-  expect(lamp.rest, 'voyant persistant (content: "")').not.toBe('none');
-  expect(lamp.playing, 'voyant inchangé quand la radio joue').toBe(lamp.rest);
-  expect(lamp.width, 'voyant visible').toBeGreaterThan(4);
+  expect(lamp.rest === 'none' || lamp.width === 0, 'pastille CTA : pas de voyant LED').toBe(true);
+  expect(lamp.playing, 'radio : la pastille CTA ne gagne pas de voyant').toBe(lamp.rest);
   expect(pageErrors, pageErrors.join('\n')).toEqual([]);
 });

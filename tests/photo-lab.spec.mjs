@@ -211,20 +211,23 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(page.locator('#cta-band .sports-chip__cta-tag', { hasText: /^Avant-hier$/ })).toHaveCount(0);
   await expect(page.locator('.sports-chip__cta-tag', { hasText: /^Hier$/ }).first()).toBeVisible();
   await expect(page.locator('.sports-chip__cta-tag', { hasText: /^Aujourd’hui$/ }).first()).toBeVisible();
-  const dotRgb = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => {
-    const m = (getComputedStyle(el, '::before').backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
-    return m;
+  const noLed = async (sel) => page.locator(sel).first().evaluate((el) => {
+    const before = getComputedStyle(el, '::before');
+    return {
+      display: before.display,
+      content: String(before.content || ''),
+      width: parseFloat(before.width) || 0,
+    };
   });
-  const [pr, pg] = await dotRgb('Prochain match');
-  const [hr, hg] = await dotRgb('Hier');
-  const ar = await page.locator('.sports-chip__cta-tag[data-cta-lamp="today"]').first().evaluate((el) => {
-    const m = (getComputedStyle(el, '::before').backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
-    return m[0];
-  });
-  expect(ar, 'Aujourd’hui résultat : voyant pâle sur fill rouge').toBeGreaterThan(200);
-  expect(pr - pg, 'Prochain : voyant ambre, pas rouge').toBeLessThan(80);
-  expect(hr, 'Hier : voyant lilas pâle').toBeGreaterThan(200);
-  expect(hg - hr, 'Hier : voyant pas vert').toBeLessThan(0);
+  for (const [label, sel] of [
+    ['Prochain match', '.sports-chip__cta-tag[data-cta-tag="Prochain match"]'],
+    ['Hier', '.sports-chip__cta-tag[data-cta-tag="Hier"]'],
+    ['Aujourd’hui', '.sports-chip__cta-tag[data-cta-lamp="today"]'],
+    ['En cours', '.sports-chip__cta-tag[data-cta-tag="En cours"]'],
+  ]) {
+    const led = await noLed(sel);
+    expect(led.display === 'none' || led.content === 'none' || led.width === 0, `${label} : pas de voyant LED`).toBe(true);
+  }
   const pillRgb = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => {
     const m = (getComputedStyle(el).backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
     return m;
