@@ -1334,7 +1334,7 @@ function sportsResultRows(team, t, lang) {
 
 /**
  * Outils flottants de la page SPORTS Étudiants :
- * flèche haut hors contenu à gauche + loupe hors contenu à droite
+ * flèche + loupe overlay bas-droite (même coin, par-dessus le contenu).
  * (CSS : gutter autour de --maxw ; safe-area sur mobile).
  */
 function sportsPageToolsHtml(t) {
@@ -1724,7 +1724,7 @@ function sportsHubPage(lang, ctx) {
   }
 
   /* Note sources retirée (inutile en bas de page) — les liens de match restent
-   * la source officielle au clic. Outils : flèche haut (gauche) + loupe sports. */
+   * la source officielle au clic. Outils : flèche + loupe overlay bas-droite. */
   body += sportsPageToolsHtml(t);
 
   const jsonLd = JSON.stringify({

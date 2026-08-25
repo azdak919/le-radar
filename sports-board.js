@@ -3,7 +3,7 @@
  * Progressive enhancement : sans ce script, toute la grille reste visible.
  * Filtres : sport · catégorie · secteur · période (en cours / semaine / mois / session)
  * + loupe de recherche locale (équipe, institution, sport…)
- * + flèche « haut de page » (bas-gauche, suit le défilement)
+ * + flèche « haut de page » (overlay bas-droite avec la loupe, suit le défilement)
  */
 (function () {
   'use strict';
@@ -710,7 +710,7 @@
     });
   }
 
-  // ── Flèche haut de page (bas-gauche, suit le scroll) ─────────────────────
+  // ── Flèche haut de page (overlay bas-droite, suit le scroll) ─────────────
   const SCROLL_TOP_SHOW_PX = 360;
 
   function syncScrollTopBtn() {
