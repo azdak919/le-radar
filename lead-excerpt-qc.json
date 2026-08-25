@@ -1,30 +1,21 @@
 {
-  "updated": "2026-08-25T04:55:41.925Z",
+  "updated": "2026-08-25T07:10:30.115Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 10,
-  "withLeadExcerpt": 85,
-  "candidates": 10,
-  "enriched": 4,
-  "failed": 0,
+  "incomplete": 9,
+  "withLeadExcerpt": 84,
+  "candidates": 9,
+  "enriched": 1,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
-      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
+      "title": "Les femmes MAGA au service du patriarcat",
+      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
       "ok": true,
-      "score": 81,
-      "chars": 400,
-      "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
-      "changed": true
-    },
-    {
-      "title": "Sois belle et tais-toi",
-      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
-      "ok": true,
-      "score": 96,
-      "chars": 295,
-      "sample": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez r",
+      "score": 100,
+      "chars": 393,
+      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
       "changed": true
     },
     {
@@ -34,7 +25,7 @@
       "score": 76,
       "chars": 400,
       "sample": "Les repas à forte teneur calorique, glycémique et lipidique regorgent dans la plupart des marchés d’",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Montreal city council to debate motion to cut ties with Israel on August 24",
@@ -55,15 +46,6 @@
       "changed": false
     },
     {
-      "title": "A conversation with Ehab Lotayef: A lifelong voyage to the conscience of humanity",
-      "link": "https://www.thetribune.ca/news/a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026/?utm_source=rss&utm_medium=rss&utm_campaign=a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026",
-      "ok": true,
-      "score": 70,
-      "chars": 400,
-      "sample": "On May 14, 429 activists carrying more than 11,000 kilograms of humanitarian aid set sail to Gaza fr",
-      "changed": false
-    },
-    {
       "title": "The Cruel Optimism of Summer",
       "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
       "ok": true,
@@ -73,12 +55,21 @@
       "changed": false
     },
     {
-      "title": "Ask the Trib: How do I survive summer in my hometown?",
-      "link": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
+      "title": "Foire aux questions",
+      "link": "https://lecollectif.ca/campus/foire-aux-questions/",
       "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
+      "score": 96,
+      "chars": 169,
+      "sample": "Attention cependant aux exceptions ! Consulte le site Web de ta faculté ou de ton centre universitai",
+      "changed": false
+    },
+    {
+      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
+      "link": "https://thelinknewspaper.ca/article/16338",
+      "ok": true,
+      "score": 90,
+      "chars": 177,
+      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
     }
   ]
