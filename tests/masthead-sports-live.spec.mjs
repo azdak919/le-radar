@@ -370,13 +370,52 @@ test('iPad tactile : la CTA participe à la cascade', async ({ browser }) => {
       twoLivePlusResultPayload(),
       { width: 820, height: 1180 },
     );
-    const first = (await cta.locator('.sports-chip__cta-text').innerText()).replace(/\s+/g, ' ');
+    const first = (await cta.locator('.sports-chip__cta-label.is-front .sports-chip__cta-text').innerText())
+      .replace(/\s+/g, ' ');
     expect(await page.evaluate(() => sportsCtaMayRotate())).toBe(true);
     await page.evaluate(() => scheduleSportsWave({ fromSlot: 0, firstWait: false }));
     await expect.poll(async () => {
       const chip = page.locator('#masthead-sports-strip .sports-chip--cta').last();
       return (await chip.locator('.sports-chip__cta-text').innerText()).replace(/\s+/g, ' ');
     }, { timeout: 4000 }).not.toBe(first);
+  } finally {
+    await context.close();
+  }
+});
+
+test('téléphone avec CTA seule : le changement garde son roulement visible', async ({ browser }) => {
+  const context = await browser.newContext({
+    hasTouch: true,
+    isMobile: true,
+    viewport: { width: 390, height: 844 },
+    timezoneId: 'America/Toronto',
+  });
+  const page = await context.newPage();
+  try {
+    await openWithSports(
+      page,
+      twoLivePlusResultPayload(),
+      { width: 390, height: 844 },
+    );
+    await page.evaluate(() => {
+      sportsFitCount = 1;
+      renderSportsStrip();
+      clearSportsSlotTimers();
+    });
+    const cta = page.locator('#masthead-sports-strip .sports-chip--cta');
+    await expect(cta).toBeVisible();
+    await expect(page.locator('#masthead-sports-strip .sports-chip')).toHaveCount(1);
+    const first = (await cta.locator('.sports-chip__cta-text').innerText()).replace(/\s+/g, ' ');
+
+    await page.evaluate(() => rotateSportsSlot(0));
+
+    await expect(cta.locator('.sports-chip__cta-label.is-rolling-in')).toBeVisible();
+    await expect.poll(async () => {
+      const current = page.locator('#masthead-sports-strip .sports-chip--cta');
+      return (await current.locator('.sports-chip__cta-label.is-front .sports-chip__cta-text').innerText())
+        .replace(/\s+/g, ' ');
+    }, { timeout: 2000 }).not.toBe(first);
+    await expect(cta.locator('.sports-chip__cta-label.is-rolling-in')).toHaveCount(0);
   } finally {
     await context.close();
   }
@@ -888,6 +927,22 @@ test('puces scores : V d’un côté et D de l’autre, pas de dédup', async ({
   expect(faces.nn.length, 'N des deux côtés').toBe(2);
   expect(faces.nn.every((f) => f.result === 'D' && f.badge === 'N')).toBe(true);
   expect(faces.nnBlocks, 'N ne masque pas l’autre N').toBe(false);
+
+  const visible = await page.evaluate(() => {
+    sportsFitCount = 4;
+    renderSportsStrip();
+    return sportsVisible.map((slide) => ({
+      mode: slide?.mode,
+      gameId: String(slide?.game?.gameId || slide?.ctaFrom?.game?.gameId || ''),
+    }));
+  });
+  for (let i = 1; i < visible.length; i += 1) {
+    const left = visible[i - 1];
+    const right = visible[i];
+    if (left.mode !== 'result' || right.mode !== 'result') continue;
+    expect(right.gameId, 'les deux faces du même résultat ne sont jamais côte à côte')
+      .not.toBe(left.gameId);
+  }
 });
 
 test('bandeau : nextGames entier, pas un seul match par équipe', async ({ page }) => {
