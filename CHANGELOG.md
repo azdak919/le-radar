@@ -27,6 +27,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Page `/sports/` : régates en **1er/12** (pas 1e, pas 7/12 brut) ; médailles 1–3, rien au-delà (plus de V/D sur une 7e place). Date civile **Aujourd’hui / Hier / Demain** quand ça colle.
 - Labo cartes sports : grille complète CTA + puces (voile or/argent/bronze/hors podium × aujourd’hui/hier, en cours sans score, visiteur, dans 45 min). Sous-ligne résultat = compétition, plus « il y a 6 h ».
 - CTA **À venir** (coup d’envoi aujourd’hui) : la sous-ligne dit **Aujourd’hui** à côté de l’heure ou du compte à rebours (« Aujourd’hui · 21 h 00 », « Aujourd’hui · dans 45 min »). La pastille reste À venir.
 - Pastille CTA **Hier** : pourpre de marque `#6c2163` (focus-group C, go humain). Plus le vert qui se lisait comme une victoire. Voyant lilas statique, filet inset blanc.

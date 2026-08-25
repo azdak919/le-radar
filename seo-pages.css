@@ -1350,6 +1350,19 @@
   border-radius: 4px;
   background: color-mix(in srgb, #8fa3b0 10%, transparent);
 }
+.sports-result--place {
+  border-left: 3px solid #0e7490;
+  margin-inline: -6px;
+  padding-inline: 6px;
+  border-radius: 4px;
+  background: color-mix(in srgb, #0e7490 9%, transparent);
+}
+.sports-result__badge--place {
+  font-size: 14px;
+  letter-spacing: 0;
+  font-weight: 700;
+  color: inherit;
+}
 .sports-result--next .sports-result__badge--next {
   color: var(--status-upcoming, #9a6900);
 }
