@@ -565,8 +565,8 @@ test('CTA sports 1920 : pastille Prochain jaune + titre long défile', async ({ 
     if (!chip || !tag || !text) return { ok: false, reason: 'no-cta' };
     chip.dataset.ctaState = 'next';
     tag.dataset.ctaLamp = 'next';
-    tag.dataset.ctaTag = 'Prochain';
-    tag.textContent = 'Prochain';
+    tag.dataset.ctaTag = 'Prochain match';
+    tag.textContent = 'Prochain match';
     tag.classList.remove('sports-chip__cta-tag--brand');
     text.textContent = title;
     if (typeof refreshSportsChipScroll === 'function') refreshSportsChipScroll(chip);

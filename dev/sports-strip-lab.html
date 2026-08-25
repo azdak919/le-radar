@@ -57,7 +57,7 @@
     /* Même grille 390 que le site, même si la fenêtre du labo est large. */
     #col .masthead-sports-strip .sports-chip--cta {
       display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-columns: auto minmax(4.25rem, 1fr);
       grid-template-rows: auto auto;
       align-items: center;
       column-gap: 8px;
@@ -117,7 +117,7 @@
   <header>
     <p><a class="hub" href="./">← Labo</a></p>
     <h1>Cartes sports</h1>
-    <p class="lede">Colonne mobile (390). Une carte à la fois. Pastille = Prochain / Hier / Aujourd’hui / date. Relatif en sous-ligne (il y a… / dans…).</p>
+    <p class="lede">Colonne mobile (390). Une carte à la fois. Pastille = Prochain match (2 lignes) / Hier / Aujourd’hui / date. Relatif en sous-ligne (il y a… / dans…).</p>
     <p class="hint">Local seulement.</p>
   </header>
   <main id="col"></main>
@@ -126,7 +126,7 @@
       {
         title: 'CTA — prochain (reçoit)',
         cta: {
-          state: 'next', tone: '#2e7d4f', tag: 'Prochain', glyph: '⚽',
+          state: 'next', tone: '#2e7d4f', tag: 'Prochain match', glyph: '⚽',
           text: 'Patriotes de Saint-Hyacinthe reçoivent Vanier College',
           sub: 'dans 3 h · Soccer collégial masculin division 1',
         },
@@ -134,7 +134,7 @@
       {
         title: 'CTA — prochain (visiteur)',
         cta: {
-          state: 'next', tone: '#2e7d4f', tag: 'Prochain', glyph: '⚽',
+          state: 'next', tone: '#2e7d4f', tag: 'Prochain match', glyph: '⚽',
           text: 'McGill à Concordia',
           sub: 'demain · Soccer universitaire féminin',
         },
@@ -195,7 +195,7 @@
       {
         title: 'CTA — hors saison',
         cta: {
-          state: 'next', tone: '#6a7580', tag: 'Prochain', glyph: '🏈',
+          state: 'next', tone: '#6a7580', tag: 'Prochain match', glyph: '🏈',
           text: 'Rouge et Or à Carabins',
           sub: 'dans 12 j · ven. 4 sept., 19 h 00 · Football universitaire',
         },
@@ -279,7 +279,7 @@
       const tagLabel = tag || 'Sports';
       const lamp = state === 'live' ? 'live'
         : tagLabel === 'Aujourd’hui' ? 'today'
-        : (state === 'next' || tagLabel === 'Prochain') ? 'next'
+        : (state === 'next' || tagLabel === 'Prochain' || tagLabel === 'Prochain match') ? 'next'
         : state === 'result' ? 'past'
         : 'idle';
       const g = glyph ? `<span class="sports-chip__cta-glyph" aria-hidden="true">${glyph}</span>` : '';
@@ -288,7 +288,9 @@
         : '';
       const tagInner = brand
         ? '<img class="sports-chip__cta-logo" src="../assets/icon.svg" width="18" height="18" alt="" decoding="async" aria-hidden="true">'
-        : tagLabel;
+        : (tagLabel === 'Prochain' || tagLabel === 'Prochain match')
+          ? '<span class="sports-chip__cta-tag-lines"><span>Prochain</span><span>match</span></span>'
+          : tagLabel;
       const tagClass = brand
         ? 'sports-chip__cta-tag sports-chip__cta-tag--brand notranslate'
         : 'sports-chip__cta-tag';

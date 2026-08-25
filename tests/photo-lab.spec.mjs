@@ -140,7 +140,43 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(page.locator('#cta-band').getByText('LE-RADAR.ca').first()).toBeVisible();
   await expect(page.locator('#cta-band').getByText(/Réseau Académique/).first()).toBeVisible();
   await expect(page.locator('#cta-band').getByText('Scores collégiaux')).toHaveCount(0);
-  await expect(page.locator('#cta-band .sports-chip__cta-tag', { hasText: /^Prochain$/ }).first()).toBeVisible();
+  await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first()).toBeVisible();
+  await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first()).toHaveText(/Prochain\s*match/i);
+  await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first().locator(':scope > span')).toHaveCount(2);
+  const glyphFit = await page.locator('#cta-band .sports-chip--cta').first().evaluate((chip) => {
+    const glyph = chip.querySelector('.sports-chip__cta-glyph');
+    const tag = chip.querySelector('.sports-chip__cta-tag');
+    if (!glyph || !tag) return { ok: false };
+    const cr = chip.getBoundingClientRect();
+    const gr = glyph.getBoundingClientRect();
+    const tr = tag.getBoundingClientRect();
+    return {
+      ok: true,
+      glyphW: gr.width,
+      fullyInChip: gr.left >= cr.left - 1 && gr.right <= cr.right + 1,
+      rightOfTag: gr.left >= tr.right - 1,
+    };
+  });
+  expect(glyphFit.ok, 'CTA prochain : glyphe présent').toBe(true);
+  expect(glyphFit.glyphW, 'CTA prochain : glyphe a une largeur').toBeGreaterThan(8);
+  expect(glyphFit.fullyInChip, 'CTA prochain : glyphe entier dans la carte (pas d’excédent)').toBe(true);
+  expect(glyphFit.rightOfTag, 'CTA prochain : glyphe à droite de la pastille').toBe(true);
+  const hierFit = await page.locator('.sports-chip__cta-tag[data-cta-tag="Hier"]').first().evaluate((tag) => {
+    const chip = tag.closest('.sports-chip--cta');
+    const glyph = chip?.querySelector('.sports-chip__cta-glyph');
+    if (!chip || !glyph) return { ok: false };
+    const cr = chip.getBoundingClientRect();
+    const gr = glyph.getBoundingClientRect();
+    const tr = tag.getBoundingClientRect();
+    return {
+      ok: true,
+      fullyInChip: gr.left >= cr.left - 1 && gr.right <= cr.right + 1,
+      rightOfTag: gr.left >= tr.right - 1,
+    };
+  });
+  expect(hierFit.ok, 'CTA hier : glyphe présent').toBe(true);
+  expect(hierFit.fullyInChip, 'CTA hier : glyphe entier dans la carte (pas d’excédent)').toBe(true);
+  expect(hierFit.rightOfTag, 'CTA hier : glyphe à droite de la pastille').toBe(true);
   await expect(page.locator('#cta-band .sports-chip__cta-tag', { hasText: /^Avant-hier$/ })).toHaveCount(0);
   await expect(page.locator('.sports-chip__cta-tag', { hasText: /^Hier$/ }).first()).toBeVisible();
   await expect(page.locator('.sports-chip__cta-tag', { hasText: /^Aujourd’hui$/ }).first()).toBeVisible();
@@ -148,7 +184,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
     const m = (getComputedStyle(el, '::before').backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
     return m;
   });
-  const [pr, pg] = await dotRgb('Prochain');
+  const [pr, pg] = await dotRgb('Prochain match');
   const [hr, hg] = await dotRgb('Hier');
   const [ar] = await dotRgb('Aujourd’hui');
   expect(ar, 'Aujourd’hui : voyant pâle sur fill rouge').toBeGreaterThan(200);
@@ -159,7 +195,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
     return m;
   });
   const pillWidth = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => el.getBoundingClientRect().width);
-  const [ppr, ppg, ppb] = await pillRgb('Prochain');
+  const [ppr, ppg, ppb] = await pillRgb('Prochain match');
   const [phr, phg] = await pillRgb('Hier');
   const [par, pag] = await pillRgb('Aujourd’hui');
   const [elr, elg] = await pillRgb('En cours');
@@ -170,7 +206,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   expect(par - pag, 'Aujourd’hui : pastille rouge saturée').toBeGreaterThan(80);
   expect(elr - elg, 'En cours : pastille rouge inchangée').toBeGreaterThan(80);
   const [wProchain, wHier, wToday] = await Promise.all([
-    pillWidth('Prochain'), pillWidth('Hier'), pillWidth('Aujourd’hui'),
+    pillWidth('Prochain match'), pillWidth('Hier'), pillWidth('Aujourd’hui'),
   ]);
   expect(Math.abs(wProchain - wHier), 'Prochain et Hier : même largeur de rail').toBeLessThan(2);
   expect(Math.abs(wProchain - wToday), 'Prochain et Aujourd’hui : même largeur de rail').toBeLessThan(2);
