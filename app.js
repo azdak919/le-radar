@@ -3646,6 +3646,8 @@ const SPORTS_ARRIVE_MS = 640;
 const SPORTS_CTA_TAG = 'Sports';
 /** Pastille pendant un match en cours — le seul cas qui remplace la rubrique. */
 const SPORTS_CTA_TAG_LIVE = 'En cours';
+/** Prochain : deux lignes dans la pastille, pas un rail plus large. */
+const SPORTS_CTA_TAG_NEXT = 'Prochain match';
 /** Repli idle (creux total, pas de match) ; sinon ton du sport via sportsCtaTone. Rouge = direct. */
 const SPORTS_CTA_REST_TONE = '#6a7580';
 const SPORTS_CTA_LIVE_TONE = '#c8102e';
@@ -5124,15 +5126,32 @@ function sportsCtaResultTag(src) {
 }
 
 /**
- * Pastille CTA : Prochain / En cours / Hier / Aujourd’hui / date.
+ * Pastille CTA : Prochain match (2 lignes) / En cours / Hier / Aujourd’hui / date.
  * Creux : LE-RADAR.ca (logo PWA), pas « Sports ».
  */
 function sportsCtaTagLabel(slide, state) {
   const st = state || sportsCtaState(slide);
   if (st === 'live') return SPORTS_CTA_TAG_LIVE;
-  if (st === 'next') return 'Prochain';
+  if (st === 'next') return SPORTS_CTA_TAG_NEXT;
   if (st === 'result') return sportsCtaResultTag(slide?.ctaFrom || slide);
   return RADAR_BRAND_SHORT;
+}
+
+/** Remplit la pastille : « Prochain match » en deux lignes, le reste en une. */
+function fillSportsCtaTagCopy(tag, wanted) {
+  tag.replaceChildren();
+  if (wanted === SPORTS_CTA_TAG_NEXT) {
+    const lines = document.createElement('span');
+    lines.className = 'sports-chip__cta-tag-lines';
+    const top = document.createElement('span');
+    top.textContent = 'Prochain';
+    const bot = document.createElement('span');
+    bot.textContent = 'match';
+    lines.append(top, bot);
+    tag.append(lines);
+    return;
+  }
+  tag.append(document.createTextNode(wanted));
 }
 
 /** Couleur du voyant : live / today (rouge) · next (ambre) · past (vert). */
@@ -5854,8 +5873,7 @@ function applySportsCtaState(chip, slide) {
     tag.removeAttribute('translate');
     if (tag.dataset.ctaTag !== wanted) {
       tag.dataset.ctaTag = wanted;
-      tag.replaceChildren();
-      tag.append(document.createTextNode(wanted));
+      fillSportsCtaTagCopy(tag, wanted);
     }
   }
   syncSportsCtaRail(chip, slide);
