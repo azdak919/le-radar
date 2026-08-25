@@ -124,9 +124,9 @@
   <script>
     const ctaCases = [
       {
-        title: 'CTA — prochain (reçoit)',
+        title: 'CTA — aujourd’hui (à venir, reçoit)',
         cta: {
-          state: 'next', tone: '#2e7d4f', tag: 'Prochain match', glyph: '⚽',
+          state: 'next', tone: '#2e7d4f', tag: 'Aujourd’hui', glyph: '⚽',
           text: 'Patriotes de Saint-Hyacinthe reçoivent Vanier College',
           sub: 'dans 3 h · Soccer collégial masculin division 1',
         },
@@ -304,8 +304,9 @@
     function stripCta({ state, tone, tag, glyph, text, sub, badge, badgeMod, brand }) {
       const tagLabel = tag || 'Sports';
       const lamp = state === 'live' ? 'live'
+        : state === 'next' ? 'next'
         : tagLabel === 'Aujourd’hui' ? 'today'
-        : (state === 'next' || tagLabel === 'Prochain' || tagLabel === 'Prochain match') ? 'next'
+        : (tagLabel === 'Prochain' || tagLabel === 'Prochain match') ? 'next'
         : state === 'result' ? 'past'
         : 'idle';
       const g = glyph ? `<span class="sports-chip__cta-glyph" aria-hidden="true">${glyph}</span>` : '';

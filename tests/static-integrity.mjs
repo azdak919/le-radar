@@ -1522,6 +1522,7 @@ assert(
     && appJs.includes('function sportsCtaResultTag')
     && appJs.includes("return 'Hier'")
     && appJs.includes("SPORTS_CTA_TAG_NEXT")
+    && appJs.includes('function sportsCtaGameIsToday')
     && appJs.includes('function fillSportsCtaTagCopy')
     && appJs.includes("return 'Aujourd’hui'")
     && appJs.includes("return 'Avant-hier'")
