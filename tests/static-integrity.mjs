@@ -1561,6 +1561,12 @@ assert(
   'app.js : CTA = today/yesterday + hors saison 7 j (1er match/jour)',
 );
 assert(
+  appJs.includes('function sportsCtaKickoffWithinHour')
+    && /const SPORTS_CTA_WITHIN_HOUR_MS\s*=\s*60\s*\*\s*60\s*\*\s*1000/.test(appJs)
+    && /imminent\.concat\(\s*yesterdayResults,\s*todayResults,\s*laterNexts\)/.test(appJs),
+  'app.js : CTA sans live = dans l’heure → hier → aujourd’hui → autres à venir',
+);
+assert(
   !appJs.includes('upcomingLater'),
   'app.js : plus de filet multi-jours upcomingLater dans le pool CTA',
 );

@@ -3541,6 +3541,8 @@ const SPORTS_LIVE_VISUAL_TAIL_MS = 3 * 3600 * 1000; /* 3 h après le coup d’en
  * (plus de fenêtre 48 h glissante — gate mainteneur 2026-08-11).
  * Les prochains du **jour lead** restent en appoint (le-radar-cta-sports-window F).
  */
+/** À venir dans l’heure : passe devant hier (même seuil que « dans 45 min »). */
+const SPORTS_CTA_WITHIN_HOUR_MS = 60 * 60 * 1000;
 /**
  * Accroches CTA **uniquement** quand il n’y a ni match chaud (≤14 j)
  * ni aucun match à venir en grille. Pas de puces grises à gauche pour
@@ -3886,6 +3888,14 @@ function sportsCtaResultIsTodayOrYesterday(game, now = Date.now()) {
   const today = torontoDayKey(now);
   const yesterday = sportsCivilDayShift(today, -1);
   return day === today || day === yesterday;
+}
+
+/** Coup d’envoi encore à venir et dans moins d’une heure. */
+function sportsCtaKickoffWithinHour(game, now = Date.now()) {
+  const ms = sportsGameMs(game);
+  if (!Number.isFinite(ms)) return false;
+  const delta = ms - now;
+  return delta >= 0 && delta < SPORTS_CTA_WITHIN_HOUR_MS;
 }
 
 /** Score numérique collé (live non officiel ou résultat). */
@@ -5432,6 +5442,11 @@ function sportsSoftSportDiversity(slides) {
  *   • **en direct** : uniquement les matchs en cours. Un seul → carte figée ;
  *     plusieurs → rotation entre eux. Dès qu’il n’y a plus de live, le cycle
  *     normal reprend.
+ *   • sans live, ordre du cycle :
+ *     1. à venir **dans l’heure**
+ *     2. résultats **d’hier**
+ *     3. résultats **d’aujourd’hui**
+ *     4. autres à venir (jour lead ; hors saison : 1er match × 7 j)
  *   • **résultats** : aujourd’hui / hier seulement (plus vieux → puces scores)
  *   • **en saison** (il y a des résultats frais) : prochains du **jour lead** seul
  *   • **hors saison** (pas de résultat aujourd’hui/hier) : **1er match** de
@@ -5488,7 +5503,10 @@ function sportsCtaLiveSources(now = Date.now()) {
 
 function sportsCtaCandidateSlides() {
   const now = Date.now();
-  const freshResults = [];
+  const today = torontoDayKey(now);
+  const yesterday = sportsCivilDayShift(today, -1);
+  const todayResults = [];
+  const yesterdayResults = [];
   const nexts = [];
   const seen = new Set();
 
@@ -5498,7 +5516,9 @@ function sportsCtaCandidateSlides() {
 
     if (s.mode === 'result') {
       if (!sportsCtaResultIsTodayOrYesterday(s.game, now)) continue;
-      freshResults.push(s);
+      const day = sportsSlideDayKey(s);
+      if (day === today) todayResults.push(s);
+      else if (day === yesterday) yesterdayResults.push(s);
       continue;
     }
 
@@ -5517,13 +5537,15 @@ function sportsCtaCandidateSlides() {
     return i < 0 ? 99 : i;
   };
 
-  // Résultats frais : plus récent d’abord.
-  freshResults.sort((a, b) => {
+  const byRecent = (a, b) => {
     const fa = sportsGameMs(a.game) || 0;
     const fb = sportsGameMs(b.game) || 0;
     if (fb !== fa) return fb - fa;
     return sportRank(a) - sportRank(b);
-  });
+  };
+  todayResults.sort(byRecent);
+  yesterdayResults.sort(byRecent);
+  const freshResults = todayResults.concat(yesterdayResults);
 
   // À venir : plus proche d’abord ; même jour = ordre horaire.
   const bySoonest = (a, b) => {
@@ -5564,23 +5586,25 @@ function sportsCtaCandidateSlides() {
   }
 
   // Direct : la CTA n’affiche que les matchs en cours (un ou plusieurs).
-  // Le cycle aujourd’hui/hier + prochains reprend dès qu’il n’y a plus de live.
+  // Le cycle hier → à venir reprend dès qu’il n’y a plus de live.
   const lives = sportsCtaLiveSources(now);
   if (lives.length) {
     lives.sort(bySoonest);
     return lives.slice(0, SPORTS_CTA_MAX_POOL);
   }
 
-  const raw = freshResults.concat(nextPool);
+  const imminent = [];
+  const laterNexts = [];
+  for (const s of nextPool) {
+    if (sportsCtaKickoffWithinHour(s.game, now)) imminent.push(s);
+    else laterNexts.push(s);
+  }
+  imminent.sort(bySoonest);
+  laterNexts.sort(bySoonest);
+
+  // Sans live : dans l’heure → hier → aujourd’hui → autres à venir.
+  const raw = imminent.concat(yesterdayResults, todayResults, laterNexts);
   const deduped = sportsDedupeMatchSlides(raw);
-  deduped.sort((a, b) => {
-    const modeRank = (s) => (s.mode === 'result' ? 0 : 1);
-    if (modeRank(a) !== modeRank(b)) return modeRank(a) - modeRank(b);
-    if (a.mode === 'result') {
-      return (sportsGameMs(b.game) || 0) - (sportsGameMs(a.game) || 0);
-    }
-    return bySoonest(a, b);
-  });
   return sportsSoftSportDiversity(deduped).slice(0, SPORTS_CTA_MAX_POOL);
 }
 

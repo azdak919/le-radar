@@ -27,6 +27,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- CTA : sans match **en cours**, le cycle **commence par les résultats d’hier**, avant les à venir — sauf un coup d’envoi **dans l’heure**, qui passe devant. En cours reste exclusif.
 - Flèche « haut de page » : overlay bas-droite **avec la loupe**, plus collée à gauche. Le rail des sources (wide E) n’a plus à céder 72 px quand on défile.
 
 - Page `/sports/` : régates en **1er/12** (pas 1e, pas 7/12 brut) ; médailles 1–3, rien au-delà (plus de V/D sur une 7e place). Date civile **Aujourd’hui / Hier / Demain** quand ça colle.
