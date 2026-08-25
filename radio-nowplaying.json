@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-25T02:37:44.786Z",
+  "updatedAt": "2026-08-25T03:45:43.422Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T02:37:13.320Z"
+      "checkedAt": "2026-08-25T03:45:18.226Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T02:37:15.638Z"
+      "checkedAt": "2026-08-25T03:45:20.254Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Drastic Plastic",
-        "source": "api-live",
-        "start": "22:00",
-        "end": "23:00"
-      },
-      "next": {
         "title": "27th Hr.",
         "source": "api-live",
         "start": "23:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Harmony Express",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "02:00"
+      },
       "track": "",
-      "showTitle": "Drastic Plastic",
+      "showTitle": "27th Hr.",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T02:37:22.509Z"
+      "checkedAt": "2026-08-25T03:45:22.523Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Past Tense",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/past-tense"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
         "start": "23:00",
         "end": "00:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
+      "next": {
+        "title": "CJLO Late Night",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
       "track": "",
-      "showTitle": "Past Tense",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T02:37:36.778Z"
+      "checkedAt": "2026-08-25T03:45:36.205Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +127,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T02:37:37.885Z"
+      "checkedAt": "2026-08-25T03:45:37.174Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +140,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Coco GB - Here I Stand (edit)",
+      "track": "BAIE - C",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -152,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-25T02:37:44.435Z"
+      "checkedAt": "2026-08-25T03:45:43.071Z"
     }
   }
 }
