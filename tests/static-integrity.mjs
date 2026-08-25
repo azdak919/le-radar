@@ -1553,7 +1553,9 @@ assert(
 // CTA pool = En cours → à venir → aujourd’hui → 5 j → hier.
 assert(
   appJs.includes('function sportsSlideDayKey')
-    && /const SPORTS_CTA_MAX_POOL\s*=\s*16/.test(appJs)
+    && /const SPORTS_CTA_MAX_POOL\s*=\s*80/.test(appJs)
+    && appJs.includes('function sportsNextSlideFromGame')
+    && appJs.includes('team.nextGames')
     && /const SPORTS_CTA_NEXT_DAYS\s*=\s*5/.test(appJs)
     && appJs.includes('function sportsCtaNextWindowEndDay')
     && appJs.includes('yesterdayResults')
