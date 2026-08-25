@@ -256,7 +256,7 @@ body {
 /* Pulse de bordure pourpre : puces scores + CTA au repos (pas en direct —
  * le live a son propre halo rouge). Même famille visuelle sur toute la bande. */
 .masthead-sports-strip .sports-chip:not(.sports-chip--cta),
-.masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]) {
+.masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):not([data-cta-lamp="soon"]) {
   animation: sports-chip-rim-glow 3.2s ease-in-out infinite;
 }
 .masthead-sports-strip .sports-chip:hover {
@@ -270,7 +270,7 @@ body {
     0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 34%, transparent);
 }
 /* Hover CTA hors direct : même élévation pourpre que les scores (le live garde son rouge). */
-.masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):hover {
+.masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):not([data-cta-lamp="soon"]):hover {
   border-color: color-mix(in srgb, var(--accent, #6c2163) 72%, rgba(255, 255, 255, 0.28));
   background:
     linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 40%, transparent) 0%, transparent 55%),
@@ -576,8 +576,9 @@ body {
   max-width: none !important;
   width: 0 !important;
 }
-/* Direct : le registre d’alerte, gagné par un match en cours. */
-.masthead-sports-strip .sports-chip--cta[data-cta-state="live"] {
+/* Direct / à venir du jour : registre d’alerte (pulse). */
+.masthead-sports-strip .sports-chip--cta[data-cta-state="live"],
+.masthead-sports-strip .sports-chip--cta[data-cta-lamp="soon"] {
   border-color: color-mix(in srgb, #c8102e 62%, rgba(255, 255, 255, 0.2));
   background:
     linear-gradient(90deg, color-mix(in srgb, #c8102e 38%, transparent) 0%, transparent 58%),
@@ -588,7 +589,8 @@ body {
     0 0 0 0 rgba(200, 16, 46, 0);
   animation: sports-cta-ring-pulse 2.6s ease-in-out infinite;
 }
-.masthead-sports-strip .sports-chip--cta[data-cta-state="live"]:hover {
+.masthead-sports-strip .sports-chip--cta[data-cta-state="live"]:hover,
+.masthead-sports-strip .sports-chip--cta[data-cta-lamp="soon"]:hover {
   border-color: color-mix(in srgb, #c8102e 72%, rgba(255, 255, 255, 0.28));
   background:
     linear-gradient(90deg, color-mix(in srgb, #c8102e 44%, transparent) 0%, transparent 58%),
@@ -642,7 +644,7 @@ body {
 }
 /* Prochain : pastille jaune (pas l’ambre radio). Encre sombre pour le contraste. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="next"],
-.masthead-sports-strip .sports-chip--cta[data-cta-state="next"] .sports-chip__cta-tag:not(.sports-chip__cta-tag--brand) {
+.masthead-sports-strip .sports-chip--cta[data-cta-state="next"] .sports-chip__cta-tag:not(.sports-chip__cta-tag--brand):not([data-cta-lamp="soon"]) {
   background: #f5d000;
   color: #1a1500;
   box-shadow: inset 0 0 0 1px rgba(255, 236, 70, 0.45);
@@ -655,14 +657,14 @@ body {
   color: #fff;
   box-shadow: inset 0 0 0 1px rgba(180, 240, 205, 0.35);
 }
-/* Aujourd’hui (résultat) : fill rouge. Un match à venir du jour reste jaune
- * (`data-cta-lamp="next"`, libellé Aujourd’hui) — pas le rouge du score. */
+/* Aujourd’hui (résultat) : fill rouge saturé, sans pulse. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="today"] {
   background: #c8102e;
   color: #fff;
   box-shadow: inset 0 0 0 1px rgba(255, 180, 190, 0.35);
 }
-.masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag {
+.masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag,
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="soon"] {
   background: #c8102e;
   color: #fff;
   font-weight: 900;
@@ -862,7 +864,7 @@ body {
   animation: sports-cta-dot-upcoming 1.8s ease-out infinite;
 }
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="next"]::before,
-.masthead-sports-strip .sports-chip--cta[data-cta-state="next"] .sports-chip__cta-tag::before {
+.masthead-sports-strip .sports-chip--cta[data-cta-state="next"] .sports-chip__cta-tag:not([data-cta-lamp="soon"])::before {
   background: #fff8c2;
   box-shadow: 0 0 0 1px rgba(26, 21, 0, 0.22);
 }
@@ -876,7 +878,8 @@ body {
   box-shadow: 0 0 0 1px rgba(10, 40, 24, 0.28);
   animation: sports-cta-dot-past 1.8s ease-out infinite;
 }
-.masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag::before {
+.masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag::before,
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="soon"]::before {
   background: #fff;
   animation: onairPulse 1.6s ease-out infinite;
 }

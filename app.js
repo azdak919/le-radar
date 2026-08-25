@@ -3646,6 +3646,8 @@ const SPORTS_ARRIVE_MS = 640;
 const SPORTS_CTA_TAG = 'Sports';
 /** Pastille pendant un match en cours — le seul cas qui remplace la rubrique. */
 const SPORTS_CTA_TAG_LIVE = 'En cours';
+/** Coup d’envoi du jour, pas encore commencé — rouge pulse, pas le jaune Prochain. */
+const SPORTS_CTA_TAG_SOON = 'À venir';
 /** Prochain : deux lignes dans la pastille, pas un rail plus large. */
 const SPORTS_CTA_TAG_NEXT = 'Prochain match';
 /** Repli idle (creux total, pas de match) ; sinon ton du sport via sportsCtaTone. Rouge = direct. */
@@ -5160,14 +5162,14 @@ function sportsCtaGameIsToday(slide) {
 }
 
 /**
- * Pastille CTA : Aujourd’hui (match du jour ou résultat) / Prochain match
- * (dès demain) / En cours / Hier / date.
+ * Pastille CTA : À venir (coup d’envoi du jour) / Prochain match (dès demain)
+ * / En cours / Aujourd’hui (résultat) / Hier / date.
  * Creux : LE-RADAR.ca (logo PWA), pas « Sports ».
  */
 function sportsCtaTagLabel(slide, state) {
   const st = state || sportsCtaState(slide);
   if (st === 'live') return SPORTS_CTA_TAG_LIVE;
-  if (st === 'next') return sportsCtaGameIsToday(slide) ? 'Aujourd’hui' : SPORTS_CTA_TAG_NEXT;
+  if (st === 'next') return sportsCtaGameIsToday(slide) ? SPORTS_CTA_TAG_SOON : SPORTS_CTA_TAG_NEXT;
   if (st === 'result') return sportsCtaResultTag(slide?.ctaFrom || slide);
   return RADAR_BRAND_SHORT;
 }
@@ -5189,11 +5191,11 @@ function fillSportsCtaTagCopy(tag, wanted) {
   tag.append(document.createTextNode(wanted));
 }
 
-/** Couleur du voyant : live / today (rouge) · next (ambre) · past (vert). */
+/** Couleur du voyant : live / soon (rouge pulse) · today (rouge) · next (ambre) · past (vert). */
 function sportsCtaLamp(slide, state) {
   const st = state || sportsCtaState(slide);
   if (st === 'live') return 'live';
-  if (st === 'next') return 'next';
+  if (st === 'next') return sportsCtaGameIsToday(slide) ? 'soon' : 'next';
   if (st === 'result') {
     const src = slide?.ctaFrom || slide;
     const day = sportsSlideDayKey(src);
@@ -5893,12 +5895,14 @@ function applySportsCtaState(chip, slide) {
   if (!chip) return;
   const state = slide?.ctaState || sportsCtaState(slide);
   chip.dataset.ctaState = state;
+  const lamp = sportsCtaLamp(slide, state);
+  chip.dataset.ctaLamp = lamp;
   chip.style.setProperty('--sports-tone', sportsCtaTone({ ...slide, ctaState: state }));
 
   const tag = chip.querySelector('.sports-chip__cta-tag');
   if (!tag) return;
   const wanted = sportsCtaTagLabel(slide, state);
-  tag.dataset.ctaLamp = sportsCtaLamp(slide, state);
+  tag.dataset.ctaLamp = lamp;
   if (state === 'idle') {
     tag.classList.add('sports-chip__cta-tag--brand');
     markNoTranslate(tag);

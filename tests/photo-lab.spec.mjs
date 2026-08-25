@@ -141,7 +141,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(page.locator('#cta-band').getByText(/Réseau Académique/).first()).toBeVisible();
   await expect(page.locator('#cta-band').getByText('Scores collégiaux')).toHaveCount(0);
   const todayUpcoming = page.locator('#cta-band .case').filter({ hasText: 'dans 3 h' }).first();
-  await expect(todayUpcoming.locator('.sports-chip__cta-tag')).toHaveText(/Aujourd/i);
+  await expect(todayUpcoming.locator('.sports-chip__cta-tag')).toHaveText(/À\s*venir/i);
   await expect(todayUpcoming.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
   await expect(todayUpcoming.locator('.sports-chip__vs')).toHaveText(/reçoivent/i);
   const vsTone = await todayUpcoming.locator('.sports-chip__vs').evaluate((el) => {
@@ -153,7 +153,16 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   expect(vsTone.vs, 'verbe reçoit plus pâle que les noms').toBeLessThan(vsTone.name * 0.85);
   expect(Number(vsTone.weight), 'verbe reçoit : poids 500, pas 800').toBeLessThanOrEqual(500);
   const todayLamp = await todayUpcoming.locator('.sports-chip__cta-tag').evaluate((el) => el.dataset.ctaLamp);
-  expect(todayLamp, 'match dans 3 h : pastille jaune (à venir), pas rouge résultat').toBe('next');
+  expect(todayLamp, 'match du jour : À venir, pulse comme En cours').toBe('soon');
+  const soonPulse = await todayUpcoming.locator('.sports-chip--cta').evaluate((chip) => {
+    const tag = chip.querySelector('.sports-chip__cta-tag');
+    return {
+      chip: getComputedStyle(chip).animationName,
+      tag: getComputedStyle(tag).animationName,
+    };
+  });
+  expect(soonPulse.chip, 'carte À venir : halo rouge').toMatch(/sports-cta-ring-pulse/);
+  expect(soonPulse.tag, 'pastille À venir : pulse En cours').toMatch(/sports-cta-tag-pulse/);
   await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first()).toHaveText(/Prochain\s*match/i);
   await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first().locator(':scope > span')).toHaveCount(2);

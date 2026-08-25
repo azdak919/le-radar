@@ -124,9 +124,9 @@
   <script>
     const ctaCases = [
       {
-        title: 'CTA — aujourd’hui (à venir, reçoit)',
+        title: 'CTA — à venir (reçoit)',
         cta: {
-          state: 'next', tone: '#2e7d4f', tag: 'Aujourd’hui', glyph: '⚽',
+          state: 'next', tone: '#2e7d4f', tag: 'À venir', glyph: '⚽',
           text: '<span class="sports-chip__name">Patriotes de Saint-Hyacinthe</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Vanier College</span>',
           sub: 'dans 3 h · Soccer collégial masculin division 1',
         },
@@ -304,9 +304,9 @@
     function stripCta({ state, tone, tag, glyph, text, sub, badge, badgeMod, brand }) {
       const tagLabel = tag || 'Sports';
       const lamp = state === 'live' ? 'live'
-        : state === 'next' ? 'next'
+        : tagLabel === 'À venir' ? 'soon'
         : tagLabel === 'Aujourd’hui' ? 'today'
-        : (tagLabel === 'Prochain' || tagLabel === 'Prochain match') ? 'next'
+        : (state === 'next' || tagLabel === 'Prochain' || tagLabel === 'Prochain match') ? 'next'
         : state === 'result' ? 'past'
         : 'idle';
       const g = glyph ? `<span class="sports-chip__cta-glyph" aria-hidden="true">${glyph}</span>` : '';
@@ -329,7 +329,7 @@
         ? ' class="sports-chip__cta-sub-text notranslate" translate="no"'
         : ' class="sports-chip__cta-sub-text"';
       return `<div class="masthead-sports-strip" data-count="1" data-cta-pinned="0" data-ready="1">
-        <a class="sports-chip sports-chip--cta" data-cta-state="${state}" href="#lab" style="--sports-tone:${tone}">
+        <a class="sports-chip sports-chip--cta" data-cta-state="${state}" data-cta-lamp="${lamp}" href="#lab" style="--sports-tone:${tone}">
           <span class="sports-chip__cta-rail">
             <span class="sports-chip__cta-eyebrow sports-chip__cta-eyebrow--rail" hidden></span>
             <span class="${tagClass}" data-cta-tag="${tagLabel}" data-cta-lamp="${lamp}"${nt}>${tagInner}</span>
