@@ -264,6 +264,12 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(placeOffPodium.locator('.sports-chip__badge')).toHaveCount(0);
   await expect(page.locator('#cta-band .sports-chip__badge--place', { hasText: '🥇' }).first()).toBeVisible();
   await expect(page.locator('#cta-band').getByText('1er/12')).toBeVisible();
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'à venir (visiteur)' }).locator('.sports-chip__vs')).toHaveText(/^à$/);
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'hier (défaite)' }).locator('.sports-chip__badge')).toHaveText(/^D$/);
+  await expect(page.locator('#standard-chips .case').filter({ hasText: 'Puce — demain' }).locator('.sports-chip__sub-text')).toContainText(/^Demain/);
+  await expect(page.locator('#standard-chips .case').filter({ hasText: 'Puce — à venir (reçoit)' }).locator('.sports-chip__sub-text')).toContainText(/^À venir/);
+  await expect(page.locator('#standard-chips .sports-chip--match[data-sports-live="1"]')).toBeVisible();
+  await expect(page.locator('#standard-chips .sports-chip__badge--place')).toBeVisible();
   const labCopy = await page.locator('body').innerText();
   expect(labCopy, 'pas d’abréviation univ. — le marquee porte le mot entier').not.toMatch(/\buniv\./);
 

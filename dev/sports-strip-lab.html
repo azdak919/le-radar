@@ -117,7 +117,7 @@
   <header>
     <p><a class="hub" href="./">← Labo</a></p>
     <h1>Cartes sports</h1>
-    <p class="lede">Colonne mobile (390). Une carte à la fois. Pastille = Prochain match (2 lignes) / Hier / Aujourd’hui / date. Relatif en sous-ligne (il y a… / dans…).</p>
+    <p class="lede">Colonne mobile (390). CTA et puces : À venir (aujourd’hui) · Demain · Prochain match · En cours · Aujourd’hui / Hier (résultat). Verbe reçoit / à pâle. Voile : médaille 1–3, pas de V.</p>
     <p class="hint">Local seulement.</p>
   </header>
   <main id="col"></main>
@@ -129,6 +129,22 @@
           state: 'next', tone: '#2e7d4f', tag: 'À venir', glyph: '⚽',
           text: '<span class="sports-chip__name">Patriotes de Saint-Hyacinthe</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Vanier College</span>',
           sub: 'dans 3 h · Soccer collégial masculin division 1',
+        },
+      },
+      {
+        title: 'CTA — à venir (visiteur)',
+        cta: {
+          state: 'next', tone: '#2e7d4f', tag: 'À venir', glyph: '⚽',
+          text: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__vs">à</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
+          sub: '21 h 00 · Soccer universitaire féminin',
+        },
+      },
+      {
+        title: 'CTA — demain (reçoit)',
+        cta: {
+          state: 'next', tone: '#2e7d4f', tag: 'Demain', glyph: '🏈',
+          text: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Carabins</span>',
+          sub: '13 h 00 · Football universitaire',
         },
       },
       {
@@ -145,7 +161,25 @@
           state: 'result', tone: '#3d9a6a', tag: 'Hier', glyph: '🏈',
           badge: 'V', badgeMod: 'w',
           text: 'Carabins 24–21 Rouge et Or',
-          sub: 'il y a 18 h · Football universitaire',
+          sub: 'Football universitaire',
+        },
+      },
+      {
+        title: 'CTA — hier (défaite)',
+        cta: {
+          state: 'result', tone: '#c45c5c', tag: 'Hier', glyph: '🏒',
+          badge: 'D', badgeMod: 'l',
+          text: 'Bishop’s 2–5 McGill',
+          sub: 'Hockey universitaire',
+        },
+      },
+      {
+        title: 'CTA — hier (match nul)',
+        cta: {
+          state: 'result', tone: '#8fa3b0', tag: 'Hier', glyph: '⚽',
+          badge: 'N', badgeMod: 'd',
+          text: 'ULaval 1–1 UdeM',
+          sub: 'Soccer universitaire masculin',
         },
       },
       {
@@ -219,7 +253,23 @@
         },
       },
       {
-        title: 'CTA — hors saison',
+        title: 'CTA — en direct (visiteur)',
+        cta: {
+          state: 'live', tone: '#c8102e', tag: 'En cours', glyph: '⚽',
+          text: 'Patriotes 0–1 Vanier College',
+          sub: 'Soccer collégial · 1re période',
+        },
+      },
+      {
+        title: 'CTA — hors saison (reçoit)',
+        cta: {
+          state: 'next', tone: '#6a7580', tag: 'Prochain match', glyph: '🏈',
+          text: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Carabins</span>',
+          sub: 'dans 12 j · ven. 4 sept., 19 h 00 · Football universitaire',
+        },
+      },
+      {
+        title: 'CTA — hors saison (visiteur)',
         cta: {
           state: 'next', tone: '#6a7580', tag: 'Prochain match', glyph: '🏈',
           text: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__vs">à</span> <span class="sports-chip__name sports-chip__opp">Carabins</span>',
@@ -239,11 +289,43 @@
 
     const standardChips = [
       {
-        title: 'Puce — prochain (reçoit)',
+        title: 'Puce — à venir (reçoit)',
         html: () => matchChip({
           tone: '#2e7d4f', glyph: '⚽',
           inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__vs">reçoit</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
-          sub: 'aujourd’hui, 19 h 00 · Soccer universitaire masculin',
+          sub: 'À venir · 19 h 00 · Soccer universitaire masculin',
+        }),
+      },
+      {
+        title: 'Puce — à venir (visiteur)',
+        html: () => matchChip({
+          tone: '#2e7d4f', glyph: '⚽',
+          inner: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__vs">à</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
+          sub: 'À venir · 21 h 00 · Soccer universitaire féminin',
+        }),
+      },
+      {
+        title: 'Puce — demain',
+        html: () => matchChip({
+          tone: '#2e7d4f', glyph: '🏈',
+          inner: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Carabins</span>',
+          sub: 'Demain · 13 h 00 · Football universitaire',
+        }),
+      },
+      {
+        title: 'Puce — prochain match',
+        html: () => matchChip({
+          tone: '#6a7580', glyph: '🏀',
+          inner: '<span class="sports-chip__name">UdeM</span> <span class="sports-chip__vs">à</span> <span class="sports-chip__name sports-chip__opp">Laval</span>',
+          sub: 'ven. 4 sept. · 19 h 00 · Basketball universitaire',
+        }),
+      },
+      {
+        title: 'Puce — en cours',
+        html: () => matchChip({
+          tone: '#c8102e', glyph: '🏒', live: true,
+          inner: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__score">2–1</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
+          sub: '2e période · Hockey universitaire',
         }),
       },
       {
@@ -286,13 +368,30 @@
           sub: 'sam. 16 août · Volleyball universitaire',
         }),
       },
+      {
+        title: 'Puce — voile 7e',
+        html: () => matchChip({
+          tone: '#3d6fa8', glyph: '⛵',
+          inner: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__score">7e/12</span>',
+          sub: 'aujourd’hui · Voile universitaire',
+        }),
+      },
+      {
+        title: 'Puce — voile or',
+        html: () => matchChip({
+          tone: '#3d6fa8', glyph: '⛵', badge: '🥇', badgeMod: 'place',
+          inner: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__score">1er/12</span>',
+          sub: 'aujourd’hui · Voile universitaire',
+        }),
+      },
     ];
 
-    function matchChip({ tone, glyph, inner, sub, badge, badgeMod }) {
+    function matchChip({ tone, glyph, inner, sub, badge, badgeMod, live }) {
       const b = badge
         ? `<span class="sports-chip__badge sports-chip__badge--${badgeMod}" aria-hidden="true">${badge}</span>`
         : '';
-      return `<a class="sports-chip sports-chip--match" href="#lab" style="--sports-tone:${tone}">
+      const liveAttr = live ? ' data-sports-live="1"' : '';
+      return `<a class="sports-chip sports-chip--match"${liveAttr} href="#lab" style="--sports-tone:${tone}">
         <span class="sports-chip__glyph" aria-hidden="true">${glyph}</span>${b}
         <span class="sports-chip__body">
           <span class="sports-chip__line"><span class="sports-chip__line-inner">${inner}</span></span>
