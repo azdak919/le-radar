@@ -649,3 +649,17 @@ test('CTA pool : à venir → aujourd’hui → 5 j → hier ; pas le lointain',
   expect(iMid).toBeGreaterThan(0);
   expect(iY).toBeGreaterThan(iMid);
 });
+
+test('bandeau : nextGames entier, pas un seul match par équipe', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#masthead-sports-strip .sports-chip--cta')).toBeVisible({ timeout: 8000 });
+  const n = await page.evaluate(() => {
+    const nexts = (typeof sportsSlides !== 'undefined' ? sportsSlides : [])
+      .filter((s) => s && s.mode === 'next');
+    const teams = new Set(nexts.map((s) => s.team?.id).filter(Boolean));
+    return { nexts: nexts.length, teams: teams.size };
+  });
+  expect(n.teams, 'plusieurs équipes à venir').toBeGreaterThan(10);
+  expect(n.nexts, 'calendrier nextGames, pas seulement nextGame').toBeGreaterThan(n.teams);
+});

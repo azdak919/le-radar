@@ -3518,8 +3518,8 @@ const SPORTS_CTA_UPCOMING_MS = 14 * 24 * 3600 * 1000;
  * Un overflow dense (voile / place / événement) à 5,5 s se lisait en zapping.
  */
 const SPORTS_MATCH_SCROLL_ONE_WAY_MS = 8000;
-/** Plafond faces CTA. */
-const SPORTS_CTA_MAX_POOL = 16;
+/** Plafond faces CTA après dédup reçoit/chez — assez pour la fenêtre 5 j. */
+const SPORTS_CTA_MAX_POOL = 80;
 /** Prochains sur la CTA : demain → aujourd’hui + N jours civils (hors « À venir » du jour). */
 const SPORTS_CTA_NEXT_DAYS = 5;
 /*
@@ -3977,14 +3977,37 @@ function sportsEditorialRank(teamOrCode) {
 }
 
 /** Slide résultat passé pour une équipe (null si aucun lastGame). */
-function sportsResultSlide(team, now = Date.now()) {
-  if (!team?.lastGame) return null;
-  const u = sportsUrgency('result', team.lastGame, now);
+function sportsGameDedupeStamp(game = {}) {
+  return `${game.date || ''}|${game.time || ''}|${game.gameId || ''}|${game.opponentCode || game.opponent || ''}`;
+}
+
+function sportsResultSlideFromGame(team, game, now = Date.now()) {
+  if (!team || !game) return null;
+  const u = sportsUrgency('result', game, now);
+  const gid = game.gameId != null ? String(game.gameId) : '';
   return {
     mode: 'result',
     team,
-    game: team.lastGame,
-    key: `r:${team.id}:${team.lastGame.date}`,
+    game,
+    key: `r:${team.id}:${game.date}:${game.time || ''}:${gid}`,
+    urgency: u,
+  };
+}
+
+function sportsResultSlide(team, now = Date.now()) {
+  if (!team?.lastGame) return null;
+  return sportsResultSlideFromGame(team, team.lastGame, now);
+}
+
+function sportsNextSlideFromGame(team, game, now = Date.now()) {
+  if (!team || !game) return null;
+  const u = sportsUrgency('next', game, now);
+  const gid = game.gameId != null ? String(game.gameId) : '';
+  return {
+    mode: 'next',
+    team,
+    game,
+    key: `n:${team.id}:${game.date}:${game.time || ''}:${gid}`,
     urgency: u,
   };
 }
@@ -3992,14 +4015,7 @@ function sportsResultSlide(team, now = Date.now()) {
 /** Slide match à venir pour une équipe (null si aucun nextGame). */
 function sportsNextSlide(team, now = Date.now()) {
   if (!team?.nextGame) return null;
-  const u = sportsUrgency('next', team.nextGame, now);
-  return {
-    mode: 'next',
-    team,
-    game: team.nextGame,
-    key: `n:${team.id}:${team.nextGame.date}`,
-    urgency: u,
-  };
+  return sportsNextSlideFromGame(team, team.nextGame, now);
 }
 
 /**
@@ -4436,10 +4452,28 @@ function buildSportsSlides(data) {
   const results = [];
   const nexts = [];
   for (const team of eligible) {
-    const r = sportsResultSlide(team, now);
-    if (r) results.push(r);
-    const n = sportsNextSlide(team, now);
-    if (n) nexts.push(n);
+    const seenR = new Set();
+    const resultGames = [];
+    if (team.lastGame) resultGames.push(team.lastGame);
+    for (const g of team.results || []) resultGames.push(g);
+    for (const g of resultGames) {
+      const stamp = sportsGameDedupeStamp(g);
+      if (seenR.has(stamp)) continue;
+      seenR.add(stamp);
+      const r = sportsResultSlideFromGame(team, g, now);
+      if (r) results.push(r);
+    }
+    const seenN = new Set();
+    const nextGames = (Array.isArray(team.nextGames) && team.nextGames.length)
+      ? team.nextGames
+      : (team.nextGame ? [team.nextGame] : []);
+    for (const g of nextGames) {
+      const stamp = sportsGameDedupeStamp(g);
+      if (seenN.has(stamp)) continue;
+      seenN.add(stamp);
+      const n = sportsNextSlideFromGame(team, g, now);
+      if (n) nexts.push(n);
+    }
   }
 
   // Résultats : plus récents d’abord (fraîcheur d’affichage).
