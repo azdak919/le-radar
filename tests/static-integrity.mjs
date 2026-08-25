@@ -1133,6 +1133,12 @@ assert(sportsHub.includes('class="sports-panel"'), 'sports : panneaux d’équip
 assert(sportsHub.includes('sports-board.js'), 'sports : script de filtres requis');
 assert(sportsHub.includes('À venir'), 'sports : lignes prochain match requises');
 assert(
+  readFileSync(join(root, 'scripts/seo-pages.js'), 'utf8').includes('function sportsPlaceOrdinal')
+    && readFileSync(join(root, 'scripts/seo-pages.js'), 'utf8').includes('function sportsDayWord')
+    && readFileSync(join(root, 'seo-pages.css'), 'utf8').includes('.sports-result--place'),
+  'sports page : place 1er/médailles + jour civil Aujourd’hui/Hier/Demain',
+);
+assert(
   /sports-board-meta[\s\S]*?<time[^>]+datetime="\d{4}-\d{2}-\d{2}T/.test(sportsHub),
   'sports : horodatage exact (date + heure) requis dans la méta',
 );
