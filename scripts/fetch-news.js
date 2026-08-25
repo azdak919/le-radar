@@ -1164,11 +1164,12 @@ async function main() {
     .map(([name]) => name);
 
   const runDate = new Date();
+  const isManual = process.env.GITHUB_EVENT_NAME === 'workflow_dispatch';
   const news = {
     updated: runDate.toISOString(),
     // Créneau affiché (ex. 16 h) même si le cron a part 35 min plus tôt.
-    // Hors fenêtre (filet :20, manuel) : null → l'UI montre l'heure réelle.
-    updatedSlot: scheduledSlotFor(runDate),
+    // Hors fenêtre (filet :20) ou passe manuelle : null → l'UI montre l'heure réelle.
+    updatedSlot: isManual ? null : scheduledSlotFor(runDate),
     count: prunedAll.length,
     freshnessSessions: 3,
     sources: sourceRuns,

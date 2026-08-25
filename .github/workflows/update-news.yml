@@ -15,11 +15,11 @@ on:
     - cron: '20 * * * *'
   workflow_dispatch:   # Allow manual trigger
 
-# Un seul job à la fois ; annuler le précédent s'il est encore en train de
-# tourner (évite les files de 40 min bloquées sur un fetch qui ne finit pas).
+# Un seul job cron à la fois. Une passe *manuelle* a son propre groupe :
+# le filet :20 ne doit pas l’annuler (sinon le tampon prod ne bouge pas).
 concurrency:
-  group: update-news-${{ github.ref }}
-  cancel-in-progress: true
+  group: update-news-${{ github.event_name == 'workflow_dispatch' && 'manual' || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
 
 jobs:
   aggregate:
@@ -143,6 +143,13 @@ jobs:
         id: check
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
         run: |
+          # Passe manuelle : toujours publier pour que le tampon « mis à jour »
+          # de le-radar.ca avance, même sans nouvel article.
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Manual dispatch — always publish so the live stamp moves."
+            exit 0
+          fi
           FILES=(news.json news-archive.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml news-sources.json assets/news-images)
           if ! git diff --quiet \
             -I '^[[:space:]]*"updated(Slot|At)?"[[:space:]]*:' \
