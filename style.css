@@ -933,6 +933,12 @@ body {
     column-gap: 8px;
     row-gap: 2px;
     min-width: 0;
+    overflow: hidden;
+  }
+  /* Le badge V/D/N est le chrome des puces scores. Dans la CTA mobile il
+     recopie une carte match à droite de la pastille. */
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-head .sports-chip__badge {
+    display: none;
   }
   .masthead-sports-strip .sports-chip--cta .sports-chip__cta-rail {
     display: flex;

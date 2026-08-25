@@ -6830,6 +6830,48 @@ function clearSportsSlotTimers() {
  * Wide multi-CTA : chaque CTA cycle sans reprendre le match d’une voisine.
  * 1 chip : CTA seule.
  */
+/** 390/430 : CTA pleine largeur — retouche sur place, pas un swap de carte. */
+function sportsCtaInPlaceViewport() {
+  try {
+    return window.matchMedia('(max-width: 430.98px)').matches;
+  } catch {
+    return false;
+  }
+}
+
+function retouchSportsCtaChip(chip, slide) {
+  if (!chip || !slide) return;
+  if (slide.ctaIdle) {
+    chip.href = radarHomeHref();
+    chip.removeAttribute('target');
+    chip.removeAttribute('rel');
+  } else {
+    chip.href = sportsBoardHref(slide);
+    markSportsBoardLink(chip);
+  }
+  chip.dataset.sportsKey = slide.key || SPORTS_CTA_KEY;
+  chip.dataset.sportsMode = 'cta';
+  chip.dataset.sportsSport = 'board';
+  if (slide.labelIndex != null) chip.dataset.ctaLabelIndex = String(slide.labelIndex);
+  else delete chip.dataset.ctaLabelIndex;
+  const { title, aria } = sportsCtaA11y(slide);
+  chip.title = title;
+  chip.setAttribute('aria-label', aria);
+  applySportsCtaState(chip, slide);
+  const layer = sportsCtaActiveLabel(chip);
+  if (layer) {
+    layer.classList.remove('is-rolling-in', 'is-rolling-out');
+    layer.classList.add('is-front');
+    layer.removeAttribute('aria-hidden');
+    fillSportsCtaLayer(layer, slide);
+    layer.dataset.ctaSig = sportsCtaSignature(slide);
+  }
+  chip.querySelectorAll('.sports-chip__cta-label:not(.is-front)').forEach((el) => el.remove());
+  chip.classList.remove('is-overflowing', 'is-sub-overflowing');
+  chip.style.removeProperty('--sports-scroll');
+  chip.style.removeProperty('--sports-scroll-sub');
+}
+
 function rotateSportsSlot(slot) {
   if (!MASTHEAD_SPORTS_STRIP || sportsVisible.length < 1 || sportsSlides.length < 1) return;
   const n = sportsVisible.length;
@@ -6929,7 +6971,26 @@ function rotateSportsSlot(slot) {
   const chips = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip');
   const oldChip = chips[slot];
 
-  // Scores, prochains et CTA : sortie carte entière → entrée carte entière.
+  // 390/430 : CTA seule, pleine largeur. Un leave/arrive type puce score
+  // fait glisser une 2ᵉ carte (glyphe + V/D/N) par-dessus la pastille.
+  if (
+    isCtaSlot
+    && replacement.mode === 'cta'
+    && oldChip?.classList.contains('sports-chip--cta')
+    && sportsCtaInPlaceViewport()
+  ) {
+    if (oldChip._leaveTimer) {
+      clearTimeout(oldChip._leaveTimer);
+      oldChip._leaveTimer = null;
+    }
+    oldChip.classList.remove('is-leaving', 'is-arriving');
+    oldChip.style.removeProperty('pointer-events');
+    retouchSportsCtaChip(oldChip, replacement);
+    window.requestAnimationFrame(() => refreshSportsChipScroll(oldChip));
+    return 80;
+  }
+
+  // Scores, prochains et CTA bureau : sortie carte entière → entrée carte entière.
   const newChip = paintSportsChip(replacement, !sportsReducedMotion);
   if (!oldChip) {
     MASTHEAD_SPORTS_STRIP.append(newChip);
