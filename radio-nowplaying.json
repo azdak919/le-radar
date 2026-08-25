@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-25T06:59:51.412Z",
+  "updatedAt": "2026-08-25T07:09:58.738Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,17 +21,24 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T06:59:24.699Z"
+      "checkedAt": "2026-08-25T07:09:34.768Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
+        "title": "À l'horizon",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/a-lhorizon"
+      },
+      "next": {
+        "title": "Le Séismix",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "next": {
         "title": "À l'horizon",
@@ -41,23 +48,29 @@
         "url": "https://cism893.ca/emissions/a-lhorizon"
       },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "À l'horizon",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T06:59:26.616Z"
+      "checkedAt": "2026-08-25T07:09:37.143Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Pirate et Libres",
+        "title": "Attik / Show For Children",
         "source": "api-live",
-        "start": "02:00",
-        "end": "03:00"
+        "start": "03:00",
+        "end": "05:00"
+      },
+      "next": {
+        "title": "The Beat Power Hour",
+        "source": "api-live",
+        "start": "05:00",
+        "end": "07:00"
       },
       "next": {
         "title": "Attik / Show For Children",
@@ -66,7 +79,7 @@
         "end": "05:00"
       },
       "track": "",
-      "showTitle": "Pirate et Libres",
+      "showTitle": "Attik / Show For Children",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +87,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T06:59:29.088Z"
+      "checkedAt": "2026-08-25T07:09:40.244Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +114,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T06:59:43.553Z"
+      "checkedAt": "2026-08-25T07:09:54.605Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +139,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T06:59:44.572Z"
+      "checkedAt": "2026-08-25T07:09:55.142Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +152,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Pure Wrath - Haven of Echoes",
+      "track": "Spell - Unquiet Graves",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +163,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-25T06:59:51.061Z"
+      "checkedAt": "2026-08-25T07:09:58.387Z"
     }
   }
 }
