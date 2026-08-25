@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-08-25T22:23:19.954Z",
+  "updatedAt": "2026-08-25T22:54:53.693Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
-      "next": {
         "title": "Capitales de Québec",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "18:50",
         "end": "23:00",
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
+      "next": {
+        "title": "Mercredi Bonbon",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mercredi-bonbon/"
+      },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "Capitales de Québec",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T22:22:52.405Z"
+      "checkedAt": "2026-08-25T22:54:16.982Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T22:22:54.373Z"
+      "checkedAt": "2026-08-25T22:54:18.945Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T22:22:58.678Z"
+      "checkedAt": "2026-08-25T22:54:21.286Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,32 +108,32 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T22:23:12.361Z"
+      "checkedAt": "2026-08-25T22:54:35.261Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "18:30"
-      },
-      "next": {
         "title": "L'Aut'Rock",
         "source": "schedule-live",
         "start": "18:30",
         "end": "20:00"
       },
+      "next": {
+        "title": "Dichotomie 88.3",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "L'Aut'Rock",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T22:23:13.332Z"
+      "checkedAt": "2026-08-25T22:54:36.050Z"
     },
     "choq": {
       "id": "choq",
@@ -152,7 +152,7 @@
         "end": "20:30",
         "url": "https://www.choq.ca/emissions/les-amazones"
       },
-      "track": "Grace Ives - Stupid Bitches",
+      "track": "Sarahmée — RATATA",
       "showTitle": "Le Studio",
       "host": "",
       "source": "api-live",
@@ -164,7 +164,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-25T22:23:19.604Z"
+      "checkedAt": "2026-08-25T22:54:53.343Z"
     }
   }
 }
