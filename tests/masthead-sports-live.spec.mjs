@@ -361,6 +361,14 @@ test('CTA : sans direct, le cycle reprend (résultat hier)', async ({ page }) =>
   await expect(cta).not.toHaveAttribute('data-cta-state', 'live');
   const tag = await cta.locator('.sports-chip__cta-tag').innerText();
   expect(tag).toMatch(/hier|aujourd/i);
+  if (/hier/i.test(tag)) {
+    const [r, g] = await cta.locator('.sports-chip__cta-tag').evaluate((el) => {
+      const m = (getComputedStyle(el).backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+      return m;
+    });
+    expect(g, 'Hier : pastille pourpre, pas verte').toBeLessThan(70);
+    expect(r - g, 'Hier : pastille pourpre (R>G)').toBeGreaterThan(40);
+  }
   const text = await cta.locator('.sports-chip__cta-text').innerText();
   expect(text).toMatch(/Saint-Hyacinthe|Concordia/);
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();

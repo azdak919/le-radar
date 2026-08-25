@@ -220,14 +220,15 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   });
   expect(ar, 'Aujourd’hui résultat : voyant pâle sur fill rouge').toBeGreaterThan(200);
   expect(pr - pg, 'Prochain : voyant ambre, pas rouge').toBeLessThan(80);
-  expect(hg - hr, 'Hier : voyant vert').toBeGreaterThan(20);
+  expect(hr, 'Hier : voyant lilas pâle').toBeGreaterThan(200);
+  expect(hg - hr, 'Hier : voyant pas vert').toBeLessThan(0);
   const pillRgb = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => {
     const m = (getComputedStyle(el).backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
     return m;
   });
   const pillWidth = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => el.getBoundingClientRect().width);
   const [ppr, ppg, ppb] = await pillRgb('Prochain match');
-  const [phr, phg] = await pillRgb('Hier');
+  const [phr, phg, phb] = await pillRgb('Hier');
   const [par, pag] = await page.locator('.sports-chip__cta-tag[data-cta-lamp="today"]').first().evaluate((el) => {
     const m = (getComputedStyle(el).backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
     return m;
@@ -236,7 +237,10 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   expect(ppr, 'Prochain : pastille jaune').toBeGreaterThan(200);
   expect(ppg, 'Prochain : pastille jaune').toBeGreaterThan(180);
   expect(ppb, 'Prochain : pastille jaune (pas crème)').toBeLessThan(80);
-  expect(phg - phr, 'Hier : pastille verte').toBeGreaterThan(40);
+  expect(phr, 'Hier : pastille pourpre (R)').toBeGreaterThan(80);
+  expect(phg, 'Hier : pastille pourpre, pas verte').toBeLessThan(70);
+  expect(phb, 'Hier : pastille pourpre (B)').toBeGreaterThan(70);
+  expect(phr - phg, 'Hier : pastille pourpre (R>G)').toBeGreaterThan(40);
   expect(par - pag, 'Aujourd’hui résultat : pastille rouge saturée').toBeGreaterThan(80);
   expect(elr - elg, 'En cours : pastille rouge inchangée').toBeGreaterThan(80);
   const pillFit = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => {

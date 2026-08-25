@@ -1345,13 +1345,15 @@ assert(
     && /\.sports-chip__cta-tag::before/.test(cssFlat)
     && /onairPulse/.test(styleCss)
     && /sports-cta-dot-upcoming/.test(styleCss)
-    && /sports-cta-dot-past/.test(styleCss)
+    && !/sports-cta-dot-past/.test(styleCss)
     && /data-cta-lamp="past"/.test(styleCss)
+    && /--lamp-past:\s*#6c2163/.test(styleCss)
     && appJs.includes('function sportsCtaLamp'),
-  'style : voyant CTA ambre Prochain, rouge Aujourd’hui, vert passé',
+  'style : voyant CTA ambre Prochain, rouge Aujourd’hui, pourpre passé (pas de pulse vert)',
 );
 assert(
-  /data-cta-lamp="past"[^{]*\{[^}]*background:\s*#3d9a6a/.test(cssFlat)
+  /data-cta-lamp="past"[^{]*\{[^}]*background:\s*var\(--lamp-past\)/.test(cssFlat)
+    && /data-cta-lamp="past"\]::before[^{]*\{[^}]*animation:\s*none/.test(cssFlat)
     && /data-cta-lamp="today"[^{]*\{[^}]*background:\s*#c8102e/.test(cssFlat)
     && /data-cta-lamp="next"[^{]*\{[^}]*background:\s*#f5d000/.test(cssFlat)
     && /cta-tag:not\(\.sports-chip__cta-tag--brand\)[^{]*\{[^}]*width:\s*max-content/.test(cssFlat)
