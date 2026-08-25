@@ -24,7 +24,6 @@
   --accent-dark: #4f1749;
   --lamp-past: #6c2163;    /* Hier / Avant-hier / date — focus-group C */
   --lamp-past-ink: #fff;
-  --lamp-past-dot: #f0d4ec;
   --live: #c8102e;         /* rouge « en direct » — bouton play, pastille solide */
   --live-dark: #9c0c24;
   /* Statuts d’antenne — partagés barre radio + grilles SEO (même teinte). */
@@ -612,8 +611,8 @@ body {
   align-self: center;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 2px 7px 2px 6px;
+  gap: 0;
+  padding: 2px 8px;
   border-radius: 3px;
   /* Légère teinte pourpre de marque — plus de pastille gris-blanc fade. */
   background: color-mix(in srgb, var(--accent, #6c2163) 42%, rgba(255, 255, 255, 0.14));
@@ -674,16 +673,6 @@ body {
   font-weight: 900;
   box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.55);
   animation: sports-cta-tag-pulse 2.6s ease-in-out infinite;
-}
-/* Point live — rendu par app.js uniquement pendant un match en cours. */
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-live {
-  flex: 0 0 auto;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
-  animation: sports-cta-live-dot 1.4s ease-out infinite;
 }
 /*
  * Stack 2 couches pour le roulement vertical (focus-group le-radar-cta-sports-motion).
@@ -852,40 +841,18 @@ body {
   animation: none !important;
   transform: none;
 }
-/* Plus de flèche : la place va au texte.
- * Pastille : jaune Prochain ; rouge Aujourd’hui (statique) ; pourpre Hier / date.
- * En cours : fill rouge + pulse. Indépendant de la radio. */
+/* Plus de flèche ni de voyant LED dans la pastille : la couleur du fill suffit.
+ * Jaune Prochain ; rouge Aujourd’hui (statique) ; pourpre Hier / date.
+ * En cours / À venir : fill rouge + pulse. Indépendant de la radio. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-chev {
   display: none !important;
 }
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag::before {
-  content: "";
-  flex: 0 0 auto;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--status-upcoming-soft, #e8c07a);
-  animation: sports-cta-dot-upcoming 1.8s ease-out infinite;
-}
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="next"]::before,
-.masthead-sports-strip .sports-chip--cta[data-cta-state="next"] .sports-chip__cta-tag:not([data-cta-lamp="soon"])::before {
-  background: #fff8c2;
-  box-shadow: 0 0 0 1px rgba(26, 21, 0, 0.22);
-}
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="today"]::before {
-  background: #ffd0d4;
-  box-shadow: 0 0 0 1px rgba(40, 0, 8, 0.28);
-  animation: onairPulse 1.6s ease-out infinite;
-}
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="past"]::before {
-  background: var(--lamp-past-dot);
-  box-shadow: 0 0 0 1px rgba(80, 20, 70, 0.28);
-  animation: none;
-}
-.masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag::before,
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="soon"]::before {
-  background: #fff;
-  animation: onairPulse 1.6s ease-out infinite;
+  content: none !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  animation: none !important;
 }
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag--brand {
   background: rgba(255, 255, 255, 0.12);
@@ -893,19 +860,10 @@ body {
   padding: 3px;
   gap: 0;
 }
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag--brand::before {
-  display: none !important;
-  content: none !important;
-  animation: none !important;
-}
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-logo {
   width: 18px;
   height: 18px;
   display: block;
-}
-@keyframes sports-cta-dot-upcoming {
-  0% { box-shadow: 0 0 0 0 rgba(232, 192, 122, 0.5); }
-  100% { box-shadow: 0 0 0 7px rgba(232, 192, 122, 0); }
 }
 /* Halo / bordure seulement — la carte ne grossit pas. */
 @keyframes sports-cta-ring-pulse {
@@ -936,14 +894,9 @@ body {
     filter: brightness(1.12);
   }
 }
-@keyframes sports-cta-live-dot {
-  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.65); opacity: 1; }
-  70% { box-shadow: 0 0 0 5px rgba(255, 255, 255, 0); opacity: 0.85; }
-  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); opacity: 1; }
-}
 /*
  * Mouvement réduit : la rotation est déjà coupée côté JS (sportsCtaMayRotate),
- * ici on neutralise tout ce qui bouge encore — halo, pastille, point, roulement.
+ * ici on neutralise tout ce qui bouge encore — halo, pastille, roulement.
  * Garde-fou `reduced-motion-fige` (focus-group le-radar-cta-sports-rhythm).
  */
 @media (prefers-reduced-motion: reduce) {
@@ -951,8 +904,6 @@ body {
   .masthead-sports-strip .sports-chip--cta[data-cta-state="live"],
   .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag,
   .masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag,
-  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-live,
-  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag::before,
   .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label,
   .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-rolling-in,
   .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-rolling-out,
