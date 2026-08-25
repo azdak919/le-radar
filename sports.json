@@ -1,14 +1,14 @@
 {
-  "updated": "2026-08-25T11:51:19.696Z",
-  "fetchedAt": "2026-08-25T11:51:19.696Z",
+  "updated": "2026-08-25T16:53:31.084Z",
+  "fetchedAt": "2026-08-25T16:53:31.084Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-25T11:51:19.697Z"
+    "referenceDate": "2026-08-25T16:53:31.084Z"
   },
   "registry": "sports-teams.json",
-  "registryMatched": 790,
+  "registryMatched": 789,
   "leagueCatalog": 109,
   "leaguesWithTeams": 100,
   "leaguesOk": 109,
@@ -73,7 +73,7 @@
     "ultimate",
     "volleyball"
   ],
-  "teamCount": 810,
+  "teamCount": 809,
   "errors": [
     {
       "leagueId": "spordle-collegial",
@@ -53287,19 +53287,6 @@
           "opponentRegistryId": "thetford"
         },
         {
-          "date": "2026-09-03",
-          "time": "19:00",
-          "opponent": "Jonquière",
-          "opponentCode": "JON",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "53b4b98b-1123-41f5-b488-41014f04d683",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=53b4b98b-1123-41f5-b488-41014f04d683",
-          "opponentFullName": "Cégep de Jonquière",
-          "opponentRegistryId": "jonquiere"
-        },
-        {
           "date": "2026-09-12",
           "time": "14:00",
           "opponent": "Champlain St-Lawrence",
@@ -53337,19 +53324,6 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=095ea97e-5c0a-4362-8b6f-862cedd70558",
           "opponentFullName": "Cégep de Thetford",
           "opponentRegistryId": "thetford"
-        },
-        {
-          "date": "2026-10-07",
-          "time": "19:00",
-          "opponent": "Jonquière",
-          "opponentCode": "JON",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "4420b0ff-8b04-42ba-9a98-77306ef96e05",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4420b0ff-8b04-42ba-9a98-77306ef96e05",
-          "opponentFullName": "Cégep de Jonquière",
-          "opponentRegistryId": "jonquiere"
         },
         {
           "date": "2026-10-09",
@@ -53434,19 +53408,6 @@
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
-          "date": "2026-09-12",
-          "time": "13:00",
-          "opponent": "Jonquière",
-          "opponentCode": "JON",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "feb82f0e-f9d0-4122-ac71-38d06d46b9d4",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=feb82f0e-f9d0-4122-ac71-38d06d46b9d4",
-          "opponentFullName": "Cégep de Jonquière",
-          "opponentRegistryId": "jonquiere"
-        },
-        {
           "date": "2026-09-19",
           "time": "14:00",
           "opponent": "Thetford",
@@ -53471,19 +53432,6 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=93578621-b508-42f4-beb3-4e1f4896589b",
           "opponentFullName": "Cégep de Alma",
           "opponentRegistryId": "alma"
-        },
-        {
-          "date": "2026-09-27",
-          "time": "16:00",
-          "opponent": "Jonquière",
-          "opponentCode": "JON",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "7b9d4f29-aa20-4cde-a7ce-9c879a5d49c9",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7b9d4f29-aa20-4cde-a7ce-9c879a5d49c9",
-          "opponentFullName": "Cégep de Jonquière",
-          "opponentRegistryId": "jonquiere"
         },
         {
           "date": "2026-10-03",
@@ -53594,19 +53542,6 @@
           "opponentRegistryId": "alma"
         },
         {
-          "date": "2026-09-19",
-          "time": "13:00",
-          "opponent": "Jonquière",
-          "opponentCode": "JON",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "bddd1f02-c8f7-49ee-93e3-e37b0789dc2a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bddd1f02-c8f7-49ee-93e3-e37b0789dc2a",
-          "opponentFullName": "Cégep de Jonquière",
-          "opponentRegistryId": "jonquiere"
-        },
-        {
           "date": "2026-09-27",
           "time": "12:00",
           "opponent": "Thetford",
@@ -53644,19 +53579,6 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e8bc6d04-4ac3-4207-b5d3-c35634833b39",
           "opponentFullName": "Cégep de Alma",
           "opponentRegistryId": "alma"
-        },
-        {
-          "date": "2026-10-11",
-          "time": "14:00",
-          "opponent": "Jonquière",
-          "opponentCode": "JON",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "b8289023-693f-4bc6-9202-caa6b7551e90",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b8289023-693f-4bc6-9202-caa6b7551e90",
-          "opponentFullName": "Cégep de Jonquière",
-          "opponentRegistryId": "jonquiere"
         },
         {
           "date": "2026-10-17",
@@ -53698,153 +53620,6 @@
       "fullName": "Champlain College St. Lawrence",
       "registryId": "ch-st-lawrence"
     },
-    "collegial:soccer:09897279-c580-4cad-a924-1831c67ce2c1:ad6b3368-7dbf-4163-a90e-8fb7d2026546": {
-      "id": "collegial:soccer:09897279-c580-4cad-a924-1831c67ce2c1:ad6b3368-7dbf-4163-a90e-8fb7d2026546",
-      "rseqTeamId": "ad6b3368-7dbf-4163-a90e-8fb7d2026546",
-      "leagueId": "09897279-c580-4cad-a924-1831c67ce2c1",
-      "name": "Jonquière",
-      "code": "JON",
-      "sector": "collegial",
-      "sport": "soccer",
-      "sportLabel": "Soccer",
-      "sex": "F",
-      "division": "D2",
-      "usports": false,
-      "leagueLabel": "Soccer collégial féminin D2",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-03",
-          "time": "19:00",
-          "opponent": "Alma",
-          "opponentCode": "ALM",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "53b4b98b-1123-41f5-b488-41014f04d683",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=53b4b98b-1123-41f5-b488-41014f04d683",
-          "opponentFullName": "Cégep de Alma",
-          "opponentRegistryId": "alma"
-        },
-        {
-          "date": "2026-09-06",
-          "time": "14:00",
-          "opponent": "Thetford",
-          "opponentCode": "THE",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "0eba663d-082b-485b-a564-ac799b1aa555",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0eba663d-082b-485b-a564-ac799b1aa555",
-          "opponentFullName": "Cégep de Thetford",
-          "opponentRegistryId": "thetford"
-        },
-        {
-          "date": "2026-09-12",
-          "time": "13:00",
-          "opponent": "Beauce-Appalaches",
-          "opponentCode": "BAP",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "feb82f0e-f9d0-4122-ac71-38d06d46b9d4",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=feb82f0e-f9d0-4122-ac71-38d06d46b9d4",
-          "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches"
-        },
-        {
-          "date": "2026-09-19",
-          "time": "13:00",
-          "opponent": "Champlain St-Lawrence",
-          "opponentCode": "SLC",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "bddd1f02-c8f7-49ee-93e3-e37b0789dc2a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bddd1f02-c8f7-49ee-93e3-e37b0789dc2a",
-          "opponentFullName": "Champlain College St. Lawrence",
-          "opponentRegistryId": "ch-st-lawrence"
-        },
-        {
-          "date": "2026-09-27",
-          "time": "16:00",
-          "opponent": "Beauce-Appalaches",
-          "opponentCode": "BAP",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "7b9d4f29-aa20-4cde-a7ce-9c879a5d49c9",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7b9d4f29-aa20-4cde-a7ce-9c879a5d49c9",
-          "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches"
-        },
-        {
-          "date": "2026-10-07",
-          "time": "19:00",
-          "opponent": "Alma",
-          "opponentCode": "ALM",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "4420b0ff-8b04-42ba-9a98-77306ef96e05",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4420b0ff-8b04-42ba-9a98-77306ef96e05",
-          "opponentFullName": "Cégep de Alma",
-          "opponentRegistryId": "alma"
-        },
-        {
-          "date": "2026-10-11",
-          "time": "14:00",
-          "opponent": "Champlain St-Lawrence",
-          "opponentCode": "SLC",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "b8289023-693f-4bc6-9202-caa6b7551e90",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b8289023-693f-4bc6-9202-caa6b7551e90",
-          "opponentFullName": "Champlain College St. Lawrence",
-          "opponentRegistryId": "ch-st-lawrence"
-        },
-        {
-          "date": "2026-10-18",
-          "time": "12:00",
-          "opponent": "Thetford",
-          "opponentCode": "THE",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "50d0be8a-6e69-4e1a-8f95-b7d8730a63d8",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=50d0be8a-6e69-4e1a-8f95-b7d8730a63d8",
-          "opponentFullName": "Cégep de Thetford",
-          "opponentRegistryId": "thetford"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-03",
-        "time": "19:00",
-        "opponent": "Alma",
-        "opponentCode": "ALM",
-        "home": false,
-        "sport": "soccer",
-        "competition": "Soccer collégial féminin D2",
-        "gameId": "53b4b98b-1123-41f5-b488-41014f04d683",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=53b4b98b-1123-41f5-b488-41014f04d683",
-        "opponentFullName": "Cégep de Alma",
-        "opponentRegistryId": "alma",
-        "opponentSector": "collegial"
-      },
-      "record": {
-        "wins": 0,
-        "losses": 0,
-        "draws": 0,
-        "played": 0,
-        "label": "0-0"
-      },
-      "source": "rseq-s1",
-      "priority": 29,
-      "fullName": "Cégep de Jonquière",
-      "registryId": "jonquiere"
-    },
     "collegial:soccer:09897279-c580-4cad-a924-1831c67ce2c1:350f1a0d-40bc-4a8c-ae43-3ad07695a8b4": {
       "id": "collegial:soccer:09897279-c580-4cad-a924-1831c67ce2c1:350f1a0d-40bc-4a8c-ae43-3ad07695a8b4",
       "rseqTeamId": "350f1a0d-40bc-4a8c-ae43-3ad07695a8b4",
@@ -53873,19 +53648,6 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=35a79885-e753-4bdf-bd59-0924f365ceaa",
           "opponentFullName": "Cégep de Alma",
           "opponentRegistryId": "alma"
-        },
-        {
-          "date": "2026-09-06",
-          "time": "14:00",
-          "opponent": "Jonquière",
-          "opponentCode": "JON",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "0eba663d-082b-485b-a564-ac799b1aa555",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0eba663d-082b-485b-a564-ac799b1aa555",
-          "opponentFullName": "Cégep de Jonquière",
-          "opponentRegistryId": "jonquiere"
         },
         {
           "date": "2026-09-19",
@@ -53951,19 +53713,6 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7b0c2efc-ad8b-4b3c-89ca-41d494cb96b4",
           "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
-        },
-        {
-          "date": "2026-10-18",
-          "time": "12:00",
-          "opponent": "Jonquière",
-          "opponentCode": "JON",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "50d0be8a-6e69-4e1a-8f95-b7d8730a63d8",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=50d0be8a-6e69-4e1a-8f95-b7d8730a63d8",
-          "opponentFullName": "Cégep de Jonquière",
-          "opponentRegistryId": "jonquiere"
         }
       ],
       "nextGame": {
@@ -82757,7 +82506,7 @@
         },
         {
           "date": "2026-12-06",
-          "time": "10:15",
+          "time": "12:45",
           "opponent": "Victoriaville",
           "opponentCode": "VIC",
           "home": false,
@@ -82945,6 +82694,19 @@
         {
           "date": "2026-12-06",
           "time": "10:15",
+          "opponent": "Sorel-Tracy",
+          "opponentCode": "ST",
+          "home": true,
+          "sport": "volleyball",
+          "competition": "Volleyball collégial masculin D2",
+          "gameId": "2a3a381e-ad57-4002-9419-f9a4dbc2416a",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2a3a381e-ad57-4002-9419-f9a4dbc2416a",
+          "opponentFullName": "Cégep de Sorel-Tracy",
+          "opponentRegistryId": "sorel-tracy"
+        },
+        {
+          "date": "2026-12-06",
+          "time": "11:30",
           "opponent": "Cégep Trois-Rivières",
           "opponentCode": "TRV",
           "home": false,
@@ -82955,19 +82717,6 @@
           "opponentFullName": "Cégep de Trois-Rivières",
           "opponentNickname": "Diablos",
           "opponentRegistryId": "trois-rivieres"
-        },
-        {
-          "date": "2026-12-06",
-          "time": "11:30",
-          "opponent": "Sorel-Tracy",
-          "opponentCode": "ST",
-          "home": true,
-          "sport": "volleyball",
-          "competition": "Volleyball collégial masculin D2",
-          "gameId": "2a3a381e-ad57-4002-9419-f9a4dbc2416a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2a3a381e-ad57-4002-9419-f9a4dbc2416a",
-          "opponentFullName": "Cégep de Sorel-Tracy",
-          "opponentRegistryId": "sorel-tracy"
         }
       ],
       "nextGame": {
@@ -83145,7 +82894,7 @@
         },
         {
           "date": "2026-12-06",
-          "time": "9:00",
+          "time": "10:15",
           "opponent": "Victoriaville",
           "opponentCode": "VIC",
           "home": true,
@@ -83158,7 +82907,7 @@
         },
         {
           "date": "2026-12-06",
-          "time": "10:15",
+          "time": "11:30",
           "opponent": "Sorel-Tracy",
           "opponentCode": "ST",
           "home": true,
@@ -83360,7 +83109,7 @@
         },
         {
           "date": "2026-12-06",
-          "time": "11:30",
+          "time": "12:45",
           "opponent": "Cégep Sherbrooke",
           "opponentCode": "SHE",
           "home": true,
@@ -83562,7 +83311,7 @@
         },
         {
           "date": "2026-12-06",
-          "time": "11:30",
+          "time": "12:45",
           "opponent": "Shawinigan",
           "opponentCode": "SHA",
           "home": false,
@@ -83751,19 +83500,6 @@
         {
           "date": "2026-12-06",
           "time": "10:15",
-          "opponent": "Saint-Hyacinthe",
-          "opponentCode": "STH",
-          "home": false,
-          "sport": "volleyball",
-          "competition": "Volleyball collégial masculin D2",
-          "gameId": "4b1ee1b7-7f69-4617-806e-6ec46b6f876e",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4b1ee1b7-7f69-4617-806e-6ec46b6f876e",
-          "opponentFullName": "Cégep de Saint-Hyacinthe",
-          "opponentRegistryId": "saint-hyacinthe"
-        },
-        {
-          "date": "2026-12-06",
-          "time": "11:30",
           "opponent": "Granby",
           "opponentCode": "GBY",
           "home": false,
@@ -83773,6 +83509,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2a3a381e-ad57-4002-9419-f9a4dbc2416a",
           "opponentFullName": "Cégep de Granby",
           "opponentRegistryId": "granby"
+        },
+        {
+          "date": "2026-12-06",
+          "time": "11:30",
+          "opponent": "Saint-Hyacinthe",
+          "opponentCode": "STH",
+          "home": false,
+          "sport": "volleyball",
+          "competition": "Volleyball collégial masculin D2",
+          "gameId": "4b1ee1b7-7f69-4617-806e-6ec46b6f876e",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4b1ee1b7-7f69-4617-806e-6ec46b6f876e",
+          "opponentFullName": "Cégep de Saint-Hyacinthe",
+          "opponentRegistryId": "saint-hyacinthe"
         }
       ],
       "nextGame": {
@@ -83962,7 +83711,7 @@
         },
         {
           "date": "2026-12-06",
-          "time": "10:15",
+          "time": "11:30",
           "opponent": "Granby",
           "opponentCode": "GBY",
           "home": true,
@@ -84151,7 +83900,7 @@
         },
         {
           "date": "2026-12-06",
-          "time": "9:00",
+          "time": "10:15",
           "opponent": "Saint-Hyacinthe",
           "opponentCode": "STH",
           "home": false,
@@ -84164,7 +83913,7 @@
         },
         {
           "date": "2026-12-06",
-          "time": "10:15",
+          "time": "12:45",
           "opponent": "Drummondville",
           "opponentCode": "DRU",
           "home": true,
