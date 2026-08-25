@@ -375,7 +375,13 @@ test('CTA : sans direct, le cycle reprend (résultat hier)', async ({ page }) =>
 });
 
 test('CTA prochain du jour : heure de coup d’envoi, pas « dans 3 h »', async ({ page }) => {
-  const payload = upcomingTodayPayload(3 * 3600 * 1000);
+  const now = Date.now();
+  const today = torontoParts(now).date;
+  // Même jour civil, hors de la fenêtre « dans X min » (dernière heure).
+  const offsetMs = [3, 2, 1.25].map((h) => h * 3600 * 1000)
+    .find((ms) => torontoParts(now + ms).date === today);
+  test.skip(!offsetMs, 'trop tard : plus de coup d’envoi aujourd’hui hors de la dernière heure');
+  const payload = upcomingTodayPayload(offsetMs);
   const cta = await openWithSports(page, payload);
   await expect(cta).toHaveAttribute('data-cta-state', 'next');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/À\s*venir/i);
@@ -386,6 +392,34 @@ test('CTA prochain du jour : heure de coup d’envoi, pas « dans 3 h »', async
   expect(sub).toMatch(new RegExp(clock.replace(' ', '\\s+')));
   expect(sub.toLowerCase()).not.toMatch(/dans \d/);
   expect(sub.toLowerCase()).not.toMatch(/il y a/);
+});
+
+test('CTA visiteur : chez l’adversaire, pas à', async ({ page }) => {
+  const game = liveKickGame({
+    opponent: 'Carabins',
+    opponentCode: 'MTL',
+    opponentFullName: 'Carabins',
+    offsetMs: 3 * 3600 * 1000,
+    extra: { live: false, home: false },
+  });
+  const team = teamShell('collegial:soccer:sth-away', {
+    name: 'Rouge et Or',
+    fullName: 'Université Laval',
+    code: 'LAV',
+  });
+  team.nextGame = game;
+  team.nextGames = [game];
+  const cta = await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [team.id]: team },
+  });
+  await expect(cta).toHaveAttribute('data-cta-state', 'next');
+  const vs = cta.locator('.sports-chip__vs');
+  await expect(vs).toHaveText('chez');
+  const text = await cta.locator('.sports-chip__cta-text').innerText();
+  expect(text).toMatch(/Carabins/);
+  expect(text).not.toMatch(/\sà\s/);
 });
 
 test('CTA demain : pastille Demain, heure, pas Prochain match', async ({ page }) => {

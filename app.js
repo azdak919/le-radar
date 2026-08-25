@@ -4377,7 +4377,7 @@ function sportsRandomResultSlide(usedKeys) {
 /**
  * Codes / écoles hors focus LE-RADAR (RSEQ invitees hors Québec, etc.).
  * On garde les matchs QC ↔ Ottawa vus **depuis** l’équipe québécoise
- * (« UdeM reçoit uOttawa »), pas le point de vue « uOttawa à UdeM ».
+ * (« UdeM reçoit uOttawa »), pas le point de vue « uOttawa chez UdeM ».
  */
 const SPORTS_OUT_OF_PROVINCE_CODES = new Set([
   'OTT', // University of Ottawa
@@ -4987,9 +4987,9 @@ function sportsPlaceEventShort(game) {
   return opp;
 }
 
-/** Verbe de rencontre — domicile « reçoit », extérieur « à » (ton presse). */
+/** Verbe de rencontre — domicile « reçoit », visiteur « chez » (ton presse : à = lieu, chez = domicile d’équipe). */
 function sportsMatchVerb(game, lang = 'fr') {
-  if (game?.home === false) return lang === 'en' ? 'at' : 'à';
+  if (game?.home === false) return lang === 'en' ? 'at' : 'chez';
   return lang === 'en' ? 'hosts' : 'reçoit';
 }
 
@@ -6389,7 +6389,7 @@ function paintSportsChip(slide, animate = false) {
     a.dataset.sportsLive = '1';
   } else {
     a.append(glyph);
-    // « reçoit » / « à » — même ton presse que la CTA ; verbe en .sports-chip__vs (gris).
+    // « reçoit » / « chez » — même ton presse que la CTA ; verbe en .sports-chip__vs (gris).
     const verb = sportsMatchVerb(g);
     inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
       + `<span class="sports-chip__vs">${escapeHtml(verb)}</span> `
