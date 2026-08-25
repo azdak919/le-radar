@@ -47,6 +47,7 @@ const {
   unwrapCdnImageUrl,
   stripStyleAndScript,
   imageUrlsMatch,
+  clearMirroredLead,
 } = require('./article-image-lib');
 const { isHtmlListSource, parseHtmlListPage } = require('./html-list-fetcher');
 const { isFirebaseSource, fetchFirebaseFeed } = require('./firebase-list-fetcher');
@@ -740,6 +741,9 @@ async function enrichItem(item, sourceByName = new Map()) {
         || !next.image
         || !imageUrlsMatch(found.url, next.image)
       ) {
+        if (next.image && !imageUrlsMatch(found.url, next.image)) {
+          clearMirroredLead(next);
+        }
         next.image = found.url;
       }
     } else if (next.image && !isCandidateImageUrl(next.image, rejectPatterns)) {
@@ -811,11 +815,12 @@ async function enrichItem(item, sourceByName = new Map()) {
 }
 
 async function enrichItems(items, feedDefaults = new Map(), sourceByName = new Map()) {
+  const byDate = (a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0);
   const queue = [
-    ...items.filter(needsImageEnrichment),
+    ...items.filter(needsImageEnrichment).sort(byDate),
     ...items.filter(
       (item) => needsEnrichment(item, feedDefaults, sourceByName) && !needsImageEnrichment(item),
-    ),
+    ).sort(byDate),
   ];
   const seen = new Set();
   let enriched = 0;
