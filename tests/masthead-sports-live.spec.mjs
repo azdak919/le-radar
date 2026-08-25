@@ -221,15 +221,15 @@ function upcomingTodayPayload(offsetMs = 3 * 3600 * 1000) {
   };
 }
 
-async function openWithSports(page, payload) {
-  await page.route('**/sports.json', async (route) => {
+async function openWithSports(page, payload, viewport = { width: 1280, height: 900 }) {
+  await page.route('**/sports-masthead.json', async (route) => {
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
       body: JSON.stringify(payload),
     });
   });
-  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.setViewportSize(viewport);
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip).toBeVisible({ timeout: 8000 });
@@ -354,6 +354,32 @@ test('CTA live : plusieurs directs — cycle entre eux, pas le reste', async ({ 
   expect(second).not.toBe(first);
   expect(second).not.toMatch(/Concordia/);
   expect(second).toMatch(/Saint-Hyacinthe|Laval|Sainte-Foy/);
+});
+
+test('iPad tactile : la CTA participe à la cascade', async ({ browser }) => {
+  const context = await browser.newContext({
+    hasTouch: true,
+    isMobile: true,
+    viewport: { width: 820, height: 1180 },
+    timezoneId: 'America/Toronto',
+  });
+  const page = await context.newPage();
+  try {
+    const cta = await openWithSports(
+      page,
+      twoLivePlusResultPayload(),
+      { width: 820, height: 1180 },
+    );
+    const first = (await cta.locator('.sports-chip__cta-text').innerText()).replace(/\s+/g, ' ');
+    expect(await page.evaluate(() => sportsCtaMayRotate())).toBe(true);
+    await page.evaluate(() => scheduleSportsWave({ fromSlot: 0, firstWait: false }));
+    await expect.poll(async () => {
+      const chip = page.locator('#masthead-sports-strip .sports-chip--cta').last();
+      return (await chip.locator('.sports-chip__cta-text').innerText()).replace(/\s+/g, ' ');
+    }, { timeout: 4000 }).not.toBe(first);
+  } finally {
+    await context.close();
+  }
 });
 
 test('CTA : sans direct, le cycle reprend (résultat hier)', async ({ page }) => {

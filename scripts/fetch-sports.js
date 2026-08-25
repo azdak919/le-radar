@@ -32,6 +32,7 @@ const {
 
 const SportsFreshness = require('./sports-freshness-lib');
 const SportsLive = require('./sports-live-lib');
+const { buildSportsMastheadPayload } = require('./sports-masthead-lib');
 
 const update = process.argv.includes('--update');
 const liveOnly = process.argv.includes('--live');
@@ -1080,6 +1081,12 @@ async function main() {
 
   if (update) {
     fs.writeFileSync(OUT_PATH, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
+    const mastheadPath = path.join(ROOT, 'sports-masthead.json');
+    fs.writeFileSync(
+      mastheadPath,
+      `${JSON.stringify(buildSportsMastheadPayload(payload), null, 2)}\n`,
+      'utf8',
+    );
     console.error(`sports: écrit ${path.relative(ROOT, OUT_PATH)} (${teamCount} équipes, ${leaguesFailed} erreurs ligue)`);
   } else {
     console.error('sports: dry-run (passe --update pour écrire)');

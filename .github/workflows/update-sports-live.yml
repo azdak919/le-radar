@@ -40,7 +40,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sports.json
+          git add sports.json sports-masthead.json
           if git diff --staged --quiet; then
             echo "No live sports changes."
             exit 0

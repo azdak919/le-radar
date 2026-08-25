@@ -59,7 +59,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sports.json sports/index.html en/sports/index.html
+          git add sports.json sports-masthead.json sports/index.html en/sports/index.html
           if git diff --staged --quiet; then
             echo "No sports changes (payload identique après re-fetch)."
             exit 0
