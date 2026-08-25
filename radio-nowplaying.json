@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-25T15:39:45.485Z",
+  "updatedAt": "2026-08-25T16:33:59.719Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T15:39:09.821Z"
+      "checkedAt": "2026-08-25T16:33:34.435Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Roche aux platines",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/roche-aux-platines"
-      },
-      "next": {
         "title": "Les sentinelles de l'art",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "Roche aux platines",
+      "showTitle": "Les sentinelles de l'art",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T15:39:12.177Z"
+      "checkedAt": "2026-08-25T16:33:36.343Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Ecolibrium/Environment in Canada",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "Universal Break",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Voice of Korea",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "Ecolibrium/Environment in Canada",
+      "showTitle": "Universal Break",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T15:39:15.611Z"
+      "checkedAt": "2026-08-25T16:33:38.695Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mirror Journal",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/mirror-journal"
-      },
-      "next": {
         "title": "World Beat News",
         "source": "schedule-live",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/world-beat-news"
       },
+      "next": {
+        "title": "Shaking the Habitual",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/shaking-the-habitual"
+      },
       "track": "",
-      "showTitle": "Mirror Journal",
+      "showTitle": "World Beat News",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T15:39:29.688Z"
+      "checkedAt": "2026-08-25T16:33:52.836Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +126,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T15:39:30.350Z"
+      "checkedAt": "2026-08-25T16:33:53.629Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le Monde Dans Mes Oreilles",
         "source": "api-live",
         "start": "12:00",
         "end": "13:00",
         "slug": "le-monde-dans-mes-oreilles"
       },
-      "track": "Grimes - Vanessa",
-      "showTitle": "",
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
+      },
+      "track": "Ouverture - Saison-223aug2026",
+      "showTitle": "Le Monde Dans Mes Oreilles",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-25T15:39:45.134Z"
+      "checkedAt": "2026-08-25T16:33:59.369Z"
     }
   }
 }
