@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-25T18:43:33.788Z",
+  "updatedAt": "2026-08-25T19:28:42.323Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T18:43:07.060Z"
+      "checkedAt": "2026-08-25T19:28:14.431Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "next": {
         "title": "À la bonne heure",
         "source": "schedule",
         "start": "15:00",
         "end": "16:00",
         "url": "https://cism893.ca/emissions/a-la-bonne-heure"
       },
+      "next": {
+        "title": "London café",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://cism893.ca/emissions/london-cafe"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "À la bonne heure",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T18:43:09.488Z"
+      "checkedAt": "2026-08-25T19:28:16.507Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Voice of Korea",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Montreal Sessions",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Off The Hour: Local Journalism Stories",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Voice of Korea",
+      "showTitle": "Montreal Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T18:43:12.357Z"
+      "checkedAt": "2026-08-25T19:28:19.417Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Code Switch",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/code-switch"
-      },
-      "next": {
         "title": "Sonic Lit: A SpokenWeb Radio Show",
         "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
       },
+      "next": {
+        "title": "The Fluid Mosaic",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
+      },
       "track": "",
-      "showTitle": "Code Switch",
+      "showTitle": "Sonic Lit: A SpokenWeb Radio Show",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T18:43:26.655Z"
+      "checkedAt": "2026-08-25T19:28:33.557Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +126,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T18:43:27.262Z"
+      "checkedAt": "2026-08-25T19:28:34.649Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
         "start": "15:00",
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Axaven - give it to me",
-      "showTitle": "",
+      "next": {
+        "title": "Le Studio",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00",
+        "slug": "live"
+      },
+      "track": "Caroline Savoie - Quel tourment ! feat. Jeanne Cote & Ponteix",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-25T18:43:33.437Z"
+      "checkedAt": "2026-08-25T19:28:41.973Z"
     }
   }
 }
