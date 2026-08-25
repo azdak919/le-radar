@@ -117,7 +117,7 @@
   <header>
     <p><a class="hub" href="./">← Labo</a></p>
     <h1>Cartes sports</h1>
-    <p class="lede">Colonne mobile (390). CTA et puces : À venir (aujourd’hui) · Demain · Prochain match · En cours · Aujourd’hui / Hier (résultat). Verbe reçoit / chez pâle. Voile : médaille 1–3, pas de V.</p>
+    <p class="lede">Colonne mobile (390). CTA et puces, même vocabulaire : À venir · Demain · Prochain match · En cours · Aujourd’hui / Hier. Voile : or / argent / bronze / hors podium, aujourd’hui et hier. Résultat = compétition, pas « il y a 6 h ».</p>
     <p class="hint">Local seulement.</p>
   </header>
   <main id="col"></main>
@@ -137,6 +137,14 @@
           state: 'next', tone: '#2e7d4f', tag: 'À venir', glyph: '⚽',
           text: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__vs">chez</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
           sub: 'Aujourd’hui · 21 h 00 · Soccer universitaire féminin',
+        },
+      },
+      {
+        title: 'CTA — à venir (dans 45 min)',
+        cta: {
+          state: 'next', tone: '#2e7d4f', tag: 'À venir', glyph: '🏀',
+          text: '<span class="sports-chip__name">UdeM</span> <span class="sports-chip__vs">reçoit</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
+          sub: 'Aujourd’hui · dans 45 min · Basketball universitaire',
         },
       },
       {
@@ -188,7 +196,7 @@
           state: 'result', tone: '#3d9a6a', tag: 'Aujourd’hui', glyph: '🏀',
           badge: 'V', badgeMod: 'w',
           text: 'UdeM 78–71 Concordia',
-          sub: 'il y a 3 h · Basketball universitaire',
+          sub: 'Basketball universitaire',
         },
       },
       {
@@ -197,7 +205,7 @@
           state: 'result', tone: '#c45c5c', tag: 'Aujourd’hui', glyph: '🏒',
           badge: 'D', badgeMod: 'l',
           text: 'Bishop’s 2–5 McGill',
-          sub: 'il y a 5 h · Hockey universitaire',
+          sub: 'Hockey universitaire',
         },
       },
       {
@@ -206,7 +214,7 @@
           state: 'result', tone: '#8fa3b0', tag: 'Aujourd’hui', glyph: '⚽',
           badge: 'N', badgeMod: 'd',
           text: 'ULaval 1–1 UdeM',
-          sub: 'il y a 2 h · Soccer universitaire masculin',
+          sub: 'Soccer universitaire masculin',
         },
       },
       {
@@ -214,7 +222,7 @@
         cta: {
           state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', glyph: '⛵',
           text: 'McGill 7e/12',
-          sub: 'il y a 6 h · Voile universitaire',
+          sub: 'Voile universitaire',
         },
       },
       {
@@ -223,7 +231,42 @@
           state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', glyph: '⛵',
           badge: '🥇', badgeMod: 'place',
           text: 'McGill 1er/12',
-          sub: 'il y a 4 h · Voile universitaire',
+          sub: 'Voile universitaire',
+        },
+      },
+      {
+        title: 'CTA — aujourd’hui (argent)',
+        cta: {
+          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', glyph: '⛵',
+          badge: '🥈', badgeMod: 'place',
+          text: 'Concordia 2e/12',
+          sub: 'Voile universitaire',
+        },
+      },
+      {
+        title: 'CTA — aujourd’hui (bronze)',
+        cta: {
+          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', glyph: '⛵',
+          badge: '🥉', badgeMod: 'place',
+          text: 'UdeM 3e/12',
+          sub: 'Voile universitaire',
+        },
+      },
+      {
+        title: 'CTA — hier (place)',
+        cta: {
+          state: 'result', tone: '#3d6fa8', tag: 'Hier', glyph: '⛵',
+          text: 'Bishop’s 7e/14',
+          sub: 'Voile universitaire',
+        },
+      },
+      {
+        title: 'CTA — hier (or)',
+        cta: {
+          state: 'result', tone: '#3d6fa8', tag: 'Hier', glyph: '⛵',
+          badge: '🥇', badgeMod: 'place',
+          text: 'ULaval 1er/10',
+          sub: 'Voile universitaire',
         },
       },
       {
@@ -232,7 +275,7 @@
           state: 'result', tone: '#3d6fa8', tag: 'Hier', glyph: '⛵',
           badge: '🥈', badgeMod: 'place',
           text: 'ULaval 2e/10',
-          sub: 'il y a 18 h · Voile universitaire',
+          sub: 'Voile universitaire',
         },
       },
       {
@@ -241,7 +284,7 @@
           state: 'result', tone: '#3d6fa8', tag: 'Hier', glyph: '⛵',
           badge: '🥉', badgeMod: 'place',
           text: 'Concordia 3e/10',
-          sub: 'il y a 20 h · Voile universitaire',
+          sub: 'Voile universitaire',
         },
       },
       {
@@ -258,6 +301,14 @@
           state: 'live', tone: '#c8102e', tag: 'En cours', glyph: '⚽',
           text: 'Patriotes 0–1 Vanier College',
           sub: 'Soccer collégial · 1re période',
+        },
+      },
+      {
+        title: 'CTA — en cours (sans score)',
+        cta: {
+          state: 'live', tone: '#c8102e', tag: 'En cours', glyph: '🏈',
+          text: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Carabins</span>',
+          sub: 'Football universitaire',
         },
       },
       {
@@ -382,6 +433,110 @@
           tone: '#3d6fa8', glyph: '⛵', badge: '🥇', badgeMod: 'place',
           inner: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__score">1er/12</span>',
           sub: 'aujourd’hui · Voile universitaire',
+        }),
+      },
+      {
+        title: 'Puce — voile argent',
+        html: () => matchChip({
+          tone: '#3d6fa8', glyph: '⛵', badge: '🥈', badgeMod: 'place',
+          inner: '<span class="sports-chip__name">Concordia</span> <span class="sports-chip__score">2e/12</span>',
+          sub: 'aujourd’hui · Voile universitaire',
+        }),
+      },
+      {
+        title: 'Puce — voile bronze',
+        html: () => matchChip({
+          tone: '#3d6fa8', glyph: '⛵', badge: '🥉', badgeMod: 'place',
+          inner: '<span class="sports-chip__name">UdeM</span> <span class="sports-chip__score">3e/12</span>',
+          sub: 'aujourd’hui · Voile universitaire',
+        }),
+      },
+      {
+        title: 'Puce — voile 7e hier',
+        html: () => matchChip({
+          tone: '#3d6fa8', glyph: '⛵',
+          inner: '<span class="sports-chip__name">Bishop’s</span> <span class="sports-chip__score">7e/14</span>',
+          sub: 'hier · Voile universitaire',
+        }),
+      },
+      {
+        title: 'Puce — voile or hier',
+        html: () => matchChip({
+          tone: '#3d6fa8', glyph: '⛵', badge: '🥇', badgeMod: 'place',
+          inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__score">1er/10</span>',
+          sub: 'hier · Voile universitaire',
+        }),
+      },
+      {
+        title: 'Puce — voile argent hier',
+        html: () => matchChip({
+          tone: '#3d6fa8', glyph: '⛵', badge: '🥈', badgeMod: 'place',
+          inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__score">2e/10</span>',
+          sub: 'hier · Voile universitaire',
+        }),
+      },
+      {
+        title: 'Puce — voile bronze hier',
+        html: () => matchChip({
+          tone: '#3d6fa8', glyph: '⛵', badge: '🥉', badgeMod: 'place',
+          inner: '<span class="sports-chip__name">Concordia</span> <span class="sports-chip__score">3e/10</span>',
+          sub: 'hier · Voile universitaire',
+        }),
+      },
+      {
+        title: 'Puce — nulle aujourd’hui',
+        html: () => matchChip({
+          tone: '#8fa3b0', glyph: '⚽', badge: 'N', badgeMod: 'd',
+          inner: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__score">1–1</span> <span class="sports-chip__name sports-chip__opp">UdeM</span>',
+          sub: 'aujourd’hui · Soccer universitaire masculin',
+        }),
+      },
+      {
+        title: 'Puce — victoire hier',
+        html: () => matchChip({
+          tone: '#3d9a6a', glyph: '🏈', badge: 'V', badgeMod: 'w',
+          inner: '<span class="sports-chip__name">Carabins</span> <span class="sports-chip__score">24–21</span> <span class="sports-chip__name sports-chip__opp">Rouge et Or</span>',
+          sub: 'hier · Football universitaire',
+        }),
+      },
+      {
+        title: 'Puce — défaite aujourd’hui',
+        html: () => matchChip({
+          tone: '#c45c5c', glyph: '🏒', badge: 'D', badgeMod: 'l',
+          inner: '<span class="sports-chip__name">Bishop’s</span> <span class="sports-chip__score">2–5</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
+          sub: 'aujourd’hui · Hockey universitaire',
+        }),
+      },
+      {
+        title: 'Puce — en cours visiteur',
+        html: () => matchChip({
+          tone: '#c8102e', glyph: '⚽', live: true,
+          inner: '<span class="sports-chip__name">Patriotes</span> <span class="sports-chip__score">0–1</span> <span class="sports-chip__name sports-chip__opp">Vanier College</span>',
+          sub: '1re période · Soccer collégial',
+        }),
+      },
+      {
+        title: 'Puce — demain visiteur',
+        html: () => matchChip({
+          tone: '#2e7d4f', glyph: '⚽',
+          inner: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__vs">chez</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
+          sub: 'Demain · 19 h 00 · Soccer universitaire féminin',
+        }),
+      },
+      {
+        title: 'Puce — prochain (reçoit)',
+        html: () => matchChip({
+          tone: '#6a7580', glyph: '🏀',
+          inner: '<span class="sports-chip__name">UdeM</span> <span class="sports-chip__vs">reçoit</span> <span class="sports-chip__name sports-chip__opp">Laval</span>',
+          sub: 'ven. 4 sept. · 19 h 00 · Basketball universitaire',
+        }),
+      },
+      {
+        title: 'Puce — à venir (dans 45 min)',
+        html: () => matchChip({
+          tone: '#2e7d4f', glyph: '🏀',
+          inner: '<span class="sports-chip__name">UdeM</span> <span class="sports-chip__vs">reçoit</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
+          sub: 'À venir · dans 45 min · Basketball universitaire',
         }),
       },
     ];
