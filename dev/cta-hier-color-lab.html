@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Labo couleur Hier — LE RADAR (local)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../style-masthead.css">
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #0c0d10; color: #f1f2f4; font: 15px/1.45 Inter, system-ui, sans-serif; }
+    header { max-width: 720px; margin: 0 auto; padding: 28px 16px 8px; }
+    h1 { margin: 0; font: 700 26px/1.1 "Source Serif 4", Georgia, serif; }
+    .lede { color: #a9acb5; margin: 10px 0 0; font-size: 14px; }
+    .hub { color: #e1b95e; }
+    .hint { font-size: 12px; color: #888d96; margin-top: 8px; }
+    main { max-width: 720px; margin: 0 auto; padding: 12px 16px 64px; }
+    h2 { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #e1b95e; margin: 22px 0 10px; }
+    .opt { margin: 0 0 18px; padding: 12px; border: 1px solid #2a2d33; border-radius: 8px; background: #14161a; }
+    .opt.is-verdict { border-color: #e1b95e; box-shadow: 0 0 0 1px #e1b95e; }
+    .opt h3 { margin: 0 0 4px; font: 800 13px/1.2 Inter, sans-serif; letter-spacing: 0.04em; text-transform: uppercase; }
+    .opt p { margin: 0 0 10px; font-size: 12px; color: #c3c6ce; }
+    .opt .ratio { font-variant-numeric: tabular-nums; color: #e1b95e; }
+    .opt .fail { color: #ff8a80; }
+    .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; }
+    .masthead-sports-strip {
+      display: flex !important; visibility: visible !important; opacity: 1 !important;
+      overflow: hidden; flex: 1 1 280px; min-width: 0; min-height: 56px; margin: 0; padding: 0; gap: 8px;
+    }
+    .swatch {
+      width: 72px; height: 44px; border-radius: 4px; flex: 0 0 auto;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
+    }
+    #verdict { padding: 12px 14px; border-radius: 8px; background: #1c1810; border: 1px solid #e1b95e; font-size: 13px; }
+    #verdict strong { color: #e1b95e; }
+  </style>
+</head>
+<body>
+<script src="./lab-home.js"></script>
+<header>
+  <p><a class="hub" href="./">← Labo</a> · <a class="hub" href="./sports-strip-lab.html">Cartes sports</a></p>
+  <h1>Couleur « Hier »</h1>
+  <p class="lede">Pastille CTA lamp=past. Le vert actuel se lit comme une victoire (badge V) et comme un feu vert, pas comme « hier ». Panel synthétique — pas une étude utilisateur.</p>
+  <p class="hint">Local. C appliqué en CSS sur la branche PR #109 (go humain). Vert A = l’ancien status quo.</p>
+</header>
+<main>
+  <p id="verdict"><strong>Appliqué : C — Pourpre de marque #6c2163</strong><br>Go humain. Votes 2–2–1. Le CSS prod de la branche suit C (fill opaque + filet inset + voyant lilas statique).</p>
+  <h2>Voisinage (déjà pris)</h2>
+  <div class="row" id="taken"></div>
+  <h2>Options</h2>
+  <div id="opts"></div>
+</main>
+<script>
+  const TAKEN = [
+    { name: 'En cours / À venir / Aujourd’hui', bg: '#c8102e', fg: '#fff' },
+    { name: 'Demain / Prochain match', bg: '#f5d000', fg: '#1a1500' },
+    { name: 'Badge V (victoire)', bg: '#2f8f5b', fg: '#fff' },
+    { name: 'Badge D', bg: '#b84848', fg: '#fff' },
+    { name: 'Pourpre marque (défaut)', bg: '#6c2163', fg: '#fff' },
+  ];
+  const OPTIONS = [
+    { id: 'A', title: 'Vert actuel', bg: '#3d9a6a', fg: '#fff', ratio: 3.48, aa: false,
+      blurb: 'Status quo, hérité du voyant « passé ». Sous AA (3,48:1). Collision V + feu vert.' },
+    { id: 'B', title: 'Ardoise', bg: '#5a6470', fg: '#fff', ratio: 6.01, aa: true,
+      blurb: 'Past / archive. Gris informatif. Risque : a l’air désactivé.' },
+    { id: 'C', title: 'Pourpre de marque', bg: '#6c2163', fg: '#fff', ratio: 10.32, aa: true,
+      blurb: 'Panel : C. AAA, déjà en palette. Filet inset blanc pour ne pas fondre dans le contour pourpre. Moins « temps », plus « marque ».' },
+    { id: 'D', title: 'Bleu info', bg: '#3a5f8a', fg: '#fff', ratio: 6.60, aa: true,
+      blurb: 'Synthèse du matin (avant votes). 0 voix une fois le panel collé. 4ᵉ bleu vs radio.' },
+    { id: 'E', title: 'Ivoire presse', bg: '#d4c4a8', fg: '#241c12', ratio: 9.81, aa: true,
+      blurb: 'Papier / éditorial. Plus froid que le jaune avenir. Pas un feu tricolore.' },
+  ];
+
+  function pill(bg, fg, label = 'Hier') {
+    return `<span class="sports-chip__cta-tag" data-cta-lamp="past" style="background:${bg};color:${fg};box-shadow:inset 0 0 0 1px rgba(255,255,255,0.18)">${label}</span>`;
+  }
+  function chip(bg, fg) {
+    return `<div class="masthead-sports-strip" data-count="1" data-ready="1">
+      <a class="sports-chip sports-chip--cta" data-cta-state="result" href="#lab">
+        <span class="sports-chip__cta-rail">
+          <span class="sports-chip__cta-tag" data-cta-lamp="past" data-cta-tag="Hier"
+            style="background:${bg};color:${fg};box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)">Hier</span>
+        </span>
+        <span class="sports-chip__line">
+          <span class="sports-chip__cta-stack">
+            <span class="sports-chip__cta-label is-front">
+              <span class="sports-chip__cta-head">
+                <span class="sports-chip__cta-glyph" aria-hidden="true">🏈</span>
+                <span class="sports-chip__badge sports-chip__badge--w" aria-hidden="true">V</span>
+                <span class="sports-chip__cta-line"><span class="sports-chip__cta-text">Carabins 24–21 Rouge et Or</span></span>
+              </span>
+              <span class="sports-chip__cta-sub"><span class="sports-chip__cta-sub-text">Football universitaire</span></span>
+            </span>
+          </span>
+        </span>
+      </a>
+    </div>`;
+  }
+
+  document.getElementById('taken').innerHTML = TAKEN.map((t) =>
+    `<div><div class="swatch" style="background:${t.bg}"></div><div style="font-size:11px;margin-top:4px;color:#a9acb5">${t.name}</div></div>`
+  ).join('');
+
+  const params = new URLSearchParams(location.search);
+  const winner = (params.get('v') || 'C').toUpperCase();
+  document.getElementById('opts').innerHTML = OPTIONS.map((o) => `
+    <article class="opt${winner === o.id ? ' is-verdict' : ''}" id="opt-${o.id}">
+      <h3>${o.id} — ${o.title} <span class="ratio ${o.aa ? '' : 'fail'}">${o.ratio}:1 ${o.aa ? 'AA' : 'sous AA'}</span></h3>
+      <p>${o.blurb}</p>
+      <div class="row">${chip(o.bg, o.fg)}</div>
+    </article>`).join('');
+
+  window.setHierVerdict = (id, note) => {
+    const o = OPTIONS.find((x) => x.id === id);
+    document.querySelectorAll('.opt').forEach((el) => el.classList.toggle('is-verdict', el.id === 'opt-' + id));
+    document.getElementById('verdict').innerHTML =
+      `<strong>Verdict panel : ${id} — ${o ? o.title : id}</strong><br>${note || ''} Gate humain ouvert : rien en prod tant que tu n’as pas dit go.`;
+  };
+</script>
+</body>
+</html>

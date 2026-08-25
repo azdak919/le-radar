@@ -133,14 +133,81 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(page.locator('#cta-band .sports-chip--cta').first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip--match')).toHaveCount(0);
   await expect(page.locator('#standard-chips .sports-chip--match').first()).toBeVisible();
-  await expect(page.locator('#cta-band').getByText('il y a 5 h', { exact: false })).toBeVisible();
+  await expect(page.locator('#cta-band').getByText(/il y a \d/)).toHaveCount(0);
   await expect(page.locator('#cta-band').getByText('dans 3 h', { exact: false })).toBeVisible();
+  await expect(page.locator('#cta-band .sports-chip__cta-sub-text', { hasText: 'dans 45 min' })).toBeVisible();
   await expect(page.getByText('avant-hier', { exact: false }).first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip__cta-tag--brand')).toBeVisible();
   await expect(page.locator('#cta-band').getByText('LE-RADAR.ca').first()).toBeVisible();
   await expect(page.locator('#cta-band').getByText(/Réseau Académique/).first()).toBeVisible();
   await expect(page.locator('#cta-band').getByText('Scores collégiaux')).toHaveCount(0);
-  await expect(page.locator('#cta-band .sports-chip__cta-tag', { hasText: /^Prochain$/ }).first()).toBeVisible();
+  const todayUpcoming = page.locator('#cta-band .case').filter({ hasText: 'dans 3 h' }).first();
+  await expect(todayUpcoming.locator('.sports-chip__cta-sub-text')).toContainText(/Aujourd’hui/);
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'à venir (visiteur)' }).locator('.sports-chip__cta-sub-text')).toContainText(/Aujourd’hui/);
+  await expect(todayUpcoming.locator('.sports-chip__cta-tag')).toHaveText(/À\s*venir/i);
+  await expect(todayUpcoming.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
+  await expect(todayUpcoming.locator('.sports-chip__vs')).toHaveText(/reçoivent/i);
+  const vsTone = await todayUpcoming.locator('.sports-chip__vs').evaluate((el) => {
+    const vs = getComputedStyle(el).color.match(/[\d.]+/g)?.map(Number) || [];
+    const name = getComputedStyle(el.parentElement.querySelector('.sports-chip__name')).color.match(/[\d.]+/g)?.map(Number) || [];
+    const a = (c) => (c.length >= 4 ? c[3] : 1) * (0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2]);
+    return { vs: a(vs), name: a(name), weight: getComputedStyle(el).fontWeight };
+  });
+  expect(vsTone.vs, 'verbe reçoit plus pâle que les noms').toBeLessThan(vsTone.name * 0.85);
+  expect(Number(vsTone.weight), 'verbe reçoit : poids 500, pas 800').toBeLessThanOrEqual(500);
+  const todayLamp = await todayUpcoming.locator('.sports-chip__cta-tag').evaluate((el) => el.dataset.ctaLamp);
+  expect(todayLamp, 'match du jour : À venir, pulse comme En cours').toBe('soon');
+  const soonPulse = await todayUpcoming.locator('.sports-chip--cta').evaluate((chip) => {
+    const tag = chip.querySelector('.sports-chip__cta-tag');
+    return {
+      chip: getComputedStyle(chip).animationName,
+      tag: getComputedStyle(tag).animationName,
+    };
+  });
+  expect(soonPulse.chip, 'carte À venir : halo rouge').toMatch(/sports-cta-ring-pulse/);
+  expect(soonPulse.tag, 'pastille À venir : pulse En cours').toMatch(/sports-cta-tag-pulse/);
+  const tomorrowCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — demain' }).first();
+  await expect(tomorrowCard.locator('.sports-chip__cta-tag')).toHaveText(/^Demain$/i);
+  await expect(tomorrowCard.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
+  const tomorrowLamp = await tomorrowCard.locator('.sports-chip__cta-tag').evaluate((el) => el.dataset.ctaLamp);
+  expect(tomorrowLamp, 'Demain : pastille jaune, pas À venir').toBe('next');
+  await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first()).toBeVisible();
+  await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first()).toHaveText(/Prochain\s*match/i);
+  await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first().locator(':scope > span')).toHaveCount(2);
+  const glyphFit = await page.locator('#cta-band .sports-chip--cta').first().evaluate((chip) => {
+    const glyph = chip.querySelector('.sports-chip__cta-glyph');
+    const tag = chip.querySelector('.sports-chip__cta-tag');
+    if (!glyph || !tag) return { ok: false };
+    const cr = chip.getBoundingClientRect();
+    const gr = glyph.getBoundingClientRect();
+    const tr = tag.getBoundingClientRect();
+    return {
+      ok: true,
+      glyphW: gr.width,
+      fullyInChip: gr.left >= cr.left - 1 && gr.right <= cr.right + 1,
+      rightOfTag: gr.left >= tr.right - 1,
+    };
+  });
+  expect(glyphFit.ok, 'CTA prochain : glyphe présent').toBe(true);
+  expect(glyphFit.glyphW, 'CTA prochain : glyphe a une largeur').toBeGreaterThan(8);
+  expect(glyphFit.fullyInChip, 'CTA prochain : glyphe entier dans la carte (pas d’excédent)').toBe(true);
+  expect(glyphFit.rightOfTag, 'CTA prochain : glyphe à droite de la pastille').toBe(true);
+  const hierFit = await page.locator('.sports-chip__cta-tag[data-cta-tag="Hier"]').first().evaluate((tag) => {
+    const chip = tag.closest('.sports-chip--cta');
+    const glyph = chip?.querySelector('.sports-chip__cta-glyph');
+    if (!chip || !glyph) return { ok: false };
+    const cr = chip.getBoundingClientRect();
+    const gr = glyph.getBoundingClientRect();
+    const tr = tag.getBoundingClientRect();
+    return {
+      ok: true,
+      fullyInChip: gr.left >= cr.left - 1 && gr.right <= cr.right + 1,
+      rightOfTag: gr.left >= tr.right - 1,
+    };
+  });
+  expect(hierFit.ok, 'CTA hier : glyphe présent').toBe(true);
+  expect(hierFit.fullyInChip, 'CTA hier : glyphe entier dans la carte (pas d’excédent)').toBe(true);
+  expect(hierFit.rightOfTag, 'CTA hier : glyphe à droite de la pastille').toBe(true);
   await expect(page.locator('#cta-band .sports-chip__cta-tag', { hasText: /^Avant-hier$/ })).toHaveCount(0);
   await expect(page.locator('.sports-chip__cta-tag', { hasText: /^Hier$/ }).first()).toBeVisible();
   await expect(page.locator('.sports-chip__cta-tag', { hasText: /^Aujourd’hui$/ }).first()).toBeVisible();
@@ -148,36 +215,77 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
     const m = (getComputedStyle(el, '::before').backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
     return m;
   });
-  const [pr, pg] = await dotRgb('Prochain');
+  const [pr, pg] = await dotRgb('Prochain match');
   const [hr, hg] = await dotRgb('Hier');
-  const [ar] = await dotRgb('Aujourd’hui');
-  expect(ar, 'Aujourd’hui : voyant pâle sur fill rouge').toBeGreaterThan(200);
+  const ar = await page.locator('.sports-chip__cta-tag[data-cta-lamp="today"]').first().evaluate((el) => {
+    const m = (getComputedStyle(el, '::before').backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+    return m[0];
+  });
+  expect(ar, 'Aujourd’hui résultat : voyant pâle sur fill rouge').toBeGreaterThan(200);
   expect(pr - pg, 'Prochain : voyant ambre, pas rouge').toBeLessThan(80);
-  expect(hg - hr, 'Hier : voyant vert').toBeGreaterThan(20);
+  expect(hr, 'Hier : voyant lilas pâle').toBeGreaterThan(200);
+  expect(hg - hr, 'Hier : voyant pas vert').toBeLessThan(0);
   const pillRgb = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => {
     const m = (getComputedStyle(el).backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
     return m;
   });
   const pillWidth = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => el.getBoundingClientRect().width);
-  const [ppr, ppg, ppb] = await pillRgb('Prochain');
-  const [phr, phg] = await pillRgb('Hier');
-  const [par, pag] = await pillRgb('Aujourd’hui');
+  const [ppr, ppg, ppb] = await pillRgb('Prochain match');
+  const [phr, phg, phb] = await pillRgb('Hier');
+  const [par, pag] = await page.locator('.sports-chip__cta-tag[data-cta-lamp="today"]').first().evaluate((el) => {
+    const m = (getComputedStyle(el).backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+    return m;
+  });
   const [elr, elg] = await pillRgb('En cours');
   expect(ppr, 'Prochain : pastille jaune').toBeGreaterThan(200);
   expect(ppg, 'Prochain : pastille jaune').toBeGreaterThan(180);
   expect(ppb, 'Prochain : pastille jaune (pas crème)').toBeLessThan(80);
-  expect(phg - phr, 'Hier : pastille verte').toBeGreaterThan(40);
-  expect(par - pag, 'Aujourd’hui : pastille rouge saturée').toBeGreaterThan(80);
+  expect(phr, 'Hier : pastille pourpre (R)').toBeGreaterThan(80);
+  expect(phg, 'Hier : pastille pourpre, pas verte').toBeLessThan(70);
+  expect(phb, 'Hier : pastille pourpre (B)').toBeGreaterThan(70);
+  expect(phr - phg, 'Hier : pastille pourpre (R>G)').toBeGreaterThan(40);
+  expect(par - pag, 'Aujourd’hui résultat : pastille rouge saturée').toBeGreaterThan(80);
   expect(elr - elg, 'En cours : pastille rouge inchangée').toBeGreaterThan(80);
+  const pillFit = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    return { w: r.width, overflow: el.scrollWidth - el.clientWidth };
+  });
   const [wProchain, wHier, wToday] = await Promise.all([
-    pillWidth('Prochain'), pillWidth('Hier'), pillWidth('Aujourd’hui'),
+    pillWidth('Prochain match'), pillWidth('Hier'), pillWidth('Aujourd’hui'),
   ]);
-  expect(Math.abs(wProchain - wHier), 'Prochain et Hier : même largeur de rail').toBeLessThan(2);
-  expect(Math.abs(wProchain - wToday), 'Prochain et Aujourd’hui : même largeur de rail').toBeLessThan(2);
+  const [fitHier, fitToday, fitNext] = await Promise.all([
+    pillFit('Hier'), pillFit('Aujourd’hui'), pillFit('Prochain match'),
+  ]);
+  expect(wHier, 'Hier : pastille collée, plus de rail 8 rem').toBeLessThan(100);
+  expect(wToday, 'Aujourd’hui plus large que Hier (libellé plus long)').toBeGreaterThan(wHier + 8);
+  expect(wProchain, 'Prochain match 2 lignes plus étroit qu’Aujourd’hui').toBeLessThan(wToday + 1);
+  expect(fitHier.overflow, 'Hier : pas d’excédent').toBeLessThanOrEqual(1);
+  expect(fitToday.overflow, 'Aujourd’hui : pas d’excédent').toBeLessThanOrEqual(1);
+  expect(fitNext.overflow, 'Prochain match : pas d’excédent').toBeLessThanOrEqual(1);
   await expect(page.locator('.sports-chip__cta-eyebrow--head', { hasText: /^Prochain$/ })).toHaveCount(0);
   await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^V$/ }).first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^D$/ }).first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^N$/ }).first()).toBeVisible();
+  const placeOffPodium = page.locator('#cta-band .case').filter({ hasText: 'McGill 7e/12' });
+  await expect(placeOffPodium).toBeVisible();
+  await expect(placeOffPodium.locator('.sports-chip__badge')).toHaveCount(0);
+  await expect(page.locator('#cta-band .sports-chip__badge--place', { hasText: '🥇' }).first()).toBeVisible();
+  await expect(page.locator('#cta-band .sports-chip__badge--place', { hasText: '🥈' }).first()).toBeVisible();
+  await expect(page.locator('#cta-band .sports-chip__badge--place', { hasText: '🥉' }).first()).toBeVisible();
+  await expect(page.locator('#cta-band').getByText('1er/12')).toBeVisible();
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'hier (place)' })).toBeVisible();
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'hier (or)' })).toBeVisible();
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'aujourd’hui (argent)' })).toBeVisible();
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'en cours (sans score)' })).toBeVisible();
+  await expect(page.locator('#standard-chips .case').filter({ hasText: 'voile argent' }).first()).toBeVisible();
+  await expect(page.locator('#standard-chips .case').filter({ hasText: 'voile bronze' }).first()).toBeVisible();
+  await expect(page.locator('#standard-chips .case').filter({ hasText: 'demain visiteur' }).locator('.sports-chip__vs')).toHaveText(/^chez$/);
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'à venir (visiteur)' }).locator('.sports-chip__vs')).toHaveText(/^chez$/);
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'hier (défaite)' }).locator('.sports-chip__badge')).toHaveText(/^D$/);
+  await expect(page.locator('#standard-chips .case').filter({ has: page.getByText('Puce — demain', { exact: true }) }).locator('.sports-chip__sub-text')).toContainText(/^Demain/);
+  await expect(page.locator('#standard-chips .case').filter({ hasText: 'Puce — à venir (reçoit)' }).locator('.sports-chip__sub-text')).toContainText(/^À venir/);
+  await expect(page.locator('#standard-chips .sports-chip--match[data-sports-live="1"]').first()).toBeVisible();
+  await expect(page.locator('#standard-chips .sports-chip__badge--place').first()).toBeVisible();
   const labCopy = await page.locator('body').innerText();
   expect(labCopy, 'pas d’abréviation univ. — le marquee porte le mot entier').not.toMatch(/\buniv\./);
 
