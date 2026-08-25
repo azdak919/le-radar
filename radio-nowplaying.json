@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-25T14:42:27.378Z",
+  "updatedAt": "2026-08-25T15:39:45.485Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T14:42:01.548Z"
+      "checkedAt": "2026-08-25T15:39:09.821Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
         "title": "Roche aux platines",
         "source": "schedule",
         "start": "11:00",
         "end": "12:00",
         "url": "https://cism893.ca/emissions/roche-aux-platines"
       },
+      "next": {
+        "title": "Les sentinelles de l'art",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+      },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Roche aux platines",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T14:42:04.133Z"
+      "checkedAt": "2026-08-25T15:39:12.177Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Basa Basa",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Ecolibrium/Environment in Canada",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00"
       },
+      "next": {
+        "title": "Universal Break",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Basa Basa",
+      "showTitle": "Ecolibrium/Environment in Canada",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T14:42:06.806Z"
+      "checkedAt": "2026-08-25T15:39:15.611Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
-      },
-      "next": {
         "title": "Mirror Journal",
         "source": "schedule-live",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/mirror-journal"
       },
+      "next": {
+        "title": "World Beat News",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/world-beat-news"
+      },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Mirror Journal",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T14:42:20.913Z"
+      "checkedAt": "2026-08-25T15:39:29.688Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T14:42:21.703Z"
+      "checkedAt": "2026-08-25T15:39:30.350Z"
     },
     "choq": {
       "id": "choq",
@@ -135,11 +135,11 @@
       "next": {
         "title": "Le Monde Dans Mes Oreilles",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
+        "start": "12:00",
+        "end": "13:00",
         "slug": "le-monde-dans-mes-oreilles"
       },
-      "track": "These Hands - Zoe Montreal",
+      "track": "Grimes - Vanessa",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-25T14:42:27.027Z"
+      "checkedAt": "2026-08-25T15:39:45.134Z"
     }
   }
 }
