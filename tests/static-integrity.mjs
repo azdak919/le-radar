@@ -1529,6 +1529,7 @@ assert(
     && appJs.includes("SPORTS_CTA_TAG_TOMORROW")
     && appJs.includes('function sportsCtaGameIsToday')
     && appJs.includes('function sportsCtaGameIsTomorrow')
+    && appJs.includes('Aujourd’hui · ${when}')
     && /data-cta-lamp="soon"[^{]*\{[^}]*sports-cta-ring-pulse/.test(cssFlat)
     && appJs.includes('function fillSportsCtaTagCopy')
     && appJs.includes("return 'Aujourd’hui'")
