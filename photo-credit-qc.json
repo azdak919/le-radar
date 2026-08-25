@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-25T05:01:55.096Z",
+  "updated": "2026-08-25T07:16:41.203Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,9 +7,9 @@
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 13,
-  "citedNew": 9,
+  "checked": 20,
+  "updatedCount": 11,
+  "citedNew": 8,
   "fallbackNew": 12,
   "samples": [
     {
@@ -20,30 +20,16 @@
       "method": "body-line"
     },
     {
-      "title": "Présences invisibles : écrire la ville sans permission",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Le retard et les bienfaits du temps long",
+      "title": "Ce que nous devons aux femmes",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "credit": "Photo : Alexandre Gontier",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "media-credit-near"
     },
     {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "title": "Les femmes MAGA au service du patriarcat",
       "source": "Le Délit",
       "credit": "Photo : Stu Doré",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Sois belle et tais-toi",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -95,6 +81,13 @@
       "credit": "Photo : Maryse Boyce",
       "cited": true,
       "method": "figcaption-copyright"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
