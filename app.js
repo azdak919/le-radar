@@ -3646,6 +3646,12 @@ const SPORTS_ARRIVE_MS = 640;
 const SPORTS_CTA_TAG = 'Sports';
 /** Pastille pendant un match en cours — le seul cas qui remplace la rubrique. */
 const SPORTS_CTA_TAG_LIVE = 'En cours';
+/** Coup d’envoi du jour, pas encore commencé — rouge pulse, pas le jaune Prochain. */
+const SPORTS_CTA_TAG_SOON = 'À venir';
+/** Demain : une ligne, même jaune que Prochain match. */
+const SPORTS_CTA_TAG_TOMORROW = 'Demain';
+/** Prochain : deux lignes dans la pastille, pas un rail plus large. */
+const SPORTS_CTA_TAG_NEXT = 'Prochain match';
 /** Repli idle (creux total, pas de match) ; sinon ton du sport via sportsCtaTone. Rouge = direct. */
 const SPORTS_CTA_REST_TONE = '#6a7580';
 const SPORTS_CTA_LIVE_TONE = '#c8102e';
@@ -3730,8 +3736,34 @@ function sportsResultTone(result) {
   return SPORTS_SPORT_TONES.default;
 }
 
-/** Pastille V / D / N — puces scores et CTA. */
-function sportsResultBadgeSpec(game) {
+/** Ordinal FR de place : 1er, 2e, 7e. */
+function sportsPlaceOrdinal(place) {
+  const n = Number(place);
+  if (!Number.isFinite(n) || n < 1) return '';
+  return n === 1 ? '1er' : `${n}e`;
+}
+
+/** Score d’une régate : « 1er/12 », « 7e/12 ». */
+function sportsPlaceScoreText(game) {
+  const ord = sportsPlaceOrdinal(game?.scoreFor);
+  const field = Number(game?.scoreAgainst);
+  if (!ord || !Number.isFinite(field) || field < 1) return '';
+  return `${ord}/${field}`;
+}
+
+/**
+ * Pastille de résultat.
+ * Match : V / D / N.
+ * Régate / place : médaille 1–3, rien au-delà (le « 7e/12 » suffit — pas un V).
+ */
+function sportsResultBadgeSpec(game, sport) {
+  if (sportsIsPlaceResult(game, sport || game?.sport)) {
+    const n = Number(game?.scoreFor);
+    if (n === 1) return { letter: '🥇', mod: 'place' };
+    if (n === 2) return { letter: '🥈', mod: 'place' };
+    if (n === 3) return { letter: '🥉', mod: 'place' };
+    return null;
+  }
   const r = String(game?.result || '');
   if (r === 'W') return { letter: 'V', mod: 'w' };
   if (r === 'L') return { letter: 'D', mod: 'l' };
@@ -3739,8 +3771,9 @@ function sportsResultBadgeSpec(game) {
   return { letter: 'N', mod: 'd' };
 }
 
-function sportsResultBadgeEl(game) {
-  const spec = sportsResultBadgeSpec(game);
+function sportsResultBadgeEl(game, sport) {
+  const spec = sportsResultBadgeSpec(game, sport);
+  if (!spec) return null;
   const el = document.createElement('span');
   el.className = `sports-chip__badge sports-chip__badge--${spec.mod}`;
   el.textContent = spec.letter;
@@ -4344,7 +4377,7 @@ function sportsRandomResultSlide(usedKeys) {
 /**
  * Codes / écoles hors focus LE-RADAR (RSEQ invitees hors Québec, etc.).
  * On garde les matchs QC ↔ Ottawa vus **depuis** l’équipe québécoise
- * (« UdeM reçoit uOttawa »), pas le point de vue « uOttawa à UdeM ».
+ * (« UdeM reçoit uOttawa »), pas le point de vue « uOttawa chez UdeM ».
  */
 const SPORTS_OUT_OF_PROVINCE_CODES = new Set([
   'OTT', // University of Ottawa
@@ -4954,9 +4987,9 @@ function sportsPlaceEventShort(game) {
   return opp;
 }
 
-/** Verbe de rencontre — domicile « reçoit », extérieur « à » (ton presse). */
+/** Verbe de rencontre — domicile « reçoit », visiteur « chez » (ton presse : à = lieu, chez = domicile d’équipe). */
 function sportsMatchVerb(game, lang = 'fr') {
-  if (game?.home === false) return lang === 'en' ? 'at' : 'à';
+  if (game?.home === false) return lang === 'en' ? 'at' : 'chez';
   return lang === 'en' ? 'hosts' : 'reçoit';
 }
 
@@ -5054,9 +5087,38 @@ function sportsCompetitionLabel(slide) {
  * La compétition (ex. « Hockey collégial masculin D2 ») est la même info
  * qu’à droite de la date sur la carte CTA (`sportsCtaSubLine`).
  */
+/**
+ * Mot de temps des puces (même vocabulaire que la CTA) :
+ * À venir / Demain / aujourd’hui / hier / avant-hier. Vide → date courte.
+ */
+function sportsWhenWord(slide) {
+  const g = slide?.game || {};
+  if (sportsGameIsLive(g)) return '';
+  const day = sportsSlideDayKey(slide);
+  if (!day) return '';
+  const today = torontoDayKey();
+  if (day === today) {
+    if (slide.mode === 'next') return 'À venir';
+    if (slide.mode === 'result') return 'aujourd’hui';
+  }
+  if (day === sportsCivilDayShift(today, 1)) return 'Demain';
+  if (day === sportsCivilDayShift(today, -1)) return 'hier';
+  if (day === sportsCivilDayShift(today, -2)) return 'avant-hier';
+  return '';
+}
+
 function sportsMatchSubLine(slide) {
   const g = slide?.game || {};
-  const when = formatSportsWhen(g.date, g.time);
+  const word = sportsWhenWord(slide);
+  const clock = sportsKickoffClock(g);
+  let when = '';
+  if (word === 'À venir' || word === 'Demain') {
+    when = [word, clock].filter(Boolean).join(' · ');
+  } else if (word) {
+    when = word;
+  } else {
+    when = formatSportsWhen(g.date, g.time);
+  }
   const prior = !!(g.priorSeason || slide?.team?.lastGamePriorSeason);
   const placeKind = sportsIsPlaceResult(g, slide?.team?.sport || g.sport);
   // Régate / place : l’événement de place prime (souvent = competition).
@@ -5085,7 +5147,7 @@ function sportsCtaLabelFromSlide(slide) {
   if (slide.mode === 'result' || liveScore) {
     const placeKind = sportsIsPlaceResult(g, slide.team.sport);
     const score = placeKind
-      ? `${g.scoreFor}e/${g.scoreAgainst}`
+      ? sportsPlaceScoreText(g)
       : `${g.scoreFor}–${g.scoreAgainst}`;
     return placeKind
       ? `${glyph} ${home} ${score}`
@@ -5123,23 +5185,58 @@ function sportsCtaResultTag(src) {
   }
 }
 
+/** Coup d’envoi (ou résultat) le jour civil Toronto d’aujourd’hui. */
+function sportsCtaGameIsToday(slide) {
+  const src = slide?.ctaFrom || slide;
+  const day = sportsSlideDayKey(src);
+  return !!(day && day === torontoDayKey());
+}
+
+function sportsCtaGameIsTomorrow(slide) {
+  const src = slide?.ctaFrom || slide;
+  const day = sportsSlideDayKey(src);
+  return !!(day && day === sportsCivilDayShift(torontoDayKey(), 1));
+}
+
 /**
- * Pastille CTA : Prochain / En cours / Hier / Aujourd’hui / date.
+ * Pastille CTA : À venir (aujourd’hui) / Demain / Prochain match (après)
+ * / En cours / Aujourd’hui (résultat) / Hier / date.
  * Creux : LE-RADAR.ca (logo PWA), pas « Sports ».
  */
 function sportsCtaTagLabel(slide, state) {
   const st = state || sportsCtaState(slide);
   if (st === 'live') return SPORTS_CTA_TAG_LIVE;
-  if (st === 'next') return 'Prochain';
+  if (st === 'next') {
+    if (sportsCtaGameIsToday(slide)) return SPORTS_CTA_TAG_SOON;
+    if (sportsCtaGameIsTomorrow(slide)) return SPORTS_CTA_TAG_TOMORROW;
+    return SPORTS_CTA_TAG_NEXT;
+  }
   if (st === 'result') return sportsCtaResultTag(slide?.ctaFrom || slide);
   return RADAR_BRAND_SHORT;
 }
 
-/** Couleur du voyant : live / today (rouge) · next (ambre) · past (vert). */
+/** Remplit la pastille : « Prochain match » en deux lignes, le reste en une. */
+function fillSportsCtaTagCopy(tag, wanted) {
+  tag.replaceChildren();
+  if (wanted === SPORTS_CTA_TAG_NEXT) {
+    const lines = document.createElement('span');
+    lines.className = 'sports-chip__cta-tag-lines';
+    const top = document.createElement('span');
+    top.textContent = 'Prochain';
+    const bot = document.createElement('span');
+    bot.textContent = 'match';
+    lines.append(top, bot);
+    tag.append(lines);
+    return;
+  }
+  tag.append(document.createTextNode(wanted));
+}
+
+/** Couleur du voyant : live / soon (rouge pulse) · today (rouge) · next (ambre) · past (vert). */
 function sportsCtaLamp(slide, state) {
   const st = state || sportsCtaState(slide);
   if (st === 'live') return 'live';
-  if (st === 'next') return 'next';
+  if (st === 'next') return sportsCtaGameIsToday(slide) ? 'soon' : 'next';
   if (st === 'result') {
     const src = slide?.ctaFrom || slide;
     const day = sportsSlideDayKey(src);
@@ -5153,8 +5250,9 @@ function sportsCtaLamp(slide, state) {
  * Sous-ligne CTA — hiérarchie scorebug (ESPN / Flashscore / L’Équipe) :
  *   live    → période si l’API la donne, sinon compétition. Jamais l’âge
  *             du coup d’envoi (« il y a 2 min » sous En cours = match fini).
- *   prochain→ heure (19 h 00) ; compte à rebours seulement dans l’heure
- *             qui précède. Jamais « il y a » (ce serait déjà un live).
+ *   prochain→ aujourd’hui : « Aujourd’hui · 19 h 00 » (compte à rebours
+ *             seulement dans l’heure : « Aujourd’hui · dans 45 min »).
+ *             Demain / plus tard : heure ou date, sans redire la pastille.
  *   résultat→ compétition. La pastille dit déjà Aujourd’hui / Hier ;
  *             l’âge du coup d’envoi ment (2 h de jeu ≠ « il y a 2 h »).
  */
@@ -5175,8 +5273,15 @@ function sportsCtaSubLine(slide, state) {
       when = sportsRelativeWhen(ms, now);
     } else if (minToGo != null && minToGo >= 0) {
       const clock = sportsKickoffClock(g);
-      const today = sportsSlideDayKey(slide) === torontoDayKey(now);
-      when = today ? clock : (sportsWhenLong(g?.date, g?.time) || clock);
+      const day = sportsSlideDayKey(slide);
+      const today = day === torontoDayKey(now);
+      const tomorrow = day === sportsCivilDayShift(torontoDayKey(now), 1);
+      when = (today || tomorrow) ? clock : (sportsWhenLong(g?.date, g?.time) || clock);
+    }
+    if (sportsCtaGameIsToday(slide)) {
+      when = when
+        ? (/\baujourd/i.test(when) ? when : `Aujourd’hui · ${when}`)
+        : 'Aujourd’hui';
     }
     if (when && when.toLowerCase() === String(tag || '').toLowerCase()) when = '';
     return [when, comp].filter(Boolean).join(' · ');
@@ -5653,7 +5758,8 @@ function fillSportsCtaLayer(layer, slide) {
     head.append(gEl);
   }
   if (src?.mode === 'result' && src.game) {
-    head.append(sportsResultBadgeEl(src.game));
+    const badge = sportsResultBadgeEl(src.game, sportKey);
+    if (badge) head.append(badge);
   }
   const line = document.createElement('span');
   line.className = 'sports-chip__cta-line';
@@ -5677,7 +5783,7 @@ function fillSportsCtaLayer(layer, slide) {
     const opp = sportsPlainOpponentName(g);
     const placeKind = sportsIsPlaceResult(g, src.team.sport);
     if (placeKind) {
-      const placeTxt = `${g.scoreFor}e/${g.scoreAgainst}`;
+      const placeTxt = sportsPlaceScoreText(g);
       text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
         + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
     } else {
@@ -5838,12 +5944,14 @@ function applySportsCtaState(chip, slide) {
   if (!chip) return;
   const state = slide?.ctaState || sportsCtaState(slide);
   chip.dataset.ctaState = state;
+  const lamp = sportsCtaLamp(slide, state);
+  chip.dataset.ctaLamp = lamp;
   chip.style.setProperty('--sports-tone', sportsCtaTone({ ...slide, ctaState: state }));
 
   const tag = chip.querySelector('.sports-chip__cta-tag');
   if (!tag) return;
   const wanted = sportsCtaTagLabel(slide, state);
-  tag.dataset.ctaLamp = sportsCtaLamp(slide, state);
+  tag.dataset.ctaLamp = lamp;
   if (state === 'idle') {
     tag.classList.add('sports-chip__cta-tag--brand');
     markNoTranslate(tag);
@@ -5854,8 +5962,7 @@ function applySportsCtaState(chip, slide) {
     tag.removeAttribute('translate');
     if (tag.dataset.ctaTag !== wanted) {
       tag.dataset.ctaTag = wanted;
-      tag.replaceChildren();
-      tag.append(document.createTextNode(wanted));
+      fillSportsCtaTagCopy(tag, wanted);
     }
   }
   syncSportsCtaRail(chip, slide);
@@ -6123,8 +6230,10 @@ function sportsChipTitle(slide) {
     return [issue, sport, line, when, host].filter(Boolean).join(' · ');
   }
 
-  // next / live proxy (urgency.tier 0 = fenêtre « en cours »)
-  const status = slide.urgency?.tier === 0 ? 'En cours' : 'Prochain match';
+  const status = sportsGameIsLive(g) ? 'En cours'
+    : sportsCtaGameIsToday(slide) ? 'À venir'
+    : sportsCtaGameIsTomorrow(slide) ? 'Demain'
+    : 'Prochain match';
   const verb = sportsMatchVerb(g);
   return [status, sport, `${home} ${verb} ${opp}`, when, host].filter(Boolean).join(' · ');
 }
@@ -6252,13 +6361,15 @@ function paintSportsChip(slide, animate = false) {
   const subLine = sportsMatchSubLine(slide);
 
   if (slide.mode === 'result') {
-    a.append(glyph, sportsResultBadgeEl(g));
+    const badge = sportsResultBadgeEl(g, sport);
+    if (badge) a.append(glyph, badge);
+    else a.append(glyph);
     const placeKind = sportsIsPlaceResult(g, sport);
     const prior = g.priorSeason || team.lastGamePriorSeason;
     if (placeKind) {
       // Régate / place : ne pas coller « McGill Sailing 7/12 ICSA Regional… »
       // en une ligne. Haut = équipe + place ; bas = date · compétition.
-      const placeTxt = `${g.scoreFor}e/${g.scoreAgainst}`;
+      const placeTxt = sportsPlaceScoreText(g);
       inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
         + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
     } else {
@@ -6284,7 +6395,7 @@ function paintSportsChip(slide, animate = false) {
     a.dataset.sportsLive = '1';
   } else {
     a.append(glyph);
-    // « reçoit » / « à » — même ton presse que la CTA ; verbe en .sports-chip__vs (gris).
+    // « reçoit » / « chez » — même ton presse que la CTA ; verbe en .sports-chip__vs (gris).
     const verb = sportsMatchVerb(g);
     inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
       + `<span class="sports-chip__vs">${escapeHtml(verb)}</span> `

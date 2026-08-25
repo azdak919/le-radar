@@ -1345,18 +1345,23 @@ assert(
     && /\.sports-chip__cta-tag::before/.test(cssFlat)
     && /onairPulse/.test(styleCss)
     && /sports-cta-dot-upcoming/.test(styleCss)
-    && /sports-cta-dot-past/.test(styleCss)
+    && !/sports-cta-dot-past/.test(styleCss)
     && /data-cta-lamp="past"/.test(styleCss)
+    && /--lamp-past:\s*#6c2163/.test(styleCss)
     && appJs.includes('function sportsCtaLamp'),
-  'style : voyant CTA ambre Prochain, rouge Aujourd’hui, vert passé',
+  'style : voyant CTA ambre Prochain, rouge Aujourd’hui, pourpre passé (pas de pulse vert)',
 );
 assert(
-  /data-cta-lamp="past"[^{]*\{[^}]*background:\s*#3d9a6a/.test(cssFlat)
+  /data-cta-lamp="past"[^{]*\{[^}]*background:\s*var\(--lamp-past\)/.test(cssFlat)
+    && /data-cta-lamp="past"\]::before[^{]*\{[^}]*animation:\s*none/.test(cssFlat)
     && /data-cta-lamp="today"[^{]*\{[^}]*background:\s*#c8102e/.test(cssFlat)
     && /data-cta-lamp="next"[^{]*\{[^}]*background:\s*#f5d000/.test(cssFlat)
-    && /cta-tag:not\(\.sports-chip__cta-tag--brand\)[^{]*\{[^}]*min-width:\s*8rem/.test(cssFlat)
+    && /cta-tag:not\(\.sports-chip__cta-tag--brand\)[^{]*\{[^}]*width:\s*max-content/.test(cssFlat)
+    && !/cta-tag:not\(\.sports-chip__cta-tag--brand\)[^{]*\{[^}]*min-width:\s*8rem/.test(cssFlat)
+    && /sports-chip__cta-tag-lines[^{]*\{[^}]*flex-direction:\s*column/.test(cssFlat)
+    && /grid-template-columns:\s*auto minmax\(4\.25rem, 1fr\)/.test(cssFlat)
     && /\[data-cta-state="live"\][^{]*\.sports-chip__cta-tag[^{]*\{[^}]*background:\s*#c8102e/.test(cssFlat),
-  'style : pastilles Prochain/Hier/Aujourd’hui en fill opaque, même rail ; direct inchangé',
+  'style : pastilles collées au libellé (pas de rail 8 rem) ; Prochain match 2 lignes ; glyphe 390 pas coupé',
 );
 {
   const wideCss = readFileSync(join(root, 'dev/wide-desktop-preview.css'), 'utf8');
@@ -1499,8 +1504,12 @@ assert(
     && appJs.includes('sports-chip__cta-sub')
     && appJs.includes('function sportsUpdatedShort')
     && appJs.includes('function sportsRelativeWhen')
-    && appJs.includes('function sportsResultBadgeEl'),
-  'app.js : CTA sous-ligne relatif + pastille V/D/N comme les puces scores',
+    && appJs.includes('function sportsResultBadgeEl')
+    && appJs.includes('function sportsPlaceOrdinal')
+    && appJs.includes('function sportsPlaceScoreText')
+    && /sports-chip__badge--place/.test(styleCss)
+    && appJs.includes('function sportsWhenWord'),
+  'app.js : CTA sous-ligne relatif + V/D/N match + médaille podium + mot de temps puces',
 );
 assert(
   appJs.includes('function sportsCtaResultIsTodayOrYesterday')
@@ -1515,12 +1524,19 @@ assert(
     && /function sportsCtaTagLabel/.test(appJs)
     && appJs.includes('function sportsCtaResultTag')
     && appJs.includes("return 'Hier'")
-    && appJs.includes("return 'Prochain'")
+    && appJs.includes("SPORTS_CTA_TAG_NEXT")
+    && appJs.includes("SPORTS_CTA_TAG_SOON")
+    && appJs.includes("SPORTS_CTA_TAG_TOMORROW")
+    && appJs.includes('function sportsCtaGameIsToday')
+    && appJs.includes('function sportsCtaGameIsTomorrow')
+    && appJs.includes('Aujourd’hui · ${when}')
+    && /data-cta-lamp="soon"[^{]*\{[^}]*sports-cta-ring-pulse/.test(cssFlat)
+    && appJs.includes('function fillSportsCtaTagCopy')
     && appJs.includes("return 'Aujourd’hui'")
     && appJs.includes("return 'Avant-hier'")
     && !/return 'Reprise'/.test(appJs)
     && !appJs.includes('function sportsHasAnyResult'),
-  'app.js : pastille Prochain/Hier/Aujourd’hui/date — plus de SPORTS+eyebrow',
+  'app.js : pastille Prochain match (2 lignes)/Hier/Aujourd’hui/date — plus de SPORTS+eyebrow',
 );
 // CTA pool = aujourd’hui/hier + (en saison jour lead | hors saison 1er match × 7 j).
 assert(
@@ -1630,6 +1646,7 @@ assert(
     && appJs.includes('Cégep Trois-Rivières')
     && appJs.includes('Cégep Rimouski')
     && appJs.includes("'reçoit'")
+    && appJs.includes("'chez'")
     && appJs.includes('sportsDisplaySideName')
     && appJs.includes('sportsChipOpponentLabel')
     && appJs.includes('sportsLookupInstitutionAcronym')
