@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-25T19:10:59.365Z",
+  "updated": "2026-08-25T20:58:56.811Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 132,
+  "cited": 131,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 20,
-  "updatedCount": 11,
-  "citedNew": 8,
-  "fallbackNew": 12,
+  "checked": 16,
+  "updatedCount": 7,
+  "citedNew": 3,
+  "fallbackNew": 13,
   "samples": [
     {
       "title": "Il y a 30 ans : un grand spectacle solidaire pour le Saguenay",
@@ -20,16 +20,9 @@
       "method": "body-line"
     },
     {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "title": "Élections de l’exécutif de l’AÉUM",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Sois belle et tais-toi",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Toscane Ralaimongo",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -64,30 +57,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
