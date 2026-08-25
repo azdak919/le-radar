@@ -49,7 +49,7 @@
   <p class="hint">Local seulement. Rien n’est appliqué en prod tant que le gate humain n’a pas dit go.</p>
 </header>
 <main>
-  <p id="verdict"><strong>Verdict panel : D — Bleu info #3a5f8a</strong><br>5/5 synthétique. Hier = temps refroidi, pas une victoire. Gate humain ouvert : rien en prod tant que tu n’as pas dit go D (ou B / C / E).</p>
+  <p id="verdict"><strong>Verdict panel : C — Pourpre de marque #6c2163</strong><br>Votes collés 2–2–1 (reader+a11y C · editor+designer E · dev B). Confiance moyenne. Le D du matin (bleu) n’a eu aucune voix. Gate humain ouvert : rien en prod tant que tu n’as pas dit go C (ou E / B / D).</p>
   <h2>Voisinage (déjà pris)</h2>
   <div class="row" id="taken"></div>
   <h2>Options</h2>
@@ -69,9 +69,9 @@
     { id: 'B', title: 'Ardoise', bg: '#5a6470', fg: '#fff', ratio: 6.01, aa: true,
       blurb: 'Past / archive. Gris informatif. Risque : a l’air désactivé.' },
     { id: 'C', title: 'Pourpre de marque', bg: '#6c2163', fg: '#fff', ratio: 10.32, aa: true,
-      blurb: 'Ni V, ni live, ni radio. Déjà fill par défaut. Moins « temps », plus « marque ».' },
+      blurb: 'Panel : C. AAA, déjà en palette. Filet inset blanc pour ne pas fondre dans le contour pourpre. Moins « temps », plus « marque ».' },
     { id: 'D', title: 'Bleu info', bg: '#3a5f8a', fg: '#fff', ratio: 6.60, aa: true,
-      blurb: 'Bleu = information (badges UX). Recency refroidie vs rouge Aujourd’hui. Pas le bleu radio.' },
+      blurb: 'Synthèse du matin (avant votes). 0 voix une fois le panel collé. 4ᵉ bleu vs radio.' },
     { id: 'E', title: 'Ivoire presse', bg: '#d4c4a8', fg: '#241c12', ratio: 9.81, aa: true,
       blurb: 'Papier / éditorial. Plus froid que le jaune avenir. Pas un feu tricolore.' },
   ];
@@ -107,7 +107,7 @@
   ).join('');
 
   const params = new URLSearchParams(location.search);
-  const winner = (params.get('v') || 'D').toUpperCase();
+  const winner = (params.get('v') || 'C').toUpperCase();
   document.getElementById('opts').innerHTML = OPTIONS.map((o) => `
     <article class="opt${winner === o.id ? ' is-verdict' : ''}" id="opt-${o.id}">
       <h3>${o.id} — ${o.title} <span class="ratio ${o.aa ? '' : 'fail'}">${o.ratio}:1 ${o.aa ? 'AA' : 'sous AA'}</span></h3>
