@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-25T09:32:36.912Z",
+  "updatedAt": "2026-08-25T10:29:03.260Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T09:32:07.582Z"
+      "checkedAt": "2026-08-25T10:28:23.790Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T09:32:09.787Z"
+      "checkedAt": "2026-08-25T10:28:26.131Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T09:32:13.267Z"
+      "checkedAt": "2026-08-25T10:28:29.254Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Hip's Time to Wake Hop",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
       },
+      "next": {
+        "title": "At The Movies",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/at-the-movies"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Hip's Time to Wake Hop",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T09:32:27.474Z"
+      "checkedAt": "2026-08-25T10:28:43.854Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T09:32:28.427Z"
+      "checkedAt": "2026-08-25T10:28:44.539Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +145,7 @@
         "end": "12:00",
         "slug": "le-monde-dans-mes-oreilles"
       },
-      "track": "Julie Aubé - La grosse misere",
+      "track": "KALIKA - KO EMOTIONNEL",
       "showTitle": "Les rois de l'arène",
       "host": "",
       "source": "api-live",
@@ -156,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-25T09:32:36.562Z"
+      "checkedAt": "2026-08-25T10:29:02.909Z"
     }
   }
 }
