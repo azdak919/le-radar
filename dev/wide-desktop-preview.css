@@ -692,7 +692,7 @@ html[data-wide-preview="e"] {
     scrollbar-color: color-mix(in srgb, var(--ink-soft, #9aa) 55%, transparent)
       color-mix(in srgb, var(--bg-soft, #1a1a1a) 80%, #000 20%);
   }
-  /* Loupe / flèche : le plus à droite/gauche possible, entier dans le cadre. */
+  /* FABs overlay : collés au bord droit du cadre (loupe + flèche ensemble). */
   html[data-wide-preview="e"] .page-tools {
     left: 0;
     right: 0;
