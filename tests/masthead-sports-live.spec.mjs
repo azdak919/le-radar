@@ -558,10 +558,9 @@ test('CTA : ADV n’est pas une institution (adversaire Spordle manquant)', asyn
   await expect(cta).not.toHaveAttribute('data-cta-state', 'next');
 });
 
-test('CTA pool : à venir → aujourd’hui → 5 j → hier ; pas le lointain', async ({ page }) => {
+test('CTA pool : hier → aujourd’hui → à venir du jour lead ; pas le lointain', async ({ page }) => {
   const now = Date.now();
   const today = torontoParts(now);
-  const earlier = torontoParts(now - 2 * 3600 * 1000);
   const plus3 = torontoParts(now + 3 * 86400000);
   const plus10 = torontoParts(now + 10 * 86400000);
   const y = yesterdayResultGame();
@@ -574,8 +573,8 @@ test('CTA pool : à venir → aujourd’hui → 5 j → hier ; pas le lointain',
     extra: { live: false },
   });
   const todayRes = {
-    date: earlier.date === today.date ? earlier.date : today.date,
-    time: earlier.date === today.date ? earlier.time : '00:15',
+    date: today.date,
+    time: '12:00',
     opponent: 'McGill',
     opponentCode: 'MCG',
     opponentFullName: 'McGill',
@@ -584,6 +583,7 @@ test('CTA pool : à venir → aujourd’hui → 5 j → hier ; pas le lointain',
     competition: 'Soccer collégial masculin D1',
     scoreFor: 1,
     scoreAgainst: 0,
+    result: 'W',
     final: true,
   };
   const mid = {
@@ -640,14 +640,10 @@ test('CTA pool : à venir → aujourd’hui → 5 j → hier ; pas le lointain',
   const seq = await page.evaluate(() => (typeof sportsCtaCandidateSlides === 'function'
     ? sportsCtaCandidateSlides().map((s) => `${s.mode}:${s.team?.code || ''}`)
     : []));
-  expect(seq[0], 'd’abord à venir').toMatch(/^next:STH$/);
-  expect(seq).toContain('next:MON');
-  expect(seq).toContain('result:CON');
-  expect(seq.join(), 'lointain (>5 j) hors CTA').not.toMatch(/AND/);
-  const iMid = seq.indexOf('next:MON');
-  const iY = seq.indexOf('result:CON');
-  expect(iMid).toBeGreaterThan(0);
-  expect(iY).toBeGreaterThan(iMid);
+  expect(seq[0], 'le cycle commence par hier').toMatch(/^result:CON$/);
+  expect(seq).toContain('next:STH');
+  expect(seq.join(), 'hors jour lead / lointain hors CTA').not.toMatch(/MON|AND/);
+  expect(seq.indexOf('next:STH')).toBeGreaterThan(0);
 });
 
 test('même match : une face reçoit ou chez, pas les deux', async ({ page }) => {
