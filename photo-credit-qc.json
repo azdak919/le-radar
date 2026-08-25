@@ -1,51 +1,30 @@
 {
-  "updated": "2026-08-25T02:03:00.111Z",
+  "updated": "2026-08-25T03:20:40.991Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 131,
-  "pending": 12,
+  "cited": 129,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 10,
-  "citedNew": 8,
-  "fallbackNew": 13,
+  "checked": 16,
+  "updatedCount": 4,
+  "citedNew": 2,
+  "fallbackNew": 14,
   "samples": [
     {
-      "title": "La Fondation de l’UdeS",
-      "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
+      "title": "Des initiatives qui rassemblent",
+      "source": "Le Délit",
+      "credit": "Crédit photo : Le Délit",
       "cited": false,
       "method": null
     },
     {
-      "title": "Le cinéma québécois fait son entrée en classe avec Ciné Panache",
-      "source": "Le Collectif",
-      "credit": "Photo : Ciné Panache",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Ce que nous devons aux femmes",
+      "title": "Élections de l’exécutif de l’AÉUM",
       "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
+      "credit": "Photo : Anna El Murr",
       "cited": true,
-      "method": "media-credit-near"
-    },
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
+      "method": "figcaption-bare"
     },
     {
       "title": "Inside Mile End Kicks",
@@ -57,30 +36,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Les PME du Saguenay-Lac-Saint-Jean en mode solution",
-      "source": "La Pige",
-      "credit": "Photo : L’Union des producteurs agricoles",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
