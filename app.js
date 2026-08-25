@@ -5406,9 +5406,9 @@ function sportsMatchDedupeKey(slide) {
 }
 
 /**
- * Face d’un match miroir (reçoit / chez) : une seule.
- * Favori → sa face ; sinon pile ou face **stable** (même match = même verbe
- * jusqu’au prochain `sports.json`, pas un flip à chaque rotation).
+ * Face d’un match miroir : **reçoit** ou **chez**, jamais les deux, jamais
+ * le libellé « reçoit/chez ». Favori → sa face ; sinon pile ou face **stable**
+ * (même match = même verbe jusqu’au prochain `sports.json`).
  */
 function sportsMatchFaceHash(slide) {
   const key = sportsMatchDedupeKey(slide) || slide?.key || '';
@@ -5420,9 +5420,23 @@ function sportsMatchFaceHash(slide) {
   return h >>> 0;
 }
 
+/** Rang CTA d’un résultat : vainqueur d’abord, puis nul, jamais la défaite. */
+function sportsResultFaceRank(slide) {
+  const r = String(slide?.game?.result || '');
+  if (r === 'W') return 0;
+  if (r === 'D' || r === 'T') return 1;
+  if (r === 'L') return 3;
+  return 2;
+}
+
 function sportsPreferMatchFace(a, b) {
   if (!a) return b;
   if (!b) return a;
+  if (a.mode === 'result' && b.mode === 'result') {
+    const ra = sportsResultFaceRank(a);
+    const rb = sportsResultFaceRank(b);
+    if (ra !== rb) return ra < rb ? a : b;
+  }
   let favSet = new Set();
   try { favSet = new Set(readSportsFavorites()); } catch { /* ignore */ }
   const fa = sportsIsFavorite(a.team, favSet);
@@ -5455,7 +5469,7 @@ function sportsDedupeMatchSlides(slides) {
 
 /**
  * Clés d’occupation d’une slide.
- * Prochains / CTA : un match = une face (reçoit ou chez).
+ * Prochains / CTA : un match = une face (**reçoit** ou **chez**).
  * Résultats (puces scores) : V et D (ou N/N) sont deux cartes distinctes.
  */
 function sportsSlideOccupyKeys(slide) {
@@ -5608,6 +5622,8 @@ function sportsCtaCandidateSlides() {
 
     if (s.mode === 'result') {
       if (!sportsCtaResultIsTodayOrYesterday(s.game, now)) continue;
+      // CTA aujourd’hui / hier : le vainqueur seulement — pas la défaite.
+      if (String(s.game?.result || '') === 'L') continue;
       const day = sportsSlideDayKey(s);
       if (day === today) todayResults.push(s);
       else if (day === yesterday) yesterdayResults.push(s);
@@ -5667,6 +5683,8 @@ function sportsCtaCandidateSlides() {
     if (weekFirsts.length) nextPool = weekFirsts;
   }
 
+  // Direct : matchs en cours. Sinon : dans l’heure → hier (vainqueur) →
+  // aujourd’hui (vainqueur) → autres à venir.
   const lives = sportsCtaLiveSources(now);
   if (lives.length) {
     lives.sort(bySoonest);
@@ -6526,8 +6544,8 @@ function paintSportsChip(slide, animate = false) {
  */
 function nextSportsSlide(usedKeys, opts = {}) {
   const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
-  // CTA à venir : pas le miroir reçoit/chez. CTA résultat : seulement la même face
-  // (la puce score peut encore montrer V/D/N de l’autre équipe).
+  // CTA à venir : une face, **reçoit** ou **chez** — pas le miroir.
+  // CTA résultat : vainqueur seulement (la puce score garde V/D/N de l’autre).
   sportsVisible.forEach((s) => {
     if (s?.mode !== 'cta') return;
     for (const k of sportsSlideOccupyKeys(s)) used.add(k);

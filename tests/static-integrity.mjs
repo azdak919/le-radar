@@ -1599,10 +1599,12 @@ assert(
     && appJs.includes('sportsDedupeMatchSlides')
     && appJs.includes('sportsMatchDedupeKey')
     && appJs.includes('function sportsMatchFaceHash')
+    && appJs.includes('function sportsResultFaceRank')
     && appJs.includes('sportsSoftSportDiversity')
+    && appJs.includes("if (String(s.game?.result || '') === 'L') continue")
     && !/CTA : carte stable — roulement/.test(appJs)
     && /if \(animate && !sportsReducedMotion\) a\.classList\.add\('is-arriving'\)/.test(appJs),
-  'app.js : CTA = dédup matchs + même leave/arrive carte entière que les scores',
+  'app.js : CTA = dédup matchs + vainqueur seulement + même leave/arrive que les scores',
 );
 assert(
   styleCss.includes('sports-chip__cta-stack')
