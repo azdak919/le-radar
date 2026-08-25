@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-25T12:41:26.498Z",
+  "updatedAt": "2026-08-25T13:47:29.243Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,52 +27,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T12:40:50.775Z"
+      "checkedAt": "2026-08-25T13:46:49.762Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Raconte ton quartier",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/raconte-ton-quartier"
-      },
-      "next": {
         "title": "La collation",
         "source": "schedule",
         "start": "09:00",
         "end": "11:00",
         "url": "https://cism893.ca/emissions/mix-collation"
       },
+      "next": {
+        "title": "Roche aux platines",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/roche-aux-platines"
+      },
       "track": "",
-      "showTitle": "Raconte ton quartier",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T12:40:53.086Z"
+      "checkedAt": "2026-08-25T13:46:52.064Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Tuesday Morning After Pt2",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Basa Basa",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Ecolibrium/Environment in Canada",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "Tuesday Morning After Pt2",
+      "showTitle": "Basa Basa",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,34 +80,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T12:40:56.258Z"
+      "checkedAt": "2026-08-25T13:46:54.937Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hip's Time to Wake Hop",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
-      },
-      "next": {
         "title": "At The Movies",
         "source": "schedule-live",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/at-the-movies"
       },
+      "next": {
+        "title": "Democracy Now",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
+      },
       "track": "",
-      "showTitle": "Hip's Time to Wake Hop",
+      "showTitle": "At The Movies",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T12:41:10.328Z"
+      "checkedAt": "2026-08-25T13:47:09.285Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,7 +132,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T12:41:10.880Z"
+      "checkedAt": "2026-08-25T13:47:10.259Z"
     },
     "choq": {
       "id": "choq",
@@ -145,18 +145,15 @@
         "end": "12:00",
         "slug": "le-monde-dans-mes-oreilles"
       },
-      "track": "Mike Shabb - DILLA",
+      "track": "Logan Staats - Empty Hands",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-08-25T12:41:26.148Z"
+      "clientPoll": null,
+      "checkedAt": "2026-08-25T13:47:28.892Z"
     }
   }
 }
