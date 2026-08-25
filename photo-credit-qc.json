@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-25T10:02:14.334Z",
+  "updated": "2026-08-25T11:03:04.505Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 131,
+  "cited": 130,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 20,
-  "updatedCount": 11,
-  "citedNew": 8,
-  "fallbackNew": 12,
+  "checked": 16,
+  "updatedCount": 7,
+  "citedNew": 3,
+  "fallbackNew": 13,
   "samples": [
     {
       "title": "Il y a 30 ans : un grand spectacle solidaire pour le Saguenay",
@@ -22,14 +22,7 @@
     {
       "title": "Élections de l’exécutif de l’AÉUM",
       "source": "Le Délit",
-      "credit": "Photo : Anna El Murr",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
-      "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
+      "credit": "Photo : Toscane Ralaimongo",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -64,30 +57,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
