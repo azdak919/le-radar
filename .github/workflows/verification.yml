@@ -43,7 +43,7 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 12
     permissions:
       contents: read
 
@@ -81,6 +81,7 @@ jobs:
       # Suite complète : workflow_dispatch seulement (trop longue pour chaque push).
       - name: Browser checks (critical)
         if: github.event_name != 'workflow_dispatch'
+        timeout-minutes: 8
         run: npm run test:browser:ci
 
       - name: Browser checks (full suite)
