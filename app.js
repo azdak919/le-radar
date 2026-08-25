@@ -3522,6 +3522,8 @@ const SPORTS_MATCH_SCROLL_ONE_WAY_MS = 8000;
 const SPORTS_CTA_MAX_POOL = 80;
 /** Prochains sur la CTA : demain → aujourd’hui + N jours civils (hors « À venir » du jour). */
 const SPORTS_CTA_NEXT_DAYS = 5;
+/** Hors saison : 1er match de chacun des N premiers jours d’action dès le jour lead. */
+const SPORTS_CTA_OFFSEASON_LEAD_DAYS = 7;
 /*
  * Registre d’alerte de la carte CTA — focus-group le-radar-sports-first-glance
  * (garde-fou `registre-alerte-reserve`) et le-radar-cta-sports-badge.
