@@ -1,11 +1,13 @@
 {
-  "checkedAt": "2026-08-24T23:32:08.443Z",
+  "checkedAt": "2026-08-25T23:34:51.194Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
-    "drift": [],
+    "stable": 4,
+    "drift": [
+      "cjlo"
+    ],
     "overhaul": [
       "choq"
     ],
@@ -46,11 +48,17 @@
       "id": "cjlo",
       "published": 371,
       "fresh": 371,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "added": [
+        "dim 22:00–00:00 CJLO's Alternative Mega Mix",
+        "lun 00:00–00:30 On the Right Track"
+      ],
+      "removed": [
+        "dim 22:00–23:00 On The Right Track",
+        "dim 23:00–00:00 CJLO's Alternative Mega Mix"
+      ],
+      "changed": 4,
+      "ratio": 0.011,
+      "status": "drift"
     },
     {
       "id": "cfak",
@@ -68,7 +76,7 @@
       "fresh": 12,
       "added": [
         "lun 17:00–18:00 Bitume",
-        "mar 11:00–12:00 Le Monde Dans Mes Oreilles",
+        "mar 12:00–13:00 Le Monde Dans Mes Oreilles",
         "jeu 20:00–21:00 La nouvelle école des surdoués"
       ],
       "removed": [
