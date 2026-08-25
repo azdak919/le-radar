@@ -382,6 +382,55 @@ test('CTA : sans direct, le cycle reprend (résultat hier)', async ({ page }) =>
   expect(pool.some((s) => s.mode === 'result')).toBe(true);
 });
 
+test('CTA : sans live, hier avant un à-venir dans 3 h', async ({ page }) => {
+  const y = yesterdayResultGame();
+  const tY = teamShell('collegial:soccer:yest', {
+    name: 'Concordia', fullName: 'Concordia', code: 'CON',
+  });
+  tY.lastGame = y;
+  tY.results = [y];
+  const later = upcomingTodayPayload(3 * 3600 * 1000);
+  const tNext = Object.values(later.teams)[0];
+  await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [tY.id]: tY, [tNext.id]: tNext },
+  });
+  const seq = await page.evaluate(() => sportsCtaCandidateSlides().map((s) => ({
+    mode: s.mode,
+    code: s.team?.code || '',
+  })));
+  expect(seq[0], 'le cycle commence par hier').toMatchObject({ mode: 'result', code: 'CON' });
+  expect(seq.some((s) => s.mode === 'next' && s.code === 'STH'), 'à venir encore dans le pool').toBe(true);
+  const cta = page.locator('#masthead-sports-strip .sports-chip--cta').last();
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/hier/i);
+});
+
+test('CTA : à venir dans l’heure passe devant hier', async ({ page }) => {
+  const y = yesterdayResultGame();
+  const tY = teamShell('collegial:soccer:yest', {
+    name: 'Concordia', fullName: 'Concordia', code: 'CON',
+  });
+  tY.lastGame = y;
+  tY.results = [y];
+  const soon = upcomingTodayPayload(45 * 60 * 1000);
+  const tNext = Object.values(soon.teams)[0];
+  await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [tY.id]: tY, [tNext.id]: tNext },
+  });
+  const seq = await page.evaluate(() => sportsCtaCandidateSlides().map((s) => ({
+    mode: s.mode,
+    code: s.team?.code || '',
+  })));
+  expect(seq[0], 'dans l’heure avant hier').toMatchObject({ mode: 'next', code: 'STH' });
+  expect(seq.some((s) => s.mode === 'result' && s.code === 'CON')).toBe(true);
+  const cta = page.locator('#masthead-sports-strip .sports-chip--cta').last();
+  await expect(cta).toHaveAttribute('data-cta-state', 'next');
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/À\s*venir/i);
+});
+
 test('CTA prochain du jour : heure de coup d’envoi, pas « dans 3 h »', async ({ page }) => {
   const now = Date.now();
   const today = torontoParts(now).date;
