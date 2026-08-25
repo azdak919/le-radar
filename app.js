@@ -4562,7 +4562,8 @@ function sportsLeftLaneState() {
       const day = sportsSlideDayKey(s);
       return day && day > ctaEnd;
     });
-    const pool = sportsDedupeMatchSlides(recentResults.concat(farNexts));
+    // Résultats : V et D (ou N/N) restent deux cartes. Futurs : une face.
+    const pool = recentResults.concat(sportsDedupeMatchSlides(farNexts));
     return { kind: 'results', pool };
   }
   // Hors saison / creux : calendrier à venir seulement (pas de musée d’avril).
@@ -5453,19 +5454,23 @@ function sportsDedupeMatchSlides(slides) {
 }
 
 /**
- * Clés d’occupation d’une slide (clé face + dédup match miroir).
- * Empêche « même match » à gauche et dans la CTA (faces QC opposées).
+ * Clés d’occupation d’une slide.
+ * Prochains / CTA : un match = une face (reçoit ou chez).
+ * Résultats (puces scores) : V et D (ou N/N) sont deux cartes distinctes.
  */
 function sportsSlideOccupyKeys(slide) {
   const keys = new Set();
   if (!slide) return keys;
   if (slide.mode === 'cta' && slide.ctaFrom) {
     if (slide.ctaFrom.key) keys.add(slide.ctaFrom.key);
-    const dk = sportsMatchDedupeKey(slide.ctaFrom);
-    if (dk && dk !== 'pair:|||') keys.add(dk);
+    if (slide.ctaFrom.mode !== 'result') {
+      const dk = sportsMatchDedupeKey(slide.ctaFrom);
+      if (dk && dk !== 'pair:|||') keys.add(dk);
+    }
     return keys;
   }
   if (slide.key) keys.add(slide.key);
+  if (slide.mode === 'result') return keys;
   const dk = sportsMatchDedupeKey(slide);
   if (dk && dk !== 'pair:|||') keys.add(dk);
   return keys;
@@ -6521,7 +6526,8 @@ function paintSportsChip(slide, animate = false) {
  */
 function nextSportsSlide(usedKeys, opts = {}) {
   const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
-  // Exclure tous les matchs déjà en CTA (1–3 cartes wide).
+  // CTA à venir : pas le miroir reçoit/chez. CTA résultat : seulement la même face
+  // (la puce score peut encore montrer V/D/N de l’autre équipe).
   sportsVisible.forEach((s) => {
     if (s?.mode !== 'cta') return;
     for (const k of sportsSlideOccupyKeys(s)) used.add(k);

@@ -698,6 +698,113 @@ test('même match : une face reçoit ou chez, pas les deux', async ({ page }) =>
   expect(['UQAM', 'MCG']).toContain(faces[0].code);
 });
 
+test('puces scores : V d’un côté et D de l’autre, pas de dédup', async ({ page }) => {
+  const y = yesterdayResultGame();
+  const win = {
+    ...y,
+    opponent: 'Vanier',
+    opponentCode: 'VAN',
+    opponentFullName: 'Vanier College',
+    scoreFor: 3,
+    scoreAgainst: 0,
+    result: 'W',
+    gameId: 'vd-same-game',
+    final: true,
+  };
+  const loss = {
+    ...y,
+    opponent: 'Saint-Hyacinthe',
+    opponentCode: 'STH',
+    opponentFullName: 'Cégep de Saint-Hyacinthe',
+    scoreFor: 0,
+    scoreAgainst: 3,
+    result: 'L',
+    gameId: 'vd-same-game',
+    final: true,
+    home: false,
+  };
+  const drawA = {
+    ...y,
+    opponent: 'Concordia',
+    opponentCode: 'CON',
+    opponentFullName: 'Concordia',
+    scoreFor: 1,
+    scoreAgainst: 1,
+    result: 'D',
+    gameId: 'draw-same-game',
+    final: true,
+  };
+  const drawB = {
+    ...y,
+    opponent: 'McGill',
+    opponentCode: 'MCG',
+    opponentFullName: 'McGill University',
+    scoreFor: 1,
+    scoreAgainst: 1,
+    result: 'D',
+    gameId: 'draw-same-game',
+    final: true,
+    home: false,
+  };
+  const tW = teamShell('collegial:soccer:sth-w', {
+    name: 'Saint-Hyacinthe', fullName: 'Cégep de Saint-Hyacinthe', code: 'STH',
+  });
+  tW.lastGame = win;
+  tW.results = [win];
+  const tL = teamShell('collegial:soccer:van-l', {
+    name: 'Vanier', fullName: 'Vanier College', code: 'VAN',
+  });
+  tL.lastGame = loss;
+  tL.results = [loss];
+  const tDrawA = teamShell('universitaire:soccer:mcg-d', {
+    name: 'McGill', fullName: 'McGill University', code: 'MCG',
+  });
+  tDrawA.sector = 'universitaire';
+  tDrawA.lastGame = drawA;
+  tDrawA.results = [drawA];
+  const tDrawB = teamShell('universitaire:soccer:con-d', {
+    name: 'Concordia', fullName: 'Concordia', code: 'CON',
+  });
+  tDrawB.sector = 'universitaire';
+  tDrawB.lastGame = drawB;
+  tDrawB.results = [drawB];
+  await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [tW.id]: tW, [tL.id]: tL, [tDrawA.id]: tDrawA, [tDrawB.id]: tDrawB },
+  });
+  const faces = await page.evaluate(() => {
+    const lane = typeof sportsLeftLaneState === 'function' ? sportsLeftLaneState() : { pool: [] };
+    const of = (gid) => (lane.pool || [])
+      .filter((s) => s.mode === 'result' && String(s.game?.gameId) === gid);
+    const occupy = (slide) => (typeof sportsSlideOccupyKeys === 'function'
+      ? [...sportsSlideOccupyKeys(slide)]
+      : []);
+    const usedBy = (slide) => new Set(occupy(slide));
+    const blocked = (slide, other) => (typeof sportsSlideIsUsed === 'function'
+      ? sportsSlideIsUsed(slide, usedBy(other))
+      : true);
+    const badge = (game) => (typeof sportsResultBadgeSpec === 'function'
+      ? sportsResultBadgeSpec(game)?.letter
+      : '');
+    const vd = of('vd-same-game');
+    const nn = of('draw-same-game');
+    return {
+      vd: vd.map((s) => ({ code: s.team?.code, result: s.game?.result, badge: badge(s.game) })),
+      nn: nn.map((s) => ({ code: s.team?.code, result: s.game?.result, badge: badge(s.game) })),
+      vdBlocks: vd.length === 2 ? blocked(vd[0], vd[1]) || blocked(vd[1], vd[0]) : true,
+      nnBlocks: nn.length === 2 ? blocked(nn[0], nn[1]) || blocked(nn[1], nn[0]) : true,
+    };
+  });
+  expect(faces.vd.length, 'V et D tous les deux').toBe(2);
+  expect(faces.vd.map((f) => f.result).sort()).toEqual(['L', 'W']);
+  expect(faces.vd.map((f) => f.badge).sort()).toEqual(['D', 'V']);
+  expect(faces.vdBlocks, 'V ne masque pas D').toBe(false);
+  expect(faces.nn.length, 'N des deux côtés').toBe(2);
+  expect(faces.nn.every((f) => f.result === 'D' && f.badge === 'N')).toBe(true);
+  expect(faces.nnBlocks, 'N ne masque pas l’autre N').toBe(false);
+});
+
 test('bandeau : nextGames entier, pas un seul match par équipe', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
