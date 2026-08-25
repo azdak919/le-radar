@@ -3506,11 +3506,11 @@ const SPORTS_SPORT_TONES = {
 const SPORTS_LIVE_BEFORE_MS = 2 * 3600 * 1000;
 const SPORTS_LIVE_AFTER_MS = 3 * 3600 * 1000;
 const SPORTS_IMMINENT_MS = 7 * 24 * 3600 * 1000; /* 7 jours */
-/** Focus-group le-radar-sports-left-pool : gate D (7 j) + exclude priorSeason. */
-const SPORTS_RECENT_RESULT_MS = 7 * 24 * 3600 * 1000; /* résultats < 7 j — cartes de gauche */
+/** Puces scores : résultats des **5** derniers jours, avant les futurs hors CTA. */
+const SPORTS_RECENT_RESULT_MS = 5 * 24 * 3600 * 1000;
 /**
  * « Chaud » pour la *voie de gauche* / détection saison (pas le pool CTA).
- * La CTA suit le-radar-cta-sports-window : journée lead + résultats aujourd’hui/hier.
+ * La CTA suit une fenêtre de 5 jours civils de prochains + aujourd’hui/hier.
  */
 const SPORTS_CTA_UPCOMING_MS = 14 * 24 * 3600 * 1000;
 /**
@@ -3518,13 +3518,11 @@ const SPORTS_CTA_UPCOMING_MS = 14 * 24 * 3600 * 1000;
  * Un overflow dense (voile / place / événement) à 5,5 s se lisait en zapping.
  */
 const SPORTS_MATCH_SCROLL_ONE_WAY_MS = 8000;
-/** Plafond faces CTA (jour lead + filet aujourd’hui/hier) — le-radar-cta-sports-window F. */
-const SPORTS_CTA_MAX_POOL = 16;
-/**
- * Hors saison (aucun résultat aujourd’hui/hier) : alterner le **premier match**
- * de chacun des **7 premiers jours civils** d’action à partir du jour lead
- * (ex. 19→25 août), pas un seul match collé toute la semaine.
- */
+/** Plafond faces CTA après dédup reçoit/chez — assez pour la fenêtre 5 j. */
+const SPORTS_CTA_MAX_POOL = 80;
+/** Prochains sur la CTA : demain → aujourd’hui + N jours civils (hors « À venir » du jour). */
+const SPORTS_CTA_NEXT_DAYS = 5;
+/** Hors saison : 1er match de chacun des N premiers jours d’action dès le jour lead. */
 const SPORTS_CTA_OFFSEASON_LEAD_DAYS = 7;
 /*
  * Registre d’alerte de la carte CTA — focus-group le-radar-sports-first-glance
@@ -3537,9 +3535,8 @@ const SPORTS_CTA_OFFSEASON_LEAD_DAYS = 7;
 const SPORTS_LIVE_VISUAL_LEAD_MS = 15 * 60 * 1000; /* 15 min avant le coup d’envoi */
 const SPORTS_LIVE_VISUAL_TAIL_MS = 3 * 3600 * 1000; /* 3 h après le coup d’envoi */
 /**
- * Filet résultats CTA : **jours civils Toronto** « aujourd’hui » + « hier »
- * (plus de fenêtre 48 h glissante — gate mainteneur 2026-08-11).
- * Les prochains du **jour lead** restent en appoint (le-radar-cta-sports-window F).
+ * Filet résultats CTA : jours civils Toronto « aujourd’hui » + « hier ».
+ * Les prochains = fenêtre SPORTS_CTA_NEXT_DAYS (pas le seul jour lead).
  */
 /** À venir dans l’heure : passe devant hier (même seuil que « dans 45 min »). */
 const SPORTS_CTA_WITHIN_HOUR_MS = 60 * 60 * 1000;
@@ -3982,14 +3979,37 @@ function sportsEditorialRank(teamOrCode) {
 }
 
 /** Slide résultat passé pour une équipe (null si aucun lastGame). */
-function sportsResultSlide(team, now = Date.now()) {
-  if (!team?.lastGame) return null;
-  const u = sportsUrgency('result', team.lastGame, now);
+function sportsGameDedupeStamp(game = {}) {
+  return `${game.date || ''}|${game.time || ''}|${game.gameId || ''}|${game.opponentCode || game.opponent || ''}`;
+}
+
+function sportsResultSlideFromGame(team, game, now = Date.now()) {
+  if (!team || !game) return null;
+  const u = sportsUrgency('result', game, now);
+  const gid = game.gameId != null ? String(game.gameId) : '';
   return {
     mode: 'result',
     team,
-    game: team.lastGame,
-    key: `r:${team.id}:${team.lastGame.date}`,
+    game,
+    key: `r:${team.id}:${game.date}:${game.time || ''}:${gid}`,
+    urgency: u,
+  };
+}
+
+function sportsResultSlide(team, now = Date.now()) {
+  if (!team?.lastGame) return null;
+  return sportsResultSlideFromGame(team, team.lastGame, now);
+}
+
+function sportsNextSlideFromGame(team, game, now = Date.now()) {
+  if (!team || !game) return null;
+  const u = sportsUrgency('next', game, now);
+  const gid = game.gameId != null ? String(game.gameId) : '';
+  return {
+    mode: 'next',
+    team,
+    game,
+    key: `n:${team.id}:${game.date}:${game.time || ''}:${gid}`,
     urgency: u,
   };
 }
@@ -3997,14 +4017,7 @@ function sportsResultSlide(team, now = Date.now()) {
 /** Slide match à venir pour une équipe (null si aucun nextGame). */
 function sportsNextSlide(team, now = Date.now()) {
   if (!team?.nextGame) return null;
-  const u = sportsUrgency('next', team.nextGame, now);
-  return {
-    mode: 'next',
-    team,
-    game: team.nextGame,
-    key: `n:${team.id}:${team.nextGame.date}`,
-    urgency: u,
-  };
+  return sportsNextSlideFromGame(team, team.nextGame, now);
 }
 
 /**
@@ -4441,10 +4454,28 @@ function buildSportsSlides(data) {
   const results = [];
   const nexts = [];
   for (const team of eligible) {
-    const r = sportsResultSlide(team, now);
-    if (r) results.push(r);
-    const n = sportsNextSlide(team, now);
-    if (n) nexts.push(n);
+    const seenR = new Set();
+    const resultGames = [];
+    if (team.lastGame) resultGames.push(team.lastGame);
+    for (const g of team.results || []) resultGames.push(g);
+    for (const g of resultGames) {
+      const stamp = sportsGameDedupeStamp(g);
+      if (seenR.has(stamp)) continue;
+      seenR.add(stamp);
+      const r = sportsResultSlideFromGame(team, g, now);
+      if (r) results.push(r);
+    }
+    const seenN = new Set();
+    const nextGames = (Array.isArray(team.nextGames) && team.nextGames.length)
+      ? team.nextGames
+      : (team.nextGame ? [team.nextGame] : []);
+    for (const g of nextGames) {
+      const stamp = sportsGameDedupeStamp(g);
+      if (seenN.has(stamp)) continue;
+      seenN.add(stamp);
+      const n = sportsNextSlideFromGame(team, g, now);
+      if (n) nexts.push(n);
+    }
   }
 
   // Résultats : plus récents d’abord (fraîcheur d’affichage).
@@ -4504,6 +4535,7 @@ function sportsLeftLaneState() {
   // Focus-group le-radar-sports-left-pool (gate D + exclude priorSeason) :
   // résultats < 7 j seulement ; jamais le musée lastGame via « CTA chaude ».
   const recentResults = results.filter((s) => {
+    if (!sportsSlideIsDisplayable(s)) return false;
     if (s?.game?.priorSeason || s?.team?.lastGamePriorSeason) return false;
     const age = sportsResultAgeMs(s.game, now);
     return Number.isFinite(age) && age >= 0 && age <= SPORTS_RECENT_RESULT_MS;
@@ -4524,14 +4556,24 @@ function sportsLeftLaneState() {
   }
 
   if (recentResults.length) {
-    // Résultats chauds d’abord, calendrier en appoint pour remplir 3 puces.
+    // Résultats 5 j d’abord ; futurs **hors** fenêtre CTA (> 5 j).
     const seen = new Set(recentResults.map((s) => s.key));
-    const pool = recentResults.concat(nexts.filter((s) => !seen.has(s.key)));
+    const ctaEnd = sportsCtaNextWindowEndDay(now);
+    const farNexts = nexts.filter((s) => {
+      if (!sportsSlideIsDisplayable(s) || seen.has(s.key)) return false;
+      const day = sportsSlideDayKey(s);
+      return day && day > ctaEnd;
+    });
+    // Résultats : V et D (ou N/N) restent deux cartes. Futurs : une face.
+    const pool = recentResults.concat(sportsDedupeMatchSlides(farNexts));
     return { kind: 'results', pool };
   }
   // Hors saison / creux : calendrier à venir seulement (pas de musée d’avril).
   // Filet ultime : un seul plus récent lastGame si vraiment zéro next.
-  if (nexts.length) return { kind: 'offseason', pool: nexts };
+  const namedNexts = nexts.filter(sportsSlideIsDisplayable);
+  if (namedNexts.length) {
+    return { kind: 'offseason', pool: sportsDedupeMatchSlides(namedNexts) };
+  }
   const staleFilet = results.slice(0, 1);
   return { kind: 'offseason', pool: staleFilet };
 }
@@ -4842,8 +4884,16 @@ function sportsLooksUniversity({ fullName, shortName, sector, code } = {}) {
   const f = String(fullName || '');
   if (/Universit[eé]|University/i.test(f)) return true;
   const c = String(code || '').toUpperCase();
-  // Code univ. explicite seulement (USHE oui, SHE non)
-  if (SPORTS_UNI_CODE_ACRONYM[c]) return true;
+  // Code univ. : seulement si le libellé est vraiment l’établissement.
+  // « Carabins » + code MTL ne doit pas devenir UdeM.
+  if (SPORTS_UNI_CODE_ACRONYM[c]) {
+    if (/Universit[eé]|University/i.test(f)) return true;
+    const ac = SPORTS_UNI_CODE_ACRONYM[c];
+    const s = String(shortName || '').trim();
+    if (s && (s === ac || s === c || /^U[A-ZÉ]{2,}/i.test(s))) return true;
+    if (!s && !f) return true;
+    return false;
+  }
   // Acronyme table **seulement** si fullName d’université (pas short seul)
   if (f) {
     const ac = sportsLookupInstitutionAcronym(f);
@@ -4852,9 +4902,35 @@ function sportsLooksUniversity({ fullName, shortName, sector, code } = {}) {
   return false;
 }
 
+/** Adversaire Spordle manquant : le bot écrit « ADV » (adversaire), pas une école. */
+const SPORTS_PLACEHOLDER_OPPONENT_RE = /^(ADV|TBD|TBA|N\/A|\?+|adversaire)$/i;
+
+function sportsGameHasNamedOpponent(game) {
+  if (!game) return false;
+  if (sportsIsPlaceResult(game, game.sport)) return true;
+  const n = String(game.opponent || '').trim();
+  const full = String(game.opponentFullName || '').trim();
+  if (SPORTS_PLACEHOLDER_OPPONENT_RE.test(n) && !full) return false;
+  if (!n && !full) return false;
+  if (SPORTS_PLACEHOLDER_OPPONENT_RE.test(n) && SPORTS_PLACEHOLDER_OPPONENT_RE.test(full || n)) {
+    return false;
+  }
+  return true;
+}
+
+function sportsSlideIsDisplayable(slide) {
+  if (!slide?.game) return false;
+  return sportsGameHasNamedOpponent(slide.game);
+}
+
+function sportsCtaNextWindowEndDay(now = Date.now()) {
+  return sportsCivilDayShift(torontoDayKey(now), SPORTS_CTA_NEXT_DAYS);
+}
+
 /**
  * Nom d’établissement en clair — garde-fou `noms-lisibles`
- * (focus-group le-radar-sports-first-glance). CTA / tooltips : forme lisible.
+ * (focus-group le-radar-sports-first-glance). Tooltips : forme lisible.
+ * CTA + puces scores : acronymes univ (sinon le titre coupe « Université de Mc… »).
  * **Jamais** de troncature `…` — marquee L→R si trop long.
  */
 function sportsPlainTeamName(team) {
@@ -5139,7 +5215,7 @@ function sportsMatchSubLine(slide) {
 }
 
 /**
- * Accroche principale de la CTA — noms en clair, score lisible, sans sigle.
+ * Accroche principale de la CTA — acronymes univ (UQAM, McGill), comme les puces.
  * Le marqueur temporel vit à part (`sportsCtaEyebrow`) pour rester hors de la
  * zone qui défile (garde-fou `marqueur-non-tronque`).
  */
@@ -5148,7 +5224,7 @@ function sportsCtaLabelFromSlide(slide) {
   const g = slide.game;
   const glyph = sportsGlyph(slide.team.sport || g.sport);
   const home = sportsChipTeamShort(slide.team);
-  const opp = sportsPlainOpponentName(g);
+  const opp = sportsChipOpponentLabel(g);
   const liveScore = sportsGameIsLive(g) && sportsGameHasScore(g);
 
   if (slide.mode === 'next' && !liveScore) {
@@ -5332,25 +5408,49 @@ function sportsMatchDedupeKey(slide) {
 }
 
 /**
- * Face éditoriale d’un match miroir : domicile → favori → rang éditorial.
- * (Un match = une accroche CTA.)
+ * Face d’un match miroir : **reçoit** ou **chez**, jamais les deux, jamais
+ * le libellé « reçoit/chez ». Favori → sa face ; sinon pile ou face **stable**
+ * (même match = même verbe jusqu’au prochain `sports.json`).
  */
+function sportsMatchFaceHash(slide) {
+  const key = sportsMatchDedupeKey(slide) || slide?.key || '';
+  let h = 2166136261;
+  for (let i = 0; i < key.length; i += 1) {
+    h ^= key.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+/** Rang CTA d’un résultat : vainqueur d’abord, puis nul, jamais la défaite. */
+function sportsResultFaceRank(slide) {
+  const r = String(slide?.game?.result || '');
+  if (r === 'W') return 0;
+  if (r === 'D' || r === 'T') return 1;
+  if (r === 'L') return 3;
+  return 2;
+}
+
 function sportsPreferMatchFace(a, b) {
   if (!a) return b;
   if (!b) return a;
-  let favSet = null;
-  try {
-    favSet = new Set(readSportsFavorites());
-  } catch { favSet = new Set(); }
-  const score = (s) => {
-    let n = 0;
-    if (s.game?.home === true) n += 100;
-    if (s.game?.home === false) n -= 10;
-    if (sportsIsFavorite(s.team, favSet)) n += 50;
-    n += Math.max(0, 40 - sportsEditorialRank(s.team));
-    return n;
-  };
-  return score(a) >= score(b) ? a : b;
+  if (a.mode === 'result' && b.mode === 'result') {
+    const ra = sportsResultFaceRank(a);
+    const rb = sportsResultFaceRank(b);
+    if (ra !== rb) return ra < rb ? a : b;
+  }
+  let favSet = new Set();
+  try { favSet = new Set(readSportsFavorites()); } catch { /* ignore */ }
+  const fa = sportsIsFavorite(a.team, favSet);
+  const fb = sportsIsFavorite(b.team, favSet);
+  if (fa && !fb) return a;
+  if (fb && !fa) return b;
+  const home = a.game?.home === true ? a : (b.game?.home === true ? b : null);
+  const away = a.game?.home === true ? b : a;
+  if (home && away && home !== away) {
+    return (sportsMatchFaceHash(home) & 1) === 0 ? home : away;
+  }
+  return a;
 }
 
 /** Une entrée par match (gameId / paire) — garde la face préférée. */
@@ -5370,19 +5470,23 @@ function sportsDedupeMatchSlides(slides) {
 }
 
 /**
- * Clés d’occupation d’une slide (clé face + dédup match miroir).
- * Empêche « même match » à gauche et dans la CTA (faces QC opposées).
+ * Clés d’occupation d’une slide.
+ * Prochains / CTA : un match = une face (**reçoit** ou **chez**).
+ * Résultats (puces scores) : V et D (ou N/N) sont deux cartes distinctes.
  */
 function sportsSlideOccupyKeys(slide) {
   const keys = new Set();
   if (!slide) return keys;
   if (slide.mode === 'cta' && slide.ctaFrom) {
     if (slide.ctaFrom.key) keys.add(slide.ctaFrom.key);
-    const dk = sportsMatchDedupeKey(slide.ctaFrom);
-    if (dk && dk !== 'pair:|||') keys.add(dk);
+    if (slide.ctaFrom.mode !== 'result') {
+      const dk = sportsMatchDedupeKey(slide.ctaFrom);
+      if (dk && dk !== 'pair:|||') keys.add(dk);
+    }
     return keys;
   }
   if (slide.key) keys.add(slide.key);
+  if (slide.mode === 'result') return keys;
   const dk = sportsMatchDedupeKey(slide);
   if (dk && dk !== 'pair:|||') keys.add(dk);
   return keys;
@@ -5453,9 +5557,11 @@ function sportsSoftSportDiversity(slides) {
  *     chacun des **7 premiers jours** d’action à partir du jour lead, en
  *     alternance (rotation CTA) — pas un seul match pendant des jours
  *   • dédup miroir + diversité sport souple ; plafond SPORTS_CTA_MAX_POOL
+ *   • adversaire placeholder (ADV / TBD) exclu
  *
- *  CARTES GAUCHE — le-radar-sports-left-pool D
- *   • Résultats &lt; 7 j + next appoint ; hors saison : prochains
+ *  CARTES GAUCHE
+ *   • Résultats des 5 derniers jours d’abord, puis futurs **hors** fenêtre CTA
+ *     (> 5 j). Hors saison : prochains.
  */
 /** Jour civil America/Toronto d’une slide match (YYYY-MM-DD). */
 function sportsSlideDayKey(slide) {
@@ -5494,6 +5600,7 @@ function sportsCtaLiveSources(now = Date.now()) {
   for (const s of sportsSlides) {
     if (!s || s.mode === 'cta' || !s.game || !s.key || seen.has(s.key)) continue;
     if (s.mode !== 'next' && s.mode !== 'result') continue;
+    if (!sportsSlideIsDisplayable(s)) continue;
     if (!sportsGameIsLive(s.game, now)) continue;
     seen.add(s.key);
     out.push(s);
@@ -5512,10 +5619,13 @@ function sportsCtaCandidateSlides() {
 
   for (const s of sportsSlides) {
     if (!s || s.mode === 'cta' || !s.game || !s.key || seen.has(s.key)) continue;
+    if (!sportsSlideIsDisplayable(s)) continue;
     seen.add(s.key);
 
     if (s.mode === 'result') {
       if (!sportsCtaResultIsTodayOrYesterday(s.game, now)) continue;
+      // CTA aujourd’hui / hier : le vainqueur seulement — pas la défaite.
+      if (String(s.game?.result || '') === 'L') continue;
       const day = sportsSlideDayKey(s);
       if (day === today) todayResults.push(s);
       else if (day === yesterday) yesterdayResults.push(s);
@@ -5525,7 +5635,6 @@ function sportsCtaCandidateSlides() {
     if (s.mode === 'next') {
       const ms = sportsGameMs(s.game);
       if (!Number.isFinite(ms)) continue;
-      // Prochains passés mal classés → ignorer (sauf fenêtre live encore ouverte).
       if (ms < now - SPORTS_LIVE_AFTER_MS) continue;
       nexts.push(s);
     }
@@ -5547,7 +5656,6 @@ function sportsCtaCandidateSlides() {
   yesterdayResults.sort(byRecent);
   const freshResults = todayResults.concat(yesterdayResults);
 
-  // À venir : plus proche d’abord ; même jour = ordre horaire.
   const bySoonest = (a, b) => {
     const fa = sportsGameMs(a.game) || Number.POSITIVE_INFINITY;
     const fb = sportsGameMs(b.game) || Number.POSITIVE_INFINITY;
@@ -5556,18 +5664,11 @@ function sportsCtaCandidateSlides() {
   };
   nexts.sort(bySoonest);
 
-  // Journée lead = jour civil du prochain match encore à venir (ou live).
   const leadDay = sportsCtaLeadDayKey(nexts);
   const leadDayNexts = leadDay
     ? nexts.filter((s) => sportsSlideDayKey(s) === leadDay)
     : [];
 
-  /**
-   * Prochains dans le pool CTA :
-   * · Avec résultats frais (aujourd’hui/hier) → jour lead seulement.
-   * · Hors saison → 1er match de chaque jour sur 7 jours civils dès le lead,
-   *   pour que la carte alterne (ex. 19→25 août) au lieu d’un seul « Prochain ».
-   */
   let nextPool = leadDayNexts;
   if (!freshResults.length && leadDay) {
     const endDay = sportsCivilDayShift(leadDay, SPORTS_CTA_OFFSEASON_LEAD_DAYS - 1);
@@ -5575,7 +5676,6 @@ function sportsCtaCandidateSlides() {
       const day = sportsSlideDayKey(s);
       return day && day >= leadDay && day <= endDay;
     });
-    // nexts déjà triés bientôt-d’abord → premier vu par jour = premier match du jour
     const firstByDay = new Map();
     for (const s of windowNexts) {
       const day = sportsSlideDayKey(s);
@@ -5585,8 +5685,8 @@ function sportsCtaCandidateSlides() {
     if (weekFirsts.length) nextPool = weekFirsts;
   }
 
-  // Direct : la CTA n’affiche que les matchs en cours (un ou plusieurs).
-  // Le cycle hier → à venir reprend dès qu’il n’y a plus de live.
+  // Direct : matchs en cours. Sinon : dans l’heure → hier (vainqueur) →
+  // aujourd’hui (vainqueur) → autres à venir.
   const lives = sportsCtaLiveSources(now);
   if (lives.length) {
     lives.sort(bySoonest);
@@ -5602,7 +5702,6 @@ function sportsCtaCandidateSlides() {
   imminent.sort(bySoonest);
   laterNexts.sort(bySoonest);
 
-  // Sans live : dans l’heure → hier → aujourd’hui → autres à venir.
   const raw = imminent.concat(yesterdayResults, todayResults, laterNexts);
   const deduped = sportsDedupeMatchSlides(raw);
   return sportsSoftSportDiversity(deduped).slice(0, SPORTS_CTA_MAX_POOL);
@@ -5795,8 +5894,8 @@ function fillSportsCtaLayer(layer, slide) {
     && sportsGameHasScore(src.game);
   if (src?.mode === 'next' && src.team && src.game && !liveScore) {
     const g = src.game;
-    const home = sportsPlainTeamName(src.team);
-    const opp = sportsPlainOpponentName(g);
+    const home = sportsChipTeamShort(src.team);
+    const opp = sportsChipOpponentLabel(g);
     const verb = sportsMatchVerb(g);
     text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
       + `<span class="sports-chip__vs">${escapeHtml(verb)}</span> `
@@ -5804,7 +5903,7 @@ function fillSportsCtaLayer(layer, slide) {
   } else if (src?.team && src.game && (src.mode === 'result' || liveScore)) {
     const g = src.game;
     const home = sportsChipTeamShort(src.team);
-    const opp = sportsPlainOpponentName(g);
+    const opp = sportsChipOpponentLabel(g);
     const placeKind = sportsIsPlaceResult(g, src.team.sport);
     if (placeKind) {
       const placeTxt = sportsPlaceScoreText(g);
@@ -6447,7 +6546,8 @@ function paintSportsChip(slide, animate = false) {
  */
 function nextSportsSlide(usedKeys, opts = {}) {
   const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
-  // Exclure tous les matchs déjà en CTA (1–3 cartes wide).
+  // CTA à venir : une face, **reçoit** ou **chez** — pas le miroir.
+  // CTA résultat : vainqueur seulement (la puce score garde V/D/N de l’autre).
   sportsVisible.forEach((s) => {
     if (s?.mode !== 'cta') return;
     for (const k of sportsSlideOccupyKeys(s)) used.add(k);

@@ -1529,7 +1529,7 @@ assert(
     && appJs.includes('function sportsCivilDayShift')
     && appJs.includes('SPORTS_RECENT_RESULT_MS')
     && !/SPORTS_CTA_FRESH_RESULT_MS\s*=\s*48/.test(appJs),
-  'app.js : CTA résultats = aujourd’hui/hier seulement (7 j = puces scores)',
+  'app.js : CTA résultats = aujourd’hui/hier (5 j = puces scores)',
 );
 assert(
   /function sportsCtaEyebrow/.test(appJs)
@@ -1550,15 +1550,18 @@ assert(
     && !appJs.includes('function sportsHasAnyResult'),
   'app.js : pastille Prochain match (2 lignes)/Hier/Aujourd’hui/date — plus de SPORTS+eyebrow',
 );
-// CTA pool = aujourd’hui/hier + (en saison jour lead | hors saison 1er match × 7 j).
+// CTA pool = En cours → à venir → aujourd’hui → 5 j → hier.
 assert(
-  appJs.includes('function sportsCtaLeadDayKey')
-    && appJs.includes('function sportsSlideDayKey')
-    && /const SPORTS_CTA_MAX_POOL\s*=\s*16/.test(appJs)
-    && /const SPORTS_CTA_OFFSEASON_LEAD_DAYS\s*=\s*7/.test(appJs)
-    && appJs.includes('firstByDay')
-    && appJs.includes('le-radar-cta-sports-window'),
-  'app.js : CTA = today/yesterday + hors saison 7 j (1er match/jour)',
+  appJs.includes('function sportsSlideDayKey')
+    && /const SPORTS_CTA_MAX_POOL\s*=\s*80/.test(appJs)
+    && appJs.includes('function sportsNextSlideFromGame')
+    && appJs.includes('team.nextGames')
+    && /const SPORTS_CTA_NEXT_DAYS\s*=\s*5/.test(appJs)
+    && appJs.includes('function sportsCtaNextWindowEndDay')
+    && appJs.includes('yesterdayResults')
+    && appJs.includes('le-radar-cta-sports-window')
+    && appJs.includes('SPORTS_PLACEHOLDER_OPPONENT_RE'),
+  'app.js : CTA = live / à venir / aujourd’hui / 5 j / hier ; ADV exclu',
 );
 assert(
   appJs.includes('function sportsCtaKickoffWithinHour')
@@ -1595,10 +1598,13 @@ assert(
   appJs.includes('sports-chip__cta-stack')
     && appJs.includes('sportsDedupeMatchSlides')
     && appJs.includes('sportsMatchDedupeKey')
+    && appJs.includes('function sportsMatchFaceHash')
+    && appJs.includes('function sportsResultFaceRank')
     && appJs.includes('sportsSoftSportDiversity')
+    && appJs.includes("if (String(s.game?.result || '') === 'L') continue")
     && !/CTA : carte stable — roulement/.test(appJs)
     && /if \(animate && !sportsReducedMotion\) a\.classList\.add\('is-arriving'\)/.test(appJs),
-  'app.js : CTA = dédup matchs + même leave/arrive carte entière que les scores',
+  'app.js : CTA = dédup matchs + vainqueur seulement + même leave/arrive que les scores',
 );
 assert(
   styleCss.includes('sports-chip__cta-stack')
@@ -1680,7 +1686,7 @@ assert(
     && appJs.includes('function sportsMatchChipTextOverflows')
     && appJs.includes('le-radar-sports-weather-fit')
     && indexHtml.includes('institution-acronyms-data.js')
-    && /SPORTS_RECENT_RESULT_MS\s*=\s*7 \* 24 \* 3600 \* 1000/.test(appJs)
+    && /SPORTS_RECENT_RESULT_MS\s*=\s*5 \* 24 \* 3600 \* 1000/.test(appJs)
     && appJs.includes('recentResults')
     && appJs.includes('le-radar-sports-left-pool')
     && appJs.includes('function sportsTeamIsQuebecFocus')

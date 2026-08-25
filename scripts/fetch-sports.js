@@ -370,7 +370,7 @@ function parseHockeyScoreboard(html, { sector, site }) {
       const oppId = g[side === 'homeTeam' ? 'awayTeamId' : 'homeTeamId'];
       const myScore = scoreMap.get(myId);
       const oppScore = scoreMap.get(oppId);
-      const oppName = ometa.shortName || ometa.name || 'ADV';
+      const oppName = ometa.shortName || ometa.name || '';
       const entry = {
         date: g.date || (g.startTime || '').slice(0, 10),
         time,

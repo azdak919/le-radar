@@ -490,3 +490,390 @@ test('CTA demain : pastille Demain, heure, pas Prochain match', async ({ page })
   expect(sub).toMatch(/19\s*h\s*00/);
   expect(sub.toLowerCase()).not.toMatch(/demain/);
 });
+
+test('CTA univ : acronymes UQAM / McGill, pas les noms longs', async ({ page }) => {
+  const kick = torontoParts(Date.now() + 3 * 86400000);
+  const game = {
+    date: kick.date,
+    time: '18:00',
+    opponent: 'McGill',
+    opponentCode: 'MCG',
+    opponentFullName: 'McGill University',
+    home: true,
+    sport: 'soccer',
+    competition: 'Soccer universitaire féminin',
+    live: false,
+  };
+  const team = teamShell('universitaire:soccer:uqam-cta', {
+    name: 'Citadins',
+    fullName: 'Université du Québec à Montréal',
+    code: 'UQAM',
+    sport: 'soccer',
+  });
+  team.sector = 'universitaire';
+  team.leagueLabel = 'Soccer universitaire féminin';
+  team.nextGame = game;
+  team.nextGames = [game];
+  const cta = await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [team.id]: team },
+  });
+  await expect(cta).toHaveAttribute('data-cta-state', 'next');
+  const text = await cta.locator('.sports-chip__cta-text').innerText();
+  expect(text).toMatch(/UQAM/);
+  expect(text).toMatch(/McGill/);
+  expect(text).not.toMatch(/Université du Québec/);
+  expect(text).not.toMatch(/University/);
+});
+
+test('CTA : ADV n’est pas une institution (adversaire Spordle manquant)', async ({ page }) => {
+  const kick = torontoParts(Date.now() + 2 * 86400000);
+  const game = {
+    date: kick.date,
+    time: '19:00',
+    opponent: 'ADV',
+    opponentCode: 'ADV',
+    home: true,
+    sport: 'hockey',
+    competition: 'Hockey universitaire féminin D1',
+    live: false,
+  };
+  const team = teamShell('universitaire:hockey:con-adv', {
+    name: 'Concordia',
+    fullName: 'Concordia University',
+    code: 'UCON',
+    sport: 'hockey',
+  });
+  team.sector = 'universitaire';
+  team.nextGame = game;
+  team.nextGames = [game];
+  const cta = await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [team.id]: team },
+  });
+  const text = (await cta.innerText()).replace(/\s+/g, ' ');
+  expect(text).not.toMatch(/\bADV\b/);
+  await expect(cta).not.toHaveAttribute('data-cta-state', 'next');
+});
+
+test('CTA pool : hier → aujourd’hui → à venir du jour lead ; pas le lointain', async ({ page }) => {
+  const now = Date.now();
+  const today = torontoParts(now);
+  const plus3 = torontoParts(now + 3 * 86400000);
+  const plus10 = torontoParts(now + 10 * 86400000);
+  const y = yesterdayResultGame();
+
+  const soon = liveKickGame({
+    opponent: 'Vanier',
+    opponentCode: 'VAN',
+    opponentFullName: 'Vanier College',
+    offsetMs: 3 * 3600 * 1000,
+    extra: { live: false },
+  });
+  const todayRes = {
+    date: today.date,
+    time: '12:00',
+    opponent: 'McGill',
+    opponentCode: 'MCG',
+    opponentFullName: 'McGill',
+    home: true,
+    sport: 'soccer',
+    competition: 'Soccer collégial masculin D1',
+    scoreFor: 1,
+    scoreAgainst: 0,
+    result: 'W',
+    final: true,
+  };
+  const mid = {
+    date: plus3.date,
+    time: '18:00',
+    opponent: 'Carleton',
+    opponentCode: 'CAR',
+    opponentFullName: 'Carleton',
+    home: true,
+    sport: 'soccer',
+    competition: 'Soccer collégial masculin D1',
+    live: false,
+  };
+  const far = {
+    date: plus10.date,
+    time: '18:00',
+    opponent: 'Ottawa',
+    opponentCode: 'OTT',
+    opponentFullName: 'uOttawa',
+    home: true,
+    sport: 'soccer',
+    competition: 'Soccer collégial masculin D1',
+    live: false,
+  };
+
+  const tSoon = teamShell('collegial:soccer:soon', { name: 'Saint-Hyacinthe', fullName: 'Cégep de Saint-Hyacinthe', code: 'STH' });
+  tSoon.nextGame = soon;
+  tSoon.nextGames = [soon];
+  const tToday = teamShell('collegial:soccer:today-r', { name: 'Lionel-Groulx', fullName: 'Cégep Lionel-Groulx', code: 'CLG' });
+  tToday.lastGame = todayRes;
+  tToday.results = [todayRes];
+  const tMid = teamShell('collegial:soccer:mid', { name: 'Montmorency', fullName: 'Collège Montmorency', code: 'MON' });
+  tMid.nextGame = mid;
+  tMid.nextGames = [mid];
+  const tY = teamShell('collegial:soccer:yest', { name: 'Concordia', fullName: 'Concordia', code: 'CON' });
+  tY.lastGame = y;
+  tY.results = [y];
+  const tFar = teamShell('collegial:soccer:far', { name: 'André-Laurendeau', fullName: 'Cégep André-Laurendeau', code: 'AND' });
+  tFar.nextGame = far;
+  tFar.nextGames = [far];
+
+  await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: {
+      [tSoon.id]: tSoon,
+      [tToday.id]: tToday,
+      [tMid.id]: tMid,
+      [tY.id]: tY,
+      [tFar.id]: tFar,
+    },
+  });
+
+  const seq = await page.evaluate(() => (typeof sportsCtaCandidateSlides === 'function'
+    ? sportsCtaCandidateSlides().map((s) => `${s.mode}:${s.team?.code || ''}`)
+    : []));
+  expect(seq[0], 'le cycle commence par hier').toMatch(/^result:CON$/);
+  expect(seq).toContain('next:STH');
+  expect(seq.join(), 'hors jour lead / lointain hors CTA').not.toMatch(/MON|AND/);
+  expect(seq.indexOf('next:STH')).toBeGreaterThan(0);
+});
+
+test('même match : une face reçoit ou chez, pas les deux', async ({ page }) => {
+  const kick = torontoParts(Date.now() + 2 * 86400000);
+  const shared = {
+    date: kick.date,
+    time: '18:00',
+    sport: 'soccer',
+    competition: 'Soccer universitaire féminin',
+    gameId: 'mirror-uqam-mcgill',
+    live: false,
+  };
+  const tA = teamShell('universitaire:soccer:uqam-m', {
+    name: 'UQAM', fullName: 'Université du Québec à Montréal', code: 'UQAM',
+  });
+  tA.sector = 'universitaire';
+  tA.nextGame = {
+    ...shared,
+    opponent: 'McGill',
+    opponentCode: 'MCG',
+    opponentFullName: 'McGill University',
+    home: true,
+  };
+  tA.nextGames = [tA.nextGame];
+  const tB = teamShell('universitaire:soccer:mcg-m', {
+    name: 'McGill', fullName: 'McGill University', code: 'MCG',
+  });
+  tB.sector = 'universitaire';
+  tB.nextGame = {
+    ...shared,
+    opponent: 'UQAM',
+    opponentCode: 'UQAM',
+    opponentFullName: 'Université du Québec à Montréal',
+    home: false,
+  };
+  tB.nextGames = [tB.nextGame];
+  await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [tA.id]: tA, [tB.id]: tB },
+  });
+  const faces = await page.evaluate(() => (typeof sportsCtaCandidateSlides === 'function'
+    ? sportsCtaCandidateSlides()
+      .filter((s) => String(s.game?.gameId) === 'mirror-uqam-mcgill')
+      .map((s) => {
+        const verb = typeof sportsMatchVerb === 'function' ? sportsMatchVerb(s.game) : '';
+        const label = typeof sportsCtaLabelFromSlide === 'function' ? sportsCtaLabelFromSlide(s) : '';
+        return { code: s.team?.code, home: s.game?.home, verb, label };
+      })
+    : []));
+  expect(faces, 'un seul miroir').toHaveLength(1);
+  expect(['UQAM', 'MCG']).toContain(faces[0].code);
+  expect(faces[0].label, 'pas le libellé reçoit/chez').not.toMatch(/reçoit\s*\/\s*chez/);
+  expect(['reçoit', 'chez']).toContain(faces[0].verb);
+  const hasRecoit = faces[0].label.includes('reçoit');
+  const hasChez = faces[0].label.includes('chez');
+  expect(hasRecoit !== hasChez, 'un verbe, pas les deux').toBe(true);
+});
+
+test('CTA résultats aujourd’hui/hier : vainqueur seulement', async ({ page }) => {
+  const y = yesterdayResultGame();
+  const win = {
+    ...y,
+    opponent: 'Vanier',
+    opponentCode: 'VAN',
+    opponentFullName: 'Vanier College',
+    scoreFor: 3,
+    scoreAgainst: 0,
+    result: 'W',
+    gameId: 'cta-winner-only',
+    final: true,
+  };
+  const loss = {
+    ...y,
+    opponent: 'Saint-Hyacinthe',
+    opponentCode: 'STH',
+    opponentFullName: 'Cégep de Saint-Hyacinthe',
+    scoreFor: 0,
+    scoreAgainst: 3,
+    result: 'L',
+    gameId: 'cta-winner-only',
+    final: true,
+    home: false,
+  };
+  const tW = teamShell('collegial:soccer:sth-cta-w', {
+    name: 'Saint-Hyacinthe', fullName: 'Cégep de Saint-Hyacinthe', code: 'STH',
+  });
+  tW.lastGame = win;
+  tW.results = [win];
+  const tL = teamShell('collegial:soccer:van-cta-l', {
+    name: 'Vanier', fullName: 'Vanier College', code: 'VAN',
+  });
+  tL.lastGame = loss;
+  tL.results = [loss];
+  await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [tW.id]: tW, [tL.id]: tL },
+  });
+  const faces = await page.evaluate(() => {
+    const cta = typeof sportsCtaCandidateSlides === 'function' ? sportsCtaCandidateSlides() : [];
+    const of = (gid) => cta.filter((s) => String(s.game?.gameId) === gid);
+    return of('cta-winner-only').map((s) => {
+      const label = typeof sportsCtaLabelFromSlide === 'function' ? sportsCtaLabelFromSlide(s) : '';
+      return { code: s.team?.code, result: s.game?.result, label };
+    });
+  });
+  expect(faces, 'une face CTA').toHaveLength(1);
+  expect(faces[0].result).toBe('W');
+  expect(faces[0].code).toBe('STH');
+  expect(faces[0].label, 'score, pas reçoit/chez').not.toMatch(/reçoit|chez/);
+});
+
+test('puces scores : V d’un côté et D de l’autre, pas de dédup', async ({ page }) => {
+  const y = yesterdayResultGame();
+  const win = {
+    ...y,
+    opponent: 'Vanier',
+    opponentCode: 'VAN',
+    opponentFullName: 'Vanier College',
+    scoreFor: 3,
+    scoreAgainst: 0,
+    result: 'W',
+    gameId: 'vd-same-game',
+    final: true,
+  };
+  const loss = {
+    ...y,
+    opponent: 'Saint-Hyacinthe',
+    opponentCode: 'STH',
+    opponentFullName: 'Cégep de Saint-Hyacinthe',
+    scoreFor: 0,
+    scoreAgainst: 3,
+    result: 'L',
+    gameId: 'vd-same-game',
+    final: true,
+    home: false,
+  };
+  const drawA = {
+    ...y,
+    opponent: 'Concordia',
+    opponentCode: 'CON',
+    opponentFullName: 'Concordia',
+    scoreFor: 1,
+    scoreAgainst: 1,
+    result: 'D',
+    gameId: 'draw-same-game',
+    final: true,
+  };
+  const drawB = {
+    ...y,
+    opponent: 'McGill',
+    opponentCode: 'MCG',
+    opponentFullName: 'McGill University',
+    scoreFor: 1,
+    scoreAgainst: 1,
+    result: 'D',
+    gameId: 'draw-same-game',
+    final: true,
+    home: false,
+  };
+  const tW = teamShell('collegial:soccer:sth-w', {
+    name: 'Saint-Hyacinthe', fullName: 'Cégep de Saint-Hyacinthe', code: 'STH',
+  });
+  tW.lastGame = win;
+  tW.results = [win];
+  const tL = teamShell('collegial:soccer:van-l', {
+    name: 'Vanier', fullName: 'Vanier College', code: 'VAN',
+  });
+  tL.lastGame = loss;
+  tL.results = [loss];
+  const tDrawA = teamShell('universitaire:soccer:mcg-d', {
+    name: 'McGill', fullName: 'McGill University', code: 'MCG',
+  });
+  tDrawA.sector = 'universitaire';
+  tDrawA.lastGame = drawA;
+  tDrawA.results = [drawA];
+  const tDrawB = teamShell('universitaire:soccer:con-d', {
+    name: 'Concordia', fullName: 'Concordia', code: 'CON',
+  });
+  tDrawB.sector = 'universitaire';
+  tDrawB.lastGame = drawB;
+  tDrawB.results = [drawB];
+  await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [tW.id]: tW, [tL.id]: tL, [tDrawA.id]: tDrawA, [tDrawB.id]: tDrawB },
+  });
+  const faces = await page.evaluate(() => {
+    const lane = typeof sportsLeftLaneState === 'function' ? sportsLeftLaneState() : { pool: [] };
+    const of = (gid) => (lane.pool || [])
+      .filter((s) => s.mode === 'result' && String(s.game?.gameId) === gid);
+    const occupy = (slide) => (typeof sportsSlideOccupyKeys === 'function'
+      ? [...sportsSlideOccupyKeys(slide)]
+      : []);
+    const usedBy = (slide) => new Set(occupy(slide));
+    const blocked = (slide, other) => (typeof sportsSlideIsUsed === 'function'
+      ? sportsSlideIsUsed(slide, usedBy(other))
+      : true);
+    const badge = (game) => (typeof sportsResultBadgeSpec === 'function'
+      ? sportsResultBadgeSpec(game)?.letter
+      : '');
+    const vd = of('vd-same-game');
+    const nn = of('draw-same-game');
+    return {
+      vd: vd.map((s) => ({ code: s.team?.code, result: s.game?.result, badge: badge(s.game) })),
+      nn: nn.map((s) => ({ code: s.team?.code, result: s.game?.result, badge: badge(s.game) })),
+      vdBlocks: vd.length === 2 ? blocked(vd[0], vd[1]) || blocked(vd[1], vd[0]) : true,
+      nnBlocks: nn.length === 2 ? blocked(nn[0], nn[1]) || blocked(nn[1], nn[0]) : true,
+    };
+  });
+  expect(faces.vd.length, 'V et D tous les deux').toBe(2);
+  expect(faces.vd.map((f) => f.result).sort()).toEqual(['L', 'W']);
+  expect(faces.vd.map((f) => f.badge).sort()).toEqual(['D', 'V']);
+  expect(faces.vdBlocks, 'V ne masque pas D').toBe(false);
+  expect(faces.nn.length, 'N des deux côtés').toBe(2);
+  expect(faces.nn.every((f) => f.result === 'D' && f.badge === 'N')).toBe(true);
+  expect(faces.nnBlocks, 'N ne masque pas l’autre N').toBe(false);
+});
+
+test('bandeau : nextGames entier, pas un seul match par équipe', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#masthead-sports-strip .sports-chip--cta')).toBeVisible({ timeout: 8000 });
+  const n = await page.evaluate(() => {
+    const nexts = (typeof sportsSlides !== 'undefined' ? sportsSlides : [])
+      .filter((s) => s && s.mode === 'next');
+    const teams = new Set(nexts.map((s) => s.team?.id).filter(Boolean));
+    return { nexts: nexts.length, teams: teams.size };
+  });
+  expect(n.teams, 'plusieurs équipes à venir').toBeGreaterThan(10);
+  expect(n.nexts, 'calendrier nextGames, pas seulement nextGame').toBeGreaterThan(n.teams);
+});
