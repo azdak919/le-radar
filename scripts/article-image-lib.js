@@ -680,6 +680,29 @@ function isBannerLikeRatio(width = 0, height = 0) {
   return width / height >= BANNER_RATIO_MIN;
 }
 
+/** `-1024x450` WordPress : bandeau campagne sans probe HTTP. */
+function wpSizeFromImageUrl(url = '') {
+  const m = String(url).match(/-(\d+)x(\d+)\.[a-z]+(?:$|\?)/i);
+  if (!m) return null;
+  const width = Number(m[1]);
+  const height = Number(m[2]);
+  if (!width || !height) return null;
+  return { width, height };
+}
+
+function imageUrlLooksBannerLike(url = '') {
+  const size = wpSizeFromImageUrl(url);
+  return !!(size && isBannerLikeRatio(size.width, size.height));
+}
+
+/** Le fil affiche imageLocal en priorité : le vider dès que l’URL source change. */
+function clearMirroredLead(item) {
+  if (!item) return;
+  delete item.imageLocal;
+  delete item.imageLocalKey;
+  delete item.imageLocalVia;
+}
+
 function cardFitBonus(width = 0, height = 0) {
   if (!width || !height) return 0;
   const r = width / height;
@@ -820,7 +843,12 @@ function imageOptionsFromHints(hints = {}) {
 function needsImageEnrichment(item, extraRejectPatterns = [], options = {}) {
   if (!item.link) return false;
   if (!item.image || !isCandidateImageUrl(item.image, extraRejectPatterns)) return true;
-  return isWeakImageUrl(item.image, options);
+  if (isWeakImageUrl(item.image, options)) return true;
+  if (imageUrlLooksBannerLike(item.image)) return true;
+  // Vedette déjà marquée « pas prête » (bandeau campagne UdeS, probe raté) :
+  // re-scraper le corps, sinon le cache RSS fige le bandeau.
+  if (item.leadImageReady === false) return true;
+  return false;
 }
 
 async function scrapeArticleImage(item, extraRejectPatterns = [], options = {}) {
@@ -982,6 +1010,9 @@ module.exports = {
   isCandidateImageUrl,
   isWeakImageUrl,
   isBannerLikeRatio,
+  wpSizeFromImageUrl,
+  imageUrlLooksBannerLike,
+  clearMirroredLead,
   cardFitBonus,
   captionLooksLikeCampaignGraphic,
   compareLeadCandidates,
