@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-25T16:33:59.719Z",
+  "updatedAt": "2026-08-25T17:29:35.492Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T16:33:34.435Z"
+      "checkedAt": "2026-08-25T17:29:09.180Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T16:33:36.343Z"
+      "checkedAt": "2026-08-25T17:29:11.596Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T16:33:38.695Z"
+      "checkedAt": "2026-08-25T17:29:14.289Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "World Beat News",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/world-beat-news"
-      },
-      "next": {
         "title": "Shaking the Habitual",
         "source": "schedule-live",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/shaking-the-habitual"
       },
+      "next": {
+        "title": "Code Switch",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/code-switch"
+      },
       "track": "",
-      "showTitle": "World Beat News",
+      "showTitle": "Shaking the Habitual",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T16:33:52.836Z"
+      "checkedAt": "2026-08-25T17:29:28.821Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +126,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T16:33:53.629Z"
+      "checkedAt": "2026-08-25T17:29:29.663Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Le Monde Dans Mes Oreilles",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "13:00",
-        "slug": "le-monde-dans-mes-oreilles"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
@@ -145,8 +139,8 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Ouverture - Saison-223aug2026",
-      "showTitle": "Le Monde Dans Mes Oreilles",
+      "track": "Shah Frank - Nonchalante",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -156,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-25T16:33:59.369Z"
+      "checkedAt": "2026-08-25T17:29:35.142Z"
     }
   }
 }
