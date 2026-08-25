@@ -11498,10 +11498,8 @@ function syncWideRailFiltersFit() {
   const sections = stack.querySelector('.site-sections');
   const head = stack.querySelector('.wire-head');
   const stackTop = stack.getBoundingClientRect().top;
-  const fab = document.getElementById('page-scroll-top');
-  const fabOn = !!(fab && !fab.hidden && fab.getClientRects().length);
-  /* Réserve seulement la flèche réellement visible — pas 72 px dès « Réduire ». */
-  const bottomSafe = fabOn ? 72 : 16;
+  /* Flèche overlay bas-droite (comme la loupe) : plus de réserve 72 px dans le rail. */
+  const bottomSafe = 16;
   stack.style.setProperty('--wide-rail-bottom', `${bottomSafe}px`);
   stack.style.setProperty('--wide-stack-from-top', `${Math.max(0, Math.round(stackTop))}px`);
   const visibleH = Math.max(160, (window.innerHeight || 800) - stackTop - bottomSafe);
@@ -11958,7 +11956,7 @@ function updateNewsSearchKeyboardInset() {
   }
 }
 
-/** Flèche « haut de page » (bas-gauche) — parité page sports. */
+/** Flèche « haut de page » (overlay bas-droite, avec la loupe) — parité page sports. */
 function initPageScrollTop() {
   const btn = document.getElementById('page-scroll-top');
   if (!btn) return;

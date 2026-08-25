@@ -5102,8 +5102,9 @@ body.external-listen-open {
 }
 
 /* ─────────────── OUTILS BAS DE PAGE ───────────────
- * Flèche haut : à gauche, hors de la colonne de contenu (gutter).
- * Loupe : à droite, hors de la colonne (symétrique).
+ * Flèche + loupe : overlay bas-droite, par-dessus le contenu (comme la loupe).
+ * Une flèche à gauche se superposait au rail des sources (wide E) et le
+ * forçait à céder 72 px. Les deux FABs partagent le coin de la loupe.
  * Mobile / tablette : sans gutter, repli sur safe-area + 14 px.
  */
 .page-tools {
@@ -5125,9 +5126,9 @@ body.external-listen-open {
   bottom: calc(max(16px, env(safe-area-inset-bottom, 0px)) + var(--vk-inset, 0px));
   z-index: 180;
   display: flex;
-  /* DOM = [flèche, loupe] → flèche gauche, loupe collée à droite (même sans flèche). */
+  /* DOM = [flèche, loupe] → les deux collés à droite (flèche hidden : loupe seule). */
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: flex-end;
   gap: 12px;
   padding-left: var(--tools-side-left);
@@ -5135,10 +5136,6 @@ body.external-listen-open {
   pointer-events: none;
 }
 .page-tools > * { pointer-events: auto; }
-/* Loupe toujours à droite : si la flèche est hidden, space-between la laissait à gauche. */
-.page-tools > .news-search {
-  margin-left: auto;
-}
 
 .page-tools__fab {
   width: 48px;
