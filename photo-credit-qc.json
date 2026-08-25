@@ -1,100 +1,86 @@
 {
-  "updated": "2026-08-24T22:56:01.439Z",
+  "updated": "2026-08-25T02:03:00.111Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 130,
-  "pending": 13,
+  "cited": 131,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 31,
-  "updatedCount": 26,
-  "citedNew": 17,
-  "fallbackNew": 14,
+  "checked": 21,
+  "updatedCount": 10,
+  "citedNew": 8,
+  "fallbackNew": 13,
   "samples": [
     {
-      "title": "L’efficacité des travaux publics au cœur de la plateforme électorale de l’AFG",
-      "source": "La Pige",
-      "credit": "Crédit photo : La Pige",
+      "title": "La Fondation de l’UdeS",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
       "cited": false,
       "method": null
     },
     {
-      "title": "Célébrer l’Ukraine, même à plus de 6 500 km",
-      "source": "La Pige",
-      "credit": "Crédit photo : La Pige",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Course à six candidats : le vote par anticipation prend fin ce soir",
-      "source": "La Pige",
-      "credit": "Crédit photo : La Pige",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Tarifs douaniers : le choc n’est pas là où on l’attend",
-      "source": "La Pige",
-      "credit": "Photo : Aglaé Delisle",
+      "title": "Le cinéma québécois fait son entrée en classe avec Ciné Panache",
+      "source": "Le Collectif",
+      "credit": "Photo : Ciné Panache",
       "cited": true,
-      "method": "body-line"
+      "method": "body-tail"
     },
     {
-      "title": "Une vente-débarras pour la bonne cause",
-      "source": "La Pige",
-      "credit": "Photo : Colin Perron",
+      "title": "Ce que nous devons aux femmes",
+      "source": "Le Délit",
+      "credit": "Photo : Alexandre Gontier",
       "cited": true,
-      "method": "body-line"
+      "method": "media-credit-near"
     },
     {
-      "title": "Plusieurs candidats provinciaux manquant dans la région",
-      "source": "La Pige",
-      "credit": "Photo : Archive Lapige",
+      "title": "Les femmes MAGA au service du patriarcat",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
       "cited": true,
-      "method": "body-line"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Il y a 30 ans : un grand spectacle solidaire pour le Saguenay",
-      "source": "La Pige",
-      "credit": "Photo : Le monde en images Gilles Potvin",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Héma-Québec cherche de nouveaux donneurs dans la région",
-      "source": "La Pige",
-      "credit": "Photo : Étienne Harvey-Soucy",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "La semaine d’intégration de l’UQAC débute",
-      "source": "La Pige",
-      "credit": "Photo : site de l’UQAC",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Présences invisibles : écrire la ville sans permission",
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
       "source": "Quartier Libre",
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
     },
     {
-      "title": "L’épidémie de la nonchalance",
-      "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
+      "title": "Inside Mile End Kicks",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Joe Fuda",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-trailing"
     },
     {
-      "title": "Le retard et les bienfaits du temps long",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "title": "The apprenticeship of public voice",
+      "source": "The Link",
+      "credit": "Illustration: Halle Keays",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Les PME du Saguenay-Lac-Saint-Jean en mode solution",
+      "source": "La Pige",
+      "credit": "Photo : L’Union des producteurs agricoles",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
