@@ -143,6 +143,15 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   const todayUpcoming = page.locator('#cta-band .case').filter({ hasText: 'dans 3 h' }).first();
   await expect(todayUpcoming.locator('.sports-chip__cta-tag')).toHaveText(/Aujourd/i);
   await expect(todayUpcoming.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
+  await expect(todayUpcoming.locator('.sports-chip__vs')).toHaveText(/reçoivent/i);
+  const vsTone = await todayUpcoming.locator('.sports-chip__vs').evaluate((el) => {
+    const vs = getComputedStyle(el).color.match(/[\d.]+/g)?.map(Number) || [];
+    const name = getComputedStyle(el.parentElement.querySelector('.sports-chip__name')).color.match(/[\d.]+/g)?.map(Number) || [];
+    const a = (c) => (c.length >= 4 ? c[3] : 1) * (0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2]);
+    return { vs: a(vs), name: a(name), weight: getComputedStyle(el).fontWeight };
+  });
+  expect(vsTone.vs, 'verbe reçoit plus pâle que les noms').toBeLessThan(vsTone.name * 0.85);
+  expect(Number(vsTone.weight), 'verbe reçoit : poids 500, pas 800').toBeLessThanOrEqual(500);
   const todayLamp = await todayUpcoming.locator('.sports-chip__cta-tag').evaluate((el) => el.dataset.ctaLamp);
   expect(todayLamp, 'match dans 3 h : pastille jaune (à venir), pas rouge résultat').toBe('next');
   await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first()).toBeVisible();
