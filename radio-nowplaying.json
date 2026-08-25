@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-25T08:38:31.426Z",
+  "updatedAt": "2026-08-25T09:32:36.912Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T08:38:04.596Z"
+      "checkedAt": "2026-08-25T09:32:07.582Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "À l'horizon",
-        "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/a-lhorizon"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "05:00",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Câlin collectif",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/calins-collectifs"
+      },
       "track": "",
-      "showTitle": "À l'horizon",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T08:38:06.627Z"
+      "checkedAt": "2026-08-25T09:32:09.787Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Attik / Show For Children",
-        "source": "api-live",
-        "start": "03:00",
-        "end": "05:00"
-      },
-      "next": {
         "title": "The Beat Power Hour",
         "source": "api-live",
         "start": "05:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Tuesday Morning After Pt1",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Attik / Show For Children",
+      "showTitle": "The Beat Power Hour",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T08:38:09.365Z"
+      "checkedAt": "2026-08-25T09:32:13.267Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T08:38:23.464Z"
+      "checkedAt": "2026-08-25T09:32:27.474Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +126,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T08:38:24.449Z"
+      "checkedAt": "2026-08-25T09:32:28.427Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les rois de l'arène",
         "source": "api-live",
         "start": "05:00",
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Arca - Sueno",
-      "showTitle": "",
+      "next": {
+        "title": "Le Monde Dans Mes Oreilles",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00",
+        "slug": "le-monde-dans-mes-oreilles"
+      },
+      "track": "Julie Aubé - La grosse misere",
+      "showTitle": "Les rois de l'arène",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-25T08:38:31.076Z"
+      "checkedAt": "2026-08-25T09:32:36.562Z"
     }
   }
 }
