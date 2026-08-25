@@ -3732,8 +3732,34 @@ function sportsResultTone(result) {
   return SPORTS_SPORT_TONES.default;
 }
 
-/** Pastille V / D / N — puces scores et CTA. */
-function sportsResultBadgeSpec(game) {
+/** Ordinal FR de place : 1er, 2e, 7e. */
+function sportsPlaceOrdinal(place) {
+  const n = Number(place);
+  if (!Number.isFinite(n) || n < 1) return '';
+  return n === 1 ? '1er' : `${n}e`;
+}
+
+/** Score d’une régate : « 1er/12 », « 7e/12 ». */
+function sportsPlaceScoreText(game) {
+  const ord = sportsPlaceOrdinal(game?.scoreFor);
+  const field = Number(game?.scoreAgainst);
+  if (!ord || !Number.isFinite(field) || field < 1) return '';
+  return `${ord}/${field}`;
+}
+
+/**
+ * Pastille de résultat.
+ * Match : V / D / N.
+ * Régate / place : médaille 1–3, rien au-delà (le « 7e/12 » suffit — pas un V).
+ */
+function sportsResultBadgeSpec(game, sport) {
+  if (sportsIsPlaceResult(game, sport || game?.sport)) {
+    const n = Number(game?.scoreFor);
+    if (n === 1) return { letter: '🥇', mod: 'place' };
+    if (n === 2) return { letter: '🥈', mod: 'place' };
+    if (n === 3) return { letter: '🥉', mod: 'place' };
+    return null;
+  }
   const r = String(game?.result || '');
   if (r === 'W') return { letter: 'V', mod: 'w' };
   if (r === 'L') return { letter: 'D', mod: 'l' };
@@ -3741,8 +3767,9 @@ function sportsResultBadgeSpec(game) {
   return { letter: 'N', mod: 'd' };
 }
 
-function sportsResultBadgeEl(game) {
-  const spec = sportsResultBadgeSpec(game);
+function sportsResultBadgeEl(game, sport) {
+  const spec = sportsResultBadgeSpec(game, sport);
+  if (!spec) return null;
   const el = document.createElement('span');
   el.className = `sports-chip__badge sports-chip__badge--${spec.mod}`;
   el.textContent = spec.letter;
@@ -5087,7 +5114,7 @@ function sportsCtaLabelFromSlide(slide) {
   if (slide.mode === 'result' || liveScore) {
     const placeKind = sportsIsPlaceResult(g, slide.team.sport);
     const score = placeKind
-      ? `${g.scoreFor}e/${g.scoreAgainst}`
+      ? sportsPlaceScoreText(g)
       : `${g.scoreFor}–${g.scoreAgainst}`;
     return placeKind
       ? `${glyph} ${home} ${score}`
@@ -5672,7 +5699,8 @@ function fillSportsCtaLayer(layer, slide) {
     head.append(gEl);
   }
   if (src?.mode === 'result' && src.game) {
-    head.append(sportsResultBadgeEl(src.game));
+    const badge = sportsResultBadgeEl(src.game, sportKey);
+    if (badge) head.append(badge);
   }
   const line = document.createElement('span');
   line.className = 'sports-chip__cta-line';
@@ -5696,7 +5724,7 @@ function fillSportsCtaLayer(layer, slide) {
     const opp = sportsPlainOpponentName(g);
     const placeKind = sportsIsPlaceResult(g, src.team.sport);
     if (placeKind) {
-      const placeTxt = `${g.scoreFor}e/${g.scoreAgainst}`;
+      const placeTxt = sportsPlaceScoreText(g);
       text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
         + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
     } else {
@@ -6270,13 +6298,15 @@ function paintSportsChip(slide, animate = false) {
   const subLine = sportsMatchSubLine(slide);
 
   if (slide.mode === 'result') {
-    a.append(glyph, sportsResultBadgeEl(g));
+    const badge = sportsResultBadgeEl(g, sport);
+    if (badge) a.append(glyph, badge);
+    else a.append(glyph);
     const placeKind = sportsIsPlaceResult(g, sport);
     const prior = g.priorSeason || team.lastGamePriorSeason;
     if (placeKind) {
       // Régate / place : ne pas coller « McGill Sailing 7/12 ICSA Regional… »
       // en une ligne. Haut = équipe + place ; bas = date · compétition.
-      const placeTxt = `${g.scoreFor}e/${g.scoreAgainst}`;
+      const placeTxt = sportsPlaceScoreText(g);
       inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
         + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
     } else {

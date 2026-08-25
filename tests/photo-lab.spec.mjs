@@ -225,6 +225,11 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^V$/ }).first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^D$/ }).first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^N$/ }).first()).toBeVisible();
+  const placeOffPodium = page.locator('#cta-band .case').filter({ hasText: 'McGill 7e/12' });
+  await expect(placeOffPodium).toBeVisible();
+  await expect(placeOffPodium.locator('.sports-chip__badge')).toHaveCount(0);
+  await expect(page.locator('#cta-band .sports-chip__badge--place', { hasText: '🥇' }).first()).toBeVisible();
+  await expect(page.locator('#cta-band').getByText('1er/12')).toBeVisible();
   const labCopy = await page.locator('body').innerText();
   expect(labCopy, 'pas d’abréviation univ. — le marquee porte le mot entier').not.toMatch(/\buniv\./);
 

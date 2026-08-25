@@ -16,7 +16,7 @@
    mise à jour.
    ═══════════════════════════════════════════════════════ */
 
-const SHELL_CACHE  = 'sports-shell-v159';
+const SHELL_CACHE  = 'sports-shell-v160';
 const FONT_CACHE   = 'sports-fonts-v1';
 const CACHE_PREFIX = 'sports-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];

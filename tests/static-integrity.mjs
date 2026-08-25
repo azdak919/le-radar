@@ -1502,8 +1502,11 @@ assert(
     && appJs.includes('sports-chip__cta-sub')
     && appJs.includes('function sportsUpdatedShort')
     && appJs.includes('function sportsRelativeWhen')
-    && appJs.includes('function sportsResultBadgeEl'),
-  'app.js : CTA sous-ligne relatif + pastille V/D/N comme les puces scores',
+    && appJs.includes('function sportsResultBadgeEl')
+    && appJs.includes('function sportsPlaceOrdinal')
+    && appJs.includes('function sportsPlaceScoreText')
+    && /sports-chip__badge--place/.test(styleCss),
+  'app.js : CTA sous-ligne relatif + V/D/N match + médaille podium régate',
 );
 assert(
   appJs.includes('function sportsCtaResultIsTodayOrYesterday')
