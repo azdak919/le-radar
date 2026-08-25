@@ -5087,9 +5087,38 @@ function sportsCompetitionLabel(slide) {
  * La compétition (ex. « Hockey collégial masculin D2 ») est la même info
  * qu’à droite de la date sur la carte CTA (`sportsCtaSubLine`).
  */
+/**
+ * Mot de temps des puces (même vocabulaire que la CTA) :
+ * À venir / Demain / aujourd’hui / hier / avant-hier. Vide → date courte.
+ */
+function sportsWhenWord(slide) {
+  const g = slide?.game || {};
+  if (sportsGameIsLive(g)) return '';
+  const day = sportsSlideDayKey(slide);
+  if (!day) return '';
+  const today = torontoDayKey();
+  if (day === today) {
+    if (slide.mode === 'next') return 'À venir';
+    if (slide.mode === 'result') return 'aujourd’hui';
+  }
+  if (day === sportsCivilDayShift(today, 1)) return 'Demain';
+  if (day === sportsCivilDayShift(today, -1)) return 'hier';
+  if (day === sportsCivilDayShift(today, -2)) return 'avant-hier';
+  return '';
+}
+
 function sportsMatchSubLine(slide) {
   const g = slide?.game || {};
-  const when = formatSportsWhen(g.date, g.time);
+  const word = sportsWhenWord(slide);
+  const clock = sportsKickoffClock(g);
+  let when = '';
+  if (word === 'À venir' || word === 'Demain') {
+    when = [word, clock].filter(Boolean).join(' · ');
+  } else if (word) {
+    when = word;
+  } else {
+    when = formatSportsWhen(g.date, g.time);
+  }
   const prior = !!(g.priorSeason || slide?.team?.lastGamePriorSeason);
   const placeKind = sportsIsPlaceResult(g, slide?.team?.sport || g.sport);
   // Régate / place : l’événement de place prime (souvent = competition).
@@ -6195,8 +6224,10 @@ function sportsChipTitle(slide) {
     return [issue, sport, line, when, host].filter(Boolean).join(' · ');
   }
 
-  // next / live proxy (urgency.tier 0 = fenêtre « en cours »)
-  const status = slide.urgency?.tier === 0 ? 'En cours' : 'Prochain match';
+  const status = sportsGameIsLive(g) ? 'En cours'
+    : sportsCtaGameIsToday(slide) ? 'À venir'
+    : sportsCtaGameIsTomorrow(slide) ? 'Demain'
+    : 'Prochain match';
   const verb = sportsMatchVerb(g);
   return [status, sport, `${home} ${verb} ${opp}`, when, host].filter(Boolean).join(' · ');
 }
