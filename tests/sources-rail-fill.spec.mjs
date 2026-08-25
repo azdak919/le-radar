@@ -34,11 +34,47 @@ test('wide E : Réduire s’aligne sur le bas de la fenêtre', async ({ page }) 
 
   await page.evaluate(() => window.scrollTo(0, 480));
   await expect.poll(async () => page.evaluate(gapBelowToggle), { timeout: 8_000 })
-    .toBeLessThanOrEqual(96);
+    .toBeLessThanOrEqual(40);
 
   const scrolled = await page.evaluate(gapBelowToggle);
-  expect(scrolled, `trou sous Réduire après scroll (${Math.round(scrolled)} px)`).toBeLessThanOrEqual(96);
+  expect(scrolled, `trou sous Réduire après scroll (${Math.round(scrolled)} px)`).toBeLessThanOrEqual(40);
   await expect(page.locator('#filters-toggle')).toBeVisible();
+});
+
+test('wide E : la flèche overlay comme la loupe, hors du rail sources', async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#wide-rail-stack')).toBeVisible({ timeout: 12_000 });
+
+  await page.evaluate(() => window.scrollTo(0, 800));
+  await expect(page.locator('#page-scroll-top')).toBeVisible();
+  await expect(page.locator('#news-search-toggle')).toBeVisible();
+
+  const geo = await page.evaluate(() => {
+    const fab = document.getElementById('page-scroll-top').getBoundingClientRect();
+    const loupe = document.getElementById('news-search-toggle').getBoundingClientRect();
+    const rail = document.getElementById('wide-rail-stack').getBoundingClientRect();
+    const stack = document.getElementById('wide-rail-stack');
+    const overlap = !(
+      fab.right < rail.left + 1
+      || fab.left > rail.right - 1
+      || fab.bottom < rail.top + 1
+      || fab.top > rail.bottom - 1
+    );
+    return {
+      fabLeft: fab.left,
+      loupeLeft: loupe.left,
+      innerWidth: window.innerWidth,
+      railBottom: stack.style.getPropertyValue('--wide-rail-bottom').trim(),
+      overlap,
+    };
+  });
+
+  expect(geo.fabLeft, 'flèche encore dans la moitié gauche').toBeGreaterThan(geo.innerWidth / 2);
+  expect(geo.loupeLeft, 'loupe plus à droite').toBeGreaterThan(geo.fabLeft);
+  expect(geo.overlap, 'la flèche recouvre encore le rail des sources').toBe(false);
+  expect(geo.railBottom, `le rail réserve encore de la place à la flèche (${geo.railBottom})`)
+    .toBe('16px');
 });
 
 test('wide E 1440 : le rail ouvert remplit aussi un laptop', async ({ page }) => {

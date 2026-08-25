@@ -1407,6 +1407,14 @@ assert(
       && /if \(isWideRailFiltersActive\(\)\) \{\s*return syncWideRailFiltersFit/.test(appJs.replace(/\s+/g, ' ')),
     'wide E → bureau : retirer hauteur rail et largeur pilule (sinon toutes les sources restent visibles)',
   );
+  const pageToolsBlock = (styleCss.match(/\.page-tools\s*\{[^}]+\}/) || [''])[0];
+  assert(
+    /justify-content:\s*flex-end/.test(pageToolsBlock)
+      && !/\.page-tools\s*>\s*\.news-search\s*\{[^}]*margin-left:\s*auto/.test(styleCss)
+      && /const bottomSafe = 16/.test(appJs)
+      && !/fabOn \? 72/.test(appJs),
+    'flèche haut : overlay bas-droite avec la loupe (pas de réserve 72 px dans le rail)',
+  );
 }
 assert(
   styleCss.includes('.news-list:not([data-ready]) > .article')
