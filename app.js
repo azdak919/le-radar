@@ -3611,7 +3611,8 @@ const SPORTS_SCROLL_POST_PAUSE_MS = MARQUEE_REST_MS;
 const SPORTS_SLOT_STAGGER_MS = 1100;
 /**
  * Vague de toutes les puces (scores + texte CTA), puis pause lecture.
- * Tous les écrans : même principe ; CTA inchangée si tactile / motion réduite.
+ * Tous les écrans : même principe ; CTA en pause à l’appui sur tactile et
+ * inchangée seulement en mouvement réduit.
  * Step assez lent pour suivre la cascade ; hold assez long pour relire le ruban.
  */
 const SPORTS_CASCADE_STEP_MS = 520;
@@ -5459,6 +5460,26 @@ function sportsDedupeMatchSlides(slides) {
 }
 
 /**
+ * Clé utilisée uniquement pour espacer les deux faces V/D (ou N/N) d'un
+ * résultat. Elles restent toutes les deux dans le cycle, mais ne doivent pas
+ * se retrouver dans deux cartes voisines du bandeau.
+ */
+function sportsResultMatchKey(slide) {
+  if (slide?.mode !== 'result') return '';
+  const key = sportsMatchDedupeKey(slide);
+  return key && key !== 'pair:|||' ? key : '';
+}
+
+function sportsAdjacentResultMatchKeys(slot, visible = sportsVisible) {
+  const keys = new Set();
+  for (const i of [slot - 1, slot + 1]) {
+    const key = sportsResultMatchKey(visible[i]);
+    if (key) keys.add(key);
+  }
+  return keys;
+}
+
+/**
  * Clés d’occupation d’une slide.
  * Prochains / CTA : un match = une face (**reçoit** ou **chez**).
  * Résultats (puces scores) : V et D (ou N/N) sont deux cartes distinctes.
@@ -6075,8 +6096,7 @@ function applySportsCtaState(chip, slide) {
 
 /**
  * Pause de la rotation au survol et au focus — garde-fou `pause-survol-focus`
- * (WCAG 2.2.2). N’est posée que sur les surfaces où la rotation existe : sur
- * tactile, l’accroche est figée et il n’y a rien à mettre en pause.
+ * (WCAG 2.2.2). Sur tactile, un appui maintenu suspend la rotation.
  */
 function bindSportsCtaPause(chip) {
   if (!chip || chip._ctaPauseBound) return;
@@ -6544,6 +6564,14 @@ function nextSportsSlide(usedKeys, opts = {}) {
         .map((s) => String(s.team?.sport || '').toLowerCase())
         .filter(Boolean),
     );
+  const avoidMatchKeys = opts.avoidMatchKeys instanceof Set
+    ? opts.avoidMatchKeys
+    : new Set(opts.avoidMatchKeys || []);
+  const isAvailable = (slide) => {
+    if (sportsSlideIsUsed(slide, used)) return false;
+    const matchKey = sportsResultMatchKey(slide);
+    return !(matchKey && avoidMatchKeys.has(matchKey));
+  };
 
   // ── Hors saison : prochains matchs seulement (pas d’accroches info) ──
   if (lane.kind === 'offseason') {
@@ -6553,7 +6581,7 @@ function nextSportsSlide(usedKeys, opts = {}) {
     // Diversité sport puis curseur (pool déjà trié plus proche → plus loin).
     for (let i = 0; i < pool.length; i += 1) {
       const s = pool[(sportsLeftCursor + i) % pool.length];
-      if (sportsSlideIsUsed(s, used)) continue;
+      if (!isAvailable(s)) continue;
       const sp = String(s.team?.sport || '').toLowerCase();
       if (sp && usedSports.has(sp) && usedSports.size < pool.length) continue;
       if (avoidSport && sp === avoidSport) continue;
@@ -6562,7 +6590,7 @@ function nextSportsSlide(usedKeys, opts = {}) {
     }
     for (let i = 0; i < pool.length; i += 1) {
       const s = pool[(sportsLeftCursor + i) % pool.length];
-      if (!sportsSlideIsUsed(s, used)) {
+      if (isAvailable(s)) {
         sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
         return s;
       }
@@ -6570,7 +6598,7 @@ function nextSportsSlide(usedKeys, opts = {}) {
     // Tout déjà affiché (hors CTA) : ne pas recycler le match CTA.
     for (let i = 0; i < pool.length; i += 1) {
       const s = pool[(sportsLeftCursor + i) % pool.length];
-      if (sportsSlideIsUsed(s, used)) continue;
+      if (!isAvailable(s)) continue;
       sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
       return s;
     }
@@ -6584,7 +6612,7 @@ function nextSportsSlide(usedKeys, opts = {}) {
   // 1) Sport pas encore dans le bandeau
   for (let i = 0; i < pool.length; i += 1) {
     const s = pool[(sportsLeftCursor + i) % pool.length];
-    if (sportsSlideIsUsed(s, used)) continue;
+    if (!isAvailable(s)) continue;
     const sp = String(s.team?.sport || '').toLowerCase();
     if (sp && !usedSports.has(sp)) {
       sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
@@ -6595,7 +6623,7 @@ function nextSportsSlide(usedKeys, opts = {}) {
   if (avoidSport) {
     for (let i = 0; i < pool.length; i += 1) {
       const s = pool[(sportsLeftCursor + i) % pool.length];
-      if (sportsSlideIsUsed(s, used)) continue;
+      if (!isAvailable(s)) continue;
       if (String(s.team?.sport || '').toLowerCase() !== avoidSport) {
         sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
         return s;
@@ -6605,7 +6633,7 @@ function nextSportsSlide(usedKeys, opts = {}) {
   // 3) Suivant non utilisé dans l’ordre de fraîcheur
   for (let i = 0; i < pool.length; i += 1) {
     const s = pool[(sportsLeftCursor + i) % pool.length];
-    if (!sportsSlideIsUsed(s, used)) {
+    if (isAvailable(s)) {
       sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
       return s;
     }
@@ -6680,7 +6708,13 @@ function pickInitialSportsVisible(count) {
   sportsVisible = ctas.slice();
   try {
     while (picked.length < contentCount) {
-      const slide = nextSportsSlide(usedKeys, { usedSports, avoidSport: '' });
+      const previousKey = sportsResultMatchKey(picked[picked.length - 1]);
+      const avoidMatchKeys = previousKey ? new Set([previousKey]) : new Set();
+      const slide = nextSportsSlide(usedKeys, {
+        usedSports,
+        avoidSport: '',
+        avoidMatchKeys,
+      });
       if (!slide || slide.mode === 'info') break;
       if (sportsSlideIsUsed(slide, usedKeys)) break;
       picked.push(slide);
@@ -6764,11 +6798,14 @@ function renderSportsStrip() {
     for (let i = 0; i < sportsVisible.length; i += 1) {
       if (ctaIdxsPrev.includes(i)) continue;
       const prev = sportsVisible[i];
+      const prevMatchKey = sportsResultMatchKey(prev);
+      const priorMatchKey = sportsResultMatchKey(nextVisible[nextVisible.length - 1]);
       if (
         prev
         && prev.mode !== 'cta'
         && prev.mode !== 'info'
         && !sportsSlideIsUsed(prev, used)
+        && !(prevMatchKey && prevMatchKey === priorMatchKey)
         && slideStillValid(prev)
         && nextVisible.length < contentSlots
       ) {
@@ -6786,7 +6823,9 @@ function renderSportsStrip() {
     sportsVisible = [...ctasKeep, ...nextVisible];
     try {
       while (nextVisible.length < contentSlots) {
-        const slide = nextSportsSlide(used, { usedSports });
+        const previousKey = sportsResultMatchKey(nextVisible[nextVisible.length - 1]);
+        const avoidMatchKeys = previousKey ? new Set([previousKey]) : new Set();
+        const slide = nextSportsSlide(used, { usedSports, avoidMatchKeys });
         if (!slide || slide.mode === 'info') break;
         if (sportsSlideIsUsed(slide, used)) break;
         nextVisible.push(slide);
@@ -6936,7 +6975,7 @@ function clearSportsSlotTimers() {
  * Wide multi-CTA : chaque CTA cycle sans reprendre le match d’une voisine.
  * 1 chip : CTA seule.
  */
-/** 390/430 : CTA pleine largeur — retouche sur place, pas un swap de carte. */
+/** 390/430 : CTA pleine largeur — roulement interne, pas un swap de carte. */
 function sportsCtaInPlaceViewport() {
   try {
     return window.matchMedia('(max-width: 430.98px)').matches;
@@ -6963,6 +7002,10 @@ function retouchSportsCtaChip(chip, slide) {
   const { title, aria } = sportsCtaA11y(slide);
   chip.title = title;
   chip.setAttribute('aria-label', aria);
+  if (!sportsReducedMotion) {
+    rollSportsCtaLabel(chip, slide);
+    return;
+  }
   applySportsCtaState(chip, slide);
   const layer = sportsCtaActiveLabel(chip);
   if (layer) {
@@ -6987,6 +7030,7 @@ function rotateSportsSlot(slot) {
   const isCtaSlot = ctaSlots.includes(slot);
   // Occupation = clés faces + dédup match (miroir CTA ↔ scores).
   const used = sportsVisibleOccupyKeys(slot);
+  const avoidMatchKeys = sportsAdjacentResultMatchKeys(slot);
   const usedSports = new Set(
     sportsVisible
       .filter((_, i) => i !== slot && sportsVisible[i]?.mode !== 'cta')
@@ -7029,9 +7073,14 @@ function rotateSportsSlot(slot) {
     // Scores (gauche ou droite des CTAs) : résultats ou prochains.
     const cur = sportsVisible[slot];
     const avoid = String(cur?.team?.sport || '').toLowerCase();
-    replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
+    replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid, avoidMatchKeys });
     if (replacement?.mode === 'cta' || replacement?.mode === 'info') {
-      replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid, forceMode: 'next' });
+      replacement = nextSportsSlide(used, {
+        usedSports,
+        avoidSport: avoid,
+        avoidMatchKeys,
+        forceMode: 'next',
+      });
     }
   }
 
@@ -7044,7 +7093,7 @@ function rotateSportsSlot(slot) {
   ) {
     const avoid = String(sportsVisible[slot]?.team?.sport || '').toLowerCase();
     sportsLeftCursor = (sportsLeftCursor + 1) % Math.max(1, sportsLeftLaneState().pool.length || 1);
-    replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid });
+    replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid, avoidMatchKeys });
     if (!replacement || sportsSlideIsUsed(replacement, used)) return;
   }
 
@@ -7060,7 +7109,12 @@ function rotateSportsSlot(slot) {
       if (!sportsSlideIsUsed(left, ctaKeys)) continue;
       const avoid = String(left.team?.sport || '').toLowerCase();
       const leftUsed = sportsVisibleOccupyKeys(i);
-      const alt = nextSportsSlide(leftUsed, { usedSports, avoidSport: avoid });
+      const leftAvoidMatchKeys = sportsAdjacentResultMatchKeys(i);
+      const alt = nextSportsSlide(leftUsed, {
+        usedSports,
+        avoidSport: avoid,
+        avoidMatchKeys: leftAvoidMatchKeys,
+      });
       if (alt && alt.mode !== 'cta' && !sportsSlideIsUsed(alt, leftUsed)) {
         sportsVisible[i] = alt;
         const chips = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip');
@@ -7077,8 +7131,8 @@ function rotateSportsSlot(slot) {
   const chips = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip');
   const oldChip = chips[slot];
 
-  // 390/430 : CTA seule, pleine largeur. Un leave/arrive type puce score
-  // fait glisser une 2ᵉ carte (glyphe + V/D/N) par-dessus la pastille.
+  // 390/430 : CTA seule, pleine largeur. Le roulement interne garde l’animation
+  // sans faire glisser une 2ᵉ carte (glyphe + V/D/N) sur la pastille.
   if (
     isCtaSlot
     && replacement.mode === 'cta'
