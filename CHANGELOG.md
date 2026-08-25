@@ -27,6 +27,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Visiteur CTA / puces : **chez** au lieu de **à**. « à » = un lieu (à Concordia, au CEPSUM) ; « chez » = le domicile d’une équipe. « Rouge et Or à Carabins » était le plus faible (Carabins n’est pas un lieu).
 - CTA sports : pastille **Prochain** en jaune (plus d’ambre). Un titre trop long (« Champlain Lennoxville reçoit Cégep François-Xavier-Garneau ») défile L→R en boucle, y compris en shell large 1920 — le CSS wide forçait `ellipsis` + `animation: none`.
 - Fil d’articles : 10 passages Québec — **6 h**, **midi**, et toutes les 2 h de 7 h à 21 h. Le cron part 35 min avant. Un test d’intégrité calé sur une date La Pige de mai bloquait tout le push dès qu’elle sortait de la fiche ; le fil JS lit `news.json`, donc un échec HTML ne retient plus les articles.
 - Page `/sports/` : le tampon « Mise à jour » et les cartes suivaient le dernier `seo:update` (17 août) alors que `sports.json` était rafraîchi plusieurs fois par jour. Le bot scores régénère maintenant `/sports/` et `/en/sports/` à chaque passe.

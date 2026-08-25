@@ -1643,6 +1643,7 @@ assert(
     && appJs.includes('Cégep Trois-Rivières')
     && appJs.includes('Cégep Rimouski')
     && appJs.includes("'reçoit'")
+    && appJs.includes("'chez'")
     && appJs.includes('sportsDisplaySideName')
     && appJs.includes('sportsChipOpponentLabel')
     && appJs.includes('sportsLookupInstitutionAcronym')
