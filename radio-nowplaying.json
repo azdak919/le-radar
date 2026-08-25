@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-25T20:57:25.298Z",
+  "updatedAt": "2026-08-25T21:29:35.193Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T20:56:57.994Z"
+      "checkedAt": "2026-08-25T21:29:10.249Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T20:57:00.478Z"
+      "checkedAt": "2026-08-25T21:29:12.610Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Montreal Sessions",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Off The Hour: Local Journalism Stories",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Prison Radio",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Montreal Sessions",
+      "showTitle": "Off The Hour: Local Journalism Stories",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T20:57:03.452Z"
+      "checkedAt": "2026-08-25T21:29:17.558Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Fluid Mosaic",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
-      },
-      "next": {
         "title": "Cherry Vamp and the Sonic Coffin",
         "source": "schedule-live",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
       },
+      "next": {
+        "title": "Bikini Brrroadcast",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
+      },
       "track": "",
-      "showTitle": "The Fluid Mosaic",
+      "showTitle": "Cherry Vamp and the Sonic Coffin",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T20:57:17.839Z"
+      "checkedAt": "2026-08-25T21:29:31.487Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T20:57:18.450Z"
+      "checkedAt": "2026-08-25T21:29:32.109Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "19:00",
         "slug": "live"
       },
-      "track": "Ecca Vandal - CAME HERE FOR THE LOOT",
+      "track": "Truck Violence - Jaundiced and reaching for a mother",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-25T20:57:24.948Z"
+      "checkedAt": "2026-08-25T21:29:34.842Z"
     }
   }
 }
