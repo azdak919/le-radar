@@ -12263,8 +12263,8 @@ function renderNews() {
     NEWS_LIST.removeAttribute('data-autumn-grace');
   }
 
-  // Wide E : 2 unes dès 1920, 3 à 3840 ; prod : 1 une + vedettes.
-  const wideDualLead = !isSourceView && isWideDualLeadViewport();
+  // Wide E : 2 unes dès 1920, 3 à 3840 — même gabarit fil général et vue source.
+  const wideDualLead = isWideDualLeadViewport();
   const leadCount = wideDualLead ? Math.min(wideHeroLeadCount(), heroItems.length) : 1;
   if (wideDualLead) hero.dataset.leads = String(leadCount);
   else hero.removeAttribute('data-leads');
@@ -12552,9 +12552,14 @@ const AVG_BRIEF_TITLE_H = 42;
  * de trop restait visible sous les vedettes. 40 px = petit spacer OK, 1 carte non.
  */
 const COLUMN_HEIGHT_TOL = 40;
-/* Vue source : 1 une + jusqu’à 2 vedettes (fraîcheur), puis En bref / suite. */
+/* Vue source hors wide dual : 1 une + jusqu’à 2 vedettes (fraîcheur).
+ * Wide E (≥1920) : même N que le fil général (2 unes + vedettes, 3 à 3840). */
 const SOURCE_FEATURE_MAX = 2;
 const SOURCE_HERO_SPOTLIGHT_MAX = 1 + SOURCE_FEATURE_MAX;
+
+function sourceHeroSpotlightMax() {
+  return isWideDualLeadViewport() ? wideHeroSpotlightMax() : SOURCE_HERO_SPOTLIGHT_MAX;
+}
 
 function estimateHeroSeedHeight(heroCount) {
   if (heroCount <= 0) return 0;
@@ -13753,17 +13758,18 @@ function pickSourceLead(pool) {
  * Vue d'un seul média (filtre source).
  *
  * Ordre de fraîcheur strict dans chaque section (pool déjà date desc) :
- *  - Une + vedettes = tranche contiguë des plus frais (1 une + ≤2 vedettes)
+ *  - Une + vedettes = tranche contiguë des plus frais
+ *    · hors wide dual : 1 une + ≤2 vedettes (évite le « double look » vs En bref
+ *      sur mobile)
+ *    · wide E (≥1920) : même N que le fil général (2 unes + vedettes)
  *  - En bref = suite chronologique (graine ≈ hauteur hero)
  *  - Suite du fil = le reste
- * Pas de 4 vedettes comme le fil global (évite le « double look » vs En bref
- * sur mobile) ; 1–2 features suffisent sous la une d’un seul média.
  */
 function partitionSourceFeed(items, referenceDate = new Date()) {
   const sorted = sortByDateDesc(items);
   const { items: pool, contingencyBand } = collectSourcePool(sorted, referenceDate);
-  // Tranche contiguë des plus frais → une = pool[0], vedettes = pool[1..n]
-  const heroN = Math.min(SOURCE_HERO_SPOTLIGHT_MAX, pool.length);
+  // Tranche contiguë des plus frais → une(s) = pool[0..leads), vedettes = suite
+  const heroN = Math.min(sourceHeroSpotlightMax(), pool.length);
   const heroItems = pool.slice(0, heroN);
   const heroKeys = new Set(heroItems.map(articleKey));
   const rest = pool.filter((item) => !heroKeys.has(articleKey(item)));
