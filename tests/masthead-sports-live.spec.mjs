@@ -650,6 +650,54 @@ test('CTA pool : à venir → aujourd’hui → 5 j → hier ; pas le lointain',
   expect(iY).toBeGreaterThan(iMid);
 });
 
+test('même match : une face reçoit ou chez, pas les deux', async ({ page }) => {
+  const kick = torontoParts(Date.now() + 2 * 86400000);
+  const shared = {
+    date: kick.date,
+    time: '18:00',
+    sport: 'soccer',
+    competition: 'Soccer universitaire féminin',
+    gameId: 'mirror-uqam-mcgill',
+    live: false,
+  };
+  const tA = teamShell('universitaire:soccer:uqam-m', {
+    name: 'UQAM', fullName: 'Université du Québec à Montréal', code: 'UQAM',
+  });
+  tA.sector = 'universitaire';
+  tA.nextGame = {
+    ...shared,
+    opponent: 'McGill',
+    opponentCode: 'MCG',
+    opponentFullName: 'McGill University',
+    home: true,
+  };
+  tA.nextGames = [tA.nextGame];
+  const tB = teamShell('universitaire:soccer:mcg-m', {
+    name: 'McGill', fullName: 'McGill University', code: 'MCG',
+  });
+  tB.sector = 'universitaire';
+  tB.nextGame = {
+    ...shared,
+    opponent: 'UQAM',
+    opponentCode: 'UQAM',
+    opponentFullName: 'Université du Québec à Montréal',
+    home: false,
+  };
+  tB.nextGames = [tB.nextGame];
+  await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [tA.id]: tA, [tB.id]: tB },
+  });
+  const faces = await page.evaluate(() => (typeof sportsCtaCandidateSlides === 'function'
+    ? sportsCtaCandidateSlides()
+      .filter((s) => String(s.game?.gameId) === 'mirror-uqam-mcgill')
+      .map((s) => ({ code: s.team?.code, home: s.game?.home }))
+    : []));
+  expect(faces, 'un seul miroir').toHaveLength(1);
+  expect(['UQAM', 'MCG']).toContain(faces[0].code);
+});
+
 test('bandeau : nextGames entier, pas un seul match par équipe', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });

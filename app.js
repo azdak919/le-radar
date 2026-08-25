@@ -4562,13 +4562,15 @@ function sportsLeftLaneState() {
       const day = sportsSlideDayKey(s);
       return day && day > ctaEnd;
     });
-    const pool = recentResults.concat(farNexts);
+    const pool = sportsDedupeMatchSlides(recentResults.concat(farNexts));
     return { kind: 'results', pool };
   }
   // Hors saison / creux : calendrier à venir seulement (pas de musée d’avril).
   // Filet ultime : un seul plus récent lastGame si vraiment zéro next.
   const namedNexts = nexts.filter(sportsSlideIsDisplayable);
-  if (namedNexts.length) return { kind: 'offseason', pool: namedNexts };
+  if (namedNexts.length) {
+    return { kind: 'offseason', pool: sportsDedupeMatchSlides(namedNexts) };
+  }
   const staleFilet = results.slice(0, 1);
   return { kind: 'offseason', pool: staleFilet };
 }
@@ -5403,25 +5405,35 @@ function sportsMatchDedupeKey(slide) {
 }
 
 /**
- * Face éditoriale d’un match miroir : domicile → favori → rang éditorial.
- * (Un match = une accroche CTA.)
+ * Face d’un match miroir (reçoit / chez) : une seule.
+ * Favori → sa face ; sinon pile ou face **stable** (même match = même verbe
+ * jusqu’au prochain `sports.json`, pas un flip à chaque rotation).
  */
+function sportsMatchFaceHash(slide) {
+  const key = sportsMatchDedupeKey(slide) || slide?.key || '';
+  let h = 2166136261;
+  for (let i = 0; i < key.length; i += 1) {
+    h ^= key.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
 function sportsPreferMatchFace(a, b) {
   if (!a) return b;
   if (!b) return a;
-  let favSet = null;
-  try {
-    favSet = new Set(readSportsFavorites());
-  } catch { favSet = new Set(); }
-  const score = (s) => {
-    let n = 0;
-    if (s.game?.home === true) n += 100;
-    if (s.game?.home === false) n -= 10;
-    if (sportsIsFavorite(s.team, favSet)) n += 50;
-    n += Math.max(0, 40 - sportsEditorialRank(s.team));
-    return n;
-  };
-  return score(a) >= score(b) ? a : b;
+  let favSet = new Set();
+  try { favSet = new Set(readSportsFavorites()); } catch { /* ignore */ }
+  const fa = sportsIsFavorite(a.team, favSet);
+  const fb = sportsIsFavorite(b.team, favSet);
+  if (fa && !fb) return a;
+  if (fb && !fa) return b;
+  const home = a.game?.home === true ? a : (b.game?.home === true ? b : null);
+  const away = a.game?.home === true ? b : a;
+  if (home && away && home !== away) {
+    return (sportsMatchFaceHash(home) & 1) === 0 ? home : away;
+  }
+  return a;
 }
 
 /** Une entrée par match (gameId / paire) — garde la face préférée. */
