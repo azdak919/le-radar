@@ -1354,11 +1354,12 @@ assert(
   /data-cta-lamp="past"[^{]*\{[^}]*background:\s*#3d9a6a/.test(cssFlat)
     && /data-cta-lamp="today"[^{]*\{[^}]*background:\s*#c8102e/.test(cssFlat)
     && /data-cta-lamp="next"[^{]*\{[^}]*background:\s*#f5d000/.test(cssFlat)
-    && /cta-tag:not\(\.sports-chip__cta-tag--brand\)[^{]*\{[^}]*min-width:\s*8rem/.test(cssFlat)
+    && /cta-tag:not\(\.sports-chip__cta-tag--brand\)[^{]*\{[^}]*width:\s*max-content/.test(cssFlat)
+    && !/cta-tag:not\(\.sports-chip__cta-tag--brand\)[^{]*\{[^}]*min-width:\s*8rem/.test(cssFlat)
     && /sports-chip__cta-tag-lines[^{]*\{[^}]*flex-direction:\s*column/.test(cssFlat)
     && /grid-template-columns:\s*auto minmax\(4\.25rem, 1fr\)/.test(cssFlat)
     && /\[data-cta-state="live"\][^{]*\.sports-chip__cta-tag[^{]*\{[^}]*background:\s*#c8102e/.test(cssFlat),
-  'style : pastilles Prochain match 2 lignes / Hier / Aujourd’hui, même rail ; glyphe 390 pas coupé',
+  'style : pastilles collées au libellé (pas de rail 8 rem) ; Prochain match 2 lignes ; glyphe 390 pas coupé',
 );
 {
   const wideCss = readFileSync(join(root, 'dev/wide-desktop-preview.css'), 'utf8');

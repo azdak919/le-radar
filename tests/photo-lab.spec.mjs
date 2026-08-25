@@ -205,11 +205,22 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   expect(phg - phr, 'Hier : pastille verte').toBeGreaterThan(40);
   expect(par - pag, 'Aujourd’hui : pastille rouge saturée').toBeGreaterThan(80);
   expect(elr - elg, 'En cours : pastille rouge inchangée').toBeGreaterThan(80);
+  const pillFit = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    return { w: r.width, overflow: el.scrollWidth - el.clientWidth };
+  });
   const [wProchain, wHier, wToday] = await Promise.all([
     pillWidth('Prochain match'), pillWidth('Hier'), pillWidth('Aujourd’hui'),
   ]);
-  expect(Math.abs(wProchain - wHier), 'Prochain et Hier : même largeur de rail').toBeLessThan(2);
-  expect(Math.abs(wProchain - wToday), 'Prochain et Aujourd’hui : même largeur de rail').toBeLessThan(2);
+  const [fitHier, fitToday, fitNext] = await Promise.all([
+    pillFit('Hier'), pillFit('Aujourd’hui'), pillFit('Prochain match'),
+  ]);
+  expect(wHier, 'Hier : pastille collée, plus de rail 8 rem').toBeLessThan(100);
+  expect(wToday, 'Aujourd’hui plus large que Hier (libellé plus long)').toBeGreaterThan(wHier + 8);
+  expect(wProchain, 'Prochain match 2 lignes plus étroit qu’Aujourd’hui').toBeLessThan(wToday + 1);
+  expect(fitHier.overflow, 'Hier : pas d’excédent').toBeLessThanOrEqual(1);
+  expect(fitToday.overflow, 'Aujourd’hui : pas d’excédent').toBeLessThanOrEqual(1);
+  expect(fitNext.overflow, 'Prochain match : pas d’excédent').toBeLessThanOrEqual(1);
   await expect(page.locator('.sports-chip__cta-eyebrow--head', { hasText: /^Prochain$/ })).toHaveCount(0);
   await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^V$/ }).first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^D$/ }).first()).toBeVisible();
