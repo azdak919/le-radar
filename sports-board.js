@@ -773,11 +773,33 @@
     searchInput.value = initial.q;
     searchQuery = initial.q;
   }
+  function relabelCivilDays() {
+    const today = ymdInToronto();
+    const yest = addDaysYmd(today, -1);
+    const tom = addDaysYmd(today, 1);
+    const word = (ymd) => {
+      if (ymd === today) return lang === 'en' ? 'Today' : 'Aujourd’hui';
+      if (ymd === yest) return lang === 'en' ? 'Yesterday' : 'Hier';
+      if (ymd === tom) return lang === 'en' ? 'Tomorrow' : 'Demain';
+      return '';
+    };
+    root.querySelectorAll('.sports-result time[datetime]').forEach((el) => {
+      const ymd = String(el.getAttribute('datetime') || '').slice(0, 10);
+      const w = word(ymd);
+      if (!w) return;
+      const dayEl = el.querySelector('.sports-result__day');
+      if (dayEl) dayEl.textContent = w;
+      else if (!el.querySelector('.sports-result__clock')) el.textContent = w;
+    });
+  }
+
   apply(sport, sector, sex, period, team, initial.q || '');
+  relabelCivilDays();
   if (initial.q) setSearchOpen(true);
   if (!team && !initial.q) openHashSport();
   window.addEventListener('hashchange', openHashSport);
   window.setInterval(() => {
+    relabelCivilDays();
     syncLivePresentation();
     const cur = currentFilters();
     if (cur.period === 'live') {
