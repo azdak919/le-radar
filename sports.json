@@ -1,11 +1,11 @@
 {
-  "updated": "2026-08-25T16:53:31.084Z",
-  "fetchedAt": "2026-08-25T16:53:31.084Z",
+  "updated": "2026-08-25T21:04:01.375Z",
+  "fetchedAt": "2026-08-25T21:04:01.375Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-25T16:53:31.084Z"
+    "referenceDate": "2026-08-25T21:04:01.375Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 789,
@@ -59194,7 +59194,7 @@
         },
         {
           "date": "2026-10-07",
-          "time": "21:00",
+          "time": "20:00",
           "opponent": "Jonquière",
           "opponentCode": "JON",
           "home": false,
@@ -59635,7 +59635,7 @@
         },
         {
           "date": "2026-10-07",
-          "time": "21:00",
+          "time": "20:00",
           "opponent": "Alma",
           "opponentCode": "ALM",
           "home": true,
