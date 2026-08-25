@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-25T15:18:14.250Z",
+  "updated": "2026-08-25T16:12:14.723Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 131,
+  "cited": 132,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 9,
-  "citedNew": 5,
-  "fallbackNew": 13,
+  "checked": 21,
+  "updatedCount": 12,
+  "citedNew": 9,
+  "fallbackNew": 12,
   "samples": [
     {
       "title": "Feeding two birds with one scone: Rad Frosh 2026 tackles student passivity and food insecurity",
@@ -27,16 +27,16 @@
       "method": "body-line"
     },
     {
-      "title": "Ce que nous devons aux femmes",
-      "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
-      "cited": true,
-      "method": "media-credit-near"
-    },
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
       "source": "Le Délit",
       "credit": "Photo : Stu Doré",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Sois belle et tais-toi",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -71,9 +71,30 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
