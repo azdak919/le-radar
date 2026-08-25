@@ -1598,6 +1598,7 @@ assert(
   appJs.includes('sports-chip__cta-stack')
     && appJs.includes('sportsDedupeMatchSlides')
     && appJs.includes('sportsMatchDedupeKey')
+    && appJs.includes('function sportsMatchFaceHash')
     && appJs.includes('sportsSoftSportDiversity')
     && !/CTA : carte stable — roulement/.test(appJs)
     && /if \(animate && !sportsReducedMotion\) a\.classList\.add\('is-arriving'\)/.test(appJs),
