@@ -692,10 +692,73 @@ test('même match : une face reçoit ou chez, pas les deux', async ({ page }) =>
   const faces = await page.evaluate(() => (typeof sportsCtaCandidateSlides === 'function'
     ? sportsCtaCandidateSlides()
       .filter((s) => String(s.game?.gameId) === 'mirror-uqam-mcgill')
-      .map((s) => ({ code: s.team?.code, home: s.game?.home }))
+      .map((s) => {
+        const verb = typeof sportsMatchVerb === 'function' ? sportsMatchVerb(s.game) : '';
+        const label = typeof sportsCtaLabelFromSlide === 'function' ? sportsCtaLabelFromSlide(s) : '';
+        return { code: s.team?.code, home: s.game?.home, verb, label };
+      })
     : []));
   expect(faces, 'un seul miroir').toHaveLength(1);
   expect(['UQAM', 'MCG']).toContain(faces[0].code);
+  expect(faces[0].label, 'pas le libellé reçoit/chez').not.toMatch(/reçoit\s*\/\s*chez/);
+  expect(['reçoit', 'chez']).toContain(faces[0].verb);
+  const hasRecoit = faces[0].label.includes('reçoit');
+  const hasChez = faces[0].label.includes('chez');
+  expect(hasRecoit !== hasChez, 'un verbe, pas les deux').toBe(true);
+});
+
+test('CTA résultats aujourd’hui/hier : vainqueur seulement', async ({ page }) => {
+  const y = yesterdayResultGame();
+  const win = {
+    ...y,
+    opponent: 'Vanier',
+    opponentCode: 'VAN',
+    opponentFullName: 'Vanier College',
+    scoreFor: 3,
+    scoreAgainst: 0,
+    result: 'W',
+    gameId: 'cta-winner-only',
+    final: true,
+  };
+  const loss = {
+    ...y,
+    opponent: 'Saint-Hyacinthe',
+    opponentCode: 'STH',
+    opponentFullName: 'Cégep de Saint-Hyacinthe',
+    scoreFor: 0,
+    scoreAgainst: 3,
+    result: 'L',
+    gameId: 'cta-winner-only',
+    final: true,
+    home: false,
+  };
+  const tW = teamShell('collegial:soccer:sth-cta-w', {
+    name: 'Saint-Hyacinthe', fullName: 'Cégep de Saint-Hyacinthe', code: 'STH',
+  });
+  tW.lastGame = win;
+  tW.results = [win];
+  const tL = teamShell('collegial:soccer:van-cta-l', {
+    name: 'Vanier', fullName: 'Vanier College', code: 'VAN',
+  });
+  tL.lastGame = loss;
+  tL.results = [loss];
+  await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [tW.id]: tW, [tL.id]: tL },
+  });
+  const faces = await page.evaluate(() => {
+    const cta = typeof sportsCtaCandidateSlides === 'function' ? sportsCtaCandidateSlides() : [];
+    const of = (gid) => cta.filter((s) => String(s.game?.gameId) === gid);
+    return of('cta-winner-only').map((s) => {
+      const label = typeof sportsCtaLabelFromSlide === 'function' ? sportsCtaLabelFromSlide(s) : '';
+      return { code: s.team?.code, result: s.game?.result, label };
+    });
+  });
+  expect(faces, 'une face CTA').toHaveLength(1);
+  expect(faces[0].result).toBe('W');
+  expect(faces[0].code).toBe('STH');
+  expect(faces[0].label, 'score, pas reçoit/chez').not.toMatch(/reçoit|chez/);
 });
 
 test('puces scores : V d’un côté et D de l’autre, pas de dédup', async ({ page }) => {
