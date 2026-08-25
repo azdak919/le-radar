@@ -921,6 +921,73 @@ function formatSportsDate(iso, lang) {
   }
 }
 
+function sportsYmdToronto(d = new Date()) {
+  try {
+    return new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Toronto',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(d);
+  } catch {
+    return d.toISOString().slice(0, 10);
+  }
+}
+
+function sportsAddDaysYmd(ymd, days) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(ymd || ''));
+  if (!m) return ymd;
+  const dt = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]) + days));
+  return dt.toISOString().slice(0, 10);
+}
+
+/** Aujourd’hui / Hier / Demain si le jour civil Québec colle, sinon vide. */
+function sportsDayWord(iso, t) {
+  const day = String(iso || '').slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return '';
+  const today = sportsYmdToronto();
+  if (day === today) return t.sportsToday;
+  if (day === sportsAddDaysYmd(today, -1)) return t.sportsYesterday;
+  if (day === sportsAddDaysYmd(today, 1)) return t.sportsTomorrow;
+  return '';
+}
+
+function sportsIsPlaceResult(game, sport) {
+  return game?.scoreKind === 'place'
+    || sport === 'sailing'
+    || game?.sport === 'sailing';
+}
+
+/** 1er / 2e / 7e — jamais « 1e ». EN : 1st / 2nd / 3rd. */
+function sportsPlaceOrdinal(place, lang = 'fr') {
+  const n = Number(place);
+  if (!Number.isFinite(n) || n < 1) return '';
+  if (lang === 'en') {
+    const mod = n % 100;
+    if (mod >= 11 && mod <= 13) return `${n}th`;
+    if (n % 10 === 1) return `${n}st`;
+    if (n % 10 === 2) return `${n}nd`;
+    if (n % 10 === 3) return `${n}rd`;
+    return `${n}th`;
+  }
+  return n === 1 ? '1er' : `${n}e`;
+}
+
+function sportsPlaceScoreText(game, lang = 'fr') {
+  const ord = sportsPlaceOrdinal(game?.scoreFor, lang);
+  const field = Number(game?.scoreAgainst);
+  if (!ord || !Number.isFinite(field) || field < 1) return '';
+  return `${ord}/${field}`;
+}
+
+function sportsPlaceBadgeSpec(game, t) {
+  const n = Number(game?.scoreFor);
+  if (n === 1) return { letter: '🥇', title: t.sportsGold };
+  if (n === 2) return { letter: '🥈', title: t.sportsSilver };
+  if (n === 3) return { letter: '🥉', title: t.sportsBronze };
+  return null;
+}
+
 /** Libellés sport localisés (filtres + meta carte). */
 const SPORT_LABEL_I18N = {
   fr: {
@@ -985,8 +1052,8 @@ function formatSportsClock(time, lang) {
 }
 
 /** HTML date (+ heure empilée) pour aligner les colonnes avec les lignes de score. */
-function formatSportsTimeHtml(date, time, lang) {
-  const day = formatSportsDate(date, lang) || date || '';
+function formatSportsTimeHtml(date, time, lang, dayLabel) {
+  const day = dayLabel || formatSportsDate(date, lang) || date || '';
   const clock = formatSportsClock(time, lang);
   if (clock) {
     return `<span class="sports-result__day">${escapeHtml(day)}</span><span class="sports-result__clock">${escapeHtml(clock)}</span>`;
@@ -1188,35 +1255,45 @@ function sportsResultRows(team, t, lang) {
   };
   const last = team.lastGame;
   if (last) {
-    const badge = last.result === 'W' ? 'V' : last.result === 'L' ? 'D' : 'N';
-    const label = last.result === 'W' ? t.sportsWin : last.result === 'L' ? t.sportsLoss : t.sportsDraw;
     const opp = formatOpp(last);
-    const placeKind = last.scoreKind === 'place' || isSailing;
-    const score = placeKind && last.scoreFor != null && last.scoreAgainst != null
-      ? `${last.scoreFor}/${last.scoreAgainst}`
+    const placeKind = sportsIsPlaceResult(last, team.sport);
+    const placeBadge = placeKind ? sportsPlaceBadgeSpec(last, t) : null;
+    const badge = placeKind
+      ? (placeBadge ? placeBadge.letter : '')
+      : (last.result === 'W' ? 'V' : last.result === 'L' ? 'D' : 'N');
+    const label = placeKind
+      ? (placeBadge ? placeBadge.title : t.sportsPlace)
+      : (last.result === 'W' ? t.sportsWin : last.result === 'L' ? t.sportsLoss : t.sportsDraw);
+    const score = placeKind
+      ? (sportsPlaceScoreText(last, lang) || `${last.scoreFor}–${last.scoreAgainst}`)
       : `${last.scoreFor}–${last.scoreAgainst}`;
     const scoreAria = placeKind
-      ? `${t.sportsPlace} ${last.scoreFor} / ${last.scoreAgainst} · ${label}`
+      ? `${t.sportsPlace} ${sportsPlaceScoreText(last, lang) || `${last.scoreFor} / ${last.scoreAgainst}`}`
       : label;
-    const when = formatSportsDate(last.date, lang);
+    const when = sportsDayWord(last.date, t) || formatSportsDate(last.date, lang);
     const prior = !!(last.priorSeason || team.lastGamePriorSeason);
     const priorClass = prior ? ' sports-result--prior-season' : '';
+    const kindClass = placeKind ? 'place' : escapeHtml(last.result || 'D');
     const priorMeta = prior
       ? `\n  <span class="sports-result__season-meta">${escapeHtml(t.sportsPriorSeason)}</span>`
       : '';
-    rows.push(`<li class="sports-result sports-result--${escapeHtml(last.result || 'D')}${priorClass}" data-result="${escapeHtml(last.result || 'D')}"${prior ? ' data-prior-season="1"' : ''}>
+    const badgeClass = placeKind && placeBadge
+      ? 'sports-result__badge sports-result__badge--place'
+      : 'sports-result__badge';
+    rows.push(`<li class="sports-result sports-result--${kindClass}${priorClass}" data-result="${placeKind ? 'place' : escapeHtml(last.result || 'D')}"${prior ? ' data-prior-season="1"' : ''}>
   <time class="sports-result__time" datetime="${escapeHtml(last.date || '')}">${escapeHtml(when)}</time>
   <span class="sports-result__score" aria-label="${escapeHtml(scoreAria)}">${escapeHtml(score)}</span>
   <span class="sports-result__title">${formatTitle(last, opp)}</span>
-  <span class="sports-result__badge" title="${escapeHtml(label)}">${badge}</span>${priorMeta}
+  <span class="${badgeClass}" title="${escapeHtml(label)}">${badge}</span>${priorMeta}
 </li>`);
   }
   const next = team.nextGame;
   if (next) {
     const live = sportsNextIsLive(next);
+    const dayWord = sportsDayWord(next.date, t);
     const timeHtml = live && next.period
-      ? `<span class="sports-result__day">${escapeHtml(formatSportsDate(next.date, lang) || next.date || '')}</span><span class="sports-result__clock">${escapeHtml(next.period)}</span>`
-      : formatSportsTimeHtml(next.date, next.time, lang);
+      ? `<span class="sports-result__day">${escapeHtml(dayWord || formatSportsDate(next.date, lang) || next.date || '')}</span><span class="sports-result__clock">${escapeHtml(next.period)}</span>`
+      : formatSportsTimeHtml(next.date, next.time, lang, dayWord);
     const opp = formatOpp(next);
     const venue = next.home === false
       ? `<span class="sports-result__venue">${escapeHtml(t.sportsAway)}</span>`

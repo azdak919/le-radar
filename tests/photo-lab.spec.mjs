@@ -308,7 +308,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
 test('labo cartes page sports : variantes V D N prochain creux', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto(`${BASE}/dev/sports-page-lab.html`, { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('#lab-nav a')).toHaveCount(18);
+  await expect(page.locator('#lab-nav a')).toHaveCount(21);
   const firstBrand = page.locator('#fiches .sports-panel__brand').first();
   await expect(firstBrand).toBeVisible();
   const chromeBox = await page.locator('.lab-chrome').boundingBox();
@@ -336,6 +336,12 @@ test('labo cartes page sports : variantes V D N prochain creux', async ({ page }
   await expect(page.locator('#fiches .sports-result__venue', { hasText: 'domicile' }).first()).toBeVisible();
   await expect(page.locator('#fiches .sports-result__venue', { hasText: 'extérieur' }).first()).toBeVisible();
   await expect(page.locator('#fiches .sports-result__vs', { hasText: 'régate' }).first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-result--place').first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-result__badge--place', { hasText: '🥇' }).first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-result__badge--place', { hasText: '🥈' }).first()).toBeVisible();
+  await expect(page.locator('#fiches .sports-result__score', { hasText: '7e/12' })).toBeVisible();
+  await expect(page.locator('#fiches .sports-result__score', { hasText: '1er/12' })).toBeVisible();
+  await expect(page.locator('#fiches .lab-case').filter({ hasText: 'Place / régate — argent' }).locator('.sports-result__badge', { hasText: /^V$/ })).toHaveCount(0);
   await expect(page.locator('#fiches .sports-panel__empty').first()).toBeVisible();
   await expect(page.locator('#fiches .sports-panel__empty--club').first()).toBeVisible();
   await expect(page.locator('#fiches .sports-panel--external').first()).toBeVisible();
@@ -343,7 +349,7 @@ test('labo cartes page sports : variantes V D N prochain creux', async ({ page }
   await expect(page.locator('#fiches .is-spotlight').first()).toBeVisible();
   await expect(page.locator('#formats iframe')).toHaveCount(4);
   await page.locator('#lab-nav a', { hasText: 'Victoire (V, vert)' }).click();
-  await expect(page.locator('#case-2')).toBeInViewport();
+  await expect(page.locator('.lab-case').filter({ hasText: 'Victoire (V, vert)' })).toBeInViewport();
 });
 
 test('labo photo : grille puis fiche, suivant en barre', async ({ page }) => {

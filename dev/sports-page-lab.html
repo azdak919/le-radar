@@ -266,7 +266,7 @@
     };
 
     function resultRow(r) {
-      const kind = r.kind; // next | W | L | D | live
+      const kind = r.kind; // next | W | L | D | live | place
       const prior = r.prior ? ' sports-result--prior-season' : '';
       const cls = `sports-result sports-result--${kind}${prior}`;
       const data = kind === 'next' || kind === 'live'
@@ -306,11 +306,12 @@
       const title = r.href
         ? `<a href="${r.href}" target="_blank" rel="noopener noreferrer" title="${r.opp} — Ouvrir la source officielle">${inner}</a>`
         : inner;
+      const badgeMod = r.badgeMod ? ` sports-result__badge--${r.badgeMod}` : '';
       const badge = kind === 'next'
         ? `<span class="sports-result__badge sports-result__badge--next" title="À venir">→</span>`
         : kind === 'live'
           ? `<span class="sports-result__badge" title="En cours"></span>`
-          : `<span class="sports-result__badge" title="${r.badgeTitle}">${r.badge}</span>`;
+          : `<span class="sports-result__badge${badgeMod}" title="${r.badgeTitle || ''}">${r.badge || ''}</span>`;
       const priorMeta = r.prior
         ? `\n  <span class="sports-result__season-meta">Saison précédente</span>`
         : '';
@@ -406,9 +407,25 @@
           school: 'Université McGill',
           meta: 'Soccer · D1 · Universitaire',
           rows: [{
-            kind: 'next', date: '2026-08-24', day: '24 août', clock: '13 h 00',
+            kind: 'next', date: '2026-08-24', day: 'Aujourd’hui', clock: '21 h 00',
             opp: 'Stingers', oppSchool: 'Concordia',
             oppFull: 'Université Concordia', venue: 'extérieur',
+            href: RSEQ,
+          }],
+        },
+      },
+      {
+        title: 'Prochain — demain',
+        note: 'jour = Demain, heure empilée',
+        panel: {
+          sport: 'football', sector: 'universitaire', name: 'Laval',
+          nick: 'Rouge et Or', code: 'LAV', sex: 'Masculin', sexKey: 'M',
+          school: 'Université Laval',
+          meta: 'Football · D1 · Universitaire',
+          rows: [{
+            kind: 'next', date: '2026-08-25', day: 'Demain', clock: '13 h 00',
+            opp: 'Carabins', oppSchool: 'Montréal',
+            oppFull: 'Université de Montréal', venue: 'domicile',
             href: RSEQ,
           }],
         },
@@ -510,16 +527,16 @@
       },
       {
         title: 'Place / régate (voile)',
-        note: 'scoreKind place · vs → régate · 7/12',
+        note: 'hors podium · 7e/12 · pas de V/D',
         panel: {
           sport: 'sailing', sector: 'universitaire', name: 'McGill Sailing',
           code: 'MCG', sex: 'Ouvert / mixte', sexKey: 'X',
           school: 'Université McGill',
-          meta: 'Voile · NEISA · Universitaire · Fiche 5-4',
+          meta: 'Voile · NEISA · Universitaire',
           rows: [{
-            kind: 'L', date: '2026-04-25', day: '25 avr.',
-            score: '7/12', scoreAria: 'Place 7 / 12 · Défaite',
-            badge: 'D', badgeTitle: 'Défaite', vs: 'régate',
+            kind: 'place', date: '2026-08-24', day: 'Aujourd’hui',
+            score: '7e/12', scoreAria: 'Place 7e / 12',
+            vs: 'régate',
             opp: 'ICSA Regional Teams National Invitational',
             oppFull: 'ICSA Regional Teams National Invitational · Columbia',
             href: 'https://scores.collegesailing.org/',
@@ -527,19 +544,55 @@
         },
       },
       {
-        title: 'Place / régate — victoire',
-        note: '2/12 · badge V',
+        title: 'Place / régate — or',
+        note: '1er/12 · médaille',
         panel: {
           sport: 'sailing', sector: 'universitaire', name: 'McGill Sailing',
           code: 'MCG', sex: 'Ouvert / mixte', sexKey: 'X',
           school: 'Université McGill',
-          meta: 'Voile · NEISA · Universitaire · Fiche 6-4',
+          meta: 'Voile · NEISA · Universitaire',
           rows: [{
-            kind: 'W', date: '2026-04-18', day: '18 avr.',
-            score: '2/12', scoreAria: 'Place 2 / 12 · Victoire',
-            badge: 'V', badgeTitle: 'Victoire', vs: 'régate',
+            kind: 'place', date: '2026-08-24', day: 'Aujourd’hui',
+            score: '1er/12', scoreAria: 'Place 1er / 12',
+            badge: '🥇', badgeMod: 'place', badgeTitle: 'Or', vs: 'régate',
             opp: 'NEISA Spring Championship',
             oppFull: 'NEISA Spring Championship · MIT',
+            href: 'https://scores.collegesailing.org/',
+          }],
+        },
+      },
+      {
+        title: 'Place / régate — argent',
+        note: '2e/12 · médaille, pas V',
+        panel: {
+          sport: 'sailing', sector: 'universitaire', name: 'McGill Sailing',
+          code: 'MCG', sex: 'Ouvert / mixte', sexKey: 'X',
+          school: 'Université McGill',
+          meta: 'Voile · NEISA · Universitaire',
+          rows: [{
+            kind: 'place', date: '2026-08-23', day: 'Hier',
+            score: '2e/12', scoreAria: 'Place 2e / 12',
+            badge: '🥈', badgeMod: 'place', badgeTitle: 'Argent', vs: 'régate',
+            opp: 'NEISA Spring Championship',
+            oppFull: 'NEISA Spring Championship · MIT',
+            href: 'https://scores.collegesailing.org/',
+          }],
+        },
+      },
+      {
+        title: 'Place / régate — bronze',
+        note: '3e/10 · médaille',
+        panel: {
+          sport: 'sailing', sector: 'universitaire', name: 'Concordia Sailing',
+          code: 'CON', sex: 'Ouvert / mixte', sexKey: 'X',
+          school: 'Université Concordia',
+          meta: 'Voile · NEISA · Universitaire',
+          rows: [{
+            kind: 'place', date: '2026-08-23', day: 'Hier',
+            score: '3e/10', scoreAria: 'Place 3e / 10',
+            badge: '🥉', badgeMod: 'place', badgeTitle: 'Bronze', vs: 'régate',
+            opp: 'ICSA Regional Teams National Invitational',
+            oppFull: 'ICSA Regional Teams National Invitational · Columbia',
             href: 'https://scores.collegesailing.org/',
           }],
         },
