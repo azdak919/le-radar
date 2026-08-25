@@ -11,10 +11,10 @@ export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
   // CI : 2 retries anti-flaky (contention runner / réseau) sans masquer un bug
   // local (0 retry hors CI pour feedback immédiat).
-  retries: process.env.CI ? 2 : 0,
-  // CI : 2 workers pour le lot principal. player-continuity tourne en projet
-  // séparé (voir projects) pour ne pas se marcher dessus avec l’audio partagé.
-  workers: process.env.CI ? 2 : undefined,
+  retries: process.env.CI ? 1 : 0,
+  // CI : 1 worker. Deux workers + 18 fixtures sports coincaient le runner
+  // 15–20 min (filet D9 / webServer). Série = 5–8 min, pas un hang.
+  workers: process.env.CI ? 1 : undefined,
   reporter: process.env.CI ? 'github' : 'list',
   use: {
     baseURL: `http://127.0.0.1:${port}`,
