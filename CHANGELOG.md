@@ -27,6 +27,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Labo cartes sports : grille complète CTA + puces (voile or/argent/bronze/hors podium × aujourd’hui/hier, en cours sans score, visiteur, dans 45 min). Sous-ligne résultat = compétition, plus « il y a 6 h ».
 - CTA **À venir** (coup d’envoi aujourd’hui) : la sous-ligne dit **Aujourd’hui** à côté de l’heure ou du compte à rebours (« Aujourd’hui · 21 h 00 », « Aujourd’hui · dans 45 min »). La pastille reste À venir.
 - Pastille CTA **Hier** : pourpre de marque `#6c2163` (focus-group C, go humain). Plus le vert qui se lisait comme une victoire. Voyant lilas statique, filet inset blanc.
 - Visiteur CTA / puces : **chez** au lieu de **à**. « à » = un lieu (à Concordia, au CEPSUM) ; « chez » = le domicile d’une équipe. « Rouge et Or à Carabins » était le plus faible (Carabins n’est pas un lieu).

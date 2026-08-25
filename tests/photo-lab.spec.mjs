@@ -133,8 +133,9 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(page.locator('#cta-band .sports-chip--cta').first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip--match')).toHaveCount(0);
   await expect(page.locator('#standard-chips .sports-chip--match').first()).toBeVisible();
-  await expect(page.locator('#cta-band').getByText('il y a 5 h', { exact: false })).toBeVisible();
+  await expect(page.locator('#cta-band').getByText(/il y a \d/)).toHaveCount(0);
   await expect(page.locator('#cta-band').getByText('dans 3 h', { exact: false })).toBeVisible();
+  await expect(page.locator('#cta-band .sports-chip__cta-sub-text', { hasText: 'dans 45 min' })).toBeVisible();
   await expect(page.getByText('avant-hier', { exact: false }).first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip__cta-tag--brand')).toBeVisible();
   await expect(page.locator('#cta-band').getByText('LE-RADAR.ca').first()).toBeVisible();
@@ -269,13 +270,22 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(placeOffPodium).toBeVisible();
   await expect(placeOffPodium.locator('.sports-chip__badge')).toHaveCount(0);
   await expect(page.locator('#cta-band .sports-chip__badge--place', { hasText: '🥇' }).first()).toBeVisible();
+  await expect(page.locator('#cta-band .sports-chip__badge--place', { hasText: '🥈' }).first()).toBeVisible();
+  await expect(page.locator('#cta-band .sports-chip__badge--place', { hasText: '🥉' }).first()).toBeVisible();
   await expect(page.locator('#cta-band').getByText('1er/12')).toBeVisible();
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'hier (place)' })).toBeVisible();
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'hier (or)' })).toBeVisible();
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'aujourd’hui (argent)' })).toBeVisible();
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'en cours (sans score)' })).toBeVisible();
+  await expect(page.locator('#standard-chips .case').filter({ hasText: 'voile argent' }).first()).toBeVisible();
+  await expect(page.locator('#standard-chips .case').filter({ hasText: 'voile bronze' }).first()).toBeVisible();
+  await expect(page.locator('#standard-chips .case').filter({ hasText: 'demain visiteur' }).locator('.sports-chip__vs')).toHaveText(/^chez$/);
   await expect(page.locator('#cta-band .case').filter({ hasText: 'à venir (visiteur)' }).locator('.sports-chip__vs')).toHaveText(/^chez$/);
   await expect(page.locator('#cta-band .case').filter({ hasText: 'hier (défaite)' }).locator('.sports-chip__badge')).toHaveText(/^D$/);
-  await expect(page.locator('#standard-chips .case').filter({ hasText: 'Puce — demain' }).locator('.sports-chip__sub-text')).toContainText(/^Demain/);
+  await expect(page.locator('#standard-chips .case').filter({ has: page.getByText('Puce — demain', { exact: true }) }).locator('.sports-chip__sub-text')).toContainText(/^Demain/);
   await expect(page.locator('#standard-chips .case').filter({ hasText: 'Puce — à venir (reçoit)' }).locator('.sports-chip__sub-text')).toContainText(/^À venir/);
-  await expect(page.locator('#standard-chips .sports-chip--match[data-sports-live="1"]')).toBeVisible();
-  await expect(page.locator('#standard-chips .sports-chip__badge--place')).toBeVisible();
+  await expect(page.locator('#standard-chips .sports-chip--match[data-sports-live="1"]').first()).toBeVisible();
+  await expect(page.locator('#standard-chips .sports-chip__badge--place').first()).toBeVisible();
   const labCopy = await page.locator('body').innerText();
   expect(labCopy, 'pas d’abréviation univ. — le marquee porte le mot entier').not.toMatch(/\buniv\./);
 
