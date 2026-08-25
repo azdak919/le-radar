@@ -163,6 +163,11 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   });
   expect(soonPulse.chip, 'carte À venir : halo rouge').toMatch(/sports-cta-ring-pulse/);
   expect(soonPulse.tag, 'pastille À venir : pulse En cours').toMatch(/sports-cta-tag-pulse/);
+  const tomorrowCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — demain' }).first();
+  await expect(tomorrowCard.locator('.sports-chip__cta-tag')).toHaveText(/^Demain$/i);
+  await expect(tomorrowCard.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
+  const tomorrowLamp = await tomorrowCard.locator('.sports-chip__cta-tag').evaluate((el) => el.dataset.ctaLamp);
+  expect(tomorrowLamp, 'Demain : pastille jaune, pas À venir').toBe('next');
   await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first()).toHaveText(/Prochain\s*match/i);
   await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first().locator(':scope > span')).toHaveCount(2);

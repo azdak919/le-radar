@@ -132,11 +132,11 @@
         },
       },
       {
-        title: 'CTA — prochain (visiteur)',
+        title: 'CTA — demain (visiteur)',
         cta: {
-          state: 'next', tone: '#2e7d4f', tag: 'Prochain match', glyph: '⚽',
+          state: 'next', tone: '#2e7d4f', tag: 'Demain', glyph: '⚽',
           text: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__vs">à</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
-          sub: 'demain · Soccer universitaire féminin',
+          sub: '19 h 00 · Soccer universitaire féminin',
         },
       },
       {
@@ -306,7 +306,7 @@
       const lamp = state === 'live' ? 'live'
         : tagLabel === 'À venir' ? 'soon'
         : tagLabel === 'Aujourd’hui' ? 'today'
-        : (state === 'next' || tagLabel === 'Prochain' || tagLabel === 'Prochain match') ? 'next'
+        : (state === 'next' || tagLabel === 'Demain' || tagLabel === 'Prochain' || tagLabel === 'Prochain match') ? 'next'
         : state === 'result' ? 'past'
         : 'idle';
       const g = glyph ? `<span class="sports-chip__cta-glyph" aria-hidden="true">${glyph}</span>` : '';

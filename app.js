@@ -3648,6 +3648,8 @@ const SPORTS_CTA_TAG = 'Sports';
 const SPORTS_CTA_TAG_LIVE = 'En cours';
 /** Coup d’envoi du jour, pas encore commencé — rouge pulse, pas le jaune Prochain. */
 const SPORTS_CTA_TAG_SOON = 'À venir';
+/** Demain : une ligne, même jaune que Prochain match. */
+const SPORTS_CTA_TAG_TOMORROW = 'Demain';
 /** Prochain : deux lignes dans la pastille, pas un rail plus large. */
 const SPORTS_CTA_TAG_NEXT = 'Prochain match';
 /** Repli idle (creux total, pas de match) ; sinon ton du sport via sportsCtaTone. Rouge = direct. */
@@ -5161,15 +5163,25 @@ function sportsCtaGameIsToday(slide) {
   return !!(day && day === torontoDayKey());
 }
 
+function sportsCtaGameIsTomorrow(slide) {
+  const src = slide?.ctaFrom || slide;
+  const day = sportsSlideDayKey(src);
+  return !!(day && day === sportsCivilDayShift(torontoDayKey(), 1));
+}
+
 /**
- * Pastille CTA : À venir (coup d’envoi du jour) / Prochain match (dès demain)
+ * Pastille CTA : À venir (aujourd’hui) / Demain / Prochain match (après)
  * / En cours / Aujourd’hui (résultat) / Hier / date.
  * Creux : LE-RADAR.ca (logo PWA), pas « Sports ».
  */
 function sportsCtaTagLabel(slide, state) {
   const st = state || sportsCtaState(slide);
   if (st === 'live') return SPORTS_CTA_TAG_LIVE;
-  if (st === 'next') return sportsCtaGameIsToday(slide) ? SPORTS_CTA_TAG_SOON : SPORTS_CTA_TAG_NEXT;
+  if (st === 'next') {
+    if (sportsCtaGameIsToday(slide)) return SPORTS_CTA_TAG_SOON;
+    if (sportsCtaGameIsTomorrow(slide)) return SPORTS_CTA_TAG_TOMORROW;
+    return SPORTS_CTA_TAG_NEXT;
+  }
   if (st === 'result') return sportsCtaResultTag(slide?.ctaFrom || slide);
   return RADAR_BRAND_SHORT;
 }
@@ -5231,8 +5243,10 @@ function sportsCtaSubLine(slide, state) {
       when = sportsRelativeWhen(ms, now);
     } else if (minToGo != null && minToGo >= 0) {
       const clock = sportsKickoffClock(g);
-      const today = sportsSlideDayKey(slide) === torontoDayKey(now);
-      when = today ? clock : (sportsWhenLong(g?.date, g?.time) || clock);
+      const day = sportsSlideDayKey(slide);
+      const today = day === torontoDayKey(now);
+      const tomorrow = day === sportsCivilDayShift(torontoDayKey(now), 1);
+      when = (today || tomorrow) ? clock : (sportsWhenLong(g?.date, g?.time) || clock);
     }
     if (when && when.toLowerCase() === String(tag || '').toLowerCase()) when = '';
     return [when, comp].filter(Boolean).join(' · ');

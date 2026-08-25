@@ -167,6 +167,36 @@ function yesterdayOnlyPayload() {
   };
 }
 
+function upcomingTomorrowPayload() {
+  const { date } = torontoParts();
+  const noon = Date.parse(`${date}T12:00:00`);
+  const t = torontoParts(noon + 86400000);
+  const game = {
+    date: t.date,
+    time: '19:00',
+    opponent: 'Vanier',
+    opponentCode: 'VAN',
+    opponentFullName: 'Vanier College',
+    home: true,
+    sport: 'soccer',
+    competition: 'Soccer collégial masculin D1',
+    live: false,
+  };
+  const team = teamShell('collegial:soccer:sth-tomorrow', {
+    name: 'Saint-Hyacinthe',
+    fullName: 'Cégep de Saint-Hyacinthe',
+    code: 'STH',
+  });
+  team.nextGame = game;
+  team.nextGames = [game];
+  return {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [team.id]: team },
+    _kick: { date: t.date, time: '19:00' },
+  };
+}
+
 function upcomingTodayPayload(offsetMs = 3 * 3600 * 1000) {
   const kick = torontoParts(Date.now() + offsetMs);
   const game = liveKickGame({
@@ -356,4 +386,15 @@ test('CTA prochain du jour : heure de coup d’envoi, pas « dans 3 h »', async
   expect(sub).toMatch(new RegExp(clock.replace(' ', '\\s+')));
   expect(sub.toLowerCase()).not.toMatch(/dans \d/);
   expect(sub.toLowerCase()).not.toMatch(/il y a/);
+});
+
+test('CTA demain : pastille Demain, heure, pas Prochain match', async ({ page }) => {
+  const payload = upcomingTomorrowPayload();
+  const cta = await openWithSports(page, payload);
+  await expect(cta).toHaveAttribute('data-cta-state', 'next');
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/^Demain$/i);
+  await expect(cta.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
+  const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
+  expect(sub).toMatch(/19\s*h\s*00/);
+  expect(sub.toLowerCase()).not.toMatch(/demain/);
 });
