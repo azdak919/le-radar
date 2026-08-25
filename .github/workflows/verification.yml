@@ -81,7 +81,9 @@ jobs:
       # Suite complète : workflow_dispatch seulement (trop longue pour chaque push).
       - name: Browser checks (critical)
         if: github.event_name != 'workflow_dispatch'
-        timeout-minutes: 8
+        # La série monoworker prend ~8 min 40 sur GitHub Actions; garder une
+        # marge suffisante évite de couper une suite encore en progrès.
+        timeout-minutes: 10
         run: npm run test:browser:ci
 
       - name: Browser checks (full suite)
