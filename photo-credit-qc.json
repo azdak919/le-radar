@@ -1,30 +1,72 @@
 {
-  "updated": "2026-08-25T03:20:40.991Z",
+  "updated": "2026-08-25T05:01:55.096Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 129,
-  "pending": 13,
+  "cited": 131,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 4,
-  "citedNew": 2,
-  "fallbackNew": 14,
+  "checked": 21,
+  "updatedCount": 13,
+  "citedNew": 9,
+  "fallbackNew": 12,
   "samples": [
     {
-      "title": "Des initiatives qui rassemblent",
-      "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
+      "title": "Il y a 30 ans : un grand spectacle solidaire pour le Saguenay",
+      "source": "La Pige",
+      "credit": "Photo : Le monde en images Gilles Potvin",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Présences invisibles : écrire la ville sans permission",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
     },
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
+      "title": "Le retard et les bienfaits du temps long",
       "source": "Le Délit",
-      "credit": "Photo : Anna El Murr",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
-      "method": "figcaption-bare"
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Sois belle et tais-toi",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Recettes musicales québécoises pour l’été",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Inside Mile End Kicks",
@@ -36,9 +78,23 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
     }
   ]
 }
