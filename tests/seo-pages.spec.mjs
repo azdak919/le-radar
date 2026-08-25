@@ -307,6 +307,38 @@ test('wide E 3840 : 3 unes, 6 vedettes en 3 col, En bref 2 col', async ({ page }
   expect(briefCols, 'En bref doit rester 2 colonnes à 3840').toBe(2);
 });
 
+test('wide E : une source reprend le gabarit 2 unes du fil général', async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  const layoutOf = async (url) => {
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
+    await expect.poll(async () => page.locator('.news-hero .article--lead').count(), { timeout: 12_000 })
+      .toBeGreaterThanOrEqual(2);
+    return page.locator('.news-hero').evaluate((hero) => {
+      const leads = [...hero.querySelectorAll('.article--lead')];
+      const firstTop = leads[0]?.getBoundingClientRect().top ?? 0;
+      const sameRow = leads.filter((el) => Math.abs(el.getBoundingClientRect().top - firstTop) < 8).length;
+      return {
+        leads: hero.getAttribute('data-leads'),
+        leadCount: leads.length,
+        leadCols: sameRow,
+        featureCount: hero.querySelectorAll('.article--feature').length,
+      };
+    });
+  };
+
+  const all = await layoutOf('/?wide=e');
+  expect(all.leads, 'Le Radar : 2 unes à 1920').toBe('2');
+  expect(all.leadCount).toBe(2);
+  expect(all.leadCols, 'Le Radar : les 2 unes côte à côte').toBe(2);
+  expect(all.featureCount).toBe(4);
+
+  const source = await layoutOf('/?wide=e&source=Quartier%20Libre');
+  expect(source.leads, 'Vue source : même data-leads que Le Radar').toBe(all.leads);
+  expect(source.leadCount, 'Vue source : 2 unes, pas une pleine largeur').toBe(all.leadCount);
+  expect(source.leadCols, 'Vue source : les 2 unes côte à côte').toBe(all.leadCols);
+  expect(source.featureCount, 'Vue source : même nombre de vedettes').toBe(all.featureCount);
+});
+
 test('depuis l’accueil, on atteint le hub des horaires puis une grille complète', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
