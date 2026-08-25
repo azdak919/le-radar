@@ -5152,14 +5152,22 @@ function sportsCtaResultTag(src) {
   }
 }
 
+/** Coup d’envoi (ou résultat) le jour civil Toronto d’aujourd’hui. */
+function sportsCtaGameIsToday(slide) {
+  const src = slide?.ctaFrom || slide;
+  const day = sportsSlideDayKey(src);
+  return !!(day && day === torontoDayKey());
+}
+
 /**
- * Pastille CTA : Prochain match (2 lignes) / En cours / Hier / Aujourd’hui / date.
+ * Pastille CTA : Aujourd’hui (match du jour ou résultat) / Prochain match
+ * (dès demain) / En cours / Hier / date.
  * Creux : LE-RADAR.ca (logo PWA), pas « Sports ».
  */
 function sportsCtaTagLabel(slide, state) {
   const st = state || sportsCtaState(slide);
   if (st === 'live') return SPORTS_CTA_TAG_LIVE;
-  if (st === 'next') return SPORTS_CTA_TAG_NEXT;
+  if (st === 'next') return sportsCtaGameIsToday(slide) ? 'Aujourd’hui' : SPORTS_CTA_TAG_NEXT;
   if (st === 'result') return sportsCtaResultTag(slide?.ctaFrom || slide);
   return RADAR_BRAND_SHORT;
 }

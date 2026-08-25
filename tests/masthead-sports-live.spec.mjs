@@ -348,8 +348,8 @@ test('CTA prochain du jour : heure de coup d’envoi, pas « dans 3 h »', async
   const payload = upcomingTodayPayload(3 * 3600 * 1000);
   const cta = await openWithSports(page, payload);
   await expect(cta).toHaveAttribute('data-cta-state', 'next');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/Prochain\s*match/i);
-  await expect(cta.locator('.sports-chip__cta-tag-lines')).toBeVisible();
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/Aujourd/i);
+  await expect(cta.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
   const clock = payload._kick.time.replace(':', ' h ');
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
   expect(sub).toMatch(new RegExp(clock.replace(' ', '\\s+')));

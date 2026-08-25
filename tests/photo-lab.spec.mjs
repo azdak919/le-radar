@@ -140,6 +140,11 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(page.locator('#cta-band').getByText('LE-RADAR.ca').first()).toBeVisible();
   await expect(page.locator('#cta-band').getByText(/Réseau Académique/).first()).toBeVisible();
   await expect(page.locator('#cta-band').getByText('Scores collégiaux')).toHaveCount(0);
+  const todayUpcoming = page.locator('#cta-band .case').filter({ hasText: 'dans 3 h' }).first();
+  await expect(todayUpcoming.locator('.sports-chip__cta-tag')).toHaveText(/Aujourd/i);
+  await expect(todayUpcoming.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
+  const todayLamp = await todayUpcoming.locator('.sports-chip__cta-tag').evaluate((el) => el.dataset.ctaLamp);
+  expect(todayLamp, 'match dans 3 h : pastille jaune (à venir), pas rouge résultat').toBe('next');
   await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first()).toHaveText(/Prochain\s*match/i);
   await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first().locator(':scope > span')).toHaveCount(2);
@@ -186,8 +191,11 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   });
   const [pr, pg] = await dotRgb('Prochain match');
   const [hr, hg] = await dotRgb('Hier');
-  const [ar] = await dotRgb('Aujourd’hui');
-  expect(ar, 'Aujourd’hui : voyant pâle sur fill rouge').toBeGreaterThan(200);
+  const ar = await page.locator('.sports-chip__cta-tag[data-cta-lamp="today"]').first().evaluate((el) => {
+    const m = (getComputedStyle(el, '::before').backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+    return m[0];
+  });
+  expect(ar, 'Aujourd’hui résultat : voyant pâle sur fill rouge').toBeGreaterThan(200);
   expect(pr - pg, 'Prochain : voyant ambre, pas rouge').toBeLessThan(80);
   expect(hg - hr, 'Hier : voyant vert').toBeGreaterThan(20);
   const pillRgb = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => {
@@ -197,13 +205,16 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   const pillWidth = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => el.getBoundingClientRect().width);
   const [ppr, ppg, ppb] = await pillRgb('Prochain match');
   const [phr, phg] = await pillRgb('Hier');
-  const [par, pag] = await pillRgb('Aujourd’hui');
+  const [par, pag] = await page.locator('.sports-chip__cta-tag[data-cta-lamp="today"]').first().evaluate((el) => {
+    const m = (getComputedStyle(el).backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+    return m;
+  });
   const [elr, elg] = await pillRgb('En cours');
   expect(ppr, 'Prochain : pastille jaune').toBeGreaterThan(200);
   expect(ppg, 'Prochain : pastille jaune').toBeGreaterThan(180);
   expect(ppb, 'Prochain : pastille jaune (pas crème)').toBeLessThan(80);
   expect(phg - phr, 'Hier : pastille verte').toBeGreaterThan(40);
-  expect(par - pag, 'Aujourd’hui : pastille rouge saturée').toBeGreaterThan(80);
+  expect(par - pag, 'Aujourd’hui résultat : pastille rouge saturée').toBeGreaterThan(80);
   expect(elr - elg, 'En cours : pastille rouge inchangée').toBeGreaterThan(80);
   const pillFit = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => {
     const r = el.getBoundingClientRect();
