@@ -1,25 +1,19 @@
 {
-  "updated": "2026-08-25T09:05:46.741Z",
+  "updated": "2026-08-25T10:01:55.765Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 21,
   "withCampusBank": 12,
   "fullyCovered": 185,
   "leadReadyPhotos": 150,
-  "pageScraped": 32,
-  "photosRecovered": 27,
-  "imagesCleared": 16,
-  "stockSearches": 32,
-  "stockFound": 10,
-  "campusBankFound": 4,
+  "pageScraped": 33,
+  "photosRecovered": 28,
+  "imagesCleared": 17,
+  "stockSearches": 30,
+  "stockFound": 8,
+  "campusBankFound": 3,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "CSU terminates council’s chief election officer",
-      "link": "https://thelinknewspaper.ca/article/16334",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
     {
       "title": "Tarifs douaniers : le choc n’est pas là où on l’attend",
       "link": "https://lapige.atmjonquiere.com/2026/08/24/tarifs-douaniers-le-choc-nest-pas-la-ou-on-lattend/?utm_source=rss&utm_medium=rss&utm_campaign=tarifs-douaniers-le-choc-nest-pas-la-ou-on-lattend",
@@ -51,12 +45,6 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
     },
     {
-      "title": "National Golf tournament",
-      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288689651802%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "campus-bank",
@@ -85,6 +73,18 @@
       "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "reason": "no-stock-match",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_marieceleste.jpg"
+    },
+    {
+      "title": "Gothic Cinema Rises from the Grave",
+      "link": "https://theplantnews.com/2026/05/11/gothic-cinema-rises-from-the-grave/",
+      "reason": "no-stock-match",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.png"
+    },
+    {
+      "title": "On Manon from KATSEYE: How K-Pop Takes Its Roots from Black Culture",
+      "link": "https://theplantnews.com/2026/05/11/on-manon-from-katseye-how-k-pop-takes-its-roots-from-black-culture/",
+      "reason": "no-stock-match",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-5.jpeg"
     }
   ]
 }

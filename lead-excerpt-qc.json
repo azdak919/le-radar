@@ -1,14 +1,32 @@
 {
-  "updated": "2026-08-25T09:01:18.804Z",
+  "updated": "2026-08-25T09:56:36.613Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 8,
-  "withLeadExcerpt": 84,
-  "candidates": 8,
+  "incomplete": 10,
+  "withLeadExcerpt": 85,
+  "candidates": 10,
   "enriched": 2,
   "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
+      "changed": true
+    },
+    {
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
+      "ok": true,
+      "score": 81,
+      "chars": 400,
+      "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
+      "changed": true
+    },
     {
       "title": "La mauvaise nutrition et les maladies chroniques",
       "link": "https://lecollectif.ca/a-la-une/la-mauvaise-nutrition-et-les-maladies-chroniques/",
@@ -43,7 +61,7 @@
       "score": 70,
       "chars": 400,
       "sample": "On May 14, 429 activists carrying more than 11,000 kilograms of humanitarian aid set sail to Gaza fr",
-      "changed": true
+      "changed": false
     },
     {
       "title": "The Cruel Optimism of Summer",
@@ -61,24 +79,6 @@
       "score": 66,
       "chars": 400,
       "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
-      "changed": true
-    },
-    {
-      "title": "Foire aux questions",
-      "link": "https://lecollectif.ca/campus/foire-aux-questions/",
-      "ok": true,
-      "score": 96,
-      "chars": 169,
-      "sample": "Attention cependant aux exceptions ! Consulte le site Web de ta faculté ou de ton centre universitai",
-      "changed": false
-    },
-    {
-      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
-      "link": "https://thelinknewspaper.ca/article/16338",
-      "ok": true,
-      "score": 90,
-      "chars": 177,
-      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
     }
   ]
