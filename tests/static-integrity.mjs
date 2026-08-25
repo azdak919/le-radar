@@ -1335,10 +1335,10 @@ assert(
     && appJs.includes('function sportsCtaTagLabel'),
   'app.js : pastille CTA = En cours / Hier / Aujourd’hui / Sports',
 );
-// Voyant CTA : CSS persistant (pas un span JS, pas lié à la radio).
+// Pastille CTA : plus de voyant LED (ni span JS, ni ::before).
 assert(
   !/dot\.className = 'sports-chip__cta-live'/.test(appJs),
-  'app.js : plus de point live JS — le voyant est le ::before CSS',
+  'app.js : plus de point live JS dans la pastille CTA',
 );
 assert(
   !/chev\.className = 'sports-chip__cta-chev'/.test(appJs)
@@ -1348,18 +1348,16 @@ assert(
 assert(
   !/data-radar-playing="1"[^{]*sports-chip__cta-tag::before/.test(cssFlat)
     && !/tuner\.is-playing\s*~[^{]*sports-chip__cta-tag::before/.test(cssFlat)
-    && /\.sports-chip__cta-tag::before/.test(cssFlat)
-    && /onairPulse/.test(styleCss)
-    && /sports-cta-dot-upcoming/.test(styleCss)
-    && !/sports-cta-dot-past/.test(styleCss)
+    && /sports-chip__cta-tag::before[^{]*\{[^}]*display:\s*none/.test(cssFlat)
+    && !/sports-cta-dot-upcoming/.test(styleCss)
+    && !/--lamp-past-dot/.test(styleCss)
     && /data-cta-lamp="past"/.test(styleCss)
     && /--lamp-past:\s*#6c2163/.test(styleCss)
     && appJs.includes('function sportsCtaLamp'),
-  'style : voyant CTA ambre Prochain, rouge Aujourd’hui, pourpre passé (pas de pulse vert)',
+  'style : pastilles CTA sans voyant LED ; fill jaune / rouge / pourpre',
 );
 assert(
   /data-cta-lamp="past"[^{]*\{[^}]*background:\s*var\(--lamp-past\)/.test(cssFlat)
-    && /data-cta-lamp="past"\]::before[^{]*\{[^}]*animation:\s*none/.test(cssFlat)
     && /data-cta-lamp="today"[^{]*\{[^}]*background:\s*#c8102e/.test(cssFlat)
     && /data-cta-lamp="next"[^{]*\{[^}]*background:\s*#f5d000/.test(cssFlat)
     && /cta-tag:not\(\.sports-chip__cta-tag--brand\)[^{]*\{[^}]*width:\s*max-content/.test(cssFlat)
