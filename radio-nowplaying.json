@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-25T07:09:58.738Z",
+  "updatedAt": "2026-08-25T07:51:04.583Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T07:09:34.768Z"
+      "checkedAt": "2026-08-25T07:50:41.380Z"
     },
     "cism": {
       "id": "cism",
@@ -40,13 +40,6 @@
         "end": "07:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
-      "next": {
-        "title": "À l'horizon",
-        "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/a-lhorizon"
-      },
       "track": "",
       "showTitle": "À l'horizon",
       "host": "",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T07:09:37.143Z"
+      "checkedAt": "2026-08-25T07:50:43.312Z"
     },
     "ckut": {
       "id": "ckut",
@@ -72,12 +65,6 @@
         "start": "05:00",
         "end": "07:00"
       },
-      "next": {
-        "title": "Attik / Show For Children",
-        "source": "api-live",
-        "start": "03:00",
-        "end": "05:00"
-      },
       "track": "",
       "showTitle": "Attik / Show For Children",
       "host": "",
@@ -87,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T07:09:40.244Z"
+      "checkedAt": "2026-08-25T07:50:45.642Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -114,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T07:09:54.605Z"
+      "checkedAt": "2026-08-25T07:50:59.615Z"
     },
     "cfak": {
       "id": "cfak",
@@ -139,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T07:09:55.142Z"
+      "checkedAt": "2026-08-25T07:51:00.348Z"
     },
     "choq": {
       "id": "choq",
@@ -152,7 +139,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Spell - Unquiet Graves",
+      "track": "Truck Violence - New Jesus",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -163,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-25T07:09:58.387Z"
+      "checkedAt": "2026-08-25T07:51:04.232Z"
     }
   }
 }
