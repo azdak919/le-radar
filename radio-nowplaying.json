@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-25T10:29:03.260Z",
+  "updatedAt": "2026-08-25T11:01:27.537Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T10:28:23.790Z"
+      "checkedAt": "2026-08-25T11:00:48.487Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "05:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "Câlin collectif",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/calins-collectifs"
       },
+      "next": {
+        "title": "Raconte ton quartier",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/raconte-ton-quartier"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Câlin collectif",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T10:28:26.131Z"
+      "checkedAt": "2026-08-25T11:00:49.971Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Beat Power Hour",
-        "source": "api-live",
-        "start": "05:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Tuesday Morning After Pt1",
         "source": "api-live",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Tuesday Morning After Pt2",
+        "source": "api-live",
+        "start": "08:00",
+        "end": "09:00"
+      },
       "track": "",
-      "showTitle": "The Beat Power Hour",
+      "showTitle": "Tuesday Morning After Pt1",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T10:28:29.254Z"
+      "checkedAt": "2026-08-25T11:00:53.200Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,43 +101,37 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T10:28:43.854Z"
+      "checkedAt": "2026-08-25T11:01:07.198Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule-live",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "18:30"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-25T10:28:44.539Z"
+      "checkedAt": "2026-08-25T11:01:07.851Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Les rois de l'arène",
-        "source": "api-live",
-        "start": "05:00",
-        "end": "07:00",
-        "slug": "les-rois-de-larene"
-      },
+      "current": null,
       "next": {
         "title": "Le Monde Dans Mes Oreilles",
         "source": "api-live",
@@ -145,18 +139,15 @@
         "end": "12:00",
         "slug": "le-monde-dans-mes-oreilles"
       },
-      "track": "KALIKA - KO EMOTIONNEL",
-      "showTitle": "Les rois de l'arène",
+      "track": "Saints Martyrs - Kyrie eleison",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-08-25T10:29:02.909Z"
+      "clientPoll": null,
+      "checkedAt": "2026-08-25T11:01:27.186Z"
     }
   }
 }
