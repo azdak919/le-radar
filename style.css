@@ -351,6 +351,17 @@ body {
 }
 .masthead-sports-strip .sports-chip__badge--l { background: #b84848; }
 .masthead-sports-strip .sports-chip__badge--d { background: #6b7c8c; }
+/* Régate : médaille podium, pas un V/D. */
+.masthead-sports-strip .sports-chip__badge--place {
+  background: transparent;
+  color: inherit;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 0;
+  min-width: 1.15rem;
+  height: 1.15rem;
+  line-height: 1;
+}
 /* Hors saison — accroche info (calendrier / voir le tableau), ton ardoise. */
 .masthead-sports-strip .sports-chip--info {
   background: linear-gradient(
