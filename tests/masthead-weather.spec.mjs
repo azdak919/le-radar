@@ -18,6 +18,22 @@ const weather = [
   current: { temperature_2m, weather_code, is_day },
 }));
 
+test('météo campus : carte active chargée @ci-critical', async ({ page }) => {
+  await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => route.fulfill({
+    contentType: 'application/json',
+    headers: { 'access-control-allow-origin': '*' },
+    body: JSON.stringify(weather),
+  }));
+
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const ribbon = page.locator('#masthead-weather');
+  await expect(ribbon).toBeVisible();
+  await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toBeVisible();
+  await expect(ribbon.locator('.masthead-weather__city.is-active .masthead-weather__temp').first())
+    .not.toHaveText('—');
+});
+
 test('météo campus : elle s’adapte à la largeur du masthead', async ({ page }) => {
   await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => route.fulfill({
     contentType: 'application/json',

@@ -12,7 +12,10 @@ for (const viewport of [
   { name: 'mobile', width: 390, height: 844 },
 ]) {
   for (const route of routes) {
-    test(`${viewport.name} ${route.path}`, async ({ page }) => {
+    const critical = viewport.name === 'bureau' && route.path === '/'
+      ? ' @ci-critical'
+      : '';
+    test(`${viewport.name} ${route.path}${critical}`, async ({ page }) => {
       const pageErrors = [];
       page.on('pageerror', (error) => pageErrors.push(error.message));
       await page.setViewportSize({ width: viewport.width, height: viewport.height });

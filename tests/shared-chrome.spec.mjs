@@ -13,7 +13,8 @@ const ROUTES = [
 ];
 
 for (const route of ROUTES) {
-  test(`chrome partagé — ${route.name} (clair)`, async ({ page }) => {
+  const critical = route.path === '/' ? ' @ci-critical' : '';
+  test(`chrome partagé — ${route.name} (clair)${critical}`, async ({ page }) => {
     await page.emulateMedia({ colorScheme: 'light' });
     await page.goto(route.path, { waitUntil: 'domcontentloaded' });
     await page.evaluate(() => {
