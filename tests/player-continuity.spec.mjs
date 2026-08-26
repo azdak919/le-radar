@@ -104,7 +104,7 @@ test('iframe kiosque-v1 : À l’antenne ouvre l’horaire sur le-radar (URL abs
 });
 
 for (const path of ['/pomo/', '/solitaire/']) {
-  test(`CHYZ dans l’iframe ${path} utilise le mount Centova actuel`, async ({ page }) => {
+  test(`CHYZ dans l’iframe ${path} utilise le mount d’antenne`, async ({ page }) => {
     await page.goto(path, { waitUntil: 'domcontentloaded' });
     const tuner = page.locator('#radar-embed').contentFrame();
     await expect.poll(async () => tuner.locator('#tuner-select option').count(), { timeout: 15_000 })
@@ -116,15 +116,10 @@ for (const path of ['/pomo/', '/solitaire/']) {
     if (!/pause|connexion/i.test(aria || '')) {
       await play.click();
     }
+    // L’encodeur CHYZ peut être à l’arrêt (nuit) : on vérifie le mount, pas le son.
     await expect.poll(async () => {
-      return tuner.locator('#radar-player').evaluate((a) => ({
-        src: a.currentSrc || a.src || '',
-        err: a.error ? a.error.code : 0,
-      }));
-    }, { timeout: 10_000 }).toEqual({
-      src: expect.stringContaining('/proxy/tech/stream'),
-      err: 0,
-    });
+      return tuner.locator('#radar-player').evaluate((a) => a.currentSrc || a.src || '');
+    }, { timeout: 10_000 }).toContain('/proxy/chyz/stream');
   });
 }
 
@@ -207,9 +202,11 @@ test('changer de poste sur un onglet suiveur bascule le flux du leader', async (
   await expect.poll(() => host.evaluate(() => Boolean(window.RadarPlayerSync))).toBe(true);
   await expect.poll(async () => host.locator('#tuner-select option').count()).toBeGreaterThan(1);
 
-  await host.locator('#tuner-select').selectOption('chyz');
+  // CISM plutôt que CHYZ : l’encodeur CHYZ est souvent à l’arrêt la nuit,
+  // et ce test porte sur la sync d’onglets, pas sur le mount CHYZ.
+  await host.locator('#tuner-select').selectOption('cism');
   await expect.poll(async () => {
-    return host.locator('#radar-player').evaluate((a) => !a.paused && /chyz/i.test(a.src || ''));
+    return host.locator('#radar-player').evaluate((a) => !a.paused && /cism/i.test(a.src || ''));
   }, { timeout: 12_000 }).toBe(true);
 
   const leaderId = await host.evaluate(() => window.RadarPlayerSync.getTabId());

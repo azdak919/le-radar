@@ -27,6 +27,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- CHYZ : le lecteur suivait le mount Centova **Tests techniques** (`/proxy/tech/stream`, celui du `<audio>` de chyz.ca). L’antenne est `/proxy/chyz/stream` (compte `chyz`, `tunein/chyz.pls` → Title1=CHYZ 94,3 FM). Accueil, fiches radio, Pomo et Solitaire lisent le même `radios.json`.
+
 - CTA sports : acronymes univ (**UQAM**, McGill…) comme les puces — plus « Université du Québec à Montréal reçoit Université de Mc… ». **ADV** n’est pas une école (adversaire Spordle manquant) : ces matchs sont exclus. Puces scores : résultats des 5 derniers jours d’abord, puis les futurs hors de cette fenêtre. Le bandeau lit **tout** le calendrier `nextGames` / `results` de `sports.json` (pas seulement le prochain match par équipe). CTA à venir : **reçoit** *ou* **chez** — une face, jamais les deux, jamais le libellé « reçoit/chez ». CTA résultats aujourd’hui/hier : **vainqueur seulement**. Puces scores : **pas** de dédup — V d’un côté, D de l’autre, N des deux.
 - CTA : sans match **en cours**, le cycle **commence par les résultats d’hier**, avant les à venir — sauf un coup d’envoi **dans l’heure**, qui passe devant. En cours reste exclusif.
 - Flèche « haut de page » : overlay bas-droite **avec la loupe**, plus collée à gauche. Le rail des sources (wide E) n’a plus à céder 72 px quand on défile.
