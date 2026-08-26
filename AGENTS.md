@@ -147,6 +147,20 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | D18 | **Régression visuelle du chrome partagé** (footer, thème, grilles) | Les tests structurels ont laissé passer des écarts visibles : footer non conforme, note collée à une carte, slogan mal placé. Le rendu partagé a besoin d’une preuve visuelle, pas seulement de présence HTML | Captures de référence clair/sombre pour accueil, RSS, fiche radio, fiche journal et maintenance ; test visuel ciblé ou revue humaine consignée avant toute propagation globale | M | resolved |
 | D19 | **Mesure de l’échantillon SEO historique** | Le catalogue `/archives/` est public mais expérimental : augmenter son volume sans impressions, clics et anomalies de canonique créerait des pages de faible valeur | 4–6 semaines de Search Console/Bing : couverture, canonicals, impressions/clics et absence de pages exclues inattendues ; revue humaine avant tout passage à `full` | S | ready |
 | D20 | **Rétro-crawl historique à mesurer avant élargissement** | La collecte est désormais bornée (3 sources × 4 pages, fenêtre de 3 ans), sans corps ni images, mais les API publiques et la valeur réelle des archives varient selon les médias | Après 4–6 semaines : taux de liens vérifiés, erreurs API, indexation 0–12 mois, clics et absence de réintégration au fil ; seulement alors augmenter les plafonds ou activer de nouvelles stratégies de liste | S | ready |
+| D21 | **Solitaire hors ligne** : intercept `SHARED_PATHS` des assets racine déjà précachés | `solitaire/sw.js` met en cache `photo-bank-data.js`, fonds QC, `install-chrome.css`, `fullscreen-wallpaper-qc.js`, mais le `fetch` n’écoute que `/solitaire/` + le menu de langue — hors ligne ces URLs vont au réseau (même trou que Pomo avant le correctif catalogue météo) | Copier le `SHARED_PATHS` de `pomo/sw.js` ; test d’intégrité ; bump `solitaire-shell-vN` | S | ready |
+| D22 | **Module de traduction** : plus rapide, moins d’hallucinations chrome | `translate.js` = gtx sans clé + MyMemory ; un nœud isolé « match » (pastille CTA en 2 lignes) devient « correspondre » ; ouvrir CONCURRENCY / MAX_CHUNK sans mesure casse l’ordre et les langues autochtones | Glossaire + `notranslate` ciblé sur le chrome sport/radio (cas collé : **PROCHAIN CORRESPONDRE**) ; fixtures de libellés UI ; mesurer cache/temps avant de toucher les quotas ; pas de nouveau moteur sans bake-off | M | open |
+
+**D21 — Solitaire, même trou que Pomo (2026-08-26).**
+
+Le précache ne sert pas si le worker ne répond pas aux requêtes hors `/solitaire/`. Pomo a le motif (`SHARED_PATHS` dérivé des `../` de `SHELL_ASSETS`). Solitaire est encore sur `sharedTranslationAsset` (menu de langue seulement). Ne pas en profiter pour gonfler le shell (analytics, tuner-embed, emojis) : intercept de ce qui est **déjà** dans `SHELL_ASSETS`.
+
+**D22 — « PROCHAIN CORRESPONDRE » (capture 2026-08-26).**
+
+- Pastille CTA jaune, deux lignes : `fillSportsCtaTagCopy` écrit « Prochain » + « match » ; `text-transform: uppercase`.
+- `applySportsCtaState` **retire** `notranslate` hors état idle (le logo LE-RADAR reste protégé, pas le chrome sport).
+- gtx traduit *match* comme le verbe *to match* → *correspondre*. Le glossaire radio (`EN ONDES` / `À l'antenne`, cache-v8) n’a pas d’entrée sport.
+- Ne pas solder en marquant toute la carte CTA `notranslate` : les accroches « reçoit / chez » doivent rester traduisibles. Cibler la pastille, le glossaire « match » (sport), et les codes équipe (déjà protégés).
+- Vitesse : `CONCURRENCY = 6`, `MAX_CHUNK = 450`, observer de mutations. Mesurer le temps jusqu’au chrome traduit **avant** d’ouvrir le robinet.
 
 **D7 — précisions (option 3, pas 1 ni 2) :**
 
