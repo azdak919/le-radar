@@ -31,6 +31,21 @@ Mesures du 2026-08-26. Un « à revoir plus tard » n’est pas une conclusion.
 | `assets/news-images/` (~30 Mo) | Miroir des unes, hors ligne et Pages. | Test 40 Mo ; prune du bot miroir |
 | `assets/kit/` (~87 Mo) | Affiches campus **600 dpi**, 7 établissements. Qualité d’impression. | Test 100 Mo ; pas de campus supplémentaire sans go humain |
 
+## Catalogue historique — mesure D19 (2026-08-26)
+
+Échantillon public **expérimental**. Ne pas passer `historical-catalog.config.json` en `mode: full` sans 4–6 semaines Search Console / Bing et une revue humaine.
+
+| Signal | Baseline |
+|---|---|
+| Mode | `partial` (`partial.maxRecords` 120) |
+| Notices internes | 8 056 |
+| Sitemap public | 15 URLs (`sitemap-archives.xml`) : `/archives/` + 14 publications |
+| `noindex` | conservation + référence + publications trop anciennes (La Gifle, L’Oisif, Trait d’Union) |
+| Indexation Google visible | aucune page `/archives/` dans `site:le-radar.ca/archives/` |
+| Consoles | **D11** : pas de propriété Search Console / Bing / IndexNow (aucun courriel) |
+
+Revue calée au **2026-09-09** (6 semaines après la mise en ligne ~2026-07-29), une fois D11 fait. Filet : `tests/historical-catalog.mjs` (sitemap ↔ robots).
+
 ## Publication directe et fenêtre de maintenance
 
 Le flux habituel est une **branche thématique + PR**. Les petites corrections
