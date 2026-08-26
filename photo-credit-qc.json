@@ -1,30 +1,93 @@
 {
-  "updated": "2026-08-26T13:25:11.680Z",
+  "updated": "2026-08-26T13:33:30.957Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 132,
+  "cited": 133,
   "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 2,
-  "citedNew": 2,
+  "checked": 19,
+  "updatedCount": 11,
+  "citedNew": 8,
   "fallbackNew": 11,
   "samples": [
     {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "title": "Il y a 30 ans : un grand spectacle solidaire pour le Saguenay",
+      "source": "La Pige",
+      "credit": "Photo : Le monde en images Gilles Potvin",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Ce que nous devons aux femmes",
+      "source": "Le Délit",
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
+    },
+    {
+      "title": "Les femmes MAGA au service du patriarcat",
       "source": "Le Délit",
       "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Sois belle et tais-toi",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Recettes musicales québécoises pour l’été",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Inside Mile End Kicks",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Joe Fuda",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "The apprenticeship of public voice",
+      "source": "The Link",
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
