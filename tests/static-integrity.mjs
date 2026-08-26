@@ -808,6 +808,22 @@ assert(feedsHtml.includes('src="native-tuner.js"'), 'feeds.html : lecteur natif 
     cursor = idx;
   }
 }
+{
+  const pomoSw = readFileSync(join(root, 'pomo/sw.js'), 'utf8');
+  const pomoWeather = readFileSync(join(root, 'pomo/js/weather.js'), 'utf8');
+  assert(
+    pomoWeather.includes("fetch('../weather-cities-data.js'"),
+    'pomo/js/weather.js : catalogue Radar requis',
+  );
+  assert(
+    pomoSw.includes("'../weather-cities-data.js'"),
+    'pomo/sw.js : catalogue météo dans le shell hors ligne',
+  );
+  assert(
+    pomoSw.includes('SHARED_PATHS'),
+    'pomo/sw.js : intercept des assets racine du shell (sinon le fetch hors /pomo/ va au réseau)',
+  );
+}
 assert(feedsHtml.includes('src="nav-shell.js"'), 'feeds.html : navigation persistante requise');
 assert(readFileSync(join(root, 'index.html'), 'utf8').includes('src="seo-page-theme.js"'), 'index.html : amorçage de thème avant paint requis');
 assert(feedsHtml.includes('src="seo-page-theme.js"'), 'feeds.html : amorçage de thème avant paint requis');

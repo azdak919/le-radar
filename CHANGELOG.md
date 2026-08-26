@@ -8,6 +8,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 ### Modifié
 
 - Client découpé sans bundler : `weather-cities-data.js`, `radar-utils.js`, `radar-state.js`, `radar-weather.js`, `radar-sports-cta.js`, `radar-tuner.js`, `radar-news.js`, `radar-lifecycle.js` ; `app.js` reste le point d’entrée. CSS par surface (`style-sports-strip`, `style-masthead-chrome`, `style-tuner`, `style-feed`, `style-chrome`), toujours via `<link>`, jamais `@import`.
+- Pomo hors ligne : `weather-cities-data.js` est dans `pomo/sw.js` et intercepté comme les autres assets racine du shell (plus de repli 4 villes).
 - Publication humaine = branche + PR + **merge and delete**. Les bots conservent l’écriture sur `main`. Actions GitHub épinglées à des SHA.
 
 ### Ajouté

@@ -8,7 +8,7 @@
      • Anything else same-origin under scope → stale-while-revalidate
    ═══════════════════════════════════════════════════════ */
 
-const SHELL_CACHE  = 'pomo-shell-v133';
+const SHELL_CACHE  = 'pomo-shell-v134';
 const FONT_CACHE   = 'pomo-fonts-v26';
 const CACHE_PREFIX = 'pomo-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];
@@ -66,11 +66,19 @@ const SHELL_ASSETS = [
   './js/panels.js',
   './js/app.js',
   './js/weather.js',
+  '../weather-cities-data.js',
   '../translate-menu.js',
   '../translate-menu.css',
   '../install-chrome.css',
   '../indigenous-mt.json',
 ];
+
+/** Assets racine précachés : le worker contrôle la page Pomo, pas seulement /pomo/. */
+const SHARED_PATHS = new Set(
+  SHELL_ASSETS
+    .filter((rel) => rel.startsWith('../'))
+    .map((rel) => new URL(rel, self.location.href).pathname),
+);
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -118,9 +126,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  const sharedTranslationAsset = /\/(?:translate-menu\.(?:js|css)|indigenous-mt\.json)$/.test(url.pathname);
-  // Le module de langue vit à la racine, mais appartient aussi au shell hors ligne.
-  if (url.origin === self.location.origin && (url.pathname.includes('/pomo/') || sharedTranslationAsset)) {
+  if (url.origin === self.location.origin && (url.pathname.includes('/pomo/') || SHARED_PATHS.has(url.pathname))) {
     event.respondWith(staleWhileRevalidate(SHELL_CACHE, request));
   }
 });
