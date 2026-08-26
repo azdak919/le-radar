@@ -1,15 +1,15 @@
 {
-  "updated": "2026-08-25T22:56:46.381Z",
+  "updated": "2026-08-26T02:10:22.267Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
   "cited": 132,
-  "pending": 12,
+  "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 20,
-  "updatedCount": 11,
-  "citedNew": 8,
+  "checked": 15,
+  "updatedCount": 7,
+  "citedNew": 3,
   "fallbackNew": 12,
   "samples": [
     {
@@ -20,18 +20,11 @@
       "method": "body-line"
     },
     {
-      "title": "Ce que nous devons aux femmes",
-      "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
+      "title": "Franc succès pour le Festival du sport et du loisir",
+      "source": "La Pige",
+      "credit": "Photo : Facebook Festival du sport et du loisir",
       "cited": true,
-      "method": "media-credit-near"
-    },
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
-      "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-paren-kind"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
@@ -64,30 +57,9 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Illustration: Halle Keays",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
