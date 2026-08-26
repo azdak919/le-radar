@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-25T22:56:18.720Z",
+  "updated": "2026-08-26T02:10:27.304Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 21,
@@ -9,11 +9,17 @@
   "pageScraped": 32,
   "photosRecovered": 27,
   "imagesCleared": 16,
-  "stockSearches": 30,
-  "stockFound": 8,
-  "campusBankFound": 3,
+  "stockSearches": 32,
+  "stockFound": 10,
+  "campusBankFound": 4,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "CSU terminates council’s chief election officer",
+      "link": "https://thelinknewspaper.ca/article/16334",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
     {
       "title": "Tarifs douaniers : le choc n’est pas là où on l’attend",
       "link": "https://lapige.atmjonquiere.com/2026/08/24/tarifs-douaniers-le-choc-nest-pas-la-ou-on-lattend/?utm_source=rss&utm_medium=rss&utm_campaign=tarifs-douaniers-le-choc-nest-pas-la-ou-on-lattend",
@@ -51,6 +57,12 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
     },
     {
+      "title": "National Golf tournament",
+      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531487%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "campus-bank",
@@ -73,18 +85,6 @@
       "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
-    },
-    {
-      "title": "Oui au budget, oui au programme FIL et non à la grève",
-      "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
-    },
-    {
-      "title": "Recettes musicales québécoises pour l’été",
-      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_marieceleste.jpg"
     }
   ]
 }
