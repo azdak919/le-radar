@@ -1,14 +1,23 @@
 {
-  "updated": "2026-08-26T07:10:33.708Z",
+  "updated": "2026-08-26T09:03:52.905Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 8,
+  "incomplete": 10,
   "withLeadExcerpt": 85,
-  "candidates": 8,
-  "enriched": 2,
-  "failed": 0,
+  "candidates": 10,
+  "enriched": 1,
+  "failed": 1,
   "ok": true,
   "samples": [
+    {
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
+      "changed": true
+    },
     {
       "title": "La mauvaise nutrition et les maladies chroniques",
       "link": "https://lecollectif.ca/a-la-une/la-mauvaise-nutrition-et-les-maladies-chroniques/",
@@ -16,7 +25,7 @@
       "score": 76,
       "chars": 400,
       "sample": "Les repas à forte teneur calorique, glycémique et lipidique regorgent dans la plupart des marchés d’",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Montreal city council to debate motion to cut ties with Israel on August 24",
@@ -70,15 +79,6 @@
       "score": 96,
       "chars": 169,
       "sample": "Attention cependant aux exceptions ! Consulte le site Web de ta faculté ou de ton centre universitai",
-      "changed": true
-    },
-    {
-      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
-      "link": "https://thelinknewspaper.ca/article/16338",
-      "ok": true,
-      "score": 90,
-      "chars": 177,
-      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
     }
   ]
