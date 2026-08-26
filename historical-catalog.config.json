@@ -14,6 +14,10 @@
     "indexableYears": 1,
     "conservationYears": 3
   },
+  "storage": {
+    "maxFileBytes": 16777216,
+    "maxRecords": 20000
+  },
   "retroCrawl": {
     "sourcesPerRun": 3,
     "pagesPerSource": 4,

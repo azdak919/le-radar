@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { mergeHistoricalCatalog, partialPublicSample, ageBand, stableId } = require('../scripts/historical-catalog-lib.js');
+const { mergeHistoricalCatalog, serializeHistoricalCatalog, partialPublicSample, ageBand, stableId } = require('../scripts/historical-catalog-lib.js');
 
 const item = {
   source: 'Journal témoin', institution: 'Université témoin', region: 'Montréal', type: 'universite', lang: 'fr',
@@ -51,5 +51,21 @@ const ageSample = partialPublicSample([verified, conservation, preserved], ageCo
 assert.equal(ageSample.records.length, 1, 'les articles de conservation ne rejoignent pas le sitemap public');
 assert.equal(ageSample.conservation.length, 1, 'la tranche 5–10 ans reste consultable sans indexation automatique');
 assert.equal(ageSample.reference.length, 1, 'les métadonnées plus anciennes restent accessibles dans les archives de référence');
+
+const many = [];
+for (let i = 0; i < 5; i += 1) {
+  many.push({
+    ...item,
+    title: `${item.title} ${i}`,
+    link: `https://example.test/article-${i}`,
+    date: `2024-04-0${i + 1}T14:30:00.000Z`,
+  });
+}
+const capped = mergeHistoricalCatalog({ records: [] }, many, '2026-07-29T10:00:00.000Z', {}, { maxRecords: 2 });
+assert.equal(capped.catalog.records.length, 2, 'storage.maxRecords plafonne le catalogue interne');
+assert.equal(capped.dropped, 3);
+const serialized = serializeHistoricalCatalog(capped.catalog, { storage: { maxRecords: 2, maxFileBytes: 16777216 } });
+assert.ok(serialized.text.endsWith('\n'));
+assert.equal(JSON.parse(serialized.text).records.length, 2);
 
 console.log('✓ Catalogue historique : identité, rétention et sélection publique vérifiées.');
