@@ -22,12 +22,14 @@ dans l'idéal, et ce qui reste volontairement manuel.
 
 ## Publication directe et fenêtre de maintenance
 
-Le flux habituel est le **push direct contrôlé** : les petites corrections ne
-mettent pas le site hors ligne. Avant chaque publication, rebaser sur `main`,
-vérifier localement les URLs touchées, exécuter `npm run check`, puis pousser
-sans jamais utiliser `git push --force` sur `main`. Les bots peuvent committer
-entre deux sessions; un push refusé se résout par `git fetch origin && git
-rebase origin/main`, jamais par l'écrasement de leur commit.
+Le flux habituel est une **branche thématique + PR**. Les petites corrections
+ne mettent pas le site hors ligne. Avant chaque publication : `main` à jour,
+vérifier localement les URLs touchées, exécuter `npm run check`, pousser la
+branche, ouvrir une PR. Merger seulement sur **merge and delete**, checks CI
+verts. `git push --force` sur `main` reste interdit. Les bots peuvent
+committer sur `main` entre deux sessions; un push de branche refusé se
+résout par `git fetch origin && git rebase origin/main`, jamais par
+l'écrasement de leur commit.
 
 La maintenance publique est réservée aux changements de risque élevé : service
 worker, lecteur, navigation globale, gabarits générés ou migration de données.
@@ -208,7 +210,7 @@ Seuls les **médias étudiants** sont éligibles (pas les portails institutionne
 | 6. Images vedette | `node scripts/ensure-lead-images.js --update` | oui (crédits source vérifiés sur la page) |
 | 7. Réseaux sociaux | `node scripts/fetch-social.js --update` | optionnel |
 | 8. Cache PWA | incrémenter `CACHE_NAME` dans `sw.js` | oui si `app.js` touché |
-| 9. Déploiement | `git commit` + `git push` | oui |
+| 9. Déploiement | branche + PR + merge and delete | oui |
 
 ### Raccourci script
 

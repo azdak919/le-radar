@@ -64,7 +64,7 @@ def analyze(im: Image.Image) -> dict:
     im = im.copy()
     im.thumbnail((320, 200))
     w, h = im.size
-    px = list(im.getdata())
+    px = list(im.get_flattened_data() if hasattr(im, "get_flattened_data") else im.getdata())
     n = max(1, len(px))
 
     snow_white = 0

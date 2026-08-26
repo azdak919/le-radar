@@ -128,7 +128,7 @@ Statuts : `open` · `ready` (tech/tests OK pour tenter) · `blocked` · `wontfix
 | ID | Dette | Pourquoi c’est volontaire | Signaux « tech assez mûre » | Effort | Statut |
 |----|--------|---------------------------|------------------------------|--------|--------|
 | D1 | **CI lourde** sur `scripts/audit-quebec-backgrounds.py` (téléchargement images) | Réseau flaky, rate-limit Commons, lourd pour chaque PR | Job **manuel/hebdo** + cache ; pas sur chaque push | M | resolved |
-| D2 | **Découpe** `app.js` / `style.css` en modules | Risque régression UX (tuner, mât, thèmes) ; gain surtout agent | Tranche unique (ex. CSS mât photo seul) + smoke manuel/playwright | L | resolved |
+| D2 | **Découpe** `app.js` / `style.css` en modules | Risque régression UX (tuner, mât, thèmes) ; gain surtout agent | Scripts `radar-*` + feuilles par surface, sans bundler ; smoke Playwright | L | resolved |
 | D3 | **Re-seed bulk** Commons pour trous de banques | 429, qualité inégale, risque de réintroduire religieux/façades | Seeds **ciblés** 1–3 lieux + `bank:check` + audit offline d’abord | M | open |
 | D4 | **Skills Grok hors repo** (`~/.grok/skills/`) | Double source d’obsolescence ; le playbook **est** le skill du dépôt | Seulement si multi-projets perso — **ne pas** dupliquer les règles LE-RADAR | S | wontfix |
 | D5 | **Durcir audit clocher / façades** (aligner Python ↔ JS runtime) | Déjà blacklist + town hall paysage ; le reste est peaufinage | Cas réels en banque ou faux négatifs documentés | S–M | resolved |
@@ -475,6 +475,7 @@ Pour promouvoir : ajouter une ligne D# en §3 avec effort + pourquoi, après OK 
 | D16 | 2026-07-30 | Les 6 radios ont `_sloganSource` / `_sloganEvidence` / `_sloganChecked` / `_sloganConfidence` ; `static-integrity` exige la provenance pour chaque station |
 | D17 | 2026-07-30 | Contrat lecteur : `tests/native-player-contract.mjs` (109 natives, 2 iframes) + `tests/player-routes.spec.mjs` matrice navigateur |
 | D2 | 2026-07-30 | Tranche CSS mât → `style-masthead.css` @import ; SW APP_SHELL mis à jour |
+| D2 | 2026-08-25 | Découpe réelle : `radar-*.js` + `weather-cities-data.js`, CSS par surface (`style-sports-strip` / `style-tuner` / `style-feed` / `style-chrome` / chrome mât), `<link>` jamais `@import`. La ligne 2026-07-30 n’était que la tranche mât. |
 | D8 | 2026-07-30 | Silhouette d’arche (ciel→structure + convexité) en renfort du trou Percé ; override Mercier conservé |
 | D18 | 2026-07-30 | `tests/shared-chrome.spec.mjs` clair/sombre + static-integrity footer structure |
 | D1 | 2026-07-30 | Audit lourd absents du Vérification (push/PR) ; bank:check offline dans npm test ; maintain hebdo |

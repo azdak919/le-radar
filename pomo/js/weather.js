@@ -16,12 +16,17 @@
   const WEATHER_CACHE_KEY = 'pomo-weather-cache-v1';
   const secondaryOffsets = [0, 0, 0].map(() => Math.floor(Math.random() * 1000));
   const slotTimers = [];
+  const escapeText = (value) => String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
   // Le catalogue de référence reste celui du Radar principal. On le lit
-  // depuis app.js pour éviter de maintenir une seconde liste de 47 villes.
+  // depuis weather-cities-data.js pour éviter de maintenir une seconde liste.
   async function importMainCityCatalog() {
     try {
-      const source = await fetch('../app.js', { credentials: 'same-origin' }).then(r => r.text());
-      const block = source.match(/const WEATHER_CITIES = \[(.*?)\n\];/s)?.[1] || '';
+      const source = await fetch('../weather-cities-data.js', { credentials: 'same-origin' }).then(r => r.text());
+      const block = source.match(/(?:const|var) WEATHER_CITIES = \[(.*?)\n\];/s)?.[1] || '';
       const imported = [...block.matchAll(/\{ id: '([^']+)', name: '([^']+)'[^\n]*?lat: ([\d.-]+), lon: ([\d.-]+)/g)]
         .map(m => ({ id: m[1], name: m[2], lat: Number(m[3]), lon: Number(m[4]), nation: nationIds.has(m[1]) }));
       if (imported.length >= 10) cities = imported;
@@ -73,7 +78,7 @@
     const card = (item, city, extra = '') => {
       const current = item?.current || {};
       const temp = Number.isFinite(current.temperature_2m) ? `${Math.round(current.temperature_2m)}°` : '—';
-      return `<a class="pomo-weather-city${extra}" data-weather-city="${city.id}" href="${weatherUrl(city)}" target="_blank" rel="noopener noreferrer" title="Prévisions MétéoMédia — ${city.name}"><span class="pomo-weather-icon" aria-hidden="true">${icon(current.weather_code, current.is_day)}</span><span class="pomo-weather-name">${city.name}</span><strong class="pomo-weather-temp">${temp}</strong></a>`;
+      return `<a class="pomo-weather-city${extra}" data-weather-city="${escapeText(city.id)}" href="${weatherUrl(city)}" target="_blank" rel="noopener noreferrer" title="Prévisions MétéoMédia — ${escapeText(city.name)}"><span class="pomo-weather-icon" aria-hidden="true">${icon(current.weather_code, current.is_day)}</span><span class="pomo-weather-name">${escapeText(city.name)}</span><strong class="pomo-weather-temp">${temp}</strong></a>`;
     };
     const primaryIndex = rotationIndex % 2;
     const primaryItem = list[primaryIndex];

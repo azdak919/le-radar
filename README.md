@@ -1,6 +1,6 @@
 # LE-RADAR — Les médias étudiants du Québec
 
-> *Les médias étudiants du Québec, sur ton radar • Student media on your radar.*
+> *Journaux, radios et sports étudiants du Québec, réunis au même endroit • Student media on your radar.*
 
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://le-radar.ca/)
 ![PWA](https://img.shields.io/badge/PWA-ready-blue)
@@ -11,10 +11,13 @@
 > **Le Réseau Académique de Découverte et d'Agrégation de Ressources**
 
 LE-RADAR est une plateforme libre destinée à **fédérer les médias étudiants** et à leur
-offrir une infrastructure moderne : journaux étudiants, radios étudiantes et autres
-ressources académiques réunis au même endroit.
+offrir une infrastructure moderne : journaux, radios et **sports** étudiants des cégeps
+et universités du Québec, réunis au même endroit.
 
-Concrètement, c'est une application web progressive (PWA) **éditoriale, texte d'abord** qui rassemble en un seul endroit **les radios et les journaux étudiants** des cégeps et universités du Québec. Une page unique : un **syntoniseur radio** en tête, et le **fil des actualités étudiantes** en dessous.
+Concrètement, c'est une application web progressive (PWA) **éditoriale, texte d'abord** :
+un **syntoniseur radio** en tête, un **bandeau de scores**, et le **fil des actualités
+étudiantes** en dessous. Ce n'est pas une rédaction — agrégateur, vitrine du template,
+accompagnement bénévole.
 
 Version courante du dépôt : **1.0.0** — voir le [journal des modifications](CHANGELOG.md).
 
@@ -87,8 +90,8 @@ le-radar/
 ├── AGENTS.md               # Agents : dettes volontaires, rythme, tokens long terme
 ├── index.html              # Page principale (fil + syntoniseur)
 ├── feeds.html              # Page des flux RSS LE-RADAR
-├── style.css               # Styles (clair / sombre, radio, fil)
-├── app.js                  # Logique client (tuner, fil, PWA)
+├── style.css               # Fondations (jetons, reset) ; surfaces dans style-*.css
+├── app.js                  # Point d'entrée ; logique dans radar-*.js
 ├── radios.json             # Registre des radios étudiantes
 ├── news.json               # Fil agrégé (généré par bot)
 ├── news-sources.json       # Registre des sources d'actualités
@@ -119,13 +122,12 @@ navigateur lit ensuite ces fichiers publiés. Les intégrations Cloudflare sont
 facultatives et ne concernent que les petits services de cache et d’entropie;
 Solitaire ne dépend d’aucun service distant.
 
-Pour publier le site principal, pousse les changements validés sur `main` :
-GitHub Pages déploie directement cette branche sur
-<https://le-radar.ca/> (domaine personnalisé, via le fichier `CNAME`). Avant une
-publication, exécute `npm test`;
-le workflow **Vérification** rejoue ces vérifications sur les modifications de
-code. Les Workers Cloudflare se déploient séparément depuis leurs dossiers et
-selon leurs README respectifs.
+GitHub Pages déploie **`main`** sur <https://le-radar.ca/> (domaine personnalisé,
+`CNAME`). Le travail humain passe par une **branche + PR** (tests locaux verts,
+puis checks **Vérification**) ; merger seulement sur **merge and delete**. Les
+bots d'agrégation (news, scores, horaires) écrivent `main` de façon documentée.
+Les Workers Cloudflare se déploient séparément depuis leurs dossiers et selon
+leurs README respectifs.
 
 ---
 

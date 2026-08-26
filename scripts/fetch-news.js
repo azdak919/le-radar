@@ -1197,7 +1197,7 @@ async function main() {
 
   if (doUpdate) {
     fs.writeFileSync(NEWS_PATH, JSON.stringify(news, null, 2) + '\n');
-    fs.writeFileSync(ARCHIVE_PATH, JSON.stringify(archiveResult.catalog, null, 2) + '\n');
+    fs.writeFileSync(ARCHIVE_PATH, JSON.stringify(archiveResult.catalog) + '\n');
     registry._lastFetchRun = news.updated;
     writeRegistry(registry);
     console.log(`✅ Wrote ${NEWS_PATH}`);

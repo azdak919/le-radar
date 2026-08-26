@@ -1,0 +1,395 @@
+/* LE-RADAR — chrome du mât (actions, icônes, wordmark)
+ * Extrait de style.css (D2). Charger via <link> dans cet ordre, jamais @import.
+ * Historiquement entre le bandeau sports et le tuner — ne pas réordonner.
+ */
+
+.masthead-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+  /* Jamais de réserve shuffle ici par défaut — le padding bureau est en ≥1024. */
+  padding-right: 0;
+  margin-right: 0;
+}
+/*
+ * Bureau ≥1024 : le shuffle flotte dans le slot, calé sur la même gouttière
+ * que le contenu / crédit photo. On réserve ~1 icône dans la rangée.
+ * ≤1023 : shuffle est DANS .masthead-actions — padding 0 (sinon trou 36 px
+ * à droite des icônes, décalage vs crédits / météo / sports).
+ */
+@media (min-width: 1024px) {
+  .masthead-actions { padding-right: calc(28px + 8px); }
+}
+@media (max-width: 1023.98px) {
+  .masthead-actions {
+    padding-right: 0 !important;
+    margin-right: 0;
+  }
+}
+
+.masthead-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  padding: 0;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color 140ms ease, color 140ms ease, transform 140ms ease, background 140ms ease;
+}
+.masthead-icon svg { width: 15px; height: 15px; }
+
+/* Twemoji brand marks — same set as Pomo / Solitaire toolbars */
+.app-emoji {
+  display: block;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  flex-shrink: 0;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.masthead-icon .app-emoji {
+  width: 15px;
+  height: 15px;
+}
+
+/* Téléphone : la date longue traditionnelle reste entière — la météo n'a pas
+   la place et la rangée (date + 6 icônes) débordait de ~33 px sur iPhone /
+   Pixel. Icônes et typo compactées ; l'ellipse est un filet de sécurité pour
+   les dates les plus longues sur les écrans les plus étroits. */
+/* Tablette + mobile : météo dockée sous le tuner (JS ≤1023.98) — mât = date + actions. */
+@media (max-width: 1023.98px) {
+  .masthead-top {
+    grid-template-areas: 'date actions';
+    grid-template-columns: minmax(0, 1fr) max-content;
+    column-gap: 6px;
+  }
+  .masthead-weather:not(.masthead-weather--docked) { display: none !important; }
+}
+@media (max-width: 599.98px) {
+  .masthead-top {
+    /* Récupère quelques px à GAUCHE pour la date — pas à droite, sinon les
+       icônes dépassent la gouttière des crédits (pad) de 6 px. */
+    margin-inline: -6px 0;
+  }
+  .masthead-date {
+    position: relative;
+    transform: translateY(-3px);
+    /* `justify-self: start` (style-masthead.css, bloc ≥360 px) dimensionnait la
+       case au CONTENU au lieu de la colonne : une date anglaise faisait 171 px
+       dans une colonne de 143 et passait 22 px sous les icônes, sans jamais
+       déclencher l'ellipse ci-dessous (scrollWidth == clientWidth). Étirée, la
+       colonne reprend la main et le filet redevient atteignable. */
+    justify-self: stretch;
+    /* Échelle fluide : 390 px reste compact, 500–600 px gagne en confort
+       sans saut brutal lorsque l'appareil bascule en tablette. */
+    font-size: clamp(10.5px, 2.5vw, 12px);
+    letter-spacing: 0.02em;
+    min-width: 0;
+    overflow: visible;
+    white-space: normal;
+  }
+  .masthead-date #today-date {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .masthead-time {
+    position: absolute;
+    top: 2em;
+    left: 0;
+    display: block;
+    font-size: 0.82em;
+    letter-spacing: inherit;
+    line-height: 1;
+    white-space: nowrap;
+    opacity: 0.9;
+  }
+  .masthead-actions { gap: clamp(4px, .8vw, 6px); }
+  .masthead-icon { width: clamp(24px, 5.5vw, 28px); height: clamp(24px, 5.5vw, 28px); }
+  .masthead-icon svg { width: clamp(13px, 3vw, 15px); height: clamp(13px, 3vw, 15px); }
+  .masthead-icon .app-emoji { width: clamp(13px, 3vw, 15px); height: clamp(13px, 3vw, 15px); }
+}
+/* Tablette + mobile (météo dockée ≤1023) : shuffle dans la rangée d’icônes
+   (JS syncMastheadShuffleButton), pas en pastille flottante sur la photo. */
+@media (max-width: 1023.98px) {
+  .masthead-shuffle-slot { display: none; }
+}
+@media (max-width: 374.98px) {
+  .masthead-date { font-size: 10px; letter-spacing: 0.01em; }
+  .masthead-icon { width: 22px; height: 22px; }
+}
+
+.theme-toggle {
+  cursor: pointer;
+}
+@media (hover: hover) and (pointer: fine) {
+  .theme-toggle:hover,
+  .masthead-home:hover,
+  .masthead-rss:hover:not([aria-current="page"]),
+  .masthead-solitaire:hover,
+  .masthead-sports:hover:not([aria-current="page"]),
+  .masthead-coffee:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .masthead-pomo:hover {
+    border-color: #c8102e;
+    background: color-mix(in srgb, #c8102e 10%, transparent);
+  }
+}
+.theme-toggle:active,
+.masthead-home:active,
+.masthead-rss:active,
+.masthead-pomo:active,
+.masthead-solitaire:active,
+.masthead-sports:active,
+.masthead-coffee:active {
+  transform: scale(0.9);
+}
+/* Accueil : même pastille que RSS / pomo au repos. Mauve seulement au pressé
+   — plus de fond persistant via aria-current / .is-active. */
+.masthead-home:active {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+/* Pomodoro : seul bouton rouge du header (tomate, hors thème accent). */
+.masthead-pomo {
+  border-color: var(--rule);
+}
+/* Page courante (RSS, sports…) — pas Accueil : même verre que les voisins. */
+.masthead-icon[aria-current="page"]:not(.masthead-home) {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+.masthead-icon:focus { outline: none; }
+.masthead-icon:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.masthead-brand {
+  padding-top: 16px;
+  text-align: center;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.wordmark {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0 2px;
+}
+/*
+ * Hiérarchie typo (tous viewports) : LE RADAR > titre À la une > .wire-title.
+ * --radar-wordmark-size max et min restent strictement au-dessus de
+ * --radar-lead-title-size, dont le plancher reste lui-même au-dessus du
+ * .wire-title « Le fil étudiant » (1.4rem).
+ */
+:root {
+  /* LE-RADAR.ca : un cran au-dessus de l’ancien « LE RADAR » */
+  --radar-wordmark-size: clamp(2.05rem, 6.8vw + 0.3rem, 4.25rem);
+  --radar-lead-title-size: clamp(1.55rem, 4.1vw + 0.15rem, 2.55rem);
+}
+/* block (pas flex) : le texte traduit (ex. inuktitut) peut se couper
+   sur plusieurs lignes sans déborder du viewport mobile/tablette. */
+.wordmark-mark {
+  /* Élément <h1> : on neutralise la marge par défaut du navigateur pour que
+     le mât reste cadré exactement comme avant. */
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: var(--radar-wordmark-size);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--ink);
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: none;
+  box-sizing: border-box;
+}
+.wordmark-brand {
+  white-space: nowrap;
+}
+.wordmark-logo {
+  display: inline-block;
+  width: .82em;
+  height: .82em;
+  margin: 0 .14em;
+  vertical-align: -.08em;
+  object-fit: contain;
+}
+.wordmark-emoji {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-weight: 400;
+  font-size: .92em;
+  line-height: 1;
+  display: inline;
+  white-space: nowrap;
+}
+.wordmark-full {
+  font-size: clamp(10px, 2.6vw, 11.5px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+  max-width: min(40rem, 100%);
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 4px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: none;
+}
+/*
+ * 721–1279 : exactement 2 lignes —
+ *   1) … du Québec,
+ *   2) réunis au même endroit
+ * Le lead ne doit PAS se re-couper (sinon « QUÉBEC, » seul au milieu).
+ * ≥1280 : une seule ligne (assez de largeur pour lead + tag).
+ */
+@media (min-width: 721px) and (max-width: 1279.98px) {
+  .wordmark-full {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.12em;
+    max-width: min(44rem, 100%);
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+  .wordmark-full__lead {
+    display: block;
+    white-space: nowrap;
+    max-width: none;
+  }
+  .wordmark-full__tag {
+    display: block;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+  }
+}
+@media (min-width: 1280px) {
+  .wordmark-full {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35em;
+    max-width: none;
+    width: max-content;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+  .wordmark-full__lead,
+  .wordmark-full__tag {
+    display: inline;
+    white-space: nowrap;
+    max-width: none;
+  }
+  .wordmark-full__tag {
+    letter-spacing: 0.14em;
+  }
+}
+@media (max-width: 480px) {
+  .wordmark-logo { width: .72em; height: .72em; margin-right: .1em; }
+}
+
+/* Scripts longs (inuktitut, arabe, farsi, ourdou, hébreu…) : resserrer le wordmark */
+html[lang="iu"] .wordmark-mark,
+html[data-translate="iu"] .wordmark-mark,
+html[data-translate="iu-latn"] .wordmark-mark,
+html[lang="ar"] .wordmark-mark,
+html[data-translate="ar"] .wordmark-mark,
+html[data-script-dir="rtl"] .wordmark-mark {
+  /* Toujours ≥ lead-title (max 2.1) */
+  font-size: clamp(1.55rem, 5.2vw + 0.25rem, 2.95rem);
+  letter-spacing: 0;
+  line-height: 1.12;
+}
+html[lang="iu"],
+html[data-translate="iu"],
+html[data-translate="iu-latn"],
+html[lang="ar"],
+html[data-translate="ar"],
+html[data-script-dir="rtl"] {
+  --radar-lead-title-size: clamp(1.2rem, 3.6vw + 0.1rem, 2.1rem);
+}
+html[lang="iu"] .wordmark-full,
+html[data-translate="iu"] .wordmark-full,
+html[data-translate="iu-latn"] .wordmark-full,
+html[lang="ar"] .wordmark-full,
+html[data-translate="ar"] .wordmark-full,
+html[data-script-dir="rtl"] .wordmark-full {
+  letter-spacing: 0.04em;
+  font-size: clamp(10px, 2.4vw, 11px);
+  line-height: 1.5;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --radar-wordmark-size: clamp(1.85rem, 7.6vw, 2.95rem);
+    /* Plancher > .wire-title (1.4rem) et < --radar-wordmark-size. */
+    --radar-lead-title-size: clamp(1.55rem, 4.8vw, 1.85rem);
+  }
+  .wordmark-mark {
+    line-height: 1.08;
+  }
+  .wordmark-full {
+    letter-spacing: 0.06em;
+    font-size: clamp(9.5px, 2.8vw, 11px);
+  }
+  html[lang="iu"] .wordmark-mark,
+  html[data-translate="iu"] .wordmark-mark,
+  html[data-translate="iu-latn"] .wordmark-mark {
+    font-size: clamp(1.45rem, 5.8vw, 2.2rem);
+  }
+  html[lang="iu"],
+  html[data-translate="iu"],
+  html[data-translate="iu-latn"] {
+    --radar-lead-title-size: clamp(1.15rem, 4vw, 1.65rem);
+  }
+}
+
+@media (min-width: 721px) and (max-width: 1024px) {
+  :root {
+    --radar-wordmark-size: clamp(2.15rem, 4.8vw, 3.6rem);
+    --radar-lead-title-size: clamp(1.45rem, 2.8vw, 2.35rem);
+  }
+  html[lang="iu"] .wordmark-mark,
+  html[data-translate="iu"] .wordmark-mark,
+  html[data-translate="iu-latn"] .wordmark-mark {
+    font-size: clamp(1.6rem, 3.6vw, 2.6rem);
+  }
+  html[lang="iu"],
+  html[data-translate="iu"],
+  html[data-translate="iu-latn"] {
+    --radar-lead-title-size: clamp(1.25rem, 2.4vw, 1.95rem);
+  }
+}

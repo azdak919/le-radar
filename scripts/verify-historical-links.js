@@ -91,7 +91,7 @@ async function main() {
   }
   catalog.updated = new Date().toISOString();
   console.log(`Liens historiques${sourceFilter ? ` (${sourceFilter})` : ''} : ${candidates.length} contrôlé(s); ${available} accessibles, ${missing} disparus, ${unreachable} injoignables.`);
-  if (update) fs.writeFileSync(ARCHIVE, JSON.stringify(catalog, null, 2) + '\n');
+  if (update) fs.writeFileSync(ARCHIVE, JSON.stringify(catalog) + '\n');
   else console.log('Dry-run — utilisez --update pour enregistrer les statuts.');
 }
 

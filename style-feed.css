@@ -1,0 +1,1599 @@
+/* LE-RADAR — fil étudiant (wire, filtres, articles, unes)
+ * Extrait de style.css (D2). Charger via <link> dans cet ordre, jamais @import.
+ * @media conservés dans ce fichier.
+ */
+
+/* ─────────────── WIRE ─────────────── */
+.wire {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad) 80px;
+}
+
+.wire-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  /* 8 px si pas de bandeau sports (sinon 0 via .masthead-sports-strip + .wire). */
+  margin-top: 8px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--rule-strong);
+}
+.wire-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  min-width: 0;
+  max-width: 100%;
+  /* Titres longs (inuktitut, etc.) : le menu fixed ne doit pas être clipé ici */
+  overflow: visible;
+}
+.wire-title {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+  margin: 0;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.2;
+}
+.wire-status {
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+.news-updated::before { content: "·"; margin-right: 8px; color: var(--rule); }
+
+/* ── Traduction page (Original / FR / EN) ── */
+.translate-control {
+  position: relative;
+  flex-shrink: 0;
+  /* Le menu est en position:fixed (JS) : ne pas le clipper ici.
+     Pas de z-index élevé ici : ça passait par-dessus le popover volume mobile. */
+  overflow: visible;
+  z-index: auto;
+}
+.translate-toggle {
+  font-family: var(--sans);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  /* Un peu plus d’air vertical pour les jambages (g, y, p de « Original »…). */
+  padding: 6px 10px 7px 8px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--bg-soft);
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+  cursor: pointer;
+  max-width: min(100%, 42vw);
+  overflow: visible;
+  transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
+}
+.translate-toggle:hover,
+.translate-toggle[aria-expanded="true"] {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, var(--bg));
+}
+.translate-toggle__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+.translate-toggle__label {
+  /* line-height: 1 + overflow:hidden coupait le « g » de Original.
+     (overflow-x/y mixtes sont ramenés à auto en CSS — on élargit la ligne.) */
+  line-height: 1.35;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.translate-toggle__chev {
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+.translate-toggle[aria-expanded="true"] .translate-toggle__chev {
+  transform: rotate(180deg);
+}
+/*
+ * Menu en position:fixed (coordonnées posées par translate.js) pour rester
+ * dans le viewport malgré overflow-x:clip sur html/body et les titres longs
+ * (inuktitut, arabe, etc.) qui poussent le bouton vers la droite.
+ */
+.translate-menu {
+  position: fixed;
+  /* Au-dessus du tuner sticky (100) quand le menu langue est ouvert */
+  z-index: 120;
+  box-sizing: border-box;
+  min-width: 260px;
+  width: max-content;
+  max-width: min(340px, calc(100% - 24px), calc(100dvw - 24px));
+  max-height: min(75vh, 560px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 6px;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: var(--bg);
+  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  /* top/left appliqués par JS ; repli CSS si JS n’a pas encore tourné */
+  top: 0;
+  left: 0;
+}
+.translate-menu[hidden] {
+  display: none !important;
+}
+/* Filtre sticky en tête de liste — loupe, pas de texte « Filtrer… » */
+.translate-menu__search-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin: 0 0 4px;
+  padding: 4px 4px 8px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--rule);
+}
+.translate-menu__search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.translate-menu__search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+  pointer-events: none;
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+.translate-menu__search {
+  font-family: var(--sans);
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 8px 10px 8px 34px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--bg-soft);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  outline: none;
+  /* Masquer la loupe native du type=search (WebKit) */
+  -webkit-appearance: none;
+  appearance: none;
+}
+.translate-menu__search::-webkit-search-decoration,
+.translate-menu__search::-webkit-search-cancel-button,
+.translate-menu__search::-webkit-search-results-button,
+.translate-menu__search::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.translate-menu__search::placeholder {
+  color: transparent;
+}
+.translate-menu__search:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.translate-menu__search:focus + .translate-menu__search-icon,
+.translate-menu__search-field:focus-within .translate-menu__search-icon {
+  color: var(--accent);
+  opacity: 1;
+}
+.translate-menu[data-filter-empty="1"]::after {
+  content: "Aucune langue";
+  display: block;
+  padding: 12px 10px;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+.translate-menu__group[hidden] {
+  display: none !important;
+}
+.translate-menu__sep {
+  margin: 6px 4px 2px;
+  padding: 4px 6px 2px;
+  border-top: 1px solid var(--rule);
+}
+.translate-menu__group:first-of-type .translate-menu__sep,
+.translate-menu__sep:first-child {
+  border-top: 0;
+  margin-top: 2px;
+}
+.translate-menu__sep-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.translate-menu__opt {
+  font-family: var(--sans);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  width: 100%;
+  margin: 0;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+.translate-menu__opt[hidden] {
+  display: none !important;
+}
+.translate-menu__opt:hover {
+  background: var(--bg-soft);
+}
+/* Focus clavier distinct du survol — indicateur ≥ 3:1 (WCAG non-text). */
+.translate-menu__opt:focus-visible {
+  background: var(--bg-soft);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.translate-menu__opt.is-active {
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg));
+}
+.translate-menu__opt.is-active .translate-menu__name::before {
+  content: "✓ ";
+  color: var(--accent);
+  font-weight: 800;
+}
+.translate-menu__opt.is-unavailable {
+  opacity: 0.55;
+  cursor: help;
+}
+.translate-menu__opt.is-unavailable:hover {
+  background: color-mix(in srgb, var(--muted) 12%, var(--bg));
+}
+.translate-menu__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+}
+.translate-menu__name {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.translate-menu__code {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: var(--bg-soft);
+  border: 1px solid var(--rule);
+}
+.translate-menu__opt.is-active .translate-menu__code {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--rule));
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg));
+}
+.translate-menu__hint {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+[data-theme="dark"] .translate-menu {
+  box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.55);
+}
+
+/* Traduction en cours (API gtx, pas le widget Google) */
+html[data-translate-busy="1"] .translate-toggle {
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.article-meta--time-only {
+  justify-content: flex-end;
+}
+.article-meta--time-only .article-time {
+  margin-left: 0;
+}
+/* Point gris masqué (méta date seule) — la pastille rouge « frais » reste. */
+.article-meta--time-only .article-time:not(.is-fresh)::before {
+  display: none;
+}
+/* Eyebrow / méta une : une seule source de vérité (voir .article-eyebrow plus bas). */
+.article--lead .article-eyebrow + .article-meta {
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+.article--lead .article-meta .article-time {
+  justify-self: end;
+}
+
+/* Source filter chips */
+.filters-panel {
+  position: relative;
+  /* Moins d’air sous « Le fil » et avant la une. */
+  margin: 8px 0 2px;
+  --filters-row-h: 42px;
+  --filters-cols: 5;
+  /* Ordinateur + tablette paysage : une seule rangée ; le reste via « Plus de sources ». */
+  --filters-collapsed-rows: 1;
+  /* hauteur = N lignes + (N−1) gaps de 6px */
+  --filters-collapsed-h: calc(
+    var(--filters-row-h) * var(--filters-collapsed-rows)
+    + 6px * (var(--filters-collapsed-rows) - 1)
+  );
+}
+
+/* app.js pilote --filters-collapsed-rows via style inline (voir
+   FILTERS_COLLAPSED_ROWS_*) ; repli si JS désactivé, même valeur partout. */
+@media (max-width: 1099.98px) and (orientation: portrait) {
+  .filters-panel {
+    --filters-collapsed-rows: 1;
+  }
+}
+
+/*
+ * Replié : rangée(s) pleine(s) + aperçu de la rangée d’après assez haut
+ * pour lire un peu le *nom de source* (padding 6px + ligne ~14px ≈ 22px),
+ * puis fondu/flou en bas — pas un flou opaque sur le nom.
+ */
+.filters-panel {
+  /* Peek : assez pour le nom, trop court pour une 2ᵉ rangée entière. */
+  --filters-peek: 24px;
+  --filters-title-h: 0px;
+}
+
+.filters-panel:not(.is-expanded):not(.is-compact) .filters {
+  max-height: calc(var(--filters-collapsed-h) + var(--filters-peek));
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.filters-panel.is-expanded .filters {
+  max-height: 1200px;
+  transition: max-height 0.45s ease;
+}
+
+/*
+ * Dégradé surtout sur la *moitié basse* de l’aperçu : le haut du peek
+ * (nom de source) reste lisible ; le bas s’estompe vers « Plus de sources ».
+ */
+/*
+ * Le pseudo-élément existe dans tous les états (sinon il apparaît d'un coup,
+ * déjà à sa position repliée, pendant que les rangées se replient encore) ;
+ * seule son opacité change, avec un délai qui attend la fin du repli (0.35s).
+ */
+.filters-panel.has-overflow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* Toute la peek. Haut transparent = nom net. Pas de backdrop-filter :
+     son amorce faisait une bande nette au milieu des pastilles. */
+  top: var(--filters-collapsed-h);
+  height: var(--filters-peek);
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 28%,
+    color-mix(in srgb, var(--bg) 22%, transparent) 55%,
+    color-mix(in srgb, var(--bg) 62%, transparent) 78%,
+    var(--bg) 100%
+  );
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.12s ease, visibility 0s linear 0.12s;
+}
+
+.filters-panel.has-overflow:not(.is-expanded):not(.is-compact)::after {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.18s ease 0.3s, visibility 0s linear 0.3s;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  align-items: stretch;
+}
+
+.filters-compact[hidden],
+.filters-toggle[hidden] {
+  display: none !important;
+}
+
+.filters-toggle,
+.filters-compact {
+  font-family: var(--sans);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  /* Parité le-kiosque .nav-toggle (« Toutes les rubriques ») : 8×12. */
+  margin-top: 6px;
+  margin-bottom: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--bg-soft);
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
+}
+
+.filters-toggle:hover,
+.filters-compact:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 6%, var(--bg));
+}
+
+.filters-toggle__chev,
+.filters-compact__chev {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.filters-panel.is-expanded .filters-toggle__chev {
+  transform: rotate(180deg);
+}
+
+.filters-compact {
+  justify-content: flex-start;
+  text-align: left;
+  margin-top: 0;
+  margin-bottom: 8px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--c, var(--accent)) 10%, var(--bg));
+  border-color: color-mix(in srgb, var(--c, var(--accent)) 40%, var(--rule));
+  color: var(--ink);
+}
+
+.filters-compact__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c, var(--accent));
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--c, var(--accent)) 22%, transparent);
+}
+
+.filters-compact__text {
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.filters-compact__chev {
+  margin-left: auto;
+}
+
+/* Téléphone uniquement — une demi-fenêtre laptop (~680–960 px) reste tablette. */
+@media (max-width: 599.98px) {
+  .filters-panel {
+    --filters-cols: 3;
+  }
+
+  .filters-panel.is-compact .filters {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    margin: 0;
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+  }
+}
+
+@media (max-width: 420px) {
+  .filters-panel { --filters-cols: 2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filters-panel .filters,
+  .filters-toggle__chev,
+  .filter-btn {
+    transition: none;
+  }
+}
+.filter-btn {
+  font-family: var(--sans);
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  flex: 0 0 calc((100% - (var(--filters-cols) - 1) * 6px) / var(--filters-cols));
+  min-width: 0;
+  padding: 6px 12px 5px;
+  border-radius: 12px;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition:
+    flex-basis 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    min-width 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 130ms ease,
+    color 130ms ease,
+    background 130ms ease;
+  max-width: 100%;
+}
+.filter-btn__row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+}
+.filter-btn__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c, var(--accent));
+  flex-shrink: 0;
+}
+.filter-btn__name {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+  text-align: left;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.filter-btn__inst {
+  display: block;
+  box-sizing: border-box;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--muted);
+  padding-left: 13px;
+  text-align: left;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.filter-btn:hover {
+  border-color: color-mix(in srgb, var(--c, var(--accent)) 40%, var(--rule));
+  background: color-mix(in srgb, var(--c, var(--accent)) 6%, var(--bg));
+}
+.filter-btn:hover .filter-btn__name { color: var(--ink); }
+.filter-btn.active {
+  background: color-mix(in srgb, var(--c, var(--accent)) 14%, var(--bg));
+  border-color: color-mix(in srgb, var(--c, var(--accent)) 48%, var(--rule));
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c, var(--accent)) 10%, transparent);
+}
+.filter-btn.active .filter-btn__name { color: var(--ink); }
+.filter-btn.active .filter-btn__inst { color: var(--muted); }
+.filter-btn.active .filter-btn__dot {
+  background: var(--c, var(--accent));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--c, var(--accent)) 22%, transparent);
+}
+
+/* Filtres sources — thème sombre : lisibilité des noms + pastille active teintée */
+[data-theme="dark"] .filter-btn {
+  background: var(--bg-soft);
+  border-color: var(--rule);
+  color: var(--ink-soft);
+}
+[data-theme="dark"] .filter-btn .filter-btn__name {
+  color: var(--ink);
+}
+[data-theme="dark"] .filter-btn .filter-btn__inst {
+  color: var(--ink-soft);
+}
+[data-theme="dark"] .filter-btn:hover {
+  border-color: var(--ink-soft);
+  background: #1c1e24;
+}
+[data-theme="dark"] .filter-btn:hover .filter-btn__name {
+  color: var(--ink);
+}
+[data-theme="dark"] .filter-btn.active {
+  background: color-mix(in srgb, var(--c, var(--accent)) 20%, var(--bg-soft));
+  border-color: color-mix(in srgb, var(--c, var(--accent)) 50%, var(--rule));
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c, var(--accent)) 12%, transparent);
+}
+[data-theme="dark"] .filter-btn.active .filter-btn__name {
+  color: var(--ink);
+}
+[data-theme="dark"] .filter-btn.active .filter-btn__inst {
+  color: var(--ink-soft);
+}
+[data-theme="dark"] .filter-btn.active .filter-btn__dot {
+  background: var(--c, var(--accent));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--c, var(--accent)) 28%, transparent);
+}
+
+/* ── Articles (text only) ── */
+.news-list { margin-top: 4px; }
+
+.article {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+  transition: transform 160ms cubic-bezier(0.22,1,0.36,1);
+  max-width: 100%;
+  min-width: 0;
+}
+.article::before {
+  content: "";
+  position: absolute;
+  /* Dans la gouttière (padding de .wire), à gauche du contenu et de la
+     vignette — jamais par-dessus l'image. Le débordement à gauche reste
+     contenu par .wire { overflow-x: clip } (pas de pan horizontal iPad). */
+  left: -14px;
+  top: 14px; bottom: 14px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--c, var(--accent));
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+/* Hover translate seulement souris fine — pas iPad (hover+coarse) qui
+   « colle » le décalage et contribue au pan horizontal. */
+@media (hover: hover) and (pointer: fine) {
+  .article:hover { transform: translateX(3px); }
+  .article:hover::before { opacity: 1; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .article:hover .article-title { color: var(--c, var(--accent)); }
+}
+/* Tactile / iPad : surbrillance titre sans translate */
+@media (hover: none), (pointer: coarse) {
+  .article:active .article-title { color: var(--c, var(--accent)); }
+}
+
+.article-media {
+  display: none;
+  margin: 0 0 10px;
+  overflow: hidden;
+  background: var(--bg-soft);
+  border-radius: 8px;
+  aspect-ratio: 16 / 9;
+}
+.article.has-image .article-media { display: block; }
+/* Crédit sous la photo : l’image reste cadré 16:9 ; le crédit suit en dessous.
+   Avant : aspect-ratio:auto sur le conteneur laissait les JPEG miroir
+   (ex. 2560×1707) gonfler la une à 700+ px et casser l’équilibre En bref. */
+.article.has-image .article-media:has(.article-media-credit) {
+  aspect-ratio: auto;
+  overflow: visible;
+  background: transparent;
+}
+.article.has-image .article-media:has(.article-media-credit) img {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--bg-soft);
+}
+/* Une : le crédit ne doit pas rétablir un cadre 16:9. */
+.article--lead.has-image .article-media:has(.article-media-credit) img {
+  aspect-ratio: 3 / 2;
+}
+.article-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Apparition en fondu : l'image n'est insérée qu'une fois chargée, donc
+     l'animation joue exactement au moment où elle s'affiche. */
+  animation: articleImgIn 0.45s ease both;
+}
+@keyframes articleImgIn {
+  from { opacity: 0; transform: scale(1.015); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .article-media img { animation: none; }
+}
+.article--stock-image .article-media,
+.article--fallback-image .article-media {
+  aspect-ratio: auto;
+  overflow: visible;
+  background: transparent;
+}
+.article--stock-image .article-media img,
+.article--fallback-image .article-media img {
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border-radius: 8px;
+  background: var(--bg-soft);
+}
+.article--lead.article--stock-image .article-media img,
+.article--lead.article--fallback-image .article-media img {
+  aspect-ratio: 3 / 2;
+}
+.article-media-credit {
+  margin: 4px 0 0;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+.article-media-credit a {
+  position: relative;
+  z-index: 1;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: color-mix(in srgb, var(--muted) 55%, transparent);
+}
+.article-media-credit a:hover {
+  color: var(--ink-soft);
+  text-decoration-color: currentColor;
+}
+.article-media-credit__creator {
+  font-weight: 600;
+  color: var(--c, var(--ink-soft));
+  text-decoration-color: color-mix(in srgb, var(--c, var(--accent)) 45%, transparent);
+}
+.article-media-credit__creator:hover {
+  color: var(--c, var(--accent));
+}
+
+.article-meta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 10px;
+  row-gap: 2px;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+.article-meta__lead {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.article-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--c, var(--accent));
+}
+.article-source::before {
+  content: "";
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--c, var(--accent));
+}
+.article-inst { color: var(--muted); }
+/* Par défaut acronyme. Nom complet : une, vedettes, En bref, suite du fil. */
+.article-inst__full { display: none; }
+.article-inst__short { display: inline; }
+@media (min-width: 600px) {
+  .article--lead .article-inst__full,
+  .news-hero .article--feature .article-inst__full,
+  .brief-rail .article--compact .article-inst__full,
+  .news-tail .article--standard .article-inst__full {
+    display: inline;
+  }
+  .article--lead .article-inst__short,
+  .news-hero .article--feature .article-inst__short,
+  .brief-rail .article--compact .article-inst__short,
+  .news-tail .article--standard .article-inst__short {
+    display: none;
+  }
+}
+/* En bref + suite du fil : toujours le nom complet (même mobile). */
+.brief-rail .article--compact .article-inst__full,
+.news-tail .article--standard .article-inst__full {
+  display: inline;
+}
+.brief-rail .article--compact .article-inst__short,
+.news-tail .article--standard .article-inst__short {
+  display: none;
+}
+/*
+ * Suite du fil : source ligne 1, institution toujours ligne 2
+ * (une + vedettes restent en ligne — cf. .article-meta__lead par défaut).
+ */
+.news-tail .article--standard .article-meta__lead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0;
+  row-gap: 0.12em;
+  min-width: 0;
+  max-width: 100%;
+  overflow: visible;
+}
+.news-tail .article--standard .article-source {
+  flex: 0 1 auto;
+  min-width: 0;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+.news-tail .article--standard .article-inst {
+  flex: 1 1 100%;
+  width: 100%;
+  white-space: normal;
+}
+.article-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  justify-self: end;
+  text-align: right;
+  font-size: 11px;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+}
+.article-time::before {
+  content: "";
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--rule);
+}
+.article-time.is-fresh { color: var(--live); font-weight: 600; }
+/* Pastille pulse : toujours visible sur le jour civil (lead, vedette, En bref,
+   Suite du fil, mobile). Les règles plus bas masquent seulement le point gris. */
+.article-time.is-fresh::before {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--live);
+  animation: onairPulse 1.6s ease-out infinite;
+  flex-shrink: 0;
+}
+
+.article-title {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.45rem;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  margin: 0 0 4px;
+  color: var(--ink);
+  transition: color 140ms ease;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
+.article-byline {
+  font-size: 0.84rem;
+  color: var(--muted);
+  margin: 0 0 6px;
+  font-weight: 500;
+}
+/* Vedettes : titre ↔ auteur collés ; air avant photo / extrait. */
+.article--feature .article-title {
+  margin-bottom: 2px;
+}
+.article--feature .article-byline {
+  margin: 0 0 8px;
+}
+/* Espace stable entre libellé et auteur — survit aux traductions qui
+   retirent le blanc final de « Par » / « By » / « Por »… */
+.article-byline .article-author {
+  color: var(--ink);
+  font-weight: 600;
+  margin-inline-start: 0.35em;
+}
+.article-byline strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.article-brief {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.article-brief-text {
+  display: inline;
+}
+
+/*
+ * « Lire la suite » — focus-group le-radar-brief-more (A) :
+ * dernier élément du bloc chapô, bas-droite, jamais float (ligne orpheline).
+ */
+.article-more {
+  display: block;
+  float: none;
+  width: 100%;
+  box-sizing: border-box;
+  /* Zéro air sous le CTA — le padding de la carte suffit. */
+  margin: 0.2rem 0 0;
+  padding: 0;
+  font-weight: 600;
+  font-size: 0.88em;
+  color: var(--c, var(--accent));
+  white-space: nowrap;
+  text-align: end;
+  line-height: 1.25;
+}
+.article-brief-text + .article-more {
+  margin-left: 0;
+}
+.article-brief.is-truncated {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+.article-brief.is-truncated .article-more {
+  float: none;
+  text-align: end;
+}
+.article:hover .article-more {
+  color: var(--c, var(--accent));
+}
+
+/*
+ * Suite du fil — focus-group le-radar-suite-more (B) :
+ * more INLINE après le chapô (pas block+end = trou vide bas-droite).
+ * Vedettes / En bref restent en more bas-droite (brief-more A).
+ */
+.news-tail .article--standard .article-brief,
+.news-tail .article--standard .article-brief.is-truncated {
+  text-align: start;
+}
+.news-tail .article--standard .article-brief-text,
+.news-tail .article--standard .article-brief.is-truncated .article-brief-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  min-height: 0;
+  text-align: start;
+}
+/*
+ * Le CTA reprend la position de « En bref » et des vedettes : bloc, bas-droite.
+ *
+ * Il était en ligne après le chapô (focus-group le-radar-suite-more B) pour
+ * éviter un « trou vide bas-droite ». Mais c'était la seule des trois
+ * dispositions du fil à placer « Lire la suite » à gauche, et l'écart sautait
+ * aux yeux d'une carte à l'autre : 429 px de la marge droite ici, collé à
+ * droite juste au-dessus. La cohérence de la colonne l'emporte sur le trou,
+ * d'autant que le chapô de la suite est tronqué à trois lignes — la dernière
+ * est donc rarement pleine de toute façon.
+ */
+.news-tail .article--standard .article-more {
+  display: block;
+  float: none;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0.2rem 0 0;
+  padding-block: 0.25rem 0;
+  padding-inline: 0;
+  text-align: end;
+  white-space: nowrap;
+}
+.news-tail .article--standard .article-more:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.news-tail .article--standard .article-more:focus-visible {
+  outline: 2px solid var(--c, var(--accent));
+  outline-offset: 2px;
+}
+@media (min-width: 600px) { .article-title { font-size: 1.6rem; } }
+
+/* ── Lead / À la une (densité type LE-KIOSQUE démo) ── */
+.article--lead {
+  padding: 10px 0 14px;
+  border-bottom: 2px solid var(--rule-strong);
+  /* Colonne flex + order : titre toujours au-dessus de la photo, même si le DOM diverge. */
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.article--lead > .article-eyebrow { order: 1; }
+.article--lead > .article-meta { order: 2; }
+.article--lead > .article-title { order: 3; }
+.article--lead > .article-byline { order: 4; }
+.article--lead > .article-media { order: 5; }
+.article--lead > .article-brief { order: 6; }
+
+.article--lead::before { top: 40px; }
+/* Espacement eyebrow → source : même bas que .brief-rail-title (padding-bottom 8px). */
+.article-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 8px;
+}
+.article--lead .article-eyebrow {
+  margin-bottom: 8px;
+}
+.article--lead .article-title {
+  /* Toujours < --radar-wordmark-size (voir :root). */
+  font-size: var(--radar-lead-title-size);
+  line-height: 1.08;
+  margin: 0 0 2px;
+}
+/* Titre → auteur → photo : pile serrée (parité Kiosque). */
+.article--lead.has-image .article-title {
+  margin-bottom: 2px;
+}
+.article--lead.has-image .article-media {
+  margin: 0 0 8px;
+}
+/* Une : 3:2 (photo de presse) — entre le 16:9 trop plat et le 1:1 trop haut. */
+.article--lead.has-image .article-media {
+  aspect-ratio: auto;
+  overflow: visible;
+  background: transparent;
+}
+.article--lead.has-image .article-media img {
+  max-height: none;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+.article--lead .article-byline {
+  font-size: 0.92rem;
+  margin: 0 0 6px;
+}
+.article--lead .article-brief {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  max-width: none;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* Vedettes : même longueur d'extrait que la une, typo intermédiaire
+   (plus compacte que la une, plus aérée que Suite du fil ~0.88–0.9rem). */
+.article--feature .article-brief {
+  font-size: 0.98rem;
+  line-height: 1.52;
+  max-width: none;
+  color: var(--ink-soft);
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+.news-hero .article--feature .article-brief-text,
+.news-hero .article--feature .article-brief.is-truncated .article-brief-text,
+.news-hero .article--feature.article--thumb.has-image .article-brief-text,
+.news-hero .article--feature.article--thumb.has-image .article-brief.is-truncated .article-brief-text {
+  display: inline;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+  -webkit-box-orient: initial;
+}
+
+.article--compact {
+  padding: 11px 0;
+}
+.article--compact .article-meta {
+  margin-bottom: 3px;
+}
+.article--compact .article-title {
+  font-size: 1.28rem;
+  line-height: 1.18;
+  margin-top: 0;
+  margin-bottom: 2px;
+  hyphens: manual;
+  -webkit-hyphens: manual;
+  word-break: normal;
+}
+.article--compact .article-byline {
+  font-size: 0.78rem;
+  margin: 0 0 6px;
+}
+.article--compact .article-brief {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  margin-top: 0;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+/* Corps de texte des extraits (toutes cartes) */
+.article-brief,
+.article-brief-text {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+.brief-rail .article--compact .article-brief-text,
+.brief-rail .article--compact .article-brief.is-truncated .article-brief-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+/*
+ * En bref + photo : grille 2 pistes (focus-group brief-more A) —
+ * plus de float wrap (ligne orpheline du more).
+ */
+.brief-rail .article--compact.article--thumb.has-image {
+  display: grid;
+  grid-template-columns: minmax(4rem, 5.75rem) minmax(0, 1fr);
+  column-gap: 0.65rem;
+  align-items: start;
+}
+.brief-rail .article--compact.article--thumb.has-image > .article-meta {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 8px;
+  margin-bottom: 3px;
+}
+.brief-rail .article--compact.article--thumb.has-image > .article-media {
+  grid-column: 1;
+  /* title + byline + brief = 3 rangées (pas 4 → vide sous « Lire la suite »). */
+  grid-row: 2 / span 3;
+  float: none;
+  width: 100%;
+  margin: 2px 0 0;
+  shape-outside: none;
+  aspect-ratio: auto;
+  align-self: start;
+  overflow: visible;
+  background: transparent;
+}
+.brief-rail .article--compact.article--thumb.has-image > .article-title,
+.brief-rail .article--compact.article--thumb.has-image > .article-byline,
+.brief-rail .article--compact.article--thumb.has-image > .article-brief {
+  grid-column: 2;
+  min-width: 0;
+}
+.brief-rail .article--compact.article--thumb.has-image > .article-brief {
+  display: block;
+  overflow: hidden;
+  margin-top: 0;
+  margin-bottom: 0;
+  min-height: 0;
+  padding-bottom: 0;
+}
+.brief-rail .article--compact.article--thumb.has-image .article-brief-text,
+.brief-rail .article--compact.article--thumb.has-image .article-brief.is-truncated .article-brief-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+.brief-rail .article--compact.article--thumb.has-image .article-media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.brief-rail .article--compact.article--thumb.has-image .article-media-credit {
+  margin: 2px 0 0;
+}
+
+/* En bref : date à droite sur la ligne source */
+.brief-rail .article--compact .article-meta {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  /* L'institution est une rangée de la grille (voir plus bas) : c'est ce
+     row-gap qui la sépare de la ligne source, plus celui du __lead. */
+  row-gap: 0.12em;
+  column-gap: 8px;
+  margin-bottom: 4px;
+}
+/*
+ * En bref : source ligne 1, institution toujours ligne 2 — et sur toute la
+ * largeur de la carte. `display: contents` remonte source et institution au
+ * rang d'éléments de la grille : sans lui, la ligne 2 restait enfermée dans la
+ * colonne 1 (la date occupe la colonne 2), et « Cégep de Jonquière » ou
+ * « Université de Montréal » se coupaient en deux alors que la ligne était
+ * vide à leur droite.
+ * (une + vedettes restent source · institution en ligne.)
+ */
+.brief-rail .article--compact .article-meta__lead {
+  display: contents;
+}
+.brief-rail .article--compact .article-source {
+  grid-row: 1;
+  grid-column: 1;
+  min-width: 0;
+  gap: 5px;
+  overflow: visible;
+  white-space: normal;
+  text-overflow: unset;
+  max-width: none;
+}
+.brief-rail .article--compact .article-inst {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  white-space: normal;
+  font-size: 0.92em;
+  color: var(--muted);
+}
+.brief-rail .article--compact .article-time {
+  grid-row: 1;
+  grid-column: 2;
+  justify-self: end;
+  text-align: right;
+  align-self: center;
+  white-space: nowrap;
+}
+/* Point gris masqué en En bref (place) — pas la pastille rouge is-fresh. */
+.brief-rail .article--compact .article-time:not(.is-fresh)::before {
+  display: none;
+}
+
+/* ── Vignette photo à gauche — En bref + vedettes (tous écrans) ──
+   Photo en colonne fixe à gauche ; le texte (titre / byline / extrait) à droite.
+   Crédit photo en petit sous la vignette. Tailles progressives mobile → bureau.
+   (« Suite du fil » reste sans photo : le rôle standard n'a pas de média.) */
+.article--thumb.has-image {
+  display: grid;
+  /* Mobile d'abord : vignette modeste pour ne pas squish le titre / extrait */
+  grid-template-columns: clamp(64px, 22vw, 88px) minmax(0, 1fr);
+  column-gap: 10px;
+  align-items: start;
+}
+.article--thumb.has-image > .article-meta {
+  grid-column: 1 / -1;
+}
+.article--thumb.has-image > .article-title,
+.article--thumb.has-image > .article-byline,
+.article--thumb.has-image > .article-brief {
+  grid-column: 2;
+  min-width: 0; /* évite le débordement horizontal du texte long */
+}
+.article--thumb.has-image > .article-media {
+  grid-column: 1;
+  grid-row: 2 / span 3;
+  margin: 2px 0 0;
+  aspect-ratio: auto;
+  overflow: visible;
+  background: transparent;
+  min-width: 0;
+}
+.article--thumb.has-image .article-media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--bg-soft);
+}
+.article--thumb.has-image .article-media-credit {
+  margin: 3px 0 0;
+  font-size: 0.55rem;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+/*
+ * Vedettes + photo — grille 2 pistes (focus-group brief-more A).
+ * Plus de float wrap (CTA orphelin). Une reste carrée, colonne.
+ */
+.news-hero .article--feature.article--thumb.has-image {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 9rem) minmax(0, 1fr);
+  column-gap: 0.85rem;
+  align-items: start;
+  padding-top: 12px;
+  padding-bottom: 8px;
+}
+.news-hero .article--feature.article--thumb.has-image > .article-meta {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 8px;
+  margin-bottom: 4px;
+}
+.news-hero .article--feature.article--thumb.has-image > .article-meta .article-time {
+  grid-row: 1;
+  grid-column: 2;
+  justify-self: end;
+  text-align: right;
+  align-self: start;
+  white-space: nowrap;
+}
+/* Point gris masqué sur vedette photo — pas la pastille rouge is-fresh. */
+.news-hero .article--feature.article--thumb.has-image > .article-meta .article-time:not(.is-fresh)::before {
+  display: none;
+}
+.news-hero .article--feature.article--thumb.has-image > .article-media {
+  grid-column: 1;
+  /* title + byline + brief = 3 rangées (pas 4 → vide sous « Lire la suite »). */
+  grid-row: 2 / span 3;
+  float: none;
+  width: 100%;
+  margin: 2px 0 0;
+  shape-outside: none;
+  aspect-ratio: auto;
+  align-self: start;
+  overflow: visible;
+  background: transparent;
+}
+.news-hero .article--feature.article--thumb.has-image > .article-title,
+.news-hero .article--feature.article--thumb.has-image > .article-byline,
+.news-hero .article--feature.article--thumb.has-image > .article-brief {
+  grid-column: 2;
+  min-width: 0;
+}
+.news-hero .article--feature.article--thumb.has-image > .article-title {
+  margin-bottom: 4px;
+}
+.news-hero .article--feature.article--thumb.has-image > .article-byline {
+  margin: 0 0 6px;
+}
+.news-hero .article--feature.article--thumb.has-image > .article-brief {
+  display: block;
+  overflow: hidden;
+  margin-top: 0;
+  margin-bottom: 0;
+  min-height: 0;
+  max-width: none;
+  padding-bottom: 0;
+}
+.news-hero .article--feature.article--thumb.has-image .article-brief-text,
+.news-hero .article--feature.article--thumb.has-image .article-brief.is-truncated .article-brief-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+  line-height: 1.48;
+}
+.news-hero .article--feature.article--thumb.has-image .article-media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 7px;
+}
+.news-hero .article--feature.article--thumb.has-image .article-media-credit {
+  margin: 2px 0 0;
+  -webkit-line-clamp: 3;
+  font-size: 0.58rem;
+}
+
+@media (min-width: 601px) {
+  /* En bref / suite : petite vignette grille (hors float En bref). */
+  .article--thumb.has-image {
+    grid-template-columns: clamp(72px, 22%, 110px) minmax(0, 1fr);
+    column-gap: 14px;
+  }
+  .article--thumb.has-image > .article-media {
+    margin: 3px 0 0;
+  }
+  .article--thumb.has-image .article-media-credit {
+    font-size: 0.6rem;
+    line-height: 1.3;
+    -webkit-line-clamp: 3;
+  }
+  /* Vedettes : piste vignette un cran plus large */
+  .news-hero .article--feature.article--thumb.has-image {
+    grid-template-columns: minmax(7.5rem, 10.5rem) minmax(0, 1fr);
+    column-gap: 0.9rem;
+  }
+  .news-hero .article--feature.article--thumb.has-image .article-media-credit {
+    font-size: 0.62rem;
+  }
+  .brief-rail .article--compact.article--thumb.has-image {
+    grid-template-columns: minmax(5rem, 6.5rem) minmax(0, 1fr);
+  }
+}
+
+/* Desktop magazine : vignette un cran plus présente */
+@media (min-width: 1100px) {
+  .news-hero .article--feature.article--thumb.has-image {
+    grid-template-columns: minmax(8rem, 11.5rem) minmax(0, 1fr);
+    column-gap: 1rem;
+  }
+  .brief-rail .article--compact.article--thumb.has-image {
+    grid-template-columns: minmax(5.5rem, 7.5rem) minmax(0, 1fr);
+  }
+}
+
+/* Loading skeletons */
+.skeleton { pointer-events: none; }
+.skeleton .sk {
+  background: var(--bg-soft);
+  border-radius: 4px;
+  animation: skel 1.3s ease-in-out infinite;
+}
+.skeleton .sk-meta { height: 12px; width: 40%; margin-bottom: 12px; }
+.skeleton .sk-title { height: 22px; width: 92%; margin-bottom: 8px; }
+.skeleton .sk-title2 { height: 22px; width: 65%; margin-bottom: 12px; }
+.skeleton .sk-brief { height: 12px; width: 100%; margin-bottom: 6px; }
+.skeleton .sk-brief2 { height: 12px; width: 80%; }
+@keyframes skel { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
+
+/*
+ * Premier paint : le prerendu SEO est une liste plate (pour les robots).
+ * On le sort du flux et on réserve un squelette magazine jusqu’à
+ * #news-list[data-ready] (posé par renderNews). Sans JS : noscript.
+ */
+.news-list:not([data-ready]) > .article {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+.news-list:not([data-ready]) {
+  position: relative;
+  min-height: 46vh;
+}
+.news-list:not([data-ready])::before,
+.news-list:not([data-ready])::after {
+  content: "";
+  display: block;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--bg-soft, #1c1e24) 92%, #fff 8%);
+  animation: skel 1.3s ease-in-out infinite;
+}
+.news-list:not([data-ready])::before {
+  min-height: 46vh;
+  margin-bottom: 12px;
+}
+.news-list:not([data-ready])::after {
+  display: none;
+}
+@media (min-width: 768px) {
+  .news-list:not([data-ready]) {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(200px, 0.8fr);
+    column-gap: 1.25rem;
+    min-height: 52vh;
+  }
+  .news-list:not([data-ready])::before {
+    min-height: 52vh;
+    margin-bottom: 0;
+  }
+  .news-list:not([data-ready])::after {
+    display: block;
+    min-height: 52vh;
+  }
+}
+/*
+ * Fondu d’apparition (pratique standard) : le contenu est déjà en place,
+ * on n’ajoute aucun délai réseau — seulement une opacification courte.
+ * visibilité : opacity seule (pas visibility:hidden) pour que le fondu joue.
+ */
+:root {
+  --ui-reveal-ms: 280ms;
+}
+.news-list[data-ready] > .news-hero,
+.news-list[data-ready] > .brief-rail,
+.news-list[data-ready] > .news-tail,
+.news-list[data-ready] > .news-search-results {
+  animation: news-reveal var(--ui-reveal-ms) ease-out;
+}
+@keyframes news-reveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.masthead-weather,
+.masthead-sports-strip,
+.filters-panel,
+#tuner-nowair-wide {
+  transition: opacity var(--ui-reveal-ms) ease-out;
+}
+.masthead-weather:not([data-ready]),
+.masthead-sports-strip:not([data-ready]):not(.is-empty),
+.filters-panel:not([data-ready]),
+#tuner-nowair-wide:not([data-ready]) {
+  opacity: 0;
+  pointer-events: none;
+}
+.masthead-weather[data-ready],
+.masthead-sports-strip[data-ready],
+.filters-panel[data-ready],
+#tuner-nowair-wide[data-ready] {
+  opacity: 1;
+}
+@media (min-width: 1024px) {
+  /* Bureau : garde la colonne météo dans la grille avant les données.
+     Sous 1024 la météo est dockée — ne pas l’imposer dans le mât (date). */
+  .masthead-top > .masthead-weather.hidden:not([data-ready]) {
+    display: inline-flex !important;
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news-list:not([data-ready])::before,
+  .news-list:not([data-ready])::after,
+  .news-list[data-ready] > .news-hero,
+  .news-list[data-ready] > .brief-rail,
+  .news-list[data-ready] > .news-tail,
+  .news-list[data-ready] > .news-search-results,
+  .masthead-weather,
+  .masthead-sports-strip,
+  .filters-panel,
+  #tuner-nowair-wide {
+    animation: none;
+    transition: none;
+  }
+}
+
+.news-empty { text-align: center; color: var(--muted); padding: 60px 0; }
