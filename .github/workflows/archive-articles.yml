@@ -43,9 +43,10 @@ jobs:
 
       - name: Submit URLs to the Wayback Machine
         id: archive
-        run: node scripts/archive-articles.js --update --limit "${{ github.event.inputs.limit || '20' }}"
+        run: node scripts/archive-articles.js --update --limit "$ARCHIVE_LIMIT"
         env:
           CI: true
+          ARCHIVE_LIMIT: ${{ github.event.inputs.limit || '20' }}
         # Internet Archive peut être lent ou indisponible : ça ne doit jamais
         # faire échouer un run ni bloquer quoi que ce soit d'autre.
         continue-on-error: true
