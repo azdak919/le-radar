@@ -15,7 +15,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { mergeHistoricalCatalog } = require('./historical-catalog-lib');
+const { mergeHistoricalCatalog, serializeHistoricalCatalog } = require('./historical-catalog-lib');
 const {
   wordpressApiBase,
   wordpressComApiBase,
@@ -239,7 +239,7 @@ async function main() {
       if (crawl.items.length) {
         const merged = mergeHistoricalCatalog(catalog, crawl.items, new Date().toISOString(), {
           firstDiscoveredAt: new Date().toISOString(), ingestedAt: new Date().toISOString(),
-        });
+        }, { maxRecords: config.storage?.maxRecords });
         catalog = merged.catalog;
         added += merged.added;
         updated += merged.updated;
@@ -258,7 +258,7 @@ async function main() {
     console.log(`Simulation : ${added} ajout(s), ${updated} mise(s) à jour; aucun fichier écrit. Ajoutez --update pour conserver l’avancement.`);
     return;
   }
-  fs.writeFileSync(ARCHIVE_PATH, `${JSON.stringify(catalog)}\n`, 'utf8');
+  fs.writeFileSync(ARCHIVE_PATH, serializeHistoricalCatalog(catalog, config).text, 'utf8');
   fs.writeFileSync(STATE_PATH, `${JSON.stringify(state, null, 2)}\n`, 'utf8');
   console.log(`Terminé : ${added} ajout(s), ${updated} mise(s) à jour. Le fil vivant n’a pas été modifié.`);
 }
