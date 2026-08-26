@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 import assert from 'node:assert/strict';
+import { readdirSync, readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
 const { mergeHistoricalCatalog, serializeHistoricalCatalog, partialPublicSample, ageBand, stableId } = require('../scripts/historical-catalog-lib.js');
@@ -67,5 +70,41 @@ assert.equal(capped.dropped, 3);
 const serialized = serializeHistoricalCatalog(capped.catalog, { storage: { maxRecords: 2, maxFileBytes: 16777216 } });
 assert.ok(serialized.text.endsWith('\n'));
 assert.equal(JSON.parse(serialized.text).records.length, 2);
+
+{
+  const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+  const sitemap = readFileSync(join(root, 'sitemap-archives.xml'), 'utf8');
+  const sitemapLocs = new Set([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]));
+  const htmlFiles = [];
+  const walk = (dir) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (entry.name === 'index.html') htmlFiles.push(full);
+    }
+  };
+  walk(join(root, 'archives'));
+  const indexable = [];
+  for (const file of htmlFiles) {
+    const html = readFileSync(file, 'utf8');
+    const robots = html.match(/name="robots" content="([^"]+)"/i)?.[1] || '';
+    const canonical = html.match(/rel="canonical" href="([^"]+)"/i)?.[1] || '';
+    const rel = file.slice(root.length + 1);
+    const conservation = rel.startsWith('archives/conservation/') || rel.startsWith('archives/reference/');
+    if (conservation) {
+      assert.match(robots, /noindex/i, `${rel} : conservation/référence doit rester noindex`);
+      assert.equal(sitemapLocs.has(canonical), false, `${rel} : page noindex absente du sitemap-archives`);
+    }
+    if (/\bnoindex\b/i.test(robots)) {
+      assert.equal(sitemapLocs.has(canonical), false, `${rel} : noindex ne doit pas figurer au sitemap`);
+    } else {
+      assert.match(robots, /index/i, `${rel} : robots index,follow requis hors conservation`);
+      assert.ok(canonical, `${rel} : canonical requis`);
+      assert.equal(sitemapLocs.has(canonical), true, `${rel} : page indexable absente de sitemap-archives.xml`);
+      indexable.push(canonical);
+    }
+  }
+  assert.equal(sitemapLocs.size, indexable.length, 'sitemap-archives : uniquement les pages indexables');
+}
 
 console.log('✓ Catalogue historique : identité, rétention et sélection publique vérifiées.');
