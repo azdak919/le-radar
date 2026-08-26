@@ -383,7 +383,7 @@ test('iPad tactile : la CTA participe à la cascade', async ({ browser }) => {
   }
 });
 
-test('téléphone avec CTA seule : le changement garde son roulement visible', async ({ browser }) => {
+test('téléphone avec CTA seule : le changement est une sortie/entrée de carte', async ({ browser }) => {
   const context = await browser.newContext({
     hasTouch: true,
     isMobile: true,
@@ -407,15 +407,26 @@ test('téléphone avec CTA seule : le changement garde son roulement visible', a
     await expect(page.locator('#masthead-sports-strip .sports-chip')).toHaveCount(1);
     const first = (await cta.locator('.sports-chip__cta-text').innerText()).replace(/\s+/g, ' ');
 
-    await page.evaluate(() => rotateSportsSlot(0));
+    const swap = await page.evaluate(() => {
+      rotateSportsSlot(0);
+      const el = document.querySelector('#masthead-sports-strip .sports-chip--cta');
+      return {
+        leaving: !!el?.classList.contains('is-leaving'),
+        rolling: !!el?.querySelector('.is-rolling-in, .is-rolling-out'),
+        n: document.querySelectorAll('#masthead-sports-strip .sports-chip').length,
+        leaveName: el ? getComputedStyle(el).animationName : '',
+      };
+    });
+    expect(swap.n, 'toujours une seule carte').toBe(1);
+    expect(swap.leaving, 'sortie carte entière').toBe(true);
+    expect(swap.rolling, 'pas de roulement interne').toBe(false);
+    expect(swap.leaveName).toMatch(/sports-chip-leave/);
 
-    await expect(cta.locator('.sports-chip__cta-label.is-rolling-in')).toBeVisible();
     await expect.poll(async () => {
       const current = page.locator('#masthead-sports-strip .sports-chip--cta');
       return (await current.locator('.sports-chip__cta-label.is-front .sports-chip__cta-text').innerText())
         .replace(/\s+/g, ' ');
     }, { timeout: 2000 }).not.toBe(first);
-    await expect(cta.locator('.sports-chip__cta-label.is-rolling-in')).toHaveCount(0);
   } finally {
     await context.close();
   }

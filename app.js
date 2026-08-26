@@ -3627,8 +3627,8 @@ const SPORTS_ARRIVE_MS = 640;
  *   sinon prochain du jour lead ; alerte réservée au direct.
  * · `le-radar-cta-sports-motion` — override humain 2026-08-17 : le
  *   renouvellement de l’accroche rejoue la **même** sortie/entrée que les
- *   puces scores (`is-leaving` / `is-arriving` sur la carte entière), plus
- *   un roulement interne du texte seul.
+ *   puces scores (`is-leaving` / `is-arriving` sur la carte entière), y
+ *   compris en 390/430 où la CTA est seule.
  * · `le-radar-cta-sports-badge` — le mot de la pastille reste « Sports » au
  *   repos ; seul le direct le remplace (override mainteneur 2026-08-09).
  */
@@ -3644,8 +3644,6 @@ const SPORTS_CTA_TAG_NEXT = 'Prochain match';
 /** Repli idle (creux total, pas de match) ; sinon ton du sport via sportsCtaTone. Rouge = direct. */
 const SPORTS_CTA_REST_TONE = '#6a7580';
 const SPORTS_CTA_LIVE_TONE = '#c8102e';
-/** Durée du roulement vertical A↑B (une seule phase, jamais de trou vide). */
-const SPORTS_CTA_ROLL_MS = 280;
 /**
  * Rythme de la carte CTA — un peu plus lent que les puces scores, mais pas
  * figé. Feedback prod 2026-08-11 : 24 s laissait l’accroche « collée » alors
@@ -5984,80 +5982,6 @@ function sportsCtaSignature(slide) {
 }
 
 /**
- * Roulement vertical de l’accroche CTA — focus-group `le-radar-cta-sports-motion`
- * (verdict C), rythme fixé par `le-radar-cta-sports-rhythm`.
- *
- * Le fondu croisé qu’il remplace était un idiome d’image : sur du texte de
- * 11 px, deux chaînes de longueurs différentes coexistaient à mi-opacité
- * pendant ~250 ms — illisible, et sans direction. Ici l’ancienne couche monte
- * et sort pendant que la nouvelle entre par le bas : une seule phase, jamais de
- * trou vide, et **jamais deux textes lisibles à la fois** (c’est le cadre qui
- * coupe, pas l’alpha).
- */
-function rollSportsCtaLabel(chip, slide) {
-  if (!chip || !slide) return;
-  chip.href = sportsBoardHref(slide);
-  const { title, aria } = sportsCtaA11y(slide);
-  chip.title = title;
-  chip.setAttribute('aria-label', aria);
-  applySportsCtaState(chip, slide);
-
-  const stack = chip.querySelector('.sports-chip__cta-stack');
-  const front = sportsCtaActiveLabel(chip);
-  if (!front || !stack) return;
-  if (front.dataset.ctaSig === sportsCtaSignature(slide)) return;
-
-  if (chip._ctaRollTimer) {
-    clearTimeout(chip._ctaRollTimer);
-    chip._ctaRollTimer = null;
-  }
-  // Nettoyer une couche fantôme d’un roulement interrompu.
-  chip.querySelectorAll('.sports-chip__cta-label.is-rolling-out')
-    .forEach((el) => { if (el !== front) el.remove(); });
-  front.classList.remove('is-rolling-in', 'is-rolling-out');
-  front.classList.add('is-front');
-
-  if (sportsReducedMotion) {
-    fillSportsCtaLayer(front, slide);
-    front.dataset.ctaSig = sportsCtaSignature(slide);
-    chip.classList.remove('is-overflowing', 'is-sub-overflowing');
-    chip.style.removeProperty('--sports-scroll');
-    chip.style.removeProperty('--sports-scroll-sub');
-    refreshSportsChipScroll(chip);
-    return;
-  }
-
-  // Couper le marquee pendant le roulement : les deux transforms vivent sur des
-  // nœuds différents, mais mesurer une couche en mouvement n’a pas de sens.
-  chip.classList.remove('is-overflowing', 'is-sub-overflowing');
-  chip.style.removeProperty('--sports-scroll');
-  chip.style.removeProperty('--sports-scroll-sub');
-
-  const back = document.createElement('span');
-  back.className = 'sports-chip__cta-label is-rolling-in';
-  back.setAttribute('aria-hidden', 'true');
-  fillSportsCtaLayer(back, slide);
-  back.dataset.ctaSig = sportsCtaSignature(slide);
-  stack.append(back);
-
-  // Reflow avant d’animer, sinon les deux couches démarrent au même endroit.
-  void back.offsetWidth;
-  front.classList.add('is-rolling-out');
-  front.classList.remove('is-front');
-  front.setAttribute('aria-hidden', 'true');
-  back.classList.add('is-front');
-
-  chip._ctaRollTimer = window.setTimeout(() => {
-    chip._ctaRollTimer = null;
-    if (front.isConnected) front.remove();
-    back.classList.remove('is-rolling-in');
-    back.classList.add('is-front');
-    back.removeAttribute('aria-hidden');
-    refreshSportsChipScroll(chip);
-  }, SPORTS_CTA_ROLL_MS);
-}
-
-/**
  * Registre visuel de la carte CTA — focus-group `le-radar-sports-first-glance`
  * (garde-fou `registre-alerte-reserve`) et `le-radar-cta-sports-badge`.
  *
@@ -6975,52 +6899,6 @@ function clearSportsSlotTimers() {
  * Wide multi-CTA : chaque CTA cycle sans reprendre le match d’une voisine.
  * 1 chip : CTA seule.
  */
-/** 390/430 : CTA pleine largeur — roulement interne, pas un swap de carte. */
-function sportsCtaInPlaceViewport() {
-  try {
-    return window.matchMedia('(max-width: 430.98px)').matches;
-  } catch {
-    return false;
-  }
-}
-
-function retouchSportsCtaChip(chip, slide) {
-  if (!chip || !slide) return;
-  if (slide.ctaIdle) {
-    chip.href = radarHomeHref();
-    chip.removeAttribute('target');
-    chip.removeAttribute('rel');
-  } else {
-    chip.href = sportsBoardHref(slide);
-    markSportsBoardLink(chip);
-  }
-  chip.dataset.sportsKey = slide.key || SPORTS_CTA_KEY;
-  chip.dataset.sportsMode = 'cta';
-  chip.dataset.sportsSport = 'board';
-  if (slide.labelIndex != null) chip.dataset.ctaLabelIndex = String(slide.labelIndex);
-  else delete chip.dataset.ctaLabelIndex;
-  const { title, aria } = sportsCtaA11y(slide);
-  chip.title = title;
-  chip.setAttribute('aria-label', aria);
-  if (!sportsReducedMotion) {
-    rollSportsCtaLabel(chip, slide);
-    return;
-  }
-  applySportsCtaState(chip, slide);
-  const layer = sportsCtaActiveLabel(chip);
-  if (layer) {
-    layer.classList.remove('is-rolling-in', 'is-rolling-out');
-    layer.classList.add('is-front');
-    layer.removeAttribute('aria-hidden');
-    fillSportsCtaLayer(layer, slide);
-    layer.dataset.ctaSig = sportsCtaSignature(slide);
-  }
-  chip.querySelectorAll('.sports-chip__cta-label:not(.is-front)').forEach((el) => el.remove());
-  chip.classList.remove('is-overflowing', 'is-sub-overflowing');
-  chip.style.removeProperty('--sports-scroll');
-  chip.style.removeProperty('--sports-scroll-sub');
-}
-
 function rotateSportsSlot(slot) {
   if (!MASTHEAD_SPORTS_STRIP || sportsVisible.length < 1 || sportsSlides.length < 1) return;
   const n = sportsVisible.length;
@@ -7131,26 +7009,8 @@ function rotateSportsSlot(slot) {
   const chips = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip');
   const oldChip = chips[slot];
 
-  // 390/430 : CTA seule, pleine largeur. Le roulement interne garde l’animation
-  // sans faire glisser une 2ᵉ carte (glyphe + V/D/N) sur la pastille.
-  if (
-    isCtaSlot
-    && replacement.mode === 'cta'
-    && oldChip?.classList.contains('sports-chip--cta')
-    && sportsCtaInPlaceViewport()
-  ) {
-    if (oldChip._leaveTimer) {
-      clearTimeout(oldChip._leaveTimer);
-      oldChip._leaveTimer = null;
-    }
-    oldChip.classList.remove('is-leaving', 'is-arriving');
-    oldChip.style.removeProperty('pointer-events');
-    retouchSportsCtaChip(oldChip, replacement);
-    window.requestAnimationFrame(() => refreshSportsChipScroll(oldChip));
-    return 80;
-  }
-
-  // Scores, prochains et CTA bureau : sortie carte entière → entrée carte entière.
+  // Scores, prochains et CTA (y compris 390/430, CTA seule) :
+  // sortie carte entière → entrée carte entière.
   const newChip = paintSportsChip(replacement, !sportsReducedMotion);
   if (!oldChip) {
     MASTHEAD_SPORTS_STRIP.append(newChip);
