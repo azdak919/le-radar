@@ -5,6 +5,11 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
+### Modifié
+
+- Client découpé sans bundler : `weather-cities-data.js`, `radar-utils.js`, `radar-state.js`, `radar-weather.js`, `radar-sports-cta.js`, `radar-tuner.js`, `radar-news.js`, `radar-lifecycle.js` ; `app.js` reste le point d’entrée. CSS par surface (`style-sports-strip`, `style-masthead-chrome`, `style-tuner`, `style-feed`, `style-chrome`), toujours via `<link>`, jamais `@import`.
+- Publication humaine = branche + PR + **merge and delete**. Les bots conservent l’écriture sur `main`. Actions GitHub épinglées à des SHA.
+
 ### Ajouté
 
 - Affiches campus 11 × 17 : pas de barre colorée, grand pictogramme + wordmark logo à gauche, versions sans photo et multi-pavillons, zone QR blanche.

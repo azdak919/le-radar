@@ -1,0 +1,871 @@
+/* LE-RADAR — bandeau sports du mât
+ * Extrait de style.css (D2). Charger via <link> dans cet ordre, jamais @import.
+ * @media conservés dans ce fichier (pas de feuille « responsive » séparée).
+ */
+
+/* ── Scoreboard RSEQ / unis QC — sous la barre radio ──
+ * Rythme vertical : 8 px au-dessus et 8 px en dessous des cartes.
+ * Le wire-head qui suit ne rajoute pas de margin-top (voir + .wire). */
+.masthead-sports-strip {
+  display: none;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 8px var(--pad);
+  box-sizing: border-box;
+  gap: 6px;
+  align-items: stretch;
+  min-width: 0;
+}
+/* Si le bandeau sports est visible, le fil ne double pas l’air en dessous.
+   Le menu de sections s'intercale entre les deux : sans la seconde forme,
+   l'adjacence est rompue et `.wire-head` reprend ses 22 px, soit l'air que
+   cette règle existe justement pour supprimer. */
+.masthead-sports-strip:not([hidden]) + .wire .wire-head,
+.masthead-sports-strip:not([hidden]) + .site-sections + .wire .wire-head,
+.masthead-sports-strip:not([hidden]) + .wire.seo-wire .seo-crumbs,
+.masthead-sports-strip:not(.is-empty) + .wire .wire-head,
+.masthead-sports-strip:not(.is-empty) + .site-sections + .wire .wire-head,
+.masthead-sports-strip:not(.is-empty) + .wire.seo-wire .seo-crumbs {
+  margin-top: 0;
+}
+/*
+ * Hauteur réservée — garde-fou `hauteur-stable` (focus-group
+ * le-radar-sports-first-glance). CTA et puces scores sont en 2 lignes
+ * (noms + date) : plancher stable pour ne pas pousser le fil au 1er paint.
+ */
+.masthead-sports-strip:not([hidden]),
+.masthead-sports-strip[hidden]:not(.is-empty) {
+  min-height: 60px;
+  align-items: stretch;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+/* Réserve la hauteur dès le 1er paint (hidden UA = display:none). */
+.masthead-sports-strip[hidden]:not(.is-empty) {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+.masthead-sports-strip.is-empty {
+  display: none !important;
+  min-height: 0;
+}
+/* Dernier cran de fit : CTA « SPORTS » seule. */
+.masthead-sports-strip[data-count="1"] .sports-chip--cta {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+}
+/*
+ * 1 score + CTA : ratio fixe ~42 / 58 (pas 50/50, pas de re-mesure par slide).
+ *
+ * La CTA porte un chrome que la puce score n’a pas : pastille « Sports » (~4.5rem)
+ * + marqueur PROCHAIN + glyphe avant les noms. À largeurs égales, la zone utile
+ * des noms est donc plus étroite à droite → marquee CTA alors que la gauche a
+ * de l’air mort (768 / 900 typiques).
+ *
+ * On compense par un partage **fixe** du strip : tailles stables à chaque
+ * rotation, zone de texte plus proche → moins de défilement d’un côté ou de
+ * l’autre. Doit gagner sur `.sports-chip--cta { flex: 1.2 1 9.5rem; … }`.
+ */
+.masthead-sports-strip[data-count="2"] > .sports-chip--match,
+.masthead-sports-strip[data-count="2"] > .sports-chip:not(.sports-chip--cta) {
+  flex: 0.72 1 0 !important;
+  flex-grow: 0.72 !important;
+  flex-shrink: 1 !important;
+  flex-basis: 0 !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: 0 !important;
+}
+.masthead-sports-strip[data-count="2"] > .sports-chip--cta {
+  flex: 1 1 0 !important;
+  flex-grow: 1 !important;
+  flex-shrink: 1 !important;
+  flex-basis: 0 !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: 0 !important;
+}
+/* 2 scores + CTA : CTA un peu plus étroite pour laisser lire les matchs. */
+.masthead-sports-strip[data-count="3"] .sports-chip--cta {
+  flex: 1 1 28%;
+  max-width: 38%;
+}
+.masthead-sports-strip .sports-chip {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 4px 10px 4px 7px;
+  border: 1.5px solid color-mix(in srgb, var(--accent, #6c2163) 58%, rgba(255, 255, 255, 0.22));
+  border-radius: 6px;
+  /* Focus-group le-radar-sports-chip-look (C). */
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 34%, transparent) 0%, transparent 55%),
+    rgba(42, 46, 54, 0.92);
+  color: rgba(245, 246, 248, 0.96);
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
+}
+/* Puces scores 2 lignes : noms (haut) + date/compétition (bas).
+ * Focus-group le-radar-sports-weather-fit A : jamais de marquee sur les scores
+ * — si le texte déborde, le JS retire une puce (fit). CTA garde le marquee. */
+.masthead-sports-strip .sports-chip--match {
+  white-space: normal;
+  align-items: center;
+  min-height: 44px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.masthead-sports-strip .sports-chip__body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* 2px : air entre les 2 lignes pour les jambages (g, j, y, p, q). */
+  gap: 2px;
+  overflow: hidden;
+}
+/* Pulse de bordure pourpre : puces scores + CTA au repos (pas en direct —
+ * le live a son propre halo rouge). Même famille visuelle sur toute la bande. */
+.masthead-sports-strip .sports-chip:not(.sports-chip--cta),
+.masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):not([data-cta-lamp="soon"]) {
+  animation: sports-chip-rim-glow 3.2s ease-in-out infinite;
+}
+.masthead-sports-strip .sports-chip:hover {
+  border-color: color-mix(in srgb, var(--accent, #6c2163) 72%, rgba(255, 255, 255, 0.28));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 40%, transparent) 0%, transparent 55%),
+    rgba(48, 52, 62, 0.96);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 34%, transparent);
+}
+/* Hover CTA hors direct : même élévation pourpre que les scores (le live garde son rouge). */
+.masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):not([data-cta-lamp="soon"]):hover {
+  border-color: color-mix(in srgb, var(--accent, #6c2163) 72%, rgba(255, 255, 255, 0.28));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 40%, transparent) 0%, transparent 55%),
+    rgba(48, 52, 62, 0.96);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 34%, transparent);
+}
+.masthead-sports-strip .sports-chip:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent, #6c2163) 70%, #fff);
+  outline-offset: 2px;
+}
+@keyframes sports-chip-rim-glow {
+  0%, 100% {
+    border-color: color-mix(in srgb, var(--accent, #6c2163) 52%, rgba(255, 255, 255, 0.2));
+    box-shadow: 0 1px 2px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.12), 0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 18%, transparent);
+  }
+  50% {
+    border-color: color-mix(in srgb, var(--accent, #6c2163) 78%, rgba(255, 255, 255, 0.3));
+    box-shadow: 0 1px 2px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.14), 0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 36%, transparent), 0 0 10px 0 color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
+  }
+}
+/*
+ * Rotation scores / prochains / CTA : même sortie puis entrée carte entière
+ * (pas le « clac » gare météo, pas de roulement interne sur la seule CTA).
+ * Sélecteurs CTA explicites : le halo live / rim-glow est plus spécifique.
+ */
+.masthead-sports-strip .sports-chip.is-leaving,
+.masthead-sports-strip .sports-chip--cta.is-leaving,
+.masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]).is-leaving,
+.masthead-sports-strip .sports-chip--cta[data-cta-state="live"].is-leaving {
+  animation: sports-chip-leave 0.42s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.masthead-sports-strip .sports-chip.is-arriving,
+.masthead-sports-strip .sports-chip--cta.is-arriving,
+.masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]).is-arriving,
+.masthead-sports-strip .sports-chip--cta[data-cta-state="live"].is-arriving {
+  animation: sports-chip-arrive 0.64s cubic-bezier(0.33, 0.1, 0.2, 1) both;
+}
+@keyframes sports-chip-leave {
+  from { opacity: 1; transform: translateY(0); filter: blur(0); }
+  to   { opacity: 0; transform: translateY(-5%); filter: blur(0.4px); }
+}
+@keyframes sports-chip-arrive {
+  from { opacity: 0; transform: translateY(8%); filter: blur(0.5px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .masthead-sports-strip .sports-chip.is-arriving,
+  .masthead-sports-strip .sports-chip.is-leaving {
+    animation: none;
+    filter: none;
+  }
+  .masthead-sports-strip .sports-chip:not(.sports-chip--cta),
+  .masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]) {
+    animation: none;
+  }
+}
+.masthead-sports-strip .sports-chip__glyph {
+  flex: 0 0 auto;
+  font-size: 13px;
+  line-height: 1;
+}
+.masthead-sports-strip .sports-chip__badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.1rem;
+  height: 1.1rem;
+  padding: 0 3px;
+  border-radius: 3px;
+  font-size: 9px;
+  font-weight: 800;
+  color: #fff;
+  background: #2f8f5b;
+}
+.masthead-sports-strip .sports-chip__badge--l { background: #b84848; }
+.masthead-sports-strip .sports-chip__badge--d { background: #6b7c8c; }
+/* Régate : médaille podium, pas un V/D. */
+.masthead-sports-strip .sports-chip__badge--place {
+  background: transparent;
+  color: inherit;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 0;
+  min-width: 1.15rem;
+  height: 1.15rem;
+  line-height: 1;
+}
+/* Hors saison — accroche info (calendrier / voir le tableau), ton ardoise. */
+.masthead-sports-strip .sports-chip--info {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, #6a7580 88%, #1a1d22) 0%,
+    color-mix(in srgb, #4a545e 92%, #12151a) 100%
+  );
+  border-color: color-mix(in srgb, #8a95a0 35%, transparent);
+  justify-content: center;
+}
+.masthead-sports-strip .sports-chip--info .sports-chip__info-label {
+  font-weight: 650;
+  font-size: 11px;
+  letter-spacing: 0.01em;
+  color: rgba(240, 242, 245, 0.94);
+}
+.masthead-sports-strip .sports-chip__line {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+.masthead-sports-strip .sports-chip--match .sports-chip__line {
+  flex: 0 0 auto;
+  display: block;
+  max-width: 100%;
+}
+.masthead-sports-strip .sports-chip__line-inner {
+  display: inline-block;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  /* Jamais d’ellipsis (…) : scores tiennent entiers (fit −1 puce) ;
+   * CTA peut marquee. Au repos : clip net, pas trois points. */
+  text-overflow: clip;
+  vertical-align: middle;
+}
+/* Sous-ligne date des puces scores (parité visuelle cta-sub, largeur chip). */
+.masthead-sports-strip .sports-chip--match .sports-chip__sub {
+  display: block;
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  /* 1.15 + overflow:hidden coupait j/g (ex. « jeu. », « collégial »). */
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.72);
+}
+.masthead-sports-strip .sports-chip--match .sports-chip__sub-text {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+  vertical-align: middle;
+  font-variant-numeric: tabular-nums;
+}
+.masthead-sports-strip .sports-chip--match .sports-chip__name {
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: rgba(245, 246, 248, 0.96);
+}
+.masthead-sports-strip .sports-chip--match .sports-chip__line-inner {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  /* Même leçon que .translate-toggle__label : line-height trop bas +
+   * overflow:hidden coupe les jambages (g de « Collège », j, y, p, q).
+   * overflow-x/y mixtes sont ramenés à auto en CSS — on élargit la ligne. */
+  line-height: 1.35;
+}
+/* Défilement L→R du texte trop long (scores ET accroche CTA SPORTS).
+ * La pastille « SPORTS » reste fixe ; seul le texte d’info défile.
+ * Rotation de match = crossfade (app.js), pas de carte type gare.
+ * Durée 5,5 s × alternate = 11 s aller-retour — app.js (SPORTS_SCROLL_*)
+ * attend ce cycle + pause repos avant de changer le match (lecture confortable). */
+.masthead-sports-strip {
+  /* Holds aux extrémités = moins d’à-coups aux virages. Titre et sous-ligne
+   * partagent la même durée ; les holds (18/82 vs 32/68) restent distincts.
+   * 2 alternate (pas infinite) + delay lecture — 1 aller-retour puis repos. */
+  --sports-scroll-duration: 5.5s;
+  --sports-scroll-delay: 1.6s;
+}
+/*
+ * Focus-group A : marquee **interdit** sur puces scores (.sports-chip--match).
+ * Les sélecteurs is-overflowing / is-sub-overflowing + keyframes restent pour
+ * la CTA seule (ci-dessous). Scores : fit JS (−1 puce) si overflow texte.
+ */
+@keyframes sports-chip-scroll {
+  /* Hold à l’origine (début + retour) puis à l’extrémité. Le JS attend
+   * encore une pause au repos après le cycle avant de changer l’info. */
+  0%, 24% { transform: translateX(0); }
+  76%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
+}
+/* CTA hors marquee : clip sur le texte seul — jamais d’ellipsis, jamais sur
+ * toute la couche (sinon head+sub se collapsaient sans marquee). */
+.masthead-sports-strip .sports-chip--cta:not(.is-overflowing) .sports-chip__line-inner {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+/* Mouvement réduit : on fige le marquee, mais on n’introduit PAS d’ellipsis
+ * (trois points interdits sur ce bandeau). Le title/aria portent le texte
+ * complet ; le cadre clippe sans « … ». */
+@media (prefers-reduced-motion: reduce) {
+  .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
+  .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text,
+  .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__cta-text,
+  .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__cta-sub-text {
+    animation: none;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: clip;
+  }
+}
+/* Ancienne classe sigle : gardée si un autre surface la réutilise. */
+.masthead-sports-strip .sports-chip__code { font-weight: 800; letter-spacing: 0.03em; }
+.masthead-sports-strip .sports-chip__score {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 2px;
+}
+.masthead-sports-strip .sports-chip__code,
+.masthead-sports-strip .sports-chip__opp,
+.masthead-sports-strip .sports-chip__when,
+.masthead-sports-strip .sports-chip__name {
+  color: rgba(245, 246, 248, 0.96);
+}
+/* Verbe « reçoit / à » — plus pâle que les noms (poids 500 réel d’Inter ;
+ * 650/800 tombaient tous deux sur 700 et le 0,72 se lisait blanc sur le live). */
+.masthead-sports-strip .sports-chip__vs {
+  color: rgba(245, 246, 248, 0.55);
+  font-weight: 500;
+  font-size: 0.88em;
+  letter-spacing: 0.01em;
+  margin: 0 0.14em;
+  /* pas de forced lowercase — verbe FR lisible */
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-text .sports-chip__name {
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-text .sports-chip__vs {
+  color: rgba(255, 255, 255, 0.52);
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.52);
+  font-weight: 500;
+  font-size: 0.88em;
+  letter-spacing: 0;
+}
+.masthead-sports-strip .sports-chip__when {
+  opacity: 0.88;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+.masthead-sports-strip .sports-chip__season-meta {
+  display: inline;
+  margin-left: 0.3rem;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: rgba(220, 224, 230, 0.78);
+  white-space: nowrap;
+}
+.masthead-sports-strip .sports-chip--prior-season {
+  opacity: 0.92;
+}
+
+/* ── CTA « SPORTS » — focus-group first-glance / motion / badge + chip-look.
+ *
+ * Au repos : **même famille** que les puces scores (contour pourpre de marque
+ * + lavis `--sports-tone` du match + pulse de bordure lent). Plus d’ardoise
+ * grise qui faisait « orpheline » à droite des trois cartes colorées.
+ * Le rouge, le halo qui pulse et le point live restent réservés à
+ * `[data-cta-state="live"]` : un match réellement en cours (pas une fausse
+ * alerte pour un match à quinze jours).
+ * L’accroche roule verticalement en place (jamais de carte type gare). ── */
+.masthead-sports-strip .sports-chip--cta {
+  /* Un peu plus de place pour pastille + accroche — sauf data-count=2 (ratio fixe). */
+  flex: 1.2 1 9.5rem;
+  min-width: 9.5rem;
+  justify-content: flex-start;
+  gap: 8px;
+  /* Parité puces scores (le-radar-sports-chip-look C étendu à la CTA). */
+  border-color: color-mix(in srgb, var(--accent, #6c2163) 58%, rgba(255, 255, 255, 0.22));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 34%, transparent) 0%, transparent 55%),
+    rgba(42, 46, 54, 0.92);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
+}
+/* Après la règle CTA flex 1.2 : re-affirmer le ratio fixe 1 score + CTA. */
+.masthead-sports-strip[data-count="2"] > .sports-chip--match,
+.masthead-sports-strip[data-count="2"] > .sports-chip:not(.sports-chip--cta) {
+  flex: 0.72 1 0 !important;
+  flex-grow: 0.72 !important;
+  flex-basis: 0 !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: 0 !important;
+}
+.masthead-sports-strip[data-count="2"] > .sports-chip--cta {
+  flex: 1 1 0 !important;
+  flex-grow: 1 !important;
+  flex-basis: 0 !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: 0 !important;
+}
+/* Direct / à venir du jour : registre d’alerte (pulse). */
+.masthead-sports-strip .sports-chip--cta[data-cta-state="live"],
+.masthead-sports-strip .sports-chip--cta[data-cta-lamp="soon"] {
+  border-color: color-mix(in srgb, #c8102e 62%, rgba(255, 255, 255, 0.2));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, #c8102e 38%, transparent) 0%, transparent 58%),
+    rgba(54, 59, 68, 0.9);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 0 0 rgba(200, 16, 46, 0);
+  animation: sports-cta-ring-pulse 2.6s ease-in-out infinite;
+}
+.masthead-sports-strip .sports-chip--cta[data-cta-state="live"]:hover,
+.masthead-sports-strip .sports-chip--cta[data-cta-lamp="soon"]:hover {
+  border-color: color-mix(in srgb, #c8102e 72%, rgba(255, 255, 255, 0.28));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, #c8102e 44%, transparent) 0%, transparent 58%),
+    rgba(60, 48, 52, 0.94);
+}
+/* Pastille : rubrique stable au repos, « En cours » pendant un match. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-rail {
+  flex: 0 0 auto;
+  display: contents;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail {
+  display: none;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
+  flex: 0 0 auto;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: 2px 8px;
+  border-radius: 3px;
+  /* Légère teinte pourpre de marque — plus de pastille gris-blanc fade. */
+  background: color-mix(in srgb, var(--accent, #6c2163) 42%, rgba(255, 255, 255, 0.14));
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 28%, transparent);
+}
+/* Pastille = largeur du libellé. Plus de rail 8 rem : Hier / En cours
+ * laissaient du vide, Aujourd’hui débordait d’un bout, l’accroche étouffait. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag:not(.sports-chip__cta-tag--brand) {
+  justify-content: center;
+  box-sizing: border-box;
+  width: max-content;
+  min-width: 0;
+  max-width: 100%;
+}
+/* « Prochain match » : 2 lignes dans le rail, pas une pastille plus large. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag-lines {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  line-height: 1.15;
+  text-align: center;
+}
+/* Prochain : pastille jaune (pas l’ambre radio). Encre sombre pour le contraste. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="next"],
+.masthead-sports-strip .sports-chip--cta[data-cta-state="next"] .sports-chip__cta-tag:not(.sports-chip__cta-tag--brand):not([data-cta-lamp="soon"]) {
+  background: #f5d000;
+  color: #1a1500;
+  box-shadow: inset 0 0 0 1px rgba(255, 236, 70, 0.45);
+  align-items: center;
+  padding-block: 3px;
+}
+/* Hier / Avant-hier / date : pourpre de marque (focus-group C). Pas le V, pas un feu. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="past"] {
+  background: var(--lamp-past);
+  color: var(--lamp-past-ink);
+  -webkit-text-fill-color: var(--lamp-past-ink);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+}
+/* Aujourd’hui (résultat) : fill rouge saturé, sans pulse. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="today"] {
+  background: #c8102e;
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 180, 190, 0.35);
+}
+.masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag,
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="soon"] {
+  background: #c8102e;
+  color: #fff;
+  font-weight: 900;
+  box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.55);
+  animation: sports-cta-tag-pulse 2.6s ease-in-out infinite;
+}
+/*
+ * Stack 2 couches pour le roulement vertical (focus-group le-radar-cta-sports-motion).
+ * Hauteur fixe : deux lignes, marqueur + accroche puis sous-ligne. Le cadre coupe
+ * — c’est lui qui garantit qu’on ne lit jamais deux accroches à la fois — mais il
+ * doit laisser passer accents hauts et jambages. Avec line-height 1.35 sur les
+ * deux lignes + gap 2px : ~3.15em (pas 2 × 1.35em collés).
+ */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-stack {
+  position: relative;
+  display: block;
+  height: 3.15em;
+  width: 100%;
+  overflow: hidden;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  color: #fff;
+  pointer-events: none;
+  will-change: transform;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-front {
+  z-index: 1;
+}
+/* Ligne 1 : marqueur + glyphe (fixes) + accroche. Deux lignes en tout. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-head {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  min-width: 0;
+}
+/* Marqueur temporel — hors de la zone qui défile (garde-fou marqueur-non-tronque). */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow {
+  flex: 0 0 auto;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent, #cf7ec1) 55%, rgba(255, 255, 255, 0.88));
+  /* 1.1 coupait le bas des glyphes dans le stack overflow:hidden. */
+  line-height: 1.35;
+  white-space: nowrap;
+}
+.masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-eyebrow {
+  color: color-mix(in srgb, #ff8a80 70%, #fff);
+}
+/* Glyphe sport — fixe comme PROCHAIN ; seul le texte des noms défile. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-glyph {
+  flex: 0 0 auto;
+  font-size: 12px;
+  line-height: 1;
+  align-self: center;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-head .sports-chip__badge {
+  flex: 0 0 auto;
+  align-self: center;
+}
+/* Fenêtre de défilement : borne les noms, jamais le marqueur ni le glyphe. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-line {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-text {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  /* Interdit : text-overflow: ellipsis. Overflow → is-overflowing + marquee. */
+  text-overflow: clip;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  /* Jambages (g de Collège / collégial) : voir .sports-chip__line-inner. */
+  line-height: 1.35;
+  vertical-align: middle;
+}
+/* Sous-ligne : compétition + fraîcheur. Fenêtre de défilement (comme le titre) :
+ * date + compétition + MAJ restent lisibles via marquee, jamais d’ellipse. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub {
+  display: block;
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  /* 1.15 coupait j/g (« jeu. », « collégial ») sous overflow:hidden. */
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.7);
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-sub-text {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+/*
+ * Roulement : une seule phase, 280 ms (SPORTS_CTA_ROLL_MS). L’opacité ne joue
+ * qu’aux extrémités du parcours — au milieu, chaque couche est soit pleine, soit
+ * hors cadre. C’est le clip qui fait le travail, pas l’alpha : c’est exactement
+ * ce que le fondu croisé ratait.
+ */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-rolling-out {
+  z-index: 1;
+  animation: sports-cta-roll-out 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-rolling-in {
+  z-index: 2;
+  animation: sports-cta-roll-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes sports-cta-roll-out {
+  0% { transform: translateY(0); opacity: 1; }
+  55% { opacity: 1; }
+  100% { transform: translateY(-70%); opacity: 0; }
+}
+@keyframes sports-cta-roll-in {
+  0% { transform: translateY(70%); opacity: 0; }
+  45% { opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+/* Marquee : le texte de la couche visible seulement, jamais la couche sortante.
+ * Titre → --sports-scroll ; sous-ligne → --sports-scroll-sub (décalages distincts). */
+.masthead-sports-strip .sports-chip--cta {
+  --sports-scroll-delay: 0.7s;
+  --sports-scroll-trips: 4;
+}
+@keyframes sports-cta-scroll {
+  0%, 10% { transform: translateX(0); }
+  90%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
+}
+@keyframes sports-cta-scroll-sub {
+  0%, 12% { transform: translateX(0); }
+  88%, 100% { transform: translateX(calc(var(--sports-scroll-sub, 0) * -1)); }
+}
+.masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text {
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+  animation: sports-cta-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) var(--sports-scroll-trips, 4) alternate both;
+  will-change: transform;
+}
+.masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+  animation: sports-cta-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) var(--sports-scroll-trips, 4) alternate both;
+  will-change: transform;
+}
+@keyframes sports-chip-scroll-sub {
+  0%, 28% { transform: translateX(0); }
+  72%, 100% { transform: translateX(calc(var(--sports-scroll-sub, 0) * -1)); }
+}
+.masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-rolling-out .sports-chip__cta-text,
+.masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-rolling-out .sports-chip__cta-sub-text {
+  animation: none !important;
+  transform: none;
+}
+/* Plus de flèche ni de voyant LED dans la pastille : la couleur du fill suffit.
+ * Jaune Prochain ; rouge Aujourd’hui (statique) ; pourpre Hier / date.
+ * En cours / À venir : fill rouge + pulse. Indépendant de la radio. */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-chev {
+  display: none !important;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag::before {
+  content: none !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  animation: none !important;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag--brand {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  padding: 3px;
+  gap: 0;
+}
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-logo {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+/* Halo / bordure seulement — la carte ne grossit pas. */
+@keyframes sports-cta-ring-pulse {
+  0%, 100% {
+    border-color: color-mix(in srgb, #c8102e 55%, rgba(255, 255, 255, 0.18));
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 0 0 0 rgba(200, 16, 46, 0),
+      0 0 10px 0 rgba(200, 16, 46, 0.12);
+  }
+  50% {
+    border-color: color-mix(in srgb, #ff3b4a 75%, rgba(255, 255, 255, 0.3));
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 0 0 2px rgba(200, 16, 46, 0.38),
+      0 0 14px 1px rgba(200, 16, 46, 0.32);
+  }
+}
+@keyframes sports-cta-tag-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.35);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.28);
+    filter: brightness(1.12);
+  }
+}
+/*
+ * Mouvement réduit : la rotation est déjà coupée côté JS (sportsCtaMayRotate),
+ * ici on neutralise tout ce qui bouge encore — halo, pastille, roulement.
+ * Garde-fou `reduced-motion-fige` (focus-group le-radar-cta-sports-rhythm).
+ */
+@media (prefers-reduced-motion: reduce) {
+  .masthead-sports-strip .sports-chip--cta,
+  .masthead-sports-strip .sports-chip--cta[data-cta-state="live"],
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag,
+  .masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag,
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label,
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-rolling-in,
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-rolling-out,
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-text {
+    animation: none !important;
+    transition: none;
+    transform: none;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
+    filter: none;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label.is-front {
+    opacity: 1;
+  }
+}
+/*
+ * 390 / 430 : 2 colonnes × 2 lignes.
+ * Col. 1 = pastille (Prochain match en 2 lignes) ; col. 2 = accroche + sous-ligne.
+ */
+@media (max-width: 430.98px) {
+  .masthead-sports-strip .sports-chip--cta {
+    display: grid;
+    /* Col. 2 a un plancher : le glyphe ⚽ ne se fait plus couper. */
+    grid-template-columns: auto minmax(4.25rem, 1fr);
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 8px;
+    row-gap: 2px;
+    min-width: 0;
+    overflow: hidden;
+  }
+  /* Le badge V/D/N est le chrome des puces scores. Dans la CTA mobile il
+     recopie une carte match à droite de la pastille. */
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-head .sports-chip__badge {
+    display: none;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-rail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 3px;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail {
+    display: block;
+    text-align: center;
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail:empty,
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail[hidden] {
+    display: none;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-head .sports-chip__cta-eyebrow {
+    display: none;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
+    justify-content: center;
+    align-self: stretch;
+    padding-inline: 6px;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__line {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .masthead-sports-strip .sports-chip--cta .sports-chip__cta-stack {
+    height: auto;
+    min-height: 3.15em;
+  }
+}
+/* Mobile : même 8 px haut/bas (pas de padding bas réduit). */

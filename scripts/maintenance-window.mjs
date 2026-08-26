@@ -148,8 +148,9 @@ async function releaseCheck(maintenanceExpected) {
   console.log('  git fetch origin && git rebase origin/main');
   console.log('  npm run check');
   console.log('  # ouvrir les URLs locales touchées et les vérifier');
-  console.log('  git push origin main');
-  console.log('\nAprès le push : Vérification + Pages verts, puis `npm run maintenance:status`.');
+  console.log('  git push origin HEAD');
+  console.log('  gh pr create');
+  console.log('\nAprès la PR : Vérification + Pages verts, puis « merge and delete ». `npm run maintenance:status`.');
   await status(maintenanceExpected ? 'maintenance' : undefined);
   if (dirty) process.exitCode = 2;
 }

@@ -14,5 +14,5 @@ try { prior = JSON.parse(fs.readFileSync(ARCHIVE, 'utf8')); } catch { /* premier
 const observedAt = news.updated || new Date().toISOString();
 const result = mergeHistoricalCatalog(prior, news.items || [], observedAt, { importedAt: observedAt });
 console.log(`Catalogue historique : +${result.added}, ${result.updated} réobservé(s), ${result.catalog.records.length} total.`);
-if (update) fs.writeFileSync(ARCHIVE, JSON.stringify(result.catalog, null, 2) + '\n');
+if (update) fs.writeFileSync(ARCHIVE, JSON.stringify(result.catalog) + '\n');
 else console.log('Dry-run — utilisez --update pour écrire news-archive.json.');

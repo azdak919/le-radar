@@ -1,0 +1,1335 @@
+/* LE-RADAR — syntoniseur radio
+ * Extrait de style.css (D2). Charger via <link> dans cet ordre, jamais @import.
+ * @media conservés dans ce fichier.
+ */
+
+/* ─────────────── TUNER (sticky) ─────────────── */
+/*
+ * Mobile : --tuner-bg plat (couleur d’origine).
+ * Bureau (≥720px) : teinte unie selon session univ. QC (data-uni-session).
+ * Aucune texture, grain, échelle ni motif — fond 100 % opaque et lisse.
+ */
+.tuner {
+  position: sticky;
+  top: 0;
+  /* Au-dessus du fil / bouton traduction : le popover volume sort sous la barre
+     et ne doit pas passer sous .translate-control (même z-index + DOM plus bas). */
+  z-index: 100;
+  background: var(--tuner-bg);
+  background-image: none;
+  color: #fff;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 6px 22px -16px rgba(0, 0, 0, 0.7);
+  border-top: none;
+  isolation: isolate;
+}
+
+/* Interdit toute pseudo-texture (mobile + bureau). */
+.tuner::before,
+.tuner::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+@media (min-width: 720px) {
+  .tuner {
+    /* Défaut = hiver si attribut absent. */
+    --tuner-session-base: #121820;
+    background: var(--tuner-session-base);
+    background-image: none;
+    box-shadow: 0 8px 24px -14px rgba(0, 0, 0, 0.78);
+  }
+
+  /* Automne — 1er sept → 31 déc */
+  html[data-uni-session="automne"] .tuner {
+    --tuner-session-base: #1a1214;
+  }
+  /* Hiver — 1er janv → 30 avr */
+  html[data-uni-session="hiver"] .tuner {
+    --tuner-session-base: #121820;
+  }
+  /* Été — 1er mai → 31 août */
+  html[data-uni-session="ete"] .tuner {
+    --tuner-session-base: #101816;
+  }
+}
+
+.tuner-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 10px var(--pad);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/*
+ * Pas de `container-type` ici : aucune règle `@container tuner-controls` dans
+ * cette feuille (les seules vivent dans embed.css, pour le syntoniseur
+ * embarqué). Le conteneur était donc mort — mais il appliquait quand même
+ * layout/style/size containment à l'ancêtre du popover volume
+ * (`.tuner-vol-slot`, absolu, qui déborde de la barre), seul candidat de
+ * rognage sur toute la chaîne .tuner-vol → .tuner (aucun overflow caché).
+ */
+.tuner-controls {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex: 1;
+  min-width: 0;
+}
+
+.tuner-label { flex-shrink: 0; }
+/* Coral « en ondes » — même token que les grilles SEO (--status-live-soft). */
+.tuner {
+  --tuner-onair-live: var(--status-live-soft);
+  --tuner-onair-idle: rgba(255, 255, 255, 0.42);
+  --tuner-upcoming: var(--status-upcoming-soft);
+}
+.tuner-onair {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--tuner-onair-idle);
+  white-space: nowrap;
+}
+.tuner-onair::before {
+  content: "";
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  transition: background 200ms ease;
+}
+.tuner.is-playing .tuner-onair { color: var(--tuner-onair-live); }
+.tuner.is-playing .tuner-onair::before {
+  background: var(--live);
+  animation: onairPulse 1.6s ease-out infinite;
+}
+.tuner.is-external .tuner-onair { color: var(--radio-bright); }
+.tuner.is-external .tuner-onair::before { background: var(--radio-bright); }
+@keyframes onairPulse {
+  0% { box-shadow: 0 0 0 0 rgba(200,16,46,0.55); }
+  100% { box-shadow: 0 0 0 7px rgba(200,16,46,0); }
+}
+.tuner-step {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.72);
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 4px 12px -4px rgba(0,0,0,0.45);
+}
+.tuner-step:hover {
+  color: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.28);
+  transform: scale(1.04);
+}
+.tuner-step:active { transform: scale(0.93); }
+.tuner-step svg { width: 20px; height: 20px; display: block; }
+
+.tuner-dial {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  width: 0;
+}
+
+.tuner-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.tuner-select {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  opacity: 0; cursor: pointer;
+  font-size: 16px;
+}
+.tuner-now {
+  pointer-events: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 36px;
+  min-width: 0;
+  width: 100%;
+  padding: 3px 24px 3px 11px;
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 9px;
+  background: rgba(255,255,255,0.05);
+  overflow: hidden;
+  transition: border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
+}
+.tuner-dial:hover .tuner-now { border-color: rgba(255,255,255,0.32); background: rgba(255,255,255,0.08); }
+/* Lecture live : synthétiseur rouge sur tous les formats (mobile, tablette, bureau).
+   Avant : seulement ≤600px ; EN ONDES restait le seul signal sur grand écran. */
+.tuner.is-playing .tuner-now {
+  border-color: rgba(255, 125, 110, 0.7);
+  background: rgba(200, 16, 46, 0.1);
+  box-shadow: 0 0 0 1px rgba(200, 16, 46, 0.22);
+}
+.tuner.is-playing .tuner-dial:hover .tuner-now {
+  border-color: rgba(255, 125, 110, 0.85);
+  background: rgba(200, 16, 46, 0.14);
+}
+.tuner.is-external .tuner-now {
+  border-color: rgba(93, 155, 224, 0.55);
+  background: rgba(0, 61, 165, 0.1);
+  box-shadow: none;
+}
+.tuner.is-external .tuner-dial:hover .tuner-now {
+  border-color: rgba(93, 155, 224, 0.7);
+  background: rgba(0, 61, 165, 0.14);
+}
+
+/* Bureau : pastilles semi-opaques (assez denses pour ne laisser aucun motif
+   sous-jacent se lire à travers). */
+@media (min-width: 720px) {
+  .tuner .tuner-step,
+  .tuner .tuner-vol-btn,
+  .tuner .tuner-cast {
+    background: rgba(8, 10, 14, 0.88);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .tuner .tuner-step:hover {
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .tuner .tuner-now {
+    background: rgba(8, 10, 14, 0.9);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .tuner .tuner-dial:hover .tuner-now {
+    background: rgba(18, 22, 28, 0.94);
+  }
+}
+
+.tuner-now::after {
+  content: "▾";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--sans);
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1;
+  pointer-events: none;
+}
+/*
+ * Focus-group le-radar-tuner-sports-type-align override C :
+ * titres serif (réconfort / différence radio) ; secondaires rythme sports.
+ * Hauteur barre inchangée.
+ */
+.tuner-now-name {
+  display: block;
+  min-width: 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--radio-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.tuner-now-name.is-crossfading {
+  opacity: 0;
+}
+/*
+ * Tant que app.js n’a pas posé L1/L2 (B idle / station), masquer le placeholder
+ * HTML « Syntoniser un poste » pour éviter un flash d’une frame après load.
+ * La boîte .tuner-now garde sa hauteur (min-height).
+ */
+.tuner:not(.is-dial-ready) .tuner-now-name,
+.tuner:not(.is-dial-ready) .tuner-now-sub-rotate {
+  opacity: 0;
+}
+.tuner.is-dial-ready .tuner-now-name,
+.tuner.is-dial-ready .tuner-now-sub-rotate {
+  opacity: 1;
+}
+.tuner.is-dial-ready .tuner-now-name.is-crossfading {
+  opacity: 0;
+}
+.tuner-now-sub-rotate {
+  display: grid;
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+  grid-template-columns: minmax(0, 1fr);
+}
+.tuner-now-sub-rotate > .tuner-now-sub {
+  grid-area: 1 / 1;
+  width: 100%;
+  max-width: 100%;
+}
+.tuner-now-sub {
+  display: block;
+  min-width: 0;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.tuner-now-sub-rotate.is-rotating > .tuner-now-sub {
+  opacity: 0;
+  transition: opacity 0.75s cubic-bezier(0.33, 1, 0.68, 1);
+  pointer-events: none;
+}
+.tuner-now-sub-rotate.is-rotating > .tuner-now-sub.is-active {
+  opacity: 1;
+}
+.tuner-now-sub.is-crossfading,
+.tuner-now-sub-rotate.is-rotating > .tuner-now-sub.is-crossfading {
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.tuner-now-sub-rotate:not(.is-rotating) > .tuner-now-sub--air {
+  display: none;
+}
+.tuner-now-sub-rotate.is-empty {
+  display: none;
+}
+.tuner-now-sub-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+/* Défilement droite → gauche (dial / filtres).
+ *
+ * `will-change: transform` suffit à confier l'animation au compositeur, et il
+ * n'est posé que pendant le défilement (.is-marquee). On n'y ajoute PAS
+ * `translateZ(0)` ni `backface-visibility: hidden` : ces deux vieilles ruses
+ * font la même chose en triple, mais figent la tramage du texte dans une
+ * texture rasterisée une seule fois — d'où un rendu mou, surtout sur écran à
+ * forte densité. Le décalage est arrondi au pixel entier côté JS
+ * (`measureMarquee`) pour que les deux positions de repos, celles qu'on lit
+ * réellement, tombent sur la grille de pixels. */
+.is-marquee { text-overflow: clip; }
+/* 1 cycle (delay lecture + aller-retour), puis repos — pas infinite. */
+.is-marquee > .tuner-now-sub-text {
+  animation: tunerMarquee var(--marquee-duration, 12s) linear var(--marquee-delay, 1.6s) var(--marquee-trips, 2) alternate both;
+  will-change: transform;
+}
+/* L'audio reste actif en arrière-plan; seules les animations de lecture sont
+   suspendues. Au retour, app.js recrée volontairement un cycle calme. */
+html.is-tuner-presentation-paused .is-marquee > .tuner-now-sub-text {
+  animation-play-state: paused;
+}
+@keyframes tunerMarquee {
+  0%, 18%   { transform: translate3d(0, 0, 0); }
+  82%, 100% { transform: translate3d(var(--marquee-shift, 0), 0, 0); }
+}
+/* Panneau antenne : même défilement doux que le dial lorsqu'un titre déborde.
+ * Bureau ≥1100 : le titre passe sur 2 lignes (voir media plus bas). */
+.tuner-nowair-title,
+.tuner-nowair-sub {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tuner-nowair-title.is-marquee,
+.tuner-nowair-sub.is-marquee {
+  text-overflow: clip;
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-marquee { text-overflow: ellipsis; }
+  .is-marquee > .tuner-now-sub-text { animation: none; }
+  .tuner-now-sub-rotate.is-rotating > .tuner-now-sub { transition: none; }
+  .tuner-nowair-body { transition: none; }
+  .tuner-play.is-buffering::after { animation: none; }
+}
+
+.tuner-play {
+  flex-shrink: 0;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: var(--live);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 6px 18px -6px rgba(200,16,46,0.7);
+}
+.tuner-play:hover { background: var(--live-dark); transform: scale(1.06); }
+.tuner-play:active { transform: scale(0.93); }
+.tuner-play:disabled {
+  background: rgba(255,255,255,0.12);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+.tuner-play.is-external {
+  background: var(--radio);
+  box-shadow: 0 6px 18px -6px rgba(0,61,165,0.65);
+}
+.tuner-play.is-external:hover { background: #0049c2; }
+.tuner-play.is-buffering {
+  background: rgba(200, 16, 46, 0.78);
+  box-shadow: 0 6px 18px -6px rgba(200,16,46,0.55);
+}
+.tuner-play.is-buffering::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 2px solid rgba(255,255,255,0.34);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: tuner-buffer-spin 720ms linear infinite;
+}
+@keyframes tuner-buffer-spin { to { transform: rotate(360deg); } }
+.tuner-play svg { width: 20px; height: 20px; }
+.tuner-play .ico-play { margin-left: 2px; }
+/* Stop carré : pas de décalage optique du triangle play */
+.tuner-play .ico-pause { margin-left: 0; }
+.tuner-play .ico-external { width: 18px; height: 18px; }
+
+.tuner-cast {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
+}
+.tuner-cast:hover {
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+.tuner-cast:active { transform: scale(0.93); }
+.tuner-cast:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  transform: none;
+}
+.tuner-cast.is-unavailable {
+  opacity: 0.3;
+  color: rgba(255, 255, 255, 0.32);
+  border-color: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.025);
+  cursor: not-allowed;
+  transform: none;
+  pointer-events: none;
+}
+.tuner-cast.is-unavailable:hover {
+  color: rgba(255, 255, 255, 0.32);
+  border-color: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.025);
+}
+.tuner-cast.is-casting {
+  color: #7eb8ff;
+  border-color: rgba(93, 155, 224, 0.62);
+  background: rgba(0, 61, 165, 0.18);
+  box-shadow: 0 0 0 1px rgba(93, 155, 224, 0.22);
+}
+.tuner-cast.is-casting:hover {
+  color: #9ecaff;
+  border-color: rgba(93, 155, 224, 0.78);
+  background: rgba(0, 61, 165, 0.26);
+}
+.tuner-cast svg { width: 20px; height: 20px; display: block; }
+
+.tuner-eq {
+  flex-shrink: 0;
+  display: none;
+  align-items: flex-end;
+  gap: 2px;
+  height: 18px;
+  padding: 0 2px;
+}
+/*
+ * EQ (parité kiosque-v1) :
+ *  · < 600 px : masqué — le tampon = spinner du play (pas d’EQ qui
+ *    s’insère entre play et volume et « squeeze » le dial mobile).
+ *  · ≥ 600 px : toujours visible — idle = barres basses ; lecture =
+ *    animation rouge ; buffering = animation tampon (eq-buffer).
+ */
+@media (min-width: 600px) {
+  .tuner-eq { display: flex; }
+}
+.tuner-eq span {
+  width: 3px; height: 4px;
+  background: var(--live);
+  border-radius: 2px;
+  opacity: 0.9;
+  transform-origin: bottom center;
+}
+/* Lecture : barres rouges, animation hauteur. */
+.tuner.is-playing .tuner-eq span { animation: eq 760ms ease-in-out infinite; }
+.tuner.is-playing .tuner-eq span:nth-child(2) { animation-duration: 1000ms; }
+.tuner.is-playing .tuner-eq span:nth-child(3) { animation-duration: 600ms; animation-delay: 90ms; }
+.tuner.is-playing .tuner-eq span:nth-child(4) { animation-duration: 880ms; animation-delay: 40ms; }
+@keyframes eq { 0%,100% { height: 4px; } 50% { height: 16px; } }
+
+/*
+ * Buffering bureau seulement (≥ 600 px) : barres rouges (même --live),
+ * animation scale distincte. Mobile : EQ déjà display:none.
+ * is-playing / is-buffering exclusifs (updatePlayUI).
+ */
+@media (min-width: 600px) {
+  .tuner.is-buffering .tuner-eq span {
+    background: var(--live, #c8102e);
+    height: 40%;
+    max-height: 16px;
+    border-radius: 1px;
+    opacity: 0.9;
+    animation: eq-buffer 0.9s ease-in-out infinite alternate;
+  }
+  .tuner.is-buffering .tuner-eq span:nth-child(2) {
+    animation-delay: 0.15s;
+    height: 70%;
+  }
+  .tuner.is-buffering .tuner-eq span:nth-child(3) {
+    animation-delay: 0.3s;
+    height: 100%;
+  }
+  .tuner.is-buffering .tuner-eq span:nth-child(4) {
+    animation-delay: 0.45s;
+    height: 55%;
+  }
+}
+@keyframes eq-buffer {
+  from { transform: scaleY(0.45); }
+  to { transform: scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tuner.is-playing .tuner-eq span,
+  .tuner.is-buffering .tuner-eq span {
+    animation: none;
+    transform: none;
+  }
+  .tuner.is-buffering .tuner-eq span { height: 10px; }
+}
+
+.tuner-vol {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255,255,255,0.5);
+  overflow: visible;
+}
+.tuner-vol-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  margin: -4px;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  border-radius: 7px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.tuner-vol-btn:hover { color: rgba(255,255,255,0.85); }
+.tuner-vol-btn .ico-vol,
+.tuner-vol-btn .ico-vol-mute { width: 16px; height: 16px; display: block; }
+/* L'icône reflète la zone d'amplification (curseur masqué sur mobile). */
+.tuner.is-boosted .tuner-vol-btn { color: #ff7d6e; }
+.tuner-vol.is-muted .tuner-vol-btn[aria-pressed="true"] {
+  color: #ff7d6e;
+  border-color: rgba(255, 125, 110, 0.72);
+  background: rgba(255, 125, 110, 0.14);
+  box-shadow: 0 0 0 1px rgba(255, 125, 110, 0.22);
+}
+.tuner-vol.is-muted .tuner-vol-btn[aria-pressed="true"]:hover {
+  color: #ff9a90;
+  border-color: rgba(255, 125, 110, 0.88);
+  background: rgba(255, 125, 110, 0.22);
+}
+.tuner-vol-track {
+  --vol-thumb: 16px;
+  --vol-ratio: 0.5;
+  --vol-base: 100%;
+  --vol-boost: 0%;
+  width: 100%;
+  min-width: 108px;
+  flex-shrink: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: visible;
+}
+.tuner-vol-slider {
+  position: relative;
+  min-height: var(--vol-thumb);
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  touch-action: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.tuner-vol-rail {
+  position: absolute;
+  left: calc(var(--vol-thumb) / 2);
+  right: calc(var(--vol-thumb) / 2);
+  top: 50%;
+  height: 5px;
+  transform: translateY(-50%);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+  overflow: visible;
+}
+.tuner-vol-zone--boost {
+  position: absolute;
+  left: 50%;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 0 3px 3px 0;
+  background: rgba(255, 125, 110, 0.1);
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+.tuner-vol-track.is-boost .tuner-vol-zone--boost { opacity: 1; }
+.tuner-vol-fill {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: 3px;
+  pointer-events: none;
+}
+.tuner-vol-fill--base {
+  left: 0;
+  width: calc(var(--vol-base) * 0.5);
+  max-width: 50%;
+  background: var(--radio-bright);
+  z-index: 1;
+}
+.tuner-vol-fill--boost {
+  left: 50%;
+  width: calc(var(--vol-boost) * 0.5);
+  max-width: 50%;
+  background: #ff7d6e;
+  z-index: 2;
+}
+.tuner-vol-tick {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  width: 2px;
+  height: 9px;
+  border-radius: 1px;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.34);
+  pointer-events: none;
+}
+.tuner-vol-tick--100 {
+  left: 50%;
+  height: 11px;
+  background: rgba(255, 255, 255, 0.58);
+}
+.tuner-vol-thumb {
+  position: absolute;
+  top: 50%;
+  left: var(--vol-x);
+  z-index: 4;
+  box-sizing: border-box;
+  width: var(--vol-thumb);
+  height: var(--vol-thumb);
+  margin: 0;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(12, 14, 18, 0.22);
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.48);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: left 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+.tuner-vol-track.is-boost .tuner-vol-thumb {
+  border-color: rgba(255, 125, 110, 0.55);
+  box-shadow: 0 1px 8px rgba(255, 90, 70, 0.35);
+}
+.tuner-vol-labels {
+  position: relative;
+  display: block;
+  height: 10px;
+  overflow: visible;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.34);
+  user-select: none;
+}
+.tuner-vol-labels span {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+/* Mute dans la bulle volume — masqué au bureau (curseur en ligne). */
+.tuner-vol-mute-btn {
+  display: none;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
+}
+.tuner-vol-mute-btn .ico-vol-mute { width: 20px; height: 20px; display: block; overflow: visible; }
+.tuner-vol-mute-btn:hover {
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+.tuner-vol-mute-btn:active { transform: scale(0.93); }
+.tuner-vol.is-muted .tuner-vol-mute-btn[aria-pressed="true"] {
+  color: #ff7d6e;
+  border-color: rgba(255, 125, 110, 0.72);
+  background: rgba(255, 125, 110, 0.14);
+  box-shadow: 0 0 0 1px rgba(255, 125, 110, 0.22);
+}
+.tuner-vol.is-muted .tuner-vol-mute-btn[aria-pressed="true"]:hover {
+  color: #ff9a90;
+  border-color: rgba(255, 125, 110, 0.88);
+  background: rgba(255, 125, 110, 0.22);
+}
+.tuner-vol-label--min {
+  left: calc(var(--vol-thumb) / 2);
+  transform: translateX(0);
+}
+.tuner-vol-label--mid {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.tuner-vol-label--max {
+  left: calc(100% - var(--vol-thumb) / 2);
+  transform: translateX(-100%);
+  color: rgba(255, 154, 144, 0.72);
+}
+/* Variantes Cast : une seule visible selon la largeur (voir media queries).
+   .hidden / [hidden] masquent toutes les variantes quand Cast n'est pas prêt. */
+.tuner-cast--bar { display: flex; }
+.tuner-cast--bar.hidden,
+.tuner-cast--bar[hidden] { display: none !important; }
+html.is-firefox .tuner-cast--bar.hidden,
+html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
+.tuner-cast--mobile { display: none; }
+.tuner-cast--popover { display: none; }
+/* Bureau : le popover interne ne change pas la mise en page en ligne. */
+.tuner-vol-popover { display: contents; }
+.tuner-volume {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+  touch-action: none;
+  opacity: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.tuner-vol-slider:has(.tuner-volume:focus-visible) {
+  outline: 2px solid var(--radio-bright);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.tuner-volume::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  height: var(--vol-thumb);
+  background: transparent;
+  border: none;
+}
+.tuner-volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: max(var(--vol-thumb), 44px);
+  height: max(var(--vol-thumb), 44px);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+.tuner-volume::-moz-range-track {
+  height: var(--vol-thumb);
+  background: transparent;
+  border: none;
+}
+.tuner-volume::-moz-range-thumb {
+  width: max(var(--vol-thumb), 44px);
+  height: max(var(--vol-thumb), 44px);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+.tuner-vol-track.is-dragging .tuner-vol-thumb {
+  transition: none;
+}
+.tuner-vol.is-muted .tuner-vol-track { opacity: 0.42; }
+
+/* Sans Web Audio : curseur 0–100 %, pas de zone boost ni de 200 %.
+   (Sur mobile moderne le 200 % reste affiché — voir GAIN_UI_MAX dans app.js.) */
+.tuner-vol--no-boost .tuner-vol-zone--boost,
+.tuner-vol--no-boost .tuner-vol-tick--100,
+.tuner-vol--no-boost .tuner-vol-label--max {
+  display: none;
+}
+.tuner-vol--no-boost .tuner-vol-label--mid {
+  left: calc(100% - var(--vol-thumb) / 2);
+  transform: translateX(-100%);
+}
+.tuner-vol--no-boost .tuner-vol-fill--base {
+  width: var(--vol-base);
+  max-width: 100%;
+}
+
+/* Grand bureau (≥1100 px) : curseur volume en ligne + mute au clic sur l'icône. */
+@media (min-width: 1100px) {
+  .tuner-now { min-height: 42px; }
+
+  .tuner-actions {
+    align-self: center;
+    min-height: 42px;
+    /* Dès le premier paint : ne pas pousser play+volume tout à droite. */
+    margin-left: 0;
+  }
+
+  .tuner-vol {
+    align-self: center;
+    height: 42px;
+    /* Largeur fixe — pas de croissance pendant le load (ni via cqw ni flex). */
+    flex: 0 0 auto;
+    flex-shrink: 0;
+    max-width: 168px;
+    min-width: 0;
+  }
+
+  .tuner-vol-slot {
+    display: flex;
+    align-items: center;
+    height: 42px;
+    overflow: visible;
+    flex: 0 0 auto;
+    max-width: 120px;
+    min-width: 0;
+  }
+
+  /* Largeur fixe compacte (pas clamp/cqw : trop large tant que le conteneur est full-width). */
+  .tuner-vol-track {
+    width: 112px;
+    max-width: 112px;
+    min-width: 96px;
+    flex: 0 0 112px;
+    height: 42px;
+    justify-content: center;
+    gap: 0;
+    position: relative;
+    overflow: visible;
+  }
+
+  .tuner-vol-slider {
+    min-height: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .tuner-vol-labels {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: visible;
+  }
+
+  .tuner-vol-btn {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.72);
+    cursor: pointer;
+    transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
+  }
+  .tuner-vol-btn:hover {
+    color: rgba(255,255,255,0.95);
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.28);
+  }
+  .tuner-vol-btn:active { transform: scale(0.93); }
+  .tuner-vol-btn .ico-vol,
+  .tuner-vol-btn .ico-vol-mute { width: 20px; height: 20px; }
+  .tuner.is-boosted .tuner-vol-btn {
+    color: #ff7d6e;
+    border-color: rgba(255,125,110,0.35);
+  }
+}
+
+/* Tablette / mobile : volume en popover — libère l'espace du synthétiseur. */
+@media (max-width: 1099.98px) {
+  .tuner-now { min-height: 42px; }
+
+  .tuner-actions {
+    gap: 6px;
+    align-self: center;
+    align-items: center;
+    min-height: 42px;
+  }
+
+  .tuner-vol {
+    align-self: center;
+    height: 42px;
+  }
+
+  .tuner-vol-btn {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.72);
+    transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
+  }
+  .tuner-vol-btn:hover { color: rgba(255,255,255,0.95); background: rgba(255,255,255,0.12); }
+  .tuner-vol-btn:active { transform: scale(0.93); }
+  .tuner-vol-btn .ico-vol,
+  .tuner-vol-btn .ico-vol-mute { width: 20px; height: 20px; }
+  .tuner.is-boosted .tuner-vol-btn { color: #ff7d6e; border-color: rgba(255,125,110,0.35); }
+
+  .tuner-vol-slot {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    /* Au sein du tuner (z-index 100) : au-dessus des autres contrôles du synthé */
+    z-index: 20;
+    box-sizing: border-box;
+    /* 100vw + 100dvw (min = le plus étroit des deux) : jamais hors écran.
+       Pas de % ici — il se résoudrait contre .tuner-vol (~42 px), pas le viewport. */
+    width: min(300px, calc(100vw - 20px), calc(100dvw - 20px));
+    min-width: 0;
+    padding: 12px 14px 10px;
+    background: #22252c;
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 12px;
+    box-shadow: 0 14px 34px -14px rgba(0,0,0,0.85);
+    opacity: 0;
+    transform: translateY(-6px) scale(0.96);
+    transform-origin: top right;
+    pointer-events: none;
+    transition: opacity 0.16s ease, transform 0.16s ease;
+  }
+  /* Petite flèche pointant vers l'icône volume. */
+  .tuner-vol-slot::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: 15px;
+    width: 10px;
+    height: 10px;
+    background: #22252c;
+    border-left: 1px solid rgba(255,255,255,0.14);
+    border-top: 1px solid rgba(255,255,255,0.14);
+    transform: rotate(45deg);
+  }
+  .tuner-vol.is-open .tuner-vol-slot {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  .tuner-vol-popover {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+  .tuner-vol-slot .tuner-vol-mute-btn {
+    display: flex;
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    margin: 0;
+  }
+  .tuner-vol-slot .tuner-vol-mute-btn .ico-vol-mute {
+    width: 18px;
+    height: 18px;
+  }
+  .tuner-vol-slot .tuner-vol-track {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+    gap: 4px;
+  }
+  .tuner-vol-slot .tuner-vol-slider {
+    min-height: 34px;
+    height: 34px;
+    width: 100%;
+  }
+  .tuner-vol-slot .tuner-vol-labels {
+    position: relative;
+    width: 100%;
+    height: 11px;
+    margin-top: 1px;
+    font-size: 8px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+    color: rgba(255, 255, 255, 0.38);
+  }
+  .tuner-vol-slot .tuner-vol-label--max {
+    color: rgba(255, 154, 144, 0.62);
+  }
+  /* Sous 1100 px : pas de cast « barre bureau ». */
+  .tuner-cast--bar { display: none !important; }
+
+  .tuner-cast--popover {
+    display: none;
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    margin: 0;
+  }
+  .tuner-cast--popover svg { width: 18px; height: 18px; }
+  /* Téléphone : cast dans le popover volume (voir max-width 599.98). */
+  .tuner-cast--popover:not(.hidden):not([hidden]) { display: flex; }
+  .tuner-cast--popover.hidden,
+  .tuner-cast--popover[hidden] { display: none !important; }
+  html.is-firefox .tuner-cast--popover,
+  html.is-firefox .tuner-cast--popover.hidden,
+  html.is-firefox .tuner-cast--popover[hidden] { display: flex !important; }
+
+  .tuner-vol.is-open .tuner-vol-btn { color: rgba(255,255,255,0.95); }
+
+  /* Tablette / demi-laptop (600–1099) : cast dans la barre d'actions. */
+  .tuner-cast--mobile:not(.hidden):not([hidden]) { display: flex; }
+  .tuner-cast--mobile.hidden,
+  .tuner-cast--mobile[hidden] { display: none !important; }
+  html.is-firefox .tuner-cast--mobile,
+  html.is-firefox .tuner-cast--mobile.hidden,
+  html.is-firefox .tuner-cast--mobile[hidden] { display: flex !important; }
+}
+
+/* Téléphone étroit : pastille EN ONDES masquée (le synthétiseur rouge global
+   signale déjà le live). Seuil bas pour ne pas traiter une demi-fenêtre laptop
+   comme un téléphone. */
+@media (max-width: 599.98px) {
+  .tuner-inner { padding: 8px var(--pad); gap: 8px; }
+  .tuner-controls { gap: 6px; }
+  .tuner-label { display: none; }
+
+  .tuner-vol-slot {
+    width: min(292px, calc(100vw - 16px), calc(100dvw - 16px));
+  }
+
+  .tuner-step {
+    box-shadow: 0 3px 10px -4px rgba(0,0,0,0.4);
+  }
+
+  /* Téléphone : cast uniquement dans le popover volume (pas dans la barre). */
+  .tuner-cast--mobile { display: none !important; }
+  html.is-firefox .tuner-cast--mobile { display: none !important; }
+  /* Popover cast : visible quand le SDK l'active (retirant .hidden). */
+  .tuner-cast--popover:not(.hidden):not([hidden]) { display: flex; }
+}
+
+/*
+ * 390 / 430 : plus de skip gauche. Le suivant se colle au cadran
+ * (onglet skip, pas un second carré 42 px). Embed kiosque inchangé.
+ */
+@media (max-width: 430.98px) {
+  html:not([data-embed="tuner"]) #tuner-prev {
+    display: none !important;
+  }
+  html:not([data-embed="tuner"]) #tuner-next.tuner-step {
+    width: 32px;
+    height: auto;
+    min-height: 36px;
+    align-self: stretch;
+    margin-left: -6px;
+    border-radius: 0 9px 9px 0;
+    border-left: 0;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: none;
+  }
+  html:not([data-embed="tuner"]) #tuner-next.tuner-step:hover,
+  html:not([data-embed="tuner"]) #tuner-next.tuner-step:active {
+    transform: none;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  html:not([data-embed="tuner"]) #tuner-next.tuner-step svg {
+    width: 18px;
+    height: 18px;
+  }
+  html:not([data-embed="tuner"]) .tuner-dial .tuner-now {
+    border-radius: 9px 0 0 9px;
+    padding-right: 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tuner-vol-slot { transition: none; }
+}
+
+.tuner-nowair {
+  display: none;
+  flex-shrink: 1;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+  max-width: 340px;
+  padding-left: 14px;
+  border-left: none;
+}
+.tuner-nowair[role="link"] { cursor: pointer; }
+.tuner-nowair[role="link"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.tuner-nowair-label {
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.35;
+  color: var(--tuner-onair-idle, rgba(255, 255, 255, 0.42));
+  white-space: nowrap;
+}
+
+.tuner-nowair-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Fondu antenne : changement de poste ou bascule CHOQ */
+.tuner-nowair {
+  transition: opacity 0.3s ease;
+}
+.tuner-nowair.is-swapping {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tuner-nowair { transition: none; }
+  .tuner-nowair.is-swapping { opacity: 1; }
+}
+
+/* Override C : titre émission serif ; sub = rythme sports (Inter dense) */
+.tuner-nowair-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--radio-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (min-width: 1100px) {
+  .tuner-nowair-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Mobile / tablette : teinte live un peu plus claire (lisibilité). */
+.tuner.is-playing .tuner-nowair-title {
+  color: #ff9a90;
+}
+
+.tuner-nowair-sub {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.48);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tuner-nowair.is-empty .tuner-nowair-title {
+  font-style: italic;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+@media (min-width: 1100px) {
+  /*
+   * Grille finale dès le premier paint (voir aussi <style> critique dans index.html).
+   * Colonne « À l'antenne » toujours présente — le volume reste compact.
+   */
+  .tuner-inner {
+    max-width: 1180px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(300px, 370px);
+    gap: 0;
+    align-items: center;
+  }
+
+  .tuner-controls {
+    grid-column: 1;
+    flex: unset;
+    min-width: 0;
+  }
+
+  .tuner-dial {
+    flex: 1 1 0;
+    width: 0;
+    min-width: 120px;
+    max-width: none;
+  }
+
+  .tuner-actions {
+    margin-left: 0;
+    flex-shrink: 0;
+  }
+
+  .tuner-nowair {
+    grid-column: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    flex: unset;
+    /* Occupe toute la colonne grille (sinon le bloc « rapetisse » au libellé seul) */
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin-left: 0;
+    padding-left: 20px;
+    border-left: none;
+    align-self: center;
+    opacity: 1;
+    box-sizing: border-box;
+  }
+
+  .tuner-nowair-body {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .tuner-nowair-title,
+  .tuner-nowair-sub {
+    max-width: 100%;
+  }
+
+  /*
+   * Bureau — couleur de l'émission selon le statut :
+   *  - live (en cours) = même coral que « EN ONDES » (--status-live-soft)
+   *  - upcoming (à venir / entre créneaux) = même ambre que la grille SEO
+   *  - idle / empty = neutre
+   */
+  .tuner.is-playing .tuner-nowair.is-live .tuner-nowair-label,
+  .tuner.is-playing .tuner-nowair.is-live .tuner-nowair-title {
+    color: var(--tuner-onair-live);
+  }
+  .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-label,
+  .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-title {
+    color: var(--tuner-upcoming);
+  }
+  .tuner.is-playing .tuner-nowair.is-upcoming .tuner-nowair-sub {
+    color: color-mix(in srgb, var(--tuner-upcoming) 72%, transparent);
+  }
+  .tuner.is-playing .tuner-nowair.is-idle .tuner-nowair-label,
+  .tuner.is-playing .tuner-nowair.is-idle .tuner-nowair-title,
+  .tuner.is-playing .tuner-nowair.is-empty .tuner-nowair-label,
+  .tuner.is-playing .tuner-nowair.is-empty .tuner-nowair-title {
+    color: rgba(255, 255, 255, 0.55);
+  }
+  .tuner.is-external .tuner-nowair-label,
+  .tuner.is-external .tuner-nowair-title {
+    color: var(--radio-bright);
+  }
+  .tuner.is-external .tuner-nowair.is-upcoming .tuner-nowair-label,
+  .tuner.is-external .tuner-nowair.is-upcoming .tuner-nowair-title {
+    color: color-mix(in srgb, var(--status-upcoming-soft) 78%, #000);
+  }
+
+  /* Ne jamais masquer le panneau en display:none sur bureau (collapse de colonne). */
+  .tuner-nowair.hidden {
+    display: flex !important;
+    /* Contenu placeholder du HTML reste lisible — pas d'opacity:0 (trou visuel). */
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .tuner-vol {
+    flex: 0 0 auto;
+    flex-shrink: 0;
+    min-width: 0;
+    max-width: 168px;
+  }
+
+  .tuner-vol-slot {
+    flex: 0 0 auto;
+    min-width: 0;
+    max-width: 120px;
+    overflow: visible;
+  }
+
+  .tuner-vol-track {
+    width: 112px;
+    max-width: 112px;
+    min-width: 96px;
+    flex: 0 0 112px;
+  }
+
+  .masthead-inner {
+    max-width: 1180px;
+  }
+}

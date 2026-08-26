@@ -9,6 +9,28 @@ import { dirname, join, relative, resolve } from 'node:path';
 const require = createRequire(import.meta.url);
 
 const root = new URL('../', import.meta.url).pathname;
+const CLIENT_JS_FILES = [
+  'weather-cities-data.js',
+  'radar-utils.js',
+  'radar-state.js',
+  'radar-weather.js',
+  'radar-sports-cta.js',
+  'radar-tuner.js',
+  'radar-news.js',
+  'radar-lifecycle.js',
+  'app.js',
+];
+const CLIENT_CSS_FILES = [
+  'style-masthead.css',
+  'style.css',
+  'style-sports-strip.css',
+  'style-masthead-chrome.css',
+  'style-tuner.css',
+  'style-feed.css',
+  'style-chrome.css',
+];
+const appJs = CLIENT_JS_FILES.map((file) => readFileSync(join(root, file), 'utf8')).join('\n');
+const styleCss = CLIENT_CSS_FILES.map((file) => readFileSync(join(root, file), 'utf8')).join('\n');
 const htmlFiles = [];
 
 // Les traces Playwright sont du HTML : sans cette exclusion, un run de tests
@@ -98,9 +120,7 @@ for (const file of htmlFiles) {
 // posait en ligne à gauche là où « En bref » et les vedettes le mettent en
 // bas-droite ; l'écart sautait aux yeux d'une carte à l'autre.
 {
-  // `styleCss` n'est lu que plus bas dans ce fichier : on relit ici.
-  const css = readFileSync(join(root, 'style.css'), 'utf8');
-  const tailRules = css.match(/\.news-tail[^{]*\.article-more\s*\{[^}]*\}/g) || [];
+  const tailRules = styleCss.match(/\.news-tail[^{]*\.article-more\s*\{[^}]*\}/g) || [];
   assert(tailRules.length > 0, 'style : règle « Lire la suite » de la suite du fil introuvable');
   for (const rule of tailRules) {
     if (rule.includes(':hover') || rule.includes(':focus')) continue;
@@ -163,7 +183,6 @@ for (const file of htmlFiles) {
 
 // Accueil : pas de reload plein écran (préserve la radio) — refresh soft.
 {
-  const appJs = readFileSync(join(root, 'app.js'), 'utf8');
   assert(
     appJs.includes('function initHomeNavRefresh')
       && appJs.includes('data-home-nav')
@@ -720,7 +739,6 @@ assert(seoPagesCss.includes('animation: seo-live-pulse'), 'horaire : pulsation l
 assert(seoPagesCss.includes('animation: seo-upcoming-pulse'), 'horaire : pulsation du prochain créneau requise');
 assert(seoPagesCss.includes('.seo-slot--pulse'), 'horaire : un seul créneau pulse à la fois');
 assert(seoPagesCss.includes('prefers-reduced-motion'), 'horaire : réduction des animations requise');
-const appJs = readFileSync(join(root, 'app.js'), 'utf8');
 assert(appJs.includes('syncSeoSchedulePlayback()'), 'horaire : synchronisation avec la lecture réelle requise');
 assert(appJs.includes("slot.classList.toggle('seo-slot--playing'"), 'horaire : classe de lecture réelle requise');
 assert(appJs.includes('seo-slot--pulse'), 'horaire : classe pulse unique requise');
@@ -854,8 +872,7 @@ assert(
   tunerEmbedHtml.includes('session-freshness-lib.js'),
   'tuner-embed charge session-freshness pour le thème kiosque-v1',
 );
-const appScript = readFileSync(join(root, 'app.js'), 'utf8');
-assert(appScript.includes("get('station')"), 'station demandée par l’embed requise');
+assert(appJs.includes("get('station')"), 'station demandée par l’embed requise');
 
 // ── Référencement (moteurs + assistants IA) ────────────────────────────────
 // Ces acquis sont invisibles à l'œil : sans test, une refonte du <head> ou de
@@ -1164,7 +1181,7 @@ for (const hub of ['sports/index.html', 'en/sports/index.html']) {
   }
 }
 // Puces sports du mât (app.js) : même garde sur le sigle et l'adversaire.
-const appSource = readFileSync(join(root, 'app.js'), 'utf8');
+const appSource = appJs;
 for (const chip of appSource.match(/<span class="sports-chip__code[^>]*>/g) || []) {
   assert(
     /\bnotranslate\b/.test(chip) && /\btranslate="no"/.test(chip),
@@ -1263,7 +1280,6 @@ if (existsSync(archiveHub)) {
 }
 
 // La <h1> hérite sinon de la marge par défaut du navigateur → mât décadré.
-const styleCss = readFileSync(join(root, 'style.css'), 'utf8');
 assert(
   /\.wordmark-mark \{[^}]*margin: 0;/.test(styleCss),
   'style.css : .wordmark-mark doit neutraliser la marge (<h1>)'

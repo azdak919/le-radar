@@ -258,7 +258,7 @@ async function main() {
     console.log(`Simulation : ${added} ajout(s), ${updated} mise(s) à jour; aucun fichier écrit. Ajoutez --update pour conserver l’avancement.`);
     return;
   }
-  fs.writeFileSync(ARCHIVE_PATH, `${JSON.stringify(catalog, null, 2)}\n`, 'utf8');
+  fs.writeFileSync(ARCHIVE_PATH, `${JSON.stringify(catalog)}\n`, 'utf8');
   fs.writeFileSync(STATE_PATH, `${JSON.stringify(state, null, 2)}\n`, 'utf8');
   console.log(`Terminé : ${added} ajout(s), ${updated} mise(s) à jour. Le fil vivant n’a pas été modifié.`);
 }
