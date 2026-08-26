@@ -724,6 +724,7 @@ async function init() {
   bindTuner();
   bindExternalListen();
   bindFiltersPanel();
+  bindMagazineViewportRelayout();
   bindNewsSearch();
   initPageScrollTop();
   initHomeNavRefresh();
@@ -11499,6 +11500,21 @@ function clearWideRailFiltersFit() {
   }
 }
 
+function wideStickyTopPx() {
+  try {
+    const n = Number.parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue('--wide-sticky-top'),
+    );
+    if (Number.isFinite(n) && n > 0) return n;
+  } catch { /* ignore */ }
+  return 76;
+}
+
+function setCssVar(el, name, value) {
+  if (!el || el.style.getPropertyValue(name) === value) return;
+  el.style.setProperty(name, value);
+}
+
 /**
  * Rail wide E : calcule combien de pastilles tiennent sous le titre,
  * pour afficher « Plus de sources » plutôt que de scroller tout le rail.
@@ -11517,11 +11533,17 @@ function syncWideRailFiltersFit() {
   }
   const sections = stack.querySelector('.site-sections');
   const head = stack.querySelector('.wire-head');
-  const stackTop = stack.getBoundingClientRect().top;
+  const stickyTop = wideStickyTopPx();
+  const rawTop = stack.getBoundingClientRect().top;
+  /* Plancher = offset sticky. En haut de page rawTop > sticky (sous le mât).
+     Collé : rawTop ≈ sticky. En bas de page le rail se décolle et rawTop
+     chute — s’en servir pour la hauteur fait grandir le rail, le recoller,
+     puis redescendre : jitter ~60 fps (Philips 1920, scroll au fond). */
+  const stackTop = Math.max(stickyTop, Math.round(rawTop));
   /* Flèche overlay bas-droite (comme la loupe) : plus de réserve 72 px dans le rail. */
   const bottomSafe = 16;
-  stack.style.setProperty('--wide-rail-bottom', `${bottomSafe}px`);
-  stack.style.setProperty('--wide-stack-from-top', `${Math.max(0, Math.round(stackTop))}px`);
+  setCssVar(stack, '--wide-rail-bottom', `${bottomSafe}px`);
+  setCssVar(stack, '--wide-stack-from-top', `${stackTop}px`);
   const visibleH = Math.max(160, (window.innerHeight || 800) - stackTop - bottomSafe);
   const chrome = (sections?.offsetHeight || 0) + (head?.offsetHeight || 0) + 8;
   const toggleH = 46;
@@ -11536,12 +11558,12 @@ function syncWideRailFiltersFit() {
   rows = Math.min(Math.max(3, rows), Math.max(3, countBtns));
   /* Rangées pleines + peek à part : ne pas rogner la dernière puce visible. */
   const collapsedH = Math.max(rowH, rows * rowH - 6);
-  FILTERS_PANEL.style.setProperty('--filters-cols', '1');
-  FILTERS_PANEL.style.setProperty('--filters-collapsed-rows', String(rows));
-  FILTERS_PANEL.style.setProperty('--filters-collapsed-h', `${collapsedH}px`);
-  FILTERS_PANEL.style.setProperty('--filters-peek', `${instFade}px`);
-  FILTERS_PANEL.style.setProperty('--filters-title-h', '0px');
-  FILTERS_PANEL.style.setProperty('--filters-rail-avail', `${Math.max(120, visibleH - chrome - toggleH)}px`);
+  setCssVar(FILTERS_PANEL, '--filters-cols', '1');
+  setCssVar(FILTERS_PANEL, '--filters-collapsed-rows', String(rows));
+  setCssVar(FILTERS_PANEL, '--filters-collapsed-h', `${collapsedH}px`);
+  setCssVar(FILTERS_PANEL, '--filters-peek', `${instFade}px`);
+  setCssVar(FILTERS_PANEL, '--filters-title-h', '0px');
+  setCssVar(FILTERS_PANEL, '--filters-rail-avail', `${Math.max(120, visibleH - chrome - toggleH)}px`);
   syncWideFiltersToggleWidth();
   return countBtns > rows;
 }
@@ -11692,6 +11714,75 @@ if (typeof window !== 'undefined') {
   window.addEventListener('radar:translate-mode', onRadarTranslateModeChange);
 }
 
+let lastMagazineViewportKey = '';
+let magazineRelayoutTimer = 0;
+
+/** Clé des seuils qui changent le DOM magazine (unes / vedettes / En bref). */
+function magazineViewportKey() {
+  return [
+    wideHeroLeadCount(),
+    wideHeroFeatureCount(),
+    briefWideColumnCount(),
+    isMidwidthMagazineLayout() ? 'm' : 'd',
+  ].join(':');
+}
+
+/**
+ * Resize demi-écran → 1920 : reposer le fil, sinon data-leads et le nombre
+ * d’unes restent ceux du viewport étroit (1 une) jusqu’au refresh.
+ * setTimeout(0) : le resize peut partir *avant* que innerWidth soit le
+ * nouveau (tuile GNOME / setViewportSize) — relire après coup.
+ */
+function scheduleMagazineViewportRelayout() {
+  if (magazineRelayoutTimer) clearTimeout(magazineRelayoutTimer);
+  const run = () => {
+    magazineRelayoutTimer = 0;
+    if (!NEWS_LIST) return;
+    if (NEWS_LIST.dataset.mode === 'search') {
+      lastMagazineViewportKey = magazineViewportKey();
+      return;
+    }
+    const key = magazineViewportKey();
+    const wantLeads = wideHeroLeadCount();
+    const haveLeads = NEWS_LIST.querySelectorAll('.news-hero .article--lead').length;
+    if (key === lastMagazineViewportKey && haveLeads === wantLeads) return;
+    if (NEWS_LIST.dataset.ready !== '1' && haveLeads === 0) return;
+    renderNews();
+  };
+  magazineRelayoutTimer = window.setTimeout(run, 0);
+  /* Trailing pass : tuile GNOME / setViewportSize finissent après le 1er tick. */
+  window.setTimeout(run, 80);
+}
+
+function bindMagazineViewportRelayout() {
+  if (bindMagazineViewportRelayout._bound) return;
+  bindMagazineViewportRelayout._bound = true;
+  if (typeof window !== 'undefined') {
+    window.__radarMagazineRelayout = scheduleMagazineViewportRelayout;
+    window.__radarMagazineDebug = () => ({
+      key: magazineViewportKey(),
+      last: lastMagazineViewportKey,
+      want: wideHeroLeadCount(),
+      dual: isWideDualLeadViewport(),
+      bound: true,
+    });
+  }
+  window.addEventListener('resize', scheduleMagazineViewportRelayout, { passive: true });
+  window.addEventListener('radar-wide-preview-change', scheduleMagazineViewportRelayout);
+  for (const q of [
+    '(min-width: 768px)',
+    '(min-width: 1100px)',
+    '(min-width: 1281px)',
+    '(min-width: 1920px)',
+    '(min-width: 3440px)',
+    '(min-width: 3840px)',
+  ]) {
+    try {
+      onMediaQueryChange(window.matchMedia(q), scheduleMagazineViewportRelayout);
+    } catch { /* ignore */ }
+  }
+}
+
 function bindFiltersPanel() {
   let filtersUserCollapsed = false;
   let filtersUserPinned = false;
@@ -11756,6 +11847,7 @@ function bindFiltersPanel() {
   const onFiltersLayoutChange = () => {
     syncFiltersPanel();
     scheduleFilterMarqueeRefresh();
+    scheduleMagazineViewportRelayout();
   };
   window.addEventListener('resize', onFiltersLayoutChange);
   onMediaQueryChange(FILTERS_MOBILE, onFiltersLayoutChange);
@@ -11806,6 +11898,9 @@ function bindFiltersPanel() {
       syncWideStickyTop();
       requestAnimationFrame(() => syncWideStickyTop());
     } catch { /* ignore */ }
+    try {
+      scheduleMagazineViewportRelayout();
+    } catch { /* ignore */ }
   });
   window.addEventListener('resize', () => {
     if (isWideTunerLayout()) {
@@ -11815,6 +11910,7 @@ function bindFiltersPanel() {
       clearWideDialInlineSize();
     }
   }, { passive: true });
+  bindMagazineViewportRelayout();
 }
 
 function selectNewsSource(source) {
@@ -12395,6 +12491,7 @@ function renderNews() {
   // Équilibre magazine : combler le vide sous vedettes et/ou sous En bref.
   scheduleMagazineColumnBalance();
   NEWS_LIST.dataset.ready = '1';
+  lastMagazineViewportKey = magazineViewportKey();
 }
 
 /** Aperçu de la rangée suivante (titres lisibles), comme --filters-peek. */
@@ -12595,7 +12692,7 @@ function isWideDualLeadViewport() {
   try {
     return typeof isWideNoMarqueeMode === 'function'
       && isWideNoMarqueeMode()
-      && (window.innerWidth || 0) >= 1920;
+      && window.matchMedia('(min-width: 1920px)').matches;
   } catch {
     return false;
   }
@@ -12603,12 +12700,24 @@ function isWideDualLeadViewport() {
 
 function wideHeroLeadCount() {
   if (!isWideDualLeadViewport()) return 1;
-  return (window.innerWidth || 0) >= 3840 ? HERO_UHD_LEAD_COUNT : HERO_WIDE_LEAD_COUNT;
+  try {
+    return window.matchMedia('(min-width: 3840px)').matches
+      ? HERO_UHD_LEAD_COUNT
+      : HERO_WIDE_LEAD_COUNT;
+  } catch {
+    return HERO_WIDE_LEAD_COUNT;
+  }
 }
 
 function wideHeroFeatureCount() {
   if (!isWideDualLeadViewport()) return HERO_FEATURE_MIN;
-  return (window.innerWidth || 0) >= 3840 ? HERO_UHD_FEATURE_MIN : HERO_WIDE_FEATURE_MIN;
+  try {
+    return window.matchMedia('(min-width: 3840px)').matches
+      ? HERO_UHD_FEATURE_MIN
+      : HERO_WIDE_FEATURE_MIN;
+  } catch {
+    return HERO_WIDE_FEATURE_MIN;
+  }
 }
 
 function wideHeroSpotlightMax() {
