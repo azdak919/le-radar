@@ -31,7 +31,9 @@ const TIMEOUT = 9000;
 
 // === KNOWN GOOD STREAMS (the bot trusts and re-validates these first) ===
 const KNOWN_STREAMS = {
-  chyz: 'https://ecoutez.chyz.ca/proxy/chyz943/stream',
+  // Mount Centova actuel (lecteur chyz.ca, 2026-08-25). L’ancien
+  // /proxy/chyz943/stream répond 404 « Stream not found ».
+  chyz: 'https://ecoutez.chyz.ca/proxy/tech/stream',
   ckut: 'https://ckut.out.airtime.pro/ckut_a',
   // HTTPS mount — playable directly on the HTTPS site (the :8000 HTTP one is blocked as mixed content)
   cism: 'https://stream03.ustream.ca/cism128.mp3',
@@ -41,7 +43,10 @@ const KNOWN_STREAMS = {
 
 // Per-station hints for faster/better discovery
 const STATION_HINTS = {
-  chyz: ['https://ecoutez.chyz.ca/proxy/chyz943/stream'],
+  chyz: [
+    'https://ecoutez.chyz.ca/proxy/tech/stream',
+    'https://ecoutez.chyz.ca/proxy/chyz943/stream',
+  ],
   ckut: [
     'https://ckut.out.airtime.pro/ckut_a',
     'https://icecast.ckut.ca/903fm-192-stereo',
