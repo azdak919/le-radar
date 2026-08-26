@@ -45,6 +45,14 @@
       'mobile-playback.js',
       'player-sync.js',
       'institution-acronyms-data.js',
+      'weather-cities-data.js',
+      'radar-utils.js',
+      'radar-state.js',
+      'radar-weather.js',
+      'radar-sports-cta.js',
+      'radar-tuner.js',
+      'radar-news.js',
+      'radar-lifecycle.js',
       'app.js',
     ]) {
       await new Promise((resolve, reject) => {
