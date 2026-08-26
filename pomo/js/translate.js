@@ -1150,8 +1150,13 @@ async function switchLanguage(langCode, { radarMode = langCode, persist = true }
 
 function buildLangDropdown() {
   const dropdown = document.getElementById('lang-dropdown');
+  const esc = (value) => String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
   dropdown.innerHTML = SUPPORTED_LANGS.map(lang =>
-    `<button class="lang-option${lang.code === currentLang ? ' active' : ''}" data-lang="${lang.code}">${lang.native}</button>`
+    `<button class="lang-option${lang.code === currentLang ? ' active' : ''}" data-lang="${esc(lang.code)}">${esc(lang.native)}</button>`
   ).join('');
 
   dropdown.addEventListener('click', (e) => {
