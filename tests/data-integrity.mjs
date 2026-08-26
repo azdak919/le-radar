@@ -105,6 +105,26 @@ for (const radio of radios) {
   assert(nowPlaying[radio.id], `métadonnées à l'antenne manquantes pour ${radio.id}`);
 }
 
+{
+  // CHYZ a renommé son mount Centova : /proxy/chyz943/stream → 404.
+  // Source de vérité : <audio> du lecteur sur chyz.ca (/proxy/tech/stream).
+  const chyz = radios.find((radio) => radio.id === 'chyz');
+  assert.equal(
+    chyz?.stream,
+    'https://ecoutez.chyz.ca/proxy/tech/stream',
+    'CHYZ : flux = mount Centova actuel (/proxy/tech/stream)',
+  );
+  const discover = readFileSync(new URL('scripts/discover-streams.js', root), 'utf8');
+  assert(
+    discover.includes("chyz: 'https://ecoutez.chyz.ca/proxy/tech/stream'"),
+    'discover-streams : KNOWN_STREAMS.chyz aligné sur radios.json',
+  );
+  assert(
+    !discover.includes("chyz: 'https://ecoutez.chyz.ca/proxy/chyz943/stream'"),
+    'discover-streams : ne plus préférer le mount CHYZ 404',
+  );
+}
+
 /*
  * Ce qui sort des bots horaires doit être lisible tel quel à l'antenne.
  *
