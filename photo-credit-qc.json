@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-26T09:09:13.701Z",
+  "updated": "2026-08-26T10:07:32.224Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 132,
-  "pending": 12,
+  "cited": 133,
+  "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 20,
-  "updatedCount": 12,
+  "checked": 19,
+  "updatedCount": 11,
   "citedNew": 8,
-  "fallbackNew": 12,
+  "fallbackNew": 11,
   "samples": [
     {
       "title": "Il y a 30 ans : un grand spectacle solidaire pour le Saguenay",
@@ -20,18 +20,18 @@
       "method": "body-line"
     },
     {
-      "title": "Des initiatives qui rassemblent",
+      "title": "Ce que nous devons aux femmes",
       "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
     },
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
+      "title": "Les femmes MAGA au service du patriarcat",
       "source": "Le Délit",
-      "credit": "Photo : Anna El Murr",
+      "credit": "Photo : Stu Doré",
       "cited": true,
-      "method": "figcaption-bare"
+      "method": "media-credit-featured"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
@@ -67,13 +67,6 @@
       "credit": "Illustration: Halle Keays",
       "cited": true,
       "method": "figcaption-trailing"
-    },
-    {
-      "title": "Franc succès pour le Festival du sport et du loisir",
-      "source": "La Pige",
-      "credit": "Photo : Facebook Festival du sport et du loisir",
-      "cited": true,
-      "method": "figcaption-paren-kind"
     },
     {
       "title": "Leave the Children Out of This",
