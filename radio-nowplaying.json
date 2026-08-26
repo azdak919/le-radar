@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-26T05:31:03.543Z",
+  "updatedAt": "2026-08-26T06:42:26.088Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T05:30:34.052Z"
+      "checkedAt": "2026-08-26T06:41:56.660Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique (reprise)",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/club-classique"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "schedule",
         "start": "02:00",
         "end": "03:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Fréquence 440",
+        "source": "schedule",
+        "start": "03:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/frequence-440"
+      },
       "track": "",
-      "showTitle": "Club classique (reprise)",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T05:30:36.517Z"
+      "checkedAt": "2026-08-26T06:41:59.127Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Space Plane",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "WarpCor / Out of the Void",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "Full Circle",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Space Plane",
+      "showTitle": "WarpCor / Out of the Void",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T05:30:41.965Z"
+      "checkedAt": "2026-08-26T06:42:02.278Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T05:30:56.220Z"
+      "checkedAt": "2026-08-26T06:42:16.524Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T05:30:57.163Z"
+      "checkedAt": "2026-08-26T06:42:17.229Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/in-velo-veritas"
       },
-      "track": "Kaatayra - Aguas Passadas",
+      "track": "FJORT - 22:30",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -151,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-26T05:31:03.192Z"
+      "checkedAt": "2026-08-26T06:42:25.737Z"
     }
   }
 }
