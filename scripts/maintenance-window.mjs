@@ -18,14 +18,19 @@ import { fileURLToPath } from 'node:url';
 
 export const WRITER_WORKFLOWS = [
   '.github/workflows/archive-articles.yml',
+  '.github/workflows/detect-schedule-drift.yml',
   '.github/workflows/discover-news-sources.yml',
   '.github/workflows/maintain.yml',
   '.github/workflows/probe-indigenous-mt.yml',
+  '.github/workflows/retro-crawl-historical.yml',
   '.github/workflows/update-institutions.yml',
   '.github/workflows/update-news.yml',
   '.github/workflows/update-radio-nowplaying.yml',
   '.github/workflows/update-radio-schedules.yml',
+  '.github/workflows/update-sports-live.yml',
+  '.github/workflows/update-sports.yml',
   '.github/workflows/update-streams.yml',
+  '.github/workflows/verify-historical-links.yml',
 ];
 
 const PROTECTED_WORKFLOWS = [
