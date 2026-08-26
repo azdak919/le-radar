@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-26T11:26:24.114Z",
+  "updatedAt": "2026-08-26T11:56:28.238Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T11:25:49.080Z"
+      "checkedAt": "2026-08-26T11:55:50.686Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T11:25:51.058Z"
+      "checkedAt": "2026-08-26T11:55:52.941Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T11:25:54.443Z"
+      "checkedAt": "2026-08-26T11:55:55.854Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Morning Electro-shock",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/morning-electro-shock"
-      },
-      "next": {
         "title": "Words and Culture",
         "source": "schedule",
         "start": "07:30",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/words-and-culture"
       },
+      "next": {
+        "title": "Trawling the Megahertz",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
+      },
       "track": "",
-      "showTitle": "Morning Electro-shock",
+      "showTitle": "Words and Culture",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T11:26:08.257Z"
+      "checkedAt": "2026-08-26T11:56:09.944Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T11:26:09.076Z"
+      "checkedAt": "2026-08-26T11:56:10.532Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/in-velo-veritas"
       },
-      "track": "Les Louanges - Correct",
+      "track": "Wine Lips - Projector",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -147,11 +147,8 @@
         "api-live",
         "schedule"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-08-26T11:26:23.763Z"
+      "clientPoll": null,
+      "checkedAt": "2026-08-26T11:56:27.888Z"
     }
   }
 }
