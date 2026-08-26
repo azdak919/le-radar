@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-08-26T18:14:40.588Z",
+  "updatedAt": "2026-08-26T20:31:46.811Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
+        "source": "api-live",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T18:14:25.138Z"
+      "checkedAt": "2026-08-26T20:31:21.999Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
+        "title": "Le cours de math",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/le-cours-de-math"
       },
       "next": {
-        "title": "Parler pour jaser",
+        "title": "Feu | Metal | Chaos",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/parler-pour-jaser"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/feu-metal-chaos"
       },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Le cours de math",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T18:14:27.141Z"
+      "checkedAt": "2026-08-26T20:31:24.181Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Radyo Kapwa",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "All Da Way Live",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Off the Hour/Sounds of Resistance",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Radyo Kapwa",
+      "showTitle": "All Da Way Live",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T18:14:29.554Z"
+      "checkedAt": "2026-08-26T20:31:26.993Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Something for the Mood",
+        "title": "Borderline",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/something-for-the-mood"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/borderline"
       },
       "next": {
-        "title": "Patch Notes",
+        "title": "Advice By The Fireplace",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/patch-notes"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
       },
       "track": "",
-      "showTitle": "Something for the Mood",
+      "showTitle": "Borderline",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T18:14:31.697Z"
+      "checkedAt": "2026-08-26T20:31:39.549Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,31 +133,32 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T18:14:32.651Z"
+      "checkedAt": "2026-08-26T20:31:40.533Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
+        "title": "Podcast Nomade: L'art de se rencontrer",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "https://www.choq.ca/emissions/podcast-nomade-lart-de-se-rencontrer"
       },
-      "track": "Burial - Street Halo",
+      "track": "Ada Lea - copycat",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-26T18:14:40.237Z"
+      "checkedAt": "2026-08-26T20:31:46.460Z"
     }
   }
 }
