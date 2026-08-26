@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-26T14:41:38.946Z",
+  "updatedAt": "2026-08-26T16:16:03.609Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T14:41:23.080Z"
+      "checkedAt": "2026-08-26T16:15:23.459Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
+        "title": "La carte cadeau",
         "source": "schedule",
-        "start": "09:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
       "next": {
-        "title": "Genre de bleu (reprise)",
+        "title": "Le palmarès",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/genre-de-bleu"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "La carte cadeau",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T14:41:25.550Z"
+      "checkedAt": "2026-08-26T16:15:25.604Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Sleepy King/Terminal 5",
+        "title": "If You Got Ears",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "Free City Radio",
+        "title": "Radyo Kapwa",
         "source": "api-live",
-        "start": "11:00",
-        "end": "11:30"
+        "start": "14:00",
+        "end": "15:00"
       },
       "track": "",
-      "showTitle": "The Sleepy King/Terminal 5",
+      "showTitle": "If You Got Ears",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T14:41:28.494Z"
+      "checkedAt": "2026-08-26T16:15:30.824Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
+        "title": "North-South Hockey",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/north-south-hockey"
       },
       "next": {
-        "title": "Unheard Of",
+        "title": "Beatnik Boy: Mixtape",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/unheard-of"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/beatnik-boy-mixtape"
       },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "North-South Hockey",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T14:41:31.780Z"
+      "checkedAt": "2026-08-26T16:15:44.398Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,32 +126,31 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T14:41:32.550Z"
+      "checkedAt": "2026-08-26T16:15:45.705Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "In Vélo Veritas",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://www.choq.ca/emissions/in-velo-veritas"
+        "title": "Palmarès CHOQ.ca",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
       },
-      "track": "Birds of Prrrey - Milk Bone (tell anyone)",
+      "track": "Quicksand - Days You Run To",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-26T14:41:38.595Z"
+      "checkedAt": "2026-08-26T16:16:03.258Z"
     }
   }
 }
