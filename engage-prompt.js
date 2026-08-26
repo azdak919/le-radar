@@ -551,29 +551,34 @@
     root.setAttribute('aria-labelledby', 'engage-prompt-title');
     root.dataset.kind = kind;
 
+    const esc = (value) => String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
     const stepsHtml = steps?.length
-      ? `<ol class="engage-prompt__steps">${steps.map((s) => `<li>${s}</li>`).join('')}</ol>`
+      ? `<ol class="engage-prompt__steps">${steps.map((s) => `<li>${esc(s)}</li>`).join('')}</ol>`
       : '';
 
     const glyph = icon
       || (kind === 'install' ? '📲' : kind === 'home' ? '🏠' : '✨');
 
     const confirmHtml = confirmLabel
-      ? `<button type="button" class="engage-prompt__btn" data-act="confirm">${confirmLabel}</button>`
+      ? `<button type="button" class="engage-prompt__btn" data-act="confirm">${esc(confirmLabel)}</button>`
       : '';
 
     root.innerHTML = `
       <div class="engage-prompt__inner">
         <button type="button" class="engage-prompt__close" aria-label="${lang === 'en' ? 'Dismiss' : 'Fermer'}">×</button>
-        <div class="engage-prompt__icon" aria-hidden="true">${glyph}</div>
+        <div class="engage-prompt__icon" aria-hidden="true">${esc(glyph)}</div>
         <div class="engage-prompt__copy">
-          <p id="engage-prompt-title" class="engage-prompt__title">${title}</p>
-          <p class="engage-prompt__body">${body}</p>
+          <p id="engage-prompt-title" class="engage-prompt__title">${esc(title)}</p>
+          <p class="engage-prompt__body">${esc(body)}</p>
           ${stepsHtml}
         </div>
         <div class="engage-prompt__actions">
           ${showPrimary !== false
-            ? `<button type="button" class="engage-prompt__btn engage-prompt__btn--primary" data-act="primary">${primaryLabel}</button>`
+            ? `<button type="button" class="engage-prompt__btn engage-prompt__btn--primary" data-act="primary">${esc(primaryLabel)}</button>`
             : ''}
           ${confirmHtml}
           <button type="button" class="engage-prompt__btn" data-act="later">${lang === 'en' ? 'Later' : 'Plus tard'}</button>

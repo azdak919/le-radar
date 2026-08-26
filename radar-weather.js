@@ -144,6 +144,7 @@ function buildMastheadWeatherBoard() {
     const provider = weatherForecastProvider(city);
     el.title = `Prévisions de ${provider} — ${context}`;
     el.setAttribute("aria-label", `Prévisions de ${provider} pour ${context}`);
+    // Trusted static skeleton; city names are assigned with textContent.
     el.innerHTML = '<span class="masthead-weather__icon" aria-hidden="true">·</span><span class="masthead-weather__name"><span class="masthead-weather__name-text"><span class="masthead-weather__name-full"></span><span class="masthead-weather__name-compact" aria-hidden="true"></span></span></span><span class="masthead-weather__temp">—</span>';
     el.querySelector('.masthead-weather__name-full').textContent = city.name;
     el.querySelector('.masthead-weather__name-compact').textContent = city.compactName || city.name;
@@ -637,6 +638,7 @@ function ensureWideNowAirPair() {
     wrap.id = 'tuner-nowair-wide';
     wrap.className = 'tuner-nowair-wide';
     wrap.setAttribute('aria-label', 'Antenne et à venir');
+    // Trusted static markup (labels + empty slots). Titles filled via textContent.
     wrap.innerHTML = [
       '<div class="tuner-wide-slot tuner-wide-slot--live" aria-live="polite">',
       '  <span class="tuner-wide-slot__label">À l\'antenne</span>',
