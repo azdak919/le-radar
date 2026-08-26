@@ -286,8 +286,11 @@ def analyze(im: Image.Image) -> dict:
     crop = cover_crop(im)
     sample = crop.resize((280, max(36, int(280 / MASTHEAD_AR))), Image.Resampling.BILINEAR)
     cw, ch = sample.size
-    pixels = list(
-        sample.get_flattened_data() if hasattr(sample, "get_flattened_data") else sample.getdata()
+    raw = list(sample.get_flattened_data()) if hasattr(sample, "get_flattened_data") else list(sample.getdata())
+    pixels = (
+        list(zip(raw[0::3], raw[1::3], raw[2::3]))
+        if raw and not isinstance(raw[0], (tuple, list))
+        else raw
     )
     n = len(pixels)
 

@@ -44,4 +44,19 @@ assert(
   'style-chrome.css : reduced-motion global en dernière feuille',
 );
 
+function assertMastheadBeforeStyle(rel) {
+  const html = readFileSync(join(root, rel), 'utf8');
+  const hrefs = [...html.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map((m) => m[1]);
+  const mast = hrefs.findIndex((h) => h.includes('style-masthead.css'));
+  const base = hrefs.findIndex((h) => /(?:^|\/)style\.css$/.test(h));
+  if (mast === -1 || base === -1) return;
+  assert(mast < base, `${rel} : style-masthead.css avant style.css`);
+}
+
+assertMastheadBeforeStyle('index.html');
+assertMastheadBeforeStyle('feeds.html');
+assertMastheadBeforeStyle('tuner-embed.html');
+assertMastheadBeforeStyle('dev/sports-strip-lab.html');
+assertMastheadBeforeStyle('dev/cta-hier-color-lab.html');
+
 console.log('OK css-cascade');
