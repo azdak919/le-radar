@@ -59,12 +59,19 @@ def fetch_image(url: str) -> Image.Image:
     return im
 
 
+def rgb_tuples(im: Image.Image) -> list:
+    raw = list(im.get_flattened_data()) if hasattr(im, "get_flattened_data") else list(im.getdata())
+    if raw and not isinstance(raw[0], (tuple, list)):
+        return list(zip(raw[0::3], raw[1::3], raw[2::3]))
+    return raw
+
+
 def analyze(im: Image.Image) -> dict:
     # Downsample further for speed
     im = im.copy()
     im.thumbnail((320, 200))
     w, h = im.size
-    px = list(im.getdata())
+    px = rgb_tuples(im)
     n = max(1, len(px))
 
     snow_white = 0

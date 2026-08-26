@@ -893,7 +893,7 @@ async function preview() {
       paintPreview(img, photo);
     }
     if (gen !== previewGen) return;
-    status.innerHTML = `<strong>${specLine()}</strong>`;
+    status.innerHTML = `<strong>${escapeAttr(specLine())}</strong>`;
   } catch (err) {
     if (gen !== previewGen) return;
     paintPreview(null, null);
@@ -1092,7 +1092,7 @@ async function downloadPrint(kind = 'pdf') {
       }
       const mb = (jpegBlob.size / 1_048_576).toFixed(1);
       const shareHint = how === 'share' ? ' Choisissez Enregistrer dans Fichiers (ou Imprimer).' : '';
-      status.innerHTML = `JPEG <strong>${stem}.jpg</strong> · ${fmt.label} · ${safe} dpi · ${mb} Mo (Safari ne tient pas un JPEG ${dpi} dpi). Le PDF reste à ${dpi} dpi.${shareHint}`;
+      status.innerHTML = `JPEG <strong>${escapeAttr(stem)}.jpg</strong> · ${escapeAttr(fmt.label)} · ${escapeAttr(safe)} dpi · ${escapeAttr(mb)} Mo (Safari ne tient pas un JPEG ${escapeAttr(dpi)} dpi). Le PDF reste à ${escapeAttr(dpi)} dpi.${escapeAttr(shareHint)}`;
       return;
     }
     const campus = campusOf(state.campus);
@@ -1124,7 +1124,7 @@ async function downloadPrint(kind = 'pdf') {
     const mb = (blob.size / 1_048_576).toFixed(1);
     const tiled = tiles ? ' Composé en tuiles (limite Safari).' : '';
     const shareHint = how === 'share' ? ' Choisissez Enregistrer dans Fichiers (ou Imprimer).' : '';
-    status.innerHTML = `Fichier <strong>${name}</strong> · ${fmt.label} · ${dpi} dpi · ${mb} Mo.${tiled}${shareHint} Imprimez à 100 %, sans « ajuster à la page ».`;
+    status.innerHTML = `Fichier <strong>${escapeAttr(name)}</strong> · ${escapeAttr(fmt.label)} · ${escapeAttr(dpi)} dpi · ${escapeAttr(mb)} Mo.${escapeAttr(tiled)}${escapeAttr(shareHint)} Imprimez à 100 %, sans « ajuster à la page ».`;
   } catch (err) {
     status.textContent = `Téléchargement impossible : ${err.message}`;
   } finally {

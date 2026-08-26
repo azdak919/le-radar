@@ -235,7 +235,7 @@ node scripts/add-news-source.js \
 | 4 | `node scripts/ensure-lead-images.js --update` | Images vedette |
 | 5 | `node scripts/fetch-social.js --update` | Réseaux sociaux (si `site` renseigné) |
 | 6 | Incrémenter `CACHE_NAME` dans `sw.js` | Si `app.js` / assets modifiés |
-| 7 | `git commit` + `git push` | Déploiement GitHub Pages |
+| 7 | branche + PR + merge and delete | Déploiement GitHub Pages |
 
 Raccourci : `node scripts/maintain.js --update`
 

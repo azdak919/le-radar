@@ -1,4 +1,4 @@
-const CACHE_NAME = "radar-shell-v785";
+const CACHE_NAME = "radar-shell-v786";
 const CACHE_PREFIX = "radar-";
 /** Cache permanent : page maintenance / hors-ligne (ne se purge pas au bump shell). */
 const OFFLINE_CACHE = "radar-offline-v22";
@@ -31,6 +31,11 @@ const APP_SHELL = [
   "./feeds-page.js",
   "./style.css",
   "./style-masthead.css",
+  "./style-sports-strip.css",
+  "./style-masthead-chrome.css",
+  "./style-tuner.css",
+  "./style-feed.css",
+  "./style-chrome.css",
   "./seo-page-theme.js",
   "./dev/wide-desktop-preview.css",
   "./dev/wide-desktop-preview.js",
@@ -42,6 +47,14 @@ const APP_SHELL = [
   "./mobile-playback.js",
   "./player-sync.js",
   "./nav-shell.js",
+  "./weather-cities-data.js",
+  "./radar-utils.js",
+  "./radar-state.js",
+  "./radar-weather.js",
+  "./radar-sports-cta.js",
+  "./radar-tuner.js",
+  "./radar-news.js",
+  "./radar-lifecycle.js",
   "./app.js",
   "./bg-rotation-lib.js",
   "./photo-bank-data.js",

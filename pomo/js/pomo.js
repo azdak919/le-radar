@@ -177,7 +177,7 @@ function PomoUI() {
   const dotsEl = document.getElementById('pomo-dots');
   const readyLabel = document.getElementById('pomo-phase-ready');
 
-  if (display) display.innerHTML = `${minStr}<span class="pomo-time-unit">m</span>`;
+  if (display) display.innerHTML = `${String(Math.max(0, Number.parseInt(minStr, 10) || 0))}<span class="pomo-time-unit">m</span>`;
 
   // Le titre est le libellé stable employé par les favoris et onglets.
   document.title = 'Pomo';
@@ -237,7 +237,7 @@ function PomoUI() {
     const fpDots = document.getElementById('pomo-fp-dots');
     const fpReady = document.getElementById('pomo-fp-phase-ready');
 
-    if (fpDisplay) fpDisplay.innerHTML = `${minStr}<span class="pomo-time-unit">m</span>`;
+    if (fpDisplay) fpDisplay.innerHTML = `${String(Math.max(0, Number.parseInt(minStr, 10) || 0))}<span class="pomo-time-unit">m</span>`;
     // fpProgress ring already updated above (step 2)
     if (fpLabel) fpLabel.textContent = pomo.isBreak ? (pomo.isLongBreak ? 'Long Break' : 'Break') : 'Focus';
     if (fpPlay) { fpPlay.classList.toggle('on-break', pomo.isBreak); }

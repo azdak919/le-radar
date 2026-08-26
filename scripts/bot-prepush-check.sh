@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Gate locale des bots qui touchent le site (HTML / SEO / app) avant push main.
+# Gate locale des bots qui touchent le site (HTML / SEO / app) avant commit sur main.
 # Objectif : échouer dans le job bot plutôt qu’envoyer un mail Vérification
 # après un commit cassé.
 #

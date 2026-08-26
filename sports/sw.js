@@ -16,7 +16,7 @@
    mise à jour.
    ═══════════════════════════════════════════════════════ */
 
-const SHELL_CACHE  = 'sports-shell-v188';
+const SHELL_CACHE  = 'sports-shell-v189';
 const FONT_CACHE   = 'sports-fonts-v1';
 const CACHE_PREFIX = 'sports-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];
@@ -55,6 +55,11 @@ const SCOPE_ASSETS = [
 const SHARED_ASSETS = [
   '../style.css',
   '../style-masthead.css',
+  '../style-sports-strip.css',
+  '../style-masthead-chrome.css',
+  '../style-tuner.css',
+  '../style-feed.css',
+  '../style-chrome.css',
   '../seo-pages.css',
   '../seo-page-theme.js',
   '../dev/wide-desktop-preview.css',
@@ -66,6 +71,14 @@ const SHARED_ASSETS = [
   '../mobile-playback.js',
   '../player-sync.js',
   '../institution-acronyms-data.js',
+  '../weather-cities-data.js',
+  '../radar-utils.js',
+  '../radar-state.js',
+  '../radar-weather.js',
+  '../radar-sports-cta.js',
+  '../radar-tuner.js',
+  '../radar-news.js',
+  '../radar-lifecycle.js',
   '../app.js',
   '../engage-prompt.js',
   '../app-sw-register.js',

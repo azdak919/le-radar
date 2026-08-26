@@ -20,14 +20,27 @@ dans l'idéal, et ce qui reste volontairement manuel.
 
 ---
 
+## Artéfacts volontairement lourds
+
+Mesures du 2026-08-26. Un « à revoir plus tard » n’est pas une conclusion.
+
+| Artefact | Pourquoi il reste | Garde-fou |
+|---|---|---|
+| `news-archive.json` (~10 Mo, ~8 k notices) | Métadonnées de conservation, **sans** corps ni images. Le public reste à `partial.maxRecords` (120). | JSON compact ; `storage.maxRecords` 20 000 ; `storage.maxFileBytes` 16 Mo ; `tests/artifact-budget.mjs` |
+| `sports.json` (~3,5 Mo) | Catalogue RSEQ vivant. Le HTML `/sports/` est un **prérendu SEO** volontaire, writer unique `generate-seo`. | Test 5 Mo |
+| `assets/news-images/` (~30 Mo) | Miroir des unes, hors ligne et Pages. | Test 40 Mo ; prune du bot miroir |
+| `assets/kit/` (~87 Mo) | Affiches campus **600 dpi**, 7 établissements. Qualité d’impression. | Test 100 Mo ; pas de campus supplémentaire sans go humain |
+
 ## Publication directe et fenêtre de maintenance
 
-Le flux habituel est le **push direct contrôlé** : les petites corrections ne
-mettent pas le site hors ligne. Avant chaque publication, rebaser sur `main`,
-vérifier localement les URLs touchées, exécuter `npm run check`, puis pousser
-sans jamais utiliser `git push --force` sur `main`. Les bots peuvent committer
-entre deux sessions; un push refusé se résout par `git fetch origin && git
-rebase origin/main`, jamais par l'écrasement de leur commit.
+Le flux habituel est une **branche thématique + PR**. Les petites corrections
+ne mettent pas le site hors ligne. Avant chaque publication : `main` à jour,
+vérifier localement les URLs touchées, exécuter `npm run check`, pousser la
+branche, ouvrir une PR. Merger seulement sur **merge and delete**, checks CI
+verts. `git push --force` sur `main` reste interdit. Les bots peuvent
+committer sur `main` entre deux sessions; un push de branche refusé se
+résout par `git fetch origin && git rebase origin/main`, jamais par
+l'écrasement de leur commit.
 
 La maintenance publique est réservée aux changements de risque élevé : service
 worker, lecteur, navigation globale, gabarits générés ou migration de données.
@@ -62,10 +75,11 @@ npm run maintenance:bots:pause -- --confirm
 npm run maintenance:bots:resume -- --confirm
 ```
 
-`maintenance:status` contrôle l’URL publique et l’état des neuf workflows qui
-écrivent dans `main`. Il affiche aussi **Vérification** et **Pages**, qui ne
-doivent jamais être désactivés. Les commandes de pause/reprise exigent
-`--confirm` afin qu’un copier-coller ne coupe pas les bots accidentellement.
+`maintenance:status` contrôle l’URL publique et l’état des **quatorze**
+workflows qui écrivent dans `main` (news, radio, sports, archives, institutions).
+Il affiche aussi **Vérification** et **Pages**, qui ne doivent jamais être
+désactivés. Les commandes de pause/reprise exigent `--confirm` afin qu’un
+copier-coller ne coupe pas les bots accidentellement.
 
 ### Séquence d’une fenêtre sensible
 
@@ -76,7 +90,7 @@ doivent jamais être désactivés. Les commandes de pause/reprise exigent
 3. Travailler localement; avant le commit, exécuter
    `npm run maintenance:release-check -- --maintenance`, les tests ciblés et
    ouvrir les liens locaux convenus.
-4. Rebaser, publier un seul commit, puis attendre Vérification et Pages.
+4. Rebaser la branche, un commit, PR, puis attendre Vérification et Pages.
 5. Désactiver le basculement WHC, vérifier l’accueil public, puis exécuter
    `npm run maintenance:bots:resume -- --confirm`.
 
@@ -208,7 +222,7 @@ Seuls les **médias étudiants** sont éligibles (pas les portails institutionne
 | 6. Images vedette | `node scripts/ensure-lead-images.js --update` | oui (crédits source vérifiés sur la page) |
 | 7. Réseaux sociaux | `node scripts/fetch-social.js --update` | optionnel |
 | 8. Cache PWA | incrémenter `CACHE_NAME` dans `sw.js` | oui si `app.js` touché |
-| 9. Déploiement | `git commit` + `git push` | oui |
+| 9. Déploiement | branche + PR + merge and delete | oui |
 
 ### Raccourci script
 

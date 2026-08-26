@@ -18,7 +18,7 @@ Pour ajouter un journal : [`adding-news-source.md`](adding-news-source.md).
 | Zone | Rôle | Fichiers pivots |
 |------|------|-----------------|
 | **Mât** | Header photo + météo + slogan | `index.html`, `quebec-backgrounds.js`, banques `QUEBEC_*` |
-| **Tuner radio** | Un lecteur, grilles, nowplaying | `app.js` (gros), `mobile-playback.js`, `radios.json` |
+| **Tuner radio** | Un lecteur, grilles, nowplaying | `radar-tuner.js`, `mobile-playback.js`, `radios.json` |
 | **News** | Fil RSS agrégé | `news.json`, `news-sources.json`, `scripts/fetch-news.js` |
 | **Pomo** | Mini-app isolée `/pomo/` | `pomo/`, `quebec-pomo-backgrounds-data.js`, `pomo/sw.js` |
 | **Solitaire** | Mini-app isolée `/solitaire/` | `solitaire/`, SW propre |
@@ -159,8 +159,8 @@ Alias historiques : `maintain:backgrounds` = masthead ; `…:pomo` etc. inchang�
 
 | Éviter en premier (monolithes) | Préférer |
 |--------------------------------|----------|
-| `app.js` (~7k lignes) | `mobile-playback.js`, `player-sync.js`, `docs/*` |
-| `style.css` (~5k) | règles ciblées + `docs/identite-visuelle.md` |
+| `radar-*.js` / `app.js` (entrée) | `mobile-playback.js`, `player-sync.js`, `docs/*` |
+| `style-*.css` | règles ciblées + `docs/identite-visuelle.md` |
 | Re-scan Commons bulk | blacklist + `bank:sync` + maintain ciblé |
 | Refonte UX radio/météo/PWA | hors scope sauf bug bloquant |
 
@@ -173,7 +173,7 @@ Alias historiques : `maintain:backgrounds` = masthead ; `…:pomo` etc. inchang�
 3. `npm run test:unit` si possible (data-integrity inclut les banques)
 4. SW bump **seulement** si shell réellement impacté (mât et/ou pomo)
 5. Diff final : chaque hunk = pipeline / purge / blacklist / doc / scripts — pas d’UX gratuite
-6. Commit message orienté résultat ; push `main` si checks OK
+6. Commit message orienté résultat ; branche → PR (jamais `git push origin main`). Merger seulement sur **merge and delete**.
 
 ### Message type
 
@@ -186,6 +186,6 @@ Pipeline banques QC : sync JSON, blacklist durable, playbook agent
 ## Dettes assumées (ne pas ouvrir sans besoin)
 
 - Pas de CI obligatoire sur `audit-quebec-backgrounds.py` (lourd réseau/images)
-- Découpe `app.js` / `style.css` — seulement si un extrait doc le justifie
+- Découpe `app.js` / `style.css` — **faite** (D2, 2026-08-25) : scripts `radar-*` + feuilles par surface, pas de bundler
 - Skills Grok externes hors repo — ce playbook **est** le skill unique du dépôt
 - Re-seed bulk Commons — volontairement hors pipeline quotidien

@@ -94,7 +94,7 @@ function recordFromItem(item, now, provenance = {}) {
   };
 }
 
-function mergeHistoricalCatalog(previous, items, observedAt = new Date().toISOString(), provenance = {}) {
+function mergeHistoricalCatalog(previous, items, observedAt = new Date().toISOString(), provenance = {}, options = {}) {
   const records = Array.isArray(previous?.records) ? previous.records : [];
   const byId = new Map(records.map((record) => [record.id, record]));
   let added = 0;
@@ -123,11 +123,18 @@ function mergeHistoricalCatalog(previous, items, observedAt = new Date().toISOSt
     byId.set(next.id, merged);
     updated += 1;
   }
-  const nextRecords = [...byId.values()].sort((a, b) => Date.parse(b.publishedAt || 0) - Date.parse(a.publishedAt || 0));
+  let nextRecords = [...byId.values()].sort((a, b) => Date.parse(b.publishedAt || 0) - Date.parse(a.publishedAt || 0));
+  const maxRecords = Number(options.maxRecords) || 0;
+  let dropped = 0;
+  if (maxRecords > 0 && nextRecords.length > maxRecords) {
+    dropped = nextRecords.length - maxRecords;
+    nextRecords = nextRecords.slice(0, maxRecords);
+  }
   return {
     catalog: { schemaVersion: 1, updated: observedAt, records: nextRecords },
     added,
     updated,
+    dropped,
   };
 }
 
@@ -182,6 +189,20 @@ function partialPublicSample(records, config, now = Date.now()) {
   return { records: chosen, eligible: eligible.length, verified: verified.length, conservation, reference };
 }
 
+function serializeHistoricalCatalog(catalog, config = {}) {
+  const maxRecords = Number(config.storage?.maxRecords) || 0;
+  const maxBytes = Number(config.storage?.maxFileBytes) || 0;
+  let records = Array.isArray(catalog?.records) ? catalog.records : [];
+  if (maxRecords > 0 && records.length > maxRecords) records = records.slice(0, maxRecords);
+  let payload = { ...catalog, records };
+  let text = `${JSON.stringify(payload)}\n`;
+  while (maxBytes > 0 && Buffer.byteLength(text) > maxBytes && payload.records.length > 120) {
+    payload = { ...payload, records: payload.records.slice(0, payload.records.length - 200) };
+    text = `${JSON.stringify(payload)}\n`;
+  }
+  return { text, catalog: payload };
+}
+
 module.exports = {
   cleanText,
   slugify,
@@ -189,6 +210,7 @@ module.exports = {
   stableId,
   recordFromItem,
   mergeHistoricalCatalog,
+  serializeHistoricalCatalog,
   ageBand,
   partialPublicSample,
 };
