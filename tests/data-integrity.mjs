@@ -106,23 +106,47 @@ for (const radio of radios) {
 }
 
 {
-  // CHYZ a renommé son mount Centova : /proxy/chyz943/stream → 404.
-  // Source de vérité : <audio> du lecteur sur chyz.ca (/proxy/tech/stream).
+  // CHYZ : ne pas suivre le <audio> de chyz.ca — il pointe le mount
+  // « Tests techniques » (/proxy/tech/stream). L’antenne est le compte
+  // Centova `chyz` (tunein/chyz.pls → Title1=CHYZ 94,3 FM).
+  const CHYZ_ONAIR = 'https://ecoutez.chyz.ca/proxy/chyz/stream';
   const chyz = radios.find((radio) => radio.id === 'chyz');
-  assert.equal(
-    chyz?.stream,
-    'https://ecoutez.chyz.ca/proxy/tech/stream',
-    'CHYZ : flux = mount Centova actuel (/proxy/tech/stream)',
-  );
+  assert.equal(chyz?.stream, CHYZ_ONAIR, 'CHYZ : flux = mount Centova d’antenne (/proxy/chyz/stream)');
   const discover = readFileSync(new URL('scripts/discover-streams.js', root), 'utf8');
   assert(
-    discover.includes("chyz: 'https://ecoutez.chyz.ca/proxy/tech/stream'"),
+    discover.includes(`chyz: CHYZ_ONAIR_STREAM`) || discover.includes(`'${CHYZ_ONAIR}'`),
     'discover-streams : KNOWN_STREAMS.chyz aligné sur radios.json',
+  );
+  assert(
+    !discover.includes("chyz: 'https://ecoutez.chyz.ca/proxy/tech/stream'"),
+    'discover-streams : ne plus préférer le mount de tests techniques',
   );
   assert(
     !discover.includes("chyz: 'https://ecoutez.chyz.ca/proxy/chyz943/stream'"),
     'discover-streams : ne plus préférer le mount CHYZ 404',
   );
+
+  const {
+    parseCentovaPls,
+    isJunkIcyName,
+    isJunkStreamUrl,
+    CHYZ_ONAIR_STREAM,
+  } = require('../scripts/discover-streams.js');
+  assert.equal(CHYZ_ONAIR_STREAM, CHYZ_ONAIR);
+  assert.equal(
+    parseCentovaPls('[playlist]\nTitle1=CHYZ 94,3 FM\nFile1=http://example:8004/stream\n').title,
+    'CHYZ 94,3 FM',
+  );
+  assert.equal(
+    parseCentovaPls('[playlist]\nTitle1=Tests techniques\nFile1=http://example:8000/stream\n').title,
+    'Tests techniques',
+  );
+  assert.equal(isJunkIcyName('Tests techniques'), true);
+  assert.equal(isJunkIcyName('No Name'), true);
+  assert.equal(isJunkIcyName('CHYZ 94,3 FM'), false);
+  assert.equal(isJunkIcyName(''), false);
+  assert.equal(isJunkStreamUrl('https://ecoutez.chyz.ca/proxy/tech/stream'), true);
+  assert.equal(isJunkStreamUrl(CHYZ_ONAIR), false);
 }
 
 /*
