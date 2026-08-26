@@ -77,6 +77,64 @@ test('wide E : la flèche overlay comme la loupe, hors du rail sources', async (
     .toBe('16px');
 });
 
+async function sampleRailTops(page, frames = 24) {
+  return page.evaluate(async (n) => {
+    const stack = document.getElementById('wide-rail-stack');
+    if (!stack) return [];
+    const out = [];
+    for (let i = 0; i < n; i += 1) {
+      out.push(Math.round(stack.getBoundingClientRect().top));
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+    }
+    return out;
+  }, frames);
+}
+
+function railJitter(samples) {
+  if (!samples.length) return Number.POSITIVE_INFINITY;
+  return Math.max(...samples) - Math.min(...samples);
+}
+
+async function scrollToPageBottom(page) {
+  await page.evaluate(() => {
+    const el = document.scrollingElement;
+    el.scrollTop = el.scrollHeight;
+  });
+  await page.waitForFunction(() => {
+    const el = document.scrollingElement;
+    return el.scrollHeight - el.scrollTop - window.innerHeight < 4;
+  });
+}
+
+test('1920 Philips : en bas de page le rail sources ne jitter pas', async ({ page }) => {
+  test.setTimeout(45_000);
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#wide-rail-stack')).toBeVisible({ timeout: 12_000 });
+  await expect(page.locator('.news-list[data-ready]')).toBeVisible({ timeout: 12_000 });
+
+  const runway = await page.evaluate(
+    () => document.scrollingElement.scrollHeight - window.innerHeight,
+  );
+  expect(runway, 'la page doit être assez longue pour aller au fond').toBeGreaterThan(400);
+
+  await scrollToPageBottom(page);
+  const collapsed = await sampleRailTops(page);
+  expect(
+    railJitter(collapsed),
+    `rail replié jitter ${railJitter(collapsed)} px (${collapsed.join(',')})`,
+  ).toBeLessThanOrEqual(4);
+
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await expandSources(page);
+  await scrollToPageBottom(page);
+  const expanded = await sampleRailTops(page);
+  expect(
+    railJitter(expanded),
+    `rail ouvert jitter ${railJitter(expanded)} px (${expanded.join(',')})`,
+  ).toBeLessThanOrEqual(4);
+});
+
 test('wide E 1440 : le rail ouvert remplit aussi un laptop', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });

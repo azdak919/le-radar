@@ -130,6 +130,23 @@ test('3440 : 2 unes moins étirées, En bref 2 col plus large', async ({ page })
   expect(layout.briefColW, `3440 : carte En bref trop étroite (${layout.briefColW} px)`).toBeGreaterThanOrEqual(480);
 });
 
+test('960 → 1920 : les 2 unes reviennent sans recharger', async ({ page }) => {
+  test.setTimeout(45_000);
+  await openAt(page, '/', 960, 1080);
+  await expect(page.locator('.news-list[data-ready]')).toBeVisible({ timeout: 12_000 });
+  await expect(page.locator('.news-hero .article--lead')).toHaveCount(1);
+
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await expect.poll(() => wideAttr(page), { timeout: 8_000 }).toBe('e');
+  await page.waitForFunction(() => {
+    const hero = document.querySelector('.news-hero');
+    return hero?.dataset.leads === '2'
+      && hero.querySelectorAll('.article--lead').length >= 2;
+  }, { timeout: 8_000 });
+  const layout = await measureMagazine(page);
+  expect(layout.leadsSideBySide, 'retour plein écran : unes toujours empilées').toBe(true);
+});
+
 test('?wide=off force l’ancien 1180 ; / tout seul active E à 1920', async ({ page }) => {
   await openAt(page, '/?wide=off', 1920, 1080);
   expect(await wideAttr(page)).toBe('');

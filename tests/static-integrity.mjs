@@ -1383,9 +1383,15 @@ assert(
     /\.wide-rail-stack:has\(\.filters-panel\.is-expanded\)\s*\{[^}]+\}/,
   ) || [''])[0];
   assert(
-    /height:\s*calc\(100dvh - var\(--wide-stack-from-top/.test(expandedStack)
+    /height:\s*calc\(100dvh - var\(--wide-rail-from-top/.test(expandedStack)
       && !/height:\s*auto/.test(expandedStack),
     'wide E : rail ouvert en hauteur réelle (pas height:auto → trou sous Réduire)',
+  );
+  assert(
+    /--wide-rail-from-top:\s*max\(/.test(wideCss)
+      && /Math\.max\(stickyTop, Math\.round\(rawTop\)\)/.test(appJs)
+      && appJs.includes('function scheduleMagazineViewportRelayout'),
+    'wide E : hauteur rail plafonnée au sticky (anti-jitter bas de page) + unes au resize',
   );
   const expandedFilters = (wideCss.match(
     /\.filters-panel\.is-expanded \.filters\s*\{[^}]+\}/,
