@@ -87,6 +87,7 @@ async function init() {
   bindTuner();
   bindExternalListen();
   bindFiltersPanel();
+  bindMagazineViewportRelayout();
   bindNewsSearch();
   initPageScrollTop();
   initHomeNavRefresh();
