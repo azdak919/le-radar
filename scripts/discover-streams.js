@@ -29,11 +29,13 @@ const RADIOS_PATH = path.join(__dirname, '..', 'radios.json');
 const CANDIDATES_PATH = path.join(__dirname, '..', 'radios-candidates.json');
 const TIMEOUT = 9000;
 
+// CHYZ : le <audio> de chyz.ca pointe /proxy/tech/stream (« Tests techniques »).
+// L’antenne est le compte Centova `chyz` (tunein/chyz.pls → Title1=CHYZ 94,3 FM).
+const CHYZ_ONAIR_STREAM = 'https://ecoutez.chyz.ca/proxy/chyz/stream';
+
 // === KNOWN GOOD STREAMS (the bot trusts and re-validates these first) ===
 const KNOWN_STREAMS = {
-  // Mount Centova actuel (lecteur chyz.ca, 2026-08-25). L’ancien
-  // /proxy/chyz943/stream répond 404 « Stream not found ».
-  chyz: 'https://ecoutez.chyz.ca/proxy/tech/stream',
+  chyz: CHYZ_ONAIR_STREAM,
   ckut: 'https://ckut.out.airtime.pro/ckut_a',
   // HTTPS mount — playable directly on the HTTPS site (the :8000 HTTP one is blocked as mixed content)
   cism: 'https://stream03.ustream.ca/cism128.mp3',
@@ -43,10 +45,7 @@ const KNOWN_STREAMS = {
 
 // Per-station hints for faster/better discovery
 const STATION_HINTS = {
-  chyz: [
-    'https://ecoutez.chyz.ca/proxy/tech/stream',
-    'https://ecoutez.chyz.ca/proxy/chyz943/stream',
-  ],
+  chyz: [CHYZ_ONAIR_STREAM],
   ckut: [
     'https://ckut.out.airtime.pro/ckut_a',
     'https://icecast.ckut.ca/903fm-192-stereo',
@@ -213,6 +212,43 @@ function normalizeStationLabel(text = '') {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, ' ')
     .trim();
+}
+
+function parseCentovaPls(text = '') {
+  const title = (String(text).match(/^Title1=(.*)$/im) || [])[1]?.trim() || '';
+  const file = (String(text).match(/^File1=(.*)$/im) || [])[1]?.trim() || '';
+  return { title, file };
+}
+
+function isJunkIcyName(name = '') {
+  const n = normalizeStationLabel(name);
+  if (!n) return false;
+  return n === 'no name' || /\btests?\b/.test(n);
+}
+
+function isJunkStreamUrl(url = '') {
+  return /\/proxy\/tech(?:\/|$)/i.test(String(url));
+}
+
+function centovaHttpsProxy(account, host = 'ecoutez.chyz.ca') {
+  const id = String(account || '').trim();
+  if (!id) return null;
+  return `https://${host}/proxy/${encodeURIComponent(id)}/stream`;
+}
+
+async function probeCentovaTunein(account, host = 'ecoutez.chyz.ca') {
+  const id = String(account || '').trim();
+  if (!id) return null;
+  const text = await fetchText(`https://${host}/tunein/${encodeURIComponent(id)}.pls`);
+  if (!text || /unable to access account/i.test(text)) return null;
+  const { title, file } = parseCentovaPls(text);
+  if (!title || isJunkIcyName(title)) return null;
+  return {
+    account: id,
+    title,
+    file,
+    https: centovaHttpsProxy(id, host),
+  };
 }
 
 const KNOWN_STATION_SLUGS = ['chyz', 'cism', 'ckut', 'cjlo', 'cfou', 'cfak', 'choq', 'cjep', 'crem'];
@@ -416,6 +452,10 @@ async function discoverForRadio(radio) {
 
   if (KNOWN_STREAMS[radio.id]) results.push(KNOWN_STREAMS[radio.id]);
   if (STATION_HINTS[radio.id]) results.push(...STATION_HINTS[radio.id]);
+  if (radio.id === 'chyz') {
+    const tunein = await probeCentovaTunein('chyz');
+    if (tunein?.https) results.push(tunein.https);
+  }
   results.push(...inferHostingUrls(radio));
 
   if (radio.website) {
@@ -453,12 +493,12 @@ async function discoverForRadio(radio) {
   }
 
   const expanded = results.flatMap((u) => expandStreamVariants(u));
-  const unique = [...new Set(expanded.filter((u) => u && isLikelyStreamUrl(u)))];
+  const unique = [...new Set(expanded.filter((u) => u && isLikelyStreamUrl(u) && !isJunkStreamUrl(u)))];
 
   const valid = [];
   for (const candidate of unique) {
     const test = await validateStream(candidate);
-    if (test.valid && streamMatchesStation(radio, test)) valid.push(test);
+    if (test.valid && streamMatchesStation(radio, test) && !isJunkIcyName(test.icyName)) valid.push(test);
   }
 
   if (!valid.length) {
@@ -622,7 +662,17 @@ async function main() {
   }
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+module.exports = {
+  CHYZ_ONAIR_STREAM,
+  parseCentovaPls,
+  isJunkIcyName,
+  isJunkStreamUrl,
+  centovaHttpsProxy,
+};
+
+if (require.main === module) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
