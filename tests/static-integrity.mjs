@@ -788,6 +788,26 @@ assert(maintenanceDoc.includes('Le DNS de `le-radar.ca` reste chez **WHC**'), 'd
 assert(maintenanceDoc.includes('npm run maintenance:status'), 'documentation maintenance : commande de statut requise');
 const feedsHtml = readFileSync(join(root, 'feeds.html'), 'utf8');
 assert(feedsHtml.includes('src="native-tuner.js"'), 'feeds.html : lecteur natif requis');
+{
+  const loader = readFileSync(join(root, 'native-tuner.js'), 'utf8');
+  const order = [
+    'weather-cities-data.js',
+    'radar-utils.js',
+    'radar-state.js',
+    'radar-weather.js',
+    'radar-sports-cta.js',
+    'radar-tuner.js',
+    'radar-news.js',
+    'radar-lifecycle.js',
+    'app.js',
+  ];
+  let cursor = -1;
+  for (const asset of order) {
+    const idx = loader.indexOf(`'${asset}'`);
+    assert(idx > cursor, `native-tuner.js : ${asset} requis avant app.js (ordre Radar)`);
+    cursor = idx;
+  }
+}
 assert(feedsHtml.includes('src="nav-shell.js"'), 'feeds.html : navigation persistante requise');
 assert(readFileSync(join(root, 'index.html'), 'utf8').includes('src="seo-page-theme.js"'), 'index.html : amorçage de thème avant paint requis');
 assert(feedsHtml.includes('src="seo-page-theme.js"'), 'feeds.html : amorçage de thème avant paint requis');
