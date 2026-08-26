@@ -663,7 +663,7 @@ test('téléphone 390 : sports cascade puis pause', async ({ page }) => {
   await assertSportsCascadeAt(page, { width: 390, minChips: 1 });
 });
 
-test('390 : la CTA se retouche sur place, pas une puce score qui glisse', async ({ page }) => {
+test('390 : la CTA change comme les autres formats, sans puce score qui glisse', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const strip = page.locator('#masthead-sports-strip');
@@ -680,20 +680,28 @@ test('390 : la CTA se retouche sur place, pas une puce score qui glisse', async 
   expect(rest.match, '390 : pas de puce score à côté de la CTA').toBe(0);
   expect(rest.badgeVisible, '390 : pas de badge V/D/N dans la CTA').toBe(false);
 
-  await page.evaluate(() => {
-    if (typeof rotateSportsSlot === 'function') rotateSportsSlot(0);
+  const swap = await page.evaluate(() => {
+    if (typeof rotateSportsSlot !== 'function') return { ok: false };
+    rotateSportsSlot(0);
+    const el = document.querySelector('#masthead-sports-strip .sports-chip--cta');
+    return {
+      ok: true,
+      n: document.querySelectorAll('#masthead-sports-strip .sports-chip').length,
+      match: document.querySelectorAll('#masthead-sports-strip .sports-chip--match').length,
+      cta: document.querySelectorAll('#masthead-sports-strip .sports-chip--cta').length,
+      leaving: !!el?.classList.contains('is-leaving'),
+      arriving: !!el?.classList.contains('is-arriving'),
+      rolling: !!el?.querySelector('.is-rolling-in, .is-rolling-out'),
+      leaveName: el ? getComputedStyle(el).animationName : '',
+    };
   });
-  await page.waitForTimeout(100);
-  const after = await strip.evaluate((el) => ({
-    n: el.querySelectorAll('.sports-chip').length,
-    match: el.querySelectorAll('.sports-chip--match').length,
-    cta: el.querySelectorAll('.sports-chip--cta').length,
-    leaving: el.querySelectorAll('.is-leaving, .is-arriving').length,
-  }));
-  expect(after.n, 'toujours une seule carte').toBe(1);
-  expect(after.cta).toBe(1);
-  expect(after.match, 'la rotation ne fait pas apparaître une puce score').toBe(0);
-  expect(after.leaving, 'pas de leave/arrive type puce score').toBe(0);
+  expect(swap.ok, 'rotateSportsSlot joignable').toBe(true);
+  expect(swap.n, 'toujours une seule carte').toBe(1);
+  expect(swap.cta).toBe(1);
+  expect(swap.match, 'la rotation ne fait pas apparaître une puce score').toBe(0);
+  expect(swap.leaving, '390 : sortie carte entière comme les autres formats').toBe(true);
+  expect(swap.rolling, 'pas de roulement interne du texte CTA').toBe(false);
+  expect(swap.leaveName, 'CSS leave sur la carte CTA mobile').toMatch(/sports-chip-leave/);
 });
 
 test('CTA sports : renouvellement carte entière comme les scores', async ({ page }) => {
