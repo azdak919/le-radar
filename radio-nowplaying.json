@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-26T09:37:04.336Z",
+  "updatedAt": "2026-08-26T10:31:53.959Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T09:36:35.469Z"
+      "checkedAt": "2026-08-26T10:31:23.804Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T09:36:37.326Z"
+      "checkedAt": "2026-08-26T10:31:26.111Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T09:36:39.692Z"
+      "checkedAt": "2026-08-26T10:31:28.825Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Morning Electro-shock",
         "source": "schedule",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/morning-electro-shock"
       },
+      "next": {
+        "title": "Words and Culture",
+        "source": "schedule",
+        "start": "07:30",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/words-and-culture"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Morning Electro-shock",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T09:36:53.360Z"
+      "checkedAt": "2026-08-26T10:31:43.190Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T09:36:54.272Z"
+      "checkedAt": "2026-08-26T10:31:43.893Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/in-velo-veritas"
       },
-      "track": "Beatrice Deer - Wolf Woman",
+      "track": "Mike Paul Kuekuatsheu - Shine bright",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -151,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-26T09:37:03.986Z"
+      "checkedAt": "2026-08-26T10:31:53.608Z"
     }
   }
 }
