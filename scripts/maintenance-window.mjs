@@ -29,7 +29,7 @@ export const WRITER_WORKFLOWS = [
 ];
 
 const PROTECTED_WORKFLOWS = [
-  '.github/workflows/quality.yml',
+  '.github/workflows/verification.yml',
   'dynamic/pages/pages-build-deployment',
 ];
 const SITE_URL = process.env.LE_RADAR_SITE_URL || 'https://le-radar.ca/';
