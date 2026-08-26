@@ -540,9 +540,15 @@ html[data-wide-preview="e"] {
     max-width: var(--wide-rail);
     justify-self: stretch;
     box-sizing: border-box;
-    /* Hauteur = espace sous le rail (haut de page ou sticky), pas 100dvh. */
+    /* Hauteur = espace sous le rail (haut de page ou sticky), pas 100dvh.
+       Plancher = sticky : en bas de page le rail se décolle, top chute, et
+       une hauteur qui grandit le recollé → jitter 60 fps. */
     overflow-anchor: none;
-    max-height: calc(100dvh - var(--wide-stack-from-top, var(--wide-sticky-top, 76px)) - var(--wide-rail-bottom, 16px));
+    --wide-rail-from-top: max(
+      var(--wide-stack-from-top, var(--wide-sticky-top, 76px)),
+      var(--wide-sticky-top, 76px)
+    );
+    max-height: calc(100dvh - var(--wide-rail-from-top) - var(--wide-rail-bottom, 16px));
     overflow-x: hidden;
     overflow-y: visible;
     overscroll-behavior: contain;
@@ -558,8 +564,8 @@ html[data-wide-preview="e"] {
      seulement `max-height` : sinon le flex ne s’étire pas et « Réduire »
      flotte au-dessus d’un trou jusqu’au bas de la fenêtre. */
   html[data-wide-preview="e"] .wide-rail-stack:has(.filters-panel.is-expanded) {
-    height: calc(100dvh - var(--wide-stack-from-top, var(--wide-sticky-top, 76px)) - var(--wide-rail-bottom, 16px));
-    max-height: calc(100dvh - var(--wide-stack-from-top, var(--wide-sticky-top, 76px)) - var(--wide-rail-bottom, 16px));
+    height: calc(100dvh - var(--wide-rail-from-top) - var(--wide-rail-bottom, 16px));
+    max-height: calc(100dvh - var(--wide-rail-from-top) - var(--wide-rail-bottom, 16px));
     overflow-y: hidden;
     padding-bottom: 8px;
   }
