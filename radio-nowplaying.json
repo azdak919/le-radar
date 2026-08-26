@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-26T13:52:43.563Z",
+  "updatedAt": "2026-08-26T14:41:38.946Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Mercredi Bonbon",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mercredi-bonbon/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Mercredi Bonbon",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T13:52:01.493Z"
+      "checkedAt": "2026-08-26T14:41:23.080Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T13:52:03.696Z"
+      "checkedAt": "2026-08-26T14:41:25.550Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T13:52:11.269Z"
+      "checkedAt": "2026-08-26T14:41:28.494Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Are We There Yet?",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/are-we-there-yet"
-      },
-      "next": {
         "title": "Democracy Now",
         "source": "schedule",
         "start": "10:00",
         "end": "11:00",
         "url": "http://www.cjlo.com/shows/democracy-now"
       },
+      "next": {
+        "title": "Unheard Of",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/unheard-of"
+      },
       "track": "",
-      "showTitle": "Are We There Yet?",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T13:52:25.171Z"
+      "checkedAt": "2026-08-26T14:41:31.780Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T13:52:26.138Z"
+      "checkedAt": "2026-08-26T14:41:32.550Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/in-velo-veritas"
       },
-      "track": "Francouvertes 2026 - Noem",
+      "track": "Birds of Prrrey - Milk Bone (tell anyone)",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -158,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-26T13:52:43.213Z"
+      "checkedAt": "2026-08-26T14:41:38.595Z"
     }
   }
 }
