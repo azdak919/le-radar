@@ -62,7 +62,7 @@ Système **sémantique** : chaque couleur a un rôle, pas seulement une esthéti
 | `--bg-soft` | `#F6F6F4` | `#181A1E` | Squelettes de chargement |
 | `--ink` | `#16181C` | `#F1F2F4` | Texte principal |
 | `--ink-soft` | `#44474D` | `#C2C6CD` | Texte secondaire / brèves |
-| `--muted` | `#80858C` | `#888D96` | Métadonnées, dates |
+| `--muted` | `#5F646C` | `#888D96` | Métadonnées, dates |
 | `--rule` | `#E7E7E3` | `#26282D` | Filets fins |
 | `--rule-strong` | `#14161A` | `#F1F2F4` | Filets forts (titres de section) |
 | `--tuner-bg` | `#111317` | `#1A1C21` | Bandeau du syntoniseur (toujours sombre) |

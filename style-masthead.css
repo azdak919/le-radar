@@ -1,6 +1,6 @@
 /* LE-RADAR — mât photo + chrome masthead
  * Extrait de style.css (D2 tranche 1) pour limiter la surface agent.
- * Chargé via @import depuis style.css — ne pas lier séparément.
+ * Chargé via <link rel="stylesheet"> avant style.css — jamais @import.
  */
 
 /* ═══════════════════════════════════════════════════════════

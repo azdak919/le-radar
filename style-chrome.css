@@ -1,0 +1,2274 @@
+/* LE-RADAR — chrome partagé (pied, sections, recherche, toast, suite du fil)
+ * Extrait de style.css (D2). Charger via <link> dans cet ordre, jamais @import.
+ * Dernière feuille du site : le reduced-motion global doit rester ici.
+ */
+
+/* ─────────────── FOOTER ─────────────── */
+.site-foot {
+  margin-top: 44px;
+  padding-top: 28px;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.site-foot a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.site-foot a:hover { text-decoration: underline; }
+.site-foot p { margin: 0 0 8px; }
+
+/* Signature institutionnelle. La marque domine ; le développement de
+   l'acronyme reste volontairement discret et ne doit jamais lui voler la
+   vedette. Il peut faire deux lignes sur mobile : on le laisse passer à la
+   ligne plutôt que de le tronquer ou de forcer un débordement. */
+.site-foot__brand {
+  margin-bottom: 16px;
+}
+
+.site-foot__wordmark {
+  margin: 0 0 2px;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  /* Même axe optique que le mot-symbole du mât / des affiches, pas la
+     coupe « texte » de Source Serif 4 à 19 px (qui se rapproche d’Inter). */
+  font-optical-sizing: none;
+  font-variation-settings: "opsz" 48;
+}
+
+.site-foot__signature {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.45;
+  /* --ink-soft et non --muted : à 12 px, --muted tombe à 3,7:1 sur le fond,
+     sous le seuil AA. La hiérarchie tient par la taille et la graisse de la
+     marque au-dessus, pas par un contraste affaibli. */
+  color: var(--ink-soft);
+  overflow-wrap: break-word;
+}
+
+.site-foot__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+  margin-bottom: 8px;
+}
+
+.site-foot__sep {
+  color: var(--rule);
+  user-select: none;
+}
+
+.site-foot__logo {
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+  vertical-align: -.12em;
+}
+
+.site-foot__credit {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+}
+
+.site-foot__author {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.site-foot__contact {
+  margin: 6px 0 12px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.site-foot__contact a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: inherit;
+  text-underline-offset: 3px;
+}
+.site-foot__contact svg { width: 15px; height: 15px; flex: 0 0 auto; }
+.site-foot__contact a:hover { color: var(--accent); }
+
+.site-foot__legal {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.site-foot__bot {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.site-foot__bot-ico {
+  font-size: 14px;
+  line-height: 1;
+}
+
+
+
+/* ── Installer l’app (menu masthead + pied de page) ── */
+.install-menu {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.install-menu__toggle { cursor: pointer; }
+.install-menu.is-open .install-menu__toggle {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+/*
+ * Le panneau est un popover : il vit dans le top layer, donc au-dessus du
+ * syntoniseur et des outils flottants sans qu'aucun z-index n'ait à le
+ * disputer. Avant ça il fallait relever `.masthead-inner` pendant l'ouverture,
+ * parce que son contexte d'empilement enfermait le z-index du panneau et que
+ * le 4ᵉ item passait sous la barre du lecteur. Plus de rustine : le top layer
+ * ignore les contextes d'empilement.
+ *
+ * Un popover est positionné par rapport à la fenêtre : c'est engage-prompt.js
+ * qui pose `top` / `left` sous le déclencheur, lui seul connaissant sa place.
+ */
+.install-menu__panel {
+  position: fixed;
+  margin: 0;
+  /* `width: max-content` + items insécables : « Sports Étudiants » passait sur
+     deux lignes et cassait le rythme du menu. */
+  width: max-content;
+  min-width: 11.5rem;
+  max-width: calc(100vw - 16px);
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  color: var(--ink);
+  box-shadow:
+    0 12px 32px -12px rgba(0, 0, 0, 0.28),
+    0 0 0 1px color-mix(in srgb, var(--rule) 60%, transparent);
+  flex-direction: column;
+  gap: 2px;
+}
+/* `:popover-open` pour les navigateurs qui gèrent l'API, `[hidden]` pour le
+   repli où le panneau reste un simple bloc absolu dans son menu. */
+.install-menu__panel:popover-open { display: flex; }
+.install-menu__panel:not([popover]) {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 240;
+  display: flex;
+}
+.install-menu__panel[hidden] { display: none !important; }
+/* Titre du panneau — focus-group le-radar-install-title (verdict B). */
+.install-menu__title {
+  margin: 2px 4px 6px;
+  padding: 0 6px 6px;
+  border-bottom: 1px solid color-mix(in srgb, var(--rule) 70%, transparent);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.install-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.install-menu__item:hover,
+.install-menu__item:focus-visible {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  outline: none;
+}
+.install-menu__item.is-current {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.install-menu__item.is-installed {
+  opacity: 0.55;
+  cursor: default;
+}
+.install-menu__item .app-emoji {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  .install-menu__toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+.install-menu__toggle:active { transform: scale(0.9); }
+
+/*
+ * « Installer LE-RADAR.ca » est une destination du pied de page comme les
+ * autres, pas un appel à l'action : la pastille accent pesait plus lourd que
+ * les sections qu'elle surplombait. Reste un <button> — c'est une action, pas
+ * un lien — mais calé sur `.site-foot a` pour être indiscernable de ses
+ * voisins, séparateurs compris.
+ */
+.site-foot__link-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--accent);
+  font-weight: 600;
+  cursor: pointer;
+}
+.site-foot__link-btn:hover { text-decoration: underline; }
+.site-foot__link-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ── Menu de sections (accueil, sous la barre des scores) ──
+ *
+ * Repris du fil d'Ariane des pages d'entités (`.seo-crumbs`) : même famille,
+ * même corps, même gris. C'est un rappel de navigation, pas un bandeau — il ne
+ * doit pas concurrencer le mât juste au-dessus ni le fil juste en dessous.
+ */
+.site-sections {
+  max-width: var(--maxw);
+  /* Le bandeau des scores a déjà 8 px de padding-bottom : 6 px suffisent
+     au-dessus. En dessous, `.wire-head` est ramené à 0 (voir la règle
+     d'adjacence plus haut), donc c'est cette marge qui donne l'air — pas les
+     deux cumulées. */
+  margin: 6px auto 8px;
+  padding: 0 var(--pad);
+  font-family: var(--sans);
+  font-size: 12.5px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  color: var(--muted);
+}
+.site-sections a {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 2px 0;
+}
+.site-sections a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.site-sections a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+.site-sections__sep {
+  color: var(--rule);
+  user-select: none;
+}
+@media (max-width: 599.98px) {
+  .site-sections {
+    /* Le padding des liens (2 px) reste : c'est la cible tactile, on gagne
+       l'espace sur les marges, pas sur ce qui se touche. */
+    margin: 4px auto 6px;
+    font-size: 12px;
+    gap: 3px 7px;
+    /* Centré sur mobile : la ligne est seule sur sa largeur, alors qu'au-dessus
+       de 600 px elle s'aligne sur le fil qui la suit. */
+    justify-content: center;
+  }
+}
+
+/* ─────────────── FEEDS PAGE ─────────────── */
+.feeds-wire { padding-bottom: 56px; }
+
+.feeds-head {
+  margin-top: 28px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--rule-strong);
+}
+
+.feeds-eyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.feeds-title {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: clamp(1.85rem, 5vw, 2.35rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.feeds-lead {
+  margin: 0;
+  max-width: 58ch;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.feeds-updated {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.feeds-card {
+  margin-top: 22px;
+  max-width: 52rem;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  background: var(--bg);
+  overflow: hidden;
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--ink) 4%, transparent);
+}
+
+.feeds-subscribe {
+  display: grid;
+  gap: 14px;
+  padding: 20px 22px;
+  background: color-mix(in srgb, var(--accent) 5%, var(--bg));
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 640px) {
+  .feeds-subscribe {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 18px;
+  }
+}
+
+.feeds-subscribe__label {
+  margin: 0 0 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.feeds-subscribe__url {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--rule));
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+.feeds-subscribe__rss {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--accent);
+}
+
+.feeds-subscribe__code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--ink);
+  word-break: break-all;
+}
+
+.feeds-subscribe__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.feeds-card__body {
+  display: grid;
+  gap: 0;
+}
+
+@media (min-width: 720px) {
+  .feeds-card__body {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .feeds-panel--sources {
+    border-right: 1px solid var(--rule);
+  }
+}
+
+.feeds-panel {
+  padding: 20px 22px 22px;
+}
+
+.feeds-panel__title {
+  margin: 0 0 14px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.feeds-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.feeds-grid__row {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  align-items: start;
+  gap: 10px 12px;
+  padding: 7px 8px;
+  border-radius: 8px;
+  transition: background 140ms ease;
+}
+
+.feeds-grid__row:hover {
+  background: color-mix(in srgb, var(--c, var(--accent)) 6%, var(--bg));
+}
+
+.feeds-grid__campus {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.feeds-grid__campus::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c, var(--accent));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--c, var(--accent)) 22%, transparent);
+  flex-shrink: 0;
+}
+
+.feeds-grid__paper {
+  min-width: 0;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.feeds-cegep-wrap {
+  margin-top: 14px;
+}
+.feeds-panel__subtitle {
+  margin: 0 0 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.feeds-grid__note {
+  margin: 12px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.feeds-points {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.feeds-points__item {
+  position: relative;
+  padding-left: 14px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.feeds-points__item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.feeds-schedule {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+}
+
+.feeds-schedule__label {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.feeds-schedule__times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feeds-schedule__times li {
+  padding: 4px 9px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--bg-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+
+.feed-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 16px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
+  white-space: nowrap;
+}
+.feed-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.feed-btn:focus { outline: none; }
+.feed-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.feed-btn--primary {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--rule));
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, var(--bg));
+}
+.feed-btn--primary:hover {
+  background: color-mix(in srgb, var(--accent) 14%, var(--bg));
+}
+.feed-btn--primary:active {
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg));
+}
+.feed-btn--quiet {
+  color: var(--muted);
+}
+.feed-btn--quiet:hover {
+  color: var(--accent);
+}
+
+/* ─────────────── EXTERNAL RADIO LISTEN ─────────────── */
+/* Modale ouverte : le fond ne défile pas (classe posée par app.js). */
+body.external-listen-open {
+  overflow: hidden;
+}
+
+.external-listen {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.external-listen.hidden { display: none; }
+
+.external-listen__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 10, 14, 0.62);
+  backdrop-filter: blur(3px);
+}
+
+.external-listen__panel {
+  position: relative;
+  width: min(420px, calc(100% - 32px), calc(100dvw - 32px));
+  max-height: min(92vh, 520px);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  box-shadow: 0 18px 48px -12px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.external-listen__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.external-listen__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.external-listen__logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.external-listen__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.external-listen__sub {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  line-height: 1.35;
+}
+
+.external-listen__close {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 1.45rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.external-listen__close:hover { background: var(--rule); color: var(--ink); }
+
+.external-listen__status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 14px 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--rule);
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+}
+.external-listen__status.is-ready {
+  background: rgba(0, 61, 165, 0.1);
+  color: var(--ink);
+}
+.external-listen__status.is-error {
+  background: rgba(180, 40, 40, 0.1);
+  color: #8f1f1f;
+}
+
+.external-listen__spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: external-spin 0.75s linear infinite;
+  flex-shrink: 0;
+}
+.external-listen__status.is-ready .external-listen__spinner,
+.external-listen__status.is-error .external-listen__spinner { display: none; }
+
+@keyframes external-spin { to { transform: rotate(360deg); } }
+
+.external-listen__frame-wrap {
+  margin: 12px 14px 0;
+  aspect-ratio: 1;
+  width: calc(100% - 28px);
+  max-height: 340px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0e1014;
+}
+.external-listen__frame-wrap.hidden { display: none; }
+
+.external-listen__frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #fff;
+}
+
+.external-listen__hint {
+  margin: 10px 14px 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.external-listen__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 14px 14px;
+  margin-top: auto;
+}
+
+.external-listen__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 14px;
+  border-radius: 9px;
+  border: 1px solid var(--rule-strong);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.external-listen__btn:hover { border-color: var(--radio); color: var(--radio); }
+.external-listen__btn--primary {
+  background: var(--radio);
+  border-color: var(--radio);
+  color: #fff;
+}
+.external-listen__btn--primary:hover {
+  background: #0049c2;
+  border-color: #0049c2;
+  color: #fff;
+}
+
+/* ─────────────── OUTILS BAS DE PAGE ───────────────
+ * Flèche + loupe : overlay bas-droite, par-dessus le contenu (comme la loupe).
+ * Une flèche à gauche se superposait au rail des sources (wide E) et le
+ * forçait à céder 72 px. Les deux FABs partagent le coin de la loupe.
+ * Mobile / tablette : sans gutter, repli sur safe-area + 14 px.
+ */
+.page-tools {
+  --tools-fab: 48px;
+  --tools-outset: 12px;
+  /* Marge latérale de la colonne centrée (0 si le contenu est pleine largeur). */
+  --tools-gutter: max(0px, calc((100vw - min(var(--maxw), 100vw)) / 2));
+  --tools-side-left: max(
+    max(14px, env(safe-area-inset-left, 0px)),
+    calc(var(--tools-gutter) - var(--tools-fab) - var(--tools-outset))
+  );
+  --tools-side-right: max(
+    max(14px, env(safe-area-inset-right, 0px)),
+    calc(var(--tools-gutter) - var(--tools-fab) - var(--tools-outset))
+  );
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(max(16px, env(safe-area-inset-bottom, 0px)) + var(--vk-inset, 0px));
+  z-index: 180;
+  display: flex;
+  /* DOM = [flèche, loupe] → les deux collés à droite (flèche hidden : loupe seule). */
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 12px;
+  padding-left: var(--tools-side-left);
+  padding-right: var(--tools-side-right);
+  pointer-events: none;
+}
+.page-tools > * { pointer-events: auto; }
+
+.page-tools__fab {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow:
+    0 2px 8px -2px rgba(0, 0, 0, 0.12),
+    0 8px 24px -10px rgba(0, 0, 0, 0.18);
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 160ms ease;
+}
+.page-tools__fab svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+.page-tools__fab[hidden] { display: none !important; }
+@media (hover: hover) and (pointer: fine) {
+  .page-tools__fab:hover {
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--rule));
+    color: var(--accent);
+  }
+}
+.page-tools__fab:active { transform: scale(0.96); }
+.page-tools__fab:focus { outline: none; }
+.page-tools__fab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+[data-theme="dark"] .page-tools__fab {
+  background: var(--bg-soft);
+  border-color: var(--rule);
+  box-shadow:
+    0 2px 10px -2px rgba(0, 0, 0, 0.45),
+    0 10px 28px -12px rgba(0, 0, 0, 0.55);
+}
+@media print {
+  .page-tools { display: none !important; }
+}
+
+/* ─────────────── RECHERCHE LOCALE (loupe bas-droite, hors contenu) ─────────────── */
+.news-search {
+  position: relative;
+  right: auto;
+  left: auto;
+  bottom: auto;
+  z-index: auto;
+  display: flex;
+  flex-direction: column;
+  /* Panneau au-dessus de la loupe, ancré à droite. */
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+  max-width: min(360px, calc(100vw - 28px));
+}
+.news-search > * { pointer-events: auto; }
+
+.news-search__fab {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow:
+    0 2px 8px -2px rgba(0, 0, 0, 0.12),
+    0 8px 24px -10px rgba(0, 0, 0, 0.18);
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.news-search__fab svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+/* Survol : souris seulement — sur tactile, :hover reste « collé » après un
+   tap et le bouton semble encore engagé une fois la recherche fermée. */
+@media (hover: hover) and (pointer: fine) {
+  .news-search__fab:hover {
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--rule));
+    color: var(--accent);
+    box-shadow:
+      0 2px 10px -2px rgba(0, 0, 0, 0.14),
+      0 10px 28px -10px color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+}
+.news-search__fab:active {
+  transform: scale(0.96);
+}
+.news-search__fab:focus { outline: none; }
+.news-search__fab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+/* Requête active : pastille accent même panneau fermé */
+.news-search__fab.is-active,
+.news-search.has-query .news-search__fab {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+@media (hover: hover) and (pointer: fine) {
+  .news-search__fab.is-active:hover,
+  .news-search.has-query .news-search__fab:hover {
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+    color: #fff;
+  }
+}
+[data-theme="dark"] .news-search__fab {
+  background: var(--bg-soft);
+  border-color: var(--rule);
+  box-shadow:
+    0 2px 10px -2px rgba(0, 0, 0, 0.45),
+    0 10px 28px -12px rgba(0, 0, 0, 0.55);
+}
+
+.news-search__panel {
+  width: min(320px, calc(100vw - 28px));
+  padding: 12px 12px 10px;
+  border-radius: 14px;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  box-shadow:
+    0 4px 16px -6px rgba(0, 0, 0, 0.14),
+    0 16px 40px -16px rgba(0, 0, 0, 0.22);
+  animation: newsSearchPanelIn 160ms ease both;
+}
+.news-search__panel[hidden] { display: none !important; }
+@keyframes newsSearchPanelIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .news-search__panel { animation: none; }
+}
+[data-theme="dark"] .news-search__panel {
+  background: var(--bg-soft);
+  box-shadow:
+    0 4px 18px -6px rgba(0, 0, 0, 0.5),
+    0 18px 44px -16px rgba(0, 0, 0, 0.65);
+}
+
+.news-search__field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px 0 12px;
+  min-height: 42px;
+  border-radius: 10px;
+  border: 1px solid var(--rule);
+  background: var(--bg-soft);
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+.news-search__field:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--rule));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.news-search__field-ico {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  color: var(--muted);
+}
+.news-search__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.3;
+  padding: 10px 0;
+  /* Évite le zoom iOS sur focus */
+  font-size: max(16px, 15px);
+}
+.news-search__input::placeholder {
+  color: var(--muted);
+  opacity: 0.9;
+}
+/* Masque le × natif de type=search (on a le nôtre) */
+.news-search__input::-webkit-search-cancel-button,
+.news-search__input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.news-search__clear {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  margin-right: -2px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.news-search__clear:hover {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+}
+.news-search__clear.hidden { display: none; }
+
+.news-search__hint {
+  margin: 8px 2px 0;
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+/* En-tête de la liste de résultats (mode search) */
+.news-search-results__title {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+  padding: 8px 0 12px;
+  border-bottom: 1px solid var(--rule);
+}
+.news-list[data-mode="search"] .news-search-results {
+  margin-top: 4px;
+}
+
+/* ─────────────── TOAST ─────────────── */
+.toast {
+  position: fixed;
+  bottom: 22px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--rule-strong);
+  color: var(--bg);
+  font-size: 13.5px;
+  padding: 10px 16px;
+  border-radius: 9px;
+  box-shadow: 0 8px 28px -8px rgba(0,0,0,0.45);
+  z-index: 200;
+  max-width: min(calc(100% - 32px), calc(100dvw - 32px));
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  :root { --pad: 18px; }
+  /* Filet reste dans le flux (left:0) — plus de left négatif iPad/téléphone */
+
+  /* Cartes avec vignette : padding vertical un peu plus bas. */
+  .brief-rail .article--compact.article--thumb.has-image,
+  .news-hero .article--feature.article--thumb.has-image {
+    padding-top: 11px;
+    padding-bottom: 11px;
+  }
+
+  /* Titre / extrait : laisser de l'air à côté de la vignette */
+  .article--thumb.has-image .article-title {
+    padding-right: 0;
+  }
+
+  /* Vedettes mobile : piste vignette plus étroite */
+  .news-hero .article--feature.article--thumb.has-image {
+    grid-template-columns: minmax(5.5rem, 7.5rem) minmax(0, 1fr);
+    column-gap: 0.65rem;
+  }
+}
+
+/*
+ * Stack 1 col sous 768 px (focus-group midwidth-fil C).
+ * 768–1099 = magazine mid ; ≥1100 = magazine bureau.
+ *
+ * Le seuil était à 900 px, ce qui excluait la quasi-totalité des iPad en
+ * portrait — 768 (mini / 9,7"), 820 (Air 11"), 834 (Pro 11") : seul le
+ * Pro 12,9" (1024) atteignait le magazine mid. La tablette portrait tombait
+ * donc dans la mise en page téléphone, alors que le rail « En bref » y tient
+ * (720 px de conteneur = 440 de une + 280 de rail).
+ */
+@media (max-width: 767.98px) {
+  /* Crédits photo : figcaption hors du cadre image (overflow/aspect-ratio) */
+  .article--lead.has-image .article-media {
+    aspect-ratio: auto;
+    overflow: visible;
+    background: transparent;
+  }
+
+  .article--lead.has-image .article-media img {
+    aspect-ratio: 3 / 2;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .article--lead.has-image .article-media-credit {
+    margin: 3px 0 4px;
+  }
+
+  .news-list {
+    display: block;
+  }
+
+  .news-hero {
+    display: block;
+  }
+
+  .news-hero-spacer {
+    display: none;
+  }
+
+  .brief-rail {
+    padding-left: 0;
+    border-left: 0;
+    margin-top: 8px;
+  }
+
+  .brief-rail-spacer {
+    display: none;
+  }
+
+  .article:hover {
+    transform: none;
+  }
+}
+
+/* Densité 600–767 (stack) : un peu moins d’air vertical. */
+@media (min-width: 600px) and (max-width: 767.98px) {
+  .news-hero .article--feature,
+  .brief-rail .article--compact,
+  .news-tail .article--standard {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+  }
+  .news-hero .article--feature.article--thumb.has-image {
+    grid-template-columns: minmax(6rem, 8.5rem) minmax(0, 1fr);
+    column-gap: 0.75rem;
+  }
+  .article--thumb.has-image {
+    grid-template-columns: clamp(72px, 20%, 88px) minmax(0, 1fr);
+    column-gap: 0.75rem;
+  }
+}
+
+@media (max-width: 1099.98px) {
+  /* Titres de section mobile — gradation À la une > En bref > Suite du fil */
+  .article-eyebrow,
+  .brief-rail-title,
+  .news-tail-title {
+    font-family: var(--sans);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .article--lead .article-eyebrow {
+    display: block;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin: 0 0 8px;
+    padding: 0;
+  }
+
+  .brief-rail-title {
+    font-size: 11.5px;
+    letter-spacing: 0.15em;
+    color: var(--ink-soft);
+    padding: 20px 0 8px;
+    margin: 0;
+  }
+
+  .news-tail-title {
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+    padding: 16px 0 6px;
+    margin: 0;
+  }
+
+  /* Méta mobile — date à droite sur la ligne source */
+  .news-hero .article--lead .article-eyebrow + .article-meta {
+    margin-top: 0;
+    margin-bottom: 4px;
+  }
+
+  .news-hero .article--lead .article-meta,
+  .news-hero .article--feature .article-meta,
+  .brief-rail .article--compact .article-meta,
+  .news-tail .article--standard .article-meta {
+    font-size: 12px;
+    margin-bottom: 5px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    column-gap: 8px;
+    row-gap: 0;
+  }
+
+  /* En bref : l'institution occupe sa propre rangée de grille (pleine
+     largeur) — lui garder son interligne malgré le row-gap: 0 ci-dessus. */
+  .brief-rail .article--compact .article-meta {
+    row-gap: 0.12em;
+  }
+
+  .news-hero .article--lead .article-meta__lead,
+  .news-hero .article--feature .article-meta__lead,
+  .brief-rail .article--compact .article-meta__lead,
+  .news-tail .article--standard .article-meta__lead {
+    min-width: 0;
+  }
+
+  /* Suite du fil : source ligne 1, institution toujours ligne 2 */
+  .news-tail .article--standard .article-meta__lead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 0;
+    row-gap: 0.12em;
+    overflow: visible;
+  }
+  .news-tail .article--standard .article-source {
+    flex: 0 1 auto;
+    min-width: 0;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
+  .news-tail .article--standard .article-inst {
+    flex: 1 1 100%;
+    width: 100%;
+    white-space: normal;
+  }
+
+  .news-hero .article--lead .article-source,
+  .news-hero .article--feature .article-source,
+  .brief-rail .article--compact .article-source,
+  .news-tail .article--standard .article-source {
+    font-size: 12px;
+    gap: 5px;
+    letter-spacing: 0.03em;
+  }
+
+  .news-hero .article--lead .article-source::before,
+  .news-hero .article--feature .article-source::before,
+  .brief-rail .article--compact .article-source::before,
+  .news-tail .article--standard .article-source::before {
+    width: 7px;
+    height: 7px;
+  }
+
+  .news-hero .article--lead .article-inst,
+  .news-hero .article--feature .article-inst,
+  .brief-rail .article--compact .article-inst,
+  .news-tail .article--standard .article-inst {
+    font-size: 12px;
+  }
+
+  .news-hero .article--lead .article-time,
+  .news-hero .article--feature .article-time,
+  .brief-rail .article--compact .article-time,
+  .news-tail .article--standard .article-time {
+    grid-row: 1;
+    grid-column: 2;
+    justify-self: end;
+    text-align: right;
+    font-size: 12px;
+    line-height: 1.35;
+    align-self: start;
+    white-space: nowrap;
+  }
+
+  /* Mobile : point gris masqué partout — pastille rouge is-fresh conservée. */
+  .news-hero .article--lead .article-time:not(.is-fresh)::before,
+  .news-hero .article--feature .article-time:not(.is-fresh)::before,
+  .brief-rail .article--compact .article-time:not(.is-fresh)::before,
+  .news-tail .article--standard .article-time:not(.is-fresh)::before {
+    display: none;
+  }
+
+  .news-tail {
+    border-top: 1px solid var(--rule);
+    padding-top: 0;
+    margin-top: 0;
+  }
+
+  /* Cartes fil mobile — En bref + Suite du fil (plus compactes que les vedettes) */
+  .brief-rail .article--compact,
+  .news-tail .article--standard {
+    padding: 12px 0;
+  }
+
+  .brief-rail .article--compact .article-title,
+  .news-tail .article--standard .article-title {
+    font-family: var(--sans);
+    font-size: 1.02rem;
+    font-weight: 650;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-top: 0;
+    hyphens: manual;
+    -webkit-hyphens: manual;
+    word-break: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  /* Vedettes (fil global) : un cran au-dessus d'En bref pour éviter le « double look » */
+  .news-hero .article--feature .article-title {
+    font-family: var(--serif);
+    font-size: 1.28rem;
+    font-weight: 700;
+    line-height: 1.22;
+    -webkit-line-clamp: 3;
+  }
+
+  .brief-rail .article--compact .article-byline,
+  .news-tail .article--standard .article-byline {
+    font-size: 0.78rem;
+    margin: 2px 0 4px;
+  }
+
+  .brief-rail .article--compact .article-brief,
+  .news-tail .article--standard .article-brief {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    margin-top: 4px;
+    color: var(--ink-soft);
+  }
+
+  .brief-rail .article--compact .article-brief-text,
+  .brief-rail .article--compact .article-brief.is-truncated .article-brief-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+  }
+
+  /* Suite du fil mobile : même more inline (verdict suite-more B) */
+  .news-tail .article--standard .article-brief-text,
+  .news-tail .article--standard .article-brief.is-truncated .article-brief-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+  /* Même alignement bas-droite que « En bref » — voir la règle de base.
+     Le chapô reste tronqué à trois lignes ; seul le CTA change de place. */
+  .news-tail .article--standard .article-more {
+    display: block;
+    width: 100%;
+    text-align: end;
+  }
+}
+
+/* ── Suite du fil : repli après 10 articles (toutes plateformes) ──
+   Comme « Plus de sources » : 10 pleins + peek des titres de la rangée
+   suivante + fondu, puis bouton. */
+.news-tail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  --news-tail-peek: 34px;
+  /* Évite le scroll-anchoring qui envoie en bas à l’ouverture */
+  overflow-anchor: none;
+}
+/* Corps grille : 1 col téléphone, 2 col dès 600 px (tablette / demi-écran / bureau) */
+.news-tail-body {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  column-gap: 0;
+  overflow-anchor: none;
+}
+.news-tail-toggle {
+  overflow-anchor: none;
+}
+/*
+ * IMPORTANT : ces media queries doivent venir *après* la règle 1-col de base,
+ * sinon la cascade annule les 2 colonnes (régression v345).
+ */
+@media (min-width: 600px) {
+  .news-tail-body {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(14px, 2.4vw, 28px);
+  }
+}
+@media (min-width: 1100px) {
+  .news-tail-body {
+    column-gap: 32px;
+  }
+}
+.news-tail.has-overflow:not(.is-expanded) .news-tail-body {
+  overflow: hidden;
+  max-height: var(--news-tail-collapsed-h, none);
+  transition: max-height 0.4s ease;
+}
+.news-tail.is-expanded .news-tail-body {
+  max-height: none !important;
+  overflow: visible;
+  transition: max-height 0.45s ease;
+}
+/* Même langage + taille que « Plus de sources » / kiosque « Toutes les rubriques ». */
+.news-tail-toggle {
+  display: none;
+  font-family: var(--sans);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 10px 0 4px;
+  padding: 8px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--bg-soft);
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  text-align: center;
+  flex-shrink: 0;
+  transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
+}
+.news-tail.has-overflow .news-tail-toggle {
+  display: inline-flex;
+}
+.news-tail-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 6%, var(--bg));
+}
+.news-tail-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+/*
+ * Dégradé sur la zone peek : haut des titres de la rangée d’après lisible,
+ * bas s’estompe vers le bouton (comme filters-panel peek).
+ */
+.news-tail.has-overflow:not(.is-expanded) .news-tail-body::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--news-tail-peek);
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 28%,
+    color-mix(in srgb, var(--bg) 22%, transparent) 55%,
+    color-mix(in srgb, var(--bg) 62%, transparent) 78%,
+    var(--bg) 100%
+  );
+}
+.news-tail.is-expanded .news-tail-body::after {
+  display: none;
+}
+
+/*
+ * Magazine mid 768–1099 (focus-group midwidth-fil C) — demi-écran, tablette
+ * paysage ET tablette portrait (iPad mini/Air/Pro 11 : 768, 820, 834).
+ * Rail En bref 240–280 px ; bureau ≥1100 garde les tracks larges ci-dessous.
+ */
+@media (min-width: 768px) and (max-width: 1099.98px) {
+  .news-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 280px);
+    column-gap: 0;
+    row-gap: 0;
+    align-items: stretch;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .article {
+    min-width: 0;
+  }
+
+  .article:hover {
+    transform: none;
+  }
+
+  .news-hero {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+    padding-right: 1rem;
+    border-bottom: none;
+    overflow: visible;
+    isolation: isolate;
+  }
+
+  .news-hero .article--lead,
+  .news-hero .article--feature {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .news-hero .article--feature:last-of-type,
+  .news-hero .article--feature:has(+ .news-hero-spacer),
+  .news-hero > .article:last-child {
+    border-bottom: none;
+  }
+
+  .news-hero-spacer {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    pointer-events: none;
+  }
+
+  .brief-rail {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+    padding-left: 0.85rem;
+    border-left: 1px solid var(--rule);
+    margin-top: 0;
+  }
+
+  .brief-rail-title {
+    flex: 0 0 auto;
+  }
+
+  .brief-rail .article--compact {
+    flex: 0 0 auto;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .brief-rail .article--compact:last-of-type,
+  .brief-rail .article--compact:has(+ .brief-rail-spacer) {
+    border-bottom: none;
+  }
+
+  .brief-rail-spacer {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .news-tail {
+    grid-column: 1 / -1;
+    border-top: 2px solid var(--rule-strong);
+    padding-top: 6px;
+  }
+
+  .news-hero .article--feature.article--thumb.has-image {
+    grid-template-columns: minmax(6rem, 8.5rem) minmax(0, 1fr);
+    column-gap: 0.75rem;
+  }
+
+  .brief-rail .article--compact.article--thumb.has-image {
+    grid-template-columns: minmax(3.75rem, 5.25rem) minmax(0, 1fr);
+    column-gap: 0.55rem;
+  }
+
+  .news-hero .article--feature .article-title {
+    font-size: 1.32rem;
+    line-height: 1.18;
+  }
+
+  .brief-rail .article--compact .article-title {
+    font-size: 1.08rem;
+    line-height: 1.2;
+  }
+
+  .article--feature {
+    padding: 11px 0;
+  }
+}
+
+@media (min-width: 1100px) {
+  :root {
+    --maxw: 1180px;
+    --pad: 32px;
+  }
+
+  .wire {
+    padding-bottom: 56px;
+  }
+
+  .wire-head {
+    margin-top: 22px;
+  }
+
+  .filters-panel {
+    margin-bottom: 18px;
+  }
+
+  .news-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(300px, 370px);
+    column-gap: 0;
+    row-gap: 0;
+    /* Colonnes de même hauteur ; un seul filet bas (pas un par colonne). */
+    align-items: stretch;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .article {
+    min-width: 0;
+  }
+
+  .article:hover {
+    transform: none;
+  }
+
+  /* Colonne principale : une + vedettes */
+  .news-hero {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+    padding-right: 32px;
+    /* Pas de border-bottom ici : le .news-list porte le filet bas unique. */
+    border-bottom: none;
+    overflow: visible;
+    isolation: isolate;
+  }
+
+  /* Filets entre cartes uniquement (jamais sous le dernier item de colonne). */
+  .news-hero .article--lead,
+  .news-hero .article--feature {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .news-hero .article--lead {
+    flex: 0 0 auto;
+    /* Densité type démo LE-KIOSQUE (ne pas ré-aérer la une). */
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .news-hero .article--feature {
+    flex: 0 0 auto;
+  }
+
+  .news-hero .article--feature:last-of-type,
+  .news-hero .article--feature:has(+ .news-hero-spacer),
+  .news-hero > .article:last-child {
+    border-bottom: none;
+  }
+
+  .news-hero-spacer {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    pointer-events: none;
+  }
+
+  .article--lead {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .article--lead::before {
+    top: 42px;
+  }
+
+  .news-list[data-hero="text"] .article--lead {
+    border-bottom: 2px solid var(--rule-strong);
+  }
+
+  .news-list[data-hero="text"] .article--lead .article-title {
+    font-size: var(--radar-lead-title-size);
+    line-height: 1.1;
+    max-width: none;
+  }
+
+  .news-list[data-hero="text"] .article--lead .article-brief {
+    display: block;
+    max-width: none;
+    min-height: 0;
+    line-height: 1.58;
+  }
+
+  .news-list[data-hero="image"] .article--lead.has-image .article-media {
+    margin-bottom: 8px;
+    aspect-ratio: auto;
+    overflow: visible;
+  }
+
+  .news-list[data-hero="image"] .article--lead.has-image .article-media img {
+    aspect-ratio: 3 / 2;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .news-list[data-hero="image"] .article--lead.has-image .article-media-credit {
+    margin: 3px 0 4px;
+  }
+
+  /* Titre au-dessus de l'image — pas de marge « sous photo ». */
+  .news-list[data-hero="image"] .article--lead.has-image .article-title {
+    margin-top: 0;
+    margin-bottom: 6px;
+  }
+
+  .news-list[data-hero="image"]:not([data-mode="source"]) .article--lead .article-title {
+    font-size: var(--radar-lead-title-size);
+    line-height: 1.1;
+    max-width: none;
+  }
+
+  .news-list[data-hero="image"]:not([data-mode="source"]) .article--lead .article-brief {
+    display: block;
+    max-width: none;
+    min-height: 0;
+    margin-top: 4px;
+    line-height: 1.58;
+  }
+
+  @media (min-width: 1100px) {
+    :root {
+      --radar-wordmark-size: clamp(2.55rem, 3.4vw + 0.7rem, 4.25rem);
+      --radar-lead-title-size: clamp(1.65rem, 1.6vw + 0.7rem, 2.55rem);
+    }
+  }
+
+  .news-list[data-mode="source"] .article--lead .article-title,
+  .news-list[data-mode="source"] .article--lead .article-brief {
+    max-width: none;
+  }
+
+  .news-list[data-mode="source"] .article--lead .article-brief {
+    display: block;
+    min-height: 0;
+    line-height: 1.58;
+  }
+
+  .news-list[data-mode="source"][data-hero="image"] .article--lead.has-image .article-media {
+    aspect-ratio: auto;
+    overflow: visible;
+  }
+
+  .news-list[data-mode="source"][data-hero="image"] .article--lead.has-image .article-media img {
+    aspect-ratio: 3 / 2;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .news-hero .article--feature {
+    padding: 12px 0;
+  }
+
+  .article--feature {
+    padding: 12px 32px 12px 0;
+  }
+
+  .article--feature .article-title {
+    font-size: 1.36rem;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .article--feature .article-byline {
+    margin: 0 0 6px;
+  }
+
+  /* Suite du fil : pleine largeur sous le bloc magazine */
+  .news-tail {
+    grid-column: 1 / -1;
+    border-top: 2px solid var(--rule-strong);
+    padding-top: 6px;
+  }
+
+  .news-tail-title {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 14px 0 6px;
+    padding: 0;
+  }
+
+  /* Cartes fil — Suite du fil + En bref (même gabarit) */
+  .news-tail .article--standard,
+  .article--compact {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .news-tail-body > .article--standard {
+    grid-column: auto;
+  }
+
+  .news-tail .article--standard .article-meta,
+  .article--compact .article-meta {
+    margin-bottom: 4px;
+  }
+
+  .news-tail .article--standard .article-title,
+  .article--compact .article-title {
+    font-size: 1.22rem;
+    line-height: 1.2;
+    margin-top: 0;
+    hyphens: manual;
+    -webkit-hyphens: manual;
+    word-break: normal;
+  }
+
+  .news-tail .article--standard .article-byline,
+  .article--compact .article-byline {
+    font-size: 0.78rem;
+    margin: 2px 0 4px;
+  }
+
+  .news-tail .article--standard .article-brief,
+  .article--compact .article-brief {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  /* Colonne droite : En bref — même hauteur que la une (stretch + spacer) */
+  .brief-rail {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+    padding-left: 28px;
+    border-left: 1px solid var(--rule);
+    /* Filet bas unique sur .news-list — évite le croisement de lignes. */
+    border-bottom: none;
+    overflow: visible;
+    isolation: isolate;
+  }
+
+  .brief-rail .article--compact:last-of-type,
+  .brief-rail > .article:last-child {
+    border-bottom: none;
+  }
+
+  .brief-rail-title {
+    flex: 0 0 auto;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+    padding: 20px 0 8px;
+  }
+
+  .brief-rail .article--compact {
+    flex: 0 0 auto;
+    padding: 9px 0 9px 14px;
+    border-left: none;
+    overflow: visible;
+  }
+
+  .brief-rail-spacer {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    pointer-events: none;
+  }
+
+  .news-hero .article--lead,
+  .news-hero .article--feature {
+    padding-left: 14px;
+    overflow: visible;
+  }
+
+  .news-hero .article--lead::before,
+  .news-hero .article--feature::before,
+  .brief-rail .article--compact::before {
+    left: 0;
+  }
+
+  .brief-rail .article--compact:last-of-type {
+    padding-bottom: 8px;
+  }
+
+  .brief-rail .article--compact .article-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    margin-top: 0;
+  }
+
+  .brief-rail .article--compact .article-brief {
+    font-size: 0.86rem;
+    line-height: 1.42;
+    display: block;
+    overflow: visible;
+  }
+
+  .brief-rail .article--compact .article-brief-text,
+  .brief-rail .article--compact .article-brief.is-truncated .article-brief-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+  }
+
+  .brief-rail-spacer {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  /* Vedettes / En bref bureau : grille + clamp + more bas-droite (verdict A) */
+  .news-hero .article--feature .article-brief {
+    display: block;
+    overflow: hidden;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    max-width: none;
+    min-height: 0;
+    color: var(--ink-soft);
+  }
+
+  .news-hero .article--feature .article-brief-text,
+  .news-hero .article--feature .article-brief.is-truncated .article-brief-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden;
+    line-height: 1.5;
+  }
+
+  .news-hero .article--lead .article-brief-text,
+  .news-hero .article--lead .article-brief.is-truncated .article-brief-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 7;
+    overflow: hidden;
+    line-height: 1.52;
+  }
+
+  .brief-rail .article--compact .article-title {
+    -webkit-line-clamp: 2;
+  }
+
+  .brief-rail .article--compact .article-brief-text,
+  .brief-rail .article--compact .article-brief.is-truncated .article-brief-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    font-size: 0.84rem;
+    line-height: 1.4;
+  }
+
+  .site-foot {
+    margin-top: 28px;
+  }
+}
+
+/*
+ * Zones sûres iPhone (encoche / coins arrondis / barre d'accueil) :
+ * viewport-fit=cover + PWA plein écran étendent la page sous la barre
+ * d'état — on consomme les insets (env() = 0 hors PWA / sans encoche).
+ * Déclaré en fin de feuille pour l'emporter sur les shorthands padding.
+ */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+.masthead-inner {
+  padding-top: calc(12px + var(--safe-top));
+}
+/*
+ * Synthé collant + encoche (app installée, plein écran iOS) : la zone de la
+ * barre d'état ne doit rester réservée QUE lorsque la barre radio est épinglée
+ * en haut de l'écran. En simple `padding-top: env(safe-area-inset-top)` sur
+ * `.tuner`, elle l'était AUSSI au repos, alors que le mât vient déjà de
+ * consommer l'encoche juste au-dessus — d'où une bande noire morte de la
+ * hauteur de l'encoche (~47 px) entre la photo et les commandes, visible dès le
+ * premier écran (bug Safari iOS, 2026-08-07).
+ *
+ * À la place, deux pièces :
+ *   1. le synthé s'ancre sous l'encoche (`top`) — sans effet tant qu'il n'est
+ *      pas épinglé, donc aucune bande au repos ;
+ *   2. une coiffe collante (injectée par app.js, cf. .tuner-safe-cap) occupe la
+ *      bande de la barre d'état. Elle ne prend aucune place dans le flux (marge
+ *      négative) : au repos elle se range derrière le synthé, et pendant le
+ *      collage elle comble exactement l'espace laissé libre au-dessus de lui.
+ * Rien ne saute au collage : les commandes restent à la même ordonnée avant et
+ * après épinglage. Hors app installée / hors encoche, env() vaut 0 px : les
+ * deux règles mesurent zéro.
+ */
+html.has-tuner-safe-cap .tuner {
+  top: var(--safe-top);
+}
+.tuner-safe-cap {
+  position: sticky;
+  top: 0;
+  z-index: 99; /* juste sous le synthé (z-index 100) */
+  height: var(--safe-top);
+  /* Aucune place dans le flux : la barre reste collée au mât. */
+  margin-bottom: calc(-1 * var(--safe-top));
+  /* Inset haut non nul = téléphone en portrait, donc le fond plat mobile
+     (au-dessus de 720 px le synthé prend une teinte de session, mais l'encoche
+     y vaut toujours 0 : la coiffe n'y a pas de hauteur). */
+  background: var(--tuner-bg);
+  pointer-events: none;
+}
+.masthead-inner,
+.tuner-inner,
+.wire {
+  padding-left: max(var(--pad), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--pad), env(safe-area-inset-right, 0px));
+}
+.toast {
+  bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+}
+
+/* ── Soft prompts : installer l’app (mobile) / page d’accueil (bureau) ──
+ * Ne pas coller au bas : les FABs .page-tools (loupe + flèche, 48 px) y
+ * vivent déjà (z-index 180). Sans offset, la carte passe sous/à travers
+ * les pastilles et coupe « Installer » (mobile). On réserve la bande FAB
+ * + sa marge bas + un entrefer ; z-index au-dessus des outils pour que
+ * le dialogue reste entièrement cliquable s’il y a encore un chevauchement.
+ */
+.engage-prompt {
+  /* Focus-group le-radar-engage-position (A) */
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: max(12px, env(safe-area-inset-top, 0px));
+  bottom: auto;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  padding: 0 max(12px, env(safe-area-inset-left, 0px))
+    0
+    max(12px, env(safe-area-inset-right, 0px));
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-12px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+.engage-prompt.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.engage-prompt.is-leaving {
+  opacity: 0;
+  transform: translateY(-16px);
+  pointer-events: none;
+}
+.engage-prompt__inner {
+  position: relative;
+  width: min(420px, 100%);
+  padding: 16px 16px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--rule);
+  background: var(--bg);
+  box-shadow:
+    0 12px 40px -12px rgba(0, 0, 0, 0.28),
+    0 0 0 1px color-mix(in srgb, var(--rule) 60%, transparent);
+  color: var(--ink);
+  font-family: var(--sans);
+}
+[data-theme="dark"] .engage-prompt__inner {
+  box-shadow:
+    0 16px 48px -10px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+.engage-prompt__close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.engage-prompt__close:hover {
+  color: var(--ink);
+  background: var(--bg-soft);
+}
+.engage-prompt__icon {
+  font-size: 1.35rem;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.engage-prompt__title {
+  margin: 0 28px 6px 0;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+.engage-prompt__body {
+  margin: 0 0 8px;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.engage-prompt__steps {
+  margin: 0 0 12px;
+  padding: 0 0 0 1.15rem;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.engage-prompt__steps li {
+  margin: 0.28em 0;
+}
+.engage-prompt__steps li strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.engage-prompt__steps code {
+  font-size: 0.78em;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--bg-soft);
+  border: 1px solid var(--rule);
+  word-break: break-all;
+}
+/* Guides longs (accueil + nouvel onglet) : un peu plus de hauteur utile */
+.engage-prompt[data-kind="home"] .engage-prompt__inner {
+  max-height: min(70vh, 520px);
+  overflow-y: auto;
+}
+.engage-prompt__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.engage-prompt__btn {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: var(--bg-soft);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: border-color 120ms ease, color 120ms ease, background 120ms ease;
+}
+.engage-prompt__btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.engage-prompt__btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.engage-prompt__btn--primary:hover {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  color: #fff;
+}
+.engage-prompt__btn--quiet {
+  border-color: transparent;
+  background: transparent;
+  font-weight: 500;
+  color: var(--muted);
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.engage-prompt__btn--quiet:hover {
+  color: var(--ink-soft);
+  background: transparent;
+  border-color: transparent;
+}
+
+/* Pull-to-refresh PWA */
+.radar-pull-refresh {
+  position: fixed; top: 0; left: 50%; z-index: 190; width: 36px; height: 36px;
+  margin-left: -18px; display: flex; align-items: center; justify-content: center;
+  pointer-events: none; opacity: 0;
+  transform: translate3d(0, calc(var(--pull, 0px) - 40px), 0);
+  transition: opacity 0.18s ease;
+}
+.radar-pull-refresh.is-visible { opacity: 1; }
+.radar-pull-refresh__dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: color-mix(in srgb, var(--accent, #6c2163) 78%, #fff);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, #6c2163) 28%, transparent);
+}
+.radar-pull-refresh.is-armed .radar-pull-refresh__dot { transform: scale(1.25); background: var(--accent, #6c2163); }
+.radar-pull-refresh.is-refreshing .radar-pull-refresh__dot { animation: radar-pull-spin 0.7s linear infinite; }
+@keyframes radar-pull-spin { to { box-shadow: 0 0 0 6px transparent; } }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

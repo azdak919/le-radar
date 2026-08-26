@@ -1103,6 +1103,11 @@ ${appHeadHtml}    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <script src="${up}seo-page-theme.js"></script>
     <link rel="stylesheet" href="${up}style-masthead.css" />
     <link rel="stylesheet" href="${up}style.css" />
+    <link rel="stylesheet" href="${up}style-sports-strip.css" />
+    <link rel="stylesheet" href="${up}style-masthead-chrome.css" />
+    <link rel="stylesheet" href="${up}style-tuner.css" />
+    <link rel="stylesheet" href="${up}style-feed.css" />
+    <link rel="stylesheet" href="${up}style-chrome.css" />
     <link rel="stylesheet" href="${up}seo-pages.css" />
 ${renderWideLayoutAssets(up)}${renderTunerCriticalCss()}
     <script src="${up}nav-shell.js" defer></script>
@@ -1120,6 +1125,14 @@ ${renderWideLayoutAssets(up)}${renderTunerCriticalCss()}
     <script src="${up}quebec-favorites-backgrounds-data.js" defer></script>
     <script src="${up}quebec-backgrounds.js" defer></script>
     <script src="${up}institution-acronyms-data.js" defer></script>
+    <script src="${up}weather-cities-data.js" defer></script>
+    <script src="${up}radar-utils.js" defer></script>
+    <script src="${up}radar-state.js" defer></script>
+    <script src="${up}radar-weather.js" defer></script>
+    <script src="${up}radar-sports-cta.js" defer></script>
+    <script src="${up}radar-tuner.js" defer></script>
+    <script src="${up}radar-news.js" defer></script>
+    <script src="${up}radar-lifecycle.js" defer></script>
     <script src="${up}app.js" defer></script>
     <script src="${up}engage-prompt.js" defer></script>
 ${(Array.isArray(extraScripts) ? extraScripts : []).map((src) => `    <script src="${up}${escapeHtml(src)}" defer></script>`).join('\n')}${Array.isArray(extraScripts) && extraScripts.length ? '\n' : ''}${jsonLd ? `    <script type="application/ld+json">${jsonLd}</script>\n` : ''}  </head>

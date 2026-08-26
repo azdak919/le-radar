@@ -64,12 +64,13 @@ const {
   pruneToFreshWindow,
   getBotHints,
 } = require('./source-retention-lib');
-const { mergeHistoricalCatalog } = require('./historical-catalog-lib');
+const { mergeHistoricalCatalog, serializeHistoricalCatalog } = require('./historical-catalog-lib');
 const { scheduledSlotFor } = require('./news-schedule-lib');
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
 const ARCHIVE_PATH = path.join(__dirname, '..', 'news-archive.json');
 const SOURCES_PATH = path.join(__dirname, '..', 'news-sources.json');
+const HIST_CONFIG_PATH = path.join(__dirname, '..', 'historical-catalog.config.json');
 
 const IS_CI = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true';
 const TIMEOUT = 15000;
@@ -1150,11 +1151,13 @@ async function main() {
   // des éléments réellement récupérés : une ligne réutilisée depuis le cache
   // n’est pas une nouvelle découverte et ne doit pas rafraîchir son état.
   const archiveObserved = new Date().toISOString();
+  const histConfig = JSON.parse(fs.readFileSync(HIST_CONFIG_PATH, 'utf8'));
   const archiveResult = mergeHistoricalCatalog(
     priorArchive,
     [...historicalItems, ...all.filter((item) => !item._retainedFromCache)],
     archiveObserved,
     { firstDiscoveredAt: archiveObserved, ingestedAt: archiveObserved },
+    { maxRecords: histConfig.storage?.maxRecords },
   );
 
   const beforePrune = all.length;
@@ -1197,7 +1200,7 @@ async function main() {
 
   if (doUpdate) {
     fs.writeFileSync(NEWS_PATH, JSON.stringify(news, null, 2) + '\n');
-    fs.writeFileSync(ARCHIVE_PATH, JSON.stringify(archiveResult.catalog, null, 2) + '\n');
+    fs.writeFileSync(ARCHIVE_PATH, serializeHistoricalCatalog(archiveResult.catalog, histConfig).text);
     registry._lastFetchRun = news.updated;
     writeRegistry(registry);
     console.log(`✅ Wrote ${NEWS_PATH}`);

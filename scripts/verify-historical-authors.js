@@ -61,7 +61,7 @@ async function main() {
 
   catalog.updated = new Date().toISOString();
   console.log(`Auteurs historiques${sourceFilter ? ` (${sourceFilter})` : ''} : ${candidates.length} contrôlé(s); ${found} signature(s) trouvée(s), ${unavailable} sans signature fiable.`);
-  if (update) fs.writeFileSync(ARCHIVE, JSON.stringify(catalog, null, 2) + '\n');
+  if (update) fs.writeFileSync(ARCHIVE, JSON.stringify(catalog) + '\n');
   else console.log('Dry-run — utilisez --update pour enregistrer les résultats.');
 }
 

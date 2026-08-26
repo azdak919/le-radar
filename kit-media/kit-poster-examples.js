@@ -39,15 +39,20 @@
     art.className = 'kit-card kit-card--example';
     const label = lang === 'en' ? ex.labelEn : ex.labelFr;
     const meta = lang === 'en' ? ex.metaEn : ex.metaFr;
+    const esc = (value) => String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
     const href = `${compose}?campus=${encodeURIComponent(ex.campus)}`;
-    const src = `${base}affiche-ex-${ex.id}-preview.jpg`;
+    const src = `${base}affiche-ex-${esc(ex.id)}-preview.jpg`;
     art.innerHTML = `<a class="kit-card__link" href="${href}">
       <div class="kit-card__preview kit-card__preview--photo">
-        <img src="${src}" width="330" height="510" alt="${label}">
+        <img src="${src}" width="330" height="510" alt="${esc(label)}">
       </div>
       <div class="kit-card__body">
-        <p class="kit-card__label">${label}</p>
-        <p class="kit-card__meta">${meta}</p>
+        <p class="kit-card__label">${esc(label)}</p>
+        <p class="kit-card__meta">${esc(meta)}</p>
       </div>
     </a>`;
     return art;
