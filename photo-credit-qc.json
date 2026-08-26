@@ -1,35 +1,35 @@
 {
-  "updated": "2026-08-26T03:26:30.742Z",
+  "updated": "2026-08-26T05:03:57.731Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 132,
-  "pending": 11,
+  "cited": 130,
+  "pending": 14,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 8,
-  "citedNew": 4,
-  "fallbackNew": 12,
+  "checked": 19,
+  "updatedCount": 11,
+  "citedNew": 5,
+  "fallbackNew": 14,
   "samples": [
     {
       "title": "Il y a 30 ans : un grand spectacle solidaire pour le Saguenay",
       "source": "La Pige",
-      "credit": "Photo : Le monde en images Gilles Potvin",
-      "cited": true,
-      "method": "body-line"
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Franc succès pour le Festival du sport et du loisir",
       "source": "La Pige",
-      "credit": "Photo : Facebook Festival du sport et du loisir",
-      "cited": true,
-      "method": "figcaption-paren-kind"
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "title": "Les femmes MAGA au service du patriarcat",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré/Félix Fournier",
+      "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -64,9 +64,30 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
