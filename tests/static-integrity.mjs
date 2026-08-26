@@ -1596,6 +1596,8 @@ assert(
     && appJs.includes('sportsSoftSportDiversity')
     && appJs.includes("if (String(s.game?.result || '') === 'L') continue")
     && !/CTA : carte stable — roulement/.test(appJs)
+    && !appJs.includes('sportsCtaInPlaceViewport')
+    && !appJs.includes('retouchSportsCtaChip')
     && /if \(animate && !sportsReducedMotion\) a\.classList\.add\('is-arriving'\)/.test(appJs),
   'app.js : CTA = dédup matchs + vainqueur seulement + même leave/arrive que les scores',
 );
