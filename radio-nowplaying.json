@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-26T06:42:26.088Z",
+  "updatedAt": "2026-08-26T07:12:47.885Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T06:41:56.660Z"
+      "checkedAt": "2026-08-26T07:12:21.577Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "Fréquence 440",
         "source": "schedule",
         "start": "03:00",
         "end": "04:00",
         "url": "https://cism893.ca/emissions/frequence-440"
       },
+      "next": {
+        "title": "Hors cadre",
+        "source": "schedule",
+        "start": "04:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/hors-cadre"
+      },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "Fréquence 440",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T06:41:59.127Z"
+      "checkedAt": "2026-08-26T07:12:23.897Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T06:42:02.278Z"
+      "checkedAt": "2026-08-26T07:12:26.783Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T06:42:16.524Z"
+      "checkedAt": "2026-08-26T07:12:40.575Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T06:42:17.229Z"
+      "checkedAt": "2026-08-26T07:12:41.072Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/in-velo-veritas"
       },
-      "track": "FJORT - 22:30",
+      "track": "Miserere Luminis - De cris & de cendres",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -151,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-26T06:42:25.737Z"
+      "checkedAt": "2026-08-26T07:12:47.533Z"
     }
   }
 }
