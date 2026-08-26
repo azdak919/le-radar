@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-26T10:31:53.959Z",
+  "updatedAt": "2026-08-26T11:26:24.114Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T10:31:23.804Z"
+      "checkedAt": "2026-08-26T11:25:49.080Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "05:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "Club classique",
         "source": "schedule",
         "start": "07:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/club-classique"
       },
+      "next": {
+        "title": "La collation",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Club classique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T10:31:26.111Z"
+      "checkedAt": "2026-08-26T11:25:51.058Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Full Circle",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "The Wednesday Morning After",
         "source": "api-live",
         "start": "07:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "The Sleepy King/Terminal 5",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Full Circle",
+      "showTitle": "The Wednesday Morning After",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T10:31:28.825Z"
+      "checkedAt": "2026-08-26T11:25:54.443Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,32 +101,32 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T10:31:43.190Z"
+      "checkedAt": "2026-08-26T11:26:08.257Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule-live",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-26T10:31:43.893Z"
+      "checkedAt": "2026-08-26T11:26:09.076Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/in-velo-veritas"
       },
-      "track": "Mike Paul Kuekuatsheu - Shine bright",
+      "track": "Les Louanges - Correct",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -151,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-26T10:31:53.608Z"
+      "checkedAt": "2026-08-26T11:26:23.763Z"
     }
   }
 }
