@@ -103,6 +103,31 @@ test('iframe kiosque-v1 : À l’antenne ouvre l’horaire sur le-radar (URL abs
   await expect(schedule).toHaveURL(new RegExp(`^${origin.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\$&')}/radios/chyz/#horaire$`));
 });
 
+for (const path of ['/pomo/', '/solitaire/']) {
+  test(`CHYZ dans l’iframe ${path} utilise le mount Centova actuel`, async ({ page }) => {
+    await page.goto(path, { waitUntil: 'domcontentloaded' });
+    const tuner = page.locator('#radar-embed').contentFrame();
+    await expect.poll(async () => tuner.locator('#tuner-select option').count(), { timeout: 15_000 })
+      .toBeGreaterThan(1);
+    await tuner.locator('#tuner-select').selectOption('chyz');
+    // Changer de poste autoplay déjà ; un second clic mettrait en pause.
+    const play = tuner.locator('#tuner-play');
+    const aria = await play.getAttribute('aria-label');
+    if (!/pause|connexion/i.test(aria || '')) {
+      await play.click();
+    }
+    await expect.poll(async () => {
+      return tuner.locator('#radar-player').evaluate((a) => ({
+        src: a.currentSrc || a.src || '',
+        err: a.error ? a.error.code : 0,
+      }));
+    }, { timeout: 10_000 }).toEqual({
+      src: expect.stringContaining('/proxy/tech/stream'),
+      err: 0,
+    });
+  });
+}
+
 test('l’iframe alterne les postes affichés lorsque la radio est arrêtée', async ({ page }) => {
   await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
   const tuner = page.locator('#radar-embed').contentFrame();
