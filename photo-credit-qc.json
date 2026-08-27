@@ -1,15 +1,15 @@
 {
-  "updated": "2026-08-26T23:51:57.752Z",
+  "updated": "2026-08-27T03:27:04.972Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
   "cited": 132,
-  "pending": 11,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 8,
-  "citedNew": 4,
+  "checked": 19,
+  "updatedCount": 11,
+  "citedNew": 7,
   "fallbackNew": 12,
   "samples": [
     {
@@ -20,18 +20,18 @@
       "method": "body-line"
     },
     {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "title": "Des initiatives qui rassemblent",
       "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
-      "cited": true,
-      "method": "media-credit-featured"
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Sois belle et tais-toi",
+      "title": "Élections de l’exécutif de l’AÉUM",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Anna El Murr",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-bare"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
@@ -64,9 +64,30 @@
     {
       "title": "The apprenticeship of public voice",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
