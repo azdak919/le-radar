@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-08-27T00:25:49.349Z",
+  "updatedAt": "2026-08-27T10:06:42.168Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "api-live",
-        "start": "18:50",
-        "end": "23:00",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Jeudi Révolte",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
       "track": "",
-      "showTitle": "Capitales de Québec",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-27T00:25:27.155Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Jeunesse cosmique",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/jeunesse-cosmique"
-      },
-      "next": {
-        "title": "Mix anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "track": "",
-      "showTitle": "Jeunesse cosmique",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-27T00:25:29.557Z"
+      "checkedAt": "2026-08-27T10:06:28.338Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Le Séismix",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
+      },
+      "next": {
+        "title": "Plus de guit présente: un retour sur le Warped tour 2026",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/plus-de-guit"
+      },
+      "track": "",
+      "showTitle": "Le Séismix",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-08-27T10:06:30.336Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Jazz Euphorium",
+        "title": "Total €clipse of The ☾harts",
         "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "06:00",
+        "end": "07:00"
       },
       "next": {
-        "title": "Lo Signal / Meanwhile/ Rhizomatic",
+        "title": "OFC Podcast Radio",
         "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
+        "start": "07:00",
+        "end": "09:00"
       },
       "track": "",
-      "showTitle": "Jazz Euphorium",
+      "showTitle": "Total €clipse of The ☾harts",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,72 +74,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-27T00:25:38.198Z"
+      "checkedAt": "2026-08-27T10:06:32.741Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "BVST",
+        "title": "Daydream Nation",
         "source": "schedule",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/bvst"
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/daydream-nation"
       },
       "next": {
-        "title": "Rap Radar",
+        "title": "Free City Radio",
         "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/rap-radar"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/free-city-radio"
       },
       "track": "",
-      "showTitle": "BVST",
+      "showTitle": "Daydream Nation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-27T00:25:40.204Z"
+      "checkedAt": "2026-08-27T10:06:34.561Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Le popcorn de l'infini",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Le popcorn de l'infini",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-27T00:25:40.717Z"
+      "checkedAt": "2026-08-27T10:06:35.525Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Opération beurre de cinoche",
+        "title": "Palmarès CHOQ.ca",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
       },
-      "track": "zohryu - Tulpamancer",
+      "track": "ID - Kat-Pereira",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-27T00:25:48.998Z"
+      "checkedAt": "2026-08-27T10:06:41.818Z"
     }
   }
 }
