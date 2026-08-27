@@ -1,25 +1,19 @@
 {
-  "updated": "2026-08-27T03:26:34.353Z",
+  "updated": "2026-08-27T10:07:53.796Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 21,
   "withCampusBank": 13,
   "fullyCovered": 185,
-  "leadReadyPhotos": 147,
+  "leadReadyPhotos": 150,
   "pageScraped": 32,
   "photosRecovered": 27,
-  "imagesCleared": 17,
-  "stockSearches": 32,
-  "stockFound": 10,
-  "campusBankFound": 5,
+  "imagesCleared": 16,
+  "stockSearches": 27,
+  "stockFound": 6,
+  "campusBankFound": 2,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "CSU terminates council’s chief election officer",
-      "link": "https://thelinknewspaper.ca/article/16334",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Henry_F._Hall_Building_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
     {
       "title": "Tarifs douaniers : le choc n’est pas là où on l’attend",
       "link": "https://lapige.atmjonquiere.com/2026/08/24/tarifs-douaniers-le-choc-nest-pas-la-ou-on-lattend/?utm_source=rss&utm_medium=rss&utm_campaign=tarifs-douaniers-le-choc-nest-pas-la-ou-on-lattend",
@@ -57,34 +51,40 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
-      "title": "National Golf tournament",
-      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288689651802%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Gaiters wrap up hard-fought season with eyes on next year",
-      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "The Gentrification of Online Fandom Spaces",
-      "link": "https://www.mcgilldaily.com/2026/03/the-gentrification-of-online-fandom-spaces/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
-    },
-    {
       "title": "Second-Class Citizens",
       "link": "https://www.mcgilldaily.com/2026/03/second-class-citizens/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
-      "title": "Le pays avant tout – esquisse",
-      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
+      "title": "Oui au budget, oui au programme FIL et non à la grève",
+      "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
       "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
+    },
+    {
+      "title": "Recettes musicales québécoises pour l’été",
+      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_marieceleste.jpg"
+    },
+    {
+      "title": "Gothic Cinema Rises from the Grave",
+      "link": "https://theplantnews.com/2026/05/11/gothic-cinema-rises-from-the-grave/",
+      "reason": "no-stock-match",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.png"
+    },
+    {
+      "title": "On Manon from KATSEYE: How K-Pop Takes Its Roots from Black Culture",
+      "link": "https://theplantnews.com/2026/05/11/on-manon-from-katseye-how-k-pop-takes-its-roots-from-black-culture/",
+      "reason": "no-stock-match",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-5.jpeg"
+    },
+    {
+      "title": "Dragon Jam: When music gives back",
+      "link": "https://thelinknewspaper.ca/article/16324",
+      "reason": "no-stock-match",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_0291-2_900_1125_90.jpg"
     }
   ]
 }
