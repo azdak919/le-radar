@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-27T10:06:42.168Z",
+  "updatedAt": "2026-08-27T17:43:53.649Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Jeudi Révolte",
+        "title": "Chéri.e, j’arrive!",
         "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/jeudi-revolte/"
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-27T10:06:28.338Z"
+      "checkedAt": "2026-08-27T17:43:28.538Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
+        "title": "La grande ludothèque",
         "source": "schedule",
-        "start": "05:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
       },
       "next": {
-        "title": "Plus de guit présente: un retour sur le Warped tour 2026",
+        "title": "Le palmarès",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/plus-de-guit"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "La grande ludothèque",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-27T10:06:30.336Z"
+      "checkedAt": "2026-08-27T17:43:30.941Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Total €clipse of The ☾harts",
+        "title": "Venus Radio",
         "source": "api-live",
-        "start": "06:00",
-        "end": "07:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "OFC Podcast Radio",
+        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
         "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
+        "start": "14:00",
+        "end": "15:00"
       },
       "track": "",
-      "showTitle": "Total €clipse of The ☾harts",
+      "showTitle": "Venus Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-27T10:06:32.741Z"
+      "checkedAt": "2026-08-27T17:43:33.982Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Daydream Nation",
+        "title": "Give Me Shelter",
         "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/daydream-nation"
+        "start": "13:30",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/give-me-shelter"
       },
       "next": {
-        "title": "Free City Radio",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/free-city-radio"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "Daydream Nation",
+      "showTitle": "Give Me Shelter",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-27T10:06:34.561Z"
+      "checkedAt": "2026-08-27T17:43:46.299Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "À nous le futur",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
+        "start": "11:00",
+        "end": "20:00"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "After 5@8",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "20:00",
+        "end": "00:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "À nous le futur",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-27T10:06:35.525Z"
+      "checkedAt": "2026-08-27T17:43:46.947Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "ID - Kat-Pereira",
+      "track": "The Drums - Under The Ice",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-27T10:06:41.818Z"
+      "checkedAt": "2026-08-27T17:43:53.298Z"
     }
   }
 }
