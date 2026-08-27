@@ -1,11 +1,11 @@
 {
-  "updated": "2026-08-27T15:16:22.519Z",
-  "fetchedAt": "2026-08-27T15:16:22.519Z",
+  "updated": "2026-08-27T21:04:17.523Z",
+  "fetchedAt": "2026-08-27T21:04:17.523Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-27T15:16:22.519Z"
+    "referenceDate": "2026-08-27T21:04:17.524Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 789,
@@ -5253,6 +5253,20 @@
           "opponentRegistryId": "riviere-du-loup"
         },
         {
+          "date": "2026-09-30",
+          "time": "20:00",
+          "opponent": "Limoilou",
+          "opponentCode": "LIM",
+          "home": false,
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "47285e24-b4f1-4afe-bc8d-93565fc28ebc",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=47285e24-b4f1-4afe-bc8d-93565fc28ebc",
+          "opponentFullName": "Cégep Limoilou",
+          "opponentNickname": "Titans",
+          "opponentRegistryId": "limoilou"
+        },
+        {
           "date": "2026-10-03",
           "time": "13:00",
           "opponent": "André-Laurendeau",
@@ -5281,22 +5295,8 @@
           "opponentRegistryId": "andre-laurendeau"
         },
         {
-          "date": "2026-10-10",
-          "time": "13:00",
-          "opponent": "Limoilou",
-          "opponentCode": "LIM",
-          "home": false,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "47285e24-b4f1-4afe-bc8d-93565fc28ebc",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=47285e24-b4f1-4afe-bc8d-93565fc28ebc",
-          "opponentFullName": "Cégep Limoilou",
-          "opponentNickname": "Titans",
-          "opponentRegistryId": "limoilou"
-        },
-        {
-          "date": "2026-10-10",
-          "time": "16:00",
+          "date": "2026-10-07",
+          "time": "19:30",
           "opponent": "Limoilou",
           "opponentCode": "LIM",
           "home": true,
@@ -6295,6 +6295,19 @@
           "opponentRegistryId": "john-abbott"
         },
         {
+          "date": "2026-09-30",
+          "time": "20:00",
+          "opponent": "Beauce-Appalaches",
+          "opponentCode": "BAP",
+          "home": true,
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "47285e24-b4f1-4afe-bc8d-93565fc28ebc",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=47285e24-b4f1-4afe-bc8d-93565fc28ebc",
+          "opponentFullName": "Cégep de Beauce-Appalaches",
+          "opponentRegistryId": "beauce-appalaches"
+        },
+        {
           "date": "2026-10-03",
           "time": "13:00",
           "opponent": "Drummondville",
@@ -6321,21 +6334,8 @@
           "opponentRegistryId": "drummondville"
         },
         {
-          "date": "2026-10-10",
-          "time": "13:00",
-          "opponent": "Beauce-Appalaches",
-          "opponentCode": "BAP",
-          "home": true,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "47285e24-b4f1-4afe-bc8d-93565fc28ebc",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=47285e24-b4f1-4afe-bc8d-93565fc28ebc",
-          "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches"
-        },
-        {
-          "date": "2026-10-10",
-          "time": "16:00",
+          "date": "2026-10-07",
+          "time": "19:30",
           "opponent": "Beauce-Appalaches",
           "opponentCode": "BAP",
           "home": false,
