@@ -26,6 +26,12 @@ const {
   planDisplayImage,
   isThematicStockItem,
 } = require('../scripts/campus-fallback-lib.js');
+const {
+  isCandidateImageUrl,
+  isWeakImageUrl,
+  meetsLeadDisplaySize,
+  GLOBAL_IMAGE_REJECT_RE,
+} = require('../scripts/article-image-lib.js');
 
 const newsSources = JSON.parse(readFileSync(join(root, 'news-sources.json'), 'utf8'));
 const sources = [...(newsSources.active || []), ...(newsSources.candidates || [])];
@@ -216,6 +222,20 @@ assert.deepEqual(
 assert.equal(isThematicStockItem({ stockImage: 'https://x.test/a.jpg', imageProvider: 'openverse' }), true);
 assert.equal(isThematicStockItem({ stockImage: 'https://x.test/a.jpg', imageProvider: 'campus-bank' }), false);
 
+const sansFinsImg = 'https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/05/Illustration-recadree-16.9-scaled-e1778861785132.png';
+assert.equal(
+  isCandidateImageUrl(sansFinsImg),
+  true,
+  'Sans fin(s) : illustration d’article candidate',
+);
+assert.equal(isWeakImageUrl(sansFinsImg), false, 'Sans fin(s) : pas une miniature WP');
+assert.equal(meetsLeadDisplaySize(2048, 1152), true, 'Sans fin(s) : 2048×1152 vedette');
+assert.equal(
+  GLOBAL_IMAGE_REJECT_RE.test(new URL(sansFinsImg).pathname),
+  false,
+  'Sans fin(s) : « illustration » n’est pas logo/banner/blank',
+);
+
 const radarNews = readFileSync(join(root, 'radar-news.js'), 'utf8');
 assert.match(radarNews, /ensureCampusStock/, 'fil : ensureCampusStock');
 assert.match(radarNews, /pickClientCampusPhoto/, 'fil : pickClientCampusPhoto');
@@ -233,11 +253,15 @@ assert.match(
   /replaceThematic/,
   'fil : thématique 404 → campus (pas SVG)',
 );
-assert.match(
+assert.doesNotMatch(
   radarNews,
-  /failedIsArchive/,
-  'fil : un essai Wayback, pas de boucle origine ↔ archive',
+  /return withArchiveImageFallback\(url\.href\)/,
+  'fil : URL primaire = origine, pas Wayback',
 );
+assert.match(radarNews, /withPhotonImageUrl/, 'fil : Photon Jetpack avant Wayback');
+assert.match(radarNews, /photoDisplayRungs/, 'fil : chaîne local → origine → Photon → Wayback');
+assert.match(radarNews, /failedIsArchive/, 'fil : Wayback identifié, pas de boucle origine ↔ archive');
+assert.match(radarNews, /15000/, 'fil : timeout Wayback plus long que l’origine');
 
 const ensure = readFileSync(join(root, 'scripts/ensure-lead-images.js'), 'utf8');
 assert.match(ensure, /itemNeedsCampusBackup/, 'bot : backup campus même si URL source');
