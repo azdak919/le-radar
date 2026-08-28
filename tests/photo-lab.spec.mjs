@@ -282,6 +282,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   const liveNoScore = page.locator('#cta-band .case').filter({ hasText: 'en cours (sans score)' });
   await expect(liveNoScore).toBeVisible();
   await expect(liveNoScore.locator('.sports-chip__score')).toHaveText('—');
+  await expect(liveNoScore.locator('.sports-chip__cta-sub-text')).toContainText(/19 h 00/);
   await expect(liveNoScore.locator('.sports-chip__cta-sub-text')).toContainText(/mis à jour à/);
   await expect(liveNoScore.locator('.sports-chip__vs')).toHaveCount(0);
   await expect(page.locator('#standard-chips .case').filter({ hasText: 'voile argent' }).first()).toBeVisible();

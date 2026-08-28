@@ -1291,8 +1291,12 @@ function sportsResultRows(team, t, lang) {
   if (next) {
     const live = sportsNextIsLive(next);
     const dayWord = sportsDayWord(next.date, t);
-    const timeHtml = live && next.period
-      ? `<span class="sports-result__day">${escapeHtml(dayWord || formatSportsDate(next.date, lang) || next.date || '')}</span><span class="sports-result__clock">${escapeHtml(next.period)}</span>`
+    const kickClock = formatSportsClock(next.time, lang);
+    const liveClock = live
+      ? [kickClock, next.period].filter(Boolean).join(' · ')
+      : '';
+    const timeHtml = live && liveClock
+      ? `<span class="sports-result__day">${escapeHtml(dayWord || formatSportsDate(next.date, lang) || next.date || '')}</span><span class="sports-result__clock">${escapeHtml(liveClock)}</span>`
       : formatSportsTimeHtml(next.date, next.time, lang, dayWord);
     const opp = formatOpp(next);
     const venue = next.home === false
