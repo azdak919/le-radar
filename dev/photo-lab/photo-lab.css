@@ -97,7 +97,7 @@ body.mode-detail #grid-view { display: none; }
   display: flex; justify-content: center; align-items: center;
   background: #000; border-radius: 12px;
   min-height: 42vh;
-  cursor: ns-resize;
+  cursor: default;
   position: relative;
 }
 .crop-inner { position: relative; max-width: 100%; }
@@ -108,6 +108,9 @@ body.mode-detail #grid-view { display: none; }
   width: auto;
   height: auto;
   background: #111;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
 }
 .crop-stage.is-loading .crop-inner img { opacity: .25; }
 .load-msg {

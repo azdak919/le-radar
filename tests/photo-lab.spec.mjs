@@ -371,6 +371,18 @@ test('labo photo : grille puis fiche, suivant en barre', async ({ page }) => {
   await expect(page.locator('#full-photo')).not.toHaveAttribute('src', firstSrc);
   await expect(page.locator('#band-desktop')).toBeVisible();
   await expect(page.locator('#band-mobile')).toBeVisible();
+  const yBefore = await page.locator('#focal-val').textContent();
+  const box = await page.locator('#crop-stage').boundingBox();
+  await page.mouse.move(box.x + box.width / 2, box.y + 20);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height - 20);
+  await page.mouse.up();
+  await expect(page.locator('#focal-val')).toHaveText(yBefore);
+  await page.locator('#focal').evaluate((el) => {
+    el.value = '220';
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await expect(page.locator('#focal-val')).toHaveText('0.22');
   await expect(page.locator('#grid-btn')).toBeVisible();
   await page.locator('#grid-btn').click();
   await expect(page.locator('#grid .card').first()).toBeVisible();

@@ -66,15 +66,15 @@
   </div>
 
   <div class="page" id="panel-body" hidden>
-    <div class="crop-stage is-loading" id="crop-stage" title="Glisser verticalement pour le cadrage Y">
+    <div class="crop-stage is-loading" id="crop-stage" title="Aperçu du cadrage — régler Y avec la barre">
       <div class="crop-inner" id="crop-inner">
-        <img id="full-photo" alt="">
+        <img id="full-photo" alt="" draggable="false">
         <div class="band band--desktop" id="band-desktop" title="Visible au mât bureau"></div>
         <div class="band band--mobile" id="band-mobile" title="Visible au mât mobile"></div>
       </div>
       <p class="load-msg" id="load-msg">Chargement de la photo…</p>
     </div>
-    <p class="legend"><span class="swatch desk"></span> mât ordinateur &nbsp; <span class="swatch mob"></span> mât téléphone — glisser ou curseur</p>
+    <p class="legend"><span class="swatch desk"></span> mât ordinateur &nbsp; <span class="swatch mob"></span> mât téléphone — cadrage Y avec la barre</p>
     <label class="focal-row">Cadrage Y
       <input id="focal" type="range" min="0" max="1000" value="500">
       <code id="focal-val">0.50</code>
