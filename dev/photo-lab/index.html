@@ -66,15 +66,15 @@
   </div>
 
   <div class="page" id="panel-body" hidden>
-    <div class="crop-stage is-loading" id="crop-stage" title="Glisser verticalement pour le cadrage Y">
+    <div class="crop-stage is-loading" id="crop-stage" title="Aperçu du cadrage — régler Y avec la barre">
       <div class="crop-inner" id="crop-inner">
-        <img id="full-photo" alt="">
+        <img id="full-photo" alt="" draggable="false">
         <div class="band band--desktop" id="band-desktop" title="Visible au mât bureau"></div>
         <div class="band band--mobile" id="band-mobile" title="Visible au mât mobile"></div>
       </div>
       <p class="load-msg" id="load-msg">Chargement de la photo…</p>
     </div>
-    <p class="legend"><span class="swatch desk"></span> mât ordinateur &nbsp; <span class="swatch mob"></span> mât téléphone — glisser ou curseur</p>
+    <p class="legend"><span class="swatch desk"></span> mât ordinateur &nbsp; <span class="swatch mob"></span> mât téléphone — cadrage Y avec la barre</p>
     <label class="focal-row">Cadrage Y
       <input id="focal" type="range" min="0" max="1000" value="500">
       <code id="focal-val">0.50</code>
@@ -130,22 +130,25 @@
 
       <fieldset class="seasons">
         <legend>Saison</legend>
-        <label><input type="radio" name="season" value=""> —</label>
-        <label><input type="radio" name="season" value="printemps"> Printemps</label>
-        <label><input type="radio" name="season" value="ete"> Été</label>
-        <label><input type="radio" name="season" value="automne"> Automne</label>
-        <label><input type="radio" name="season" value="hiver"> Hiver</label>
+        <label class="tag gold"><input type="radio" name="season" value="all"> Toutes les saisons</label>
+        <label class="tag"><input type="radio" name="season" value="printemps"> Printemps</label>
+        <label class="tag"><input type="radio" name="season" value="ete"> Été</label>
+        <label class="tag"><input type="radio" name="season" value="automne"> Automne</label>
+        <label class="tag"><input type="radio" name="season" value="hiver"> Hiver</label>
       </fieldset>
       <fieldset class="seasons" id="season6-wrap">
         <legend>Saison Nunavik</legend>
-        <label><input type="radio" name="season6" value=""> —</label>
-        <label><input type="radio" name="season6" value="ukiuq"> Ukiuq (hiver)</label>
-        <label><input type="radio" name="season6" value="upingaksaaq"> Upingaksaaq (hiver / printemps)</label>
-        <label><input type="radio" name="season6" value="upingaaq"> Upingaaq (printemps)</label>
-        <label><input type="radio" name="season6" value="aujaq"> Aujaq (été)</label>
-        <label><input type="radio" name="season6" value="ukiaqsaaq"> Ukiaqsaaq (été / automne)</label>
-        <label><input type="radio" name="season6" value="ukiaq"> Ukiaq (automne)</label>
+        <label class="tag"><input type="radio" name="season6" value=""> —</label>
+        <label class="tag"><input type="radio" name="season6" value="ukiuq"> Ukiuq (hiver)</label>
+        <label class="tag"><input type="radio" name="season6" value="upingaksaaq"> Upingaksaaq (hiver / printemps)</label>
+        <label class="tag"><input type="radio" name="season6" value="upingaaq"> Upingaaq (printemps)</label>
+        <label class="tag"><input type="radio" name="season6" value="aujaq"> Aujaq (été)</label>
+        <label class="tag"><input type="radio" name="season6" value="ukiaqsaaq"> Ukiaqsaaq (été / automne)</label>
+        <label class="tag"><input type="radio" name="season6" value="ukiaq"> Ukiaq (automne)</label>
       </fieldset>
+      <div class="edit-actions">
+        <button type="button" class="btn primary" id="save-inline-btn">Enregistrer</button>
+      </div>
     </section>
   </div>
 

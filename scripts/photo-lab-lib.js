@@ -335,6 +335,8 @@ function createPhotoLab(opts = {}) {
       returnResult: true,
       checkOnly: false,
       skipScrub: true,
+      // Labo : ne pas réécrire les tags / le mât qu’on vient d’enregistrer.
+      skipRetain: true,
     });
   }
 
@@ -391,6 +393,7 @@ function createPhotoLab(opts = {}) {
           banks: tags.slice(),
           surfaces,
           tags,
+          campus: p.campus === true || tags.includes('campus'),
           stock: false,
         };
       })
@@ -658,7 +661,8 @@ function createPhotoLab(opts = {}) {
       if (payload.clear) {
         delete p.season;
         delete p.season6;
-        delete p.seasonSource;
+        p.seasonSource = 'manual';
+        p.seasonConfidence = 1;
       }
     });
     const n = patchQcByUrl(photo.url, (p) => {
@@ -676,7 +680,8 @@ function createPhotoLab(opts = {}) {
       if (payload.clear) {
         delete p.season;
         delete p.season6;
-        delete p.seasonSource;
+        p.seasonSource = 'manual';
+        p.seasonConfidence = 1;
       }
     });
     runSync();
@@ -885,11 +890,15 @@ function createPhotoLab(opts = {}) {
     if (payload.clearSeason) {
       extra.season = '';
       extra.season6 = '';
-      patchQcByUrl(photo.url, (p) => {
+      const markAllSeasons = (p) => {
         delete p.season;
         delete p.season6;
-        delete p.seasonSource;
-      });
+        p.seasonSource = 'manual';
+        p.seasonConfidence = 1;
+      };
+      patchUnified(photo.url, markAllSeasons);
+      patchQcByUrl(photo.url, markAllSeasons);
+      patchStockByUrl(photo.url, markAllSeasons);
     } else {
       if (payload.season) {
         if (!SEASON4.includes(payload.season)) {
@@ -962,10 +971,13 @@ function createPhotoLab(opts = {}) {
     return {
       ok: true,
       surfaces: after ? after.surfaces : surfaces,
+      tags: after ? after.tags : extra.photo && extra.photo.tags,
       credit: after && after.credit,
       place: after && after.place,
       season: after && after.season,
+      season6: after && after.season6,
       focalY: after && after.focalY,
+      photo: after || null,
     };
   }
 

@@ -5,7 +5,8 @@
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
@@ -173,6 +174,35 @@ assert.ok(!uniPhoto.tags.includes('mat'), 'décoche mât → plus de tag mat');
 assert.equal(afterSave.credit, 'Alice Tremblay');
 assert.equal(afterSave.place, 'Tadoussac');
 assert.equal(afterSave.season, 'ete');
+const savedPayload = lab.saveAll(lac.url, {
+  credit: 'Alice Tremblay',
+  place: 'Tadoussac',
+  season: 'hiver',
+  focalY: 0.44,
+  tags: ['pomo', 'solitaire'],
+});
+assert.ok(savedPayload.photo, 'Enregistrer renvoie la fiche');
+assert.equal(savedPayload.photo.season, 'hiver', 'saison renvoyée après save');
+assert.equal(savedPayload.photo.focalY, 0.44);
+assert.deepEqual(savedPayload.photo.tags.slice().sort(), ['pomo', 'solitaire']);
+assert.equal(lab.findByUrl(lac.url).season, 'hiver', 'saison encore là au rechargement');
+
+const allYear = lab.saveAll(lac.url, {
+  credit: 'Alice Tremblay',
+  place: 'Tadoussac',
+  clearSeason: true,
+  tags: ['pomo', 'solitaire'],
+});
+assert.ok(!allYear.photo.season, 'toutes saisons : pas de season');
+assert.equal(allYear.photo.seasonSource, 'manual', 'toutes saisons : manuel, pas de re-tag bot');
+const uniAll = JSON.parse(readFileSync(join(root, 'data/photo-bank.json'), 'utf8'));
+const uniAllPhoto = (uniAll.photos || []).find((p) => p.url === lac.url);
+assert.ok(uniAllPhoto, 'banque unique après clearSeason');
+assert.ok(!uniAllPhoto.season, 'banque unique : saison vidée');
+assert.equal(uniAllPhoto.seasonSource, 'manual');
+const { mergeRecord } = require('../scripts/photo-bank-lib.js');
+const protectedAll = mergeRecord(uniAllPhoto, { season: 'ete', seasonSource: 'text' });
+assert.ok(!protectedAll.season, 'moisson ne recolle pas une saison sur « toutes saisons »');
 
 lab.pinPhoto(lac.url, { surfaces: ['masthead', 'solitaire'], focalY: 0.22 });
 const fav = JSON.parse(readFileSync(join(root, 'data/quebec-favorites-backgrounds.json'), 'utf8'));
@@ -204,6 +234,13 @@ assert.match(
   /BACKGROUNDS/,
 );
 assert.ok(!existsSync(join(root, 'nope')));
+
+const labUi = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../dev/photo-lab/photo-lab.js'), 'utf8');
+assert.doesNotMatch(
+  labUi,
+  /crop-stage[\s\S]{0,80}pointerdown|setPointerCapture/,
+  'cadrage Y : pas de glisser sur la photo, seulement la barre',
+);
 
 const {
   retainUnifiedPhoto,
