@@ -805,7 +805,9 @@ function sportsStripCramped() {
   const wide = isWideNoMarqueeMode();
   const comfort = isWideDesktopComfort();
   const minScore = comfort ? 0 : (wide ? 100 : 118);
-  const minCta = comfort ? 400 : (wide ? 120 : 148);
+  const minCta = comfort
+    ? (isWide1600SportsBand() ? SPORTS_CTA_W_1600 : 400)
+    : (wide ? 120 : 148);
 
   const cta = strip.querySelector('.sports-chip--cta');
   if (!cta) return true;
@@ -973,7 +975,11 @@ function fitSportsStripAfterPaint() {
   sportsFitDepth += 1;
   // Wide étroit : totaux impairs (CTA centrée). ≥1440 : juste −1 (garder le remplissage).
   // ≥ ~520 px : ne pas jeter le dernier score (round-trip 2560→1920 le perdait).
-  const floor = sportsStripAvailWidth() >= 520 ? 2 : 1;
+  // 1600 : 2 CTA + 1 score de chaque côté. Ne pas redescendre à 3
+  // (le score unique partait à droite, gauche vide).
+  const floor = isWide1600SportsBand()
+    ? 4
+    : (sportsStripAvailWidth() >= 520 ? 2 : 1);
   let next = count - 1;
   if (!comfort && wide && next >= 4 && next % 2 === 0) next -= 1;
   sportsFitCount = Math.max(floor, next);
