@@ -1,7 +1,7 @@
 {
   "version": 1,
   "profile": "pomo",
-  "updated": "2026-08-24T09:31:27.505Z",
+  "updated": "2026-08-28T06:27:22.481Z",
   "photos": [
     {
       "id": "1eb2382981cc",
@@ -3232,19 +3232,21 @@
       ],
       "seasonDetectedAt": "2026-08-21T03:20:28.641Z",
       "place": "Sherbrooke",
-      "focalY": 0.733,
+      "focalY": 0.692,
       "surfaces": [
-        "masthead"
+        "masthead",
+        "pomo"
       ],
       "faces": 0,
       "faceRatio": 0,
       "faceDetectedAt": "2026-08-06T20:47:26.788Z",
       "tags": [
-        "mat",
         "campus",
+        "mat",
         "pomo"
       ],
-      "campus": true
+      "campus": true,
+      "permanent": false
     }
   ]
 }

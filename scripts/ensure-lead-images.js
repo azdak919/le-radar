@@ -42,6 +42,7 @@ const {
 const { findStockPhoto, cleanCreatorName, stockStillFits } = require('./stock-photo-lib');
 const { pickCampusPhoto, hasCampusBank, diversifyCampusBankItems } = require('./campus-photo-bank');
 const { pruneToFreshWindow, loadSourceRegistryMap, getBotHints } = require('./source-retention-lib');
+const { imageHostIsFragile, sourceNeedsCampusBackup } = require('./campus-fallback-lib');
 
 
 const ROOT = path.join(__dirname, '..');
@@ -102,6 +103,14 @@ function isCandidateForItem(item = {}, sourceMap = new Map()) {
 function hasSourcePhoto(item = {}, sourceMap = new Map()) {
   const { ok } = isCandidateForItem(item, sourceMap);
   return ok(item.image);
+}
+
+function itemNeedsCampusBackup(item = {}, sourceMap = new Map()) {
+  const hints = imageHintsFor(item, sourceMap);
+  if (hints.disableCampusBank === true || isSubstackItem(item)) return false;
+  return sourceNeedsCampusBackup(item, {
+    hasUsableSourceImage: hasSourcePhoto(item, sourceMap),
+  });
 }
 
 function imagePathKey(url = '') {
@@ -497,7 +506,10 @@ async function main() {
         if (await photoIsLeadReady(item)) {
           if (doUpdate) {
             const sourceLead = item.image && ok(item.image) && await probeLeadReady(item.image);
-            if (sourceLead) clearStockPhoto(item);
+            // Hôte fragile sans miroir : garder le stock campus comme filet.
+            if (sourceLead && !(imageHostIsFragile(item.image) && !item.imageLocal)) {
+              clearStockPhoto(item);
+            }
             clearLegacyFallback(item);
           }
           continue;
@@ -571,10 +583,7 @@ async function main() {
   if (doUpdate) {
     let campusBackfill = 0;
     for (const item of items) {
-      if (hasSourcePhoto(item, sourceMap)) continue;
-      if (item.stockImage && isCandidateImageUrl(item.stockImage)) continue;
-      const hints = imageHintsFor(item, sourceMap);
-      if (hints.disableCampusBank === true || isSubstackItem(item)) continue;
+      if (!itemNeedsCampusBackup(item, sourceMap)) continue;
       if (!hasCampusBank(item.institution)) continue;
       const campus = pickCampusPhoto(item, { avoidUrls: usedCampusUrls });
       if (!campus?.stockImage) continue;
@@ -601,7 +610,11 @@ async function main() {
     let freeRetry = 0;
     for (const item of items) {
       if (hasSourcePhoto(item, sourceMap)) continue;
-      if (item.stockImage && isCandidateImageUrl(item.stockImage)) continue;
+      // Campus déjà posé : encore le droit à une photo thématique (ordre 2 avant 3).
+      const hasThematic = item.stockImage
+        && item.imageProvider !== 'campus-bank'
+        && isCandidateImageUrl(item.stockImage);
+      if (hasThematic) continue;
       if (isSubstackItem(item)) continue;
       const hints = imageHintsFor(item, sourceMap);
       if (hints.disableFreeStock === true) continue;
@@ -622,10 +635,7 @@ async function main() {
     // Filet campus final pour ce qui reste vide (unicité).
     let campusFinal = 0;
     for (const item of items) {
-      if (hasSourcePhoto(item, sourceMap)) continue;
-      if (item.stockImage && isCandidateImageUrl(item.stockImage)) continue;
-      const hints = imageHintsFor(item, sourceMap);
-      if (hints.disableCampusBank === true || isSubstackItem(item)) continue;
+      if (!itemNeedsCampusBackup(item, sourceMap)) continue;
       if (!hasCampusBank(item.institution)) continue;
       // L'unicité est une préférence, pas une condition : une banque
       // d'établissement épuisée (Bishop's, 14 vues déjà placées) laissait
