@@ -171,10 +171,14 @@ function weatherBoardAvailWidth() {
         - gap * 2
         - slack;
     }
-    // Case 1fr déjà contrainte = vérité. Si elle a gonflé (contenu), le
-    // reliquat date/icônes est plus sûr. On prend le plus étroit.
+    // Case 1fr déjà contrainte ≈ reliquat. Après un dock 390→1920 le ruban
+    // shrink-wrap sur 2 cartes (cellule trop étroite) : prendre le reliquat
+    // pour re-autoriser les secondaires.
     const trim = Math.max(0, weatherAvailTrim);
-    if (cell >= 40 && leftover >= 40) return Math.max(40, Math.min(cell, leftover) - trim);
+    if (cell >= 40 && leftover >= 40) {
+      if (leftover > cell + 80) return Math.max(40, leftover - trim);
+      return Math.max(40, Math.min(cell, leftover) - trim);
+    }
     if (leftover >= 40) return Math.max(40, leftover - trim);
     if (cell >= 40) return Math.max(40, cell - slack - trim);
   }
@@ -1247,15 +1251,27 @@ function weatherMeasureStringPx(el, text) {
 
 function weatherCityNaturalWidth(el) {
   if (!el) return 0;
+  const name = el.querySelector('.masthead-weather__name-text, .masthead-weather__name-full, .masthead-weather__name');
   const prevWidth = el.style.width;
   const prevMin = el.style.minWidth;
   const prevMax = el.style.maxWidth;
   const prevFlex = el.style.flex;
+  const namePrev = name
+    ? { maxWidth: name.style.maxWidth, overflow: name.style.overflow }
+    : null;
+  if (name) {
+    name.style.maxWidth = 'none';
+    name.style.overflow = 'visible';
+  }
   el.style.width = 'max-content';
   el.style.minWidth = 'max-content';
   el.style.maxWidth = 'none';
   el.style.flex = '0 0 auto';
   const w = Math.ceil(el.getBoundingClientRect().width);
+  if (name && namePrev) {
+    name.style.maxWidth = namePrev.maxWidth;
+    name.style.overflow = namePrev.overflow;
+  }
   el.style.width = prevWidth;
   el.style.minWidth = prevMin;
   el.style.maxWidth = prevMax;
@@ -1264,8 +1280,9 @@ function weatherCityNaturalWidth(el) {
 }
 
 /**
- * ≥1440 : largeur fixe par carte (tient un nom type « Saint-Félicien »).
- * Les noms plus longs défilent. −1 carte si le ruban déborde.
+ * ≥1440 : MTL + QC calés sur la largeur de Montréal ; le reliquat va aux
+ * secondaires pour éviter le défilement des toponymes trop longs.
+ * −1 carte seulement si même le plancher secondaire ne rentre pas.
  * @returns {boolean} true si un re-render a été lancé
  */
 function fitWideWeatherSecondarySlots() {
@@ -1284,9 +1301,6 @@ function fitWideWeatherSecondarySlots() {
   }
   const mtl = actives.find((el) => el.getAttribute('data-weather-city') === 'montreal');
   const qc = actives.find((el) => el.getAttribute('data-weather-city') === 'quebec');
-  const mtlW = weatherCityNaturalWidth(mtl) || 128;
-  const qcW = weatherCityNaturalWidth(qc) || 112;
-  const primaryW = Math.max(mtlW, qcW);
   const gap = 4;
   const avail = weatherBoardAvailWidth();
   if (avail < 40) return false;
@@ -1297,7 +1311,11 @@ function fitWideWeatherSecondarySlots() {
       ? 52 + weatherMeasureStringPx(mtl || qc, 'MONTRÉAL')
       : 118,
   );
-  const uniformAll = window.matchMedia('(min-width: 1920px)').matches;
+  // Les deux ancres : l’espace que Montréal demande (Québec est plus court).
+  const primaryW = Math.max(minPrimary, weatherCityNaturalWidth(mtl) || 128);
+  // Resize 390→1920 : le board n’a pas encore sa largeur utile ; ne pas
+  // descendre à MTL+QC seules sur une mesure transitoire.
+  if (primaryW * 2 > avail) return false;
   const applyW = (el, w) => {
     if (!el) return;
     el.style.setProperty('flex', `0 0 ${w}px`, 'important');
@@ -1317,40 +1335,28 @@ function fitWideWeatherSecondarySlots() {
     return true;
   };
 
-  if (uniformAll) {
-    let n = actives.length;
-    while (n > 3 && n * MIN_SEC + gap * (n - 1) > avail + 1) n -= 1;
-    if (n < actives.length) return dropTo(n);
-    const slotW = Math.max(MIN_SEC, Math.floor((avail - gap * Math.max(0, n - 1)) / n));
-    board.style.setProperty('--weather-slot-w', `${slotW}px`);
-    board.style.setProperty('--weather-secondary-w', `${slotW}px`);
-    board.style.setProperty('--weather-primary-w', `${slotW}px`);
-    actives.forEach((el) => applyW(el, slotW));
-    return false;
-  }
-
   let nSec = secondaries.length;
-  let pW = primaryW;
-  const gapsFor = (n) => gap * (n + 1);
-  while (nSec > 1 && pW * 2 + nSec * MIN_SEC + gapsFor(nSec) > avail + 1) {
-    const shrink = Math.floor((avail - nSec * MIN_SEC - gapsFor(nSec)) / 2);
-    if (shrink >= minPrimary && shrink < pW) {
-      pW = shrink;
-      break;
-    }
+  const pW = primaryW;
+  const gapsFor = (nTotal) => gap * Math.max(0, nTotal - 1);
+  // Wide : garder au moins 2 secondaires (4 cartes) ; on rétrécit les
+  // slots plutôt que de redescendre à MTL+QC seules après un resize.
+  const dropFloor = avail >= 700 ? 4 : 2;
+  while (nSec > Math.max(1, dropFloor - 2)
+    && pW * 2 + nSec * MIN_SEC + gapsFor(2 + nSec) > avail + 1) {
     nSec -= 1;
   }
-  if (nSec < secondaries.length) return dropTo(2 + nSec);
-  const room = avail - pW * 2 - gap * Math.max(0, actives.length - 1);
-  const slotW = Math.max(MIN_SEC, Math.floor(room / Math.max(1, nSec)));
+  if (nSec < secondaries.length && 2 + nSec >= dropFloor) return dropTo(2 + nSec);
+  const room = avail - pW * 2 - gapsFor(2 + nSec);
+  const slotW = Math.max(80, Math.floor(room / Math.max(1, nSec)));
+  board.style.removeProperty('--weather-slot-w');
   board.style.setProperty('--weather-secondary-w', `${slotW}px`);
   board.style.setProperty('--weather-primary-w', `${pW}px`);
   secondaries.forEach((el) => applyW(el, slotW));
   applyW(mtl, pW);
   applyW(qc, pW);
   const painted = actives.reduce((sum, el) => sum + el.getBoundingClientRect().width, 0)
-    + gap * Math.max(0, actives.length - 1);
-  if (painted > avail + 1 && actives.length > 2) return dropTo(actives.length - 1);
+    + gapsFor(actives.length);
+  if (painted > avail + 1 && actives.length > dropFloor) return dropTo(actives.length - 1);
   return false;
 }
 
