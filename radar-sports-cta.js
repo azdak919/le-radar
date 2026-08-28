@@ -181,8 +181,8 @@ const SPORTS_CTA_TAG_LIVE = 'En cours';
 const SPORTS_CTA_TAG_SOON = 'À venir';
 /** Demain : une ligne, même jaune que Prochain match. */
 const SPORTS_CTA_TAG_TOMORROW = 'Demain';
-/** Prochain : deux lignes dans la pastille, pas un rail plus large. */
-const SPORTS_CTA_TAG_NEXT = 'Prochain match';
+/** Prochains : deux lignes dans la pastille, pas un rail plus large. */
+const SPORTS_CTA_TAG_NEXT = 'Prochains match';
 /** Repli idle (creux total, pas de match) ; sinon ton du sport via sportsCtaTone. Rouge = direct. */
 const SPORTS_CTA_REST_TONE = '#6a7580';
 const SPORTS_CTA_LIVE_TONE = '#c8102e';
@@ -601,12 +601,13 @@ function syncWeatherCountToSports() {
 }
 
 /**
- * Wide : nombre de cartes CTA (1–3) selon largeur + taille du pool.
+ * Wide : nombre de cartes CTA (1–4) selon largeur + taille du pool.
  * Plusieurs CTAs = matchs / accroches **distincts** (pas la même info).
+ * 1600 / 1920 → 2 ; 2560 → 3 ; 3440 / 3840 → 4. ≤1440 → 1.
  */
 function isWideDualSportsCta() {
   try {
-    return isWideDesktopComfort() && window.matchMedia('(min-width: 1921px)').matches;
+    return isWideDesktopComfort() && window.matchMedia('(min-width: 1600px)').matches;
   } catch {
     return false;
   }
@@ -614,10 +615,25 @@ function isWideDualSportsCta() {
 
 function isWideTripleSportsCta() {
   try {
+    return isWideDesktopComfort() && window.matchMedia('(min-width: 2560px)').matches;
+  } catch {
+    return false;
+  }
+}
+
+function isWideQuadSportsCta() {
+  try {
     return isWideDesktopComfort() && window.matchMedia('(min-width: 3440px)').matches;
   } catch {
     return false;
   }
+}
+
+function sportsWantedCtaCount() {
+  if (isWideQuadSportsCta()) return 4;
+  if (isWideTripleSportsCta()) return 3;
+  if (isWideDualSportsCta()) return 2;
+  return 1;
 }
 
 function sportsWideCtaCount(boardCount = 0) {
@@ -626,13 +642,10 @@ function sportsWideCtaCount(boardCount = 0) {
     sportsCtaCandidateSlides()?.length || 0,
     sportsCtaLabelPool()?.length || 0,
   );
-  // ≥3440 : 3 CTA. >1920 : 2. ≤1920 : 1, gabarit 1280.
   if (isWideDesktopComfort()) {
-    let want = 1;
-    if (isWideTripleSportsCta() && poolN >= 3) want = 3;
-    else if (isWideDualSportsCta() && poolN >= 2) want = 2;
-    const cap = boardCount > 0 ? boardCount : 11;
-    return Math.max(1, Math.min(want, poolN || 1, cap));
+    const want = sportsWantedCtaCount();
+    const cap = boardCount > 0 ? boardCount : 13;
+    return Math.max(1, Math.min(want, cap));
   }
   const avail = sportsStripAvailWidth();
   let want = 1;
@@ -655,13 +668,17 @@ function sportsBoardCountBase() {
   const gap = 6;
   // ≥1440 : CTA gabarit 900/1280 ; scores plus larges (pas de troncature).
   // Wide étroit : slots flex égaux, plus de puces.
-  const minScore = comfort ? 200 : (wide ? 120 : 128);
+  const vw = (() => {
+    try { return document.documentElement.clientWidth || window.innerWidth || 0; } catch { return 0; }
+  })();
+  // 1600 : 2 CTA au centre, scores un cran plus serrés aux extrémités.
+  const minScore = comfort ? (vw < 1920 ? 176 : 200) : (wide ? 120 : 128);
   const minCta = comfort ? 424 : (wide ? 140 : 152);
   let maxN = 4;
   if (comfort) {
-    // Remplir le bandeau : 3 CTA dès 3440, 2 dès 1920.
-    if (avail >= 3000) maxN = 13;
-    else if (avail >= 2200) maxN = 11;
+    // Remplir le bandeau : 4 CTA dès 3440, 3 dès 2560, 2 dès 1600.
+    if (avail >= 3000) maxN = 14;
+    else if (avail >= 2200) maxN = 12;
     else if (avail >= 1700) maxN = 9;
     else maxN = 7;
   } else if (wide) {
@@ -673,7 +690,7 @@ function sportsBoardCountBase() {
 
   // Estimer le nb de CTA pour le budget largeur
   const roughCta = comfort
-    ? (isWideTripleSportsCta() ? 3 : (isWideDualSportsCta() ? 2 : 1))
+    ? sportsWantedCtaCount()
     : (wide
       ? (avail >= 2000 ? 3 : avail >= 1300 ? 2 : 1)
       : 1);
@@ -881,7 +898,12 @@ function fitWideSportsMatchSlots({ fill = false } = {}) {
     : avail;
   let widths = naturals.map((w) => Math.min(w, maxEach));
   if (fill && need <= avail + 2 && matches.length) {
-    const extra = Math.max(0, avail - need);
+    let extra = Math.max(0, avail - need);
+    try {
+      const vw = document.documentElement.clientWidth || window.innerWidth || 0;
+      // 1600 : laisser le reliquat aux 2 CTA, scores un peu plus compacts.
+      if (vw >= 1600 && vw < 1920) extra = Math.floor(extra * 0.55);
+    } catch { /* ignore */ }
     const add = Math.floor(extra / matches.length);
     const rem = extra - add * matches.length;
     widths = naturals.map((w, i) => Math.min(maxEach, w + add + (i < rem ? 1 : 0)));
@@ -1836,7 +1858,7 @@ function sportsCtaGameIsTomorrow(slide) {
 }
 
 /**
- * Pastille CTA : À venir (aujourd’hui) / Demain / Prochain match (après)
+ * Pastille CTA : À venir (aujourd’hui) / Demain / Prochains match (après)
  * / En cours / Aujourd’hui (résultat) / Hier / date.
  * Creux : LE-RADAR.ca (logo PWA), pas « Sports ».
  */
@@ -1852,14 +1874,14 @@ function sportsCtaTagLabel(slide, state) {
   return RADAR_BRAND_SHORT;
 }
 
-/** Remplit la pastille : « Prochain match » en deux lignes, le reste en une. */
+/** Remplit la pastille : « Prochains match » en deux lignes, le reste en une. */
 function fillSportsCtaTagCopy(tag, wanted) {
   tag.replaceChildren();
   if (wanted === SPORTS_CTA_TAG_NEXT) {
     const lines = document.createElement('span');
     lines.className = 'sports-chip__cta-tag-lines';
     const top = document.createElement('span');
-    top.textContent = 'Prochain';
+    top.textContent = 'Prochains';
     const bot = document.createElement('span');
     bot.textContent = 'match';
     lines.append(top, bot);
@@ -2375,8 +2397,17 @@ function pickDistinctSportsCtas(n) {
     used.add(slide.key);
     out.push(slide);
   }
-  // Filet : au moins une CTA
+  // Filet : au moins une CTA, et remplir jusqu’à `want` (4 à 3440)
+  // même si le pool de matchs distincts est plus court.
   if (!out.length) out.push(sportsCtaSlide(0));
+  for (let i = out.length; i < want; i += 1) {
+    const slide = sportsCtaSlide(i);
+    out.push({
+      ...slide,
+      key: `${SPORTS_CTA_KEY}:fill:${i}`,
+      labelIndex: (slide?.labelIndex ?? 0) + i * 17,
+    });
+  }
   sportsCtaLabelIndex = out[0]?.labelIndex ?? 0;
   return out;
 }
@@ -2845,7 +2876,7 @@ function sportsChipTitle(slide) {
   const status = sportsGameIsLive(g) ? 'En cours'
     : sportsCtaGameIsToday(slide) ? 'À venir'
     : sportsCtaGameIsTomorrow(slide) ? 'Demain'
-    : 'Prochain match';
+    : 'Prochains match';
   const verb = sportsMatchVerb(g);
   return [status, sport, `${home} ${verb} ${opp}`, when, host].filter(Boolean).join(' · ');
 }

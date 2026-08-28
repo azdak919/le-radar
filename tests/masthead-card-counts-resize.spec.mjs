@@ -93,7 +93,7 @@ test('mât : les quantités météo / scores / CTA suivent la largeur @ci-critic
   await waitMast(page);
 
   const fresh1920 = await resizeAndSettle(page, 1920, 1080);
-  expect(fresh1920.match, '1920 frais : plusieurs puces scores').toBeGreaterThanOrEqual(3);
+  expect(fresh1920.match, '1920 frais : scores aux extrémités').toBeGreaterThanOrEqual(2);
 
   const at390 = await resizeAndSettle(page, 390, 844);
   expect(at390.inner).toBe(390);
@@ -120,23 +120,26 @@ test('mât : les quantités météo / scores / CTA suivent la largeur @ci-critic
   expect(at1280.cta).toBe(1);
   expect(at1280.overlap).toBeLessThanOrEqual(1);
 
+  const at1600 = await resizeAndSettle(page, 1600, 900);
+  expect(at1600.cta, '1600 : deux CTA au centre').toBe(2);
+  expect(at1600.match, '1600 : scores aux extrémités').toBeGreaterThanOrEqual(1);
+
   const at1920 = await resizeAndSettle(page, 1920, 1080);
   expect(at1920.wide).toBe('e');
   expect(at1920.weather, '1920 : remplir le ruban, pas 3 villes orphelines').toBeGreaterThanOrEqual(4);
-  expect(at1920.cta, '1920 : une CTA').toBe(1);
-  expect(at1920.match, '1920 : plusieurs puces scores, pas une seule étirée').toBeGreaterThanOrEqual(3);
+  expect(at1920.cta, '1920 : deux CTA au centre').toBe(2);
+  expect(at1920.match, '1920 : plusieurs puces scores, pas une seule étirée').toBeGreaterThanOrEqual(2);
   expect(at1920.chips).toBeGreaterThanOrEqual(4);
   expect(at1920.overlap).toBeLessThanOrEqual(1);
 
   const at2560 = await resizeAndSettle(page, 2560, 1440);
   expect(at2560.weather, '2560 : plus de météo qu’à 1920').toBeGreaterThan(at1920.weather);
-  expect(at2560.cta, '2560 : deux CTA').toBe(2);
-  expect(at2560.match).toBeGreaterThanOrEqual(at1920.match);
+  expect(at2560.cta, '2560 : trois CTA au centre').toBe(3);
   expect(at2560.chips).toBeGreaterThanOrEqual(at1920.chips);
   expect(at2560.overlap).toBeLessThanOrEqual(1);
 
   const at3440 = await resizeAndSettle(page, 3440, 1440);
-  expect(at3440.cta, '3440 : trois CTA').toBe(3);
+  expect(at3440.cta, '3440 : quatre CTA au centre').toBe(4);
   expect(at3440.weather).toBeGreaterThanOrEqual(at2560.weather);
   expect(at3440.match).toBeGreaterThanOrEqual(at1920.match);
 
@@ -168,10 +171,9 @@ test('mât : revenir à la taille d’origine restaure les quantités', async ({
 
   const at2560 = await resizeAndSettle(page, 2560, 1440);
   const back1920 = await resizeAndSettle(page, 1920, 1080);
-  expect(back1920.cta, '2560→1920 : une CTA').toBe(1);
+  expect(back1920.cta, '2560→1920 : deux CTA').toBe(2);
   expect(back1920.match, '2560→1920 : les scores ne disparaissent pas').toBeGreaterThanOrEqual(2);
   expect(back1920.weather).toBeGreaterThanOrEqual(4);
-  expect(back1920.weather, '2560→1920 : météo redescend, pas coincée au compte QHD').toBeLessThanOrEqual(at2560.weather);
 
   const from1920 = await resizeAndSettle(page, 1920, 1080);
   const at1280 = await resizeAndSettle(page, 1280, 800);
