@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-08-27T20:40:10.990Z",
+  "updatedAt": "2026-08-28T05:05:22.799Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
+      "current": null,
       "next": {
-        "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        "title": "Vendredi Nostalgie",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
       },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-27T20:39:49.100Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Rythmologie",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
-      },
-      "next": {
-        "title": "Entropie",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/entropie"
-      },
-      "track": "",
-      "showTitle": "Rythmologie",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-27T20:39:51.195Z"
+      "checkedAt": "2026-08-28T05:05:08.037Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Rebelles soniques (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/rebelles-soniques"
+      },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
+      "track": "",
+      "showTitle": "Rebelles soniques (reprise)",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-08-28T05:05:09.980Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Positive Vibes",
+        "title": "Listen! You Smell Something?",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "01:00",
+        "end": "04:00"
       },
       "next": {
-        "title": "The Barricade",
+        "title": "G-Flex Survivor's Corner",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "04:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Positive Vibes",
+      "showTitle": "Listen! You Smell Something?",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,72 +74,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-27T20:39:53.428Z"
+      "checkedAt": "2026-08-28T05:05:12.333Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hooked On Sonics",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
+        "title": "Finally Midnight",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/finally-midnight"
       },
       "next": {
-        "title": "Electric Messiah",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/electric-messiah"
+        "title": "CJLO Late Night",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "track": "",
-      "showTitle": "Hooked On Sonics",
+      "showTitle": "Finally Midnight",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-27T20:40:04.461Z"
+      "checkedAt": "2026-08-28T05:05:13.954Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "À nous le futur",
+        "title": "Les nuits CFAK",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "20:00"
+        "start": "00:00",
+        "end": "07:00"
       },
       "next": {
-        "title": "After 5@8",
+        "title": "Folkswagen",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "00:00"
+        "start": "07:00",
+        "end": "08:00"
       },
       "track": "",
-      "showTitle": "À nous le futur",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-27T20:40:05.258Z"
+      "checkedAt": "2026-08-28T05:05:14.902Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "La 3ème demie",
+        "title": "Opération beurre de cinoche",
         "source": "api-live",
-        "start": "17:15",
-        "end": "18:00",
-        "slug": "le-12-mtlsup"
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
       },
-      "track": "Odd Future - Oldie",
+      "track": "Downtown Boys - Public Luxury",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-27T20:40:10.639Z"
+      "checkedAt": "2026-08-28T05:05:22.448Z"
     }
   }
 }
