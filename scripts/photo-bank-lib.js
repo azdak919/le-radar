@@ -149,6 +149,14 @@ function mergeRecord(a, b) {
   if (a && b && a.url && b.url) out.url = preferUrl(a.url, b.url);
   if (hasTag(out, 'favori') || out.permanent) out.permanent = true;
   if (hasTag(out, 'campus') || out.campus) out.campus = true;
+  // Labo « toutes les saisons » : seasonSource manual + pas de saison.
+  // Ne pas laisser une moisson recoller un été / hiver.
+  if (a && a.seasonSource === 'manual' && !a.season) {
+    delete out.season;
+    delete out.season6;
+    out.seasonSource = 'manual';
+    out.seasonConfidence = 1;
+  }
   return out;
 }
 
