@@ -1525,10 +1525,15 @@ assert(
 );
 assert(
   !/state === 'live'[\s\S]{0,200}sportsRelativeAge/.test(appFlat)
-    && !/state === 'live'[\s\S]{0,200}sportsRelativeWhen/.test(appFlat)
     && appJs.includes('sportsLivePeriodLabel')
-    && appJs.includes('function sportsKickoffClock'),
-  'app.js : sous-ligne live = période / compétition (pas « il y a 2 min »)',
+    && appJs.includes('function sportsKickoffClock')
+    && appJs.includes('function sportsLiveSubParts')
+    && appJs.includes('SPORTS_LIVE_SCORE_PENDING')
+    && appJs.includes('function sportsLiveScoreText')
+    && appJs.includes('function sportsLiveTeamsScoreHtml')
+    && /function sportsLiveSubParts[\s\S]{0,400}sportsUpdatedShort/.test(appJs)
+    && !/function sportsLiveSubParts[\s\S]{0,400}sportsRelative/.test(appJs),
+  'app.js : sous-ligne live = période / compétition / tampon vérif (pas « il y a 2 min »)',
 );
 assert(
   /\[data-cta-state="live"\][^{]*\{[^}]*sports-cta-ring-pulse/.test(cssFlat),

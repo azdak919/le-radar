@@ -312,8 +312,8 @@
         title: 'CTA — en cours (sans score)',
         cta: {
           state: 'live', tone: '#c8102e', tag: 'En cours', glyph: '🏈',
-          text: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Carabins</span>',
-          sub: 'Football universitaire',
+          text: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__score">—</span> <span class="sports-chip__name sports-chip__opp">Carabins</span>',
+          sub: 'Football universitaire · mis à jour à 18 h 41',
         },
       },
       {
@@ -381,7 +381,15 @@
         html: () => matchChip({
           tone: '#c8102e', glyph: '🏒', live: true,
           inner: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__score">2–1</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
-          sub: '2e période · Hockey universitaire',
+          sub: '2e période · Hockey universitaire · mis à jour à 18 h 41',
+        }),
+      },
+      {
+        title: 'Puce — en cours (sans score)',
+        html: () => matchChip({
+          tone: '#c8102e', glyph: '⚽', live: true,
+          inner: '<span class="sports-chip__name">Sherbrooke</span> <span class="sports-chip__score">—</span> <span class="sports-chip__name sports-chip__opp">Granby</span>',
+          sub: 'Soccer collégial féminin D2 · mis à jour à 18 h 41',
         }),
       },
       {

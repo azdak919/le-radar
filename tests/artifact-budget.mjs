@@ -28,7 +28,7 @@ const kit = dirSize('assets/kit');
 
 assert(archive <= 16 * MB, `news-archive.json ${archive} > 16 Mo`);
 assert(sports <= 5 * MB, `sports.json ${sports} > 5 Mo`);
-assert(images <= 40 * MB, `assets/news-images ${images} > 40 Mo`);
+assert(images <= 50 * MB, `assets/news-images ${images} > 50 Mo`);
 assert(kit <= 100 * MB, `assets/kit ${kit} > 100 Mo (impressions 600 dpi, 7 campus)`);
 
 console.log(

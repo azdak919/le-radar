@@ -1626,6 +1626,26 @@ function sportsVsHtml(game) {
   return `<span class="sports-chip__vs" data-vs-orig="${escapeHtml(fr)}">${escapeHtml(shown)}</span>`;
 }
 
+/**
+ * Scorebug live : chiffre collé, sinon tiret. RSEQ soccer envoie souvent
+ * -999 tant que le rapport n’est pas versé — on n’invente jamais un 0-0.
+ */
+const SPORTS_LIVE_SCORE_PENDING = '—';
+
+function sportsLiveScoreText(game) {
+  if (sportsGameHasScore(game)) return `${game.scoreFor}–${game.scoreAgainst}`;
+  return SPORTS_LIVE_SCORE_PENDING;
+}
+
+function sportsLiveTeamsScoreHtml(team, game) {
+  const home = sportsChipTeamShort(team);
+  const opp = sportsChipOpponentLabel(game);
+  const scoreTxt = sportsLiveScoreText(game);
+  return `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+    + `<span class="sports-chip__score">${escapeHtml(scoreTxt)}</span> `
+    + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+}
+
 /** Domicile / extérieur — tooltip / sous-ligne optionnelle. */
 function sportsVenueLabel(game, lang = 'fr') {
   if (game?.home === false) return lang === 'en' ? 'away' : 'extérieur';
@@ -1772,12 +1792,14 @@ function sportsCtaLabelFromSlide(slide) {
   const glyph = sportsGlyph(slide.team.sport || g.sport);
   const home = sportsChipTeamShort(slide.team);
   const opp = sportsChipOpponentLabel(g);
-  const liveScore = sportsGameIsLive(g) && sportsGameHasScore(g);
 
-  if (slide.mode === 'next' && !liveScore) {
+  if (sportsGameIsLive(g)) {
+    return `${glyph} ${home} ${sportsLiveScoreText(g)} ${opp}`;
+  }
+  if (slide.mode === 'next') {
     return `${glyph} ${home} ${sportsMatchVerb(g)} ${opp}`;
   }
-  if (slide.mode === 'result' || liveScore) {
+  if (slide.mode === 'result') {
     const placeKind = sportsIsPlaceResult(g, slide.team.sport);
     const score = placeKind
       ? sportsPlaceScoreText(g)
@@ -1902,9 +1924,20 @@ function sportsCtaLamp(slide, state) {
 }
 
 /**
+ * Sous-ligne live : période RSEQ si elle existe, compétition, tampon de
+ * dernière *vérification* (`mis à jour à 19 h 22`). Jamais l’âge du coup
+ * d’envoi (« il y a 2 min » sous En cours se lit comme un match fini).
+ */
+function sportsLiveSubParts(slide) {
+  const period = sportsLivePeriodLabel(slide?.game);
+  const comp = sportsCompetitionLabel(slide);
+  return [period, comp, sportsUpdatedShort()].filter(Boolean);
+}
+
+/**
  * Sous-ligne CTA — hiérarchie scorebug (ESPN / Flashscore / L’Équipe) :
- *   live    → période si l’API la donne, sinon compétition. Jamais l’âge
- *             du coup d’envoi (« il y a 2 min » sous En cours = match fini).
+ *   live    → période si l’API la donne, sinon compétition, + tampon
+ *             « mis à jour à ». Jamais l’âge du coup d’envoi.
  *   prochain→ aujourd’hui : « Aujourd’hui · 19 h 00 » (compte à rebours
  *             seulement dans l’heure : « Aujourd’hui · dans 45 min »).
  *             Demain / plus tard : heure ou date, sans redire la pastille.
@@ -1918,8 +1951,7 @@ function sportsCtaSubLine(slide, state) {
   const tag = sportsCtaTagLabel(slide, state);
   const now = Date.now();
   if (state === 'live') {
-    const period = sportsLivePeriodLabel(g);
-    return [period, comp].filter(Boolean).join(' · ');
+    return sportsLiveSubParts(slide).join(' · ');
   }
   if (state === 'next') {
     const minToGo = Number.isFinite(ms) ? Math.round((ms - now) / 60000) : null;
@@ -2487,17 +2519,16 @@ function fillSportsCtaLayer(layer, slide) {
   const text = document.createElement('span');
   text.className = 'sports-chip__cta-text';
   // Noms / score seulement dans la zone qui défile (pas le glyphe).
-  const liveScore = src?.team && src.game
-    && sportsGameIsLive(src.game)
-    && sportsGameHasScore(src.game);
-  if (src?.mode === 'next' && src.team && src.game && !liveScore) {
+  if (src?.team && src.game && sportsGameIsLive(src.game)) {
+    text.innerHTML = sportsLiveTeamsScoreHtml(src.team, src.game);
+  } else if (src?.mode === 'next' && src.team && src.game) {
     const g = src.game;
     const home = sportsChipTeamShort(src.team);
     const opp = sportsChipOpponentLabel(g);
     text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
       + sportsVsHtml(g)
       + ` <span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
-  } else if (src?.team && src.game && (src.mode === 'result' || liveScore)) {
+  } else if (src?.team && src.game && src.mode === 'result') {
     const g = src.game;
     const home = sportsChipTeamShort(src.team);
     const opp = sportsChipOpponentLabel(g);
@@ -2870,8 +2901,16 @@ function sportsChipTitle(slide) {
     return [issue, sport, line, when, host].filter(Boolean).join(' · ');
   }
 
-  const status = sportsGameIsLive(g) ? 'En cours'
-    : sportsCtaGameIsToday(slide) ? 'À venir'
+  if (sportsGameIsLive(g)) {
+    return [
+      'En cours',
+      sport,
+      `${home} ${sportsLiveScoreText(g)} ${opp}`,
+      sportsUpdatedShort(),
+      host,
+    ].filter(Boolean).join(' · ');
+  }
+  const status = sportsCtaGameIsToday(slide) ? 'À venir'
     : sportsCtaGameIsTomorrow(slide) ? 'Demain'
     : 'Prochains match';
   const verb = sportsMatchVerb(g);
@@ -3022,14 +3061,10 @@ function paintSportsChip(slide, animate = false) {
     if (prior) a.classList.add('sports-chip--prior-season');
     a.title = sportsChipTitle(slide) + (prior ? ' · Saison précédente' : '');
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
-  } else if (slide.mode === 'next' && sportsGameIsLive(g) && sportsGameHasScore(g)) {
+  } else if (slide.mode === 'next' && sportsGameIsLive(g)) {
     a.append(glyph);
-    const scoreTxt = `${g.scoreFor}–${g.scoreAgainst}`;
-    inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-      + `<span class="sports-chip__score">${escapeHtml(String(scoreTxt))}</span> `
-      + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
-    const period = sportsLivePeriodLabel(g);
-    subText.textContent = [period, subLine].filter(Boolean).join(' · ');
+    inner.innerHTML = sportsLiveTeamsScoreHtml(team, g);
+    subText.textContent = sportsLiveSubParts(slide).join(' · ');
     a.title = sportsChipTitle(slide);
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
     a.dataset.sportsLive = '1';

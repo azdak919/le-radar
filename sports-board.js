@@ -227,9 +227,11 @@
       const isUpcoming = /à venir|upcoming/i.test(score.textContent || '')
         || /à venir|upcoming/i.test(idle);
       if (isUpcoming) {
-        score.className = 'sports-result__score sports-result__score--live';
+        // Scorebug : tiret tant que RSEQ n’a pas collé de chiffre. La pastille
+        // dit déjà « En cours » — ne pas répéter le mot dans la cellule score.
+        score.className = 'sports-result__score';
         score.setAttribute('aria-label', t.live);
-        score.textContent = t.live;
+        score.textContent = '—';
       }
     }
     if (badge) {

@@ -238,34 +238,18 @@ async function openWithSports(page, payload, viewport = { width: 1280, height: 9
   return cta;
 }
 
-test('CTA live : En cours, équipes, pas « dans 15 min »', async ({ page }) => {
+test('CTA live : En cours, scorebug et tampon, pas « dans 15 min »', async ({ page }) => {
   const cta = await openWithSports(page, livePayload());
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En cours');
   const text = await cta.locator('.sports-chip__cta-text').innerText();
   expect(text).toMatch(/Saint-Hyacinthe/);
   expect(text).toMatch(/Vanier/);
-  expect(text).toMatch(/reçoit/);
-  const vs = cta.locator('.sports-chip__vs');
-  await expect(vs).toHaveText('reçoit');
-  const pale = await cta.evaluate((root) => {
-    const vsEl = root.querySelector('.sports-chip__vs');
-    const nameEl = root.querySelector('.sports-chip__name');
-    const vsCs = getComputedStyle(vsEl);
-    const nameCs = getComputedStyle(nameEl);
-    return {
-      vsWeight: Number(vsCs.fontWeight),
-      nameWeight: Number(nameCs.fontWeight),
-      vsColor: vsCs.color,
-      vsSize: Number.parseFloat(vsCs.fontSize),
-      nameSize: Number.parseFloat(nameCs.fontSize),
-    };
-  });
-  expect(pale.vsWeight, 'verbe Inter 500, pas le 700 des noms').toBe(500);
-  expect(pale.nameWeight, 'noms plus gras que le verbe').toBeGreaterThanOrEqual(700);
-  expect(pale.vsSize, 'verbe un peu plus petit que les noms').toBeLessThan(pale.nameSize);
+  expect(text).not.toMatch(/reçoit/);
+  await expect(cta.locator('.sports-chip__score')).toHaveText('—');
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
   expect(sub).toMatch(/Soccer collégial masculin D1/);
+  expect(sub).toMatch(/mis à jour à/);
   expect(sub.toLowerCase()).not.toMatch(/dans \d/);
   expect(sub.toLowerCase()).not.toMatch(/à l[’']instant/);
   expect(sub.toLowerCase()).not.toMatch(/il y a/);
@@ -277,6 +261,7 @@ test('CTA live : pas « il y a 2 min » sous En cours', async ({ page }) => {
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En cours');
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
   expect(sub).toMatch(/Soccer collégial masculin D1/);
+  expect(sub).toMatch(/mis à jour à/);
   expect(sub.toLowerCase()).not.toMatch(/il y a/);
   expect(sub.toLowerCase()).not.toMatch(/à l[’']instant/);
   expect(sub.toLowerCase()).not.toMatch(/dans \d/);
@@ -297,6 +282,7 @@ test('CTA live : score et période dès qu’ils sont collés', async ({ page })
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
   expect(sub).toMatch(/1re mi-temps/);
   expect(sub).toMatch(/Soccer collégial masculin D1/);
+  expect(sub).toMatch(/mis à jour à/);
 });
 
 test('CTA live : un direct écarte résultats et prochains du cycle', async ({ page }) => {

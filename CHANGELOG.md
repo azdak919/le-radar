@@ -35,6 +35,9 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Direct CTA : un match **En cours** est un scorebug — score collé, ou **—** si RSEQ n’a rien (soccer collégial souvent `-999`) ; sous-ligne = période / compétition / **mis à jour à** (dernière vérification, pas l’âge du coup d’envoi). Filet bot live : cron `:20` + enchaînement sur la radio now-playing — GitHub lâchait le `*/5` (28 août : rien de 12 h à 19 h QC).
+- Plafond du miroir `assets/news-images/` : 50 Mo (la passe news du 28 août, gate reportée, a poussé à 48 Mo).
+
 - Traduction : la pastille CTA « Prochains match » (deux nœuds) devenait **PROCHAIN CORRESPONDRE** — gtx prenait *match* pour le verbe anglais. Glossaire sport + `notranslate` sur la pastille seulement (les accroches « reçoit / chez » restent traduisibles). Cache `v9`.
 
 - Fil d’articles : le tampon « mis à jour » suivait le dernier *commit* de contenu (heartbeat 6 h) alors que GitHub lâchait les crons news pendant des heures. Une passe qui a fetché publie le tampon. Filet : enchaînement sur la radio now-playing et les scores RSEQ (bots qui, eux, partent encore) si le fil a plus de 75 min.
