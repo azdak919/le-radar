@@ -58,45 +58,13 @@
   max-width: 100%;
 }
 /*
- * 1 score + CTA : ratio fixe ~42 / 58 (pas 50/50, pas de re-mesure par slide).
- *
- * La CTA porte un chrome que la puce score n’a pas : pastille « Sports » (~4.5rem)
- * + marqueur PROCHAIN + glyphe avant les noms. À largeurs égales, la zone utile
- * des noms est donc plus étroite à droite → marquee CTA alors que la gauche a
- * de l’air mort (768 / 900 typiques).
- *
- * On compense par un partage **fixe** du strip : tailles stables à chaque
- * rotation, zone de texte plus proche → moins de défilement d’un côté ou de
- * l’autre. Doit gagner sur `.sports-chip--cta { flex: 1.2 1 9.5rem; … }`.
+ * CTA et scores : même largeur, tous formats. Si un nom ne tient pas,
+ * on retire une carte (fit JS) — pas de clip, pas de ratio 42/58.
  */
-.masthead-sports-strip[data-count="2"] > .sports-chip--match,
-.masthead-sports-strip[data-count="2"] > .sports-chip:not(.sports-chip--cta) {
-  flex: 0.72 1 0 !important;
-  flex-grow: 0.72 !important;
-  flex-shrink: 1 !important;
-  flex-basis: 0 !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  width: 0 !important;
-}
-.masthead-sports-strip[data-count="2"] > .sports-chip--cta {
-  flex: 1 1 0 !important;
-  flex-grow: 1 !important;
-  flex-shrink: 1 !important;
-  flex-basis: 0 !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  width: 0 !important;
-}
-/* 2 scores + CTA : CTA un peu plus étroite pour laisser lire les matchs. */
-.masthead-sports-strip[data-count="3"] .sports-chip--cta {
-  flex: 1 1 28%;
-  max-width: 38%;
-}
 .masthead-sports-strip .sports-chip {
   flex: 1 1 0;
   min-width: 0;
-  max-width: 100%;
+  max-width: none;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -431,9 +399,8 @@
  * alerte pour un match à quinze jours).
  * L’accroche roule verticalement en place (jamais de carte type gare). ── */
 .masthead-sports-strip .sports-chip--cta {
-  /* Un peu plus de place pour pastille + accroche — sauf data-count=2 (ratio fixe). */
-  flex: 1.2 1 9.5rem;
-  min-width: 9.5rem;
+  flex: 1 1 0;
+  min-width: 0;
   justify-content: flex-start;
   gap: 8px;
   /* Parité puces scores (le-radar-sports-chip-look C étendu à la CTA). */
@@ -445,24 +412,6 @@
     0 1px 2px rgba(0, 0, 0, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
-}
-/* Après la règle CTA flex 1.2 : re-affirmer le ratio fixe 1 score + CTA. */
-.masthead-sports-strip[data-count="2"] > .sports-chip--match,
-.masthead-sports-strip[data-count="2"] > .sports-chip:not(.sports-chip--cta) {
-  flex: 0.72 1 0 !important;
-  flex-grow: 0.72 !important;
-  flex-basis: 0 !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  width: 0 !important;
-}
-.masthead-sports-strip[data-count="2"] > .sports-chip--cta {
-  flex: 1 1 0 !important;
-  flex-grow: 1 !important;
-  flex-basis: 0 !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  width: 0 !important;
 }
 /* Direct / à venir du jour : registre d’alerte (pulse). */
 .masthead-sports-strip .sports-chip--cta[data-cta-state="live"],

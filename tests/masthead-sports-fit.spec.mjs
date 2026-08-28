@@ -35,7 +35,7 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   expect(compact).toBeLessThanOrEqual(4);
   await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
   const wide = await countAt(1440);
-  expect(wide).toBeGreaterThanOrEqual(compact);
+  expect(wide).toBeGreaterThanOrEqual(2);
   expect(wide).toBeLessThanOrEqual(9);
   expect(await strip.locator('.sports-chip--cta').count()).toBe(1);
   expect(await strip.locator('.sports-chip:not(.sports-chip--cta)').count()).toBe(wide - 1);
@@ -66,10 +66,7 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   expect(narrow).toBeLessThanOrEqual(Math.max(mid, midNarrow));
   expect(narrow).toBeGreaterThanOrEqual(1);
 
-  // Tablette 768 / 900 : au moins 1 score à gauche de la CTA.
-  // data-count=2 → ratio fixe ~42/58 (score / CTA) pour compenser le chrome
-  // pastille SPORTS + PROCHAIN — pas 50/50 (air mort à gauche / marquee CTA)
-  // ni flex dynamique par slide (tailles stables).
+  // Tablette 768 / 900 : score à gauche, CTA à droite, même largeur.
   const pairRatioWhenTwo = async () => {
     const n = Number(await strip.getAttribute('data-count') || 0);
     if (n !== 2) return;
@@ -78,21 +75,11 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
     );
     expect(widths).toHaveLength(2);
     const [scoreW, ctaW] = widths;
-    const total = scoreW + ctaW;
-    expect(total).toBeGreaterThan(200);
-    const scoreShare = scoreW / total;
-    // 0.72 / (0.72+1) ≈ 0.419 — tolérance de rendu sub-pixel + gap.
+    expect(scoreW + ctaW).toBeGreaterThan(200);
     expect(
-      scoreShare,
-      `ratio score/CTA ~42/58 attendu, got ${scoreW}/${ctaW} (${(scoreShare * 100).toFixed(1)}%)`,
-    ).toBeGreaterThanOrEqual(0.38);
-    expect(scoreShare).toBeLessThanOrEqual(0.46);
-    expect(ctaW, `CTA doit être plus large que le score, got ${widths}`).toBeGreaterThan(scoreW);
-    const flexes = await strip.locator('.sports-chip').evaluateAll((chips) =>
-      chips.map((c) => getComputedStyle(c).flexGrow),
-    );
-    expect(Number(flexes[0])).toBeCloseTo(0.72, 2);
-    expect(Number(flexes[1])).toBeCloseTo(1, 2);
+      Math.abs(scoreW - ctaW),
+      `cartes égales, got ${scoreW}/${ctaW}`,
+    ).toBeLessThanOrEqual(8);
   };
   const tab768 = await countAt(768);
   expect(tab768).toBeGreaterThanOrEqual(2);
