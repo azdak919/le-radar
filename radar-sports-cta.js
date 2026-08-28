@@ -181,8 +181,8 @@ const SPORTS_CTA_TAG_LIVE = 'En cours';
 const SPORTS_CTA_TAG_SOON = 'À venir';
 /** Demain : une ligne, même jaune que Prochain match. */
 const SPORTS_CTA_TAG_TOMORROW = 'Demain';
-/** Prochain : deux lignes dans la pastille, pas un rail plus large. */
-const SPORTS_CTA_TAG_NEXT = 'Prochain match';
+/** Prochains : deux lignes dans la pastille, pas un rail plus large. */
+const SPORTS_CTA_TAG_NEXT = 'Prochains match';
 /** Repli idle (creux total, pas de match) ; sinon ton du sport via sportsCtaTone. Rouge = direct. */
 const SPORTS_CTA_REST_TONE = '#6a7580';
 const SPORTS_CTA_LIVE_TONE = '#c8102e';
@@ -595,29 +595,17 @@ function sportsMatchChipCount() {
 
 function syncWeatherCountToSports() {
   if (!isWideDesktopComfort() || !MASTHEAD_WEATHER) return;
-  const want = weatherSportsParityCount();
-  if (want < 3) return;
-  const byWidth = Math.max(2, Math.min(12, Math.floor(weatherBoardAvailWidth() / 170)));
-  const target = Math.min(want, byWidth);
-  const ceiling = mastheadWeatherFitCount == null
-    ? target
-    : Math.min(target, mastheadWeatherFitCount);
-  if (mastheadWeatherLastBoardCount === ceiling) {
-    fitWideWeatherSecondarySlots();
-    return;
-  }
-  mastheadWeatherFitCount = ceiling;
-  mastheadWeatherLastBoardCount = 0;
-  showMastheadWeatherBoard();
+  // Option D : largeurs = grille CSS. Rien à recaler depuis les scores.
 }
 
 /**
- * Wide : nombre de cartes CTA (1–3) selon largeur + taille du pool.
+ * Wide : nombre de cartes CTA (1–4) selon largeur + taille du pool.
  * Plusieurs CTAs = matchs / accroches **distincts** (pas la même info).
+ * 1600 / 1920 → 2 ; 2560 → 3 ; 3440 / 3840 → 4. ≤1440 → 1.
  */
 function isWideDualSportsCta() {
   try {
-    return isWideDesktopComfort() && window.matchMedia('(min-width: 1921px)').matches;
+    return isWideDesktopComfort() && window.matchMedia('(min-width: 1600px)').matches;
   } catch {
     return false;
   }
@@ -625,10 +613,25 @@ function isWideDualSportsCta() {
 
 function isWideTripleSportsCta() {
   try {
+    return isWideDesktopComfort() && window.matchMedia('(min-width: 2560px)').matches;
+  } catch {
+    return false;
+  }
+}
+
+function isWideQuadSportsCta() {
+  try {
     return isWideDesktopComfort() && window.matchMedia('(min-width: 3440px)').matches;
   } catch {
     return false;
   }
+}
+
+function sportsWantedCtaCount() {
+  if (isWideQuadSportsCta()) return 4;
+  if (isWideTripleSportsCta()) return 3;
+  if (isWideDualSportsCta()) return 2;
+  return 1;
 }
 
 function sportsWideCtaCount(boardCount = 0) {
@@ -637,13 +640,10 @@ function sportsWideCtaCount(boardCount = 0) {
     sportsCtaCandidateSlides()?.length || 0,
     sportsCtaLabelPool()?.length || 0,
   );
-  // ≥3440 : 3 CTA. >1920 : 2. ≤1920 : 1, gabarit 1280.
   if (isWideDesktopComfort()) {
-    let want = 1;
-    if (isWideTripleSportsCta() && poolN >= 3) want = 3;
-    else if (isWideDualSportsCta() && poolN >= 2) want = 2;
-    const cap = boardCount > 0 ? boardCount : 11;
-    return Math.max(1, Math.min(want, poolN || 1, cap));
+    const want = sportsWantedCtaCount();
+    const cap = boardCount > 0 ? boardCount : 13;
+    return Math.max(1, Math.min(want, cap));
   }
   const avail = sportsStripAvailWidth();
   let want = 1;
@@ -666,13 +666,17 @@ function sportsBoardCountBase() {
   const gap = 6;
   // ≥1440 : CTA gabarit 900/1280 ; scores plus larges (pas de troncature).
   // Wide étroit : slots flex égaux, plus de puces.
-  const minScore = comfort ? 200 : (wide ? 120 : 128);
+  const vw = (() => {
+    try { return document.documentElement.clientWidth || window.innerWidth || 0; } catch { return 0; }
+  })();
+  // 1600 : 2 CTA au centre, scores un cran plus serrés aux extrémités.
+  const minScore = comfort ? (vw < 1920 ? 176 : 200) : (wide ? 120 : 128);
   const minCta = comfort ? 424 : (wide ? 140 : 152);
   let maxN = 4;
   if (comfort) {
-    // Remplir le bandeau : 3 CTA dès 3440, 2 dès 1920.
-    if (avail >= 3000) maxN = 13;
-    else if (avail >= 2200) maxN = 11;
+    // Remplir le bandeau : 4 CTA dès 3440, 3 dès 2560, 2 dès 1600.
+    if (avail >= 3000) maxN = 14;
+    else if (avail >= 2200) maxN = 12;
     else if (avail >= 1700) maxN = 9;
     else maxN = 7;
   } else if (wide) {
@@ -684,7 +688,7 @@ function sportsBoardCountBase() {
 
   // Estimer le nb de CTA pour le budget largeur
   const roughCta = comfort
-    ? (isWideTripleSportsCta() ? 3 : (isWideDualSportsCta() ? 2 : 1))
+    ? sportsWantedCtaCount()
     : (wide
       ? (avail >= 2000 ? 3 : avail >= 1300 ? 2 : 1)
       : 1);
@@ -830,19 +834,36 @@ function sportsMatchNaturalWidth(chip) {
     maxWidth: chip.style.maxWidth,
     flex: chip.style.flex,
   };
+  const inners = [...chip.querySelectorAll('.sports-chip__line-inner, .sports-chip__sub-text')];
+  const saved = inners.map((el) => ({
+    el,
+    maxWidth: el.style.maxWidth,
+    overflow: el.style.overflow,
+  }));
+  inners.forEach((el) => {
+    el.style.maxWidth = 'none';
+    el.style.overflow = 'visible';
+  });
   chip.style.width = 'max-content';
   chip.style.minWidth = 'max-content';
   chip.style.maxWidth = 'none';
   chip.style.flex = '0 0 auto';
-  const w = Math.ceil(chip.getBoundingClientRect().width);
+  const boxW = Math.ceil(chip.getBoundingClientRect().width);
+  const textW = inners.reduce((max, el) => Math.max(max, el.scrollWidth || 0), 0);
+  saved.forEach(({ el, maxWidth, overflow }) => {
+    el.style.maxWidth = maxWidth;
+    el.style.overflow = overflow;
+  });
   chip.style.width = prev.width;
   chip.style.minWidth = prev.minWidth;
   chip.style.maxWidth = prev.maxWidth;
   chip.style.flex = prev.flex;
-  return w;
+  // max-width:100% sur le texte fausse max-content ; on prend le vrai
+  // scrollWidth + chrome glyphe/padding (~48 px) + filet subpixel.
+  return Math.max(boxW, Math.ceil(textW) + 48);
 }
 
-/** ≥1440 : scores à la largeur du plus long nom ; le reliquat remplit les bouts. */
+/** ≥1440 : chaque score à sa largeur de texte ; le reliquat remplit les bouts. */
 function fitWideSportsMatchSlots({ fill = false } = {}) {
   if (!isWideDesktopComfort() || !MASTHEAD_SPORTS_STRIP) return;
   const strip = MASTHEAD_SPORTS_STRIP;
@@ -852,27 +873,42 @@ function fitWideSportsMatchSlots({ fill = false } = {}) {
     strip.style.removeProperty('--sports-match-w');
     return;
   }
-  let maxW = 0;
+  const naturals = [];
   matches.forEach((chip) => {
     chip.style.removeProperty('flex');
     chip.style.removeProperty('width');
     chip.style.removeProperty('min-width');
     chip.style.removeProperty('max-width');
-    maxW = Math.max(maxW, sportsMatchNaturalWidth(chip));
+    naturals.push(Math.max(1, sportsMatchNaturalWidth(chip)));
   });
-  if (maxW <= 0) return;
-  let slotW = maxW;
-  if (fill) {
-    const gap = 6;
-    const ctaW = ctas.reduce((sum, el) => sum + Math.ceil(el.getBoundingClientRect().width), 0);
-    const n = matches.length + ctas.length;
-    const room = sportsStripAvailWidth() - ctaW - gap * Math.max(0, n - 1);
-    if (room > 0) {
-      slotW = Math.max(maxW, Math.floor(room / matches.length));
-    }
+  if (!naturals.length || Math.max(...naturals) <= 0) return;
+  const gap = 6;
+  const ctaW = ctas.reduce((sum, el) => sum + Math.ceil(el.getBoundingClientRect().width), 0);
+  const n = matches.length + ctas.length;
+  const avail = sportsStripAvailWidth();
+  const need = naturals.reduce((sum, w) => sum + w, 0)
+    + ctaW
+    + gap * Math.max(0, n - 1);
+  // Jamais plus étroit que le texte (clip). Si ça ne rentre pas, le cramped
+  // retire une puce. Le reliquat s’ajoute à parts égales au-dessus du naturel.
+  const maxEach = matches.length
+    ? Math.max(80, Math.floor((avail - ctaW - gap * Math.max(0, n - 1)) / matches.length))
+    : avail;
+  let widths = naturals.map((w) => Math.min(w, maxEach));
+  if (fill && need <= avail + 2 && matches.length) {
+    let extra = Math.max(0, avail - need);
+    try {
+      const vw = document.documentElement.clientWidth || window.innerWidth || 0;
+      // 1600 : laisser le reliquat aux 2 CTA, scores un peu plus compacts.
+      if (vw >= 1600 && vw < 1920) extra = Math.floor(extra * 0.55);
+    } catch { /* ignore */ }
+    const add = Math.floor(extra / matches.length);
+    const rem = extra - add * matches.length;
+    widths = naturals.map((w, i) => Math.min(maxEach, w + add + (i < rem ? 1 : 0)));
   }
-  strip.style.setProperty('--sports-match-w', `${slotW}px`);
-  matches.forEach((chip) => {
+  strip.style.setProperty('--sports-match-w', `${Math.max(...widths)}px`);
+  matches.forEach((chip, i) => {
+    const slotW = widths[i] || naturals[i];
     chip.style.setProperty('flex', `0 0 ${slotW}px`, 'important');
     chip.style.setProperty('width', `${slotW}px`, 'important');
     chip.style.setProperty('min-width', `${slotW}px`, 'important');
@@ -912,9 +948,17 @@ function fitSportsStripAfterPaint() {
   }
   sportsFitDepth += 1;
   // Wide étroit : totaux impairs (CTA centrée). ≥1440 : juste −1 (garder le remplissage).
+  // ≥ ~520 px : ne pas jeter le dernier score (round-trip 2560→1920 le perdait).
+  const floor = sportsStripAvailWidth() >= 520 ? 2 : 1;
   let next = count - 1;
   if (!comfort && wide && next >= 4 && next % 2 === 0) next -= 1;
-  sportsFitCount = Math.max(1, next);
+  sportsFitCount = Math.max(floor, next);
+  if (sportsFitCount >= count) {
+    fitWideSportsMatchSlots({ fill: true });
+    refreshSportsChipScroll();
+    syncWeatherCountToSports();
+    return;
+  }
   try {
     renderSportsStrip();
   } finally {
@@ -1052,8 +1096,8 @@ function sportsNextSlidesSorted() {
 
 /**
  * État de la voie de gauche :
- *  - « results » : saison active (résultats passés + activité CTA chaude)
- *    → uniquement résultats, ordre fraîcheur desc.
+ *  - « results » : saison active (résultats chauds d’abord, puis prochains
+ *    une face pour remplir le bandeau — la CTA garde « son » match).
  *  - « offseason » : creux (pas de résultats chauds)
  *    → matchs à venir par proximité, **sans** puces grises « Hors saison… »
  *      (celles-ci n’apparaissaient qu’en filet total — voir CTA idle).
@@ -1086,17 +1130,14 @@ function sportsLeftLaneState() {
   }
 
   if (recentResults.length) {
-    // Résultats 5 j d’abord ; futurs **hors** fenêtre CTA (> 5 j).
+    // Résultats 5 j d’abord (V et D restent deux cartes). Puis les prochains
+    // (une face) pour remplir le bandeau : la CTA occupe déjà « son » match
+    // via occupy keys, les autres restent des puces scores normales.
     const seen = new Set(recentResults.map((s) => s.key));
-    const ctaEnd = sportsCtaNextWindowEndDay(now);
-    const farNexts = nexts.filter((s) => {
-      if (!sportsSlideIsDisplayable(s) || seen.has(s.key)) return false;
-      const day = sportsSlideDayKey(s);
-      return day && day > ctaEnd;
-    });
-    // Résultats : V et D (ou N/N) restent deux cartes. Futurs : une face.
-    const pool = recentResults.concat(sportsDedupeMatchSlides(farNexts));
-    return { kind: 'results', pool };
+    const moreNexts = sportsDedupeMatchSlides(nexts.filter((s) => (
+      sportsSlideIsDisplayable(s) && !seen.has(s.key)
+    )));
+    return { kind: 'results', pool: recentResults.concat(moreNexts) };
   }
   // Hors saison / creux : calendrier à venir seulement (pas de musée d’avril).
   // Filet ultime : un seul plus récent lastGame si vraiment zéro next.
@@ -1815,7 +1856,7 @@ function sportsCtaGameIsTomorrow(slide) {
 }
 
 /**
- * Pastille CTA : À venir (aujourd’hui) / Demain / Prochain match (après)
+ * Pastille CTA : À venir (aujourd’hui) / Demain / Prochains match (après)
  * / En cours / Aujourd’hui (résultat) / Hier / date.
  * Creux : LE-RADAR.ca (logo PWA), pas « Sports ».
  */
@@ -1831,14 +1872,14 @@ function sportsCtaTagLabel(slide, state) {
   return RADAR_BRAND_SHORT;
 }
 
-/** Remplit la pastille : « Prochain match » en deux lignes, le reste en une. */
+/** Remplit la pastille : « Prochains match » en deux lignes, le reste en une. */
 function fillSportsCtaTagCopy(tag, wanted) {
   tag.replaceChildren();
   if (wanted === SPORTS_CTA_TAG_NEXT) {
     const lines = document.createElement('span');
     lines.className = 'sports-chip__cta-tag-lines';
     const top = document.createElement('span');
-    top.textContent = 'Prochain';
+    top.textContent = 'Prochains';
     const bot = document.createElement('span');
     bot.textContent = 'match';
     lines.append(top, bot);
@@ -2354,8 +2395,17 @@ function pickDistinctSportsCtas(n) {
     used.add(slide.key);
     out.push(slide);
   }
-  // Filet : au moins une CTA
+  // Filet : au moins une CTA, et remplir jusqu’à `want` (4 à 3440)
+  // même si le pool de matchs distincts est plus court.
   if (!out.length) out.push(sportsCtaSlide(0));
+  for (let i = out.length; i < want; i += 1) {
+    const slide = sportsCtaSlide(i);
+    out.push({
+      ...slide,
+      key: `${SPORTS_CTA_KEY}:fill:${i}`,
+      labelIndex: (slide?.labelIndex ?? 0) + i * 17,
+    });
+  }
   sportsCtaLabelIndex = out[0]?.labelIndex ?? 0;
   return out;
 }
@@ -2824,7 +2874,7 @@ function sportsChipTitle(slide) {
   const status = sportsGameIsLive(g) ? 'En cours'
     : sportsCtaGameIsToday(slide) ? 'À venir'
     : sportsCtaGameIsTomorrow(slide) ? 'Demain'
-    : 'Prochain match';
+    : 'Prochains match';
   const verb = sportsMatchVerb(g);
   return [status, sport, `${home} ${verb} ${opp}`, when, host].filter(Boolean).join(' · ');
 }
@@ -3130,6 +3180,43 @@ function arrangeSportsVisible(contentSlides, ctaOrList) {
   return [...contentSlides, ctas[0]];
 }
 
+/**
+ * Les deux faces V/D d’un même match restent dans le cycle, mais ne peuvent
+ * pas être voisines. On filtre **après** le placement CTA (wide = CTA au
+ * centre) : [V, CTA, D] est valide ; [V, D, CTA] recule D de l’autre côté
+ * si une CTA sépare, sinon on n’en garde qu’une.
+ */
+function sportsSeparateAdjacentResults(visible) {
+  if (!Array.isArray(visible) || visible.length < 2) return visible || [];
+  const kept = [];
+  const deferred = [];
+  for (const slide of visible) {
+    const prev = kept[kept.length - 1];
+    const a = sportsResultMatchKey(prev);
+    const b = sportsResultMatchKey(slide);
+    if (a && b && a === b) deferred.push(slide);
+    else kept.push(slide);
+  }
+  // Hors wide : CTA à droite. On ne recale pas une face après elle.
+  const wide = typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode();
+  if (!wide) return kept;
+  for (const slide of deferred) {
+    const key = sportsResultMatchKey(slide);
+    let inserted = false;
+    for (let i = 0; i <= kept.length; i += 1) {
+      const left = sportsResultMatchKey(kept[i - 1]);
+      const right = sportsResultMatchKey(kept[i]);
+      if (key && left === key) continue;
+      if (key && right === key) continue;
+      kept.splice(i, 0, slide);
+      inserted = true;
+      break;
+    }
+    if (!inserted) continue;
+  }
+  return kept;
+}
+
 function sportsCtaSlotIndex(visible = sportsVisible) {
   const i = visible.findIndex((s) => s?.mode === 'cta');
   return i >= 0 ? i : Math.max(0, visible.length - 1);
@@ -3174,12 +3261,10 @@ function pickInitialSportsVisible(count) {
   sportsVisible = ctas.slice();
   try {
     while (picked.length < contentCount) {
-      const previousKey = sportsResultMatchKey(picked[picked.length - 1]);
-      const avoidMatchKeys = previousKey ? new Set([previousKey]) : new Set();
       const slide = nextSportsSlide(usedKeys, {
         usedSports,
         avoidSport: '',
-        avoidMatchKeys,
+        avoidMatchKeys: new Set(),
       });
       if (!slide || slide.mode === 'info') break;
       if (sportsSlideIsUsed(slide, usedKeys)) break;
@@ -3191,7 +3276,7 @@ function pickInitialSportsVisible(count) {
     sportsVisible = prevVisible;
   }
 
-  return arrangeSportsVisible(picked, ctas);
+  return sportsSeparateAdjacentResults(arrangeSportsVisible(picked, ctas));
 }
 
 /** Remplit / recalcule les slots visibles (resize ou 1er paint). */
@@ -3302,7 +3387,7 @@ function renderSportsStrip() {
       sportsVisible = prevVis;
     }
     // Wide : CTAs au centre ; prod : CTA à droite.
-    sportsVisible = arrangeSportsVisible(nextVisible, ctasKeep);
+    sportsVisible = sportsSeparateAdjacentResults(arrangeSportsVisible(nextVisible, ctasKeep));
   }
   // Marqueur CSS pour le style « CTA centre » + nombre de CTAs
   if (MASTHEAD_SPORTS_STRIP) {
@@ -3787,7 +3872,7 @@ async function initMastheadSports() {
           const w = MASTHEAD_SPORTS_STRIP?.clientWidth || 0;
           if (
             source === 'ro'
-            && Math.abs(w - (initMastheadSports._lastWidth || 0)) < 2
+            && Math.abs(w - (initMastheadSports._lastWidth || 0)) < 8
           ) {
             return;
           }

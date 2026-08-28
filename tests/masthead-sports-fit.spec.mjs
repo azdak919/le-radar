@@ -31,7 +31,7 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   };
 
   const compact = await countAt(1280);
-  expect(compact).toBeGreaterThanOrEqual(3);
+  expect(compact).toBeGreaterThanOrEqual(2);
   expect(compact).toBeLessThanOrEqual(4);
   await expect(strip.locator('.sports-chip').last()).toHaveClass(/sports-chip--cta/);
   const wide = await countAt(1440);
@@ -113,7 +113,7 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   // Pastille visible (pas coupée hors flux). Marque possible : repos, direct,
   // résultat civil ou prochain match.
   const tag = strip.locator('.sports-chip__cta-tag');
-  await expect(tag).toContainText(/sports|en cours|hier|aujourd|prochain/i);
+  await expect(tag).toContainText(/sports|en cours|hier|aujourd|demain|prochain|venir/i);
   await expect(strip.locator('.sports-chip__cta-chev')).toHaveCount(0);
   const tagBox = await tag.boundingBox();
   expect(tagBox).toBeTruthy();
@@ -463,7 +463,7 @@ test('390 / 430 : pastille Prochain/Hier/Aujourd’hui à gauche de l’accroche
     const strip = page.locator('#masthead-sports-strip');
     await expect(strip.locator('.sports-chip--cta')).toBeVisible({ timeout: 8000 });
     const tag = strip.locator('.sports-chip--cta .sports-chip__cta-tag');
-    await expect(tag).toContainText(/prochain|hier|aujourd|en cours|sports|août|avant-hier/i);
+    await expect(tag).toContainText(/prochain|hier|aujourd|demain|venir|en cours|sports|août|avant-hier/i);
     const geo = await page.evaluate(() => {
       const chip = document.querySelector('.sports-chip--cta');
       const tagEl = chip?.querySelector('.sports-chip__cta-tag');
@@ -552,7 +552,7 @@ test('CTA sports 1920 : pastille Prochain jaune + titre long défile', async ({ 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip).toBeVisible({ timeout: 8000 });
-  const cta = strip.locator('.sports-chip--cta');
+  const cta = strip.locator('.sports-chip--cta').first();
   await expect(cta).toBeVisible({ timeout: 8000 });
 
   const longTitle = 'Champlain College Lennoxville reçoit Cégep François-Xavier-Garneau';
@@ -565,8 +565,8 @@ test('CTA sports 1920 : pastille Prochain jaune + titre long défile', async ({ 
     if (!chip || !tag || !text) return { ok: false, reason: 'no-cta' };
     chip.dataset.ctaState = 'next';
     tag.dataset.ctaLamp = 'next';
-    tag.dataset.ctaTag = 'Prochain match';
-    tag.textContent = 'Prochain match';
+    tag.dataset.ctaTag = 'Prochains match';
+    tag.textContent = 'Prochains match';
     tag.classList.remove('sports-chip__cta-tag--brand');
     text.textContent = title;
     if (typeof refreshSportsChipScroll === 'function') refreshSportsChipScroll(chip);
@@ -597,14 +597,14 @@ test('CTA sports 1920 : pastille Prochain jaune + titre long défile', async ({ 
   expect(left1, 'défilement L→R à 1920').toBeLessThan(left0 - 1);
 });
 
-test('wide E ≥3440 : 3 CTA sports distinctes', async ({ page }) => {
+test('wide E ≥3440 : 4 CTA sports distinctes', async ({ page }) => {
   await page.setViewportSize({ width: 3440, height: 1200 });
   await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip).toBeVisible({ timeout: 8000 });
   await expect.poll(async () => strip.locator('.sports-chip--cta').count(), { timeout: 8000 })
-    .toBe(3);
-  await expect(strip).toHaveAttribute('data-cta-count', '3');
+    .toBe(4);
+  await expect(strip).toHaveAttribute('data-cta-count', '4');
   const weatherN = await page.locator('#masthead-weather .masthead-weather__city.is-active').count();
   const matchN = await strip.locator('.sports-chip--match').count();
   expect(weatherN, 'météo suit encore les scores (+ bonus 3440)').toBeGreaterThanOrEqual(2 + matchN);
@@ -637,9 +637,10 @@ async function assertSportsCascadeAt(page, { width, height = 900, wide = false, 
   const flipped = now.filter((row, i) => row.text !== start[i]?.text).length;
   const liveCta = await strip.locator('.sports-chip--cta[data-cta-state="live"]').count();
   const onlyLiveCta = start.length === 1 && start[0].cta && liveCta > 0;
+  const matchN = start.filter((row) => !row.cta).length;
   if (onlyLiveCta) {
     expect(flipped, `direct unique : la CTA En cours reste à ${width}`).toBe(0);
-  } else if (start.length >= 3) {
+  } else if (matchN >= 3) {
     expect(flipped, `plusieurs cartes sports changent à ${width}`).toBeGreaterThan(1);
   } else {
     expect(flipped, `au moins une carte sports change à ${width}`).toBeGreaterThan(0);
