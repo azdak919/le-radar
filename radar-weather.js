@@ -51,6 +51,9 @@ let mastheadWeatherNationSlot = 1;
 let mastheadWeatherQueueIndex = 0;
 let mastheadWeatherLastBoardCount = 0;
 let mastheadWeatherFitCount = null;
+/** 1ʳᵉ largeur Montréal gelée (panel A) : jamais ré-élargie par fonts/RO. */
+let weatherPrimaryLockW = null;
+let weatherPrimaryLockKey = '';
 let weatherOverlapFitDepth = 0;
 let weatherAvailTrim = 0;
 let mastheadWeatherTooNarrow = false;
@@ -91,6 +94,8 @@ function setMastheadWeatherDocked(docked) {
   }
   // Le contexte a changé de largeur : tout réévaluer depuis zéro.
   mastheadWeatherFitCount = null;
+  weatherPrimaryLockW = null;
+  weatherPrimaryLockKey = '';
   mastheadWeatherTooNarrow = false;
   mastheadWeatherLastBoardCount = 0;
   MASTHEAD_WEATHER.classList.remove('is-too-narrow');
@@ -1279,10 +1284,17 @@ function weatherCityNaturalWidth(el) {
   return w;
 }
 
+function weatherShellKey() {
+  return [
+    isWideNoMarqueeMode() ? 'w' : 'n',
+    MASTHEAD_WEATHER_PHONE_MQ.matches ? 'd' : 'u',
+    isWideDesktopComfort() ? 'c' : 'x',
+  ].join('');
+}
+
 /**
- * ≥1440 : MTL + QC calés sur la largeur de Montréal ; le reliquat va aux
- * secondaires pour éviter le défilement des toponymes trop longs.
- * −1 carte seulement si même le plancher secondaire ne rentre pas.
+ * ≥1440 : MTL + QC gelés sur la 1re largeur de Montréal (panel A, go 2026-08-28).
+ * Reliquat aux secondaires. Jamais de 2e passe qui élargit les ancres.
  * @returns {boolean} true si un re-render a été lancé
  */
 function fitWideWeatherSecondarySlots() {
@@ -1305,16 +1317,15 @@ function fitWideWeatherSecondarySlots() {
   const avail = weatherBoardAvailWidth();
   if (avail < 40) return false;
   const MIN_SEC = isWideQhdPlus() ? 152 : 168;
-  const minPrimary = Math.max(
-    118,
-    (mtl || qc)
-      ? 52 + weatherMeasureStringPx(mtl || qc, 'MONTRÉAL')
-      : 118,
-  );
-  // Les deux ancres : l’espace que Montréal demande (Québec est plus court).
-  const primaryW = Math.max(minPrimary, weatherCityNaturalWidth(mtl) || 128);
-  // Resize 390→1920 : le board n’a pas encore sa largeur utile ; ne pas
-  // descendre à MTL+QC seules sur une mesure transitoire.
+  const key = weatherShellKey();
+  if (weatherPrimaryLockKey !== key) {
+    weatherPrimaryLockW = null;
+    weatherPrimaryLockKey = key;
+  }
+  const measured = Math.max(118, weatherCityNaturalWidth(mtl) || 128);
+  if (weatherPrimaryLockW == null) weatherPrimaryLockW = measured;
+  // Gel : jamais ré-élargir MTL/QC (fonts.ready / RO volaient ~15 px aux secondaires).
+  const primaryW = weatherPrimaryLockW;
   if (primaryW * 2 > avail) return false;
   const applyW = (el, w) => {
     if (!el) return;
@@ -1628,37 +1639,34 @@ function rotateOneMastheadWeatherCard(forcedSlot) {
   applyBoardWithArrive();
 }
 
-function scheduleMastheadWeatherLayout() {
+function scheduleMastheadWeatherLayout(source = 'resize') {
   window.cancelAnimationFrame(mastheadWeatherResizeFrame);
   mastheadWeatherResizeFrame = window.requestAnimationFrame(() => {
     const nowW = document.documentElement.clientWidth || 0;
     const prevW = scheduleMastheadWeatherLayout._w;
     scheduleMastheadWeatherLayout._w = nowW;
-    const layoutKey = [
-      isWideNoMarqueeMode() ? 'w' : 'n',
-      MASTHEAD_WEATHER_PHONE_MQ.matches ? 'd' : 'u',
-      isWideDesktopComfort() ? 'c' : 'x',
-    ].join('');
+    const layoutKey = weatherShellKey();
     const prevKey = scheduleMastheadWeatherLayout._key;
     scheduleMastheadWeatherLayout._key = layoutKey;
-    // Premier passage : ne pas traiter 0→viewport comme un « élargissement »
-    // (fonts.ready re-montrait trop de cartes). Panneau qui s’ouvre = rétrécit
-    // (garder le plafond). Fermeture = élargit (re-autoriser des cartes).
-    // Changement de coque (wide ↔ bureau, dock ↔ mât) : tout re-mesurer,
-    // sinon le plafond d’un overflow transitoire reste coincé à 1 carte.
-    if (prevKey != null && prevKey !== layoutKey) {
+    const keyChanged = prevKey != null && prevKey !== layoutKey;
+    const viewportChanged = prevW != null && Math.abs(nowW - prevW) > 8;
+    // Premier passage : ne pas traiter 0→viewport comme un « élargissement ».
+    // Changement de coque / vrai resize : re-mesurer. RO du mât (sports, date) :
+    // ne pas casser le gel MTL/QC (panel A).
+    if (keyChanged || (source !== 'ro' && viewportChanged)) {
       mastheadWeatherFitCount = null;
       weatherAvailTrim = 0;
-    } else if (prevW != null && nowW > prevW + 8) {
-      mastheadWeatherFitCount = null;
-      weatherAvailTrim = 0;
+      weatherPrimaryLockW = null;
+      weatherPrimaryLockKey = '';
+      clearWeatherSlotInlineStyles();
+    } else if (source === 'ro' && weatherPrimaryLockW != null) {
+      fitWideWeatherSecondarySlots();
+      return;
     }
     mastheadWeatherTooNarrow = false;
     weatherOverlapFitDepth = 0;
     MASTHEAD_WEATHER?.classList.remove('is-too-narrow');
-    clearWeatherSlotInlineStyles();
-    // showMastheadWeatherBoard réévalue lui-même le dockage (masthead vs
-    // sous le syntoniseur) selon la largeur actuelle.
+    if (keyChanged || source !== 'ro') clearWeatherSlotInlineStyles();
     mastheadWeatherResizeFrame = window.requestAnimationFrame(showMastheadWeatherBoard);
   });
 }
@@ -1666,9 +1674,9 @@ function scheduleMastheadWeatherLayout() {
 function bindMastheadWeatherLayoutWatchers() {
   if (bindMastheadWeatherLayoutWatchers._bound) return;
   bindMastheadWeatherLayoutWatchers._bound = true;
-  window.addEventListener('resize', scheduleMastheadWeatherLayout, { passive: true });
+  window.addEventListener('resize', () => scheduleMastheadWeatherLayout('resize'), { passive: true });
   try {
-    window.visualViewport?.addEventListener('resize', scheduleMastheadWeatherLayout, { passive: true });
+    window.visualViewport?.addEventListener('resize', () => scheduleMastheadWeatherLayout('resize'), { passive: true });
   } catch { /* ignore */ }
   [
     MASTHEAD_WEATHER_PHONE_MQ,
@@ -1677,7 +1685,7 @@ function bindMastheadWeatherLayoutWatchers() {
     window.matchMedia('(min-width: 1920px)'),
     window.matchMedia('(min-width: 2560px)'),
     window.matchMedia('(min-width: 3440px)'),
-  ].forEach((mq) => onMediaQueryChange(mq, scheduleMastheadWeatherLayout));
+  ].forEach((mq) => onMediaQueryChange(mq, () => scheduleMastheadWeatherLayout('mq')));
   if (typeof ResizeObserver === 'undefined') return;
   const watch = (el) => {
     if (!el) return;
@@ -1686,7 +1694,7 @@ function bindMastheadWeatherLayoutWatchers() {
       const w = el.clientWidth;
       if (Math.abs(w - lastW) < 2) return;
       lastW = w;
-      scheduleMastheadWeatherLayout();
+      scheduleMastheadWeatherLayout('ro');
     });
     ro.observe(el);
   };
@@ -1697,13 +1705,13 @@ function bindMastheadWeatherLayoutWatchers() {
 function startMastheadWeatherBoard() {
   if (!MASTHEAD_WEATHER) return;
   showMastheadWeatherBoard();
-  // Re-fit après fontes : 1ʳᵉ mesure trop tôt → fitCount=1 figé (1 carte au lieu de 2).
+  // Fontes : retoggle marquee seulement. Interdit de relancer le layout
+  // (ça ré-élargissait MTL/QC : 184 → 199 px).
   const fonts = document.fonts;
   if (fonts?.ready && typeof fonts.ready.then === 'function') {
     fonts.ready.then(() => {
       if (!MASTHEAD_WEATHER?.isConnected) return;
-      mastheadWeatherFitCount = null;
-      scheduleMastheadWeatherLayout();
+      measureWeatherNameOverflows();
     }).catch(() => { /* ignore */ });
   }
   // Chaîne setTimeout (pas interval fixe) : le dwell suit le marquee réel.

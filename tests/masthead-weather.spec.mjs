@@ -249,6 +249,13 @@ test('wide : MTL/QC calés sur Montréal, secondaires plus larges', async ({ pag
   const secMin = Math.min(...layout.secW);
   expect(secMin, `secondaires ${layout.secW} vs MTL ${layout.mtlW}`).toBeGreaterThanOrEqual(layout.mtlW);
   expect(layout.secOverflow, 'le reliquat doit éviter le marquee des secondaires').toBe(0);
+
+  const firstMtl = layout.mtlW;
+  await page.waitForTimeout(1000);
+  const later = await ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"]').evaluate(
+    (el) => Math.round(el.getBoundingClientRect().width),
+  );
+  expect(Math.abs(later - firstMtl), `MTL ne s’élargit pas après chargement (${firstMtl} → ${later})`).toBeLessThanOrEqual(2);
 });
 
 test('wide E : météo secondaire tourne de gauche à droite, MTL/QC fixes', async ({ page }) => {
