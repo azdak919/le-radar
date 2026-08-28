@@ -43,6 +43,10 @@ const WALLPAPER_INST_RULES = [
   { re: /dawson/i, key: 'dawson college' },
   { re: /vieux\s*montr[eé]al/i, key: 'cegep du vieux montreal' },
   { re: /jonqui[eè]re/i, key: 'cegep de jonquiere' },
+  { re: /lionel[\s-]?groulx/i, key: 'college lionel groulx' },
+  { re: /coll[eè]ge\s+de\s+maisonneuve|c[eé]gep.{0,20}maisonneuve/i, key: 'college de maisonneuve' },
+  { re: /cegep\s+de\s+chicoutimi|cegep\s+chicoutimi/i, key: 'cegep de chicoutimi' },
+  { re: /cegep\s+de\s+rimouski|cegep\s+rimouski/i, key: 'cegep de rimouski' },
 ];
 
 function mapWallpaperToBankKey(photo = {}) {
@@ -478,6 +482,110 @@ const BANK = {
       tags: 'exterior campus montreal metro entrance spring',
     },
   ],
+  'college lionel groulx': [
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/e/e9/Coll%C3%A8ge_Lionel-Groulx_%28entr%C3%A9e_du_vieux_s%C3%A9minaire%29.jpg',
+      title: 'Collège Lionel-Groulx (entrée du vieux séminaire)',
+      creator: 'Khayman',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Coll%C3%A8ge_Lionel-Groulx_(entr%C3%A9e_du_vieux_s%C3%A9minaire).jpg',
+      tags: 'exterior campus sainte-therese seminary entrance',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Coll%C3%A8ge_Lionel-Groulx_1.jpg',
+      title: 'Collège Lionel-Groulx 1',
+      creator: 'Khayman',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Coll%C3%A8ge_Lionel-Groulx_1.jpg',
+      tags: 'exterior campus sainte-therese building',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/9/98/Coll%C3%A8ge_Lionel-Groulx.jpg',
+      title: 'Collège Lionel-Groulx',
+      creator: 'Konik Studio',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Coll%C3%A8ge_Lionel-Groulx.jpg',
+      tags: 'exterior campus sainte-therese night facade',
+    },
+  ],
+  'cegep de chicoutimi': [
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/7/70/C%C3%A9gep_de_Chicoutimi_%28vue_gauche_ancien_s%C3%A9minaire%29.jpg',
+      title: 'Cégep de Chicoutimi (vue gauche, ancien séminaire)',
+      creator: 'Khayman',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:C%C3%A9gep_de_Chicoutimi_(vue_gauche_ancien_s%C3%A9minaire).jpg',
+      tags: 'exterior campus chicoutimi seminary',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/8/82/Entr%C3%A9e_de_l%27ancien_S%C3%A9minaire_de_Chicoutimi.JPG',
+      title: 'Entrée de l’ancien Séminaire de Chicoutimi',
+      creator: 'Khayman',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Entr%C3%A9e_de_l%27ancien_S%C3%A9minaire_de_Chicoutimi.JPG',
+      tags: 'exterior campus chicoutimi seminary entrance',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/c/cf/C%C3%89GEP_Chicoutimi_aile_H.jpg',
+      title: 'CÉGEP Chicoutimi, aile H',
+      creator: 'Adqproductions',
+      license: 'CC0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:C%C3%89GEP_Chicoutimi_aile_H.jpg',
+      tags: 'exterior campus chicoutimi wing',
+    },
+  ],
+  'college de maisonneuve': [
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Montr%C3%A9al%2C_C%C3%A9gep%2C_Maisonneuve_02.jpg',
+      title: 'Cégep de Maisonneuve, rue Sherbrooke',
+      creator: 'Héron du fleuve',
+      license: 'CC0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Montr%C3%A9al,_C%C3%A9gep,_Maisonneuve_02.jpg',
+      tags: 'exterior campus montreal sherbrooke maisonneuve',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Montr%C3%A9al%2C_C%C3%A9gep%2C_Maisonneuve_01.jpg',
+      title: 'Cégep de Maisonneuve, pavillon chimie',
+      creator: 'Héron du fleuve',
+      license: 'CC0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Montr%C3%A9al,_C%C3%A9gep,_Maisonneuve_01.jpg',
+      tags: 'exterior campus montreal sherbrooke maisonneuve',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Entrance_of_College_De_maisonneuve.jpg',
+      title: 'Entrée du Collège de Maisonneuve',
+      creator: 'Lutarchitecture',
+      license: 'CC BY-SA 4.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Entrance_of_College_De_maisonneuve.jpg',
+      tags: 'exterior campus montreal entrance maisonneuve',
+    },
+  ],
+  'cegep de rimouski': [
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/C%C3%A9gep_de_Rimouski.jpg',
+      title: 'Cégep de Rimouski',
+      creator: 'Charny',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:C%C3%A9gep_de_Rimouski.jpg',
+      tags: 'exterior campus rimouski cegep',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/8/84/Rimouski-Cegep.jpg',
+      title: 'Cégep de Rimouski',
+      creator: 'Sebb',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Rimouski-Cegep.jpg',
+      tags: 'exterior campus rimouski cegep building',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Cegeprimouski2.jpg',
+      title: 'Cégep de Rimouski 2',
+      creator: 'Stéphanevoyer',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Cegeprimouski2.jpg',
+      tags: 'exterior campus rimouski cegep',
+    },
+  ],
 };
 
 const ALIASES = {
@@ -514,6 +622,17 @@ const ALIASES = {
   uqac: 'universite du quebec a chicoutimi',
   'universite du quebec a rimouski': 'universite du quebec a rimouski',
   uqar: 'universite du quebec a rimouski',
+  'lionel groulx': 'college lionel groulx',
+  'college lionel groulx': 'college lionel groulx',
+  'cegep lionel groulx': 'college lionel groulx',
+  maisonneuve: 'college de maisonneuve',
+  'college de maisonneuve': 'college de maisonneuve',
+  'cegep de maisonneuve': 'college de maisonneuve',
+  'cegep maisonneuve': 'college de maisonneuve',
+  'cegep de chicoutimi': 'cegep de chicoutimi',
+  'cegep chicoutimi': 'cegep de chicoutimi',
+  'cegep de rimouski': 'cegep de rimouski',
+  'cegep rimouski': 'cegep de rimouski',
 };
 
 function bankKeyHasPhotos(key, extrasMap) {

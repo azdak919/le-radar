@@ -4,9 +4,14 @@
  * Utilisé par le bot (ensure-lead-images) et les tests. Le fil (radar-news.js)
  * reprend la même logique côté client (QUEBEC_UNIVERSITY_BACKGROUNDS + cégeps).
  *
- * Hôtes fragiles : URL d’article présente mais souvent injoignable depuis
- * le-radar.ca (hotlink / origine down). On garde la photo source en priorité,
- * et on attache un stock campus comme filet.
+ * Ordre d’affichage (toutes sources) :
+ *   1. photo d’article (miroir local, puis URL source — y compris hôte fragile)
+ *   2. photo thématique (Openverse / Commons, imageProvider !== campus-bank)
+ *   3. photo campus de l’établissement
+ * Pas de carte texte / SVG tant qu’une photo campus existe en banque.
+ *
+ * Hôtes fragiles : on essaie quand même la photo d’article (timeout court) ;
+ * le stock campus n’est qu’un filet si 1 et 2 échouent.
  */
 
 'use strict';
@@ -190,6 +195,110 @@ const CEGEP_CAMPUS_EXTRAS = [
       },
     ],
   },
+  {
+    needles: ['lionel groulx'],
+    photos: [
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/e/e9/Coll%C3%A8ge_Lionel-Groulx_%28entr%C3%A9e_du_vieux_s%C3%A9minaire%29.jpg',
+        title: 'Collège Lionel-Groulx (entrée du vieux séminaire)',
+        credit: 'Khayman',
+        license: 'CC BY-SA 3.0',
+        link: 'https://commons.wikimedia.org/wiki/File:Coll%C3%A8ge_Lionel-Groulx_(entr%C3%A9e_du_vieux_s%C3%A9minaire).jpg',
+      },
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Coll%C3%A8ge_Lionel-Groulx_1.jpg',
+        title: 'Collège Lionel-Groulx 1',
+        credit: 'Khayman',
+        license: 'CC BY-SA 3.0',
+        link: 'https://commons.wikimedia.org/wiki/File:Coll%C3%A8ge_Lionel-Groulx_1.jpg',
+      },
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/9/98/Coll%C3%A8ge_Lionel-Groulx.jpg',
+        title: 'Collège Lionel-Groulx',
+        credit: 'Konik Studio',
+        license: 'CC BY-SA 3.0',
+        link: 'https://commons.wikimedia.org/wiki/File:Coll%C3%A8ge_Lionel-Groulx.jpg',
+      },
+    ],
+  },
+  {
+    needles: ['cegep de chicoutimi'],
+    photos: [
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/7/70/C%C3%A9gep_de_Chicoutimi_%28vue_gauche_ancien_s%C3%A9minaire%29.jpg',
+        title: 'Cégep de Chicoutimi (vue gauche, ancien séminaire)',
+        credit: 'Khayman',
+        license: 'CC BY-SA 3.0',
+        link: 'https://commons.wikimedia.org/wiki/File:C%C3%A9gep_de_Chicoutimi_(vue_gauche_ancien_s%C3%A9minaire).jpg',
+      },
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/8/82/Entr%C3%A9e_de_l%27ancien_S%C3%A9minaire_de_Chicoutimi.JPG',
+        title: 'Entrée de l’ancien Séminaire de Chicoutimi',
+        credit: 'Khayman',
+        license: 'CC BY-SA 3.0',
+        link: 'https://commons.wikimedia.org/wiki/File:Entr%C3%A9e_de_l%27ancien_S%C3%A9minaire_de_Chicoutimi.JPG',
+      },
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/c/cf/C%C3%89GEP_Chicoutimi_aile_H.jpg',
+        title: 'CÉGEP Chicoutimi, aile H',
+        credit: 'Adqproductions',
+        license: 'CC0',
+        link: 'https://commons.wikimedia.org/wiki/File:C%C3%89GEP_Chicoutimi_aile_H.jpg',
+      },
+    ],
+  },
+  {
+    needles: ['maisonneuve'],
+    photos: [
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Montr%C3%A9al%2C_C%C3%A9gep%2C_Maisonneuve_02.jpg',
+        title: 'Cégep de Maisonneuve, rue Sherbrooke',
+        credit: 'Héron du fleuve',
+        license: 'CC0',
+        link: 'https://commons.wikimedia.org/wiki/File:Montr%C3%A9al,_C%C3%A9gep,_Maisonneuve_02.jpg',
+      },
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Montr%C3%A9al%2C_C%C3%A9gep%2C_Maisonneuve_01.jpg',
+        title: 'Cégep de Maisonneuve, pavillon chimie',
+        credit: 'Héron du fleuve',
+        license: 'CC0',
+        link: 'https://commons.wikimedia.org/wiki/File:Montr%C3%A9al,_C%C3%A9gep,_Maisonneuve_01.jpg',
+      },
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/4/41/Entrance_of_College_De_maisonneuve.jpg',
+        title: 'Entrée du Collège de Maisonneuve',
+        credit: 'Lutarchitecture',
+        license: 'CC BY-SA 4.0',
+        link: 'https://commons.wikimedia.org/wiki/File:Entrance_of_College_De_maisonneuve.jpg',
+      },
+    ],
+  },
+  {
+    needles: ['cegep de rimouski'],
+    photos: [
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/C%C3%A9gep_de_Rimouski.jpg',
+        title: 'Cégep de Rimouski',
+        credit: 'Charny',
+        license: 'CC BY-SA 3.0',
+        link: 'https://commons.wikimedia.org/wiki/File:C%C3%A9gep_de_Rimouski.jpg',
+      },
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/8/84/Rimouski-Cegep.jpg',
+        title: 'Cégep de Rimouski',
+        credit: 'Sebb',
+        license: 'CC BY-SA 3.0',
+        link: 'https://commons.wikimedia.org/wiki/File:Rimouski-Cegep.jpg',
+      },
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Cegeprimouski2.jpg',
+        title: 'Cégep de Rimouski 2',
+        credit: 'Stéphanevoyer',
+        license: 'CC BY-SA 3.0',
+        link: 'https://commons.wikimedia.org/wiki/File:Cegeprimouski2.jpg',
+      },
+    ],
+  },
 ];
 
 function extrasForInstitution(institution = '') {
@@ -242,6 +351,32 @@ function pickCampusFallback(item = {}, opts = {}) {
   return toFallbackFields(pick);
 }
 
+/** Photo libre thématique (Openverse / Commons), pas la banque campus. */
+function isThematicStockItem(item = {}) {
+  const url = String(item?.stockImage || '').trim();
+  if (!url) return false;
+  return item.imageProvider !== 'campus-bank';
+}
+
+/**
+ * Contrat d’affichage (1 article → 2 thématique → 3 campus).
+ * Le fil (radar-news) applique ce plan ; SVG seulement si campus introuvable.
+ */
+function planDisplayImage(item = {}) {
+  const plan = [];
+  if (String(item.imageLocal || '').trim()) {
+    plan.push({ rung: 'article', src: String(item.imageLocal).trim() });
+  }
+  if (String(item.image || '').trim()) {
+    plan.push({ rung: 'article', src: String(item.image).trim() });
+  }
+  if (isThematicStockItem(item)) {
+    plan.push({ rung: 'thematic', src: String(item.stockImage).trim() });
+  }
+  plan.push({ rung: 'campus' });
+  return plan;
+}
+
 function sourceNeedsCampusBackup(item = {}, { hasUsableSourceImage = false } = {}) {
   if (!item) return false;
   if (item.stockImage && String(item.stockImage).trim()) return false;
@@ -259,6 +394,8 @@ const api = {
   extrasForInstitution,
   pickCampusFallback,
   sourceNeedsCampusBackup,
+  isThematicStockItem,
+  planDisplayImage,
   CEGEP_CAMPUS_EXTRAS,
   hashIndex,
 };
