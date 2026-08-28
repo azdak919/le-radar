@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-08-28T05:05:22.799Z",
+  "updatedAt": "2026-08-28T17:35:36.362Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Détour",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://chyz.ca/emission/detour/"
+      },
       "next": {
-        "title": "Vendredi Nostalgie",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
+        "title": "Capitales de Québec",
+        "source": "schedule-live",
+        "start": "18:50",
+        "end": "23:00",
+        "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Détour",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-28T05:05:08.037Z"
+      "checkedAt": "2026-08-28T17:35:07.302Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques (reprise)",
+        "title": "Rebelles soniques",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
+        "start": "12:00",
+        "end": "14:00",
         "url": "https://cism893.ca/emissions/rebelles-soniques"
       },
       "next": {
-        "title": "Mix Franco",
+        "title": "Le palmarès",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
       "track": "",
-      "showTitle": "Rebelles soniques (reprise)",
+      "showTitle": "Rebelles soniques",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-28T05:05:09.980Z"
+      "checkedAt": "2026-08-28T17:35:09.951Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Listen! You Smell Something?",
+        "title": "Butcher T's Noontime Cuts",
         "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "G-Flex Survivor's Corner",
+        "title": "NNB/SQUAT FM/QPIRG/knots",
         "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
+        "start": "14:00",
+        "end": "15:00"
       },
-      "track": "",
-      "showTitle": "Listen! You Smell Something?",
+      "track": "Butcher T",
+      "showTitle": "Butcher T's Noontime Cuts",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,72 +81,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-28T05:05:12.333Z"
+      "checkedAt": "2026-08-28T17:35:13.141Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Finally Midnight",
+        "title": "the castle",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/finally-midnight"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-castle"
       },
       "next": {
-        "title": "CJLO Late Night",
+        "title": "Spiral Bound",
         "source": "schedule",
-        "start": "02:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/spiral-bound"
       },
       "track": "",
-      "showTitle": "Finally Midnight",
+      "showTitle": "the castle",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-28T05:05:13.954Z"
+      "checkedAt": "2026-08-28T17:35:27.490Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Ciné-Histoire",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
+        "start": "12:00",
+        "end": "15:00"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "Nouveautés Franco",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "15:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Ciné-Histoire",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-28T05:05:14.902Z"
+      "checkedAt": "2026-08-28T17:35:28.647Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Opération beurre de cinoche",
+        "title": "Histoire de passer le temps",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "16:00",
+        "end": "17:00",
+        "slug": "histoire-de-passer-le-temps"
       },
-      "track": "Downtown Boys - Public Luxury",
+      "track": "cinemacinema2026mixage - final",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-28T05:05:22.448Z"
+      "checkedAt": "2026-08-28T17:35:36.012Z"
     }
   }
 }
