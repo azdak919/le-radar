@@ -1,14 +1,23 @@
 {
-  "updated": "2026-08-28T12:48:19.949Z",
+  "updated": "2026-08-28T19:58:11.392Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 9,
+  "incomplete": 10,
   "withLeadExcerpt": 86,
-  "candidates": 9,
-  "enriched": 0,
+  "candidates": 10,
+  "enriched": 1,
   "failed": 1,
   "ok": true,
   "samples": [
+    {
+      "title": "Élections provinciales 2026 : vos personnes candidates dans Saint-François (1/2)",
+      "link": "https://lecollectif.ca/societe/elections-provinciales-2026-vos-personnes-candidates-dans-saint-francois-1-2/",
+      "ok": true,
+      "score": 100,
+      "chars": 325,
+      "sample": "De l’autre côté de la rivière, dans Saint-François, la circonscription vit une situation différente ",
+      "changed": true
+    },
     {
       "title": "La mauvaise nutrition et les maladies chroniques",
       "link": "https://lecollectif.ca/a-la-une/la-mauvaise-nutrition-et-les-maladies-chroniques/",
@@ -70,15 +79,6 @@
       "score": 96,
       "chars": 169,
       "sample": "Attention cependant aux exceptions ! Consulte le site Web de ta faculté ou de ton centre universitai",
-      "changed": false
-    },
-    {
-      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
-      "link": "https://thelinknewspaper.ca/article/16338",
-      "ok": true,
-      "score": 90,
-      "chars": 177,
-      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
     }
   ]
