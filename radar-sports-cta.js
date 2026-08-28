@@ -602,7 +602,22 @@ function syncWeatherCountToSports() {
  * Wide : nombre de cartes CTA (1–4) selon largeur + taille du pool.
  * Plusieurs CTAs = matchs / accroches **distincts** (pas la même info).
  * 1600 / 1920 → 2 ; 2560 → 3 ; 3440 / 3840 → 4. ≤1440 → 1.
+ * 1600 a son propre gabarit (CTA plus étroites) pour garder un score de
+ * chaque côté, proportionné — le 424 px de 1280/1920 y laissait 1 score géant.
  */
+const SPORTS_CTA_W_COMFORT = 424;
+const SPORTS_CTA_W_1600 = 390;
+
+function isWide1600SportsBand() {
+  try {
+    return isWideDesktopComfort()
+      && window.matchMedia('(min-width: 1600px)').matches
+      && !window.matchMedia('(min-width: 1920px)').matches;
+  } catch {
+    return false;
+  }
+}
+
 function isWideDualSportsCta() {
   try {
     return isWideDesktopComfort() && window.matchMedia('(min-width: 1600px)').matches;
@@ -669,9 +684,14 @@ function sportsBoardCountBase() {
   const vw = (() => {
     try { return document.documentElement.clientWidth || window.innerWidth || 0; } catch { return 0; }
   })();
-  // 1600 : 2 CTA au centre, scores un cran plus serrés aux extrémités.
-  const minScore = comfort ? (vw < 1920 ? 176 : 200) : (wide ? 120 : 128);
-  const minCta = comfort ? 424 : (wide ? 140 : 152);
+  // 1600 : 2 CTA au centre (390 px) + un score de chaque côté.
+  // 1440 / 1920+ : gabarit 424 px (mesuré à 1280).
+  const minScore = comfort
+    ? (isWide1600SportsBand() ? 260 : (vw < 1920 ? 176 : 200))
+    : (wide ? 120 : 128);
+  const minCta = comfort
+    ? (isWide1600SportsBand() ? SPORTS_CTA_W_1600 : SPORTS_CTA_W_COMFORT)
+    : (wide ? 140 : 152);
   let maxN = 4;
   if (comfort) {
     // Remplir le bandeau : 4 CTA dès 3440, 3 dès 2560, 2 dès 1600.
@@ -899,12 +919,16 @@ function fitWideSportsMatchSlots({ fill = false } = {}) {
     let extra = Math.max(0, avail - need);
     try {
       const vw = document.documentElement.clientWidth || window.innerWidth || 0;
-      // 1600 : laisser le reliquat aux 2 CTA, scores un peu plus compacts.
-      if (vw >= 1600 && vw < 1920) extra = Math.floor(extra * 0.55);
+      // 1600 : ne pas verser tout le reliquat dans un seul score (il devenait
+      // plus large que les CTA). Plafonner à la largeur CTA.
+      if (vw >= 1600 && vw < 1920) extra = Math.floor(extra * 0.25);
     } catch { /* ignore */ }
     const add = Math.floor(extra / matches.length);
     const rem = extra - add * matches.length;
     widths = naturals.map((w, i) => Math.min(maxEach, w + add + (i < rem ? 1 : 0)));
+  }
+  if (isWide1600SportsBand()) {
+    widths = widths.map((w) => Math.min(w, SPORTS_CTA_W_1600));
   }
   strip.style.setProperty('--sports-match-w', `${Math.max(...widths)}px`);
   matches.forEach((chip, i) => {

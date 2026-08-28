@@ -122,7 +122,7 @@ test('mât : les quantités météo / scores / CTA suivent la largeur @ci-critic
 
   const at1600 = await resizeAndSettle(page, 1600, 900);
   expect(at1600.cta, '1600 : deux CTA au centre').toBe(2);
-  expect(at1600.match, '1600 : scores aux extrémités').toBeGreaterThanOrEqual(1);
+  expect(at1600.match, '1600 : un score de chaque côté, pas un orphelin étiré').toBeGreaterThanOrEqual(2);
 
   const at1920 = await resizeAndSettle(page, 1920, 1080);
   expect(at1920.wide).toBe('e');
