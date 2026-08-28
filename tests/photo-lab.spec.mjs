@@ -398,6 +398,11 @@ test('labo photo : Enregistrer reste sur la même fiche et garde saison / cadrag
   await expect(page.locator('#photo-meta')).toContainText(title.slice(0, 12));
   await expect(page.locator(`input[name="season"][value="${target}"]`)).toBeChecked();
   await expect(page.locator('#status')).toContainText(target === 'ete' ? 'été' : 'hiver');
+  await page.locator('label.tag:has(input[name="season"][value="all"])').click();
+  await expect(page.locator('#status')).toContainText(/toutes saisons/i, { timeout: 15_000 });
+  await expect(page.locator('input[name="season"][value="all"]')).toBeChecked();
+  await page.locator('#undo-btn').click();
+  await expect(page.locator(`input[name="season"][value="${target}"]`)).toBeChecked({ timeout: 10_000 });
   await page.locator('#undo-btn').click();
   await expect(page.locator('#status')).toContainText(/Enregistré|Annul/i, { timeout: 10_000 });
 });

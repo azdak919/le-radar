@@ -186,6 +186,23 @@ assert.equal(savedPayload.photo.focalY, 0.44);
 assert.deepEqual(savedPayload.photo.tags.slice().sort(), ['pomo', 'solitaire']);
 assert.equal(lab.findByUrl(lac.url).season, 'hiver', 'saison encore là au rechargement');
 
+const allYear = lab.saveAll(lac.url, {
+  credit: 'Alice Tremblay',
+  place: 'Tadoussac',
+  clearSeason: true,
+  tags: ['pomo', 'solitaire'],
+});
+assert.ok(!allYear.photo.season, 'toutes saisons : pas de season');
+assert.equal(allYear.photo.seasonSource, 'manual', 'toutes saisons : manuel, pas de re-tag bot');
+const uniAll = JSON.parse(readFileSync(join(root, 'data/photo-bank.json'), 'utf8'));
+const uniAllPhoto = (uniAll.photos || []).find((p) => p.url === lac.url);
+assert.ok(uniAllPhoto, 'banque unique après clearSeason');
+assert.ok(!uniAllPhoto.season, 'banque unique : saison vidée');
+assert.equal(uniAllPhoto.seasonSource, 'manual');
+const { mergeRecord } = require('../scripts/photo-bank-lib.js');
+const protectedAll = mergeRecord(uniAllPhoto, { season: 'ete', seasonSource: 'text' });
+assert.ok(!protectedAll.season, 'moisson ne recolle pas une saison sur « toutes saisons »');
+
 lab.pinPhoto(lac.url, { surfaces: ['masthead', 'solitaire'], focalY: 0.22 });
 const fav = JSON.parse(readFileSync(join(root, 'data/quebec-favorites-backgrounds.json'), 'utf8'));
 assert.equal(fav.photos.length, 1);

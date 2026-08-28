@@ -217,14 +217,15 @@
   function formPayload() {
     const season = (document.querySelector('input[name="season"]:checked') || {}).value || '';
     const season6 = (document.querySelector('input[name="season6"]:checked') || {}).value || '';
+    const allSeasons = season === 'all' || season === '';
     return {
       url: state.selected.url,
       focalY: state.focalY,
       credit: $('credit').value,
       place: $('place').value,
-      season: season || undefined,
-      season6: season6 || undefined,
-      clearSeason: !season && !season6,
+      season: allSeasons ? undefined : season,
+      season6: allSeasons ? undefined : (season6 || undefined),
+      clearSeason: allSeasons,
       surfaces: selectedSurfaces(),
       tags: selectedTags(),
     };
@@ -285,7 +286,7 @@
     $('place').value = p.place || '';
     updateCreditPreview();
     for (const el of document.querySelectorAll('input[name="season"]')) {
-      el.checked = (p.season || '') === el.value;
+      el.checked = p.season ? p.season === el.value : el.value === 'all';
     }
     for (const el of document.querySelectorAll('input[name="season6"]')) {
       el.checked = (p.season6 || '') === el.value;
@@ -333,10 +334,10 @@
       c.textContent = tagLabel[t] || t;
       chips.appendChild(c);
     }
-    if (p.season) {
+    {
       const c = document.createElement('span');
-      c.className = 'chip';
-      c.textContent = seasonLabel(p.season);
+      c.className = 'chip' + (p.season ? '' : ' perm');
+      c.textContent = p.season ? seasonLabel(p.season) : 'toutes saisons';
       chips.appendChild(c);
     }
     $('status').textContent = '';
@@ -451,7 +452,7 @@
   function savedSummary(photo) {
     if (!photo) return 'Enregistré sur ce disque. Pas encore sur le-radar.ca.';
     const bits = [];
-    if (photo.season) bits.push(seasonLabel(photo.season));
+    bits.push(photo.season ? seasonLabel(photo.season) : 'toutes saisons');
     if (typeof photo.focalY === 'number') bits.push(`Y ${Number(photo.focalY).toFixed(2)}`);
     const tags = photo.tags || [];
     if (tags.length) bits.push(tags.map((t) => (t === 'mat' ? 'mât' : t)).join(', '));
@@ -718,8 +719,8 @@
     } else if (ev.key === 'z' && !ev.metaKey && !ev.ctrlKey && !ev.altKey) {
       ev.preventDefault();
       $('undo-btn').click();
-    } else if (['1', '2', '3', '4'].includes(ev.key)) {
-      const map = { 1: 'printemps', 2: 'ete', 3: 'automne', 4: 'hiver' };
+    } else if (['0', '1', '2', '3', '4'].includes(ev.key)) {
+      const map = { 0: 'all', 1: 'printemps', 2: 'ete', 3: 'automne', 4: 'hiver' };
       const val = map[ev.key];
       const radio = document.querySelector(`input[name="season"][value="${val}"]`);
       if (radio) {
