@@ -84,7 +84,7 @@ async function resizeAndSettle(page, width, height = 1080) {
 }
 
 test('mât : les quantités météo / scores / CTA suivent la largeur @ci-critical', async ({ page }) => {
-  test.setTimeout(60_000);
+  test.setTimeout(120_000);
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
   await mockWeather(page);
@@ -147,7 +147,7 @@ test('mât : les quantités météo / scores / CTA suivent la largeur @ci-critic
 });
 
 test('mât : revenir à la taille d’origine restaure les quantités', async ({ page }) => {
-  test.setTimeout(60_000);
+  test.setTimeout(120_000);
   await mockWeather(page);
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });

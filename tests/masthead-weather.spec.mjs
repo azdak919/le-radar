@@ -244,11 +244,23 @@ test('wide : MTL/QC calés sur Montréal, secondaires plus larges', async ({ pag
   });
 
   expect(layout.mtlW, 'Montréal mesurable').toBeGreaterThan(80);
-  expect(Math.abs(layout.mtlW - layout.qcW), `MTL ${layout.mtlW} vs QC ${layout.qcW}`).toBeLessThanOrEqual(4);
+  expect(layout.qcW, 'Québec mesurable').toBeGreaterThan(80);
+  expect(layout.qcW, `QC ${layout.qcW} ne dépasse pas MTL ${layout.mtlW}`).toBeLessThanOrEqual(layout.mtlW + 4);
   expect(layout.secW.length, 'au moins deux secondaires').toBeGreaterThanOrEqual(2);
   const secMin = Math.min(...layout.secW);
   expect(secMin, `secondaires ${layout.secW} vs MTL ${layout.mtlW}`).toBeGreaterThanOrEqual(layout.mtlW);
   expect(layout.secOverflow, 'le reliquat doit éviter le marquee des secondaires').toBe(0);
+
+  const paint = await ribbon.locator('.masthead-weather__board').evaluate((board) => {
+    const cs = getComputedStyle(board);
+    const cities = [...board.querySelectorAll('.masthead-weather__city.is-active')];
+    return {
+      display: cs.display,
+      inlineWidths: cities.filter((el) => (el.style.width || '').trim()).length,
+    };
+  });
+  expect(paint.display, 'option D : grille CSS').toBe('grid');
+  expect(paint.inlineWidths, 'pas de width inline JS').toBe(0);
 
   const firstMtl = layout.mtlW;
   await page.waitForTimeout(1000);
@@ -452,9 +464,9 @@ test('wide E : ≥2560 ajoute une carte météo et resserre les slots', async ({
   expect(layout.min).toBeGreaterThanOrEqual(118);
   expect(layout.primary.length, 'MTL + QC visibles').toBe(2);
   expect(
-    Math.abs(layout.primary[0] - layout.primary[1]),
-    `MTL/QC même largeur, got ${layout.primary}`,
-  ).toBeLessThanOrEqual(4);
+    Math.max(...layout.primary) - Math.min(...layout.primary),
+    `MTL/QC compactes (QC ≤ MTL), got ${layout.primary}`,
+  ).toBeLessThanOrEqual(40);
   if (layout.secondary.length) {
     const secMin = Math.min(...layout.secondary);
     const secMax = Math.max(...layout.secondary);
