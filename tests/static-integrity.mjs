@@ -1598,8 +1598,23 @@ assert(
     && appJs.includes("return 'Aujourd’hui'")
     && appJs.includes("return 'Avant-hier'")
     && !/return 'Reprise'/.test(appJs)
-    && !appJs.includes('function sportsHasAnyResult'),
+    && !appJs.includes('function sportsHasAnyResult')
+    && appJs.includes('function sportsVsHtml')
+    && appJs.includes('refreshSportsChromeLanguage')
+    && !/tag\.classList\.remove\('sports-chip__cta-tag--brand', 'notranslate'\)/.test(appJs),
   'app.js : pastille Prochain match (2 lignes)/Hier/Aujourd’hui/date — plus de SPORTS+eyebrow',
+);
+const translateJs = readFileSync(join(root, 'translate.js'), 'utf8');
+assert(
+  translateJs.includes("radar-translate-cache-v9")
+    && translateJs.includes("'Prochains match'")
+    && /UI_LOCK_NO_MT[\s\S]*'match'/.test(translateJs)
+    && translateJs.includes('sports-chip__cta-tag')
+    && translateJs.includes('chromeOnly')
+    && /const CONCURRENCY = 6/.test(translateJs)
+    && /const MAX_CHUNK = 450/.test(translateJs)
+    && translateJs.includes('CHROME_SELECTOR'),
+  'translate.js D22 : glossaire sports + cache v9 + chrome-first ; quotas MT inchangés',
 );
 // CTA pool = En cours → à venir → aujourd’hui → 5 j → hier.
 assert(

@@ -7,6 +7,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Modifié
 
+- Traduction plus rapide sans nouveau moteur ni hausse des quotas gtx : le chrome (mât, tuner, CTA, nav, tête du fil) passe **avant** le fil ; cache LRU plus large ; requêtes identiques partagées ; mutations pendant un passage sont rejouées au lieu d’être perdues.
+
 - Client découpé sans bundler : `weather-cities-data.js`, `radar-utils.js`, `radar-state.js`, `radar-weather.js`, `radar-sports-cta.js`, `radar-tuner.js`, `radar-news.js`, `radar-lifecycle.js` ; `app.js` reste le point d’entrée. CSS par surface (`style-sports-strip`, `style-masthead-chrome`, `style-tuner`, `style-feed`, `style-chrome`), toujours via `<link>`, jamais `@import`.
 - Pomo hors ligne : `weather-cities-data.js` est dans `pomo/sw.js` et intercepté comme les autres assets racine du shell (plus de repli 4 villes).
 - Publication humaine = branche + PR + **merge and delete**. Les bots conservent l’écriture sur `main`. Actions GitHub épinglées à des SHA.
@@ -32,6 +34,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 - Scores **en direct** sur la carte CTA : un match dans la fenêtre (coup d’envoi −15 min / +3 h) reste « En cours », affiche le score dès que RSEQ le colle, et n’est plus recouvert par un résultat d’hier. Tant qu’un ou plusieurs matchs sont en cours, le cycle de la CTA ne montre **que** ces directs (un → carte figée ; plusieurs → rotation entre eux). Le cycle normal (aujourd’hui/hier, prochains) reprend dès qu’il n’y a plus de live. Le bot relit `GetGameDiffusion` toutes les **5 min** (plancher GitHub Actions) de 12 h à minuit Québec, et le mât ressonde `sports.json` toutes les **15 s** tant qu’un direct est à l’écran.
 
 ### Corrigé
+
+- Traduction : la pastille CTA « Prochains match » (deux nœuds) devenait **PROCHAIN CORRESPONDRE** — gtx prenait *match* pour le verbe anglais. Glossaire sport + `notranslate` sur la pastille seulement (les accroches « reçoit / chez » restent traduisibles). Cache `v9`.
 
 - Fil d’articles : le tampon « mis à jour » suivait le dernier *commit* de contenu (heartbeat 6 h) alors que GitHub lâchait les crons news pendant des heures. Une passe qui a fetché publie le tampon. Filet : enchaînement sur la radio now-playing et les scores RSEQ (bots qui, eux, partent encore) si le fil a plus de 75 min.
 

@@ -1620,6 +1620,12 @@ function sportsMatchVerb(game, lang = 'fr') {
   return lang === 'en' ? 'hosts' : 'reçoit';
 }
 
+function sportsVsHtml(game) {
+  const fr = sportsMatchVerb(game, 'fr');
+  const shown = window.RadarTranslate?.displayUiText?.(fr) || fr;
+  return `<span class="sports-chip__vs" data-vs-orig="${escapeHtml(fr)}">${escapeHtml(shown)}</span>`;
+}
+
 /** Domicile / extérieur — tooltip / sous-ligne optionnelle. */
 function sportsVenueLabel(game, lang = 'fr') {
   if (game?.home === false) return lang === 'en' ? 'away' : 'extérieur';
@@ -1845,18 +1851,40 @@ function sportsCtaTagLabel(slide, state) {
 /** Remplit la pastille : « Prochains match » en deux lignes, le reste en une. */
 function fillSportsCtaTagCopy(tag, wanted) {
   tag.replaceChildren();
+  markNoTranslate(tag);
+  const shown = window.RadarTranslate?.displayUiText?.(wanted) || wanted;
   if (wanted === SPORTS_CTA_TAG_NEXT) {
+    const parts = String(shown).trim().split(/\s+/).filter(Boolean);
+    const topTxt = parts.length >= 2 ? parts.slice(0, -1).join(' ') : shown;
+    const botTxt = parts.length >= 2 ? parts[parts.length - 1] : '';
     const lines = document.createElement('span');
     lines.className = 'sports-chip__cta-tag-lines';
     const top = document.createElement('span');
-    top.textContent = 'Prochains';
-    const bot = document.createElement('span');
-    bot.textContent = 'match';
-    lines.append(top, bot);
+    top.textContent = topTxt;
+    lines.append(top);
+    if (botTxt) {
+      const bot = document.createElement('span');
+      bot.textContent = botTxt;
+      lines.append(bot);
+    }
     tag.append(lines);
     return;
   }
-  tag.append(document.createTextNode(wanted));
+  tag.append(document.createTextNode(shown));
+}
+
+/** Pastille + verbes reçoit/chez : rejouer le glossaire sans MT. */
+function refreshSportsChromeLanguage() {
+  document.querySelectorAll('.sports-chip--cta .sports-chip__cta-tag').forEach((tag) => {
+    if (tag.classList.contains('sports-chip__cta-tag--brand')) return;
+    const wanted = tag.dataset.ctaTag;
+    if (wanted) fillSportsCtaTagCopy(tag, wanted);
+  });
+  document.querySelectorAll('.sports-chip__vs[data-vs-orig]').forEach((el) => {
+    const orig = el.getAttribute('data-vs-orig');
+    if (!orig) return;
+    el.textContent = window.RadarTranslate?.displayUiText?.(orig) || orig;
+  });
 }
 
 /** Couleur du voyant : live / soon (rouge pulse) · today (rouge) · next (ambre) · past (vert). */
@@ -2466,10 +2494,9 @@ function fillSportsCtaLayer(layer, slide) {
     const g = src.game;
     const home = sportsChipTeamShort(src.team);
     const opp = sportsChipOpponentLabel(g);
-    const verb = sportsMatchVerb(g);
     text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-      + `<span class="sports-chip__vs">${escapeHtml(verb)}</span> `
-      + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+      + sportsVsHtml(g)
+      + ` <span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
   } else if (src?.team && src.game && (src.mode === 'result' || liveScore)) {
     const g = src.game;
     const home = sportsChipTeamShort(src.team);
@@ -2570,10 +2597,12 @@ function applySportsCtaState(chip, slide) {
     tag.dataset.ctaTag = RADAR_BRAND_SHORT;
     tag.replaceChildren(radarBrandLogoEl());
   } else {
-    tag.classList.remove('sports-chip__cta-tag--brand', 'notranslate');
-    tag.removeAttribute('translate');
-    if (tag.dataset.ctaTag !== wanted) {
+    tag.classList.remove('sports-chip__cta-tag--brand');
+    markNoTranslate(tag);
+    const lang = window.RadarTranslate?.getMode?.() || 'original';
+    if (tag.dataset.ctaTag !== wanted || tag.dataset.ctaLang !== lang) {
       tag.dataset.ctaTag = wanted;
+      tag.dataset.ctaLang = lang;
       fillSportsCtaTagCopy(tag, wanted);
     }
   }
@@ -3007,10 +3036,9 @@ function paintSportsChip(slide, animate = false) {
   } else {
     a.append(glyph);
     // « reçoit » / « chez » — même ton presse que la CTA ; verbe en .sports-chip__vs (gris).
-    const verb = sportsMatchVerb(g);
     inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-      + `<span class="sports-chip__vs">${escapeHtml(verb)}</span> `
-      + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+      + sportsVsHtml(g)
+      + ` <span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
     subText.textContent = subLine;
     a.title = sportsChipTitle(slide);
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
@@ -3876,4 +3904,6 @@ async function initMastheadSports() {
     }
   }
 }
+
+window.addEventListener('radar:translate-mode', refreshSportsChromeLanguage);
 
