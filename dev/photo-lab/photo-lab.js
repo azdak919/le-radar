@@ -433,6 +433,33 @@
     }
   }
 
+  function upsertListed(photo) {
+    if (!photo || !photo.key) return null;
+    const merge = (list) => {
+      const i = list.findIndex((p) => p.key === photo.key);
+      if (i < 0) return list;
+      list[i] = { ...list[i], ...photo };
+      return list;
+    };
+    state.photos = merge(state.photos);
+    state.filtered = merge(state.filtered);
+    const hit = state.photos.find((p) => p.key === photo.key);
+    if (hit) state.selected = hit;
+    return hit;
+  }
+
+  function savedSummary(photo) {
+    if (!photo) return 'Enregistré sur ce disque. Pas encore sur le-radar.ca.';
+    const bits = [];
+    if (photo.season) bits.push(seasonLabel(photo.season));
+    if (typeof photo.focalY === 'number') bits.push(`Y ${Number(photo.focalY).toFixed(2)}`);
+    const tags = photo.tags || [];
+    if (tags.length) bits.push(tags.map((t) => (t === 'mat' ? 'mât' : t)).join(', '));
+    if (photo.place) bits.push(photo.place);
+    const extra = bits.length ? ` (${bits.join(' · ')})` : '';
+    return `Enregistré${extra}. Toujours cette fiche — pas le-radar.ca tant que la PR n’est pas mergée.`;
+  }
+
   async function reload(preferKey) {
     const data = await api('/api/photos');
     state.photos = data.photos || [];
@@ -452,17 +479,22 @@
     applyFilters();
   }
 
-  async function mutate(fn) {
+  async function mutate(fn, { stay = false } = {}) {
     if (state.busy || !state.selected) return;
     state.busy = true;
     $('status').textContent = 'Enregistrement…';
     try {
       const result = await fn();
       const keep = state.selected && state.selected.key;
-      await reload(keep);
+      if (stay && result && result.photo) {
+        upsertListed(result.photo);
+        if (state.view === 'detail' && keep) select(keep);
+      } else {
+        await reload(keep);
+      }
       $('status').textContent = result && result.error
         ? result.error
-        : 'Enregistré sur ce disque. Pas encore sur le-radar.ca.';
+        : savedSummary(result && result.photo);
     } catch (err) {
       $('status').textContent = err.message || String(err);
     } finally {
@@ -565,7 +597,7 @@
       setFocalState(false);
       state.metaDirty = false;
       return result;
-    });
+    }, { stay: true });
   });
 
   $('reject-btn').addEventListener('click', () => {
@@ -587,7 +619,7 @@
       setFocalState(false);
       state.metaDirty = false;
       return result;
-    });
+    }, { stay: true });
   });
 
   $('undo-btn').addEventListener('click', () => mutate(() => api('/api/undo', {})));
