@@ -1383,9 +1383,9 @@ assert(
   'nom long LE-RADAR : notranslate (pied + gabarit)',
 );
 assert(
-  /const SPORTS_CTA_TAG_LIVE\s*=\s*['"]En cours['"]/.test(appJs)
+  /const SPORTS_CTA_TAG_LIVE\s*=\s*['"]En direct['"]/.test(appJs)
     && appJs.includes('function sportsCtaTagLabel'),
-  'app.js : pastille CTA = En cours / Hier / Aujourd’hui / Sports',
+  'app.js : pastille CTA = En direct / Hier / Aujourd’hui / Sports',
 );
 // Pastille CTA : plus de voyant LED (ni span JS, ni ::before).
 assert(
@@ -1515,7 +1515,7 @@ assert(
     && appJs.includes('function pollLiveSportsJson')
     && /const SPORTS_LIVE_POLL_MS\s*=\s*15000/.test(appJs)
     && appJs.includes("if (state === 'live')"),
-  'app.js : direct = pastille En cours + score collé + sondage sports.json aux 15 s',
+  'app.js : direct = pastille En direct + score collé + sondage sports.json aux 15 s',
 );
 assert(
   /const lives = sportsCtaLiveSources\(now\);\s*if \(lives\.length\)/.test(appFlat)

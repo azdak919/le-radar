@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v819",
+    "cache": "radar-shell-v820",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -24,7 +24,7 @@
       "quebec-university-backgrounds-data.js": "bcfb70bbfada42ba",
       "radar-lifecycle.js": "005825973b55d988",
       "radar-news.js": "de4dab93ceee1c4d",
-      "radar-sports-cta.js": "9a3808d3c98659c3",
+      "radar-sports-cta.js": "4e2f35e08f6a483a",
       "radar-state.js": "26dcd41bb6e2783d",
       "radar-tuner.js": "163ed56ebab51be2",
       "radar-utils.js": "e110f6e5c1b7cbc2",
@@ -38,12 +38,12 @@
       "style-feed.css": "d35a2b61c7d041e7",
       "style-masthead-chrome.css": "14f32bc972a5ccdc",
       "style-masthead.css": "4e41094fb44a0d6f",
-      "style-sports-strip.css": "dc32457f36abbaa8",
+      "style-sports-strip.css": "080e2d589ade0036",
       "style-tuner.css": "2d79d7df1d02c13a",
       "style.css": "6463c439c24b18b1",
       "translate-menu.css": "a5a4eb37479afb60",
       "translate-menu.js": "07802220efb342c2",
-      "translate.js": "464ac2af99528446",
+      "translate.js": "5963a2c4edccbd08",
       "weather-cities-data.js": "55d8ae8c518bfbdf"
     }
   },
@@ -95,7 +95,7 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v222",
+    "cache": "sports-shell-v223",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "0e0df2c60f5900e3",
@@ -111,19 +111,19 @@
       "player-sync.js": "36e84f1afaff7fcb",
       "radar-lifecycle.js": "005825973b55d988",
       "radar-news.js": "de4dab93ceee1c4d",
-      "radar-sports-cta.js": "9a3808d3c98659c3",
+      "radar-sports-cta.js": "4e2f35e08f6a483a",
       "radar-state.js": "26dcd41bb6e2783d",
       "radar-tuner.js": "163ed56ebab51be2",
       "radar-utils.js": "e110f6e5c1b7cbc2",
       "radar-weather.js": "b5bd9440168e977c",
       "seo-page-theme.js": "0f1d4a74dd3416a0",
       "seo-pages.css": "523e518bb0300005",
-      "sports-board.js": "b8b97a623f464cf9",
+      "sports-board.js": "9cb34f04de522277",
       "style-chrome.css": "d3343c63aafc13f6",
       "style-feed.css": "d35a2b61c7d041e7",
       "style-masthead-chrome.css": "14f32bc972a5ccdc",
       "style-masthead.css": "4e41094fb44a0d6f",
-      "style-sports-strip.css": "dc32457f36abbaa8",
+      "style-sports-strip.css": "080e2d589ade0036",
       "style-tuner.css": "2d79d7df1d02c13a",
       "style.css": "6463c439c24b18b1",
       "weather-cities-data.js": "55d8ae8c518bfbdf"

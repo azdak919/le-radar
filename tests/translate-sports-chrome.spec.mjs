@@ -22,7 +22,7 @@ test('glossaire sports : match n’est pas correspondre', async ({ page }) => {
       matchEn: p('match', 'en'),
       matchFr: p('match', 'fr'),
       matchIu: p('match', 'iu'),
-      liveEn: p('En cours', 'en'),
+      liveEn: p('En direct', 'en'),
       hierEs: p('Hier', 'es'),
       recEn: p('reçoit', 'en'),
       chezEn: p('chez', 'en'),

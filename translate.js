@@ -1304,12 +1304,19 @@
       en: 'Game', es: 'Partido', pt: 'Jogo', de: 'Spiel', it: 'Partita',
       fr: 'Match',
     },
+    'En direct': {
+      en: 'Live', es: 'En directo', pt: 'Ao vivo', de: 'Live', it: 'In diretta',
+      nl: 'Live', pl: 'Na żywo', tr: 'Canlı', ru: 'В эфире', uk: 'Наживо',
+      zh: '直播', 'zh-tw': '直播', ar: 'مباشر', ko: '생중계', ja: 'ライブ',
+      hi: 'लाइव', vi: 'Trực tiếp', ht: 'An dirèk',
+      fr: 'En direct',
+    },
     'En cours': {
-      en: 'Live', es: 'En curso', pt: 'Ao vivo', de: 'Live', it: 'In corso',
-      nl: 'Live', pl: 'Na żywo', tr: 'Canlı', ru: 'Идёт', uk: 'Зараз',
-      zh: '进行中', 'zh-tw': '進行中', ar: 'جارية', ko: '진행 중', ja: '試合中',
-      hi: 'लाइव', vi: 'Đang diễn ra', ht: 'An kou',
-      fr: 'En cours',
+      en: 'Live', es: 'En directo', pt: 'Ao vivo', de: 'Live', it: 'In diretta',
+      nl: 'Live', pl: 'Na żywo', tr: 'Canlı', ru: 'В эфире', uk: 'Наживо',
+      zh: '直播', 'zh-tw': '直播', ar: 'مباشر', ko: '생중계', ja: 'ライブ',
+      hi: 'लाइव', vi: 'Trực tiếp', ht: 'An dirèk',
+      fr: 'En direct',
     },
     Demain: {
       en: 'Tomorrow', es: 'Mañana', pt: 'Amanhã', de: 'Morgen', it: 'Domani',
@@ -1457,7 +1464,7 @@
   /** Ne jamais envoyer ces libellés au MT, même en IU/ar (cas « correspondre »). */
   const UI_LOCK_NO_MT = new Set([
     'match', 'Match', 'Prochains match', 'Prochain match',
-    'En cours', 'reçoit', 'reçoivent', 'chez',
+    'En direct', 'En cours', 'reçoit', 'reçoivent', 'chez',
   ]);
 
   function uiPhraseLookup(core = '', targetLang = '') {

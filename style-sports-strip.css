@@ -433,7 +433,7 @@
     linear-gradient(90deg, color-mix(in srgb, #c8102e 44%, transparent) 0%, transparent 58%),
     rgba(60, 48, 52, 0.94);
 }
-/* Pastille : rubrique stable au repos, « En cours » pendant un match. */
+/* Pastille : rubrique stable au repos, « En direct » pendant un match. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-rail {
   flex: 0 0 auto;
   display: contents;
@@ -460,7 +460,7 @@
   white-space: nowrap;
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 28%, transparent);
 }
-/* Pastille = largeur du libellé. Plus de rail 8 rem : Hier / En cours
+/* Pastille = largeur du libellé. Plus de rail 8 rem : Hier / En direct
  * laissaient du vide, Aujourd’hui débordait d’un bout, l’accroche étouffait. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag:not(.sports-chip__cta-tag--brand) {
   justify-content: center;
@@ -678,7 +678,7 @@
 }
 /* Plus de flèche ni de voyant LED dans la pastille : la couleur du fill suffit.
  * Jaune Prochain ; rouge Aujourd’hui (statique) ; pourpre Hier / date.
- * En cours / À venir : fill rouge + pulse. Indépendant de la radio. */
+ * En direct / À venir : fill rouge + pulse. Indépendant de la radio. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-chev {
   display: none !important;
 }
