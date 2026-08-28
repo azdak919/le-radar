@@ -576,7 +576,10 @@
     updateCreditPreview();
   });
   document.querySelectorAll('input[name="season"], input[name="season6"]').forEach((el) => {
-    el.addEventListener('change', markMetaDirty);
+    el.addEventListener('change', () => {
+      markMetaDirty();
+      $('save-meta-btn').click();
+    });
   });
   ['tag-mat', 'tag-pomo', 'tag-solitaire', 'tag-favori', 'tag-campus', 'tag-nations'].forEach((id) => {
     const el = $(id);
@@ -590,7 +593,7 @@
     });
   });
 
-  $('save-meta-btn').addEventListener('click', () => {
+  function saveCurrent() {
     if (!state.selected) return;
     mutate(async () => {
       const result = await api('/api/save', formPayload());
@@ -598,7 +601,9 @@
       state.metaDirty = false;
       return result;
     }, { stay: true });
-  });
+  }
+  $('save-meta-btn').addEventListener('click', saveCurrent);
+  if ($('save-inline-btn')) $('save-inline-btn').addEventListener('click', saveCurrent);
 
   $('reject-btn').addEventListener('click', () => {
     if (!state.selected) return;

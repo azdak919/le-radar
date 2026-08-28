@@ -384,18 +384,20 @@ test('labo photo : Enregistrer reste sur la même fiche et garde saison / cadrag
   await page.locator('#grid .card').first().click();
   await expect(page.locator('#panel-body')).toBeVisible();
   const title = (await page.locator('#photo-meta').textContent()) || '';
+  const seasons = page.locator('fieldset.seasons').first();
+  await seasons.scrollIntoViewIfNeeded();
+  const seasonBox = await seasons.boundingBox();
+  const dockBox = await page.locator('.dock').boundingBox();
+  expect(seasonBox, 'bloc saison hors écran').toBeTruthy();
+  expect(dockBox, 'barre d’actions hors écran').toBeTruthy();
+  expect(seasonBox.y + seasonBox.height, 'saisons recouvertes par Enregistrer').toBeLessThanOrEqual(dockBox.y + 1);
   const beforeSeason = await page.locator('input[name="season"]:checked').getAttribute('value');
   const target = beforeSeason === 'ete' ? 'hiver' : 'ete';
-  await page.locator(`input[name="season"][value="${target}"]`).click();
-  await page.locator('#focal').evaluate((el) => {
-    el.value = '310';
-    el.dispatchEvent(new Event('input', { bubbles: true }));
-  });
-  await page.locator('#save-meta-btn').click();
+  await page.locator(`label.tag:has(input[name="season"][value="${target}"])`).click();
   await expect(page.locator('#status')).toContainText(/Enregistré/i, { timeout: 15_000 });
   await expect(page.locator('#photo-meta')).toContainText(title.slice(0, 12));
   await expect(page.locator(`input[name="season"][value="${target}"]`)).toBeChecked();
-  await expect(page.locator('#focal-val')).toHaveText('0.31');
+  await expect(page.locator('#status')).toContainText(target === 'ete' ? 'été' : 'hiver');
   await page.locator('#undo-btn').click();
   await expect(page.locator('#status')).toContainText(/Enregistré|Annul/i, { timeout: 10_000 });
 });
