@@ -552,7 +552,7 @@ test('CTA sports 1920 : pastille Prochain jaune + titre long défile', async ({ 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip).toBeVisible({ timeout: 8000 });
-  const cta = strip.locator('.sports-chip--cta');
+  const cta = strip.locator('.sports-chip--cta').first();
   await expect(cta).toBeVisible({ timeout: 8000 });
 
   const longTitle = 'Champlain College Lennoxville reçoit Cégep François-Xavier-Garneau';
@@ -565,8 +565,8 @@ test('CTA sports 1920 : pastille Prochain jaune + titre long défile', async ({ 
     if (!chip || !tag || !text) return { ok: false, reason: 'no-cta' };
     chip.dataset.ctaState = 'next';
     tag.dataset.ctaLamp = 'next';
-    tag.dataset.ctaTag = 'Prochain match';
-    tag.textContent = 'Prochain match';
+    tag.dataset.ctaTag = 'Prochains match';
+    tag.textContent = 'Prochains match';
     tag.classList.remove('sports-chip__cta-tag--brand');
     text.textContent = title;
     if (typeof refreshSportsChipScroll === 'function') refreshSportsChipScroll(chip);
@@ -597,14 +597,14 @@ test('CTA sports 1920 : pastille Prochain jaune + titre long défile', async ({ 
   expect(left1, 'défilement L→R à 1920').toBeLessThan(left0 - 1);
 });
 
-test('wide E ≥3440 : 3 CTA sports distinctes', async ({ page }) => {
+test('wide E ≥3440 : 4 CTA sports distinctes', async ({ page }) => {
   await page.setViewportSize({ width: 3440, height: 1200 });
   await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip).toBeVisible({ timeout: 8000 });
   await expect.poll(async () => strip.locator('.sports-chip--cta').count(), { timeout: 8000 })
-    .toBe(3);
-  await expect(strip).toHaveAttribute('data-cta-count', '3');
+    .toBe(4);
+  await expect(strip).toHaveAttribute('data-cta-count', '4');
   const weatherN = await page.locator('#masthead-weather .masthead-weather__city.is-active').count();
   const matchN = await strip.locator('.sports-chip--match').count();
   expect(weatherN, 'météo suit encore les scores (+ bonus 3440)').toBeGreaterThanOrEqual(2 + matchN);
