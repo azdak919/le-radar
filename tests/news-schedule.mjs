@@ -10,6 +10,7 @@ const {
   CRON_LEAD_MINUTES,
   SCHEDULE_TOLERANCE_MINUTES,
   SAFETY_NET_CRON,
+  FILET_WORKFLOWS,
   scheduledSlotFor,
   primaryFireUtc,
 } = require('../scripts/news-schedule-lib.js');
@@ -71,14 +72,58 @@ assert.match(
 );
 assert.match(
   workflow,
-  /Manual dispatch — always publish so the live stamp moves/,
-  'passe manuelle : toujours publier le tampon live',
+  /cancel-in-progress:\s*false/,
+  'ne pas annuler un fetch déjà parti (filet radio/sports ou primaire)',
+);
+assert.match(
+  workflow,
+  /Successful fetch — always publish so the live stamp is the last check/,
+  'toute passe qui a fetché publie le tampon live',
+);
+assert.match(
+  workflow,
+  /workflow_run:/,
+  'filet workflow_run déclaré (GitHub lâche les crons fréquents)',
+);
+assert.match(
+  workflow,
+  /EVENT='\$\{\{ github\.event_name \}\}'/,
+  'gate : distingue primaire, :20 et workflow_run',
+);
+assert.ok(
+  FILET_WORKFLOWS.length >= 2,
+  'au moins deux bots filet (radio + sports RSEQ)',
+);
+for (const name of FILET_WORKFLOWS) {
+  assert.ok(
+    workflow.includes(`- ${name}`),
+    `update-news.yml déclenché par « ${name} »`,
+  );
+}
+const radioYml = readFileSync(new URL('../.github/workflows/update-radio-nowplaying.yml', import.meta.url), 'utf8');
+const sportsYml = readFileSync(new URL('../.github/workflows/update-sports.yml', import.meta.url), 'utf8');
+assert.equal(
+  radioYml.match(/^name:\s*(.+)$/m)[1].trim(),
+  'Update Radio Now Playing',
+);
+assert.equal(
+  sportsYml.match(/^name:\s*(.+)$/m)[1].trim(),
+  'Update Student Sports (RSEQ)',
+);
+assert.deepEqual(
+  FILET_WORKFLOWS.slice().sort(),
+  ['Update Radio Now Playing', 'Update Student Sports (RSEQ)'].sort(),
 );
 const fetchNews = readFileSync(new URL('../scripts/fetch-news.js', import.meta.url), 'utf8');
 assert.match(
   fetchNews,
-  /GITHUB_EVENT_NAME === 'workflow_dispatch'/,
+  /eventName === 'workflow_dispatch'/,
   'passe manuelle : pas de créneau, l’UI montre l’heure réelle',
+);
+assert.match(
+  fetchNews,
+  /eventName === 'workflow_run'/,
+  'filet radio/sports : pas de créneau, l’UI montre l’heure réelle',
 );
 const cronExprs = [...workflow.matchAll(/- cron:\s*'([^']+)'/g)].map((m) => m[1]);
 assert.ok(cronExprs.includes(SAFETY_NET_CRON), 'filet :20 toujours déclaré');

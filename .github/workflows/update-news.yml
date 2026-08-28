@@ -14,15 +14,25 @@ on:
     - cron: '25 0,9,10,12,14,15,16,18,20,22 * * *'
     - cron: '20 * * * *'
   workflow_dispatch:   # Allow manual trigger
+  # GitHub lâche les crons fréquents de ce dépôt (observé 2026-08-28 : 7 h
+  # sans aucune passe news alors que sports RSEQ et la radio partaient encore).
+  # Enchaîner sur ces bots plus rares : le gate 75 min évite le spam.
+  workflow_run:
+    workflows:
+      - Update Radio Now Playing
+      - Update Student Sports (RSEQ)
+    types: [completed]
 
-# Un seul job cron à la fois. Une passe *manuelle* a son propre groupe :
-# le filet :20 ne doit pas l’annuler (sinon le tampon prod ne bouge pas).
+# Un seul job bot à la fois (file d'attente, pas d'annulation) : un filet
+# radio/sports ne doit pas tuer un fetch déjà parti. Manuel = groupe à part
+# pour ne jamais attendre derrière le cron.
 concurrency:
   group: update-news-${{ github.event_name == 'workflow_dispatch' && 'manual' || github.ref }}
-  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
+  cancel-in-progress: false
 
 jobs:
   aggregate:
+    if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
     runs-on: ubuntu-latest
     # 25 min suffit avec plafonds par source ; 45 min laissait un hang McGill
     # Daily bloquer toute l'après-midi.
@@ -40,15 +50,21 @@ jobs:
           node-version: '24'
 
       # github.event.schedule = expression cron exacte qui a déclenché le run.
-      # Filet :20 — skip si un refresh a déjà eu lieu récemment.
+      # Filet :20 *et* workflow_run (radio / sports RSEQ) — skip si un
+      # refresh a déjà eu lieu récemment. Primaire + manuel : toujours.
       - name: Safety-net gate
         id: gate
         run: |
+          EVENT='${{ github.event_name }}'
           SCHEDULE='${{ github.event.schedule }}'
-          echo "schedule=$SCHEDULE"
-          if [ "$SCHEDULE" != "20 * * * *" ]; then
+          echo "event=$EVENT schedule=$SCHEDULE"
+          FILET=false
+          if [ "$EVENT" = "workflow_run" ] || [ "$SCHEDULE" = "20 * * * *" ]; then
+            FILET=true
+          fi
+          if [ "$FILET" != "true" ]; then
             echo "skip=false" >> "$GITHUB_OUTPUT"
-            echo "Primary or manual schedule — always run."
+            echo "Primary or manual — always run."
             exit 0
           fi
           AGE_MIN=$(node -e "
@@ -81,6 +97,7 @@ jobs:
         env:
           CI: true
           FIREBASE_POLYSCOPE_API_KEY: ${{ secrets.FIREBASE_POLYSCOPE_API_KEY }}
+          GITHUB_EVENT_SCHEDULE: "${{ github.event.schedule }}"
         continue-on-error: false
 
       - name: Verify authors
@@ -136,57 +153,20 @@ jobs:
           CI: true
         continue-on-error: true
 
-      # Éviter un commit Git à chaque simple rafraîchissement de timestamps.
-      # Les changements éditoriaux sont poussés immédiatement; en l'absence de
-      # changement réel, un heartbeat reste publié au plus toutes les 6 h.
+      # Le tampon « mis à jour » = dernière *vérification* des sources, pas
+      # seulement le dernier article neuf. Le gate 75 min (filet / radio /
+      # sports) est l'anti-bruit ; une passe qui a vraiment fetché publie.
       - name: Check for changes
         id: check
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
         run: |
-          # Passe manuelle : toujours publier pour que le tampon « mis à jour »
-          # de le-radar.ca avance, même sans nouvel article.
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "Manual dispatch — always publish so the live stamp moves."
-            exit 0
-          fi
-          FILES=(news.json news-archive.json author-qc.json lead-excerpt-qc.json social-feed.json lead-image-qc.json photo-credit-qc.json feed.xml news-sources.json assets/news-images)
-          if ! git diff --quiet \
-            -I '^[[:space:]]*"updated(Slot|At)?"[[:space:]]*:' \
-            -I '^[[:space:]]*"lastFetchOk"[[:space:]]*:' \
-            -I '^[[:space:]]*"[^" ]*(CheckedAt|checkedAt|FetchedAt|fetchedAt)"[[:space:]]*:' \
-            -I '^[[:space:]]*<lastBuildDate>' \
-            -- "${FILES[@]}"; then
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "Meaningful content or QC change — publish now."
-            exit 0
-          fi
-
-          COMMITTED_AGE_MIN=$(git show HEAD:news.json | node -e "
-            let raw = '';
-            process.stdin.on('data', c => raw += c);
-            process.stdin.on('end', () => {
-              try {
-                const updated = Date.parse(JSON.parse(raw).updated || 0) || 0;
-                console.log(Math.floor((Date.now() - updated) / 60000));
-              } catch { console.log(9999); }
-            });
-          ")
-          echo "minutes_since_committed_heartbeat=$COMMITTED_AGE_MIN"
-          if [ "$COMMITTED_AGE_MIN" -ge 360 ]; then
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "Timestamp-only heartbeat due (>= 6 h)."
-          else
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "Timestamp-only refresh — skip noisy commit."
-          fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "Successful fetch — always publish so the live stamp is the last check."
 
       # Référencement : prérendu du fil dans index.html (les robots des IA
-      # n'exécutent pas JS) + sitemap + llms.txt. Volontairement APRÈS le
-      # contrôle de changement : sinon index.html bougerait à chaque passe et
-      # forcerait un commit, ce que la logique anti-bruit ci-dessus évite.
-      # continue-on-error : un échec ici ne doit jamais bloquer la publication
-      # éditoriale.
+      # n'exécutent pas JS) + sitemap + llms.txt. Après un fetch publié, pour
+      # que le HTML suive news.json. continue-on-error : un échec ici ne doit
+      # jamais bloquer la publication éditoriale.
       - name: Regenerate SEO artefacts
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true'
         timeout-minutes: 2

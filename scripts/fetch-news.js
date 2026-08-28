@@ -1172,12 +1172,16 @@ async function main() {
     .map(([name]) => name);
 
   const runDate = new Date();
-  const isManual = process.env.GITHUB_EVENT_NAME === 'workflow_dispatch';
+  const eventName = process.env.GITHUB_EVENT_NAME || '';
+  const isManual = eventName === 'workflow_dispatch';
+  const isCatchUp = eventName === 'workflow_run'
+    || process.env.GITHUB_EVENT_SCHEDULE === '20 * * * *';
   const news = {
     updated: runDate.toISOString(),
     // Créneau affiché (ex. 16 h) même si le cron a part 35 min plus tôt.
-    // Hors fenêtre (filet :20) ou passe manuelle : null → l'UI montre l'heure réelle.
-    updatedSlot: isManual ? null : scheduledSlotFor(runDate),
+    // Hors fenêtre, filet radio/sports, :20 ou passe manuelle : null →
+    // l'UI montre l'heure réelle de la vérification.
+    updatedSlot: (isManual || isCatchUp) ? null : scheduledSlotFor(runDate),
     count: prunedAll.length,
     freshnessSessions: 3,
     sources: sourceRuns,
