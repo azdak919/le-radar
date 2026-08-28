@@ -1709,6 +1709,29 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
 }
 
+/* 1600 : 2 CTA un cran plus étroites (390) pour un score de chaque côté,
+   sans qu’un match orphelin s’étire plus large que les CTA. */
+@media (min-width: 1600px) and (max-width: 1919.98px) {
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-cta-layout="center"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="1"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="2"] > .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="3"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="4"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="5"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="6"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="7"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="8"] .sports-chip--cta,
+  html[data-wide-preview="e"] .masthead-sports-strip[data-count="9"] .sports-chip--cta {
+    flex: 0 0 390px !important;
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;
+    width: 390px !important;
+    min-width: 390px !important;
+    max-width: 390px !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-text,
   html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-text,
