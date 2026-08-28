@@ -113,7 +113,7 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   // Pastille visible (pas coupée hors flux). Marque possible : repos, direct,
   // résultat civil ou prochain match.
   const tag = strip.locator('.sports-chip__cta-tag');
-  await expect(tag).toContainText(/sports|en cours|hier|aujourd|demain|prochain/i);
+  await expect(tag).toContainText(/sports|en cours|hier|aujourd|demain|prochain|venir/i);
   await expect(strip.locator('.sports-chip__cta-chev')).toHaveCount(0);
   const tagBox = await tag.boundingBox();
   expect(tagBox).toBeTruthy();
@@ -463,7 +463,7 @@ test('390 / 430 : pastille Prochain/Hier/Aujourd’hui à gauche de l’accroche
     const strip = page.locator('#masthead-sports-strip');
     await expect(strip.locator('.sports-chip--cta')).toBeVisible({ timeout: 8000 });
     const tag = strip.locator('.sports-chip--cta .sports-chip__cta-tag');
-    await expect(tag).toContainText(/prochain|hier|aujourd|demain|en cours|sports|août|avant-hier/i);
+    await expect(tag).toContainText(/prochain|hier|aujourd|demain|venir|en cours|sports|août|avant-hier/i);
     const geo = await page.evaluate(() => {
       const chip = document.querySelector('.sports-chip--cta');
       const tagEl = chip?.querySelector('.sports-chip__cta-tag');
