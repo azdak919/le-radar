@@ -1,7 +1,7 @@
 {
   "version": 1,
   "profile": "unified",
-  "updated": "2026-08-24T09:24:26.075Z",
+  "updated": "2026-08-28T06:27:04.109Z",
   "photos": [
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg/1920px-%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg",
@@ -26,7 +26,17 @@
         "pomo",
         "solitaire"
       ],
-      "id": "20b05be3c62d"
+      "id": "20b05be3c62d",
+      "focalY": 0.22,
+      "place": "",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "pomo",
+        "solitaire"
+      ],
+      "campus": false,
+      "permanent": false
     },
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Thomas_Cole_-_The_Oxbow_%28The_Connecticut_River_near_Northampton%29.jpg/1920px-Thomas_Cole_-_The_Oxbow_%28The_Connecticut_River_near_Northampton%29.jpg",
@@ -2210,15 +2220,16 @@
         "date_disagrees"
       ],
       "seasonDetectedAt": "2026-08-21T03:41:20.366Z",
-      "focalY": 0.5,
+      "focalY": 0.521,
       "surfaces": [
         "masthead"
       ],
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
-      "campus": true
+      "campus": true,
+      "permanent": false
     },
     {
       "id": "ebea372c0dd2",
@@ -6481,19 +6492,21 @@
       ],
       "seasonDetectedAt": "2026-08-21T03:20:28.641Z",
       "place": "Sherbrooke",
-      "focalY": 0.733,
+      "focalY": 0.692,
       "surfaces": [
-        "masthead"
+        "masthead",
+        "pomo"
       ],
       "faces": 0,
       "faceRatio": 0,
       "faceDetectedAt": "2026-08-06T20:47:26.788Z",
       "tags": [
-        "mat",
         "campus",
+        "mat",
         "pomo"
       ],
-      "campus": true
+      "campus": true,
+      "permanent": false
     },
     {
       "id": "7c10c00e8c21",
@@ -6516,16 +6529,17 @@
       "seasonSource": "manual",
       "seasonConfidence": 1,
       "place": "Sherbrooke",
-      "focalY": 0.461,
+      "focalY": 0.515,
       "seasonDetectedAt": "2026-08-21T03:20:43.147Z",
       "surfaces": [
         "masthead"
       ],
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
-      "campus": true
+      "campus": true,
+      "permanent": false
     },
     {
       "id": "a7697051c0fc",
@@ -6901,7 +6915,7 @@
       "sessionId": "ete",
       "bank": "universities",
       "place": "Université Laval",
-      "focalY": 0.81,
+      "focalY": 0.781,
       "season": "printemps",
       "seasonSource": "manual",
       "seasonConfidence": 1,
@@ -6910,10 +6924,11 @@
         "masthead"
       ],
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
-      "campus": true
+      "campus": true,
+      "permanent": false
     },
     {
       "id": "57e176d26a4f",
@@ -7037,10 +7052,11 @@
         "masthead"
       ],
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
-      "campus": true
+      "campus": true,
+      "permanent": false
     },
     {
       "id": "017b41d9ba0d",
@@ -7092,7 +7108,6 @@
       "bank": "universities",
       "place": "UQAM",
       "focalY": 0.617,
-      "season": "ete",
       "seasonSource": "manual",
       "seasonConfidence": 1,
       "seasonDetectedAt": "2026-08-21T03:26:40.281Z",
@@ -7103,10 +7118,11 @@
       "faceRatio": 0,
       "faceDetectedAt": "2026-08-06T20:48:07.569Z",
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
-      "campus": true
+      "campus": true,
+      "permanent": false
     },
     {
       "id": "d0eec221cb26",
@@ -7128,17 +7144,17 @@
       "faceDetectedAt": "2026-08-06T20:48:07.569Z",
       "place": "UQAM",
       "focalY": 0.5,
-      "season": "ete",
       "seasonSource": "manual",
       "seasonConfidence": 1,
       "surfaces": [
         "masthead"
       ],
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
-      "campus": true
+      "campus": true,
+      "permanent": false
     },
     {
       "id": "1247733e67f7",
@@ -7157,7 +7173,7 @@
       "sessionId": "ete",
       "bank": "universities",
       "place": "UQAM",
-      "focalY": 0.513,
+      "focalY": 0.556,
       "season": "automne",
       "seasonSource": "manual",
       "seasonConfidence": 1,
@@ -7169,10 +7185,11 @@
       "faceRatio": 0,
       "faceDetectedAt": "2026-08-06T20:48:07.569Z",
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
-      "campus": true
+      "campus": true,
+      "permanent": false
     },
     {
       "id": "d062a814a269",
@@ -7254,8 +7271,7 @@
       "sessionId": "ete",
       "bank": "universities",
       "place": "UQAM",
-      "focalY": 0.317,
-      "season": "printemps",
+      "focalY": 0.426,
       "seasonSource": "manual",
       "seasonConfidence": 1,
       "seasonDetectedAt": "2026-08-21T03:28:32.552Z",
@@ -7266,10 +7282,11 @@
       "faceRatio": 0,
       "faceDetectedAt": "2026-08-06T20:48:07.569Z",
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
-      "campus": true
+      "campus": true,
+      "permanent": false
     },
     {
       "id": "c9b42ca827fb",
@@ -7291,17 +7308,17 @@
       "faceRatio": 0,
       "faceDetectedAt": "2026-08-06T20:48:07.569Z",
       "place": "UQAM",
-      "season": "printemps",
       "seasonSource": "manual",
       "seasonConfidence": 1,
       "surfaces": [
         "masthead"
       ],
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
-      "campus": true
+      "campus": true,
+      "permanent": false
     },
     {
       "id": "f85bedb0ab7a",
@@ -7548,69 +7565,19 @@
       "addedAt": "2026-08-21T05:00:58.287Z",
       "sessionId": "ete",
       "bank": "universities",
-      "season": "hiver",
-      "seasonSource": "balance-query",
-      "seasonConfidence": 0.55,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "campus": true,
-      "place": "UQAM"
-    },
-    {
-      "id": "296bc344f312",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/9/91/Henry_F._Hall_Building_03.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "link": "https://commons.wikimedia.org/wiki/File:Henry%20F.%20Hall%20Building%2003.JPG",
-      "title": "Henry F. Hall Building 03",
-      "credit": "Jean Gagnon",
-      "license": "CC BY-SA 3.0",
-      "description": "The Henry F. Hall Building is a high-density hub of Concordia’s downtown campus. Concordia University Images Montreal",
-      "categories": "Taken with Nikon Coolpix S3300|Henry F. Hall Building|Self-published work|Files with coordinates missing SDC location of creation",
-      "width": 4608,
-      "height": 3456,
-      "aspect": 1.333,
-      "mime": "image/jpeg",
-      "source": "commons-geo",
-      "addedAt": "2026-08-21T05:00:58.287Z",
-      "sessionId": "ete",
-      "bank": "universities",
-      "season": "hiver",
-      "seasonSource": "balance-query",
-      "seasonConfidence": 0.55,
-      "tags": [
-        "mat",
-        "campus"
+      "place": "UQAM",
+      "focalY": 0.463,
+      "surfaces": [
+        "masthead"
       ],
-      "campus": true,
-      "place": "Concordia"
-    },
-    {
-      "id": "5cb1a80f9f09",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Henry_F._Hall_Building_02.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "link": "https://commons.wikimedia.org/wiki/File:Henry%20F.%20Hall%20Building%2002.JPG",
-      "title": "Henry F. Hall Building 02",
-      "credit": "Jean Gagnon",
-      "license": "CC BY-SA 3.0",
-      "description": "The Henry F. Hall Building is a high-density hub of Concordia’s downtown campus. Concordia University Images Montreal",
-      "categories": "Taken with Nikon Coolpix S3300|Henry F. Hall Building|Self-published work|Files with coordinates missing SDC location of creation",
-      "width": 4608,
-      "height": 3456,
-      "aspect": 1.333,
-      "mime": "image/jpeg",
-      "source": "commons-geo",
-      "addedAt": "2026-08-21T05:00:58.287Z",
-      "sessionId": "ete",
-      "bank": "universities",
-      "season": "hiver",
-      "seasonSource": "balance-query",
-      "seasonConfidence": 0.55,
-      "tags": [
-        "mat",
-        "campus"
-      ],
-      "campus": true,
-      "place": "Concordia"
+      "permanent": false
     },
     {
       "id": "bd757f59f7f9",
@@ -7819,14 +7786,19 @@
       "sessionId": "ete",
       "bank": "universities",
       "season": "hiver",
-      "seasonSource": "balance-query",
-      "seasonConfidence": 0.55,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "campus": true,
-      "place": "Sherbrooke"
+      "place": "Sherbrooke",
+      "focalY": 0.845,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "182e836562a0",
@@ -7873,14 +7845,19 @@
       "sessionId": "ete",
       "bank": "universities",
       "season": "hiver",
-      "seasonSource": "balance-query",
-      "seasonConfidence": 0.55,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "campus": true,
-      "place": "Sherbrooke"
+      "place": "Sherbrooke",
+      "focalY": 0.762,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "3c491281ecdd",
@@ -7907,7 +7884,8 @@
         "campus"
       ],
       "campus": true,
-      "place": "Sherbrooke"
+      "place": "Sherbrooke",
+      "focalY": 0.517
     },
     {
       "id": "823837c488ba",
@@ -7932,7 +7910,7 @@
         "mat"
       ],
       "campus": true,
-      "focalY": 0.0731586752347998,
+      "focalY": 0.617,
       "place": "Sherbrooke",
       "seasonSource": "manual",
       "seasonConfidence": 1,
@@ -8093,10 +8071,17 @@
       "season": "printemps",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
-      "id": "edb0c03bd470"
+      "id": "edb0c03bd470",
+      "focalY": 0.354,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Pavillon_Ernest-Lemieux_06.jpg",
@@ -8134,24 +8119,6 @@
       "mime": "image/jpeg"
     },
     {
-      "id": "645b0a09fe8f",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/b/b9/UofQ_Trois_Revieres_-_panoramio.jpg",
-      "link": "https://commons.wikimedia.org/wiki/File:UofQ_Trois_Revieres_-_panoramio.jpg",
-      "title": "UofQ Trois Revieres - panoramio",
-      "credit": "gueco8288",
-      "license": "CC BY 3.0",
-      "width": 2592,
-      "height": 1936,
-      "place": "UQTR",
-      "campus": true,
-      "tags": [
-        "mat",
-        "campus"
-      ],
-      "source": "commons-cat",
-      "mime": "image/jpeg"
-    },
-    {
       "id": "753aa855a8df",
       "url": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Campus_de_l%27UQTR_%C3%A0_Drummondville.jpg",
       "link": "https://commons.wikimedia.org/wiki/File:Campus_de_l'UQTR_%C3%A0_Drummondville.jpg",
@@ -8163,29 +8130,19 @@
       "place": "UQTR",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
-    },
-    {
-      "id": "059caf01ae2d",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/9/99/G%C3%AEte_universitaire_UQTR.JPG",
-      "link": "https://commons.wikimedia.org/wiki/File:G%C3%AEte_universitaire_UQTR.JPG",
-      "title": "Gîte universitaire UQTR",
-      "credit": "Khayman",
-      "license": "CC BY-SA 3.0",
-      "width": 1920,
-      "height": 1080,
-      "place": "UQTR",
-      "campus": true,
-      "tags": [
-        "mat",
-        "campus"
+      "mime": "image/jpeg",
+      "focalY": 0.3737147346678438,
+      "surfaces": [
+        "masthead"
       ],
-      "source": "commons-cat",
-      "mime": "image/jpeg"
+      "permanent": false,
+      "season": "automne",
+      "seasonSource": "manual",
+      "seasonConfidence": 1
     },
     {
       "id": "792cafdb106b",
@@ -8199,11 +8156,18 @@
       "place": "UQAC",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.528,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "9ef6ccf25172",
@@ -8228,18 +8192,26 @@
       "url": "https://upload.wikimedia.org/wikipedia/commons/8/81/Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Rimouski_-_Entr%C3%A9e_principale.jpg",
       "link": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Rimouski_-_Entr%C3%A9e_principale.jpg",
       "title": "Université du Québec à Rimouski - Entrée principale",
-      "credit": "AzertyFab",
+      "credit": "Azerty Fab",
       "license": "CC BY-SA 3.0",
       "width": 2592,
       "height": 1944,
       "place": "UQAR",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.39,
+      "season": "automne",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "e96720eba8a2",
@@ -8253,11 +8225,19 @@
       "place": "UQAR",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.401,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "season": "automne"
     },
     {
       "id": "71b923438c29",
@@ -8271,11 +8251,18 @@
       "place": "UQAR",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.587,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false,
+      "seasonSource": "manual",
+      "seasonConfidence": 1
     },
     {
       "id": "5f13c104f37e",
@@ -8289,11 +8276,19 @@
       "place": "UQO",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.482,
+      "season": "ete",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "e1c9baf7b9d5",
@@ -8307,11 +8302,16 @@
       "place": "UQAT",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.6604053386060307,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "d312d5ae6c42",
@@ -8325,11 +8325,19 @@
       "place": "UQAT",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.113,
+      "season": "ete",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "a2d0fe697235",
@@ -8343,29 +8351,41 @@
       "place": "UQAT",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.195,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "663f7c276a8a",
       "url": "https://upload.wikimedia.org/wikipedia/commons/5/59/Ecole_de_technologie_superieure_05.jpg",
       "link": "https://commons.wikimedia.org/wiki/File:Ecole_de_technologie_superieure_05.jpg",
       "title": "Ecole de technologie superieure 05",
-      "credit": "Jeangagnon",
+      "credit": "Jean Gagnon",
       "license": "CC BY-SA 3.0",
       "width": 3456,
       "height": 1360,
       "place": "ÉTS",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.174,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "70a4f2e558db",
@@ -8379,29 +8399,43 @@
       "place": "ÉTS",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.967,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "611cd94ab5b2",
       "url": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Ecole_de_technologie_superieure_01.jpg",
       "link": "https://commons.wikimedia.org/wiki/File:Ecole_de_technologie_superieure_01.jpg",
       "title": "Ecole de technologie superieure 01",
-      "credit": "Jeangagnon",
+      "credit": "Jean Gagnon",
       "license": "CC BY-SA 3.0",
       "width": 4000,
       "height": 3000,
       "place": "ÉTS",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.865,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "f7611ef3807b",
@@ -8415,11 +8449,18 @@
       "place": "TÉLUQ",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.182,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "11c79bfd0d6c",
@@ -8436,7 +8477,11 @@
         "campus"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.404,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "permanent": false
     },
     {
       "id": "062e80d031a6",
@@ -8471,7 +8516,11 @@
         "campus"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.388,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "permanent": false
     },
     {
       "id": "ab7a36ad3833",
@@ -8485,11 +8534,18 @@
       "place": "ENAP",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.438,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "3592bc36fdc8",
@@ -8558,7 +8614,12 @@
         "campus"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.355,
+      "permanent": false,
+      "season": "hiver",
+      "seasonSource": "manual",
+      "seasonConfidence": 1
     },
     {
       "id": "ff3231bc807a",
@@ -8608,11 +8669,18 @@
       "place": "ENAP",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.389,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "638f8d74ce92",
@@ -8644,11 +8712,19 @@
       "place": "Université Laval",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.5,
+      "season": "ete",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "aa5df3626551",
@@ -8662,11 +8738,19 @@
       "place": "Université Laval",
       "campus": true,
       "tags": [
-        "mat",
-        "campus"
+        "campus",
+        "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.5,
+      "season": "ete",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     },
     {
       "id": "06fbe98e6eda",
@@ -8684,8 +8768,15 @@
         "mat"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "focalY": 0.415,
+      "season": "ete",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "surfaces": [
+        "masthead"
+      ],
+      "permanent": false
     }
-  ],
-  "lastSeasonDetect": "2026-08-24T09:24:26.075Z"
+  ]
 }

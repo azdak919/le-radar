@@ -200,6 +200,8 @@ const BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:David_-_The_Death_of_Socrates.jpg",
     source: "Wikimedia Commons · Public Domain",
     culture: "greco-roman",
+    focalY: 0.22,
+    surfaces: ["pomo", "solitaire"],
   },
   {
     url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Thomas_Cole_-_The_Oxbow_%28The_Connecticut_River_near_Northampton%29.jpg/1920px-Thomas_Cole_-_The_Oxbow_%28The_Connecticut_River_near_Northampton%29.jpg",
