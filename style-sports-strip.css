@@ -520,7 +520,7 @@
   min-width: 0;
   max-width: 100%;
 }
-/* « Prochain match » : 2 lignes dans le rail, pas une pastille plus large. */
+/* « Prochains match » : 2 lignes dans le rail, pas une pastille plus large. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag-lines {
   display: flex;
   flex-direction: column;
