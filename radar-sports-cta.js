@@ -180,7 +180,7 @@ const SPORTS_ARRIVE_MS = 640;
  */
 const SPORTS_CTA_TAG = 'Sports';
 /** Pastille pendant un match en cours — le seul cas qui remplace la rubrique. */
-const SPORTS_CTA_TAG_LIVE = 'En cours';
+const SPORTS_CTA_TAG_LIVE = 'En direct';
 /** Coup d’envoi du jour, pas encore commencé — rouge pulse, pas le jaune Prochain. */
 const SPORTS_CTA_TAG_SOON = 'À venir';
 /** Demain : une ligne, même jaune que Prochain match. */
@@ -476,7 +476,7 @@ function sportsLivePeriodLabel(game) {
  * pastille rouge et point live. Fenêtre serrée autour du coup d’envoi, pas la
  * fenêtre large du tri.
  *
- * Un résultat officiel (`final` / score sans `live`) ne reste pas « En cours »
+ * Un résultat officiel (`final` / score sans `live`) ne reste pas « En direct »
  * pendant les 3 h de queue — même si le coup d’envoi est encore dans la
  * fenêtre. Un 0-0 encore marqué `live` (rapport pas déposé) oui.
  */
@@ -1890,7 +1890,7 @@ function sportsCtaGameIsTomorrow(slide) {
 
 /**
  * Pastille CTA : À venir (aujourd’hui) / Demain / Prochains match (après)
- * / En cours / Aujourd’hui (résultat) / Hier / date.
+ * / En direct / Aujourd’hui (résultat) / Hier / date.
  * Creux : LE-RADAR.ca (logo PWA), pas « Sports ».
  */
 function sportsCtaTagLabel(slide, state) {
@@ -1961,7 +1961,7 @@ function sportsCtaLamp(slide, state) {
 /**
  * Sous-ligne live : heure de début (`18 h 30`), période RSEQ si elle existe,
  * compétition, tampon de dernière *vérification*. Jamais l’âge du coup
- * d’envoi (« il y a 2 min » sous En cours se lit comme un match fini).
+ * d’envoi (« il y a 2 min » sous En direct se lit comme un match fini).
  */
 function sportsLiveSubParts(slide) {
   const kick = sportsKickoffClock(slide?.game);
@@ -2642,7 +2642,7 @@ function sportsCtaSignature(slide) {
  * (garde-fou `registre-alerte-reserve`) et `le-radar-cta-sports-badge`.
  *
  * Au repos : lavis du sport du match + contour pourpre (parité chip-look).
- * Rouge, pastille « En cours » et point live **uniquement** pendant un match.
+ * Rouge, pastille « En direct » et point live **uniquement** pendant un match.
  * Le point était créé sans condition et pulsait toute l’année, y compris pour
  * un match à quinze jours : une promesse fausse.
  */
@@ -2939,7 +2939,7 @@ function sportsChipTitle(slide) {
 
   if (sportsGameIsLive(g)) {
     return [
-      'En cours',
+      SPORTS_CTA_TAG_LIVE,
       sport,
       `${home} ${sportsLiveScoreText(g)} ${opp}`,
       sportsKickoffClock(g),
@@ -3002,7 +3002,7 @@ function paintSportsChip(slide, animate = false) {
     a.title = title;
     a.setAttribute('aria-label', aria);
 
-    // Pastille : Sports / En cours / Hier / Aujourd’hui (jour du résultat).
+    // Pastille : Sports / En direct / Hier / Aujourd’hui (jour du résultat).
     const tag = document.createElement('span');
     tag.className = 'sports-chip__cta-tag';
     tag.setAttribute('aria-hidden', 'true');
@@ -3841,7 +3841,7 @@ function scheduleSportsWave({ fromSlot = 0, firstWait = true } = {}) {
     }
     const slot = index;
     const slide = sportsVisible[slot];
-    // Direct unique : la carte En cours ne tourne pas. Plusieurs lives : cycle.
+    // Direct unique : la carte En direct ne tourne pas. Plusieurs lives : cycle.
     if (slide?.mode === 'cta' && sportsCtaHoldOnLive(slide)) {
       sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
       return;

@@ -223,7 +223,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
     ['Prochain match', '.sports-chip__cta-tag[data-cta-tag="Prochain match"]'],
     ['Hier', '.sports-chip__cta-tag[data-cta-tag="Hier"]'],
     ['Aujourd’hui', '.sports-chip__cta-tag[data-cta-lamp="today"]'],
-    ['En cours', '.sports-chip__cta-tag[data-cta-tag="En cours"]'],
+    ['En direct', '.sports-chip__cta-tag[data-cta-tag="En direct"]'],
   ]) {
     const led = await noLed(sel);
     expect(led.display === 'none' || led.content === 'none' || led.width === 0, `${label} : pas de voyant LED`).toBe(true);
@@ -239,7 +239,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
     const m = (getComputedStyle(el).backgroundColor.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
     return m;
   });
-  const [elr, elg] = await pillRgb('En cours');
+  const [elr, elg] = await pillRgb('En direct');
   expect(ppr, 'Prochain : pastille jaune').toBeGreaterThan(200);
   expect(ppg, 'Prochain : pastille jaune').toBeGreaterThan(180);
   expect(ppb, 'Prochain : pastille jaune (pas crème)').toBeLessThan(80);
@@ -248,7 +248,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   expect(phb, 'Hier : pastille pourpre (B)').toBeGreaterThan(70);
   expect(phr - phg, 'Hier : pastille pourpre (R>G)').toBeGreaterThan(40);
   expect(par - pag, 'Aujourd’hui résultat : pastille rouge saturée').toBeGreaterThan(80);
-  expect(elr - elg, 'En cours : pastille rouge inchangée').toBeGreaterThan(80);
+  expect(elr - elg, 'En direct : pastille rouge inchangée').toBeGreaterThan(80);
   const pillFit = async (tag) => page.locator(`.sports-chip__cta-tag[data-cta-tag="${tag}"]`).first().evaluate((el) => {
     const r = el.getBoundingClientRect();
     return { w: r.width, overflow: el.scrollWidth - el.clientWidth };
@@ -331,7 +331,7 @@ test('labo cartes page sports : variantes V D N prochain creux', async ({ page }
   await expect(page.locator('#fiches .sports-result--live').first()).toBeVisible();
   const livePill = page.locator('#fiches .sports-panel__live').first();
   await expect(livePill).toBeVisible();
-  await expect(livePill).toHaveText(/En cours/i);
+  await expect(livePill).toHaveText(/En direct/i);
   const liveFilter = page.locator('#lab-filters [data-filter-period="live"]');
   await expect(liveFilter).toBeVisible();
   await liveFilter.click();

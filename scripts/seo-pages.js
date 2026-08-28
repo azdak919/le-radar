@@ -1305,7 +1305,7 @@ function sportsResultRows(team, t, lang) {
         ? `<span class="sports-result__venue">${escapeHtml(t.sportsHome)}</span>`
         : '';
     if (live) {
-      const liveLabel = t.sportsLive || 'En cours';
+      const liveLabel = t.sportsLive || 'En direct';
       const hasScore = next.scoreFor != null && next.scoreAgainst != null
         && Number.isFinite(Number(next.scoreFor)) && Number.isFinite(Number(next.scoreAgainst))
         && Number(next.scoreFor) !== -999 && Number(next.scoreAgainst) !== -999;
@@ -1419,7 +1419,7 @@ function sportsPanelHtml(team, t, lang) {
     : '';
   const liveNow = sportsNextIsLive(team.nextGame);
   const livePill = team.nextGame
-    ? ` <span class="sports-panel__live"${liveNow ? '' : ' hidden'}>${escapeHtml(t.sportsLive || 'En cours')}</span>`
+    ? ` <span class="sports-panel__live"${liveNow ? '' : ' hidden'}>${escapeHtml(t.sportsLive || 'En direct')}</span>`
     : '';
   // Associations de voile (ULaVoile, PolyVoile, McGill Sailing) : jamais le surnom varsity.
   const isSailingClub = sport === 'sailing'

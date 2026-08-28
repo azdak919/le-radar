@@ -270,7 +270,7 @@ test('CTA live : En cours, scorebug et tampon, pas « dans 15 min »', async ({ 
   const payload = livePayload();
   const cta = await openWithSports(page, payload);
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En cours');
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En direct');
   const text = await cta.locator('.sports-chip__cta-text').innerText();
   expect(text).toMatch(/Saint-Hyacinthe/);
   expect(text).toMatch(/Vanier/);
@@ -291,7 +291,7 @@ test('CTA live : pas « il y a 2 min » sous En cours', async ({ page }) => {
   const payload = livePayload({ offsetMs: -2 * 60 * 1000 });
   const cta = await openWithSports(page, payload);
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En cours');
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En direct');
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
   const kick = kickoffClockFromPayload(payload);
   expect(sub).toMatch(new RegExp(kick.replace(' ', '\\s+')));
@@ -308,7 +308,7 @@ test('CTA live : score et période dès qu’ils sont collés', async ({ page })
     period: '1re mi-temps',
   }));
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En cours');
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En direct');
   const text = await cta.locator('.sports-chip__cta-text').innerText();
   expect(text).toMatch(/Saint-Hyacinthe/);
   expect(text).toMatch(/1–0/);
@@ -324,7 +324,7 @@ test('CTA live : score et période dès qu’ils sont collés', async ({ page })
 test('CTA live : un direct écarte résultats et prochains du cycle', async ({ page }) => {
   const cta = await openWithSports(page, livePlusYesterdayPayload());
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En cours');
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En direct');
   const text = await cta.locator('.sports-chip__cta-text').innerText();
   expect(text).toMatch(/Saint-Hyacinthe/);
   expect(text).not.toMatch(/Concordia/);
