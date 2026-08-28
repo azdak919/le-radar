@@ -179,7 +179,7 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 ### Workflows GitHub Actions
 
 - `maintain.yml` — pipeline complet + `bot-status.json` + issue si besoin
-- `update-news.yml` — articles frais (10 passes/jour **affichées** : 6 h, midi, et toutes les 2 h de 7 h à 21 h Québec). Le cron part **35 min plus tôt** (retard GitHub 20–40 min + fetch ~10 min). Filet horaire **:20** si la dernière mise à jour a > 75 min. Une passe **manuelle** (`workflow_dispatch`) n’est pas annulée par le filet, publie toujours, et affiche l’heure réelle (pas le créneau). Si le gate `bot-prepush-check` casse (test HTML figé), `news.json` est quand même poussé pour que le fil JS reste à jour. Timeouts durs par source (90 s) et par étape.
+- `update-news.yml` — articles frais (10 passes/jour **affichées** : 6 h, midi, et toutes les 2 h de 7 h à 21 h Québec). Le cron part **35 min plus tôt** (retard GitHub 20–40 min + fetch ~10 min). Filet horaire **:20** *et* enchaînement `workflow_run` sur **Update Radio Now Playing** + **Update Student Sports (RSEQ)** si la dernière mise à jour a > 75 min — GitHub lâche souvent les crons fréquents de ce dépôt. Une passe qui a réellement fetché **publie toujours** le tampon « mis à jour » (dernière vérification des sources, pas seulement un article neuf). Manuel = groupe à part, heure réelle. Si le gate `bot-prepush-check` casse (test HTML figé), `news.json` est quand même poussé pour que le fil JS reste à jour. Timeouts durs par source (90 s) et par étape.
 - `update-sports.yml` — scores RSEQ/Spordle/voile : **matin · midi · fin de cours · 20 h · 22 h 30 · minuit+** (UTC mappé sur Amérique/Toronto ±1 h EST/EDT) + **week-end après-midi**. Après le fetch : `generate-seo.js --sports-only` pour que `/sports/` (HTML prérendu) suive `sports.json`. Abort si chute >50 % d’équipes ou majorité de ligues en panne ; sinon préserve le snapshot précédent par ligue. Push avec retry comme les autres bots. `sports.json` est en `paths-ignore` du Vérification (pas de Chromium à chaque refresh).
 - `update-streams.yml` — validation des flux (quotidien)
 - **Bots SEO/HTML** (news, streams, institutions, schedules, discover, maintain, archives) : étape **`bot-prepush-check.sh`** (`npm run check`) **avant** le commit pour éviter un mail Vérification après coup.
@@ -330,9 +330,9 @@ npm test
 ```
 
 Le workflow `verification.yml` applique la même suite aux changements de code. Les
-commits limités à des timestamps de fraîcheur sont regroupés : un heartbeat est
-conservé au plus toutes les six heures, sans retarder un changement réel de
-contenu ou de contrôle qualité.
+commits du fil news portent le tampon de la **dernière vérification** des
+sources (anti-bruit = gate 75 min sur les filets, pas un heartbeat 6 h). Un
+changement réel de contenu ou de contrôle qualité n'est jamais retardé.
 
 ### Banques photo : deux contrôles, pas un
 

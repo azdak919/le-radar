@@ -43,5 +43,5 @@ La commande `npm test` doit réussir pour tout changement de code. Elle couvre :
   transfert du rôle de lecteur principal entre deux pages.
 
 Les données générées par les bots conservent leurs contrôles spécialisés. Un
-changement éditorial est publié immédiatement; un rafraîchissement limité aux
-timestamps ne produit au plus qu'un heartbeat Git toutes les six heures.
+changement éditorial est publié immédiatement. Le tampon « mis à jour » du fil
+suit la dernière vérification des sources (gate 75 min sur les filets).
