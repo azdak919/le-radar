@@ -32,11 +32,14 @@ const WALLPAPER_INST_RULES = [
   { re: /uqam|judith[\s-]?jasmin/i, key: 'uqam' },
   { re: /mcgill|roddick|wilson\s*hall|avenue\s*mcgill/i, key: 'mcgill university' },
   { re: /concordia|henry\s*f\.?\s*hall|loyola|mackay/i, key: 'concordia university' },
-  { re: /polytechnique|roger[\s-]?gaudry|universit[eé]\s*de\s*montr[eé]al|\budem\b/i, key: 'universite de montreal' },
+  { re: /polytechnique/i, key: 'polytechnique montreal' },
+  { re: /roger[\s-]?gaudry|universit[eé]\s*de\s*montr[eé]al|\budem\b/i, key: 'universite de montreal' },
   { re: /laval/i, key: 'universite laval' },
   { re: /sherbrooke|longueuil/i, key: 'universite de sherbrooke' },
   { re: /bishop/i, key: "bishop's university" },
   { re: /uqtr|trois[\s-]?rivi/i, key: 'universite du quebec a trois rivieres' },
+  { re: /uqac/i, key: 'universite du quebec a chicoutimi' },
+  { re: /uqar/i, key: 'universite du quebec a rimouski' },
   { re: /dawson/i, key: 'dawson college' },
   { re: /vieux\s*montr[eé]al/i, key: 'cegep du vieux montreal' },
   { re: /jonqui[eè]re/i, key: 'cegep de jonquiere' },
@@ -312,6 +315,9 @@ const BANK = {
       tags: 'exterior campus lennoxville building',
     },
   ],
+  'polytechnique montreal': [],
+  'universite du quebec a chicoutimi': [],
+  'universite du quebec a rimouski': [],
   'universite du quebec a trois rivieres': [
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/4/47/Pavillon_Pierre-Boucher_UQTR.jpg',
@@ -500,22 +506,41 @@ const ALIASES = {
   'college dawson': 'dawson college',
   'college dawson montreal': 'dawson college',
   'dawson college montreal': 'dawson college',
+  'polytechnique montreal': 'polytechnique montreal',
+  polytechnique: 'polytechnique montreal',
+  'ecole polytechnique': 'polytechnique montreal',
+  'ecole polytechnique de montreal': 'polytechnique montreal',
+  'universite du quebec a chicoutimi': 'universite du quebec a chicoutimi',
+  uqac: 'universite du quebec a chicoutimi',
+  'universite du quebec a rimouski': 'universite du quebec a rimouski',
+  uqar: 'universite du quebec a rimouski',
 };
 
-// Résoudre alias → liste (y compris listes vides qui pointent vers une clé peuplée)
+function bankKeyHasPhotos(key, extrasMap) {
+  if (!key) return false;
+  if (BANK[key]?.length) return true;
+  const extras = extrasMap || loadWallpaperCampusExtras();
+  return Boolean(extras.get(key)?.length);
+}
+
+// Résoudre alias → liste (y compris listes vides / clés wallpaper-only)
 function resolveBankKey(institution = '') {
   const raw = normalizeKey(institution).replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim();
   if (!raw) return null;
-  if (BANK[raw]?.length) return raw;
-  if (ALIASES[raw] && BANK[ALIASES[raw]]?.length) return ALIASES[raw];
+  const extras = loadWallpaperCampusExtras();
+  if (bankKeyHasPhotos(raw, extras)) return raw;
+  if (ALIASES[raw] && bankKeyHasPhotos(ALIASES[raw], extras)) return ALIASES[raw];
 
   // Correspondance partielle (ex. « Cégep de Jonquière (ATM – journalisme) »)
-  for (const key of Object.keys(BANK)) {
-    if (!BANK[key]?.length) continue;
+  const keys = new Set([...Object.keys(BANK), ...extras.keys()]);
+  for (const key of keys) {
+    if (!bankKeyHasPhotos(key, extras)) continue;
     if (raw.includes(key) || key.includes(raw)) return key;
   }
   for (const [alias, target] of Object.entries(ALIASES)) {
-    if ((raw.includes(alias) || alias.includes(raw)) && BANK[target]?.length) return target;
+    if ((raw.includes(alias) || alias.includes(raw)) && bankKeyHasPhotos(target, extras)) {
+      return target;
+    }
   }
   return null;
 }

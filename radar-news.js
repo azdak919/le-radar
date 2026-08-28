@@ -2963,14 +2963,15 @@ function createArticle(item, role = 'standard') {
   }
   const readMore = item.lang === 'en' ? 'Read more →' : 'Lire la suite →';
   const byLabel = item.lang === 'en' ? 'By' : 'Par';
-  /* Vignette à droite pour les vedettes et En bref : photo réelle ou banque
-     d'images seulement (le repli SVG serait illisible en petit format). */
-  const isThumbRole = ['feature', 'compact'].includes(role);
-  const canUseImage = role === 'lead' || isThumbRole;
+  /* Vignette : une, vedettes, En bref ET suite du fil. Le SVG de repli
+     reste illisible en petit format — photo source ou campus seulement. */
+  const isThumbRole = role !== 'lead';
+  const canUseImage = true;
   /* Vignettes : seuils assouplis (forThumb) — beaucoup d’URL WP ~300–500 px
      étaient rejetées alors qu’elles passent bien en object-fit. */
+  ensureCampusStock(item);
   const hasImageCandidate = role === 'lead'
-    || (isThumbRole && (hasUsablePhoto(item, role) || hasStockPhoto(item, role)));
+    || (hasUsablePhoto(item, role) || hasStockPhoto(item, role));
   if (!hasImageCandidate && canUseImage) a.classList.add('article--text');
   if (isThumbRole && hasImageCandidate) a.classList.add('article--thumb');
   const timeHtml = time
@@ -3190,7 +3191,7 @@ function displaySizedImageUrl(raw = '', role = 'lead') {
   try {
     const u = new URL(src, location.href);
     const host = u.hostname.toLowerCase();
-    const isThumb = role === 'feature' || role === 'compact';
+    const isThumb = isThumbRoleName(role);
     const maxW = role === 'lead' ? 1400 : (isThumb ? 480 : 960);
 
     // Déjà un dérivé dimensionné (thumb Wikimedia ou ?width=).
@@ -3227,19 +3228,57 @@ function resolveLocalPhotoUrl(item) {
   }
 }
 
+function isThumbRoleName(role = '') {
+  return role === 'feature' || role === 'compact' || role === 'standard';
+}
+
 function hasUsablePhoto(item, role = 'lead') {
   if (hasLocalPhoto(item)) return true;
-  const forThumb = role === 'feature' || role === 'compact';
+  const forThumb = isThumbRoleName(role);
   return !!getCandidateImage(item?.image, { forThumb });
 }
 
 function hasStockPhoto(item, role = 'lead') {
-  const forThumb = role === 'feature' || role === 'compact';
+  const forThumb = isThumbRoleName(role);
   return !!getCandidateImage(item?.stockImage, { forThumb });
 }
 
 function hasDisplayImage(item, role = 'lead') {
   return hasUsablePhoto(item, role) || hasStockPhoto(item, role) || isFallbackImageUrl(item?.fallbackImage);
+}
+
+/**
+ * Repli campus côté client — scripts/campus-fallback-lib.js (CampusFallback).
+ * Banque mât universities + cégeps curatés.
+ */
+function pickClientCampusPhoto(item = {}) {
+  const lib = typeof CampusFallback === 'object' ? CampusFallback : null;
+  if (!lib || typeof lib.pickCampusFallback !== 'function') return null;
+  const uni = (typeof QUEBEC_UNIVERSITY_BACKGROUNDS !== 'undefined'
+    && Array.isArray(QUEBEC_UNIVERSITY_BACKGROUNDS))
+    ? QUEBEC_UNIVERSITY_BACKGROUNDS
+    : [];
+  return lib.pickCampusFallback(item, { universityPhotos: uni });
+}
+
+function ensureCampusStock(item) {
+  if (!item || typeof item !== 'object') return null;
+  if (item.stockImage && getCandidateImage(item.stockImage, { forThumb: true })) return item;
+  const pick = pickClientCampusPhoto(item);
+  if (!pick?.url && !pick?.stockImage) return null;
+  const url = pick.stockImage || pick.url;
+  const credit = pick.credit || pick.imageCreator || '';
+  const license = pick.license || pick.imageLicense || 'CC';
+  const link = pick.link || pick.imageSourceUrl || url;
+  item.stockImage = url;
+  item.imageTitle = pick.title || pick.imageTitle || '';
+  item.imageCredit = pick.imageCredit
+    || `Photo : ${credit || 'Auteur·e inconnu·e'} / ${license} · Wikimedia Commons`;
+  item.imageCreator = credit;
+  item.imageLicense = license;
+  item.imageProvider = 'campus-bank';
+  item.imageSourceUrl = link;
+  return item;
 }
 
 function darkenHex(hex, amount = 0.32) {
@@ -3291,7 +3330,22 @@ function buildClientFallbackDataUrl(item) {
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
 
+function isFragileUnmirroredPhoto(item) {
+  if (hasLocalPhoto(item)) return false;
+  try {
+    const host = new URL(String(item?.image || ''), location.href).hostname.toLowerCase();
+    return IMAGE_ARCHIVE_FALLBACK_HOSTS.has(host);
+  } catch {
+    return false;
+  }
+}
+
 function shouldPreferStockPhoto(item, role = 'lead') {
+  // Hôte fragile sans miroir (L’Exemplaire, etc.) : ne pas attendre Wayback.
+  if (isFragileUnmirroredPhoto(item)) {
+    ensureCampusStock(item);
+    if (hasStockPhoto(item, role)) return true;
+  }
   // Jamais remplacer une vraie photo d'article par la banque campus (pavillon).
   if (item.imageProvider === 'campus-bank' && hasUsablePhoto(item, role)) return false;
   // Source absente / rejetée (logo Daily.png, logo Exil, bannière editorial_…) → stock.
@@ -3305,15 +3359,19 @@ function shouldPreferStockPhoto(item, role = 'lead') {
 }
 
 function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
-  const forThumb = role === 'feature' || role === 'compact';
+  const forThumb = isThumbRoleName(role);
   if (shouldPreferStockPhoto(item, role)) preferPhoto = false;
 
   // 1) Miroir local (GitHub Pages) — résilient si l’origine journal est down.
   if (preferPhoto && hasLocalPhoto(item)) {
     return { src: resolveLocalPhotoUrl(item), kind: 'photo' };
   }
-  // 2) Photo source distante (évent. réécrite Wayback pour hôtes fragiles).
-  if (preferPhoto && getCandidateImage(item?.image, { forThumb })) {
+  // 2) Photo source distante — sauf hôte fragile non mirroiré (Wayback pend).
+  if (
+    preferPhoto
+    && !isFragileUnmirroredPhoto(item)
+    && getCandidateImage(item?.image, { forThumb })
+  ) {
     return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
   }
   // 3) Banque libre thématique ; campus bank seulement sans photo source.
@@ -3323,6 +3381,11 @@ function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
       if (local) return { src: local, kind: 'photo' };
       return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
     }
+    return { src: getCandidateImage(item.stockImage, { forThumb }), kind: 'stock' };
+  }
+  // 4) Baseline campus de l’établissement (Laval, McGill, Dawson…).
+  ensureCampusStock(item);
+  if (hasStockPhoto(item, role)) {
     return { src: getCandidateImage(item.stockImage, { forThumb }), kind: 'stock' };
   }
   if (isFallbackImageUrl(item?.fallbackImage)) {
@@ -3335,26 +3398,48 @@ function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
       return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
     }
   }
+  if (role === 'lead') {
+    const svg = buildClientFallbackDataUrl(item);
+    if (svg) return { src: svg, kind: 'fallback' };
+  }
   return { src: '', kind: 'none' };
 }
 
 /** Return the other usable source after an image request failed.
  * A stale Openverse URL must never cause us to retry itself and then discard
  * an otherwise valid image supplied by the publication. */
-function alternateDisplayImage(item, failedKind, role = 'lead') {
-  const forThumb = role === 'feature' || role === 'compact';
-  // Miroir local cassé → origin / Wayback.
-  if (failedKind === 'photo' && getCandidateImage(item?.image, { forThumb })) {
-    return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
+function alternateDisplayImage(item, failedKind, role = 'lead', failedSrc = '') {
+  const forThumb = isThumbRoleName(role);
+  const failed = String(failedSrc || '').trim();
+  const different = (url) => {
+    const src = String(url || '').trim();
+    return Boolean(src) && src !== failed;
+  };
+
+  if (failedKind === 'photo') {
+    const local = resolveLocalPhotoUrl(item);
+    if (different(local)) return { src: local, kind: 'photo' };
+    const remote = getCandidateImage(item?.image, { forThumb });
+    if (different(remote) && !/web\.archive\.org/i.test(failed)) {
+      const archived = withArchiveImageFallback(String(item?.image || remote || '').trim());
+      if (different(archived)) return { src: archived, kind: 'photo' };
+    }
+    if (different(remote)) return { src: remote, kind: 'photo' };
   }
-  if (failedKind === 'stock' && hasLocalPhoto(item)) {
-    return { src: resolveLocalPhotoUrl(item), kind: 'photo' };
+  if (failedKind === 'stock') {
+    const local = resolveLocalPhotoUrl(item);
+    if (different(local)) return { src: local, kind: 'photo' };
+    const remote = getCandidateImage(item?.image, { forThumb });
+    if (different(remote)) return { src: remote, kind: 'photo' };
   }
-  if (failedKind === 'stock' && getCandidateImage(item?.image, { forThumb })) {
-    return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
+  ensureCampusStock(item);
+  if (hasStockPhoto(item, role)) {
+    const stock = getCandidateImage(item.stockImage, { forThumb });
+    if (different(stock)) return { src: stock, kind: 'stock' };
   }
-  if (failedKind === 'photo' && hasStockPhoto(item, role)) {
-    return { src: getCandidateImage(item.stockImage, { forThumb }), kind: 'stock' };
+  if (role === 'lead') {
+    const svg = buildClientFallbackDataUrl(item);
+    if (svg && different(svg)) return { src: svg, kind: 'fallback' };
   }
   return { src: '', kind: 'none' };
 }
@@ -3597,14 +3682,16 @@ function showArticleImage(article, media, img, kind, item) {
 }
 
 function dropArticleImage(article, media, role, item) {
-  if (role === 'lead' && item && hasStockPhoto(item)) {
+  if (item) {
+    ensureCampusStock(item);
     const alt = resolveDisplayImage(item, { preferPhoto: false, role });
-    if (alt.kind === 'stock' && alt.src) {
+    if (alt.src && (alt.kind === 'stock' || (alt.kind === 'fallback' && role === 'lead'))) {
       const img = new Image();
       img.decoding = 'async';
       img.loading = 'eager';
+      img.referrerPolicy = 'no-referrer';
       img.alt = '';
-      img.onload = () => showArticleImage(article, media, img, 'stock', item);
+      img.onload = () => showArticleImage(article, media, img, alt.kind, item);
       img.onerror = () => {
         media.remove();
         article.classList.add('article--text');
@@ -3626,7 +3713,7 @@ function attachArticleImage(article, item, role) {
 
   const failToText = () => dropArticleImage(article, media, role, item);
   const allowFallback = role === 'lead';
-  const isThumb = role === 'feature' || role === 'compact';
+  const isThumb = isThumbRoleName(role);
 
   const loadImage = (src, kind, allowRetry = true, { forceRaw = false } = {}) => {
     if (!src || (kind === 'fallback' && !allowFallback)) {
@@ -3637,6 +3724,8 @@ function attachArticleImage(article, item, role) {
     const displaySrc = forceRaw ? src : displaySizedImageUrl(src, role);
     const img = new Image();
     img.decoding = 'async';
+    /* Hotlink WP : sans referrer, les origines qui bloquent le-radar.ca passent. */
+    img.referrerPolicy = 'no-referrer';
     /* Pas de loading="lazy" ici : une Image() hors du DOM en lazy ne se
        charge jamais — le délai trop court la faisait basculer en mode texte. */
     if (role === 'lead') img.fetchPriority = 'high';
@@ -3665,8 +3754,8 @@ function attachArticleImage(article, item, role) {
           return;
         }
         if (allowRetry) {
-          const alt = alternateDisplayImage(item, kind, role);
-          if (alt.src && alt.kind !== 'photo') {
+          const alt = alternateDisplayImage(item, kind, role, src);
+          if (alt.src && alt.src !== src && alt.kind !== 'photo') {
             settled = true;
             loadImage(alt.src, alt.kind, false);
           } else {
@@ -3709,7 +3798,7 @@ function attachArticleImage(article, item, role) {
         }
       }
       if (allowRetry && (kind === 'photo' || kind === 'stock')) {
-        const alt = alternateDisplayImage(item, kind, role);
+        const alt = alternateDisplayImage(item, kind, role, src);
         if (alt.src && alt.src !== src) {
           settled = true;
           loadImage(alt.src, alt.kind, false);
@@ -3717,6 +3806,7 @@ function attachArticleImage(article, item, role) {
           failToText();
         }
       } else {
+        // Wayback / stock en dernier essai : encore le campus, pas le vide.
         failToText();
       }
     };
@@ -3727,16 +3817,18 @@ function attachArticleImage(article, item, role) {
     // encore en cours de chargement (Wikimedia 8K / réseau lent). Même règle
     // pour une photo source : une réponse lente reste préférable à un stock
     // incertain; seul son vrai onerror déclenche le repli.
-    const timeoutMs = isThumb ? 10000 : 6000;
+    const fragileRemote = IMAGE_ARCHIVE_FALLBACK_HOSTS.has((() => {
+      try { return new URL(String(item?.image || src || ''), location.href).hostname.toLowerCase(); }
+      catch { return ''; }
+    })());
+    const timeoutMs = fragileRemote ? 4000 : (isThumb ? 10000 : 6000);
     window.setTimeout(() => {
       if (settled || article.classList.contains('has-image') || !media.isConnected) return;
-      if (!allowRetry || kind === 'photo') return;
-      const alt = alternateDisplayImage(item, kind, role);
-      if (alt.src && alt.src !== src && alt.kind !== kind) {
+      const alt = alternateDisplayImage(item, kind, role, src);
+      if (alt.src && alt.src !== src && (allowRetry || alt.kind !== kind)) {
         settled = true;
         loadImage(alt.src, alt.kind, false);
       }
-      // Sinon on laisse onload/onerror finir — mieux qu'un vignette vide.
     }, timeoutMs);
   };
 
