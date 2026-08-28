@@ -5,7 +5,8 @@
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
@@ -233,6 +234,13 @@ assert.match(
   /BACKGROUNDS/,
 );
 assert.ok(!existsSync(join(root, 'nope')));
+
+const labUi = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../dev/photo-lab/photo-lab.js'), 'utf8');
+assert.doesNotMatch(
+  labUi,
+  /crop-stage[\s\S]{0,80}pointerdown|setPointerCapture/,
+  'cadrage Y : pas de glisser sur la photo, seulement la barre',
+);
 
 const {
   retainUnifiedPhoto,

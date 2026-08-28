@@ -650,46 +650,6 @@
     }, 2500);
   });
 
-  function focalFromPointer(ev) {
-    const img = $('full-photo');
-    const rect = img.getBoundingClientRect();
-    if (rect.height <= 0) return state.focalY;
-    const y = (ev.clientY - rect.top) / rect.height;
-    return Math.min(1, Math.max(0, y));
-  }
-
-  let dragging = false;
-  $('crop-stage').addEventListener('pointerdown', (ev) => {
-    if (!state.selected) return;
-    dragging = true;
-    $('crop-stage').setPointerCapture(ev.pointerId);
-    state.focalY = focalFromPointer(ev);
-    $('focal').value = String(Math.round(state.focalY * 1000));
-    $('focal-val').textContent = state.focalY.toFixed(2);
-    setFocalState(true);
-    updateOverlays();
-    renderMinis();
-  });
-  $('crop-stage').addEventListener('pointermove', (ev) => {
-    if (!dragging) return;
-    state.focalY = focalFromPointer(ev);
-    $('focal').value = String(Math.round(state.focalY * 1000));
-    $('focal-val').textContent = state.focalY.toFixed(2);
-    setFocalState(true);
-    updateOverlays();
-    renderMinis();
-  });
-  $('crop-stage').addEventListener('pointerup', () => {
-    if (!dragging) return;
-    dragging = false;
-    if (!state.selected) return;
-    persistFocalIfDirty().then(() => {
-      $('status').textContent = 'Cadrage Y enregistré.';
-    }).catch((err) => {
-      $('status').textContent = err.message || String(err);
-    });
-  });
-
   document.addEventListener('keydown', (ev) => {
     const tag = (ev.target && ev.target.tagName) || '';
     if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') {
