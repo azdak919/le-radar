@@ -279,7 +279,11 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(page.locator('#cta-band .case').filter({ hasText: 'hier (place)' })).toBeVisible();
   await expect(page.locator('#cta-band .case').filter({ hasText: 'hier (or)' })).toBeVisible();
   await expect(page.locator('#cta-band .case').filter({ hasText: 'aujourd’hui (argent)' })).toBeVisible();
-  await expect(page.locator('#cta-band .case').filter({ hasText: 'en cours (sans score)' })).toBeVisible();
+  const liveNoScore = page.locator('#cta-band .case').filter({ hasText: 'en cours (sans score)' });
+  await expect(liveNoScore).toBeVisible();
+  await expect(liveNoScore.locator('.sports-chip__score')).toHaveText('—');
+  await expect(liveNoScore.locator('.sports-chip__cta-sub-text')).toContainText(/mis à jour à/);
+  await expect(liveNoScore.locator('.sports-chip__vs')).toHaveCount(0);
   await expect(page.locator('#standard-chips .case').filter({ hasText: 'voile argent' }).first()).toBeVisible();
   await expect(page.locator('#standard-chips .case').filter({ hasText: 'voile bronze' }).first()).toBeVisible();
   await expect(page.locator('#standard-chips .case').filter({ hasText: 'demain visiteur' }).locator('.sports-chip__vs')).toHaveText(/^chez$/);

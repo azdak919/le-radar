@@ -114,6 +114,9 @@ test('update-sports-live.yml sonde les fenêtres de match', () => {
   const yml = readFileSync(join(ROOT, '.github/workflows/update-sports-live.yml'), 'utf8');
   assert.match(yml, /\*\/5 16-23 \* \* \*/);
   assert.match(yml, /\*\/5 0-3 \* \* \*/);
+  assert.match(yml, /20 \* \* \*/);
+  assert.match(yml, /workflow_run/);
+  assert.match(yml, /Update Radio Now Playing/);
   assert.doesNotMatch(yml, /0,15,30,45/);
   assert.match(yml, /--live/);
 });
