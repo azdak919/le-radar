@@ -217,14 +217,15 @@
   function formPayload() {
     const season = (document.querySelector('input[name="season"]:checked') || {}).value || '';
     const season6 = (document.querySelector('input[name="season6"]:checked') || {}).value || '';
+    const allSeasons = season === 'all' || season === '';
     return {
       url: state.selected.url,
       focalY: state.focalY,
       credit: $('credit').value,
       place: $('place').value,
-      season: season || undefined,
-      season6: season6 || undefined,
-      clearSeason: !season && !season6,
+      season: allSeasons ? undefined : season,
+      season6: allSeasons ? undefined : (season6 || undefined),
+      clearSeason: allSeasons,
       surfaces: selectedSurfaces(),
       tags: selectedTags(),
     };
@@ -285,7 +286,7 @@
     $('place').value = p.place || '';
     updateCreditPreview();
     for (const el of document.querySelectorAll('input[name="season"]')) {
-      el.checked = (p.season || '') === el.value;
+      el.checked = p.season ? p.season === el.value : el.value === 'all';
     }
     for (const el of document.querySelectorAll('input[name="season6"]')) {
       el.checked = (p.season6 || '') === el.value;
@@ -333,10 +334,10 @@
       c.textContent = tagLabel[t] || t;
       chips.appendChild(c);
     }
-    if (p.season) {
+    {
       const c = document.createElement('span');
-      c.className = 'chip';
-      c.textContent = seasonLabel(p.season);
+      c.className = 'chip' + (p.season ? '' : ' perm');
+      c.textContent = p.season ? seasonLabel(p.season) : 'toutes saisons';
       chips.appendChild(c);
     }
     $('status').textContent = '';
@@ -433,6 +434,33 @@
     }
   }
 
+  function upsertListed(photo) {
+    if (!photo || !photo.key) return null;
+    const merge = (list) => {
+      const i = list.findIndex((p) => p.key === photo.key);
+      if (i < 0) return list;
+      list[i] = { ...list[i], ...photo };
+      return list;
+    };
+    state.photos = merge(state.photos);
+    state.filtered = merge(state.filtered);
+    const hit = state.photos.find((p) => p.key === photo.key);
+    if (hit) state.selected = hit;
+    return hit;
+  }
+
+  function savedSummary(photo) {
+    if (!photo) return 'Enregistré sur ce disque. Pas encore sur le-radar.ca.';
+    const bits = [];
+    bits.push(photo.season ? seasonLabel(photo.season) : 'toutes saisons');
+    if (typeof photo.focalY === 'number') bits.push(`Y ${Number(photo.focalY).toFixed(2)}`);
+    const tags = photo.tags || [];
+    if (tags.length) bits.push(tags.map((t) => (t === 'mat' ? 'mât' : t)).join(', '));
+    if (photo.place) bits.push(photo.place);
+    const extra = bits.length ? ` (${bits.join(' · ')})` : '';
+    return `Enregistré${extra}. Toujours cette fiche — pas le-radar.ca tant que la PR n’est pas mergée.`;
+  }
+
   async function reload(preferKey) {
     const data = await api('/api/photos');
     state.photos = data.photos || [];
@@ -452,17 +480,22 @@
     applyFilters();
   }
 
-  async function mutate(fn) {
+  async function mutate(fn, { stay = false } = {}) {
     if (state.busy || !state.selected) return;
     state.busy = true;
     $('status').textContent = 'Enregistrement…';
     try {
       const result = await fn();
       const keep = state.selected && state.selected.key;
-      await reload(keep);
+      if (stay && result && result.photo) {
+        upsertListed(result.photo);
+        if (state.view === 'detail' && keep) select(keep);
+      } else {
+        await reload(keep);
+      }
       $('status').textContent = result && result.error
         ? result.error
-        : 'Enregistré sur ce disque. Pas encore sur le-radar.ca.';
+        : savedSummary(result && result.photo);
     } catch (err) {
       $('status').textContent = err.message || String(err);
     } finally {
@@ -544,7 +577,10 @@
     updateCreditPreview();
   });
   document.querySelectorAll('input[name="season"], input[name="season6"]').forEach((el) => {
-    el.addEventListener('change', markMetaDirty);
+    el.addEventListener('change', () => {
+      markMetaDirty();
+      $('save-meta-btn').click();
+    });
   });
   ['tag-mat', 'tag-pomo', 'tag-solitaire', 'tag-favori', 'tag-campus', 'tag-nations'].forEach((id) => {
     const el = $(id);
@@ -558,15 +594,17 @@
     });
   });
 
-  $('save-meta-btn').addEventListener('click', () => {
+  function saveCurrent() {
     if (!state.selected) return;
     mutate(async () => {
       const result = await api('/api/save', formPayload());
       setFocalState(false);
       state.metaDirty = false;
       return result;
-    });
-  });
+    }, { stay: true });
+  }
+  $('save-meta-btn').addEventListener('click', saveCurrent);
+  if ($('save-inline-btn')) $('save-inline-btn').addEventListener('click', saveCurrent);
 
   $('reject-btn').addEventListener('click', () => {
     if (!state.selected) return;
@@ -587,7 +625,7 @@
       setFocalState(false);
       state.metaDirty = false;
       return result;
-    });
+    }, { stay: true });
   });
 
   $('undo-btn').addEventListener('click', () => mutate(() => api('/api/undo', {})));
@@ -610,46 +648,6 @@
         $('full-photo').src = `${photoSrc(p)}?r=${Date.now()}`;
       }
     }, 2500);
-  });
-
-  function focalFromPointer(ev) {
-    const img = $('full-photo');
-    const rect = img.getBoundingClientRect();
-    if (rect.height <= 0) return state.focalY;
-    const y = (ev.clientY - rect.top) / rect.height;
-    return Math.min(1, Math.max(0, y));
-  }
-
-  let dragging = false;
-  $('crop-stage').addEventListener('pointerdown', (ev) => {
-    if (!state.selected) return;
-    dragging = true;
-    $('crop-stage').setPointerCapture(ev.pointerId);
-    state.focalY = focalFromPointer(ev);
-    $('focal').value = String(Math.round(state.focalY * 1000));
-    $('focal-val').textContent = state.focalY.toFixed(2);
-    setFocalState(true);
-    updateOverlays();
-    renderMinis();
-  });
-  $('crop-stage').addEventListener('pointermove', (ev) => {
-    if (!dragging) return;
-    state.focalY = focalFromPointer(ev);
-    $('focal').value = String(Math.round(state.focalY * 1000));
-    $('focal-val').textContent = state.focalY.toFixed(2);
-    setFocalState(true);
-    updateOverlays();
-    renderMinis();
-  });
-  $('crop-stage').addEventListener('pointerup', () => {
-    if (!dragging) return;
-    dragging = false;
-    if (!state.selected) return;
-    persistFocalIfDirty().then(() => {
-      $('status').textContent = 'Cadrage Y enregistré.';
-    }).catch((err) => {
-      $('status').textContent = err.message || String(err);
-    });
   });
 
   document.addEventListener('keydown', (ev) => {
@@ -681,8 +679,8 @@
     } else if (ev.key === 'z' && !ev.metaKey && !ev.ctrlKey && !ev.altKey) {
       ev.preventDefault();
       $('undo-btn').click();
-    } else if (['1', '2', '3', '4'].includes(ev.key)) {
-      const map = { 1: 'printemps', 2: 'ete', 3: 'automne', 4: 'hiver' };
+    } else if (['0', '1', '2', '3', '4'].includes(ev.key)) {
+      const map = { 0: 'all', 1: 'printemps', 2: 'ete', 3: 'automne', 4: 'hiver' };
       const val = map[ev.key];
       const radio = document.querySelector(`input[name="season"][value="${val}"]`);
       if (radio) {

@@ -1205,12 +1205,12 @@ const QUEBEC_POMO_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:Sherbrooke%2C%20Quebec%20-%20centre-ville%20en%20automne%20-%203.jpg",
     license: "CC BY-SA 4.0",
     title: "Sherbrooke, Quebec - centre-ville en automne - 3",
-    focalY: 0.733,
+    focalY: 0.692,
     width: 4608,
     height: 3072,
     place: "Sherbrooke",
     season: "automne",
-    surfaces: ["masthead"],
-    tags: ["mat", "campus", "pomo"],
+    surfaces: ["masthead", "pomo"],
+    tags: ["campus", "mat", "pomo"],
   }
 ];

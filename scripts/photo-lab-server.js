@@ -202,7 +202,9 @@ async function handleApi(req, res, url) {
     }
     if (req.method === 'POST' && route === '/api/save') {
       const body = await readBody(req);
-      return sendJson(res, 200, lab.saveAll(body.url, body));
+      const result = lab.saveAll(body.url, body);
+      if (result && result.photo) result.photo = decorate(result.photo);
+      return sendJson(res, 200, result);
     }
     if (req.method === 'POST' && route === '/api/undo') {
       return sendJson(res, 200, lab.undo());
