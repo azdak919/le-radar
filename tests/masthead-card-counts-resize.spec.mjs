@@ -49,6 +49,7 @@ function snapshot(page) {
       chip.querySelector('.sports-chip__line-inner'),
       chip.querySelector('.sports-chip__sub-text'),
     ].some((el) => el && /ellipsis/i.test(getComputedStyle(el).textOverflow))).length;
+    const chipW = chips.map((el) => Math.round(el.getBoundingClientRect().width));
     return {
       weather: cities.length,
       chips: chips.length,
@@ -59,6 +60,7 @@ function snapshot(page) {
       wide: document.documentElement.dataset.widePreview || '',
       overlap: Math.round(overlap),
       inner: window.innerWidth,
+      chipSpread: chipW.length ? Math.max(...chipW) - Math.min(...chipW) : 0,
     };
   });
 }
@@ -123,6 +125,7 @@ test('mât : les quantités météo / scores / CTA suivent la largeur @ci-critic
   const at1600 = await resizeAndSettle(page, 1600, 900);
   expect(at1600.cta, '1600 : deux CTA au centre').toBe(2);
   expect(at1600.match, '1600 : un score de chaque côté, pas un orphelin étiré').toBeGreaterThanOrEqual(2);
+  expect(at1600.chipSpread, `1600 : cartes égales, spread ${at1600.chipSpread}`).toBeLessThanOrEqual(8);
 
   const at1920 = await resizeAndSettle(page, 1920, 1080);
   expect(at1920.wide).toBe('e');
@@ -131,6 +134,7 @@ test('mât : les quantités météo / scores / CTA suivent la largeur @ci-critic
   expect(at1920.match, '1920 : plusieurs puces scores, pas une seule étirée').toBeGreaterThanOrEqual(2);
   expect(at1920.chips).toBeGreaterThanOrEqual(4);
   expect(at1920.overlap).toBeLessThanOrEqual(1);
+  expect(at1920.chipSpread, `1920 : cartes égales, spread ${at1920.chipSpread}`).toBeLessThanOrEqual(8);
 
   const at2560 = await resizeAndSettle(page, 2560, 1440);
   expect(at2560.weather, '2560 : plus de météo qu’à 1920').toBeGreaterThan(at1920.weather);
