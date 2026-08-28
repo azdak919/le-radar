@@ -595,9 +595,7 @@ function sportsMatchChipCount() {
 
 function syncWeatherCountToSports() {
   if (!isWideDesktopComfort() || !MASTHEAD_WEATHER) return;
-  // Météo suit sa largeur (focus-group A) : ne pas abaisser son plafond
-  // quand le bandeau sports n’a qu’un ou deux scores à montrer.
-  fitWideWeatherSecondarySlots();
+  // Option D : largeurs = grille CSS. Rien à recaler depuis les scores.
 }
 
 /**
