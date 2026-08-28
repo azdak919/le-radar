@@ -661,7 +661,8 @@ function createPhotoLab(opts = {}) {
       if (payload.clear) {
         delete p.season;
         delete p.season6;
-        delete p.seasonSource;
+        p.seasonSource = 'manual';
+        p.seasonConfidence = 1;
       }
     });
     const n = patchQcByUrl(photo.url, (p) => {
@@ -679,7 +680,8 @@ function createPhotoLab(opts = {}) {
       if (payload.clear) {
         delete p.season;
         delete p.season6;
-        delete p.seasonSource;
+        p.seasonSource = 'manual';
+        p.seasonConfidence = 1;
       }
     });
     runSync();
@@ -888,11 +890,15 @@ function createPhotoLab(opts = {}) {
     if (payload.clearSeason) {
       extra.season = '';
       extra.season6 = '';
-      patchQcByUrl(photo.url, (p) => {
+      const markAllSeasons = (p) => {
         delete p.season;
         delete p.season6;
-        delete p.seasonSource;
-      });
+        p.seasonSource = 'manual';
+        p.seasonConfidence = 1;
+      };
+      patchUnified(photo.url, markAllSeasons);
+      patchQcByUrl(photo.url, markAllSeasons);
+      patchStockByUrl(photo.url, markAllSeasons);
     } else {
       if (payload.season) {
         if (!SEASON4.includes(payload.season)) {
