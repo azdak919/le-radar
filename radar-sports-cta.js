@@ -602,7 +602,18 @@ function syncWeatherCountToSports() {
  * Wide : nombre de cartes CTA (1–4) selon largeur + taille du pool.
  * Plusieurs CTAs = matchs / accroches **distincts** (pas la même info).
  * 1600 / 1920 → 2 ; 2560 → 3 ; 3440 / 3840 → 4. ≤1440 → 1.
+ * Toutes les cartes (CTA + scores) partagent la même largeur.
  */
+function isWide1600SportsBand() {
+  try {
+    return isWideDesktopComfort()
+      && window.matchMedia('(min-width: 1600px)').matches
+      && !window.matchMedia('(min-width: 1920px)').matches;
+  } catch {
+    return false;
+  }
+}
+
 function isWideDualSportsCta() {
   try {
     return isWideDesktopComfort() && window.matchMedia('(min-width: 1600px)').matches;
@@ -664,17 +675,11 @@ function sportsBoardCountBase() {
   const wide = isWideNoMarqueeMode();
   const comfort = isWideDesktopComfort();
   const gap = 6;
-  // ≥1440 : CTA gabarit 900/1280 ; scores plus larges (pas de troncature).
-  // Wide étroit : slots flex égaux, plus de puces.
-  const vw = (() => {
-    try { return document.documentElement.clientWidth || window.innerWidth || 0; } catch { return 0; }
-  })();
-  // 1600 : 2 CTA au centre, scores un cran plus serrés aux extrémités.
-  const minScore = comfort ? (vw < 1920 ? 176 : 200) : (wide ? 120 : 128);
-  const minCta = comfort ? 424 : (wide ? 140 : 152);
+  // Un seul plancher : CTA et scores ont la même largeur. Assez large
+  // pour un nom + sous-ligne sans clip ; si ça déborde encore, le fit −1.
+  const minSlot = comfort ? 220 : (wide ? 200 : 240);
   let maxN = 4;
   if (comfort) {
-    // Remplir le bandeau : 4 CTA dès 3440, 3 dès 2560, 2 dès 1600.
     if (avail >= 3000) maxN = 14;
     else if (avail >= 2200) maxN = 12;
     else if (avail >= 1700) maxN = 9;
@@ -686,7 +691,6 @@ function sportsBoardCountBase() {
     else maxN = 5;
   }
 
-  // Estimer le nb de CTA pour le budget largeur
   const roughCta = comfort
     ? sportsWantedCtaCount()
     : (wide
@@ -696,9 +700,8 @@ function sportsBoardCountBase() {
   let n = 1;
   for (let tryN = maxN; tryN >= 2; tryN -= 1) {
     const ctaN = wide ? Math.min(roughCta, tryN) : 1;
-    const scores = Math.max(0, tryN - ctaN);
-    const need = scores * minScore + ctaN * minCta + gap * (tryN - 1);
-    if (avail >= need) {
+    const need = tryN * minSlot + gap * (tryN - 1);
+    if (avail >= need && tryN >= ctaN) {
       n = tryN;
       break;
     }
@@ -707,10 +710,14 @@ function sportsBoardCountBase() {
   // Multi-CTA : pas d’obligation d’impair (cluster CTA au centre).
   if (wide && roughCta <= 1 && n >= 4 && n % 2 === 0) {
     const up = n + 1;
-    const scoresUp = up - 1;
-    const needUp = scoresUp * minScore + minCta + gap * (up - 1);
+    const needUp = up * minSlot + gap * (up - 1);
     if (avail >= needUp && up <= maxN) n = up;
     else n = Math.max(3, n - 1);
+  }
+  // Multi-CTA : nombre pair de scores (un de chaque côté du cluster).
+  if (comfort && roughCta >= 2) {
+    const scores = n - Math.min(roughCta, n);
+    if (scores >= 1 && scores % 2 === 1 && n > roughCta + 1) n -= 1;
   }
   return n;
 }
@@ -785,26 +792,25 @@ function sportsStripCramped() {
   const wide = isWideNoMarqueeMode();
   const comfort = isWideDesktopComfort();
   const minScore = comfort ? 0 : (wide ? 100 : 118);
-  const minCta = comfort ? 400 : (wide ? 120 : 148);
+  const minCta = wide ? 120 : 148;
 
   const cta = strip.querySelector('.sports-chip--cta');
   if (!cta) return true;
-  if (!comfort && cta.clientWidth + 0.5 < minCta) return true;
+  if (!comfort && !wide && cta.clientWidth + 0.5 < minCta) return true;
   if (!wide) {
     const tag = cta.querySelector('.sports-chip__cta-tag');
     if (tag && tag.scrollWidth > tag.clientWidth + 1) return true;
   }
 
   if (comfort) {
-    // Ne pas utiliser strip.scrollWidth : le texte marquee de la CTA l’enfle.
+    // Flex égal : la somme des cartes ≈ la largeur utile, donc ne pas
+    // traiter « used > avail » comme un débordement (ça vidait le bandeau
+    // jusqu’à 2 cartes géantes à 1440).
     for (const chip of chips) {
       if (chip.classList.contains('sports-chip--cta')) continue;
       if (sportsMatchChipTextOverflows(chip)) return true;
     }
-    const gap = 6;
-    const used = chips.reduce((sum, el) => sum + el.getBoundingClientRect().width, 0)
-      + gap * Math.max(0, chips.length - 1);
-    return used > sportsStripAvailWidth() + 2;
+    return false;
   }
 
   for (const chip of chips) {
@@ -863,56 +869,16 @@ function sportsMatchNaturalWidth(chip) {
   return Math.max(boxW, Math.ceil(textW) + 48);
 }
 
-/** ≥1440 : chaque score à sa largeur de texte ; le reliquat remplit les bouts. */
-function fitWideSportsMatchSlots({ fill = false } = {}) {
-  if (!isWideDesktopComfort() || !MASTHEAD_SPORTS_STRIP) return;
+/** Toutes largeurs : CTA et scores en flex égal — retirer les width inline. */
+function fitWideSportsMatchSlots() {
+  if (!MASTHEAD_SPORTS_STRIP) return;
   const strip = MASTHEAD_SPORTS_STRIP;
-  const matches = [...strip.querySelectorAll('.sports-chip--match')];
-  const ctas = [...strip.querySelectorAll('.sports-chip--cta')];
-  if (!matches.length) {
-    strip.style.removeProperty('--sports-match-w');
-    return;
-  }
-  const naturals = [];
-  matches.forEach((chip) => {
-    chip.style.removeProperty('flex');
-    chip.style.removeProperty('width');
-    chip.style.removeProperty('min-width');
-    chip.style.removeProperty('max-width');
-    naturals.push(Math.max(1, sportsMatchNaturalWidth(chip)));
-  });
-  if (!naturals.length || Math.max(...naturals) <= 0) return;
-  const gap = 6;
-  const ctaW = ctas.reduce((sum, el) => sum + Math.ceil(el.getBoundingClientRect().width), 0);
-  const n = matches.length + ctas.length;
-  const avail = sportsStripAvailWidth();
-  const need = naturals.reduce((sum, w) => sum + w, 0)
-    + ctaW
-    + gap * Math.max(0, n - 1);
-  // Jamais plus étroit que le texte (clip). Si ça ne rentre pas, le cramped
-  // retire une puce. Le reliquat s’ajoute à parts égales au-dessus du naturel.
-  const maxEach = matches.length
-    ? Math.max(80, Math.floor((avail - ctaW - gap * Math.max(0, n - 1)) / matches.length))
-    : avail;
-  let widths = naturals.map((w) => Math.min(w, maxEach));
-  if (fill && need <= avail + 2 && matches.length) {
-    let extra = Math.max(0, avail - need);
-    try {
-      const vw = document.documentElement.clientWidth || window.innerWidth || 0;
-      // 1600 : laisser le reliquat aux 2 CTA, scores un peu plus compacts.
-      if (vw >= 1600 && vw < 1920) extra = Math.floor(extra * 0.55);
-    } catch { /* ignore */ }
-    const add = Math.floor(extra / matches.length);
-    const rem = extra - add * matches.length;
-    widths = naturals.map((w, i) => Math.min(maxEach, w + add + (i < rem ? 1 : 0)));
-  }
-  strip.style.setProperty('--sports-match-w', `${Math.max(...widths)}px`);
-  matches.forEach((chip, i) => {
-    const slotW = widths[i] || naturals[i];
-    chip.style.setProperty('flex', `0 0 ${slotW}px`, 'important');
-    chip.style.setProperty('width', `${slotW}px`, 'important');
-    chip.style.setProperty('min-width', `${slotW}px`, 'important');
-    chip.style.setProperty('max-width', `${slotW}px`, 'important');
+  strip.style.removeProperty('--sports-match-w');
+  strip.querySelectorAll('.sports-chip').forEach((el) => {
+    el.style.removeProperty('flex');
+    el.style.removeProperty('width');
+    el.style.removeProperty('min-width');
+    el.style.removeProperty('max-width');
   });
 }
 
@@ -949,7 +915,11 @@ function fitSportsStripAfterPaint() {
   sportsFitDepth += 1;
   // Wide étroit : totaux impairs (CTA centrée). ≥1440 : juste −1 (garder le remplissage).
   // ≥ ~520 px : ne pas jeter le dernier score (round-trip 2560→1920 le perdait).
-  const floor = sportsStripAvailWidth() >= 520 ? 2 : 1;
+  // Multi-CTA : au moins un score de chaque côté (sinon le seul part à droite).
+  const ctaFloor = (typeof sportsWantedCtaCount === 'function') ? sportsWantedCtaCount() : 1;
+  const floor = isWideDesktopComfort()
+    ? (ctaFloor >= 2 ? ctaFloor + 2 : 3)
+    : (sportsStripAvailWidth() >= 520 ? 2 : 1);
   let next = count - 1;
   if (!comfort && wide && next >= 4 && next % 2 === 0) next -= 1;
   sportsFitCount = Math.max(floor, next);
