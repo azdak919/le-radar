@@ -5,13 +5,15 @@
  * reprend la même logique côté client (QUEBEC_UNIVERSITY_BACKGROUNDS + cégeps).
  *
  * Ordre d’affichage (toutes sources) :
- *   1. photo d’article (miroir local, puis URL source — y compris hôte fragile)
+ *   1. photo d’article (miroir local, puis URL d’origine — y compris hôte
+ *      fragile ; Photon / Wayback seulement si l’origine échoue)
  *   2. photo thématique (Openverse / Commons, imageProvider !== campus-bank)
  *   3. photo campus de l’établissement
  * Pas de carte texte / SVG tant qu’une photo campus existe en banque.
  *
- * Hôtes fragiles : on essaie quand même la photo d’article (timeout court) ;
- * le stock campus n’est qu’un filet si 1 et 2 échouent.
+ * Hôtes fragiles : on essaie l’origine d’abord (timeout court). Wayback n’est
+ * pas l’URL primaire — trop lent, ça basculait vers le campus alors que
+ * l’illustration d’article était bonne. Campus = filet si 1 et 2 échouent.
  */
 
 'use strict';
