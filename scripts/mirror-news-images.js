@@ -9,7 +9,7 @@
  *
  * Solution en couches (affichage client, app.js) :
  *   1. imageLocal  → assets/news-images/<hash>.ext  (ce script, GitHub Pages)
- *   2. image       → URL d’origine (évent. réécrite Wayback pour hôtes fragiles)
+ *   2. image       → URL d’origine (Photon / Wayback seulement si l’origine échoue)
  *   3. stockImage  → Openverse / campus-bank (ensure-lead-images)
  *   4. fallback    → SVG généré côté client
  *
@@ -36,7 +36,9 @@ const MANIFEST_PATH = path.join(CACHE_DIR, 'manifest.json');
 
 const doUpdate = process.argv.includes('--update');
 const forceAll = process.argv.includes('--force');
-const MAX_BYTES = Number(process.env.MIRROR_MAX_BYTES) || 750_000;
+/* 1,2 Mo : une illustration PNG 16:9 (~760 ko, ex. Sans fin(s) / L’Exemplaire)
+ * passait juste au-dessus de 750 ko et n’était jamais mirroirée. */
+const MAX_BYTES = Number(process.env.MIRROR_MAX_BYTES) || 1_200_000;
 const MIN_BYTES = 1_200;
 const CONCURRENCY = Math.max(1, Number(process.env.MIRROR_CONCURRENCY) || 4);
 const TIMEOUT_MS = 18_000;
@@ -104,6 +106,18 @@ function archiveUrl(url = '') {
   return `https://web.archive.org/web/2id_/${url}`;
 }
 
+function photonUrl(url = '') {
+  try {
+    const u = new URL(url);
+    const host = u.hostname.toLowerCase();
+    if (host === 'i0.wp.com' || host.endsWith('.wp.com')) return url;
+    if (!/\/wp-content\/uploads\//i.test(u.pathname)) return '';
+    return `https://i0.wp.com/${host}${u.pathname}?ssl=1`;
+  } catch {
+    return '';
+  }
+}
+
 function isFragile(url = '') {
   return FRAGILE_HOSTS.has(hostOf(url));
 }
@@ -136,6 +150,14 @@ async function downloadWithFallback(url) {
     return { ...(await fetchBuffer(url)), via: 'origin' };
   } catch (err) {
     if (!isFragile(url)) throw err;
+    const photon = photonUrl(url);
+    if (photon && photon !== url) {
+      try {
+        return { ...(await fetchBuffer(photon)), via: 'photon', sourceUrl: url };
+      } catch {
+        /* Wayback ensuite */
+      }
+    }
     const archived = archiveUrl(url);
     const out = await fetchBuffer(archived);
     return { ...out, via: 'wayback', sourceUrl: url };

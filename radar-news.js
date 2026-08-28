@@ -3117,13 +3117,26 @@ function isWeakImagePath(path = '', { forThumb = false } = {}) {
 
 /**
  * Hôtes dont les médias sont souvent injoignables (site journal down).
- * On bascule vers la capture Wayback (modificateur id_ = binaire original).
- * L'Exemplaire (ULaval) : 2026-07-30 — connexion refusée sur :80/:443.
+ * Wayback / Photon = repli après l’URL d’origine, jamais l’essai primaire :
+ * web.archive.org met ~7 s sur un HEAD, au-delà du timeout 4 s → campus
+ * alors que l’origine L’Exemplaire répond en < 200 ms (ex. illustration
+ * « Sans fin(s) », 2048×1152, dessin éditorial sur fond blanc).
  */
 const IMAGE_ARCHIVE_FALLBACK_HOSTS = new Set([
   'exemplaire.com.ulaval.ca',
   'www.exemplaire.com.ulaval.ca',
 ]);
+
+function hostOfHref(href = '') {
+  try {
+    return new URL(
+      String(href || '').trim(),
+      typeof location !== 'undefined' ? location.href : 'https://le-radar.ca/',
+    ).hostname.toLowerCase();
+  } catch {
+    return '';
+  }
+}
 
 /** Réécrit une URL image vers Internet Archive si l’hôte est en repli. */
 function withArchiveImageFallback(href = '') {
@@ -3137,6 +3150,25 @@ function withArchiveImageFallback(href = '') {
     return `https://web.archive.org/web/2id_/${u.href}`;
   } catch {
     return raw;
+  }
+}
+
+/**
+ * CDN Jetpack (i0.wp.com) — plus petit et CORS, cache indépendant de l’origine.
+ * Uniquement hôtes fragiles WP : un site sans Photon 404.
+ */
+function withPhotonImageUrl(href = '') {
+  const raw = String(href || '').trim();
+  if (!raw) return '';
+  try {
+    const u = new URL(raw, typeof location !== 'undefined' ? location.href : 'https://le-radar.ca/');
+    const host = u.hostname.toLowerCase();
+    if (host === 'i0.wp.com' || host.endsWith('.wp.com')) return u.href;
+    if (!IMAGE_ARCHIVE_FALLBACK_HOSTS.has(host)) return '';
+    if (!/\/wp-content\/uploads\//i.test(u.pathname)) return '';
+    return `https://i0.wp.com/${host}${u.pathname}?ssl=1`;
+  } catch {
+    return '';
   }
 }
 
@@ -3177,7 +3209,8 @@ function getCandidateImage(src = '', { forThumb = false } = {}) {
     if (width > 0 && height > 0 && width * height < minPx) return '';
   }
   if (isWeakImagePath(path, { forThumb })) return '';
-  return withArchiveImageFallback(url.href);
+  // Origine telle quelle. Wayback / Photon : photoDisplayRungs, pas ici.
+  return url.href;
 }
 
 /**
@@ -3380,6 +3413,32 @@ function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
   return { src: '', kind: 'none' };
 }
 
+/**
+ * Chaîne photo d’article, toujours vers l’avant :
+ *   local → origine → Photon (hôte fragile WP) → Wayback.
+ * Une illustration éditoriale (fond blanc, dessin) reste une photo d’article.
+ */
+function photoDisplayRungs(item = {}, { forThumb = false } = {}) {
+  const rungs = [];
+  const seen = new Set();
+  const push = (src, rung) => {
+    const href = String(src || '').trim();
+    if (!href || seen.has(href)) return;
+    seen.add(href);
+    rungs.push({ src: href, kind: 'photo', rung });
+  };
+  const local = resolveLocalPhotoUrl(item);
+  if (local) push(local, 'local');
+  const remote = getCandidateImage(item?.image, { forThumb });
+  if (remote) push(remote, 'origin');
+  const photon = withPhotonImageUrl(item?.image || remote || '');
+  if (photon) push(photon, 'photon');
+  const archived = withArchiveImageFallback(String(item?.image || remote || '').trim());
+  const failedIsArchive = hostOfHref(archived).includes('web.archive.org');
+  if (failedIsArchive) push(archived, 'archive');
+  return rungs;
+}
+
 /** Return the other usable source after an image request failed.
  * A stale Openverse URL must never cause us to retry itself and then discard
  * an otherwise valid image supplied by the publication. */
@@ -3392,14 +3451,11 @@ function alternateDisplayImage(item, failedKind, role = 'lead', failedSrc = '') 
   };
 
   if (failedKind === 'photo') {
-    const local = resolveLocalPhotoUrl(item);
-    if (different(local)) return { src: local, kind: 'photo' };
-    const remote = getCandidateImage(item?.image, { forThumb });
-    const failedIsArchive = /web\.archive\.org/i.test(failed);
-    // Un essai Wayback, puis on arrête : ne pas reboucler origine ↔ archive.
-    if (!failedIsArchive && different(remote)) {
-      const archived = withArchiveImageFallback(String(item?.image || remote || '').trim());
-      if (different(archived)) return { src: archived, kind: 'photo' };
+    const rungs = photoDisplayRungs(item, { forThumb });
+    const failedIdx = rungs.findIndex((r) => r.src === failed);
+    const start = failedIdx >= 0 ? failedIdx + 1 : 0;
+    for (let i = start; i < rungs.length; i += 1) {
+      if (different(rungs[i].src)) return rungs[i];
     }
     if (isThematicStock(item, role)) {
       const stock = getCandidateImage(item.stockImage, { forThumb });
@@ -3756,56 +3812,38 @@ function attachArticleImage(article, item, role) {
         loadImage(src, kind, allowRetry, { forceRaw: true });
         return;
       }
-      // Miroir local mort → distante/Wayback ; distante morte → Wayback ; puis stock.
-      if (allowRetry && kind === 'photo') {
-        if (/assets\/news-images\//i.test(src) && item?.image) {
-          const remote = getCandidateImage(item.image, { forThumb: isThumb });
-          if (remote && remote !== src) {
-            settled = true;
-            loadImage(remote, 'photo', true, { forceRaw: true });
-            return;
-          }
-        }
-        if (!/web\.archive\.org/i.test(src)) {
-          const archived = withArchiveImageFallback(String(item?.image || src || '').trim());
-          if (archived && archived !== src) {
-            settled = true;
-            loadImage(archived, kind, false, { forceRaw: true });
-            return;
-          }
-        }
-      }
+      // Origine → Photon → Wayback → thématique/campus (photoDisplayRungs).
       if (allowRetry && (kind === 'photo' || kind === 'stock')) {
         const alt = alternateDisplayImage(item, kind, role, src);
         if (alt.src && alt.src !== src) {
           settled = true;
-          loadImage(alt.src, alt.kind, false);
+          loadImage(alt.src, alt.kind, alt.kind === 'photo');
         } else {
           failToText();
         }
       } else {
-        // Wayback / stock en dernier essai : encore le campus, pas le vide.
         failToText();
       }
     };
 
     img.src = displaySrc;
 
-    // Timeout : tenter une alternative, mais ne PAS jeter une image stock
-    // encore en cours de chargement (Wikimedia 8K / réseau lent). Même règle
-    // pour une photo source : une réponse lente reste préférable à un stock
-    // incertain; seul son vrai onerror déclenche le repli.
-    const fragileRemote = IMAGE_ARCHIVE_FALLBACK_HOSTS.has((() => {
-      try { return new URL(String(item?.image || src || ''), location.href).hostname.toLowerCase(); }
-      catch { return ''; }
-    })());
-    const timeoutMs = fragileRemote ? 4000 : (isThumb ? 10000 : 6000);
+    // Timeout : une photo d’article lente (origine) reste préférable au campus.
+    // Wayback est lent (~7 s HEAD) : lui laisser 15 s. Origine fragile : 4 s
+    // puis Photon, pas le pavillon.
+    const srcHost = hostOfHref(src);
+    const fromArchive = srcHost.includes('web.archive.org');
+    const fromPhoton = srcHost.endsWith('.wp.com');
+    const fragileRemote = IMAGE_ARCHIVE_FALLBACK_HOSTS.has(hostOfHref(item?.image || src));
+    const timeoutMs = fromArchive ? 15000
+      : fromPhoton ? 8000
+      : (fragileRemote ? 4000 : (isThumb ? 10000 : 6000));
     window.setTimeout(() => {
       if (settled || article.classList.contains('has-image') || !media.isConnected) return;
       const alt = alternateDisplayImage(item, kind, role, src);
       if (alt.src && alt.src !== src && (allowRetry || alt.kind !== kind)) {
         settled = true;
-        loadImage(alt.src, alt.kind, false);
+        loadImage(alt.src, alt.kind, alt.kind === 'photo');
       }
     }, timeoutMs);
   };
@@ -3826,6 +3864,8 @@ function isUsableArticleImage(img, role) {
   const ratio = width / Math.max(height, 1);
   const isThumb = role === 'feature' || role === 'compact';
   const min = role === 'lead' ? LEAD_IMAGE_MIN : (isThumb ? THUMB_IMAGE_MIN : FEATURE_IMAGE_MIN);
+  // Dimensions seulement : un dessin éditorial (fond blanc, peu de traits) reste
+  // une image d’article. Pas de QC « wallpaper » ici.
   // Vignettes : très tolérant (object-fit). Stock/campus passent sans ce filtre.
   const [ratioMin, ratioMax] = isThumb ? [0.4, 4.0] : [0.95, 2.6];
   return (
