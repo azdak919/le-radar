@@ -388,7 +388,7 @@ test('wide E : ≥2560 ajoute une carte météo et resserre les slots', async ({
 
   const at1920 = await countAt(1920);
   const at2560 = await countAt(2560);
-  expect(at2560, `2560 doit faire +1 vs 1920 (${at1920})`).toBe(at1920 + 1);
+  expect(at2560, `2560 doit montrer plus de cartes météo qu’à 1920 (${at1920})`).toBeGreaterThan(at1920);
 
   const widths = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) =>
     cities.map((el) => Math.round(el.getBoundingClientRect().width)),

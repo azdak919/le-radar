@@ -595,20 +595,9 @@ function sportsMatchChipCount() {
 
 function syncWeatherCountToSports() {
   if (!isWideDesktopComfort() || !MASTHEAD_WEATHER) return;
-  const want = weatherSportsParityCount();
-  if (want < 3) return;
-  const byWidth = Math.max(2, Math.min(12, Math.floor(weatherBoardAvailWidth() / 170)));
-  const target = Math.min(want, byWidth);
-  const ceiling = mastheadWeatherFitCount == null
-    ? target
-    : Math.min(target, mastheadWeatherFitCount);
-  if (mastheadWeatherLastBoardCount === ceiling) {
-    fitWideWeatherSecondarySlots();
-    return;
-  }
-  mastheadWeatherFitCount = ceiling;
-  mastheadWeatherLastBoardCount = 0;
-  showMastheadWeatherBoard();
+  // Météo suit sa largeur (focus-group A) : ne pas abaisser son plafond
+  // quand le bandeau sports n’a qu’un ou deux scores à montrer.
+  fitWideWeatherSecondarySlots();
 }
 
 /**
@@ -862,15 +851,19 @@ function fitWideSportsMatchSlots({ fill = false } = {}) {
   });
   if (maxW <= 0) return;
   let slotW = maxW;
-  if (fill) {
-    const gap = 6;
-    const ctaW = ctas.reduce((sum, el) => sum + Math.ceil(el.getBoundingClientRect().width), 0);
-    const n = matches.length + ctas.length;
-    const room = sportsStripAvailWidth() - ctaW - gap * Math.max(0, n - 1);
-    if (room > 0) {
-      slotW = Math.max(maxW, Math.floor(room / matches.length));
-    }
+  const gap = 6;
+  const ctaW = ctas.reduce((sum, el) => sum + Math.ceil(el.getBoundingClientRect().width), 0);
+  const n = matches.length + ctas.length;
+  const room = sportsStripAvailWidth() - ctaW - gap * Math.max(0, n - 1);
+  if (fill && matches.length && room > 0) {
+    // Remplir le reliquat, sans jamais dépasser la place réelle (sinon
+    // 1920→1680 laissait un score plus large que le bandeau).
+    slotW = Math.floor(room / matches.length);
   }
+  if (matches.length && room > 0) {
+    slotW = Math.min(slotW, Math.floor(room / matches.length));
+  }
+  if (slotW < 1) return;
   strip.style.setProperty('--sports-match-w', `${slotW}px`);
   matches.forEach((chip) => {
     chip.style.setProperty('flex', `0 0 ${slotW}px`, 'important');
@@ -912,9 +905,17 @@ function fitSportsStripAfterPaint() {
   }
   sportsFitDepth += 1;
   // Wide étroit : totaux impairs (CTA centrée). ≥1440 : juste −1 (garder le remplissage).
+  // ≥ ~520 px : ne pas jeter le dernier score (round-trip 2560→1920 le perdait).
+  const floor = sportsStripAvailWidth() >= 520 ? 2 : 1;
   let next = count - 1;
   if (!comfort && wide && next >= 4 && next % 2 === 0) next -= 1;
-  sportsFitCount = Math.max(1, next);
+  sportsFitCount = Math.max(floor, next);
+  if (sportsFitCount >= count) {
+    fitWideSportsMatchSlots({ fill: true });
+    refreshSportsChipScroll();
+    syncWeatherCountToSports();
+    return;
+  }
   try {
     renderSportsStrip();
   } finally {
@@ -3130,6 +3131,43 @@ function arrangeSportsVisible(contentSlides, ctaOrList) {
   return [...contentSlides, ctas[0]];
 }
 
+/**
+ * Les deux faces V/D d’un même match restent dans le cycle, mais ne peuvent
+ * pas être voisines. On filtre **après** le placement CTA (wide = CTA au
+ * centre) : [V, CTA, D] est valide ; [V, D, CTA] recule D de l’autre côté
+ * si une CTA sépare, sinon on n’en garde qu’une.
+ */
+function sportsSeparateAdjacentResults(visible) {
+  if (!Array.isArray(visible) || visible.length < 2) return visible || [];
+  const kept = [];
+  const deferred = [];
+  for (const slide of visible) {
+    const prev = kept[kept.length - 1];
+    const a = sportsResultMatchKey(prev);
+    const b = sportsResultMatchKey(slide);
+    if (a && b && a === b) deferred.push(slide);
+    else kept.push(slide);
+  }
+  // Hors wide : CTA à droite. On ne recale pas une face après elle.
+  const wide = typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode();
+  if (!wide) return kept;
+  for (const slide of deferred) {
+    const key = sportsResultMatchKey(slide);
+    let inserted = false;
+    for (let i = 0; i <= kept.length; i += 1) {
+      const left = sportsResultMatchKey(kept[i - 1]);
+      const right = sportsResultMatchKey(kept[i]);
+      if (key && left === key) continue;
+      if (key && right === key) continue;
+      kept.splice(i, 0, slide);
+      inserted = true;
+      break;
+    }
+    if (!inserted) continue;
+  }
+  return kept;
+}
+
 function sportsCtaSlotIndex(visible = sportsVisible) {
   const i = visible.findIndex((s) => s?.mode === 'cta');
   return i >= 0 ? i : Math.max(0, visible.length - 1);
@@ -3174,12 +3212,10 @@ function pickInitialSportsVisible(count) {
   sportsVisible = ctas.slice();
   try {
     while (picked.length < contentCount) {
-      const previousKey = sportsResultMatchKey(picked[picked.length - 1]);
-      const avoidMatchKeys = previousKey ? new Set([previousKey]) : new Set();
       const slide = nextSportsSlide(usedKeys, {
         usedSports,
         avoidSport: '',
-        avoidMatchKeys,
+        avoidMatchKeys: new Set(),
       });
       if (!slide || slide.mode === 'info') break;
       if (sportsSlideIsUsed(slide, usedKeys)) break;
@@ -3191,7 +3227,7 @@ function pickInitialSportsVisible(count) {
     sportsVisible = prevVisible;
   }
 
-  return arrangeSportsVisible(picked, ctas);
+  return sportsSeparateAdjacentResults(arrangeSportsVisible(picked, ctas));
 }
 
 /** Remplit / recalcule les slots visibles (resize ou 1er paint). */
@@ -3302,7 +3338,7 @@ function renderSportsStrip() {
       sportsVisible = prevVis;
     }
     // Wide : CTAs au centre ; prod : CTA à droite.
-    sportsVisible = arrangeSportsVisible(nextVisible, ctasKeep);
+    sportsVisible = sportsSeparateAdjacentResults(arrangeSportsVisible(nextVisible, ctasKeep));
   }
   // Marqueur CSS pour le style « CTA centre » + nombre de CTAs
   if (MASTHEAD_SPORTS_STRIP) {

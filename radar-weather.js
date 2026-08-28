@@ -905,10 +905,9 @@ function weatherBoardCount() {
     if (isWideDesktopComfort()) {
       // 170 px / carte : plancher réaliste (nom + icône + °). Le fit post-paint
       // recoupe encore si Rouyn-Noranda / sidebar ne rentrent pas.
-      const byWidth = Math.max(2, Math.min(12, Math.floor(width / 170)));
-      const parity = weatherSportsParityCount();
-      if (parity > 0) count = Math.min(parity, byWidth);
-      else count = Math.min(12, Math.max(4, byWidth) + weatherSportsParityBonus());
+      // Focus-group A : météo ⊥ sports — la largeur du ruban décide, pas le
+      // nombre de scores (sinon 1 résultat étiré capait le mât à 3 villes).
+      count = Math.max(2, Math.min(12, Math.floor(width / 170)));
     } else if (width >= 1800) count = 8;
     else if (width >= 1200) count = 7;
     else if (width >= 900) count = 6;
@@ -926,8 +925,8 @@ function weatherBoardCount() {
   // Docké (768/900) : même plafond 3 pour lisibilité.
   if (mastheadWeatherDocked && count > 3) count = 3;
   // Wide dual : ne jamais descendre sous MTL+QC (fit inclus).
-  // La parité sports est un *cible*, jamais un plancher : un panneau latéral
-  // (Firefox, Chrome, Edge, Arc…) doit pouvoir retirer des cartes.
+  // Un panneau latéral (Firefox, Chrome, Edge, Arc…) doit pouvoir retirer
+  // des cartes via le plafond mesuré, pas rester coincé à un ancien compte.
   if (weatherWideDualPrimary()) {
     const floor = 2;
     if (mastheadWeatherFitCount === null) return Math.max(floor, count);
@@ -1629,10 +1628,22 @@ function scheduleMastheadWeatherLayout() {
     const nowW = document.documentElement.clientWidth || 0;
     const prevW = scheduleMastheadWeatherLayout._w;
     scheduleMastheadWeatherLayout._w = nowW;
+    const layoutKey = [
+      isWideNoMarqueeMode() ? 'w' : 'n',
+      MASTHEAD_WEATHER_PHONE_MQ.matches ? 'd' : 'u',
+      isWideDesktopComfort() ? 'c' : 'x',
+    ].join('');
+    const prevKey = scheduleMastheadWeatherLayout._key;
+    scheduleMastheadWeatherLayout._key = layoutKey;
     // Premier passage : ne pas traiter 0→viewport comme un « élargissement »
     // (fonts.ready re-montrait trop de cartes). Panneau qui s’ouvre = rétrécit
     // (garder le plafond). Fermeture = élargit (re-autoriser des cartes).
-    if (prevW != null && nowW > prevW + 8) {
+    // Changement de coque (wide ↔ bureau, dock ↔ mât) : tout re-mesurer,
+    // sinon le plafond d’un overflow transitoire reste coincé à 1 carte.
+    if (prevKey != null && prevKey !== layoutKey) {
+      mastheadWeatherFitCount = null;
+      weatherAvailTrim = 0;
+    } else if (prevW != null && nowW > prevW + 8) {
       mastheadWeatherFitCount = null;
       weatherAvailTrim = 0;
     }
