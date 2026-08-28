@@ -48,8 +48,12 @@ const SPORTS_SPORT_TONES = {
 const SPORTS_LIVE_BEFORE_MS = 2 * 3600 * 1000;
 const SPORTS_LIVE_AFTER_MS = 3 * 3600 * 1000;
 const SPORTS_IMMINENT_MS = 7 * 24 * 3600 * 1000; /* 7 jours */
-/** Puces scores : résultats des **5** derniers jours, avant les futurs hors CTA. */
-const SPORTS_RECENT_RESULT_MS = 5 * 24 * 3600 * 1000;
+/**
+ * Puces scores : résultats des **5** derniers jours **civils** Toronto
+ * (un dimanche 17 h reste affiché le vendredi soir — pas un filet 5×24 h).
+ */
+const SPORTS_RECENT_RESULT_DAYS = 5;
+const SPORTS_RECENT_RESULT_MS = SPORTS_RECENT_RESULT_DAYS * 24 * 3600 * 1000;
 /**
  * « Chaud » pour la *voie de gauche* / détection saison (pas le pool CTA).
  * La CTA suit une fenêtre de 5 jours civils de prochains + aujourd’hui/hier.
@@ -402,6 +406,34 @@ function sportsCivilDayShift(yyyyMmDd, deltaDays) {
   return new Date(utc).toISOString().slice(0, 10);
 }
 
+/** Jour civil Toronto d’un match (YYYY-MM-DD). */
+function sportsGameDayKey(game, now = Date.now()) {
+  const ms = sportsGameMs(game);
+  if (Number.isFinite(ms)) return torontoDayKey(ms);
+  const d = String(game?.date || '').trim();
+  return /^\d{4}-\d{2}-\d{2}$/.test(d) ? d : '';
+}
+
+/**
+ * Écart en jours civils Toronto (0 = aujourd’hui, 1 = hier).
+ * Négatif si le match est à venir. Infini si la date est illisible.
+ */
+function sportsCivilDaysAgo(game, now = Date.now()) {
+  const day = sportsGameDayKey(game, now);
+  const today = torontoDayKey(now);
+  if (!day || !today) return Number.POSITIVE_INFINITY;
+  const a = Date.parse(`${day}T12:00:00Z`);
+  const b = Date.parse(`${today}T12:00:00Z`);
+  if (!Number.isFinite(a) || !Number.isFinite(b)) return Number.POSITIVE_INFINITY;
+  return Math.round((b - a) / 86400000);
+}
+
+/** Résultat dans la fenêtre des puces (5 jours civils, saison courante). */
+function sportsResultIsRecent(game, now = Date.now()) {
+  const days = sportsCivilDaysAgo(game, now);
+  return Number.isFinite(days) && days >= 0 && days <= SPORTS_RECENT_RESULT_DAYS;
+}
+
 /**
  * Résultat admissible sur la CTA : jour civil Toronto = aujourd’hui **ou** hier.
  * (Remplace l’ancien filet glissant 48 h.)
@@ -492,8 +524,7 @@ function sportsUrgency(mode, game, now = Date.now()) {
   }
 
   // Résultat
-  const age = now - t;
-  if (age >= 0 && age <= SPORTS_RECENT_RESULT_MS) {
+  if (sportsResultIsRecent(game, now)) {
     return { tier: 2, sortMs: -t }; // plus récent d’abord
   }
   return { tier: 4, sortMs: -t };
@@ -552,7 +583,7 @@ function sportsNextSlide(team, now = Date.now()) {
 
 /**
  * Ancien « meilleur signal » par équipe — conservé pour la CTA (urgence).
- * Un résultat récent (SPORTS_RECENT_RESULT_MS) prime sur un prochain lointain ;
+ * Un résultat récent (5 j civils) prime sur un prochain lointain ;
  * un prochain imminent prime sur un vieux score.
  */
 function sportsPickTeamSlide(team, now = Date.now()) {
@@ -1077,12 +1108,11 @@ function sportsLeftLaneState() {
   const nexts = sportsNextSlidesSorted();
   const now = Date.now();
   // Focus-group le-radar-sports-left-pool (gate D + exclude priorSeason) :
-  // résultats < 7 j seulement ; jamais le musée lastGame via « CTA chaude ».
+  // 5 jours civils, pas 5×24 h ; jamais le musée lastGame hors saison.
   const recentResults = results.filter((s) => {
     if (!sportsSlideIsDisplayable(s)) return false;
     if (s?.game?.priorSeason || s?.team?.lastGamePriorSeason) return false;
-    const age = sportsResultAgeMs(s.game, now);
-    return Number.isFinite(age) && age >= 0 && age <= SPORTS_RECENT_RESULT_MS;
+    return sportsResultIsRecent(s.game, now);
   });
   // « Chaud » = score récent ou prochain ≤ 14 j (détection saison / appoint).
   let hasHot = recentResults.length > 0;
@@ -1101,13 +1131,18 @@ function sportsLeftLaneState() {
 
   if (recentResults.length) {
     // Résultats 5 j d’abord (V et D restent deux cartes). Puis les prochains
-    // (une face) pour remplir le bandeau : la CTA occupe déjà « son » match
-    // via occupy keys, les autres restent des puces scores normales.
+    // pour remplir le bandeau — le picker n’y touche qu’une fois les scores
+    // épuisés (pas de saut football « pour la diversité »).
     const seen = new Set(recentResults.map((s) => s.key));
     const moreNexts = sportsDedupeMatchSlides(nexts.filter((s) => (
       sportsSlideIsDisplayable(s) && !seen.has(s.key)
     )));
-    return { kind: 'results', pool: recentResults.concat(moreNexts) };
+    return {
+      kind: 'results',
+      results: recentResults,
+      nexts: moreNexts,
+      pool: recentResults.concat(moreNexts),
+    };
   }
   // Hors saison / creux : calendrier à venir seulement (pas de musée d’avril).
   // Filet ultime : un seul plus récent lastGame si vraiment zéro next.
@@ -2181,8 +2216,8 @@ function sportsSoftSportDiversity(slides) {
  *   • adversaire placeholder (ADV / TBD) exclu
  *
  *  CARTES GAUCHE
- *   • Résultats des 5 derniers jours d’abord, puis futurs **hors** fenêtre CTA
- *     (> 5 j). Hors saison : prochains.
+ *   • Résultats des 5 derniers **jours civils** d’abord (toutes les faces
+ *     encore disponibles), puis à-venir. Hors saison : prochains.
  */
 /** Jour civil America/Toronto d’une slide match (YYYY-MM-DD). */
 function sportsSlideDayKey(slide) {
@@ -3154,40 +3189,42 @@ function nextSportsSlide(usedKeys, opts = {}) {
     return null;
   }
 
-  // ── Saison : résultats passés seulement ──
-  const pool = lane.pool;
-  if (!pool.length) return null;
+  // ── Saison : résultats 5 j civils d’abord, puis à-venir ──
+  const resultPool = Array.isArray(lane.results) && lane.results.length
+    ? lane.results
+    : [];
+  const nextPool = Array.isArray(lane.nexts) ? lane.nexts : [];
+  const lists = resultPool.length || nextPool.length
+    ? [resultPool, nextPool]
+    : [lane.pool || []];
 
-  // 1) Sport pas encore dans le bandeau
-  for (let i = 0; i < pool.length; i += 1) {
-    const s = pool[(sportsLeftCursor + i) % pool.length];
-    if (!isAvailable(s)) continue;
-    const sp = String(s.team?.sport || '').toLowerCase();
-    if (sp && !usedSports.has(sp)) {
-      sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
-      return s;
-    }
-  }
-  // 2) Sport ≠ slot remplacé
-  if (avoidSport) {
-    for (let i = 0; i < pool.length; i += 1) {
-      const s = pool[(sportsLeftCursor + i) % pool.length];
+  const sportOf = (s) => String(s?.team?.sport || '').toLowerCase();
+  const pickFrom = (list) => {
+    if (!list.length) return null;
+    for (let i = 0; i < list.length; i += 1) {
+      const s = list[i];
       if (!isAvailable(s)) continue;
-      if (String(s.team?.sport || '').toLowerCase() !== avoidSport) {
-        sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
-        return s;
+      const sp = sportOf(s);
+      if (sp && !usedSports.has(sp)) return s;
+    }
+    if (avoidSport) {
+      for (let i = 0; i < list.length; i += 1) {
+        const s = list[i];
+        if (!isAvailable(s)) continue;
+        if (sportOf(s) !== avoidSport) return s;
       }
     }
-  }
-  // 3) Suivant non utilisé dans l’ordre de fraîcheur
-  for (let i = 0; i < pool.length; i += 1) {
-    const s = pool[(sportsLeftCursor + i) % pool.length];
-    if (isAvailable(s)) {
-      sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
-      return s;
+    for (let i = 0; i < list.length; i += 1) {
+      const s = list[i];
+      if (isAvailable(s)) return s;
     }
+    return null;
+  };
+
+  for (const list of lists) {
+    const s = pickFrom(list);
+    if (s) return s;
   }
-  // 4) Plus de candidats hors CTA
   return null;
 }
 
