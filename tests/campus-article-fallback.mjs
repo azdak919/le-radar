@@ -23,6 +23,8 @@ const {
   pickCampusFallback,
   campusNeedlesFor,
   filterUniversityPhotos,
+  planDisplayImage,
+  isThematicStockItem,
 } = require('../scripts/campus-fallback-lib.js');
 
 const newsSources = JSON.parse(readFileSync(join(root, 'news-sources.json'), 'utf8'));
@@ -141,12 +143,13 @@ for (const src of sources) {
   else skipped.push(`${src.name} (${inst})`);
 }
 
-assert.ok(
-  covered.length >= 12,
-  `au moins 12 sources avec campus (got ${covered.length}: ${covered.join(', ')})`,
+assert.equal(
+  skipped.length,
+  0,
+  `toutes les sources doivent avoir une photo campus (manque : ${skipped.join('; ')})`,
 );
 
-const activeNow = [
+const mustHaveCampus = [
   'Université Laval',
   'McGill University',
   'Université McGill',
@@ -160,29 +163,85 @@ const activeNow = [
   'Dawson College',
   'Cégep du Vieux Montréal',
   'Cégep de Jonquière (ATM – journalisme)',
+  'Cégep de Chicoutimi',
+  'Collège Lionel-Groulx',
+  'Collège de Maisonneuve',
+  'Cégep de Rimouski',
+  'Université du Québec à Chicoutimi',
 ];
-for (const inst of activeNow) {
+for (const inst of mustHaveCampus) {
   const client = pickCampusFallback({ institution: inst, link: `https://le-radar.ca/#${inst}` }, { universityPhotos });
   const bot = pickCampusPhoto({ institution: inst, link: `https://le-radar.ca/#${inst}` });
   assert.ok(
     client?.url || bot?.stockImage || hasCampusBank(inst),
-    `source active sans campus : ${inst} (key=${resolveBankKey(inst)}, entries=${bankEntriesFor(inst).length})`,
+    `établissement sans campus : ${inst} (key=${resolveBankKey(inst)}, entries=${bankEntriesFor(inst).length})`,
   );
 }
+
+const groulx = pickCampusFallback(
+  { institution: 'Collège Lionel-Groulx', link: 'https://le-radar.ca/#lg' },
+  { universityPhotos },
+);
+assert.ok(groulx?.url, 'Lionel-Groulx → campus');
+assert.match(`${groulx.title} ${groulx.url}`, /Lionel-Groulx/i, 'Lionel-Groulx : photo du collège');
+
+const maisonneuve = pickCampusFallback(
+  { institution: 'Collège de Maisonneuve', link: 'https://le-radar.ca/#mai' },
+  { universityPhotos },
+);
+assert.ok(maisonneuve?.url, 'Maisonneuve → campus');
+assert.match(`${maisonneuve.title} ${maisonneuve.url}`, /Maisonneuve/i, 'Maisonneuve : photo du cégep');
+
+const fragilePlan = planDisplayImage({
+  image: 'https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/05/SKIBIDI-MINIA-2.png',
+  stockImage: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Pavillon_Louis-Jacques-Casault_3.jpg',
+  imageProvider: 'campus-bank',
+  institution: 'Université Laval',
+});
+assert.equal(fragilePlan[0].rung, 'article', 'hôte fragile : photo d’article en 1, pas le campus');
+assert.equal(fragilePlan.at(-1).rung, 'campus', 'campus en dernier');
+assert.ok(!fragilePlan.some((p) => p.rung === 'thematic'), 'campus-bank n’est pas une photo thématique');
+
+const thematicPlan = planDisplayImage({
+  image: '',
+  stockImage: 'https://upload.wikimedia.org/wikipedia/commons/x/x1/Hotel_du_Parlement.jpg',
+  imageProvider: 'openverse',
+  institution: 'Université Laval',
+});
+assert.deepEqual(
+  thematicPlan.map((p) => p.rung),
+  ['thematic', 'campus'],
+  'sans photo d’article : thématique puis campus',
+);
+assert.equal(isThematicStockItem({ stockImage: 'https://x.test/a.jpg', imageProvider: 'openverse' }), true);
+assert.equal(isThematicStockItem({ stockImage: 'https://x.test/a.jpg', imageProvider: 'campus-bank' }), false);
 
 const radarNews = readFileSync(join(root, 'radar-news.js'), 'utf8');
 assert.match(radarNews, /ensureCampusStock/, 'fil : ensureCampusStock');
 assert.match(radarNews, /pickClientCampusPhoto/, 'fil : pickClientCampusPhoto');
 assert.match(radarNews, /referrerPolicy = 'no-referrer'/, 'fil : no-referrer anti-hotlink');
 assert.match(radarNews, /fragileRemote/, 'fil : timeout court sur hôte fragile');
-assert.match(radarNews, /isFragileUnmirroredPhoto/, 'fil : hôte fragile sans miroir → campus d’abord');
+assert.match(radarNews, /isThematicStock/, 'fil : thématique avant campus');
+assert.doesNotMatch(
+  radarNews,
+  /&&\s*!isFragileUnmirroredPhoto/,
+  'fil : ne pas sauter la photo d’article des hôtes fragiles',
+);
 assert.match(radarNews, /alternateDisplayImage\(item, kind, role, src\)/, 'fil : alternate reçoit l’URL ratée');
+assert.match(
+  radarNews,
+  /replaceThematic/,
+  'fil : thématique 404 → campus (pas SVG)',
+);
+assert.match(
+  radarNews,
+  /failedIsArchive/,
+  'fil : un essai Wayback, pas de boucle origine ↔ archive',
+);
 
 const ensure = readFileSync(join(root, 'scripts/ensure-lead-images.js'), 'utf8');
 assert.match(ensure, /itemNeedsCampusBackup/, 'bot : backup campus même si URL source');
 assert.match(ensure, /imageHostIsFragile/, 'bot : hôtes fragiles');
+assert.match(ensure, /hasThematic/, 'bot : 2e chance Openverse même si campus déjà posé');
 
-if (skipped.length) {
-  console.log('sources sans campus (hors fil actif, OK) :', skipped.join('; '));
-}
-console.log(`OK campus-article-fallback (${covered.length} sources couvertes)`);
+console.log(`OK campus-article-fallback (${covered.length} sources couvertes, 0 trou)`);

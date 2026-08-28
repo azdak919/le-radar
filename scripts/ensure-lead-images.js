@@ -610,7 +610,11 @@ async function main() {
     let freeRetry = 0;
     for (const item of items) {
       if (hasSourcePhoto(item, sourceMap)) continue;
-      if (item.stockImage && isCandidateImageUrl(item.stockImage)) continue;
+      // Campus déjà posé : encore le droit à une photo thématique (ordre 2 avant 3).
+      const hasThematic = item.stockImage
+        && item.imageProvider !== 'campus-bank'
+        && isCandidateImageUrl(item.stockImage);
+      if (hasThematic) continue;
       if (isSubstackItem(item)) continue;
       const hints = imageHintsFor(item, sourceMap);
       if (hints.disableFreeStock === true) continue;

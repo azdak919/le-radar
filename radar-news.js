@@ -3261,9 +3261,15 @@ function pickClientCampusPhoto(item = {}) {
   return lib.pickCampusFallback(item, { universityPhotos: uni });
 }
 
-function ensureCampusStock(item) {
+function isThematicStock(item, role = 'lead') {
+  return hasStockPhoto(item, role) && item.imageProvider !== 'campus-bank';
+}
+
+function ensureCampusStock(item, { replace = false } = {}) {
   if (!item || typeof item !== 'object') return null;
-  if (item.stockImage && getCandidateImage(item.stockImage, { forThumb: true })) return item;
+  if (!replace && item.stockImage && getCandidateImage(item.stockImage, { forThumb: true })) {
+    return item;
+  }
   const pick = pickClientCampusPhoto(item);
   if (!pick?.url && !pick?.stockImage) return null;
   const url = pick.stockImage || pick.url;
@@ -3330,31 +3336,10 @@ function buildClientFallbackDataUrl(item) {
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
 
-function isFragileUnmirroredPhoto(item) {
-  if (hasLocalPhoto(item)) return false;
-  try {
-    const host = new URL(String(item?.image || ''), location.href).hostname.toLowerCase();
-    return IMAGE_ARCHIVE_FALLBACK_HOSTS.has(host);
-  } catch {
-    return false;
-  }
-}
-
 function shouldPreferStockPhoto(item, role = 'lead') {
-  // Hôte fragile sans miroir (L’Exemplaire, etc.) : ne pas attendre Wayback.
-  if (isFragileUnmirroredPhoto(item)) {
-    ensureCampusStock(item);
-    if (hasStockPhoto(item, role)) return true;
-  }
-  // Jamais remplacer une vraie photo d'article par la banque campus (pavillon).
-  if (item.imageProvider === 'campus-bank' && hasUsablePhoto(item, role)) return false;
-  // Source absente / rejetée (logo Daily.png, logo Exil, bannière editorial_…) → stock.
-  // Le rejet path (GLOBAL_IMAGE_REJECT_RE) fait basculer hasUsablePhoto à false.
-  if (hasStockPhoto(item, role) && !hasUsablePhoto(item, role)) return true;
-  // Une image source réelle garde priorité, même si le bot l'a jugée un peu
-  // sous le seuil de grande vedette. Le navigateur accepte cette photo pour la
-  // une dès 200 × 150; cela évite qu'un ancien lien Openverse la remplace par
-  // une image cassée ou hors sujet.
+  // Photo d’article d’abord — y compris hôte fragile (timeout court au load).
+  if (hasUsablePhoto(item, role)) return false;
+  if (hasStockPhoto(item, role)) return true;
   return false;
 }
 
@@ -3362,28 +3347,18 @@ function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
   const forThumb = isThumbRoleName(role);
   if (shouldPreferStockPhoto(item, role)) preferPhoto = false;
 
-  // 1) Miroir local (GitHub Pages) — résilient si l’origine journal est down.
+  // 1) Photo d’article : miroir local, puis URL source (hôte fragile inclus).
   if (preferPhoto && hasLocalPhoto(item)) {
     return { src: resolveLocalPhotoUrl(item), kind: 'photo' };
   }
-  // 2) Photo source distante — sauf hôte fragile non mirroiré (Wayback pend).
-  if (
-    preferPhoto
-    && !isFragileUnmirroredPhoto(item)
-    && getCandidateImage(item?.image, { forThumb })
-  ) {
+  if (preferPhoto && getCandidateImage(item?.image, { forThumb })) {
     return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
   }
-  // 3) Banque libre thématique ; campus bank seulement sans photo source.
-  if (hasStockPhoto(item, role)) {
-    if (item.imageProvider === 'campus-bank' && hasUsablePhoto(item, role)) {
-      const local = resolveLocalPhotoUrl(item);
-      if (local) return { src: local, kind: 'photo' };
-      return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
-    }
+  // 2) Photo thématique (Openverse / Commons) — jamais la banque campus ici.
+  if (isThematicStock(item, role)) {
     return { src: getCandidateImage(item.stockImage, { forThumb }), kind: 'stock' };
   }
-  // 4) Baseline campus de l’établissement (Laval, McGill, Dawson…).
+  // 3) Campus de l’établissement. Pas de SVG tant que la banque a une photo.
   ensureCampusStock(item);
   if (hasStockPhoto(item, role)) {
     return { src: getCandidateImage(item.stockImage, { forThumb }), kind: 'stock' };
@@ -3420,11 +3395,16 @@ function alternateDisplayImage(item, failedKind, role = 'lead', failedSrc = '') 
     const local = resolveLocalPhotoUrl(item);
     if (different(local)) return { src: local, kind: 'photo' };
     const remote = getCandidateImage(item?.image, { forThumb });
-    if (different(remote) && !/web\.archive\.org/i.test(failed)) {
+    const failedIsArchive = /web\.archive\.org/i.test(failed);
+    // Un essai Wayback, puis on arrête : ne pas reboucler origine ↔ archive.
+    if (!failedIsArchive && different(remote)) {
       const archived = withArchiveImageFallback(String(item?.image || remote || '').trim());
       if (different(archived)) return { src: archived, kind: 'photo' };
     }
-    if (different(remote)) return { src: remote, kind: 'photo' };
+    if (isThematicStock(item, role)) {
+      const stock = getCandidateImage(item.stockImage, { forThumb });
+      if (different(stock)) return { src: stock, kind: 'stock' };
+    }
   }
   if (failedKind === 'stock') {
     const local = resolveLocalPhotoUrl(item);
@@ -3432,14 +3412,12 @@ function alternateDisplayImage(item, failedKind, role = 'lead', failedSrc = '') 
     const remote = getCandidateImage(item?.image, { forThumb });
     if (different(remote)) return { src: remote, kind: 'photo' };
   }
-  ensureCampusStock(item);
+  // Thématique morte → campus (on remplace le stock Openverse 404).
+  const replaceThematic = failedKind === 'stock' && item.imageProvider !== 'campus-bank';
+  ensureCampusStock(item, { replace: replaceThematic });
   if (hasStockPhoto(item, role)) {
     const stock = getCandidateImage(item.stockImage, { forThumb });
     if (different(stock)) return { src: stock, kind: 'stock' };
-  }
-  if (role === 'lead') {
-    const svg = buildClientFallbackDataUrl(item);
-    if (svg && different(svg)) return { src: svg, kind: 'fallback' };
   }
   return { src: '', kind: 'none' };
 }
