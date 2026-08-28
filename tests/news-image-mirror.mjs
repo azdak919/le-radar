@@ -3,6 +3,7 @@
  * Pas de réseau : pure logique.
  */
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
@@ -36,6 +37,11 @@ assert.notEqual(
 );
 
 assert.ok(imageUrlKey(u1).includes('foo'), 'imageUrlKey extrait le basename');
+
+const mirrorJs = readFileSync(path.join(root, 'scripts/mirror-news-images.js'), 'utf8');
+assert.match(mirrorJs, /1_200_000/, 'miroir : plafond 1,2 Mo (PNG éditorial ~760 ko)');
+assert.match(mirrorJs, /photonUrl/, 'miroir : Photon si l’origine est trop lourde / down');
+assert.match(mirrorJs, /via: 'photon'/, 'miroir : via photon');
 
 // Script chargeable (syntaxe)
 const check = spawnSync(process.execPath, ['--check', path.join(root, 'scripts/mirror-news-images.js')], {

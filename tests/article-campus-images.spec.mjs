@@ -34,6 +34,37 @@ test('accueil hydrate le fil sans erreur JS', async ({ page }) => {
   await expect(page.locator('#news-list .article.has-image').first()).toBeVisible({ timeout: 15_000 });
 });
 
+test('Sans fin(s) : illustration d’article, pas le pavillon campus', async ({ page }) => {
+  const pageErrors = [];
+  page.on('pageerror', (error) => pageErrors.push(String(error)));
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await waitForNewsReady(page);
+
+  const present = await page.evaluate(async () => {
+    const res = await fetch('news.json', { cache: 'no-cache' });
+    const data = await res.json();
+    const items = Array.isArray(data) ? data : (data.items || []);
+    return items.some((it) => /Sans fin/i.test(it.title || ''));
+  });
+  test.skip(!present, 'Sans fin(s) plus dans news.json');
+
+  await openSource(page, "L'Exemplaire");
+  await waitForNewsReady(page);
+  expect(pageErrors, pageErrors.join('\n')).toEqual([]);
+
+  const card = page.locator('#news-list .article').filter({ hasText: /Sans fin/ }).first();
+  await expect(card, 'carte Sans fin(s) absente').toBeVisible({ timeout: 15_000 });
+  await expect(card).toHaveClass(/has-image/, { timeout: 20_000 });
+  const src = (await card.locator('.article-media img').getAttribute('src')) || '';
+  expect(src, 'src campus Wikimedia').not.toMatch(/wikimedia|upload\.wikimedia/i);
+  expect(src, 'src illustration Exemplaire').toMatch(
+    /Illustration-recadree|i0\.wp\.com|exemplaire\.com\.ulaval/i,
+  );
+  const credit = (await card.locator('.article-media').innerText()) || '';
+  expect(credit, 'crédit Cephas campus').not.toMatch(/Cephas/i);
+});
+
 test('L\'Exemplaire : une + Skibidi ont une photo (source ou campus)', async ({ page }) => {
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(String(error)));
