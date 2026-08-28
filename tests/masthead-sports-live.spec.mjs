@@ -82,6 +82,27 @@ function yesterdayResultGame() {
   };
 }
 
+function civilDaysAgoResultGame(daysBack, extra = {}) {
+  const { date } = torontoParts();
+  const noon = Date.parse(`${date}T12:00:00`);
+  const past = torontoParts(noon - daysBack * 86400000);
+  return {
+    date: past.date,
+    time: '17:00',
+    opponent: 'Vanier',
+    opponentCode: 'VAN',
+    opponentFullName: 'Vanier College',
+    home: true,
+    sport: 'soccer',
+    competition: 'Soccer collégial masculin D1',
+    scoreFor: 3,
+    scoreAgainst: 0,
+    result: 'W',
+    final: true,
+    ...extra,
+  };
+}
+
 function livePayload({ score, period, offsetMs = -8 * 60 * 1000 } = {}) {
   const game = liveKickGame({
     opponent: 'Vanier',
@@ -940,6 +961,92 @@ test('puces scores : V d’un côté et D de l’autre, pas de dédup', async ({
     expect(right.gameId, 'les deux faces du même résultat ne sont jamais côte à côte')
       .not.toBe(left.gameId);
   }
+});
+
+test('puces : résultats 5 j civils avant les à-venir, même sport', async ({ page }) => {
+  const past = civilDaysAgoResultGame(5, { gameId: 'five-day-result' });
+  const tonight = liveKickGame({
+    opponent: 'McGill',
+    opponentCode: 'MCG',
+    opponentFullName: 'McGill',
+    offsetMs: 2 * 3600 * 1000,
+    extra: { live: false, gameId: 'tonight-next' },
+  });
+  const tR = teamShell('collegial:soccer:sth-r', {
+    name: 'Saint-Hyacinthe', fullName: 'Cégep de Saint-Hyacinthe', code: 'STH',
+  });
+  tR.lastGame = past;
+  tR.results = [past];
+  const tN = teamShell('collegial:soccer:lav-n', {
+    name: 'Laval', fullName: 'Université Laval', code: 'LAV',
+  });
+  tN.nextGame = tonight;
+  tN.nextGames = [tonight];
+  await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [tR.id]: tR, [tN.id]: tN },
+  });
+  const info = await page.evaluate(() => {
+    const lane = sportsLeftLaneState();
+    sportsLeftCursor = 0;
+    const first = nextSportsSlide(new Set());
+    sportsFitCount = 4;
+    renderSportsStrip();
+    const sides = sportsVisible.filter((s) => s && s.mode !== 'cta');
+    return {
+      kind: lane.kind,
+      resultN: (lane.results || []).length,
+      firstMode: first?.mode || '',
+      firstId: String(first?.game?.gameId || ''),
+      sideModes: sides.map((s) => s.mode),
+      recent: typeof sportsResultIsRecent === 'function'
+        ? sportsResultIsRecent(lane.results?.[0]?.game)
+        : null,
+    };
+  });
+  expect(info.kind, 'saison = des scores dans les 5 j civils').toBe('results');
+  expect(info.resultN, 'le 3–0 d’il y a 5 j civils reste').toBeGreaterThanOrEqual(1);
+  expect(info.firstMode, 'première puce = résultat, pas reçoit').toBe('result');
+  expect(info.firstId).toBe('five-day-result');
+  expect(info.sideModes[0], 'côté gauche : score avant à-venir').toBe('result');
+});
+
+test('puces : un résultat à 6 j civils n’est plus dans les 5 j', async ({ page }) => {
+  const stale = civilDaysAgoResultGame(6, { gameId: 'six-day-result' });
+  const tonight = liveKickGame({
+    opponent: 'McGill',
+    opponentCode: 'MCG',
+    opponentFullName: 'McGill',
+    offsetMs: 2 * 3600 * 1000,
+    extra: { live: false, gameId: 'tonight-next' },
+  });
+  const tR = teamShell('collegial:soccer:sth-old', {
+    name: 'Saint-Hyacinthe', fullName: 'Cégep de Saint-Hyacinthe', code: 'STH',
+  });
+  tR.lastGame = stale;
+  tR.results = [stale];
+  const tN = teamShell('collegial:soccer:lav-n2', {
+    name: 'Laval', fullName: 'Université Laval', code: 'LAV',
+  });
+  tN.nextGame = tonight;
+  tN.nextGames = [tonight];
+  await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [tR.id]: tR, [tN.id]: tN },
+  });
+  const info = await page.evaluate(() => {
+    const lane = sportsLeftLaneState();
+    return {
+      kind: lane.kind,
+      resultN: (lane.results || []).length,
+      poolHasOld: (lane.pool || []).some((s) => s.game?.gameId === 'six-day-result'),
+    };
+  });
+  expect(info.kind, 'plus de score chaud → calendrier').toBe('offseason');
+  expect(info.resultN).toBe(0);
+  expect(info.poolHasOld, 'le 6e jour civil n’encombre pas les puces').toBe(false);
 });
 
 test('bandeau : nextGames entier, pas un seul match par équipe', async ({ page }) => {
