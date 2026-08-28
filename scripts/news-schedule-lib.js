@@ -36,6 +36,15 @@ const SCHEDULE_TOLERANCE_MS = SCHEDULE_TOLERANCE_MINUTES * 60 * 1000;
 
 const SAFETY_NET_CRON = '20 * * * *';
 
+// Filet hors cron : GitHub lâche souvent les horaires fréquents de ce dépôt
+// (news horaire, sports live 5 min, radio 30 min). Les bots plus rares
+// (scores RSEQ, radio now-playing quand il part) restent des déclencheurs
+// fiables. Noms = champ `name:` des YAML, pas le nom de fichier.
+const FILET_WORKFLOWS = [
+  'Update Radio Now Playing',
+  'Update Student Sports (RSEQ)',
+];
+
 function fireTimeFor(slot) {
   return new Date(slot.getTime() - CRON_LEAD_MS);
 }
@@ -91,6 +100,7 @@ module.exports = {
   CRON_LEAD_MINUTES,
   SCHEDULE_TOLERANCE_MINUTES,
   SAFETY_NET_CRON,
+  FILET_WORKFLOWS,
   scheduledSlotFor,
   primaryFireUtc,
 };
