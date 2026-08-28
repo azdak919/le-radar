@@ -677,7 +677,7 @@ function sportsBoardCountBase() {
   const gap = 6;
   // Un seul plancher : CTA et scores ont la même largeur. Assez large
   // pour un nom + sous-ligne sans clip ; si ça déborde encore, le fit −1.
-  const minSlot = comfort ? 280 : (wide ? 200 : 240);
+  const minSlot = comfort ? 220 : (wide ? 200 : 240);
   let maxN = 4;
   if (comfort) {
     if (avail >= 3000) maxN = 14;
@@ -803,15 +803,14 @@ function sportsStripCramped() {
   }
 
   if (comfort) {
-    // Ne pas utiliser strip.scrollWidth : le texte marquee de la CTA l’enfle.
+    // Flex égal : la somme des cartes ≈ la largeur utile, donc ne pas
+    // traiter « used > avail » comme un débordement (ça vidait le bandeau
+    // jusqu’à 2 cartes géantes à 1440).
     for (const chip of chips) {
       if (chip.classList.contains('sports-chip--cta')) continue;
       if (sportsMatchChipTextOverflows(chip)) return true;
     }
-    const gap = 6;
-    const used = chips.reduce((sum, el) => sum + el.getBoundingClientRect().width, 0)
-      + gap * Math.max(0, chips.length - 1);
-    return used > sportsStripAvailWidth() + 2;
+    return false;
   }
 
   for (const chip of chips) {
@@ -918,8 +917,8 @@ function fitSportsStripAfterPaint() {
   // ≥ ~520 px : ne pas jeter le dernier score (round-trip 2560→1920 le perdait).
   // Multi-CTA : au moins un score de chaque côté (sinon le seul part à droite).
   const ctaFloor = (typeof sportsWantedCtaCount === 'function') ? sportsWantedCtaCount() : 1;
-  const floor = (isWideDesktopComfort() && ctaFloor >= 2)
-    ? ctaFloor + 2
+  const floor = isWideDesktopComfort()
+    ? (ctaFloor >= 2 ? ctaFloor + 2 : 3)
     : (sportsStripAvailWidth() >= 520 ? 2 : 1);
   let next = count - 1;
   if (!comfort && wide && next >= 4 && next % 2 === 0) next -= 1;
