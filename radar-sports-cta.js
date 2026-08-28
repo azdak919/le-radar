@@ -1959,20 +1959,21 @@ function sportsCtaLamp(slide, state) {
 }
 
 /**
- * Sous-ligne live : période RSEQ si elle existe, compétition, tampon de
- * dernière *vérification* (`mis à jour à 19 h 22`). Jamais l’âge du coup
+ * Sous-ligne live : heure de début (`18 h 30`), période RSEQ si elle existe,
+ * compétition, tampon de dernière *vérification*. Jamais l’âge du coup
  * d’envoi (« il y a 2 min » sous En cours se lit comme un match fini).
  */
 function sportsLiveSubParts(slide) {
+  const kick = sportsKickoffClock(slide?.game);
   const period = sportsLivePeriodLabel(slide?.game);
   const comp = sportsCompetitionLabel(slide);
-  return [period, comp, sportsUpdatedShort()].filter(Boolean);
+  return [kick, period, comp, sportsUpdatedShort()].filter(Boolean);
 }
 
 /**
  * Sous-ligne CTA — hiérarchie scorebug (ESPN / Flashscore / L’Équipe) :
- *   live    → période si l’API la donne, sinon compétition, + tampon
- *             « mis à jour à ». Jamais l’âge du coup d’envoi.
+ *   live    → heure de début, période si l’API la donne, compétition,
+ *             tampon « mis à jour à ». Jamais l’âge du coup d’envoi.
  *   prochain→ aujourd’hui : « Aujourd’hui · 19 h 00 » (compte à rebours
  *             seulement dans l’heure : « Aujourd’hui · dans 45 min »).
  *             Demain / plus tard : heure ou date, sans redire la pastille.
@@ -2941,6 +2942,7 @@ function sportsChipTitle(slide) {
       'En cours',
       sport,
       `${home} ${sportsLiveScoreText(g)} ${opp}`,
+      sportsKickoffClock(g),
       sportsUpdatedShort(),
       host,
     ].filter(Boolean).join(' · ');

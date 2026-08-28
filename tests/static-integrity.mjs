@@ -1531,9 +1531,10 @@ assert(
     && appJs.includes('SPORTS_LIVE_SCORE_PENDING')
     && appJs.includes('function sportsLiveScoreText')
     && appJs.includes('function sportsLiveTeamsScoreHtml')
-    && /function sportsLiveSubParts[\s\S]{0,400}sportsUpdatedShort/.test(appJs)
-    && !/function sportsLiveSubParts[\s\S]{0,400}sportsRelative/.test(appJs),
-  'app.js : sous-ligne live = période / compétition / tampon vérif (pas « il y a 2 min »)',
+    && /function sportsLiveSubParts[\s\S]{0,500}sportsKickoffClock/.test(appJs)
+    && /function sportsLiveSubParts[\s\S]{0,500}sportsUpdatedShort/.test(appJs)
+    && !/function sportsLiveSubParts[\s\S]{0,500}sportsRelative/.test(appJs),
+  'app.js : sous-ligne live = coup d’envoi / période / compétition / tampon (pas « il y a 2 min »)',
 );
 assert(
   /\[data-cta-state="live"\][^{]*\{[^}]*sports-cta-ring-pulse/.test(cssFlat),

@@ -259,8 +259,16 @@ async function openWithSports(page, payload, viewport = { width: 1280, height: 9
   return cta;
 }
 
+function kickoffClockFromPayload(payload) {
+  const game = Object.values(payload.teams || {})[0]?.nextGame;
+  const t = String(game?.time || '');
+  const m = t.match(/^(\d{1,2}):(\d{2})/);
+  return m ? `${m[1]} h ${m[2]}` : '';
+}
+
 test('CTA live : En cours, scorebug et tampon, pas « dans 15 min »', async ({ page }) => {
-  const cta = await openWithSports(page, livePayload());
+  const payload = livePayload();
+  const cta = await openWithSports(page, payload);
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En cours');
   const text = await cta.locator('.sports-chip__cta-text').innerText();
@@ -269,6 +277,9 @@ test('CTA live : En cours, scorebug et tampon, pas « dans 15 min »', async ({ 
   expect(text).not.toMatch(/reçoit/);
   await expect(cta.locator('.sports-chip__score')).toHaveText('—');
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
+  const kick = kickoffClockFromPayload(payload);
+  expect(kick).toBeTruthy();
+  expect(sub).toMatch(new RegExp(kick.replace(' ', '\\s+')));
   expect(sub).toMatch(/Soccer collégial masculin D1/);
   expect(sub).toMatch(/mis à jour à/);
   expect(sub.toLowerCase()).not.toMatch(/dans \d/);
@@ -277,10 +288,13 @@ test('CTA live : En cours, scorebug et tampon, pas « dans 15 min »', async ({ 
 });
 
 test('CTA live : pas « il y a 2 min » sous En cours', async ({ page }) => {
-  const cta = await openWithSports(page, livePayload({ offsetMs: -2 * 60 * 1000 }));
+  const payload = livePayload({ offsetMs: -2 * 60 * 1000 });
+  const cta = await openWithSports(page, payload);
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En cours');
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
+  const kick = kickoffClockFromPayload(payload);
+  expect(sub).toMatch(new RegExp(kick.replace(' ', '\\s+')));
   expect(sub).toMatch(/Soccer collégial masculin D1/);
   expect(sub).toMatch(/mis à jour à/);
   expect(sub.toLowerCase()).not.toMatch(/il y a/);
@@ -304,6 +318,7 @@ test('CTA live : score et période dès qu’ils sont collés', async ({ page })
   expect(sub).toMatch(/1re mi-temps/);
   expect(sub).toMatch(/Soccer collégial masculin D1/);
   expect(sub).toMatch(/mis à jour à/);
+  expect(sub).toMatch(/\d{1,2}\s*h\s*\d{2}/);
 });
 
 test('CTA live : un direct écarte résultats et prochains du cycle', async ({ page }) => {
