@@ -377,3 +377,25 @@ test('labo photo : grille puis fiche, suivant en barre', async ({ page }) => {
   await expect(page.locator('#save-meta-btn')).toContainText('Enregistrer tout');
   await expect(page.locator('#persist-hint')).toContainText('fichiers locaux');
 });
+
+test('labo photo : Enregistrer reste sur la même fiche et garde saison / cadrage', async ({ page }) => {
+  await page.goto(`${BASE}/dev/photo-lab/`, { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#grid .card').first()).toBeVisible({ timeout: 15_000 });
+  await page.locator('#grid .card').first().click();
+  await expect(page.locator('#panel-body')).toBeVisible();
+  const title = (await page.locator('#photo-meta').textContent()) || '';
+  const beforeSeason = await page.locator('input[name="season"]:checked').getAttribute('value');
+  const target = beforeSeason === 'ete' ? 'hiver' : 'ete';
+  await page.locator(`input[name="season"][value="${target}"]`).click();
+  await page.locator('#focal').evaluate((el) => {
+    el.value = '310';
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await page.locator('#save-meta-btn').click();
+  await expect(page.locator('#status')).toContainText(/Enregistré/i, { timeout: 15_000 });
+  await expect(page.locator('#photo-meta')).toContainText(title.slice(0, 12));
+  await expect(page.locator(`input[name="season"][value="${target}"]`)).toBeChecked();
+  await expect(page.locator('#focal-val')).toHaveText('0.31');
+  await page.locator('#undo-btn').click();
+  await expect(page.locator('#status')).toContainText(/Enregistré|Annul/i, { timeout: 10_000 });
+});

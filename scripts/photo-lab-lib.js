@@ -335,6 +335,8 @@ function createPhotoLab(opts = {}) {
       returnResult: true,
       checkOnly: false,
       skipScrub: true,
+      // Labo : ne pas réécrire les tags / le mât qu’on vient d’enregistrer.
+      skipRetain: true,
     });
   }
 
@@ -391,6 +393,7 @@ function createPhotoLab(opts = {}) {
           banks: tags.slice(),
           surfaces,
           tags,
+          campus: p.campus === true || tags.includes('campus'),
           stock: false,
         };
       })
@@ -962,10 +965,13 @@ function createPhotoLab(opts = {}) {
     return {
       ok: true,
       surfaces: after ? after.surfaces : surfaces,
+      tags: after ? after.tags : extra.photo && extra.photo.tags,
       credit: after && after.credit,
       place: after && after.place,
       season: after && after.season,
+      season6: after && after.season6,
       focalY: after && after.focalY,
+      photo: after || null,
     };
   }
 

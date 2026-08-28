@@ -173,6 +173,18 @@ assert.ok(!uniPhoto.tags.includes('mat'), 'décoche mât → plus de tag mat');
 assert.equal(afterSave.credit, 'Alice Tremblay');
 assert.equal(afterSave.place, 'Tadoussac');
 assert.equal(afterSave.season, 'ete');
+const savedPayload = lab.saveAll(lac.url, {
+  credit: 'Alice Tremblay',
+  place: 'Tadoussac',
+  season: 'hiver',
+  focalY: 0.44,
+  tags: ['pomo', 'solitaire'],
+});
+assert.ok(savedPayload.photo, 'Enregistrer renvoie la fiche');
+assert.equal(savedPayload.photo.season, 'hiver', 'saison renvoyée après save');
+assert.equal(savedPayload.photo.focalY, 0.44);
+assert.deepEqual(savedPayload.photo.tags.slice().sort(), ['pomo', 'solitaire']);
+assert.equal(lab.findByUrl(lac.url).season, 'hiver', 'saison encore là au rechargement');
 
 lab.pinPhoto(lac.url, { surfaces: ['masthead', 'solitaire'], focalY: 0.22 });
 const fav = JSON.parse(readFileSync(join(root, 'data/quebec-favorites-backgrounds.json'), 'utf8'));
