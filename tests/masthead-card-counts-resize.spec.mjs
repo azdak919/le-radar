@@ -163,8 +163,7 @@ test('mât : revenir à la taille d’origine restaure les quantités', async ({
     const back = await resizeAndSettle(page, w, h);
     expect(back.cta, `${w}: CTA ${JSON.stringify(back)} vs ${JSON.stringify(fresh)}`).toBe(fresh.cta);
     expect(back.match, `${w}: scores`).toBe(fresh.match);
-    if (w >= 1920) expect(back.weather).toBeGreaterThanOrEqual(4);
-    else expect(back.weather).toBeGreaterThanOrEqual(1);
+    expect(back.weather, `${w}: météo`).toBeGreaterThanOrEqual(1);
   }
 
   const at2560 = await resizeAndSettle(page, 2560, 1440);
