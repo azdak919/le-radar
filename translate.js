@@ -14,12 +14,18 @@
   'use strict';
 
   const STORAGE_KEY = 'radar-translate-mode';
-  // v8 : glossaire radio LIVE/NOW PLAYING + secondaires EN du menu
-  const CACHE_KEY = 'radar-translate-cache-v8';
-  const CACHE_MAX = 900;
+  // v9 : glossaire sports (PROCHAIN CORRESPONDRE) + LRU. Invalide le cache v8
+  // qui pouvait coller « correspondre » sur la pastille « match ».
+  const CACHE_KEY = 'radar-translate-cache-v9';
+  const CACHE_MAX = 1400;
   const DEFAULT_MODE = 'original';
+  // 6 = plafond HTTP/1.1 par hôte vers gtx. Au-delà, le navigateur file.
+  // La vitesse perçue vient du passage chrome (glossaire, 0 réseau), pas d’un
+  // plus gros robinet — ouvrir MAX_CHUNK / CONCURRENCY casse l’ordre IU.
   const CONCURRENCY = 6;
   const MAX_CHUNK = 450;
+  /** Mât, tuner, CTA, nav, tête du fil, pied — avant les articles. */
+  const CHROME_SELECTOR = 'header.masthead, #tuner, #masthead-sports-strip, nav.site-sections, .wire-head, .site-foot';
 
   /**
    * Catalogue de langues.
@@ -848,6 +854,10 @@
   let translationCache = {};
   let activeMode = DEFAULT_MODE;
   let translating = false;
+  let pendingRetranslate = false;
+  let translateGen = 0;
+  /** Requêtes MT en vol, dédupliquées par clé de cache. */
+  const inflight = new Map();
   let mutateTimer = 0;
   let mutateObserver = null;
   /** Noms de médias étudiants (propres) — ne jamais traduire. */
@@ -888,7 +898,7 @@
    *    seulement hors Original / FR / EN (ex. ES : Universidad…, Colegio…)
    *  - Libellés UI (« Par », « À la une », « Toutes les sources ») → traduits
    */
-  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-author|filter-btn__name|article-media-credit(?:__creator)?|sports-(?:panel|chip)__code|site-foot__signature)\b/;
+  const SKIP_CLASS_RE = /\b(?:notranslate|article-source|article-author|filter-btn__name|article-media-credit(?:__creator)?|sports-(?:panel|chip)__code|sports-chip__cta-tag|site-foot__signature)\b/;
 
   /**
    * Sigles d'équipes sportives (THE, SL, OUT, LAF, ÉTS, UQAC…) : ce sont des
@@ -1065,6 +1075,22 @@
 
   function cacheKey(text, tl) {
     return `auto|${tl}|${text}`;
+  }
+
+  /** LRU : relire une clé la remet en fin d’insertion (saveCache coupe le début). */
+  function cacheGet(key) {
+    if (!Object.prototype.hasOwnProperty.call(translationCache, key)) return undefined;
+    const val = translationCache[key];
+    delete translationCache[key];
+    translationCache[key] = val;
+    return val;
+  }
+
+  function cacheSet(key, val) {
+    if (Object.prototype.hasOwnProperty.call(translationCache, key)) {
+      delete translationCache[key];
+    }
+    translationCache[key] = val;
   }
 
   function cleanTranslation(str) {
@@ -1246,6 +1272,117 @@
     "A l'antenne": {
       en: 'NOW PLAYING', es: 'AHORA', fr: "À l'antenne",
     },
+    /*
+     * Sports — nœud isolé « match » (pastille 2 lignes) : gtx le prend pour
+     * le verbe *to match* → « correspondre ». Phrases unitaires, pas MT.
+     * La pastille est aussi `notranslate` : ce glossaire sert le remplissage
+     * via displayUiText, et les verbes « reçoit / chez » du rail.
+     */
+    'Prochains match': {
+      en: 'Next games', es: 'Próximos partidos', pt: 'Próximos jogos',
+      de: 'Nächste Spiele', it: 'Prossime partite', nl: 'Volgende wedstrijden',
+      pl: 'Następne mecze', tr: 'Sonraki maçlar', ru: 'Ближайшие матчи',
+      uk: 'Наступні матчі', zh: '下场比赛', 'zh-tw': '下場比賽',
+      ar: 'المباريات القادمة', ko: '다음 경기', ja: '次の試合',
+      hi: 'अगले मैच', vi: 'Trận tới', ht: 'Pwochèn match',
+      fr: 'Prochains match',
+    },
+    'Prochain match': {
+      en: 'Next game', es: 'Próximo partido', pt: 'Próximo jogo',
+      de: 'Nächstes Spiel', it: 'Prossima partita', nl: 'Volgende wedstrijd',
+      pl: 'Następny mecz', tr: 'Sonraki maç', ru: 'Следующий матч',
+      zh: '下场比赛', ar: 'المباراة القادمة', ko: '다음 경기', ja: '次の試合',
+      fr: 'Prochain match',
+    },
+    match: {
+      en: 'game', es: 'partido', pt: 'jogo', de: 'Spiel', it: 'partita',
+      nl: 'wedstrijd', pl: 'mecz', tr: 'maç', ru: 'матч', uk: 'матч',
+      zh: '比赛', 'zh-tw': '比賽', ar: 'مباراة', ko: '경기', ja: '試合',
+      hi: 'मैच', vi: 'trận', ht: 'match', fr: 'match',
+    },
+    Match: {
+      en: 'Game', es: 'Partido', pt: 'Jogo', de: 'Spiel', it: 'Partita',
+      fr: 'Match',
+    },
+    'En cours': {
+      en: 'Live', es: 'En curso', pt: 'Ao vivo', de: 'Live', it: 'In corso',
+      nl: 'Live', pl: 'Na żywo', tr: 'Canlı', ru: 'Идёт', uk: 'Зараз',
+      zh: '进行中', 'zh-tw': '進行中', ar: 'جارية', ko: '진행 중', ja: '試合中',
+      hi: 'लाइव', vi: 'Đang diễn ra', ht: 'An kou',
+      fr: 'En cours',
+    },
+    Demain: {
+      en: 'Tomorrow', es: 'Mañana', pt: 'Amanhã', de: 'Morgen', it: 'Domani',
+      nl: 'Morgen', pl: 'Jutro', tr: 'Yarın', ru: 'Завтра', uk: 'Завтра',
+      zh: '明天', ar: 'غدًا', ko: '내일', ja: '明日', hi: 'कल', vi: 'Ngày mai',
+      ht: 'Demen', fr: 'Demain',
+    },
+    Hier: {
+      en: 'Yesterday', es: 'Ayer', pt: 'Ontem', de: 'Gestern', it: 'Ieri',
+      nl: 'Gisteren', pl: 'Wczoraj', tr: 'Dün', ru: 'Вчера', uk: 'Вчора',
+      zh: '昨天', ar: 'أمس', ko: '어제', ja: '昨日', hi: 'कल', vi: 'Hôm qua',
+      ht: 'Yè', fr: 'Hier',
+    },
+    "Aujourd'hui": {
+      en: 'Today', es: 'Hoy', pt: 'Hoje', de: 'Heute', it: 'Oggi',
+      nl: 'Vandaag', pl: 'Dziś', tr: 'Bugün', ru: 'Сегодня', uk: 'Сьогодні',
+      zh: '今天', ar: 'اليوم', ko: '오늘', ja: '今日', hi: 'आज', vi: 'Hôm nay',
+      ht: 'Jodi a', fr: "Aujourd'hui",
+    },
+    'Aujourd’hui': {
+      en: 'Today', es: 'Hoy', pt: 'Hoje', de: 'Heute', it: 'Oggi',
+      nl: 'Vandaag', pl: 'Dziś', tr: 'Bugün', ru: 'Сегодня',
+      zh: '今天', ar: 'اليوم', ko: '오늘', ja: '今日',
+      fr: 'Aujourd’hui',
+    },
+    'Avant-hier': {
+      en: '2 days ago', es: 'Anteayer', pt: 'Anteontem', de: 'Vorgestern',
+      it: 'L’altro ieri', nl: 'Eergisteren', pl: 'Przedwczoraj',
+      tr: 'Evvelsi gün', ru: 'Позавчера', zh: '前天', ar: 'أول أمس',
+      ko: '그저께', ja: '一昨日', fr: 'Avant-hier',
+    },
+    Sports: {
+      en: 'Sports', es: 'Deportes', pt: 'Esportes', de: 'Sport', it: 'Sport',
+      nl: 'Sport', pl: 'Sport', tr: 'Spor', ru: 'Спорт', zh: '体育',
+      ar: 'رياضة', ko: '스포츠', ja: 'スポーツ', fr: 'Sports',
+    },
+    reçoit: {
+      en: 'hosts', es: 'recibe', pt: 'recebe', de: 'empfängt', it: 'ospita',
+      nl: 'ontvangt', pl: 'gości', tr: 'ağırlıyor', ru: 'принимает',
+      zh: '主场迎战', ar: 'يستضيف', ko: '홈', ja: 'ホーム',
+      fr: 'reçoit',
+    },
+    reçoivent: {
+      en: 'host', es: 'reciben', pt: 'recebem', de: 'empfangen', it: 'ospitano',
+      fr: 'reçoivent',
+    },
+    chez: {
+      en: 'at', es: 'en casa de', pt: 'em', de: 'bei', it: 'in casa di',
+      nl: 'bij', pl: 'u', tr: 'deplasmanda', ru: 'в гостях у',
+      zh: '客场', ar: 'خارج الأرض', ko: '원정', ja: 'アウェイ',
+      fr: 'chez',
+    },
+    'Calendrier à venir': {
+      en: 'Schedule upcoming', es: 'Calendario por venir',
+      pt: 'Calendário a seguir', de: 'Terminplan folgt',
+      it: 'Calendario in arrivo', fr: 'Calendrier à venir',
+    },
+    Accueil: {
+      en: 'Home', es: 'Inicio', pt: 'Início', de: 'Start', it: 'Home',
+      fr: 'Accueil',
+    },
+    Médias: {
+      en: 'Media', es: 'Medios', pt: 'Mídias', de: 'Medien', it: 'Media',
+      fr: 'Médias',
+    },
+    Journaux: {
+      en: 'Newspapers', es: 'Periódicos', pt: 'Jornais', de: 'Zeitungen',
+      it: 'Giornali', fr: 'Journaux',
+    },
+    Radios: {
+      en: 'Radio', es: 'Radios', pt: 'Rádios', de: 'Radios', it: 'Radio',
+      fr: 'Radios',
+    },
     'À venir': {
       // Libellé panneau (text-transform: uppercase → UP NEXT) + sous-titres grille.
       en: 'Up next', es: 'Próximamente', pt: 'A seguir', de: 'Als Nächstes',
@@ -1317,17 +1454,29 @@
     return /^(iu|ar|fa|he|ur|zh|hi|pa|bn|ta|te|mr|gu|kn|ml|ko|ja|th|am|hy|ka|my|km|lo|si|ne|bo)$/.test(l);
   }
 
+  /** Ne jamais envoyer ces libellés au MT, même en IU/ar (cas « correspondre »). */
+  const UI_LOCK_NO_MT = new Set([
+    'match', 'Match', 'Prochains match', 'Prochain match',
+    'En cours', 'reçoit', 'reçoivent', 'chez',
+  ]);
+
   function uiPhraseLookup(core = '', targetLang = '') {
     const entry = UI_PHRASES[core];
-    if (!entry) return null;
+    if (!entry) {
+      return UI_LOCK_NO_MT.has(core) ? core : null;
+    }
     const lang = institutionLangKey(targetLang);
     if (entry[lang] != null) {
       // Ancien filet « garder le FR en IU » : équivaut à ne pas traduire.
-      // Pour les scripts lointains, on laisse plutôt le MT travailler.
-      if (prefersMachineUi(lang) && entry[lang] === core) return null;
+      // Pour les scripts lointains, on laisse plutôt le MT travailler —
+      // sauf le chrome sport, où gtx hallucine (match → correspondre).
+      if (prefersMachineUi(lang) && entry[lang] === core) {
+        return UI_LOCK_NO_MT.has(core) ? core : null;
+      }
       return entry[lang];
     }
     if (entry.default != null) return entry.default;
+    if (UI_LOCK_NO_MT.has(core)) return core;
     return null;
   }
 
@@ -1391,37 +1540,7 @@
     return null;
   }
 
-  async function translateText(text, targetLang) {
-    const original = String(text || '');
-    if (!original.trim()) return original;
-    // Traduire le cœur sans espaces de bord (clé de cache stable)
-    const core = original.replace(/^\s+|\s+$/g, '');
-    const tl = gtxLang(targetLang);
-    const key = cacheKey(core, tl);
-
-    const finish = (translatedCore) => reapplyEdgeWhitespace(original, translatedCore);
-
-    if (translationCache[key]) return finish(translationCache[key]);
-
-    // Phrases UI connues : pas de MT (évite les contresens)
-    const uiHit = preferredUiPhrase(core, targetLang);
-    if (uiHit != null) {
-      translationCache[key] = uiHit;
-      return finish(uiHit);
-    }
-
-    // Très longs : découper par phrases approximatives
-    if (core.length > MAX_CHUNK) {
-      const parts = splitLong(core, MAX_CHUNK);
-      const out = [];
-      for (const part of parts) {
-        out.push(await translateText(part, targetLang));
-      }
-      const joined = fixInternalTranslationSpacing(out.join(''));
-      translationCache[key] = joined.replace(/^\s+|\s+$/g, '');
-      return finish(translationCache[key]);
-    }
-
+  async function fetchMachineTranslation(core, tl) {
     const encoded = encodeURIComponent(core);
 
     // 1) Google gtx (même endpoint qu'Ataraxia)
@@ -1432,10 +1551,7 @@
         const data = await resp.json();
         const raw = data?.[0]?.map((s) => s?.[0]).filter(Boolean).join('');
         const translated = cleanTranslation(raw);
-        if (translated) {
-          translationCache[key] = translated.replace(/^\s+|\s+$/g, '');
-          return finish(translationCache[key]);
-        }
+        if (translated) return translated.replace(/^\s+|\s+$/g, '');
       }
     } catch { /* next */ }
 
@@ -1448,14 +1564,68 @@
         if (data.responseStatus === 200 && data.responseData?.translatedText) {
           const translated = cleanTranslation(data.responseData.translatedText);
           if (translated && translated !== core.toUpperCase()) {
-            translationCache[key] = translated.replace(/^\s+|\s+$/g, '');
-            return finish(translationCache[key]);
+            return translated.replace(/^\s+|\s+$/g, '');
           }
         }
       }
     } catch { /* keep original */ }
 
-    return original;
+    return null;
+  }
+
+  async function translateText(text, targetLang) {
+    const original = String(text || '');
+    if (!original.trim()) return original;
+    // Traduire le cœur sans espaces de bord (clé de cache stable)
+    const core = original.replace(/^\s+|\s+$/g, '');
+    const tl = gtxLang(targetLang);
+    const key = cacheKey(core, tl);
+
+    const finish = (translatedCore) => reapplyEdgeWhitespace(original, translatedCore);
+
+    const cached = cacheGet(key);
+    if (cached != null) return finish(cached);
+
+    // Phrases UI connues : pas de MT (évite les contresens)
+    const uiHit = preferredUiPhrase(core, targetLang);
+    if (uiHit != null) {
+      cacheSet(key, uiHit);
+      return finish(uiHit);
+    }
+
+    if (inflight.has(key)) {
+      const shared = await inflight.get(key);
+      return finish(shared != null ? shared : core);
+    }
+
+    const work = (async () => {
+      // Très longs : découper par phrases approximatives
+      if (core.length > MAX_CHUNK) {
+        const parts = splitLong(core, MAX_CHUNK);
+        const out = [];
+        for (const part of parts) {
+          out.push(await translateText(part, targetLang));
+        }
+        const joined = fixInternalTranslationSpacing(out.join('')).replace(/^\s+|\s+$/g, '');
+        cacheSet(key, joined);
+        return joined;
+      }
+
+      const translated = await fetchMachineTranslation(core, tl);
+      if (translated) {
+        cacheSet(key, translated);
+        return translated;
+      }
+      return core;
+    })();
+
+    inflight.set(key, work);
+    try {
+      const translatedCore = await work;
+      return finish(translatedCore);
+    } finally {
+      inflight.delete(key);
+    }
   }
 
   function splitLong(text, max) {
@@ -2360,7 +2530,15 @@
     return idx >= visible + peek;
   }
 
-  function collectTextNodes(root = document.body, { includeCollapsedTail = false } = {}) {
+  function isChromeTextNode(node) {
+    const el = node && node.nodeType === 3 ? node.parentElement : node;
+    return !!el?.closest?.(CHROME_SELECTOR);
+  }
+
+  function collectTextNodes(root = document.body, {
+    includeCollapsedTail = false,
+    chromeOnly = false,
+  } = {}) {
     if (!root) return [];
     const nodes = [];
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
@@ -2369,6 +2547,7 @@
         if (!val || !val.trim()) return NodeFilter.FILTER_REJECT;
         // Ignorer purement numérique / ponctuation
         if (!/[\p{L}]/u.test(val)) return NodeFilter.FILTER_REJECT;
+        if (chromeOnly && !isChromeTextNode(node)) return NodeFilter.FILTER_REJECT;
         // Suite du fil repliée : ignorer les cartes hors écran
         if (!includeCollapsedTail && isInCollapsedTailOverflow(node)) {
           return NodeFilter.FILTER_REJECT;
@@ -2414,8 +2593,16 @@
     /** Si true : ne réécrit que les nœuds encore à l’original (dépliage suite du fil). */
     onlyUntranslated = false,
     includeCollapsedTail = false,
+    chromeOnly = false,
+    gen = null,
+    force = false,
   } = {}) {
-    if (!targetLang || translating) return;
+    if (!targetLang) return;
+    if (gen != null && gen !== translateGen) return;
+    if (translating && !force) {
+      pendingRetranslate = true;
+      return;
+    }
     translating = true;
     translateTargetLang = targetLang;
     document.documentElement.dataset.translateBusy = '1';
@@ -2423,8 +2610,10 @@
       notify(`Traduction en cours… (${labelForMode(activeMode).short || targetLang})`);
     }
 
+    const stale = () => gen != null && gen !== translateGen;
+
     try {
-      const nodes = collectTextNodes(root, { includeCollapsedTail });
+      const nodes = collectTextNodes(root, { includeCollapsedTail, chromeOnly });
       // Grouper par texte original (dédup) — une requête MT par chaîne unique
       const byText = new Map(); // original → [nodes]
       for (const node of nodes) {
@@ -2439,9 +2628,11 @@
       let fail = 0;
 
       for (let i = 0; i < entries.length; i += CONCURRENCY) {
+        if (stale()) return;
         const batch = entries.slice(i, i + CONCURRENCY);
         // eslint-disable-next-line no-await-in-loop
         await Promise.all(batch.map(async ([orig, list]) => {
+          if (stale()) return;
           try {
             const instNodes = list.filter((n) => isTranslatableInstitutionZone(n));
             // Noms d’établissements : glossaire / mapping type d’abord ;
@@ -2493,7 +2684,7 @@
 
       saveCache();
 
-      if (!quiet) {
+      if (!quiet && !stale()) {
         const m = labelForMode(activeMode);
         if (ok === 0 && entries.length > 0) {
           notify('Traduction indisponible pour le moment. Réessayez dans quelques secondes.');
@@ -2505,6 +2696,10 @@
       translating = false;
       translateTargetLang = null;
       document.documentElement.removeAttribute('data-translate-busy');
+      if (pendingRetranslate && (gen == null || gen === translateGen)) {
+        pendingRetranslate = false;
+        scheduleRetranslate();
+      }
     }
   }
 
@@ -2715,6 +2910,9 @@
       return;
     }
 
+    const gen = ++translateGen;
+    pendingRetranslate = false;
+
     if (persist) mode = setMode(mode);
     else if (!mode) mode = DEFAULT_MODE;
 
@@ -2735,11 +2933,45 @@
     }
 
     await loadProtectedMediaNames();
+    if (gen !== translateGen) return;
+
+    // Un passage précédent (autre langue) : attendre qu’il voie le gen périmé.
+    const waitStart = Date.now();
+    while (translating && Date.now() - waitStart < 8000) {
+      await new Promise((r) => window.setTimeout(r, 16));
+    }
+    if (gen !== translateGen) return;
+
     // Toujours repartir des originaux avant de re-traduire
     restoreOriginals();
-    // Réaligner pastilles sources (marquees) sur les originaux avant MT
+    // Réaligner pastilles sources (marquees) + pastille CTA (glossaire)
     notifyDisplayRefresh();
-    await translateDom(target, { quiet: !fromUserClick && !hasUserPreference() });
+
+    const quiet = !fromUserClick && !hasUserPreference();
+    if (!quiet) {
+      notify(`Traduction en cours… (${labelForMode(activeMode).short || target})`);
+    }
+
+    // 1) Chrome d’abord (glossaire radio/sports/nav) — perçue instantanée
+    await translateDom(target, {
+      quiet: true,
+      chromeOnly: true,
+      gen,
+      force: true,
+    });
+    if (gen !== translateGen) return;
+    notifyDisplayRefresh();
+
+    // 2) Reste de la page (fil, cartes) — onlyUntranslated saute le chrome fait
+    await translateDom(target, {
+      quiet: true,
+      onlyUntranslated: true,
+      includeCollapsedTail: false,
+      gen,
+      force: true,
+    });
+    if (gen !== translateGen) return;
+
     // Marquees / libellés « Plus de sources » : reposer les originaux localisés
     // puis laisser un second passage MT pour ce qui n’a pas de glossaire.
     notifyDisplayRefresh();
@@ -2747,11 +2979,22 @@
       quiet: true,
       onlyUntranslated: true,
       includeCollapsedTail: false,
+      gen,
+      force: true,
     });
+    if (gen !== translateGen) return;
+
+    if (!quiet) {
+      notify(`Page affichée en ${labelForMode(activeMode).label}`);
+    }
   }
 
   function scheduleRetranslate() {
-    if (activeMode === DEFAULT_MODE || translating) return;
+    if (activeMode === DEFAULT_MODE) return;
+    if (translating) {
+      pendingRetranslate = true;
+      return;
+    }
     clearTimeout(mutateTimer);
     mutateTimer = window.setTimeout(() => {
       const target = googCodeForMode(activeMode);
@@ -2764,7 +3007,7 @@
           includeCollapsedTail: false,
         });
       }
-    }, 400);
+    }, 180);
   }
 
   function startObserver() {
@@ -2772,7 +3015,7 @@
     // childList seulement : le fil d'articles se re-rend souvent.
     // Pas de characterData — nos propres nodeValue déclencheraient une boucle.
     mutateObserver = new MutationObserver((mutations) => {
-      if (activeMode === DEFAULT_MODE || translating) return;
+      if (activeMode === DEFAULT_MODE) return;
       for (const m of mutations) {
         if (m.type !== 'childList' || !m.addedNodes?.length) continue;
         // Ignorer le menu de traduction et les nœuds purement techniques
@@ -3055,7 +3298,7 @@
     if (hit != null) return hit;
     // IU / ar / … : réutiliser le cache MT pour ne pas réécraser les pastilles
     // en français après notifyDisplayRefresh (marquees).
-    const cached = translationCache[cacheKey(raw, tl)];
+    const cached = cacheGet(cacheKey(raw, tl));
     if (cached) return cached;
     return raw;
   }
@@ -3079,6 +3322,7 @@
     displayUiText,
     displayInstitutionLabel,
     notifyDisplayRefresh,
+    preferredUiPhrase,
     DEFAULT_MODE,
     MODES,
     /**
@@ -3087,6 +3331,13 @@
      * traduction (donc sans test instable). Lecture seule, aucune incidence
      * sur l'exécution — voir tests/institution-labels.spec.mjs.
      */
+    _ui: {
+      preferredUiPhrase,
+      CHROME_SELECTOR,
+      CACHE_KEY,
+      CONCURRENCY,
+      MAX_CHUNK,
+    },
     _labels: {
       formatCegepLabel,
       formatCollegeLabel,
