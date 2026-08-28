@@ -819,19 +819,36 @@ function sportsMatchNaturalWidth(chip) {
     maxWidth: chip.style.maxWidth,
     flex: chip.style.flex,
   };
+  const inners = [...chip.querySelectorAll('.sports-chip__line-inner, .sports-chip__sub-text')];
+  const saved = inners.map((el) => ({
+    el,
+    maxWidth: el.style.maxWidth,
+    overflow: el.style.overflow,
+  }));
+  inners.forEach((el) => {
+    el.style.maxWidth = 'none';
+    el.style.overflow = 'visible';
+  });
   chip.style.width = 'max-content';
   chip.style.minWidth = 'max-content';
   chip.style.maxWidth = 'none';
   chip.style.flex = '0 0 auto';
-  const w = Math.ceil(chip.getBoundingClientRect().width);
+  const boxW = Math.ceil(chip.getBoundingClientRect().width);
+  const textW = inners.reduce((max, el) => Math.max(max, el.scrollWidth || 0), 0);
+  saved.forEach(({ el, maxWidth, overflow }) => {
+    el.style.maxWidth = maxWidth;
+    el.style.overflow = overflow;
+  });
   chip.style.width = prev.width;
   chip.style.minWidth = prev.minWidth;
   chip.style.maxWidth = prev.maxWidth;
   chip.style.flex = prev.flex;
-  return w;
+  // max-width:100% sur le texte fausse max-content ; on prend le vrai
+  // scrollWidth + chrome glyphe/padding (~48 px) + filet subpixel.
+  return Math.max(boxW, Math.ceil(textW) + 48);
 }
 
-/** ≥1440 : scores à la largeur du plus long nom ; le reliquat remplit les bouts. */
+/** ≥1440 : chaque score à sa largeur de texte ; le reliquat remplit les bouts. */
 function fitWideSportsMatchSlots({ fill = false } = {}) {
   if (!isWideDesktopComfort() || !MASTHEAD_SPORTS_STRIP) return;
   const strip = MASTHEAD_SPORTS_STRIP;
@@ -841,31 +858,37 @@ function fitWideSportsMatchSlots({ fill = false } = {}) {
     strip.style.removeProperty('--sports-match-w');
     return;
   }
-  let maxW = 0;
+  const naturals = [];
   matches.forEach((chip) => {
     chip.style.removeProperty('flex');
     chip.style.removeProperty('width');
     chip.style.removeProperty('min-width');
     chip.style.removeProperty('max-width');
-    maxW = Math.max(maxW, sportsMatchNaturalWidth(chip));
+    naturals.push(Math.max(1, sportsMatchNaturalWidth(chip)));
   });
-  if (maxW <= 0) return;
-  let slotW = maxW;
+  if (!naturals.length || Math.max(...naturals) <= 0) return;
   const gap = 6;
   const ctaW = ctas.reduce((sum, el) => sum + Math.ceil(el.getBoundingClientRect().width), 0);
   const n = matches.length + ctas.length;
-  const room = sportsStripAvailWidth() - ctaW - gap * Math.max(0, n - 1);
-  if (fill && matches.length && room > 0) {
-    // Remplir le reliquat, sans jamais dépasser la place réelle (sinon
-    // 1920→1680 laissait un score plus large que le bandeau).
-    slotW = Math.floor(room / matches.length);
+  const avail = sportsStripAvailWidth();
+  const need = naturals.reduce((sum, w) => sum + w, 0)
+    + ctaW
+    + gap * Math.max(0, n - 1);
+  // Jamais plus étroit que le texte (clip). Si ça ne rentre pas, le cramped
+  // retire une puce. Le reliquat s’ajoute à parts égales au-dessus du naturel.
+  const maxEach = matches.length
+    ? Math.max(80, Math.floor((avail - ctaW - gap * Math.max(0, n - 1)) / matches.length))
+    : avail;
+  let widths = naturals.map((w) => Math.min(w, maxEach));
+  if (fill && need <= avail + 2 && matches.length) {
+    const extra = Math.max(0, avail - need);
+    const add = Math.floor(extra / matches.length);
+    const rem = extra - add * matches.length;
+    widths = naturals.map((w, i) => Math.min(maxEach, w + add + (i < rem ? 1 : 0)));
   }
-  if (matches.length && room > 0) {
-    slotW = Math.min(slotW, Math.floor(room / matches.length));
-  }
-  if (slotW < 1) return;
-  strip.style.setProperty('--sports-match-w', `${slotW}px`);
-  matches.forEach((chip) => {
+  strip.style.setProperty('--sports-match-w', `${Math.max(...widths)}px`);
+  matches.forEach((chip, i) => {
+    const slotW = widths[i] || naturals[i];
     chip.style.setProperty('flex', `0 0 ${slotW}px`, 'important');
     chip.style.setProperty('width', `${slotW}px`, 'important');
     chip.style.setProperty('min-width', `${slotW}px`, 'important');
@@ -1053,8 +1076,8 @@ function sportsNextSlidesSorted() {
 
 /**
  * État de la voie de gauche :
- *  - « results » : saison active (résultats passés + activité CTA chaude)
- *    → uniquement résultats, ordre fraîcheur desc.
+ *  - « results » : saison active (résultats chauds d’abord, puis prochains
+ *    une face pour remplir le bandeau — la CTA garde « son » match).
  *  - « offseason » : creux (pas de résultats chauds)
  *    → matchs à venir par proximité, **sans** puces grises « Hors saison… »
  *      (celles-ci n’apparaissaient qu’en filet total — voir CTA idle).
@@ -1087,17 +1110,14 @@ function sportsLeftLaneState() {
   }
 
   if (recentResults.length) {
-    // Résultats 5 j d’abord ; futurs **hors** fenêtre CTA (> 5 j).
+    // Résultats 5 j d’abord (V et D restent deux cartes). Puis les prochains
+    // (une face) pour remplir le bandeau : la CTA occupe déjà « son » match
+    // via occupy keys, les autres restent des puces scores normales.
     const seen = new Set(recentResults.map((s) => s.key));
-    const ctaEnd = sportsCtaNextWindowEndDay(now);
-    const farNexts = nexts.filter((s) => {
-      if (!sportsSlideIsDisplayable(s) || seen.has(s.key)) return false;
-      const day = sportsSlideDayKey(s);
-      return day && day > ctaEnd;
-    });
-    // Résultats : V et D (ou N/N) restent deux cartes. Futurs : une face.
-    const pool = recentResults.concat(sportsDedupeMatchSlides(farNexts));
-    return { kind: 'results', pool };
+    const moreNexts = sportsDedupeMatchSlides(nexts.filter((s) => (
+      sportsSlideIsDisplayable(s) && !seen.has(s.key)
+    )));
+    return { kind: 'results', pool: recentResults.concat(moreNexts) };
   }
   // Hors saison / creux : calendrier à venir seulement (pas de musée d’avril).
   // Filet ultime : un seul plus récent lastGame si vraiment zéro next.
@@ -3823,7 +3843,7 @@ async function initMastheadSports() {
           const w = MASTHEAD_SPORTS_STRIP?.clientWidth || 0;
           if (
             source === 'ro'
-            && Math.abs(w - (initMastheadSports._lastWidth || 0)) < 2
+            && Math.abs(w - (initMastheadSports._lastWidth || 0)) < 8
           ) {
             return;
           }
