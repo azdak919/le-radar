@@ -269,7 +269,7 @@ test.describe('overlay traduction articles', () => {
     await expect(page.locator('#translate-progress')).toBeHidden();
   });
 
-  test('prefers-reduced-motion : barre statique, pas de rayure', async ({ page }) => {
+  test('prefers-reduced-motion : barre statique, pas de reflet', async ({ page }) => {
     test.setTimeout(60_000);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await mockTranslateInstant(page);
