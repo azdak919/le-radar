@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-28T23:29:37.831Z",
-  "fetchedAt": "2026-08-28T23:29:37.831Z",
+  "updated": "2026-08-29T00:18:41.994Z",
+  "fetchedAt": "2026-08-29T00:18:41.994Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-28T23:29:37.831Z"
+    "referenceDate": "2026-08-29T00:18:41.994Z"
   },
   "masthead": {
     "nextGameLimit": 48,
     "resultLimit": 32
   },
-  "teamCount": 98,
+  "teamCount": 94,
   "teams": {
     "collegial:soccer:3f4585ce-0bbf-41b0-a726-7a294098a074:85580e0a-39a7-46ce-8005-80ff281cf9d6": {
       "id": "collegial:soccer:3f4585ce-0bbf-41b0-a726-7a294098a074:85580e0a-39a7-46ce-8005-80ff281cf9d6",
@@ -536,7 +536,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=992e4138-e51a-494b-a69c-ac4e2bff2354",
           "opponentFullName": "Cégep de Sainte-Foy",
           "opponentNickname": "Géants",
-          "opponentRegistryId": "sainte-foy"
+          "opponentRegistryId": "sainte-foy",
+          "live": true
         }
       ],
       "nextGame": {
@@ -551,7 +552,8 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=992e4138-e51a-494b-a69c-ac4e2bff2354",
         "opponentFullName": "Cégep de Sainte-Foy",
         "opponentNickname": "Géants",
-        "opponentRegistryId": "sainte-foy"
+        "opponentRegistryId": "sainte-foy",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 40,
@@ -752,6 +754,20 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=226c9321-23c1-4117-b7a9-a81347be611a",
           "opponentFullName": "Collège Ahuntsic",
           "opponentRegistryId": "ahuntsic"
+        },
+        {
+          "date": "2026-09-04",
+          "time": "18:45",
+          "opponent": "Montmorency",
+          "opponentCode": "MON",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D1",
+          "gameId": "449b6afd-1e9b-4f18-ab42-2eb8f466336a",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=449b6afd-1e9b-4f18-ab42-2eb8f466336a",
+          "opponentFullName": "Collège Montmorency",
+          "opponentNickname": "Nomades",
+          "opponentRegistryId": "montmorency"
         }
       ],
       "nextGame": {
@@ -858,7 +874,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=992e4138-e51a-494b-a69c-ac4e2bff2354",
           "opponentFullName": "Cégep de Trois-Rivières",
           "opponentNickname": "Diablos",
-          "opponentRegistryId": "trois-rivieres"
+          "opponentRegistryId": "trois-rivieres",
+          "live": true
         }
       ],
       "nextGame": {
@@ -873,7 +890,8 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=992e4138-e51a-494b-a69c-ac4e2bff2354",
         "opponentFullName": "Cégep de Trois-Rivières",
         "opponentNickname": "Diablos",
-        "opponentRegistryId": "trois-rivieres"
+        "opponentRegistryId": "trois-rivieres",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 37,
@@ -1061,8 +1079,36 @@
         "priorSeason": false,
         "opponentSector": "collegial"
       },
-      "nextGames": [],
-      "nextGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-04",
+          "time": "18:45",
+          "opponent": "Garneau",
+          "opponentCode": "GAR",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D1",
+          "gameId": "449b6afd-1e9b-4f18-ab42-2eb8f466336a",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=449b6afd-1e9b-4f18-ab42-2eb8f466336a",
+          "opponentFullName": "Cégep François-Xavier-Garneau",
+          "opponentNickname": "Boomerang",
+          "opponentRegistryId": "garneau"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-04",
+        "time": "18:45",
+        "opponent": "Garneau",
+        "opponentCode": "GAR",
+        "home": false,
+        "sport": "soccer",
+        "competition": "Soccer collégial féminin D1",
+        "gameId": "449b6afd-1e9b-4f18-ab42-2eb8f466336a",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=449b6afd-1e9b-4f18-ab42-2eb8f466336a",
+        "opponentFullName": "Cégep François-Xavier-Garneau",
+        "opponentNickname": "Boomerang",
+        "opponentRegistryId": "garneau"
+      },
       "source": "rseq-s1",
       "priority": 31,
       "fullName": "Collège Montmorency",
@@ -1131,533 +1177,6 @@
       ],
       "nextGames": []
     },
-    "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:b11e5431-4bc6-44a1-aa63-61f65bf7b1bf": {
-      "id": "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:b11e5431-4bc6-44a1-aa63-61f65bf7b1bf",
-      "rseqTeamId": "b11e5431-4bc6-44a1-aa63-61f65bf7b1bf",
-      "leagueId": "357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f",
-      "name": "Champlain Lennoxville",
-      "code": "LEN",
-      "sector": "collegial",
-      "sport": "football",
-      "sportLabel": "Football",
-      "sex": "M",
-      "division": "D1",
-      "usports": false,
-      "leagueLabel": "Football collégial masculin D1",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-28",
-          "time": "19:30",
-          "opponent": "Garneau",
-          "opponentCode": "GAR",
-          "home": true,
-          "sport": "football",
-          "competition": "Football collégial masculin D1",
-          "gameId": "451edf4e-1884-4e77-93d0-1a8df5a5cea7",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=451edf4e-1884-4e77-93d0-1a8df5a5cea7",
-          "opponentFullName": "Cégep François-Xavier-Garneau",
-          "opponentNickname": "Boomerang",
-          "opponentRegistryId": "garneau",
-          "live": true
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-28",
-        "time": "19:30",
-        "opponent": "Garneau",
-        "opponentCode": "GAR",
-        "home": true,
-        "sport": "football",
-        "competition": "Football collégial masculin D1",
-        "gameId": "451edf4e-1884-4e77-93d0-1a8df5a5cea7",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=451edf4e-1884-4e77-93d0-1a8df5a5cea7",
-        "opponentFullName": "Cégep François-Xavier-Garneau",
-        "opponentNickname": "Boomerang",
-        "opponentRegistryId": "garneau",
-        "live": true
-      },
-      "source": "rseq-s1",
-      "priority": 24,
-      "fullName": "Champlain College Lennoxville",
-      "registryId": "champlain-lennoxville"
-    },
-    "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:660a03cf-b785-432c-8c92-b74009c2a98f": {
-      "id": "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:660a03cf-b785-432c-8c92-b74009c2a98f",
-      "rseqTeamId": "660a03cf-b785-432c-8c92-b74009c2a98f",
-      "leagueId": "357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f",
-      "name": "Garneau",
-      "code": "GAR",
-      "sector": "collegial",
-      "sport": "football",
-      "sportLabel": "Football",
-      "sex": "M",
-      "division": "D1",
-      "usports": false,
-      "leagueLabel": "Football collégial masculin D1",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-28",
-          "time": "19:30",
-          "opponent": "Champlain Lennoxville",
-          "opponentCode": "LEN",
-          "home": false,
-          "sport": "football",
-          "competition": "Football collégial masculin D1",
-          "gameId": "451edf4e-1884-4e77-93d0-1a8df5a5cea7",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=451edf4e-1884-4e77-93d0-1a8df5a5cea7",
-          "opponentFullName": "Champlain College Lennoxville",
-          "opponentRegistryId": "champlain-lennoxville",
-          "live": true
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-28",
-        "time": "19:30",
-        "opponent": "Champlain Lennoxville",
-        "opponentCode": "LEN",
-        "home": false,
-        "sport": "football",
-        "competition": "Football collégial masculin D1",
-        "gameId": "451edf4e-1884-4e77-93d0-1a8df5a5cea7",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=451edf4e-1884-4e77-93d0-1a8df5a5cea7",
-        "opponentFullName": "Champlain College Lennoxville",
-        "opponentRegistryId": "champlain-lennoxville",
-        "live": true
-      },
-      "source": "rseq-s1",
-      "priority": 8,
-      "fullName": "Cégep François-Xavier-Garneau",
-      "nickname": "Boomerang",
-      "registryId": "garneau"
-    },
-    "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:d9e8bc5a-48c6-4507-bbb9-cde12dcaf4a7": {
-      "id": "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:d9e8bc5a-48c6-4507-bbb9-cde12dcaf4a7",
-      "rseqTeamId": "d9e8bc5a-48c6-4507-bbb9-cde12dcaf4a7",
-      "leagueId": "357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f",
-      "name": "Limoilou",
-      "code": "LIM",
-      "sector": "collegial",
-      "sport": "football",
-      "sportLabel": "Football",
-      "sex": "M",
-      "division": "D1",
-      "usports": false,
-      "leagueLabel": "Football collégial masculin D1",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-28",
-          "time": "19:30",
-          "opponent": "Notre-Dame",
-          "opponentCode": "NDF",
-          "home": false,
-          "sport": "football",
-          "competition": "Football collégial masculin D1",
-          "gameId": "78c8192e-08ec-4d2d-99bf-ef2eedfe4de1",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=78c8192e-08ec-4d2d-99bf-ef2eedfe4de1",
-          "opponentFullName": "Campus Notre-Dame-de-Foy",
-          "opponentRegistryId": "notre-dame-foy",
-          "live": true
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-28",
-        "time": "19:30",
-        "opponent": "Notre-Dame",
-        "opponentCode": "NDF",
-        "home": false,
-        "sport": "football",
-        "competition": "Football collégial masculin D1",
-        "gameId": "78c8192e-08ec-4d2d-99bf-ef2eedfe4de1",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=78c8192e-08ec-4d2d-99bf-ef2eedfe4de1",
-        "opponentFullName": "Campus Notre-Dame-de-Foy",
-        "opponentRegistryId": "notre-dame-foy",
-        "live": true
-      },
-      "source": "rseq-s1",
-      "priority": 9,
-      "fullName": "Cégep Limoilou",
-      "nickname": "Titans",
-      "registryId": "limoilou"
-    },
-    "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:d387591f-12eb-4afb-9011-a6c7a18291ef": {
-      "id": "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:d387591f-12eb-4afb-9011-a6c7a18291ef",
-      "rseqTeamId": "d387591f-12eb-4afb-9011-a6c7a18291ef",
-      "leagueId": "357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f",
-      "name": "Notre-Dame",
-      "code": "NDF",
-      "sector": "collegial",
-      "sport": "football",
-      "sportLabel": "Football",
-      "sex": "M",
-      "division": "D1",
-      "usports": false,
-      "leagueLabel": "Football collégial masculin D1",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-28",
-          "time": "19:30",
-          "opponent": "Limoilou",
-          "opponentCode": "LIM",
-          "home": true,
-          "sport": "football",
-          "competition": "Football collégial masculin D1",
-          "gameId": "78c8192e-08ec-4d2d-99bf-ef2eedfe4de1",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=78c8192e-08ec-4d2d-99bf-ef2eedfe4de1",
-          "opponentFullName": "Cégep Limoilou",
-          "opponentNickname": "Titans",
-          "opponentRegistryId": "limoilou",
-          "live": true
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-28",
-        "time": "19:30",
-        "opponent": "Limoilou",
-        "opponentCode": "LIM",
-        "home": true,
-        "sport": "football",
-        "competition": "Football collégial masculin D1",
-        "gameId": "78c8192e-08ec-4d2d-99bf-ef2eedfe4de1",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=78c8192e-08ec-4d2d-99bf-ef2eedfe4de1",
-        "opponentFullName": "Cégep Limoilou",
-        "opponentNickname": "Titans",
-        "opponentRegistryId": "limoilou",
-        "live": true
-      },
-      "source": "rseq-s1",
-      "priority": 32,
-      "fullName": "Campus Notre-Dame-de-Foy",
-      "registryId": "notre-dame-foy"
-    },
-    "collegial:football:e0cda4d1-7f2b-43fa-bf3d-b68166903237:1e7dc1dd-1d1e-436c-b9db-315e84b09054": {
-      "id": "collegial:football:e0cda4d1-7f2b-43fa-bf3d-b68166903237:1e7dc1dd-1d1e-436c-b9db-315e84b09054",
-      "rseqTeamId": "1e7dc1dd-1d1e-436c-b9db-315e84b09054",
-      "leagueId": "e0cda4d1-7f2b-43fa-bf3d-b68166903237",
-      "name": "John Abbott",
-      "code": "JAC",
-      "sector": "collegial",
-      "sport": "football",
-      "sportLabel": "Football",
-      "sex": "M",
-      "division": "D2",
-      "usports": false,
-      "leagueLabel": "Football collégial masculin D2",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-28",
-          "time": "19:30",
-          "opponent": "Montmorency",
-          "opponentCode": "MON",
-          "home": true,
-          "sport": "football",
-          "competition": "Football collégial masculin D2",
-          "gameId": "5fe9e726-1c41-4cc2-9f6c-110a2475e812",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5fe9e726-1c41-4cc2-9f6c-110a2475e812",
-          "opponentFullName": "Collège Montmorency",
-          "opponentNickname": "Nomades",
-          "opponentRegistryId": "montmorency",
-          "live": true
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-28",
-        "time": "19:30",
-        "opponent": "Montmorency",
-        "opponentCode": "MON",
-        "home": true,
-        "sport": "football",
-        "competition": "Football collégial masculin D2",
-        "gameId": "5fe9e726-1c41-4cc2-9f6c-110a2475e812",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5fe9e726-1c41-4cc2-9f6c-110a2475e812",
-        "opponentFullName": "Collège Montmorency",
-        "opponentNickname": "Nomades",
-        "opponentRegistryId": "montmorency",
-        "live": true
-      },
-      "source": "rseq-s1",
-      "priority": 28,
-      "fullName": "John Abbott College",
-      "nickname": "Islanders",
-      "registryId": "john-abbott"
-    },
-    "collegial:football:e0cda4d1-7f2b-43fa-bf3d-b68166903237:938617d1-334b-4fea-ac94-f6da6196d4e2": {
-      "id": "collegial:football:e0cda4d1-7f2b-43fa-bf3d-b68166903237:938617d1-334b-4fea-ac94-f6da6196d4e2",
-      "rseqTeamId": "938617d1-334b-4fea-ac94-f6da6196d4e2",
-      "leagueId": "e0cda4d1-7f2b-43fa-bf3d-b68166903237",
-      "name": "Montmorency",
-      "code": "MON",
-      "sector": "collegial",
-      "sport": "football",
-      "sportLabel": "Football",
-      "sex": "M",
-      "division": "D2",
-      "usports": false,
-      "leagueLabel": "Football collégial masculin D2",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-28",
-          "time": "19:30",
-          "opponent": "John Abbott",
-          "opponentCode": "JAC",
-          "home": false,
-          "sport": "football",
-          "competition": "Football collégial masculin D2",
-          "gameId": "5fe9e726-1c41-4cc2-9f6c-110a2475e812",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5fe9e726-1c41-4cc2-9f6c-110a2475e812",
-          "opponentFullName": "John Abbott College",
-          "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott",
-          "live": true
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-28",
-        "time": "19:30",
-        "opponent": "John Abbott",
-        "opponentCode": "JAC",
-        "home": false,
-        "sport": "football",
-        "competition": "Football collégial masculin D2",
-        "gameId": "5fe9e726-1c41-4cc2-9f6c-110a2475e812",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5fe9e726-1c41-4cc2-9f6c-110a2475e812",
-        "opponentFullName": "John Abbott College",
-        "opponentNickname": "Islanders",
-        "opponentRegistryId": "john-abbott",
-        "live": true
-      },
-      "source": "rseq-s1",
-      "priority": 31,
-      "fullName": "Collège Montmorency",
-      "nickname": "Nomades",
-      "registryId": "montmorency"
-    },
-    "collegial:football:e0cda4d1-7f2b-43fa-bf3d-b68166903237:cd69b601-8e3b-422a-baee-842394c8d15c": {
-      "id": "collegial:football:e0cda4d1-7f2b-43fa-bf3d-b68166903237:cd69b601-8e3b-422a-baee-842394c8d15c",
-      "rseqTeamId": "cd69b601-8e3b-422a-baee-842394c8d15c",
-      "leagueId": "e0cda4d1-7f2b-43fa-bf3d-b68166903237",
-      "name": "Lionel-Groulx",
-      "code": "CLG",
-      "sector": "collegial",
-      "sport": "football",
-      "sportLabel": "Football",
-      "sex": "M",
-      "division": "D2",
-      "usports": false,
-      "leagueLabel": "Football collégial masculin D2",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-28",
-          "time": "19:30",
-          "opponent": "Cégep Sherbrooke",
-          "opponentCode": "SHE",
-          "home": true,
-          "sport": "football",
-          "competition": "Football collégial masculin D2",
-          "gameId": "d9315ae9-91ba-48e6-836f-e944a269028c",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d9315ae9-91ba-48e6-836f-e944a269028c",
-          "opponentFullName": "Cégep de Sherbrooke",
-          "opponentRegistryId": "cegep-sherbrooke",
-          "live": true
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-28",
-        "time": "19:30",
-        "opponent": "Cégep Sherbrooke",
-        "opponentCode": "SHE",
-        "home": true,
-        "sport": "football",
-        "competition": "Football collégial masculin D2",
-        "gameId": "d9315ae9-91ba-48e6-836f-e944a269028c",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d9315ae9-91ba-48e6-836f-e944a269028c",
-        "opponentFullName": "Cégep de Sherbrooke",
-        "opponentRegistryId": "cegep-sherbrooke",
-        "live": true
-      },
-      "source": "rseq-s1",
-      "priority": 30,
-      "fullName": "Collège Lionel-Groulx",
-      "registryId": "lionel-groulx"
-    },
-    "collegial:football:e0cda4d1-7f2b-43fa-bf3d-b68166903237:dd8c765f-f5a3-49f4-9178-e1f55bb53808": {
-      "id": "collegial:football:e0cda4d1-7f2b-43fa-bf3d-b68166903237:dd8c765f-f5a3-49f4-9178-e1f55bb53808",
-      "rseqTeamId": "dd8c765f-f5a3-49f4-9178-e1f55bb53808",
-      "leagueId": "e0cda4d1-7f2b-43fa-bf3d-b68166903237",
-      "name": "Cégep Sherbrooke",
-      "code": "SHE",
-      "sector": "collegial",
-      "sport": "football",
-      "sportLabel": "Football",
-      "sex": "M",
-      "division": "D2",
-      "usports": false,
-      "leagueLabel": "Football collégial masculin D2",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-28",
-          "time": "19:30",
-          "opponent": "Lionel-Groulx",
-          "opponentCode": "CLG",
-          "home": false,
-          "sport": "football",
-          "competition": "Football collégial masculin D2",
-          "gameId": "d9315ae9-91ba-48e6-836f-e944a269028c",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d9315ae9-91ba-48e6-836f-e944a269028c",
-          "opponentFullName": "Collège Lionel-Groulx",
-          "opponentRegistryId": "lionel-groulx",
-          "live": true
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-28",
-        "time": "19:30",
-        "opponent": "Lionel-Groulx",
-        "opponentCode": "CLG",
-        "home": false,
-        "sport": "football",
-        "competition": "Football collégial masculin D2",
-        "gameId": "d9315ae9-91ba-48e6-836f-e944a269028c",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d9315ae9-91ba-48e6-836f-e944a269028c",
-        "opponentFullName": "Collège Lionel-Groulx",
-        "opponentRegistryId": "lionel-groulx",
-        "live": true
-      },
-      "source": "rseq-s1",
-      "priority": 38,
-      "fullName": "Cégep de Sherbrooke",
-      "registryId": "cegep-sherbrooke"
-    },
-    "collegial:soccer:5321a38c-ee53-42b8-b27f-62411bc2707b:c67b6294-b434-4f14-a4c4-24386f91b3b8": {
-      "id": "collegial:soccer:5321a38c-ee53-42b8-b27f-62411bc2707b:c67b6294-b434-4f14-a4c4-24386f91b3b8",
-      "rseqTeamId": "c67b6294-b434-4f14-a4c4-24386f91b3b8",
-      "leagueId": "5321a38c-ee53-42b8-b27f-62411bc2707b",
-      "name": "Dawson",
-      "code": "DAW",
-      "sector": "collegial",
-      "sport": "soccer",
-      "sportLabel": "Soccer",
-      "sex": "M",
-      "division": "D2",
-      "usports": false,
-      "leagueLabel": "Soccer collégial masculin D2",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-28",
-          "time": "20:00",
-          "opponent": "Saint-Jean",
-          "opponentCode": "SJR",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "2c0b8f29-5f21-4212-99e6-752045f7854f",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2c0b8f29-5f21-4212-99e6-752045f7854f",
-          "opponentFullName": "Cégep Saint-Jean-sur-Richelieu",
-          "opponentNickname": "Dragons",
-          "opponentRegistryId": "saint-jean-sur-richelieu"
-        },
-        {
-          "date": "2026-08-30",
-          "time": "13:00",
-          "opponent": "Vieux Montréal",
-          "opponentCode": "CVM",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "ed6f993b-f6e5-4ba4-b357-5e7b3923928f",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ed6f993b-f6e5-4ba4-b357-5e7b3923928f",
-          "opponentFullName": "Cégep du Vieux Montréal",
-          "opponentRegistryId": "vieux-montreal"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-28",
-        "time": "20:00",
-        "opponent": "Saint-Jean",
-        "opponentCode": "SJR",
-        "home": false,
-        "sport": "soccer",
-        "competition": "Soccer collégial masculin D2",
-        "gameId": "2c0b8f29-5f21-4212-99e6-752045f7854f",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2c0b8f29-5f21-4212-99e6-752045f7854f",
-        "opponentFullName": "Cégep Saint-Jean-sur-Richelieu",
-        "opponentNickname": "Dragons",
-        "opponentRegistryId": "saint-jean-sur-richelieu"
-      },
-      "source": "rseq-s1",
-      "priority": 26,
-      "fullName": "Dawson College",
-      "nickname": "Blues",
-      "registryId": "dawson"
-    },
-    "collegial:soccer:5321a38c-ee53-42b8-b27f-62411bc2707b:d43cc84e-7958-4388-9420-faff620b218f": {
-      "id": "collegial:soccer:5321a38c-ee53-42b8-b27f-62411bc2707b:d43cc84e-7958-4388-9420-faff620b218f",
-      "rseqTeamId": "d43cc84e-7958-4388-9420-faff620b218f",
-      "leagueId": "5321a38c-ee53-42b8-b27f-62411bc2707b",
-      "name": "Saint-Jean",
-      "code": "SJR",
-      "sector": "collegial",
-      "sport": "soccer",
-      "sportLabel": "Soccer",
-      "sex": "M",
-      "division": "D2",
-      "usports": false,
-      "leagueLabel": "Soccer collégial masculin D2",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-28",
-          "time": "20:00",
-          "opponent": "Dawson",
-          "opponentCode": "DAW",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "2c0b8f29-5f21-4212-99e6-752045f7854f",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2c0b8f29-5f21-4212-99e6-752045f7854f",
-          "opponentFullName": "Dawson College",
-          "opponentNickname": "Blues",
-          "opponentRegistryId": "dawson"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-28",
-        "time": "20:00",
-        "opponent": "Dawson",
-        "opponentCode": "DAW",
-        "home": true,
-        "sport": "soccer",
-        "competition": "Soccer collégial masculin D2",
-        "gameId": "2c0b8f29-5f21-4212-99e6-752045f7854f",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2c0b8f29-5f21-4212-99e6-752045f7854f",
-        "opponentFullName": "Dawson College",
-        "opponentNickname": "Blues",
-        "opponentRegistryId": "dawson"
-      },
-      "source": "rseq-s1",
-      "priority": 35,
-      "fullName": "Cégep Saint-Jean-sur-Richelieu",
-      "nickname": "Dragons",
-      "registryId": "saint-jean-sur-richelieu"
-    },
     "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:0a2de31f-bb58-4730-b6ec-0f8c3c168c1e": {
       "id": "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:0a2de31f-bb58-4730-b6ec-0f8c3c168c1e",
       "rseqTeamId": "0a2de31f-bb58-4730-b6ec-0f8c3c168c1e",
@@ -1685,7 +1204,8 @@
           "gameId": "9b6dd574-a817-4070-91ac-7efd55f21a9d",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9b6dd574-a817-4070-91ac-7efd55f21a9d",
           "opponentFullName": "Cégep de Valleyfield",
-          "opponentRegistryId": "valleyfield"
+          "opponentRegistryId": "valleyfield",
+          "live": true
         }
       ],
       "nextGame": {
@@ -1699,7 +1219,8 @@
         "gameId": "9b6dd574-a817-4070-91ac-7efd55f21a9d",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9b6dd574-a817-4070-91ac-7efd55f21a9d",
         "opponentFullName": "Cégep de Valleyfield",
-        "opponentRegistryId": "valleyfield"
+        "opponentRegistryId": "valleyfield",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 20,
@@ -1733,7 +1254,8 @@
           "gameId": "9b6dd574-a817-4070-91ac-7efd55f21a9d",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9b6dd574-a817-4070-91ac-7efd55f21a9d",
           "opponentFullName": "Collège Ahuntsic",
-          "opponentRegistryId": "ahuntsic"
+          "opponentRegistryId": "ahuntsic",
+          "live": true
         }
       ],
       "nextGame": {
@@ -1747,7 +1269,8 @@
         "gameId": "9b6dd574-a817-4070-91ac-7efd55f21a9d",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9b6dd574-a817-4070-91ac-7efd55f21a9d",
         "opponentFullName": "Collège Ahuntsic",
-        "opponentRegistryId": "ahuntsic"
+        "opponentRegistryId": "ahuntsic",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -1781,7 +1304,8 @@
           "gameId": "9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
           "opponentFullName": "Cégep de Sherbrooke",
-          "opponentRegistryId": "cegep-sherbrooke"
+          "opponentRegistryId": "cegep-sherbrooke",
+          "live": true
         }
       ],
       "nextGame": {
@@ -1795,7 +1319,8 @@
         "gameId": "9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
         "opponentFullName": "Cégep de Sherbrooke",
-        "opponentRegistryId": "cegep-sherbrooke"
+        "opponentRegistryId": "cegep-sherbrooke",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -1829,7 +1354,8 @@
           "gameId": "9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
           "opponentFullName": "Cégep de Granby",
-          "opponentRegistryId": "granby"
+          "opponentRegistryId": "granby",
+          "live": true
         }
       ],
       "nextGame": {
@@ -1843,7 +1369,8 @@
         "gameId": "9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
         "opponentFullName": "Cégep de Granby",
-        "opponentRegistryId": "granby"
+        "opponentRegistryId": "granby",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 38,
@@ -1877,7 +1404,8 @@
           "gameId": "17c03e59-7604-4596-be4a-715be940e0b0",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=17c03e59-7604-4596-be4a-715be940e0b0",
           "opponentFullName": "Cégep de Victoriaville",
-          "opponentRegistryId": "victoriaville"
+          "opponentRegistryId": "victoriaville",
+          "live": true
         }
       ],
       "nextGame": {
@@ -1891,7 +1419,8 @@
         "gameId": "17c03e59-7604-4596-be4a-715be940e0b0",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=17c03e59-7604-4596-be4a-715be940e0b0",
         "opponentFullName": "Cégep de Victoriaville",
-        "opponentRegistryId": "victoriaville"
+        "opponentRegistryId": "victoriaville",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 40,
@@ -1927,7 +1456,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=17c03e59-7604-4596-be4a-715be940e0b0",
           "opponentFullName": "Cégep de Trois-Rivières",
           "opponentNickname": "Diablos",
-          "opponentRegistryId": "trois-rivieres"
+          "opponentRegistryId": "trois-rivieres",
+          "live": true
         }
       ],
       "nextGame": {
@@ -1942,7 +1472,8 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=17c03e59-7604-4596-be4a-715be940e0b0",
         "opponentFullName": "Cégep de Trois-Rivières",
         "opponentNickname": "Diablos",
-        "opponentRegistryId": "trois-rivieres"
+        "opponentRegistryId": "trois-rivieres",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -2766,6 +2297,20 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9ae4fe0d-6c11-40a6-ae31-55ee299b94ef",
           "opponentFullName": "Cégep de Saint-Jérôme",
           "opponentRegistryId": "saint-jerome"
+        },
+        {
+          "date": "2026-09-04",
+          "time": "18:30",
+          "opponent": "Montmorency",
+          "opponentCode": "MON",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D2",
+          "gameId": "0a42243e-ee75-4165-b1cf-8fcf2af41200",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0a42243e-ee75-4165-b1cf-8fcf2af41200",
+          "opponentFullName": "Collège Montmorency",
+          "opponentNickname": "Nomades",
+          "opponentRegistryId": "montmorency"
         }
       ],
       "nextGame": {
@@ -4373,6 +3918,55 @@
       "fullName": "Collège Ahuntsic",
       "registryId": "ahuntsic"
     },
+    "collegial:soccer:5321a38c-ee53-42b8-b27f-62411bc2707b:c67b6294-b434-4f14-a4c4-24386f91b3b8": {
+      "id": "collegial:soccer:5321a38c-ee53-42b8-b27f-62411bc2707b:c67b6294-b434-4f14-a4c4-24386f91b3b8",
+      "rseqTeamId": "c67b6294-b434-4f14-a4c4-24386f91b3b8",
+      "leagueId": "5321a38c-ee53-42b8-b27f-62411bc2707b",
+      "name": "Dawson",
+      "code": "DAW",
+      "sector": "collegial",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "M",
+      "division": "D2",
+      "usports": false,
+      "leagueLabel": "Soccer collégial masculin D2",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-08-30",
+          "time": "13:00",
+          "opponent": "Vieux Montréal",
+          "opponentCode": "CVM",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "ed6f993b-f6e5-4ba4-b357-5e7b3923928f",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ed6f993b-f6e5-4ba4-b357-5e7b3923928f",
+          "opponentFullName": "Cégep du Vieux Montréal",
+          "opponentRegistryId": "vieux-montreal"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-08-30",
+        "time": "13:00",
+        "opponent": "Vieux Montréal",
+        "opponentCode": "CVM",
+        "home": true,
+        "sport": "soccer",
+        "competition": "Soccer collégial masculin D2",
+        "gameId": "ed6f993b-f6e5-4ba4-b357-5e7b3923928f",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ed6f993b-f6e5-4ba4-b357-5e7b3923928f",
+        "opponentFullName": "Cégep du Vieux Montréal",
+        "opponentRegistryId": "vieux-montreal"
+      },
+      "source": "rseq-s1",
+      "priority": 26,
+      "fullName": "Dawson College",
+      "nickname": "Blues",
+      "registryId": "dawson"
+    },
     "collegial:soccer:5321a38c-ee53-42b8-b27f-62411bc2707b:a1a25c06-5bad-4844-ac10-0b0cc8dddfc9": {
       "id": "collegial:soccer:5321a38c-ee53-42b8-b27f-62411bc2707b:a1a25c06-5bad-4844-ac10-0b0cc8dddfc9",
       "rseqTeamId": "a1a25c06-5bad-4844-ac10-0b0cc8dddfc9",
@@ -4905,6 +4499,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=94d9e639-7614-4e18-b205-f1033d43b2f3",
           "opponentFullName": "Collège Ahuntsic",
           "opponentRegistryId": "ahuntsic"
+        },
+        {
+          "date": "2026-09-04",
+          "time": "18:30",
+          "opponent": "Lionel-Groulx",
+          "opponentCode": "CLG",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D2",
+          "gameId": "0a42243e-ee75-4165-b1cf-8fcf2af41200",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0a42243e-ee75-4165-b1cf-8fcf2af41200",
+          "opponentFullName": "Collège Lionel-Groulx",
+          "opponentRegistryId": "lionel-groulx"
         }
       ],
       "nextGame": {
@@ -5107,6 +4714,20 @@
           "opponentFullName": "Université de Montréal",
           "opponentNickname": "Carabins",
           "opponentRegistryId": "udem"
+        },
+        {
+          "date": "2026-09-04",
+          "time": "18:00",
+          "opponent": "UQTR",
+          "opponentCode": "UQTR",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "a3df2b21-2442-4186-b64c-40f6da8a51e9",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a3df2b21-2442-4186-b64c-40f6da8a51e9",
+          "opponentFullName": "Université du Québec à Trois-Rivières",
+          "opponentNickname": "Patriotes",
+          "opponentRegistryId": "uqtr"
         }
       ],
       "nextGame": {
@@ -5439,6 +5060,261 @@
       "priority": 80,
       "fullName": "Cégep de Chicoutimi",
       "registryId": "chicoutimi"
+    },
+    "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:afd48cf0-d89e-43b2-89cf-0a5579bfaedb": {
+      "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:afd48cf0-d89e-43b2-89cf-0a5579bfaedb",
+      "rseqTeamId": "afd48cf0-d89e-43b2-89cf-0a5579bfaedb",
+      "leagueId": "56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b",
+      "name": "Bishop's",
+      "code": "BIS",
+      "sector": "universitaire",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "F",
+      "division": null,
+      "usports": true,
+      "leagueLabel": "Soccer universitaire féminin",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-04",
+          "time": "18:00",
+          "opponent": "Concordia",
+          "opponentCode": "UCON",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "3ed5f6c8-19d1-493e-ab6e-43cec9168625",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3ed5f6c8-19d1-493e-ab6e-43cec9168625",
+          "opponentFullName": "Université Concordia",
+          "opponentNickname": "Stingers",
+          "opponentRegistryId": "concordia"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-04",
+        "time": "18:00",
+        "opponent": "Concordia",
+        "opponentCode": "UCON",
+        "home": true,
+        "sport": "soccer",
+        "competition": "Soccer universitaire féminin",
+        "gameId": "3ed5f6c8-19d1-493e-ab6e-43cec9168625",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3ed5f6c8-19d1-493e-ab6e-43cec9168625",
+        "opponentFullName": "Université Concordia",
+        "opponentNickname": "Stingers",
+        "opponentRegistryId": "concordia"
+      },
+      "source": "rseq-s1",
+      "priority": 7,
+      "fullName": "Bishop's University",
+      "nickname": "Gaiters",
+      "registryId": "bishops"
+    },
+    "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:3470444a-361e-470d-aba5-1f2ac64d670a": {
+      "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:3470444a-361e-470d-aba5-1f2ac64d670a",
+      "rseqTeamId": "3470444a-361e-470d-aba5-1f2ac64d670a",
+      "leagueId": "56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b",
+      "name": "Concordia",
+      "code": "UCON",
+      "sector": "universitaire",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "F",
+      "division": null,
+      "usports": true,
+      "leagueLabel": "Soccer universitaire féminin",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-04",
+          "time": "18:00",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "3ed5f6c8-19d1-493e-ab6e-43cec9168625",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3ed5f6c8-19d1-493e-ab6e-43cec9168625",
+          "opponentFullName": "Bishop's University",
+          "opponentNickname": "Gaiters",
+          "opponentRegistryId": "bishops"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-04",
+        "time": "18:00",
+        "opponent": "Bishop's",
+        "opponentCode": "BIS",
+        "home": false,
+        "sport": "soccer",
+        "competition": "Soccer universitaire féminin",
+        "gameId": "3ed5f6c8-19d1-493e-ab6e-43cec9168625",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3ed5f6c8-19d1-493e-ab6e-43cec9168625",
+        "opponentFullName": "Bishop's University",
+        "opponentNickname": "Gaiters",
+        "opponentRegistryId": "bishops"
+      },
+      "source": "rseq-s1",
+      "priority": 3,
+      "fullName": "Université Concordia",
+      "nickname": "Stingers",
+      "registryId": "concordia"
+    },
+    "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:53543aa9-9a6c-443d-b9c9-9fe34e4111c0": {
+      "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:53543aa9-9a6c-443d-b9c9-9fe34e4111c0",
+      "rseqTeamId": "53543aa9-9a6c-443d-b9c9-9fe34e4111c0",
+      "leagueId": "56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b",
+      "name": "Laval",
+      "code": "LAV",
+      "sector": "universitaire",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "F",
+      "division": null,
+      "usports": true,
+      "leagueLabel": "Soccer universitaire féminin",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-04",
+          "time": "18:00",
+          "opponent": "Sherbrooke",
+          "opponentCode": "USHE",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "9d4d3d05-341e-495b-b5af-60846f7da347",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9d4d3d05-341e-495b-b5af-60846f7da347",
+          "opponentFullName": "Université de Sherbrooke",
+          "opponentNickname": "Vert & Or",
+          "opponentRegistryId": "usherbrooke"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-04",
+        "time": "18:00",
+        "opponent": "Sherbrooke",
+        "opponentCode": "USHE",
+        "home": true,
+        "sport": "soccer",
+        "competition": "Soccer universitaire féminin",
+        "gameId": "9d4d3d05-341e-495b-b5af-60846f7da347",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9d4d3d05-341e-495b-b5af-60846f7da347",
+        "opponentFullName": "Université de Sherbrooke",
+        "opponentNickname": "Vert & Or",
+        "opponentRegistryId": "usherbrooke"
+      },
+      "source": "rseq-s1",
+      "priority": 1,
+      "fullName": "Université Laval",
+      "nickname": "Rouge et Or",
+      "registryId": "ulaval"
+    },
+    "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:7335a241-b2c2-4fb8-b1a0-c24ae1e2de51": {
+      "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:7335a241-b2c2-4fb8-b1a0-c24ae1e2de51",
+      "rseqTeamId": "7335a241-b2c2-4fb8-b1a0-c24ae1e2de51",
+      "leagueId": "56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b",
+      "name": "Sherbrooke",
+      "code": "USHE",
+      "sector": "universitaire",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "F",
+      "division": null,
+      "usports": true,
+      "leagueLabel": "Soccer universitaire féminin",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-04",
+          "time": "18:00",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "9d4d3d05-341e-495b-b5af-60846f7da347",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9d4d3d05-341e-495b-b5af-60846f7da347",
+          "opponentFullName": "Université Laval",
+          "opponentNickname": "Rouge et Or",
+          "opponentRegistryId": "ulaval"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-04",
+        "time": "18:00",
+        "opponent": "Laval",
+        "opponentCode": "LAV",
+        "home": false,
+        "sport": "soccer",
+        "competition": "Soccer universitaire féminin",
+        "gameId": "9d4d3d05-341e-495b-b5af-60846f7da347",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9d4d3d05-341e-495b-b5af-60846f7da347",
+        "opponentFullName": "Université Laval",
+        "opponentNickname": "Rouge et Or",
+        "opponentRegistryId": "ulaval"
+      },
+      "source": "rseq-s1",
+      "priority": 6,
+      "fullName": "Université de Sherbrooke",
+      "nickname": "Vert & Or",
+      "registryId": "usherbrooke"
+    },
+    "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:070aa425-59f4-4039-9bfb-af19a23c4e63": {
+      "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:070aa425-59f4-4039-9bfb-af19a23c4e63",
+      "rseqTeamId": "070aa425-59f4-4039-9bfb-af19a23c4e63",
+      "leagueId": "56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b",
+      "name": "UQTR",
+      "code": "UQTR",
+      "sector": "universitaire",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "F",
+      "division": null,
+      "usports": true,
+      "leagueLabel": "Soccer universitaire féminin",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-04",
+          "time": "18:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "a3df2b21-2442-4186-b64c-40f6da8a51e9",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a3df2b21-2442-4186-b64c-40f6da8a51e9",
+          "opponentFullName": "Université McGill",
+          "opponentNickname": "Redbirds",
+          "opponentRegistryId": "mcgill"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-04",
+        "time": "18:00",
+        "opponent": "McGill",
+        "opponentCode": "MCG",
+        "home": true,
+        "sport": "soccer",
+        "competition": "Soccer universitaire féminin",
+        "gameId": "a3df2b21-2442-4186-b64c-40f6da8a51e9",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a3df2b21-2442-4186-b64c-40f6da8a51e9",
+        "opponentFullName": "Université McGill",
+        "opponentNickname": "Redbirds",
+        "opponentRegistryId": "mcgill"
+      },
+      "source": "rseq-s1",
+      "priority": 11,
+      "fullName": "Université du Québec à Trois-Rivières",
+      "nickname": "Patriotes",
+      "registryId": "uqtr"
     }
   }
 }
