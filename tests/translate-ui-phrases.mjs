@@ -27,6 +27,8 @@ assert.match(
   'overlay : timer dès le lancement, pas après le chrome',
 );
 assert.match(src, /function translateOverlayCopyFirst/, 'libellés overlay traduits en premier');
+assert.match(src, /HOLD_AT_100_MS/, 'overlay : tenir 100 % avant le fondu');
+assert.match(src, /band:\s*\[80,\s*94\]/, '2e passage articles : 80–94 %, pas de plateau');
 assert.match(
   src,
   /await translateOverlayCopyFirst\(target, gen\)[\s\S]{0,500}chromeOnly:\s*true/,
