@@ -1905,11 +1905,24 @@ function sportsCtaTagLabel(slide, state) {
   return RADAR_BRAND_SHORT;
 }
 
-/** Remplit la pastille : « Prochains match » en deux lignes, le reste en une. */
-function fillSportsCtaTagCopy(tag, wanted) {
+/** Remplit la pastille : « Prochains match » / live (En direct + score) en deux lignes. */
+function fillSportsCtaTagCopy(tag, wanted, extra = {}) {
   tag.replaceChildren();
   markNoTranslate(tag);
   const shown = window.RadarTranslate?.displayUiText?.(wanted) || wanted;
+  if (wanted === SPORTS_CTA_TAG_LIVE) {
+    const score = extra.score || tag.dataset.ctaScore || SPORTS_LIVE_SCORE_PENDING;
+    const lines = document.createElement('span');
+    lines.className = 'sports-chip__cta-tag-lines';
+    const top = document.createElement('span');
+    top.textContent = shown;
+    const bot = document.createElement('span');
+    bot.className = 'sports-chip__cta-tag-score';
+    bot.textContent = score;
+    lines.append(top, bot);
+    tag.append(lines);
+    return;
+  }
   if (wanted === SPORTS_CTA_TAG_NEXT) {
     const parts = String(shown).trim().split(/\s+/).filter(Boolean);
     const topTxt = parts.length >= 2 ? parts.slice(0, -1).join(' ') : shown;
@@ -1935,7 +1948,7 @@ function refreshSportsChromeLanguage() {
   document.querySelectorAll('.sports-chip--cta .sports-chip__cta-tag').forEach((tag) => {
     if (tag.classList.contains('sports-chip__cta-tag--brand')) return;
     const wanted = tag.dataset.ctaTag;
-    if (wanted) fillSportsCtaTagCopy(tag, wanted);
+    if (wanted) fillSportsCtaTagCopy(tag, wanted, { score: tag.dataset.ctaScore });
   });
   document.querySelectorAll('.sports-chip__vs[data-vs-orig]').forEach((el) => {
     const orig = el.getAttribute('data-vs-orig');
@@ -1967,7 +1980,11 @@ function sportsLiveSubParts(slide) {
   const kick = sportsKickoffClock(slide?.game);
   const period = sportsLivePeriodLabel(slide?.game);
   const comp = sportsCompetitionLabel(slide);
-  return [kick, period, comp, sportsUpdatedShort()].filter(Boolean);
+  const stamp = sportsUpdatedShort();
+  const parts = [kick, period, comp];
+  // Pas « 20 h 30 · … · mis à jour à 20 h 30 » — même horloge deux fois.
+  if (stamp && !(kick && stamp.includes(kick))) parts.push(stamp);
+  return parts.filter(Boolean);
 }
 
 /**
@@ -2667,10 +2684,15 @@ function applySportsCtaState(chip, slide) {
     tag.classList.remove('sports-chip__cta-tag--brand');
     markNoTranslate(tag);
     const lang = window.RadarTranslate?.getMode?.() || 'original';
-    if (tag.dataset.ctaTag !== wanted || tag.dataset.ctaLang !== lang) {
+    const game = slide?.ctaFrom?.game || slide?.game;
+    const liveScore = (state === 'live' && game) ? sportsLiveScoreText(game) : '';
+    const scoreChanged = (tag.dataset.ctaScore || '') !== liveScore;
+    if (liveScore) tag.dataset.ctaScore = liveScore;
+    else delete tag.dataset.ctaScore;
+    if (tag.dataset.ctaTag !== wanted || tag.dataset.ctaLang !== lang || scoreChanged) {
       tag.dataset.ctaTag = wanted;
       tag.dataset.ctaLang = lang;
-      fillSportsCtaTagCopy(tag, wanted);
+      fillSportsCtaTagCopy(tag, wanted, { score: liveScore });
     }
   }
   syncSportsCtaRail(chip, slide);
