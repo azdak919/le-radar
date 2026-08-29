@@ -1557,9 +1557,9 @@ assert(
 );
 assert(
   appJs.includes('function sportsCtaMayRotate')
-    && /const SPORTS_CTA_DWELL_MS\s*=\s*12000/.test(appJs)
+    && /const SPORTS_CTA_DWELL_MS\s*=\s*8000/.test(appJs)
     && appJs.includes('sportsCtaPaused'),
-  'app.js : rotation CTA (~12 s), en pause au survol ou à l’appui',
+  'app.js : rotation CTA (~8 s), en pause au survol ou à l’appui',
 );
 assert(
   !appJs.includes('SPORTS_CTA_ROTATE_MEDIA')
@@ -1797,8 +1797,9 @@ assert(
     && appJs.includes('sportsSlotDwellMs')
     && appJs.includes('sportsLabelReadingMs')
     && appJs.includes('sportsChipNeedsMarquee')
-    && /SPORTS_READ_MIN_MS\s*=\s*9000/.test(appJs)
-    && /SPORTS_READ_MAX_MS\s*=\s*14000/.test(appJs)
+    && /SPORTS_READ_MIN_MS\s*=\s*6500/.test(appJs)
+    && /SPORTS_READ_MAX_MS\s*=\s*10000/.test(appJs)
+    && /SPORTS_BOARD_HOLD_MS\s*=\s*7500/.test(appJs)
     && /SPORTS_SCROLL_ONE_WAY_MS\s*=\s*5500/.test(appJs)
     && appJs.includes('SPORTS_SCROLL_ROUND_TRIP_MS')
     && appJs.includes('SPORTS_SCROLL_READ_DELAY_MS')
@@ -1810,7 +1811,7 @@ assert(
     && appJs.includes('function pickBriefSidebar')
     && appJs.includes('function sportsBoardHoldMs')
     && /WEATHER_CASCADE_STEP_MS\s*=\s*440/.test(appJs)
-    && /SPORTS_CASCADE_STEP_MS\s*=\s*520/.test(appJs)
+    && /SPORTS_CASCADE_STEP_MS\s*=\s*440/.test(appJs)
     && appJs.includes('SPORTS_CHIP_LEAVE_MS')
     && /if \(!weatherCascadeSlots\(\)\.length\) return/.test(appJs)
     && !/Hors wide : une carte à la fois/.test(appJs),

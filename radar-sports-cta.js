@@ -133,15 +133,17 @@ try {
  * Temps d’affichage des puces sports (gauche) — calibré pour *lire* l’info
  * (glyphe + équipes + date + heure), pas un flip nerveux type gare météo.
  *
- * Feedback prod 2026-08-11 : 4,8–8 s faisait « trop vide » (3 slots qui
- * tournent en parallèle → sensation de bandeau qui se vide sans cesse).
- * Sans défilement : ~9–14 s selon la longueur du libellé.
+ * Feedback prod 2026-08-11 : 4,8–8 s en rotation *parallèle* faisait « trop
+ * vide » (3 slots qui tournent chacun de leur côté). La vague L→R puis pause
+ * évite ça : le bandeau reste plein pendant le hold.
+ * Feedback prod 2026-08-29 : 9–14 s de pause après la vague = trop long.
+ * Sans défilement : ~6,5–10 s selon la longueur du libellé.
  * Avec marquee : ≥ 1 aller-retour CSS + pause au repos pour relire le début
  *   (même esprit que MARQUEE_REST_MS du dial radio).
  */
-const SPORTS_READ_MIN_MS = 9000;
-const SPORTS_READ_PER_CHAR_MS = 42;
-const SPORTS_READ_MAX_MS = 14000;
+const SPORTS_READ_MIN_MS = 6500;
+const SPORTS_READ_PER_CHAR_MS = 32;
+const SPORTS_READ_MAX_MS = 10000;
 /**
  * Une voie du marquee CSS `sports-chip-scroll` (style.css) — tenir synchro
  * avec `--sports-scroll-duration`. `alternate` → aller-retour = 2 ×.
@@ -159,10 +161,11 @@ const SPORTS_SLOT_STAGGER_MS = 1100;
  * Vague de toutes les puces (scores + texte CTA), puis pause lecture.
  * Tous les écrans : même principe ; CTA en pause à l’appui sur tactile et
  * inchangée seulement en mouvement réduit.
- * Step assez lent pour suivre la cascade ; hold assez long pour relire le ruban.
+ * Step assez lent pour suivre la cascade ; hold assez long pour relire le ruban
+ * sans laisser les cartes figées ~12–16 s (prod 2026-08-29).
  */
-const SPORTS_CASCADE_STEP_MS = 520;
-const SPORTS_BOARD_HOLD_MS = 11000;
+const SPORTS_CASCADE_STEP_MS = 440;
+const SPORTS_BOARD_HOLD_MS = 7500;
 /** Entrée d’une puce score (CSS sports-chip-arrive) — plus long = moins brutal. */
 const SPORTS_ARRIVE_MS = 640;
 /**
@@ -191,12 +194,12 @@ const SPORTS_CTA_TAG_NEXT = 'Prochains match';
 const SPORTS_CTA_REST_TONE = '#6a7580';
 const SPORTS_CTA_LIVE_TONE = '#c8102e';
 /**
- * Rythme de la carte CTA — un peu plus lent que les puces scores, mais pas
- * figé. Feedback prod 2026-08-11 : 24 s laissait l’accroche « collée » alors
- * que la gauche tournait trop vite. Cible ~12 s (proche des scores stables,
- * toujours un cran plus posé). Survol = pause (garde-fou rotation-pointeur-fin).
+ * Rythme de la carte CTA — un cran plus posé que les puces scores, mais pas
+ * figé. Feedback prod 2026-08-11 : 24 s laissait l’accroche « collée ».
+ * Cible ~8 s (proche des scores stables). Survol = pause
+ * (garde-fou rotation-pointeur-fin).
  */
-const SPORTS_CTA_DWELL_MS = 12000;
+const SPORTS_CTA_DWELL_MS = 8000;
 /** Sortie douce d’une puce score avant replaceWith (synchro CSS is-leaving). */
 const SPORTS_CHIP_LEAVE_MS = 420;
 /** Popularité sports étudiants QC (aligné page /sports/). */
@@ -3520,14 +3523,14 @@ function renderSportsStrip() {
 
 /**
  * Temps de lecture estimé d’un libellé de puce (scan compact FR).
- * Ex. « CLG vs OUT · 19 août · 23 h 40 » ≈ 9–11 s ; accroche plus longue → plus.
+ * Ex. « CLG vs OUT · 19 août · 23 h 40 » ≈ 6,5–8 s ; accroche plus longue → plus.
  */
 function sportsLabelReadingMs(text) {
   const len = String(text || '').replace(/\s+/g, ' ').trim().length;
   if (!len) return SPORTS_READ_MIN_MS;
   return Math.min(
     SPORTS_READ_MAX_MS,
-    Math.max(SPORTS_READ_MIN_MS, 4200 + len * SPORTS_READ_PER_CHAR_MS),
+    Math.max(SPORTS_READ_MIN_MS, 3000 + len * SPORTS_READ_PER_CHAR_MS),
   );
 }
 
@@ -3564,7 +3567,7 @@ function sportsChipNeedsMarquee(chip) {
 /**
  * Temps d’affichage d’un slot avant rotation — assez long pour *apprécier*
  * la carte et enregistrer l’info.
- * · Texte entier visible : dwell = lecture estimée (puces ~9–14 s ; CTA ~12 s).
+ * · Texte entier visible : dwell = lecture estimée (puces ~6,5–10 s ; CTA ~8 s).
  * · Texte qui défile : **toujours** 1 aller-retour marquee + pause repos
  *   (ne jamais changer la carte au milieu du scroll).
  */
@@ -3818,7 +3821,7 @@ function clearSportsWave() {
 /** Pause lecture après une vague sports (scores + accroches CTA). */
 function sportsBoardHoldMs() {
   const n = Math.max(1, sportsVisible.length);
-  let hold = Math.min(16000, Math.max(SPORTS_BOARD_HOLD_MS, 1800 * n));
+  let hold = Math.min(12000, Math.max(SPORTS_BOARD_HOLD_MS, 1400 * n));
   sportsVisible.forEach((slide, i) => {
     if (slide?.mode === 'cta') hold = Math.max(hold, sportsSlotDwellMs(i));
   });
@@ -3827,7 +3830,7 @@ function sportsBoardHoldMs() {
     sportsVisible.forEach((_, i) => {
       hold = Math.max(hold, sportsSlotDwellMs(i));
     });
-    hold = Math.min(16000, hold);
+    hold = Math.min(12000, hold);
   }
   return hold;
 }
