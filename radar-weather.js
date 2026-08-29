@@ -783,7 +783,7 @@ function wideNowAirLiveCopy(radio) {
     liveSub: hasLive ? liveSub : '',
     songSplit: !!songSplit && hasLive,
     hideLive: !hasLive,
-    nextTitle: upcoming?.title || (radio ? 'Rien de programmé' : '—'),
+    nextTitle: upcoming?.title || (radio ? 'Rien de programmé pour aujourd\'hui' : '—'),
     nextSub: upcoming?.sub || '',
     hasUpcoming: !!upcoming,
   };
