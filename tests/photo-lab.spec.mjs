@@ -176,7 +176,9 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(tomorrowCard.locator('.sports-chip__cta-tag-lines')).toHaveCount(1);
   await expect(tomorrowCard.locator('.sports-chip__cta-tag-meridiem')).toHaveText(/^PM$/i);
   const hierCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — hier (victoire)' });
-  await expect(hierCard.locator('.sports-chip__cta-tag-meridiem')).toHaveText(/^(AM|PM)$/i);
+  await expect(hierCard.locator('.sports-chip__cta-tag-meridiem')).toHaveCount(0);
+  await expect(hierCard.locator('.sports-chip__cta-tag')).toHaveText(/^Hier$/i);
+  await expect(page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="Hier"] .sports-chip__cta-tag-meridiem')).toHaveCount(0);
   const liveCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — en direct' }).first();
   await expect(liveCard.locator('.sports-chip__cta-tag-score')).toBeVisible();
   await expect(liveCard.locator('.sports-chip__cta-tag-meridiem')).toHaveCount(0);
