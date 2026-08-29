@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v834",
+    "cache": "radar-shell-v835",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -23,13 +23,13 @@
       "quebec-nations-backgrounds-data.js": "11fbca15903973d4",
       "quebec-university-backgrounds-data.js": "bcfb70bbfada42ba",
       "radar-lifecycle.js": "005825973b55d988",
-      "radar-news.js": "de4dab93ceee1c4d",
+      "radar-news.js": "8597330d90b53e24",
       "radar-sports-cta.js": "17c69ec57f5ebe64",
       "radar-state.js": "26dcd41bb6e2783d",
       "radar-tuner.js": "163ed56ebab51be2",
       "radar-utils.js": "e110f6e5c1b7cbc2",
-      "radar-weather.js": "b5bd9440168e977c",
-      "scripts/campus-fallback-lib.js": "5f8bda6f2684d3c0",
+      "radar-weather.js": "8bba27375d456e97",
+      "scripts/campus-fallback-lib.js": "1782f0c434ee1d34",
       "scripts/season-lib.js": "af99fef06683c37b",
       "scripts/session-freshness-lib.js": "8864fadc8cd34ed1",
       "scripts/sports-freshness-lib.js": "cb3ee31267516560",
@@ -44,7 +44,7 @@
       "style.css": "f31b05655e776f2b",
       "translate-menu.css": "a5a4eb37479afb60",
       "translate-menu.js": "07802220efb342c2",
-      "translate.js": "341d1ced971889fb",
+      "translate.js": "5b48d676f4e750ef",
       "weather-cities-data.js": "55d8ae8c518bfbdf"
     }
   },
@@ -96,7 +96,7 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v231",
+    "cache": "sports-shell-v232",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "0e0df2c60f5900e3",
@@ -111,12 +111,12 @@
       "nav-shell.js": "97c086a5c1ef5bca",
       "player-sync.js": "36e84f1afaff7fcb",
       "radar-lifecycle.js": "005825973b55d988",
-      "radar-news.js": "de4dab93ceee1c4d",
+      "radar-news.js": "8597330d90b53e24",
       "radar-sports-cta.js": "17c69ec57f5ebe64",
       "radar-state.js": "26dcd41bb6e2783d",
       "radar-tuner.js": "163ed56ebab51be2",
       "radar-utils.js": "e110f6e5c1b7cbc2",
-      "radar-weather.js": "b5bd9440168e977c",
+      "radar-weather.js": "8bba27375d456e97",
       "seo-page-theme.js": "0f1d4a74dd3416a0",
       "seo-pages.css": "523e518bb0300005",
       "sports-board.js": "9cb34f04de522277",

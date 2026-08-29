@@ -13,7 +13,9 @@
  *
  * Hôtes fragiles : on essaie l’origine d’abord (timeout court). Wayback n’est
  * pas l’URL primaire — trop lent, ça basculait vers le campus alors que
- * l’illustration d’article était bonne. Campus = filet si 1 et 2 échouent.
+ * l’illustration d’article était bonne. Origine saine (Collectif, etc.) :
+ * un timeout 6 s ne doit PAS envoyer au campus — on attend onload/onerror.
+ * Campus = filet si 1 et 2 échouent vraiment (404), pas s’ils sont lents.
  */
 
 'use strict';
