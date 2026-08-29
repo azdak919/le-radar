@@ -1378,6 +1378,15 @@ assert(
 // roulement vertical, rotation seulement là où on peut l'arrêter.
 const appFlat = appJs.replace(/\s+/g, ' ');
 const cssFlat = styleCss.replace(/\s+/g, ' ');
+assert(
+  /\[data-theme="light"\][^{]*\.sports-chip:not\(\[data-cta-state="live"\]\)[^{]*\{[^}]*rgba\(54,\s*59,\s*68,\s*0\.68\)/.test(cssFlat)
+    && styleCss.includes('sports-chip-rim-glow-light'),
+  'style : cartes sports light = verre météo rgba(54, 59, 68, 0.68)',
+);
+assert(
+  /\[data-theme="light"\][^{]*\.wordmark-full\s*\{[^}]*rgba\(54,\s*59,\s*68,\s*0\.68\)/.test(cssFlat),
+  'style : slogan light = verre météo rgba(54, 59, 68, 0.68)',
+);
 
 assert(
   /const RADAR_BRAND_SHORT\s*=\s*['"]LE-RADAR\.ca['"]/.test(appJs)
