@@ -445,8 +445,8 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.14),
     0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 34%, transparent);
 }
-[data-theme="light"] .masthead-sports-strip .sports-chip:not(.sports-chip--cta),
-[data-theme="light"] .masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):not([data-cta-lamp="soon"]) {
+[data-theme="light"] .masthead-sports-strip .sports-chip:not(.sports-chip--cta):not(.is-leaving):not(.is-arriving),
+[data-theme="light"] .masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):not([data-cta-lamp="soon"]):not(.is-leaving):not(.is-arriving) {
   animation: sports-chip-rim-glow-light 3.2s ease-in-out infinite;
 }
 @keyframes sports-chip-rim-glow-light {
@@ -501,6 +501,9 @@
     0 0 0 0 rgba(200, 16, 46, 0);
   backdrop-filter: blur(10px) saturate(1.06);
   -webkit-backdrop-filter: blur(10px) saturate(1.06);
+}
+[data-theme="light"] .masthead-sports-strip .sports-chip--cta[data-cta-state="live"]:not(.is-leaving):not(.is-arriving),
+[data-theme="light"] .masthead-sports-strip .sports-chip--cta[data-cta-lamp="soon"]:not(.is-leaving):not(.is-arriving) {
   animation: sports-cta-ring-pulse-light 2.6s ease-in-out infinite;
 }
 [data-theme="light"] .masthead-sports-strip .sports-chip--cta[data-cta-state="live"]:hover,

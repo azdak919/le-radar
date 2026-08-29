@@ -529,4 +529,32 @@ test('thème clair : sports et slogan partagent le verre météo @ci-critical', 
     expect(color.a, `${name} alpha`).toBeCloseTo(slate.a, 2);
   }
   expect(glass.ctaLive.blur, 'CTA live light : blur verre').toMatch(/blur\(10px\)/);
+
+  const cascade = await page.evaluate(() => {
+    const name = (el) => (el ? getComputedStyle(el).animationName : '');
+    const chip = document.querySelector(
+      '#masthead-sports-strip .sports-chip:not(.sports-chip--cta)',
+    );
+    const cta = document.querySelector('#masthead-sports-strip .sports-chip--cta');
+    const rest = name(chip);
+    chip?.classList.add('is-leaving');
+    const leaving = name(chip);
+    chip?.classList.remove('is-leaving');
+    chip?.classList.add('is-arriving');
+    const arriving = name(chip);
+    chip?.classList.remove('is-arriving');
+    if (cta) {
+      cta.setAttribute('data-cta-state', 'live');
+      cta.removeAttribute('data-cta-lamp');
+    }
+    const ctaRest = name(cta);
+    cta?.classList.add('is-leaving');
+    const ctaLeaving = name(cta);
+    return { rest, leaving, arriving, ctaRest, ctaLeaving };
+  });
+  expect(cascade.rest, 'puce light au repos : rim-glow').toMatch(/sports-chip-rim-glow-light/);
+  expect(cascade.leaving, 'puce light qui sort : cascade').toBe('sports-chip-leave');
+  expect(cascade.arriving, 'puce light qui entre : cascade').toBe('sports-chip-arrive');
+  expect(cascade.ctaRest, 'CTA live light au repos : halo').toMatch(/sports-cta-ring-pulse-light/);
+  expect(cascade.ctaLeaving, 'CTA live light qui sort : cascade').toBe('sports-chip-leave');
 });
