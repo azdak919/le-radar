@@ -33,7 +33,7 @@
 
   const TZ = 'America/Toronto';
   const PERIOD_KEYS = new Set(['all', 'live', 'week', 'next-week', 'month', 'session']);
-  /* Même fenêtre que app.js (CTA « En cours ») : 15 min avant → 3 h après. */
+  /* Même fenêtre que app.js (CTA « En direct ») : 15 min avant → 3 h après. */
   const LIVE_LEAD_MS = 15 * 60 * 1000;
   const LIVE_TAIL_MS = 3 * 3600 * 1000;
 
@@ -44,9 +44,9 @@
         : `${n} entrée${n > 1 ? 's' : ''} sur ${total}`),
       boardsOnly: 'Tableaux officiels (liens)',
       empty: 'Aucune équipe pour ce filtre.',
-      live: 'En cours',
+      live: 'En direct',
       emptyPeriod: {
-        live: 'Aucun match en cours.',
+        live: 'Aucun match en direct.',
         week: 'Aucun match cette semaine.',
         'next-week': 'Aucun match la semaine prochaine.',
         month: 'Aucun match ce mois-ci.',
@@ -227,9 +227,11 @@
       const isUpcoming = /à venir|upcoming/i.test(score.textContent || '')
         || /à venir|upcoming/i.test(idle);
       if (isUpcoming) {
-        score.className = 'sports-result__score sports-result__score--live';
+        // Scorebug : tiret tant que RSEQ n’a pas collé de chiffre. La pastille
+        // dit déjà « En direct » — ne pas répéter le mot dans la cellule score.
+        score.className = 'sports-result__score';
         score.setAttribute('aria-label', t.live);
-        score.textContent = t.live;
+        score.textContent = '—';
       }
     }
     if (badge) {

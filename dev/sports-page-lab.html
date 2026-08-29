@@ -243,7 +243,7 @@
       <div class="sports-filters__row" data-filter-period-row>
         <span class="sports-filters__label">Période</span>
         <button type="button" class="sports-filter is-active" data-filter-period="all" aria-pressed="true">Toutes</button>
-        <button type="button" class="sports-filter" data-filter-period="live" aria-pressed="false">En cours</button>
+        <button type="button" class="sports-filter" data-filter-period="live" aria-pressed="false">En direct</button>
         <button type="button" class="sports-filter" data-filter-period="week" aria-pressed="false">Cette semaine</button>
         <button type="button" class="sports-filter" data-filter-period="next-week" aria-pressed="false">Semaine prochaine</button>
         <button type="button" class="sports-filter" data-filter-period="month" aria-pressed="false">Ce mois-ci</button>
@@ -290,11 +290,10 @@
       } else if (kind === 'live') {
         if (r.score) {
           score = r.score;
-          scoreAria = r.scoreAria || 'En cours';
+          scoreAria = r.scoreAria || 'En direct';
         } else {
-          scoreCls += ' sports-result__score--live';
-          score = 'En cours';
-          scoreAria = 'En cours';
+          score = '—';
+          scoreAria = 'En direct';
         }
       }
       const vs = r.vs || 'vs';
@@ -315,7 +314,7 @@
       const badge = kind === 'next'
         ? `<span class="sports-result__badge sports-result__badge--next" title="À venir">→</span>`
         : kind === 'live'
-          ? `<span class="sports-result__badge" title="En cours"></span>`
+          ? `<span class="sports-result__badge" title="En direct"></span>`
           : `<span class="sports-result__badge${badgeMod}" title="${r.badgeTitle || ''}">${r.badge || ''}</span>`;
       const priorMeta = r.prior
         ? `\n  <span class="sports-result__season-meta">Saison précédente</span>`
@@ -336,7 +335,7 @@
       const sexBadge = p.sex
         ? ` <span class="sports-panel__sex sports-panel__sex--${sexMod}"${p.sexKey === 'X' ? ' title="Mixte"' : ''}>${p.sex}</span>`
         : '';
-      const livePill = isLive ? ' <span class="sports-panel__live">En cours</span>' : '';
+      const livePill = isLive ? ' <span class="sports-panel__live">En direct</span>' : '';
       const code = p.code
         ? ` <span class="sports-panel__code notranslate" translate="no">${p.code}</span>`
         : '';
@@ -603,8 +602,8 @@
         },
       },
       {
-        title: 'En cours',
-        note: 'pastille En cours + filtre Période',
+        title: 'En direct',
+        note: 'pastille En direct + filtre Période',
         panel: {
           sport: 'hockey', sector: 'universitaire', name: 'McGill',
           nick: 'Redbirds', code: 'MCG', sex: 'Masculin', sexKey: 'M',
@@ -613,7 +612,7 @@
           meta: 'Hockey · D1 · Universitaire',
           rows: [{
             kind: 'live', date: '2026-08-23', day: '23 août', clock: '2e période',
-            score: '2–1', scoreAria: 'En cours',
+            score: '2–1', scoreAria: 'En direct',
             opp: 'Stingers', oppSchool: 'Concordia',
             oppFull: 'Université Concordia', venue: 'domicile',
             href: RSEQ,

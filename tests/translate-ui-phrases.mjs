@@ -23,6 +23,7 @@ assert.match(src, /function cacheGet/, 'LRU cacheGet');
 const phrases = [
   'Prochains match',
   'Prochain match',
+  'En direct',
   'En cours',
   'Demain',
   'Hier',

@@ -28,7 +28,7 @@ Mesures du 2026-08-26. Un « à revoir plus tard » n’est pas une conclusion.
 |---|---|---|
 | `news-archive.json` (~10 Mo, ~8 k notices) | Métadonnées de conservation, **sans** corps ni images. Le public reste à `partial.maxRecords` (120). | JSON compact ; `storage.maxRecords` 20 000 ; `storage.maxFileBytes` 16 Mo ; `tests/artifact-budget.mjs` |
 | `sports.json` (~3,5 Mo) | Catalogue RSEQ vivant. Le HTML `/sports/` est un **prérendu SEO** volontaire, writer unique `generate-seo`. | Test 5 Mo |
-| `assets/news-images/` (~30 Mo) | Miroir des unes, hors ligne et Pages. | Test 40 Mo ; prune du bot miroir |
+| `assets/news-images/` (~48 Mo) | Miroir des unes, hors ligne et Pages. | Test 50 Mo ; prune du bot miroir |
 | `assets/kit/` (~87 Mo) | Affiches campus **600 dpi**, 7 établissements. Qualité d’impression. | Test 100 Mo ; pas de campus supplémentaire sans go humain |
 
 ## Catalogue historique — mesure D19 (2026-08-26)
@@ -162,7 +162,7 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 | Flux radio + promotion candidats | `discover-streams.js` | Quotidien + hebdo |
 | Agrégation articles | `fetch-news.js` | 7×/jour |
 | Résultats sportifs RSEQ | `fetch-sports.js` | **6×/jour + sam/dim 14 h** (`update-sports.yml`) — heures de consultation QC (matin, midi, fin de cours, soirée matchs, post-match, rattrapage) ; source en panne → snapshot précédent conservé |
-| Scores **en direct** RSEQ | `fetch-sports.js --live` | **Toutes les 5 min** 12 h–minuit Québec (`update-sports-live.yml`) — ligues avec un match dans la fenêtre seulement ; le mât relit `sports.json` aux 15 s |
+| Scores **en direct** RSEQ | `fetch-sports.js --live` | **Toutes les 5 min** 12 h–minuit Québec (`update-sports-live.yml`) — ligues avec un match dans la fenêtre seulement ; filet horaire `:20` + enchaînement `workflow_run` sur la radio now-playing (GitHub lâche le `*/5`) ; le mât relit `sports.json` aux 15 s |
 | Extrait « à la une » | `enrich-lead-excerpts.js` | 7×/jour (après `fetch-news`) |
 | En cours + à venir (API / grille / ICY) | `fetch-radio-nowplaying.js` | Aux 30 min |
 | Dérive des grilles (rapport) | `detect-schedule-drift.js` | **Quotidien** (23:10 UTC ≈ 19:10 HAE) |

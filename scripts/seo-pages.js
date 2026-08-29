@@ -1291,8 +1291,12 @@ function sportsResultRows(team, t, lang) {
   if (next) {
     const live = sportsNextIsLive(next);
     const dayWord = sportsDayWord(next.date, t);
-    const timeHtml = live && next.period
-      ? `<span class="sports-result__day">${escapeHtml(dayWord || formatSportsDate(next.date, lang) || next.date || '')}</span><span class="sports-result__clock">${escapeHtml(next.period)}</span>`
+    const kickClock = formatSportsClock(next.time, lang);
+    const liveClock = live
+      ? [kickClock, next.period].filter(Boolean).join(' · ')
+      : '';
+    const timeHtml = live && liveClock
+      ? `<span class="sports-result__day">${escapeHtml(dayWord || formatSportsDate(next.date, lang) || next.date || '')}</span><span class="sports-result__clock">${escapeHtml(liveClock)}</span>`
       : formatSportsTimeHtml(next.date, next.time, lang, dayWord);
     const opp = formatOpp(next);
     const venue = next.home === false
@@ -1301,15 +1305,14 @@ function sportsResultRows(team, t, lang) {
         ? `<span class="sports-result__venue">${escapeHtml(t.sportsHome)}</span>`
         : '';
     if (live) {
-      const liveLabel = t.sportsLive || 'En cours';
-      const hasScore = next.scoreFor != null && next.scoreAgainst != null;
-      const scoreText = hasScore ? `${next.scoreFor}–${next.scoreAgainst}` : liveLabel;
-      const scoreClass = hasScore
-        ? 'sports-result__score'
-        : 'sports-result__score sports-result__score--live';
+      const liveLabel = t.sportsLive || 'En direct';
+      const hasScore = next.scoreFor != null && next.scoreAgainst != null
+        && Number.isFinite(Number(next.scoreFor)) && Number.isFinite(Number(next.scoreAgainst))
+        && Number(next.scoreFor) !== -999 && Number(next.scoreAgainst) !== -999;
+      const scoreText = hasScore ? `${next.scoreFor}–${next.scoreAgainst}` : '—';
       rows.push(`<li class="sports-result sports-result--live">
   <time class="sports-result__time" datetime="${escapeHtml(next.date || '')}">${timeHtml}</time>
-  <span class="${scoreClass}" aria-label="${escapeHtml(liveLabel)}">${escapeHtml(scoreText)}</span>
+  <span class="sports-result__score" aria-label="${escapeHtml(liveLabel)}">${escapeHtml(scoreText)}</span>
   <span class="sports-result__title">${formatTitle(next, opp, venue)}</span>
   <span class="sports-result__badge" title="${escapeHtml(liveLabel)}"></span>
 </li>`);
@@ -1416,7 +1419,7 @@ function sportsPanelHtml(team, t, lang) {
     : '';
   const liveNow = sportsNextIsLive(team.nextGame);
   const livePill = team.nextGame
-    ? ` <span class="sports-panel__live"${liveNow ? '' : ' hidden'}>${escapeHtml(t.sportsLive || 'En cours')}</span>`
+    ? ` <span class="sports-panel__live"${liveNow ? '' : ' hidden'}>${escapeHtml(t.sportsLive || 'En direct')}</span>`
     : '';
   // Associations de voile (ULaVoile, PolyVoile, McGill Sailing) : jamais le surnom varsity.
   const isSailingClub = sport === 'sailing'

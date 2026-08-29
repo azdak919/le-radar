@@ -1383,9 +1383,9 @@ assert(
   'nom long LE-RADAR : notranslate (pied + gabarit)',
 );
 assert(
-  /const SPORTS_CTA_TAG_LIVE\s*=\s*['"]En cours['"]/.test(appJs)
+  /const SPORTS_CTA_TAG_LIVE\s*=\s*['"]En direct['"]/.test(appJs)
     && appJs.includes('function sportsCtaTagLabel'),
-  'app.js : pastille CTA = En cours / Hier / Aujourd’hui / Sports',
+  'app.js : pastille CTA = En direct / Hier / Aujourd’hui / Sports',
 );
 // Pastille CTA : plus de voyant LED (ni span JS, ni ::before).
 assert(
@@ -1515,7 +1515,7 @@ assert(
     && appJs.includes('function pollLiveSportsJson')
     && /const SPORTS_LIVE_POLL_MS\s*=\s*15000/.test(appJs)
     && appJs.includes("if (state === 'live')"),
-  'app.js : direct = pastille En cours + score collé + sondage sports.json aux 15 s',
+  'app.js : direct = pastille En direct + score collé + sondage sports.json aux 15 s',
 );
 assert(
   /const lives = sportsCtaLiveSources\(now\);\s*if \(lives\.length\)/.test(appFlat)
@@ -1525,10 +1525,16 @@ assert(
 );
 assert(
   !/state === 'live'[\s\S]{0,200}sportsRelativeAge/.test(appFlat)
-    && !/state === 'live'[\s\S]{0,200}sportsRelativeWhen/.test(appFlat)
     && appJs.includes('sportsLivePeriodLabel')
-    && appJs.includes('function sportsKickoffClock'),
-  'app.js : sous-ligne live = période / compétition (pas « il y a 2 min »)',
+    && appJs.includes('function sportsKickoffClock')
+    && appJs.includes('function sportsLiveSubParts')
+    && appJs.includes('SPORTS_LIVE_SCORE_PENDING')
+    && appJs.includes('function sportsLiveScoreText')
+    && appJs.includes('function sportsLiveTeamsScoreHtml')
+    && /function sportsLiveSubParts[\s\S]{0,500}sportsKickoffClock/.test(appJs)
+    && /function sportsLiveSubParts[\s\S]{0,500}sportsUpdatedShort/.test(appJs)
+    && !/function sportsLiveSubParts[\s\S]{0,500}sportsRelative/.test(appJs),
+  'app.js : sous-ligne live = coup d’envoi / période / compétition / tampon (pas « il y a 2 min »)',
 );
 assert(
   /\[data-cta-state="live"\][^{]*\{[^}]*sports-cta-ring-pulse/.test(cssFlat),
@@ -1754,7 +1760,10 @@ assert(
     && appJs.includes('function sportsMatchChipTextOverflows')
     && appJs.includes('le-radar-sports-weather-fit')
     && indexHtml.includes('institution-acronyms-data.js')
-    && /SPORTS_RECENT_RESULT_MS\s*=\s*5 \* 24 \* 3600 \* 1000/.test(appJs)
+    && /SPORTS_RECENT_RESULT_DAYS\s*=\s*5/.test(appJs)
+    && appJs.includes('SPORTS_RECENT_RESULT_MS')
+    && appJs.includes('function sportsResultIsRecent')
+    && appJs.includes('function sportsCivilDaysAgo')
     && appJs.includes('recentResults')
     && appJs.includes('le-radar-sports-left-pool')
     && appJs.includes('function sportsTeamIsQuebecFocus')

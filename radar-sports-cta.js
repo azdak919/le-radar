@@ -48,8 +48,12 @@ const SPORTS_SPORT_TONES = {
 const SPORTS_LIVE_BEFORE_MS = 2 * 3600 * 1000;
 const SPORTS_LIVE_AFTER_MS = 3 * 3600 * 1000;
 const SPORTS_IMMINENT_MS = 7 * 24 * 3600 * 1000; /* 7 jours */
-/** Puces scores : résultats des **5** derniers jours, avant les futurs hors CTA. */
-const SPORTS_RECENT_RESULT_MS = 5 * 24 * 3600 * 1000;
+/**
+ * Puces scores : résultats des **5** derniers jours **civils** Toronto
+ * (un dimanche 17 h reste affiché le vendredi soir — pas un filet 5×24 h).
+ */
+const SPORTS_RECENT_RESULT_DAYS = 5;
+const SPORTS_RECENT_RESULT_MS = SPORTS_RECENT_RESULT_DAYS * 24 * 3600 * 1000;
 /**
  * « Chaud » pour la *voie de gauche* / détection saison (pas le pool CTA).
  * La CTA suit une fenêtre de 5 jours civils de prochains + aujourd’hui/hier.
@@ -176,7 +180,7 @@ const SPORTS_ARRIVE_MS = 640;
  */
 const SPORTS_CTA_TAG = 'Sports';
 /** Pastille pendant un match en cours — le seul cas qui remplace la rubrique. */
-const SPORTS_CTA_TAG_LIVE = 'En cours';
+const SPORTS_CTA_TAG_LIVE = 'En direct';
 /** Coup d’envoi du jour, pas encore commencé — rouge pulse, pas le jaune Prochain. */
 const SPORTS_CTA_TAG_SOON = 'À venir';
 /** Demain : une ligne, même jaune que Prochain match. */
@@ -402,6 +406,34 @@ function sportsCivilDayShift(yyyyMmDd, deltaDays) {
   return new Date(utc).toISOString().slice(0, 10);
 }
 
+/** Jour civil Toronto d’un match (YYYY-MM-DD). */
+function sportsGameDayKey(game, now = Date.now()) {
+  const ms = sportsGameMs(game);
+  if (Number.isFinite(ms)) return torontoDayKey(ms);
+  const d = String(game?.date || '').trim();
+  return /^\d{4}-\d{2}-\d{2}$/.test(d) ? d : '';
+}
+
+/**
+ * Écart en jours civils Toronto (0 = aujourd’hui, 1 = hier).
+ * Négatif si le match est à venir. Infini si la date est illisible.
+ */
+function sportsCivilDaysAgo(game, now = Date.now()) {
+  const day = sportsGameDayKey(game, now);
+  const today = torontoDayKey(now);
+  if (!day || !today) return Number.POSITIVE_INFINITY;
+  const a = Date.parse(`${day}T12:00:00Z`);
+  const b = Date.parse(`${today}T12:00:00Z`);
+  if (!Number.isFinite(a) || !Number.isFinite(b)) return Number.POSITIVE_INFINITY;
+  return Math.round((b - a) / 86400000);
+}
+
+/** Résultat dans la fenêtre des puces (5 jours civils, saison courante). */
+function sportsResultIsRecent(game, now = Date.now()) {
+  const days = sportsCivilDaysAgo(game, now);
+  return Number.isFinite(days) && days >= 0 && days <= SPORTS_RECENT_RESULT_DAYS;
+}
+
 /**
  * Résultat admissible sur la CTA : jour civil Toronto = aujourd’hui **ou** hier.
  * (Remplace l’ancien filet glissant 48 h.)
@@ -444,7 +476,7 @@ function sportsLivePeriodLabel(game) {
  * pastille rouge et point live. Fenêtre serrée autour du coup d’envoi, pas la
  * fenêtre large du tri.
  *
- * Un résultat officiel (`final` / score sans `live`) ne reste pas « En cours »
+ * Un résultat officiel (`final` / score sans `live`) ne reste pas « En direct »
  * pendant les 3 h de queue — même si le coup d’envoi est encore dans la
  * fenêtre. Un 0-0 encore marqué `live` (rapport pas déposé) oui.
  */
@@ -492,8 +524,7 @@ function sportsUrgency(mode, game, now = Date.now()) {
   }
 
   // Résultat
-  const age = now - t;
-  if (age >= 0 && age <= SPORTS_RECENT_RESULT_MS) {
+  if (sportsResultIsRecent(game, now)) {
     return { tier: 2, sortMs: -t }; // plus récent d’abord
   }
   return { tier: 4, sortMs: -t };
@@ -552,7 +583,7 @@ function sportsNextSlide(team, now = Date.now()) {
 
 /**
  * Ancien « meilleur signal » par équipe — conservé pour la CTA (urgence).
- * Un résultat récent (SPORTS_RECENT_RESULT_MS) prime sur un prochain lointain ;
+ * Un résultat récent (5 j civils) prime sur un prochain lointain ;
  * un prochain imminent prime sur un vieux score.
  */
 function sportsPickTeamSlide(team, now = Date.now()) {
@@ -1077,12 +1108,11 @@ function sportsLeftLaneState() {
   const nexts = sportsNextSlidesSorted();
   const now = Date.now();
   // Focus-group le-radar-sports-left-pool (gate D + exclude priorSeason) :
-  // résultats < 7 j seulement ; jamais le musée lastGame via « CTA chaude ».
+  // 5 jours civils, pas 5×24 h ; jamais le musée lastGame hors saison.
   const recentResults = results.filter((s) => {
     if (!sportsSlideIsDisplayable(s)) return false;
     if (s?.game?.priorSeason || s?.team?.lastGamePriorSeason) return false;
-    const age = sportsResultAgeMs(s.game, now);
-    return Number.isFinite(age) && age >= 0 && age <= SPORTS_RECENT_RESULT_MS;
+    return sportsResultIsRecent(s.game, now);
   });
   // « Chaud » = score récent ou prochain ≤ 14 j (détection saison / appoint).
   let hasHot = recentResults.length > 0;
@@ -1101,13 +1131,18 @@ function sportsLeftLaneState() {
 
   if (recentResults.length) {
     // Résultats 5 j d’abord (V et D restent deux cartes). Puis les prochains
-    // (une face) pour remplir le bandeau : la CTA occupe déjà « son » match
-    // via occupy keys, les autres restent des puces scores normales.
+    // pour remplir le bandeau — le picker n’y touche qu’une fois les scores
+    // épuisés (pas de saut football « pour la diversité »).
     const seen = new Set(recentResults.map((s) => s.key));
     const moreNexts = sportsDedupeMatchSlides(nexts.filter((s) => (
       sportsSlideIsDisplayable(s) && !seen.has(s.key)
     )));
-    return { kind: 'results', pool: recentResults.concat(moreNexts) };
+    return {
+      kind: 'results',
+      results: recentResults,
+      nexts: moreNexts,
+      pool: recentResults.concat(moreNexts),
+    };
   }
   // Hors saison / creux : calendrier à venir seulement (pas de musée d’avril).
   // Filet ultime : un seul plus récent lastGame si vraiment zéro next.
@@ -1626,6 +1661,26 @@ function sportsVsHtml(game) {
   return `<span class="sports-chip__vs" data-vs-orig="${escapeHtml(fr)}">${escapeHtml(shown)}</span>`;
 }
 
+/**
+ * Scorebug live : chiffre collé, sinon tiret. RSEQ soccer envoie souvent
+ * -999 tant que le rapport n’est pas versé — on n’invente jamais un 0-0.
+ */
+const SPORTS_LIVE_SCORE_PENDING = '—';
+
+function sportsLiveScoreText(game) {
+  if (sportsGameHasScore(game)) return `${game.scoreFor}–${game.scoreAgainst}`;
+  return SPORTS_LIVE_SCORE_PENDING;
+}
+
+function sportsLiveTeamsScoreHtml(team, game) {
+  const home = sportsChipTeamShort(team);
+  const opp = sportsChipOpponentLabel(game);
+  const scoreTxt = sportsLiveScoreText(game);
+  return `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+    + `<span class="sports-chip__score">${escapeHtml(scoreTxt)}</span> `
+    + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+}
+
 /** Domicile / extérieur — tooltip / sous-ligne optionnelle. */
 function sportsVenueLabel(game, lang = 'fr') {
   if (game?.home === false) return lang === 'en' ? 'away' : 'extérieur';
@@ -1772,12 +1827,14 @@ function sportsCtaLabelFromSlide(slide) {
   const glyph = sportsGlyph(slide.team.sport || g.sport);
   const home = sportsChipTeamShort(slide.team);
   const opp = sportsChipOpponentLabel(g);
-  const liveScore = sportsGameIsLive(g) && sportsGameHasScore(g);
 
-  if (slide.mode === 'next' && !liveScore) {
+  if (sportsGameIsLive(g)) {
+    return `${glyph} ${home} ${sportsLiveScoreText(g)} ${opp}`;
+  }
+  if (slide.mode === 'next') {
     return `${glyph} ${home} ${sportsMatchVerb(g)} ${opp}`;
   }
-  if (slide.mode === 'result' || liveScore) {
+  if (slide.mode === 'result') {
     const placeKind = sportsIsPlaceResult(g, slide.team.sport);
     const score = placeKind
       ? sportsPlaceScoreText(g)
@@ -1833,7 +1890,7 @@ function sportsCtaGameIsTomorrow(slide) {
 
 /**
  * Pastille CTA : À venir (aujourd’hui) / Demain / Prochains match (après)
- * / En cours / Aujourd’hui (résultat) / Hier / date.
+ * / En direct / Aujourd’hui (résultat) / Hier / date.
  * Creux : LE-RADAR.ca (logo PWA), pas « Sports ».
  */
 function sportsCtaTagLabel(slide, state) {
@@ -1902,9 +1959,21 @@ function sportsCtaLamp(slide, state) {
 }
 
 /**
+ * Sous-ligne live : heure de début (`18 h 30`), période RSEQ si elle existe,
+ * compétition, tampon de dernière *vérification*. Jamais l’âge du coup
+ * d’envoi (« il y a 2 min » sous En direct se lit comme un match fini).
+ */
+function sportsLiveSubParts(slide) {
+  const kick = sportsKickoffClock(slide?.game);
+  const period = sportsLivePeriodLabel(slide?.game);
+  const comp = sportsCompetitionLabel(slide);
+  return [kick, period, comp, sportsUpdatedShort()].filter(Boolean);
+}
+
+/**
  * Sous-ligne CTA — hiérarchie scorebug (ESPN / Flashscore / L’Équipe) :
- *   live    → période si l’API la donne, sinon compétition. Jamais l’âge
- *             du coup d’envoi (« il y a 2 min » sous En cours = match fini).
+ *   live    → heure de début, période si l’API la donne, compétition,
+ *             tampon « mis à jour à ». Jamais l’âge du coup d’envoi.
  *   prochain→ aujourd’hui : « Aujourd’hui · 19 h 00 » (compte à rebours
  *             seulement dans l’heure : « Aujourd’hui · dans 45 min »).
  *             Demain / plus tard : heure ou date, sans redire la pastille.
@@ -1918,8 +1987,7 @@ function sportsCtaSubLine(slide, state) {
   const tag = sportsCtaTagLabel(slide, state);
   const now = Date.now();
   if (state === 'live') {
-    const period = sportsLivePeriodLabel(g);
-    return [period, comp].filter(Boolean).join(' · ');
+    return sportsLiveSubParts(slide).join(' · ');
   }
   if (state === 'next') {
     const minToGo = Number.isFinite(ms) ? Math.round((ms - now) / 60000) : null;
@@ -2149,8 +2217,8 @@ function sportsSoftSportDiversity(slides) {
  *   • adversaire placeholder (ADV / TBD) exclu
  *
  *  CARTES GAUCHE
- *   • Résultats des 5 derniers jours d’abord, puis futurs **hors** fenêtre CTA
- *     (> 5 j). Hors saison : prochains.
+ *   • Résultats des 5 derniers **jours civils** d’abord (toutes les faces
+ *     encore disponibles), puis à-venir. Hors saison : prochains.
  */
 /** Jour civil America/Toronto d’une slide match (YYYY-MM-DD). */
 function sportsSlideDayKey(slide) {
@@ -2487,17 +2555,16 @@ function fillSportsCtaLayer(layer, slide) {
   const text = document.createElement('span');
   text.className = 'sports-chip__cta-text';
   // Noms / score seulement dans la zone qui défile (pas le glyphe).
-  const liveScore = src?.team && src.game
-    && sportsGameIsLive(src.game)
-    && sportsGameHasScore(src.game);
-  if (src?.mode === 'next' && src.team && src.game && !liveScore) {
+  if (src?.team && src.game && sportsGameIsLive(src.game)) {
+    text.innerHTML = sportsLiveTeamsScoreHtml(src.team, src.game);
+  } else if (src?.mode === 'next' && src.team && src.game) {
     const g = src.game;
     const home = sportsChipTeamShort(src.team);
     const opp = sportsChipOpponentLabel(g);
     text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
       + sportsVsHtml(g)
       + ` <span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
-  } else if (src?.team && src.game && (src.mode === 'result' || liveScore)) {
+  } else if (src?.team && src.game && src.mode === 'result') {
     const g = src.game;
     const home = sportsChipTeamShort(src.team);
     const opp = sportsChipOpponentLabel(g);
@@ -2575,7 +2642,7 @@ function sportsCtaSignature(slide) {
  * (garde-fou `registre-alerte-reserve`) et `le-radar-cta-sports-badge`.
  *
  * Au repos : lavis du sport du match + contour pourpre (parité chip-look).
- * Rouge, pastille « En cours » et point live **uniquement** pendant un match.
+ * Rouge, pastille « En direct » et point live **uniquement** pendant un match.
  * Le point était créé sans condition et pulsait toute l’année, y compris pour
  * un match à quinze jours : une promesse fausse.
  */
@@ -2870,8 +2937,17 @@ function sportsChipTitle(slide) {
     return [issue, sport, line, when, host].filter(Boolean).join(' · ');
   }
 
-  const status = sportsGameIsLive(g) ? 'En cours'
-    : sportsCtaGameIsToday(slide) ? 'À venir'
+  if (sportsGameIsLive(g)) {
+    return [
+      SPORTS_CTA_TAG_LIVE,
+      sport,
+      `${home} ${sportsLiveScoreText(g)} ${opp}`,
+      sportsKickoffClock(g),
+      sportsUpdatedShort(),
+      host,
+    ].filter(Boolean).join(' · ');
+  }
+  const status = sportsCtaGameIsToday(slide) ? 'À venir'
     : sportsCtaGameIsTomorrow(slide) ? 'Demain'
     : 'Prochains match';
   const verb = sportsMatchVerb(g);
@@ -2926,7 +3002,7 @@ function paintSportsChip(slide, animate = false) {
     a.title = title;
     a.setAttribute('aria-label', aria);
 
-    // Pastille : Sports / En cours / Hier / Aujourd’hui (jour du résultat).
+    // Pastille : Sports / En direct / Hier / Aujourd’hui (jour du résultat).
     const tag = document.createElement('span');
     tag.className = 'sports-chip__cta-tag';
     tag.setAttribute('aria-hidden', 'true');
@@ -3022,14 +3098,10 @@ function paintSportsChip(slide, animate = false) {
     if (prior) a.classList.add('sports-chip--prior-season');
     a.title = sportsChipTitle(slide) + (prior ? ' · Saison précédente' : '');
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
-  } else if (slide.mode === 'next' && sportsGameIsLive(g) && sportsGameHasScore(g)) {
+  } else if (slide.mode === 'next' && sportsGameIsLive(g)) {
     a.append(glyph);
-    const scoreTxt = `${g.scoreFor}–${g.scoreAgainst}`;
-    inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-      + `<span class="sports-chip__score">${escapeHtml(String(scoreTxt))}</span> `
-      + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
-    const period = sportsLivePeriodLabel(g);
-    subText.textContent = [period, subLine].filter(Boolean).join(' · ');
+    inner.innerHTML = sportsLiveTeamsScoreHtml(team, g);
+    subText.textContent = sportsLiveSubParts(slide).join(' · ');
     a.title = sportsChipTitle(slide);
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
     a.dataset.sportsLive = '1';
@@ -3119,40 +3191,42 @@ function nextSportsSlide(usedKeys, opts = {}) {
     return null;
   }
 
-  // ── Saison : résultats passés seulement ──
-  const pool = lane.pool;
-  if (!pool.length) return null;
+  // ── Saison : résultats 5 j civils d’abord, puis à-venir ──
+  const resultPool = Array.isArray(lane.results) && lane.results.length
+    ? lane.results
+    : [];
+  const nextPool = Array.isArray(lane.nexts) ? lane.nexts : [];
+  const lists = resultPool.length || nextPool.length
+    ? [resultPool, nextPool]
+    : [lane.pool || []];
 
-  // 1) Sport pas encore dans le bandeau
-  for (let i = 0; i < pool.length; i += 1) {
-    const s = pool[(sportsLeftCursor + i) % pool.length];
-    if (!isAvailable(s)) continue;
-    const sp = String(s.team?.sport || '').toLowerCase();
-    if (sp && !usedSports.has(sp)) {
-      sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
-      return s;
-    }
-  }
-  // 2) Sport ≠ slot remplacé
-  if (avoidSport) {
-    for (let i = 0; i < pool.length; i += 1) {
-      const s = pool[(sportsLeftCursor + i) % pool.length];
+  const sportOf = (s) => String(s?.team?.sport || '').toLowerCase();
+  const pickFrom = (list) => {
+    if (!list.length) return null;
+    for (let i = 0; i < list.length; i += 1) {
+      const s = list[i];
       if (!isAvailable(s)) continue;
-      if (String(s.team?.sport || '').toLowerCase() !== avoidSport) {
-        sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
-        return s;
+      const sp = sportOf(s);
+      if (sp && !usedSports.has(sp)) return s;
+    }
+    if (avoidSport) {
+      for (let i = 0; i < list.length; i += 1) {
+        const s = list[i];
+        if (!isAvailable(s)) continue;
+        if (sportOf(s) !== avoidSport) return s;
       }
     }
-  }
-  // 3) Suivant non utilisé dans l’ordre de fraîcheur
-  for (let i = 0; i < pool.length; i += 1) {
-    const s = pool[(sportsLeftCursor + i) % pool.length];
-    if (isAvailable(s)) {
-      sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
-      return s;
+    for (let i = 0; i < list.length; i += 1) {
+      const s = list[i];
+      if (isAvailable(s)) return s;
     }
+    return null;
+  };
+
+  for (const list of lists) {
+    const s = pickFrom(list);
+    if (s) return s;
   }
-  // 4) Plus de candidats hors CTA
   return null;
 }
 
@@ -3767,7 +3841,7 @@ function scheduleSportsWave({ fromSlot = 0, firstWait = true } = {}) {
     }
     const slot = index;
     const slide = sportsVisible[slot];
-    // Direct unique : la carte En cours ne tourne pas. Plusieurs lives : cycle.
+    // Direct unique : la carte En direct ne tourne pas. Plusieurs lives : cycle.
     if (slide?.mode === 'cta' && sportsCtaHoldOnLive(slide)) {
       sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
       return;
