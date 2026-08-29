@@ -373,4 +373,54 @@ test.describe('overlay traduction articles', () => {
     expect(unlocked.htmlLock).toBe(false);
     expect(unlocked.bodyFixed).toBe(false);
   });
+
+  test('persan : glossaire overlay + articles en écriture arabe', async ({ page }) => {
+    await page.route('**/assets/news-images/**', (route) => route.abort());
+    await page.route('**/assets/meteocons/**', (route) => route.abort());
+    await page.route(/translate\.googleapis\.com/, async (route) => {
+      const q = new URL(route.request().url()).searchParams.get('q') || '';
+      await route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify([[[`ترجمه ${q}`, q]]]),
+      });
+    });
+    await page.route(/mymemory\.translated\.net/, (route) => route.abort());
+    await openHome(page, { width: 900, height: 700 });
+    const overlayFa = await page.evaluate(() => {
+      const p = window.RadarTranslate._ui.preferredUiPhrase;
+      return {
+        prep: p('Préparation de la langue…', 'fa'),
+        skip: p('Afficher les articles dans la langue actuelle', 'fa'),
+      };
+    });
+    expect(overlayFa.prep).toMatch(/[\u0600-\u06FF]/);
+    expect(overlayFa.skip).toMatch(/[\u0600-\u06FF]/);
+    await Promise.race([
+      page.evaluate(() => window.RadarTranslate.applyMode('fa', {
+        persist: false,
+        fromUserClick: true,
+      })),
+      page.waitForTimeout(20000).then(() => { throw new Error('applyMode fa > 20s'); }),
+    ]);
+    const title = page.locator('.article-title').first();
+    await expect(title).toContainText(/[\u0600-\u06FF]/);
+    const dir = await page.evaluate(() => document.documentElement.dataset.scriptDir);
+    expect(dir).toBe('rtl');
+  });
+
+  test('gtx en échec : applyMode persan se termine et pose lang=fa', async ({ page }) => {
+    await page.route('**/assets/news-images/**', (route) => route.abort());
+    await page.route('**/assets/meteocons/**', (route) => route.abort());
+    await page.route(/translate\.googleapis\.com/, (route) => route.abort());
+    await page.route(/mymemory\.translated\.net/, (route) => route.abort());
+    await openHome(page, { width: 900, height: 700 });
+    await page.evaluate(() => window.RadarTranslate.applyMode('fa', {
+      persist: false,
+      fromUserClick: true,
+    }));
+    const lang = await page.evaluate(() => document.documentElement.lang);
+    expect(lang).toBe('fa');
+    const dir = await page.evaluate(() => document.documentElement.dataset.scriptDir);
+    expect(dir).toBe('rtl');
+  });
 });

@@ -35,6 +35,12 @@ assert.match(
   'skip / paliers overlay avant le chrome et les articles',
 );
 assert.match(src, /Afficher les articles dans la langue actuelle/, 'lien lever le lock');
+assert.match(src, /timeoutMs:\s*6000/, 'MT : timeout 6 s (persan ne doit pas pendre)');
+assert.match(src, /langpair=fr\|/, 'MyMemory : fr|cible, pas auto|');
+assert.match(src, /sl=fr&tl=/, 'gtx : source français, pas auto');
+assert.match(src, /fa: 'آماده‌سازی زبان…'/, 'overlay persan : préparation');
+assert.match(src, /fa: 'نمایش مقاله‌ها به زبان فعلی'/, 'overlay persan : skip');
+assert.match(src, /tls = tl === 'fa' \? \['fa', 'fa-IR'\]/, 'gtx persan : fa puis fa-IR');
 assert.doesNotMatch(src, /\.showModal\s*\(/, 'pas de dialog.showModal (tuner inert)');
 assert.doesNotMatch(
   src,
