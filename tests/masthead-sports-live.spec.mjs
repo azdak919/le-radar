@@ -543,7 +543,10 @@ test('CTA prochain du jour : heure de coup d’envoi, pas « dans 3 h »', async
   const cta = await openWithSports(page, payload);
   await expect(cta).toHaveAttribute('data-cta-state', 'next');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/À\s*venir/i);
-  await expect(cta.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
+  await expect(cta.locator('.sports-chip__cta-tag-lines')).toHaveCount(1);
+  const hour = Number(String(payload._kick.time || '12:00').split(':')[0]);
+  const meridiem = hour < 12 ? /cet\s*AM/i : /ce\s*PM/i;
+  await expect(cta.locator('.sports-chip__cta-tag-meridiem')).toHaveText(meridiem);
   await expect(cta).toHaveAttribute('data-cta-lamp', 'soon');
   const clock = payload._kick.time.replace(':', ' h ');
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
@@ -551,6 +554,20 @@ test('CTA prochain du jour : heure de coup d’envoi, pas « dans 3 h »', async
   expect(sub).toMatch(new RegExp(clock.replace(' ', '\\s+')));
   expect(sub.toLowerCase()).not.toMatch(/dans \d/);
   expect(sub.toLowerCase()).not.toMatch(/il y a/);
+});
+
+test('CTA À venir : cet AM le matin, ce PM l’après-midi', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const lines = await page.evaluate(() => ({
+    am: typeof sportsMeridiemLine === 'function' ? sportsMeridiemLine({ time: '09:30' }) : null,
+    noon: typeof sportsMeridiemLine === 'function' ? sportsMeridiemLine({ time: '12:00' }) : null,
+    pm: typeof sportsMeridiemLine === 'function' ? sportsMeridiemLine({ time: '18:15' }) : null,
+    empty: typeof sportsMeridiemLine === 'function' ? sportsMeridiemLine({ time: '' }) : null,
+  }));
+  expect(lines.am).toBe('cet AM');
+  expect(lines.noon).toBe('ce PM');
+  expect(lines.pm).toBe('ce PM');
+  expect(lines.empty).toBe('');
 });
 
 test('CTA visiteur : chez l’adversaire, pas à', async ({ page }) => {

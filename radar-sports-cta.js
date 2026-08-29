@@ -181,6 +181,13 @@ const SPORTS_CTA_TAG = 'Sports';
 const SPORTS_CTA_TAG_LIVE = 'En direct';
 /** Coup d’envoi du jour, pas encore commencé — rouge pulse, pas le jaune Prochain. */
 const SPORTS_CTA_TAG_SOON = 'À venir';
+/**
+ * 2e ligne sous À venir. AM = avant-midi (masc.) + voyelle → « cet AM ».
+ * PM = après-midi (masc. QC) + consonne → « ce PM ». Pas « cette AM »
+ * (confusion cet / cette).
+ */
+const SPORTS_MERIDIEM_AM_LINE = 'cet AM';
+const SPORTS_MERIDIEM_PM_LINE = 'ce PM';
 /** Demain : une ligne, même jaune que Prochain match. */
 const SPORTS_CTA_TAG_TOMORROW = 'Demain';
 /** Prochains : deux lignes dans la pastille, pas un rail plus large. */
@@ -1703,6 +1710,22 @@ function sportsKickoffClock(game) {
   return `${m[1]} h ${m[2]}`;
 }
 
+/** AM avant midi Toronto, PM à partir de 12 h 00. */
+function sportsMeridiem(game) {
+  const t = String(game?.time || '').trim();
+  const m = t.match(/^(\d{1,2}):(\d{2})/);
+  if (!m) return '';
+  return Number(m[1]) < 12 ? 'AM' : 'PM';
+}
+
+/** 2e ligne sous À venir : « cet AM » / « ce PM ». */
+function sportsMeridiemLine(game) {
+  const half = sportsMeridiem(game);
+  if (half === 'AM') return SPORTS_MERIDIEM_AM_LINE;
+  if (half === 'PM') return SPORTS_MERIDIEM_PM_LINE;
+  return '';
+}
+
 /** Âge lisible d’un fait daté — « il y a 14 h », « hier », « il y a 3 j ». */
 function sportsRelativeAge(ms, now = Date.now()) {
   if (!Number.isFinite(ms)) return '';
@@ -1893,11 +1916,28 @@ function sportsCtaTagLabel(slide, state) {
   return RADAR_BRAND_SHORT;
 }
 
-/** Remplit la pastille : « Prochains match » / live (En direct + score) en deux lignes. */
+/** Remplit la pastille : « Prochains match » / live (En direct + score) / À venir + cet AM|ce PM. */
 function fillSportsCtaTagCopy(tag, wanted, extra = {}) {
   tag.replaceChildren();
   markNoTranslate(tag);
   const shown = window.RadarTranslate?.displayUiText?.(wanted) || wanted;
+  if (wanted === SPORTS_CTA_TAG_SOON) {
+    const line = extra.meridiemLine || tag.dataset.ctaMeridiemLine || '';
+    if (!line) {
+      tag.append(document.createTextNode(shown));
+      return;
+    }
+    const lines = document.createElement('span');
+    lines.className = 'sports-chip__cta-tag-lines';
+    const top = document.createElement('span');
+    top.textContent = shown;
+    const bot = document.createElement('span');
+    bot.className = 'sports-chip__cta-tag-meridiem';
+    bot.textContent = window.RadarTranslate?.displayUiText?.(line) || line;
+    lines.append(top, bot);
+    tag.append(lines);
+    return;
+  }
   if (wanted === SPORTS_CTA_TAG_LIVE) {
     const score = extra.score || tag.dataset.ctaScore || SPORTS_LIVE_SCORE_PENDING;
     const lines = document.createElement('span');
@@ -1936,7 +1976,12 @@ function refreshSportsChromeLanguage() {
   document.querySelectorAll('.sports-chip--cta .sports-chip__cta-tag').forEach((tag) => {
     if (tag.classList.contains('sports-chip__cta-tag--brand')) return;
     const wanted = tag.dataset.ctaTag;
-    if (wanted) fillSportsCtaTagCopy(tag, wanted, { score: tag.dataset.ctaScore });
+    if (wanted) {
+      fillSportsCtaTagCopy(tag, wanted, {
+        score: tag.dataset.ctaScore,
+        meridiemLine: tag.dataset.ctaMeridiemLine,
+      });
+    }
   });
   document.querySelectorAll('.sports-chip__vs[data-vs-orig]').forEach((el) => {
     const orig = el.getAttribute('data-vs-orig');
@@ -2677,10 +2722,14 @@ function applySportsCtaState(chip, slide) {
     const scoreChanged = (tag.dataset.ctaScore || '') !== liveScore;
     if (liveScore) tag.dataset.ctaScore = liveScore;
     else delete tag.dataset.ctaScore;
-    if (tag.dataset.ctaTag !== wanted || tag.dataset.ctaLang !== lang || scoreChanged) {
+    const meridiemLine = wanted === SPORTS_CTA_TAG_SOON ? sportsMeridiemLine(game) : '';
+    const meridiemChanged = (tag.dataset.ctaMeridiemLine || '') !== meridiemLine;
+    if (meridiemLine) tag.dataset.ctaMeridiemLine = meridiemLine;
+    else delete tag.dataset.ctaMeridiemLine;
+    if (tag.dataset.ctaTag !== wanted || tag.dataset.ctaLang !== lang || scoreChanged || meridiemChanged) {
       tag.dataset.ctaTag = wanted;
       tag.dataset.ctaLang = lang;
-      fillSportsCtaTagCopy(tag, wanted, { score: liveScore });
+      fillSportsCtaTagCopy(tag, wanted, { score: liveScore, meridiemLine });
     }
   }
   syncSportsCtaRail(chip, slide);

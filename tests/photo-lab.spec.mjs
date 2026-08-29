@@ -144,8 +144,10 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   const todayUpcoming = page.locator('#cta-band .case').filter({ hasText: 'dans 3 h' }).first();
   await expect(todayUpcoming.locator('.sports-chip__cta-sub-text')).toContainText(/Aujourd’hui/);
   await expect(page.locator('#cta-band .case').filter({ hasText: 'à venir (visiteur)' }).locator('.sports-chip__cta-sub-text')).toContainText(/Aujourd’hui/);
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'à venir (visiteur)' }).locator('.sports-chip__cta-tag-meridiem')).toHaveText(/cet\s*AM/i);
   await expect(todayUpcoming.locator('.sports-chip__cta-tag')).toHaveText(/À\s*venir/i);
-  await expect(todayUpcoming.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
+  await expect(todayUpcoming.locator('.sports-chip__cta-tag-lines')).toHaveCount(1);
+  await expect(todayUpcoming.locator('.sports-chip__cta-tag-meridiem')).toHaveText(/ce\s*PM/i);
   await expect(todayUpcoming.locator('.sports-chip__vs')).toHaveText(/reçoivent/i);
   const vsTone = await todayUpcoming.locator('.sports-chip__vs').evaluate((el) => {
     const vs = getComputedStyle(el).color.match(/[\d.]+/g)?.map(Number) || [];

@@ -48,6 +48,8 @@ const phrases = [
   'En direct',
   'En cours',
   'Demain',
+  'cet AM',
+  'ce PM',
   'Hier',
   'Avant-hier',
   'reçoit',

@@ -488,6 +488,14 @@
   font-size: 11px;
   line-height: 1.15;
 }
+/* À venir : 2e ligne « cet AM » / « ce PM » (uppercase hérité de la pastille). */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag-meridiem {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  font-weight: 900;
+  font-size: 10px;
+  line-height: 1.15;
+}
 /* Prochain : pastille jaune (pas l’ambre radio). Encre sombre pour le contraste. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="next"],
 .masthead-sports-strip .sports-chip--cta[data-cta-state="next"] .sports-chip__cta-tag:not(.sports-chip__cta-tag--brand):not([data-cta-lamp="soon"]) {
