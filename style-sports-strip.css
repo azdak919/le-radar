@@ -182,7 +182,9 @@
     filter: none;
   }
   .masthead-sports-strip .sports-chip:not(.sports-chip--cta),
-  .masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]) {
+  .masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]),
+  [data-theme="light"] .masthead-sports-strip .sports-chip:not(.sports-chip--cta),
+  [data-theme="light"] .masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):not([data-cta-lamp="soon"]) {
     animation: none;
   }
 }
@@ -412,6 +414,58 @@
     0 1px 2px rgba(0, 0, 0, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
+}
+/*
+ * Clair : même verre ardoise que .masthead-weather__city en light
+ * (rgba(54, 59, 68, 0.68), lavis 16 %, blur 10px, ombre 3 couches).
+ * Le contour pourpre et --sports-tone restent l’identité sports.
+ * Live / soon : registre d’alerte inchangé (règles suivantes).
+ */
+[data-theme="light"] .masthead-sports-strip .sports-chip:not([data-cta-state="live"]):not([data-cta-lamp="soon"]) {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 16%, transparent) 0%, transparent 55%),
+    rgba(54, 59, 68, 0.68);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.24),
+    0 3px 10px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
+  backdrop-filter: blur(10px) saturate(1.06);
+  -webkit-backdrop-filter: blur(10px) saturate(1.06);
+}
+[data-theme="light"] .masthead-sports-strip .sports-chip:not([data-cta-state="live"]):not([data-cta-lamp="soon"]):hover,
+[data-theme="light"] .masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):not([data-cta-lamp="soon"]):hover {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 23%, transparent) 0%, transparent 55%),
+    rgba(67, 73, 84, 0.78);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.24),
+    0 3px 10px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 34%, transparent);
+}
+[data-theme="light"] .masthead-sports-strip .sports-chip:not(.sports-chip--cta),
+[data-theme="light"] .masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):not([data-cta-lamp="soon"]) {
+  animation: sports-chip-rim-glow-light 3.2s ease-in-out infinite;
+}
+@keyframes sports-chip-rim-glow-light {
+  0%, 100% {
+    border-color: color-mix(in srgb, var(--accent, #6c2163) 52%, rgba(255, 255, 255, 0.24));
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.24),
+      0 3px 10px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 18%, transparent);
+  }
+  50% {
+    border-color: color-mix(in srgb, var(--accent, #6c2163) 78%, rgba(255, 255, 255, 0.3));
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.24),
+      0 3px 10px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 36%, transparent),
+      0 0 10px 0 color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
+  }
 }
 /* Direct / à venir du jour : registre d’alerte (pulse). */
 .masthead-sports-strip .sports-chip--cta[data-cta-state="live"],
