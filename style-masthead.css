@@ -407,11 +407,6 @@
   .masthead:has(#bg-photo-layer.loaded) .wordmark-full__tag {
     letter-spacing: 0.08em;
   }
-  /* EN (et IU) plus longs que le FR : ne pas déborder dans le padding. */
-  .masthead:has(#bg-photo-layer.loaded) .wordmark-full__lead {
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
   .masthead:has(#bg-photo-layer.loaded) .masthead-brand {
     padding-bottom: 18px;
   }
