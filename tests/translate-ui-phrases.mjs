@@ -45,7 +45,8 @@ assert.match(
   /await translateOverlayCopyFirst\(target, gen\)[\s\S]{0,500}chromeOnly:\s*true/,
   'skip / paliers overlay avant le chrome et les articles',
 );
-assert.match(src, /Afficher les articles dans la langue actuelle/, 'lien lever le lock');
+assert.match(src, /Afficher les articles dans la langue originale/, 'lien skip : ramène à Original');
+assert.match(src, /skipArticlesOverlay\(\) \{\s*applyMode\(DEFAULT_MODE/, 'skip overlay → mode Original');
 assert.match(src, /timeoutMs:\s*6000/, 'MT : timeout 6 s (persan ne doit pas pendre)');
 assert.match(src, /function isJunkMt/, 'MT : refuser Sorry / quota MyMemory');
 assert.match(src, /clients5\.google\.com\/translate_a\/t\?client=dict-chrome-ex/, 'MT : repli dict-chrome-ex');
@@ -65,7 +66,7 @@ assert.doesNotMatch(
 assert.match(src, /langpair=fr\|/, 'MyMemory : fr|cible, pas auto|');
 assert.match(src, /sources = \['fr', 'auto', 'en'\]/, 'gtx : fr puis auto puis en (sonde IU)');
 assert.match(src, /fa: 'آماده‌سازی زبان…'/, 'overlay persan : préparation');
-assert.match(src, /fa: 'نمایش مقاله‌ها به زبان فعلی'/, 'overlay persan : skip');
+assert.match(src, /fa: 'نمایش مقاله‌ها به زبان اصلی'/, 'overlay persan : skip (langue originale)');
 assert.match(src, /function gtxTargetCodes/, 'alias gtx pour tout le menu, pas seulement fa');
 assert.match(src, /function mymemoryLang/, 'MyMemory : iw→he, fa-IR→fa');
 assert.match(src, /fa: \['fa', 'fa-IR'\]/, 'gtx persan : fa puis fa-IR');

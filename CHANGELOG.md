@@ -39,6 +39,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 - Slogan du mât : air intérieur de la pastille (padding-inline > rayon) ; le texte **se resserre** (interlettrage, puis taille) pour rester sur ses lignes, sans se couper.
 
+- Overlay traduction : le lien **Afficher les articles dans la langue originale** s’affiche dans la langue choisie ; un clic ramène au choix **Original** (module off).
+
 - Overlay de traduction mobile : le filet de « Le fil étudiant » ne traverse plus le logo (`.wire-head` z 70 > overlay 60). Titre **et** puce langue sous le voile ; carte centrée dans le fil ; toast masqué tant que la carte est là.
 
 - Pastille CTA d’un **résultat du jour** : **Dernière heure** (2 lignes ; EN Breaking news). Pas d’AM/PM. À venir du jour garde **cet AM / ce PM**.
