@@ -435,7 +435,7 @@
     const en = uiLang() === 'en';
     const { browser } = plat;
 
-    if (browser === 'chrome') {
+    if (browser === 'chrome' || browser === 'brave') {
       return en
         ? [
           'Settings (⋮) → <strong>On startup</strong> → open a specific page',
@@ -497,11 +497,11 @@
 
     return en
       ? [
-        'Open browser settings → homepage or on startup',
+        'Open browser settings → <strong>homepage</strong> or <strong>on startup</strong>',
         'Paste the address',
       ]
       : [
-        'Paramètres du navigateur → page d’accueil ou au démarrage',
+        'Paramètres du navigateur → <strong>page d’accueil</strong> ou <strong>au démarrage</strong>',
         'Collez l’adresse',
       ];
   }
@@ -531,11 +531,15 @@
 
   // ─── Rendu ────────────────────────────────────────────────────────────────
 
-  function closeCard() {
+  function closeCard(opts = {}) {
     if (!cardEl) return;
-    cardEl.classList.add('is-leaving');
     const el = cardEl;
     cardEl = null;
+    if (opts.immediate) {
+      el.remove();
+      return;
+    }
+    el.classList.add('is-leaving');
     window.setTimeout(() => el.remove(), 280);
   }
 
@@ -543,7 +547,7 @@
     kind, title, body, steps, primaryLabel, onPrimary, showPrimary, icon,
     confirmLabel, onConfirm,
   }) {
-    closeCard();
+    closeCard({ immediate: true });
     const lang = uiLang();
     const root = document.createElement('div');
     root.className = 'engage-prompt';
@@ -556,8 +560,11 @@
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
+    // Copy interne : <strong> est le gras des menus (CSS .engage-prompt__steps li strong).
+    // Le reste reste échappé — pas d’attributs, pas d’autres balises.
+    const escStep = (value) => esc(value).replace(/&lt;(\/?strong)&gt;/gi, '<$1>');
     const stepsHtml = steps?.length
-      ? `<ol class="engage-prompt__steps">${steps.map((s) => `<li>${esc(s)}</li>`).join('')}</ol>`
+      ? `<ol class="engage-prompt__steps">${steps.map((s) => `<li>${escStep(s)}</li>`).join('')}</ol>`
       : '';
 
     const glyph = icon
@@ -1356,6 +1363,36 @@
       isStandalone,
       platform: detectPlatform,
       classify: classifyPlatform,
+      /**
+       * Aperçu d’une carte (tests + debug). N’écrit pas le snooze.
+       * kind = 'home' | 'install'
+       */
+      preview(kind, platOverride = {}) {
+        const plat = { ...detectPlatform(), ...platOverride };
+        if (kind === 'home') {
+          showHomePrompt(plat);
+          return;
+        }
+        const lang = uiLang();
+        const appId = currentAppId();
+        const steps = installSteps(plat);
+        const isIosChromeLike = plat.iosNonSafari;
+        const benefit = installBodyCopy(lang, appId);
+        const body = isIosChromeLike
+          ? (lang === 'en'
+            ? `${benefit} On this device, add from Safari:`
+            : `${benefit} Sur cet appareil, ajoutez depuis Safari :`)
+          : benefit;
+        renderCard({
+          kind: 'install',
+          icon: '📲',
+          title: lang === 'en' ? 'Add to Home Screen' : 'Sur l’écran d’accueil',
+          body,
+          steps,
+          primaryLabel: lang === 'en' ? 'Got it' : 'Compris',
+          onPrimary: () => closeCard(),
+        });
+      },
     };
     window.__radarEngageDebug = () => ({
       platform: detectPlatform(),
