@@ -1,11 +1,11 @@
 {
-  "updated": "2026-08-29T06:17:19.231Z",
-  "fetchedAt": "2026-08-29T06:17:19.231Z",
+  "updated": "2026-08-29T09:12:29.779Z",
+  "fetchedAt": "2026-08-29T09:12:29.779Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-29T06:17:19.232Z"
+    "referenceDate": "2026-08-29T09:12:29.779Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 789,
@@ -36067,8 +36067,45 @@
       "division": "D1",
       "usports": false,
       "leagueLabel": "Football collégial masculin D1",
-      "results": [],
-      "lastGame": null,
+      "results": [
+        {
+          "date": "2026-08-28",
+          "time": "19:30",
+          "opponent": "Garneau",
+          "opponentCode": "GAR",
+          "home": true,
+          "scoreFor": 46,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "football",
+          "competition": "Football collégial masculin D1",
+          "gameId": "451edf4e-1884-4e77-93d0-1a8df5a5cea7",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=451edf4e-1884-4e77-93d0-1a8df5a5cea7",
+          "opponentFullName": "Cégep François-Xavier-Garneau",
+          "opponentNickname": "Boomerang",
+          "opponentRegistryId": "garneau",
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-08-28",
+        "time": "19:30",
+        "opponent": "Garneau",
+        "opponentCode": "GAR",
+        "home": true,
+        "scoreFor": 46,
+        "scoreAgainst": 0,
+        "result": "W",
+        "sport": "football",
+        "competition": "Football collégial masculin D1",
+        "gameId": "451edf4e-1884-4e77-93d0-1a8df5a5cea7",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=451edf4e-1884-4e77-93d0-1a8df5a5cea7",
+        "opponentFullName": "Cégep François-Xavier-Garneau",
+        "opponentNickname": "Boomerang",
+        "opponentRegistryId": "garneau",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
       "nextGames": [
         {
           "date": "2026-09-04",
@@ -36181,16 +36218,17 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "1-0"
       },
       "source": "rseq-s1",
       "priority": 24,
       "fullName": "Champlain College Lennoxville",
-      "registryId": "champlain-lennoxville"
+      "registryId": "champlain-lennoxville",
+      "lastGamePriorSeason": false
     },
     "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:660a03cf-b785-432c-8c92-b74009c2a98f": {
       "id": "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:660a03cf-b785-432c-8c92-b74009c2a98f",
@@ -36205,8 +36243,43 @@
       "division": "D1",
       "usports": false,
       "leagueLabel": "Football collégial masculin D1",
-      "results": [],
-      "lastGame": null,
+      "results": [
+        {
+          "date": "2026-08-28",
+          "time": "19:30",
+          "opponent": "Champlain Lennoxville",
+          "opponentCode": "LEN",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 46,
+          "result": "L",
+          "sport": "football",
+          "competition": "Football collégial masculin D1",
+          "gameId": "451edf4e-1884-4e77-93d0-1a8df5a5cea7",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=451edf4e-1884-4e77-93d0-1a8df5a5cea7",
+          "opponentFullName": "Champlain College Lennoxville",
+          "opponentRegistryId": "champlain-lennoxville",
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-08-28",
+        "time": "19:30",
+        "opponent": "Champlain Lennoxville",
+        "opponentCode": "LEN",
+        "home": false,
+        "scoreFor": 0,
+        "scoreAgainst": 46,
+        "result": "L",
+        "sport": "football",
+        "competition": "Football collégial masculin D1",
+        "gameId": "451edf4e-1884-4e77-93d0-1a8df5a5cea7",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=451edf4e-1884-4e77-93d0-1a8df5a5cea7",
+        "opponentFullName": "Champlain College Lennoxville",
+        "opponentRegistryId": "champlain-lennoxville",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
       "nextGames": [
         {
           "date": "2026-09-05",
@@ -36320,16 +36393,17 @@
       },
       "record": {
         "wins": 0,
-        "losses": 0,
+        "losses": 1,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "0-1"
       },
       "source": "rseq-s1",
       "priority": 8,
       "fullName": "Cégep François-Xavier-Garneau",
       "nickname": "Boomerang",
-      "registryId": "garneau"
+      "registryId": "garneau",
+      "lastGamePriorSeason": false
     },
     "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:d9e8bc5a-48c6-4507-bbb9-cde12dcaf4a7": {
       "id": "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:d9e8bc5a-48c6-4507-bbb9-cde12dcaf4a7",
