@@ -158,6 +158,11 @@ async function overlaySnapshot(page) {
       percentText: overlay?.querySelector('.translate-progress__pct')?.innerText || '',
       zTuner: tuner ? Number.parseInt(getComputedStyle(tuner).zIndex, 10) : 0,
       zOverlay: overlay ? Number.parseInt(getComputedStyle(overlay).zIndex, 10) : 0,
+      zLangHost: (() => {
+        const wire = document.querySelector('main.wire');
+        const host = wire && [...wire.children].find((el) => el.querySelector?.('.translate-control'));
+        return host ? Number.parseInt(getComputedStyle(host).zIndex, 10) : 0;
+      })(),
       zWave: overlay?.querySelector('.translate-progress__wave')
         ? Number.parseInt(getComputedStyle(overlay.querySelector('.translate-progress__wave')).zIndex, 10)
         : 0,
@@ -216,6 +221,7 @@ test.describe('overlay traduction articles', () => {
       expect(snap.beat, `${vp.name}: pas de ligne Excerpts`).toBeFalsy();
       expect(snap.label.length, `${vp.name}: étape officielle`).toBeGreaterThan(2);
       expect(snap.zOverlay, `${vp.name}: overlay sous tuner`).toBeLessThan(snap.zTuner);
+      expect(snap.zLangHost, `${vp.name}: sélecteur au-dessus overlay`).toBeGreaterThan(snap.zOverlay);
       expect(snap.zWave, `${vp.name}: ondes sous l’anneau`).toBeLessThan(snap.zRing);
       expect(snap.overflowX, `${vp.name}: overflow-x ${snap.overflowX}`).toBeLessThan(8);
       expect(
@@ -342,6 +348,24 @@ test.describe('overlay traduction articles', () => {
       .toBeTruthy();
     expect(motion.fillAnim === 'none' || !motion.fillAnim).toBeTruthy();
     await finishHeldTranslate(page);
+  });
+
+  test('sélecteur de langue cliquable pendant la traduction', async ({ page }) => {
+    test.setTimeout(60_000);
+    await mockTranslateInstant(page);
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await openHome(page);
+    await startHeldTranslate(page);
+    const toggle = page.locator('#translate-toggle');
+    await expect(toggle).toBeVisible();
+    const pe = await toggle.evaluate((el) => getComputedStyle(el).pointerEvents);
+    expect(pe, 'toggle pas gelé par data-translate-busy').not.toBe('none');
+    await toggle.click();
+    const menu = page.locator('#translate-menu');
+    await expect(menu).toBeVisible();
+    await menu.locator('[data-mode="original"]').click();
+    await expect(page.locator('#translate-progress')).toBeHidden({ timeout: 8000 });
+    await expect(page.locator('#translate-label')).toContainText(/original/i);
   });
 
   test('unlock restaure scrollY ; skip lève le lock, radio intacte', async ({ page }) => {

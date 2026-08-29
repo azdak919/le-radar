@@ -19,6 +19,16 @@ main.wire.is-translate-locked > :not(.translate-progress) {
   pointer-events: none;
 }
 
+/* Ancêtre direct qui contient le sélecteur (wire-head ou rail wide). */
+main.wire.is-translate-locked > :has(.translate-control) {
+  position: relative;
+  z-index: 70;
+  pointer-events: none;
+}
+main.wire.is-translate-locked .translate-control {
+  pointer-events: auto;
+}
+
 .translate-progress {
   position: absolute;
   z-index: 60; /* rail wide 50 ; tuner sticky 100 */
