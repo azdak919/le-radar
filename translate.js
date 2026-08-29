@@ -2594,6 +2594,486 @@
     }
   }
 
+  /** Overlay articles : délai, paliers, skip — mutables pour les tests. */
+  const OVERLAY_TIMING = {
+    SHOW_DELAY_MS: 350,
+    INDETERMINATE_MS: 1000,
+    SKIP_AFTER_MS: 9000,
+    FADE_MS: 250,
+    HOLD_AT_100_MS: 280,
+  };
+  const OVERLAY_LIVE_MARKS = [25, 50, 75, 100];
+
+  let overlaySession = null;
+  let overlayLocked = false;
+  let overlayLockY = 0;
+  let overlayLayoutBound = false;
+
+  function isMiniAppPath() {
+    try {
+      return /\/(pomo|solitaire)(\/|$)/.test(location.pathname || '');
+    } catch {
+      return false;
+    }
+  }
+
+  function articlesHost() {
+    if (isMiniAppPath()) return null;
+    return document.querySelector('main.wire');
+  }
+
+  function prefersReducedMotion() {
+    try {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch {
+      return false;
+    }
+  }
+
+  function eventInTuner(e) {
+    const t = e.target;
+    const el = t && t.nodeType === 1 ? t : t?.parentElement;
+    return !!el?.closest?.('#tuner, #radar-player, .tuner-controls, .tuner-vol-slot, .tuner-vol-popover');
+  }
+
+  function blockPageScroll(e) {
+    if (!overlayLocked) return;
+    if (eventInTuner(e)) return;
+    if (e.type === 'keydown') {
+      const keys = ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '];
+      if (!keys.includes(e.key)) return;
+      if (e.key === ' ') {
+        const el = e.target && e.target.nodeType === 1 ? e.target : e.target?.parentElement;
+        if (el?.closest?.('button, a, [href], input, textarea, select')) return;
+      }
+    }
+    e.preventDefault();
+  }
+
+  function overlayLockTargets() {
+    const host = articlesHost();
+    const targets = [];
+    if (host) {
+      for (const child of host.children) {
+        if (child.id === 'translate-progress' || child.classList.contains('translate-progress')) continue;
+        targets.push(child);
+      }
+      targets.push(host);
+    }
+    const nav = document.querySelector('nav.site-sections');
+    if (nav && !host?.contains(nav)) targets.push(nav);
+    return targets;
+  }
+
+  function setInert(el, on) {
+    if (!el) return;
+    try { el.inert = on; } catch { /* anciens moteurs */ }
+    if (on) el.setAttribute('inert', '');
+    else el.removeAttribute('inert');
+  }
+
+  function lockArticlesScroll() {
+    if (overlayLocked) return;
+    overlayLocked = true;
+    overlayLockY = window.scrollY || 0;
+    document.documentElement.classList.add('translate-articles-lock');
+    const host = articlesHost();
+    if (host) {
+      host.classList.add('is-translate-locked');
+      host.setAttribute('aria-busy', 'true');
+    }
+    for (const el of overlayLockTargets()) {
+      if (el === host) continue;
+      setInert(el, true);
+    }
+    document.addEventListener('wheel', blockPageScroll, { passive: false, capture: true });
+    document.addEventListener('touchmove', blockPageScroll, { passive: false, capture: true });
+    document.addEventListener('keydown', blockPageScroll, { capture: true });
+  }
+
+  function unlockArticlesScroll() {
+    if (!overlayLocked) return;
+    overlayLocked = false;
+    document.documentElement.classList.remove('translate-articles-lock');
+    const host = articlesHost();
+    if (host) {
+      host.classList.remove('is-translate-locked');
+      host.removeAttribute('aria-busy');
+    }
+    for (const el of overlayLockTargets()) setInert(el, false);
+    document.removeEventListener('wheel', blockPageScroll, { capture: true });
+    document.removeEventListener('touchmove', blockPageScroll, { capture: true });
+    document.removeEventListener('keydown', blockPageScroll, { capture: true });
+    const y = overlayLockY;
+    window.requestAnimationFrame(() => {
+      if (Math.abs((window.scrollY || 0) - y) > 1) {
+        window.scrollTo(0, y);
+      }
+    });
+  }
+
+  const OVERLAY_COPY_FR = {
+    prep: 'Préparation de la langue…',
+    articles: 'Traduction des articles…',
+    layout: 'Mise en page…',
+    ready: 'Prêt',
+    skip: 'Afficher les articles dans la langue actuelle',
+  };
+  let overlayCopy = { ...OVERLAY_COPY_FR };
+
+  function overlayLabelForPercent(p) {
+    if (p >= 100) return overlayCopy.ready;
+    if (p >= 75) return overlayCopy.layout;
+    if (p >= 30) return overlayCopy.articles;
+    return overlayCopy.prep;
+  }
+
+  function applyOverlayCopyToDom() {
+    const el = document.getElementById('translate-progress');
+    if (!el) return;
+    const skip = el.querySelector('.translate-progress__skip');
+    if (skip) skip.textContent = overlayCopy.skip;
+    const label = el.querySelector('#translate-progress-label');
+    if (label) {
+      const determined = (overlaySession?.total || 0) > 0;
+      label.textContent = determined
+        ? overlayLabelForPercent(overlaySession?.percent || 0)
+        : overlayCopy.prep;
+    }
+  }
+
+  async function translateOverlayCopyFirst(targetLang, gen) {
+    overlayCopy = { ...OVERLAY_COPY_FR };
+    applyOverlayCopyToDom();
+    if (!targetLang || !articlesHost()) return;
+    const keys = Object.keys(OVERLAY_COPY_FR);
+    const next = { ...OVERLAY_COPY_FR };
+    await Promise.all(keys.map(async (key) => {
+      if (gen != null && gen !== translateGen) return;
+      const out = await translateText(OVERLAY_COPY_FR[key], targetLang);
+      if (out) next[key] = out;
+    }));
+    if (gen != null && gen !== translateGen) return;
+    overlayCopy = next;
+    applyOverlayCopyToDom();
+  }
+
+  function layoutArticlesOverlay() {
+    const host = articlesHost();
+    const overlay = document.getElementById('translate-progress');
+    if (!host || !overlay || overlay.hidden) return;
+    const hostRect = host.getBoundingClientRect();
+    const tuner = document.getElementById('tuner');
+    const tunerBottom = tuner ? tuner.getBoundingClientRect().bottom : 0;
+    const viewTop = Math.max(0, tunerBottom);
+    const visTop = Math.max(hostRect.top, viewTop);
+    const visBottom = Math.min(hostRect.bottom, window.innerHeight);
+    const visLeft = Math.max(hostRect.left, 0);
+    const visRight = Math.min(hostRect.right, window.innerWidth);
+    const width = Math.max(0, visRight - visLeft);
+    const height = Math.max(0, visBottom - visTop);
+    overlay.style.top = `${visTop - hostRect.top}px`;
+    overlay.style.left = `${visLeft - hostRect.left}px`;
+    overlay.style.width = `${width}px`;
+    overlay.style.height = `${Math.max(height, 8)}px`;
+    overlay.style.removeProperty('--translate-rail-shift');
+    overlay.classList.remove('is-wide');
+
+    const card = overlay.querySelector('.translate-progress__card');
+    if (!card) return;
+    const cardH = card.offsetHeight || 220;
+    const minTop = visTop + 16;
+    const maxTop = visBottom - cardH - 16;
+    let cardTopVp = (window.innerHeight / 2) - (cardH / 2);
+    if (maxTop >= minTop) {
+      cardTopVp = Math.min(Math.max(cardTopVp, minTop), maxTop);
+    } else {
+      cardTopVp = minTop;
+    }
+    card.style.position = 'absolute';
+    card.style.top = `${Math.max(0, cardTopVp - visTop)}px`;
+    card.style.left = '50%';
+    card.style.right = 'auto';
+    card.style.transform = 'translateX(-50%)';
+    card.style.margin = '0';
+  }
+
+  let overlayLayoutRaf = 0;
+  function scheduleArticlesOverlayLayout() {
+    if (overlayLayoutRaf) return;
+    overlayLayoutRaf = window.requestAnimationFrame(() => {
+      overlayLayoutRaf = 0;
+      layoutArticlesOverlay();
+    });
+  }
+
+  function bindOverlayLayout() {
+    if (overlayLayoutBound) return;
+    overlayLayoutBound = true;
+    window.addEventListener('resize', scheduleArticlesOverlayLayout);
+    try {
+      window.visualViewport?.addEventListener('resize', scheduleArticlesOverlayLayout);
+    } catch { /* pas de visualViewport */ }
+  }
+
+  function ensureArticlesOverlay() {
+    const host = articlesHost();
+    if (!host) return null;
+    let el = document.getElementById('translate-progress');
+    if (el) return el;
+    el = document.createElement('div');
+    el.id = 'translate-progress';
+    el.className = 'translate-progress notranslate';
+    el.setAttribute('translate', 'no');
+    el.hidden = true;
+    el.innerHTML = [
+      '<div class="translate-progress__veil" aria-hidden="true"></div>',
+      '<div class="translate-progress__layout">',
+      '  <div class="translate-progress__card">',
+      '    <div class="translate-progress__ring" aria-hidden="true"></div>',
+      '    <p class="translate-progress__pct" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-labelledby="translate-progress-label">',
+      '      <span class="translate-progress__num">0</span><span class="translate-progress__suffix"> %</span>',
+      '    </p>',
+      '    <p id="translate-progress-label" class="translate-progress__label"></p>',
+      '    <div class="translate-progress__bar" aria-hidden="true"><div class="translate-progress__fill"></div></div>',
+      '    <button type="button" class="translate-progress__skip" hidden></button>',
+      '  </div>',
+      '</div>',
+      '<div class="translate-progress__live" aria-live="polite"></div>',
+    ].join('');
+    el.querySelector('.translate-progress__skip').addEventListener('click', (e) => {
+      e.preventDefault();
+      skipArticlesOverlay();
+    });
+    host.appendChild(el);
+    applyOverlayCopyToDom();
+    bindOverlayLayout();
+    return el;
+  }
+
+  function paintArticlesOverlay(percent, { determined = true } = {}) {
+    const el = ensureArticlesOverlay();
+    if (!el) return;
+    const pct = Math.max(0, Math.min(100, percent));
+    const num = el.querySelector('.translate-progress__num');
+    const bar = el.querySelector('.translate-progress__pct');
+    const fill = el.querySelector('.translate-progress__fill');
+    const ring = el.querySelector('.translate-progress__ring');
+    const label = el.querySelector('#translate-progress-label');
+    const live = el.querySelector('.translate-progress__live');
+    el.classList.toggle('is-indeterminate', !determined);
+    if (num) num.textContent = determined ? String(Math.round(pct)) : '…';
+    const suffix = el.querySelector('.translate-progress__suffix');
+    if (suffix) suffix.hidden = !determined;
+    if (bar) {
+      if (determined) bar.setAttribute('aria-valuenow', String(Math.round(pct)));
+      else bar.removeAttribute('aria-valuenow');
+    }
+    if (fill && determined) fill.style.width = `${pct}%`;
+    if (ring) ring.style.setProperty('--translate-pct', determined ? String(pct) : '0');
+    if (label) label.textContent = determined ? overlayLabelForPercent(pct) : overlayCopy.prep;
+    const skip = el.querySelector('.translate-progress__skip');
+    if (skip) skip.textContent = overlayCopy.skip;
+    if (live && overlaySession && determined) {
+      for (const mark of OVERLAY_LIVE_MARKS) {
+        if (pct >= mark && !overlaySession.liveAnnounced.has(mark)) {
+          overlaySession.liveAnnounced.add(mark);
+          live.textContent = `${mark} %`;
+        }
+      }
+    }
+  }
+
+  function showArticlesOverlay() {
+    if (!articlesHost()) return;
+    if (overlaySession?.dismissed) return;
+    const el = ensureArticlesOverlay();
+    if (!el) return;
+    const wasFocusedInTuner = eventInTuner({ target: document.activeElement });
+    el.hidden = false;
+    el.classList.remove('is-leaving');
+    lockArticlesScroll();
+    layoutArticlesOverlay();
+    window.requestAnimationFrame(() => layoutArticlesOverlay());
+    if (overlaySession) overlaySession.shown = true;
+    paintArticlesOverlay(overlaySession?.percent || 10, { determined: (overlaySession?.total || 0) > 0 });
+    if (wasFocusedInTuner && document.activeElement && eventInTuner({ target: document.activeElement })) {
+      /* ne pas voler le focus radio */
+    }
+    if (overlaySession && !overlaySession.skipTimer) {
+      overlaySession.skipTimer = window.setTimeout(() => {
+        const skip = el.querySelector('.translate-progress__skip');
+        if (skip && overlaySession && !overlaySession.dismissed && overlaySession.shown) {
+          skip.hidden = false;
+        }
+      }, OVERLAY_TIMING.SKIP_AFTER_MS);
+    }
+  }
+
+  function hideArticlesOverlay({ fade = true } = {}) {
+    const el = document.getElementById('translate-progress');
+    const runUnlock = () => {
+      unlockArticlesScroll();
+      if (!el) return;
+      el.hidden = true;
+      el.classList.remove('is-leaving');
+    };
+    if (!el || el.hidden) {
+      runUnlock();
+      return Promise.resolve();
+    }
+    const useFade = fade && !prefersReducedMotion();
+    if (!useFade) {
+      runUnlock();
+      return Promise.resolve();
+    }
+    el.classList.add('is-leaving');
+    return new Promise((resolve) => {
+      window.setTimeout(() => {
+        runUnlock();
+        resolve();
+      }, OVERLAY_TIMING.FADE_MS);
+    });
+  }
+
+  function skipArticlesOverlay() {
+    if (!overlaySession) {
+      hideArticlesOverlay({ fade: true });
+      return;
+    }
+    overlaySession.dismissed = true;
+    if (overlaySession.showTimer) {
+      clearTimeout(overlaySession.showTimer);
+      overlaySession.showTimer = null;
+    }
+    hideArticlesOverlay({ fade: true });
+  }
+
+  function abortArticlesOverlay() {
+    if (!overlaySession) {
+      hideArticlesOverlay({ fade: false });
+      return;
+    }
+    overlaySession.dismissed = true;
+    if (overlaySession.showTimer) clearTimeout(overlaySession.showTimer);
+    if (overlaySession.skipTimer) clearTimeout(overlaySession.skipTimer);
+    overlaySession = null;
+    overlayCopy = { ...OVERLAY_COPY_FR };
+    hideArticlesOverlay({ fade: false });
+  }
+
+  function mapOverlayPercent(session) {
+    if (session.phase === 'done') return 100;
+    if (session.phase === 'dom') return 96;
+    if (session.total <= 0) return session.hadWork ? 10 : 0;
+    const lo = session.bandLo ?? 12;
+    const hi = session.bandHi ?? 94;
+    const t = Math.min(1, Math.max(0, session.passDone / Math.max(1, session.passTotal)));
+    return Math.round(lo + t * (hi - lo));
+  }
+
+  function setOverlayPercent(next) {
+    if (!overlaySession) return;
+    let p = Math.max(0, Math.min(100, next));
+    if (p === 99 && overlaySession.phase !== 'done') p = 98;
+    p = Math.max(overlaySession.percent, p);
+    overlaySession.percent = p;
+    if (overlaySession.shown) {
+      const determined = overlaySession.total > 0 || overlaySession.phase === 'dom' || overlaySession.phase === 'done';
+      paintArticlesOverlay(p, { determined });
+    }
+  }
+
+  function startArticlesOverlaySession(gen) {
+    abortArticlesOverlay();
+    if (!articlesHost()) {
+      return {
+        nodes() {},
+        markDom() {},
+        finish() { return Promise.resolve(); },
+      };
+    }
+    const session = {
+      gen,
+      shown: false,
+      dismissed: false,
+      hadWork: true,
+      total: 0,
+      done: 0,
+      passBase: 0,
+      passDone: 0,
+      passTotal: 0,
+      bandLo: 10,
+      bandHi: 94,
+      percent: 10,
+      phase: 'start',
+      liveAnnounced: new Set(),
+      startedAt: Date.now(),
+      showTimer: null,
+      skipTimer: null,
+    };
+    overlaySession = session;
+    const maybeShow = () => {
+      if (overlaySession !== session || session.dismissed || session.shown) return;
+      if (!session.hadWork) return;
+      if (Date.now() - session.startedAt < OVERLAY_TIMING.SHOW_DELAY_MS) return;
+      showArticlesOverlay();
+    };
+    session.showTimer = window.setTimeout(maybeShow, OVERLAY_TIMING.SHOW_DELAY_MS);
+
+    return {
+      nodes({ total, done, band }) {
+        if (overlaySession !== session || session.dismissed) return;
+        if (Array.isArray(band) && band.length === 2) {
+          session.bandLo = Number(band[0]) || 10;
+          session.bandHi = Number(band[1]) || 94;
+        }
+        if (typeof total === 'number' && total > 0) {
+          session.hadWork = true;
+          session.passTotal = total;
+          session.total = Math.max(session.total, total);
+          session.passDone = typeof done === 'number' ? done : 0;
+          session.phase = 'nodes';
+          setOverlayPercent(mapOverlayPercent(session));
+        }
+        maybeShow();
+      },
+      markDom() {
+        if (overlaySession !== session || session.dismissed) return;
+        session.phase = 'dom';
+        setOverlayPercent(96);
+      },
+      async finish() {
+        if (overlaySession !== session) return;
+        if (session.showTimer) {
+          clearTimeout(session.showTimer);
+          session.showTimer = null;
+        }
+        if (session.skipTimer) {
+          clearTimeout(session.skipTimer);
+          session.skipTimer = null;
+        }
+        if (session.dismissed || gen !== translateGen) {
+          overlaySession = null;
+          await hideArticlesOverlay({ fade: false });
+          return;
+        }
+        if (!session.shown) {
+          overlaySession = null;
+          return;
+        }
+        session.phase = 'done';
+        setOverlayPercent(100);
+        const dwell = prefersReducedMotion() ? 0 : OVERLAY_TIMING.HOLD_AT_100_MS;
+        if (dwell > 0) {
+          await new Promise((r) => window.setTimeout(r, dwell));
+        }
+        overlaySession = null;
+        await hideArticlesOverlay({ fade: true });
+      },
+    };
+  }
+
   async function translateDom(targetLang, {
     quiet = false,
     root = document.body,
@@ -2603,6 +3083,7 @@
     chromeOnly = false,
     gen = null,
     force = false,
+    onNodeProgress = null,
   } = {}) {
     if (!targetLang) return;
     if (gen != null && gen !== translateGen) return;
@@ -2633,6 +3114,11 @@
       const entries = [...byText.entries()];
       let ok = 0;
       let fail = 0;
+      let progressed = 0;
+      if (onNodeProgress) onNodeProgress({ total: entries.length, done: 0 });
+      if (onNodeProgress && window.__RADAR_TRANSLATE_HOLD) {
+        try { await window.__RADAR_TRANSLATE_HOLD; } catch { /* harnais de test */ }
+      }
 
       for (let i = 0; i < entries.length; i += CONCURRENCY) {
         if (stale()) return;
@@ -2685,6 +3171,11 @@
             }
           } catch {
             fail += 1;
+          } finally {
+            progressed += 1;
+            if (!stale() && onNodeProgress) {
+              onNodeProgress({ total: entries.length, done: progressed });
+            }
           }
         }));
       }
@@ -2919,6 +3410,7 @@
 
     const gen = ++translateGen;
     pendingRetranslate = false;
+    abortArticlesOverlay();
 
     if (persist) mode = setMode(mode);
     else if (!mode) mode = DEFAULT_MODE;
@@ -2959,40 +3451,53 @@
       notify(`Traduction en cours… (${labelForMode(activeMode).short || target})`);
     }
 
-    // 1) Chrome d’abord (glossaire radio/sports/nav) — perçue instantanée
-    await translateDom(target, {
-      quiet: true,
-      chromeOnly: true,
-      gen,
-      force: true,
-    });
-    if (gen !== translateGen) return;
-    notifyDisplayRefresh();
+    const overlay = startArticlesOverlaySession(gen);
+    try {
+      // 0) Libellés de la carte d’attente (skip inclus) — avant tout le reste.
+      await translateOverlayCopyFirst(target, gen);
+      if (gen !== translateGen) return;
 
-    // 2) Reste de la page (fil, cartes) — onlyUntranslated saute le chrome fait
-    await translateDom(target, {
-      quiet: true,
-      onlyUntranslated: true,
-      includeCollapsedTail: false,
-      gen,
-      force: true,
-    });
-    if (gen !== translateGen) return;
+      // 1) Chrome (glossaire radio/sports/nav). L’overlay part dès 350 ms.
+      await translateDom(target, {
+        quiet: true,
+        chromeOnly: true,
+        gen,
+        force: true,
+        onNodeProgress: (p) => overlay.nodes({ ...p, band: [10, 22] }),
+      });
+      if (gen !== translateGen) return;
+      notifyDisplayRefresh();
 
-    // Marquees / libellés « Plus de sources » : reposer les originaux localisés
-    // puis laisser un second passage MT pour ce qui n’a pas de glossaire.
-    notifyDisplayRefresh();
-    await translateDom(target, {
-      quiet: true,
-      onlyUntranslated: true,
-      includeCollapsedTail: false,
-      gen,
-      force: true,
-    });
-    if (gen !== translateGen) return;
+      // 2) Reste de la page (fil, cartes) — onlyUntranslated saute le chrome fait
+      await translateDom(target, {
+        quiet: true,
+        onlyUntranslated: true,
+        includeCollapsedTail: false,
+        gen,
+        force: true,
+        onNodeProgress: (p) => overlay.nodes({ ...p, band: [22, 80] }),
+      });
+      if (gen !== translateGen) return;
 
-    if (!quiet) {
-      notify(`Page affichée en ${labelForMode(activeMode).label}`);
+      // Marquees / libellés « Plus de sources » : reposer les originaux localisés
+      // puis laisser un second passage MT pour ce qui n’a pas de glossaire.
+      notifyDisplayRefresh();
+      await translateDom(target, {
+        quiet: true,
+        onlyUntranslated: true,
+        includeCollapsedTail: false,
+        gen,
+        force: true,
+        onNodeProgress: (p) => overlay.nodes({ ...p, band: [80, 94] }),
+      });
+      if (gen !== translateGen) return;
+      overlay.markDom();
+
+      if (!quiet) {
+        notify(`Page affichée en ${labelForMode(activeMode).label}`);
+      }
+    } finally {
+      await overlay.finish();
     }
   }
 
@@ -3027,7 +3532,7 @@
         if (m.type !== 'childList' || !m.addedNodes?.length) continue;
         // Ignorer le menu de traduction et les nœuds purement techniques
         for (const node of m.addedNodes) {
-          if (node.nodeType === 1 && node.closest?.('.translate-control, .notranslate')) continue;
+          if (node.nodeType === 1 && node.closest?.('.translate-control, .notranslate, .translate-progress')) continue;
           if (node.nodeType === 1 || node.nodeType === 3) {
             scheduleRetranslate();
             return;
@@ -3344,6 +3849,7 @@
       CACHE_KEY,
       CONCURRENCY,
       MAX_CHUNK,
+      OVERLAY_TIMING,
     },
     _labels: {
       formatCegepLabel,

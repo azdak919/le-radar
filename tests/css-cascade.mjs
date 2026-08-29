@@ -44,6 +44,25 @@ assert(
   'style-chrome.css : reduced-motion global en dernière feuille',
 );
 
+const overlayCss = readFileSync(join(root, 'style-translate-overlay.css'), 'utf8');
+const overlayStripped = overlayCss.replace(/\/\*[\s\S]*?\*\//g, '').trimStart();
+assert(
+  !overlayStripped.startsWith('@import') && !/\n@import/.test(overlayStripped),
+  'style-translate-overlay.css : @import interdit (charger via <link>)',
+);
+assert(
+  hrefs.includes('style-translate-overlay.css'),
+  'index.html : style-translate-overlay.css en <link>',
+);
+assert(
+  hrefs.indexOf('style-translate-overlay.css') > hrefs.indexOf('translate-menu.css'),
+  'index.html : overlay après translate-menu.css',
+);
+assert(
+  /z-index:\s*60/.test(overlayCss) && /#tuner/.test(overlayCss),
+  'overlay : z-index sous le tuner (100)',
+);
+
 function assertMastheadBeforeStyle(rel) {
   const html = readFileSync(join(root, rel), 'utf8');
   const hrefs = [...html.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map((m) => m[1]);
