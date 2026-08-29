@@ -10,6 +10,8 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const src = readFileSync(join(root, 'translate.js'), 'utf8');
 const cta = readFileSync(join(root, 'radar-sports-cta.js'), 'utf8');
+const menuCss = readFileSync(join(root, 'translate-menu.css'), 'utf8');
+const feedCss = readFileSync(join(root, 'style-feed.css'), 'utf8');
 
 assert.match(src, /radar-translate-cache-v10/, 'cache v10 (purge fraîcheur + { t, ts })');
 assert.match(src, /function pruneTranslationCache/, 'purge cache hors fil frais');
@@ -20,9 +22,14 @@ assert.match(src, /const MAX_CHUNK = 450/, 'MAX_CHUNK reste 450 (ordre IU)');
 assert.match(src, /chromeOnly/, 'passage chrome avant le fil');
 assert.match(src, /CHROME_SELECTOR/, 'sélecteur chrome');
 assert.match(src, /UI_LOCK_NO_MT/, 'filet anti-MT sur match / reçoit');
+assert.doesNotMatch(src, /UI_LOCK_NO_MT[\s\S]{0,220}'ce PM'/, 'ce PM n’est plus locké (IU / EN this PM)');
 assert.match(src, /const inflight = new Map/, 'dédup requêtes en vol');
 assert.match(src, /function cacheGet/, 'LRU cacheGet');
 assert.match(src, /translate-progress/, 'overlay de progression des articles');
+assert(
+  src.includes("querySelector?.('.translate-control')"),
+  'overlay : ne pas inertir le sélecteur de langue',
+);
 assert.match(src, /SHOW_DELAY_MS:\s*350/, 'overlay : délai 350 ms (cache hit silencieux)');
 assert.match(
   src,
@@ -42,9 +49,18 @@ assert.match(src, /timeoutMs:\s*6000/, 'MT : timeout 6 s (persan ne doit pas pen
 assert.match(src, /function isJunkMt/, 'MT : refuser Sorry / quota MyMemory');
 assert.match(src, /clients5\.google\.com\/translate_a\/t\?client=dict-chrome-ex/, 'MT : repli dict-chrome-ex');
 assert.match(src, /le-radar-translate\.azdak\.workers\.dev/, 'MT : worker cache partagé (modèle météo)');
-assert.match(src, /OVERLAY_BEATS_FR/, 'overlay : messages intercalaires Claude-style');
-assert.match(src, /Ouverture du dictionnaire/, 'overlay : beat préparation');
-assert.match(src, /translate-progress__spark/, 'overlay : petite animation (spark)');
+assert.doesNotMatch(src, /OVERLAY_BEATS_FR/, 'overlay : plus de beats intercalaires');
+assert.doesNotMatch(src, /translate-progress__spark/, 'overlay : plus d’étoile Claude-style');
+assert.doesNotMatch(
+  menuCss,
+  /data-translate-busy[\s\S]{0,80}pointer-events:\s*none/,
+  'menu : toggle cliquable pendant busy',
+);
+assert.doesNotMatch(
+  feedCss,
+  /data-translate-busy[\s\S]{0,80}pointer-events:\s*none/,
+  'fil : toggle cliquable pendant busy',
+);
 assert.match(src, /langpair=fr\|/, 'MyMemory : fr|cible, pas auto|');
 assert.match(src, /sources = \['fr', 'auto', 'en'\]/, 'gtx : fr puis auto puis en (sonde IU)');
 assert.match(src, /fa: 'آماده‌سازی زبان…'/, 'overlay persan : préparation');
