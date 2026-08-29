@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-08-29T19:58:11.315Z",
+  "updatedAt": "2026-08-29T22:29:51.486Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Radio Futura",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/radio-futura/"
-      },
+      "current": null,
       "next": {
         "title": "Capitales de Québec",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "18:50",
         "end": "23:00",
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
       "track": "",
-      "showTitle": "Radio Futura",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-29T19:57:45.867Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Faites entrer un DJ",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/faites-entrer-un-dj"
-      },
-      "next": {
-        "title": "Contenu explicite",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/contenu-explicite"
-      },
-      "track": "",
-      "showTitle": "Faites entrer un DJ",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-29T19:57:47.919Z"
+      "checkedAt": "2026-08-29T22:29:22.255Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Disconomique",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/disconomique"
+      },
+      "next": {
+        "title": "Solénoïde",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/solenoide"
+      },
+      "track": "",
+      "showTitle": "Disconomique",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-08-29T22:29:24.654Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Funky Revolutions",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
-      },
-      "next": {
         "title": "West Indian Rhythms",
         "source": "api-live",
         "start": "16:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Masters At Work",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Funky Revolutions",
+      "showTitle": "West Indian Rhythms",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-29T19:57:50.266Z"
+      "checkedAt": "2026-08-29T22:29:27.541Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Caribbean Callaloo",
+        "title": "The Limelight",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-limelight"
       },
       "next": {
-        "title": "Mi Dun Talk",
+        "title": "Screamers",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/mi-dun-talk"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/screamers"
       },
       "track": "",
-      "showTitle": "Caribbean Callaloo",
+      "showTitle": "The Limelight",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-29T19:58:04.146Z"
+      "checkedAt": "2026-08-29T22:29:42.048Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-29T19:58:04.869Z"
+      "checkedAt": "2026-08-29T22:29:42.894Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +142,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-29T19:58:10.963Z"
+      "checkedAt": "2026-08-29T22:29:51.137Z"
     }
   }
 }
