@@ -1766,30 +1766,30 @@
       hi: 'तैयार', vi: 'Xong', ht: 'Pare', el: 'Έτοιμο',
       fr: 'Prêt',
     },
-    'Afficher les articles dans la langue actuelle': {
-      en: 'Show articles in the current language',
-      es: 'Mostrar los artículos en el idioma actual',
-      pt: 'Mostrar os artigos no idioma atual',
-      de: 'Artikel in der aktuellen Sprache anzeigen',
-      it: 'Mostra gli articoli nella lingua attuale',
-      nl: 'Artikelen in de huidige taal tonen',
-      pl: 'Pokaż artykuły w bieżącym języku',
-      tr: 'Yazıları geçerli dilde göster',
-      ru: 'Показать статьи на текущем языке',
-      uk: 'Показати статті поточною мовою',
-      ar: 'عرض المقالات باللغة الحالية',
-      fa: 'نمایش مقاله‌ها به زبان فعلی',
-      he: 'הצגת הכתבות בשפה הנוכחית',
-      ur: 'موجودہ زبان میں مضامین دکھائیں',
-      zh: '以当前语言显示文章',
-      'zh-tw': '以目前語言顯示文章',
-      ko: '현재 언어로 기사 보기',
-      ja: '現在の言語で記事を表示',
-      hi: 'वर्तमान भाषा में लेख दिखाएँ',
-      vi: 'Hiện bài bằng ngôn ngữ hiện tại',
-      ht: 'Montre atik yo nan lang aktyèl la',
-      el: 'Εμφάνιση άρθρων στην τρέχουσα γλώσσα',
-      fr: 'Afficher les articles dans la langue actuelle',
+    'Afficher les articles dans la langue originale': {
+      en: 'Show articles in the original language',
+      es: 'Mostrar los artículos en el idioma original',
+      pt: 'Mostrar os artigos no idioma original',
+      de: 'Artikel in der Originalsprache anzeigen',
+      it: 'Mostra gli articoli nella lingua originale',
+      nl: 'Artikelen in de oorspronkelijke taal tonen',
+      pl: 'Pokaż artykuły w języku oryginalnym',
+      tr: 'Yazıları özgün dilde göster',
+      ru: 'Показать статьи на языке оригинала',
+      uk: 'Показати статті мовою оригіналу',
+      ar: 'عرض المقالات باللغة الأصلية',
+      fa: 'نمایش مقاله‌ها به زبان اصلی',
+      he: 'הצגת הכתבות בשפה המקורית',
+      ur: 'اصل زبان میں مضامین دکھائیں',
+      zh: '以原文语言显示文章',
+      'zh-tw': '以原文語言顯示文章',
+      ko: '원문으로 기사 보기',
+      ja: '原文の言語で記事を表示',
+      hi: 'मूल भाषा में लेख दिखाएँ',
+      vi: 'Hiện bài bằng ngôn ngữ gốc',
+      ht: 'Montre atik yo nan lang orijinal la',
+      el: 'Εμφάνιση άρθρων στην πρωτότυπη γλώσσα',
+      fr: 'Afficher les articles dans la langue originale',
     },
   };
 
@@ -3170,7 +3170,7 @@
     articles: 'Traduction des articles…',
     layout: 'Mise en page…',
     ready: 'Prêt',
-    skip: 'Afficher les articles dans la langue actuelle',
+    skip: 'Afficher les articles dans la langue originale',
   };
   let overlayCopy = { ...OVERLAY_COPY_FR };
 
@@ -3309,7 +3309,7 @@
       '    </p>',
       '    <p id="translate-progress-label" class="translate-progress__label"></p>',
       '    <div class="translate-progress__bar" aria-hidden="true"><div class="translate-progress__fill"></div></div>',
-      '    <button type="button" class="translate-progress__skip" hidden></button>',
+      '    <button type="button" class="translate-progress__skip notranslate" translate="no" lang="fr" hidden></button>',
       '  </div>',
       '</div>',
       '<div class="translate-progress__live" aria-live="polite"></div>',
@@ -3412,16 +3412,7 @@
   }
 
   function skipArticlesOverlay() {
-    if (!overlaySession) {
-      hideArticlesOverlay({ fade: true });
-      return;
-    }
-    overlaySession.dismissed = true;
-    if (overlaySession.showTimer) {
-      clearTimeout(overlaySession.showTimer);
-      overlaySession.showTimer = null;
-    }
-    hideArticlesOverlay({ fade: true });
+    applyMode(DEFAULT_MODE, { persist: true, fromUserClick: true });
   }
 
   function abortArticlesOverlay() {
