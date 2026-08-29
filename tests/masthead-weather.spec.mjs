@@ -474,3 +474,48 @@ test('wide E : ≥2560 ajoute une carte météo et resserre les slots', async ({
     expect(secMin, 'secondaires au moins aussi larges que Montréal').toBeGreaterThanOrEqual(Math.min(...layout.primary) - 1);
   }
 });
+
+test('thème clair : sports et slogan partagent le verre météo @ci-critical', async ({ page }) => {
+  await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => route.fulfill({
+    contentType: 'application/json',
+    headers: { 'access-control-allow-origin': '*' },
+    body: JSON.stringify(weather),
+  }));
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => {
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.querySelector('#bg-photo-layer')?.classList.add('loaded');
+  });
+
+  const ribbon = page.locator('#masthead-weather');
+  await expect(ribbon.locator('.masthead-weather__city.is-active').first()).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator('#masthead-sports-strip .sports-chip').first()).toBeVisible({ timeout: 12_000 });
+  await expect(page.locator('.masthead:has(#bg-photo-layer.loaded) .wordmark-full').first()).toBeVisible();
+
+  const glass = await page.evaluate(() => {
+    const parse = (el) => {
+      if (!el) return null;
+      const m = getComputedStyle(el).backgroundColor.match(/[\d.]+/g)?.map(Number);
+      if (!m) return null;
+      return { r: m[0], g: m[1], b: m[2], a: m[3] ?? 1 };
+    };
+    return {
+      weather: parse(document.querySelector('.masthead-weather__city.is-active')),
+      sports: parse(document.querySelector(
+        '#masthead-sports-strip .sports-chip:not([data-cta-state="live"]):not([data-cta-lamp="soon"])',
+      )),
+      slogan: parse(document.querySelector('.wordmark-full')),
+    };
+  });
+
+  const slate = { r: 54, g: 59, b: 68, a: 0.68 };
+  for (const [name, color] of Object.entries(glass)) {
+    expect(color, `${name} mesurable`).toBeTruthy();
+    expect(color.r, `${name} r`).toBe(slate.r);
+    expect(color.g, `${name} g`).toBe(slate.g);
+    expect(color.b, `${name} b`).toBe(slate.b);
+    expect(color.a, `${name} alpha`).toBeCloseTo(slate.a, 2);
+  }
+});
