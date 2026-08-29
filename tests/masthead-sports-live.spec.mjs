@@ -82,6 +82,27 @@ function yesterdayResultGame() {
   };
 }
 
+function civilDaysAgoResultGame(daysBack, extra = {}) {
+  const { date } = torontoParts();
+  const noon = Date.parse(`${date}T12:00:00`);
+  const past = torontoParts(noon - daysBack * 86400000);
+  return {
+    date: past.date,
+    time: '17:00',
+    opponent: 'Vanier',
+    opponentCode: 'VAN',
+    opponentFullName: 'Vanier College',
+    home: true,
+    sport: 'soccer',
+    competition: 'Soccer collégial masculin D1',
+    scoreFor: 3,
+    scoreAgainst: 0,
+    result: 'W',
+    final: true,
+    ...extra,
+  };
+}
+
 function livePayload({ score, period, offsetMs = -8 * 60 * 1000 } = {}) {
   const game = liveKickGame({
     opponent: 'Vanier',
@@ -238,45 +259,44 @@ async function openWithSports(page, payload, viewport = { width: 1280, height: 9
   return cta;
 }
 
-test('CTA live : En cours, équipes, pas « dans 15 min »', async ({ page }) => {
-  const cta = await openWithSports(page, livePayload());
+function kickoffClockFromPayload(payload) {
+  const game = Object.values(payload.teams || {})[0]?.nextGame;
+  const t = String(game?.time || '');
+  const m = t.match(/^(\d{1,2}):(\d{2})/);
+  return m ? `${m[1]} h ${m[2]}` : '';
+}
+
+test('CTA live : En cours, scorebug et tampon, pas « dans 15 min »', async ({ page }) => {
+  const payload = livePayload();
+  const cta = await openWithSports(page, payload);
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En cours');
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En direct');
   const text = await cta.locator('.sports-chip__cta-text').innerText();
   expect(text).toMatch(/Saint-Hyacinthe/);
   expect(text).toMatch(/Vanier/);
-  expect(text).toMatch(/reçoit/);
-  const vs = cta.locator('.sports-chip__vs');
-  await expect(vs).toHaveText('reçoit');
-  const pale = await cta.evaluate((root) => {
-    const vsEl = root.querySelector('.sports-chip__vs');
-    const nameEl = root.querySelector('.sports-chip__name');
-    const vsCs = getComputedStyle(vsEl);
-    const nameCs = getComputedStyle(nameEl);
-    return {
-      vsWeight: Number(vsCs.fontWeight),
-      nameWeight: Number(nameCs.fontWeight),
-      vsColor: vsCs.color,
-      vsSize: Number.parseFloat(vsCs.fontSize),
-      nameSize: Number.parseFloat(nameCs.fontSize),
-    };
-  });
-  expect(pale.vsWeight, 'verbe Inter 500, pas le 700 des noms').toBe(500);
-  expect(pale.nameWeight, 'noms plus gras que le verbe').toBeGreaterThanOrEqual(700);
-  expect(pale.vsSize, 'verbe un peu plus petit que les noms').toBeLessThan(pale.nameSize);
+  expect(text).not.toMatch(/reçoit/);
+  await expect(cta.locator('.sports-chip__score')).toHaveText('—');
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
+  const kick = kickoffClockFromPayload(payload);
+  expect(kick).toBeTruthy();
+  expect(sub).toMatch(new RegExp(kick.replace(' ', '\\s+')));
   expect(sub).toMatch(/Soccer collégial masculin D1/);
+  expect(sub).toMatch(/mis à jour à/);
   expect(sub.toLowerCase()).not.toMatch(/dans \d/);
   expect(sub.toLowerCase()).not.toMatch(/à l[’']instant/);
   expect(sub.toLowerCase()).not.toMatch(/il y a/);
 });
 
 test('CTA live : pas « il y a 2 min » sous En cours', async ({ page }) => {
-  const cta = await openWithSports(page, livePayload({ offsetMs: -2 * 60 * 1000 }));
+  const payload = livePayload({ offsetMs: -2 * 60 * 1000 });
+  const cta = await openWithSports(page, payload);
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En cours');
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En direct');
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
+  const kick = kickoffClockFromPayload(payload);
+  expect(sub).toMatch(new RegExp(kick.replace(' ', '\\s+')));
   expect(sub).toMatch(/Soccer collégial masculin D1/);
+  expect(sub).toMatch(/mis à jour à/);
   expect(sub.toLowerCase()).not.toMatch(/il y a/);
   expect(sub.toLowerCase()).not.toMatch(/à l[’']instant/);
   expect(sub.toLowerCase()).not.toMatch(/dans \d/);
@@ -288,7 +308,7 @@ test('CTA live : score et période dès qu’ils sont collés', async ({ page })
     period: '1re mi-temps',
   }));
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En cours');
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En direct');
   const text = await cta.locator('.sports-chip__cta-text').innerText();
   expect(text).toMatch(/Saint-Hyacinthe/);
   expect(text).toMatch(/1–0/);
@@ -297,12 +317,14 @@ test('CTA live : score et période dès qu’ils sont collés', async ({ page })
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
   expect(sub).toMatch(/1re mi-temps/);
   expect(sub).toMatch(/Soccer collégial masculin D1/);
+  expect(sub).toMatch(/mis à jour à/);
+  expect(sub).toMatch(/\d{1,2}\s*h\s*\d{2}/);
 });
 
 test('CTA live : un direct écarte résultats et prochains du cycle', async ({ page }) => {
   const cta = await openWithSports(page, livePlusYesterdayPayload());
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En cours');
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText('En direct');
   const text = await cta.locator('.sports-chip__cta-text').innerText();
   expect(text).toMatch(/Saint-Hyacinthe/);
   expect(text).not.toMatch(/Concordia/);
@@ -954,6 +976,92 @@ test('puces scores : V d’un côté et D de l’autre, pas de dédup', async ({
     expect(right.gameId, 'les deux faces du même résultat ne sont jamais côte à côte')
       .not.toBe(left.gameId);
   }
+});
+
+test('puces : résultats 5 j civils avant les à-venir, même sport', async ({ page }) => {
+  const past = civilDaysAgoResultGame(5, { gameId: 'five-day-result' });
+  const tonight = liveKickGame({
+    opponent: 'McGill',
+    opponentCode: 'MCG',
+    opponentFullName: 'McGill',
+    offsetMs: 2 * 3600 * 1000,
+    extra: { live: false, gameId: 'tonight-next' },
+  });
+  const tR = teamShell('collegial:soccer:sth-r', {
+    name: 'Saint-Hyacinthe', fullName: 'Cégep de Saint-Hyacinthe', code: 'STH',
+  });
+  tR.lastGame = past;
+  tR.results = [past];
+  const tN = teamShell('collegial:soccer:lav-n', {
+    name: 'Laval', fullName: 'Université Laval', code: 'LAV',
+  });
+  tN.nextGame = tonight;
+  tN.nextGames = [tonight];
+  await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [tR.id]: tR, [tN.id]: tN },
+  });
+  const info = await page.evaluate(() => {
+    const lane = sportsLeftLaneState();
+    sportsLeftCursor = 0;
+    const first = nextSportsSlide(new Set());
+    sportsFitCount = 4;
+    renderSportsStrip();
+    const sides = sportsVisible.filter((s) => s && s.mode !== 'cta');
+    return {
+      kind: lane.kind,
+      resultN: (lane.results || []).length,
+      firstMode: first?.mode || '',
+      firstId: String(first?.game?.gameId || ''),
+      sideModes: sides.map((s) => s.mode),
+      recent: typeof sportsResultIsRecent === 'function'
+        ? sportsResultIsRecent(lane.results?.[0]?.game)
+        : null,
+    };
+  });
+  expect(info.kind, 'saison = des scores dans les 5 j civils').toBe('results');
+  expect(info.resultN, 'le 3–0 d’il y a 5 j civils reste').toBeGreaterThanOrEqual(1);
+  expect(info.firstMode, 'première puce = résultat, pas reçoit').toBe('result');
+  expect(info.firstId).toBe('five-day-result');
+  expect(info.sideModes[0], 'côté gauche : score avant à-venir').toBe('result');
+});
+
+test('puces : un résultat à 6 j civils n’est plus dans les 5 j', async ({ page }) => {
+  const stale = civilDaysAgoResultGame(6, { gameId: 'six-day-result' });
+  const tonight = liveKickGame({
+    opponent: 'McGill',
+    opponentCode: 'MCG',
+    opponentFullName: 'McGill',
+    offsetMs: 2 * 3600 * 1000,
+    extra: { live: false, gameId: 'tonight-next' },
+  });
+  const tR = teamShell('collegial:soccer:sth-old', {
+    name: 'Saint-Hyacinthe', fullName: 'Cégep de Saint-Hyacinthe', code: 'STH',
+  });
+  tR.lastGame = stale;
+  tR.results = [stale];
+  const tN = teamShell('collegial:soccer:lav-n2', {
+    name: 'Laval', fullName: 'Université Laval', code: 'LAV',
+  });
+  tN.nextGame = tonight;
+  tN.nextGames = [tonight];
+  await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [tR.id]: tR, [tN.id]: tN },
+  });
+  const info = await page.evaluate(() => {
+    const lane = sportsLeftLaneState();
+    return {
+      kind: lane.kind,
+      resultN: (lane.results || []).length,
+      poolHasOld: (lane.pool || []).some((s) => s.game?.gameId === 'six-day-result'),
+    };
+  });
+  expect(info.kind, 'plus de score chaud → calendrier').toBe('offseason');
+  expect(info.resultN).toBe(0);
+  expect(info.poolHasOld, 'le 6e jour civil n’encombre pas les puces').toBe(false);
 });
 
 test('bandeau : nextGames entier, pas un seul match par équipe', async ({ page }) => {

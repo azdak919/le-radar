@@ -10,9 +10,19 @@ on:
     # |------------------|------------------|---------------------------|
     # | 16:00–23:55 /5   | 12:00–19:55      | après-midi collégial      |
     # | 00:00–03:55 /5   | 20:00–23:55      | soirée + fin de match     |
+    # | :20 chaque heure | filet            | GitHub lâche le */5       |
     - cron: '*/5 16-23 * * *'
     - cron: '*/5 0-3 * * *'
+    - cron: '20 * * * *'
   workflow_dispatch:
+  # Observé 2026-08-28 : le */5 n’a pas tiré de 12 h à 19 h QC (dernier run
+  # 11:08 UTC) alors que des matchs collégiaux étaient En cours. La radio
+  # now-playing (*/30) part encore → enchaîner. --live sort sans écrire s’il
+  # n’y a personne dans la fenêtre.
+  workflow_run:
+    workflows:
+      - Update Radio Now Playing
+    types: [completed]
 
 concurrency:
   group: update-sports-live-${{ github.ref }}
@@ -20,6 +30,7 @@ concurrency:
 
 jobs:
   live:
+    if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:

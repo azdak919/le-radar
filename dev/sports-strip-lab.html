@@ -122,7 +122,7 @@
   <header>
     <p><a class="hub" href="./">← Labo</a></p>
     <h1>Cartes sports</h1>
-    <p class="lede">Colonne mobile (390). CTA et puces, même vocabulaire : À venir · Demain · Prochain match · En cours · Aujourd’hui / Hier. Voile : or / argent / bronze / hors podium, aujourd’hui et hier. Résultat = compétition, pas « il y a 6 h ».</p>
+    <p class="lede">Colonne mobile (390). CTA et puces, même vocabulaire : À venir · Demain · Prochain match · En direct · Aujourd’hui / Hier. Voile : or / argent / bronze / hors podium, aujourd’hui et hier. Résultat = compétition, pas « il y a 6 h ».</p>
     <p class="hint">Local seulement.</p>
   </header>
   <main id="col"></main>
@@ -295,25 +295,25 @@
       {
         title: 'CTA — en direct',
         cta: {
-          state: 'live', tone: '#c8102e', tag: 'En cours', glyph: '🏒',
+          state: 'live', tone: '#c8102e', tag: 'En direct', glyph: '🏒',
           text: 'McGill 2–1 Concordia',
-          sub: 'Hockey universitaire · 2e période',
+          sub: '19 h 00 · 2e période · Hockey universitaire · mis à jour à 19 h 22',
         },
       },
       {
         title: 'CTA — en direct (visiteur)',
         cta: {
-          state: 'live', tone: '#c8102e', tag: 'En cours', glyph: '⚽',
+          state: 'live', tone: '#c8102e', tag: 'En direct', glyph: '⚽',
           text: 'Patriotes 0–1 Vanier College',
-          sub: 'Soccer collégial · 1re période',
+          sub: '18 h 30 · 1re période · Soccer collégial · mis à jour à 19 h 22',
         },
       },
       {
         title: 'CTA — en cours (sans score)',
         cta: {
-          state: 'live', tone: '#c8102e', tag: 'En cours', glyph: '🏈',
-          text: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Carabins</span>',
-          sub: 'Football universitaire',
+          state: 'live', tone: '#c8102e', tag: 'En direct', glyph: '🏈',
+          text: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__score">—</span> <span class="sports-chip__name sports-chip__opp">Carabins</span>',
+          sub: '19 h 00 · Football universitaire · mis à jour à 18 h 41',
         },
       },
       {
@@ -381,7 +381,15 @@
         html: () => matchChip({
           tone: '#c8102e', glyph: '🏒', live: true,
           inner: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__score">2–1</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
-          sub: '2e période · Hockey universitaire',
+          sub: '19 h 00 · 2e période · Hockey universitaire · mis à jour à 18 h 41',
+        }),
+      },
+      {
+        title: 'Puce — en cours (sans score)',
+        html: () => matchChip({
+          tone: '#c8102e', glyph: '⚽', live: true,
+          inner: '<span class="sports-chip__name">Sherbrooke</span> <span class="sports-chip__score">—</span> <span class="sports-chip__name sports-chip__opp">Granby</span>',
+          sub: '18 h 30 · Soccer collégial féminin D2 · mis à jour à 18 h 41',
         }),
       },
       {
