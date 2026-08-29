@@ -37,7 +37,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 - Sélecteur de langue : bouton **×** (Fermer / Close) sur tous les formats ; la liste défile sur mobile (scroller interne — le geste ne repositionne plus le panneau). Le panneau est porté dans `<body>` pour ne plus passer sous la loupe.
 
-- Slogan du mât : le texte ne colle plus aux bords de la pastille (padding-inline > rayon).
+- Slogan du mât : air intérieur de la pastille (padding-inline > rayon) ; le texte **se resserre** (interlettrage, puis taille) pour rester sur ses lignes, sans se couper.
 
 - Overlay de traduction mobile : le filet de « Le fil étudiant » ne traverse plus le logo (`.wire-head` z 70 > overlay 60). Titre **et** puce langue sous le voile ; carte centrée dans le fil ; toast masqué tant que la carte est là.
 

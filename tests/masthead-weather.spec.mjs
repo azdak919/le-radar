@@ -571,6 +571,26 @@ for (const viewport of [
     });
     const slogan = page.locator('.masthead:has(#bg-photo-layer.loaded) .wordmark-full').first();
     await expect(slogan).toBeVisible();
+    await slogan.evaluate((el) => {
+      const lead = el.querySelector('.wordmark-full__lead');
+      const tag = el.querySelector('.wordmark-full__tag');
+      if (lead) lead.textContent = 'NEWSPAPERS, RADIOS AND STUDENT SPORTS FROM QUEBEC,';
+      if (tag) tag.textContent = 'GATHERED IN THE SAME PLACE';
+    });
+    await expect.poll(async () => slogan.evaluate((el) => {
+      const lead = el.querySelector('.wordmark-full__lead') || el;
+      const cs = getComputedStyle(el);
+      const pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+      let maxW = parseFloat(cs.maxWidth);
+      if (!Number.isFinite(maxW) || cs.maxWidth === 'none') {
+        maxW = el.parentElement?.getBoundingClientRect().width || window.innerWidth;
+      }
+      const cap = Math.min(maxW, el.parentElement?.getBoundingClientRect().width || maxW) - pad;
+      const wrap = getComputedStyle(lead).whiteSpace;
+      const lh = parseFloat(getComputedStyle(lead).lineHeight)
+        || parseFloat(getComputedStyle(lead).fontSize);
+      return wrap === 'nowrap' && lead.scrollWidth <= cap + 2 && lead.getBoundingClientRect().height < lh * 1.6;
+    })).toBe(true);
     const metrics = await slogan.evaluate((el) => {
       const cs = getComputedStyle(el);
       const lead = el.querySelector('.wordmark-full__lead') || el;
@@ -582,8 +602,10 @@ for (const viewport of [
         radius: parseFloat(cs.borderTopLeftRadius),
         insetL: text.left - pill.left,
         insetR: pill.right - text.right,
+        wrap: getComputedStyle(lead).whiteSpace,
       };
     });
+    expect(metrics.wrap, 'lead sans coupure').toBe('nowrap');
     expect(metrics.padL, 'padding gauche').toBeGreaterThanOrEqual(15);
     expect(metrics.padR, 'padding droit').toBeGreaterThanOrEqual(15);
     expect(metrics.padL, 'padding > rayon gauche').toBeGreaterThan(metrics.radius);
