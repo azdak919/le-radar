@@ -131,7 +131,7 @@
       {
         title: 'CTA — à venir (reçoit)',
         cta: {
-          state: 'next', tone: '#2e7d4f', tag: 'À venir', glyph: '⚽',
+          state: 'next', tone: '#2e7d4f', tag: 'À venir', meridiem: 'ce PM', glyph: '⚽',
           text: '<span class="sports-chip__name">Patriotes de Saint-Hyacinthe</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Vanier College</span>',
           sub: 'Aujourd’hui · dans 3 h · Soccer collégial masculin division 1',
         },
@@ -139,15 +139,15 @@
       {
         title: 'CTA — à venir (visiteur)',
         cta: {
-          state: 'next', tone: '#2e7d4f', tag: 'À venir', glyph: '⚽',
+          state: 'next', tone: '#2e7d4f', tag: 'À venir', meridiem: 'cet AM', glyph: '⚽',
           text: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__vs">chez</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
-          sub: 'Aujourd’hui · 21 h 00 · Soccer universitaire féminin',
+          sub: 'Aujourd’hui · 10 h 00 · Soccer universitaire féminin',
         },
       },
       {
         title: 'CTA — à venir (dans 45 min)',
         cta: {
-          state: 'next', tone: '#2e7d4f', tag: 'À venir', glyph: '🏀',
+          state: 'next', tone: '#2e7d4f', tag: 'À venir', meridiem: 'ce PM', glyph: '🏀',
           text: '<span class="sports-chip__name">UdeM</span> <span class="sports-chip__vs">reçoit</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
           sub: 'Aujourd’hui · dans 45 min · Basketball universitaire',
         },
@@ -571,7 +571,7 @@
       </a>`;
     }
 
-    function stripCta({ state, tone, tag, glyph, text, sub, badge, badgeMod, brand, score }) {
+    function stripCta({ state, tone, tag, glyph, text, sub, badge, badgeMod, brand, score, meridiem }) {
       const tagLabel = tag || 'Sports';
       const lamp = state === 'live' ? 'live'
         : tagLabel === 'À venir' ? 'soon'
@@ -590,6 +590,8 @@
           ? '<span class="sports-chip__cta-tag-lines"><span>Prochain</span><span>match</span></span>'
           : (tagLabel === 'En direct')
             ? `<span class="sports-chip__cta-tag-lines"><span>En direct</span><span class="sports-chip__cta-tag-score">${liveScore}</span></span>`
+          : (tagLabel === 'À venir' && meridiem)
+            ? `<span class="sports-chip__cta-tag-lines"><span>À venir</span><span class="sports-chip__cta-tag-meridiem">${meridiem}</span></span>`
             : tagLabel;
       const tagClass = brand
         ? 'sports-chip__cta-tag sports-chip__cta-tag--brand notranslate'

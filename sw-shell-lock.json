@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v830",
+    "cache": "radar-shell-v831",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -24,7 +24,7 @@
       "quebec-university-backgrounds-data.js": "bcfb70bbfada42ba",
       "radar-lifecycle.js": "005825973b55d988",
       "radar-news.js": "de4dab93ceee1c4d",
-      "radar-sports-cta.js": "93f3ef36eda36f01",
+      "radar-sports-cta.js": "c39732c540b7e76c",
       "radar-state.js": "26dcd41bb6e2783d",
       "radar-tuner.js": "163ed56ebab51be2",
       "radar-utils.js": "e110f6e5c1b7cbc2",
@@ -38,13 +38,13 @@
       "style-feed.css": "d35a2b61c7d041e7",
       "style-masthead-chrome.css": "14f32bc972a5ccdc",
       "style-masthead.css": "4e41094fb44a0d6f",
-      "style-sports-strip.css": "2ab2b4a9fca40500",
+      "style-sports-strip.css": "63558020a647ea0a",
       "style-translate-overlay.css": "7436f5767eb49852",
       "style-tuner.css": "2d79d7df1d02c13a",
       "style.css": "f31b05655e776f2b",
       "translate-menu.css": "a5a4eb37479afb60",
       "translate-menu.js": "07802220efb342c2",
-      "translate.js": "8fad0bf4f5b82672",
+      "translate.js": "f06b986c12c51b53",
       "weather-cities-data.js": "55d8ae8c518bfbdf"
     }
   },
@@ -96,7 +96,7 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v227",
+    "cache": "sports-shell-v228",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "0e0df2c60f5900e3",
@@ -112,7 +112,7 @@
       "player-sync.js": "36e84f1afaff7fcb",
       "radar-lifecycle.js": "005825973b55d988",
       "radar-news.js": "de4dab93ceee1c4d",
-      "radar-sports-cta.js": "93f3ef36eda36f01",
+      "radar-sports-cta.js": "c39732c540b7e76c",
       "radar-state.js": "26dcd41bb6e2783d",
       "radar-tuner.js": "163ed56ebab51be2",
       "radar-utils.js": "e110f6e5c1b7cbc2",
@@ -124,7 +124,7 @@
       "style-feed.css": "d35a2b61c7d041e7",
       "style-masthead-chrome.css": "14f32bc972a5ccdc",
       "style-masthead.css": "4e41094fb44a0d6f",
-      "style-sports-strip.css": "2ab2b4a9fca40500",
+      "style-sports-strip.css": "63558020a647ea0a",
       "style-tuner.css": "2d79d7df1d02c13a",
       "style.css": "f31b05655e776f2b",
       "weather-cities-data.js": "55d8ae8c518bfbdf"
