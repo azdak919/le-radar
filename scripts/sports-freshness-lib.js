@@ -1,13 +1,17 @@
 /**
  * LE-RADAR / LE-KIOSQUE — fraîcheur des scores (verdict focus-group B).
  *
- * Résultats passés :
- *  - fenêtre = session-freshness-lib (session en cours + 2 précédentes, grâce sept.)
- *  - hors fenêtre : au plus 1 lastGame le plus récent, flag priorSeason
+ * Deux couches, volontairement distinctes :
  *
- * Matchs à venir :
- *  - date ≥ aujourd’hui (calendrier civil local)
- *  - dans la session en cours OU la session suivante
+ * 1) Banque `/sports/` + `sports.json` (prune) :
+ *    - passés = session-freshness-lib (session en cours + 2 précédentes, grâce sept.)
+ *    - hors fenêtre : au plus 1 lastGame, flag priorSeason
+ *    - à venir = ≥ aujourd’hui civil Toronto, session en cours + 1 suivante
+ *
+ * 2) Mât (affichage) — jours civils America/Toronto, pas de filet glissant h :
+ *    - CTA : résultats d’aujourd’hui et d’hier
+ *    - puces : résultats jusqu’à 5 j civils d’âge (0 = aujourd’hui, 5 = il y a 5 j)
+ *      Un dimanche 17 h reste le vendredi soir (l’ancien 5×24 h le faisait tomber).
  *
  * UMD : require() Node ou window.RadarSportsFreshness en navigateur.
  * Dépend de session-freshness-lib (RadarSessionFreshness).
@@ -42,6 +46,13 @@
     return `${y}-${m}-${d}`;
   }
 
+  /**
+   * Mât — CTA : aujourd’hui (0) + hier (1).
+   * Puces : jusqu’à 5 j civils d’âge. Pas 7×24 h (override FG 2026-08-11) ni 5×24 h.
+   */
+  const MASTHEAD_CTA_RESULT_MAX_DAYS_AGO = 1;
+  const MASTHEAD_CHIP_RESULT_MAX_DAYS_AGO = 5;
+
   /** Jour civil America/Toronto (GitHub Actions = UTC). */
   function torontoDayKey(msOrDate = Date.now()) {
     const d = msOrDate instanceof Date ? msOrDate : new Date(msOrDate);
@@ -73,6 +84,40 @@
     const nextStart = getNextUniversitySessionStart(currentStart);
     const afterNext = getNextUniversitySessionStart(nextStart);
     return new Date(afterNext.getTime() - 1);
+  }
+
+  /** YYYY-MM-DD du match tel que stocké (jour civil QC), pas un parse d’heure local. */
+  function gameCivilDayKey(gameOrDate) {
+    if (typeof gameOrDate === 'string') {
+      const day = String(gameOrDate).slice(0, 10);
+      return /^\d{4}-\d{2}-\d{2}$/.test(day) ? day : '';
+    }
+    const day = String((gameOrDate && gameOrDate.date) || '').slice(0, 10);
+    return /^\d{4}-\d{2}-\d{2}$/.test(day) ? day : '';
+  }
+
+  /**
+   * Écart en jours civils Toronto (0 = aujourd’hui, 1 = hier).
+   * Négatif si le match est à venir. +∞ si la date est illisible.
+   */
+  function civilDaysAgo(game, referenceDate = new Date()) {
+    const day = gameCivilDayKey(game);
+    const today = torontoDayKey(referenceDate);
+    if (!day || !today) return Number.POSITIVE_INFINITY;
+    const a = Date.parse(`${day}T12:00:00Z`);
+    const b = Date.parse(`${today}T12:00:00Z`);
+    if (!Number.isFinite(a) || !Number.isFinite(b)) return Number.POSITIVE_INFINITY;
+    return Math.round((b - a) / 86400000);
+  }
+
+  function isMastheadCtaResult(game, referenceDate = new Date()) {
+    const days = civilDaysAgo(game, referenceDate);
+    return Number.isFinite(days) && days >= 0 && days <= MASTHEAD_CTA_RESULT_MAX_DAYS_AGO;
+  }
+
+  function isMastheadChipResult(game, referenceDate = new Date()) {
+    const days = civilDaysAgo(game, referenceDate);
+    return Number.isFinite(days) && days >= 0 && days <= MASTHEAD_CHIP_RESULT_MAX_DAYS_AGO;
   }
 
   function isPastGameFresh(game, referenceDate = new Date()) {
@@ -230,11 +275,17 @@
   }
 
   return {
+    MASTHEAD_CTA_RESULT_MAX_DAYS_AGO,
+    MASTHEAD_CHIP_RESULT_MAX_DAYS_AGO,
     getNextUniversitySessionStart,
     nextGameHorizonEnd,
     parseGameDay,
     dayKey,
     torontoDayKey,
+    gameCivilDayKey,
+    civilDaysAgo,
+    isMastheadCtaResult,
+    isMastheadChipResult,
     isPastGameFresh,
     isPastGameKeepable,
     isNextGameInHorizon,
