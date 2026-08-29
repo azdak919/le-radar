@@ -2600,6 +2600,7 @@
     INDETERMINATE_MS: 1000,
     SKIP_AFTER_MS: 9000,
     FADE_MS: 250,
+    HOLD_AT_100_MS: 280,
   };
   const OVERLAY_LIVE_MARKS = [25, 50, 75, 100];
 
@@ -2963,10 +2964,12 @@
 
   function mapOverlayPercent(session) {
     if (session.phase === 'done') return 100;
-    if (session.phase === 'dom') return 90;
+    if (session.phase === 'dom') return 96;
     if (session.total <= 0) return session.hadWork ? 10 : 0;
-    const t = session.done / session.total;
-    return Math.round(15 + t * 65);
+    const lo = session.bandLo ?? 12;
+    const hi = session.bandHi ?? 94;
+    const t = Math.min(1, Math.max(0, session.passDone / Math.max(1, session.passTotal)));
+    return Math.round(lo + t * (hi - lo));
   }
 
   function setOverlayPercent(next) {
@@ -2998,6 +3001,10 @@
       total: 0,
       done: 0,
       passBase: 0,
+      passDone: 0,
+      passTotal: 0,
+      bandLo: 10,
+      bandHi: 94,
       percent: 10,
       phase: 'start',
       liveAnnounced: new Set(),
@@ -3015,25 +3022,17 @@
     session.showTimer = window.setTimeout(maybeShow, OVERLAY_TIMING.SHOW_DELAY_MS);
 
     return {
-      nodes({ total, done }) {
+      nodes({ total, done, band }) {
         if (overlaySession !== session || session.dismissed) return;
-        if (typeof total === 'number' && typeof done === 'number' && done === 0 && total > 0) {
-          session.passBase = session.done;
-          session.total = session.passBase + total;
+        if (Array.isArray(band) && band.length === 2) {
+          session.bandLo = Number(band[0]) || 10;
+          session.bandHi = Number(band[1]) || 94;
+        }
+        if (typeof total === 'number' && total > 0) {
           session.hadWork = true;
-        } else if (typeof total === 'number' && total > session.total) {
-          session.total = total;
-          if (total > 0) session.hadWork = true;
-        }
-        if (typeof done === 'number') {
-          const base = session.passBase || 0;
-          session.done = Math.max(session.done, base + done);
-        }
-        if (session.hadWork && session.percent < 10) {
-          session.phase = 'nodes';
-          setOverlayPercent(10);
-        }
-        if (session.total > 0) {
+          session.passTotal = total;
+          session.total = Math.max(session.total, total);
+          session.passDone = typeof done === 'number' ? done : 0;
           session.phase = 'nodes';
           setOverlayPercent(mapOverlayPercent(session));
         }
@@ -3042,7 +3041,7 @@
       markDom() {
         if (overlaySession !== session || session.dismissed) return;
         session.phase = 'dom';
-        setOverlayPercent(90);
+        setOverlayPercent(96);
       },
       async finish() {
         if (overlaySession !== session) return;
@@ -3065,6 +3064,10 @@
         }
         session.phase = 'done';
         setOverlayPercent(100);
+        const dwell = prefersReducedMotion() ? 0 : OVERLAY_TIMING.HOLD_AT_100_MS;
+        if (dwell > 0) {
+          await new Promise((r) => window.setTimeout(r, dwell));
+        }
         overlaySession = null;
         await hideArticlesOverlay({ fade: true });
       },
@@ -3460,7 +3463,7 @@
         chromeOnly: true,
         gen,
         force: true,
-        onNodeProgress: overlay.nodes,
+        onNodeProgress: (p) => overlay.nodes({ ...p, band: [10, 22] }),
       });
       if (gen !== translateGen) return;
       notifyDisplayRefresh();
@@ -3472,7 +3475,7 @@
         includeCollapsedTail: false,
         gen,
         force: true,
-        onNodeProgress: overlay.nodes,
+        onNodeProgress: (p) => overlay.nodes({ ...p, band: [22, 80] }),
       });
       if (gen !== translateGen) return;
 
@@ -3485,7 +3488,7 @@
         includeCollapsedTail: false,
         gen,
         force: true,
-        onNodeProgress: overlay.nodes,
+        onNodeProgress: (p) => overlay.nodes({ ...p, band: [80, 94] }),
       });
       if (gen !== translateGen) return;
       overlay.markDom();
