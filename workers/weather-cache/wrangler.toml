@@ -5,3 +5,17 @@ compatibility_date = "2026-07-23"
 # aren't available — served from the account's workers.dev subdomain instead.
 workers_dev = true
 preview_urls = false
+
+# Workers Logs: the dashboard toggle is overwritten unless it lives here.
+# Traces off — invocation + console logs are enough at this volume.
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+[observability.logs]
+enabled = true
+invocation_logs = true
+persist = true
+
+[observability.traces]
+enabled = false
