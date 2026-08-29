@@ -880,6 +880,48 @@ test('CTA résultats aujourd’hui/hier : vainqueur seulement', async ({ page })
   expect(faces[0].label, 'score, pas reçoit/chez').not.toMatch(/reçoit|chez/);
 });
 
+test('CTA Hier : v. pâle entre les deux institutions, score dans la pastille', async ({ page }) => {
+  const y = yesterdayResultGame();
+  const win = {
+    ...y,
+    opponent: 'Victoriaville',
+    opponentCode: 'VIC',
+    opponentFullName: 'Cégep de Victoriaville',
+    scoreFor: 3,
+    scoreAgainst: 1,
+    result: 'W',
+    gameId: 'cta-hier-vs',
+    final: true,
+    competition: 'Soccer collégial masculin D2',
+  };
+  const tW = teamShell('collegial:soccer:tr-cta-vs', {
+    name: 'Trois-Rivières', fullName: 'Cégep de Trois-Rivières', code: 'TR',
+  });
+  tW.lastGame = win;
+  tW.results = [win];
+  const cta = await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [tW.id]: tW },
+  });
+  await expect(cta).toHaveAttribute('data-cta-state', 'result');
+  await expect(cta.locator('.sports-chip__cta-tag')).toContainText(/Hier/i);
+  await expect(cta.locator('.sports-chip__cta-tag-score')).toHaveText('3–1');
+  await expect(cta.locator('.sports-chip__cta-text .sports-chip__score')).toHaveCount(0);
+  const vs = cta.locator('.sports-chip__cta-text .sports-chip__vs');
+  await expect(vs).toHaveText('v.');
+  await expect(cta.locator('.sports-chip__cta-text .sports-chip__name').first()).toHaveText(/Trois-Rivières|Cégep/);
+  await expect(cta.locator('.sports-chip__cta-text .sports-chip__opp')).toHaveText(/Victoriaville/);
+  const tone = await vs.evaluate((el) => {
+    const vsC = getComputedStyle(el).color.match(/[\d.]+/g)?.map(Number) || [];
+    const name = getComputedStyle(el.parentElement.querySelector('.sports-chip__name')).color.match(/[\d.]+/g)?.map(Number) || [];
+    const a = (c) => (c.length >= 4 ? c[3] : 1) * (0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2]);
+    return { vs: a(vsC), name: a(name), weight: getComputedStyle(el).fontWeight };
+  });
+  expect(tone.vs, 'v. plus pâle que les noms').toBeLessThan(tone.name * 0.85);
+  expect(Number(tone.weight), 'v. : poids 500').toBeLessThanOrEqual(500);
+});
+
 test('puces scores : V d’un côté et D de l’autre, pas de dédup', async ({ page }) => {
   const y = yesterdayResultGame();
   const win = {
