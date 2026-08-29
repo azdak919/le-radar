@@ -171,9 +171,11 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(tomorrowCard.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
   const tomorrowLamp = await tomorrowCard.locator('.sports-chip__cta-tag').evaluate((el) => el.dataset.ctaLamp);
   expect(tomorrowLamp, 'Demain : pastille jaune, pas À venir').toBe('next');
-  await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first()).toBeVisible();
-  await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first()).toHaveText(/Prochain\s*match/i);
-  await expect(page.locator('#cta-band .sports-chip__cta-tag-lines').first().locator(':scope > span')).toHaveCount(2);
+  const prochainLines = page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="Prochain match"] .sports-chip__cta-tag-lines');
+  await expect(prochainLines.first()).toBeVisible();
+  await expect(prochainLines.first()).toHaveText(/Prochain\s*match/i);
+  await expect(prochainLines.first().locator(':scope > span')).toHaveCount(2);
+  await expect(page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="En direct"] .sports-chip__cta-tag-score').first()).toBeVisible();
   const glyphFit = await page.locator('#cta-band .sports-chip--cta').first().evaluate((chip) => {
     const glyph = chip.querySelector('.sports-chip__cta-glyph');
     const tag = chip.querySelector('.sports-chip__cta-tag');
@@ -282,8 +284,9 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   const liveNoScore = page.locator('#cta-band .case').filter({ hasText: 'en cours (sans score)' });
   await expect(liveNoScore).toBeVisible();
   await expect(liveNoScore.locator('.sports-chip__score')).toHaveText('—');
+  await expect(liveNoScore.locator('.sports-chip__cta-tag-score')).toHaveText('—');
   await expect(liveNoScore.locator('.sports-chip__cta-sub-text')).toContainText(/19 h 00/);
-  await expect(liveNoScore.locator('.sports-chip__cta-sub-text')).toContainText(/mis à jour à/);
+  await expect(liveNoScore.locator('.sports-chip__cta-sub-text')).not.toContainText(/mis à jour à/);
   await expect(liveNoScore.locator('.sports-chip__vs')).toHaveCount(0);
   await expect(page.locator('#standard-chips .case').filter({ hasText: 'voile argent' }).first()).toBeVisible();
   await expect(page.locator('#standard-chips .case').filter({ hasText: 'voile bronze' }).first()).toBeVisible();
