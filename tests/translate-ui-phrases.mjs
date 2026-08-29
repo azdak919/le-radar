@@ -69,6 +69,7 @@ const phrases = [
   'En direct',
   'En cours',
   'Demain',
+  'Dernière heure',
   'cet AM',
   'ce PM',
   'AM',
@@ -87,6 +88,7 @@ for (const phrase of phrases) {
 }
 assert.match(src, /\bmatch:\s*\{/, 'glossaire : nœud isolé « match »');
 assert.match(src, /en: 'Next games'/, 'Prochains match → Next games (pas correspondre)');
+assert.match(src, /en: 'Breaking news'/, 'Dernière heure → Breaking news');
 assert.match(src, /en: 'game'/, 'match → game, pas verbe to match');
 assert.match(src, /en: 'hosts'/, 'reçoit → hosts');
 assert.match(src, /en: 'at'/, 'chez → at');

@@ -1516,6 +1516,11 @@
       zh: '明天', ar: 'غدًا', ko: '내일', ja: '明日', hi: 'कल', vi: 'Ngày mai',
       ht: 'Demen', fr: 'Demain',
     },
+    'Dernière heure': {
+      en: 'Breaking news', es: 'Última hora', pt: 'Última hora',
+      de: 'Eilmeldung', it: 'Ultima ora', nl: 'Laatste uur',
+      fr: 'Dernière heure',
+    },
     Hier: {
       en: 'Yesterday', es: 'Ayer', pt: 'Ontem', de: 'Gestern', it: 'Ieri',
       nl: 'Gisteren', pl: 'Wczoraj', tr: 'Dün', ru: 'Вчера', uk: 'Вчора',
@@ -1770,7 +1775,7 @@
   /** Ne jamais envoyer ces libellés au MT, même en IU/ar (cas « correspondre »). */
   const UI_LOCK_NO_MT = new Set([
     'match', 'Match', 'Prochains match', 'Prochain match',
-    'En direct', 'En cours', 'cet AM', 'ce PM', 'AM', 'PM', 'reçoit', 'reçoivent', 'chez',
+    'En direct', 'En cours', 'Dernière heure', 'cet AM', 'ce PM', 'AM', 'PM', 'reçoit', 'reçoivent', 'chez',
   ]);
 
   function uiPhraseLookup(core = '', targetLang = '') {

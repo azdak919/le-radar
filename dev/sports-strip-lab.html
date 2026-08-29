@@ -258,7 +258,7 @@
       {
         title: 'CTA — aujourd’hui AM (victoire)',
         cta: {
-          state: 'result', tone: '#3d9a6a', tag: 'Aujourd’hui', meridiem: 'cet AM', glyph: '🏀',
+          state: 'result', tone: '#3d9a6a', tag: 'Dernière heure', glyph: '🏀',
           badge: 'V', badgeMod: 'w',
           text: 'UdeM 78–71 Concordia',
           sub: '11 h 00 · Basketball universitaire',
@@ -267,7 +267,7 @@
       {
         title: 'CTA — aujourd’hui (victoire)',
         cta: {
-          state: 'result', tone: '#3d9a6a', tag: 'Aujourd’hui', meridiem: 'ce PM', glyph: '🏀',
+          state: 'result', tone: '#3d9a6a', tag: 'Dernière heure', glyph: '🏀',
           badge: 'V', badgeMod: 'w',
           text: 'UdeM 78–71 Concordia',
           sub: '19 h 00 · Basketball universitaire',
@@ -276,7 +276,7 @@
       {
         title: 'CTA — aujourd’hui AM (défaite)',
         cta: {
-          state: 'result', tone: '#c45c5c', tag: 'Aujourd’hui', meridiem: 'cet AM', glyph: '🏒',
+          state: 'result', tone: '#c45c5c', tag: 'Dernière heure', glyph: '🏒',
           badge: 'D', badgeMod: 'l',
           text: 'Bishop’s 2–5 McGill',
           sub: '10 h 30 · Hockey universitaire',
@@ -285,7 +285,7 @@
       {
         title: 'CTA — aujourd’hui (défaite)',
         cta: {
-          state: 'result', tone: '#c45c5c', tag: 'Aujourd’hui', meridiem: 'ce PM', glyph: '🏒',
+          state: 'result', tone: '#c45c5c', tag: 'Dernière heure', glyph: '🏒',
           badge: 'D', badgeMod: 'l',
           text: 'Bishop’s 2–5 McGill',
           sub: '19 h 00 · Hockey universitaire',
@@ -294,7 +294,7 @@
       {
         title: 'CTA — aujourd’hui (match nul)',
         cta: {
-          state: 'result', tone: '#8fa3b0', tag: 'Aujourd’hui', meridiem: 'cet AM', glyph: '⚽',
+          state: 'result', tone: '#8fa3b0', tag: 'Dernière heure', glyph: '⚽',
           badge: 'N', badgeMod: 'd',
           text: 'ULaval 1–1 UdeM',
           sub: '11 h 00 · Soccer universitaire masculin',
@@ -303,7 +303,7 @@
       {
         title: 'CTA — aujourd’hui (place)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', meridiem: 'ce PM', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'Dernière heure', glyph: '⛵',
           text: 'McGill 7e/12',
           sub: '14 h 00 · Voile universitaire',
         },
@@ -311,7 +311,7 @@
       {
         title: 'CTA — aujourd’hui (or)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', meridiem: 'cet AM', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'Dernière heure', glyph: '⛵',
           badge: '🥇', badgeMod: 'place',
           text: 'McGill 1er/12',
           sub: '10 h 00 · Voile universitaire',
@@ -320,7 +320,7 @@
       {
         title: 'CTA — aujourd’hui (argent)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', meridiem: 'ce PM', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'Dernière heure', glyph: '⛵',
           badge: '🥈', badgeMod: 'place',
           text: 'Concordia 2e/12',
           sub: '15 h 00 · Voile universitaire',
@@ -329,7 +329,7 @@
       {
         title: 'CTA — aujourd’hui (bronze)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', meridiem: 'cet AM', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'Dernière heure', glyph: '⛵',
           badge: '🥉', badgeMod: 'place',
           text: 'UdeM 3e/12',
           sub: '11 h 30 · Voile universitaire',
@@ -668,7 +668,7 @@
       const tagLabel = tag || 'Sports';
       const lamp = state === 'live' ? 'live'
         : tagLabel === 'À venir' ? 'soon'
-        : tagLabel === 'Aujourd’hui' ? 'today'
+        : (tagLabel === 'Aujourd’hui' || tagLabel === 'Dernière heure') ? 'today'
         : (state === 'next' || tagLabel === 'Demain' || tagLabel === 'Prochain' || tagLabel === 'Prochain match') ? 'next'
         : state === 'result' ? 'past'
         : 'idle';
@@ -677,7 +677,8 @@
         || tagLabel === 'Prochain'
         || tagLabel === 'Prochain match'
         || tagLabel === 'Hier'
-        || tagLabel === 'Avant-hier';
+        || tagLabel === 'Avant-hier'
+        || tagLabel === 'Dernière heure';
       const todayTag = tagLabel === 'À venir' || tagLabel === 'Aujourd’hui';
       const datedTag = todayTag || tagLabel === 'Demain';
       const half = skipMeridiem
@@ -692,6 +693,8 @@
         ? '<img class="sports-chip__cta-logo" src="../assets/icon.svg" width="18" height="18" alt="" decoding="async" aria-hidden="true">'
         : (tagLabel === 'Prochain' || tagLabel === 'Prochain match')
           ? '<span class="sports-chip__cta-tag-lines"><span>Prochain</span><span>match</span></span>'
+          : (tagLabel === 'Dernière heure')
+            ? '<span class="sports-chip__cta-tag-lines"><span>Dernière</span><span>heure</span></span>'
           : (tagLabel === 'En direct')
             ? `<span class="sports-chip__cta-tag-lines"><span>En direct</span><span class="sports-chip__cta-tag-score">${liveScore}</span></span>`
           : half
