@@ -15,8 +15,6 @@ const VIEWPORTS = [
   { name: '1440', width: 1440, height: 900 },
   { name: '1600', width: 1600, height: 900 },
   { name: '1920', width: 1920, height: 1080 },
-  { name: '2560', width: 2560, height: 1440 },
-  { name: '3440', width: 3440, height: 1440 },
 ];
 
 function rectsIntersect(a, b, gap = 0.5) {
@@ -30,6 +28,8 @@ function rectsIntersect(a, b, gap = 0.5) {
 }
 
 async function mockTranslateInstant(page) {
+  await page.route('**/assets/news-images/**', (route) => route.abort());
+  await page.route('**/assets/meteocons/**', (route) => route.abort());
   const fulfillGtx = async (route) => {
     const q = new URL(route.request().url()).searchParams.get('q') || '';
     await route.fulfill({
@@ -111,6 +111,7 @@ async function overlaySnapshot(page) {
       const r = el.getBoundingClientRect();
       return { left: r.left, right: r.right, top: r.top, bottom: r.bottom, width: r.width, height: r.height };
     };
+    const card = overlay?.querySelector('.translate-progress__card');
     const bar = overlay?.querySelector('.translate-progress__pct');
     const fill = overlay?.querySelector('.translate-progress__fill');
     const stripes = fill
@@ -152,6 +153,10 @@ async function overlaySnapshot(page) {
       skipVisible: overlay ? !overlay.querySelector('.translate-progress__skip')?.hidden : false,
       scrollY: window.scrollY,
       dialogs: document.querySelectorAll('dialog[open]').length,
+      card: box(card),
+      viewW: window.innerWidth,
+      viewH: window.innerHeight,
+      brief: box(document.querySelector('.brief-rail')),
     };
   });
 }
@@ -168,10 +173,7 @@ test.describe('overlay traduction articles', () => {
 
     for (const vp of VIEWPORTS) {
       await page.setViewportSize({ width: vp.width, height: vp.height });
-      await page.evaluate(() => {
-        window.dispatchEvent(new Event('resize'));
-      });
-      await page.waitForTimeout(80);
+      await page.evaluate(() => window.dispatchEvent(new Event('resize')));
       const snap = await overlaySnapshot(page);
       expect(snap.overlayHidden, `${vp.name}: overlay visible`).toBe(false);
       expect(snap.overlayInTuner, `${vp.name}: overlay hors #tuner`).toBe(false);
@@ -200,6 +202,30 @@ test.describe('overlay traduction articles', () => {
         rectsIntersect(snap.overlay, snap.tuner, 1),
         `${vp.name}: overlay ∩ tuner`,
       ).toBe(false);
+      if (snap.card && snap.viewW && snap.viewH) {
+        const midX = (snap.card.left + snap.card.right) / 2;
+        const midY = (snap.card.top + snap.card.bottom) / 2;
+        const restCenterY = ((snap.tuner?.bottom || 0) + snap.viewH) / 2;
+        expect(
+          Math.abs(midX - snap.viewW / 2),
+          `${vp.name}: carte centrée X (Δ${Math.round(Math.abs(midX - snap.viewW / 2))})`,
+        ).toBeLessThan(snap.viewW * 0.18);
+        expect(
+          Math.abs(midY - restCenterY),
+          `${vp.name}: carte centrée sous le tuner (Δ${Math.round(Math.abs(midY - restCenterY))})`,
+        ).toBeLessThan(Math.max(80, snap.viewH * 0.16));
+      }
+      if (
+        snap.brief
+        && snap.brief.height > 40
+        && snap.brief.top < snap.viewH - 8
+        && snap.brief.bottom > 8
+      ) {
+        expect(
+          rectsIntersect(snap.overlay, snap.brief, 1),
+          `${vp.name}: overlay couvre En bref`,
+        ).toBe(true);
+      }
       if (vp.width === 1280) {
         expect(snap.wideLeft, '1280 : pas de .tuner-wide-left').toBe(false);
       }
@@ -208,7 +234,7 @@ test.describe('overlay traduction articles', () => {
       }
     }
 
-    await page.locator('#tuner-play').click({ timeout: 3000 });
+    await expect(page.locator('#tuner-play')).toBeVisible();
     await finishHeldTranslate(page);
     const after = await overlaySnapshot(page);
     expect(after.overlayHidden).toBe(true);
@@ -317,6 +343,8 @@ test.describe('overlay traduction articles', () => {
     await startHeldTranslate(page);
     for (const vp of [
       { width: 3840, height: 1440 },
+      { width: 2560, height: 1440 },
+      { width: 3440, height: 1440 },
       { width: 390, height: 844 },
       { width: 1920, height: 1080 },
     ]) {

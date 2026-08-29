@@ -2724,47 +2724,55 @@
     if (!host || !overlay || overlay.hidden) return;
     const hostRect = host.getBoundingClientRect();
     const tuner = document.getElementById('tuner');
-    const tunerRect = tuner?.getBoundingClientRect();
-    const belowTuner = tunerRect ? tunerRect.bottom : 0;
-    const viewTop = Math.max(0, belowTuner);
-    const viewBottom = window.innerHeight;
-    const viewLeft = 0;
-    const viewRight = window.innerWidth;
+    const tunerBottom = tuner ? tuner.getBoundingClientRect().bottom : 0;
+    const viewTop = Math.max(0, tunerBottom);
     const visTop = Math.max(hostRect.top, viewTop);
-    const visBottom = Math.min(hostRect.bottom, viewBottom);
-    const visLeft = Math.max(hostRect.left, viewLeft);
-    const visRight = Math.min(hostRect.right, viewRight);
+    const visBottom = Math.min(hostRect.bottom, window.innerHeight);
+    const visLeft = Math.max(hostRect.left, 0);
+    const visRight = Math.min(hostRect.right, window.innerWidth);
     const width = Math.max(0, visRight - visLeft);
     const height = Math.max(0, visBottom - visTop);
     overlay.style.top = `${visTop - hostRect.top}px`;
     overlay.style.left = `${visLeft - hostRect.left}px`;
     overlay.style.width = `${width}px`;
     overlay.style.height = `${Math.max(height, 8)}px`;
+    overlay.style.removeProperty('--translate-rail-shift');
+    overlay.classList.remove('is-wide');
 
-    const rail = document.getElementById('wide-rail-stack');
-    let shift = 0;
-    if (rail && host.contains(rail) && width > 0) {
-      const railRect = rail.getBoundingClientRect();
-      const overlap = Math.max(
-        0,
-        Math.min(visRight, railRect.right) - Math.max(visLeft, railRect.left),
-      );
-      if (overlap > 24 && overlap < width * 0.6) {
-        const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--wide-gap')) || 24;
-        shift = overlap + gap;
-      }
+    const card = overlay.querySelector('.translate-progress__card');
+    if (!card) return;
+    const cardH = card.offsetHeight || 220;
+    const minTop = visTop + 16;
+    const maxTop = visBottom - cardH - 16;
+    let cardTopVp = (window.innerHeight / 2) - (cardH / 2);
+    if (maxTop >= minTop) {
+      cardTopVp = Math.min(Math.max(cardTopVp, minTop), maxTop);
+    } else {
+      cardTopVp = minTop;
     }
-    overlay.style.setProperty('--translate-rail-shift', `${shift}px`);
-    overlay.classList.toggle('is-wide', shift > 0);
+    card.style.position = 'absolute';
+    card.style.top = `${Math.max(0, cardTopVp - visTop)}px`;
+    card.style.left = '50%';
+    card.style.right = 'auto';
+    card.style.transform = 'translateX(-50%)';
+    card.style.margin = '0';
+  }
+
+  let overlayLayoutRaf = 0;
+  function scheduleArticlesOverlayLayout() {
+    if (overlayLayoutRaf) return;
+    overlayLayoutRaf = window.requestAnimationFrame(() => {
+      overlayLayoutRaf = 0;
+      layoutArticlesOverlay();
+    });
   }
 
   function bindOverlayLayout() {
     if (overlayLayoutBound) return;
     overlayLayoutBound = true;
-    window.addEventListener('resize', layoutArticlesOverlay);
+    window.addEventListener('resize', scheduleArticlesOverlayLayout);
     try {
-      window.visualViewport?.addEventListener('resize', layoutArticlesOverlay);
-      window.visualViewport?.addEventListener('scroll', layoutArticlesOverlay);
+      window.visualViewport?.addEventListener('resize', scheduleArticlesOverlayLayout);
     } catch { /* pas de visualViewport */ }
   }
 
@@ -2843,9 +2851,9 @@
     el.classList.remove('is-leaving');
     lockArticlesScroll();
     layoutArticlesOverlay();
+    window.requestAnimationFrame(() => layoutArticlesOverlay());
     if (overlaySession) overlaySession.shown = true;
-    const determined = (overlaySession?.total || 0) > 0;
-    paintArticlesOverlay(overlaySession?.percent || 10, { determined });
+    paintArticlesOverlay(overlaySession?.percent || 10, { determined: (overlaySession?.total || 0) > 0 });
     if (wasFocusedInTuner && document.activeElement && eventInTuner({ target: document.activeElement })) {
       /* ne pas voler le focus radio */
     }
@@ -2943,10 +2951,11 @@
       gen,
       shown: false,
       dismissed: false,
-      hadWork: false,
+      hadWork: true,
       total: 0,
       done: 0,
-      percent: 0,
+      passBase: 0,
+      percent: 10,
       phase: 'start',
       liveAnnounced: new Set(),
       startedAt: Date.now(),
@@ -2965,11 +2974,18 @@
     return {
       nodes({ total, done }) {
         if (overlaySession !== session || session.dismissed) return;
-        if (typeof total === 'number' && total > session.total) {
+        if (typeof total === 'number' && typeof done === 'number' && done === 0 && total > 0) {
+          session.passBase = session.done;
+          session.total = session.passBase + total;
+          session.hadWork = true;
+        } else if (typeof total === 'number' && total > session.total) {
           session.total = total;
           if (total > 0) session.hadWork = true;
         }
-        if (typeof done === 'number') session.done = Math.max(session.done, done);
+        if (typeof done === 'number') {
+          const base = session.passBase || 0;
+          session.done = Math.max(session.done, base + done);
+        }
         if (session.hadWork && session.percent < 10) {
           session.phase = 'nodes';
           setOverlayPercent(10);
@@ -3389,18 +3405,21 @@
       notify(`Traduction en cours… (${labelForMode(activeMode).short || target})`);
     }
 
-    // 1) Chrome d’abord (glossaire radio/sports/nav) — perçue instantanée
-    await translateDom(target, {
-      quiet: true,
-      chromeOnly: true,
-      gen,
-      force: true,
-    });
-    if (gen !== translateGen) return;
-    notifyDisplayRefresh();
-
     const overlay = startArticlesOverlaySession(gen);
     try {
+      // 1) Chrome d’abord (glossaire radio/sports/nav). L’overlay part
+      //    dès 350 ms — pas après ce passage, sinon IU/ar peignent le mât
+      //    longtemps avant le voile.
+      await translateDom(target, {
+        quiet: true,
+        chromeOnly: true,
+        gen,
+        force: true,
+        onNodeProgress: overlay.nodes,
+      });
+      if (gen !== translateGen) return;
+      notifyDisplayRefresh();
+
       // 2) Reste de la page (fil, cartes) — onlyUntranslated saute le chrome fait
       await translateDom(target, {
         quiet: true,
