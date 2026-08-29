@@ -27,6 +27,10 @@ test('glossaire sports : match n’est pas correspondre', async ({ page }) => {
       recEn: p('reçoit', 'en'),
       chezEn: p('chez', 'en'),
       radioEn: p('EN ONDES', 'en'),
+      cePmEn: p('ce PM', 'en'),
+      cetAmEn: p('cet AM', 'en'),
+      aVenirIu: p('À venir', 'iu'),
+      cePmIu: p('ce PM', 'iu'),
     };
   });
   expect(out.nextEn).toBe('Next games');
@@ -39,7 +43,33 @@ test('glossaire sports : match n’est pas correspondre', async ({ page }) => {
   expect(out.recEn).toBe('hosts');
   expect(out.chezEn).toBe('at');
   expect(out.radioEn).toBe('LIVE');
+  expect(out.cePmEn.toLowerCase()).toBe('this pm');
+  expect(out.cetAmEn.toLowerCase()).toBe('this am');
+  expect(String(out.aVenirIu || ''), 'IU : pas de repli anglais Up next').not.toMatch(/up next/i);
+  expect(out.cePmIu, 'IU : laisser le MT, pas figer ce PM').not.toBe('ce PM');
   expect(JSON.stringify(out).toLowerCase()).not.toContain('correspondre');
+});
+
+test('pastille À venir + ce PM suit la langue (pas CE PM en anglais)', async ({ page }) => {
+  await page.route(/translate\.googleapis\.com/, (route) => route.abort());
+  await page.route(/clients[45]\.google\.com/, (route) => route.abort());
+  await page.route(/le-radar-translate\.azdak\.workers\.dev/, (route) => route.fulfill({
+    status: 404, contentType: 'application/json', body: '{}',
+  }));
+  await page.route(/mymemory\.translated\.net/, (route) => route.abort());
+  await ready(page);
+  const txt = await page.evaluate(async () => {
+    window.RadarTranslate.applyMode('en', { persist: false, fromUserClick: false });
+    await Promise.resolve();
+    const tag = document.createElement('span');
+    tag.className = 'sports-chip__cta-tag';
+    document.body.append(tag);
+    fillSportsCtaTagCopy(tag, 'À venir', { meridiemLine: 'ce PM' });
+    return (tag.innerText || '').replace(/\s+/g, ' ').trim();
+  });
+  expect(txt).toMatch(/up next/i);
+  expect(txt).toMatch(/this pm/i);
+  expect(txt).not.toMatch(/ce pm/i);
 });
 
 test('quotas MT inchangés ; chrome-first exposé', async ({ page }) => {
