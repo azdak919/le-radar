@@ -50,6 +50,7 @@ const phrases = [
   'Demain',
   'Hier',
   'Avant-hier',
+  "Rien de programmé pour aujourd'hui",
   'reçoit',
   'chez',
 ];
@@ -64,6 +65,11 @@ assert.match(src, /en: 'Next games'/, 'Prochains match → Next games (pas corre
 assert.match(src, /en: 'game'/, 'match → game, pas verbe to match');
 assert.match(src, /en: 'hosts'/, 'reçoit → hosts');
 assert.match(src, /en: 'at'/, 'chez → at');
+assert.match(
+  src,
+  /en: 'Nothing scheduled for today'/,
+  'creux UP NEXT → Nothing scheduled for today',
+);
 assert.doesNotMatch(
   src,
   /en:\s*'correspondre'|fr:\s*'correspondre'/,
