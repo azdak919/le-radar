@@ -1,23 +1,14 @@
 {
-  "updated": "2026-08-29T03:46:16.796Z",
+  "updated": "2026-08-29T06:19:20.507Z",
   "total": 185,
   "pool": 58,
   "incomplete": 10,
   "withLeadExcerpt": 87,
   "candidates": 10,
-  "enriched": 0,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "link": "https://www.delitfrancais.com/2026/03/18/elections-de-lexecutif-de-laeum/",
-      "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "Desjardins, candidate à la présidence, issue de la coalition S.T.A.N.D., promet de rendre l’AÉUM « p",
-      "changed": false
-    },
     {
       "title": "Pourquoi le L est en premier dans LGBTQ+",
       "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
@@ -26,6 +17,15 @@
       "chars": 400,
       "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
       "changed": false
+    },
+    {
+      "title": "Sois belle et tais-toi",
+      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 295,
+      "sample": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez r",
+      "changed": true
     },
     {
       "title": "La mauvaise nutrition et les maladies chroniques",
