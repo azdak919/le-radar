@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-29T17:39:02.848Z",
+  "updated": "2026-08-29T18:45:35.886Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,17 +7,73 @@
   "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 12,
-  "updatedCount": 1,
-  "citedNew": 1,
+  "checked": 17,
+  "updatedCount": 9,
+  "citedNew": 6,
   "fallbackNew": 11,
   "samples": [
+    {
+      "title": "Il y a 30 ans : un grand spectacle solidaire pour le Saguenay",
+      "source": "La Pige",
+      "credit": "Photo : Le monde en images Gilles Potvin",
+      "cited": true,
+      "method": "body-line"
+    },
     {
       "title": "Qui sont les agents qui patrouillent notre campus ?",
       "source": "Le Délit",
       "credit": "Photo : Stu Doré/Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Recettes musicales québécoises pour l’été",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Inside Mile End Kicks",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Joe Fuda",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
