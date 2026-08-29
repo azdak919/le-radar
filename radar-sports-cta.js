@@ -649,8 +649,8 @@ function syncWeatherCountToSports() {
 /**
  * Wide : nombre de cartes CTA (1–4) selon largeur + taille du pool.
  * Plusieurs CTAs = matchs / accroches **distincts** (pas la même info).
- * 1600 / 1920 → 2 ; 2560 → 3 ; 3440 / 3840 → 4. ≤1440 → 1.
- * Toutes les cartes (CTA + scores) partagent la même largeur.
+ * 1600 / 1920 → 2 CTA, 1 score de chaque côté ; 2560 → 3 ; 3440 / 3840 → 4.
+ * ≤1440 → 1. Toutes les cartes (CTA + scores) partagent la même largeur.
  */
 function isWide1600SportsBand() {
   try {
@@ -717,7 +717,12 @@ function sportsWideCtaCount(boardCount = 0) {
  * Focus-group le-radar-sports-weather-fit A :
  * Plafond sports = largeur seule (max 3 scores + CTA). Météo indépendante.
  * Wide : place pour 2–3 CTAs + scores autour.
+ * 1600 / 1920 (2 CTA) : score | CTA | CTA | score — pas une 2ᵉ à droite.
  */
+function sportsDualCtaOneEachSide() {
+  return isWideDualSportsCta() && !isWideTripleSportsCta();
+}
+
 function sportsBoardCountBase() {
   const avail = sportsStripAvailWidth();
   const wide = isWideNoMarqueeMode();
@@ -766,6 +771,11 @@ function sportsBoardCountBase() {
   if (comfort && roughCta >= 2) {
     const scores = n - Math.min(roughCta, n);
     if (scores >= 1 && scores % 2 === 1 && n > roughCta + 1) n -= 1;
+  }
+  // Dual CTA 1600–2559 : un score de chaque côté. Une 2ᵉ à droite
+  // se clippe (overflow:hidden) — vu à 1920.
+  if (comfort && sportsDualCtaOneEachSide()) {
+    n = Math.min(n, roughCta + 2);
   }
   return n;
 }
@@ -851,12 +861,17 @@ function sportsStripCramped() {
   }
 
   if (comfort) {
-    // Flex égal : la somme des cartes ≈ la largeur utile, donc ne pas
-    // traiter « used > avail » comme un débordement (ça vidait le bandeau
-    // jusqu’à 2 cartes géantes à 1440).
+    // Ne pas sommer les largeurs flex peintes (used≈avail → 2 cartes géantes
+    // à 1440). Texte illisible ou dernière carte hors cadre = −1.
     for (const chip of chips) {
       if (chip.classList.contains('sports-chip--cta')) continue;
       if (sportsMatchChipTextOverflows(chip)) return true;
+    }
+    const last = chips[chips.length - 1];
+    if (last) {
+      const stripBox = strip.getBoundingClientRect();
+      const padR = parseFloat(getComputedStyle(strip).paddingRight) || 0;
+      if (last.getBoundingClientRect().right > stripBox.right - padR + 2) return true;
     }
     return false;
   }
@@ -970,6 +985,11 @@ function fitSportsStripAfterPaint() {
     : (sportsStripAvailWidth() >= 520 ? 2 : 1);
   let next = count - 1;
   if (!comfort && wide && next >= 4 && next % 2 === 0) next -= 1;
+  if (comfort && ctaFloor >= 2) {
+    const scores = next - Math.min(ctaFloor, next);
+    if (scores >= 1 && scores % 2 === 1 && next > ctaFloor + 1) next -= 1;
+    if (sportsDualCtaOneEachSide()) next = Math.min(next, ctaFloor + 2);
+  }
   sportsFitCount = Math.max(floor, next);
   if (sportsFitCount >= count) {
     fitWideSportsMatchSlots({ fill: true });
