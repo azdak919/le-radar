@@ -159,6 +159,12 @@ async function overlaySnapshot(page) {
       percentText: overlay?.querySelector('.translate-progress__pct')?.innerText || '',
       zTuner: tuner ? Number.parseInt(getComputedStyle(tuner).zIndex, 10) : 0,
       zOverlay: overlay ? Number.parseInt(getComputedStyle(overlay).zIndex, 10) : 0,
+      zWave: overlay?.querySelector('.translate-progress__wave')
+        ? Number.parseInt(getComputedStyle(overlay.querySelector('.translate-progress__wave')).zIndex, 10)
+        : 0,
+      zRing: overlay?.querySelector('.translate-progress__ring')
+        ? Number.parseInt(getComputedStyle(overlay.querySelector('.translate-progress__ring')).zIndex, 10)
+        : 0,
       wideLeft: !!document.querySelector('.tuner-wide-left'),
       stripes,
       skipVisible: overlay ? !overlay.querySelector('.translate-progress__skip')?.hidden : false,
@@ -213,6 +219,7 @@ test.describe('overlay traduction articles', () => {
         expect(snap.beat.length, `${vp.name}: beat intercalaire`).toBeGreaterThan(3);
       }
       expect(snap.zOverlay, `${vp.name}: overlay sous tuner`).toBeLessThan(snap.zTuner);
+      expect(snap.zWave, `${vp.name}: ondes sous l’anneau`).toBeLessThan(snap.zRing);
       expect(snap.overflowX, `${vp.name}: overflow-x ${snap.overflowX}`).toBeLessThan(8);
       expect(
         rectsIntersect(snap.overlay, snap.tuner, 1),
