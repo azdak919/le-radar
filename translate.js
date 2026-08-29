@@ -777,10 +777,23 @@
     ].filter(Boolean).join(' ').toLowerCase();
   }
 
+  function menuPanelCopy() {
+    const english = menuChromeLocale().startsWith('en');
+    return {
+      title: english ? 'Language' : 'Langue',
+      close: english ? 'Close' : 'Fermer',
+    };
+  }
+
   /** Met à jour secondaires + en-têtes de groupe sans reconstruire tout le menu. */
   function refreshMenuChromeLabels() {
     const menu = document.getElementById('translate-menu');
     if (!menu) return;
+    const copy = menuPanelCopy();
+    const title = menu.querySelector('.translate-menu__title');
+    const closeBtn = menu.querySelector('.translate-menu__close');
+    if (title) title.textContent = copy.title;
+    if (closeBtn) closeBtn.setAttribute('aria-label', copy.close);
     menu.querySelectorAll('.translate-menu__opt[data-mode]').forEach((opt) => {
       const m = MODES[opt.dataset.mode];
       if (!m) return;
@@ -3763,34 +3776,29 @@
     const maxW = Math.min(320, Math.max(160, vw - pad * 2));
     menu.style.width = '';
     menu.style.maxWidth = `${maxW}px`;
-    menu.style.maxHeight = '';
 
-    // Mesure après affichage (menu non hidden)
-    let menuW = Math.min(Math.max(menu.offsetWidth || 240, 240), maxW);
-    let menuH = menu.offsetHeight || 200;
-    const maxH = Math.min(vh * 0.75, 560, Math.max(120, vh - pad * 2));
-    if (menuH > maxH) {
-      menu.style.maxHeight = `${maxH}px`;
-      menuH = maxH;
+    const preferredTop = btnRect.bottom + gap;
+    const availableBelow = vh - preferredTop - pad;
+    const availableAbove = btnRect.top - pad - gap;
+    const cap = Math.min(vh * 0.85, 640, Math.max(160, vh - pad * 2));
+    let top = preferredTop;
+    let maxH = Math.min(cap, Math.max(160, availableBelow));
+    if (availableBelow < 160 && availableAbove > availableBelow) {
+      maxH = Math.min(cap, Math.max(160, availableAbove));
+      top = Math.max(pad, btnRect.top - gap - maxH);
+    } else if (preferredTop + maxH > vh - pad) {
+      top = Math.max(pad, vh - pad - maxH);
+      maxH = Math.max(160, vh - top - pad);
     }
 
-    // Préférer l’alignement droit du bouton (ouvre vers la gauche) ;
-    // si ça sort à gauche, basculer ; toujours clamper dans le viewport.
+    // Ne jamais vider maxHeight : ça relance le layout et remet le scroll à 0.
+    menu.style.maxHeight = `${Math.round(maxH)}px`;
+
+    let menuW = Math.min(Math.max(menu.offsetWidth || 240, 240), maxW);
     let left = btnRect.right - menuW;
     if (left < pad) left = btnRect.left;
     if (left + menuW > vw - pad) left = Math.max(pad, vw - pad - menuW);
     if (left < pad) left = pad;
-
-    let top = btnRect.bottom + gap;
-    if (top + menuH > vh - pad) {
-      // Ouvrir au-dessus du bouton si pas assez de place en bas
-      const above = btnRect.top - gap - menuH;
-      if (above >= pad) top = above;
-      else {
-        top = Math.max(pad, vh - pad - menuH);
-        menu.style.maxHeight = `${Math.max(120, vh - top - pad)}px`;
-      }
-    }
 
     menu.style.top = `${Math.round(top)}px`;
     menu.style.left = `${Math.round(left)}px`;
@@ -3798,7 +3806,12 @@
     menu.style.bottom = 'auto';
   }
 
-  function onMenuViewportChange() {
+  function onMenuViewportChange(event) {
+    if (event && event.type === 'scroll') {
+      const menu = document.getElementById('translate-menu');
+      const target = event.target;
+      if (menu && target && (target === menu || menu.contains(target))) return;
+    }
     positionMenu();
   }
 
@@ -3845,10 +3858,8 @@
         const active = menu.querySelector('.translate-menu__opt.is-active');
         if (filter && window.innerWidth >= 480) {
           filter.focus({ preventScroll: true });
-        } else {
-          active?.scrollIntoView({ block: 'nearest' });
         }
-        active?.scrollIntoView({ block: 'nearest' });
+        active?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
       });
     });
     bindMenuPositioning();
@@ -4020,13 +4031,15 @@
     const menu = document.getElementById('translate-menu');
     if (!menu) return;
 
-    const frag = document.createDocumentFragment();
-
-    // Filtre (liste longue) — loupe plutôt que placeholder « Filtrer… »
-    const searchWrap = document.createElement('div');
-    searchWrap.className = 'translate-menu__search-wrap';
-    searchWrap.setAttribute('role', 'presentation');
-    searchWrap.innerHTML = ''
+    const copy = menuPanelCopy();
+    const chrome = document.createElement('div');
+    chrome.className = 'translate-menu__chrome';
+    chrome.innerHTML = ''
+      + '<div class="translate-menu__head">'
+      + `<span class="translate-menu__title" id="translate-menu-title">${escapeHtml(copy.title)}</span>`
+      + `<button type="button" class="translate-menu__close" aria-label="${escapeHtml(copy.close)}">`
+      + '<span aria-hidden="true">×</span></button></div>'
+      + '<div class="translate-menu__search-wrap" role="presentation">'
       + '<label class="translate-menu__search-label" for="translate-menu-filter">'
       + '<span class="sr-only">Filtrer les langues</span>'
       + '</label>'
@@ -4040,8 +4053,13 @@
       + '<input type="search" id="translate-menu-filter" class="translate-menu__search" '
       + 'placeholder="" autocomplete="off" spellcheck="false" '
       + 'aria-label="Filtrer les langues" enterkeyhint="search" />'
-      + '</div>';
-    frag.appendChild(searchWrap);
+      + '</div></div>';
+
+    const list = document.createElement('div');
+    list.className = 'translate-menu__list';
+    list.id = 'translate-menu-list';
+    list.setAttribute('role', 'listbox');
+    list.setAttribute('aria-labelledby', 'translate-menu-title');
 
     let lastGroup = '';
     let groupEl = null;
@@ -4064,7 +4082,7 @@
           sep.setAttribute('role', 'presentation');
           sep.innerHTML = `<span class="translate-menu__sep-label">${escapeHtml(groupLabel)}</span>`;
           groupEl.appendChild(sep);
-          frag.appendChild(groupEl);
+          list.appendChild(groupEl);
         } else {
           groupEl = null;
         }
@@ -4102,10 +4120,20 @@
         + (secondary
           ? `<span class="translate-menu__hint">${escapeHtml(secondary)}</span>`
           : '');
-      (groupEl || frag).appendChild(opt);
+      (groupEl || list).appendChild(opt);
     }
 
-    menu.replaceChildren(frag);
+    menu.setAttribute('role', 'dialog');
+    menu.setAttribute('aria-modal', 'false');
+    menu.setAttribute('aria-labelledby', 'translate-menu-title');
+    menu.replaceChildren(chrome, list);
+
+    chrome.querySelector('.translate-menu__close')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeMenu();
+      document.getElementById('translate-toggle')?.focus();
+    });
 
     const filter = menu.querySelector('#translate-menu-filter');
     if (filter) {
@@ -4165,6 +4193,16 @@
       control.setAttribute('translate', 'no');
     }
     if (!btn || !menu) return;
+
+    // Porter le panneau dans <body> : .wire / FABs ne doivent ni clipper
+    // ni empiler le sélecteur sous la loupe.
+    if (menu.parentElement !== document.body) {
+      document.body.appendChild(menu);
+    }
+    menu.classList.add('notranslate');
+    menu.setAttribute('translate', 'no');
+    btn.setAttribute('aria-haspopup', 'dialog');
+    btn.setAttribute('aria-controls', 'translate-menu');
 
     buildMenu();
 
