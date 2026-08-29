@@ -24,16 +24,60 @@
       color: #f1f2f4;
       font: 15px/1.45 Inter, system-ui, sans-serif;
     }
-    header { max-width: 390px; margin: 0 auto; padding: 28px 12px 8px; }
+    header { max-width: 820px; margin: 0 auto; padding: 28px 12px 8px; }
     h1 { margin: 0; font: 700 28px/1.1 "Source Serif 4", Georgia, serif; }
     .lede { color: #a9acb5; margin: 10px 0 0; font-size: 14px; }
     .hub { color: #e1b95e; }
     .hint { font-size: 12px; color: #888d96; margin-top: 8px; }
+    .legend {
+      display: grid;
+      gap: 6px;
+      margin: 14px 0 0;
+      padding: 12px 14px;
+      border: 1px solid #2c3038;
+      border-radius: 10px;
+      background: #16181f;
+      font-size: 13px;
+      color: #c3c6ce;
+    }
+    .legend strong { color: #fff; }
+    .legend code {
+      font: 700 11px/1.2 ui-monospace, monospace;
+      letter-spacing: 0.04em;
+      color: #e1b95e;
+    }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0 0;
+    }
+    .toc a {
+      color: #e1b95e;
+      font-size: 12px;
+      text-decoration: none;
+      border: 1px solid #3a3f48;
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
+    .toc a:hover { border-color: #e1b95e; }
     #col {
-      width: 390px;
+      width: min(820px, 100%);
       max-width: 100%;
       margin: 0 auto;
       padding: 12px 12px 64px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 840px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+    .case .masthead-sports-strip {
+      width: 100%;
+      max-width: 390px;
     }
     h2 {
       font-size: 11px;
@@ -50,8 +94,8 @@
       visibility: visible !important;
       opacity: 1 !important;
       overflow: hidden;
-      width: 100%;
-      max-width: none;
+      width: 390px;
+      max-width: 100%;
       margin: 0;
       padding: 0;
       min-height: 56px;
@@ -122,7 +166,22 @@
   <header>
     <p><a class="hub" href="./">← Labo</a></p>
     <h1>Cartes sports</h1>
-    <p class="lede">Colonne mobile (390). CTA et puces, même vocabulaire : À venir · Demain · Prochain match · En direct · Aujourd’hui / Hier. Voile : or / argent / bronze / hors podium, aujourd’hui et hier. Résultat = compétition, pas « il y a 6 h ».</p>
+    <p class="lede">Labo mât : une carte = 390 px. Aujourd’hui a <strong>cet AM</strong> et <strong>ce PM</strong>. Hier / Demain : AM ou PM seuls.</p>
+    <div class="legend">
+      <div><code>CET AM</code> — aujourd’hui avant midi (À venir + résultat).</div>
+      <div><code>CE PM</code> — aujourd’hui à partir de 12 h.</div>
+      <div><code>AM</code> / <code>PM</code> — Hier et Demain, sans « ce ».</div>
+      <div>Pas d’AM/PM sur <strong>En direct</strong> (score) ni <strong>Prochain match</strong>.</div>
+    </div>
+    <nav class="toc">
+      <a href="#today-next">À venir</a>
+      <a href="#today-result">Résultat du jour</a>
+      <a href="#tomorrow">Demain</a>
+      <a href="#past">Hier</a>
+      <a href="#live">En direct</a>
+      <a href="#idle">Hors saison</a>
+      <a href="#standard-chips">Puces</a>
+    </nav>
     <p class="hint">Local seulement.</p>
   </header>
   <main id="col"></main>
@@ -155,26 +214,26 @@
       {
         title: 'CTA — demain (reçoit)',
         cta: {
-          state: 'next', tone: '#2e7d4f', tag: 'Demain', glyph: '🏈',
+          state: 'next', tone: '#2e7d4f', tag: 'Demain', meridiem: 'PM', glyph: '🏈',
           text: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Carabins</span>',
           sub: '13 h 00 · Football universitaire',
         },
       },
       {
-        title: 'CTA — demain (visiteur)',
+        title: 'CTA — demain AM (visiteur)',
         cta: {
-          state: 'next', tone: '#2e7d4f', tag: 'Demain', glyph: '⚽',
+          state: 'next', tone: '#2e7d4f', tag: 'Demain', meridiem: 'AM', glyph: '⚽',
           text: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__vs">chez</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
-          sub: '19 h 00 · Soccer universitaire féminin',
+          sub: '10 h 00 · Soccer universitaire féminin',
         },
       },
       {
         title: 'CTA — hier (victoire)',
         cta: {
-          state: 'result', tone: '#3d9a6a', tag: 'Hier', glyph: '🏈',
+          state: 'result', tone: '#3d9a6a', tag: 'Hier', meridiem: 'AM', glyph: '🏈',
           badge: 'V', badgeMod: 'w',
           text: 'Carabins 24–21 Rouge et Or',
-          sub: 'Football universitaire',
+          sub: '11 h 00 · Football universitaire',
         },
       },
       {
@@ -196,65 +255,83 @@
         },
       },
       {
-        title: 'CTA — aujourd’hui (victoire)',
+        title: 'CTA — aujourd’hui AM (victoire)',
         cta: {
-          state: 'result', tone: '#3d9a6a', tag: 'Aujourd’hui', glyph: '🏀',
+          state: 'result', tone: '#3d9a6a', tag: 'Aujourd’hui', meridiem: 'cet AM', glyph: '🏀',
           badge: 'V', badgeMod: 'w',
           text: 'UdeM 78–71 Concordia',
-          sub: 'Basketball universitaire',
+          sub: '11 h 00 · Basketball universitaire',
+        },
+      },
+      {
+        title: 'CTA — aujourd’hui (victoire)',
+        cta: {
+          state: 'result', tone: '#3d9a6a', tag: 'Aujourd’hui', meridiem: 'ce PM', glyph: '🏀',
+          badge: 'V', badgeMod: 'w',
+          text: 'UdeM 78–71 Concordia',
+          sub: '19 h 00 · Basketball universitaire',
+        },
+      },
+      {
+        title: 'CTA — aujourd’hui AM (défaite)',
+        cta: {
+          state: 'result', tone: '#c45c5c', tag: 'Aujourd’hui', meridiem: 'cet AM', glyph: '🏒',
+          badge: 'D', badgeMod: 'l',
+          text: 'Bishop’s 2–5 McGill',
+          sub: '10 h 30 · Hockey universitaire',
         },
       },
       {
         title: 'CTA — aujourd’hui (défaite)',
         cta: {
-          state: 'result', tone: '#c45c5c', tag: 'Aujourd’hui', glyph: '🏒',
+          state: 'result', tone: '#c45c5c', tag: 'Aujourd’hui', meridiem: 'ce PM', glyph: '🏒',
           badge: 'D', badgeMod: 'l',
           text: 'Bishop’s 2–5 McGill',
-          sub: 'Hockey universitaire',
+          sub: '19 h 00 · Hockey universitaire',
         },
       },
       {
         title: 'CTA — aujourd’hui (match nul)',
         cta: {
-          state: 'result', tone: '#8fa3b0', tag: 'Aujourd’hui', glyph: '⚽',
+          state: 'result', tone: '#8fa3b0', tag: 'Aujourd’hui', meridiem: 'cet AM', glyph: '⚽',
           badge: 'N', badgeMod: 'd',
           text: 'ULaval 1–1 UdeM',
-          sub: 'Soccer universitaire masculin',
+          sub: '11 h 00 · Soccer universitaire masculin',
         },
       },
       {
         title: 'CTA — aujourd’hui (place)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', meridiem: 'ce PM', glyph: '⛵',
           text: 'McGill 7e/12',
-          sub: 'Voile universitaire',
+          sub: '14 h 00 · Voile universitaire',
         },
       },
       {
         title: 'CTA — aujourd’hui (or)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', meridiem: 'cet AM', glyph: '⛵',
           badge: '🥇', badgeMod: 'place',
           text: 'McGill 1er/12',
-          sub: 'Voile universitaire',
+          sub: '10 h 00 · Voile universitaire',
         },
       },
       {
         title: 'CTA — aujourd’hui (argent)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', meridiem: 'ce PM', glyph: '⛵',
           badge: '🥈', badgeMod: 'place',
           text: 'Concordia 2e/12',
-          sub: 'Voile universitaire',
+          sub: '15 h 00 · Voile universitaire',
         },
       },
       {
         title: 'CTA — aujourd’hui (bronze)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'Aujourd’hui', meridiem: 'cet AM', glyph: '⛵',
           badge: '🥉', badgeMod: 'place',
           text: 'UdeM 3e/12',
-          sub: 'Voile universitaire',
+          sub: '11 h 30 · Voile universitaire',
         },
       },
       {
@@ -356,11 +433,19 @@
         }),
       },
       {
-        title: 'Puce — à venir (visiteur)',
+        title: 'Puce — à venir AM (visiteur)',
         html: () => matchChip({
           tone: '#2e7d4f', glyph: '⚽',
           inner: '<span class="sports-chip__name">McGill</span> <span class="sports-chip__vs">chez</span> <span class="sports-chip__name sports-chip__opp">Concordia</span>',
-          sub: 'À venir · 21 h 00 · Soccer universitaire féminin',
+          sub: 'À venir · 10 h 00 · Soccer universitaire féminin',
+        }),
+      },
+      {
+        title: 'Puce — demain AM',
+        html: () => matchChip({
+          tone: '#2e7d4f', glyph: '🏈',
+          inner: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Carabins</span>',
+          sub: 'Demain · 11 h 00 · Football universitaire',
         }),
       },
       {
@@ -594,7 +679,7 @@
       const datedTag = todayTag || tagLabel === 'Demain' || tagLabel === 'Hier' || tagLabel === 'Avant-hier';
       const half = skipMeridiem
         ? ''
-        : (meridiem || meridiemFromSub(sub, todayTag) || (datedTag ? (todayTag ? 'ce PM' : 'PM') : ''));
+        : (meridiem || meridiemFromSub(sub, todayTag) || '');
       const g = glyph ? `<span class="sports-chip__cta-glyph" aria-hidden="true">${glyph}</span>` : '';
       const b = badge
         ? `<span class="sports-chip__badge sports-chip__badge--${badgeMod}" aria-hidden="true">${badge}</span>`
@@ -672,19 +757,38 @@
     }
 
     const col = document.getElementById('col');
-    const ctaHtml = ctaCases.map((c) =>
+    const ctaSections = [
+      { id: 'today-next', title: 'CTA · aujourd’hui à venir', test: (t) => t.includes('à venir') },
+      { id: 'today-result', title: 'CTA · résultat du jour', test: (t) => t.includes('aujourd’hui') },
+      { id: 'tomorrow', title: 'CTA · demain', test: (t) => t.includes('demain') },
+      { id: 'past', title: 'CTA · hier', test: (t) => /\bhier\b/.test(t) },
+      { id: 'live', title: 'CTA · en direct', test: (t) => t.includes('en direct') || t.includes('en cours') },
+      { id: 'idle', title: 'CTA · hors saison / creux', test: (t) => t.includes('hors saison') || t.includes('marque') },
+    ];
+    const used = new Set();
+    const ctaHtml = ctaSections.map((sec) => {
+      const items = ctaCases.filter((c) => sec.test(c.title.toLowerCase()));
+      items.forEach((c) => used.add(c));
+      const cards = items.map((c) =>
+        `<article class="case"><p><strong>${c.title}</strong></p>${stripCta(c.cta)}</article>`
+      ).join('');
+      return `<section id="${sec.id}"><h2>${sec.title}</h2><div class="grid">${cards}</div></section>`;
+    }).join('');
+    const leftover = ctaCases.filter((c) => !used.has(c)).map((c) =>
       `<article class="case"><p><strong>${c.title}</strong></p>${stripCta(c.cta)}</article>`
     ).join('');
     const stdHtml = standardChips.map((c) =>
       `<article class="case"><p><strong>${c.title}</strong></p><div class="masthead-sports-strip" data-count="1" data-cta-pinned="0" data-ready="1">${c.html()}</div></article>`
     ).join('');
-    col.innerHTML = `<section id="cta-band"><h2>Carte CTA</h2>${ctaHtml}</section>`
-      + `<section id="standard-chips"><h2>Puces scores</h2>${stdHtml}</section>`;
+    col.innerHTML = `<div id="cta-band">${ctaHtml}${leftover ? `<section id="cta-other"><h2>Autres CTA</h2><div class="grid">${leftover}</div></section>` : ''}</div>`
+      + `<section id="standard-chips"><h2>Puces scores</h2><div class="grid">${stdHtml}</div></section>`;
 
     const run = () => armMarquee(col);
     run();
     requestAnimationFrame(() => requestAnimationFrame(run));
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+    window.setTimeout(run, 80);
+    window.addEventListener('resize', run);
   </script>
 </body>
 </html>
