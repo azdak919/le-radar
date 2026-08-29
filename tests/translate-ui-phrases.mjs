@@ -11,7 +11,10 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const src = readFileSync(join(root, 'translate.js'), 'utf8');
 const cta = readFileSync(join(root, 'radar-sports-cta.js'), 'utf8');
 
-assert.match(src, /radar-translate-cache-v9/, 'cache v9 (invalide correspondre v8)');
+assert.match(src, /radar-translate-cache-v10/, 'cache v10 (purge fraîcheur + { t, ts })');
+assert.match(src, /function pruneTranslationCache/, 'purge cache hors fil frais');
+assert.match(src, /function rememberNewsCorpus/, 'corpus news pour garder seulement le fil vivant');
+assert.match(src, /CACHE_MAX = 4000/, 'plafond cache 4000 (filet quota)');
 assert.match(src, /const CONCURRENCY = 6/, 'CONCURRENCY reste 6 (plafond gtx par hôte)');
 assert.match(src, /const MAX_CHUNK = 450/, 'MAX_CHUNK reste 450 (ordre IU)');
 assert.match(src, /chromeOnly/, 'passage chrome avant le fil');

@@ -269,6 +269,29 @@ test.describe('overlay traduction articles', () => {
     await expect(page.locator('#translate-progress')).toBeHidden();
   });
 
+  test('cache : purge un titre hors fil, garde l’article frais', async ({ page }) => {
+    await mockTranslateInstant(page);
+    await openHome(page, { width: 900, height: 700 });
+    const report = await page.evaluate(async () => {
+      const title = (document.querySelector('.article-title')?.textContent || 'Titre frais').trim();
+      await window.RadarTranslate.translateText(title, 'es');
+      await window.RadarTranslate.translateText('Ancien article disparu du fil', 'es');
+      window.RadarTranslate.rememberNewsCorpus([
+        { title, date: new Date().toISOString() },
+      ]);
+      const raw = JSON.parse(localStorage.getItem(window.RadarTranslate._ui.CACHE_KEY) || '{}');
+      const keys = Object.keys(raw.entries || {});
+      return {
+        v: raw.v,
+        hasStale: keys.some((k) => k.includes('Ancien article disparu du fil')),
+        hasLive: keys.some((k) => k.includes(title)),
+      };
+    });
+    expect(report.v).toBe(10);
+    expect(report.hasStale, 'titre plus dans le fil : hors cache').toBe(false);
+    expect(report.hasLive, 'titre encore au fil : conservé').toBe(true);
+  });
+
   test('prefers-reduced-motion : barre statique, pas de reflet', async ({ page }) => {
     test.setTimeout(60_000);
     await page.emulateMedia({ reducedMotion: 'reduce' });
