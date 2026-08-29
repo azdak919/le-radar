@@ -166,11 +166,12 @@
   <header>
     <p><a class="hub" href="./">← Labo</a></p>
     <h1>Cartes sports</h1>
-    <p class="lede">Labo mât : une carte = 390 px. Aujourd’hui a <strong>cet AM</strong> et <strong>ce PM</strong>. Hier / Demain : AM ou PM seuls.</p>
+    <p class="lede">Labo mât : une carte = 390 px. Aujourd’hui a <strong>cet AM</strong> et <strong>ce PM</strong>. Demain : AM ou PM. <strong>Hier : pas d’AM/PM</strong>.</p>
     <div class="legend">
       <div><code>CET AM</code> — aujourd’hui avant midi (À venir + résultat).</div>
       <div><code>CE PM</code> — aujourd’hui à partir de 12 h.</div>
-      <div><code>AM</code> / <code>PM</code> — Hier et Demain, sans « ce ».</div>
+      <div><code>AM</code> / <code>PM</code> — Demain seulement, sans « ce ».</div>
+      <div><strong>Hier</strong> — une ligne, pas d’AM/PM.</div>
       <div>Pas d’AM/PM sur <strong>En direct</strong> (score) ni <strong>Prochain match</strong>.</div>
     </div>
     <nav class="toc">
@@ -230,10 +231,10 @@
       {
         title: 'CTA — hier (victoire)',
         cta: {
-          state: 'result', tone: '#3d9a6a', tag: 'Hier', meridiem: 'AM', glyph: '🏈',
+          state: 'result', tone: '#3d9a6a', tag: 'Hier', glyph: '🏈',
           badge: 'V', badgeMod: 'w',
           text: 'Carabins 24–21 Rouge et Or',
-          sub: '11 h 00 · Football universitaire',
+          sub: 'Football universitaire',
         },
       },
       {
@@ -674,9 +675,11 @@
       const skipMeridiem = brand
         || tagLabel === 'En direct'
         || tagLabel === 'Prochain'
-        || tagLabel === 'Prochain match';
+        || tagLabel === 'Prochain match'
+        || tagLabel === 'Hier'
+        || tagLabel === 'Avant-hier';
       const todayTag = tagLabel === 'À venir' || tagLabel === 'Aujourd’hui';
-      const datedTag = todayTag || tagLabel === 'Demain' || tagLabel === 'Hier' || tagLabel === 'Avant-hier';
+      const datedTag = todayTag || tagLabel === 'Demain';
       const half = skipMeridiem
         ? ''
         : (meridiem || meridiemFromSub(sub, todayTag) || '');

@@ -184,8 +184,8 @@ const SPORTS_CTA_TAG_SOON = 'À venir';
 /**
  * 2e ligne des pastilles datées.
  * Aujourd’hui seulement : « cet AM » / « ce PM » (ce = ce jour-ci).
- * Hier / Demain / date : « AM » / « PM » — jamais « ce PM hier ».
- * Pas « cette AM ». Pas En direct (score) ni Prochain match.
+ * Demain : « AM » / « PM ». Pas Hier / Avant-hier / En direct / Prochain match.
+ * Pas « cette AM ». Pas « ce PM hier ».
  */
 const SPORTS_MERIDIEM_AM_LINE = 'cet AM';
 const SPORTS_MERIDIEM_PM_LINE = 'ce PM';
@@ -1726,7 +1726,7 @@ function sportsCtaTagIsToday(wanted) {
 
 /**
  * 2e ligne. `today: true` → cet AM / ce PM.
- * Hier, Demain, date → AM / PM seuls.
+ * Demain → AM / PM seuls. Hier n’en a pas.
  */
 function sportsMeridiemLine(game, { today = false } = {}) {
   const half = sportsMeridiem(game);
@@ -1735,12 +1735,13 @@ function sportsMeridiemLine(game, { today = false } = {}) {
   return half === 'AM' ? SPORTS_MERIDIEM_AM_LINE : SPORTS_MERIDIEM_PM_LINE;
 }
 
-/** Pastilles datées : AM/PM. Pas En direct (score) ni Prochain match. */
+/** AM/PM : aujourd’hui et demain. Pas Hier, En direct, Prochain match. */
 function sportsCtaTagUsesMeridiem(wanted) {
   if (!wanted) return false;
   if (wanted === SPORTS_CTA_TAG_LIVE) return false;
   if (wanted === SPORTS_CTA_TAG_NEXT) return false;
   if (wanted === RADAR_BRAND_SHORT) return false;
+  if (wanted === 'Hier' || wanted === 'Avant-hier') return false;
   return true;
 }
 
