@@ -972,6 +972,48 @@
     return map[code] || code;
   }
 
+  /** Codes gtx à essayer, dans l’ordre. Un hang (null) arrête la liste. */
+  const GTX_TL_ALIASES = {
+    fa: ['fa', 'fa-IR'],
+    he: ['iw', 'he'],
+    iw: ['iw', 'he'],
+    zh: ['zh-CN', 'zh'],
+    'zh-CN': ['zh-CN', 'zh'],
+    'zh-tw': ['zh-TW'],
+    'zh-TW': ['zh-TW'],
+    tl: ['tl', 'fil'],
+    fil: ['tl', 'fil'],
+    iu: ['iu', 'ike'],
+    'iu-latn': ['iu-Latn', 'iu'],
+    'iu-Latn': ['iu-Latn', 'iu'],
+  };
+
+  function gtxTargetCodes(tl) {
+    const code = gtxLang(tl);
+    const aliases = GTX_TL_ALIASES[code] || GTX_TL_ALIASES[tl];
+    if (!aliases) return [code];
+    const seen = new Set();
+    const out = [];
+    for (const item of aliases) {
+      if (seen.has(item)) continue;
+      seen.add(item);
+      out.push(item);
+    }
+    return out.length ? out : [code];
+  }
+
+  /** MyMemory veut ISO 639 (he, pas iw ; fa, pas fa-IR). */
+  function mymemoryLang(tl) {
+    const code = gtxLang(tl);
+    const map = {
+      iw: 'he',
+      'fa-IR': 'fa',
+      'iu-Latn': 'iu',
+      fil: 'tl',
+    };
+    return map[code] || code;
+  }
+
   function notify(msg) {
     const el = document.getElementById('toast');
     if (el) {
@@ -1543,8 +1585,6 @@
   const UI_LOCK_NO_MT = new Set([
     'match', 'Match', 'Prochains match', 'Prochain match',
     'En direct', 'En cours', 'reçoit', 'reçoivent', 'chez',
-    'Préparation de la langue…', 'Traduction des articles…', 'Mise en page…',
-    'Prêt', 'Afficher les articles dans la langue actuelle',
   ]);
 
   function uiPhraseLookup(core = '', targetLang = '') {
@@ -1652,10 +1692,10 @@
 
   async function fetchMachineTranslation(core, tl) {
     const encoded = encodeURIComponent(core);
-    const tls = tl === 'fa' ? ['fa', 'fa-IR'] : [tl];
+    const tls = gtxTargetCodes(tl);
 
-    // Originaux Radar = français. sl=auto + persan coincait souvent (écho FR
-    // mis en cache = « ça ne traduit pas »). Timeout : sinon l’overlay reste à 21 %.
+    // Originaux Radar = français. sl=auto renvoyait l’écho FR (cache = langue
+    // « traduite » encore en français). Timeout : sinon l’overlay reste à 21 %.
     for (const gtl of tls) {
       const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=fr&tl=${encodeURIComponent(gtl)}&dt=t&q=${encoded}`;
       const data = await fetchJsonTimed(url);
@@ -1665,7 +1705,8 @@
     }
 
     try {
-      const url = `https://api.mymemory.translated.net/get?q=${encoded}&langpair=fr|${encodeURIComponent(tl)}`;
+      const mm = mymemoryLang(tl);
+      const url = `https://api.mymemory.translated.net/get?q=${encoded}&langpair=fr|${encodeURIComponent(mm)}`;
       const data = await fetchJsonTimed(url);
       if (data?.responseStatus === 200 && data.responseData?.translatedText) {
         const translated = cleanTranslation(data.responseData.translatedText)
@@ -1709,12 +1750,15 @@
       if (core.length > MAX_CHUNK) {
         const parts = splitLong(core, MAX_CHUNK);
         const out = [];
+        let anyReal = false;
         for (const part of parts) {
-          out.push(await translateText(part, targetLang));
+          const piece = await translateText(part, targetLang);
+          out.push(piece);
+          if (piece && !sameMtText(piece, part)) anyReal = true;
         }
         const joined = fixInternalTranslationSpacing(out.join('')).replace(/^\s+|\s+$/g, '');
-        cacheSet(key, joined);
-        return joined;
+        if (anyReal && !sameMtText(joined, core)) cacheSet(key, joined);
+        return anyReal ? joined : core;
       }
 
       const translated = await fetchMachineTranslation(core, tl);
@@ -2845,22 +2889,28 @@
     overlayCopy = { ...OVERLAY_COPY_FR };
     const next = { ...OVERLAY_COPY_FR };
     for (const key of Object.keys(OVERLAY_COPY_FR)) {
-      const hit = preferredUiPhrase(OVERLAY_COPY_FR[key], targetLang);
+      const hit = preferredUiPhrase(OVERLAY_COPY_FR[key], targetLang)
+        || preferredUiPhrase(OVERLAY_COPY_FR[key], 'en');
       if (hit) next[key] = hit;
     }
     overlayCopy = { ...next };
     applyOverlayCopyToDom();
     if (!targetLang || !articlesHost()) return;
-    const missing = Object.keys(OVERLAY_COPY_FR).filter((key) => next[key] === OVERLAY_COPY_FR[key]);
+    const missing = Object.keys(OVERLAY_COPY_FR).filter((key) => {
+      const localized = preferredUiPhrase(OVERLAY_COPY_FR[key], targetLang);
+      return !localized || localized === OVERLAY_COPY_FR[key];
+    });
     if (!missing.length) return;
-    await Promise.all(missing.map(async (key) => {
+    // Ne pas bloquer le chrome : EN déjà affiché, MT en fond.
+    void Promise.all(missing.map(async (key) => {
       if (gen != null && gen !== translateGen) return;
       const out = await translateText(OVERLAY_COPY_FR[key], targetLang);
       if (out && out !== OVERLAY_COPY_FR[key]) next[key] = out;
-    }));
-    if (gen != null && gen !== translateGen) return;
-    overlayCopy = next;
-    applyOverlayCopyToDom();
+    })).then(() => {
+      if (gen != null && gen !== translateGen) return;
+      overlayCopy = next;
+      applyOverlayCopyToDom();
+    });
   }
 
   function layoutArticlesOverlay() {
@@ -3956,6 +4006,8 @@
       MAX_CHUNK,
       MT,
       OVERLAY_TIMING,
+      gtxTargetCodes,
+      mymemoryLang,
     },
     _labels: {
       formatCegepLabel,

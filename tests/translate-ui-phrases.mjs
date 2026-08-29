@@ -40,7 +40,18 @@ assert.match(src, /langpair=fr\|/, 'MyMemory : fr|cible, pas auto|');
 assert.match(src, /sl=fr&tl=/, 'gtx : source français, pas auto');
 assert.match(src, /fa: 'آماده‌سازی زبان…'/, 'overlay persan : préparation');
 assert.match(src, /fa: 'نمایش مقاله‌ها به زبان فعلی'/, 'overlay persan : skip');
-assert.match(src, /tls = tl === 'fa' \? \['fa', 'fa-IR'\]/, 'gtx persan : fa puis fa-IR');
+assert.match(src, /function gtxTargetCodes/, 'alias gtx pour tout le menu, pas seulement fa');
+assert.match(src, /function mymemoryLang/, 'MyMemory : iw→he, fa-IR→fa');
+assert.match(src, /fa: \['fa', 'fa-IR'\]/, 'gtx persan : fa puis fa-IR');
+assert.match(src, /iw: \['iw', 'he'\]/, 'gtx hébreu : iw puis he');
+assert.match(src, /'zh-CN': \['zh-CN', 'zh'\]/, 'gtx chinois simplifié');
+assert.match(src, /tl: \['tl', 'fil'\]/, 'gtx tagalog / filipino');
+assert.match(src, /preferredUiPhrase\(OVERLAY_COPY_FR\[key\], 'en'\)/, 'overlay : repli EN si pas de glossaire');
+assert.doesNotMatch(
+  src,
+  /cacheSet\(key, joined\);\s*return joined/,
+  'textes longs : ne pas cacher un écho FR',
+);
 assert.doesNotMatch(src, /\.showModal\s*\(/, 'pas de dialog.showModal (tuner inert)');
 assert.doesNotMatch(
   src,
