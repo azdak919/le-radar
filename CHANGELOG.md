@@ -35,7 +35,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
-- Traduction MT (persan **et tout le menu**) : timeout 6 s ; source **fr** ; pas de cache d’écho FR (y compris textes longs) ; alias gtx (fa/fa-IR, iw/he, zh-CN, tl/fil, iu-Latn) ; MyMemory en ISO. Carte d’attente : glossaire, sinon anglais, sans bloquer le chrome.
+- Traduction MT (persan, **inuktitut**, tout le menu) : timeout 6 s ; gtx `sl=fr` puis `auto` puis `en` (la sonde IU était en `sl=en`) ; pas de cache d’écho FR ; alias gtx (fa, iw/he, zh-CN, tl/fil, iu-Latn/ike-Latn). Carte d’attente : glossaire, puis MT de la langue choisie, **anglais seulement en dernier** — plus d’IU qui affiche « Preparing the language… ».
 
 - CTA **En direct** : le score vit sous la pastille (deuxième ligne, hors marquee) ; la sous-ligne ne répète plus la même heure en « mis à jour à 20 h 30 » quand c’est déjà le coup d’envoi.
 
