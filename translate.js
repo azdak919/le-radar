@@ -1594,10 +1594,12 @@
     },
     'À venir': {
       // Libellé panneau (text-transform: uppercase → UP NEXT) + sous-titres grille.
+      // Pas de repli EN : IU/ar doivent passer par le MT, pas « Up next ».
       en: 'Up next', es: 'Próximamente', pt: 'A seguir', de: 'Als Nächstes',
       it: 'A seguire', zh: '即将播出', 'zh-tw': '即將播出', ar: 'التالي', ru: 'Далее',
       ko: '다음', ja: '次の番組', hi: 'आगे', vi: 'Sắp tới', tr: 'Sırada',
       nl: 'Hierna', pl: 'Następnie', ht: 'A pwochen',
+      fr: 'À venir',
     },
     AM: {
       en: 'AM', es: 'AM', pt: 'AM', de: 'AM', it: 'AM', fr: 'AM',
@@ -1780,7 +1782,7 @@
   /** Ne jamais envoyer ces libellés au MT, même en IU/ar (cas « correspondre »). */
   const UI_LOCK_NO_MT = new Set([
     'match', 'Match', 'Prochains match', 'Prochain match',
-    'En direct', 'En cours', 'Dernière heure', 'cet AM', 'ce PM', 'AM', 'PM', 'reçoit', 'reçoivent', 'chez',
+    'En direct', 'En cours', 'Dernière heure', 'AM', 'PM', 'reçoit', 'reçoivent', 'chez',
   ]);
 
   function uiPhraseLookup(core = '', targetLang = '') {
@@ -1814,8 +1816,8 @@
     const upcoming = core.match(/^À venir(?:\s*·\s*(.+))?$/i)
       || core.match(/^Up next(?:\s*·\s*(.+))?$/i);
     if (upcoming) {
-      const stem = uiPhraseLookup('À venir', targetLang) || 'Up next';
-      return upcoming[1] ? `${stem} · ${upcoming[1]}` : stem;
+      const stem = uiPhraseLookup('À venir', targetLang);
+      if (stem != null) return upcoming[1] ? `${stem} · ${upcoming[1]}` : stem;
     }
     // « avec Prénom Nom » (animateur)
     const withHost = core.match(/^avec\s+(.+)$/i) || core.match(/^with\s+(.+)$/i);
@@ -4247,8 +4249,12 @@
     const raw = String(original ?? '');
     const tl = activeMode === DEFAULT_MODE ? null : googCodeForMode(activeMode);
     if (!tl) return raw;
-    const hit = preferredUiPhrase(raw.replace(/\s+/g, ' ').trim(), tl);
-    return hit != null ? hit : raw;
+    const core = raw.replace(/\s+/g, ' ').trim();
+    const hit = preferredUiPhrase(core, tl);
+    if (hit != null) return hit;
+    const cached = cacheGet(cacheKey(core, tl));
+    if (cached) return reapplyEdgeWhitespace(raw, cached);
+    return raw;
   }
 
   function displayInstitutionLabel(original = '') {

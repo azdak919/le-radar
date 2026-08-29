@@ -22,6 +22,7 @@ assert.match(src, /const MAX_CHUNK = 450/, 'MAX_CHUNK reste 450 (ordre IU)');
 assert.match(src, /chromeOnly/, 'passage chrome avant le fil');
 assert.match(src, /CHROME_SELECTOR/, 'sélecteur chrome');
 assert.match(src, /UI_LOCK_NO_MT/, 'filet anti-MT sur match / reçoit');
+assert.doesNotMatch(src, /UI_LOCK_NO_MT[\s\S]{0,220}'ce PM'/, 'ce PM n’est plus locké (IU / EN this PM)');
 assert.match(src, /const inflight = new Map/, 'dédup requêtes en vol');
 assert.match(src, /function cacheGet/, 'LRU cacheGet');
 assert.match(src, /translate-progress/, 'overlay de progression des articles');
