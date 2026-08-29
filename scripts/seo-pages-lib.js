@@ -632,7 +632,7 @@ const CSP = "default-src 'self'; "
   + "font-src 'self' https://fonts.gstatic.com; "
   + "img-src 'self' data: https:; "
   + "media-src 'self' https: blob:; "
-  + "connect-src 'self' blob: https://le-radar-weather.azdak.workers.dev https://le-radar-nowplaying.azdak.workers.dev https://le-radar-bg-rotation.azdak.workers.dev https://cloud.umami.is https://gateway.umami.is https://translate.googleapis.com https://api.mymemory.translated.net; "
+  + "connect-src 'self' blob: https://le-radar-weather.azdak.workers.dev https://le-radar-nowplaying.azdak.workers.dev https://le-radar-bg-rotation.azdak.workers.dev https://le-radar-translate.azdak.workers.dev https://cloud.umami.is https://gateway.umami.is https://clients5.google.com https://clients4.google.com https://translate.googleapis.com https://api.mymemory.translated.net; "
   + "frame-src 'self' https://chyz.ca https://cism893.ca https://ckut.ca https://www.cjlo.com https://www.cfak.ca https://www.choq.ca; "
   + "object-src 'none'; base-uri 'self'; form-action 'none'";
 
