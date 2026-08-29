@@ -1766,20 +1766,20 @@
       hi: 'तैयार', vi: 'Xong', ht: 'Pare', el: 'Έτοιμο',
       fr: 'Prêt',
     },
-    'Afficher les articles dans la langue originale': {
-      en: 'Show articles in the original language',
-      es: 'Mostrar los artículos en el idioma original',
+    'Afficher les articles dans leur langue originale': {
+      en: 'Show articles in their original language',
+      es: 'Mostrar los artículos en su idioma original',
       pt: 'Mostrar os artigos no idioma original',
-      de: 'Artikel in der Originalsprache anzeigen',
-      it: 'Mostra gli articoli nella lingua originale',
-      nl: 'Artikelen in de oorspronkelijke taal tonen',
-      pl: 'Pokaż artykuły w języku oryginalnym',
+      de: 'Artikel in ihrer Originalsprache anzeigen',
+      it: 'Mostra gli articoli nella loro lingua originale',
+      nl: 'Artikelen in hun oorspronkelijke taal tonen',
+      pl: 'Pokaż artykuły w ich języku oryginalnym',
       tr: 'Yazıları özgün dilde göster',
       ru: 'Показать статьи на языке оригинала',
       uk: 'Показати статті мовою оригіналу',
-      ar: 'عرض المقالات باللغة الأصلية',
+      ar: 'عرض المقالات بلغتها الأصلية',
       fa: 'نمایش مقاله‌ها به زبان اصلی',
-      he: 'הצגת הכתבות בשפה המקורית',
+      he: 'הצגת הכתבות בשפתן המקורית',
       ur: 'اصل زبان میں مضامین دکھائیں',
       zh: '以原文语言显示文章',
       'zh-tw': '以原文語言顯示文章',
@@ -1787,9 +1787,9 @@
       ja: '原文の言語で記事を表示',
       hi: 'मूल भाषा में लेख दिखाएँ',
       vi: 'Hiện bài bằng ngôn ngữ gốc',
-      ht: 'Montre atik yo nan lang orijinal la',
-      el: 'Εμφάνιση άρθρων στην πρωτότυπη γλώσσα',
-      fr: 'Afficher les articles dans la langue originale',
+      ht: 'Montre atik yo nan lang orijinal yo',
+      el: 'Εμφάνιση άρθρων στην πρωτότυπη γλώσσα τους',
+      fr: 'Afficher les articles dans leur langue originale',
     },
   };
 
@@ -3170,7 +3170,7 @@
     articles: 'Traduction des articles…',
     layout: 'Mise en page…',
     ready: 'Prêt',
-    skip: 'Afficher les articles dans la langue originale',
+    skip: 'Afficher les articles dans leur langue originale',
   };
   let overlayCopy = { ...OVERLAY_COPY_FR };
 

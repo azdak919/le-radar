@@ -45,7 +45,7 @@ assert.match(
   /await translateOverlayCopyFirst\(target, gen\)[\s\S]{0,500}chromeOnly:\s*true/,
   'skip / paliers overlay avant le chrome et les articles',
 );
-assert.match(src, /Afficher les articles dans la langue originale/, 'lien skip : ramène à Original');
+assert.match(src, /Afficher les articles dans leur langue originale/, 'lien skip : ramène à Original');
 assert.match(src, /skipArticlesOverlay\(\) \{\s*applyMode\(DEFAULT_MODE/, 'skip overlay → mode Original');
 assert.match(src, /timeoutMs:\s*6000/, 'MT : timeout 6 s (persan ne doit pas pendre)');
 assert.match(src, /function isJunkMt/, 'MT : refuser Sorry / quota MyMemory');
