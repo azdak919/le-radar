@@ -153,9 +153,8 @@ async function overlaySnapshot(page) {
       valuenow: bar?.getAttribute('aria-valuenow'),
       role: bar?.getAttribute('role'),
       label: document.getElementById('translate-progress-label')?.textContent || '',
-      beat: overlay?.querySelector('.translate-progress__beat-text')?.textContent || '',
-      beatHidden: overlay ? !!overlay.querySelector('.translate-progress__beat')?.hidden : true,
-      spark: !!overlay?.querySelector('.translate-progress__spark'),
+      beat: overlay?.querySelector('.translate-progress__beat'),
+      spark: overlay?.querySelector('.translate-progress__spark'),
       percentText: overlay?.querySelector('.translate-progress__pct')?.innerText || '',
       zTuner: tuner ? Number.parseInt(getComputedStyle(tuner).zIndex, 10) : 0,
       zOverlay: overlay ? Number.parseInt(getComputedStyle(overlay).zIndex, 10) : 0,
@@ -213,11 +212,9 @@ test.describe('overlay traduction articles', () => {
       expect(Number(snap.valuenow), `${vp.name}: aria-valuenow`).toBeGreaterThanOrEqual(0);
       expect(Number(snap.valuenow), `${vp.name}: pas collé à 99`).toBeLessThan(99);
       expect(snap.percentText, `${vp.name}: chiffre %`).toMatch(/\d/);
-      expect(snap.spark, `${vp.name}: spark Claude-style`).toBe(true);
+      expect(snap.spark, `${vp.name}: pas d’étoile intercalaire`).toBeFalsy();
+      expect(snap.beat, `${vp.name}: pas de ligne Excerpts`).toBeFalsy();
       expect(snap.label.length, `${vp.name}: étape officielle`).toBeGreaterThan(2);
-      if (!snap.beatHidden) {
-        expect(snap.beat.length, `${vp.name}: beat intercalaire`).toBeGreaterThan(3);
-      }
       expect(snap.zOverlay, `${vp.name}: overlay sous tuner`).toBeLessThan(snap.zTuner);
       expect(snap.zWave, `${vp.name}: ondes sous l’anneau`).toBeLessThan(snap.zRing);
       expect(snap.overflowX, `${vp.name}: overflow-x ${snap.overflowX}`).toBeLessThan(8);

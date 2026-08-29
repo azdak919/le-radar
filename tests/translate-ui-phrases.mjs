@@ -42,9 +42,8 @@ assert.match(src, /timeoutMs:\s*6000/, 'MT : timeout 6 s (persan ne doit pas pen
 assert.match(src, /function isJunkMt/, 'MT : refuser Sorry / quota MyMemory');
 assert.match(src, /clients5\.google\.com\/translate_a\/t\?client=dict-chrome-ex/, 'MT : repli dict-chrome-ex');
 assert.match(src, /le-radar-translate\.azdak\.workers\.dev/, 'MT : worker cache partagé (modèle météo)');
-assert.match(src, /OVERLAY_BEATS_FR/, 'overlay : messages intercalaires Claude-style');
-assert.match(src, /Ouverture du dictionnaire/, 'overlay : beat préparation');
-assert.match(src, /translate-progress__spark/, 'overlay : petite animation (spark)');
+assert.doesNotMatch(src, /OVERLAY_BEATS_FR/, 'overlay : plus de beats intercalaires');
+assert.doesNotMatch(src, /translate-progress__spark/, 'overlay : plus d’étoile Claude-style');
 assert.match(src, /langpair=fr\|/, 'MyMemory : fr|cible, pas auto|');
 assert.match(src, /sources = \['fr', 'auto', 'en'\]/, 'gtx : fr puis auto puis en (sonde IU)');
 assert.match(src, /fa: 'آماده‌سازی زبان…'/, 'overlay persan : préparation');
