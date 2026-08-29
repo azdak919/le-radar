@@ -1414,8 +1414,10 @@ assert(
     && appJs.includes('function sportsCtaTagLabel')
     && appJs.includes('sports-chip__cta-tag-score')
     && appJs.includes('function sportsCtaTagPutsResultScore')
-    && appJs.includes('function sportsResultMarkText'),
-  'app.js : pastille CTA = En direct + score / Hier + score / Sports',
+    && appJs.includes('function sportsResultMarkText')
+    && appJs.includes("const SPORTS_RESULT_VS = 'v.'")
+    && appJs.includes('function sportsResultVsHtml'),
+  'app.js : pastille CTA = En direct + score / Hier + score / Sports ; v. entre les noms',
 );
 // Pastille CTA : plus de voyant LED (ni span JS, ni ::before).
 assert(

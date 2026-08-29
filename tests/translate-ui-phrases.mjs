@@ -107,6 +107,7 @@ const phrases = [
   "Rien de programmé pour aujourd'hui",
   'reçoit',
   'chez',
+  'v.',
 ];
 for (const phrase of phrases) {
   assert(
@@ -120,6 +121,9 @@ assert.match(src, /en: 'Breaking news'/, 'Dernière heure → Breaking news');
 assert.match(src, /en: 'game'/, 'match → game, pas verbe to match');
 assert.match(src, /en: 'hosts'/, 'reçoit → hosts');
 assert.match(src, /en: 'at'/, 'chez → at');
+assert.match(src, /'v\.': \{/, 'glossaire : v. (scores finaux, pas vs/contre)');
+assert.match(cta, /const SPORTS_RESULT_VS\s*=\s*'v\.'/, 'CTA : séparateur v. si score dans la pastille');
+assert.match(cta, /function sportsResultVsHtml/, 'CTA : v. pâle via sports-chip__vs');
 assert.match(
   src,
   /en: 'Nothing scheduled for today'/,

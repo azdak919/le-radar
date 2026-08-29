@@ -1595,6 +1595,11 @@
       zh: '客场', ar: 'خارج الأرض', ko: '원정', ja: 'アウェイ',
       fr: 'chez',
     },
+    'v.': {
+      en: 'v.', es: 'v.', pt: 'v.', de: 'v.', it: 'v.',
+      nl: 'v.', pl: 'v.', tr: 'v.', ru: 'v.', uk: 'v.',
+      zh: 'v.', ar: 'v.', ko: 'v.', ja: 'v.', fr: 'v.',
+    },
     'Calendrier à venir': {
       en: 'Schedule upcoming', es: 'Calendario por venir',
       pt: 'Calendário a seguir', de: 'Terminplan folgt',
@@ -1806,7 +1811,7 @@
   /** Ne jamais envoyer ces libellés au MT, même en IU/ar (cas « correspondre »). */
   const UI_LOCK_NO_MT = new Set([
     'match', 'Match', 'Prochains match', 'Prochain match',
-    'En direct', 'En cours', 'Dernière heure', 'AM', 'PM', 'reçoit', 'reçoivent', 'chez',
+    'En direct', 'En cours', 'Dernière heure', 'AM', 'PM', 'reçoit', 'reçoivent', 'chez', 'v.',
   ]);
 
   function uiPhraseLookup(core = '', targetLang = '') {
