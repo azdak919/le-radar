@@ -128,7 +128,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(page.locator('#preview')).toHaveCount(0);
   const col = page.locator('#col');
   await expect(col).toBeVisible();
-  await expect.poll(async () => Math.round((await col.boundingBox()).width)).toBeLessThanOrEqual(390);
+  await expect.poll(async () => Math.round((await page.locator('#cta-band .masthead-sports-strip').first().boundingBox()).width)).toBeLessThanOrEqual(400);
 
   await expect(page.locator('#cta-band .sports-chip--cta').first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip--match')).toHaveCount(0);
@@ -144,8 +144,13 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   const todayUpcoming = page.locator('#cta-band .case').filter({ hasText: 'dans 3 h' }).first();
   await expect(todayUpcoming.locator('.sports-chip__cta-sub-text')).toContainText(/Aujourd’hui/);
   await expect(page.locator('#cta-band .case').filter({ hasText: 'à venir (visiteur)' }).locator('.sports-chip__cta-sub-text')).toContainText(/Aujourd’hui/);
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'à venir (visiteur)' }).locator('.sports-chip__cta-tag-meridiem')).toHaveText(/cet\s*AM/i);
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'aujourd’hui AM (victoire)' }).locator('.sports-chip__cta-tag-meridiem')).toHaveText(/cet\s*AM/i);
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'CTA — aujourd’hui (victoire)' }).locator('.sports-chip__cta-tag-meridiem')).toHaveText(/ce\s*PM/i);
+  await expect(page.locator('#cta-band .case').filter({ hasText: 'demain AM' }).locator('.sports-chip__cta-tag-meridiem')).toHaveText(/^AM$/i);
   await expect(todayUpcoming.locator('.sports-chip__cta-tag')).toHaveText(/À\s*venir/i);
-  await expect(todayUpcoming.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
+  await expect(todayUpcoming.locator('.sports-chip__cta-tag-lines')).toHaveCount(1);
+  await expect(todayUpcoming.locator('.sports-chip__cta-tag-meridiem')).toHaveText(/ce\s*PM/i);
   await expect(todayUpcoming.locator('.sports-chip__vs')).toHaveText(/reçoivent/i);
   const vsTone = await todayUpcoming.locator('.sports-chip__vs').evaluate((el) => {
     const vs = getComputedStyle(el).color.match(/[\d.]+/g)?.map(Number) || [];
@@ -167,8 +172,16 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   expect(soonPulse.chip, 'carte À venir : halo rouge').toMatch(/sports-cta-ring-pulse/);
   expect(soonPulse.tag, 'pastille À venir : pulse En cours').toMatch(/sports-cta-tag-pulse/);
   const tomorrowCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — demain' }).first();
-  await expect(tomorrowCard.locator('.sports-chip__cta-tag')).toHaveText(/^Demain$/i);
-  await expect(tomorrowCard.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
+  await expect(tomorrowCard.locator('.sports-chip__cta-tag')).toHaveText(/Demain/i);
+  await expect(tomorrowCard.locator('.sports-chip__cta-tag-lines')).toHaveCount(1);
+  await expect(tomorrowCard.locator('.sports-chip__cta-tag-meridiem')).toHaveText(/^PM$/i);
+  const hierCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — hier (victoire)' });
+  await expect(hierCard.locator('.sports-chip__cta-tag-meridiem')).toHaveCount(0);
+  await expect(hierCard.locator('.sports-chip__cta-tag')).toHaveText(/^Hier$/i);
+  await expect(page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="Hier"] .sports-chip__cta-tag-meridiem')).toHaveCount(0);
+  const liveCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — en direct' }).first();
+  await expect(liveCard.locator('.sports-chip__cta-tag-score')).toBeVisible();
+  await expect(liveCard.locator('.sports-chip__cta-tag-meridiem')).toHaveCount(0);
   const tomorrowLamp = await tomorrowCard.locator('.sports-chip__cta-tag').evaluate((el) => el.dataset.ctaLamp);
   expect(tomorrowLamp, 'Demain : pastille jaune, pas À venir').toBe('next');
   const prochainLines = page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="Prochain match"] .sports-chip__cta-tag-lines');
@@ -210,9 +223,9 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   expect(hierFit.ok, 'CTA hier : glyphe présent').toBe(true);
   expect(hierFit.fullyInChip, 'CTA hier : glyphe entier dans la carte (pas d’excédent)').toBe(true);
   expect(hierFit.rightOfTag, 'CTA hier : glyphe à droite de la pastille').toBe(true);
-  await expect(page.locator('#cta-band .sports-chip__cta-tag', { hasText: /^Avant-hier$/ })).toHaveCount(0);
-  await expect(page.locator('.sports-chip__cta-tag', { hasText: /^Hier$/ }).first()).toBeVisible();
-  await expect(page.locator('.sports-chip__cta-tag', { hasText: /^Aujourd’hui$/ }).first()).toBeVisible();
+  await expect(page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="Avant-hier"]')).toHaveCount(0);
+  await expect(page.locator('.sports-chip__cta-tag[data-cta-tag="Hier"]').first()).toBeVisible();
+  await expect(page.locator('.sports-chip__cta-tag[data-cta-tag="Aujourd’hui"]').first()).toBeVisible();
   const noLed = async (sel) => page.locator(sel).first().evaluate((el) => {
     const before = getComputedStyle(el, '::before');
     return {
@@ -300,8 +313,8 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   const labCopy = await page.locator('body').innerText();
   expect(labCopy, 'pas d’abréviation univ. — le marquee porte le mot entier').not.toMatch(/\buniv\./);
 
-  const overflowing = page.locator('.sports-chip--cta.is-overflowing').first();
-  await expect(overflowing).toBeVisible({ timeout: 8000 });
+  const overflowing = page.locator('#cta-band .case').filter({ hasText: 'à venir (reçoit)' }).locator('.sports-chip--cta');
+  await expect(overflowing).toHaveClass(/is-overflowing/, { timeout: 8000 });
   const title = overflowing.locator('.sports-chip__cta-text').first();
   await expect.poll(async () => title.evaluate((el) => {
     const s = getComputedStyle(el);

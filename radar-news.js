@@ -2970,7 +2970,10 @@ function createArticle(item, role = 'standard') {
   const canUseImage = true;
   /* Vignettes : seuils assouplis (forThumb) — beaucoup d’URL WP ~300–500 px
      étaient rejetées alors qu’elles passent bien en object-fit. */
-  ensureCampusStock(item);
+  /* Campus seulement s’il n’y a pas de photo d’article. Le pré-charger
+     ici faisait basculer les unes Collectif (carte, portrait) vers le
+     Centre sportif dès qu’un timeout 6 s tirait alternateDisplayImage. */
+  if (!hasUsablePhoto(item, role)) ensureCampusStock(item);
   const hasImageCandidate = role === 'lead'
     || (hasUsablePhoto(item, role) || hasStockPhoto(item, role));
   if (!hasImageCandidate && canUseImage) a.classList.add('article--text');
@@ -3778,13 +3781,9 @@ function attachArticleImage(article, item, role) {
       if (kind === 'photo' && !isUsableArticleImage(img, role)) {
         const w = img.naturalWidth || 0;
         const h = img.naturalHeight || 0;
-        // Vedette : on accepte une photo imparfaite plutôt que le vide.
-        if (role === 'lead' && w >= 200 && h >= 150) {
-          settleShow();
-          return;
-        }
-        // En bref / vedettes : object-fit recadre — garder toute photo réelle.
-        if (isThumb && w >= 120 && h >= 100) {
+        // Photo d’article déjà décodée : on la garde. Le campus n’est pas
+        // un upgrade de qualité — carte 463×378, portrait 800×800 Collectif.
+        if (w >= 120 && h >= 100) {
           settleShow();
           return;
         }
@@ -3829,9 +3828,9 @@ function attachArticleImage(article, item, role) {
 
     img.src = displaySrc;
 
-    // Timeout : une photo d’article lente (origine) reste préférable au campus.
-    // Wayback est lent (~7 s HEAD) : lui laisser 15 s. Origine fragile : 4 s
-    // puis Photon, pas le pavillon.
+    // Timeout : une photo d’article lente (origine saine) reste à l’écran
+    // jusqu’à onload/onerror — pas de bascule campus. Wayback ~7 s HEAD →
+    // 15 s. Origine fragile : 4 s puis Photon, pas le pavillon.
     const srcHost = hostOfHref(src);
     const fromArchive = srcHost.includes('web.archive.org');
     const fromPhoton = srcHost.endsWith('.wp.com');
@@ -3841,6 +3840,7 @@ function attachArticleImage(article, item, role) {
       : (fragileRemote ? 4000 : (isThumb ? 10000 : 6000));
     window.setTimeout(() => {
       if (settled || article.classList.contains('has-image') || !media.isConnected) return;
+      if (kind === 'photo' && !fragileRemote && !fromArchive && !fromPhoton) return;
       const alt = alternateDisplayImage(item, kind, role, src);
       if (alt.src && alt.src !== src && (allowRetry || alt.kind !== kind)) {
         settled = true;

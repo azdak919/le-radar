@@ -47,27 +47,22 @@ const SPORTS_SPORT_TONES = {
  */
 const SPORTS_LIVE_BEFORE_MS = 2 * 3600 * 1000;
 const SPORTS_LIVE_AFTER_MS = 3 * 3600 * 1000;
-const SPORTS_IMMINENT_MS = 7 * 24 * 3600 * 1000; /* 7 jours */
+const SPORTS_IMMINENT_MS = 7 * 24 * 3600 * 1000; /* 7 jours — tri d’urgence seulement */
 /**
- * Puces scores : résultats des **5** derniers jours **civils** Toronto
- * (un dimanche 17 h reste affiché le vendredi soir — pas un filet 5×24 h).
+ * Puces scores : SSOT `RadarSportsFreshness.MASTHEAD_CHIP_RESULT_MAX_DAYS_AGO`
+ * (5 j civils Toronto). Plus de filet glissant 5×24 h.
  */
-const SPORTS_RECENT_RESULT_DAYS = 5;
-const SPORTS_RECENT_RESULT_MS = SPORTS_RECENT_RESULT_DAYS * 24 * 3600 * 1000;
-/**
- * « Chaud » pour la *voie de gauche* / détection saison (pas le pool CTA).
- * La CTA suit une fenêtre de 5 jours civils de prochains + aujourd’hui/hier.
- */
-const SPORTS_CTA_UPCOMING_MS = 14 * 24 * 3600 * 1000;
+const SPORTS_RECENT_RESULT_DAYS = (typeof RadarSportsFreshness !== 'undefined'
+  && Number.isFinite(RadarSportsFreshness.MASTHEAD_CHIP_RESULT_MAX_DAYS_AGO))
+  ? RadarSportsFreshness.MASTHEAD_CHIP_RESULT_MAX_DAYS_AGO
+  : 5;
 /**
  * Marquee puces match (2 lignes, noms longs) — plus lent que la CTA (5,5 s).
  * Un overflow dense (voile / place / événement) à 5,5 s se lisait en zapping.
  */
 const SPORTS_MATCH_SCROLL_ONE_WAY_MS = 8000;
-/** Plafond faces CTA après dédup reçoit/chez — assez pour la fenêtre 5 j. */
+/** Plafond faces CTA après dédup reçoit/chez. */
 const SPORTS_CTA_MAX_POOL = 80;
-/** Prochains sur la CTA : demain → aujourd’hui + N jours civils (hors « À venir » du jour). */
-const SPORTS_CTA_NEXT_DAYS = 5;
 /** Hors saison : 1er match de chacun des N premiers jours d’action dès le jour lead. */
 const SPORTS_CTA_OFFSEASON_LEAD_DAYS = 7;
 /*
@@ -81,16 +76,16 @@ const SPORTS_CTA_OFFSEASON_LEAD_DAYS = 7;
 const SPORTS_LIVE_VISUAL_LEAD_MS = 15 * 60 * 1000; /* 15 min avant le coup d’envoi */
 const SPORTS_LIVE_VISUAL_TAIL_MS = 3 * 3600 * 1000; /* 3 h après le coup d’envoi */
 /**
- * Filet résultats CTA : jours civils Toronto « aujourd’hui » + « hier ».
- * Les prochains = fenêtre SPORTS_CTA_NEXT_DAYS (pas le seul jour lead).
+ * Filet résultats CTA : jours civils Toronto « aujourd’hui » + « hier »
+ * (`RadarSportsFreshness.isMastheadCtaResult`). À venir en saison = jour lead.
  */
 /** À venir dans l’heure : passe devant hier (même seuil que « dans 45 min »). */
 const SPORTS_CTA_WITHIN_HOUR_MS = 60 * 60 * 1000;
 /**
- * Accroches CTA **uniquement** quand il n’y a ni match chaud (≤14 j)
- * ni aucun match à venir en grille. Pas de puces grises à gauche pour
- * ces messages — elles se confondaient avec des scores (régression UX
- * 2026-07-30 : « Hors saison » à côté de vrais prochains matchs).
+ * Accroches CTA **uniquement** quand le pool (live / hier / aujourd’hui /
+ * jour lead) est vide. Pas de puces grises à gauche pour ces messages —
+ * elles se confondaient avec des scores (régression UX 2026-07-30 :
+ * « Hors saison » à côté de vrais prochains matchs).
  */
 const SPORTS_CTA_IDLE_LABELS = [
   'Scores collégiaux et universitaires',
@@ -133,15 +128,17 @@ try {
  * Temps d’affichage des puces sports (gauche) — calibré pour *lire* l’info
  * (glyphe + équipes + date + heure), pas un flip nerveux type gare météo.
  *
- * Feedback prod 2026-08-11 : 4,8–8 s faisait « trop vide » (3 slots qui
- * tournent en parallèle → sensation de bandeau qui se vide sans cesse).
- * Sans défilement : ~9–14 s selon la longueur du libellé.
+ * Feedback prod 2026-08-11 : 4,8–8 s en rotation *parallèle* faisait « trop
+ * vide » (3 slots qui tournent chacun de leur côté). La vague L→R puis pause
+ * évite ça : le bandeau reste plein pendant le hold.
+ * Feedback prod 2026-08-29 : 9–14 s de pause après la vague = trop long.
+ * Sans défilement : ~6,5–10 s selon la longueur du libellé.
  * Avec marquee : ≥ 1 aller-retour CSS + pause au repos pour relire le début
  *   (même esprit que MARQUEE_REST_MS du dial radio).
  */
-const SPORTS_READ_MIN_MS = 9000;
-const SPORTS_READ_PER_CHAR_MS = 42;
-const SPORTS_READ_MAX_MS = 14000;
+const SPORTS_READ_MIN_MS = 6500;
+const SPORTS_READ_PER_CHAR_MS = 32;
+const SPORTS_READ_MAX_MS = 10000;
 /**
  * Une voie du marquee CSS `sports-chip-scroll` (style.css) — tenir synchro
  * avec `--sports-scroll-duration`. `alternate` → aller-retour = 2 ×.
@@ -159,10 +156,11 @@ const SPORTS_SLOT_STAGGER_MS = 1100;
  * Vague de toutes les puces (scores + texte CTA), puis pause lecture.
  * Tous les écrans : même principe ; CTA en pause à l’appui sur tactile et
  * inchangée seulement en mouvement réduit.
- * Step assez lent pour suivre la cascade ; hold assez long pour relire le ruban.
+ * Step assez lent pour suivre la cascade ; hold assez long pour relire le ruban
+ * sans laisser les cartes figées ~12–16 s (prod 2026-08-29).
  */
-const SPORTS_CASCADE_STEP_MS = 520;
-const SPORTS_BOARD_HOLD_MS = 11000;
+const SPORTS_CASCADE_STEP_MS = 440;
+const SPORTS_BOARD_HOLD_MS = 7500;
 /** Entrée d’une puce score (CSS sports-chip-arrive) — plus long = moins brutal. */
 const SPORTS_ARRIVE_MS = 640;
 /**
@@ -183,7 +181,15 @@ const SPORTS_CTA_TAG = 'Sports';
 const SPORTS_CTA_TAG_LIVE = 'En direct';
 /** Coup d’envoi du jour, pas encore commencé — rouge pulse, pas le jaune Prochain. */
 const SPORTS_CTA_TAG_SOON = 'À venir';
-/** Demain : une ligne, même jaune que Prochain match. */
+/**
+ * 2e ligne des pastilles datées.
+ * Aujourd’hui seulement : « cet AM » / « ce PM » (ce = ce jour-ci).
+ * Demain : « AM » / « PM ». Pas Hier / Avant-hier / En direct / Prochain match.
+ * Pas « cette AM ». Pas « ce PM hier ».
+ */
+const SPORTS_MERIDIEM_AM_LINE = 'cet AM';
+const SPORTS_MERIDIEM_PM_LINE = 'ce PM';
+/** Demain : deux lignes (Demain / AM|PM), même jaune que Prochain match. */
 const SPORTS_CTA_TAG_TOMORROW = 'Demain';
 /** Prochains : deux lignes dans la pastille, pas un rail plus large. */
 const SPORTS_CTA_TAG_NEXT = 'Prochains match';
@@ -191,12 +197,12 @@ const SPORTS_CTA_TAG_NEXT = 'Prochains match';
 const SPORTS_CTA_REST_TONE = '#6a7580';
 const SPORTS_CTA_LIVE_TONE = '#c8102e';
 /**
- * Rythme de la carte CTA — un peu plus lent que les puces scores, mais pas
- * figé. Feedback prod 2026-08-11 : 24 s laissait l’accroche « collée » alors
- * que la gauche tournait trop vite. Cible ~12 s (proche des scores stables,
- * toujours un cran plus posé). Survol = pause (garde-fou rotation-pointeur-fin).
+ * Rythme de la carte CTA — un cran plus posé que les puces scores, mais pas
+ * figé. Feedback prod 2026-08-11 : 24 s laissait l’accroche « collée ».
+ * Cible ~8 s (proche des scores stables). Survol = pause
+ * (garde-fou rotation-pointeur-fin).
  */
-const SPORTS_CTA_DWELL_MS = 12000;
+const SPORTS_CTA_DWELL_MS = 8000;
 /** Sortie douce d’une puce score avant replaceWith (synchro CSS is-leaving). */
 const SPORTS_CHIP_LEAVE_MS = 420;
 /** Popularité sports étudiants QC (aligné page /sports/). */
@@ -406,12 +412,17 @@ function sportsCivilDayShift(yyyyMmDd, deltaDays) {
   return new Date(utc).toISOString().slice(0, 10);
 }
 
-/** Jour civil Toronto d’un match (YYYY-MM-DD). */
+/** Jour civil Toronto d’un match (YYYY-MM-DD) — champ `date`, pas l’heure locale. */
 function sportsGameDayKey(game, now = Date.now()) {
+  if (typeof RadarSportsFreshness?.gameCivilDayKey === 'function') {
+    const key = RadarSportsFreshness.gameCivilDayKey(game);
+    if (key) return key;
+  }
+  const d = String(game?.date || '').trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(d)) return d;
   const ms = sportsGameMs(game);
   if (Number.isFinite(ms)) return torontoDayKey(ms);
-  const d = String(game?.date || '').trim();
-  return /^\d{4}-\d{2}-\d{2}$/.test(d) ? d : '';
+  return '';
 }
 
 /**
@@ -419,6 +430,9 @@ function sportsGameDayKey(game, now = Date.now()) {
  * Négatif si le match est à venir. Infini si la date est illisible.
  */
 function sportsCivilDaysAgo(game, now = Date.now()) {
+  if (typeof RadarSportsFreshness?.civilDaysAgo === 'function') {
+    return RadarSportsFreshness.civilDaysAgo(game, new Date(now));
+  }
   const day = sportsGameDayKey(game, now);
   const today = torontoDayKey(now);
   if (!day || !today) return Number.POSITIVE_INFINITY;
@@ -430,23 +444,22 @@ function sportsCivilDaysAgo(game, now = Date.now()) {
 
 /** Résultat dans la fenêtre des puces (5 jours civils, saison courante). */
 function sportsResultIsRecent(game, now = Date.now()) {
+  if (typeof RadarSportsFreshness?.isMastheadChipResult === 'function') {
+    return RadarSportsFreshness.isMastheadChipResult(game, new Date(now));
+  }
   const days = sportsCivilDaysAgo(game, now);
   return Number.isFinite(days) && days >= 0 && days <= SPORTS_RECENT_RESULT_DAYS;
 }
 
 /**
  * Résultat admissible sur la CTA : jour civil Toronto = aujourd’hui **ou** hier.
- * (Remplace l’ancien filet glissant 48 h.)
  */
 function sportsCtaResultIsTodayOrYesterday(game, now = Date.now()) {
-  let day = '';
-  const ms = sportsGameMs(game);
-  if (Number.isFinite(ms)) day = torontoDayKey(ms);
-  else if (game?.date && /^\d{4}-\d{2}-\d{2}$/.test(game.date)) day = game.date;
-  if (!day) return false;
-  const today = torontoDayKey(now);
-  const yesterday = sportsCivilDayShift(today, -1);
-  return day === today || day === yesterday;
+  if (typeof RadarSportsFreshness?.isMastheadCtaResult === 'function') {
+    return RadarSportsFreshness.isMastheadCtaResult(game, new Date(now));
+  }
+  const days = sportsCivilDaysAgo(game, now);
+  return days === 0 || days === 1;
 }
 
 /** Coup d’envoi encore à venir et dans moins d’une heure. */
@@ -1107,27 +1120,14 @@ function sportsLeftLaneState() {
   const results = sportsResultSlidesSorted();
   const nexts = sportsNextSlidesSorted();
   const now = Date.now();
-  // Focus-group le-radar-sports-left-pool (gate D + exclude priorSeason) :
-  // 5 jours civils, pas 5×24 h ; jamais le musée lastGame hors saison.
+  // Focus-group le-radar-sports-left-pool : 5 j civils Toronto
+  // (SSOT isMastheadChipResult) ; jamais le musée lastGame hors saison.
+  // Un prochain ≤14 j ne déverrouille plus les archives.
   const recentResults = results.filter((s) => {
     if (!sportsSlideIsDisplayable(s)) return false;
     if (s?.game?.priorSeason || s?.team?.lastGamePriorSeason) return false;
     return sportsResultIsRecent(s.game, now);
   });
-  // « Chaud » = score récent ou prochain ≤ 14 j (détection saison / appoint).
-  let hasHot = recentResults.length > 0;
-  if (!hasHot) {
-    try {
-      for (const s of nexts) {
-        const ms = sportsGameMs(s.game);
-        if (Number.isFinite(ms) && ms >= now - SPORTS_LIVE_AFTER_MS
-          && ms <= now + SPORTS_CTA_UPCOMING_MS) {
-          hasHot = true;
-          break;
-        }
-      }
-    } catch { /* ignore */ }
-  }
 
   if (recentResults.length) {
     // Résultats 5 j d’abord (V et D restent deux cartes). Puis les prochains
@@ -1499,10 +1499,6 @@ function sportsSlideIsDisplayable(slide) {
   return sportsGameHasNamedOpponent(slide.game);
 }
 
-function sportsCtaNextWindowEndDay(now = Date.now()) {
-  return sportsCivilDayShift(torontoDayKey(now), SPORTS_CTA_NEXT_DAYS);
-}
-
 /**
  * Nom d’établissement en clair — garde-fou `noms-lisibles`
  * (focus-group le-radar-sports-first-glance). Tooltips : forme lisible.
@@ -1715,6 +1711,40 @@ function sportsKickoffClock(game) {
   return `${m[1]} h ${m[2]}`;
 }
 
+/** AM avant midi Toronto, PM à partir de 12 h 00. */
+function sportsMeridiem(game) {
+  const t = String(game?.time || '').trim();
+  const m = t.match(/^(\d{1,2}):(\d{2})/);
+  if (!m) return '';
+  return Number(m[1]) < 12 ? 'AM' : 'PM';
+}
+
+/** Aujourd’hui (À venir / résultat du jour) : « ce » est licite. */
+function sportsCtaTagIsToday(wanted) {
+  return wanted === SPORTS_CTA_TAG_SOON || wanted === 'Aujourd’hui';
+}
+
+/**
+ * 2e ligne. `today: true` → cet AM / ce PM.
+ * Demain → AM / PM seuls. Hier n’en a pas.
+ */
+function sportsMeridiemLine(game, { today = false } = {}) {
+  const half = sportsMeridiem(game);
+  if (!half) return '';
+  if (!today) return half;
+  return half === 'AM' ? SPORTS_MERIDIEM_AM_LINE : SPORTS_MERIDIEM_PM_LINE;
+}
+
+/** AM/PM : aujourd’hui et demain. Pas Hier, En direct, Prochain match. */
+function sportsCtaTagUsesMeridiem(wanted) {
+  if (!wanted) return false;
+  if (wanted === SPORTS_CTA_TAG_LIVE) return false;
+  if (wanted === SPORTS_CTA_TAG_NEXT) return false;
+  if (wanted === RADAR_BRAND_SHORT) return false;
+  if (wanted === 'Hier' || wanted === 'Avant-hier') return false;
+  return true;
+}
+
 /** Âge lisible d’un fait daté — « il y a 14 h », « hier », « il y a 3 j ». */
 function sportsRelativeAge(ms, now = Date.now()) {
   if (!Number.isFinite(ms)) return '';
@@ -1905,7 +1935,7 @@ function sportsCtaTagLabel(slide, state) {
   return RADAR_BRAND_SHORT;
 }
 
-/** Remplit la pastille : « Prochains match » / live (En direct + score) en deux lignes. */
+/** Remplit la pastille : Prochains match / En direct+score / mot + cet AM|ce PM. */
 function fillSportsCtaTagCopy(tag, wanted, extra = {}) {
   tag.replaceChildren();
   markNoTranslate(tag);
@@ -1940,6 +1970,19 @@ function fillSportsCtaTagCopy(tag, wanted, extra = {}) {
     tag.append(lines);
     return;
   }
+  const line = extra.meridiemLine || tag.dataset.ctaMeridiemLine || '';
+  if (line && sportsCtaTagUsesMeridiem(wanted)) {
+    const wrap = document.createElement('span');
+    wrap.className = 'sports-chip__cta-tag-lines';
+    const top = document.createElement('span');
+    top.textContent = shown;
+    const bot = document.createElement('span');
+    bot.className = 'sports-chip__cta-tag-meridiem';
+    bot.textContent = window.RadarTranslate?.displayUiText?.(line) || line;
+    wrap.append(top, bot);
+    tag.append(wrap);
+    return;
+  }
   tag.append(document.createTextNode(shown));
 }
 
@@ -1948,7 +1991,12 @@ function refreshSportsChromeLanguage() {
   document.querySelectorAll('.sports-chip--cta .sports-chip__cta-tag').forEach((tag) => {
     if (tag.classList.contains('sports-chip__cta-tag--brand')) return;
     const wanted = tag.dataset.ctaTag;
-    if (wanted) fillSportsCtaTagCopy(tag, wanted, { score: tag.dataset.ctaScore });
+    if (wanted) {
+      fillSportsCtaTagCopy(tag, wanted, {
+        score: tag.dataset.ctaScore,
+        meridiemLine: tag.dataset.ctaMeridiemLine,
+      });
+    }
   });
   document.querySelectorAll('.sports-chip__vs[data-vs-orig]').forEach((el) => {
     const orig = el.getAttribute('data-vs-orig');
@@ -2225,8 +2273,8 @@ function sportsSoftSportDiversity(slides) {
  *     2. résultats **d’hier**
  *     3. résultats **d’aujourd’hui**
  *     4. autres à venir (jour lead ; hors saison : 1er match × 7 j)
- *   • **résultats** : aujourd’hui / hier seulement (plus vieux → puces scores)
- *   • **en saison** (il y a des résultats frais) : prochains du **jour lead** seul
+ *   • **résultats** : aujourd’hui / hier seulement (plus vieux → puces, 5 j)
+ *   • **en saison** (résultat aujourd’hui/hier) : prochains du **jour lead** seul
  *   • **hors saison** (pas de résultat aujourd’hui/hier) : **1er match** de
  *     chacun des **7 premiers jours** d’action à partir du jour lead, en
  *     alternance (rotation CTA) — pas un seul match pendant des jours
@@ -2234,8 +2282,8 @@ function sportsSoftSportDiversity(slides) {
  *   • adversaire placeholder (ADV / TBD) exclu
  *
  *  CARTES GAUCHE
- *   • Résultats des 5 derniers **jours civils** d’abord (toutes les faces
- *     encore disponibles), puis à-venir. Hors saison : prochains.
+ *   • Résultats jusqu’à 5 j civils d’âge d’abord (toutes les faces encore
+ *     disponibles), puis à-venir. Hors saison : prochains.
  */
 /** Jour civil America/Toronto d’une slide match (YYYY-MM-DD). */
 function sportsSlideDayKey(slide) {
@@ -2410,7 +2458,7 @@ function sportsCtaHoldOnLive(slide) {
 
 /**
  * Slide CTA — slot de droite.
- * Match « chaud » (aujourd’hui / ≤14 j) ou accroche idle hors saison.
+ * Match du pool CTA (live / hier / aujourd’hui / jour lead) ou accroche idle.
  */
 function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
   const candidates = sportsCtaCandidateSlides();
@@ -2689,10 +2737,16 @@ function applySportsCtaState(chip, slide) {
     const scoreChanged = (tag.dataset.ctaScore || '') !== liveScore;
     if (liveScore) tag.dataset.ctaScore = liveScore;
     else delete tag.dataset.ctaScore;
-    if (tag.dataset.ctaTag !== wanted || tag.dataset.ctaLang !== lang || scoreChanged) {
+    const meridiemLine = sportsCtaTagUsesMeridiem(wanted)
+      ? sportsMeridiemLine(game, { today: sportsCtaTagIsToday(wanted) })
+      : '';
+    const meridiemChanged = (tag.dataset.ctaMeridiemLine || '') !== meridiemLine;
+    if (meridiemLine) tag.dataset.ctaMeridiemLine = meridiemLine;
+    else delete tag.dataset.ctaMeridiemLine;
+    if (tag.dataset.ctaTag !== wanted || tag.dataset.ctaLang !== lang || scoreChanged || meridiemChanged) {
       tag.dataset.ctaTag = wanted;
       tag.dataset.ctaLang = lang;
-      fillSportsCtaTagCopy(tag, wanted, { score: liveScore });
+      fillSportsCtaTagCopy(tag, wanted, { score: liveScore, meridiemLine });
     }
   }
   syncSportsCtaRail(chip, slide);
@@ -3520,14 +3574,14 @@ function renderSportsStrip() {
 
 /**
  * Temps de lecture estimé d’un libellé de puce (scan compact FR).
- * Ex. « CLG vs OUT · 19 août · 23 h 40 » ≈ 9–11 s ; accroche plus longue → plus.
+ * Ex. « CLG vs OUT · 19 août · 23 h 40 » ≈ 6,5–8 s ; accroche plus longue → plus.
  */
 function sportsLabelReadingMs(text) {
   const len = String(text || '').replace(/\s+/g, ' ').trim().length;
   if (!len) return SPORTS_READ_MIN_MS;
   return Math.min(
     SPORTS_READ_MAX_MS,
-    Math.max(SPORTS_READ_MIN_MS, 4200 + len * SPORTS_READ_PER_CHAR_MS),
+    Math.max(SPORTS_READ_MIN_MS, 3000 + len * SPORTS_READ_PER_CHAR_MS),
   );
 }
 
@@ -3564,7 +3618,7 @@ function sportsChipNeedsMarquee(chip) {
 /**
  * Temps d’affichage d’un slot avant rotation — assez long pour *apprécier*
  * la carte et enregistrer l’info.
- * · Texte entier visible : dwell = lecture estimée (puces ~9–14 s ; CTA ~12 s).
+ * · Texte entier visible : dwell = lecture estimée (puces ~6,5–10 s ; CTA ~8 s).
  * · Texte qui défile : **toujours** 1 aller-retour marquee + pause repos
  *   (ne jamais changer la carte au milieu du scroll).
  */
@@ -3818,7 +3872,7 @@ function clearSportsWave() {
 /** Pause lecture après une vague sports (scores + accroches CTA). */
 function sportsBoardHoldMs() {
   const n = Math.max(1, sportsVisible.length);
-  let hold = Math.min(16000, Math.max(SPORTS_BOARD_HOLD_MS, 1800 * n));
+  let hold = Math.min(12000, Math.max(SPORTS_BOARD_HOLD_MS, 1400 * n));
   sportsVisible.forEach((slide, i) => {
     if (slide?.mode === 'cta') hold = Math.max(hold, sportsSlotDwellMs(i));
   });
@@ -3827,7 +3881,7 @@ function sportsBoardHoldMs() {
     sportsVisible.forEach((_, i) => {
       hold = Math.max(hold, sportsSlotDwellMs(i));
     });
-    hold = Math.min(16000, hold);
+    hold = Math.min(12000, hold);
   }
   return hold;
 }
