@@ -1,18 +1,19 @@
 {
-  "updated": "2026-08-29T00:18:41.994Z",
-  "fetchedAt": "2026-08-29T00:18:41.994Z",
+  "updated": "2026-08-29T00:33:28.236Z",
+  "fetchedAt": "2026-08-29T00:33:28.236Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-29T00:18:41.994Z"
+    "referenceDate": "2026-08-29T00:33:28.236Z"
   },
   "registry": "sports-teams.json",
-  "registryMatched": 50,
+  "registryMatched": 789,
   "leagueCatalog": 109,
-  "leaguesWithTeams": 6,
-  "leaguesOk": 6,
+  "leaguesWithTeams": 100,
+  "leaguesOk": 109,
   "leaguesFailed": 0,
+  "teamsPreservedOnError": 17,
   "sportsCovered": [
     "athletisme",
     "badminton",
@@ -34,18 +35,57 @@
     "volleyball"
   ],
   "sportsCatalog": [
+    "athletisme",
+    "badminton",
+    "baseball",
+    "basketball",
+    "cheerleading",
+    "cross-country",
     "flag-football",
     "football",
-    "soccer"
+    "futsal",
+    "golf",
+    "hockey",
+    "natation",
+    "rugby",
+    "soccer",
+    "soccer-interieur",
+    "ultimate",
+    "volleyball"
   ],
   "sportsFetched": [
+    "athletisme",
+    "badminton",
+    "baseball",
+    "basketball",
+    "cheerleading",
+    "cross-country",
     "flag-football",
     "football",
+    "futsal",
+    "golf",
     "hockey",
+    "natation",
+    "rugby",
     "sailing",
-    "soccer"
+    "soccer",
+    "soccer-interieur",
+    "ultimate",
+    "volleyball"
   ],
   "teamCount": 809,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -50854,21 +50894,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-08-28",
-          "time": "20:30",
-          "opponent": "Cégep Trois-Rivières",
-          "opponentCode": "TRV",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D1",
-          "gameId": "992e4138-e51a-494b-a69c-ac4e2bff2354",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=992e4138-e51a-494b-a69c-ac4e2bff2354",
-          "opponentFullName": "Cégep de Trois-Rivières",
-          "opponentNickname": "Diablos",
-          "opponentRegistryId": "trois-rivieres",
-          "live": true
-        },
-        {
           "date": "2026-09-04",
           "time": "19:00",
           "opponent": "Vanier",
@@ -50980,19 +51005,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-08-28",
-        "time": "20:30",
-        "opponent": "Cégep Trois-Rivières",
-        "opponentCode": "TRV",
+        "date": "2026-09-04",
+        "time": "19:00",
+        "opponent": "Vanier",
+        "opponentCode": "VAN",
         "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D1",
-        "gameId": "992e4138-e51a-494b-a69c-ac4e2bff2354",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=992e4138-e51a-494b-a69c-ac4e2bff2354",
-        "opponentFullName": "Cégep de Trois-Rivières",
-        "opponentNickname": "Diablos",
-        "opponentRegistryId": "trois-rivieres",
-        "live": true,
+        "gameId": "109ab39e-d521-4e6e-84f4-cef5eba24678",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=109ab39e-d521-4e6e-84f4-cef5eba24678",
+        "opponentFullName": "Vanier College",
+        "opponentNickname": "Cheetahs",
+        "opponentRegistryId": "vanier",
         "opponentSector": "collegial"
       },
       "record": {
@@ -51062,21 +51086,6 @@
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-08-28",
-          "time": "20:30",
-          "opponent": "Sainte-Foy",
-          "opponentCode": "CSF",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D1",
-          "gameId": "992e4138-e51a-494b-a69c-ac4e2bff2354",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=992e4138-e51a-494b-a69c-ac4e2bff2354",
-          "opponentFullName": "Cégep de Sainte-Foy",
-          "opponentNickname": "Géants",
-          "opponentRegistryId": "sainte-foy",
-          "live": true
-        },
         {
           "date": "2026-09-04",
           "time": "19:00",
@@ -51190,19 +51199,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-08-28",
-        "time": "20:30",
-        "opponent": "Sainte-Foy",
-        "opponentCode": "CSF",
+        "date": "2026-09-04",
+        "time": "19:00",
+        "opponent": "Champlain St-Lambert",
+        "opponentCode": "SLA",
         "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D1",
-        "gameId": "992e4138-e51a-494b-a69c-ac4e2bff2354",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=992e4138-e51a-494b-a69c-ac4e2bff2354",
-        "opponentFullName": "Cégep de Sainte-Foy",
-        "opponentNickname": "Géants",
-        "opponentRegistryId": "sainte-foy",
-        "live": true,
+        "gameId": "98803167-e2aa-4cf9-a770-656bef0048bd",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=98803167-e2aa-4cf9-a770-656bef0048bd",
+        "opponentFullName": "Champlain College Saint-Lambert",
+        "opponentNickname": "Barons",
+        "opponentRegistryId": "champlain-st-lambert",
         "opponentSector": "collegial"
       },
       "record": {
@@ -57462,20 +57470,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-08-28",
-          "time": "20:30",
-          "opponent": "Cégep Sherbrooke",
-          "opponentCode": "SHE",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
-          "opponentFullName": "Cégep de Sherbrooke",
-          "opponentRegistryId": "cegep-sherbrooke",
-          "live": true
-        },
-        {
           "date": "2026-09-12",
           "time": "13:00",
           "opponent": "Drummondville",
@@ -57570,18 +57564,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-08-28",
-        "time": "20:30",
-        "opponent": "Cégep Sherbrooke",
-        "opponentCode": "SHE",
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Drummondville",
+        "opponentCode": "DRU",
         "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
-        "opponentFullName": "Cégep de Sherbrooke",
-        "opponentRegistryId": "cegep-sherbrooke",
-        "live": true,
+        "gameId": "99b80eda-fa1a-496e-809c-f98cad061e72",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=99b80eda-fa1a-496e-809c-f98cad061e72",
+        "opponentFullName": "Cégep de Drummondville",
+        "opponentRegistryId": "drummondville",
         "opponentSector": "collegial"
       },
       "record": {
@@ -57612,20 +57605,6 @@
       "results": [],
       "lastGame": null,
       "nextGames": [
-        {
-          "date": "2026-08-28",
-          "time": "20:30",
-          "opponent": "Granby",
-          "opponentCode": "GBY",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
-          "opponentFullName": "Cégep de Granby",
-          "opponentRegistryId": "granby",
-          "live": true
-        },
         {
           "date": "2026-09-11",
           "time": "21:00",
@@ -57721,18 +57700,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-08-28",
-        "time": "20:30",
-        "opponent": "Granby",
-        "opponentCode": "GBY",
-        "home": true,
+        "date": "2026-09-11",
+        "time": "21:00",
+        "opponent": "Cégep Trois-Rivières",
+        "opponentCode": "TRV",
+        "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
-        "opponentFullName": "Cégep de Granby",
-        "opponentRegistryId": "granby",
-        "live": true,
+        "gameId": "0d00fe55-443d-461f-835f-d350a275cdb5",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0d00fe55-443d-461f-835f-d350a275cdb5",
+        "opponentFullName": "Cégep de Trois-Rivières",
+        "opponentNickname": "Diablos",
+        "opponentRegistryId": "trois-rivieres",
         "opponentSector": "collegial"
       },
       "record": {
@@ -57763,20 +57742,6 @@
       "results": [],
       "lastGame": null,
       "nextGames": [
-        {
-          "date": "2026-08-28",
-          "time": "20:30",
-          "opponent": "Victoriaville",
-          "opponentCode": "VIC",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "17c03e59-7604-4596-be4a-715be940e0b0",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=17c03e59-7604-4596-be4a-715be940e0b0",
-          "opponentFullName": "Cégep de Victoriaville",
-          "opponentRegistryId": "victoriaville",
-          "live": true
-        },
         {
           "date": "2026-09-06",
           "time": "15:00",
@@ -57870,18 +57835,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-08-28",
-        "time": "20:30",
-        "opponent": "Victoriaville",
-        "opponentCode": "VIC",
-        "home": false,
+        "date": "2026-09-06",
+        "time": "15:00",
+        "opponent": "Drummondville",
+        "opponentCode": "DRU",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "17c03e59-7604-4596-be4a-715be940e0b0",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=17c03e59-7604-4596-be4a-715be940e0b0",
-        "opponentFullName": "Cégep de Victoriaville",
-        "opponentRegistryId": "victoriaville",
-        "live": true,
+        "gameId": "000d528c-07d7-4576-ac97-53dd955d665b",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=000d528c-07d7-4576-ac97-53dd955d665b",
+        "opponentFullName": "Cégep de Drummondville",
+        "opponentRegistryId": "drummondville",
         "opponentSector": "collegial"
       },
       "record": {
@@ -57913,21 +57877,6 @@
       "results": [],
       "lastGame": null,
       "nextGames": [
-        {
-          "date": "2026-08-28",
-          "time": "20:30",
-          "opponent": "Cégep Trois-Rivières",
-          "opponentCode": "TRV",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "17c03e59-7604-4596-be4a-715be940e0b0",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=17c03e59-7604-4596-be4a-715be940e0b0",
-          "opponentFullName": "Cégep de Trois-Rivières",
-          "opponentNickname": "Diablos",
-          "opponentRegistryId": "trois-rivieres",
-          "live": true
-        },
         {
           "date": "2026-09-04",
           "time": "19:00",
@@ -58022,19 +57971,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-08-28",
-        "time": "20:30",
-        "opponent": "Cégep Trois-Rivières",
-        "opponentCode": "TRV",
-        "home": true,
+        "date": "2026-09-04",
+        "time": "19:00",
+        "opponent": "Drummondville",
+        "opponentCode": "DRU",
+        "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "17c03e59-7604-4596-be4a-715be940e0b0",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=17c03e59-7604-4596-be4a-715be940e0b0",
-        "opponentFullName": "Cégep de Trois-Rivières",
-        "opponentNickname": "Diablos",
-        "opponentRegistryId": "trois-rivieres",
-        "live": true,
+        "gameId": "d6b595b8-89db-41b3-a4db-6d19397df20e",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d6b595b8-89db-41b3-a4db-6d19397df20e",
+        "opponentFullName": "Cégep de Drummondville",
+        "opponentRegistryId": "drummondville",
         "opponentSector": "collegial"
       },
       "record": {
