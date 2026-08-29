@@ -35,6 +35,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Cartes sports du mât : pause trop longue entre deux vagues (~11–16 s). Lecture ~6,5–10 s, CTA ~8 s, cascade au même pas que la météo (440 ms). Le bandeau reste plein pendant le hold.
+
 - CTA **En direct** : le score vit sous la pastille (deuxième ligne, hors marquee) ; la sous-ligne ne répète plus la même heure en « mis à jour à 20 h 30 » quand c’est déjà le coup d’envoi.
 
 - Direct CTA : un match **En direct** est un scorebug — score collé, ou **—** si RSEQ n’a rien (soccer collégial souvent `-999`) ; sous-ligne = **heure de début** (`18 h 30`) / période / compétition / **mis à jour à** (dernière vérification, pas l’âge du coup d’envoi). Filet bot live : cron `:20` + enchaînement sur la radio now-playing — GitHub lâchait le `*/5` (28 août : rien de 12 h à 19 h QC).
