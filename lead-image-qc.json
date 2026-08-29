@@ -1,19 +1,25 @@
 {
-  "updated": "2026-08-29T11:11:48.236Z",
+  "updated": "2026-08-29T11:23:00.857Z",
   "total": 185,
   "withPhoto": 168,
   "withStock": 31,
-  "withCampusBank": 22,
+  "withCampusBank": 21,
   "fullyCovered": 185,
-  "leadReadyPhotos": 152,
+  "leadReadyPhotos": 148,
   "pageScraped": 31,
   "photosRecovered": 26,
   "imagesCleared": 16,
-  "stockSearches": 34,
-  "stockFound": 23,
-  "campusBankFound": 16,
+  "stockSearches": 36,
+  "stockFound": 24,
+  "campusBankFound": 15,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "The Cruel Optimism of Summer",
+      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/917/28627096297_a3e0756d47_b.jpg"
+    },
     {
       "title": "Élections provinciales 2026 : vos personnes candidates dans Saint-François (1/2)",
       "link": "https://lecollectif.ca/societe/elections-provinciales-2026-vos-personnes-candidates-dans-saint-francois-1-2/",
@@ -43,6 +49,12 @@
       "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+    },
+    {
+      "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
+      "link": "https://thelinknewspaper.ca/article/16326",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
     },
     {
       "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
