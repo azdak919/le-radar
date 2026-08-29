@@ -322,10 +322,9 @@
   box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.55);
 }
 
-/* Traduction en cours (API gtx, pas le widget Google) */
+/* Traduction en cours : ne pas geler le sélecteur (changement de langue). */
 html[data-translate-busy="1"] .translate-toggle {
-  opacity: 0.75;
-  pointer-events: none;
+  opacity: 0.9;
 }
 
 .article-meta--time-only {
