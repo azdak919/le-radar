@@ -992,6 +992,11 @@ assert(
 assert(!/accès hors ligne inclus/i.test(engagePrompt), 'invitation PWA : promesse offline gonflée interdite');
 assert(!/magasin d[’']apps/i.test(engagePrompt), 'invitation PWA : jargon magasin d’apps interdit');
 assert(engagePrompt.includes("event.key === 'Escape'"), 'invitation : fermeture Échap requise');
+assert(
+  engagePrompt.includes('escStep(s)')
+    && engagePrompt.includes('/&lt;(\\/?strong)&gt;/gi'),
+  'invitation : <strong> des étapes rendu (pas échappé en clair)',
+);
 const TUNER_FRAME_ORIGINS = [
   "'self'",
   'https://chyz.ca',
