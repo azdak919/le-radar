@@ -50,12 +50,21 @@ function snapshot(page) {
       chip.querySelector('.sports-chip__sub-text'),
     ].some((el) => el && /ellipsis/i.test(getComputedStyle(el).textOverflow))).length;
     const chipW = chips.map((el) => Math.round(el.getBoundingClientRect().width));
+    const stripBox = strip?.getBoundingClientRect();
+    const padR = strip ? parseFloat(getComputedStyle(strip).paddingRight) || 0 : 0;
+    const last = chips[chips.length - 1];
+    const clipRight = last && stripBox
+      ? Math.max(0, last.getBoundingClientRect().right - (stripBox.right - padR))
+      : 0;
+    const order = chips.map((el) => (el.classList.contains('sports-chip--cta') ? 'C' : 'M')).join('');
     return {
       weather: cities.length,
       chips: chips.length,
       cta: ctas.length,
       match: matches.length,
       clip: clip + ellipsis,
+      clipRight: Math.round(clipRight),
+      order,
       docked: !!weatherEl?.classList.contains('masthead-weather--docked'),
       wide: document.documentElement.dataset.widePreview || '',
       overlap: Math.round(overlap),
@@ -124,15 +133,20 @@ test('mât : les quantités météo / scores / CTA suivent la largeur @ci-critic
 
   const at1600 = await resizeAndSettle(page, 1600, 900);
   expect(at1600.cta, '1600 : deux CTA au centre').toBe(2);
-  expect(at1600.match, '1600 : un score de chaque côté, pas un orphelin étiré').toBeGreaterThanOrEqual(2);
+  expect(at1600.match, '1600 : un score de chaque côté').toBe(2);
+  expect(at1600.chips, '1600 : score | 2 CTA | score').toBe(4);
+  expect(at1600.order, '1600 : MCCM').toBe('MCCM');
+  expect(at1600.clipRight, '1600 : pas de carte coupée à droite').toBeLessThanOrEqual(2);
   expect(at1600.chipSpread, `1600 : cartes égales, spread ${at1600.chipSpread}`).toBeLessThanOrEqual(8);
 
   const at1920 = await resizeAndSettle(page, 1920, 1080);
   expect(at1920.wide).toBe('e');
   expect(at1920.weather, '1920 : remplir le ruban, pas 3 villes orphelines').toBeGreaterThanOrEqual(4);
   expect(at1920.cta, '1920 : deux CTA au centre').toBe(2);
-  expect(at1920.match, '1920 : plusieurs puces scores, pas une seule étirée').toBeGreaterThanOrEqual(2);
-  expect(at1920.chips).toBeGreaterThanOrEqual(4);
+  expect(at1920.match, '1920 : un score de chaque côté, pas une 2ᵉ à droite').toBe(2);
+  expect(at1920.chips, '1920 : score | 2 CTA | score').toBe(4);
+  expect(at1920.order, '1920 : MCCM').toBe('MCCM');
+  expect(at1920.clipRight, '1920 : pas de carte coupée à droite').toBeLessThanOrEqual(2);
   expect(at1920.overlap).toBeLessThanOrEqual(1);
   expect(at1920.chipSpread, `1920 : cartes égales, spread ${at1920.chipSpread}`).toBeLessThanOrEqual(8);
 
