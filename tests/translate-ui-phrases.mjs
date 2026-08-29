@@ -13,7 +13,11 @@ const cta = readFileSync(join(root, 'radar-sports-cta.js'), 'utf8');
 const menuCss = readFileSync(join(root, 'translate-menu.css'), 'utf8');
 const feedCss = readFileSync(join(root, 'style-feed.css'), 'utf8');
 
-assert.match(src, /radar-translate-cache-v10/, 'cache v10 (purge fraîcheur + { t, ts })');
+assert.match(src, /radar-translate-cache-v11/, 'cache v11 (invalide poison DISTINCT LANGUAGES)');
+assert.match(src, /radar-translate-cache-v10/, 'v10 listé en LEGACY_KEYS (purge poison)');
+assert.match(src, /PLEASE SELECT TWO DISTINCT LANGUAGES/, 'poubelle MyMemory sl===tl');
+assert.match(src, /function sameMtLang/, 'ne pas appeler gtx/MyMemory sl===tl');
+assert.match(src, /!sameMtLang\('fr', mm\)/, 'MyMemory : skip fr|fr');
 assert.match(src, /function pruneTranslationCache/, 'purge cache hors fil frais');
 assert.match(src, /function rememberNewsCorpus/, 'corpus news pour garder seulement le fil vivant');
 assert.match(src, /CACHE_MAX = 4000/, 'plafond cache 4000 (filet quota)');

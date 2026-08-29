@@ -11,7 +11,9 @@ Ce Worker :
 1. cache la paire `(langue, texte)` ~6 h (Cache API, CORS réappliqué à la sortie) ;
 2. traduit via `clients5.google.com` (`dict-chrome-ex`, encore ouvert) ;
 3. repli `translate.googleapis.com` `client=gtx`, puis MyMemory ;
-4. refuse les réponses poubelle (`Sorry…`, `MYMEMORY WARNING…`).
+4. refuse les réponses poubelle (`Sorry…`, `MYMEMORY WARNING…`,
+   `PLEASE SELECT TWO DISTINCT LANGUAGES` — MyMemory sl===tl) ;
+5. refuse les paires sl===tl (pas d’appel MyMemory `fr|fr`).
 
 ## Déploiement
 

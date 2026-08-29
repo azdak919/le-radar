@@ -58,11 +58,35 @@ export function isJunkMt(text) {
   if (/<html[\s>]/i.test(t) || /<title>\s*Sorry/i.test(t)) return true;
   if (/MYMEMORY WARNING/i.test(t) || /YOU USED ALL AVAILABLE/i.test(t)) return true;
   if (/NEXT AVAILABLE IN/i.test(t) && /TRANSLATE MORE/i.test(t)) return true;
+  if (/PLEASE SELECT TWO DISTINCT LANGUAGES/i.test(t)) return true;
+  if (/VEUILLEZ S[ÉE]LECTIONNER DEUX LANGUES DISTINCTES/i.test(t)) return true;
+  if (/INVALID LANGUAGE PAIR/i.test(t) || /NO QUERY SPECIFIED/i.test(t)) return true;
+  if (/QUERY LENGTH LIMIT/i.test(t)) return true;
   return false;
+}
+
+export function sameMtLang(a, b) {
+  const canon = (c) => {
+    let x = String(c || '').trim();
+    if (!x) return '';
+    if (x === 'iw') x = 'he';
+    if (x === 'fa-IR' || x === 'fa-ir') x = 'fa';
+    if (x === 'iu-Latn' || x === 'iu-latn') x = 'iu';
+    if (x === 'zh-CN' || x === 'zh-cn') x = 'zh';
+    if (x === 'fil') x = 'tl';
+    return x.toLowerCase();
+  };
+  const na = canon(a);
+  const nb = canon(b);
+  return !!na && !!nb && na === nb;
 }
 
 export function readMtPayload(data) {
   if (data == null) return '';
+  if (typeof data === 'object' && !Array.isArray(data) && data.responseStatus != null
+      && Number(data.responseStatus) !== 200) {
+    return '';
+  }
   if (typeof data === 'string') return data.trim();
   if (typeof data.t === 'string') return String(data.t).trim();
   if (Array.isArray(data) && typeof data[0] === 'string') {
@@ -107,6 +131,7 @@ async function fetchJson(url, ms = FETCH_MS) {
 }
 
 async function translateUpstream(core, sl, tl) {
+  if (sameMtLang(sl, tl)) return '';
   const q = encodeURIComponent(core);
   const dict = await fetchJson(
     `https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=${encodeURIComponent(sl)}&tl=${encodeURIComponent(tl)}&q=${q}`,
@@ -144,6 +169,9 @@ export default {
     if (!q || !tl || q.length > MAX_Q) {
       return json({ error: 'q/tl invalides' }, request, 400);
     }
+    if (sameMtLang(sl, tl)) {
+      return json({ error: 'same language' }, request, 503);
+    }
 
     const cache = caches.default;
     const cacheKey = new Request(
@@ -152,11 +180,21 @@ export default {
     );
     const cached = await cache.match(cacheKey);
     if (cached) {
-      const headers = new Headers(cached.headers);
-      Object.entries(corsHeaders(request)).forEach(([k, v]) => headers.set(k, v));
-      headers.set('X-LR-Cache', 'HIT');
-      headers.set('CDN-Cache-Control', 'no-store');
-      return new Response(cached.body, { status: cached.status, headers });
+      let poison = false;
+      try {
+        const payload = await cached.clone().json();
+        const hit = String(payload?.t || '');
+        if (!hit || isJunkMt(hit) || sameMtText(hit, q)) poison = true;
+      } catch {
+        poison = true;
+      }
+      if (!poison) {
+        const headers = new Headers(cached.headers);
+        Object.entries(corsHeaders(request)).forEach(([k, v]) => headers.set(k, v));
+        headers.set('X-LR-Cache', 'HIT');
+        headers.set('CDN-Cache-Control', 'no-store');
+        return new Response(cached.body, { status: cached.status, headers });
+      }
     }
 
     const translated = await translateUpstream(q, sl, tl);

@@ -335,7 +335,7 @@ test.describe('overlay traduction articles', () => {
         hasLive: keys.some((k) => k.includes(title)),
       };
     });
-    expect(report.v).toBe(10);
+    expect(report.v).toBe(11);
     expect(report.hasStale, 'titre plus dans le fil : hors cache').toBe(false);
     expect(report.hasLive, 'titre encore au fil : conservé').toBe(true);
   });

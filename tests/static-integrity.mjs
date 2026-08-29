@@ -2013,6 +2013,12 @@ assert(
     'workers/translate-cache : refuse les réponses quota / Sorry',
   );
   assert(
+    trWorker.includes('PLEASE SELECT TWO DISTINCT LANGUAGES')
+      && trWorker.includes('sameMtLang')
+      && trWorker.includes('same language'),
+    'workers/translate-cache : refuse sl===tl / DISTINCT LANGUAGES',
+  );
+  assert(
     trWorker.includes('clients5.google.com'),
     'workers/translate-cache : dict-chrome-ex en amont de gtx',
   );
