@@ -188,8 +188,10 @@
     let positionBound = false;
 
     menu.hidden = true;
-    menu.setAttribute('role', 'listbox');
-    menu.classList.add('translate-menu');
+    menu.setAttribute('role', 'dialog');
+    menu.setAttribute('aria-modal', 'false');
+    menu.classList.add('translate-menu', 'notranslate');
+    menu.setAttribute('translate', 'no');
     // backdrop-filter/transform sur les barres Pomo et Solitaire crée un bloc
     // contenant pour position:fixed. Porter le panneau dans <body> garantit
     // des coordonnées réellement liées au viewport après redimensionnement.
@@ -198,7 +200,7 @@
       document.body.appendChild(menu);
     }
     button.classList.add('translate-toggle');
-    button.setAttribute('aria-haspopup', 'listbox');
+    button.setAttribute('aria-haspopup', 'dialog');
     button.setAttribute('aria-expanded', 'false');
 
     const locale = () => {
@@ -227,6 +229,25 @@
       if (group === 'indigenous') return english ? 'Indigenous languages of Quebec' : 'Langues autochtones du Québec';
       if (group === 'other') return english ? 'Other languages' : 'Autres langues';
       return '';
+    }
+
+    function panelCopy() {
+      const english = locale().startsWith('en');
+      return {
+        title: english ? 'Language' : 'Langue',
+        close: english ? 'Close' : 'Fermer',
+        search: english ? 'Filter languages' : 'Filtrer les langues',
+      };
+    }
+
+    function paintPanelChrome() {
+      const copy = panelCopy();
+      const title = menu.querySelector('.translate-menu__title');
+      const closeBtn = menu.querySelector('.translate-menu__close');
+      const search = menu.querySelector('.translate-menu__search');
+      if (title) title.textContent = copy.title;
+      if (closeBtn) closeBtn.setAttribute('aria-label', copy.close);
+      if (search) search.setAttribute('aria-label', copy.search);
     }
 
     function orderedModes() {
@@ -262,17 +283,25 @@
         option.classList.toggle('active', active);
         option.setAttribute('aria-selected', active ? 'true' : 'false');
       });
+      paintPanelChrome();
     }
 
     function build() {
-      const search = document.createElement('div');
-      search.className = 'translate-menu__search-wrap';
-      search.innerHTML = '<div class="translate-menu__search-field">'
+      const copy = panelCopy();
+      const chrome = document.createElement('div');
+      chrome.className = 'translate-menu__chrome';
+      chrome.innerHTML = '<div class="translate-menu__head">'
+        + `<span class="translate-menu__title">${escapeHtml(copy.title)}</span>`
+        + `<button type="button" class="translate-menu__close" aria-label="${escapeHtml(copy.close)}">`
+        + '<span aria-hidden="true">×</span></button></div>'
+        + '<div class="translate-menu__search-wrap">'
+        + '<div class="translate-menu__search-field">'
         + '<svg class="translate-menu__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>'
-        + '<input type="search" class="translate-menu__search" autocomplete="off" spellcheck="false" aria-label="Filtrer les langues">'
-        + '</div>';
-      const fragment = document.createDocumentFragment();
-      fragment.append(search);
+        + `<input type="search" class="translate-menu__search" autocomplete="off" spellcheck="false" aria-label="${escapeHtml(copy.search)}">`
+        + '</div></div>';
+      const list = document.createElement('div');
+      list.className = 'translate-menu__list';
+      list.setAttribute('role', 'listbox');
       let currentGroup = '';
       let groupElement = null;
       for (const mode of orderedModes()) {
@@ -287,7 +316,7 @@
             groupElement.setAttribute('role', 'group');
             groupElement.setAttribute('aria-label', heading);
             groupElement.innerHTML = `<div class="translate-menu__sep"><span class="translate-menu__sep-label">${escapeHtml(heading)}</span></div>`;
-            fragment.append(groupElement);
+            list.append(groupElement);
           }
         }
         const option = document.createElement('button');
@@ -300,10 +329,18 @@
         option.setAttribute('aria-disabled', mode.unavailable ? 'true' : 'false');
         const hint = secondary(mode);
         option.innerHTML = `<span class="translate-menu__row"><span class="translate-menu__name"${mode.goog ? ` lang="${escapeHtml(mode.goog)}"` : ''}>${escapeHtml(mode.label)}</span>${mode.short && mode.short !== '—' ? `<span class="translate-menu__code" aria-hidden="true">${escapeHtml(mode.short)}</span>` : ''}</span>${hint ? `<span class="translate-menu__hint">${escapeHtml(hint)}</span>` : ''}`;
-        (groupElement || fragment).append(option);
+        (groupElement || list).append(option);
       }
-      menu.replaceChildren(fragment);
-      search.querySelector('input').addEventListener('input', (event) => filter(event.target.value));
+      menu.setAttribute('role', 'dialog');
+      menu.setAttribute('aria-modal', 'false');
+      menu.replaceChildren(chrome, list);
+      chrome.querySelector('.translate-menu__close')?.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        close();
+        button.focus();
+      });
+      chrome.querySelector('input').addEventListener('input', (event) => filter(event.target.value));
       setActive(activeMode);
       if (!menu.hidden) requestAnimationFrame(position);
     }
@@ -321,21 +358,31 @@
       menu.style.width = `${width}px`;
       const preferredTop = Math.max(rect.bottom, anchorRect?.bottom || rect.bottom) + gap;
       const availableBelow = window.innerHeight - preferredTop - pad;
-      const maxHeight = Math.min(560, Math.max(120, availableBelow));
-      menu.style.maxHeight = `${maxHeight}px`;
-      const height = Math.min(menu.offsetHeight || 300, window.innerHeight - pad * 2);
-      let left = Math.max(pad, Math.min(rect.right - width, window.innerWidth - width - pad));
+      const availableAbove = (anchorRect?.top || rect.top) - pad - gap;
+      const cap = Math.min(window.innerHeight * 0.85, 640);
       let top = preferredTop;
-      if (availableBelow < 120) {
-        const aboveAnchor = (anchorRect?.top || rect.top) - gap - height;
-        top = aboveAnchor >= pad ? aboveAnchor : Math.max(pad, window.innerHeight - pad - height);
+      let maxHeight = Math.min(cap, Math.max(160, availableBelow));
+      if (availableBelow < 160 && availableAbove > availableBelow) {
+        maxHeight = Math.min(cap, Math.max(160, availableAbove));
+        top = Math.max(pad, (anchorRect?.top || rect.top) - gap - maxHeight);
+      } else if (preferredTop + maxHeight > window.innerHeight - pad) {
+        top = Math.max(pad, window.innerHeight - pad - maxHeight);
+        maxHeight = Math.max(160, window.innerHeight - top - pad);
       }
+      menu.style.maxHeight = `${Math.round(maxHeight)}px`;
+      let left = Math.max(pad, Math.min(rect.right - width, window.innerWidth - width - pad));
       menu.style.left = `${Math.round(left)}px`;
       menu.style.top = `${Math.round(top)}px`;
       menu.style.right = 'auto';
     }
 
-    function onViewportChange() { position(); }
+    function onViewportChange(event) {
+      if (event && event.type === 'scroll') {
+        const target = event.target;
+        if (target && (target === menu || menu.contains(target))) return;
+      }
+      position();
+    }
     function close() {
       menu.hidden = true;
       menu.classList.remove('open');
@@ -382,6 +429,7 @@
       menu.hidden ? open() : close();
     });
     menu.addEventListener('click', (event) => {
+      if (event.target.closest('.translate-menu__close')) return;
       const option = event.target.closest('.translate-menu__opt');
       if (!option || option.getAttribute('aria-disabled') === 'true') return;
       const mode = option.dataset.mode;

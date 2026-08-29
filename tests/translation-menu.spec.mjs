@@ -20,10 +20,32 @@ for (const viewport of [
       const menu = page.locator('.translate-menu');
       await expect(menu).toBeVisible();
       await expect(menu.locator('.translate-menu__search')).toBeVisible();
+      await expect(menu.locator('.translate-menu__close')).toBeVisible();
+      await expect(menu.locator('.translate-menu__title')).toBeVisible();
       expect(await menu.locator('.translate-menu__opt').count()).toBeGreaterThan(40);
       await expect(menu.locator('[data-mode="fr"]')).toBeVisible();
       await expect(menu.locator('.translate-menu__group[data-group="indigenous"]')).toBeVisible();
       await expect(menu.locator('[data-mode="original"] .translate-menu__hint')).toContainText(/traduction|translation/i);
+
+      const list = menu.locator('.translate-menu__list');
+      await expect.poll(async () => list.evaluate((el) => {
+        const style = getComputedStyle(el);
+        return el.scrollHeight > el.clientHeight
+          && (style.overflowY === 'auto' || style.overflowY === 'scroll');
+      })).toBe(true);
+      const overflow = await list.evaluate((el) => ({
+        scrollHeight: el.scrollHeight,
+        clientHeight: el.clientHeight,
+        overflowY: getComputedStyle(el).overflowY,
+      }));
+      expect(overflow.scrollHeight).toBeGreaterThan(overflow.clientHeight);
+      expect(['auto', 'scroll']).toContain(overflow.overflowY);
+      const beforeScroll = await list.evaluate((el) => el.scrollTop);
+      await list.evaluate((el) => { el.scrollTop = el.scrollHeight; });
+      const afterScroll = await list.evaluate((el) => el.scrollTop);
+      expect(afterScroll).toBeGreaterThan(beforeScroll);
+      await expect(menu).toBeVisible();
+      await expect(menu.locator('.translate-menu__close')).toBeVisible();
 
       const bounds = await menu.boundingBox();
       expect(bounds).not.toBeNull();
@@ -59,6 +81,9 @@ for (const viewport of [
       await menu.locator('.translate-menu__search').fill('japonais');
       await expect(menu.locator('[data-mode="ja"]')).toBeVisible();
       await expect(menu.locator('[data-mode="es"]')).toBeHidden();
+
+      await menu.locator('.translate-menu__close').click();
+      await expect(menu).toBeHidden();
     });
   }
 }

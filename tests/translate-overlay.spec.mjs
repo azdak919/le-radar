@@ -420,10 +420,11 @@ test.describe('overlay traduction articles', () => {
     expect(Math.abs(mid.scrollY - before)).toBeLessThan(80);
     await expect(page.locator('.translate-progress__skip')).toBeVisible({ timeout: 4000 });
     await expect(page.locator('.translate-progress__skip')).not.toHaveText(
-      'Afficher les articles dans la langue actuelle',
+      'Afficher les articles dans leur langue originale',
     );
     await page.locator('.translate-progress__skip').click();
     await expect(page.locator('#translate-progress')).toBeHidden({ timeout: 4000 });
+    await expect.poll(() => page.evaluate(() => window.RadarTranslate.getMode())).toBe('original');
     const skipped = await overlaySnapshot(page);
     expect(skipped.htmlLock).toBe(false);
     expect(skipped.tunerInert).toBe(false);
@@ -503,7 +504,7 @@ test.describe('overlay traduction articles', () => {
       const p = window.RadarTranslate._ui.preferredUiPhrase;
       return {
         prep: p('Préparation de la langue…', 'fa'),
-        skip: p('Afficher les articles dans la langue actuelle', 'fa'),
+        skip: p('Afficher les articles dans leur langue originale', 'fa'),
       };
     });
     expect(overlayFa.prep).toMatch(/[\u0600-\u06FF]/);
@@ -550,7 +551,7 @@ test.describe('overlay traduction articles', () => {
         'Traduction des articles…',
         'Mise en page…',
         'Prêt',
-        'Afficher les articles dans la langue actuelle',
+        'Afficher les articles dans leur langue originale',
       ];
       const modes = Object.entries(window.RadarTranslate.MODES)
         .filter(([, m]) => m && !m.unavailable && m.id !== 'original' && m.id !== 'fr')
