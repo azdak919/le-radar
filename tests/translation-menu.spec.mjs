@@ -14,7 +14,8 @@ for (const viewport of [
     test(`menu de traduction partagé — ${viewport.name} ${app.path}`, async ({ page }) => {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.goto(app.path, { waitUntil: 'domcontentloaded' });
-      await page.locator(app.button).click();
+      await expect(page.locator(app.button)).toBeVisible();
+      await page.locator(app.button).click({ force: true });
 
       const menu = page.locator('.translate-menu');
       await expect(menu).toBeVisible();

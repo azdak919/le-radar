@@ -38,6 +38,14 @@ async function mockTranslateInstant(page) {
     });
   };
   await page.route(/translate\.googleapis\.com/, fulfillGtx);
+  await page.route(/clients[45]\.google\.com/, fulfillGtx);
+  await page.route(/le-radar-translate\.azdak\.workers\.dev/, async (route) => {
+    const q = new URL(route.request().url()).searchParams.get('q') || '';
+    await route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify({ t: `ES ${q}` }),
+    });
+  });
   await page.route(/mymemory\.translated\.net/, async (route) => {
     const q = new URL(route.request().url()).searchParams.get('q') || '';
     await route.fulfill({
@@ -145,9 +153,18 @@ async function overlaySnapshot(page) {
       valuenow: bar?.getAttribute('aria-valuenow'),
       role: bar?.getAttribute('role'),
       label: document.getElementById('translate-progress-label')?.textContent || '',
+      beat: overlay?.querySelector('.translate-progress__beat-text')?.textContent || '',
+      beatHidden: overlay ? !!overlay.querySelector('.translate-progress__beat')?.hidden : true,
+      spark: !!overlay?.querySelector('.translate-progress__spark'),
       percentText: overlay?.querySelector('.translate-progress__pct')?.innerText || '',
       zTuner: tuner ? Number.parseInt(getComputedStyle(tuner).zIndex, 10) : 0,
       zOverlay: overlay ? Number.parseInt(getComputedStyle(overlay).zIndex, 10) : 0,
+      zWave: overlay?.querySelector('.translate-progress__wave')
+        ? Number.parseInt(getComputedStyle(overlay.querySelector('.translate-progress__wave')).zIndex, 10)
+        : 0,
+      zRing: overlay?.querySelector('.translate-progress__ring')
+        ? Number.parseInt(getComputedStyle(overlay.querySelector('.translate-progress__ring')).zIndex, 10)
+        : 0,
       wideLeft: !!document.querySelector('.tuner-wide-left'),
       stripes,
       skipVisible: overlay ? !overlay.querySelector('.translate-progress__skip')?.hidden : false,
@@ -196,7 +213,13 @@ test.describe('overlay traduction articles', () => {
       expect(Number(snap.valuenow), `${vp.name}: aria-valuenow`).toBeGreaterThanOrEqual(0);
       expect(Number(snap.valuenow), `${vp.name}: pas collé à 99`).toBeLessThan(99);
       expect(snap.percentText, `${vp.name}: chiffre %`).toMatch(/\d/);
+      expect(snap.spark, `${vp.name}: spark Claude-style`).toBe(true);
+      expect(snap.label.length, `${vp.name}: étape officielle`).toBeGreaterThan(2);
+      if (!snap.beatHidden) {
+        expect(snap.beat.length, `${vp.name}: beat intercalaire`).toBeGreaterThan(3);
+      }
       expect(snap.zOverlay, `${vp.name}: overlay sous tuner`).toBeLessThan(snap.zTuner);
+      expect(snap.zWave, `${vp.name}: ondes sous l’anneau`).toBeLessThan(snap.zRing);
       expect(snap.overflowX, `${vp.name}: overflow-x ${snap.overflowX}`).toBeLessThan(8);
       expect(
         rectsIntersect(snap.overlay, snap.tuner, 1),
@@ -406,13 +429,19 @@ test.describe('overlay traduction articles', () => {
   test('persan : glossaire overlay + articles en écriture arabe', async ({ page }) => {
     await page.route('**/assets/news-images/**', (route) => route.abort());
     await page.route('**/assets/meteocons/**', (route) => route.abort());
-    await page.route(/translate\.googleapis\.com/, async (route) => {
+    const fulfillFa = async (route) => {
       const q = new URL(route.request().url()).searchParams.get('q') || '';
+      const isWorker = /le-radar-translate/.test(route.request().url());
       await route.fulfill({
         contentType: 'application/json',
-        body: JSON.stringify([[[`ترجمه ${q}`, q]]]),
+        body: isWorker
+          ? JSON.stringify({ t: `ترجمه ${q}` })
+          : JSON.stringify([[[`ترجمه ${q}`, q]]]),
       });
-    });
+    };
+    await page.route(/translate\.googleapis\.com/, fulfillFa);
+    await page.route(/clients[45]\.google\.com/, fulfillFa);
+    await page.route(/le-radar-translate\.azdak\.workers\.dev/, fulfillFa);
     await page.route(/mymemory\.translated\.net/, (route) => route.abort());
     await openHome(page, { width: 900, height: 700 });
     const overlayFa = await page.evaluate(() => {
@@ -441,6 +470,8 @@ test.describe('overlay traduction articles', () => {
     await page.route('**/assets/news-images/**', (route) => route.abort());
     await page.route('**/assets/meteocons/**', (route) => route.abort());
     await page.route(/translate\.googleapis\.com/, (route) => route.abort());
+    await page.route(/clients[45]\.google\.com/, (route) => route.abort());
+    await page.route(/le-radar-translate\.azdak\.workers\.dev/, (route) => route.abort());
     await page.route(/mymemory\.translated\.net/, (route) => route.abort());
     await openHome(page, { width: 900, height: 700 });
     await page.evaluate(() => window.RadarTranslate.applyMode('fa', {
@@ -504,15 +535,22 @@ test.describe('overlay traduction articles', () => {
   test('inuktitut : overlay et articles en syllabaires, pas l’anglais', async ({ page }) => {
     await page.route('**/assets/news-images/**', (route) => route.abort());
     await page.route('**/assets/meteocons/**', (route) => route.abort());
-    await page.route(/translate\.googleapis\.com/, async (route) => {
+    const fulfillIu = async (route) => {
       const u = new URL(route.request().url());
       const q = u.searchParams.get('q') || '';
       const sl = u.searchParams.get('sl') || '';
-      const body = (sl === 'fr')
-        ? JSON.stringify([[[q, q]]])
-        : JSON.stringify([[['ᐃᓄᒃᑎᑐᑦ ' + q, q]]]);
+      const t = (sl === 'fr') ? q : `ᐃᓄᒃᑎᑐᑦ ${q}`;
+      const isWorker = /le-radar-translate/.test(route.request().url());
+      const isDict = /clients[45]\.google\.com/.test(route.request().url());
+      let body;
+      if (isWorker) body = JSON.stringify({ t });
+      else if (isDict) body = JSON.stringify([t]);
+      else body = (sl === 'fr') ? JSON.stringify([[[q, q]]]) : JSON.stringify([[[t, q]]]);
       await route.fulfill({ contentType: 'application/json', body });
-    });
+    };
+    await page.route(/translate\.googleapis\.com/, fulfillIu);
+    await page.route(/clients[45]\.google\.com/, fulfillIu);
+    await page.route(/le-radar-translate\.azdak\.workers\.dev/, fulfillIu);
     await page.route(/mymemory\.translated\.net/, (route) => route.abort());
     await openHome(page, { width: 900, height: 700 });
     const seen = await page.evaluate(async () => {
@@ -531,5 +569,43 @@ test.describe('overlay traduction articles', () => {
     await expect(title).toContainText(/[\u1400-\u167F]/);
     expect(seen.join('\n'), 'overlay IU pas en anglais').not.toMatch(/Preparing the language/i);
     expect(seen.some((t) => /[\u1400-\u167F]/.test(t)), 'overlay en syllabaires').toBe(true);
+  });
+
+  test('gtx 429 + quota MyMemory : clients5 traduit encore', async ({ page }) => {
+    await page.route('**/assets/news-images/**', (route) => route.abort());
+    await page.route('**/assets/meteocons/**', (route) => route.abort());
+    await page.route(/le-radar-translate\.azdak\.workers\.dev/, (route) => route.fulfill({
+      status: 404,
+      contentType: 'application/json',
+      body: '{"error":"Not found"}',
+    }));
+    await page.route(/translate\.googleapis\.com/, (route) => route.fulfill({
+      status: 429,
+      contentType: 'text/html',
+      body: '<html><title>Sorry...</title></html>',
+    }));
+    await page.route(/mymemory\.translated\.net/, (route) => route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify({
+        responseStatus: 200,
+        responseData: {
+          translatedText: 'MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY',
+        },
+      }),
+    }));
+    await page.route(/clients5\.google\.com/, async (route) => {
+      const q = new URL(route.request().url()).searchParams.get('q') || '';
+      await route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify([`Hola ${q}`]),
+      });
+    });
+    await openHome(page, { width: 900, height: 700 });
+    await page.evaluate(() => window.RadarTranslate.applyMode('es', {
+      persist: false,
+      fromUserClick: true,
+    }));
+    const title = await page.locator('.article-title').first().textContent();
+    expect(title, 'titre traduit via clients5').toMatch(/Hola /);
   });
 });

@@ -52,7 +52,7 @@ test('quotas MT inchangés ; chrome-first exposé', async ({ page }) => {
   }));
   expect(meta.concurrency).toBe(6);
   expect(meta.maxChunk).toBe(450);
-  expect(meta.cacheKey).toContain('v9');
+  expect(meta.cacheKey).toContain('v10');
   expect(meta.chrome).toContain('masthead-sports-strip');
   expect(meta.chrome).toContain('#tuner');
 });
@@ -66,6 +66,22 @@ test('gtx halluciné sur match n’atteint pas la pastille CTA', async ({ page }
     await route.fulfill({
       contentType: 'application/json',
       body: JSON.stringify([[[translated, q]]]),
+    });
+  });
+  await page.route(/clients[45]\.google\.com/, async (route) => {
+    const q = new URL(route.request().url()).searchParams.get('q') || '';
+    const translated = /^match$/i.test(q.trim()) ? 'correspondre' : `X ${q}`;
+    await route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify([translated]),
+    });
+  });
+  await page.route(/le-radar-translate\.azdak\.workers\.dev/, async (route) => {
+    const q = new URL(route.request().url()).searchParams.get('q') || '';
+    const translated = /^match$/i.test(q.trim()) ? 'correspondre' : `X ${q}`;
+    await route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify({ t: translated }),
     });
   });
   await page.route('https://api.mymemory.translated.net/**', async (route) => {
@@ -101,7 +117,7 @@ test('gtx halluciné sur match n’atteint pas la pastille CTA', async ({ page }
     fillSportsCtaTagCopy(tag, 'Prochains match');
   });
 
-  const tag = page.locator('#masthead-sports-strip .sports-chip__cta-tag').first();
+  const tag = page.locator('#masthead-sports-strip .sports-chip[data-cta-state="next"] .sports-chip__cta-tag').first();
   await expect(tag).toHaveClass(/notranslate/);
   await expect(tag).toHaveAttribute('translate', 'no');
   await expect(tag).toContainText(/prochains|next/i);
