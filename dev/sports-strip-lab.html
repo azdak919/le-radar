@@ -571,10 +571,12 @@
       </a>`;
     }
 
-    function meridiemFromSub(sub) {
+    function meridiemFromSub(sub, today) {
       const m = String(sub || '').match(/\b(\d{1,2})\s*h/);
       if (!m) return '';
-      return Number(m[1]) < 12 ? 'cet AM' : 'ce PM';
+      const half = Number(m[1]) < 12 ? 'AM' : 'PM';
+      if (!today) return half;
+      return half === 'AM' ? 'cet AM' : 'ce PM';
     }
     function stripCta({ state, tone, tag, glyph, text, sub, badge, badgeMod, brand, score, meridiem }) {
       const tagLabel = tag || 'Sports';
@@ -588,9 +590,11 @@
         || tagLabel === 'En direct'
         || tagLabel === 'Prochain'
         || tagLabel === 'Prochain match';
+      const todayTag = tagLabel === 'À venir' || tagLabel === 'Aujourd’hui';
+      const datedTag = todayTag || tagLabel === 'Demain' || tagLabel === 'Hier' || tagLabel === 'Avant-hier';
       const half = skipMeridiem
         ? ''
-        : (meridiem || meridiemFromSub(sub) || (tagLabel === 'À venir' || tagLabel === 'Demain' || tagLabel === 'Hier' || tagLabel === 'Aujourd’hui' || tagLabel === 'Avant-hier' ? 'ce PM' : ''));
+        : (meridiem || meridiemFromSub(sub, todayTag) || (datedTag ? (todayTag ? 'ce PM' : 'PM') : ''));
       const g = glyph ? `<span class="sports-chip__cta-glyph" aria-hidden="true">${glyph}</span>` : '';
       const b = badge
         ? `<span class="sports-chip__badge sports-chip__badge--${badgeMod}" aria-hidden="true">${badge}</span>`

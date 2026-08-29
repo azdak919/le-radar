@@ -182,14 +182,14 @@ const SPORTS_CTA_TAG_LIVE = 'En direct';
 /** Coup d’envoi du jour, pas encore commencé — rouge pulse, pas le jaune Prochain. */
 const SPORTS_CTA_TAG_SOON = 'À venir';
 /**
- * 2e ligne des pastilles datées (À venir, Demain, Hier, Aujourd’hui…).
- * AM = avant-midi (masc.) + voyelle → « cet AM ».
- * PM = après-midi (masc. QC) + consonne → « ce PM ». Pas « cette AM ».
- * Pas sur En direct (score) ni Prochain match (déjà 2 lignes).
+ * 2e ligne des pastilles datées.
+ * Aujourd’hui seulement : « cet AM » / « ce PM » (ce = ce jour-ci).
+ * Hier / Demain / date : « AM » / « PM » — jamais « ce PM hier ».
+ * Pas « cette AM ». Pas En direct (score) ni Prochain match.
  */
 const SPORTS_MERIDIEM_AM_LINE = 'cet AM';
 const SPORTS_MERIDIEM_PM_LINE = 'ce PM';
-/** Demain : deux lignes (Demain / cet AM|ce PM), même jaune que Prochain match. */
+/** Demain : deux lignes (Demain / AM|PM), même jaune que Prochain match. */
 const SPORTS_CTA_TAG_TOMORROW = 'Demain';
 /** Prochains : deux lignes dans la pastille, pas un rail plus large. */
 const SPORTS_CTA_TAG_NEXT = 'Prochains match';
@@ -1719,12 +1719,20 @@ function sportsMeridiem(game) {
   return Number(m[1]) < 12 ? 'AM' : 'PM';
 }
 
-/** 2e ligne : « cet AM » / « ce PM ». */
-function sportsMeridiemLine(game) {
+/** Aujourd’hui (À venir / résultat du jour) : « ce » est licite. */
+function sportsCtaTagIsToday(wanted) {
+  return wanted === SPORTS_CTA_TAG_SOON || wanted === 'Aujourd’hui';
+}
+
+/**
+ * 2e ligne. `today: true` → cet AM / ce PM.
+ * Hier, Demain, date → AM / PM seuls.
+ */
+function sportsMeridiemLine(game, { today = false } = {}) {
   const half = sportsMeridiem(game);
-  if (half === 'AM') return SPORTS_MERIDIEM_AM_LINE;
-  if (half === 'PM') return SPORTS_MERIDIEM_PM_LINE;
-  return '';
+  if (!half) return '';
+  if (!today) return half;
+  return half === 'AM' ? SPORTS_MERIDIEM_AM_LINE : SPORTS_MERIDIEM_PM_LINE;
 }
 
 /** Pastilles datées : AM/PM. Pas En direct (score) ni Prochain match. */
@@ -2728,7 +2736,9 @@ function applySportsCtaState(chip, slide) {
     const scoreChanged = (tag.dataset.ctaScore || '') !== liveScore;
     if (liveScore) tag.dataset.ctaScore = liveScore;
     else delete tag.dataset.ctaScore;
-    const meridiemLine = sportsCtaTagUsesMeridiem(wanted) ? sportsMeridiemLine(game) : '';
+    const meridiemLine = sportsCtaTagUsesMeridiem(wanted)
+      ? sportsMeridiemLine(game, { today: sportsCtaTagIsToday(wanted) })
+      : '';
     const meridiemChanged = (tag.dataset.ctaMeridiemLine || '') !== meridiemLine;
     if (meridiemLine) tag.dataset.ctaMeridiemLine = meridiemLine;
     else delete tag.dataset.ctaMeridiemLine;

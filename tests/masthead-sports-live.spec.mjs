@@ -559,14 +559,18 @@ test('CTA prochain du jour : heure de coup d’envoi, pas « dans 3 h »', async
 test('CTA À venir : cet AM le matin, ce PM l’après-midi', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const lines = await page.evaluate(() => ({
-    am: typeof sportsMeridiemLine === 'function' ? sportsMeridiemLine({ time: '09:30' }) : null,
-    noon: typeof sportsMeridiemLine === 'function' ? sportsMeridiemLine({ time: '12:00' }) : null,
-    pm: typeof sportsMeridiemLine === 'function' ? sportsMeridiemLine({ time: '18:15' }) : null,
-    empty: typeof sportsMeridiemLine === 'function' ? sportsMeridiemLine({ time: '' }) : null,
+    am: sportsMeridiemLine({ time: '09:30' }, { today: true }),
+    noon: sportsMeridiemLine({ time: '12:00' }, { today: true }),
+    pm: sportsMeridiemLine({ time: '18:15' }, { today: true }),
+    hierPm: sportsMeridiemLine({ time: '18:15' }, { today: false }),
+    demainAm: sportsMeridiemLine({ time: '09:30' }, { today: false }),
+    empty: sportsMeridiemLine({ time: '' }, { today: true }),
   }));
   expect(lines.am).toBe('cet AM');
   expect(lines.noon).toBe('ce PM');
   expect(lines.pm).toBe('ce PM');
+  expect(lines.hierPm, 'hier : pas « ce PM »').toBe('PM');
+  expect(lines.demainAm, 'demain : pas « cet AM »').toBe('AM');
   expect(lines.empty).toBe('');
 });
 
@@ -604,7 +608,7 @@ test('CTA demain : pastille Demain, heure, pas Prochain match', async ({ page })
   await expect(cta).toHaveAttribute('data-cta-state', 'next');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/Demain/i);
   await expect(cta.locator('.sports-chip__cta-tag-lines')).toHaveCount(1);
-  await expect(cta.locator('.sports-chip__cta-tag-meridiem')).toHaveText(/ce\s*PM/i);
+  await expect(cta.locator('.sports-chip__cta-tag-meridiem')).toHaveText(/^PM$/i);
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
   expect(sub).toMatch(/19\s*h\s*00/);
   expect(sub.toLowerCase()).not.toMatch(/demain/);
