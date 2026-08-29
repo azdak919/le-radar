@@ -58,5 +58,10 @@ assert(count >= 40, `weather-cities-data.js : catalogue trop court (${count})`);
 
 const engage = readFileSync(join(root, 'engage-prompt.js'), 'utf8');
 assert(engage.includes('esc(title)') && engage.includes('esc(body)'), 'engage : copy échappée');
+assert(
+  engage.includes('escStep(s)')
+    && engage.includes('/&lt;(\\/?strong)&gt;/gi'),
+  'engage : étapes rendent <strong>, le reste échappé',
+);
 
 console.log(`OK dom-sinks (${prod.length} fichiers prod, XSS text fixtures)`);
