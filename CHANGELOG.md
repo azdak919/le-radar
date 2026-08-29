@@ -35,6 +35,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- CTA **En direct** : le score vit sous la pastille (deuxième ligne, hors marquee) ; la sous-ligne ne répète plus la même heure en « mis à jour à 20 h 30 » quand c’est déjà le coup d’envoi.
+
 - Direct CTA : un match **En direct** est un scorebug — score collé, ou **—** si RSEQ n’a rien (soccer collégial souvent `-999`) ; sous-ligne = **heure de début** (`18 h 30`) / période / compétition / **mis à jour à** (dernière vérification, pas l’âge du coup d’envoi). Filet bot live : cron `:20` + enchaînement sur la radio now-playing — GitHub lâchait le `*/5` (28 août : rien de 12 h à 19 h QC).
 - Pastille live sports : **En direct** à la place d’« En cours » — CTA, puces, filtre `/sports/`.
 - Puces scores (côtés) : résultats des **5 jours civils** avant les à-venir. Un dimanche 17 h ne tombe plus du bandeau le vendredi soir (l’ancien filet 5×24 h le faisait) ; on ne saute plus aux prochains pour « diversifier » le sport tant qu’il reste un score.
