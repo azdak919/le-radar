@@ -1609,6 +1609,8 @@ assert(
     && appJs.includes('function sportsMeridiemLine')
     && appJs.includes('function sportsCtaTagIsToday')
     && appJs.includes('function sportsCtaTagUsesMeridiem')
+    && appJs.includes('function sportsMatchWhenTag')
+    && /sports-chip__when-tag/.test(styleCss)
     && /wanted === 'Hier' \|\| wanted === 'Avant-hier'/.test(appJs)
     && appJs.includes("SPORTS_MERIDIEM_AM_LINE = 'cet AM'")
     && appJs.includes("SPORTS_MERIDIEM_PM_LINE = 'ce PM'")

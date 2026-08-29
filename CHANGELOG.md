@@ -35,6 +35,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Puces scores : pastille **Aujourd’hui / cet AM|ce PM** et **Demain / AM|PM** (pas Hier).
+
 - Cache traduction **chez l’utilisateur** (localStorage v10) : les visites suivantes ne retraduisent que les **nouveaux** articles. Purge selon la fraîcheur sessions QC (plus dans le fil = hors cache) + plafond 4000. Overlay silencieux si tout est déjà en cache.
 
 - Overlay traduction : logo PWA rond au centre de l’anneau, ondes radar (émission), barre lisse avec reflet. Le libellé ne déborde plus.
