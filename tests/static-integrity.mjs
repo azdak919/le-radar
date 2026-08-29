@@ -1557,9 +1557,9 @@ assert(
 );
 assert(
   appJs.includes('function sportsCtaMayRotate')
-    && /const SPORTS_CTA_DWELL_MS\s*=\s*12000/.test(appJs)
+    && /const SPORTS_CTA_DWELL_MS\s*=\s*8000/.test(appJs)
     && appJs.includes('sportsCtaPaused'),
-  'app.js : rotation CTA (~12 s), en pause au survol ou à l’appui',
+  'app.js : rotation CTA (~8 s), en pause au survol ou à l’appui',
 );
 assert(
   !appJs.includes('SPORTS_CTA_ROTATE_MEDIA')
@@ -1585,9 +1585,12 @@ assert(
   appJs.includes('function sportsCtaResultIsTodayOrYesterday')
     && !appJs.includes('function sportsCtaResultIsRecent')
     && appJs.includes('function sportsCivilDayShift')
-    && appJs.includes('SPORTS_RECENT_RESULT_MS')
+    && appJs.includes('isMastheadCtaResult')
+    && appJs.includes('isMastheadChipResult')
+    && !appJs.includes('SPORTS_RECENT_RESULT_MS')
+    && !appJs.includes('SPORTS_CTA_UPCOMING_MS')
     && !/SPORTS_CTA_FRESH_RESULT_MS\s*=\s*48/.test(appJs),
-  'app.js : CTA résultats = aujourd’hui/hier (5 j = puces scores)',
+  'app.js : CTA résultats = aujourd’hui/hier (5 j civils = puces ; SSOT freshness-lib)',
 );
 assert(
   /function sportsCtaEyebrow/.test(appJs)
@@ -1602,6 +1605,14 @@ assert(
     && appJs.includes('Aujourd’hui · ${when}')
     && /data-cta-lamp="soon"[^{]*\{[^}]*sports-cta-ring-pulse/.test(cssFlat)
     && appJs.includes('function fillSportsCtaTagCopy')
+    && appJs.includes('function sportsMeridiem')
+    && appJs.includes('function sportsMeridiemLine')
+    && appJs.includes('function sportsCtaTagIsToday')
+    && appJs.includes('function sportsCtaTagUsesMeridiem')
+    && /wanted === 'Hier' \|\| wanted === 'Avant-hier'/.test(appJs)
+    && appJs.includes("SPORTS_MERIDIEM_AM_LINE = 'cet AM'")
+    && appJs.includes("SPORTS_MERIDIEM_PM_LINE = 'ce PM'")
+    && /sports-chip__cta-tag-meridiem/.test(styleCss)
     && appJs.includes("return 'Aujourd’hui'")
     && appJs.includes("return 'Avant-hier'")
     && !/return 'Reprise'/.test(appJs)
@@ -1623,18 +1634,18 @@ assert(
     && translateJs.includes('CHROME_SELECTOR'),
   'translate.js D22 : glossaire sports + cache v9 + chrome-first ; quotas MT inchangés',
 );
-// CTA pool = En cours → à venir → aujourd’hui → 5 j → hier.
+// CTA pool = live → dans l’heure → hier → aujourd’hui → jour lead.
 assert(
   appJs.includes('function sportsSlideDayKey')
     && /const SPORTS_CTA_MAX_POOL\s*=\s*80/.test(appJs)
     && appJs.includes('function sportsNextSlideFromGame')
     && appJs.includes('team.nextGames')
-    && /const SPORTS_CTA_NEXT_DAYS\s*=\s*5/.test(appJs)
-    && appJs.includes('function sportsCtaNextWindowEndDay')
+    && !appJs.includes('SPORTS_CTA_NEXT_DAYS')
+    && !appJs.includes('function sportsCtaNextWindowEndDay')
     && appJs.includes('yesterdayResults')
     && appJs.includes('le-radar-cta-sports-window')
     && appJs.includes('SPORTS_PLACEHOLDER_OPPONENT_RE'),
-  'app.js : CTA = live / à venir / aujourd’hui / 5 j / hier ; ADV exclu',
+  'app.js : CTA = live / dans l’heure / hier / aujourd’hui / jour lead ; ADV exclu',
 );
 assert(
   appJs.includes('function sportsCtaKickoffWithinHour')
@@ -1761,8 +1772,17 @@ assert(
     && appJs.includes('function sportsMatchChipTextOverflows')
     && appJs.includes('le-radar-sports-weather-fit')
     && indexHtml.includes('institution-acronyms-data.js')
-    && /SPORTS_RECENT_RESULT_DAYS\s*=\s*5/.test(appJs)
-    && appJs.includes('SPORTS_RECENT_RESULT_MS')
+    && appJs.includes('SPORTS_RECENT_RESULT_DAYS')
+    && appJs.includes('MASTHEAD_CHIP_RESULT_MAX_DAYS_AGO')
+    && (() => {
+      const sportsFreshJs = readFileSync(join(root, 'scripts/sports-freshness-lib.js'), 'utf8');
+      return /MASTHEAD_CTA_RESULT_MAX_DAYS_AGO\s*=\s*1/.test(sportsFreshJs)
+        && /MASTHEAD_CHIP_RESULT_MAX_DAYS_AGO\s*=\s*5/.test(sportsFreshJs)
+        && sportsFreshJs.includes('function isMastheadCtaResult')
+        && sportsFreshJs.includes('function isMastheadChipResult')
+        && sportsFreshJs.includes('function gameCivilDayKey');
+    })()
+    && !appJs.includes('SPORTS_RECENT_RESULT_MS')
     && appJs.includes('function sportsResultIsRecent')
     && appJs.includes('function sportsCivilDaysAgo')
     && appJs.includes('recentResults')
@@ -1797,8 +1817,9 @@ assert(
     && appJs.includes('sportsSlotDwellMs')
     && appJs.includes('sportsLabelReadingMs')
     && appJs.includes('sportsChipNeedsMarquee')
-    && /SPORTS_READ_MIN_MS\s*=\s*9000/.test(appJs)
-    && /SPORTS_READ_MAX_MS\s*=\s*14000/.test(appJs)
+    && /SPORTS_READ_MIN_MS\s*=\s*6500/.test(appJs)
+    && /SPORTS_READ_MAX_MS\s*=\s*10000/.test(appJs)
+    && /SPORTS_BOARD_HOLD_MS\s*=\s*7500/.test(appJs)
     && /SPORTS_SCROLL_ONE_WAY_MS\s*=\s*5500/.test(appJs)
     && appJs.includes('SPORTS_SCROLL_ROUND_TRIP_MS')
     && appJs.includes('SPORTS_SCROLL_READ_DELAY_MS')
@@ -1810,7 +1831,7 @@ assert(
     && appJs.includes('function pickBriefSidebar')
     && appJs.includes('function sportsBoardHoldMs')
     && /WEATHER_CASCADE_STEP_MS\s*=\s*440/.test(appJs)
-    && /SPORTS_CASCADE_STEP_MS\s*=\s*520/.test(appJs)
+    && /SPORTS_CASCADE_STEP_MS\s*=\s*440/.test(appJs)
     && appJs.includes('SPORTS_CHIP_LEAVE_MS')
     && /if \(!weatherCascadeSlots\(\)\.length\) return/.test(appJs)
     && !/Hors wide : une carte à la fois/.test(appJs),
