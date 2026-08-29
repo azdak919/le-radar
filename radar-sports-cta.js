@@ -1687,10 +1687,25 @@ function sportsMatchVerb(game, lang = 'fr') {
   return lang === 'en' ? 'hosts' : 'reçoit';
 }
 
-function sportsVsHtml(game) {
-  const fr = sportsMatchVerb(game, 'fr');
+/**
+ * Séparateur de score final quand le chiffre est déjà dans la pastille
+ * (Hier / Avant-hier). Plus court que « vs » / « contre » ; lisible FR et EN
+ * (tennis, télégrammes). Pas un 2ᵉ score — le ton pâle de `.sports-chip__vs`.
+ */
+const SPORTS_RESULT_VS = 'v.';
+
+function sportsVsParticleHtml(particleFr) {
+  const fr = String(particleFr || '').trim();
   const shown = window.RadarTranslate?.displayUiText?.(fr) || fr;
   return `<span class="sports-chip__vs" data-vs-orig="${escapeHtml(fr)}">${escapeHtml(shown)}</span>`;
+}
+
+function sportsVsHtml(game) {
+  return sportsVsParticleHtml(sportsMatchVerb(game, 'fr'));
+}
+
+function sportsResultVsHtml() {
+  return sportsVsParticleHtml(SPORTS_RESULT_VS);
 }
 
 /**
@@ -1935,7 +1950,7 @@ function sportsCtaLabelFromSlide(slide) {
     const score = sportsResultMarkText(g, slide.team.sport);
     const scoreInPill = sportsCtaTagPutsResultScore(sportsCtaResultTag(slide));
     if (scoreInPill) {
-      return placeKind ? `${glyph} ${home}` : `${glyph} ${home} ${opp}`;
+      return placeKind ? `${glyph} ${home}` : `${glyph} ${home} ${SPORTS_RESULT_VS} ${opp}`;
     }
     return placeKind
       ? `${glyph} ${home} ${score}`
@@ -2775,7 +2790,8 @@ function fillSportsCtaLayer(layer, slide) {
       const scoreTxt = `${g.scoreFor}–${g.scoreAgainst}`;
       text.innerHTML = scoreInPill
         ? `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-          + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`
+          + sportsResultVsHtml()
+          + ` <span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`
         : `<span class="sports-chip__name">${escapeHtml(home)}</span> `
           + `<span class="sports-chip__score">${escapeHtml(scoreTxt)}</span> `
           + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;

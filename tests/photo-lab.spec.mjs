@@ -182,6 +182,19 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(hierCard.locator('.sports-chip__cta-tag-score')).toHaveText('24–21');
   await expect(hierCard.locator('.sports-chip__badge--w')).toHaveText('V');
   await expect(hierCard.locator('.sports-chip__cta-text')).not.toContainText('24');
+  await expect(hierCard.locator('.sports-chip__vs')).toHaveText('v.');
+  const hierVsTone = await hierCard.locator('.sports-chip__vs').evaluate((el) => {
+    const vs = getComputedStyle(el).color.match(/[\d.]+/g)?.map(Number) || [];
+    const name = getComputedStyle(el.parentElement.querySelector('.sports-chip__name')).color.match(/[\d.]+/g)?.map(Number) || [];
+    const a = (c) => (c.length >= 4 ? c[3] : 1) * (0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2]);
+    return { vs: a(vs), name: a(name), weight: getComputedStyle(el).fontWeight };
+  });
+  expect(hierVsTone.vs, 'v. plus pâle que les noms').toBeLessThan(hierVsTone.name * 0.85);
+  expect(Number(hierVsTone.weight), 'v. : poids 500, pas 800').toBeLessThanOrEqual(500);
+  const hierCegeps = page.locator('#cta-band .case').filter({ hasText: 'CTA — hier (cégeps)' });
+  await expect(hierCegeps.locator('.sports-chip__vs')).toHaveText('v.');
+  await expect(hierCegeps.locator('.sports-chip__name').first()).toHaveText(/Trois-Rivières/);
+  await expect(hierCegeps.locator('.sports-chip__opp')).toHaveText(/Victoriaville/);
   await expect(hierCard.locator('.sports-chip__cta-glyph')).toHaveText('🏈');
   const hierGold = page.locator('#cta-band .case').filter({ hasText: 'CTA — hier (or)' });
   await expect(hierGold.locator('.sports-chip__cta-tag-score')).toHaveText('1er/10');
