@@ -14,10 +14,11 @@
   'use strict';
 
   const STORAGE_KEY = 'radar-translate-mode';
-  // v9 : glossaire sports (PROCHAIN CORRESPONDRE) + LRU. Invalide le cache v8
-  // qui pouvait coller « correspondre » sur la pastille « match ».
-  const CACHE_KEY = 'radar-translate-cache-v9';
-  const CACHE_MAX = 1400;
+  // v10 : { t, ts } + purge fraîcheur (sessions QC). Invalide v9 (échos FR).
+  const CACHE_KEY = 'radar-translate-cache-v10';
+  const CACHE_LEGACY_KEYS = ['radar-translate-cache-v9', 'radar-translate-cache-v8'];
+  const CACHE_MAX = 4000;
+  const CACHE_VERSION = 10;
   const DEFAULT_MODE = 'original';
   // 6 = plafond HTTP/1.1 par hôte vers gtx. Au-delà, le navigateur file.
   // La vitesse perçue vient du passage chrome (glossaire, 0 réseau), pas d’un
@@ -852,8 +853,10 @@
 
   /** textNode → original string (avant toute traduction) */
   const originalByNode = new WeakMap();
-  /** cache localStorage : key → translated */
+  /** cache localStorage : key → { t, ts } */
   let translationCache = {};
+  /** Titres / extraits encore dans le fil frais — pour purger le cache. */
+  let newsCorpusTexts = new Set();
   let activeMode = DEFAULT_MODE;
   let translating = false;
   let pendingRetranslate = false;
@@ -1096,45 +1099,190 @@
     return mode;
   }
 
+  function cacheKey(text, tl) {
+    return `auto|${tl}|${text}`;
+  }
+
+  function cacheKeyParts(key) {
+    const first = String(key).indexOf('|');
+    const second = String(key).indexOf('|', first + 1);
+    if (second < 0) return { sl: '', tl: '', text: String(key) };
+    return {
+      sl: key.slice(0, first),
+      tl: key.slice(first + 1, second),
+      text: key.slice(second + 1),
+    };
+  }
+
+  function unwrapCacheVal(val) {
+    if (val && typeof val === 'object' && typeof val.t === 'string') return val;
+    if (typeof val === 'string') return { t: val, ts: Date.now() };
+    return null;
+  }
+
   function loadCache() {
     try {
+      CACHE_LEGACY_KEYS.forEach((k) => {
+        try { localStorage.removeItem(k); } catch { /* ignore */ }
+      });
       const raw = localStorage.getItem(CACHE_KEY);
-      if (raw) translationCache = JSON.parse(raw) || {};
+      if (!raw) {
+        translationCache = {};
+        return;
+      }
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.v === CACHE_VERSION && parsed.entries && typeof parsed.entries === 'object') {
+        translationCache = parsed.entries;
+      } else if (parsed && typeof parsed === 'object' && !parsed.v) {
+        translationCache = {};
+        for (const [k, val] of Object.entries(parsed)) {
+          const rec = unwrapCacheVal(val);
+          if (!rec) continue;
+          const { text } = cacheKeyParts(k);
+          if (sameMtText(rec.t, text)) continue;
+          translationCache[k] = { t: rec.t, ts: rec.ts || Date.now() };
+        }
+      } else {
+        translationCache = {};
+      }
     } catch {
       translationCache = {};
     }
   }
 
+  function persistCachePayload() {
+    return JSON.stringify({
+      v: CACHE_VERSION,
+      savedAt: Date.now(),
+      entries: translationCache,
+    });
+  }
+
   function saveCache() {
+    const keys = Object.keys(translationCache);
+    if (keys.length > CACHE_MAX) {
+      keys.slice(0, keys.length - CACHE_MAX).forEach((k) => {
+        delete translationCache[k];
+      });
+    }
     try {
-      const keys = Object.keys(translationCache);
-      if (keys.length > CACHE_MAX) {
-        keys.slice(0, keys.length - CACHE_MAX).forEach((k) => {
-          delete translationCache[k];
-        });
-      }
-      localStorage.setItem(CACHE_KEY, JSON.stringify(translationCache));
-    } catch { /* quota */ }
+      localStorage.setItem(CACHE_KEY, persistCachePayload());
+    } catch {
+      keys.slice(0, Math.ceil(keys.length * 0.35)).forEach((k) => {
+        delete translationCache[k];
+      });
+      try {
+        localStorage.setItem(CACHE_KEY, persistCachePayload());
+      } catch { /* quota */ }
+    }
   }
 
-  function cacheKey(text, tl) {
-    return `auto|${tl}|${text}`;
-  }
-
-  /** LRU : relire une clé la remet en fin d’insertion (saveCache coupe le début). */
+  /** LRU : relire une clé la remet en fin d’insertion (le cap coupe le début). */
   function cacheGet(key) {
     if (!Object.prototype.hasOwnProperty.call(translationCache, key)) return undefined;
-    const val = translationCache[key];
+    const rec = unwrapCacheVal(translationCache[key]);
+    if (!rec) {
+      delete translationCache[key];
+      return undefined;
+    }
+    const { text } = cacheKeyParts(key);
+    if (sameMtText(rec.t, text)) {
+      delete translationCache[key];
+      return undefined;
+    }
     delete translationCache[key];
-    translationCache[key] = val;
-    return val;
+    translationCache[key] = { t: rec.t, ts: Date.now() };
+    return rec.t;
   }
 
   function cacheSet(key, val) {
+    if (val == null || val === '') return;
+    const { text } = cacheKeyParts(key);
+    if (sameMtText(val, text)) return;
     if (Object.prototype.hasOwnProperty.call(translationCache, key)) {
       delete translationCache[key];
     }
-    translationCache[key] = val;
+    translationCache[key] = { t: String(val), ts: Date.now() };
+  }
+
+  function rememberNewsCorpus(items = []) {
+    const list = Array.isArray(items) ? items : [];
+    const fresh = (typeof window !== 'undefined' && window.RadarSessionFreshness?.filterFreshItems)
+      ? window.RadarSessionFreshness.filterFreshItems(list)
+      : list;
+    const next = new Set();
+    const fields = ['title', 'excerpt', 'summary', 'description', 'brief', 'author', 'byline', 'kicker'];
+    for (const item of fresh) {
+      if (!item || typeof item !== 'object') continue;
+      for (const field of fields) {
+        const t = String(item[field] || '').replace(/\s+/g, ' ').trim();
+        if (t) next.add(t);
+      }
+    }
+    newsCorpusTexts = next;
+    pruneTranslationCache();
+  }
+
+  function chromeKeepTexts() {
+    const keep = new Set();
+    Object.keys(UI_PHRASES).forEach((k) => keep.add(k));
+    Object.values(OVERLAY_COPY_FR || {}).forEach((k) => keep.add(k));
+    if (typeof document === 'undefined') return keep;
+    document.querySelectorAll(`${CHROME_SELECTOR}, .article`).forEach((root) => {
+      const walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      let n = walk.nextNode();
+      while (n) {
+        const orig = originalByNode.get(n);
+        const t = String(orig || n.nodeValue || '').replace(/\s+/g, ' ').trim();
+        if (t) keep.add(t);
+        n = walk.nextNode();
+      }
+    });
+    return keep;
+  }
+
+  /**
+   * Garde les traductions du fil encore frais + chrome UI.
+   * Sans corpus (news pas encore là) : seulement cap LRU + échos FR.
+   */
+  function pruneTranslationCache({ persist = true } = {}) {
+    const keep = chromeKeepTexts();
+    newsCorpusTexts.forEach((t) => keep.add(t));
+    const hasCorpus = newsCorpusTexts.size > 0;
+    const windowStart = (typeof window !== 'undefined'
+      && window.RadarSessionFreshness?.freshnessWindowStart)
+      ? window.RadarSessionFreshness.freshnessWindowStart().getTime()
+      : 0;
+
+    for (const key of Object.keys(translationCache)) {
+      const rec = unwrapCacheVal(translationCache[key]);
+      const { text } = cacheKeyParts(key);
+      const norm = String(text || '').replace(/\s+/g, ' ').trim();
+      if (!rec || sameMtText(rec.t, text)) {
+        delete translationCache[key];
+        continue;
+      }
+      if (keep.has(text) || keep.has(norm)) continue;
+      if (hasCorpus) {
+        delete translationCache[key];
+        continue;
+      }
+      if (windowStart && rec.ts && rec.ts < windowStart) {
+        delete translationCache[key];
+      }
+    }
+
+    const keys = Object.keys(translationCache);
+    if (keys.length > CACHE_MAX) {
+      keys.slice(0, keys.length - CACHE_MAX).forEach((k) => {
+        delete translationCache[k];
+      });
+    }
+    if (persist) {
+      try {
+        localStorage.setItem(CACHE_KEY, persistCachePayload());
+      } catch { /* quota */ }
+    }
   }
 
   function cleanTranslation(str) {
@@ -3993,6 +4141,8 @@
   window.RadarTranslate = {
     getMode,
     applyMode,
+    rememberNewsCorpus,
+    pruneTranslationCache,
     detectBrowserAutoMode,
     hasUserPreference,
     translateText,
@@ -4014,6 +4164,11 @@
       preferredUiPhrase,
       CHROME_SELECTOR,
       CACHE_KEY,
+      CACHE_MAX,
+      CACHE_VERSION,
+      pruneTranslationCache,
+      rememberNewsCorpus,
+      cacheSize: () => Object.keys(translationCache).length,
       CONCURRENCY,
       MAX_CHUNK,
       MT,
