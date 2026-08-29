@@ -191,6 +191,8 @@ const SPORTS_MERIDIEM_AM_LINE = 'cet AM';
 const SPORTS_MERIDIEM_PM_LINE = 'ce PM';
 /** Demain : deux lignes (Demain / AM|PM), même jaune que Prochain match. */
 const SPORTS_CTA_TAG_TOMORROW = 'Demain';
+/** Résultat du jour : deux lignes DERNIÈRE / HEURE. Pas d’AM/PM. */
+const SPORTS_CTA_TAG_LATEST = 'Dernière heure';
 /** Puces à-venir du jour — pas la CTA (À venir). */
 const SPORTS_MATCH_TAG_TODAY = 'Aujourd’hui';
 /** Prochains : deux lignes dans la pastille, pas un rail plus large. */
@@ -1744,6 +1746,7 @@ function sportsCtaTagUsesMeridiem(wanted) {
   if (wanted === SPORTS_CTA_TAG_NEXT) return false;
   if (wanted === RADAR_BRAND_SHORT) return false;
   if (wanted === 'Hier' || wanted === 'Avant-hier') return false;
+  if (wanted === SPORTS_CTA_TAG_LATEST) return false;
   return true;
 }
 
@@ -1920,7 +1923,7 @@ function sportsCtaResultTag(src) {
   const day = sportsSlideDayKey(src);
   if (!day) return SPORTS_CTA_TAG;
   const today = torontoDayKey();
-  if (day === today) return 'Aujourd’hui';
+  if (day === today) return SPORTS_CTA_TAG_LATEST;
   if (day === sportsCivilDayShift(today, -1)) return 'Hier';
   if (day === sportsCivilDayShift(today, -2)) return 'Avant-hier';
   const iso = src?.game?.date || day;
@@ -1984,7 +1987,7 @@ function fillSportsCtaTagCopy(tag, wanted, extra = {}) {
     tag.append(lines);
     return;
   }
-  if (wanted === SPORTS_CTA_TAG_NEXT) {
+  if (wanted === SPORTS_CTA_TAG_NEXT || wanted === SPORTS_CTA_TAG_LATEST) {
     const parts = String(shown).trim().split(/\s+/).filter(Boolean);
     const topTxt = parts.length >= 2 ? parts.slice(0, -1).join(' ') : shown;
     const botTxt = parts.length >= 2 ? parts[parts.length - 1] : '';
