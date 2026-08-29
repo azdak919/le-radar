@@ -279,16 +279,22 @@ test.describe('overlay traduction articles', () => {
     const motion = await page.evaluate(() => {
       const fill = document.querySelector('.translate-progress__fill');
       const ring = document.querySelector('.translate-progress__ring');
+      const wave = document.querySelector('.translate-progress__wave');
+      const logo = document.querySelector('.translate-progress__logo');
       const after = fill ? getComputedStyle(fill, '::after') : null;
       return {
         fillAnim: fill ? getComputedStyle(fill).animationName : '',
         afterAnim: after?.animationName || 'none',
         afterDisplay: after?.display || '',
         ringAnim: ring ? getComputedStyle(ring).animationName : '',
+        waveAnim: wave ? getComputedStyle(wave).animationName : '',
+        logoSrc: logo?.getAttribute('src') || '',
         percent: document.querySelector('.translate-progress__num')?.textContent || '',
       };
     });
     expect(motion.percent).toMatch(/\d/);
+    expect(motion.logoSrc).toMatch(/icon\.svg/);
+    expect(motion.waveAnim === 'none' || !motion.waveAnim).toBeTruthy();
     expect(motion.afterDisplay === 'none' || motion.afterAnim === 'none' || !motion.afterAnim)
       .toBeTruthy();
     expect(motion.fillAnim === 'none' || !motion.fillAnim).toBeTruthy();
