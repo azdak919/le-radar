@@ -397,7 +397,8 @@
 @media (max-width: 430px) {
   .masthead:has(#bg-photo-layer.loaded) .wordmark-full {
     max-width: min(92vw, 22rem);
-    padding: 0.28rem 0.55rem;
+    /* padding-inline > radius (0.6rem) : le glyphe ne rentre plus dans l’arc. */
+    padding: 0.4rem 1rem;
     margin-top: 0.25rem;
     letter-spacing: 0.08em;
     gap: 0.08em;
@@ -477,7 +478,7 @@
   max-width: min(94vw, 36rem);
   width: max-content;
   margin-top: 0.35rem;
-  padding: 0.35rem 0.75rem;
+  padding: 0.42rem 1.15rem;
   border-radius: 0.6rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(12, 14, 18, 0.48);
@@ -501,11 +502,14 @@
 .masthead:has(#bg-photo-layer.loaded) .wordmark-full__lead {
   display: block;
   white-space: nowrap;
-  max-width: none;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .masthead:has(#bg-photo-layer.loaded) .wordmark-full__tag {
   display: block;
   white-space: nowrap;
+  max-width: 100%;
+  box-sizing: border-box;
   letter-spacing: 0.14em;
 }
 @media (min-width: 1280px) {

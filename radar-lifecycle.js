@@ -16,6 +16,8 @@ async function init() {
   } catch (_) { /* ignore */ }
   initMastheadActions();
   renderTodayDate();
+  fitMastheadSlogan();
+  bindMastheadSloganFit();
   syncSeoScheduleNow();
   initSeoScheduleHashScroll();
   // Date déjà visible sans attendre la photo. Rejouer la cascade au .loaded
@@ -25,6 +27,7 @@ async function init() {
     const photoDateMo = new MutationObserver(() => {
       if (bgPhotoLayer.classList.contains('loaded')) {
         renderTodayDate();
+        fitMastheadSlogan();
         // La puce date gagne padding/bordure au loaded : refit météo même
         // si le texte de date n’a pas changé (sinon dernière ville clipée).
         window.setTimeout(() => scheduleMastheadWeatherLayout(), 0);
@@ -41,7 +44,10 @@ async function init() {
   // Changement de langue : la date se reformate elle-même (elle est hors du
   // moteur de traduction, voir `mastheadLocale`). La cascade d'ajustement se
   // rejoue du même coup, une langue n'ayant pas la longueur d'une autre.
-  window.addEventListener('radar:translate-mode', () => renderTodayDate());
+  window.addEventListener('radar:translate-mode', () => {
+    renderTodayDate();
+    fitMastheadSlogan();
+  });
   // La cascade dépend de la largeur disponible : une rotation d'écran doit la
   // rejouer tout de suite, pas au prochain tic de 30 s. Groupé en rAF comme la
   // mise en page météo, pour ne pas mesurer à chaque pixel du redimensionnement.
@@ -52,6 +58,7 @@ async function init() {
     window.requestAnimationFrame(() => {
       todayDateFitPending = false;
       renderTodayDate();
+      fitMastheadSlogan();
     });
   }, { passive: true });
   // Polices web : la cascade date mesure avec la fonte système d’abord, puis
@@ -63,6 +70,7 @@ async function init() {
       fonts.ready.then(() => {
         if (!TODAY_DATE?.isConnected) return;
         renderTodayDate();
+        fitMastheadSlogan();
       }).catch(() => { /* ignore */ });
     }
   } catch { /* document.fonts absent */ }
@@ -659,6 +667,76 @@ function renderTodayDate() {
     const dw = Math.ceil(dateHost.getBoundingClientRect().width);
     if (dw > 40) dateHost.style.minWidth = `${dw}px`;
   }
+}
+
+/**
+ * Slogan du mât : garder les lignes prévues (lead / tag, ou une ligne ≥1280)
+ * sans coupure. Si le texte traduit déborde de la pastille, on resserre
+ * d’abord l’interlettrage, puis la taille — le padding reste.
+ */
+function sloganLineWidth(pill) {
+  const parts = [...pill.querySelectorAll('.wordmark-full__lead, .wordmark-full__tag')];
+  const cs = getComputedStyle(pill);
+  if (cs.flexDirection === 'row' && parts.length) {
+    const gap = parseFloat(cs.gap) || 0;
+    return parts.reduce((sum, el) => sum + el.scrollWidth, 0)
+      + gap * Math.max(0, parts.length - 1);
+  }
+  let widest = 0;
+  for (const el of parts) widest = Math.max(widest, el.scrollWidth);
+  return Math.max(widest, pill.scrollWidth);
+}
+
+function sloganInnerCap(pill) {
+  const cs = getComputedStyle(pill);
+  const pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+  const border = (parseFloat(cs.borderLeftWidth) || 0) + (parseFloat(cs.borderRightWidth) || 0);
+  const parentW = pill.parentElement?.getBoundingClientRect().width || window.innerWidth;
+  let maxW = parseFloat(cs.maxWidth);
+  if (!Number.isFinite(maxW) || cs.maxWidth === 'none') maxW = parentW;
+  return Math.max(48, Math.min(maxW, parentW) - pad - border);
+}
+
+function fitMastheadSlogan() {
+  const pill = document.querySelector('.wordmark-full');
+  if (!pill || !pill.getClientRects().length) return;
+  pill.style.fontSize = '';
+  pill.style.letterSpacing = '';
+  void pill.offsetWidth;
+  const minSize = 8;
+  let size = parseFloat(getComputedStyle(pill).fontSize) || 11;
+  let tracking = parseFloat(getComputedStyle(pill).letterSpacing);
+  if (!Number.isFinite(tracking)) tracking = 0;
+  let guard = 48;
+  while (sloganLineWidth(pill) > sloganInnerCap(pill) + 1 && guard--) {
+    if (tracking > 0.2) {
+      tracking = Math.max(0, tracking - 0.3);
+      pill.style.letterSpacing = `${tracking}px`;
+    } else if (size > minSize) {
+      size = Math.max(minSize, size - 0.25);
+      pill.style.fontSize = `${size}px`;
+    } else {
+      break;
+    }
+    void pill.offsetWidth;
+  }
+}
+
+function bindMastheadSloganFit() {
+  const pill = document.querySelector('.wordmark-full');
+  if (!pill || pill.dataset.sloganFitBound === '1') return;
+  pill.dataset.sloganFitBound = '1';
+  if (typeof MutationObserver === 'undefined') return;
+  let pending = false;
+  const mo = new MutationObserver(() => {
+    if (pending) return;
+    pending = true;
+    window.requestAnimationFrame(() => {
+      pending = false;
+      fitMastheadSlogan();
+    });
+  });
+  mo.observe(pill, { characterData: true, childList: true, subtree: true });
 }
 
 /** Heure et jour à Québec, même si la personne consulte le site ailleurs. */
