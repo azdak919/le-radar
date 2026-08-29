@@ -178,7 +178,15 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(tomorrowCard.locator('.sports-chip__cta-tag-meridiem')).toHaveText(/^PM$/i);
   const hierCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — hier (victoire)' });
   await expect(hierCard.locator('.sports-chip__cta-tag-meridiem')).toHaveCount(0);
-  await expect(hierCard.locator('.sports-chip__cta-tag')).toHaveText(/^Hier$/i);
+  await expect(hierCard.locator('.sports-chip__cta-tag')).toContainText(/Hier/i);
+  await expect(hierCard.locator('.sports-chip__cta-tag-score')).toHaveText('24–21');
+  await expect(hierCard.locator('.sports-chip__badge--w')).toHaveText('V');
+  await expect(hierCard.locator('.sports-chip__cta-text')).not.toContainText('24');
+  await expect(hierCard.locator('.sports-chip__cta-glyph')).toHaveText('🏈');
+  const hierGold = page.locator('#cta-band .case').filter({ hasText: 'CTA — hier (or)' });
+  await expect(hierGold.locator('.sports-chip__cta-tag-score')).toHaveText('1er/10');
+  await expect(hierGold.locator('.sports-chip__badge--place')).toHaveText('🥇');
+  await expect(hierGold.locator('.sports-chip__cta-text')).not.toContainText('1er');
   await expect(page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="Hier"] .sports-chip__cta-tag-meridiem')).toHaveCount(0);
   const liveCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — en direct' }).first();
   await expect(liveCard.locator('.sports-chip__cta-tag-score')).toBeVisible();

@@ -1412,8 +1412,10 @@ assert(
 assert(
   /const SPORTS_CTA_TAG_LIVE\s*=\s*['"]En direct['"]/.test(appJs)
     && appJs.includes('function sportsCtaTagLabel')
-    && appJs.includes('sports-chip__cta-tag-score'),
-  'app.js : pastille CTA = En direct + score / Hier / Aujourd’hui / Sports',
+    && appJs.includes('sports-chip__cta-tag-score')
+    && appJs.includes('function sportsCtaTagPutsResultScore')
+    && appJs.includes('function sportsResultMarkText'),
+  'app.js : pastille CTA = En direct + score / Hier + score / Sports',
 );
 // Pastille CTA : plus de voyant LED (ni span JS, ni ::before).
 assert(
