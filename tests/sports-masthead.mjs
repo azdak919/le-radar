@@ -37,6 +37,32 @@ test('sports masthead : garde les deux faces des prochains matchs choisis', () =
   assert.equal(compact.teams.a.record, undefined);
 });
 
+test('sports masthead : résultats hors 5 j civils exclus, filet 1 si vide', () => {
+  const ref = new Date('2026-08-28T19:00:00-04:00');
+  const hot = { gameId: 'hot', date: '2026-08-27', time: '18:00', opponentCode: 'BBB' };
+  const stale = { gameId: 'stale', date: '2026-08-01', time: '18:00', opponentCode: 'CCC' };
+  const withHot = buildSportsMastheadPayload({
+    updated: '2026-08-28T12:00:00.000Z',
+    teams: {
+      a: team('a', 'AAA', [], [hot]),
+      c: team('c', 'CCC', [], [stale]),
+    },
+  }, { nextGameLimit: 0, resultLimit: 8, referenceDate: ref });
+  assert.deepEqual(Object.keys(withHot.teams).sort(), ['a']);
+  assert.equal(withHot.teams.a.results[0].gameId, 'hot');
+  assert.equal(withHot.masthead.chipResultMaxDaysAgo, 5);
+  assert.equal(withHot.masthead.ctaResultMaxDaysAgo, 1);
+
+  const onlyStale = buildSportsMastheadPayload({
+    updated: '2026-08-28T12:00:00.000Z',
+    teams: {
+      c: team('c', 'CCC', [], [stale]),
+    },
+  }, { nextGameLimit: 0, resultLimit: 8, referenceDate: ref });
+  assert.deepEqual(Object.keys(onlyStale.teams), ['c']);
+  assert.equal(onlyStale.teams.c.results[0].gameId, 'stale');
+});
+
 test('sports masthead : snapshot commité léger et exploitable', () => {
   const full = require(join(ROOT, 'sports.json'));
   const compact = require(join(ROOT, 'sports-masthead.json'));

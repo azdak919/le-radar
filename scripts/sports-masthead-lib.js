@@ -3,11 +3,15 @@
  *
  * /sports/ reste un tableau statique complet, généré depuis sports.json.
  * L'accueil, lui, n'affiche que quelques cartes et ne doit pas faire parser
- * des milliers de matchs futurs sur une tablette. On garde les résultats
- * chauds et les prochains matchs les plus proches, avec les deux faces d'un
- * même match afin que le choix éditorial du client reste inchangé.
+ * des milliers de matchs futurs sur une tablette.
+ *
+ * Résultats = même fenêtre que les puces (5 j civils Toronto) ; si vide,
+ * 1 lastGame filet (hors saison). Prochains = les plus proches. Les deux
+ * faces d’un match restent pour le choix éditorial du client.
  */
 'use strict';
+
+const SpF = require('./sports-freshness-lib');
 
 const MASTHEAD_NEXT_GAME_LIMIT = 48;
 const MASTHEAD_RESULT_LIMIT = 32;
@@ -34,9 +38,18 @@ function compactTeam(team, { results = [], nextGames = [] } = {}) {
   return out;
 }
 
+function pickMastheadResultFaces(resultByMatch, { resultLimit, referenceDate }) {
+  const ranked = [...resultByMatch.values()]
+    .sort((a, b) => gameStamp(b[0]?.game).localeCompare(gameStamp(a[0]?.game)));
+  const recent = ranked.filter((faces) => SpF.isMastheadChipResult(faces[0]?.game, referenceDate));
+  if (recent.length) return recent.slice(0, resultLimit);
+  return ranked.slice(0, 1);
+}
+
 function buildSportsMastheadPayload(payload, {
   nextGameLimit = MASTHEAD_NEXT_GAME_LIMIT,
   resultLimit = MASTHEAD_RESULT_LIMIT,
+  referenceDate = new Date(),
 } = {}) {
   const teams = Object.values(payload?.teams || {});
   const nextByMatch = new Map();
@@ -62,9 +75,7 @@ function buildSportsMastheadPayload(payload, {
   }
 
   const selected = [
-    ...[...resultByMatch.values()]
-      .sort((a, b) => gameStamp(b[0]?.game).localeCompare(gameStamp(a[0]?.game)))
-      .slice(0, resultLimit),
+    ...pickMastheadResultFaces(resultByMatch, { resultLimit, referenceDate }),
     ...[...nextByMatch.values()]
       .sort((a, b) => gameStamp(a[0]?.game).localeCompare(gameStamp(b[0]?.game)))
       .slice(0, nextGameLimit),
@@ -93,7 +104,12 @@ function buildSportsMastheadPayload(payload, {
     fetchedAt: payload?.fetchedAt,
     source: payload?.source,
     sportsFreshness: payload?.sportsFreshness,
-    masthead: { nextGameLimit, resultLimit },
+    masthead: {
+      nextGameLimit,
+      resultLimit,
+      chipResultMaxDaysAgo: SpF.MASTHEAD_CHIP_RESULT_MAX_DAYS_AGO,
+      ctaResultMaxDaysAgo: SpF.MASTHEAD_CTA_RESULT_MAX_DAYS_AGO,
+    },
     teamCount: Object.keys(outTeams).length,
     teams: outTeams,
   };

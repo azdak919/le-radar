@@ -30,6 +30,32 @@ test('sports-freshness : nextGame jour civil Toronto (pas UTC 20 h EDT)', () => 
   assert.equal(SpF.isNextGameInHorizon({ date: '2026-08-23' }, utcNextDay), true);
 });
 
+test('sports-freshness : mât CTA = aujourd’hui+hier, puces = 5 j civils', () => {
+  // Vendredi 28 août 2026 — un dimanche 17 h doit encore tenir (5 j, pas 5×24 h).
+  const fri = new Date('2026-08-28T19:00:00-04:00');
+  assert.equal(SpF.torontoDayKey(fri), '2026-08-28');
+  assert.equal(SpF.civilDaysAgo({ date: '2026-08-28' }, fri), 0);
+  assert.equal(SpF.civilDaysAgo({ date: '2026-08-27' }, fri), 1);
+  assert.equal(SpF.civilDaysAgo({ date: '2026-08-23' }, fri), 5);
+  assert.equal(SpF.civilDaysAgo({ date: '2026-08-22' }, fri), 6);
+
+  assert.equal(SpF.isMastheadCtaResult({ date: '2026-08-28' }, fri), true);
+  assert.equal(SpF.isMastheadCtaResult({ date: '2026-08-27' }, fri), true);
+  assert.equal(SpF.isMastheadCtaResult({ date: '2026-08-26' }, fri), false);
+
+  assert.equal(SpF.isMastheadChipResult({ date: '2026-08-23' }, fri), true);
+  assert.equal(SpF.isMastheadChipResult({ date: '2026-08-22' }, fri), false);
+  assert.equal(SpF.MASTHEAD_CTA_RESULT_MAX_DAYS_AGO, 1);
+  assert.equal(SpF.MASTHEAD_CHIP_RESULT_MAX_DAYS_AGO, 5);
+});
+
+test('sports-freshness : jour civil = champ date, pas l’heure locale du runner', () => {
+  const utcMorning = new Date('2026-08-29T03:30:00.000Z'); // 23:30 EDT le 28
+  assert.equal(SpF.torontoDayKey(utcMorning), '2026-08-28');
+  assert.equal(SpF.gameCivilDayKey({ date: '2026-08-28', time: '23:00' }), '2026-08-28');
+  assert.equal(SpF.isMastheadCtaResult({ date: '2026-08-28', time: '23:00' }, utcMorning), true);
+});
+
 test('sports-freshness : payload sports.json prune sans casser', () => {
   const data = require(join(ROOT, 'sports.json'));
   const pruned = SpF.pruneSportsPayload(data, REF);
