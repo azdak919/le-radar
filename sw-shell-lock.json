@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v820",
+    "cache": "radar-shell-v821",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -39,11 +39,12 @@
       "style-masthead-chrome.css": "14f32bc972a5ccdc",
       "style-masthead.css": "4e41094fb44a0d6f",
       "style-sports-strip.css": "080e2d589ade0036",
+      "style-translate-overlay.css": "4f925365899eb85c",
       "style-tuner.css": "2d79d7df1d02c13a",
-      "style.css": "6463c439c24b18b1",
+      "style.css": "f31b05655e776f2b",
       "translate-menu.css": "a5a4eb37479afb60",
       "translate-menu.js": "07802220efb342c2",
-      "translate.js": "5963a2c4edccbd08",
+      "translate.js": "03107cf12dd78bb9",
       "weather-cities-data.js": "55d8ae8c518bfbdf"
     }
   },
@@ -95,7 +96,7 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v223",
+    "cache": "sports-shell-v224",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "0e0df2c60f5900e3",
@@ -125,7 +126,7 @@
       "style-masthead.css": "4e41094fb44a0d6f",
       "style-sports-strip.css": "080e2d589ade0036",
       "style-tuner.css": "2d79d7df1d02c13a",
-      "style.css": "6463c439c24b18b1",
+      "style.css": "f31b05655e776f2b",
       "weather-cities-data.js": "55d8ae8c518bfbdf"
     }
   }

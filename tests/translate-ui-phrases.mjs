@@ -19,6 +19,15 @@ assert.match(src, /CHROME_SELECTOR/, 'sélecteur chrome');
 assert.match(src, /UI_LOCK_NO_MT/, 'filet anti-MT sur match / reçoit');
 assert.match(src, /const inflight = new Map/, 'dédup requêtes en vol');
 assert.match(src, /function cacheGet/, 'LRU cacheGet');
+assert.match(src, /translate-progress/, 'overlay de progression des articles');
+assert.match(src, /SHOW_DELAY_MS:\s*350/, 'overlay : délai 350 ms (cache hit silencieux)');
+assert.match(src, /Afficher les articles dans la langue actuelle/, 'lien lever le lock');
+assert.doesNotMatch(src, /\.showModal\s*\(/, 'pas de dialog.showModal (tuner inert)');
+assert.doesNotMatch(
+  src,
+  /body\.style\.position\s*=\s*['"]fixed['"]/,
+  'pas de position:fixed sur body',
+);
 
 const phrases = [
   'Prochains match',
