@@ -169,8 +169,14 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   expect(soonPulse.chip, 'carte À venir : halo rouge').toMatch(/sports-cta-ring-pulse/);
   expect(soonPulse.tag, 'pastille À venir : pulse En cours').toMatch(/sports-cta-tag-pulse/);
   const tomorrowCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — demain' }).first();
-  await expect(tomorrowCard.locator('.sports-chip__cta-tag')).toHaveText(/^Demain$/i);
-  await expect(tomorrowCard.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
+  await expect(tomorrowCard.locator('.sports-chip__cta-tag')).toHaveText(/Demain/i);
+  await expect(tomorrowCard.locator('.sports-chip__cta-tag-lines')).toHaveCount(1);
+  await expect(tomorrowCard.locator('.sports-chip__cta-tag-meridiem')).toHaveText(/ce\s*PM/i);
+  const hierCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — hier (victoire)' });
+  await expect(hierCard.locator('.sports-chip__cta-tag-meridiem')).toHaveText(/ce\s*PM|cet\s*AM/i);
+  const liveCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — en direct' }).first();
+  await expect(liveCard.locator('.sports-chip__cta-tag-score')).toBeVisible();
+  await expect(liveCard.locator('.sports-chip__cta-tag-meridiem')).toHaveCount(0);
   const tomorrowLamp = await tomorrowCard.locator('.sports-chip__cta-tag').evaluate((el) => el.dataset.ctaLamp);
   expect(tomorrowLamp, 'Demain : pastille jaune, pas À venir').toBe('next');
   const prochainLines = page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="Prochain match"] .sports-chip__cta-tag-lines');
@@ -212,9 +218,9 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   expect(hierFit.ok, 'CTA hier : glyphe présent').toBe(true);
   expect(hierFit.fullyInChip, 'CTA hier : glyphe entier dans la carte (pas d’excédent)').toBe(true);
   expect(hierFit.rightOfTag, 'CTA hier : glyphe à droite de la pastille').toBe(true);
-  await expect(page.locator('#cta-band .sports-chip__cta-tag', { hasText: /^Avant-hier$/ })).toHaveCount(0);
-  await expect(page.locator('.sports-chip__cta-tag', { hasText: /^Hier$/ }).first()).toBeVisible();
-  await expect(page.locator('.sports-chip__cta-tag', { hasText: /^Aujourd’hui$/ }).first()).toBeVisible();
+  await expect(page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="Avant-hier"]')).toHaveCount(0);
+  await expect(page.locator('.sports-chip__cta-tag[data-cta-tag="Hier"]').first()).toBeVisible();
+  await expect(page.locator('.sports-chip__cta-tag[data-cta-tag="Aujourd’hui"]').first()).toBeVisible();
   const noLed = async (sel) => page.locator(sel).first().evaluate((el) => {
     const before = getComputedStyle(el, '::before');
     return {

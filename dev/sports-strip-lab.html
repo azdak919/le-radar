@@ -571,6 +571,11 @@
       </a>`;
     }
 
+    function meridiemFromSub(sub) {
+      const m = String(sub || '').match(/\b(\d{1,2})\s*h/);
+      if (!m) return '';
+      return Number(m[1]) < 12 ? 'cet AM' : 'ce PM';
+    }
     function stripCta({ state, tone, tag, glyph, text, sub, badge, badgeMod, brand, score, meridiem }) {
       const tagLabel = tag || 'Sports';
       const lamp = state === 'live' ? 'live'
@@ -579,6 +584,13 @@
         : (state === 'next' || tagLabel === 'Demain' || tagLabel === 'Prochain' || tagLabel === 'Prochain match') ? 'next'
         : state === 'result' ? 'past'
         : 'idle';
+      const skipMeridiem = brand
+        || tagLabel === 'En direct'
+        || tagLabel === 'Prochain'
+        || tagLabel === 'Prochain match';
+      const half = skipMeridiem
+        ? ''
+        : (meridiem || meridiemFromSub(sub) || (tagLabel === 'À venir' || tagLabel === 'Demain' || tagLabel === 'Hier' || tagLabel === 'Aujourd’hui' || tagLabel === 'Avant-hier' ? 'ce PM' : ''));
       const g = glyph ? `<span class="sports-chip__cta-glyph" aria-hidden="true">${glyph}</span>` : '';
       const b = badge
         ? `<span class="sports-chip__badge sports-chip__badge--${badgeMod}" aria-hidden="true">${badge}</span>`
@@ -590,8 +602,8 @@
           ? '<span class="sports-chip__cta-tag-lines"><span>Prochain</span><span>match</span></span>'
           : (tagLabel === 'En direct')
             ? `<span class="sports-chip__cta-tag-lines"><span>En direct</span><span class="sports-chip__cta-tag-score">${liveScore}</span></span>`
-          : (tagLabel === 'À venir' && meridiem)
-            ? `<span class="sports-chip__cta-tag-lines"><span>À venir</span><span class="sports-chip__cta-tag-meridiem">${meridiem}</span></span>`
+          : half
+            ? `<span class="sports-chip__cta-tag-lines"><span>${tagLabel}</span><span class="sports-chip__cta-tag-meridiem">${half}</span></span>`
             : tagLabel;
       const tagClass = brand
         ? 'sports-chip__cta-tag sports-chip__cta-tag--brand notranslate'

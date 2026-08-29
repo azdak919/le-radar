@@ -36,7 +36,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 ### Corrigé
 
 - Cartes sports du mât : pause trop longue entre deux vagues (~11–16 s). Lecture ~6,5–10 s, CTA ~8 s, cascade au même pas que la météo (440 ms). Le bandeau reste plein pendant le hold.
-- Pastille **À venir** : 2e ligne **cet AM** / **ce PM** (avant-midi masc. + voyelle → cet ; après-midi masc. + consonne → ce). Pas « cette AM ».
+- Pastilles CTA datées (**À venir**, **Demain**, **Hier**, **Aujourd’hui**) : 2e ligne **cet AM** / **ce PM**. Pas sur **En direct** (score) ni **Prochain match**. Pas « cette AM ».
 - Fraîcheur sports du mât alignée : CTA = aujourd’hui + hier (civil Toronto) ; puces = jusqu’à 5 j civils d’âge ; snapshot d’accueil = même fenêtre (1 lastGame filet si vide). Plus de restes 5×24 h / 14 j / « 5 j de prochains CTA » qui n’étaient pas branchés. Le jour civil lit `game.date`, pas l’heure locale du runner.
 
 - CTA **En direct** : le score vit sous la pastille (deuxième ligne, hors marquee) ; la sous-ligne ne répète plus la même heure en « mis à jour à 20 h 30 » quand c’est déjà le coup d’envoi.

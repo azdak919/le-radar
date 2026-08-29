@@ -602,8 +602,9 @@ test('CTA demain : pastille Demain, heure, pas Prochain match', async ({ page })
   const payload = upcomingTomorrowPayload();
   const cta = await openWithSports(page, payload);
   await expect(cta).toHaveAttribute('data-cta-state', 'next');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/^Demain$/i);
-  await expect(cta.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/Demain/i);
+  await expect(cta.locator('.sports-chip__cta-tag-lines')).toHaveCount(1);
+  await expect(cta.locator('.sports-chip__cta-tag-meridiem')).toHaveText(/ce\s*PM/i);
   const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
   expect(sub).toMatch(/19\s*h\s*00/);
   expect(sub.toLowerCase()).not.toMatch(/demain/);

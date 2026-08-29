@@ -1607,6 +1607,7 @@ assert(
     && appJs.includes('function fillSportsCtaTagCopy')
     && appJs.includes('function sportsMeridiem')
     && appJs.includes('function sportsMeridiemLine')
+    && appJs.includes('function sportsCtaTagUsesMeridiem')
     && appJs.includes("SPORTS_MERIDIEM_AM_LINE = 'cet AM'")
     && appJs.includes("SPORTS_MERIDIEM_PM_LINE = 'ce PM'")
     && /sports-chip__cta-tag-meridiem/.test(styleCss)
