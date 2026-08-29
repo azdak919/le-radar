@@ -35,6 +35,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Overlay de traduction mobile : le filet de « Le fil étudiant » ne traverse plus le logo (`.wire-head` z 70 > overlay 60). Titre **et** puce langue sous le voile ; carte centrée dans le fil ; toast masqué tant que la carte est là.
+
 - Pastille CTA d’un **résultat du jour** : **Dernière heure** (2 lignes ; EN Breaking news). Pas d’AM/PM. À venir du jour garde **cet AM / ce PM**.
 
 - Puces scores : pastille **Aujourd’hui / cet AM|ce PM** et **Demain / AM|PM** (pas Hier).
