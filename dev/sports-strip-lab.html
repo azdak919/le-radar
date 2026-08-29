@@ -296,24 +296,27 @@
         title: 'CTA — en direct',
         cta: {
           state: 'live', tone: '#c8102e', tag: 'En direct', glyph: '🏒',
+          score: '2–1',
           text: 'McGill 2–1 Concordia',
-          sub: '19 h 00 · 2e période · Hockey universitaire · mis à jour à 19 h 22',
+          sub: '19 h 00 · 2e période · Hockey universitaire',
         },
       },
       {
         title: 'CTA — en direct (visiteur)',
         cta: {
           state: 'live', tone: '#c8102e', tag: 'En direct', glyph: '⚽',
+          score: '0–1',
           text: 'Patriotes 0–1 Vanier College',
-          sub: '18 h 30 · 1re période · Soccer collégial · mis à jour à 19 h 22',
+          sub: '18 h 30 · 1re période · Soccer collégial',
         },
       },
       {
         title: 'CTA — en cours (sans score)',
         cta: {
           state: 'live', tone: '#c8102e', tag: 'En direct', glyph: '🏈',
+          score: '—',
           text: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__score">—</span> <span class="sports-chip__name sports-chip__opp">Carabins</span>',
-          sub: '19 h 00 · Football universitaire · mis à jour à 18 h 41',
+          sub: '19 h 00 · Football universitaire',
         },
       },
       {
@@ -568,7 +571,7 @@
       </a>`;
     }
 
-    function stripCta({ state, tone, tag, glyph, text, sub, badge, badgeMod, brand }) {
+    function stripCta({ state, tone, tag, glyph, text, sub, badge, badgeMod, brand, score }) {
       const tagLabel = tag || 'Sports';
       const lamp = state === 'live' ? 'live'
         : tagLabel === 'À venir' ? 'soon'
@@ -580,11 +583,14 @@
       const b = badge
         ? `<span class="sports-chip__badge sports-chip__badge--${badgeMod}" aria-hidden="true">${badge}</span>`
         : '';
+      const liveScore = score || (state === 'live' ? '—' : '');
       const tagInner = brand
         ? '<img class="sports-chip__cta-logo" src="../assets/icon.svg" width="18" height="18" alt="" decoding="async" aria-hidden="true">'
         : (tagLabel === 'Prochain' || tagLabel === 'Prochain match')
           ? '<span class="sports-chip__cta-tag-lines"><span>Prochain</span><span>match</span></span>'
-          : tagLabel;
+          : (tagLabel === 'En direct')
+            ? `<span class="sports-chip__cta-tag-lines"><span>En direct</span><span class="sports-chip__cta-tag-score">${liveScore}</span></span>`
+            : tagLabel;
       const tagClass = brand
         ? 'sports-chip__cta-tag sports-chip__cta-tag--brand notranslate'
         : 'sports-chip__cta-tag notranslate';

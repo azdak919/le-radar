@@ -479,6 +479,15 @@
   line-height: 1.15;
   text-align: center;
 }
+/* Live : En direct + score sous la pastille (toujours visible, hors marquee). */
+.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag-score {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  font-weight: 900;
+  font-size: 11px;
+  line-height: 1.15;
+}
 /* Prochain : pastille jaune (pas l’ambre radio). Encre sombre pour le contraste. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="next"],
 .masthead-sports-strip .sports-chip--cta[data-cta-state="next"] .sports-chip__cta-tag:not(.sports-chip__cta-tag--brand):not([data-cta-lamp="soon"]) {
