@@ -1013,8 +1013,11 @@ const CONNECT_ORIGINS = [
   'https://le-radar-weather.azdak.workers.dev',
   'https://le-radar-nowplaying.azdak.workers.dev',
   'https://le-radar-bg-rotation.azdak.workers.dev',
+  'https://le-radar-translate.azdak.workers.dev',
   'https://cloud.umami.is',
   'https://gateway.umami.is',
+  'https://clients5.google.com',
+  'https://clients4.google.com',
   'https://translate.googleapis.com',
   'https://api.mymemory.translated.net',
 ];
@@ -1960,6 +1963,48 @@ assert(
     'workers/weather-cache : CDN-Cache-Control no-store (pas de cache edge CORS-bound)',
   );
 }
+{
+  const trWorker = existsSync(join(root, 'workers/translate-cache/src/index.js'))
+    ? readFileSync(join(root, 'workers/translate-cache/src/index.js'), 'utf8')
+    : '';
+  assert(trWorker.length > 200, 'workers/translate-cache/src/index.js manquant');
+  assert(
+    trWorker.includes("'https://le-radar.ca'")
+      && trWorker.includes("'https://www.le-radar.ca'"),
+    'workers/translate-cache : origines prod le-radar.ca (+ www) autorisées',
+  );
+  assert(
+    !/\bif\s*\(\s*cached\s*\)\s*return\s+cached\s*;/.test(trWorker),
+    'workers/translate-cache : interdit « return cached » nu (poison CORS prod)',
+  );
+  assert(
+    trWorker.includes('cache.match')
+      && /corsHeaders\s*\(\s*request\s*\)/.test(trWorker)
+      && trWorker.includes('headers.set'),
+    'workers/translate-cache : réapplique corsHeaders(request) après cache HIT',
+  );
+  assert(
+    trWorker.includes('CDN-Cache-Control') && trWorker.includes('no-store'),
+    'workers/translate-cache : CDN-Cache-Control no-store',
+  );
+  assert(
+    trWorker.includes('isJunkMt') && trWorker.includes('MYMEMORY WARNING'),
+    'workers/translate-cache : refuse les réponses quota / Sorry',
+  );
+  assert(
+    trWorker.includes('clients5.google.com'),
+    'workers/translate-cache : dict-chrome-ex en amont de gtx',
+  );
+}
+assert(
+  indexHtml.includes('le-radar-translate.azdak.workers.dev')
+    || /connect-src[^"]*le-radar-translate/.test(indexHtml),
+  'index.html CSP : connect-src autorise le-radar-translate worker',
+);
+assert(
+  indexHtml.includes('clients5.google.com'),
+  'index.html CSP : connect-src autorise clients5 (repli MT)',
+);
 // CSP prod : connect-src doit inclure le worker météo (sinon fetch bloqué).
 assert(
   indexHtml.includes('le-radar-weather.azdak.workers.dev')

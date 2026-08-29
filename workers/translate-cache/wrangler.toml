@@ -1,0 +1,6 @@
+name = "le-radar-translate"
+main = "src/index.js"
+compatibility_date = "2026-07-23"
+# le-radar.ca DNS is still at WHC — no Custom Domain. workers.dev like weather.
+workers_dev = true
+preview_urls = false

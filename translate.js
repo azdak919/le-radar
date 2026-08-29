@@ -3,8 +3,10 @@
  *
  * Pas de widget Google Website Translator (cookies googtrans souvent cassés
  * sur GitHub Pages). On traduit le DOM via des API libres :
- *   1. Google gtx (translate.googleapis.com, sans clé — comme Ataraxia)
- *   2. MyMemory (repli)
+ *   1. Worker cache partagé (workers/translate-cache — modèle météo)
+ *   2. Google dict-chrome-ex (clients5) — gtx 429 en prod
+ *   3. Google gtx (translate.googleapis.com, sans clé — comme Ataraxia)
+ *   4. MyMemory (repli ; refuser les warnings de quota)
  *
  * Règles d'activation :
  *  1. Préférence utilisateur (localStorage) si elle existe — y compris « Original ».
@@ -26,7 +28,10 @@
   const CONCURRENCY = 6;
   const MAX_CHUNK = 450;
   /** gtx/MyMemory sans délai = overlay coincé (persan vu à 21 %). Mutable en test. */
-  const MT = { timeoutMs: 6000 };
+  const MT = { timeoutMs: 6000, workerTimeoutMs: 2500 };
+  const TRANSLATE_WORKER_BASE = (typeof TRANSLATE_API_BASE === 'string' && TRANSLATE_API_BASE)
+    ? TRANSLATE_API_BASE
+    : 'https://le-radar-translate.azdak.workers.dev';
   /** Mât, tuner, CTA, nav, tête du fil, pied — avant les articles. */
   const CHROME_SELECTOR = 'header.masthead, #tuner, #masthead-sports-strip, nav.site-sections, .wire-head, .site-foot';
 
@@ -1227,6 +1232,9 @@
     const keep = new Set();
     Object.keys(UI_PHRASES).forEach((k) => keep.add(k));
     Object.values(OVERLAY_COPY_FR || {}).forEach((k) => keep.add(k));
+    Object.values(OVERLAY_BEATS_FR || {}).forEach((list) => {
+      list.forEach((k) => keep.add(k));
+    });
     if (typeof document === 'undefined') return keep;
     document.querySelectorAll(`${CHROME_SELECTOR}, .article`).forEach((root) => {
       const walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
@@ -1764,6 +1772,105 @@
       el: 'Εμφάνιση άρθρων στην τρέχουσα γλώσσα',
       fr: 'Afficher les articles dans la langue actuelle',
     },
+    'Ouverture du dictionnaire…': {
+      en: 'Opening the dictionary…', es: 'Abriendo el diccionario…',
+      pt: 'A abrir o dicionário…', de: 'Wörterbuch wird geöffnet…',
+      it: 'Apertura del dizionario…', nl: 'Woordenboek openen…',
+      pl: 'Otwieranie słownika…', tr: 'Sözlük açılıyor…',
+      ru: 'Открытие словаря…', uk: 'Відкриття словника…',
+      ar: 'جارٍ فتح المعجم…', fa: 'باز کردن واژه‌نامه…',
+      he: 'פותחים את המילון…', zh: '正在打开词典…',
+      'zh-tw': '正在開啟詞典…', ko: '사전을 여는 중…', ja: '辞書を開いています…',
+      hi: 'शब्दकोश खुल रहा है…', vi: 'Đang mở từ điển…',
+      ht: 'N ap ouvri diksyonè a…', el: 'Άνοιγμα λεξικού…',
+      fr: 'Ouverture du dictionnaire…',
+    },
+    'Glossaire radio et sports…': {
+      en: 'Radio and sports glossary…', es: 'Glosario de radio y deportes…',
+      pt: 'Glossário de rádio e desporto…', de: 'Radio- und Sportglossar…',
+      it: 'Glossario radio e sport…', nl: 'Radio- en sportwoordenlijst…',
+      pl: 'Słownik radia i sportu…', tr: 'Radyo ve spor sözlüğü…',
+      ru: 'Глоссарий радио и спорта…', uk: 'Глосарій радіо і спорту…',
+      ar: 'مسرد الراديو والرياضة…', fa: 'واژه‌نامهٔ رادیو و ورزش…',
+      he: 'מילון רדיו וספורט…', zh: '电台与体育词汇…',
+      'zh-tw': '電台與體育詞彙…', ko: '라디오·스포츠 용어…', ja: 'ラジオとスポーツ用語…',
+      hi: 'रेडियो और खेल शब्दावली…', vi: 'Thuật ngữ radio và thể thao…',
+      ht: 'Glosè radyo ak espò…', el: 'Γλωσσάρι ραδιοφώνου και αθλητισμού…',
+      fr: 'Glossaire radio et sports…',
+    },
+    'Alignement du chrome…': {
+      en: 'Aligning the chrome…', es: 'Alineando la interfaz…',
+      pt: 'A alinhar a interface…', de: 'Oberfläche wird ausgerichtet…',
+      it: 'Allineamento dell’interfaccia…', nl: 'Interface uitlijnen…',
+      pl: 'Wyrównywanie interfejsu…', tr: 'Arayüz hizalanıyor…',
+      ru: 'Выравнивание интерфейса…', uk: 'Вирівнювання інтерфейсу…',
+      ar: 'جارٍ محاذاة الواجهة…', fa: 'تراز کردن رابط…',
+      he: 'יישור הממשק…', zh: '正在对齐界面…',
+      'zh-tw': '正在對齊介面…', ko: '인터페이스 맞추는 중…', ja: '画面を整えています…',
+      hi: 'इंटरफ़ेस संरेखित हो रहा है…', vi: 'Đang căn giao diện…',
+      ht: 'N ap aliyen koòdonn nan…', el: 'Στοίχιση διεπαφής…',
+      fr: 'Alignement du chrome…',
+    },
+    'Titres du fil…': {
+      en: 'Feed headlines…', es: 'Titulares del hilo…',
+      pt: 'Títulos do fio…', de: 'Schlagzeilen des Feeds…',
+      it: 'Titoli del filo…', nl: 'Koppen van de feed…',
+      pl: 'Nagłówki z taśmy…', tr: 'Akış başlıkları…',
+      ru: 'Заголовки ленты…', uk: 'Заголовки стрічки…',
+      ar: 'عناوين الشريط…', fa: 'عنوان‌های خوراک…',
+      he: 'כותרות העדכון…', zh: '正在处理标题…',
+      'zh-tw': '正在處理標題…', ko: '피드 제목…', ja: '見出しを処理中…',
+      hi: 'फ़ीड शीर्षक…', vi: 'Tiêu đề bản tin…',
+      ht: 'Tit fil la…', el: 'Τίτλοι ροής…',
+      fr: 'Titres du fil…',
+    },
+    'Extraits…': {
+      en: 'Excerpts…', es: 'Extractos…', pt: 'Excertos…', de: 'Auszüge…',
+      it: 'Estratti…', nl: 'Fragmenten…', pl: 'Fragmenty…', tr: 'Alıntılar…',
+      ru: 'Отрывки…', uk: 'Уривки…',
+      ar: 'المقتطفات…', fa: 'گزیده‌ها…', he: 'קטעים…',
+      zh: '正在处理摘要…', 'zh-tw': '正在處理摘要…',
+      ko: '발췌문…', ja: '抜粋を処理中…',
+      hi: 'अंश…', vi: 'Đoạn trích…', ht: 'Ekstrè…', el: 'Αποσπάσματα…',
+      fr: 'Extraits…',
+    },
+    'Cartes du magazine…': {
+      en: 'Magazine cards…', es: 'Tarjetas de la revista…',
+      pt: 'Cartões da revista…', de: 'Magazin-Karten…',
+      it: 'Schede del magazine…', nl: 'Tijdschriftkaarten…',
+      pl: 'Karty magazynu…', tr: 'Dergi kartları…',
+      ru: 'Карточки журнала…', uk: 'Картки журналу…',
+      ar: 'بطاقات المجلة…', fa: 'کارت‌های مجله…',
+      he: 'כרטיסי המגזין…', zh: '杂志卡片…',
+      'zh-tw': '雜誌卡片…', ko: '매거진 카드…', ja: '雑誌カード…',
+      hi: 'पत्रिका कार्ड…', vi: 'Thẻ tạp chí…',
+      ht: 'Kat magazin yo…', el: 'Κάρτες περιοδικού…',
+      fr: 'Cartes du magazine…',
+    },
+    'Recalage des cartes…': {
+      en: 'Reflowing the cards…', es: 'Recolocando las tarjetas…',
+      pt: 'A repor os cartões…', de: 'Karten werden neu gesetzt…',
+      it: 'Riposizionamento delle schede…', nl: 'Kaarten opnieuw plaatsen…',
+      pl: 'Przeład kart…', tr: 'Kartlar yeniden diziliyor…',
+      ru: 'Перестановка карточек…', uk: 'Перестановка карток…',
+      ar: 'جارٍ إعادة ترتيب البطاقات…', fa: 'چیدن دوبارهٔ کارت‌ها…',
+      he: 'סידור מחדש של הכרטיסים…', zh: '正在重排卡片…',
+      'zh-tw': '正在重排卡片…', ko: '카드 다시 배치…', ja: 'カードを再配置中…',
+      hi: 'कार्ड फिर से सजाए जा रहे हैं…', vi: 'Đang xếp lại thẻ…',
+      ht: 'N ap ranje kat yo…', el: 'Αναδιάταξη καρτών…',
+      fr: 'Recalage des cartes…',
+    },
+    'Dernière passe…': {
+      en: 'Last pass…', es: 'Última pasada…', pt: 'Última passagem…',
+      de: 'Letzter Durchgang…', it: 'Ultimo passaggio…', nl: 'Laatste ronde…',
+      pl: 'Ostatnie przejście…', tr: 'Son geçiş…',
+      ru: 'Последний проход…', uk: 'Останній прохід…',
+      ar: 'المرور الأخير…', fa: 'آخرین گذر…', he: 'מעבר אחרון…',
+      zh: '最后一遍…', 'zh-tw': '最後一遍…',
+      ko: '마지막 패스…', ja: '最終パス…',
+      hi: 'अंतिम पास…', vi: 'Lượt cuối…', ht: 'Dènye pas…', el: 'Τελευταίο πέρασμα…',
+      fr: 'Dernière passe…',
+    },
   };
 
   /** Langues où un calque FR figé n’aide pas — laisser gtx tenter. */
@@ -1868,34 +1975,126 @@
     try {
       const resp = await fetch(url, { signal: ctrl.signal });
       if (!resp.ok) return { data: null, aborted: false, status: resp.status };
+      const ctype = resp.headers.get('content-type') || '';
+      if (ctype.includes('text/html')) return { data: null, aborted: false, status: resp.status || 200 };
       return { data: await resp.json(), aborted: false, status: resp.status };
     } catch (err) {
-      const aborted = err?.name === 'AbortError';
+      const aborted = true;
       return { data: null, aborted, status: 0 };
     } finally {
       window.clearTimeout(timer);
     }
   }
 
-  function readGtxText(data) {
-    const raw = data?.[0]?.map((s) => s?.[0]).filter(Boolean).join('');
-    return cleanTranslation(raw || '')?.replace(/^\s+|\s+$/g, '') || '';
+  function isJunkMt(text) {
+    const t = String(text || '');
+    if (!t.trim()) return true;
+    if (/<html[\s>]/i.test(t) || /<title>\s*Sorry/i.test(t)) return true;
+    if (/MYMEMORY WARNING/i.test(t) || /YOU USED ALL AVAILABLE/i.test(t)) return true;
+    if (/NEXT AVAILABLE IN/i.test(t) && /TRANSLATE MORE/i.test(t)) return true;
+    return false;
   }
+
+  function readMtPayload(data) {
+    if (data == null) return '';
+    if (typeof data === 'string') {
+      return cleanTranslation(data)?.replace(/^\s+|\s+$/g, '') || '';
+    }
+    if (typeof data.t === 'string') {
+      return cleanTranslation(data.t)?.replace(/^\s+|\s+$/g, '') || '';
+    }
+    if (Array.isArray(data) && typeof data[0] === 'string') {
+      return cleanTranslation(data.filter((s) => typeof s === 'string').join(''))
+        ?.replace(/^\s+|\s+$/g, '') || '';
+    }
+    if (Array.isArray(data) && Array.isArray(data[0])) {
+      const raw = data[0].map((s) => (Array.isArray(s) ? s?.[0] : '')).filter(Boolean).join('');
+      return cleanTranslation(raw || '')?.replace(/^\s+|\s+$/g, '') || '';
+    }
+    if (data.responseData?.translatedText) {
+      return cleanTranslation(data.responseData.translatedText)?.replace(/^\s+|\s+$/g, '') || '';
+    }
+    return '';
+  }
+
+  function readGtxText(data) {
+    return readMtPayload(data);
+  }
+
+  function usableMt(text, core) {
+    const t = String(text || '').replace(/^\s+|\s+$/g, '');
+    if (!t || isJunkMt(t) || sameMtText(t, core) || t === core.toUpperCase()) return '';
+    return t;
+  }
+
+  const mtSkip = { worker: false, dict: false, gtx: false };
 
   async function fetchMachineTranslation(core, tl) {
     const encoded = encodeURIComponent(core);
     const tls = gtxTargetCodes(tl);
     // fr = originaux Radar ; auto si sl=fr échoue ; en = sonde IU (probe sl=en).
     const sources = ['fr', 'auto', 'en'];
+    const primaryTl = tls[0] || tl;
 
-    gtxLoop:
-    for (const gtl of tls) {
-      for (const sl of sources) {
-        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${encodeURIComponent(sl)}&tl=${encodeURIComponent(gtl)}&dt=t&q=${encoded}`;
-        const res = await fetchJsonTimed(url);
-        const translated = readGtxText(res.data);
-        if (translated && !sameMtText(translated, core)) return translated;
-        if (res.aborted) break gtxLoop;
+    const tryPair = async (buildUrl, sls, gtl, timeoutMs) => {
+      for (const sl of sls) {
+        const res = await fetchJsonTimed(buildUrl(sl, gtl), timeoutMs);
+        const hit = usableMt(readMtPayload(res.data), core);
+        if (hit) return { hit, aborted: false };
+        if (res.aborted) return { hit: '', aborted: true };
+        if (res.status === 404 || res.status === 530) return { hit: '', aborted: false, missing: true };
+      }
+      return { hit: '', aborted: false };
+    };
+
+    // 1) Cache partagé (modèle météo). 404 = pas encore déployé → suite.
+    const workerBase = String(TRANSLATE_WORKER_BASE || '').replace(/\/+$/, '');
+    if (workerBase && !mtSkip.worker) {
+      const worker = await tryPair(
+        (sl, gtl) => `${workerBase}/v1/translate?sl=${encodeURIComponent(sl)}&tl=${encodeURIComponent(gtl)}&q=${encoded}`,
+        ['fr', 'auto'],
+        primaryTl,
+        MT.workerTimeoutMs || 2500,
+      );
+      if (worker.hit) return worker.hit;
+      if (worker.missing || worker.aborted) mtSkip.worker = true;
+    }
+
+    // 2) dict-chrome-ex — gtx est en 429 Sorry en prod.
+    if (!mtSkip.dict) {
+      const dictHosts = [
+        'https://clients5.google.com/translate_a/t?client=dict-chrome-ex',
+        'https://clients4.google.com/translate_a/t?client=dict-chrome-ex',
+      ];
+      for (const host of dictHosts) {
+        const dict = await tryPair(
+          (sl, gtl) => `${host}&sl=${encodeURIComponent(sl)}&tl=${encodeURIComponent(gtl)}&q=${encoded}`,
+          sources,
+          primaryTl,
+          MT.timeoutMs,
+        );
+        if (dict.hit) return dict.hit;
+        if (dict.aborted || dict.missing) {
+          mtSkip.dict = true;
+          break;
+        }
+      }
+    }
+
+    // 3) gtx historique (souvent 429 — on tente encore, timeout 6 s).
+    if (!mtSkip.gtx) {
+      gtxLoop:
+      for (const gtl of tls) {
+        for (const sl of sources) {
+          const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${encodeURIComponent(sl)}&tl=${encodeURIComponent(gtl)}&dt=t&q=${encoded}`;
+          const res = await fetchJsonTimed(url);
+          const translated = usableMt(readGtxText(res.data), core);
+          if (translated) return translated;
+          if (res.aborted) {
+            mtSkip.gtx = true;
+            break gtxLoop;
+          }
+        }
       }
     }
 
@@ -1903,14 +2102,8 @@
       const mm = mymemoryLang(tl);
       const url = `https://api.mymemory.translated.net/get?q=${encoded}&langpair=fr|${encodeURIComponent(mm)}`;
       const res = await fetchJsonTimed(url);
-      const payload = res.data;
-      if (payload?.responseStatus === 200 && payload.responseData?.translatedText) {
-        const translated = cleanTranslation(payload.responseData.translatedText)
-          ?.replace(/^\s+|\s+$/g, '') || '';
-        if (translated && !sameMtText(translated, core) && translated !== core.toUpperCase()) {
-          return translated;
-        }
-      }
+      const translated = usableMt(readMtPayload(res.data), core);
+      if (translated) return translated;
     } catch { /* keep original */ }
 
     return null;
@@ -2941,6 +3134,7 @@
     SKIP_AFTER_MS: 9000,
     FADE_MS: 250,
     HOLD_AT_100_MS: 280,
+    BEAT_MS: 1400,
   };
   const OVERLAY_LIVE_MARKS = [25, 50, 75, 100];
 
@@ -3059,13 +3253,86 @@
     ready: 'Prêt',
     skip: 'Afficher les articles dans la langue actuelle',
   };
+  /** Messages intercalaires (style Claude Code) — les 4 étapes ci-dessus restent. */
+  const OVERLAY_BEATS_FR = {
+    prep: [
+      'Ouverture du dictionnaire…',
+      'Glossaire radio et sports…',
+      'Alignement du chrome…',
+    ],
+    articles: [
+      'Titres du fil…',
+      'Extraits…',
+      'Cartes du magazine…',
+    ],
+    layout: [
+      'Recalage des cartes…',
+      'Dernière passe…',
+    ],
+  };
   let overlayCopy = { ...OVERLAY_COPY_FR };
+  let overlayBeats = {
+    prep: [...OVERLAY_BEATS_FR.prep],
+    articles: [...OVERLAY_BEATS_FR.articles],
+    layout: [...OVERLAY_BEATS_FR.layout],
+  };
+  let overlayBeatTimer = 0;
+  let overlayBeatIndex = 0;
 
   function overlayLabelForPercent(p) {
     if (p >= 100) return overlayCopy.ready;
     if (p >= 75) return overlayCopy.layout;
     if (p >= 30) return overlayCopy.articles;
     return overlayCopy.prep;
+  }
+
+  function overlayPhaseForPercent(p) {
+    if (p >= 100) return 'ready';
+    if (p >= 75) return 'layout';
+    if (p >= 30) return 'articles';
+    return 'prep';
+  }
+
+  function overlayBeatForPercent(p) {
+    const phase = overlayPhaseForPercent(p);
+    if (phase === 'ready') return '';
+    const list = overlayBeats[phase] || OVERLAY_BEATS_FR[phase] || [];
+    if (!list.length) return '';
+    return list[overlayBeatIndex % list.length];
+  }
+
+  function stopOverlayBeats() {
+    if (overlayBeatTimer) {
+      clearInterval(overlayBeatTimer);
+      overlayBeatTimer = 0;
+    }
+  }
+
+  function paintOverlayBeat(percent) {
+    const el = document.getElementById('translate-progress');
+    if (!el) return;
+    const beat = el.querySelector('.translate-progress__beat');
+    const text = el.querySelector('.translate-progress__beat-text');
+    const line = overlayBeatForPercent(percent);
+    if (!beat || !text) return;
+    if (!line || overlayPhaseForPercent(percent) === 'ready') {
+      beat.hidden = true;
+      text.textContent = '';
+      return;
+    }
+    beat.hidden = false;
+    text.textContent = line;
+  }
+
+  function startOverlayBeats() {
+    stopOverlayBeats();
+    overlayBeatIndex = 0;
+    paintOverlayBeat(overlaySession?.percent || 10);
+    if (prefersReducedMotion()) return;
+    overlayBeatTimer = window.setInterval(() => {
+      overlayBeatIndex += 1;
+      paintOverlayBeat(overlaySession?.percent || 10);
+    }, OVERLAY_TIMING.BEAT_MS);
   }
 
   function applyOverlayCopyToDom() {
@@ -3080,10 +3347,26 @@
         ? overlayLabelForPercent(overlaySession?.percent || 0)
         : overlayCopy.prep;
     }
+    paintOverlayBeat(overlaySession?.percent || 0);
+  }
+
+  async function translateOneOverlayPhrase(src, targetLang, gen) {
+    const hit = preferredUiPhrase(src, targetLang);
+    if (hit && hit !== src) return hit;
+    if (!targetLang) return src;
+    const out = await translateText(src, targetLang);
+    if (gen != null && gen !== translateGen) return src;
+    if (out && out !== src) return out;
+    return preferredUiPhrase(src, 'en') || src;
   }
 
   async function translateOverlayCopyFirst(targetLang, gen) {
     overlayCopy = { ...OVERLAY_COPY_FR };
+    overlayBeats = {
+      prep: [...OVERLAY_BEATS_FR.prep],
+      articles: [...OVERLAY_BEATS_FR.articles],
+      layout: [...OVERLAY_BEATS_FR.layout],
+    };
     const next = { ...OVERLAY_COPY_FR };
     for (const key of Object.keys(OVERLAY_COPY_FR)) {
       const hit = preferredUiPhrase(OVERLAY_COPY_FR[key], targetLang);
@@ -3107,6 +3390,15 @@
       if (en) next[key] = en;
     }
     overlayCopy = next;
+
+    const nextBeats = { prep: [], articles: [], layout: [] };
+    for (const phase of Object.keys(OVERLAY_BEATS_FR)) {
+      nextBeats[phase] = await Promise.all(
+        OVERLAY_BEATS_FR[phase].map((src) => translateOneOverlayPhrase(src, targetLang, gen)),
+      );
+      if (gen != null && gen !== translateGen) return;
+    }
+    overlayBeats = nextBeats;
     applyOverlayCopyToDom();
   }
 
@@ -3193,6 +3485,10 @@
       '      <span class="translate-progress__num">0</span><span class="translate-progress__suffix"> %</span>',
       '    </p>',
       '    <p id="translate-progress-label" class="translate-progress__label"></p>',
+      '    <p class="translate-progress__beat" hidden>',
+      '      <span class="translate-progress__spark" aria-hidden="true"></span>',
+      '      <span class="translate-progress__beat-text"></span>',
+      '    </p>',
       '    <div class="translate-progress__bar" aria-hidden="true"><div class="translate-progress__fill"></div></div>',
       '    <button type="button" class="translate-progress__skip" hidden></button>',
       '  </div>',
@@ -3230,6 +3526,7 @@
     if (fill && determined) fill.style.width = `${pct}%`;
     if (ring) ring.style.setProperty('--translate-pct', determined ? String(pct) : '0');
     if (label) label.textContent = determined ? overlayLabelForPercent(pct) : overlayCopy.prep;
+    paintOverlayBeat(determined ? pct : 10);
     const skip = el.querySelector('.translate-progress__skip');
     if (skip) skip.textContent = overlayCopy.skip;
     if (live && overlaySession && determined) {
@@ -3255,6 +3552,7 @@
     window.requestAnimationFrame(() => layoutArticlesOverlay());
     if (overlaySession) overlaySession.shown = true;
     paintArticlesOverlay(overlaySession?.percent || 10, { determined: (overlaySession?.total || 0) > 0 });
+    startOverlayBeats();
     if (wasFocusedInTuner && document.activeElement && eventInTuner({ target: document.activeElement })) {
       /* ne pas voler le focus radio */
     }
@@ -3271,6 +3569,7 @@
   function hideArticlesOverlay({ fade = true } = {}) {
     const el = document.getElementById('translate-progress');
     const runUnlock = () => {
+      stopOverlayBeats();
       unlockArticlesScroll();
       if (!el) return;
       el.hidden = true;
@@ -3317,6 +3616,11 @@
     if (overlaySession.skipTimer) clearTimeout(overlaySession.skipTimer);
     overlaySession = null;
     overlayCopy = { ...OVERLAY_COPY_FR };
+    overlayBeats = {
+      prep: [...OVERLAY_BEATS_FR.prep],
+      articles: [...OVERLAY_BEATS_FR.articles],
+      layout: [...OVERLAY_BEATS_FR.layout],
+    };
     hideArticlesOverlay({ fade: false });
   }
 
@@ -4218,6 +4522,10 @@
       OVERLAY_TIMING,
       gtxTargetCodes,
       mymemoryLang,
+      isJunkMt,
+      readMtPayload,
+      TRANSLATE_WORKER_BASE,
+      OVERLAY_BEATS_FR,
     },
     _labels: {
       formatCegepLabel,

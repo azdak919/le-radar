@@ -14,6 +14,9 @@ var WEATHER_API_BASE = 'https://le-radar-weather.azdak.workers.dev';
 // Métadonnées « à l'antenne » (JSON/XML only — pas l'audio). Cache edge ~60 s.
 // workers/nowplaying-cache — évite CORS / 429 sur Triton & co. côté navigateur.
 var NOWPLAYING_API_BASE = 'https://le-radar-nowplaying.azdak.workers.dev';
+// Traduction partagée (workers/translate-cache) — même modèle que la météo :
+// un cache edge pour ne pas brûler gtx/MyMemory à chaque visiteur.
+var TRANSLATE_API_BASE = 'https://le-radar-translate.azdak.workers.dev';
 
 function safeHttpUrl(url, { allowHttp = false } = {}) {
   if (!url || typeof url !== 'string') return null;
