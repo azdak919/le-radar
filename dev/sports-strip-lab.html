@@ -232,8 +232,8 @@
         title: 'CTA — hier (victoire)',
         cta: {
           state: 'result', tone: '#3d9a6a', tag: 'Hier', glyph: '🏈',
-          badge: 'V', badgeMod: 'w',
-          text: 'Carabins 24–21 Rouge et Or',
+          badge: 'V', badgeMod: 'w', score: '24–21',
+          text: '<span class="sports-chip__name">Carabins</span> <span class="sports-chip__name sports-chip__opp">Rouge et Or</span>',
           sub: 'Football universitaire',
         },
       },
@@ -241,8 +241,8 @@
         title: 'CTA — hier (défaite)',
         cta: {
           state: 'result', tone: '#c45c5c', tag: 'Hier', glyph: '🏒',
-          badge: 'D', badgeMod: 'l',
-          text: 'Bishop’s 2–5 McGill',
+          badge: 'D', badgeMod: 'l', score: '2–5',
+          text: '<span class="sports-chip__name">Bishop’s</span> <span class="sports-chip__name sports-chip__opp">McGill</span>',
           sub: 'Hockey universitaire',
         },
       },
@@ -250,8 +250,8 @@
         title: 'CTA — hier (match nul)',
         cta: {
           state: 'result', tone: '#8fa3b0', tag: 'Hier', glyph: '⚽',
-          badge: 'N', badgeMod: 'd',
-          text: 'ULaval 1–1 UdeM',
+          badge: 'N', badgeMod: 'd', score: '1–1',
+          text: '<span class="sports-chip__name">ULaval</span> <span class="sports-chip__name sports-chip__opp">UdeM</span>',
           sub: 'Soccer universitaire masculin',
         },
       },
@@ -339,7 +339,8 @@
         title: 'CTA — hier (place)',
         cta: {
           state: 'result', tone: '#3d6fa8', tag: 'Hier', glyph: '⛵',
-          text: 'Bishop’s 7e/14',
+          score: '7e/14',
+          text: '<span class="sports-chip__name">Bishop’s</span>',
           sub: 'Voile universitaire',
         },
       },
@@ -347,8 +348,8 @@
         title: 'CTA — hier (or)',
         cta: {
           state: 'result', tone: '#3d6fa8', tag: 'Hier', glyph: '⛵',
-          badge: '🥇', badgeMod: 'place',
-          text: 'ULaval 1er/10',
+          badge: '🥇', badgeMod: 'place', score: '1er/10',
+          text: '<span class="sports-chip__name">ULaval</span>',
           sub: 'Voile universitaire',
         },
       },
@@ -356,8 +357,8 @@
         title: 'CTA — hier (argent)',
         cta: {
           state: 'result', tone: '#3d6fa8', tag: 'Hier', glyph: '⛵',
-          badge: '🥈', badgeMod: 'place',
-          text: 'ULaval 2e/10',
+          badge: '🥈', badgeMod: 'place', score: '2e/10',
+          text: '<span class="sports-chip__name">ULaval</span>',
           sub: 'Voile universitaire',
         },
       },
@@ -365,8 +366,8 @@
         title: 'CTA — hier (bronze)',
         cta: {
           state: 'result', tone: '#3d6fa8', tag: 'Hier', glyph: '⛵',
-          badge: '🥉', badgeMod: 'place',
-          text: 'Concordia 3e/10',
+          badge: '🥉', badgeMod: 'place', score: '3e/10',
+          text: '<span class="sports-chip__name">Concordia</span>',
           sub: 'Voile universitaire',
         },
       },
@@ -697,6 +698,8 @@
             ? '<span class="sports-chip__cta-tag-lines"><span>Dernière</span><span>heure</span></span>'
           : (tagLabel === 'En direct')
             ? `<span class="sports-chip__cta-tag-lines"><span>En direct</span><span class="sports-chip__cta-tag-score">${liveScore}</span></span>`
+          : ((tagLabel === 'Hier' || tagLabel === 'Avant-hier') && liveScore)
+            ? `<span class="sports-chip__cta-tag-lines"><span>${tagLabel}</span><span class="sports-chip__cta-tag-score">${liveScore}</span></span>`
           : half
             ? `<span class="sports-chip__cta-tag-lines"><span>${tagLabel}</span><span class="sports-chip__cta-tag-meridiem">${half}</span></span>`
             : tagLabel;

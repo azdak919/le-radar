@@ -294,6 +294,18 @@ function sportsPlaceScoreText(game) {
   return `${ord}/${field}`;
 }
 
+/** Marque de résultat pour la 2e ligne Hier : score « 2–1 » ou place « 7e/12 ». */
+function sportsResultMarkText(game, sport) {
+  if (sportsIsPlaceResult(game, sport || game?.sport)) return sportsPlaceScoreText(game);
+  if (sportsGameHasScore(game)) return `${game.scoreFor}–${game.scoreAgainst}`;
+  return '';
+}
+
+/** Hier / Avant-hier : score ou place sous le mot, pas dans l’accroche. */
+function sportsCtaTagPutsResultScore(wanted) {
+  return wanted === 'Hier' || wanted === 'Avant-hier';
+}
+
 /**
  * Pastille de résultat.
  * Match : V / D / N.
@@ -1920,9 +1932,11 @@ function sportsCtaLabelFromSlide(slide) {
   }
   if (slide.mode === 'result') {
     const placeKind = sportsIsPlaceResult(g, slide.team.sport);
-    const score = placeKind
-      ? sportsPlaceScoreText(g)
-      : `${g.scoreFor}–${g.scoreAgainst}`;
+    const score = sportsResultMarkText(g, slide.team.sport);
+    const scoreInPill = sportsCtaTagPutsResultScore(sportsCtaResultTag(slide));
+    if (scoreInPill) {
+      return placeKind ? `${glyph} ${home}` : `${glyph} ${home} ${opp}`;
+    }
     return placeKind
       ? `${glyph} ${home} ${score}`
       : `${glyph} ${home} ${score} ${opp}`;
@@ -1994,16 +2008,20 @@ function fillSportsCtaTagCopy(tag, wanted, extra = {}) {
   tag.replaceChildren();
   markNoTranslate(tag);
   const shown = window.RadarTranslate?.displayUiText?.(wanted) || wanted;
-  if (wanted === SPORTS_CTA_TAG_LIVE) {
-    const score = extra.score || tag.dataset.ctaScore || SPORTS_LIVE_SCORE_PENDING;
+  if (wanted === SPORTS_CTA_TAG_LIVE || (sportsCtaTagPutsResultScore(wanted) && (extra.score || tag.dataset.ctaScore))) {
+    const score = extra.score || tag.dataset.ctaScore
+      || (wanted === SPORTS_CTA_TAG_LIVE ? SPORTS_LIVE_SCORE_PENDING : '');
     const lines = document.createElement('span');
     lines.className = 'sports-chip__cta-tag-lines';
     const top = document.createElement('span');
     top.textContent = shown;
-    const bot = document.createElement('span');
-    bot.className = 'sports-chip__cta-tag-score';
-    bot.textContent = score;
-    lines.append(top, bot);
+    lines.append(top);
+    if (score) {
+      const bot = document.createElement('span');
+      bot.className = 'sports-chip__cta-tag-score';
+      bot.textContent = score;
+      lines.append(bot);
+    }
     tag.append(lines);
     return;
   }
@@ -2746,15 +2764,21 @@ function fillSportsCtaLayer(layer, slide) {
     const home = sportsChipTeamShort(src.team);
     const opp = sportsChipOpponentLabel(g);
     const placeKind = sportsIsPlaceResult(g, src.team.sport);
+    const scoreInPill = sportsCtaTagPutsResultScore(sportsCtaResultTag(src));
     if (placeKind) {
       const placeTxt = sportsPlaceScoreText(g);
-      text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-        + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
+      text.innerHTML = scoreInPill
+        ? `<span class="sports-chip__name">${escapeHtml(home)}</span>`
+        : `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+          + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
     } else {
       const scoreTxt = `${g.scoreFor}–${g.scoreAgainst}`;
-      text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-        + `<span class="sports-chip__score">${escapeHtml(scoreTxt)}</span> `
-        + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+      text.innerHTML = scoreInPill
+        ? `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+          + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`
+        : `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+          + `<span class="sports-chip__score">${escapeHtml(scoreTxt)}</span> `
+          + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
     }
   } else {
     markNoTranslate(text);
@@ -2846,9 +2870,14 @@ function applySportsCtaState(chip, slide) {
     markNoTranslate(tag);
     const lang = window.RadarTranslate?.getMode?.() || 'original';
     const game = slide?.ctaFrom?.game || slide?.game;
+    const sportKey = slide?.ctaFrom?.team?.sport || game?.sport || '';
     const liveScore = (state === 'live' && game) ? sportsLiveScoreText(game) : '';
-    const scoreChanged = (tag.dataset.ctaScore || '') !== liveScore;
-    if (liveScore) tag.dataset.ctaScore = liveScore;
+    const resultScore = (state === 'result' && game && sportsCtaTagPutsResultScore(wanted))
+      ? sportsResultMarkText(game, sportKey)
+      : '';
+    const pillScore = liveScore || resultScore;
+    const scoreChanged = (tag.dataset.ctaScore || '') !== pillScore;
+    if (pillScore) tag.dataset.ctaScore = pillScore;
     else delete tag.dataset.ctaScore;
     const meridiemLine = sportsCtaTagUsesMeridiem(wanted)
       ? sportsMeridiemLine(game, { today: sportsCtaTagIsToday(wanted) })
@@ -2859,7 +2888,7 @@ function applySportsCtaState(chip, slide) {
     if (tag.dataset.ctaTag !== wanted || tag.dataset.ctaLang !== lang || scoreChanged || meridiemChanged) {
       tag.dataset.ctaTag = wanted;
       tag.dataset.ctaLang = lang;
-      fillSportsCtaTagCopy(tag, wanted, { score: liveScore, meridiemLine });
+      fillSportsCtaTagCopy(tag, wanted, { score: pillScore, meridiemLine });
     }
   }
   syncSportsCtaRail(chip, slide);
