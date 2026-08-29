@@ -1,4 +1,4 @@
-const CACHE_NAME = "radar-shell-v821";
+const CACHE_NAME = "radar-shell-v827";
 const CACHE_PREFIX = "radar-";
 /** Cache permanent : page maintenance / hors-ligne (ne se purge pas au bump shell). */
 const OFFLINE_CACHE = "radar-offline-v22";
@@ -68,6 +68,7 @@ const APP_SHELL = [
   "./translate.js",
   "./translate-menu.js",
   "./translate-menu.css",
+  "./style-translate-overlay.css",
   "./indigenous-mt.json",
   "./engage-prompt.js",
   "./scripts/session-freshness-lib.js",

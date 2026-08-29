@@ -19,6 +19,28 @@ assert.match(src, /CHROME_SELECTOR/, 'sélecteur chrome');
 assert.match(src, /UI_LOCK_NO_MT/, 'filet anti-MT sur match / reçoit');
 assert.match(src, /const inflight = new Map/, 'dédup requêtes en vol');
 assert.match(src, /function cacheGet/, 'LRU cacheGet');
+assert.match(src, /translate-progress/, 'overlay de progression des articles');
+assert.match(src, /SHOW_DELAY_MS:\s*350/, 'overlay : délai 350 ms (cache hit silencieux)');
+assert.match(
+  src,
+  /startArticlesOverlaySession\(gen\)[\s\S]{0,800}chromeOnly:\s*true/,
+  'overlay : timer dès le lancement, pas après le chrome',
+);
+assert.match(src, /function translateOverlayCopyFirst/, 'libellés overlay traduits en premier');
+assert.match(src, /HOLD_AT_100_MS/, 'overlay : tenir 100 % avant le fondu');
+assert.match(src, /band:\s*\[80,\s*94\]/, '2e passage articles : 80–94 %, pas de plateau');
+assert.match(
+  src,
+  /await translateOverlayCopyFirst\(target, gen\)[\s\S]{0,500}chromeOnly:\s*true/,
+  'skip / paliers overlay avant le chrome et les articles',
+);
+assert.match(src, /Afficher les articles dans la langue actuelle/, 'lien lever le lock');
+assert.doesNotMatch(src, /\.showModal\s*\(/, 'pas de dialog.showModal (tuner inert)');
+assert.doesNotMatch(
+  src,
+  /body\.style\.position\s*=\s*['"]fixed['"]/,
+  'pas de position:fixed sur body',
+);
 
 const phrases = [
   'Prochains match',
