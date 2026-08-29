@@ -423,4 +423,51 @@ test.describe('overlay traduction articles', () => {
     const dir = await page.evaluate(() => document.documentElement.dataset.scriptDir);
     expect(dir).toBe('rtl');
   });
+
+  test('toutes les langues du menu : alias gtx + overlay pas coincé en FR', async ({ page }) => {
+    await page.route('**/assets/news-images/**', (route) => route.abort());
+    await page.route('**/assets/meteocons/**', (route) => route.abort());
+    await openHome(page, { width: 900, height: 700 });
+    const report = await page.evaluate(() => {
+      const ui = window.RadarTranslate._ui;
+      const keys = [
+        'Préparation de la langue…',
+        'Traduction des articles…',
+        'Mise en page…',
+        'Prêt',
+        'Afficher les articles dans la langue actuelle',
+      ];
+      const modes = Object.entries(window.RadarTranslate.MODES)
+        .filter(([, m]) => m && !m.unavailable && m.id !== 'original' && m.id !== 'fr')
+        .map(([id]) => id);
+      const stuckFr = [];
+      for (const id of modes) {
+        for (const k of keys) {
+          const hit = window.RadarTranslate.preferredUiPhrase(k, id)
+            || window.RadarTranslate.preferredUiPhrase(k, 'en');
+          if (!hit || hit === k) stuckFr.push(`${id}:${k}`);
+        }
+      }
+      return {
+        modeCount: modes.length,
+        stuckFr,
+        fa: ui.gtxTargetCodes('fa'),
+        he: ui.gtxTargetCodes('he'),
+        zh: ui.gtxTargetCodes('zh'),
+        tl: ui.gtxTargetCodes('tl'),
+        iuLatn: ui.gtxTargetCodes('iu-latn'),
+        mmIw: ui.mymemoryLang('iw'),
+        mmFaIr: ui.mymemoryLang('fa-IR'),
+      };
+    });
+    expect(report.modeCount, 'catalogue menu').toBeGreaterThan(30);
+    expect(report.stuckFr, 'aucune langue sans overlay (glossaire ou EN)').toEqual([]);
+    expect(report.fa).toEqual(['fa', 'fa-IR']);
+    expect(report.he[0]).toBe('iw');
+    expect(report.zh[0]).toBe('zh-CN');
+    expect(report.tl).toEqual(['tl', 'fil']);
+    expect(report.iuLatn[0]).toBe('iu-Latn');
+    expect(report.mmIw).toBe('he');
+    expect(report.mmFaIr).toBe('fa');
+  });
 });

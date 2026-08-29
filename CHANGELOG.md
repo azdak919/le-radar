@@ -35,7 +35,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
-- Traduction **persan** (et les autres langues MT) : timeout 6 s sur gtx/MyMemory (plus d’overlay coincé à 21 %) ; source **fr** au lieu de `auto` ; MyMemory `fr|fa` ; on ne met plus en cache un écho du français. Libellés de la carte d’attente en glossaire (dont فارسی) dès le clic.
+- Traduction MT (persan **et tout le menu**) : timeout 6 s ; source **fr** ; pas de cache d’écho FR (y compris textes longs) ; alias gtx (fa/fa-IR, iw/he, zh-CN, tl/fil, iu-Latn) ; MyMemory en ISO. Carte d’attente : glossaire, sinon anglais, sans bloquer le chrome.
 
 - CTA **En direct** : le score vit sous la pastille (deuxième ligne, hors marquee) ; la sous-ligne ne répète plus la même heure en « mis à jour à 20 h 30 » quand c’est déjà le coup d’envoi.
 
