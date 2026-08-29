@@ -2005,6 +2005,34 @@ assert(
     'workers/translate-cache : dict-chrome-ex en amont de gtx',
   );
 }
+{
+  // Workers Logs must live in wrangler.toml — dashboard toggles do not survive deploy.
+  const workerRoot = join(root, 'workers');
+  const workerDirs = readdirSync(workerRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name);
+  assert(workerDirs.length >= 4, 'workers/ : au moins 4 workers wrangler');
+  for (const dir of workerDirs) {
+    const wranglerPath = join(workerRoot, dir, 'wrangler.toml');
+    assert(existsSync(wranglerPath), `workers/${dir}/wrangler.toml manquant`);
+    const wrangler = readFileSync(wranglerPath, 'utf8');
+    assert(
+      /\[observability\]/.test(wrangler)
+        && /^\s*enabled\s*=\s*true\s*$/m.test(wrangler.split('[observability]')[1] || ''),
+      `workers/${dir}/wrangler.toml : observability.enabled = true requis`,
+    );
+    assert(
+      /\[observability\.logs\]/.test(wrangler)
+        && /invocation_logs\s*=\s*true/.test(wrangler),
+      `workers/${dir}/wrangler.toml : observability.logs.invocation_logs = true requis`,
+    );
+    assert(
+      /\[observability\.traces\]/.test(wrangler)
+        && /enabled\s*=\s*false/.test(wrangler.split('[observability.traces]')[1] || ''),
+      `workers/${dir}/wrangler.toml : observability.traces.enabled = false requis`,
+    );
+  }
+}
 assert(
   indexHtml.includes('le-radar-translate.azdak.workers.dev')
     || /connect-src[^"]*le-radar-translate/.test(indexHtml),
