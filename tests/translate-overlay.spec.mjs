@@ -467,7 +467,40 @@ test.describe('overlay traduction articles', () => {
     expect(report.zh[0]).toBe('zh-CN');
     expect(report.tl).toEqual(['tl', 'fil']);
     expect(report.iuLatn[0]).toBe('iu-Latn');
+    expect(report.iuLatn).toContain('ike-Latn');
     expect(report.mmIw).toBe('he');
     expect(report.mmFaIr).toBe('fa');
+  });
+
+  test('inuktitut : overlay et articles en syllabaires, pas l’anglais', async ({ page }) => {
+    await page.route('**/assets/news-images/**', (route) => route.abort());
+    await page.route('**/assets/meteocons/**', (route) => route.abort());
+    await page.route(/translate\.googleapis\.com/, async (route) => {
+      const u = new URL(route.request().url());
+      const q = u.searchParams.get('q') || '';
+      const sl = u.searchParams.get('sl') || '';
+      const body = (sl === 'fr')
+        ? JSON.stringify([[[q, q]]])
+        : JSON.stringify([[['ᐃᓄᒃᑎᑐᑦ ' + q, q]]]);
+      await route.fulfill({ contentType: 'application/json', body });
+    });
+    await page.route(/mymemory\.translated\.net/, (route) => route.abort());
+    await openHome(page, { width: 900, height: 700 });
+    const seen = await page.evaluate(async () => {
+      const labels = [];
+      const obs = new MutationObserver(() => {
+        const t = document.querySelector('#translate-progress-label')?.textContent || '';
+        if (t) labels.push(t);
+      });
+      const host = document.querySelector('main.wire') || document.body;
+      obs.observe(host, { subtree: true, childList: true, characterData: true });
+      await window.RadarTranslate.applyMode('iu', { persist: false, fromUserClick: true });
+      obs.disconnect();
+      return labels;
+    });
+    const title = page.locator('.article-title').first();
+    await expect(title).toContainText(/[\u1400-\u167F]/);
+    expect(seen.join('\n'), 'overlay IU pas en anglais').not.toMatch(/Preparing the language/i);
+    expect(seen.some((t) => /[\u1400-\u167F]/.test(t)), 'overlay en syllabaires').toBe(true);
   });
 });

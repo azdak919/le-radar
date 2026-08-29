@@ -984,8 +984,8 @@
     tl: ['tl', 'fil'],
     fil: ['tl', 'fil'],
     iu: ['iu', 'ike'],
-    'iu-latn': ['iu-Latn', 'iu'],
-    'iu-Latn': ['iu-Latn', 'iu'],
+    'iu-latn': ['iu-Latn', 'ike-Latn', 'iu'],
+    'iu-Latn': ['iu-Latn', 'ike-Latn', 'iu'],
   };
 
   function gtxTargetCodes(tl) {
@@ -1676,10 +1676,11 @@
     const timer = window.setTimeout(() => ctrl.abort(), ms);
     try {
       const resp = await fetch(url, { signal: ctrl.signal });
-      if (!resp.ok) return null;
-      return await resp.json();
-    } catch {
-      return null;
+      if (!resp.ok) return { data: null, aborted: false, status: resp.status };
+      return { data: await resp.json(), aborted: false, status: resp.status };
+    } catch (err) {
+      const aborted = err?.name === 'AbortError';
+      return { data: null, aborted, status: 0 };
     } finally {
       window.clearTimeout(timer);
     }
@@ -1693,23 +1694,27 @@
   async function fetchMachineTranslation(core, tl) {
     const encoded = encodeURIComponent(core);
     const tls = gtxTargetCodes(tl);
+    // fr = originaux Radar ; auto si sl=fr échoue ; en = sonde IU (probe sl=en).
+    const sources = ['fr', 'auto', 'en'];
 
-    // Originaux Radar = français. sl=auto renvoyait l’écho FR (cache = langue
-    // « traduite » encore en français). Timeout : sinon l’overlay reste à 21 %.
+    gtxLoop:
     for (const gtl of tls) {
-      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=fr&tl=${encodeURIComponent(gtl)}&dt=t&q=${encoded}`;
-      const data = await fetchJsonTimed(url);
-      const translated = readGtxText(data);
-      if (translated && !sameMtText(translated, core)) return translated;
-      if (data == null) break;
+      for (const sl of sources) {
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${encodeURIComponent(sl)}&tl=${encodeURIComponent(gtl)}&dt=t&q=${encoded}`;
+        const res = await fetchJsonTimed(url);
+        const translated = readGtxText(res.data);
+        if (translated && !sameMtText(translated, core)) return translated;
+        if (res.aborted) break gtxLoop;
+      }
     }
 
     try {
       const mm = mymemoryLang(tl);
       const url = `https://api.mymemory.translated.net/get?q=${encoded}&langpair=fr|${encodeURIComponent(mm)}`;
-      const data = await fetchJsonTimed(url);
-      if (data?.responseStatus === 200 && data.responseData?.translatedText) {
-        const translated = cleanTranslation(data.responseData.translatedText)
+      const res = await fetchJsonTimed(url);
+      const payload = res.data;
+      if (payload?.responseStatus === 200 && payload.responseData?.translatedText) {
+        const translated = cleanTranslation(payload.responseData.translatedText)
           ?.replace(/^\s+|\s+$/g, '') || '';
         if (translated && !sameMtText(translated, core) && translated !== core.toUpperCase()) {
           return translated;
@@ -2014,6 +2019,7 @@
     if (raw.startsWith('zh')) return raw.includes('tw') || raw.includes('hant') ? 'zh-tw' : 'zh';
     if (raw === 'iw') return 'he';
     if (raw === 'fil') return 'tl';
+    if (raw === 'iu-latn' || raw.startsWith('iu-latn') || raw === 'ike-latn') return 'iu-latn';
     return raw.split(/[-_]/)[0] || raw;
   }
 
@@ -2889,28 +2895,28 @@
     overlayCopy = { ...OVERLAY_COPY_FR };
     const next = { ...OVERLAY_COPY_FR };
     for (const key of Object.keys(OVERLAY_COPY_FR)) {
-      const hit = preferredUiPhrase(OVERLAY_COPY_FR[key], targetLang)
-        || preferredUiPhrase(OVERLAY_COPY_FR[key], 'en');
-      if (hit) next[key] = hit;
+      const hit = preferredUiPhrase(OVERLAY_COPY_FR[key], targetLang);
+      if (hit && hit !== OVERLAY_COPY_FR[key]) next[key] = hit;
     }
     overlayCopy = { ...next };
     applyOverlayCopyToDom();
     if (!targetLang || !articlesHost()) return;
-    const missing = Object.keys(OVERLAY_COPY_FR).filter((key) => {
-      const localized = preferredUiPhrase(OVERLAY_COPY_FR[key], targetLang);
-      return !localized || localized === OVERLAY_COPY_FR[key];
-    });
-    if (!missing.length) return;
-    // Ne pas bloquer le chrome : EN déjà affiché, MT en fond.
-    void Promise.all(missing.map(async (key) => {
+    const missing = Object.keys(OVERLAY_COPY_FR).filter((key) => next[key] === OVERLAY_COPY_FR[key]);
+    if (missing.length) {
+      await Promise.all(missing.map(async (key) => {
+        if (gen != null && gen !== translateGen) return;
+        const out = await translateText(OVERLAY_COPY_FR[key], targetLang);
+        if (out && out !== OVERLAY_COPY_FR[key]) next[key] = out;
+      }));
       if (gen != null && gen !== translateGen) return;
-      const out = await translateText(OVERLAY_COPY_FR[key], targetLang);
-      if (out && out !== OVERLAY_COPY_FR[key]) next[key] = out;
-    })).then(() => {
-      if (gen != null && gen !== translateGen) return;
-      overlayCopy = next;
-      applyOverlayCopyToDom();
-    });
+    }
+    for (const key of Object.keys(OVERLAY_COPY_FR)) {
+      if (next[key] !== OVERLAY_COPY_FR[key]) continue;
+      const en = preferredUiPhrase(OVERLAY_COPY_FR[key], 'en');
+      if (en) next[key] = en;
+    }
+    overlayCopy = next;
+    applyOverlayCopyToDom();
   }
 
   function layoutArticlesOverlay() {
