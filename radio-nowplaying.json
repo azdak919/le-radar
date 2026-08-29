@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-08-29T13:56:13.083Z",
+  "updatedAt": "2026-08-29T17:30:39.257Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Radio Futura",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/radio-futura/"
+      },
       "next": {
-        "title": "Palmarès CHYZ",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
+        "title": "Capitales de Québec",
+        "source": "schedule-live",
+        "start": "18:50",
+        "end": "23:00",
+        "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Radio Futura",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-29T13:55:45.811Z"
+      "checkedAt": "2026-08-29T17:30:01.504Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Elkin Polo El Show",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/elkin-polo-el-show"
-      },
-      "next": {
         "title": "Change le beat",
         "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/change-le-beat"
       },
+      "next": {
+        "title": "Faites entrer un DJ",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/faites-entrer-un-dj"
+      },
       "track": "",
-      "showTitle": "Elkin Polo El Show",
+      "showTitle": "Change le beat",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-29T13:55:48.117Z"
+      "checkedAt": "2026-08-29T17:30:04.416Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Quebec Acadie",
+        "title": "Samedi Midi",
         "source": "api-live",
-        "start": "06:00",
-        "end": "10:00"
+        "start": "10:30",
+        "end": "14:00"
       },
       "next": {
-        "title": "Making Contact/Anything Goes",
+        "title": "Funky Revolutions",
         "source": "api-live",
-        "start": "10:00",
-        "end": "10:30"
+        "start": "14:00",
+        "end": "16:00"
       },
       "track": "",
-      "showTitle": "Quebec Acadie",
+      "showTitle": "Samedi Midi",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-29T13:55:51.150Z"
+      "checkedAt": "2026-08-29T17:30:06.760Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Live Wire Show",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/the-live-wire-show"
+        "title": "Anatomy of Caribbean Music",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
       },
       "next": {
-        "title": "Gospel Unlimited",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/gospel-unlimited"
+        "title": "Caribbean Callaloo",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
       },
       "track": "",
-      "showTitle": "The Live Wire Show",
+      "showTitle": "Anatomy of Caribbean Music",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-29T13:56:05.602Z"
+      "checkedAt": "2026-08-29T17:30:30.460Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-29T13:56:06.358Z"
+      "checkedAt": "2026-08-29T17:30:31.287Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +149,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-29T13:56:12.732Z"
+      "checkedAt": "2026-08-29T17:30:38.907Z"
     }
   }
 }
