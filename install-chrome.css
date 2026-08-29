@@ -168,6 +168,13 @@
   line-height: 1.45;
   color: var(--text-secondary, var(--ink-soft, #444));
 }
+.engage-prompt__steps li {
+  margin: 0.28em 0;
+}
+.engage-prompt__steps li strong {
+  color: var(--chrome-text, var(--ink, #111));
+  font-weight: 600;
+}
 .engage-prompt__actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .engage-prompt__btn {
   font-family: var(--font-body, var(--sans, system-ui, sans-serif));
