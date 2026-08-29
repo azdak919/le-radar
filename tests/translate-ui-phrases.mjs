@@ -26,9 +26,10 @@ assert.doesNotMatch(src, /UI_LOCK_NO_MT[\s\S]{0,220}'ce PM'/, 'ce PM n’est plu
 assert.match(src, /const inflight = new Map/, 'dédup requêtes en vol');
 assert.match(src, /function cacheGet/, 'LRU cacheGet');
 assert.match(src, /translate-progress/, 'overlay de progression des articles');
-assert(
-  src.includes("querySelector?.('.translate-control')"),
-  'overlay : ne pas inertir le sélecteur de langue',
+assert.doesNotMatch(
+  src,
+  /querySelector\?\.?\(['"]\.translate-control['"]\)\s*\)\s*continue/,
+  'overlay : sélecteur de langue sous le voile (inerte)',
 );
 assert.match(src, /SHOW_DELAY_MS:\s*350/, 'overlay : délai 350 ms (cache hit silencieux)');
 assert.match(
