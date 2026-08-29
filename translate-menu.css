@@ -197,7 +197,9 @@
 .translate-menu[data-filter-empty="1"]::after { content: "Aucune langue"; padding: 12px 10px; color: var(--muted, #aaa); font-size: 12px; text-align: center; }
 
 .lang-translating { pointer-events: none; }
-html[data-translate-busy="1"] .translate-toggle { opacity: 0.75; pointer-events: none; }
+/* Busy = signal visuel seulement. Interdire le clic coincait le sélecteur
+   après le premier choix (overlay encore en cours). */
+html[data-translate-busy="1"] .translate-toggle { opacity: 0.9; }
 
 @media (max-width: 479px) {
   .translate-menu,
