@@ -35,6 +35,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Traduction **persan** (et les autres langues MT) : timeout 6 s sur gtx/MyMemory (plus d’overlay coincé à 21 %) ; source **fr** au lieu de `auto` ; MyMemory `fr|fa` ; on ne met plus en cache un écho du français. Libellés de la carte d’attente en glossaire (dont فارسی) dès le clic.
+
 - CTA **En direct** : le score vit sous la pastille (deuxième ligne, hors marquee) ; la sous-ligne ne répète plus la même heure en « mis à jour à 20 h 30 » quand c’est déjà le coup d’envoi.
 
 - Direct CTA : un match **En direct** est un scorebug — score collé, ou **—** si RSEQ n’a rien (soccer collégial souvent `-999`) ; sous-ligne = **heure de début** (`18 h 30`) / période / compétition / **mis à jour à** (dernière vérification, pas l’âge du coup d’envoi). Filet bot live : cron `:20` + enchaînement sur la radio now-playing — GitHub lâchait le `*/5` (28 août : rien de 12 h à 19 h QC).

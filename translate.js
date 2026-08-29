@@ -24,6 +24,8 @@
   // plus gros robinet — ouvrir MAX_CHUNK / CONCURRENCY casse l’ordre IU.
   const CONCURRENCY = 6;
   const MAX_CHUNK = 450;
+  /** gtx/MyMemory sans délai = overlay coincé (persan vu à 21 %). Mutable en test. */
+  const MT = { timeoutMs: 6000 };
   /** Mât, tuner, CTA, nav, tête du fil, pied — avant les articles. */
   const CHROME_SELECTOR = 'header.masthead, #tuner, #masthead-sports-strip, nav.site-sections, .wire-head, .site-foot';
 
@@ -1453,6 +1455,82 @@
       uk: 'Інші мови',
       ht: 'Lòt lang',
     },
+    'Préparation de la langue…': {
+      en: 'Preparing the language…', es: 'Preparando el idioma…',
+      pt: 'A preparar o idioma…', de: 'Sprache wird vorbereitet…',
+      it: 'Preparazione della lingua…', nl: 'Taal wordt voorbereid…',
+      pl: 'Przygotowywanie języka…', tr: 'Dil hazırlanıyor…',
+      ru: 'Подготовка языка…', uk: 'Підготовка мови…',
+      ar: 'جارٍ تجهيز اللغة…', fa: 'آماده‌سازی زبان…',
+      he: 'מכינים את השפה…', ur: 'زبان تیار کی جا رہی ہے…',
+      zh: '正在准备语言…', 'zh-tw': '正在準備語言…',
+      ko: '언어 준비 중…', ja: '言語を準備しています…',
+      hi: 'भाषा तैयार हो रही है…', vi: 'Đang chuẩn bị ngôn ngữ…',
+      ht: 'N ap prepare lang lan…', el: 'Προετοιμασία γλώσσας…',
+      fr: 'Préparation de la langue…',
+    },
+    'Traduction des articles…': {
+      en: 'Translating articles…', es: 'Traduciendo los artículos…',
+      pt: 'A traduzir os artigos…', de: 'Artikel werden übersetzt…',
+      it: 'Traduzione degli articoli…', nl: 'Artikelen worden vertaald…',
+      pl: 'Tłumaczenie artykułów…', tr: 'Yazılar çevriliyor…',
+      ru: 'Перевод статей…', uk: 'Переклад статей…',
+      ar: 'جارٍ ترجمة المقالات…', fa: 'در حال ترجمهٔ مقاله‌ها…',
+      he: 'מתרגמים את הכתבות…', ur: 'مضامین کا ترجمہ ہو رہا ہے…',
+      zh: '正在翻译文章…', 'zh-tw': '正在翻譯文章…',
+      ko: '기사 번역 중…', ja: '記事を翻訳しています…',
+      hi: 'लेख अनूदित हो रहे हैं…', vi: 'Đang dịch bài…',
+      ht: 'N ap tradui atik yo…', el: 'Μετάφραση άρθρων…',
+      fr: 'Traduction des articles…',
+    },
+    'Mise en page…': {
+      en: 'Laying out the page…', es: 'Maquetando…',
+      pt: 'A paginar…', de: 'Seite wird gesetzt…',
+      it: 'Impaginazione…', nl: 'Opmaak…',
+      pl: 'Skład strony…', tr: 'Sayfa düzenleniyor…',
+      ru: 'Вёрстка…', uk: 'Верстка…',
+      ar: 'جارٍ تنسيق الصفحة…', fa: 'صفحه‌آرایی…',
+      he: 'עימוד…', ur: 'صفحہ آرائی…',
+      zh: '正在排版…', 'zh-tw': '正在排版…',
+      ko: '페이지 구성 중…', ja: 'レイアウト中…',
+      hi: 'पृष्ठ सजाया जा रहा है…', vi: 'Đang dàn trang…',
+      ht: 'N ap mete paj la…', el: 'Σελιδοποίηση…',
+      fr: 'Mise en page…',
+    },
+    'Prêt': {
+      en: 'Ready', es: 'Listo', pt: 'Pronto', de: 'Fertig',
+      it: 'Pronto', nl: 'Klaar', pl: 'Gotowe', tr: 'Hazır',
+      ru: 'Готово', uk: 'Готово',
+      ar: 'جاهز', fa: 'آماده', he: 'מוכן', ur: 'تیار',
+      zh: '完成', 'zh-tw': '完成', ko: '완료', ja: '完了',
+      hi: 'तैयार', vi: 'Xong', ht: 'Pare', el: 'Έτοιμο',
+      fr: 'Prêt',
+    },
+    'Afficher les articles dans la langue actuelle': {
+      en: 'Show articles in the current language',
+      es: 'Mostrar los artículos en el idioma actual',
+      pt: 'Mostrar os artigos no idioma atual',
+      de: 'Artikel in der aktuellen Sprache anzeigen',
+      it: 'Mostra gli articoli nella lingua attuale',
+      nl: 'Artikelen in de huidige taal tonen',
+      pl: 'Pokaż artykuły w bieżącym języku',
+      tr: 'Yazıları geçerli dilde göster',
+      ru: 'Показать статьи на текущем языке',
+      uk: 'Показати статті поточною мовою',
+      ar: 'عرض المقالات باللغة الحالية',
+      fa: 'نمایش مقاله‌ها به زبان فعلی',
+      he: 'הצגת הכתבות בשפה הנוכחית',
+      ur: 'موجودہ زبان میں مضامین دکھائیں',
+      zh: '以当前语言显示文章',
+      'zh-tw': '以目前語言顯示文章',
+      ko: '현재 언어로 기사 보기',
+      ja: '現在の言語で記事を表示',
+      hi: 'वर्तमान भाषा में लेख दिखाएँ',
+      vi: 'Hiện bài bằng ngôn ngữ hiện tại',
+      ht: 'Montre atik yo nan lang aktyèl la',
+      el: 'Εμφάνιση άρθρων στην τρέχουσα γλώσσα',
+      fr: 'Afficher les articles dans la langue actuelle',
+    },
   };
 
   /** Langues où un calque FR figé n’aide pas — laisser gtx tenter. */
@@ -1465,6 +1543,8 @@
   const UI_LOCK_NO_MT = new Set([
     'match', 'Match', 'Prochains match', 'Prochain match',
     'En direct', 'En cours', 'reçoit', 'reçoivent', 'chez',
+    'Préparation de la langue…', 'Traduction des articles…', 'Mise en page…',
+    'Prêt', 'Afficher les articles dans la langue actuelle',
   ]);
 
   function uiPhraseLookup(core = '', targetLang = '') {
@@ -1547,32 +1627,51 @@
     return null;
   }
 
+  function sameMtText(a = '', b = '') {
+    return String(a).replace(/\s+/g, ' ').trim() === String(b).replace(/\s+/g, ' ').trim();
+  }
+
+  async function fetchJsonTimed(url, ms = MT.timeoutMs) {
+    const ctrl = new AbortController();
+    const timer = window.setTimeout(() => ctrl.abort(), ms);
+    try {
+      const resp = await fetch(url, { signal: ctrl.signal });
+      if (!resp.ok) return null;
+      return await resp.json();
+    } catch {
+      return null;
+    } finally {
+      window.clearTimeout(timer);
+    }
+  }
+
+  function readGtxText(data) {
+    const raw = data?.[0]?.map((s) => s?.[0]).filter(Boolean).join('');
+    return cleanTranslation(raw || '')?.replace(/^\s+|\s+$/g, '') || '';
+  }
+
   async function fetchMachineTranslation(core, tl) {
     const encoded = encodeURIComponent(core);
+    const tls = tl === 'fa' ? ['fa', 'fa-IR'] : [tl];
 
-    // 1) Google gtx (même endpoint qu'Ataraxia)
-    try {
-      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${encodeURIComponent(tl)}&dt=t&q=${encoded}`;
-      const resp = await fetch(url);
-      if (resp.ok) {
-        const data = await resp.json();
-        const raw = data?.[0]?.map((s) => s?.[0]).filter(Boolean).join('');
-        const translated = cleanTranslation(raw);
-        if (translated) return translated.replace(/^\s+|\s+$/g, '');
-      }
-    } catch { /* next */ }
+    // Originaux Radar = français. sl=auto + persan coincait souvent (écho FR
+    // mis en cache = « ça ne traduit pas »). Timeout : sinon l’overlay reste à 21 %.
+    for (const gtl of tls) {
+      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=fr&tl=${encodeURIComponent(gtl)}&dt=t&q=${encoded}`;
+      const data = await fetchJsonTimed(url);
+      const translated = readGtxText(data);
+      if (translated && !sameMtText(translated, core)) return translated;
+      if (data == null) break;
+    }
 
-    // 2) MyMemory
     try {
-      const url = `https://api.mymemory.translated.net/get?q=${encoded}&langpair=auto|${encodeURIComponent(tl)}`;
-      const resp = await fetch(url);
-      if (resp.ok) {
-        const data = await resp.json();
-        if (data.responseStatus === 200 && data.responseData?.translatedText) {
-          const translated = cleanTranslation(data.responseData.translatedText);
-          if (translated && translated !== core.toUpperCase()) {
-            return translated.replace(/^\s+|\s+$/g, '');
-          }
+      const url = `https://api.mymemory.translated.net/get?q=${encoded}&langpair=fr|${encodeURIComponent(tl)}`;
+      const data = await fetchJsonTimed(url);
+      if (data?.responseStatus === 200 && data.responseData?.translatedText) {
+        const translated = cleanTranslation(data.responseData.translatedText)
+          ?.replace(/^\s+|\s+$/g, '') || '';
+        if (translated && !sameMtText(translated, core) && translated !== core.toUpperCase()) {
+          return translated;
         }
       }
     } catch { /* keep original */ }
@@ -2744,14 +2843,20 @@
 
   async function translateOverlayCopyFirst(targetLang, gen) {
     overlayCopy = { ...OVERLAY_COPY_FR };
+    const next = { ...OVERLAY_COPY_FR };
+    for (const key of Object.keys(OVERLAY_COPY_FR)) {
+      const hit = preferredUiPhrase(OVERLAY_COPY_FR[key], targetLang);
+      if (hit) next[key] = hit;
+    }
+    overlayCopy = { ...next };
     applyOverlayCopyToDom();
     if (!targetLang || !articlesHost()) return;
-    const keys = Object.keys(OVERLAY_COPY_FR);
-    const next = { ...OVERLAY_COPY_FR };
-    await Promise.all(keys.map(async (key) => {
+    const missing = Object.keys(OVERLAY_COPY_FR).filter((key) => next[key] === OVERLAY_COPY_FR[key]);
+    if (!missing.length) return;
+    await Promise.all(missing.map(async (key) => {
       if (gen != null && gen !== translateGen) return;
       const out = await translateText(OVERLAY_COPY_FR[key], targetLang);
-      if (out) next[key] = out;
+      if (out && out !== OVERLAY_COPY_FR[key]) next[key] = out;
     }));
     if (gen != null && gen !== translateGen) return;
     overlayCopy = next;
@@ -3849,6 +3954,7 @@
       CACHE_KEY,
       CONCURRENCY,
       MAX_CHUNK,
+      MT,
       OVERLAY_TIMING,
     },
     _labels: {
