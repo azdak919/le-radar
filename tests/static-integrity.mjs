@@ -1384,6 +1384,11 @@ assert(
   'style : cartes sports light = verre météo rgba(54, 59, 68, 0.68)',
 );
 assert(
+  /\[data-theme="light"\][^{]*\.sports-chip--cta\[data-cta-state="live"\][^{]*\{[^}]*rgba\(54,\s*59,\s*68,\s*0\.68\)/.test(cssFlat)
+    && styleCss.includes('sports-cta-ring-pulse-light'),
+  'style : CTA live/soon light = verre météo rgba(54, 59, 68, 0.68)',
+);
+assert(
   /\[data-theme="light"\][^{]*\.wordmark-full\s*\{[^}]*rgba\(54,\s*59,\s*68,\s*0\.68\)/.test(cssFlat),
   'style : slogan light = verre météo rgba(54, 59, 68, 0.68)',
 );

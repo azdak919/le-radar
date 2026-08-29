@@ -497,15 +497,25 @@ test('thème clair : sports et slogan partagent le verre météo @ci-critical', 
   const glass = await page.evaluate(() => {
     const parse = (el) => {
       if (!el) return null;
-      const m = getComputedStyle(el).backgroundColor.match(/[\d.]+/g)?.map(Number);
+      const cs = getComputedStyle(el);
+      const m = cs.backgroundColor.match(/[\d.]+/g)?.map(Number);
       if (!m) return null;
-      return { r: m[0], g: m[1], b: m[2], a: m[3] ?? 1 };
+      return {
+        r: m[0], g: m[1], b: m[2], a: m[3] ?? 1,
+        blur: cs.backdropFilter || cs.webkitBackdropFilter,
+      };
     };
+    const cta = document.querySelector('#masthead-sports-strip .sports-chip--cta');
+    if (cta) {
+      cta.setAttribute('data-cta-state', 'live');
+      cta.removeAttribute('data-cta-lamp');
+    }
     return {
       weather: parse(document.querySelector('.masthead-weather__city.is-active')),
       sports: parse(document.querySelector(
-        '#masthead-sports-strip .sports-chip:not([data-cta-state="live"]):not([data-cta-lamp="soon"])',
+        '#masthead-sports-strip .sports-chip:not(.sports-chip--cta):not([data-cta-state="live"]):not([data-cta-lamp="soon"])',
       )),
+      ctaLive: parse(cta),
       slogan: parse(document.querySelector('.wordmark-full')),
     };
   });
@@ -518,4 +528,5 @@ test('thème clair : sports et slogan partagent le verre météo @ci-critical', 
     expect(color.b, `${name} b`).toBe(slate.b);
     expect(color.a, `${name} alpha`).toBeCloseTo(slate.a, 2);
   }
+  expect(glass.ctaLive.blur, 'CTA live light : blur verre').toMatch(/blur\(10px\)/);
 });
