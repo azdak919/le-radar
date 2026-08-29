@@ -250,6 +250,39 @@ assert.doesNotMatch(
 assert.match(radarNews, /alternateDisplayImage\(item, kind, role, src\)/, 'fil : alternate reçoit l’URL ratée');
 assert.match(
   radarNews,
+  /if \(!hasUsablePhoto\(item, role\)\) ensureCampusStock/,
+  'fil : campus seulement si pas de photo d’article',
+);
+assert.match(
+  radarNews,
+  /kind === 'photo' && !fragileRemote && !fromArchive && !fromPhoton/,
+  'fil : timeout origine saine n’envoie pas au campus',
+);
+assert.match(
+  radarNews,
+  /w >= 120 && h >= 100/,
+  'fil : photo d’article décodée (carte, portrait) gardée',
+);
+
+const collectifPlan = planDisplayImage({
+  image: 'https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Vos-personnes-candidates-dans-Saint-Francois_Elections-Quebec.png',
+  institution: 'Université de Sherbrooke',
+});
+assert.equal(collectifPlan[0].rung, 'article', 'Collectif : photo d’article en 1');
+assert.equal(collectifPlan.at(-1).rung, 'campus', 'Collectif : campus seulement en filet');
+assert.equal(
+  sourceNeedsCampusBackup(
+    {
+      image: 'https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Le-choix-du-PQ-dans-Sherbrooke-est-fait_Site-web-du-PQ.png',
+      institution: 'Université de Sherbrooke',
+    },
+    { hasUsableSourceImage: true },
+  ),
+  false,
+  'Collectif avec photo source : pas de backup campus forcé',
+);
+assert.match(
+  radarNews,
   /replaceThematic/,
   'fil : thématique 404 → campus (pas SVG)',
 );
