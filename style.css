@@ -4,6 +4,7 @@
 ═══════════════════════════════════════════════════════════ */
 
 /* D2 — feuilles chargées via <link> avant/après celle-ci (pas @import) */
+/* Overlay traduction articles : style-translate-overlay.css via <link>, pas @import. */
 
 :root {
   /* Sentinelle : signale à engage-prompt.js que la feuille du site est
