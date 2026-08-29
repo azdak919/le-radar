@@ -558,3 +558,37 @@ test('thème clair : sports et slogan partagent le verre météo @ci-critical', 
   expect(cascade.ctaRest, 'CTA live light au repos : halo').toMatch(/sports-cta-ring-pulse-light/);
   expect(cascade.ctaLeaving, 'CTA live light qui sort : cascade').toBe('sports-chip-leave');
 });
+
+for (const viewport of [
+  { name: 'mobile', width: 390, height: 844 },
+  { name: 'bureau', width: 1280, height: 900 },
+]) {
+  test(`slogan : le texte ne colle pas aux bords de la pastille — ${viewport.name} @ci-critical`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.evaluate(() => {
+      document.querySelector('#bg-photo-layer')?.classList.add('loaded');
+    });
+    const slogan = page.locator('.masthead:has(#bg-photo-layer.loaded) .wordmark-full').first();
+    await expect(slogan).toBeVisible();
+    const metrics = await slogan.evaluate((el) => {
+      const cs = getComputedStyle(el);
+      const lead = el.querySelector('.wordmark-full__lead') || el;
+      const pill = el.getBoundingClientRect();
+      const text = lead.getBoundingClientRect();
+      return {
+        padL: parseFloat(cs.paddingLeft),
+        padR: parseFloat(cs.paddingRight),
+        radius: parseFloat(cs.borderTopLeftRadius),
+        insetL: text.left - pill.left,
+        insetR: pill.right - text.right,
+      };
+    });
+    expect(metrics.padL, 'padding gauche').toBeGreaterThanOrEqual(15);
+    expect(metrics.padR, 'padding droit').toBeGreaterThanOrEqual(15);
+    expect(metrics.padL, 'padding > rayon gauche').toBeGreaterThan(metrics.radius);
+    expect(metrics.padR, 'padding > rayon droit').toBeGreaterThan(metrics.radius);
+    expect(metrics.insetL, 'glyphe vs bord gauche').toBeGreaterThanOrEqual(14);
+    expect(metrics.insetR, 'glyphe vs bord droit').toBeGreaterThanOrEqual(14);
+  });
+}
