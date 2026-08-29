@@ -35,6 +35,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Pastille CTA d’un **résultat du jour** : **Dernière heure** (2 lignes ; EN Breaking news). Pas d’AM/PM. À venir du jour garde **cet AM / ce PM**.
+
 - Puces scores : pastille **Aujourd’hui / cet AM|ce PM** et **Demain / AM|PM** (pas Hier).
 
 - Cache traduction **chez l’utilisateur** (localStorage v10) : les visites suivantes ne retraduisent que les **nouveaux** articles. Purge selon la fraîcheur sessions QC (plus dans le fil = hors cache) + plafond 4000. Overlay silencieux si tout est déjà en cache.
