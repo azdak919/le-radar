@@ -1,23 +1,14 @@
 {
-  "updated": "2026-08-29T08:09:24.319Z",
+  "updated": "2026-08-29T11:06:54.134Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 9,
+  "incomplete": 8,
   "withLeadExcerpt": 86,
-  "candidates": 9,
-  "enriched": 1,
+  "candidates": 8,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
-      "ok": true,
-      "score": 100,
-      "chars": 393,
-      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
-      "changed": true
-    },
     {
       "title": "La mauvaise nutrition et les maladies chroniques",
       "link": "https://lecollectif.ca/a-la-une/la-mauvaise-nutrition-et-les-maladies-chroniques/",
@@ -79,6 +70,15 @@
       "score": 96,
       "chars": 169,
       "sample": "Attention cependant aux exceptions ! Consulte le site Web de ta faculté ou de ton centre universitai",
+      "changed": false
+    },
+    {
+      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
+      "link": "https://thelinknewspaper.ca/article/16338",
+      "ok": true,
+      "score": 90,
+      "chars": 177,
+      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
     }
   ]
