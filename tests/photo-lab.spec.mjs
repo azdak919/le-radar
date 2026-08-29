@@ -171,9 +171,9 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   const tomorrowCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — demain' }).first();
   await expect(tomorrowCard.locator('.sports-chip__cta-tag')).toHaveText(/Demain/i);
   await expect(tomorrowCard.locator('.sports-chip__cta-tag-lines')).toHaveCount(1);
-  await expect(tomorrowCard.locator('.sports-chip__cta-tag-meridiem')).toHaveText(/ce\s*PM/i);
+  await expect(tomorrowCard.locator('.sports-chip__cta-tag-meridiem')).toHaveText(/^PM$/i);
   const hierCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — hier (victoire)' });
-  await expect(hierCard.locator('.sports-chip__cta-tag-meridiem')).toHaveText(/ce\s*PM|cet\s*AM/i);
+  await expect(hierCard.locator('.sports-chip__cta-tag-meridiem')).toHaveText(/^(AM|PM)$/i);
   const liveCard = page.locator('#cta-band .case').filter({ hasText: 'CTA — en direct' }).first();
   await expect(liveCard.locator('.sports-chip__cta-tag-score')).toBeVisible();
   await expect(liveCard.locator('.sports-chip__cta-tag-meridiem')).toHaveCount(0);

@@ -1397,6 +1397,12 @@
       ko: '다음', ja: '次の番組', hi: 'आगे', vi: 'Sắp tới', tr: 'Sırada',
       nl: 'Hierna', pl: 'Następnie', ht: 'A pwochen',
     },
+    AM: {
+      en: 'AM', es: 'AM', pt: 'AM', de: 'AM', it: 'AM', fr: 'AM',
+    },
+    PM: {
+      en: 'PM', es: 'PM', pt: 'PM', de: 'PM', it: 'PM', fr: 'PM',
+    },
     'cet AM': {
       en: 'this AM', es: 'esta AM', pt: 'esta AM', de: 'vorm.', it: 'AM',
       fr: 'cet AM',

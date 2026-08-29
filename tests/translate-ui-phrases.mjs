@@ -50,6 +50,8 @@ const phrases = [
   'Demain',
   'cet AM',
   'ce PM',
+  'AM',
+  'PM',
   'Hier',
   'Avant-hier',
   'reçoit',
