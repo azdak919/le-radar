@@ -312,6 +312,9 @@ test.describe('overlay traduction articles', () => {
     expect(mid.htmlLock).toBe(true);
     expect(Math.abs(mid.scrollY - before)).toBeLessThan(80);
     await expect(page.locator('.translate-progress__skip')).toBeVisible({ timeout: 4000 });
+    await expect(page.locator('.translate-progress__skip')).not.toHaveText(
+      'Afficher les articles dans la langue actuelle',
+    );
     await page.locator('.translate-progress__skip').click();
     await expect(page.locator('#translate-progress')).toBeHidden({ timeout: 4000 });
     const skipped = await overlaySnapshot(page);

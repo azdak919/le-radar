@@ -2711,11 +2711,50 @@
     });
   }
 
+  const OVERLAY_COPY_FR = {
+    prep: 'Préparation de la langue…',
+    articles: 'Traduction des articles…',
+    layout: 'Mise en page…',
+    ready: 'Prêt',
+    skip: 'Afficher les articles dans la langue actuelle',
+  };
+  let overlayCopy = { ...OVERLAY_COPY_FR };
+
   function overlayLabelForPercent(p) {
-    if (p >= 100) return 'Prêt';
-    if (p >= 75) return 'Mise en page…';
-    if (p >= 30) return 'Traduction des articles…';
-    return 'Préparation de la langue…';
+    if (p >= 100) return overlayCopy.ready;
+    if (p >= 75) return overlayCopy.layout;
+    if (p >= 30) return overlayCopy.articles;
+    return overlayCopy.prep;
+  }
+
+  function applyOverlayCopyToDom() {
+    const el = document.getElementById('translate-progress');
+    if (!el) return;
+    const skip = el.querySelector('.translate-progress__skip');
+    if (skip) skip.textContent = overlayCopy.skip;
+    const label = el.querySelector('#translate-progress-label');
+    if (label) {
+      const determined = (overlaySession?.total || 0) > 0;
+      label.textContent = determined
+        ? overlayLabelForPercent(overlaySession?.percent || 0)
+        : overlayCopy.prep;
+    }
+  }
+
+  async function translateOverlayCopyFirst(targetLang, gen) {
+    overlayCopy = { ...OVERLAY_COPY_FR };
+    applyOverlayCopyToDom();
+    if (!targetLang || !articlesHost()) return;
+    const keys = Object.keys(OVERLAY_COPY_FR);
+    const next = { ...OVERLAY_COPY_FR };
+    await Promise.all(keys.map(async (key) => {
+      if (gen != null && gen !== translateGen) return;
+      const out = await translateText(OVERLAY_COPY_FR[key], targetLang);
+      if (out) next[key] = out;
+    }));
+    if (gen != null && gen !== translateGen) return;
+    overlayCopy = next;
+    applyOverlayCopyToDom();
   }
 
   function layoutArticlesOverlay() {
@@ -2794,9 +2833,9 @@
       '    <p class="translate-progress__pct" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-labelledby="translate-progress-label">',
       '      <span class="translate-progress__num">0</span><span class="translate-progress__suffix"> %</span>',
       '    </p>',
-      '    <p id="translate-progress-label" class="translate-progress__label">Préparation de la langue…</p>',
+      '    <p id="translate-progress-label" class="translate-progress__label"></p>',
       '    <div class="translate-progress__bar" aria-hidden="true"><div class="translate-progress__fill"></div></div>',
-      '    <button type="button" class="translate-progress__skip" hidden>Afficher les articles dans la langue actuelle</button>',
+      '    <button type="button" class="translate-progress__skip" hidden></button>',
       '  </div>',
       '</div>',
       '<div class="translate-progress__live" aria-live="polite"></div>',
@@ -2806,6 +2845,7 @@
       skipArticlesOverlay();
     });
     host.appendChild(el);
+    applyOverlayCopyToDom();
     bindOverlayLayout();
     return el;
   }
@@ -2830,7 +2870,9 @@
     }
     if (fill && determined) fill.style.width = `${pct}%`;
     if (ring) ring.style.setProperty('--translate-pct', determined ? String(pct) : '0');
-    if (label) label.textContent = determined ? overlayLabelForPercent(pct) : 'Préparation de la langue…';
+    if (label) label.textContent = determined ? overlayLabelForPercent(pct) : overlayCopy.prep;
+    const skip = el.querySelector('.translate-progress__skip');
+    if (skip) skip.textContent = overlayCopy.skip;
     if (live && overlaySession && determined) {
       for (const mark of OVERLAY_LIVE_MARKS) {
         if (pct >= mark && !overlaySession.liveAnnounced.has(mark)) {
@@ -2915,6 +2957,7 @@
     if (overlaySession.showTimer) clearTimeout(overlaySession.showTimer);
     if (overlaySession.skipTimer) clearTimeout(overlaySession.skipTimer);
     overlaySession = null;
+    overlayCopy = { ...OVERLAY_COPY_FR };
     hideArticlesOverlay({ fade: false });
   }
 
@@ -3407,9 +3450,11 @@
 
     const overlay = startArticlesOverlaySession(gen);
     try {
-      // 1) Chrome d’abord (glossaire radio/sports/nav). L’overlay part
-      //    dès 350 ms — pas après ce passage, sinon IU/ar peignent le mât
-      //    longtemps avant le voile.
+      // 0) Libellés de la carte d’attente (skip inclus) — avant tout le reste.
+      await translateOverlayCopyFirst(target, gen);
+      if (gen !== translateGen) return;
+
+      // 1) Chrome (glossaire radio/sports/nav). L’overlay part dès 350 ms.
       await translateDom(target, {
         quiet: true,
         chromeOnly: true,
