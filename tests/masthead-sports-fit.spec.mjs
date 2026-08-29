@@ -635,6 +635,21 @@ async function assertSportsCascadeAt(page, { width, height = 900, wide = false, 
   expect(now.some((row) => row.cta), 'la vague conserve au moins une CTA').toBe(true);
 }
 
+test('pause sports : lecture ~6,5–10 s, pas 11–16 s', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const strip = page.locator('#masthead-sports-strip');
+  await expect(strip).toBeVisible({ timeout: 8000 });
+  await expect.poll(async () => strip.locator('.sports-chip').count(), { timeout: 8000 })
+    .toBeGreaterThan(0);
+  const hold = await page.evaluate(() => (
+    typeof sportsBoardHoldMs === 'function' ? sportsBoardHoldMs() : null
+  ));
+  expect(hold, 'sportsBoardHoldMs exposé').toEqual(expect.any(Number));
+  expect(hold, `hold ${hold} ms trop court`).toBeGreaterThanOrEqual(6500);
+  expect(hold, `hold ${hold} ms trop long (prod 2026-08-29)`).toBeLessThanOrEqual(12000);
+});
+
 test('wide E : sports + CTA changent en cascade puis se figent', async ({ page }) => {
   await assertSportsCascadeAt(page, { width: 1920, height: 1080, wide: true, minChips: 3 });
 });

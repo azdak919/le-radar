@@ -1397,6 +1397,20 @@
       ko: '다음', ja: '次の番組', hi: 'आगे', vi: 'Sắp tới', tr: 'Sırada',
       nl: 'Hierna', pl: 'Następnie', ht: 'A pwochen',
     },
+    AM: {
+      en: 'AM', es: 'AM', pt: 'AM', de: 'AM', it: 'AM', fr: 'AM',
+    },
+    PM: {
+      en: 'PM', es: 'PM', pt: 'PM', de: 'PM', it: 'PM', fr: 'PM',
+    },
+    'cet AM': {
+      en: 'this AM', es: 'esta AM', pt: 'esta AM', de: 'vorm.', it: 'AM',
+      fr: 'cet AM',
+    },
+    'ce PM': {
+      en: 'this PM', es: 'este PM', pt: 'este PM', de: 'nachm.', it: 'PM',
+      fr: 'ce PM',
+    },
     "Rien de programmé pour aujourd'hui": {
       en: 'Nothing scheduled for today',
       es: 'Nada programado para hoy',
@@ -1488,7 +1502,7 @@
   /** Ne jamais envoyer ces libellés au MT, même en IU/ar (cas « correspondre »). */
   const UI_LOCK_NO_MT = new Set([
     'match', 'Match', 'Prochains match', 'Prochain match',
-    'En direct', 'En cours', 'reçoit', 'reçoivent', 'chez',
+    'En direct', 'En cours', 'cet AM', 'ce PM', 'AM', 'PM', 'reçoit', 'reçoivent', 'chez',
   ]);
 
   function uiPhraseLookup(core = '', targetLang = '') {
