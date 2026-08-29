@@ -6,7 +6,7 @@
  *   1. Worker cache partagé (workers/translate-cache — modèle météo)
  *   2. Google dict-chrome-ex (clients5) — gtx 429 en prod
  *   3. Google gtx (translate.googleapis.com, sans clé — comme Ataraxia)
- *   4. MyMemory (repli ; refuser les warnings de quota)
+ *   4. MyMemory (repli ; jamais fr|fr ; refuser quota + « two distinct languages »)
  *
  * Règles d'activation :
  *  1. Préférence utilisateur (localStorage) si elle existe — y compris « Original ».
@@ -16,11 +16,15 @@
   'use strict';
 
   const STORAGE_KEY = 'radar-translate-mode';
-  // v10 : { t, ts } + purge fraîcheur (sessions QC). Invalide v9 (échos FR).
-  const CACHE_KEY = 'radar-translate-cache-v10';
-  const CACHE_LEGACY_KEYS = ['radar-translate-cache-v9', 'radar-translate-cache-v8'];
+  // v11 : invalide v10 (poison MyMemory « PLEASE SELECT TWO DISTINCT LANGUAGES »).
+  const CACHE_KEY = 'radar-translate-cache-v11';
+  const CACHE_LEGACY_KEYS = [
+    'radar-translate-cache-v10',
+    'radar-translate-cache-v9',
+    'radar-translate-cache-v8',
+  ];
   const CACHE_MAX = 4000;
-  const CACHE_VERSION = 10;
+  const CACHE_VERSION = 11;
   const DEFAULT_MODE = 'original';
   // 6 = plafond HTTP/1.1 par hôte vers gtx. Au-delà, le navigateur file.
   // La vitesse perçue vient du passage chrome (glossaire, 0 réseau), pas d’un
@@ -1211,7 +1215,7 @@
       return undefined;
     }
     const { text } = cacheKeyParts(key);
-    if (sameMtText(rec.t, text)) {
+    if (sameMtText(rec.t, text) || isJunkMt(rec.t)) {
       delete translationCache[key];
       return undefined;
     }
@@ -1223,7 +1227,7 @@
   function cacheSet(key, val) {
     if (val == null || val === '') return;
     const { text } = cacheKeyParts(key);
-    if (sameMtText(val, text)) return;
+    if (sameMtText(val, text) || isJunkMt(val)) return;
     if (Object.prototype.hasOwnProperty.call(translationCache, key)) {
       delete translationCache[key];
     }
@@ -1283,7 +1287,7 @@
       const rec = unwrapCacheVal(translationCache[key]);
       const { text } = cacheKeyParts(key);
       const norm = String(text || '').replace(/\s+/g, ' ').trim();
-      if (!rec || sameMtText(rec.t, text)) {
+      if (!rec || sameMtText(rec.t, text) || isJunkMt(rec.t)) {
         delete translationCache[key];
         continue;
       }
@@ -1912,11 +1916,26 @@
     if (/<html[\s>]/i.test(t) || /<title>\s*Sorry/i.test(t)) return true;
     if (/MYMEMORY WARNING/i.test(t) || /YOU USED ALL AVAILABLE/i.test(t)) return true;
     if (/NEXT AVAILABLE IN/i.test(t) && /TRANSLATE MORE/i.test(t)) return true;
+    // MyMemory sl===tl (EN→FR) collait ça sur tout le chrome.
+    if (/PLEASE SELECT TWO DISTINCT LANGUAGES/i.test(t)) return true;
+    if (/VEUILLEZ S[ÉE]LECTIONNER DEUX LANGUES DISTINCTES/i.test(t)) return true;
+    if (/INVALID LANGUAGE PAIR/i.test(t) || /NO QUERY SPECIFIED/i.test(t)) return true;
+    if (/QUERY LENGTH LIMIT/i.test(t)) return true;
     return false;
+  }
+
+  function sameMtLang(a, b) {
+    const na = String(mymemoryLang(a) || '').toLowerCase();
+    const nb = String(mymemoryLang(b) || '').toLowerCase();
+    return !!na && !!nb && na === nb;
   }
 
   function readMtPayload(data) {
     if (data == null) return '';
+    if (typeof data === 'object' && !Array.isArray(data) && data.responseStatus != null
+        && Number(data.responseStatus) !== 200) {
+      return '';
+    }
     if (typeof data === 'string') {
       return cleanTranslation(data)?.replace(/^\s+|\s+$/g, '') || '';
     }
@@ -1958,6 +1977,7 @@
 
     const tryPair = async (buildUrl, sls, gtl, timeoutMs) => {
       for (const sl of sls) {
+        if (sameMtLang(sl, gtl)) continue;
         const res = await fetchJsonTimed(buildUrl(sl, gtl), timeoutMs);
         const hit = usableMt(readMtPayload(res.data), core);
         if (hit) return { hit, aborted: false };
@@ -2006,6 +2026,7 @@
       gtxLoop:
       for (const gtl of tls) {
         for (const sl of sources) {
+          if (sameMtLang(sl, gtl)) continue;
           const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${encodeURIComponent(sl)}&tl=${encodeURIComponent(gtl)}&dt=t&q=${encoded}`;
           const res = await fetchJsonTimed(url);
           const translated = usableMt(readGtxText(res.data), core);
@@ -2020,10 +2041,12 @@
 
     try {
       const mm = mymemoryLang(tl);
-      const url = `https://api.mymemory.translated.net/get?q=${encoded}&langpair=fr|${encodeURIComponent(mm)}`;
-      const res = await fetchJsonTimed(url);
-      const translated = usableMt(readMtPayload(res.data), core);
-      if (translated) return translated;
+      if (mm && !sameMtLang('fr', mm)) {
+        const url = `https://api.mymemory.translated.net/get?q=${encoded}&langpair=fr|${encodeURIComponent(mm)}`;
+        const res = await fetchJsonTimed(url);
+        const translated = usableMt(readMtPayload(res.data), core);
+        if (translated) return translated;
+      }
     } catch { /* keep original */ }
 
     return null;
@@ -4355,6 +4378,7 @@
       OVERLAY_TIMING,
       gtxTargetCodes,
       mymemoryLang,
+      sameMtLang,
       isJunkMt,
       readMtPayload,
       TRANSLATE_WORKER_BASE,

@@ -12,20 +12,35 @@ assert.match(src, /clients5\.google\.com/, 'clients5 en premier');
 assert.match(src, /function isJunkMt/, 'filtre poubelle');
 assert.doesNotMatch(src, /\bif\s*\(\s*cached\s*\)\s*return\s+cached\s*;/, 'pas de return cached nu');
 
-const { isJunkMt, readMtPayload } = await import('../workers/translate-cache/src/index.js');
+const { isJunkMt, readMtPayload, sameMtLang } = await import('../workers/translate-cache/src/index.js');
 
 assert.equal(isJunkMt('Hello'), false);
 assert.equal(isJunkMt('MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS'), true);
 assert.equal(isJunkMt('<html><title>Sorry...</title>'), true);
+assert.equal(isJunkMt('PLEASE SELECT TWO DISTINCT LANGUAGES'), true);
+assert.equal(isJunkMt('VEUILLEZ SÉLECTIONNER DEUX LANGUES DISTINCTES'), true);
+assert.equal(isJunkMt('Veuillez selectionner deux langues distinctes'), true);
 assert.equal(readMtPayload(['Hello world']), 'Hello world');
 assert.equal(readMtPayload([[['Hola', 'Bonjour']]]), 'Hola');
 assert.equal(readMtPayload({ t: 'Ciao' }), 'Ciao');
+assert.equal(
+  readMtPayload({
+    responseStatus: '403',
+    responseData: { translatedText: 'PLEASE SELECT TWO DISTINCT LANGUAGES' },
+  }),
+  '',
+);
 assert.equal(
   isJunkMt(readMtPayload({
     responseData: { translatedText: 'MYMEMORY WARNING: YOU USED ALL AVAILABLE' },
   })),
   true,
 );
+assert.equal(sameMtLang('fr', 'fr'), true);
+assert.equal(sameMtLang('en', 'fr'), false);
+assert.equal(sameMtLang('iw', 'he'), true);
+assert.match(src, /same language/, 'worker : 503 si sl===tl');
+assert.match(src, /PLEASE SELECT TWO DISTINCT LANGUAGES/, 'worker : poubelle sl===tl');
 
 const page = readFileSync(join(root, 'translate.js'), 'utf8');
 assert.match(page, /function isJunkMt/, 'page : même filtre');
