@@ -1034,6 +1034,13 @@
     console.info(msg);
   }
 
+  function hideTranslateToast() {
+    const el = document.getElementById('toast');
+    if (!el) return;
+    el.classList.add('hidden');
+    clearTimeout(el._radarTranslateT);
+  }
+
   function labelForMode(mode) {
     if (MODES[mode]) return MODES[mode];
     if (mode && mode !== DEFAULT_MODE) {
@@ -3230,7 +3237,9 @@
     const cardH = card.offsetHeight || 220;
     const minTop = visTop + 16;
     const maxTop = visBottom - cardH - 16;
-    let cardTopVp = (window.innerHeight / 2) - (cardH / 2);
+    // Centre dans l’îlot overlay (fil visible). Le milieu écran, à 390 px,
+    // tombait sur le titre : le filet de .wire-head traversait le logo.
+    let cardTopVp = visTop + (height / 2) - (cardH / 2);
     if (maxTop >= minTop) {
       cardTopVp = Math.min(Math.max(cardTopVp, minTop), maxTop);
     } else {
@@ -3344,6 +3353,7 @@
     const wasFocusedInTuner = eventInTuner({ target: document.activeElement });
     el.hidden = false;
     el.classList.remove('is-leaving');
+    hideTranslateToast();
     lockArticlesScroll();
     layoutArticlesOverlay();
     window.requestAnimationFrame(() => layoutArticlesOverlay());
