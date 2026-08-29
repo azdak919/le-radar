@@ -191,6 +191,8 @@ const SPORTS_MERIDIEM_AM_LINE = 'cet AM';
 const SPORTS_MERIDIEM_PM_LINE = 'ce PM';
 /** Demain : deux lignes (Demain / AM|PM), même jaune que Prochain match. */
 const SPORTS_CTA_TAG_TOMORROW = 'Demain';
+/** Puces à-venir du jour — pas la CTA (À venir). */
+const SPORTS_MATCH_TAG_TODAY = 'Aujourd’hui';
 /** Prochains : deux lignes dans la pastille, pas un rail plus large. */
 const SPORTS_CTA_TAG_NEXT = 'Prochains match';
 /** Repli idle (creux total, pas de match) ; sinon ton du sport via sportsCtaTone. Rouge = direct. */
@@ -1809,6 +1811,30 @@ function sportsCompetitionLabel(slide) {
  * Mot de temps des puces (même vocabulaire que la CTA) :
  * À venir / Demain / aujourd’hui / hier / avant-hier. Vide → date courte.
  */
+/** Puces à-venir du jour / demain : pastille AM·PM. Pas Hier. */
+function sportsMatchWhenTag(slide) {
+  const g = slide?.game || {};
+  if (slide?.mode !== 'next' || sportsGameIsLive(g)) return null;
+  const day = sportsSlideDayKey(slide);
+  if (!day) return null;
+  const today = torontoDayKey();
+  if (day === today) {
+    return {
+      word: SPORTS_MATCH_TAG_TODAY,
+      meridiem: sportsMeridiemLine(g, { today: true }),
+      lamp: 'soon',
+    };
+  }
+  if (day === sportsCivilDayShift(today, 1)) {
+    return {
+      word: SPORTS_CTA_TAG_TOMORROW,
+      meridiem: sportsMeridiemLine(g, { today: false }),
+      lamp: 'next',
+    };
+  }
+  return null;
+}
+
 function sportsWhenWord(slide) {
   const g = slide?.game || {};
   if (sportsGameIsLive(g)) return '';
@@ -1827,15 +1853,20 @@ function sportsWhenWord(slide) {
 
 function sportsMatchSubLine(slide) {
   const g = slide?.game || {};
-  const word = sportsWhenWord(slide);
+  const tag = sportsMatchWhenTag(slide);
   const clock = sportsKickoffClock(g);
   let when = '';
-  if (word === 'À venir' || word === 'Demain') {
-    when = [word, clock].filter(Boolean).join(' · ');
-  } else if (word) {
-    when = word;
+  if (tag) {
+    when = clock;
   } else {
-    when = formatSportsWhen(g.date, g.time);
+    const word = sportsWhenWord(slide);
+    if (word === 'À venir' || word === 'Demain') {
+      when = [word, clock].filter(Boolean).join(' · ');
+    } else if (word) {
+      when = word;
+    } else {
+      when = formatSportsWhen(g.date, g.time);
+    }
   }
   const prior = !!(g.priorSeason || slide?.team?.lastGamePriorSeason);
   const placeKind = sportsIsPlaceResult(g, slide?.team?.sport || g.sport);
@@ -1996,6 +2027,12 @@ function refreshSportsChromeLanguage() {
         score: tag.dataset.ctaScore,
         meridiemLine: tag.dataset.ctaMeridiemLine,
       });
+    }
+  });
+  document.querySelectorAll('.sports-chip--match .sports-chip__when-tag').forEach((tag) => {
+    const wanted = tag.dataset.whenTag;
+    if (wanted) {
+      fillSportsCtaTagCopy(tag, wanted, { meridiemLine: tag.dataset.meridiem || '' });
     }
   });
   document.querySelectorAll('.sports-chip__vs[data-vs-orig]').forEach((el) => {
@@ -3151,10 +3188,23 @@ function paintSportsChip(slide, animate = false) {
   // Puce étroite : acronymes univ. (ULaval, UdeM…) — CTA garde les formes longues.
   const opp = sportsChipOpponentLabel(g);
   const subLine = sportsMatchSubLine(slide);
+  const whenInfo = sportsMatchWhenTag(slide);
+  const whenTag = whenInfo ? (() => {
+    const el = document.createElement('span');
+    el.className = 'sports-chip__when-tag';
+    el.setAttribute('aria-hidden', 'true');
+    el.dataset.whenTag = whenInfo.word;
+    if (whenInfo.lamp) el.dataset.whenLamp = whenInfo.lamp;
+    if (whenInfo.meridiem) el.dataset.meridiem = whenInfo.meridiem;
+    fillSportsCtaTagCopy(el, whenInfo.word, { meridiemLine: whenInfo.meridiem });
+    return el;
+  })() : null;
 
   if (slide.mode === 'result') {
     const badge = sportsResultBadgeEl(g, sport);
-    if (badge) a.append(glyph, badge);
+    if (whenTag && badge) a.append(whenTag, glyph, badge);
+    else if (whenTag) a.append(whenTag, glyph);
+    else if (badge) a.append(glyph, badge);
     else a.append(glyph);
     const placeKind = sportsIsPlaceResult(g, sport);
     const prior = g.priorSeason || team.lastGamePriorSeason;
@@ -3175,14 +3225,16 @@ function paintSportsChip(slide, animate = false) {
     a.title = sportsChipTitle(slide) + (prior ? ' · Saison précédente' : '');
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
   } else if (slide.mode === 'next' && sportsGameIsLive(g)) {
-    a.append(glyph);
+    if (whenTag) a.append(whenTag, glyph);
+    else a.append(glyph);
     inner.innerHTML = sportsLiveTeamsScoreHtml(team, g);
     subText.textContent = sportsLiveSubParts(slide).join(' · ');
     a.title = sportsChipTitle(slide);
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
     a.dataset.sportsLive = '1';
   } else {
-    a.append(glyph);
+    if (whenTag) a.append(whenTag, glyph);
+    else a.append(glyph);
     // « reçoit » / « chez » — même ton presse que la CTA ; verbe en .sports-chip__vs (gris).
     inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
       + sportsVsHtml(g)
