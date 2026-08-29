@@ -82,7 +82,7 @@ test('quotas MT inchangés ; chrome-first exposé', async ({ page }) => {
   }));
   expect(meta.concurrency).toBe(6);
   expect(meta.maxChunk).toBe(450);
-  expect(meta.cacheKey).toContain('v10');
+  expect(meta.cacheKey).toContain('v11');
   expect(meta.chrome).toContain('masthead-sports-strip');
   expect(meta.chrome).toContain('#tuner');
 });
