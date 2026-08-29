@@ -182,13 +182,14 @@ const SPORTS_CTA_TAG_LIVE = 'En direct';
 /** Coup d’envoi du jour, pas encore commencé — rouge pulse, pas le jaune Prochain. */
 const SPORTS_CTA_TAG_SOON = 'À venir';
 /**
- * 2e ligne sous À venir. AM = avant-midi (masc.) + voyelle → « cet AM ».
- * PM = après-midi (masc. QC) + consonne → « ce PM ». Pas « cette AM »
- * (confusion cet / cette).
+ * 2e ligne des pastilles datées (À venir, Demain, Hier, Aujourd’hui…).
+ * AM = avant-midi (masc.) + voyelle → « cet AM ».
+ * PM = après-midi (masc. QC) + consonne → « ce PM ». Pas « cette AM ».
+ * Pas sur En direct (score) ni Prochain match (déjà 2 lignes).
  */
 const SPORTS_MERIDIEM_AM_LINE = 'cet AM';
 const SPORTS_MERIDIEM_PM_LINE = 'ce PM';
-/** Demain : une ligne, même jaune que Prochain match. */
+/** Demain : deux lignes (Demain / cet AM|ce PM), même jaune que Prochain match. */
 const SPORTS_CTA_TAG_TOMORROW = 'Demain';
 /** Prochains : deux lignes dans la pastille, pas un rail plus large. */
 const SPORTS_CTA_TAG_NEXT = 'Prochains match';
@@ -1718,12 +1719,21 @@ function sportsMeridiem(game) {
   return Number(m[1]) < 12 ? 'AM' : 'PM';
 }
 
-/** 2e ligne sous À venir : « cet AM » / « ce PM ». */
+/** 2e ligne : « cet AM » / « ce PM ». */
 function sportsMeridiemLine(game) {
   const half = sportsMeridiem(game);
   if (half === 'AM') return SPORTS_MERIDIEM_AM_LINE;
   if (half === 'PM') return SPORTS_MERIDIEM_PM_LINE;
   return '';
+}
+
+/** Pastilles datées : AM/PM. Pas En direct (score) ni Prochain match. */
+function sportsCtaTagUsesMeridiem(wanted) {
+  if (!wanted) return false;
+  if (wanted === SPORTS_CTA_TAG_LIVE) return false;
+  if (wanted === SPORTS_CTA_TAG_NEXT) return false;
+  if (wanted === RADAR_BRAND_SHORT) return false;
+  return true;
 }
 
 /** Âge lisible d’un fait daté — « il y a 14 h », « hier », « il y a 3 j ». */
@@ -1916,28 +1926,11 @@ function sportsCtaTagLabel(slide, state) {
   return RADAR_BRAND_SHORT;
 }
 
-/** Remplit la pastille : « Prochains match » / live (En direct + score) / À venir + cet AM|ce PM. */
+/** Remplit la pastille : Prochains match / En direct+score / mot + cet AM|ce PM. */
 function fillSportsCtaTagCopy(tag, wanted, extra = {}) {
   tag.replaceChildren();
   markNoTranslate(tag);
   const shown = window.RadarTranslate?.displayUiText?.(wanted) || wanted;
-  if (wanted === SPORTS_CTA_TAG_SOON) {
-    const line = extra.meridiemLine || tag.dataset.ctaMeridiemLine || '';
-    if (!line) {
-      tag.append(document.createTextNode(shown));
-      return;
-    }
-    const lines = document.createElement('span');
-    lines.className = 'sports-chip__cta-tag-lines';
-    const top = document.createElement('span');
-    top.textContent = shown;
-    const bot = document.createElement('span');
-    bot.className = 'sports-chip__cta-tag-meridiem';
-    bot.textContent = window.RadarTranslate?.displayUiText?.(line) || line;
-    lines.append(top, bot);
-    tag.append(lines);
-    return;
-  }
   if (wanted === SPORTS_CTA_TAG_LIVE) {
     const score = extra.score || tag.dataset.ctaScore || SPORTS_LIVE_SCORE_PENDING;
     const lines = document.createElement('span');
@@ -1966,6 +1959,19 @@ function fillSportsCtaTagCopy(tag, wanted, extra = {}) {
       lines.append(bot);
     }
     tag.append(lines);
+    return;
+  }
+  const line = extra.meridiemLine || tag.dataset.ctaMeridiemLine || '';
+  if (line && sportsCtaTagUsesMeridiem(wanted)) {
+    const wrap = document.createElement('span');
+    wrap.className = 'sports-chip__cta-tag-lines';
+    const top = document.createElement('span');
+    top.textContent = shown;
+    const bot = document.createElement('span');
+    bot.className = 'sports-chip__cta-tag-meridiem';
+    bot.textContent = window.RadarTranslate?.displayUiText?.(line) || line;
+    wrap.append(top, bot);
+    tag.append(wrap);
     return;
   }
   tag.append(document.createTextNode(shown));
@@ -2722,7 +2728,7 @@ function applySportsCtaState(chip, slide) {
     const scoreChanged = (tag.dataset.ctaScore || '') !== liveScore;
     if (liveScore) tag.dataset.ctaScore = liveScore;
     else delete tag.dataset.ctaScore;
-    const meridiemLine = wanted === SPORTS_CTA_TAG_SOON ? sportsMeridiemLine(game) : '';
+    const meridiemLine = sportsCtaTagUsesMeridiem(wanted) ? sportsMeridiemLine(game) : '';
     const meridiemChanged = (tag.dataset.ctaMeridiemLine || '') !== meridiemLine;
     if (meridiemLine) tag.dataset.ctaMeridiemLine = meridiemLine;
     else delete tag.dataset.ctaMeridiemLine;

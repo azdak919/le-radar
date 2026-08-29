@@ -488,7 +488,7 @@
   font-size: 11px;
   line-height: 1.15;
 }
-/* À venir : 2e ligne « cet AM » / « ce PM » (uppercase hérité de la pastille). */
+/* Pastilles datées : 2e ligne « cet AM » / « ce PM » (uppercase hérité). */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag-meridiem {
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.08em;
