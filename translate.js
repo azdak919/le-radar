@@ -14,16 +14,19 @@
   'use strict';
 
   const STORAGE_KEY = 'radar-translate-mode';
-  // v9 : glossaire sports (PROCHAIN CORRESPONDRE) + LRU. Invalide le cache v8
-  // qui pouvait coller « correspondre » sur la pastille « match ».
-  const CACHE_KEY = 'radar-translate-cache-v9';
-  const CACHE_MAX = 1400;
+  // v10 : { t, ts } + purge fraîcheur (sessions QC). Invalide v9 (échos FR).
+  const CACHE_KEY = 'radar-translate-cache-v10';
+  const CACHE_LEGACY_KEYS = ['radar-translate-cache-v9', 'radar-translate-cache-v8'];
+  const CACHE_MAX = 4000;
+  const CACHE_VERSION = 10;
   const DEFAULT_MODE = 'original';
   // 6 = plafond HTTP/1.1 par hôte vers gtx. Au-delà, le navigateur file.
   // La vitesse perçue vient du passage chrome (glossaire, 0 réseau), pas d’un
   // plus gros robinet — ouvrir MAX_CHUNK / CONCURRENCY casse l’ordre IU.
   const CONCURRENCY = 6;
   const MAX_CHUNK = 450;
+  /** gtx/MyMemory sans délai = overlay coincé (persan vu à 21 %). Mutable en test. */
+  const MT = { timeoutMs: 6000 };
   /** Mât, tuner, CTA, nav, tête du fil, pied — avant les articles. */
   const CHROME_SELECTOR = 'header.masthead, #tuner, #masthead-sports-strip, nav.site-sections, .wire-head, .site-foot';
 
@@ -850,8 +853,10 @@
 
   /** textNode → original string (avant toute traduction) */
   const originalByNode = new WeakMap();
-  /** cache localStorage : key → translated */
+  /** cache localStorage : key → { t, ts } */
   let translationCache = {};
+  /** Titres / extraits encore dans le fil frais — pour purger le cache. */
+  let newsCorpusTexts = new Set();
   let activeMode = DEFAULT_MODE;
   let translating = false;
   let pendingRetranslate = false;
@@ -970,6 +975,48 @@
     return map[code] || code;
   }
 
+  /** Codes gtx à essayer, dans l’ordre. Un hang (null) arrête la liste. */
+  const GTX_TL_ALIASES = {
+    fa: ['fa', 'fa-IR'],
+    he: ['iw', 'he'],
+    iw: ['iw', 'he'],
+    zh: ['zh-CN', 'zh'],
+    'zh-CN': ['zh-CN', 'zh'],
+    'zh-tw': ['zh-TW'],
+    'zh-TW': ['zh-TW'],
+    tl: ['tl', 'fil'],
+    fil: ['tl', 'fil'],
+    iu: ['iu', 'ike'],
+    'iu-latn': ['iu-Latn', 'ike-Latn', 'iu'],
+    'iu-Latn': ['iu-Latn', 'ike-Latn', 'iu'],
+  };
+
+  function gtxTargetCodes(tl) {
+    const code = gtxLang(tl);
+    const aliases = GTX_TL_ALIASES[code] || GTX_TL_ALIASES[tl];
+    if (!aliases) return [code];
+    const seen = new Set();
+    const out = [];
+    for (const item of aliases) {
+      if (seen.has(item)) continue;
+      seen.add(item);
+      out.push(item);
+    }
+    return out.length ? out : [code];
+  }
+
+  /** MyMemory veut ISO 639 (he, pas iw ; fa, pas fa-IR). */
+  function mymemoryLang(tl) {
+    const code = gtxLang(tl);
+    const map = {
+      iw: 'he',
+      'fa-IR': 'fa',
+      'iu-Latn': 'iu',
+      fil: 'tl',
+    };
+    return map[code] || code;
+  }
+
   function notify(msg) {
     const el = document.getElementById('toast');
     if (el) {
@@ -1052,45 +1099,190 @@
     return mode;
   }
 
+  function cacheKey(text, tl) {
+    return `auto|${tl}|${text}`;
+  }
+
+  function cacheKeyParts(key) {
+    const first = String(key).indexOf('|');
+    const second = String(key).indexOf('|', first + 1);
+    if (second < 0) return { sl: '', tl: '', text: String(key) };
+    return {
+      sl: key.slice(0, first),
+      tl: key.slice(first + 1, second),
+      text: key.slice(second + 1),
+    };
+  }
+
+  function unwrapCacheVal(val) {
+    if (val && typeof val === 'object' && typeof val.t === 'string') return val;
+    if (typeof val === 'string') return { t: val, ts: Date.now() };
+    return null;
+  }
+
   function loadCache() {
     try {
+      CACHE_LEGACY_KEYS.forEach((k) => {
+        try { localStorage.removeItem(k); } catch { /* ignore */ }
+      });
       const raw = localStorage.getItem(CACHE_KEY);
-      if (raw) translationCache = JSON.parse(raw) || {};
+      if (!raw) {
+        translationCache = {};
+        return;
+      }
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.v === CACHE_VERSION && parsed.entries && typeof parsed.entries === 'object') {
+        translationCache = parsed.entries;
+      } else if (parsed && typeof parsed === 'object' && !parsed.v) {
+        translationCache = {};
+        for (const [k, val] of Object.entries(parsed)) {
+          const rec = unwrapCacheVal(val);
+          if (!rec) continue;
+          const { text } = cacheKeyParts(k);
+          if (sameMtText(rec.t, text)) continue;
+          translationCache[k] = { t: rec.t, ts: rec.ts || Date.now() };
+        }
+      } else {
+        translationCache = {};
+      }
     } catch {
       translationCache = {};
     }
   }
 
+  function persistCachePayload() {
+    return JSON.stringify({
+      v: CACHE_VERSION,
+      savedAt: Date.now(),
+      entries: translationCache,
+    });
+  }
+
   function saveCache() {
+    const keys = Object.keys(translationCache);
+    if (keys.length > CACHE_MAX) {
+      keys.slice(0, keys.length - CACHE_MAX).forEach((k) => {
+        delete translationCache[k];
+      });
+    }
     try {
-      const keys = Object.keys(translationCache);
-      if (keys.length > CACHE_MAX) {
-        keys.slice(0, keys.length - CACHE_MAX).forEach((k) => {
-          delete translationCache[k];
-        });
-      }
-      localStorage.setItem(CACHE_KEY, JSON.stringify(translationCache));
-    } catch { /* quota */ }
+      localStorage.setItem(CACHE_KEY, persistCachePayload());
+    } catch {
+      keys.slice(0, Math.ceil(keys.length * 0.35)).forEach((k) => {
+        delete translationCache[k];
+      });
+      try {
+        localStorage.setItem(CACHE_KEY, persistCachePayload());
+      } catch { /* quota */ }
+    }
   }
 
-  function cacheKey(text, tl) {
-    return `auto|${tl}|${text}`;
-  }
-
-  /** LRU : relire une clé la remet en fin d’insertion (saveCache coupe le début). */
+  /** LRU : relire une clé la remet en fin d’insertion (le cap coupe le début). */
   function cacheGet(key) {
     if (!Object.prototype.hasOwnProperty.call(translationCache, key)) return undefined;
-    const val = translationCache[key];
+    const rec = unwrapCacheVal(translationCache[key]);
+    if (!rec) {
+      delete translationCache[key];
+      return undefined;
+    }
+    const { text } = cacheKeyParts(key);
+    if (sameMtText(rec.t, text)) {
+      delete translationCache[key];
+      return undefined;
+    }
     delete translationCache[key];
-    translationCache[key] = val;
-    return val;
+    translationCache[key] = { t: rec.t, ts: Date.now() };
+    return rec.t;
   }
 
   function cacheSet(key, val) {
+    if (val == null || val === '') return;
+    const { text } = cacheKeyParts(key);
+    if (sameMtText(val, text)) return;
     if (Object.prototype.hasOwnProperty.call(translationCache, key)) {
       delete translationCache[key];
     }
-    translationCache[key] = val;
+    translationCache[key] = { t: String(val), ts: Date.now() };
+  }
+
+  function rememberNewsCorpus(items = []) {
+    const list = Array.isArray(items) ? items : [];
+    const fresh = (typeof window !== 'undefined' && window.RadarSessionFreshness?.filterFreshItems)
+      ? window.RadarSessionFreshness.filterFreshItems(list)
+      : list;
+    const next = new Set();
+    const fields = ['title', 'excerpt', 'summary', 'description', 'brief', 'author', 'byline', 'kicker'];
+    for (const item of fresh) {
+      if (!item || typeof item !== 'object') continue;
+      for (const field of fields) {
+        const t = String(item[field] || '').replace(/\s+/g, ' ').trim();
+        if (t) next.add(t);
+      }
+    }
+    newsCorpusTexts = next;
+    pruneTranslationCache();
+  }
+
+  function chromeKeepTexts() {
+    const keep = new Set();
+    Object.keys(UI_PHRASES).forEach((k) => keep.add(k));
+    Object.values(OVERLAY_COPY_FR || {}).forEach((k) => keep.add(k));
+    if (typeof document === 'undefined') return keep;
+    document.querySelectorAll(`${CHROME_SELECTOR}, .article`).forEach((root) => {
+      const walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      let n = walk.nextNode();
+      while (n) {
+        const orig = originalByNode.get(n);
+        const t = String(orig || n.nodeValue || '').replace(/\s+/g, ' ').trim();
+        if (t) keep.add(t);
+        n = walk.nextNode();
+      }
+    });
+    return keep;
+  }
+
+  /**
+   * Garde les traductions du fil encore frais + chrome UI.
+   * Sans corpus (news pas encore là) : seulement cap LRU + échos FR.
+   */
+  function pruneTranslationCache({ persist = true } = {}) {
+    const keep = chromeKeepTexts();
+    newsCorpusTexts.forEach((t) => keep.add(t));
+    const hasCorpus = newsCorpusTexts.size > 0;
+    const windowStart = (typeof window !== 'undefined'
+      && window.RadarSessionFreshness?.freshnessWindowStart)
+      ? window.RadarSessionFreshness.freshnessWindowStart().getTime()
+      : 0;
+
+    for (const key of Object.keys(translationCache)) {
+      const rec = unwrapCacheVal(translationCache[key]);
+      const { text } = cacheKeyParts(key);
+      const norm = String(text || '').replace(/\s+/g, ' ').trim();
+      if (!rec || sameMtText(rec.t, text)) {
+        delete translationCache[key];
+        continue;
+      }
+      if (keep.has(text) || keep.has(norm)) continue;
+      if (hasCorpus) {
+        delete translationCache[key];
+        continue;
+      }
+      if (windowStart && rec.ts && rec.ts < windowStart) {
+        delete translationCache[key];
+      }
+    }
+
+    const keys = Object.keys(translationCache);
+    if (keys.length > CACHE_MAX) {
+      keys.slice(0, keys.length - CACHE_MAX).forEach((k) => {
+        delete translationCache[k];
+      });
+    }
+    if (persist) {
+      try {
+        localStorage.setItem(CACHE_KEY, persistCachePayload());
+      } catch { /* quota */ }
+    }
   }
 
   function cleanTranslation(str) {
@@ -1491,6 +1683,82 @@
       uk: 'Інші мови',
       ht: 'Lòt lang',
     },
+    'Préparation de la langue…': {
+      en: 'Preparing the language…', es: 'Preparando el idioma…',
+      pt: 'A preparar o idioma…', de: 'Sprache wird vorbereitet…',
+      it: 'Preparazione della lingua…', nl: 'Taal wordt voorbereid…',
+      pl: 'Przygotowywanie języka…', tr: 'Dil hazırlanıyor…',
+      ru: 'Подготовка языка…', uk: 'Підготовка мови…',
+      ar: 'جارٍ تجهيز اللغة…', fa: 'آماده‌سازی زبان…',
+      he: 'מכינים את השפה…', ur: 'زبان تیار کی جا رہی ہے…',
+      zh: '正在准备语言…', 'zh-tw': '正在準備語言…',
+      ko: '언어 준비 중…', ja: '言語を準備しています…',
+      hi: 'भाषा तैयार हो रही है…', vi: 'Đang chuẩn bị ngôn ngữ…',
+      ht: 'N ap prepare lang lan…', el: 'Προετοιμασία γλώσσας…',
+      fr: 'Préparation de la langue…',
+    },
+    'Traduction des articles…': {
+      en: 'Translating articles…', es: 'Traduciendo los artículos…',
+      pt: 'A traduzir os artigos…', de: 'Artikel werden übersetzt…',
+      it: 'Traduzione degli articoli…', nl: 'Artikelen worden vertaald…',
+      pl: 'Tłumaczenie artykułów…', tr: 'Yazılar çevriliyor…',
+      ru: 'Перевод статей…', uk: 'Переклад статей…',
+      ar: 'جارٍ ترجمة المقالات…', fa: 'در حال ترجمهٔ مقاله‌ها…',
+      he: 'מתרגמים את הכתבות…', ur: 'مضامین کا ترجمہ ہو رہا ہے…',
+      zh: '正在翻译文章…', 'zh-tw': '正在翻譯文章…',
+      ko: '기사 번역 중…', ja: '記事を翻訳しています…',
+      hi: 'लेख अनूदित हो रहे हैं…', vi: 'Đang dịch bài…',
+      ht: 'N ap tradui atik yo…', el: 'Μετάφραση άρθρων…',
+      fr: 'Traduction des articles…',
+    },
+    'Mise en page…': {
+      en: 'Laying out the page…', es: 'Maquetando…',
+      pt: 'A paginar…', de: 'Seite wird gesetzt…',
+      it: 'Impaginazione…', nl: 'Opmaak…',
+      pl: 'Skład strony…', tr: 'Sayfa düzenleniyor…',
+      ru: 'Вёрстка…', uk: 'Верстка…',
+      ar: 'جارٍ تنسيق الصفحة…', fa: 'صفحه‌آرایی…',
+      he: 'עימוד…', ur: 'صفحہ آرائی…',
+      zh: '正在排版…', 'zh-tw': '正在排版…',
+      ko: '페이지 구성 중…', ja: 'レイアウト中…',
+      hi: 'पृष्ठ सजाया जा रहा है…', vi: 'Đang dàn trang…',
+      ht: 'N ap mete paj la…', el: 'Σελιδοποίηση…',
+      fr: 'Mise en page…',
+    },
+    'Prêt': {
+      en: 'Ready', es: 'Listo', pt: 'Pronto', de: 'Fertig',
+      it: 'Pronto', nl: 'Klaar', pl: 'Gotowe', tr: 'Hazır',
+      ru: 'Готово', uk: 'Готово',
+      ar: 'جاهز', fa: 'آماده', he: 'מוכן', ur: 'تیار',
+      zh: '完成', 'zh-tw': '完成', ko: '완료', ja: '完了',
+      hi: 'तैयार', vi: 'Xong', ht: 'Pare', el: 'Έτοιμο',
+      fr: 'Prêt',
+    },
+    'Afficher les articles dans la langue actuelle': {
+      en: 'Show articles in the current language',
+      es: 'Mostrar los artículos en el idioma actual',
+      pt: 'Mostrar os artigos no idioma atual',
+      de: 'Artikel in der aktuellen Sprache anzeigen',
+      it: 'Mostra gli articoli nella lingua attuale',
+      nl: 'Artikelen in de huidige taal tonen',
+      pl: 'Pokaż artykuły w bieżącym języku',
+      tr: 'Yazıları geçerli dilde göster',
+      ru: 'Показать статьи на текущем языке',
+      uk: 'Показати статті поточною мовою',
+      ar: 'عرض المقالات باللغة الحالية',
+      fa: 'نمایش مقاله‌ها به زبان فعلی',
+      he: 'הצגת הכתבות בשפה הנוכחית',
+      ur: 'موجودہ زبان میں مضامین دکھائیں',
+      zh: '以当前语言显示文章',
+      'zh-tw': '以目前語言顯示文章',
+      ko: '현재 언어로 기사 보기',
+      ja: '現在の言語で記事を表示',
+      hi: 'वर्तमान भाषा में लेख दिखाएँ',
+      vi: 'Hiện bài bằng ngôn ngữ hiện tại',
+      ht: 'Montre atik yo nan lang aktyèl la',
+      el: 'Εμφάνιση άρθρων στην τρέχουσα γλώσσα',
+      fr: 'Afficher les articles dans la langue actuelle',
+    },
   };
 
   /** Langues où un calque FR figé n’aide pas — laisser gtx tenter. */
@@ -1585,32 +1853,57 @@
     return null;
   }
 
+  function sameMtText(a = '', b = '') {
+    return String(a).replace(/\s+/g, ' ').trim() === String(b).replace(/\s+/g, ' ').trim();
+  }
+
+  async function fetchJsonTimed(url, ms = MT.timeoutMs) {
+    const ctrl = new AbortController();
+    const timer = window.setTimeout(() => ctrl.abort(), ms);
+    try {
+      const resp = await fetch(url, { signal: ctrl.signal });
+      if (!resp.ok) return { data: null, aborted: false, status: resp.status };
+      return { data: await resp.json(), aborted: false, status: resp.status };
+    } catch (err) {
+      const aborted = err?.name === 'AbortError';
+      return { data: null, aborted, status: 0 };
+    } finally {
+      window.clearTimeout(timer);
+    }
+  }
+
+  function readGtxText(data) {
+    const raw = data?.[0]?.map((s) => s?.[0]).filter(Boolean).join('');
+    return cleanTranslation(raw || '')?.replace(/^\s+|\s+$/g, '') || '';
+  }
+
   async function fetchMachineTranslation(core, tl) {
     const encoded = encodeURIComponent(core);
+    const tls = gtxTargetCodes(tl);
+    // fr = originaux Radar ; auto si sl=fr échoue ; en = sonde IU (probe sl=en).
+    const sources = ['fr', 'auto', 'en'];
 
-    // 1) Google gtx (même endpoint qu'Ataraxia)
-    try {
-      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${encodeURIComponent(tl)}&dt=t&q=${encoded}`;
-      const resp = await fetch(url);
-      if (resp.ok) {
-        const data = await resp.json();
-        const raw = data?.[0]?.map((s) => s?.[0]).filter(Boolean).join('');
-        const translated = cleanTranslation(raw);
-        if (translated) return translated.replace(/^\s+|\s+$/g, '');
+    gtxLoop:
+    for (const gtl of tls) {
+      for (const sl of sources) {
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${encodeURIComponent(sl)}&tl=${encodeURIComponent(gtl)}&dt=t&q=${encoded}`;
+        const res = await fetchJsonTimed(url);
+        const translated = readGtxText(res.data);
+        if (translated && !sameMtText(translated, core)) return translated;
+        if (res.aborted) break gtxLoop;
       }
-    } catch { /* next */ }
+    }
 
-    // 2) MyMemory
     try {
-      const url = `https://api.mymemory.translated.net/get?q=${encoded}&langpair=auto|${encodeURIComponent(tl)}`;
-      const resp = await fetch(url);
-      if (resp.ok) {
-        const data = await resp.json();
-        if (data.responseStatus === 200 && data.responseData?.translatedText) {
-          const translated = cleanTranslation(data.responseData.translatedText);
-          if (translated && translated !== core.toUpperCase()) {
-            return translated.replace(/^\s+|\s+$/g, '');
-          }
+      const mm = mymemoryLang(tl);
+      const url = `https://api.mymemory.translated.net/get?q=${encoded}&langpair=fr|${encodeURIComponent(mm)}`;
+      const res = await fetchJsonTimed(url);
+      const payload = res.data;
+      if (payload?.responseStatus === 200 && payload.responseData?.translatedText) {
+        const translated = cleanTranslation(payload.responseData.translatedText)
+          ?.replace(/^\s+|\s+$/g, '') || '';
+        if (translated && !sameMtText(translated, core) && translated !== core.toUpperCase()) {
+          return translated;
         }
       }
     } catch { /* keep original */ }
@@ -1648,12 +1941,15 @@
       if (core.length > MAX_CHUNK) {
         const parts = splitLong(core, MAX_CHUNK);
         const out = [];
+        let anyReal = false;
         for (const part of parts) {
-          out.push(await translateText(part, targetLang));
+          const piece = await translateText(part, targetLang);
+          out.push(piece);
+          if (piece && !sameMtText(piece, part)) anyReal = true;
         }
         const joined = fixInternalTranslationSpacing(out.join('')).replace(/^\s+|\s+$/g, '');
-        cacheSet(key, joined);
-        return joined;
+        if (anyReal && !sameMtText(joined, core)) cacheSet(key, joined);
+        return anyReal ? joined : core;
       }
 
       const translated = await fetchMachineTranslation(core, tl);
@@ -1909,6 +2205,7 @@
     if (raw.startsWith('zh')) return raw.includes('tw') || raw.includes('hant') ? 'zh-tw' : 'zh';
     if (raw === 'iw') return 'he';
     if (raw === 'fil') return 'tl';
+    if (raw === 'iu-latn' || raw.startsWith('iu-latn') || raw === 'ike-latn') return 'iu-latn';
     return raw.split(/[-_]/)[0] || raw;
   }
 
@@ -2782,16 +3079,28 @@
 
   async function translateOverlayCopyFirst(targetLang, gen) {
     overlayCopy = { ...OVERLAY_COPY_FR };
+    const next = { ...OVERLAY_COPY_FR };
+    for (const key of Object.keys(OVERLAY_COPY_FR)) {
+      const hit = preferredUiPhrase(OVERLAY_COPY_FR[key], targetLang);
+      if (hit && hit !== OVERLAY_COPY_FR[key]) next[key] = hit;
+    }
+    overlayCopy = { ...next };
     applyOverlayCopyToDom();
     if (!targetLang || !articlesHost()) return;
-    const keys = Object.keys(OVERLAY_COPY_FR);
-    const next = { ...OVERLAY_COPY_FR };
-    await Promise.all(keys.map(async (key) => {
+    const missing = Object.keys(OVERLAY_COPY_FR).filter((key) => next[key] === OVERLAY_COPY_FR[key]);
+    if (missing.length) {
+      await Promise.all(missing.map(async (key) => {
+        if (gen != null && gen !== translateGen) return;
+        const out = await translateText(OVERLAY_COPY_FR[key], targetLang);
+        if (out && out !== OVERLAY_COPY_FR[key]) next[key] = out;
+      }));
       if (gen != null && gen !== translateGen) return;
-      const out = await translateText(OVERLAY_COPY_FR[key], targetLang);
-      if (out) next[key] = out;
-    }));
-    if (gen != null && gen !== translateGen) return;
+    }
+    for (const key of Object.keys(OVERLAY_COPY_FR)) {
+      if (next[key] !== OVERLAY_COPY_FR[key]) continue;
+      const en = preferredUiPhrase(OVERLAY_COPY_FR[key], 'en');
+      if (en) next[key] = en;
+    }
     overlayCopy = next;
     applyOverlayCopyToDom();
   }
@@ -2868,7 +3177,13 @@
       '<div class="translate-progress__veil" aria-hidden="true"></div>',
       '<div class="translate-progress__layout">',
       '  <div class="translate-progress__card">',
-      '    <div class="translate-progress__ring" aria-hidden="true"></div>',
+      '    <div class="translate-progress__mark" aria-hidden="true">',
+      '      <span class="translate-progress__wave"></span>',
+      '      <span class="translate-progress__wave"></span>',
+      '      <span class="translate-progress__wave"></span>',
+      '      <div class="translate-progress__ring"></div>',
+      '      <img class="translate-progress__logo" src="./assets/icon.svg" width="48" height="48" alt="">',
+      '    </div>',
       '    <p class="translate-progress__pct" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-labelledby="translate-progress-label">',
       '      <span class="translate-progress__num">0</span><span class="translate-progress__suffix"> %</span>',
       '    </p>',
@@ -3864,6 +4179,8 @@
   window.RadarTranslate = {
     getMode,
     applyMode,
+    rememberNewsCorpus,
+    pruneTranslationCache,
     detectBrowserAutoMode,
     hasUserPreference,
     translateText,
@@ -3885,9 +4202,17 @@
       preferredUiPhrase,
       CHROME_SELECTOR,
       CACHE_KEY,
+      CACHE_MAX,
+      CACHE_VERSION,
+      pruneTranslationCache,
+      rememberNewsCorpus,
+      cacheSize: () => Object.keys(translationCache).length,
       CONCURRENCY,
       MAX_CHUNK,
+      MT,
       OVERLAY_TIMING,
+      gtxTargetCodes,
+      mymemoryLang,
     },
     _labels: {
       formatCegepLabel,
