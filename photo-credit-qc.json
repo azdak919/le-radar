@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-29T11:22:20.933Z",
+  "updated": "2026-08-29T14:03:12.649Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,9 +7,9 @@
   "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 5,
-  "citedNew": 2,
+  "checked": 17,
+  "updatedCount": 9,
+  "citedNew": 6,
   "fallbackNew": 11,
   "samples": [
     {
@@ -18,6 +18,13 @@
       "credit": "Photo : Le monde en images Gilles Potvin",
       "cited": true,
       "method": "body-line"
+    },
+    {
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré/Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
@@ -46,6 +53,27 @@
       "credit": "Photo: Courtesy of Joe Fuda",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
