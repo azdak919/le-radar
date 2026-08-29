@@ -11,7 +11,10 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const src = readFileSync(join(root, 'translate.js'), 'utf8');
 const cta = readFileSync(join(root, 'radar-sports-cta.js'), 'utf8');
 
-assert.match(src, /radar-translate-cache-v9/, 'cache v9 (invalide correspondre v8)');
+assert.match(src, /radar-translate-cache-v10/, 'cache v10 (purge fraîcheur + { t, ts })');
+assert.match(src, /function pruneTranslationCache/, 'purge cache hors fil frais');
+assert.match(src, /function rememberNewsCorpus/, 'corpus news pour garder seulement le fil vivant');
+assert.match(src, /CACHE_MAX = 4000/, 'plafond cache 4000 (filet quota)');
 assert.match(src, /const CONCURRENCY = 6/, 'CONCURRENCY reste 6 (plafond gtx par hôte)');
 assert.match(src, /const MAX_CHUNK = 450/, 'MAX_CHUNK reste 450 (ordre IU)');
 assert.match(src, /chromeOnly/, 'passage chrome avant le fil');
@@ -35,6 +38,24 @@ assert.match(
   'skip / paliers overlay avant le chrome et les articles',
 );
 assert.match(src, /Afficher les articles dans la langue actuelle/, 'lien lever le lock');
+assert.match(src, /timeoutMs:\s*6000/, 'MT : timeout 6 s (persan ne doit pas pendre)');
+assert.match(src, /langpair=fr\|/, 'MyMemory : fr|cible, pas auto|');
+assert.match(src, /sources = \['fr', 'auto', 'en'\]/, 'gtx : fr puis auto puis en (sonde IU)');
+assert.match(src, /fa: 'آماده‌سازی زبان…'/, 'overlay persan : préparation');
+assert.match(src, /fa: 'نمایش مقاله‌ها به زبان فعلی'/, 'overlay persan : skip');
+assert.match(src, /function gtxTargetCodes/, 'alias gtx pour tout le menu, pas seulement fa');
+assert.match(src, /function mymemoryLang/, 'MyMemory : iw→he, fa-IR→fa');
+assert.match(src, /fa: \['fa', 'fa-IR'\]/, 'gtx persan : fa puis fa-IR');
+assert.match(src, /iw: \['iw', 'he'\]/, 'gtx hébreu : iw puis he');
+assert.match(src, /'zh-CN': \['zh-CN', 'zh'\]/, 'gtx chinois simplifié');
+assert.match(src, /tl: \['tl', 'fil'\]/, 'gtx tagalog / filipino');
+assert.match(src, /preferredUiPhrase\(OVERLAY_COPY_FR\[key\], 'en'\)/, 'overlay : EN seulement après échec MT');
+assert.match(src, /ike-Latn/, 'gtx IU latin : ike-Latn');
+assert.doesNotMatch(
+  src,
+  /cacheSet\(key, joined\);\s*return joined/,
+  'textes longs : ne pas cacher un écho FR',
+);
 assert.doesNotMatch(src, /\.showModal\s*\(/, 'pas de dialog.showModal (tuner inert)');
 assert.doesNotMatch(
   src,

@@ -269,7 +269,30 @@ test.describe('overlay traduction articles', () => {
     await expect(page.locator('#translate-progress')).toBeHidden();
   });
 
-  test('prefers-reduced-motion : barre statique, pas de rayure', async ({ page }) => {
+  test('cache : purge un titre hors fil, garde l’article frais', async ({ page }) => {
+    await mockTranslateInstant(page);
+    await openHome(page, { width: 900, height: 700 });
+    const report = await page.evaluate(async () => {
+      const title = (document.querySelector('.article-title')?.textContent || 'Titre frais').trim();
+      await window.RadarTranslate.translateText(title, 'es');
+      await window.RadarTranslate.translateText('Ancien article disparu du fil', 'es');
+      window.RadarTranslate.rememberNewsCorpus([
+        { title, date: new Date().toISOString() },
+      ]);
+      const raw = JSON.parse(localStorage.getItem(window.RadarTranslate._ui.CACHE_KEY) || '{}');
+      const keys = Object.keys(raw.entries || {});
+      return {
+        v: raw.v,
+        hasStale: keys.some((k) => k.includes('Ancien article disparu du fil')),
+        hasLive: keys.some((k) => k.includes(title)),
+      };
+    });
+    expect(report.v).toBe(10);
+    expect(report.hasStale, 'titre plus dans le fil : hors cache').toBe(false);
+    expect(report.hasLive, 'titre encore au fil : conservé').toBe(true);
+  });
+
+  test('prefers-reduced-motion : barre statique, pas de reflet', async ({ page }) => {
     test.setTimeout(60_000);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await mockTranslateInstant(page);
@@ -279,16 +302,22 @@ test.describe('overlay traduction articles', () => {
     const motion = await page.evaluate(() => {
       const fill = document.querySelector('.translate-progress__fill');
       const ring = document.querySelector('.translate-progress__ring');
+      const wave = document.querySelector('.translate-progress__wave');
+      const logo = document.querySelector('.translate-progress__logo');
       const after = fill ? getComputedStyle(fill, '::after') : null;
       return {
         fillAnim: fill ? getComputedStyle(fill).animationName : '',
         afterAnim: after?.animationName || 'none',
         afterDisplay: after?.display || '',
         ringAnim: ring ? getComputedStyle(ring).animationName : '',
+        waveAnim: wave ? getComputedStyle(wave).animationName : '',
+        logoSrc: logo?.getAttribute('src') || '',
         percent: document.querySelector('.translate-progress__num')?.textContent || '',
       };
     });
     expect(motion.percent).toMatch(/\d/);
+    expect(motion.logoSrc).toMatch(/icon\.svg/);
+    expect(motion.waveAnim === 'none' || !motion.waveAnim).toBeTruthy();
     expect(motion.afterDisplay === 'none' || motion.afterAnim === 'none' || !motion.afterAnim)
       .toBeTruthy();
     expect(motion.fillAnim === 'none' || !motion.fillAnim).toBeTruthy();
@@ -372,5 +401,135 @@ test.describe('overlay traduction articles', () => {
     const unlocked = await overlaySnapshot(page);
     expect(unlocked.htmlLock).toBe(false);
     expect(unlocked.bodyFixed).toBe(false);
+  });
+
+  test('persan : glossaire overlay + articles en écriture arabe', async ({ page }) => {
+    await page.route('**/assets/news-images/**', (route) => route.abort());
+    await page.route('**/assets/meteocons/**', (route) => route.abort());
+    await page.route(/translate\.googleapis\.com/, async (route) => {
+      const q = new URL(route.request().url()).searchParams.get('q') || '';
+      await route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify([[[`ترجمه ${q}`, q]]]),
+      });
+    });
+    await page.route(/mymemory\.translated\.net/, (route) => route.abort());
+    await openHome(page, { width: 900, height: 700 });
+    const overlayFa = await page.evaluate(() => {
+      const p = window.RadarTranslate._ui.preferredUiPhrase;
+      return {
+        prep: p('Préparation de la langue…', 'fa'),
+        skip: p('Afficher les articles dans la langue actuelle', 'fa'),
+      };
+    });
+    expect(overlayFa.prep).toMatch(/[\u0600-\u06FF]/);
+    expect(overlayFa.skip).toMatch(/[\u0600-\u06FF]/);
+    await Promise.race([
+      page.evaluate(() => window.RadarTranslate.applyMode('fa', {
+        persist: false,
+        fromUserClick: true,
+      })),
+      page.waitForTimeout(20000).then(() => { throw new Error('applyMode fa > 20s'); }),
+    ]);
+    const title = page.locator('.article-title').first();
+    await expect(title).toContainText(/[\u0600-\u06FF]/);
+    const dir = await page.evaluate(() => document.documentElement.dataset.scriptDir);
+    expect(dir).toBe('rtl');
+  });
+
+  test('gtx en échec : applyMode persan se termine et pose lang=fa', async ({ page }) => {
+    await page.route('**/assets/news-images/**', (route) => route.abort());
+    await page.route('**/assets/meteocons/**', (route) => route.abort());
+    await page.route(/translate\.googleapis\.com/, (route) => route.abort());
+    await page.route(/mymemory\.translated\.net/, (route) => route.abort());
+    await openHome(page, { width: 900, height: 700 });
+    await page.evaluate(() => window.RadarTranslate.applyMode('fa', {
+      persist: false,
+      fromUserClick: true,
+    }));
+    const lang = await page.evaluate(() => document.documentElement.lang);
+    expect(lang).toBe('fa');
+    const dir = await page.evaluate(() => document.documentElement.dataset.scriptDir);
+    expect(dir).toBe('rtl');
+  });
+
+  test('toutes les langues du menu : alias gtx + overlay pas coincé en FR', async ({ page }) => {
+    await page.route('**/assets/news-images/**', (route) => route.abort());
+    await page.route('**/assets/meteocons/**', (route) => route.abort());
+    await openHome(page, { width: 900, height: 700 });
+    const report = await page.evaluate(() => {
+      const ui = window.RadarTranslate._ui;
+      const keys = [
+        'Préparation de la langue…',
+        'Traduction des articles…',
+        'Mise en page…',
+        'Prêt',
+        'Afficher les articles dans la langue actuelle',
+      ];
+      const modes = Object.entries(window.RadarTranslate.MODES)
+        .filter(([, m]) => m && !m.unavailable && m.id !== 'original' && m.id !== 'fr')
+        .map(([id]) => id);
+      const stuckFr = [];
+      for (const id of modes) {
+        for (const k of keys) {
+          const hit = window.RadarTranslate.preferredUiPhrase(k, id)
+            || window.RadarTranslate.preferredUiPhrase(k, 'en');
+          if (!hit || hit === k) stuckFr.push(`${id}:${k}`);
+        }
+      }
+      return {
+        modeCount: modes.length,
+        stuckFr,
+        fa: ui.gtxTargetCodes('fa'),
+        he: ui.gtxTargetCodes('he'),
+        zh: ui.gtxTargetCodes('zh'),
+        tl: ui.gtxTargetCodes('tl'),
+        iuLatn: ui.gtxTargetCodes('iu-latn'),
+        mmIw: ui.mymemoryLang('iw'),
+        mmFaIr: ui.mymemoryLang('fa-IR'),
+      };
+    });
+    expect(report.modeCount, 'catalogue menu').toBeGreaterThan(30);
+    expect(report.stuckFr, 'aucune langue sans overlay (glossaire ou EN)').toEqual([]);
+    expect(report.fa).toEqual(['fa', 'fa-IR']);
+    expect(report.he[0]).toBe('iw');
+    expect(report.zh[0]).toBe('zh-CN');
+    expect(report.tl).toEqual(['tl', 'fil']);
+    expect(report.iuLatn[0]).toBe('iu-Latn');
+    expect(report.iuLatn).toContain('ike-Latn');
+    expect(report.mmIw).toBe('he');
+    expect(report.mmFaIr).toBe('fa');
+  });
+
+  test('inuktitut : overlay et articles en syllabaires, pas l’anglais', async ({ page }) => {
+    await page.route('**/assets/news-images/**', (route) => route.abort());
+    await page.route('**/assets/meteocons/**', (route) => route.abort());
+    await page.route(/translate\.googleapis\.com/, async (route) => {
+      const u = new URL(route.request().url());
+      const q = u.searchParams.get('q') || '';
+      const sl = u.searchParams.get('sl') || '';
+      const body = (sl === 'fr')
+        ? JSON.stringify([[[q, q]]])
+        : JSON.stringify([[['ᐃᓄᒃᑎᑐᑦ ' + q, q]]]);
+      await route.fulfill({ contentType: 'application/json', body });
+    });
+    await page.route(/mymemory\.translated\.net/, (route) => route.abort());
+    await openHome(page, { width: 900, height: 700 });
+    const seen = await page.evaluate(async () => {
+      const labels = [];
+      const obs = new MutationObserver(() => {
+        const t = document.querySelector('#translate-progress-label')?.textContent || '';
+        if (t) labels.push(t);
+      });
+      const host = document.querySelector('main.wire') || document.body;
+      obs.observe(host, { subtree: true, childList: true, characterData: true });
+      await window.RadarTranslate.applyMode('iu', { persist: false, fromUserClick: true });
+      obs.disconnect();
+      return labels;
+    });
+    const title = page.locator('.article-title').first();
+    await expect(title).toContainText(/[\u1400-\u167F]/);
+    expect(seen.join('\n'), 'overlay IU pas en anglais').not.toMatch(/Preparing the language/i);
+    expect(seen.some((t) => /[\u1400-\u167F]/.test(t)), 'overlay en syllabaires').toBe(true);
   });
 });

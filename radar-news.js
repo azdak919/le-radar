@@ -22,6 +22,7 @@ async function loadNews({ silent = false } = {}) {
     const data = await res.json();
     news = Array.isArray(data) ? data : (data.items || []);
     news.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+    window.RadarTranslate?.rememberNewsCorpus?.(news);
     assignSourceColors();
     // Les fiches SEO de journaux ramènent ici avec ?source=… : on valide
     // d'abord contre les données réellement chargées, plutôt que d'afficher

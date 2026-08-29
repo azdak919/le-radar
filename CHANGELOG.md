@@ -35,6 +35,12 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Cache traduction **chez l’utilisateur** (localStorage v10) : les visites suivantes ne retraduisent que les **nouveaux** articles. Purge selon la fraîcheur sessions QC (plus dans le fil = hors cache) + plafond 4000. Overlay silencieux si tout est déjà en cache.
+
+- Overlay traduction : logo PWA rond au centre de l’anneau, ondes radar (émission), barre lisse avec reflet. Le libellé ne déborde plus.
+
+- Traduction MT (persan, **inuktitut**, tout le menu) : timeout 6 s ; gtx `sl=fr` puis `auto` puis `en` (la sonde IU était en `sl=en`) ; pas de cache d’écho FR ; alias gtx (fa, iw/he, zh-CN, tl/fil, iu-Latn/ike-Latn). Carte d’attente : glossaire, puis MT de la langue choisie, **anglais seulement en dernier** — plus d’IU qui affiche « Preparing the language… ».
+
 - Cartes sports du mât : pause trop longue entre deux vagues (~11–16 s). Lecture ~6,5–10 s, CTA ~8 s, cascade au même pas que la météo (440 ms). Le bandeau reste plein pendant le hold.
 - Pastilles CTA : 2e ligne AM/PM. **Aujourd’hui / À venir** = **cet AM** / **ce PM**. **Demain** = **AM** / **PM**. **Hier : pas d’AM/PM**. Pas En direct ni Prochain match.
 - Fraîcheur sports du mât alignée : CTA = aujourd’hui + hier (civil Toronto) ; puces = jusqu’à 5 j civils d’âge ; snapshot d’accueil = même fenêtre (1 lastGame filet si vide). Plus de restes 5×24 h / 14 j / « 5 j de prochains CTA » qui n’étaient pas branchés. Le jour civil lit `game.date`, pas l’heure locale du runner.
