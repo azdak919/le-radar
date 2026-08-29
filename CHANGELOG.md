@@ -35,6 +35,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Overlay de traduction mobile : le filet de « Le fil étudiant » ne traverse plus le logo. Cause = `z-index: 70` sur tout `.wire-head` (au-dessus de l’overlay 60). Carte centrée dans le fil visible ; toast « Traduction en cours » masqué tant que la carte est là.
+
 - Pastille CTA d’un **résultat du jour** : **Dernière heure** (2 lignes ; EN Breaking news). Pas d’AM/PM. À venir du jour garde **cet AM / ce PM**.
 
 - Puces scores : pastille **Aujourd’hui / cet AM|ce PM** et **Demain / AM|PM** (pas Hier).

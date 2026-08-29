@@ -158,10 +158,24 @@ async function overlaySnapshot(page) {
       percentText: overlay?.querySelector('.translate-progress__pct')?.innerText || '',
       zTuner: tuner ? Number.parseInt(getComputedStyle(tuner).zIndex, 10) : 0,
       zOverlay: overlay ? Number.parseInt(getComputedStyle(overlay).zIndex, 10) : 0,
+      zHead: (() => {
+        const head = document.querySelector('.wire-head');
+        const z = head ? Number.parseInt(getComputedStyle(head).zIndex, 10) : 0;
+        return Number.isFinite(z) ? z : 0;
+      })(),
+      toastHidden: (() => {
+        const t = document.getElementById('toast');
+        if (!t) return true;
+        if (t.classList.contains('hidden') || t.hidden) return true;
+        const cs = getComputedStyle(t);
+        return cs.visibility === 'hidden' || cs.display === 'none' || cs.opacity === '0';
+      })(),
+      toastText: document.getElementById('toast')?.textContent || '',
       zLangHost: (() => {
         const wire = document.querySelector('main.wire');
         const host = wire && [...wire.children].find((el) => el.querySelector?.('.translate-control'));
-        return host ? Number.parseInt(getComputedStyle(host).zIndex, 10) : 0;
+        const z = host ? Number.parseInt(getComputedStyle(host).zIndex, 10) : 0;
+        return Number.isFinite(z) ? z : 0;
       })(),
       zWave: overlay?.querySelector('.translate-progress__wave')
         ? Number.parseInt(getComputedStyle(overlay.querySelector('.translate-progress__wave')).zIndex, 10)
@@ -221,25 +235,27 @@ test.describe('overlay traduction articles', () => {
       expect(snap.beat, `${vp.name}: pas de ligne Excerpts`).toBeFalsy();
       expect(snap.label.length, `${vp.name}: étape officielle`).toBeGreaterThan(2);
       expect(snap.zOverlay, `${vp.name}: overlay sous tuner`).toBeLessThan(snap.zTuner);
-      expect(snap.zLangHost, `${vp.name}: sélecteur au-dessus overlay`).toBeGreaterThan(snap.zOverlay);
+      expect(snap.zLangHost, `${vp.name}: tête du fil sous overlay (pas le filet sur le logo)`).toBeLessThan(snap.zOverlay);
+      expect(snap.zHead, `${vp.name}: .wire-head sous overlay`).toBeLessThan(snap.zOverlay);
+      expect(snap.toastHidden, `${vp.name}: toast masqué (doublon overlay)`).toBe(true);
       expect(snap.zWave, `${vp.name}: ondes sous l’anneau`).toBeLessThan(snap.zRing);
       expect(snap.overflowX, `${vp.name}: overflow-x ${snap.overflowX}`).toBeLessThan(8);
       expect(
         rectsIntersect(snap.overlay, snap.tuner, 1),
         `${vp.name}: overlay ∩ tuner`,
       ).toBe(false);
-      if (snap.card && snap.viewW && snap.viewH) {
+      if (snap.card && snap.overlay && snap.viewW) {
         const midX = (snap.card.left + snap.card.right) / 2;
         const midY = (snap.card.top + snap.card.bottom) / 2;
-        const restCenterY = ((snap.tuner?.bottom || 0) + snap.viewH) / 2;
+        const overlayMidY = (snap.overlay.top + snap.overlay.bottom) / 2;
         expect(
           Math.abs(midX - snap.viewW / 2),
           `${vp.name}: carte centrée X (Δ${Math.round(Math.abs(midX - snap.viewW / 2))})`,
         ).toBeLessThan(snap.viewW * 0.18);
         expect(
-          Math.abs(midY - restCenterY),
-          `${vp.name}: carte centrée sous le tuner (Δ${Math.round(Math.abs(midY - restCenterY))})`,
-        ).toBeLessThan(Math.max(80, snap.viewH * 0.16));
+          Math.abs(midY - overlayMidY),
+          `${vp.name}: carte centrée dans l’overlay (Δ${Math.round(Math.abs(midY - overlayMidY))})`,
+        ).toBeLessThan(Math.max(48, snap.overlay.height * 0.12));
       }
       if (
         snap.brief
