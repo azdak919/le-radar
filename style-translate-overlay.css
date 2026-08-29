@@ -19,20 +19,9 @@ main.wire.is-translate-locked > :not(.translate-progress) {
   pointer-events: none;
 }
 
-/* Sélecteur seul au-dessus de l’overlay (changement de langue).
-   Pas tout le wire-head : son filet (z 70) traversait le logo. */
-main.wire.is-translate-locked .translate-control {
-  position: relative;
-  z-index: 80;
-  pointer-events: auto;
-}
-main.wire.is-translate-locked .translate-toggle {
-  pointer-events: auto;
-}
-
 .translate-progress {
   position: absolute;
-  z-index: 60; /* rail wide 50 ; sélecteur 80 ; tuner sticky 100 */
+  z-index: 60; /* rail wide 50 ; tuner sticky 100 */
   /* Hors flux : ne pas devenir une piste de la grille wide. */
   box-sizing: border-box;
   margin: 0;

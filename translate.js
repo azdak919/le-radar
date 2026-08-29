@@ -3096,7 +3096,6 @@
     if (host) {
       for (const child of host.children) {
         if (child.id === 'translate-progress' || child.classList.contains('translate-progress')) continue;
-        if (child.querySelector?.('.translate-control')) continue;
         targets.push(child);
       }
       targets.push(host);
@@ -3354,6 +3353,7 @@
     el.hidden = false;
     el.classList.remove('is-leaving');
     hideTranslateToast();
+    closeMenu();
     lockArticlesScroll();
     layoutArticlesOverlay();
     window.requestAnimationFrame(() => layoutArticlesOverlay());
