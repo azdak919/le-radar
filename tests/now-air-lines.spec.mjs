@@ -678,9 +678,17 @@ test('wide : sans émission, masquer À l’antenne (pas « Rien à l’antenne 
     liveSlot.classList.toggle('is-wide-absent', !!copy.hideLive);
     wrap.classList.toggle('is-live-absent', !!copy.hideLive);
     const cs = getComputedStyle(liveSlot);
+    const nextT = document.querySelector('[data-wide-next-title]');
+    if (nextT) nextT.textContent = copy.nextTitle;
+    const nt = nextT ? getComputedStyle(nextT) : null;
+    const noRadio = window.RadarAir._pure.wideNowAirLiveCopy(null);
     return {
       hideLive: copy.hideLive,
       liveTitle: copy.liveTitle,
+      nextTitle: copy.nextTitle,
+      nextH: nextT ? nextT.getBoundingClientRect().height : 0,
+      nextWrap: nt?.whiteSpace || '',
+      noRadioNext: noRadio.nextTitle,
       display: cs.display,
     };
   });
@@ -688,6 +696,10 @@ test('wide : sans émission, masquer À l’antenne (pas « Rien à l’antenne 
   expect(report.hideLive).toBe(true);
   expect(report.liveTitle).toBe('');
   expect(report.display, 'le slot live doit disparaître').toBe('none');
+  expect(report.nextTitle).toBe("Rien de programmé pour aujourd'hui");
+  expect(report.noRadioNext, 'sans poste : tiret, pas le creux du jour').toBe('—');
+  expect(report.nextWrap).toBe('nowrap');
+  expect(report.nextH, 'creux du jour = 1 ligne').toBeLessThan(22);
 });
 
 test('wide : deux slots, deux lignes, jamais de titre écrasé', async ({ page }) => {
@@ -738,6 +750,7 @@ test('wide : deux slots, deux lignes, jamais de titre écrasé', async ({ page }
   expect(geo.nextW, 'slot à venir pas écrasé').toBeGreaterThan(120);
   expect(geo.empty.hideLive, 'sans émission : masquer À l’antenne').toBe(true);
   expect(geo.empty.liveTitle, 'pas de « Rien à l’antenne »').toBe('');
+  expect(geo.empty.nextTitle).toBe("Rien de programmé pour aujourd'hui");
 
   const full = await page.evaluate(() => {
     const nextT = document.querySelector('[data-wide-next-title]');
