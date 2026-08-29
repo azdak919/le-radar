@@ -35,7 +35,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
-- Overlay traduction : barre **sans rayures** — piste lisse, fill pourpre avec reflet, anneau halo. Le libellé ne déborde plus sur la barre.
+- Overlay traduction : logo PWA rond au centre de l’anneau, ondes radar (émission), barre lisse avec reflet. Le libellé ne déborde plus.
 
 - Traduction MT (persan, **inuktitut**, tout le menu) : timeout 6 s ; gtx `sl=fr` puis `auto` puis `en` (la sonde IU était en `sl=en`) ; pas de cache d’écho FR ; alias gtx (fa, iw/he, zh-CN, tl/fil, iu-Latn/ike-Latn). Carte d’attente : glossaire, puis MT de la langue choisie, **anglais seulement en dernier** — plus d’IU qui affiche « Preparing the language… ».
 
