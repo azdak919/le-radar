@@ -418,8 +418,9 @@
 /*
  * Clair : même verre ardoise que .masthead-weather__city en light
  * (rgba(54, 59, 68, 0.68), lavis 16 %, blur 10px, ombre 3 couches).
+ * Puces scores + CTA (y compris En direct / bientôt) : même verre.
  * Le contour pourpre et --sports-tone restent l’identité sports.
- * Live / soon : registre d’alerte inchangé (règles suivantes).
+ * Live / soon : halo rouge sur ce verre (règles suivantes), pas un fond opaque.
  */
 [data-theme="light"] .masthead-sports-strip .sports-chip:not([data-cta-state="live"]):not([data-cta-lamp="soon"]) {
   background:
@@ -486,6 +487,27 @@
   background:
     linear-gradient(90deg, color-mix(in srgb, #c8102e 44%, transparent) 0%, transparent 58%),
     rgba(60, 48, 52, 0.94);
+}
+/* Clair live/soon : verre météo (0.68 + blur), lavis rouge 16 %, halo inchangé. */
+[data-theme="light"] .masthead-sports-strip .sports-chip--cta[data-cta-state="live"],
+[data-theme="light"] .masthead-sports-strip .sports-chip--cta[data-cta-lamp="soon"] {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, #c8102e 16%, transparent) 0%, transparent 58%),
+    rgba(54, 59, 68, 0.68);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.24),
+    0 3px 10px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 0 0 0 rgba(200, 16, 46, 0);
+  backdrop-filter: blur(10px) saturate(1.06);
+  -webkit-backdrop-filter: blur(10px) saturate(1.06);
+  animation: sports-cta-ring-pulse-light 2.6s ease-in-out infinite;
+}
+[data-theme="light"] .masthead-sports-strip .sports-chip--cta[data-cta-state="live"]:hover,
+[data-theme="light"] .masthead-sports-strip .sports-chip--cta[data-cta-lamp="soon"]:hover {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, #c8102e 23%, transparent) 0%, transparent 58%),
+    rgba(67, 73, 84, 0.78);
 }
 /* Pastille : rubrique stable au repos, « En direct » pendant un match. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-rail {
@@ -824,6 +846,26 @@
     border-color: color-mix(in srgb, #ff3b4a 75%, rgba(255, 255, 255, 0.3));
     box-shadow:
       0 1px 2px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 0 0 2px rgba(200, 16, 46, 0.38),
+      0 0 14px 1px rgba(200, 16, 46, 0.32);
+  }
+}
+@keyframes sports-cta-ring-pulse-light {
+  0%, 100% {
+    border-color: color-mix(in srgb, #c8102e 55%, rgba(255, 255, 255, 0.18));
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.24),
+      0 3px 10px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 0 0 0 rgba(200, 16, 46, 0),
+      0 0 10px 0 rgba(200, 16, 46, 0.12);
+  }
+  50% {
+    border-color: color-mix(in srgb, #ff3b4a 75%, rgba(255, 255, 255, 0.3));
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.24),
+      0 3px 10px rgba(0, 0, 0, 0.18),
       inset 0 1px 0 rgba(255, 255, 255, 0.14),
       0 0 0 2px rgba(200, 16, 46, 0.38),
       0 0 14px 1px rgba(200, 16, 46, 0.32);
