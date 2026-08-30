@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-30T12:14:58.478Z",
+  "updated": "2026-08-30T14:33:23.130Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 129,
-  "pending": 12,
+  "cited": 130,
+  "pending": 11,
   "missingHero": 0,
   "ok": false,
   "checked": 18,
   "updatedCount": 10,
-  "citedNew": 6,
-  "fallbackNew": 12,
+  "citedNew": 7,
+  "fallbackNew": 11,
   "samples": [
     {
       "title": "Il y a 30 ans : un grand spectacle solidaire pour le Saguenay",
@@ -20,18 +20,18 @@
       "method": "body-line"
     },
     {
-      "title": "Des initiatives qui rassemblent",
+      "title": "Ce que nous devons aux femmes",
       "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
     },
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
+      "title": "Les femmes MAGA au service du patriarcat",
       "source": "Le Délit",
-      "credit": "Photo : Anna El Murr",
+      "credit": "Photo : Stu Doré",
       "cited": true,
-      "method": "figcaption-bare"
+      "method": "media-credit-featured"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
