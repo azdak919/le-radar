@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-08-30T19:38:36.759Z",
+  "updatedAt": "2026-08-30T22:22:38.069Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Radio Futura",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/radio-futura/"
-      },
-      "next": {
         "title": "Capitales de Québec",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "16:50",
         "end": "20:30",
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
+      "next": {
+        "title": "Lundi Indie",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
+      },
       "track": "",
-      "showTitle": "Radio Futura",
+      "showTitle": "Capitales de Québec",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-30T19:38:00.194Z"
+      "checkedAt": "2026-08-30T22:22:11.367Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le char de marge",
+        "title": "Symbiose",
         "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/le-char-de-marge"
+        "start": "18:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/symbiose"
       },
       "next": {
-        "title": "Vibrance",
+        "title": "London café (reprise)",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/vibrance"
+        "start": "20:00",
+        "end": "21:30",
+        "url": "https://cism893.ca/emissions/london-cafe"
       },
       "track": "",
-      "showTitle": "Le char de marge",
+      "showTitle": "Symbiose",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-30T19:38:02.428Z"
+      "checkedAt": "2026-08-30T22:22:13.730Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Magic Roundabout",
+        "title": "Desi Beats",
         "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "next": {
-        "title": "Bhum Bhum Time",
+        "title": "Bluegrass Rambling",
         "source": "api-live",
-        "start": "16:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "The Magic Roundabout",
+      "showTitle": "Desi Beats",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-30T19:38:05.362Z"
+      "checkedAt": "2026-08-30T22:22:16.682Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Fukubukuro",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/fukubukuro"
+        "title": "Bills Country and Western Favourites",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
       },
       "next": {
-        "title": "Grade A Explosives",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/grade-a-explosives"
+        "title": "No Boundaries",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/no-boundaries"
       },
       "track": "",
-      "showTitle": "Fukubukuro",
+      "showTitle": "Bills Country and Western Favourites",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-30T19:38:29.535Z"
+      "checkedAt": "2026-08-30T22:22:30.730Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,32 +133,31 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-30T19:38:30.711Z"
+      "checkedAt": "2026-08-30T22:22:31.525Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Mutations",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "https://www.choq.ca/emissions/mutations"
+        "title": "Les rois de l'arène",
+        "source": "api-live",
+        "start": "05:00",
+        "end": "07:00",
+        "slug": "les-rois-de-larene"
       },
-      "track": "Girl Band — Why They Hide Their Bodies Under My Garage",
+      "track": "Hôtel Particulier - Dans ta poche",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-30T19:38:36.409Z"
+      "checkedAt": "2026-08-30T22:22:37.718Z"
     }
   }
 }
