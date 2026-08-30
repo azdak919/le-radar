@@ -1,8 +1,8 @@
 {
-  "updated": "2026-08-30T20:41:09.113Z",
+  "updated": "2026-08-30T22:24:05.747Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 5,
+  "mismatches": 6,
   "ok": true,
   "samples": [
     {
@@ -30,11 +30,19 @@
       "reason": "no-author-source"
     },
     {
-      "title": "Des initiatives qui rassemblent",
-      "link": "https://www.delitfrancais.com/2026/03/18/des-initiatives-qui-rassemblent/",
+      "title": "Qui sont les agents qui patrouillent notre campus ?",
+      "link": "https://www.delitfrancais.com/2026/03/18/qui-sont-les-agents-qui-patrouillent-notre-campus/",
       "source": "Le Délit",
       "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Héloïse Durning et Elie Nguyen",
+      "canonicalAuthor": "Héloïse Durning",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Ce que nous devons aux femmes",
+      "link": "https://www.delitfrancais.com/2026/03/18/ce-que-nous-devons-aux-femmes/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Eugénie St-Pierre",
       "reason": "page-byline"
     },
     {
@@ -46,5 +54,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 5
+  "fixed": 6
 }
