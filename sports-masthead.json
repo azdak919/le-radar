@@ -1,10 +1,10 @@
 {
-  "updated": "2026-08-30T19:18:36.595Z",
-  "fetchedAt": "2026-08-30T19:18:36.595Z",
+  "updated": "2026-08-30T19:39:07.955Z",
+  "fetchedAt": "2026-08-30T19:39:07.955Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-30T19:18:36.595Z"
+    "referenceDate": "2026-08-30T19:39:07.955Z"
   },
   "masthead": {
     "nextGameLimit": 48,
@@ -12,7 +12,7 @@
     "chipResultMaxDaysAgo": 5,
     "ctaResultMaxDaysAgo": 1
   },
-  "teamCount": 130,
+  "teamCount": 132,
   "teams": {
     "collegial:soccer:d774ba9e-7528-45fc-82e6-f71151013f01:767c0106-cf4c-42b8-8f42-341960994a22": {
       "id": "collegial:soccer:d774ba9e-7528-45fc-82e6-f71151013f01:767c0106-cf4c-42b8-8f42-341960994a22",
@@ -6022,140 +6022,6 @@
       "fullName": "Cégep de l'Outaouais",
       "registryId": "outaouais"
     },
-    "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:8da1c885-51ab-48a0-ae71-e7c01f97f8d7": {
-      "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:8da1c885-51ab-48a0-ae71-e7c01f97f8d7",
-      "rseqTeamId": "8da1c885-51ab-48a0-ae71-e7c01f97f8d7",
-      "leagueId": "56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b",
-      "name": "McGill",
-      "code": "MCG",
-      "sector": "universitaire",
-      "sport": "soccer",
-      "sportLabel": "Soccer",
-      "sex": "F",
-      "division": null,
-      "usports": true,
-      "leagueLabel": "Soccer universitaire féminin",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-30",
-          "time": "15:30",
-          "opponent": "Montréal",
-          "opponentCode": "MTL",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer universitaire féminin",
-          "gameId": "8577100f-6d6b-401b-98be-c71270a0e63d",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=8577100f-6d6b-401b-98be-c71270a0e63d",
-          "opponentFullName": "Université de Montréal",
-          "opponentNickname": "Carabins",
-          "opponentRegistryId": "udem",
-          "live": true
-        },
-        {
-          "date": "2026-09-04",
-          "time": "18:00",
-          "opponent": "UQTR",
-          "opponentCode": "UQTR",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer universitaire féminin",
-          "gameId": "a3df2b21-2442-4186-b64c-40f6da8a51e9",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a3df2b21-2442-4186-b64c-40f6da8a51e9",
-          "opponentFullName": "Université du Québec à Trois-Rivières",
-          "opponentNickname": "Patriotes",
-          "opponentRegistryId": "uqtr"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-30",
-        "time": "15:30",
-        "opponent": "Montréal",
-        "opponentCode": "MTL",
-        "home": false,
-        "sport": "soccer",
-        "competition": "Soccer universitaire féminin",
-        "gameId": "8577100f-6d6b-401b-98be-c71270a0e63d",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=8577100f-6d6b-401b-98be-c71270a0e63d",
-        "opponentFullName": "Université de Montréal",
-        "opponentNickname": "Carabins",
-        "opponentRegistryId": "udem",
-        "live": true
-      },
-      "source": "rseq-s1",
-      "priority": 2,
-      "fullName": "Université McGill",
-      "nickname": "Redbirds",
-      "registryId": "mcgill"
-    },
-    "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:f312bcc3-0e7e-4bfc-9d08-5a725a558be6": {
-      "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:f312bcc3-0e7e-4bfc-9d08-5a725a558be6",
-      "rseqTeamId": "f312bcc3-0e7e-4bfc-9d08-5a725a558be6",
-      "leagueId": "56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b",
-      "name": "Montréal",
-      "code": "MTL",
-      "sector": "universitaire",
-      "sport": "soccer",
-      "sportLabel": "Soccer",
-      "sex": "F",
-      "division": null,
-      "usports": true,
-      "leagueLabel": "Soccer universitaire féminin",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-30",
-          "time": "15:30",
-          "opponent": "McGill",
-          "opponentCode": "MCG",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer universitaire féminin",
-          "gameId": "8577100f-6d6b-401b-98be-c71270a0e63d",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=8577100f-6d6b-401b-98be-c71270a0e63d",
-          "opponentFullName": "Université McGill",
-          "opponentNickname": "Redbirds",
-          "opponentRegistryId": "mcgill",
-          "live": true
-        },
-        {
-          "date": "2026-09-03",
-          "time": "18:00",
-          "opponent": "UQAM",
-          "opponentCode": "UQAM",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer universitaire féminin",
-          "gameId": "b3c32c6d-395d-4c7c-a0ab-50d9599096bd",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b3c32c6d-395d-4c7c-a0ab-50d9599096bd",
-          "opponentFullName": "Université du Québec à Montréal",
-          "opponentNickname": "Citadins",
-          "opponentRegistryId": "uqam"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-30",
-        "time": "15:30",
-        "opponent": "McGill",
-        "opponentCode": "MCG",
-        "home": true,
-        "sport": "soccer",
-        "competition": "Soccer universitaire féminin",
-        "gameId": "8577100f-6d6b-401b-98be-c71270a0e63d",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=8577100f-6d6b-401b-98be-c71270a0e63d",
-        "opponentFullName": "Université McGill",
-        "opponentNickname": "Redbirds",
-        "opponentRegistryId": "mcgill",
-        "live": true
-      },
-      "source": "rseq-s1",
-      "priority": 4,
-      "fullName": "Université de Montréal",
-      "nickname": "Carabins",
-      "registryId": "udem"
-    },
     "collegial:soccer:48a59be5-0904-4b5c-b52b-1ef4cf1e8d8c:6ba50c57-09cc-4375-aef9-c36df6db1022": {
       "id": "collegial:soccer:48a59be5-0904-4b5c-b52b-1ef4cf1e8d8c:6ba50c57-09cc-4375-aef9-c36df6db1022",
       "rseqTeamId": "6ba50c57-09cc-4375-aef9-c36df6db1022",
@@ -6253,6 +6119,57 @@
       "fullName": "Cégep de Saint-Hyacinthe",
       "registryId": "saint-hyacinthe",
       "lastGamePriorSeason": false
+    },
+    "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:f312bcc3-0e7e-4bfc-9d08-5a725a558be6": {
+      "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:f312bcc3-0e7e-4bfc-9d08-5a725a558be6",
+      "rseqTeamId": "f312bcc3-0e7e-4bfc-9d08-5a725a558be6",
+      "leagueId": "56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b",
+      "name": "Montréal",
+      "code": "MTL",
+      "sector": "universitaire",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "F",
+      "division": null,
+      "usports": true,
+      "leagueLabel": "Soccer universitaire féminin",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-03",
+          "time": "18:00",
+          "opponent": "UQAM",
+          "opponentCode": "UQAM",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "b3c32c6d-395d-4c7c-a0ab-50d9599096bd",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b3c32c6d-395d-4c7c-a0ab-50d9599096bd",
+          "opponentFullName": "Université du Québec à Montréal",
+          "opponentNickname": "Citadins",
+          "opponentRegistryId": "uqam"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-03",
+        "time": "18:00",
+        "opponent": "UQAM",
+        "opponentCode": "UQAM",
+        "home": false,
+        "sport": "soccer",
+        "competition": "Soccer universitaire féminin",
+        "gameId": "b3c32c6d-395d-4c7c-a0ab-50d9599096bd",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b3c32c6d-395d-4c7c-a0ab-50d9599096bd",
+        "opponentFullName": "Université du Québec à Montréal",
+        "opponentNickname": "Citadins",
+        "opponentRegistryId": "uqam"
+      },
+      "source": "rseq-s1",
+      "priority": 4,
+      "fullName": "Université de Montréal",
+      "nickname": "Carabins",
+      "registryId": "udem"
     },
     "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:6c330bc7-5a4c-45e4-9118-8c8dc9cadc22": {
       "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:6c330bc7-5a4c-45e4-9118-8c8dc9cadc22",
@@ -6607,6 +6524,57 @@
       "fullName": "Université de Sherbrooke",
       "nickname": "Vert & Or",
       "registryId": "usherbrooke"
+    },
+    "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:8da1c885-51ab-48a0-ae71-e7c01f97f8d7": {
+      "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:8da1c885-51ab-48a0-ae71-e7c01f97f8d7",
+      "rseqTeamId": "8da1c885-51ab-48a0-ae71-e7c01f97f8d7",
+      "leagueId": "56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b",
+      "name": "McGill",
+      "code": "MCG",
+      "sector": "universitaire",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "F",
+      "division": null,
+      "usports": true,
+      "leagueLabel": "Soccer universitaire féminin",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-04",
+          "time": "18:00",
+          "opponent": "UQTR",
+          "opponentCode": "UQTR",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "a3df2b21-2442-4186-b64c-40f6da8a51e9",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a3df2b21-2442-4186-b64c-40f6da8a51e9",
+          "opponentFullName": "Université du Québec à Trois-Rivières",
+          "opponentNickname": "Patriotes",
+          "opponentRegistryId": "uqtr"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-04",
+        "time": "18:00",
+        "opponent": "UQTR",
+        "opponentCode": "UQTR",
+        "home": false,
+        "sport": "soccer",
+        "competition": "Soccer universitaire féminin",
+        "gameId": "a3df2b21-2442-4186-b64c-40f6da8a51e9",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a3df2b21-2442-4186-b64c-40f6da8a51e9",
+        "opponentFullName": "Université du Québec à Trois-Rivières",
+        "opponentNickname": "Patriotes",
+        "opponentRegistryId": "uqtr"
+      },
+      "source": "rseq-s1",
+      "priority": 2,
+      "fullName": "Université McGill",
+      "nickname": "Redbirds",
+      "registryId": "mcgill"
     },
     "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:070aa425-59f4-4039-9bfb-af19a23c4e63": {
       "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:070aa425-59f4-4039-9bfb-af19a23c4e63",
@@ -9056,6 +9024,102 @@
       "priority": 41,
       "fullName": "Cégep du Vieux Montréal",
       "registryId": "vieux-montreal"
+    },
+    "collegial:soccer:05798bd7-130d-4b88-ae8d-8f934e7963ed:e6c5c7dc-a5e3-4626-8e18-cf124d8e2d5f": {
+      "id": "collegial:soccer:05798bd7-130d-4b88-ae8d-8f934e7963ed:e6c5c7dc-a5e3-4626-8e18-cf124d8e2d5f",
+      "rseqTeamId": "e6c5c7dc-a5e3-4626-8e18-cf124d8e2d5f",
+      "leagueId": "05798bd7-130d-4b88-ae8d-8f934e7963ed",
+      "name": "Gérald-Godin",
+      "code": "CGG",
+      "sector": "collegial",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "M",
+      "division": "D3",
+      "usports": false,
+      "leagueLabel": "Soccer collégial masculin D3",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-05",
+          "time": "13:00",
+          "opponent": "Jean-de-Brébeuf",
+          "opponentCode": "BRÉ",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D3",
+          "gameId": "2f86c65f-d2e7-4e94-81fa-777db561d131",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2f86c65f-d2e7-4e94-81fa-777db561d131",
+          "opponentFullName": "Collège Jean-de-Brébeuf",
+          "opponentRegistryId": "brebeuf"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-05",
+        "time": "13:00",
+        "opponent": "Jean-de-Brébeuf",
+        "opponentCode": "BRÉ",
+        "home": true,
+        "sport": "soccer",
+        "competition": "Soccer collégial masculin D3",
+        "gameId": "2f86c65f-d2e7-4e94-81fa-777db561d131",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2f86c65f-d2e7-4e94-81fa-777db561d131",
+        "opponentFullName": "Collège Jean-de-Brébeuf",
+        "opponentRegistryId": "brebeuf"
+      },
+      "source": "rseq-s1",
+      "priority": 80,
+      "fullName": "Cégep de Gérald-Godin",
+      "registryId": "gerald-godin"
+    },
+    "collegial:soccer:05798bd7-130d-4b88-ae8d-8f934e7963ed:0637bc2d-551e-44c2-8ac6-8f640199813b": {
+      "id": "collegial:soccer:05798bd7-130d-4b88-ae8d-8f934e7963ed:0637bc2d-551e-44c2-8ac6-8f640199813b",
+      "rseqTeamId": "0637bc2d-551e-44c2-8ac6-8f640199813b",
+      "leagueId": "05798bd7-130d-4b88-ae8d-8f934e7963ed",
+      "name": "Jean-de-Brébeuf",
+      "code": "BRÉ",
+      "sector": "collegial",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "M",
+      "division": "D3",
+      "usports": false,
+      "leagueLabel": "Soccer collégial masculin D3",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-05",
+          "time": "13:00",
+          "opponent": "Gérald-Godin",
+          "opponentCode": "CGG",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D3",
+          "gameId": "2f86c65f-d2e7-4e94-81fa-777db561d131",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2f86c65f-d2e7-4e94-81fa-777db561d131",
+          "opponentFullName": "Cégep de Gérald-Godin",
+          "opponentRegistryId": "gerald-godin"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-05",
+        "time": "13:00",
+        "opponent": "Gérald-Godin",
+        "opponentCode": "CGG",
+        "home": false,
+        "sport": "soccer",
+        "competition": "Soccer collégial masculin D3",
+        "gameId": "2f86c65f-d2e7-4e94-81fa-777db561d131",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2f86c65f-d2e7-4e94-81fa-777db561d131",
+        "opponentFullName": "Cégep de Gérald-Godin",
+        "opponentRegistryId": "gerald-godin"
+      },
+      "source": "rseq-s1",
+      "priority": 27,
+      "fullName": "Collège Jean-de-Brébeuf",
+      "registryId": "brebeuf"
     }
   }
 }
