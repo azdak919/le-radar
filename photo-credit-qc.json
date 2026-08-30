@@ -1,15 +1,15 @@
 {
-  "updated": "2026-08-30T10:04:28.057Z",
+  "updated": "2026-08-30T12:14:58.478Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
   "cited": 129,
-  "pending": 11,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 8,
-  "citedNew": 4,
+  "checked": 18,
+  "updatedCount": 10,
+  "citedNew": 6,
   "fallbackNew": 12,
   "samples": [
     {
@@ -18,6 +18,20 @@
       "credit": "Photo : Le monde en images Gilles Potvin",
       "cited": true,
       "method": "body-line"
+    },
+    {
+      "title": "Des initiatives qui rassemblent",
+      "source": "Le Délit",
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Élections de l’exécutif de l’AÉUM",
+      "source": "Le Délit",
+      "credit": "Photo : Anna El Murr",
+      "cited": true,
+      "method": "figcaption-bare"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
@@ -41,6 +55,13 @@
       "method": null
     },
     {
+      "title": "Inside Mile End Kicks",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Joe Fuda",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
       "title": "Leave the Children Out of This",
       "source": "The Plant",
       "credit": "Photo: My Little Princess (2011)",
@@ -53,13 +74,6 @@
       "credit": "Photo : Maryse Boyce",
       "cited": true,
       "method": "figcaption-copyright"
-    },
-    {
-      "title": "Inside Mile End Kicks",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
     },
     {
       "title": "Une jeune candidate qui n’a pas froid aux yeux",
