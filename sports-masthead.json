@@ -1,10 +1,10 @@
 {
-  "updated": "2026-08-30T09:57:30.817Z",
-  "fetchedAt": "2026-08-30T09:57:30.817Z",
+  "updated": "2026-08-30T15:23:31.009Z",
+  "fetchedAt": "2026-08-30T15:23:31.009Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-30T09:57:30.817Z"
+    "referenceDate": "2026-08-30T15:23:31.009Z"
   },
   "masthead": {
     "nextGameLimit": 48,
@@ -5412,124 +5412,6 @@
       "registryId": "outaouais",
       "lastGamePriorSeason": false
     },
-    "collegial:soccer:d774ba9e-7528-45fc-82e6-f71151013f01:e63440e1-568f-4a09-b623-cef874ee0cd9": {
-      "id": "collegial:soccer:d774ba9e-7528-45fc-82e6-f71151013f01:e63440e1-568f-4a09-b623-cef874ee0cd9",
-      "rseqTeamId": "e63440e1-568f-4a09-b623-cef874ee0cd9",
-      "leagueId": "d774ba9e-7528-45fc-82e6-f71151013f01",
-      "name": "Dawson",
-      "code": "DAW",
-      "sector": "collegial",
-      "sport": "soccer",
-      "sportLabel": "Soccer",
-      "sex": "F",
-      "division": "D1",
-      "usports": false,
-      "leagueLabel": "Soccer collégial féminin D1",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-30",
-          "time": "11:00",
-          "opponent": "Vanier",
-          "opponentCode": "VAN",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D1",
-          "gameId": "af043447-99e2-4595-9af6-b6c3c184fb7c",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=af043447-99e2-4595-9af6-b6c3c184fb7c",
-          "opponentFullName": "Vanier College",
-          "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "vanier"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-30",
-        "time": "11:00",
-        "opponent": "Vanier",
-        "opponentCode": "VAN",
-        "home": true,
-        "sport": "soccer",
-        "competition": "Soccer collégial féminin D1",
-        "gameId": "af043447-99e2-4595-9af6-b6c3c184fb7c",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=af043447-99e2-4595-9af6-b6c3c184fb7c",
-        "opponentFullName": "Vanier College",
-        "opponentNickname": "Cheetahs",
-        "opponentRegistryId": "vanier"
-      },
-      "source": "rseq-s1",
-      "priority": 26,
-      "fullName": "Dawson College",
-      "nickname": "Blues",
-      "registryId": "dawson",
-      "lastGamePriorSeason": false
-    },
-    "collegial:soccer:d774ba9e-7528-45fc-82e6-f71151013f01:1ef2f3a1-d9ac-4fe0-81a3-dbc7d26c905c": {
-      "id": "collegial:soccer:d774ba9e-7528-45fc-82e6-f71151013f01:1ef2f3a1-d9ac-4fe0-81a3-dbc7d26c905c",
-      "rseqTeamId": "1ef2f3a1-d9ac-4fe0-81a3-dbc7d26c905c",
-      "leagueId": "d774ba9e-7528-45fc-82e6-f71151013f01",
-      "name": "Vanier",
-      "code": "VAN",
-      "sector": "collegial",
-      "sport": "soccer",
-      "sportLabel": "Soccer",
-      "sex": "F",
-      "division": "D1",
-      "usports": false,
-      "leagueLabel": "Soccer collégial féminin D1",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-30",
-          "time": "11:00",
-          "opponent": "Dawson",
-          "opponentCode": "DAW",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D1",
-          "gameId": "af043447-99e2-4595-9af6-b6c3c184fb7c",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=af043447-99e2-4595-9af6-b6c3c184fb7c",
-          "opponentFullName": "Dawson College",
-          "opponentNickname": "Blues",
-          "opponentRegistryId": "dawson"
-        },
-        {
-          "date": "2026-09-04",
-          "time": "19:00",
-          "opponent": "Sainte-Foy",
-          "opponentCode": "CSF",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D1",
-          "gameId": "109ab39e-d521-4e6e-84f4-cef5eba24678",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=109ab39e-d521-4e6e-84f4-cef5eba24678",
-          "opponentFullName": "Cégep de Sainte-Foy",
-          "opponentNickname": "Géants",
-          "opponentRegistryId": "sainte-foy"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-30",
-        "time": "11:00",
-        "opponent": "Dawson",
-        "opponentCode": "DAW",
-        "home": false,
-        "sport": "soccer",
-        "competition": "Soccer collégial féminin D1",
-        "gameId": "af043447-99e2-4595-9af6-b6c3c184fb7c",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=af043447-99e2-4595-9af6-b6c3c184fb7c",
-        "opponentFullName": "Dawson College",
-        "opponentNickname": "Blues",
-        "opponentRegistryId": "dawson"
-      },
-      "source": "rseq-s1",
-      "priority": 10,
-      "fullName": "Vanier College",
-      "nickname": "Cheetahs",
-      "registryId": "vanier",
-      "lastGamePriorSeason": false
-    },
     "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:27fa235f-f37d-4506-b77b-b1112067d0d6": {
       "id": "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:27fa235f-f37d-4506-b77b-b1112067d0d6",
       "rseqTeamId": "27fa235f-f37d-4506-b77b-b1112067d0d6",
@@ -5558,7 +5440,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7f552eb7-8991-4039-8fb2-6c77423c2a37",
           "opponentFullName": "Cégep de Saint-Laurent",
           "opponentNickname": "Cavaliers",
-          "opponentRegistryId": "saint-laurent"
+          "opponentRegistryId": "saint-laurent",
+          "live": true
         }
       ],
       "nextGame": {
@@ -5573,7 +5456,8 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7f552eb7-8991-4039-8fb2-6c77423c2a37",
         "opponentFullName": "Cégep de Saint-Laurent",
         "opponentNickname": "Cavaliers",
-        "opponentRegistryId": "saint-laurent"
+        "opponentRegistryId": "saint-laurent",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 21,
@@ -5607,7 +5491,8 @@
           "gameId": "7f552eb7-8991-4039-8fb2-6c77423c2a37",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7f552eb7-8991-4039-8fb2-6c77423c2a37",
           "opponentFullName": "Collège André-Grasset",
-          "opponentRegistryId": "andre-grasset"
+          "opponentRegistryId": "andre-grasset",
+          "live": true
         }
       ],
       "nextGame": {
@@ -5621,7 +5506,8 @@
         "gameId": "7f552eb7-8991-4039-8fb2-6c77423c2a37",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7f552eb7-8991-4039-8fb2-6c77423c2a37",
         "opponentFullName": "Collège André-Grasset",
-        "opponentRegistryId": "andre-grasset"
+        "opponentRegistryId": "andre-grasset",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 53,
@@ -7787,6 +7673,58 @@
       "nickname": "Barons",
       "registryId": "champlain-st-lambert"
     },
+    "collegial:soccer:d774ba9e-7528-45fc-82e6-f71151013f01:1ef2f3a1-d9ac-4fe0-81a3-dbc7d26c905c": {
+      "id": "collegial:soccer:d774ba9e-7528-45fc-82e6-f71151013f01:1ef2f3a1-d9ac-4fe0-81a3-dbc7d26c905c",
+      "rseqTeamId": "1ef2f3a1-d9ac-4fe0-81a3-dbc7d26c905c",
+      "leagueId": "d774ba9e-7528-45fc-82e6-f71151013f01",
+      "name": "Vanier",
+      "code": "VAN",
+      "sector": "collegial",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "F",
+      "division": "D1",
+      "usports": false,
+      "leagueLabel": "Soccer collégial féminin D1",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-04",
+          "time": "19:00",
+          "opponent": "Sainte-Foy",
+          "opponentCode": "CSF",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D1",
+          "gameId": "109ab39e-d521-4e6e-84f4-cef5eba24678",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=109ab39e-d521-4e6e-84f4-cef5eba24678",
+          "opponentFullName": "Cégep de Sainte-Foy",
+          "opponentNickname": "Géants",
+          "opponentRegistryId": "sainte-foy"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-04",
+        "time": "19:00",
+        "opponent": "Sainte-Foy",
+        "opponentCode": "CSF",
+        "home": true,
+        "sport": "soccer",
+        "competition": "Soccer collégial féminin D1",
+        "gameId": "109ab39e-d521-4e6e-84f4-cef5eba24678",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=109ab39e-d521-4e6e-84f4-cef5eba24678",
+        "opponentFullName": "Cégep de Sainte-Foy",
+        "opponentNickname": "Géants",
+        "opponentRegistryId": "sainte-foy"
+      },
+      "source": "rseq-s1",
+      "priority": 10,
+      "fullName": "Vanier College",
+      "nickname": "Cheetahs",
+      "registryId": "vanier",
+      "lastGamePriorSeason": false
+    },
     "collegial:soccer:3f4585ce-0bbf-41b0-a726-7a294098a074:9c8c9a30-5711-41f4-84bd-c5951b65a90e": {
       "id": "collegial:soccer:3f4585ce-0bbf-41b0-a726-7a294098a074:9c8c9a30-5711-41f4-84bd-c5951b65a90e",
       "rseqTeamId": "9c8c9a30-5711-41f4-84bd-c5951b65a90e",
@@ -8609,6 +8547,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=89181571-8d18-4375-8b47-320ef3a2dbf1",
           "opponentFullName": "Collège Jean-de-Brébeuf",
           "opponentRegistryId": "brebeuf"
+        },
+        {
+          "date": "2026-09-05",
+          "time": "13:00",
+          "opponent": "Vieux Montréal",
+          "opponentCode": "CVM",
+          "home": false,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D3",
+          "gameId": "049c201b-6fa1-400b-bf6a-0679bc7eae1b",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=049c201b-6fa1-400b-bf6a-0679bc7eae1b",
+          "opponentFullName": "Cégep du Vieux Montréal",
+          "opponentRegistryId": "vieux-montreal"
         }
       ],
       "nextGame": {
@@ -9068,6 +9019,54 @@
       "priority": 50,
       "fullName": "Cégep de Lévis",
       "registryId": "levis"
+    },
+    "collegial:flag-football:48369892-577a-4679-9308-5f7cf91168b7:65edf9cc-e1a6-4a0c-b020-8a0e44831166": {
+      "id": "collegial:flag-football:48369892-577a-4679-9308-5f7cf91168b7:65edf9cc-e1a6-4a0c-b020-8a0e44831166",
+      "rseqTeamId": "65edf9cc-e1a6-4a0c-b020-8a0e44831166",
+      "leagueId": "48369892-577a-4679-9308-5f7cf91168b7",
+      "name": "Vieux Montréal",
+      "code": "CVM",
+      "sector": "collegial",
+      "sport": "flag-football",
+      "sportLabel": "Flag football",
+      "sex": "F",
+      "division": "D3",
+      "usports": false,
+      "leagueLabel": "Flag football collégial féminin D3",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-05",
+          "time": "13:00",
+          "opponent": "Maisonneuve",
+          "opponentCode": "MAI",
+          "home": true,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D3",
+          "gameId": "049c201b-6fa1-400b-bf6a-0679bc7eae1b",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=049c201b-6fa1-400b-bf6a-0679bc7eae1b",
+          "opponentFullName": "Cégep de Maisonneuve",
+          "opponentRegistryId": "maisonneuve"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-05",
+        "time": "13:00",
+        "opponent": "Maisonneuve",
+        "opponentCode": "MAI",
+        "home": true,
+        "sport": "flag-football",
+        "competition": "Flag football collégial féminin D3",
+        "gameId": "049c201b-6fa1-400b-bf6a-0679bc7eae1b",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=049c201b-6fa1-400b-bf6a-0679bc7eae1b",
+        "opponentFullName": "Cégep de Maisonneuve",
+        "opponentRegistryId": "maisonneuve"
+      },
+      "source": "rseq-s1",
+      "priority": 41,
+      "fullName": "Cégep du Vieux Montréal",
+      "registryId": "vieux-montreal"
     }
   }
 }
