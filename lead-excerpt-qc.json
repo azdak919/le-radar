@@ -1,41 +1,14 @@
 {
-  "updated": "2026-08-30T18:40:31.938Z",
+  "updated": "2026-08-30T20:41:33.446Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 11,
+  "incomplete": 9,
   "withLeadExcerpt": 88,
-  "candidates": 11,
-  "enriched": 3,
-  "failed": 0,
+  "candidates": 9,
+  "enriched": 0,
+  "failed": 1,
   "ok": true,
   "samples": [
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
-      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
-      "ok": true,
-      "score": 100,
-      "chars": 393,
-      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
-      "changed": true
-    },
-    {
-      "title": "You have the best taste in music, as long as it’s yours",
-      "link": "https://www.thetribune.ca/a-e/you-have-the-best-taste-in-music-as-long-as-its-yours-30082026/?utm_source=rss&utm_medium=rss&utm_campaign=you-have-the-best-taste-in-music-as-long-as-its-yours-30082026",
-      "ok": true,
-      "score": 100,
-      "chars": 399,
-      "sample": "I was probably the most obnoxious 12-year-old to exist. I listened to 3WK Undergroundradio and looke",
-      "changed": true
-    },
-    {
-      "title": "Quebec must address its homelessness crisis through preventative, not punitive, measures",
-      "link": "https://www.thetribune.ca/opinion/quebec-must-address-its-homelessness-crisis-through-preventative-not-punitive-measures-30082026/?utm_source=rss&utm_medium=rss&utm_campaign=quebec-must-address-its-homelessness-crisis-through-preventative-not-punitive-measures-30082026",
-      "ok": true,
-      "score": 96,
-      "chars": 389,
-      "sample": "While current treatment-focused institutions in Quebec, such as shelters and warming centres , do co",
-      "changed": true
-    },
     {
       "title": "La mauvaise nutrition et les maladies chroniques",
       "link": "https://lecollectif.ca/a-la-une/la-mauvaise-nutrition-et-les-maladies-chroniques/",
@@ -79,6 +52,33 @@
       "score": 66,
       "chars": 400,
       "sample": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt t",
+      "changed": false
+    },
+    {
+      "title": "Ask the Trib: How do I survive summer in my hometown?",
+      "link": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
+      "changed": false
+    },
+    {
+      "title": "Foire aux questions",
+      "link": "https://lecollectif.ca/campus/foire-aux-questions/",
+      "ok": true,
+      "score": 96,
+      "chars": 169,
+      "sample": "Attention cependant aux exceptions ! Consulte le site Web de ta faculté ou de ton centre universitai",
+      "changed": false
+    },
+    {
+      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
+      "link": "https://thelinknewspaper.ca/article/16338",
+      "ok": true,
+      "score": 90,
+      "chars": 177,
+      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
     }
   ]
