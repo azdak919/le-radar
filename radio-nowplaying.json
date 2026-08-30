@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-30T12:07:32.682Z",
+  "updatedAt": "2026-08-30T16:54:33.613Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Palmarès CHYZ",
+        "title": "Radio Futura",
         "source": "schedule",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
+        "start": "13:00",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/radio-futura/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-30T12:07:09.357Z"
+      "checkedAt": "2026-08-30T16:53:58.270Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Par mots et par vaux",
+        "title": "Basses fréquences",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/basses-frequences"
       },
       "next": {
-        "title": "Le 120e parallèle",
+        "title": "Le char de marge",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/le-120e-parallele"
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
       },
       "track": "",
-      "showTitle": "Par mots et par vaux",
+      "showTitle": "Basses fréquences",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-30T12:07:11.399Z"
+      "checkedAt": "2026-08-30T16:54:00.666Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Mind, Soul, & Spirit",
+        "title": "Free Kick",
         "source": "api-live",
-        "start": "06:00",
-        "end": "09:00"
+        "start": "11:00",
+        "end": "13:00"
       },
       "next": {
-        "title": "Latin Time",
+        "title": "Modular Systems/Future Classics",
         "source": "api-live",
-        "start": "09:00",
-        "end": "10:30"
+        "start": "13:00",
+        "end": "14:00"
       },
       "track": "",
-      "showTitle": "Mind, Soul, & Spirit",
+      "showTitle": "Free Kick",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-30T12:07:13.550Z"
+      "checkedAt": "2026-08-30T16:54:02.816Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Gigi Brown Experience",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
+        "title": "Brave Little Emo Girl",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
       },
       "next": {
-        "title": "REVC",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/revc"
+        "title": "Northern Stagelights",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/northern-stagelights"
       },
       "track": "",
-      "showTitle": "The Gigi Brown Experience",
+      "showTitle": "Brave Little Emo Girl",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-30T12:07:27.310Z"
+      "checkedAt": "2026-08-30T16:54:26.884Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-30T12:07:27.992Z"
+      "checkedAt": "2026-08-30T16:54:27.657Z"
     },
     "choq": {
       "id": "choq",
@@ -139,18 +139,19 @@
         "end": "18:00",
         "url": "https://www.choq.ca/emissions/mutations"
       },
-      "track": "ID - lysandre",
+      "track": "Winston Hightower - Fight For Frequency",
       "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
+        "api-live",
         "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-30T12:07:32.332Z"
+      "checkedAt": "2026-08-30T16:54:33.262Z"
     }
   }
 }
