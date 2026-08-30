@@ -1,37 +1,51 @@
 {
-  "updated": "2026-08-30T17:03:02.398Z",
+  "updated": "2026-08-30T18:45:53.278Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
-  "cited": 130,
+  "cited": 132,
   "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 7,
-  "citedNew": 4,
+  "checked": 20,
+  "updatedCount": 12,
+  "citedNew": 9,
   "fallbackNew": 11,
   "samples": [
     {
-      "title": "Il y a 30 ans : un grand spectacle solidaire pour le Saguenay",
-      "source": "La Pige",
-      "credit": "Photo : Le monde en images Gilles Potvin",
+      "title": "You have the best taste in music, as long as it’s yours",
+      "source": "The Tribune",
+      "credit": "Photo : Eliot Loose",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-attribution"
     },
     {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
+      "title": "Quebec must address its homelessness crisis through preventative, not punitive, measures",
+      "source": "The Tribune",
+      "credit": "Photo : Sophie Schuyler",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "Ce que nous devons aux femmes",
+      "source": "Le Délit",
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
+    },
+    {
+      "title": "Les femmes MAGA au service du patriarcat",
       "source": "Le Délit",
       "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Sois belle et tais-toi",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "title": "Il y a 30 ans : un grand spectacle solidaire pour le Saguenay",
+      "source": "La Pige",
+      "credit": "Photo : Le monde en images Gilles Potvin",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "body-line"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
@@ -55,11 +69,32 @@
       "method": null
     },
     {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
+    },
+    {
       "title": "Inside Mile End Kicks",
       "source": "The Link",
       "credit": "Photo: Courtesy of Joe Fuda",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }

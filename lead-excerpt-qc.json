@@ -1,30 +1,39 @@
 {
-  "updated": "2026-08-30T16:56:34.840Z",
+  "updated": "2026-08-30T18:40:31.938Z",
   "total": 185,
   "pool": 58,
-  "incomplete": 10,
-  "withLeadExcerpt": 87,
-  "candidates": 10,
-  "enriched": 2,
+  "incomplete": 11,
+  "withLeadExcerpt": 88,
+  "candidates": 11,
+  "enriched": 3,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
-      "link": "https://www.delitfrancais.com/2026/03/18/pourquoi-le-l-est-en-premier-dans-lgbtq/",
+      "title": "Les femmes MAGA au service du patriarcat",
+      "link": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
       "ok": true,
-      "score": 81,
-      "chars": 400,
-      "sample": "Cependant, l’épidémie du sida a modifié le rapport entre les deux groupes. Au cours de cette crise, ",
+      "score": 100,
+      "chars": 393,
+      "sample": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer ",
       "changed": true
     },
     {
-      "title": "Sois belle et tais-toi",
-      "link": "https://www.delitfrancais.com/2026/03/18/sois-belle-et-tais-toi-2/",
+      "title": "You have the best taste in music, as long as it’s yours",
+      "link": "https://www.thetribune.ca/a-e/you-have-the-best-taste-in-music-as-long-as-its-yours-30082026/?utm_source=rss&utm_medium=rss&utm_campaign=you-have-the-best-taste-in-music-as-long-as-its-yours-30082026",
+      "ok": true,
+      "score": 100,
+      "chars": 399,
+      "sample": "I was probably the most obnoxious 12-year-old to exist. I listened to 3WK Undergroundradio and looke",
+      "changed": true
+    },
+    {
+      "title": "Quebec must address its homelessness crisis through preventative, not punitive, measures",
+      "link": "https://www.thetribune.ca/opinion/quebec-must-address-its-homelessness-crisis-through-preventative-not-punitive-measures-30082026/?utm_source=rss&utm_medium=rss&utm_campaign=quebec-must-address-its-homelessness-crisis-through-preventative-not-punitive-measures-30082026",
       "ok": true,
       "score": 96,
-      "chars": 295,
-      "sample": "C’est la sécheresse totale dans le cerveau de bien des gens. Le vôtre, peut-être. Mais ne craignez r",
+      "chars": 389,
+      "sample": "While current treatment-focused institutions in Quebec, such as shelters and warming centres , do co",
       "changed": true
     },
     {
@@ -70,15 +79,6 @@
       "score": 66,
       "chars": 400,
       "sample": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt t",
-      "changed": false
-    },
-    {
-      "title": "Ask the Trib: How do I survive summer in my hometown?",
-      "link": "https://www.thetribune.ca/student-life/ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026/?utm_source=rss&utm_medium=rss&utm_campaign=ask-the-trib-how-do-i-survive-summer-in-my-hometown-26062026",
-      "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "Since returning to my hometown from McGill a little over a month ago, I’ve been so extremely bored. ",
       "changed": false
     }
   ]
