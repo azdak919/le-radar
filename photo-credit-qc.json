@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-30T14:33:23.130Z",
+  "updated": "2026-08-30T17:03:02.398Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,9 +7,9 @@
   "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 10,
-  "citedNew": 7,
+  "checked": 15,
+  "updatedCount": 7,
+  "citedNew": 4,
   "fallbackNew": 11,
   "samples": [
     {
@@ -20,16 +20,16 @@
       "method": "body-line"
     },
     {
-      "title": "Ce que nous devons aux femmes",
-      "source": "Le Délit",
-      "credit": "Photo : Alexandre Gontier",
-      "cited": true,
-      "method": "media-credit-near"
-    },
-    {
-      "title": "Les femmes MAGA au service du patriarcat",
+      "title": "Pourquoi le L est en premier dans LGBTQ+",
       "source": "Le Délit",
       "credit": "Photo : Stu Doré",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Sois belle et tais-toi",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -60,27 +60,6 @@
       "credit": "Photo: Courtesy of Joe Fuda",
       "cited": true,
       "method": "figcaption-trailing"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
