@@ -1,155 +1,155 @@
 {
-  "updatedAt": "2026-08-30T00:36:56.639Z",
+  "updatedAt": "2026-08-30T06:12:54.213Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "api-live",
-        "start": "18:50",
-        "end": "23:00",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHYZ",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
       "track": "",
-      "showTitle": "Capitales de Québec",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-30T00:36:18.051Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Les criquets crinqués (reprise)",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/les-criquets-crinques"
-      },
-      "next": {
-        "title": "Mix anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "track": "",
-      "showTitle": "Les criquets crinqués (reprise)",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-30T00:36:19.916Z"
+      "checkedAt": "2026-08-30T06:12:26.403Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Mix Franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "06:30",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
+      "next": {
+        "title": "Les mignardises littéraires",
+        "source": "schedule",
+        "start": "06:30",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/les-mignardises-litteraires"
+      },
+      "track": "",
+      "showTitle": "Mix Franco",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-08-30T06:12:28.455Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Masters At Work",
+        "title": "Utopia's Paradise",
         "source": "api-live",
-        "start": "19:00",
-        "end": "21:00"
+        "start": "02:00",
+        "end": "06:00"
       },
       "next": {
-        "title": "Howls From Hell/Too Loud For The Crowd",
+        "title": "Mind, Soul, & Spirit",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "06:00",
+        "end": "09:00"
       },
-      "track": "",
-      "showTitle": "Masters At Work",
+      "track": "Utopia",
+      "showTitle": "Utopia's Paradise",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-30T00:36:22.267Z"
+      "checkedAt": "2026-08-30T06:12:31.172Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "01:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "The Spacious Astrology Playlist",
+        "title": "Sun Ra, Sun Rise",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-spacious-astrology-playlist"
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-30T00:36:38.319Z"
+      "checkedAt": "2026-08-30T06:12:45.067Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Solénoïde",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les nuits CFAK",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-30T00:36:38.999Z"
+      "checkedAt": "2026-08-30T06:12:45.870Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "D'amour et de sexe",
+        "title": "Mutations",
         "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "https://www.choq.ca/emissions/mutations"
       },
-      "track": "Bloc Pub 21 juillet.mp3",
+      "track": "ZØRZA - The Devil Wears Well",
       "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
-      "clientPoll": null,
-      "checkedAt": "2026-08-30T00:36:56.288Z"
+      "clientPoll": {
+        "type": "triton-np",
+        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
+      },
+      "checkedAt": "2026-08-30T06:12:53.863Z"
     }
   }
 }
