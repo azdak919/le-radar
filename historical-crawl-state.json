@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-08-24T07:43:55.353Z",
+  "updated": "2026-08-31T14:24:57.086Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -130,18 +130,18 @@
     },
     "the-campus": {
       "strategy": "unsupported",
-      "lastAttemptAt": "2026-08-01T08:56:13.631Z",
+      "lastAttemptAt": "2026-08-31T14:24:55.237Z",
       "error": "wordpress_http_404",
-      "retryAt": "2026-08-31T08:56:13.631Z",
-      "windowStart": "2023-08-01T14:56:06.582Z",
+      "retryAt": "2026-09-30T14:24:55.237Z",
+      "windowStart": "2023-08-31T20:24:55.161Z",
       "windowYears": 3
     },
     "the-link": {
       "strategy": "unsupported",
-      "lastAttemptAt": "2026-08-01T08:56:13.912Z",
+      "lastAttemptAt": "2026-08-31T14:24:55.935Z",
       "error": "wordpress_http_404",
-      "retryAt": "2026-08-31T08:56:13.912Z",
-      "windowStart": "2023-08-01T14:56:06.582Z",
+      "retryAt": "2026-09-30T14:24:55.935Z",
+      "windowStart": "2023-08-31T20:24:55.161Z",
       "windowYears": 3
     },
     "the-mcgill-daily": {
