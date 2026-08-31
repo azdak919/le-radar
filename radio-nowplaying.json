@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-31T00:45:05.765Z",
+  "updatedAt": "2026-08-31T06:38:34.023Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T00:44:38.368Z"
+      "checkedAt": "2026-08-31T06:38:07.735Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "London café (reprise)",
+        "title": "Mix Franco",
         "source": "schedule",
-        "start": "20:00",
-        "end": "21:30",
-        "url": "https://cism893.ca/emissions/london-cafe"
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
       },
       "next": {
-        "title": "Mix Anglo",
+        "title": "Le char de marge (reprise)",
         "source": "schedule",
-        "start": "21:30",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
       },
       "track": "",
-      "showTitle": "London café (reprise)",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T00:44:40.493Z"
+      "checkedAt": "2026-08-31T06:38:09.670Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Country Classics",
+        "title": "Roots, Rock, Reggae",
         "source": "api-live",
-        "start": "20:00",
-        "end": "21:00"
+        "start": "01:00",
+        "end": "04:00"
       },
       "next": {
-        "title": "Cha Cha In Blue",
+        "title": "Adventures In Music",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "04:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Country Classics",
+      "showTitle": "Roots, Rock, Reggae",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T00:44:43.367Z"
+      "checkedAt": "2026-08-31T06:38:12.196Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Towards A Common Horizon",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/towards-a-common-horizon"
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "Afro Archives",
+        "title": "Experiments",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/afro-archives"
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/experiments"
       },
       "track": "",
-      "showTitle": "Towards A Common Horizon",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T00:44:57.733Z"
+      "checkedAt": "2026-08-31T06:38:26.675Z"
     },
     "cfak": {
       "id": "cfak",
@@ -109,14 +109,14 @@
       "current": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "21:00"
+        "start": "00:01",
+        "end": "07:00"
       },
       "next": {
-        "title": "Solénoïde",
+        "title": "Folkswagen",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "00:00"
+        "start": "07:00",
+        "end": "08:00"
       },
       "track": "",
       "showTitle": "Les nuits CFAK",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T00:44:58.559Z"
+      "checkedAt": "2026-08-31T06:38:28.359Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Le Belladone, Zéa calla, Sloan Lucas, Fyore - B*TCH",
+      "track": "Miserere Luminis - Aux bras des vagues & des vomissures",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-31T00:45:05.416Z"
+      "checkedAt": "2026-08-31T06:38:33.672Z"
     }
   }
 }
