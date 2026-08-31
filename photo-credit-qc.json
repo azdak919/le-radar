@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-31T04:39:19.096Z",
+  "updated": "2026-08-31T05:53:47.533Z",
   "total": 185,
   "withImage": 168,
   "withCredit": 168,
@@ -7,17 +7,17 @@
   "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 2,
-  "citedNew": 2,
+  "checked": 15,
+  "updatedCount": 7,
+  "citedNew": 4,
   "fallbackNew": 11,
   "samples": [
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
-      "source": "Le Délit",
-      "credit": "Photo : Toscane Ralaimongo",
+      "title": "Il y a 30 ans : un grand spectacle solidaire pour le Saguenay",
+      "source": "La Pige",
+      "credit": "Photo : Le monde en images Gilles Potvin",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "body-line"
     },
     {
       "title": "Pourquoi le L est en premier dans LGBTQ+",
@@ -25,6 +25,41 @@
       "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Sois belle et tais-toi",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Recettes musicales québécoises pour l’été",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Inside Mile End Kicks",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Joe Fuda",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
