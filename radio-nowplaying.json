@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-31T14:49:40.376Z",
+  "updatedAt": "2026-08-31T20:38:39.320Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T14:49:14.427Z"
+      "checkedAt": "2026-08-31T20:38:11.899Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
+        "title": "Les garçons pleurent aussi",
         "source": "schedule",
-        "start": "09:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "15:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
       },
       "next": {
-        "title": "o'keb",
+        "title": "Les criquets crinqués",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/okeb"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/les-criquets-crinques"
       },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Les garçons pleurent aussi",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T14:49:16.503Z"
+      "checkedAt": "2026-08-31T20:38:14.107Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Latin Music Mondays",
+        "title": "Whose Vibe Is It Anyway",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "All Things Campus",
+        "title": "En Profondeur",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Latin Music Mondays",
+      "showTitle": "Whose Vibe Is It Anyway",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T14:49:18.975Z"
+      "checkedAt": "2026-08-31T20:38:16.920Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
+        "title": "Dreamscapes",
         "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/dreamscapes"
       },
       "next": {
-        "title": "2 Days and a Night",
+        "title": "The Pressure Drop",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/2-days-and-a-night"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-pressure-drop"
       },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Dreamscapes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T14:49:33.203Z"
+      "checkedAt": "2026-08-31T20:38:31.655Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,32 +126,31 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T14:49:34.255Z"
+      "checkedAt": "2026-08-31T20:38:33.004Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Faire avec",
-        "source": "schedule",
+        "title": "Podcast Nomade: L'art de se rencontrer",
+        "source": "api-live",
         "start": "17:00",
         "end": "18:00",
-        "url": "https://www.choq.ca/emissions/faire-avec"
+        "slug": "podcast-nomade-lart-de-se-rencontrer"
       },
-      "track": "0001 - Write a Letter",
+      "track": "The New Pornographers - Ballad Of The Last Payphone",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-31T14:49:40.025Z"
+      "checkedAt": "2026-08-31T20:38:38.970Z"
     }
   }
 }
