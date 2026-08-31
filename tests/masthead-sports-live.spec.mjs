@@ -262,7 +262,7 @@ async function openWithSports(page, payload, viewport = { width: 1280, height: 9
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip).toBeVisible({ timeout: 8000 });
-  const cta = strip.locator('.sports-chip--cta').last();
+  const cta = strip.locator('.sports-chip').first();
   await expect(cta).toBeVisible({ timeout: 8000 });
   return cta;
 }
@@ -279,13 +279,13 @@ test('CTA live : En cours, scorebug et tampon, pas « dans 15 min »', async ({ 
   const cta = await openWithSports(page, payload);
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/En\s*direct/i);
-  await expect(cta.locator('.sports-chip__cta-glyph')).toBeVisible();
+  await expect(cta.locator('.sports-chip__glyph')).toBeVisible();
   await expect(cta.locator('.sports-chip__score')).toHaveText('0–0');
-  const text = await cta.locator('.sports-chip__cta-text').innerText();
+  const text = await cta.locator('.sports-chip__line-inner').innerText();
   expect(text).toMatch(/Saint-Hyacinthe/);
   expect(text).toMatch(/Vanier/);
   expect(text).not.toMatch(/reçoit/);
-  const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
+  const sub = await cta.locator('.sports-chip__sub-text').innerText();
   const kick = kickoffClockFromPayload(payload);
   expect(kick).toBeTruthy();
   expect(sub).toMatch(new RegExp(kick.replace(' ', '\\s+')));
@@ -302,7 +302,7 @@ test('CTA live : pas « il y a 2 min » sous En cours', async ({ page }) => {
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/En\s*direct/i);
   await expect(cta.locator('.sports-chip__score')).toHaveText('0–0');
-  const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
+  const sub = await cta.locator('.sports-chip__sub-text').innerText();
   const kick = kickoffClockFromPayload(payload);
   expect(sub).toMatch(new RegExp(kick.replace(' ', '\\s+')));
   expect(sub).toMatch(/Soccer collégial masculin D1/);
@@ -319,13 +319,13 @@ test('CTA live : score et période dès qu’ils sont collés', async ({ page })
   }));
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/En\s*direct/i);
-  await expect(cta.locator('.sports-chip__cta-glyph')).toBeVisible();
+  await expect(cta.locator('.sports-chip__glyph')).toBeVisible();
   await expect(cta.locator('.sports-chip__score')).toHaveText('1–0');
-  const text = await cta.locator('.sports-chip__cta-text').innerText();
+  const text = await cta.locator('.sports-chip__line-inner').innerText();
   expect(text).toMatch(/Saint-Hyacinthe/);
   expect(text).toMatch(/Vanier/);
   expect(text).not.toMatch(/reçoit/);
-  const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
+  const sub = await cta.locator('.sports-chip__sub-text').innerText();
   expect(sub).toMatch(/Soccer collégial masculin D1/);
   expect(sub).toMatch(/mis à jour à/);
   expect(sub).toMatch(/\d{1,2}\s*h\s*\d{2}/);
@@ -335,7 +335,7 @@ test('CTA live : un direct écarte résultats et prochains du cycle', async ({ p
   const cta = await openWithSports(page, livePlusYesterdayPayload());
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/En\s*direct/i);
-  const text = await cta.locator('.sports-chip__cta-text').innerText();
+  const text = await cta.locator('.sports-chip__line-inner').innerText();
   expect(text).toMatch(/Saint-Hyacinthe/);
   expect(text).not.toMatch(/Concordia/);
   const pool = await page.evaluate(() => sportsCtaCandidateSlides().map((s) => ({
@@ -350,9 +350,9 @@ test('CTA live : un direct écarte résultats et prochains du cycle', async ({ p
     scheduleSportsWave({ fromSlot: 0, firstWait: false });
   });
   await page.waitForTimeout(900);
-  const still = page.locator('#masthead-sports-strip .sports-chip--cta').last();
+  const still = page.locator('#masthead-sports-strip .sports-chip').first();
   await expect(still).toHaveAttribute('data-cta-state', 'live');
-  const after = await still.locator('.sports-chip__cta-text').innerText();
+  const after = await still.locator('.sports-chip__line-inner').innerText();
   expect(after).toMatch(/Saint-Hyacinthe/);
   expect(after).not.toMatch(/Concordia/);
 });
@@ -372,19 +372,19 @@ test('CTA live : plusieurs directs — cycle entre eux, pas le reste', async ({ 
   const firstNonLive = pool.findIndex((s) => !s.live);
   expect(firstNonLive, 'Concordia après les directs').toBeGreaterThanOrEqual(2);
 
-  const first = (await cta.locator('.sports-chip__cta-text').innerText()).replace(/\s+/g, ' ');
+  const first = (await cta.locator('.sports-chip__line-inner').innerText()).replace(/\s+/g, ' ');
   await page.evaluate(() => {
     rotateSportsSlot(sportsCtaSlotIndex());
   });
   await expect.poll(async () => {
-    const chip = page.locator('#masthead-sports-strip .sports-chip--cta').last();
+    const chip = page.locator('#masthead-sports-strip .sports-chip').first();
     const state = await chip.getAttribute('data-cta-state');
-    const text = (await chip.locator('.sports-chip__cta-text').innerText()).replace(/\s+/g, ' ');
+    const text = (await chip.locator('.sports-chip__line-inner').innerText()).replace(/\s+/g, ' ');
     return `${state}|${text}`;
   }, { timeout: 4000 }).not.toBe(`live|${first}`);
-  const next = page.locator('#masthead-sports-strip .sports-chip--cta').last();
+  const next = page.locator('#masthead-sports-strip .sports-chip').first();
   await expect(next).toHaveAttribute('data-cta-state', 'live');
-  const second = (await next.locator('.sports-chip__cta-text').innerText()).replace(/\s+/g, ' ');
+  const second = (await next.locator('.sports-chip__line-inner').innerText()).replace(/\s+/g, ' ');
   expect(second).not.toBe(first);
   expect(second).not.toMatch(/Concordia/);
   expect(second).toMatch(/Saint-Hyacinthe|Laval|Sainte-Foy/);
@@ -404,13 +404,13 @@ test('iPad tactile : la CTA participe à la cascade', async ({ browser }) => {
       twoLivePlusResultPayload(),
       { width: 820, height: 1180 },
     );
-    const first = (await cta.locator('.sports-chip__cta-text').innerText())
+    const first = (await cta.locator('.sports-chip__line-inner').innerText())
       .replace(/\s+/g, ' ');
     expect(await page.evaluate(() => sportsCtaMayRotate())).toBe(true);
     await page.evaluate(() => scheduleSportsWave({ fromSlot: 0, firstWait: false }));
     await expect.poll(async () => {
-      const chip = page.locator('#masthead-sports-strip .sports-chip--cta').last();
-      return (await chip.locator('.sports-chip__cta-text').innerText()).replace(/\s+/g, ' ');
+      const chip = page.locator('#masthead-sports-strip .sports-chip').first();
+      return (await chip.locator('.sports-chip__line-inner').innerText()).replace(/\s+/g, ' ');
     }, { timeout: 4000 }).not.toBe(first);
   } finally {
     await context.close();
@@ -436,14 +436,14 @@ test('téléphone avec CTA seule : le changement est une sortie/entrée de carte
       renderSportsStrip();
       clearSportsSlotTimers();
     });
-    const cta = page.locator('#masthead-sports-strip .sports-chip--cta');
+    const cta = page.locator('#masthead-sports-strip .sports-chip').first();
     await expect(cta).toBeVisible();
     await expect(page.locator('#masthead-sports-strip .sports-chip')).toHaveCount(1);
-    const first = (await cta.locator('.sports-chip__cta-text').innerText()).replace(/\s+/g, ' ');
+    const first = (await cta.locator('.sports-chip__line-inner').innerText()).replace(/\s+/g, ' ');
 
     const swap = await page.evaluate(() => {
       rotateSportsSlot(0);
-      const el = document.querySelector('#masthead-sports-strip .sports-chip--cta');
+      const el = document.querySelector('#masthead-sports-strip .sports-chip');
       return {
         leaving: !!el?.classList.contains('is-leaving'),
         rolling: !!el?.querySelector('.is-rolling-in, .is-rolling-out'),
@@ -457,8 +457,8 @@ test('téléphone avec CTA seule : le changement est une sortie/entrée de carte
     expect(swap.leaveName).toMatch(/sports-chip-leave/);
 
     await expect.poll(async () => {
-      const current = page.locator('#masthead-sports-strip .sports-chip--cta');
-      return (await current.locator('.sports-chip__cta-text').innerText())
+      const current = page.locator('#masthead-sports-strip .sports-chip').first();
+      return (await current.locator('.sports-chip__line-inner').innerText())
         .replace(/\s+/g, ' ');
     }, { timeout: 2000 }).not.toBe(first);
   } finally {
@@ -479,9 +479,9 @@ test('CTA : sans direct, le cycle reprend (résultat hier)', async ({ page }) =>
     expect(g, 'Hier : pastille pourpre, pas verte').toBeLessThan(70);
     expect(r - g, 'Hier : pastille pourpre (R>G)').toBeGreaterThan(40);
   }
-  const text = await cta.locator('.sports-chip__cta-text').innerText();
+  const text = await cta.locator('.sports-chip__line-inner').innerText();
   expect(text).toMatch(/Saint-Hyacinthe|Concordia/);
-  const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
+  const sub = await cta.locator('.sports-chip__sub-text').innerText();
   expect(sub.toLowerCase()).not.toMatch(/il y a/);
   const pool = await page.evaluate(() => sportsCtaCandidateSlides().map((s) => ({
     live: sportsGameIsLive(s.game),
@@ -514,7 +514,7 @@ test('CTA : sans live, à-venir d’aujourd’hui avant hier', async ({ page }) 
   })));
   expect(seq[0], 'B : ce soir avant hier').toMatchObject({ mode: 'next', code: 'STH' });
   expect(seq.some((s) => s.mode === 'result' && s.code === 'CON'), 'hier en reliquat').toBe(true);
-  const cta = page.locator('#masthead-sports-strip .sports-chip--cta').last();
+  const cta = page.locator('#masthead-sports-strip .sports-chip').first();
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/À\s*venir/i);
 });
 
@@ -540,7 +540,7 @@ test('CTA : à venir dans l’heure passe devant hier', async ({ page }) => {
   })));
   expect(seq[0], 'dans l’heure avant hier').toMatchObject({ mode: 'next', code: 'STH' });
   expect(seq.some((s) => s.mode === 'result' && s.code === 'CON')).toBe(true);
-  const cta = page.locator('#masthead-sports-strip .sports-chip--cta').last();
+  const cta = page.locator('#masthead-sports-strip .sports-chip').first();
   await expect(cta).toHaveAttribute('data-cta-state', 'next');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/À\s*venir/i);
 });
@@ -557,10 +557,10 @@ test('CTA prochain du jour : heure de coup d’envoi, pas « dans 3 h »', async
   await expect(cta).toHaveAttribute('data-cta-state', 'next');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/À\s*venir/i);
   await expect(cta.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
-  await expect(cta.locator('.sports-chip__cta-glyph')).toBeVisible();
+  await expect(cta.locator('.sports-chip__glyph')).toBeVisible();
   await expect(cta).toHaveAttribute('data-cta-lamp', 'soon');
   const clock = payload._kick.time.replace(':', ' h ');
-  const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
+  const sub = await cta.locator('.sports-chip__sub-text').innerText();
   expect(sub).toMatch(/Aujourd[’']hui/);
   expect(sub).toMatch(new RegExp(clock.replace(' ', '\\s+')));
   expect(sub.toLowerCase()).not.toMatch(/dans \d/);
@@ -608,7 +608,7 @@ test('CTA visiteur : chez l’adversaire, pas à', async ({ page }) => {
   await expect(cta).toHaveAttribute('data-cta-state', 'next');
   const vs = cta.locator('.sports-chip__vs');
   await expect(vs).toHaveText('chez');
-  const text = await cta.locator('.sports-chip__cta-text').innerText();
+  const text = await cta.locator('.sports-chip__line-inner').innerText();
   expect(text).toMatch(/Carabins/);
   expect(text).not.toMatch(/\sà\s/);
 });
@@ -619,8 +619,8 @@ test('CTA demain : pastille Demain, heure, pas Prochain match', async ({ page })
   await expect(cta).toHaveAttribute('data-cta-state', 'next');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/^Demain$/i);
   await expect(cta.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
-  await expect(cta.locator('.sports-chip__cta-glyph')).toBeVisible();
-  const sub = await cta.locator('.sports-chip__cta-sub-text').innerText();
+  await expect(cta.locator('.sports-chip__glyph')).toBeVisible();
+  const sub = await cta.locator('.sports-chip__sub-text').innerText();
   expect(sub).toMatch(/19\s*h\s*00/);
   expect(sub.toLowerCase()).not.toMatch(/demain/);
 });
@@ -654,7 +654,7 @@ test('CTA univ : acronymes UQAM / McGill, pas les noms longs', async ({ page }) 
     teams: { [team.id]: team },
   });
   await expect(cta).toHaveAttribute('data-cta-state', 'next');
-  const text = await cta.locator('.sports-chip__cta-text').innerText();
+  const text = await cta.locator('.sports-chip__line-inner').innerText();
   expect(text).toMatch(/UQAM/);
   expect(text).toMatch(/McGill/);
   expect(text).not.toMatch(/Université du Québec/);
@@ -926,10 +926,10 @@ test('CTA Hier : score entre les noms, kicker 1 ligne, glyphe', async ({ page })
   });
   await expect(cta).toHaveAttribute('data-cta-state', 'result');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/^Hier$/i);
-  await expect(cta.locator('.sports-chip__cta-glyph')).toBeVisible();
-  await expect(cta.locator('.sports-chip__cta-text .sports-chip__score')).toHaveText('3–1');
-  await expect(cta.locator('.sports-chip__cta-text .sports-chip__name').first()).toHaveText(/Trois-Rivières|Cégep/);
-  await expect(cta.locator('.sports-chip__cta-text .sports-chip__opp')).toHaveText(/Victoriaville/);
+  await expect(cta.locator('.sports-chip__glyph')).toBeVisible();
+  await expect(cta.locator('.sports-chip__line-inner .sports-chip__score')).toHaveText('3–1');
+  await expect(cta.locator('.sports-chip__line-inner .sports-chip__name').first()).toHaveText(/Trois-Rivières|Cégep/);
+  await expect(cta.locator('.sports-chip__line-inner .sports-chip__opp')).toHaveText(/Victoriaville/);
 });
 
 test('puces scores : V d’un côté et D de l’autre, pas de dédup', async ({ page }) => {
@@ -1138,7 +1138,7 @@ test('puces : un résultat à 6 j civils n’est plus dans les 5 j', async ({ pa
 test('bandeau : nextGames entier, pas un seul match par équipe', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('#masthead-sports-strip .sports-chip--cta')).toBeVisible({ timeout: 8000 });
+  await expect(page.locator('#masthead-sports-strip .sports-chip').first()).toBeVisible({ timeout: 8000 });
   const n = await page.evaluate(() => {
     const nexts = (typeof sportsSlides !== 'undefined' ? sportsSlides : [])
       .filter((s) => s && s.mode === 'next');

@@ -34,14 +34,14 @@ function snapshot(page) {
     const strip = document.getElementById('masthead-sports-strip');
     const cities = [...(weatherEl?.querySelectorAll('.masthead-weather__city.is-active') || [])];
     const chips = [...(strip?.querySelectorAll('.sports-chip') || [])];
-    const ctas = chips.filter((el) => el.classList.contains('sports-chip--cta'));
+    const ctas = chips.filter((el) => el.classList.contains('sports-chip--cta') || el.classList.contains('sports-chip--idle'));
     const overlap = (() => {
       const actions = document.querySelector('.masthead-actions');
       const limit = actions?.getBoundingClientRect().left ?? 0;
       if (weatherEl?.classList.contains('masthead-weather--docked')) return 0;
       return cities.reduce((max, el) => Math.max(max, el.getBoundingClientRect().right - limit), 0);
     })();
-    const matches = chips.filter((el) => !el.classList.contains('sports-chip--cta'));
+    const matches = chips.filter((el) => el.classList.contains('sports-chip--match') && !el.classList.contains('sports-chip--idle'));
     const clip = typeof sportsMatchChipTextOverflows === 'function'
       ? matches.filter((chip) => sportsMatchChipTextOverflows(chip)).length
       : 0;
@@ -56,7 +56,7 @@ function snapshot(page) {
     const clipRight = last && stripBox
       ? Math.max(0, last.getBoundingClientRect().right - (stripBox.right - padR))
       : 0;
-    const order = chips.map((el) => (el.classList.contains('sports-chip--cta') ? 'C' : 'M')).join('');
+    const order = chips.map((el) => (el.classList.contains('sports-chip--idle') ? 'C' : 'M')).join('');
     return {
       weather: cities.length,
       chips: chips.length,
@@ -110,54 +110,55 @@ test('mât : les quantités météo / scores / CTA suivent la largeur @ci-critic
   expect(at390.inner).toBe(390);
   expect(at390.docked, '390 : météo dockée').toBe(true);
   expect(at390.weather, '390 : au moins une ville').toBeGreaterThanOrEqual(1);
-  expect(at390.chips, '390 : CTA seule').toBe(1);
-  expect(at390.cta).toBe(1);
-  expect(at390.match).toBe(0);
+  expect(at390.chips, '390 : une carte sport').toBe(1);
+  expect(at390.match).toBe(1);
+  expect(at390.cta).toBe(0);
 
   const at768 = await resizeAndSettle(page, 768, 1024);
   expect(at768.docked).toBe(true);
   expect(at768.weather).toBeGreaterThanOrEqual(2);
   expect(at768.weather).toBeLessThanOrEqual(3);
-  expect(at768.chips).toBeGreaterThanOrEqual(2);
-  expect(at768.cta).toBe(1);
-  expect(at768.match).toBeGreaterThanOrEqual(1);
+  expect(at768.chips).toBeGreaterThanOrEqual(1);
+  expect(at768.match).toBe(at768.chips);
+  expect(at768.cta).toBe(0);
 
   const at1280 = await resizeAndSettle(page, 1280, 800);
   expect(at1280.wide, '1280 : pas shell E').toBe('');
   expect(at1280.docked).toBe(false);
   expect(at1280.weather, '1280 : 3 cartes (pas coincé à 1 après 390)').toBe(3);
-  expect(at1280.chips).toBeGreaterThanOrEqual(2);
-  expect(at1280.match, '1280 : plus qu’un score étiré').toBeGreaterThanOrEqual(1);
-  expect(at1280.cta).toBe(1);
+  expect(at1280.chips).toBeGreaterThanOrEqual(1);
+  expect(at1280.match, '1280 : plus qu’une carte').toBeGreaterThanOrEqual(1);
+  expect(at1280.cta).toBe(0);
+  expect(at1280.chips).toBe(at1280.match);
   expect(at1280.overlap).toBeLessThanOrEqual(1);
 
   const at1600 = await resizeAndSettle(page, 1600, 900);
-  expect(at1600.cta, '1600 : deux CTA en tête (B)').toBe(2);
-  expect(at1600.match, '1600 : deux scores après les CTA').toBe(2);
-  expect(at1600.chips, '1600 : 2 CTA | 2 scores').toBe(4);
-  expect(at1600.order, '1600 : CCMM').toBe('CCMM');
+  expect(at1600.cta, '1600 : plus de chrome CTA').toBe(0);
+  expect(at1600.match, '1600 : cartes sport seulement').toBe(at1600.chips);
+  expect(at1600.chips, '1600 : au moins deux cartes').toBeGreaterThanOrEqual(2);
+  expect(at1600.order.startsWith('M'), '1600 : puces sport').toBe(true);
   expect(at1600.clipRight, '1600 : pas de carte coupée à droite').toBeLessThanOrEqual(2);
   expect(at1600.chipSpread, `1600 : cartes égales, spread ${at1600.chipSpread}`).toBeLessThanOrEqual(8);
 
   const at1920 = await resizeAndSettle(page, 1920, 1080);
   expect(at1920.wide).toBe('e');
   expect(at1920.weather, '1920 : remplir le ruban, pas 3 villes orphelines').toBeGreaterThanOrEqual(4);
-  expect(at1920.cta, '1920 : deux CTA en tête (B)').toBe(2);
-  expect(at1920.match, '1920 : deux scores après les CTA').toBe(2);
-  expect(at1920.chips, '1920 : 2 CTA | 2 scores').toBe(4);
-  expect(at1920.order, '1920 : CCMM').toBe('CCMM');
+  expect(at1920.cta, '1920 : plus de chrome CTA').toBe(0);
+  expect(at1920.match, '1920 : cartes sport seulement').toBe(at1920.chips);
+  expect(at1920.chips, '1920 : au moins deux cartes').toBeGreaterThanOrEqual(2);
+  expect(at1920.order.startsWith('M'), '1920 : puces sport').toBe(true);
   expect(at1920.clipRight, '1920 : pas de carte coupée à droite').toBeLessThanOrEqual(2);
   expect(at1920.overlap).toBeLessThanOrEqual(1);
   expect(at1920.chipSpread, `1920 : cartes égales, spread ${at1920.chipSpread}`).toBeLessThanOrEqual(8);
 
   const at2560 = await resizeAndSettle(page, 2560, 1440);
   expect(at2560.weather, '2560 : plus de météo qu’à 1920').toBeGreaterThan(at1920.weather);
-  expect(at2560.cta, '2560 : trois CTA en tête (B)').toBe(3);
+  expect(at2560.match, '2560 : plus de cartes qu’à 1920').toBeGreaterThanOrEqual(at1920.match);
   expect(at2560.chips).toBeGreaterThanOrEqual(at1920.chips);
   expect(at2560.overlap).toBeLessThanOrEqual(1);
 
   const at3440 = await resizeAndSettle(page, 3440, 1440);
-  expect(at3440.cta, '3440 : quatre CTA en tête (B)').toBe(4);
+  expect(at3440.match, '3440 : au moins autant de cartes qu’à 1920').toBeGreaterThanOrEqual(at1920.match);
   expect(at3440.weather).toBeGreaterThanOrEqual(at2560.weather);
   expect(at3440.match).toBeGreaterThanOrEqual(at1920.match);
 
@@ -189,7 +190,7 @@ test('mât : revenir à la taille d’origine restaure les quantités', async ({
 
   const at2560 = await resizeAndSettle(page, 2560, 1440);
   const back1920 = await resizeAndSettle(page, 1920, 1080);
-  expect(back1920.cta, '2560→1920 : deux CTA').toBe(2);
+  expect(back1920.cta, '2560→1920 : plus de chrome CTA').toBe(0);
   expect(back1920.match, '2560→1920 : les scores ne disparaissent pas').toBeGreaterThanOrEqual(2);
   expect(back1920.weather).toBeGreaterThanOrEqual(4);
 

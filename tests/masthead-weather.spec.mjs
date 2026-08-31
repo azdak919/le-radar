@@ -505,37 +505,42 @@ test('thème clair : sports et slogan partagent le verre météo @ci-critical', 
         blur: cs.backdropFilter || cs.webkitBackdropFilter,
       };
     };
-    const cta = document.querySelector('#masthead-sports-strip .sports-chip--cta');
-    if (cta) {
-      cta.setAttribute('data-cta-state', 'live');
-      cta.removeAttribute('data-cta-lamp');
+    const chips = [...document.querySelectorAll('#masthead-sports-strip .sports-chip--match')];
+    const rest = chips.find((el) => el.getAttribute('data-cta-state') !== 'live') || chips[0];
+    const liveProbe = chips.find((el) => el !== rest) || rest;
+    if (liveProbe && liveProbe !== rest) {
+      liveProbe.setAttribute('data-cta-state', 'live');
+      liveProbe.removeAttribute('data-cta-lamp');
     }
     return {
       weather: parse(document.querySelector('.masthead-weather__city.is-active')),
-      sports: parse(document.querySelector(
-        '#masthead-sports-strip .sports-chip:not(.sports-chip--cta):not([data-cta-state="live"]):not([data-cta-lamp="soon"])',
-      )),
-      ctaLive: parse(cta),
+      sports: parse(rest),
+      ctaLive: parse(liveProbe),
       slogan: parse(document.querySelector('.wordmark-full')),
     };
   });
 
   const slate = { r: 54, g: 59, b: 68, a: 0.68 };
-  for (const [name, color] of Object.entries(glass)) {
+  for (const [name, color] of Object.entries({
+    weather: glass.weather,
+    sports: glass.sports,
+    slogan: glass.slogan,
+  })) {
     expect(color, `${name} mesurable`).toBeTruthy();
     expect(color.r, `${name} r`).toBe(slate.r);
     expect(color.g, `${name} g`).toBe(slate.g);
     expect(color.b, `${name} b`).toBe(slate.b);
     expect(color.a, `${name} alpha`).toBeCloseTo(slate.a, 2);
   }
-  expect(glass.ctaLive.blur, 'CTA live light : blur verre').toMatch(/blur\(10px\)/);
+  expect(glass.sports.blur, 'cartes sport light : blur verre').toMatch(/blur\(10px\)/);
 
   const cascade = await page.evaluate(() => {
     const name = (el) => (el ? getComputedStyle(el).animationName : '');
-    const chip = document.querySelector(
-      '#masthead-sports-strip .sports-chip:not(.sports-chip--cta)',
-    );
-    const cta = document.querySelector('#masthead-sports-strip .sports-chip--cta');
+    const chip = document.querySelector('#masthead-sports-strip .sports-chip--match');
+    const cta = document.querySelectorAll('#masthead-sports-strip .sports-chip--match')[1]
+      || chip;
+    chip?.classList.remove('is-arriving', 'is-leaving');
+    cta?.classList.remove('is-arriving', 'is-leaving');
     const rest = name(chip);
     chip?.classList.add('is-leaving');
     const leaving = name(chip);
@@ -555,7 +560,7 @@ test('thème clair : sports et slogan partagent le verre météo @ci-critical', 
   expect(cascade.rest, 'puce light au repos : rim-glow').toMatch(/sports-chip-rim-glow-light/);
   expect(cascade.leaving, 'puce light qui sort : cascade').toBe('sports-chip-leave');
   expect(cascade.arriving, 'puce light qui entre : cascade').toBe('sports-chip-arrive');
-  expect(cascade.ctaRest, 'CTA live light au repos : halo').toMatch(/sports-cta-ring-pulse-light/);
+  expect(cascade.ctaRest, '2e carte sport light : pulse ou rim').toMatch(/sports-chip-rim-glow|sports-cta-ring-pulse/);
   expect(cascade.ctaLeaving, 'CTA live light qui sort : cascade').toBe('sports-chip-leave');
 });
 

@@ -1414,24 +1414,22 @@ const SPORTS_COLLEGIAL_CODES = new Set([
  * Clé = code RSEQ collégial.
  */
 const SPORTS_COLLEGIAL_CITY_DISAMBIG = {
-  TRV: 'Cégep Trois-Rivières', // ≠ UQTR
-  RIM: 'Cégep Rimouski', // ≠ UQAR
-  CHI: 'Cégep Chicoutimi', // ≠ UQAC
-  OUT: 'Cégep Outaouais', // ≠ UQO
-  SHE: 'Cégep Sherbrooke', // ≠ UdeS (USHE)
-  CAT: "Cégep Abitibi-Témiscamingue", // ≠ UQAT
+  TRV: 'Cégep de Trois-Rivières', // ≠ UQTR
+  RIM: 'Cégep de Rimouski', // ≠ UQAR
+  CHI: 'Cégep de Chicoutimi', // ≠ UQAC
+  OUT: "Cégep de l'Outaouais", // ≠ UQO
+  SHE: 'Cégep de Sherbrooke', // ≠ UdeS (USHE)
+  CAT: "Cégep de l'Abitibi-Témiscamingue", // ≠ UQAT
 };
 
 /** Shorts collégiaux (sans code) qui collident avec une ville d’université. */
 const SPORTS_COLLEGIAL_CITY_SHORT_DISAMBIG = {
-  'trois-rivieres': 'Cégep Trois-Rivières',
-  'trois-rivières': 'Cégep Trois-Rivières',
-  rimouski: 'Cégep Rimouski',
-  chicoutimi: 'Cégep Chicoutimi',
-  outaouais: 'Cégep Outaouais',
-  sherbrooke: 'Cégep Sherbrooke', // seulement si collégial déjà établi
-  'abitibi-temiscamingue': "Cégep Abitibi-Témiscamingue",
-  'abitibi-témiscamingue': "Cégep Abitibi-Témiscamingue",
+  'trois-rivieres': 'Cégep de Trois-Rivières',
+  rimouski: 'Cégep de Rimouski',
+  chicoutimi: 'Cégep de Chicoutimi',
+  outaouais: "Cégep de l'Outaouais",
+  sherbrooke: 'Cégep de Sherbrooke',
+  'abitibi-temiscamingue': "Cégep de l'Abitibi-Témiscamingue",
 };
 
 /**
@@ -1650,18 +1648,59 @@ function sportsDisplaySideName({
 }
 
 /**
- * Nom d’équipe pour **puce** : surnom d’abord (Vert & Or, Diablos).
- * Repli univ = acronyme ; collégial ville = Cégep … ; voile = club, pas Rouge et Or.
+ * Sigle univ. (UdeS) ou nom officiel cégep (Cégep de l'Outaouais)
+ * à coller à droite du surnom : « Vert & Or (UdeS) ».
+ */
+function sportsInstitutionParen({ shortName, fullName, code, sector } = {}) {
+  const short = String(shortName || '').trim();
+  const full = String(fullName || '').trim();
+  const codeU = String(code || '').toUpperCase();
+  if (sportsLooksCollegial({ fullName: full, shortName: short, sector, code: codeU })) {
+    if (SPORTS_COLLEGIAL_CITY_DISAMBIG[codeU]) return SPORTS_COLLEGIAL_CITY_DISAMBIG[codeU];
+    const fold = sportsFoldKey(short.replace(/^Cégep\s+(de\s+|d'|du\s+|de\s+la\s+)?/i, ''));
+    if (SPORTS_COLLEGIAL_CITY_SHORT_DISAMBIG[fold]) return SPORTS_COLLEGIAL_CITY_SHORT_DISAMBIG[fold];
+    if (short && !/^Cégep\b/i.test(short)) return short;
+    return full || short;
+  }
+  if (sportsLooksUniversity({ fullName: full, shortName: short, sector, code: codeU })) {
+    return sportsLookupInstitutionAcronym(full)
+      || SPORTS_UNI_CODE_ACRONYM[codeU]
+      || sportsUniCityAcronym(short)
+      || '';
+  }
+  return '';
+}
+
+function sportsChipWithInstitution(label, paren) {
+  const l = String(label || '').trim();
+  const p = String(paren || '').trim();
+  if (!l) return p;
+  if (!p) return l;
+  if (l === p || l.includes(`(${p})`)) return l;
+  const foldL = sportsFoldKey(l);
+  const foldP = sportsFoldKey(p);
+  if (foldL === foldP || foldL.endsWith(foldP) || foldP.endsWith(foldL)) return l;
+  return `${l} (${p})`;
+}
+
+/**
+ * Nom d’équipe pour **puce** : surnom + (sigle) (Vert & Or (UdeS)).
+ * Sans surnom : acronyme univ. ou nom officiel cégep. Voile = club.
  */
 function sportsChipTeamShort(team) {
   const sport = String(team?.sport || '').toLowerCase();
   const sailing = sport === 'sailing' || sport === 'voile';
-  let name = sportsDisplaySideName({
+  const args = {
     shortName: team?.name || team?.shortName,
     fullName: team?.fullName,
     code: team?.code,
     sector: team?.sector,
-    nickname: sailing ? '' : (team?.nickname || ''),
+  };
+  const nick = sailing ? '' : String(team?.nickname || '').trim();
+  if (nick) return sportsChipWithInstitution(nick, sportsInstitutionParen(args));
+  let name = sportsDisplaySideName({
+    ...args,
+    nickname: '',
     preferAcronym: true,
     fallback: 'Équipe',
   });
@@ -1671,7 +1710,7 @@ function sportsChipTeamShort(team) {
   return name;
 }
 
-/** Adversaire sur puce — surnom d’abord, comme l’équipe à domicile. */
+/** Adversaire sur puce — surnom + (sigle), comme l’équipe à domicile. */
 function sportsChipOpponentLabel(game) {
   const full = String(game?.opponentFullName || '');
   const code = String(game?.opponentCode || '').toUpperCase();
@@ -1683,12 +1722,17 @@ function sportsChipOpponentLabel(game) {
   } else if (sportsLooksUniversity({ fullName: full, shortName: game?.opponent, code })) {
     sector = 'universitaire';
   }
-  return sportsDisplaySideName({
+  const args = {
     shortName: game?.opponent,
     fullName: game?.opponentFullName,
     code: game?.opponentCode,
     sector,
-    nickname: sailing ? '' : (game?.opponentNickname || ''),
+  };
+  const nick = sailing ? '' : String(game?.opponentNickname || '').trim();
+  if (nick) return sportsChipWithInstitution(nick, sportsInstitutionParen(args));
+  return sportsDisplaySideName({
+    ...args,
+    nickname: '',
     preferAcronym: sector === 'universitaire',
     fallback: 'adversaire',
   });
@@ -2706,7 +2750,8 @@ function sportsCtaState(slide) {
 
 /** Un seul direct : la CTA reste dessus. Plusieurs : elle tourne entre eux. */
 function sportsCtaHoldOnLive(slide) {
-  return sportsCtaState(slide) === 'live' && sportsCtaLiveSources().length < 2;
+  const g = slide?.ctaFrom?.game || slide?.game;
+  return sportsGameIsLive(g) && sportsCtaLiveSources().length < 2;
 }
 
 /**
@@ -3305,10 +3350,13 @@ function paintSportsChip(slide, animate = false) {
     return a;
   }
 
-  /* ── CTA « SPORTS » — pastille + accroche ; même leave/arrive que les scores ── */
+  /* ── Creux marque. Un match CTA est peint comme puce sport (une famille). ── */
   if (slide.mode === 'cta') {
+    if (!slide.ctaIdle && slide.ctaFrom?.team && slide.ctaFrom?.game) {
+      return paintSportsChip(slide.ctaFrom, animate);
+    }
     const a = document.createElement('a');
-    a.className = 'sports-chip sports-chip--cta';
+    a.className = 'sports-chip sports-chip--match sports-chip--idle';
     if (slide.ctaIdle) {
       a.href = radarHomeHref();
     } else {
@@ -3417,6 +3465,7 @@ function paintSportsChip(slide, animate = false) {
   })() : null;
 
   if (slide.mode === 'result') {
+    a.dataset.ctaState = 'result';
     const badge = sportsResultBadgeEl(g, sport);
     if (whenTag && badge) a.append(whenTag, glyph, badge);
     else if (whenTag) a.append(whenTag, glyph);
@@ -3450,6 +3499,7 @@ function paintSportsChip(slide, animate = false) {
     a.title = sportsChipTitle(slide);
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
   } else {
+    a.dataset.ctaState = 'next';
     if (whenTag) a.append(whenTag, glyph);
     else a.append(glyph);
     // « reçoit » / « chez » — même ton presse que la CTA ; verbe en .sports-chip__vs (gris).
@@ -3569,37 +3619,25 @@ function sportsCtaSlotIndices(visible = sportsVisible) {
 
 /**
  * Première peinture (go B) : préfixe de sportsOpenOrderSlides.
- * 1 chip : tête de liste (CTA). Overflow = coupe la queue, pas de re-tri.
+ * Une seule famille visuelle (puce sport). Pas de chrome CTA.
+ * Overflow = coupe la queue, pas de re-tri. Creux = marque.
  */
 function pickInitialSportsVisible(count) {
   sportsCtaLabelIndex = 0;
   sportsLeftCursor = 0;
-  if (count <= 1) return [sportsCtaSlide(0)];
-
-  const ctaN = sportsWideCtaCount(count);
-  const ctas = pickDistinctSportsCtas(ctaN);
-  const contentCount = Math.max(0, count - ctas.length);
+  const pool = sportsOpenOrderSlides();
+  const n = Math.max(1, count | 0);
+  if (!pool.length) return [sportsCtaSlide(0)];
   const picked = [];
   const usedKeys = new Set();
-  ctas.forEach((c) => {
-    for (const k of sportsSlideOccupyKeys(c)) usedKeys.add(k);
-    usedKeys.add(c.key);
-  });
-  const prevVisible = sportsVisible;
-  sportsVisible = ctas.slice();
-  try {
-    const pool = sportsOpenOrderSlides();
-    for (const slide of pool) {
-      if (picked.length >= contentCount) break;
-      if (!slide || sportsSlideIsUsed(slide, usedKeys)) continue;
-      picked.push(slide);
-      for (const k of sportsSlideOccupyKeys(slide)) usedKeys.add(k);
-    }
-  } finally {
-    sportsVisible = prevVisible;
+  for (const slide of pool) {
+    if (picked.length >= n) break;
+    if (!slide || sportsSlideIsUsed(slide, usedKeys)) continue;
+    picked.push(slide);
+    for (const k of sportsSlideOccupyKeys(slide)) usedKeys.add(k);
   }
-
-  return sportsSeparateAdjacentResults(arrangeSportsVisible(picked, ctas));
+  if (!picked.length) return [sportsCtaSlide(0)];
+  return sportsSeparateAdjacentResults(picked);
 }
 
 /** Remplit / recalcule les slots visibles (resize ou 1er paint). */
@@ -3614,109 +3652,11 @@ function renderSportsStrip() {
     return;
   }
   const board = sportsBoardCount();
-  // Réserver 1–3 CTAs (wide) ; le reste = scores.
   const count = Math.min(board, Math.max(1, sportsSlides.length + 3));
-  const pinned = count >= 2;
-  const ctaN = sportsWideCtaCount(count);
-  const contentSlots = pinned ? Math.max(0, count - ctaN) : 0;
-
-  // Resize / fit : si le mode pin ou le nb de slots change, re-semer.
-  const wideCentered = typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode();
-  const ctaIdxsPrev = sportsCtaSlotIndices(sportsVisible);
-  const wasPinned = sportsVisible.length >= 2
-    && ctaIdxsPrev.length >= 1;
-  const wasCtaOnly = sportsVisible.length === 1 && sportsVisible[0]?.mode === 'cta';
-  const prevCtaN = ctaIdxsPrev.length || 0;
-  const slideStillValid = (s) => {
-    if (!s || s.mode === 'cta') return false;
-    // Anciennes puces « info » : purger au prochain paint (plus dans la gauche).
-    if (s.mode === 'info') return false;
-    return sportsSlides.some((x) => x.key === s.key);
-  };
-  const canReuse = pinned
-    && sportsVisible.some((s) => s && s.mode !== 'cta' && slideStillValid(s));
-  if (
-    !canReuse
-    || sportsVisible.length !== count
-    || wasPinned !== pinned
-    || prevCtaN !== ctaN
-    || (count === 1 && !wasCtaOnly)
-  ) {
-    sportsVisible = pickInitialSportsVisible(count);
-  } else {
-    // Garder les CTAs existantes si encore distinctes / valides, sinon re-piocher.
-    const prevCtas = sportsVisible.filter((s) => s?.mode === 'cta');
-    let ctasKeep = prevCtas.slice(0, ctaN);
-    if (ctasKeep.length < ctaN) {
-      ctasKeep = pickDistinctSportsCtas(ctaN);
-    } else {
-      // Revalider distinctness
-      const seen = new Set();
-      const ok = [];
-      for (const c of ctasKeep) {
-        if (sportsSlideIsUsed(c, seen)) continue;
-        for (const k of sportsSlideOccupyKeys(c)) seen.add(k);
-        seen.add(c.key);
-        ok.push(c);
-      }
-      if (ok.length < ctaN) ctasKeep = pickDistinctSportsCtas(ctaN);
-      else ctasKeep = ok;
-    }
-    const used = new Set();
-    ctasKeep.forEach((c) => {
-      for (const k of sportsSlideOccupyKeys(c)) used.add(k);
-      used.add(c.key);
-    });
-    const nextVisible = [];
-    // Reprendre les scores existants (tous slots sauf CTAs), ordre L→R.
-    for (let i = 0; i < sportsVisible.length; i += 1) {
-      if (ctaIdxsPrev.includes(i)) continue;
-      const prev = sportsVisible[i];
-      const prevMatchKey = sportsResultMatchKey(prev);
-      const priorMatchKey = sportsResultMatchKey(nextVisible[nextVisible.length - 1]);
-      if (
-        prev
-        && prev.mode !== 'cta'
-        && prev.mode !== 'info'
-        && !sportsSlideIsUsed(prev, used)
-        && !(prevMatchKey && prevMatchKey === priorMatchKey)
-        && slideStillValid(prev)
-        && nextVisible.length < contentSlots
-      ) {
-        nextVisible.push(prev);
-        for (const k of sportsSlideOccupyKeys(prev)) used.add(k);
-      }
-    }
-    const usedSports = new Set(
-      nextVisible
-        .map((s) => String(s.team?.sport || '').toLowerCase())
-        .filter(Boolean),
-    );
-    // Compléter avec scores / prochains (hors matchs CTA).
-    const prevVis = sportsVisible;
-    sportsVisible = [...ctasKeep, ...nextVisible];
-    try {
-      while (nextVisible.length < contentSlots) {
-        const previousKey = sportsResultMatchKey(nextVisible[nextVisible.length - 1]);
-        const avoidMatchKeys = previousKey ? new Set([previousKey]) : new Set();
-        const slide = nextSportsSlide(used, { usedSports, avoidMatchKeys });
-        if (!slide || slide.mode === 'info') break;
-        if (sportsSlideIsUsed(slide, used)) break;
-        nextVisible.push(slide);
-        for (const k of sportsSlideOccupyKeys(slide)) used.add(k);
-        if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
-      }
-    } finally {
-      sportsVisible = prevVis;
-    }
-    // Wide : CTAs au centre ; prod : CTA à droite.
-    sportsVisible = sportsSeparateAdjacentResults(arrangeSportsVisible(nextVisible, ctasKeep));
-  }
-  // Marqueur CSS pour le style « CTA centre » + nombre de CTAs
+  sportsVisible = pickInitialSportsVisible(count);
   if (MASTHEAD_SPORTS_STRIP) {
-    const nCta = sportsCtaSlotIndices(sportsVisible).length;
-    MASTHEAD_SPORTS_STRIP.dataset.ctaLayout = wideCentered && count >= 2 ? 'center' : 'end';
-    MASTHEAD_SPORTS_STRIP.dataset.ctaCount = String(nCta);
+    MASTHEAD_SPORTS_STRIP.dataset.ctaLayout = 'start';
+    MASTHEAD_SPORTS_STRIP.dataset.ctaCount = '0';
   }
 
   // Rotation L→R : toujours repartir du slot le plus à gauche après un re-paint.
@@ -3727,7 +3667,7 @@ function renderSportsStrip() {
   MASTHEAD_SPORTS_STRIP.hidden = false;
   MASTHEAD_SPORTS_STRIP.classList.remove('is-empty');
   MASTHEAD_SPORTS_STRIP.dataset.count = String(sportsVisible.length);
-  MASTHEAD_SPORTS_STRIP.dataset.ctaPinned = pinned ? '1' : '0';
+  MASTHEAD_SPORTS_STRIP.dataset.ctaPinned = sportsVisible.length >= 2 ? '1' : '0';
   // Fit anti-marquee (A) + marquee CTA seulement, après layout stable.
   window.requestAnimationFrame(() => {
     refreshSportsChipScroll();
@@ -3853,63 +3793,20 @@ function rotateSportsSlot(slot) {
   if (!MASTHEAD_SPORTS_STRIP || sportsVisible.length < 1 || sportsSlides.length < 1) return;
   const n = sportsVisible.length;
   if (slot < 0 || slot >= n) return;
-  const pinned = n >= 2;
-  const ctaSlots = sportsCtaSlotIndices(sportsVisible);
-  const isCtaSlot = ctaSlots.includes(slot);
-  // Occupation = clés faces + dédup match (miroir CTA ↔ scores).
   const used = sportsVisibleOccupyKeys(slot);
   const avoidMatchKeys = sportsAdjacentResultMatchKeys(slot);
   const usedSports = new Set(
     sportsVisible
-      .filter((_, i) => i !== slot && sportsVisible[i]?.mode !== 'cta')
+      .filter((_, i) => i !== slot)
       .map((s) => String(s.team?.sport || '').toLowerCase())
       .filter(Boolean),
   );
 
-  let replacement = null;
-  if (!pinned || isCtaSlot) {
-    // CTA : cycle pool en évitant les matchs déjà portés par d’autres CTAs.
-    // En live, un direct peut déjà être à gauche : on le prend quand même
-    // (la puce score est remplacée plus bas). Sinon le 2ᵉ match resterait coincé.
-    const poolLen = Math.max(1, sportsCtaCandidateSlides().length || sportsCtaLabelPool().length);
+  let replacement = nextSportsSlide(used, { usedSports, avoidMatchKeys });
+  if (!replacement && sportsVisible[slot]?.mode === 'cta') {
+    const poolLen = Math.max(1, sportsCtaCandidateSlides().length || 1);
     const curIdx = Number(sportsVisible[slot]?.labelIndex) || 0;
-    const liveN = sportsCtaLiveSources().length;
-    const ctaUsed = new Set();
-    sportsVisible.forEach((s, i) => {
-      if (i === slot || s?.mode !== 'cta') return;
-      for (const k of sportsSlideOccupyKeys(s)) ctaUsed.add(k);
-    });
-    const avoid = liveN ? ctaUsed : used;
-    let found = null;
-    for (let step = 1; step <= poolLen; step += 1) {
-      const idx = (curIdx + step) % poolLen;
-      const cand = sportsCtaSlide(idx);
-      if (sportsSlideIsUsed(cand, avoid)) continue;
-      // Idle : éviter le même label qu’une autre CTA
-      if (cand.ctaIdle) {
-        const otherLabels = sportsVisible
-          .filter((s, i) => i !== slot && s?.mode === 'cta')
-          .map((s) => s.label);
-        if (otherLabels.includes(cand.label)) continue;
-      }
-      found = cand;
-      break;
-    }
-    replacement = found || sportsCtaSlide((curIdx + 1) % poolLen);
-    sportsCtaLabelIndex = replacement.labelIndex ?? ((curIdx + 1) % poolLen);
-  } else {
-    // Scores (gauche ou droite des CTAs) : résultats ou prochains.
-    const cur = sportsVisible[slot];
-    const avoid = String(cur?.team?.sport || '').toLowerCase();
-    replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid, avoidMatchKeys });
-    if (replacement?.mode === 'cta' || replacement?.mode === 'info') {
-      replacement = nextSportsSlide(used, {
-        usedSports,
-        avoidSport: avoid,
-        avoidMatchKeys,
-        forceMode: 'next',
-      });
-    }
+    replacement = sportsCtaSlide((curIdx + 1) % poolLen);
   }
 
   if (!replacement) return;
@@ -4013,8 +3910,8 @@ function scheduleSportsSlot(slot, { initialStagger = 0 } = {}) {
   // La carte CTA ne tourne que là où on peut l’arrêter, et pas pendant qu’on la
   // survole ou qu’elle a le focus (garde-fous `rotation-pointeur-fin` et
   // `pause-survol-focus`). Ailleurs, l’accroche reste celle du chargement.
-  if (sportsVisible[slot]?.mode === 'cta' && sportsCtaHoldOnLive(sportsVisible[slot])) return;
-  if (sportsVisible[slot]?.mode === 'cta' && (!sportsCtaMayRotate() || sportsCtaPaused)) return;
+  if (sportsCtaHoldOnLive(sportsVisible[slot])) return;
+  if (sportsCtaPaused && sportsVisible[slot]?.mode === 'cta') return;
   // Mesurer le marquee avant de fixer le dwell (classe peut être absente un instant).
   const chipNow = MASTHEAD_SPORTS_STRIP.querySelectorAll('.sports-chip')?.[slot];
   if (chipNow) refreshSportsChipScroll(chipNow);
@@ -4093,11 +3990,11 @@ function scheduleSportsWave({ fromSlot = 0, firstWait = true } = {}) {
     const slot = index;
     const slide = sportsVisible[slot];
     // Direct unique : la carte En direct ne tourne pas. Plusieurs lives : cycle.
-    if (slide?.mode === 'cta' && sportsCtaHoldOnLive(slide)) {
+    if (sportsCtaHoldOnLive(slide)) {
       sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
       return;
     }
-    if (slide?.mode === 'cta' && (!sportsCtaMayRotate() || sportsCtaPaused)) {
+    if (slide?.ctaIdle && (!sportsCtaMayRotate() || sportsCtaPaused)) {
       sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
       return;
     }
