@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-08-31T06:38:34.023Z",
+  "updatedAt": "2026-08-31T13:36:28.487Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Lundi Indie",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Lundi Indie",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T06:38:07.735Z"
+      "checkedAt": "2026-08-31T13:35:59.377Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
+        "title": "La collation",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "09:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "next": {
-        "title": "Le char de marge (reprise)",
+        "title": "o'keb",
         "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/le-char-de-marge"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/okeb"
       },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T06:38:09.670Z"
+      "checkedAt": "2026-08-31T13:36:01.576Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Roots, Rock, Reggae",
+        "title": "Latin Music Mondays",
         "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "next": {
-        "title": "Adventures In Music",
+        "title": "All Things Campus",
         "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "track": "",
-      "showTitle": "Roots, Rock, Reggae",
+      "showTitle": "Latin Music Mondays",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,83 +81,84 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T06:38:12.196Z"
+      "checkedAt": "2026-08-31T13:36:03.672Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
+        "title": "Death of the Midrange",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/death-of-the-midrange"
       },
       "next": {
-        "title": "Experiments",
+        "title": "Democracy Now",
         "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/experiments"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Death of the Midrange",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T06:38:26.675Z"
+      "checkedAt": "2026-08-31T13:36:17.300Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Solénoïde",
         "source": "schedule-live",
-        "start": "00:01",
-        "end": "07:00"
+        "start": "09:00",
+        "end": "18:00"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "Ma radio Académia",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "18:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Solénoïde",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T06:38:28.359Z"
+      "checkedAt": "2026-08-31T13:36:18.133Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Les rois de l'arène",
-        "source": "api-live",
-        "start": "05:00",
-        "end": "07:00",
-        "slug": "les-rois-de-larene"
+        "title": "Faire avec",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "https://www.choq.ca/emissions/faire-avec"
       },
-      "track": "Miserere Luminis - Aux bras des vagues & des vomissures",
+      "track": "La grossophobie, aujourd",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-31T06:38:33.672Z"
+      "checkedAt": "2026-08-31T13:36:28.136Z"
     }
   }
 }
