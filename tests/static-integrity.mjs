@@ -281,6 +281,14 @@ assert(
   'banque unique : Pavillon Casault',
 );
 assert(
+  /Pavillon Agathe-Lacerte/.test(photoBankJson),
+  'banque unique : résidence Agathe-Lacerte',
+);
+assert(
+  /Pavillon Ernest-Lemieux/.test(photoBankJson),
+  'banque unique : résidence Ernest-Lemieux',
+);
+assert(
   !/Pavillon_Adrien-Pouliot_0[789]\.jpg/i.test(photoBankJson),
   'Pouliot 07/08/09 restent les rejets labo',
 );
@@ -646,6 +654,9 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builder.includes('Lettre 8,5 × 11'), 'générateur public : format lettre');
   assert(builder.includes('Légal 8,5 × 14'), 'générateur public : format légal');
   assert(builderJs.includes('function applyQuery'), 'générateur public : ?campus= depuis le kit média');
+  assert(builderJs.includes('function applyPhotoHint'), 'générateur public : ?photo=ernest-lemieux');
+  assert(builderJs.includes('agathe-lacerte'), 'générateur public : résidence Agathe-Lacerte');
+  assert(builderJs.includes('ernest-lemieux'), 'générateur public : résidence Ernest-Lemieux');
   assert(builderJs.includes('function isAppleTouch'), 'générateur public : iPadOS desktop-UA');
   assert(builderJs.includes('function mustTile'), 'générateur public : tuilage forcé sous le plafond iOS');
   assert(builderJs.includes('function rasterTiles'), 'générateur public : PDF 600 dpi en tuiles sur iPad');

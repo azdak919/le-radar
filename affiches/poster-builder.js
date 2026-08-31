@@ -88,7 +88,14 @@ const CAMPUSES = [
   {
     slug: 'laval', line: 'Université Laval', prefix: 'Université ', core: 'Laval', bilingual: false, label: 'Université Laval',
     places: ['université laval'],
-    hints: ['université laval', 'adrien-pouliot', 'alphonse-marie-parent', 'biermans', 'ernest-lemieux', 'pavillon dkn', 'casault', 'palasis', 'bonenfant', 'grand axe'],
+    hints: [
+      'université laval', 'adrien-pouliot', 'alphonse-marie-parent', 'biermans',
+      'ernest-lemieux', 'agathe-lacerte', 'pavillon dkn', 'casault', 'palasis',
+      'bonenfant', 'grand axe', 'vandry', 'vachon', 'desjardins', 'marchand',
+      'optique', 'pavillon de l’est', 'peps', 'médecine dentaire', 'envirotron',
+      'savard', 'kruger', 'de sève', 'lapointe', 'sciences de l’éducation',
+      'pollack', 'comtois', 'laurentienne', 'abitibi-price', 'institut nordique',
+    ],
   },
   {
     slug: 'mcgill', line: 'Université McGill', lineEn: 'McGill University', prefix: 'Université ', core: 'McGill', bilingual: true, label: 'Université McGill',
@@ -187,6 +194,7 @@ const state = {
   qr: true,
   dpi: DEFAULT_DPI,
   photoId: null,
+  photoHint: null,
   photos: [],
   focalX: 0.5,
   focalY: 0.42,
@@ -1211,7 +1219,26 @@ function applyQuery() {
     const input = document.querySelector(`input[name="campus"][value="${campus}"]`);
     if (input) input.checked = true;
   }
+  const photo = q.get('photo');
+  if (photo) state.photoHint = photo;
+  const greeting = q.get('greeting');
+  if (greeting && Object.prototype.hasOwnProperty.call(GREETINGS, greeting)) {
+    state.greeting = greeting;
+    const sel = document.getElementById('greeting');
+    if (sel) sel.value = greeting;
+  }
   syncGenericLangs();
+}
+
+function applyPhotoHint() {
+  const hint = fold(state.photoHint || '');
+  if (!hint) return;
+  const photos = filteredPhotos();
+  const hit = photos.find((p) => photoKeyId(p) === state.photoHint)
+    || photos.find((p) => fold(`${p.title || ''} ${p.id || ''}`).includes(hint));
+  if (!hit) return;
+  state.photoId = photoKeyId(hit);
+  if (photos.findIndex((p) => photoKeyId(p) === state.photoId) >= 5) state.photoOpen = true;
 }
 
 function syncGenericLangs() {
@@ -1356,6 +1383,7 @@ async function main() {
     if (banned.has(url) || banned.has(p.id) || (file && banned.has(file))) return false;
     return true;
   });
+  applyPhotoHint();
   renderChoices();
   await preview();
 }

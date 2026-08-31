@@ -9,7 +9,10 @@ Grand pictogramme satellite + wordmark **[logo PWA | LE-RADAR.ca]**.
 
 ```
 python3 scripts/generate-campus-posters.py --ground nophoto --only generique,laval,mcgill,udem
-python3 scripts/generate-campus-posters.py
+python3 scripts/generate-campus-posters.py --only laval --ground lemieux --out ~/Downloads/le-radar-affiches-ulaval
 ```
+
+Studio public : `/affiches/?campus=laval&photo=ernest-lemieux`  
+(pavillons d’enseignement + 4 résidences : Parent, Biermans-Moraud, Lemieux, Agathe-Lacerte).
 
 Labo : http://127.0.0.1:8777/dev/affiche-lab.html

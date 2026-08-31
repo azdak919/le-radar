@@ -45,6 +45,15 @@ test.describe('affiches — largeurs labo', () => {
     await expect(page.locator('label:has(input[name="lang"][value="bilingue"])')).toBeHidden();
   });
 
+  test('?photo=ernest-lemieux sélectionne la résidence', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto('/affiches/?campus=laval&photo=ernest-lemieux', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('input[name="campus"][value="laval"]')).toBeChecked();
+    await expect(page.locator('#photo-more')).toBeVisible({ timeout: 20000 });
+    const lemieux = page.locator('#photo-grid label[title*="Ernest-Lemieux" i] input');
+    await expect(lemieux).toBeChecked({ timeout: 20000 });
+  });
+
   test('barre Format du labo locale', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/affiches/', { waitUntil: 'domcontentloaded' });
