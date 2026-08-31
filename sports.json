@@ -1,11 +1,11 @@
 {
-  "updated": "2026-08-30T22:56:44.017Z",
-  "fetchedAt": "2026-08-30T22:56:44.017Z",
+  "updated": "2026-08-31T04:31:02.225Z",
+  "fetchedAt": "2026-08-31T04:31:02.225Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-30T22:56:44.018Z"
+    "referenceDate": "2026-08-31T04:31:02.225Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 789,
@@ -54799,19 +54799,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-08-30",
-          "time": "14:00",
-          "opponent": "Champlain St-Lawrence",
-          "opponentCode": "SLC",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-          "opponentFullName": "Champlain College St. Lawrence",
-          "opponentRegistryId": "ch-st-lawrence"
-        },
-        {
           "date": "2026-09-19",
           "time": "14:00",
           "opponent": "Thetford",
@@ -54878,17 +54865,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-08-30",
+        "date": "2026-09-19",
         "time": "14:00",
-        "opponent": "Champlain St-Lawrence",
-        "opponentCode": "SLC",
-        "home": false,
+        "opponent": "Thetford",
+        "opponentCode": "THE",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-        "opponentFullName": "Champlain College St. Lawrence",
-        "opponentRegistryId": "ch-st-lawrence",
+        "gameId": "b224b84a-c8e4-438f-a49c-5c5e52e98a98",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b224b84a-c8e4-438f-a49c-5c5e52e98a98",
+        "opponentFullName": "Cégep de Thetford",
+        "opponentRegistryId": "thetford",
         "opponentSector": "collegial"
       },
       "record": {
@@ -54919,19 +54906,6 @@
       "results": [],
       "lastGame": null,
       "nextGames": [
-        {
-          "date": "2026-08-30",
-          "time": "14:00",
-          "opponent": "Beauce-Appalaches",
-          "opponentCode": "BAP",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-          "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches"
-        },
         {
           "date": "2026-09-12",
           "time": "14:00",
@@ -54999,17 +54973,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-08-30",
+        "date": "2026-09-12",
         "time": "14:00",
-        "opponent": "Beauce-Appalaches",
-        "opponentCode": "BAP",
+        "opponent": "Alma",
+        "opponentCode": "ALM",
         "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-        "opponentFullName": "Cégep de Beauce-Appalaches",
-        "opponentRegistryId": "beauce-appalaches",
+        "gameId": "6dde0e95-6759-47d9-96d5-236c3097fffe",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6dde0e95-6759-47d9-96d5-236c3097fffe",
+        "opponentFullName": "Cégep de Alma",
+        "opponentRegistryId": "alma",
         "opponentSector": "collegial"
       },
       "record": {

@@ -1,10 +1,10 @@
 {
-  "updated": "2026-08-30T22:56:44.017Z",
-  "fetchedAt": "2026-08-30T22:56:44.017Z",
+  "updated": "2026-08-31T04:31:02.225Z",
+  "fetchedAt": "2026-08-31T04:31:02.225Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-08-30T22:56:44.018Z"
+    "referenceDate": "2026-08-31T04:31:02.225Z"
   },
   "masthead": {
     "nextGameLimit": 48,
@@ -12,7 +12,7 @@
     "chipResultMaxDaysAgo": 5,
     "ctaResultMaxDaysAgo": 1
   },
-  "teamCount": 134,
+  "teamCount": 132,
   "teams": {
     "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:8da1c885-51ab-48a0-ae71-e7c01f97f8d7": {
       "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:8da1c885-51ab-48a0-ae71-e7c01f97f8d7",
@@ -5636,102 +5636,6 @@
       "registryId": "saint-jerome",
       "lastGamePriorSeason": false
     },
-    "collegial:soccer:09897279-c580-4cad-a924-1831c67ce2c1:2c63bd7a-1c9f-4671-8acc-2c5de5bf5ec9": {
-      "id": "collegial:soccer:09897279-c580-4cad-a924-1831c67ce2c1:2c63bd7a-1c9f-4671-8acc-2c5de5bf5ec9",
-      "rseqTeamId": "2c63bd7a-1c9f-4671-8acc-2c5de5bf5ec9",
-      "leagueId": "09897279-c580-4cad-a924-1831c67ce2c1",
-      "name": "Beauce-Appalaches",
-      "code": "BAP",
-      "sector": "collegial",
-      "sport": "soccer",
-      "sportLabel": "Soccer",
-      "sex": "F",
-      "division": "D2",
-      "usports": false,
-      "leagueLabel": "Soccer collégial féminin D2",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-30",
-          "time": "14:00",
-          "opponent": "Champlain St-Lawrence",
-          "opponentCode": "SLC",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-          "opponentFullName": "Champlain College St. Lawrence",
-          "opponentRegistryId": "ch-st-lawrence"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-30",
-        "time": "14:00",
-        "opponent": "Champlain St-Lawrence",
-        "opponentCode": "SLC",
-        "home": false,
-        "sport": "soccer",
-        "competition": "Soccer collégial féminin D2",
-        "gameId": "4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-        "opponentFullName": "Champlain College St. Lawrence",
-        "opponentRegistryId": "ch-st-lawrence"
-      },
-      "source": "rseq-s1",
-      "priority": 80,
-      "fullName": "Cégep de Beauce-Appalaches",
-      "registryId": "beauce-appalaches"
-    },
-    "collegial:soccer:09897279-c580-4cad-a924-1831c67ce2c1:04a285f6-2cf0-4724-a1af-23ebb3595127": {
-      "id": "collegial:soccer:09897279-c580-4cad-a924-1831c67ce2c1:04a285f6-2cf0-4724-a1af-23ebb3595127",
-      "rseqTeamId": "04a285f6-2cf0-4724-a1af-23ebb3595127",
-      "leagueId": "09897279-c580-4cad-a924-1831c67ce2c1",
-      "name": "Champlain St-Lawrence",
-      "code": "SLC",
-      "sector": "collegial",
-      "sport": "soccer",
-      "sportLabel": "Soccer",
-      "sex": "F",
-      "division": "D2",
-      "usports": false,
-      "leagueLabel": "Soccer collégial féminin D2",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-08-30",
-          "time": "14:00",
-          "opponent": "Beauce-Appalaches",
-          "opponentCode": "BAP",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-          "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-08-30",
-        "time": "14:00",
-        "opponent": "Beauce-Appalaches",
-        "opponentCode": "BAP",
-        "home": true,
-        "sport": "soccer",
-        "competition": "Soccer collégial féminin D2",
-        "gameId": "4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-        "opponentFullName": "Cégep de Beauce-Appalaches",
-        "opponentRegistryId": "beauce-appalaches"
-      },
-      "source": "rseq-s1",
-      "priority": 80,
-      "fullName": "Champlain College St. Lawrence",
-      "registryId": "ch-st-lawrence"
-    },
     "collegial:soccer:48a59be5-0904-4b5c-b52b-1ef4cf1e8d8c:6ba50c57-09cc-4375-aef9-c36df6db1022": {
       "id": "collegial:soccer:48a59be5-0904-4b5c-b52b-1ef4cf1e8d8c:6ba50c57-09cc-4375-aef9-c36df6db1022",
       "rseqTeamId": "6ba50c57-09cc-4375-aef9-c36df6db1022",
@@ -7818,6 +7722,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=89181571-8d18-4375-8b47-320ef3a2dbf1",
           "opponentFullName": "Cégep de Maisonneuve",
           "opponentRegistryId": "maisonneuve"
+        },
+        {
+          "date": "2026-09-05",
+          "time": "14:30",
+          "opponent": "Lionel-Groulx",
+          "opponentCode": "CLG",
+          "home": true,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D3",
+          "gameId": "23f42331-97f9-4843-883c-b03873a1019d",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=23f42331-97f9-4843-883c-b03873a1019d",
+          "opponentFullName": "Collège Lionel-Groulx",
+          "opponentRegistryId": "lionel-groulx"
         }
       ],
       "nextGame": {
@@ -8137,6 +8054,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c699be3a-40f1-4e9c-ad3d-aa7f3e8f1570",
           "opponentFullName": "Cégep de Gérald-Godin",
           "opponentRegistryId": "gerald-godin"
+        },
+        {
+          "date": "2026-09-05",
+          "time": "14:30",
+          "opponent": "Jean-de-Brébeuf",
+          "opponentCode": "BRÉ",
+          "home": false,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D3",
+          "gameId": "23f42331-97f9-4843-883c-b03873a1019d",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=23f42331-97f9-4843-883c-b03873a1019d",
+          "opponentFullName": "Collège Jean-de-Brébeuf",
+          "opponentRegistryId": "brebeuf"
         }
       ],
       "nextGame": {
