@@ -40,20 +40,20 @@ const TRANSLATE_LANGS = [
 
 const GREETINGS = {
   none: null,
-  rentree: 'Bonne rentrée',
-  'mi-session': 'Courage — mi-session',
-  motivation: 'Tu vas y arriver',
-  'fin-session': 'Bonne fin de session',
-  relache: 'Bonne relâche',
-  'action-grace': 'Bonne Action de grâce',
+  rentree: 'Bonne rentrée !',
+  'mi-session': 'Courage — mi-session !',
+  motivation: 'Tu vas y arriver !',
+  'fin-session': 'Bonne fin de session !',
+  relache: 'Bonne relâche !',
+  'action-grace': 'Bonne Action de grâce !',
   verite: 'Vérité et réconciliation',
   souvenir: 'Souvenons-nous',
-  fetes: 'Joyeuses Fêtes',
-  annee: 'Bonne année',
-  paques: 'Joyeuses Pâques',
+  fetes: 'Joyeuses Fêtes !',
+  annee: 'Bonne année !',
+  paques: 'Joyeuses Pâques !',
   patriotes: 'Journée des Patriotes',
-  'saint-jean': 'Bonne Saint-Jean',
-  canada: 'Bonne fête du Canada',
+  'saint-jean': 'Bonne Saint-Jean !',
+  canada: 'Bonne fête du Canada !',
   nopub: 'Pas de publicité',
   gpl: 'Code libre GPL 2.0',
   gratuit: 'Gratuit, pour toujours',
@@ -62,20 +62,20 @@ const GREETINGS = {
 };
 
 const GREETINGS_EN = {
-  rentree: 'Have a great start',
-  'mi-session': 'You’ve got this — midterms',
-  motivation: 'You’ve got this',
-  'fin-session': 'Good luck with finals',
-  relache: 'Enjoy the break',
-  'action-grace': 'Happy Thanksgiving',
+  rentree: 'Have a great start!',
+  'mi-session': 'You’ve got this — midterms!',
+  motivation: 'You’ve got this!',
+  'fin-session': 'Good luck with finals!',
+  relache: 'Enjoy the break!',
+  'action-grace': 'Happy Thanksgiving!',
   verite: 'Truth and Reconciliation',
   souvenir: 'Lest we forget',
-  fetes: 'Happy Holidays',
-  annee: 'Happy New Year',
-  paques: 'Happy Easter',
+  fetes: 'Happy Holidays!',
+  annee: 'Happy New Year!',
+  paques: 'Happy Easter!',
   patriotes: 'Patriots’ Day',
-  'saint-jean': 'Happy Fête nationale',
-  canada: 'Happy Canada Day',
+  'saint-jean': 'Happy Fête nationale!',
+  canada: 'Happy Canada Day!',
   nopub: 'No ads',
   gpl: 'Free software — GPL 2.0',
   gratuit: 'Free, forever',
@@ -88,7 +88,14 @@ const CAMPUSES = [
   {
     slug: 'laval', line: 'Université Laval', prefix: 'Université ', core: 'Laval', bilingual: false, label: 'Université Laval',
     places: ['université laval'],
-    hints: ['université laval', 'adrien-pouliot', 'alphonse-marie-parent', 'biermans', 'ernest-lemieux', 'pavillon dkn', 'casault', 'palasis', 'bonenfant', 'grand axe'],
+    hints: [
+      'université laval', 'adrien-pouliot', 'alphonse-marie-parent', 'biermans',
+      'ernest-lemieux', 'agathe-lacerte', 'pavillon dkn', 'casault', 'palasis',
+      'bonenfant', 'grand axe', 'vandry', 'vachon', 'desjardins', 'marchand',
+      'optique', 'pavillon de l’est', 'peps', 'médecine dentaire', 'envirotron',
+      'savard', 'kruger', 'de sève', 'lapointe', 'sciences de l’éducation',
+      'pollack', 'comtois', 'laurentienne', 'abitibi-price', 'institut nordique',
+    ],
   },
   {
     slug: 'mcgill', line: 'Université McGill', lineEn: 'McGill University', prefix: 'Université ', core: 'McGill', bilingual: true, label: 'Université McGill',
@@ -187,15 +194,18 @@ const state = {
   qr: true,
   dpi: DEFAULT_DPI,
   photoId: null,
+  photoHint: null,
   photos: [],
   focalX: 0.5,
   focalY: 0.42,
   angle: 0,
   zoom: 0.9,
   photoOpen: false,
+  uploads: [],
 };
 
 let lastPhotoImg = null;
+let uploadSeq = 0;
 
 const assets = { logo: null, qr: null, translate: null };
 const imageCache = new Map();
@@ -298,13 +308,19 @@ function fileNameFromUrl(url) {
   }
 }
 
+function isLocalPhoto(photo) {
+  return !!(photo && (photo.local === true || /^(blob|data):/i.test(String(photo.url || ''))));
+}
+
 function thumbUrl(photo, width) {
+  if (isLocalPhoto(photo)) return photo.url;
   const name = fileNameFromUrl(photo.url);
   if (!name) return photo.url.split('?')[0];
   return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(name)}?width=${width}`;
 }
 
 function printUrl(photo) {
+  if (isLocalPhoto(photo)) return photo.url;
   return (photo.url || '').split('?')[0];
 }
 
@@ -313,6 +329,7 @@ function photoKeyId(photo) {
 }
 
 function loadImage(src, cors = true) {
+  if (/^(blob|data):/i.test(src)) cors = false;
   const key = `${cors ? 'c' : 'n'}:${src}`;
   if (imageCache.has(key)) return imageCache.get(key);
   const job = new Promise((resolve, reject) => {
@@ -755,10 +772,11 @@ function isCampusPhoto(p) {
 
 function filteredPhotos() {
   const campus = campusOf(state.campus);
-  const pool = campus.places
+  const bank = campus.places
     ? state.photos.filter((p) => isCampusPhoto(p) && photoMatches(p, campus))
     : state.photos;
-  return pool.filter(printWorthy);
+  const uploads = isLocalHost() ? state.uploads : [];
+  return [...uploads, ...bank.filter(printWorthy)];
 }
 
 function printWorthy(p) {
@@ -769,7 +787,8 @@ function printWorthy(p) {
 
 function currentPhoto() {
   if (!state.photoId) return null;
-  return state.photos.find((p) => photoKeyId(p) === state.photoId) || null;
+  const pool = [...(state.uploads || []), ...state.photos];
+  return pool.find((p) => photoKeyId(p) === state.photoId) || null;
 }
 
 function renderChoices() {
@@ -801,9 +820,13 @@ function renderChoices() {
     moreBtn.hidden = true;
   }
   const n = photos.length;
-  document.getElementById('photo-meta').textContent = state.campus === 'generique'
+  const nLocal = photos.filter(isLocalPhoto).length;
+  const base = state.campus === 'generique'
     ? `${n} photos de toute la banque`
     : `${n} photos pour ${campusOf(state.campus).label}`;
+  document.getElementById('photo-meta').textContent = nLocal
+    ? `${base} · ${nLocal} téléversée${nLocal > 1 ? 's' : ''}`
+    : base;
   syncCropUi();
 }
 
@@ -887,7 +910,7 @@ async function preview() {
   try {
     paintPreview(null, photo);
     if (photo) {
-      const img = await loadImage(printUrl(photo), true);
+      const img = await loadImage(printUrl(photo), !isLocalPhoto(photo));
       if (gen !== previewGen) return;
       lastPhotoImg = img;
       paintPreview(img, photo);
@@ -1044,7 +1067,7 @@ async function downloadPrint(kind = 'pdf') {
     const dpi = outputDpi();
     const photo = currentPhoto();
     let img = null;
-    if (photo) img = await loadImage(printUrl(photo), true);
+    if (photo) img = await loadImage(printUrl(photo), !isLocalPhoto(photo));
     const { w, h } = px(fmt, dpi);
     const composeOpts = {
       format: state.format,
@@ -1132,12 +1155,72 @@ async function downloadPrint(kind = 'pdf') {
   }
 }
 
+function syncUploadLab() {
+  const box = document.getElementById('photo-upload-box');
+  if (box) box.hidden = !isLocalHost();
+}
+
+function isUploadFile(file) {
+  const type = String(file.type || '').toLowerCase();
+  if (/^image\/(jpeg|jpg|png|webp)$/.test(type)) return true;
+  return /\.(jpe?g|png|webp)$/i.test(file.name || '');
+}
+
+async function addUploadedFiles(fileList) {
+  if (!isLocalHost()) return;
+  const status = document.getElementById('status');
+  const files = [...(fileList || [])];
+  if (!files.length) return;
+  let last = null;
+  for (const file of files) {
+    if (!isUploadFile(file)) {
+      if (status) status.textContent = `Format non pris en charge : ${file.name}. JPEG, PNG ou WebP.`;
+      continue;
+    }
+    const url = URL.createObjectURL(file);
+    let img;
+    try {
+      img = await loadImage(url, false);
+    } catch {
+      URL.revokeObjectURL(url);
+      if (status) status.textContent = `Impossible de lire ${file.name}.`;
+      continue;
+    }
+    const w = img.naturalWidth;
+    const h = img.naturalHeight;
+    if (Math.max(w, h) < 800 || Math.min(w, h) < 400) {
+      URL.revokeObjectURL(url);
+      if (status) status.textContent = `${file.name} est trop petite (${w} × ${h}). Minimum environ 800 px.`;
+      continue;
+    }
+    const title = String(file.name || 'Photo téléversée').replace(/\.[^.]+$/, '') || 'Photo téléversée';
+    const photo = {
+      id: `local-${++uploadSeq}`,
+      url,
+      title,
+      credit: title,
+      width: w,
+      height: h,
+      local: true,
+    };
+    state.uploads.push(photo);
+    last = { photo, img };
+  }
+  if (!last) return;
+  state.photoId = photoKeyId(last.photo);
+  resetCrop(last.photo);
+  lastPhotoImg = last.img;
+  renderChoices();
+  await preview();
+}
+
 function syncDpiLab() {
   const lab = document.getElementById('dpi-1200-choice');
   const hint = document.getElementById('dpi-hint');
   const local = isLocalHost();
   if (lab) lab.hidden = !local;
   if (!local && state.dpi === 1200) state.dpi = DEFAULT_DPI;
+  syncUploadLab();
   if (hint) {
     if (isAppleTouch()) {
       hint.textContent = '600 dpi par défaut. Sur iPad, le PDF est composé en tuiles ; le JPEG peut descendre si Safari refuse le canevas plein.';
@@ -1211,7 +1294,26 @@ function applyQuery() {
     const input = document.querySelector(`input[name="campus"][value="${campus}"]`);
     if (input) input.checked = true;
   }
+  const photo = q.get('photo');
+  if (photo) state.photoHint = photo;
+  const greeting = q.get('greeting');
+  if (greeting && Object.prototype.hasOwnProperty.call(GREETINGS, greeting)) {
+    state.greeting = greeting;
+    const sel = document.getElementById('greeting');
+    if (sel) sel.value = greeting;
+  }
   syncGenericLangs();
+}
+
+function applyPhotoHint() {
+  const hint = fold(state.photoHint || '');
+  if (!hint) return;
+  const photos = filteredPhotos();
+  const hit = photos.find((p) => photoKeyId(p) === state.photoHint)
+    || photos.find((p) => fold(`${p.title || ''} ${p.id || ''}`).includes(hint));
+  if (!hit) return;
+  state.photoId = photoKeyId(hit);
+  if (photos.findIndex((p) => photoKeyId(p) === state.photoId) >= 5) state.photoOpen = true;
 }
 
 function syncGenericLangs() {
@@ -1308,6 +1410,13 @@ function bind() {
     state.photoOpen = !state.photoOpen;
     renderChoices();
   });
+  const upload = document.getElementById('photo-upload');
+  if (upload) {
+    upload.addEventListener('change', async () => {
+      await addUploadedFiles(upload.files);
+      upload.value = '';
+    });
+  }
   document.getElementById('dl').addEventListener('click', () => downloadPrint('pdf'));
   document.getElementById('dl-jpg').addEventListener('click', () => downloadPrint('jpeg'));
   document.getElementById('dl-bottom').addEventListener('click', () => downloadPrint('pdf'));
@@ -1333,6 +1442,7 @@ async function main() {
   bind();
   applyQuery();
   syncDpiLab();
+  syncUploadLab();
   syncDpiLabels();
   syncLangChoice();
   await loadFonts();
@@ -1356,6 +1466,7 @@ async function main() {
     if (banned.has(url) || banned.has(p.id) || (file && banned.has(file))) return false;
     return true;
   });
+  applyPhotoHint();
   renderChoices();
   await preview();
 }

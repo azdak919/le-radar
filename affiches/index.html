@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="../style-feed.css" />
     <link rel="stylesheet" href="../style-chrome.css" />
   <link rel="stylesheet" href="../seo-pages.css">
-  <link rel="stylesheet" href="./poster-builder.css?v=ipad-dl">
+  <link rel="stylesheet" href="./poster-builder.css?v=local-upload">
   <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e92">
   <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e92">
 </head>
@@ -162,20 +162,20 @@
               <option value="ncompte">Sans compte à créer</option>
             </optgroup>
             <optgroup label="Saison">
-              <option value="rentree">Bonne rentrée</option>
-              <option value="mi-session">Courage — mi-session</option>
-              <option value="motivation">Tu vas y arriver</option>
-              <option value="fin-session">Bonne fin de session</option>
-              <option value="relache">Bonne relâche</option>
-              <option value="action-grace">Bonne Action de grâce</option>
+              <option value="rentree">Bonne rentrée !</option>
+              <option value="mi-session">Courage — mi-session !</option>
+              <option value="motivation">Tu vas y arriver !</option>
+              <option value="fin-session">Bonne fin de session !</option>
+              <option value="relache">Bonne relâche !</option>
+              <option value="action-grace">Bonne Action de grâce !</option>
               <option value="verite">Vérité et réconciliation</option>
               <option value="souvenir">Souvenons-nous</option>
-              <option value="fetes">Joyeuses Fêtes</option>
-              <option value="annee">Bonne année</option>
-              <option value="paques">Joyeuses Pâques</option>
+              <option value="fetes">Joyeuses Fêtes !</option>
+              <option value="annee">Bonne année !</option>
+              <option value="paques">Joyeuses Pâques !</option>
               <option value="patriotes">Journée des Patriotes</option>
-              <option value="saint-jean">Bonne Saint-Jean</option>
-              <option value="canada">Bonne fête du Canada</option>
+              <option value="saint-jean">Bonne Saint-Jean !</option>
+              <option value="canada">Bonne fête du Canada !</option>
             </optgroup>
           </select>
           <p class="field-hint" id="greeting-hint">Signature à la main. En bilingue, une ligne anglaise s’ajoute.</p>
@@ -202,6 +202,13 @@
           <legend>Photo</legend>
           <div class="photo-grid" id="photo-grid"></div>
           <button type="button" class="photo-more" id="photo-more" hidden>Voir plus de photos</button>
+          <div id="photo-upload-box" hidden>
+            <label class="photo-upload">
+              <input type="file" id="photo-upload" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" multiple>
+              Téléverser une image
+            </label>
+            <p class="field-hint">Labo local seulement. JPEG, PNG ou WebP — l’image reste dans cet onglet.</p>
+          </div>
           <p class="photo-meta" id="photo-meta"></p>
         </fieldset>
 
@@ -281,6 +288,6 @@
   <script src="../engage-prompt.js" defer></script>
   <script src="../dev/midwidth-preview.js?v=wide-auto-e92"></script>
   <script src="../dev/wide-desktop-preview.js?v=wide-auto-e92"></script>
-  <script src="./poster-builder.js?v=no-greet"></script>
+  <script src="./poster-builder.js?v=local-upload-2"></script>
 </body>
 </html>

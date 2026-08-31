@@ -188,6 +188,31 @@ select.greeting:focus {
   background: color-mix(in srgb, var(--purple) 18%, var(--bg));
 }
 .photo-more[hidden] { display: none !important; }
+#photo-upload-box[hidden] { display: none !important; }
+.photo-upload {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  font: 700 12px/1.2 var(--sans);
+  cursor: pointer;
+}
+.photo-upload:hover {
+  border-color: var(--purple);
+  background: color-mix(in srgb, var(--purple) 18%, var(--bg));
+}
+.photo-upload input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
 .photo-meta { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
 
 .dash-actions {

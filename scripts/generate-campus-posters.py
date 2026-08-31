@@ -14,6 +14,7 @@ import argparse
 import json
 import shutil
 import subprocess
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -90,6 +91,26 @@ CAMPUSES = [
             {"key": "parent", "url": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Pavillon_Alphonse-Marie-Parent_05.jpg", "credit": "Cephas", "license": "CC BY-SA 4.0", "title": "Pavillon Alphonse-Marie-Parent", "line": "Université Laval · Alphonse-Marie-Parent", "focal": (0.48, 0.38), "crop_scale": 0.88, "desaturate": 0.55, "overlay": 0.52},
             {"key": "biermans", "url": "https://upload.wikimedia.org/wikipedia/commons/4/46/Pavillon_H.-Biermans-L.-Moraud_01.jpg", "credit": "Cephas", "license": "CC BY-SA 4.0", "title": "Pavillon H.-Biermans-L.-Moraud", "line": "Université Laval · H.-Biermans-L.-Moraud", "focal": (0.52, 0.28), "crop_scale": 0.78, "desaturate": 0.55, "overlay": 0.55},
             {"key": "lemieux", "url": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Pavillon_Ernest-Lemieux_06.jpg", "credit": "Cephas", "license": "CC BY-SA 4.0", "title": "Pavillon Ernest-Lemieux", "line": "Université Laval · Ernest-Lemieux", "focal": (0.45, 0.28), "crop_scale": 0.75, "desaturate": 0.52, "overlay": 0.58},
+            {"key": "lacerte", "photo_id": "85b4eff16b7f", "label": "Pavillon Agathe-Lacerte", "line": "Université Laval · Agathe-Lacerte", "focal": (0.50, 0.36), "crop_scale": 0.88, "desaturate": 0.55, "overlay": 0.52},
+            {"key": "vandry", "photo_id": "f1a23eb08d38", "label": "Pavillon Ferdinand-Vandry", "focal": (0.50, 0.36), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.55},
+            {"key": "abitibi", "photo_id": "407561b39acb", "label": "Pavillon Abitibi-Price", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.55, "overlay": 0.52},
+            {"key": "vachon", "photo_id": "12253475a05c", "label": "Pavillon Alexandre-Vachon", "focal": (0.48, 0.42), "crop_scale": 0.88, "desaturate": 0.52, "overlay": 0.55},
+            {"key": "desjardins", "photo_id": "a1e23eb180b0", "label": "Pavillon Alphonse-Desjardins", "focal": (0.50, 0.42), "crop_scale": 0.92, "desaturate": 0.55, "overlay": 0.52},
+            {"key": "marchand", "photo_id": "9312d68b533a", "label": "Pavillon Charles-Eugène-Marchand", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.55},
+            {"key": "optique", "photo_id": "539b5adacc45", "label": "Pavillon d’optique-photonique", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.55},
+            {"key": "est", "photo_id": "2c14dc92c5b3", "label": "Pavillon de l’Est", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.55, "overlay": 0.52},
+            {"key": "peps", "photo_id": "e058b3e1e628", "label": "PEPS", "line": "Université Laval · PEPS", "focal": (0.48, 0.42), "crop_scale": 0.88, "desaturate": 0.52, "overlay": 0.55},
+            {"key": "dentaire", "photo_id": "a7235a00dd79", "label": "Pavillon de médecine dentaire", "focal": (0.50, 0.38), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.55},
+            {"key": "services", "photo_id": "ce75b7ccff99", "label": "Pavillon des Services", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.55, "overlay": 0.52},
+            {"key": "envirotron", "photo_id": "801a58f94552", "label": "Pavillon Envirotron", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.55},
+            {"key": "savard", "photo_id": "b967cbb33996", "label": "Pavillon Félix-Antoine-Savard", "focal": (0.50, 0.38), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.55},
+            {"key": "kruger", "photo_id": "04f676d202be", "label": "Pavillon Gene-H.-Kruger", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.55},
+            {"key": "deseve", "photo_id": "fb0d3ac3bc0c", "label": "Pavillon J.-A.-DeSève", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.55, "overlay": 0.52},
+            {"key": "lapointe", "photo_id": "1919db416500", "label": "Pavillon Jeanne-Lapointe", "focal": (0.50, 0.38), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.55},
+            {"key": "pollack", "photo_id": "66b237d2dd75", "label": "Pavillon Maurice-Pollack", "focal": (0.48, 0.40), "crop_scale": 0.90, "desaturate": 0.55, "overlay": 0.52},
+            {"key": "comtois", "photo_id": "897c6b961cd6", "label": "Pavillon Paul-Comtois", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.55},
+            {"key": "laurentienne", "photo_id": "69ebe6da771d", "label": "Pavillon La Laurentienne", "focal": (0.50, 0.40), "crop_scale": 0.90, "desaturate": 0.55, "overlay": 0.52},
+            {"key": "inq", "photo_id": "57532a14e13f", "label": "Institut nordique du Québec", "focal": (0.50, 0.42), "crop_scale": 0.90, "desaturate": 0.52, "overlay": 0.55},
         ],
     },
     {
@@ -226,9 +247,26 @@ def download(url: str, dest: Path) -> None:
     dest.parent.mkdir(parents=True, exist_ok=True)
     if dest.is_file() and dest.stat().st_size > 50_000:
         return
-    req = urllib.request.Request(url.split("?")[0], headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=90) as res, dest.open("wb") as out:
-        shutil.copyfileobj(res, out)
+    clean = url.split("?")[0]
+    name = urllib.parse.unquote(clean.rsplit("/", 1)[-1])
+    candidates = [clean]
+    if name:
+        candidates.append(
+            "https://commons.wikimedia.org/wiki/Special:FilePath/" + urllib.parse.quote(name)
+        )
+    last_err = None
+    for cand in candidates:
+        req = urllib.request.Request(cand, headers={"User-Agent": UA})
+        try:
+            with urllib.request.urlopen(req, timeout=90) as res, dest.open("wb") as out:
+                shutil.copyfileobj(res, out)
+            if dest.stat().st_size > 50_000:
+                return
+        except Exception as err:
+            last_err = err
+            if dest.exists():
+                dest.unlink()
+    raise last_err or SystemExit(f"affiche: téléchargement impossible {url}")
 
 
 def cover_crop(im, tw, th, fx, fy, scale):
@@ -567,7 +605,11 @@ def main():
     parser.add_argument("--variant", action="append", dest="variants")
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--formats", default="jpg,preview")
+    parser.add_argument("--out", help="dossier de sortie (défaut: assets/kit/affiches)")
     args = parser.parse_args()
+    global OUT_DIR
+    if args.out:
+        OUT_DIR = Path(args.out).expanduser().resolve()
     formats = {x.strip() for x in args.formats.split(",") if x.strip()}
     variants = tuple(args.variants) if args.variants else VARIANTS
     for v in variants:
