@@ -1,17 +1,59 @@
 {
-  "updated": "2026-08-31T11:01:10.052Z",
+  "updated": "2026-08-31T13:58:44.666Z",
   "total": 185,
-  "withImage": 168,
-  "withCredit": 168,
+  "withImage": 169,
+  "withCredit": 169,
   "cited": 133,
   "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 7,
-  "citedNew": 4,
-  "fallbackNew": 11,
+  "checked": 25,
+  "updatedCount": 17,
+  "citedNew": 13,
+  "fallbackNew": 12,
   "samples": [
+    {
+      "title": "What’s it Like to Run Move-In Weekend?",
+      "source": "The McGill Daily",
+      "credit": "Photo credit: The McGill Daily",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "The Environmental Cost of AI",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zoe Sanguin",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "The Death of Futurity",
+      "source": "The McGill Daily",
+      "credit": "Photo : Eva Marriott-Fabre",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "My Midsummer’s Nightmare",
+      "source": "The McGill Daily",
+      "credit": "Photo : Nikhila Shanker",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Into the Editing Room",
+      "source": "The McGill Daily",
+      "credit": "Photo : Eva Marriott-Fabre",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "The City’s Ours",
+      "source": "The McGill Daily",
+      "credit": "Photo : Courtesy of Ingara Maidou",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
     {
       "title": "Il y a 30 ans : un grand spectacle solidaire pour le Saguenay",
       "source": "La Pige",
@@ -20,16 +62,23 @@
       "method": "body-line"
     },
     {
-      "title": "Élections de l’exécutif de l’AÉUM",
+      "title": "Ce que nous devons aux femmes",
       "source": "Le Délit",
-      "credit": "Photo : Toscane Ralaimongo",
+      "credit": "Photo : Alexandre Gontier",
+      "cited": true,
+      "method": "media-credit-near"
+    },
+    {
+      "title": "Les femmes MAGA au service du patriarcat",
+      "source": "Le Délit",
+      "credit": "Photo : Stu Doré",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Pourquoi le L est en premier dans LGBTQ+",
-      "source": "Le Délit",
-      "credit": "Photo : Stu Doré",
+      "title": "The Cruel Optimism of Summer",
+      "source": "The McGill Daily",
+      "credit": "Photo : Eva Marriott-Fabre",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -46,20 +95,6 @@
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Recettes musicales québécoises pour l’été",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Inside Mile End Kicks",
-      "source": "The Link",
-      "credit": "Photo: Courtesy of Joe Fuda",
-      "cited": true,
-      "method": "figcaption-trailing"
     }
   ]
 }
