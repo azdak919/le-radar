@@ -787,7 +787,8 @@ function printWorthy(p) {
 
 function currentPhoto() {
   if (!state.photoId) return null;
-  return state.photos.find((p) => photoKeyId(p) === state.photoId) || null;
+  const pool = [...(state.uploads || []), ...state.photos];
+  return pool.find((p) => photoKeyId(p) === state.photoId) || null;
 }
 
 function renderChoices() {
@@ -909,7 +910,7 @@ async function preview() {
   try {
     paintPreview(null, photo);
     if (photo) {
-      const img = await loadImage(printUrl(photo), true);
+      const img = await loadImage(printUrl(photo), !isLocalPhoto(photo));
       if (gen !== previewGen) return;
       lastPhotoImg = img;
       paintPreview(img, photo);
@@ -1066,7 +1067,7 @@ async function downloadPrint(kind = 'pdf') {
     const dpi = outputDpi();
     const photo = currentPhoto();
     let img = null;
-    if (photo) img = await loadImage(printUrl(photo), true);
+    if (photo) img = await loadImage(printUrl(photo), !isLocalPhoto(photo));
     const { w, h } = px(fmt, dpi);
     const composeOpts = {
       format: state.format,
