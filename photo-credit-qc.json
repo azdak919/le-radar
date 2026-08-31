@@ -1,17 +1,66 @@
 {
-  "updated": "2026-08-31T20:13:43.695Z",
+  "updated": "2026-08-31T21:37:16.977Z",
   "total": 185,
   "withImage": 169,
   "withCredit": 169,
-  "cited": 131,
-  "pending": 13,
+  "cited": 128,
+  "pending": 16,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 6,
-  "citedNew": 4,
-  "fallbackNew": 14,
+  "checked": 25,
+  "updatedCount": 17,
+  "citedNew": 8,
+  "fallbackNew": 17,
   "samples": [
+    {
+      "title": "Bulletin radio 16h30",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Arvida : Patrimoine et histoire à l’honneur",
+      "source": "La Pige",
+      "credit": "Photo : Émile Barthe",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Une finale enlevante dans le tournoi de soccer à Chicoutimi",
+      "source": "La Pige",
+      "credit": "Photo : Colin Perron",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Élection partielle dans Chicoutimi–Le Fjord : le Bloc Québécois se dit confiant",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Une campagne empreinte de fierté pour les libéraux à Chicoutimi-Le Fjord",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Une réussite pour le Gawafest 2026",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Un nouveau décor prometteur pour la 9e édition du Festival d’humour d’Alma",
+      "source": "La Pige",
+      "credit": "Photo : Facebook – Imagerie GS",
+      "cited": true,
+      "method": "body-line"
+    },
     {
       "title": "Des avions de chasse dans les airs du Saguenay-Lac-Saint-Jean",
       "source": "La Pige",
@@ -46,13 +95,6 @@
       "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "La Fondation de l’UdeS",
-      "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
-      "cited": false,
-      "method": null
     }
   ]
 }
