@@ -1,19 +1,18 @@
-# Traduction partagée — cache + repli
+# Traduction partagée — cache seulement
 
-Même logique que `workers/weather-cache` : chaque visiteur n’appelle plus
-seul les API MT. Chrome UI (« En direct », « Mise en page… ») et les titres
-du fil sont les **mêmes chaînes** pour tout le monde ; sans cache partagé,
-Google `client=gtx` répond **429 Sorry** et MyMemory épuise son quota
-journalier — la page reste en français.
+Même rôle que `workers/weather-cache` : **un cache de bord**, pas un proxy
+d’API tierce. Les IP Cloudflare sont souvent bloquées par `clients5` / gtx
+(403/429). Le navigateur traduit (IP résidentielle) ; le Worker mémorise.
 
-Ce Worker :
+1. `POST /v1/lookup` — HIT/MISS pour un lot de chaînes (une aller-retour) ;
+2. le navigateur appelle `clients5` (puis gtx, MyMemory) sur les MISS ;
+3. `POST /v1/store` — écrit les traductions déjà filtrées (poubelle refusée,
+   écho source refusé) ;
+4. `GET /v1/translate?tl=&q=` — lookup d’une chaîne (compat / curl).
+   HIT = 200 `{t}` ; MISS = **404** `{error:"miss"}` (jamais 503 : l’ancien
+   client prenait ça pour « réessayer gtx »).
 
-1. cache la paire `(langue, texte)` ~6 h (Cache API, CORS réappliqué à la sortie) ;
-2. traduit via `clients5.google.com` (`dict-chrome-ex`, encore ouvert) ;
-3. repli `translate.googleapis.com` `client=gtx`, puis MyMemory ;
-4. refuse les réponses poubelle (`Sorry…`, `MYMEMORY WARNING…`,
-   `PLEASE SELECT TWO DISTINCT LANGUAGES` — MyMemory sl===tl) ;
-5. refuse les paires sl===tl (pas d’appel MyMemory `fr|fr`).
+TTL ~7 jours (Cache API). CORS réappliqué à la sortie (poison CORS 2026-08-12).
 
 ## Déploiement
 
@@ -23,36 +22,38 @@ npx wrangler login
 npx wrangler deploy
 ```
 
-URL : `https://le-radar-translate.azdak.workers.dev`  
-(`workers_dev = true`, parité météo / now-playing.)
+URL : `https://le-radar-translate.azdak.workers.dev`
 
-Le site appelle ce Worker **en premier**. S’il n’est pas encore déployé
-(404), le navigateur bascule tout de suite sur `clients5` — la prod ne
-dépend pas du deploy Worker.
+Le site appelle lookup **en premier**. 404 / 403 / timeout → `clients5`
+direct, sans cascade de 6 s.
 
 ## API
 
 ```
+POST /v1/lookup
+{ "tl": "en", "q": ["Bonjour", "Merci"] }
+→ { "hits": { "Bonjour": "Hello" }, "missed": ["Merci"] }
+
+POST /v1/store
+{ "tl": "en", "items": [{ "q": "Merci", "t": "Thank you" }] }
+→ { "ok": true, "stored": 1 }
+
 GET /v1/translate?sl=fr&tl=en&q=Bonjour
-→ {"t":"Hello"}
+→ {"t":"Hello"}   # HIT
+→ 404 {"error":"miss"}
+
 GET /health
 ```
 
-`q` ≤ 450 caractères (même plafond que `MAX_CHUNK` côté page).
-
-## CORS
-
-Parité weather-cache : prod `le-radar.ca` / `www` / Pages GH + lab
-`localhost` / `127.0.0.1` (port libre). **Jamais** `return cached` nu —
-réappliquer `corsHeaders(request)` (poison CORS 2026-08-12).
+`q` ≤ 450 caractères (même plafond que `MAX_CHUNK`). Lot ≤ 80.
 
 ## Vérification
 
 ```bash
-curl -fsS "https://le-radar-translate.azdak.workers.dev/v1/translate?sl=fr&tl=en&q=Bonjour"
-# {"t":"Hello"}
+curl -fsS "https://le-radar-translate.azdak.workers.dev/health"
 
-curl -sSI -H "Origin: https://le-radar.ca" \
-  "https://le-radar-translate.azdak.workers.dev/v1/translate?sl=fr&tl=en&q=Bonjour" \
-  | grep -i access-control-allow-origin
+curl -sS -X POST "https://le-radar-translate.azdak.workers.dev/v1/lookup" \
+  -H 'content-type: application/json' \
+  -H 'Origin: https://le-radar.ca' \
+  -d '{"tl":"en","q":["Bonjour"]}'
 ```

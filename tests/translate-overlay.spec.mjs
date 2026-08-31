@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { mockRadarTranslateApis } from './translate-mt-route.mjs';
 
 /**
  * Overlay de progression : îlot radio + contenu articles inerte.
@@ -30,32 +31,7 @@ function rectsIntersect(a, b, gap = 0.5) {
 async function mockTranslateInstant(page) {
   await page.route('**/assets/news-images/**', (route) => route.abort());
   await page.route('**/assets/meteocons/**', (route) => route.abort());
-  const fulfillGtx = async (route) => {
-    const q = new URL(route.request().url()).searchParams.get('q') || '';
-    await route.fulfill({
-      contentType: 'application/json',
-      body: JSON.stringify([[[`ES ${q}`, q]]]),
-    });
-  };
-  await page.route(/translate\.googleapis\.com/, fulfillGtx);
-  await page.route(/clients[45]\.google\.com/, fulfillGtx);
-  await page.route(/le-radar-translate\.azdak\.workers\.dev/, async (route) => {
-    const q = new URL(route.request().url()).searchParams.get('q') || '';
-    await route.fulfill({
-      contentType: 'application/json',
-      body: JSON.stringify({ t: `ES ${q}` }),
-    });
-  });
-  await page.route(/mymemory\.translated\.net/, async (route) => {
-    const q = new URL(route.request().url()).searchParams.get('q') || '';
-    await route.fulfill({
-      contentType: 'application/json',
-      body: JSON.stringify({
-        responseStatus: 200,
-        responseData: { translatedText: `ES ${q}` },
-      }),
-    });
-  });
+  await mockRadarTranslateApis(page, ({ q }) => `ES ${q}`);
 }
 
 async function openHome(page, viewport) {
@@ -485,20 +461,7 @@ test.describe('overlay traduction articles', () => {
   test('persan : glossaire overlay + articles en écriture arabe', async ({ page }) => {
     await page.route('**/assets/news-images/**', (route) => route.abort());
     await page.route('**/assets/meteocons/**', (route) => route.abort());
-    const fulfillFa = async (route) => {
-      const q = new URL(route.request().url()).searchParams.get('q') || '';
-      const isWorker = /le-radar-translate/.test(route.request().url());
-      await route.fulfill({
-        contentType: 'application/json',
-        body: isWorker
-          ? JSON.stringify({ t: `ترجمه ${q}` })
-          : JSON.stringify([[[`ترجمه ${q}`, q]]]),
-      });
-    };
-    await page.route(/translate\.googleapis\.com/, fulfillFa);
-    await page.route(/clients[45]\.google\.com/, fulfillFa);
-    await page.route(/le-radar-translate\.azdak\.workers\.dev/, fulfillFa);
-    await page.route(/mymemory\.translated\.net/, (route) => route.abort());
+    await mockRadarTranslateApis(page, ({ q }) => `ترجمه ${q}`);
     await openHome(page, { width: 900, height: 700 });
     const overlayFa = await page.evaluate(() => {
       const p = window.RadarTranslate._ui.preferredUiPhrase;
@@ -591,23 +554,9 @@ test.describe('overlay traduction articles', () => {
   test('inuktitut : overlay et articles en syllabaires, pas l’anglais', async ({ page }) => {
     await page.route('**/assets/news-images/**', (route) => route.abort());
     await page.route('**/assets/meteocons/**', (route) => route.abort());
-    const fulfillIu = async (route) => {
-      const u = new URL(route.request().url());
-      const q = u.searchParams.get('q') || '';
-      const sl = u.searchParams.get('sl') || '';
-      const t = (sl === 'fr') ? q : `ᐃᓄᒃᑎᑐᑦ ${q}`;
-      const isWorker = /le-radar-translate/.test(route.request().url());
-      const isDict = /clients[45]\.google\.com/.test(route.request().url());
-      let body;
-      if (isWorker) body = JSON.stringify({ t });
-      else if (isDict) body = JSON.stringify([t]);
-      else body = (sl === 'fr') ? JSON.stringify([[[q, q]]]) : JSON.stringify([[[t, q]]]);
-      await route.fulfill({ contentType: 'application/json', body });
-    };
-    await page.route(/translate\.googleapis\.com/, fulfillIu);
-    await page.route(/clients[45]\.google\.com/, fulfillIu);
-    await page.route(/le-radar-translate\.azdak\.workers\.dev/, fulfillIu);
-    await page.route(/mymemory\.translated\.net/, (route) => route.abort());
+    await mockRadarTranslateApis(page, ({ q, sl }) => (
+      sl === 'fr' ? q : `ᐃᓄᒃᑎᑐᑦ ${q}`
+    ));
     await openHome(page, { width: 900, height: 700 });
     const seen = await page.evaluate(async () => {
       const labels = [];
