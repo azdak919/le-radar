@@ -1,30 +1,39 @@
 {
-  "updated": "2026-08-31T17:08:33.522Z",
+  "updated": "2026-08-31T20:07:13.888Z",
   "total": 185,
-  "pool": 58,
+  "pool": 56,
   "incomplete": 11,
-  "withLeadExcerpt": 97,
+  "withLeadExcerpt": 98,
   "candidates": 11,
-  "enriched": 2,
+  "enriched": 3,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Bulletin radio 12h30",
-      "link": "https://lapige.atmjonquiere.com/2026/08/31/bulletin-radio-11h/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-radio-11h",
+      "title": "Un divorce plus si surprenant entre le Canada et les États-Unis",
+      "link": "https://www.delitfrancais.com/2026/08/31/un-divorce-plus-si-surprenant-entre-le-canada-et-les-etats-unis/",
       "ok": true,
-      "score": 96,
-      "chars": 264,
-      "sample": "Scrutin dans la circonscription fédérale de Chicoutimi-Le Fjord, nuit mouvementée pour les policiers",
+      "score": 100,
+      "chars": 344,
+      "sample": "Son gouvernement s’est montré intransigeant face aux efforts américains qui cherchent à affaiblir le",
       "changed": true
     },
     {
-      "title": "La mission de l’Usine-école",
-      "link": "https://lecollectif.ca/campus/la-mission-de-lusine-ecole/",
+      "title": "Des avions de chasse dans les airs du Saguenay-Lac-Saint-Jean",
+      "link": "https://lapige.atmjonquiere.com/2026/08/31/des-avions-de-chasse-dans-les-airs-du-saguenay-lac-saint-jean/?utm_source=rss&utm_medium=rss&utm_campaign=des-avions-de-chasse-dans-les-airs-du-saguenay-lac-saint-jean",
+      "ok": true,
+      "score": 96,
+      "chars": 399,
+      "sample": "Ces exercices permettent aux militaires d’améliorer leurs tactiques, de tester leur dynamique de vol",
+      "changed": true
+    },
+    {
+      "title": "Trump et la Corée du Nord",
+      "link": "https://www.delitfrancais.com/2026/08/31/trump-et-la-coree-du-nord/",
       "ok": true,
       "score": 100,
-      "chars": 370,
-      "sample": "Depuis près de quatre ans, le Studio de création abrite un colocataire singulier, visible par ses im",
+      "chars": 359,
+      "sample": "Quelques jours avant son début, Trump a cependant ordonné une réduction substantielle des manœuvres,",
       "changed": true
     },
     {
@@ -70,15 +79,6 @@
       "score": 70,
       "chars": 400,
       "sample": "On May 14, 429 activists carrying more than 11,000 kilograms of humanitarian aid set sail to Gaza fr",
-      "changed": false
-    },
-    {
-      "title": "The Cruel Optimism of Summer",
-      "link": "https://www.mcgilldaily.com/2026/07/the-cruel-optimism-of-summer/",
-      "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "“20 degrees Celsius,” my weather app beams. My eyebrows knit with confusion. Twenty degrees? I opt t",
       "changed": false
     }
   ]

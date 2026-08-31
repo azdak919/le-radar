@@ -1,10 +1,26 @@
 {
-  "updated": "2026-08-31T17:08:04.145Z",
+  "updated": "2026-08-31T20:06:49.573Z",
   "total": 185,
   "withAuthor": 185,
-  "mismatches": 5,
+  "mismatches": 7,
   "ok": true,
   "samples": [
+    {
+      "title": "L’Odysée mcgilloise",
+      "link": "https://www.delitfrancais.com/2026/08/31/lodysee-mcgilloise/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Timotée Allouch-Chantepie",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Un divorce plus si surprenant entre le Canada et les États-Unis",
+      "link": "https://www.delitfrancais.com/2026/08/31/un-divorce-plus-si-surprenant-entre-le-canada-et-les-etats-unis/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Timotée Allouch-Chantepie",
+      "reason": "page-byline"
+    },
     {
       "title": "Keep the Planet in Mind During Move-in",
       "link": "https://www.mcgilldaily.com/2026/08/keep-the-planet-in-mind-during-move-in/",
@@ -46,5 +62,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 5
+  "fixed": 7
 }

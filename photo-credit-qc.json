@@ -1,65 +1,58 @@
 {
-  "updated": "2026-08-31T17:15:10.526Z",
+  "updated": "2026-08-31T20:13:43.695Z",
   "total": 185,
   "withImage": 169,
   "withCredit": 169,
-  "cited": 132,
-  "pending": 12,
+  "cited": 131,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 7,
-  "citedNew": 3,
-  "fallbackNew": 12,
+  "checked": 18,
+  "updatedCount": 6,
+  "citedNew": 4,
+  "fallbackNew": 14,
   "samples": [
     {
-      "title": "Bulletin radio 12h30",
+      "title": "Des avions de chasse dans les airs du Saguenay-Lac-Saint-Jean",
       "source": "La Pige",
-      "credit": "Crédit photo : La Pige",
+      "credit": "Photo : Julianne Landry",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Trump et la Corée du Nord",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pouvoir se confier en francais, enfin",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "L’Odysée mcgilloise",
+      "source": "Le Délit",
+      "credit": "Crédit photo : Le Délit",
       "cited": false,
       "method": null
     },
     {
-      "title": "La mission de l’Usine-école",
+      "title": "Un divorce plus si surprenant entre le Canada et les États-Unis",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "La Fondation de l’UdeS",
       "source": "Le Collectif",
-      "credit": "Photo : Fabienne Théis",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Il y a 30 ans : un grand spectacle solidaire pour le Saguenay",
-      "source": "La Pige",
-      "credit": "Photo : Le monde en images Gilles Potvin",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
+      "credit": "Crédit photo : Le Collectif",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Recettes musicales québécoises pour l’été",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Inside Mile End Kicks",
-      "source": "The Link",
-      "credit": "Photo: Courtesy of Joe Fuda",
-      "cited": true,
-      "method": "figcaption-trailing"
     }
   ]
 }
