@@ -53,8 +53,12 @@ assert.match(src, /Afficher les articles dans leur langue originale/, 'lien skip
 assert.match(src, /skipArticlesOverlay\(\) \{\s*applyMode\(DEFAULT_MODE/, 'skip overlay → mode Original');
 assert.match(src, /timeoutMs:\s*6000/, 'MT : timeout 6 s (persan ne doit pas pendre)');
 assert.match(src, /function isJunkMt/, 'MT : refuser Sorry / quota MyMemory');
-assert.match(src, /clients5\.google\.com\/translate_a\/t\?client=dict-chrome-ex/, 'MT : repli dict-chrome-ex');
-assert.match(src, /le-radar-translate\.azdak\.workers\.dev/, 'MT : worker cache partagé (modèle météo)');
+assert.match(src, /clients5\.google\.com\/translate_a\/t\?client=dict-chrome-ex/, 'MT : clients5 depuis le navigateur');
+assert.match(src, /le-radar-translate\.azdak\.workers\.dev/, 'MT : worker cache partagé');
+assert.match(src, /\/v1\/lookup/, 'MT : lookup batch Worker');
+assert.match(src, /\/v1\/store/, 'MT : write-back Worker');
+assert.match(src, /function alreadyTargetLanguage/, 'MT : skip FR déjà FR / EN déjà EN');
+assert.match(src, /function hydrateFromWorkerCache/, 'MT : hydrate cache avant la file');
 assert.doesNotMatch(src, /OVERLAY_BEATS_FR/, 'overlay : plus de beats intercalaires');
 assert.doesNotMatch(src, /translate-progress__spark/, 'overlay : plus d’étoile Claude-style');
 assert.doesNotMatch(

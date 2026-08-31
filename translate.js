@@ -3,8 +3,8 @@
  *
  * Pas de widget Google Website Translator (cookies googtrans souvent cassés
  * sur GitHub Pages). On traduit le DOM via des API libres :
- *   1. Worker cache partagé (workers/translate-cache — modèle météo)
- *   2. Google dict-chrome-ex (clients5) — gtx 429 en prod
+ *   1. Worker cache partagé (lookup + store — pas de proxy Google)
+ *   2. Google dict-chrome-ex (clients5) depuis le navigateur
  *   3. Google gtx (translate.googleapis.com, sans clé — comme Ataraxia)
  *   4. MyMemory (repli ; jamais fr|fr ; refuser quota + « two distinct languages »)
  *
@@ -31,6 +31,8 @@
   // plus gros robinet — ouvrir MAX_CHUNK / CONCURRENCY casse l’ordre IU.
   const CONCURRENCY = 6;
   const MAX_CHUNK = 450;
+  const LOOKUP_BATCH = 40;
+  const STORE_BATCH = 40;
   /** gtx/MyMemory sans délai = overlay coincé (persan vu à 21 %). Mutable en test. */
   const MT = { timeoutMs: 6000, workerTimeoutMs: 2500 };
   const TRANSLATE_WORKER_BASE = (typeof TRANSLATE_API_BASE === 'string' && TRANSLATE_API_BASE)
@@ -885,6 +887,8 @@
   let translateGen = 0;
   /** Requêtes MT en vol, dédupliquées par clé de cache. */
   const inflight = new Map();
+  /** Write-back Worker (traductions réelles seulement). */
+  const pendingWorkerStore = [];
   let mutateTimer = 0;
   let mutateObserver = null;
   /** Noms de médias étudiants (propres) — ne jamais traduire. */
@@ -1915,6 +1919,27 @@
     }
   }
 
+  async function postJsonTimed(url, body, ms = MT.workerTimeoutMs) {
+    const ctrl = new AbortController();
+    const timer = window.setTimeout(() => ctrl.abort(), ms);
+    try {
+      const resp = await fetch(url, {
+        method: 'POST',
+        signal: ctrl.signal,
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (!resp.ok) return { data: null, aborted: false, status: resp.status };
+      const ctype = resp.headers.get('content-type') || '';
+      if (ctype.includes('text/html')) return { data: null, aborted: false, status: resp.status || 200 };
+      return { data: await resp.json(), aborted: false, status: resp.status };
+    } catch (err) {
+      return { data: null, aborted: true, status: 0 };
+    } finally {
+      window.clearTimeout(timer);
+    }
+  }
+
   function isJunkMt(text) {
     const t = String(text || '');
     if (!t.trim()) return true;
@@ -1971,7 +1996,123 @@
     return t;
   }
 
+  const FR_MARK_RE = /[àâäéèêëîïôùûüçœæ]/i;
+  const FR_WORD_RE = /\b(le|la|les|des|une|un|du|au|aux|et|dans|pour|sur|avec|pas|est|sont|cette|cet|ces|que|qui)\b/i;
+  const EN_WORD_RE = /\b(the|and|of|to|in|for|on|with|from|is|are|this|that|you|your|not|be)\b/i;
+
+  /** Preuve positive seulement — un doute laisse le MT décider. */
+  function alreadyTargetLanguage(text, tl) {
+    const core = String(text || '').replace(/\s+/g, ' ').trim();
+    if (!core) return false;
+    const code = String(gtxLang(tl) || tl || '').toLowerCase();
+    if (code === 'fr' || code.startsWith('fr-')) {
+      return FR_MARK_RE.test(core) || FR_WORD_RE.test(core);
+    }
+    if (code === 'en' || code.startsWith('en-')) {
+      if (FR_MARK_RE.test(core) || FR_WORD_RE.test(core)) return false;
+      return EN_WORD_RE.test(core);
+    }
+    return false;
+  }
+
   const mtSkip = { worker: false, dict: false, gtx: false };
+
+  function workerBaseUrl() {
+    return String(TRANSLATE_WORKER_BASE || '').replace(/\/+$/, '');
+  }
+
+  function workerDeadStatus(status) {
+    return status === 403 || status === 404 || status === 405 || status === 530;
+  }
+
+  async function lookupWorkerCache(tl, texts) {
+    const hits = new Map();
+    const base = workerBaseUrl();
+    if (!base || mtSkip.worker || !Array.isArray(texts) || !texts.length) return hits;
+    const unique = [];
+    const seen = new Set();
+    for (const raw of texts) {
+      const core = String(raw || '').replace(/^\s+|\s+$/g, '');
+      if (!core || core.length > MAX_CHUNK || seen.has(core)) continue;
+      seen.add(core);
+      unique.push(core);
+    }
+    for (let i = 0; i < unique.length; i += LOOKUP_BATCH) {
+      const chunk = unique.slice(i, i + LOOKUP_BATCH);
+      const res = await postJsonTimed(
+        `${base}/v1/lookup`,
+        { tl, q: chunk },
+        MT.workerTimeoutMs || 2500,
+      );
+      if (res.aborted || workerDeadStatus(res.status)) {
+        mtSkip.worker = true;
+        return hits;
+      }
+      const bag = res.data && res.data.hits;
+      if (!bag || typeof bag !== 'object') {
+        mtSkip.worker = true;
+        return hits;
+      }
+      Object.entries(bag).forEach(([q, t]) => {
+        const out = usableMt(t, q);
+        if (out) hits.set(q, out);
+      });
+    }
+    return hits;
+  }
+
+  async function hydrateFromWorkerCache(targetLang, cores) {
+    const tl = gtxLang(targetLang);
+    const need = [];
+    for (const raw of cores) {
+      const core = String(raw || '').replace(/^\s+|\s+$/g, '');
+      if (!core) continue;
+      if (preferredUiPhrase(core, targetLang) != null) continue;
+      if (alreadyTargetLanguage(core, tl)) continue;
+      if (cacheGet(cacheKey(core, tl)) != null) continue;
+      need.push(core);
+    }
+    if (!need.length) return;
+    const hits = await lookupWorkerCache(tl, need);
+    hits.forEach((t, q) => {
+      cacheSet(cacheKey(q, tl), t);
+    });
+  }
+
+  function queueWorkerStore(tl, q, t) {
+    if (mtSkip.worker) return;
+    if (!usableMt(t, q)) return;
+    pendingWorkerStore.push({ tl, q, t });
+  }
+
+  async function flushWorkerStore() {
+    const base = workerBaseUrl();
+    if (!base || mtSkip.worker || !pendingWorkerStore.length) {
+      pendingWorkerStore.length = 0;
+      return;
+    }
+    const items = pendingWorkerStore.splice(0, pendingWorkerStore.length);
+    const byTl = new Map();
+    items.forEach((it) => {
+      if (!usableMt(it.t, it.q)) return;
+      if (!byTl.has(it.tl)) byTl.set(it.tl, []);
+      byTl.get(it.tl).push({ q: it.q, t: it.t });
+    });
+    for (const [tl, list] of byTl) {
+      for (let i = 0; i < list.length; i += STORE_BATCH) {
+        const chunk = list.slice(i, i + STORE_BATCH);
+        const res = await postJsonTimed(
+          `${base}/v1/store`,
+          { tl, items: chunk },
+          MT.workerTimeoutMs || 2500,
+        );
+        if (res.aborted || workerDeadStatus(res.status)) {
+          mtSkip.worker = true;
+          return;
+        }
+      }
+    }
+  }
 
   async function fetchMachineTranslation(core, tl) {
     const encoded = encodeURIComponent(core);
@@ -1980,32 +2121,32 @@
     const sources = ['fr', 'auto', 'en'];
     const primaryTl = tls[0] || tl;
 
-    const tryPair = async (buildUrl, sls, gtl, timeoutMs) => {
+    const tryPair = async (buildUrl, sls, gtl, timeoutMs, { acceptIdentity = false } = {}) => {
+      let identity = false;
       for (const sl of sls) {
         if (sameMtLang(sl, gtl)) continue;
         const res = await fetchJsonTimed(buildUrl(sl, gtl), timeoutMs);
-        const hit = usableMt(readMtPayload(res.data), core);
-        if (hit) return { hit, aborted: false };
-        if (res.aborted) return { hit: '', aborted: true };
-        if (res.status === 404 || res.status === 530) return { hit: '', aborted: false, missing: true };
+        const raw = readMtPayload(res.data);
+        const hit = usableMt(raw, core);
+        if (hit) return { hit, aborted: false, identity: false };
+        if (res.aborted) return { hit: '', aborted: true, identity: false };
+        if (res.status === 404 || res.status === 530) {
+          return { hit: '', aborted: false, missing: true, identity: false };
+        }
+        if (
+          acceptIdentity
+          && res.status === 200
+          && raw
+          && !isJunkMt(raw)
+          && (sameMtText(raw, core) || raw === core.toUpperCase())
+        ) {
+          identity = true;
+        }
       }
-      return { hit: '', aborted: false };
+      return { hit: '', aborted: false, identity };
     };
 
-    // 1) Cache partagé (modèle météo). 404 = pas encore déployé → suite.
-    const workerBase = String(TRANSLATE_WORKER_BASE || '').replace(/\/+$/, '');
-    if (workerBase && !mtSkip.worker) {
-      const worker = await tryPair(
-        (sl, gtl) => `${workerBase}/v1/translate?sl=${encodeURIComponent(sl)}&tl=${encodeURIComponent(gtl)}&q=${encoded}`,
-        ['fr', 'auto'],
-        primaryTl,
-        MT.workerTimeoutMs || 2500,
-      );
-      if (worker.hit) return worker.hit;
-      if (worker.missing || worker.aborted) mtSkip.worker = true;
-    }
-
-    // 2) dict-chrome-ex — gtx est en 429 Sorry en prod.
+    // clients5 depuis le navigateur (IP résidentielle). Le Worker ne proxy plus Google.
     if (!mtSkip.dict) {
       const dictHosts = [
         'https://clients5.google.com/translate_a/t?client=dict-chrome-ex',
@@ -2017,8 +2158,10 @@
           sources,
           primaryTl,
           MT.timeoutMs,
+          { acceptIdentity: true },
         );
         if (dict.hit) return dict.hit;
+        if (dict.identity) return core;
         if (dict.aborted || dict.missing) {
           mtSkip.dict = true;
           break;
@@ -2026,7 +2169,6 @@
       }
     }
 
-    // 3) gtx historique (souvent 429 — on tente encore, timeout 6 s).
     if (!mtSkip.gtx) {
       gtxLoop:
       for (const gtl of tls) {
@@ -2070,6 +2212,8 @@
     const cached = cacheGet(key);
     if (cached != null) return finish(cached);
 
+    if (alreadyTargetLanguage(core, tl)) return finish(core);
+
     // Phrases UI connues : pas de MT (évite les contresens)
     const uiHit = preferredUiPhrase(core, targetLang);
     if (uiHit != null) {
@@ -2099,8 +2243,9 @@
       }
 
       const translated = await fetchMachineTranslation(core, tl);
-      if (translated) {
+      if (translated && !sameMtText(translated, core)) {
         cacheSet(key, translated);
+        queueWorkerStore(tl, core, translated);
         return translated;
       }
       return core;
@@ -3235,11 +3380,13 @@
     if (!targetLang || !articlesHost()) return;
     const missing = Object.keys(OVERLAY_COPY_FR).filter((key) => next[key] === OVERLAY_COPY_FR[key]);
     if (missing.length) {
+      await hydrateFromWorkerCache(targetLang, missing.map((key) => OVERLAY_COPY_FR[key]));
       await Promise.all(missing.map(async (key) => {
         if (gen != null && gen !== translateGen) return;
         const out = await translateText(OVERLAY_COPY_FR[key], targetLang);
         if (out && out !== OVERLAY_COPY_FR[key]) next[key] = out;
       }));
+      await flushWorkerStore();
       if (gen != null && gen !== translateGen) return;
     }
     for (const key of Object.keys(OVERLAY_COPY_FR)) {
@@ -3606,6 +3753,10 @@
       }
 
       const entries = [...byText.entries()];
+      await hydrateFromWorkerCache(
+        targetLang,
+        entries.map(([orig]) => String(orig).replace(/^\s+|\s+$/g, '')),
+      );
       let ok = 0;
       let fail = 0;
       let progressed = 0;
@@ -3675,6 +3826,7 @@
       }
 
       saveCache();
+      await flushWorkerStore();
 
       if (!quiet && !stale()) {
         const m = labelForMode(activeMode);
@@ -4387,6 +4539,8 @@
       isJunkMt,
       readMtPayload,
       TRANSLATE_WORKER_BASE,
+      LOOKUP_BATCH,
+      alreadyTargetLanguage,
     },
     _labels: {
       formatCegepLabel,

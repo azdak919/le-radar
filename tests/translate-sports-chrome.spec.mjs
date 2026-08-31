@@ -107,7 +107,26 @@ test('gtx halluciné sur match n’atteint pas la pastille CTA', async ({ page }
     });
   });
   await page.route(/le-radar-translate\.azdak\.workers\.dev/, async (route) => {
-    const q = new URL(route.request().url()).searchParams.get('q') || '';
+    const request = route.request();
+    if (request.method() === 'OPTIONS') {
+      await route.fulfill({ status: 204 });
+      return;
+    }
+    if (request.method() === 'POST') {
+      let body = {};
+      try { body = request.postDataJSON() || {}; } catch { body = {}; }
+      if (String(request.url()).includes('/v1/store')) {
+        await route.fulfill({ contentType: 'application/json', body: '{"ok":true}' });
+        return;
+      }
+      const hits = {};
+      for (const q of body.q || []) {
+        hits[q] = /^match$/i.test(String(q).trim()) ? 'correspondre' : `X ${q}`;
+      }
+      await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ hits, missed: [] }) });
+      return;
+    }
+    const q = new URL(request.url()).searchParams.get('q') || '';
     const translated = /^match$/i.test(q.trim()) ? 'correspondre' : `X ${q}`;
     await route.fulfill({
       contentType: 'application/json',
