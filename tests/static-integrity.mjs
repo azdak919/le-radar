@@ -2020,8 +2020,8 @@ assert(
   assert(
     trWorker.includes('cache.match')
       && /corsHeaders\s*\(\s*request\s*\)/.test(trWorker)
-      && trWorker.includes('headers.set'),
-    'workers/translate-cache : réapplique corsHeaders(request) après cache HIT',
+      && !/\bif\s*\(\s*cached\s*\)\s*return\s+cached\s*;/.test(trWorker),
+    'workers/translate-cache : CORS via corsHeaders(request), jamais return cached nu',
   );
   assert(
     trWorker.includes('CDN-Cache-Control') && trWorker.includes('no-store'),
@@ -2038,8 +2038,14 @@ assert(
     'workers/translate-cache : refuse sl===tl / DISTINCT LANGUAGES',
   );
   assert(
-    trWorker.includes('clients5.google.com'),
-    'workers/translate-cache : dict-chrome-ex en amont de gtx',
+    trWorker.includes('/v1/lookup') && trWorker.includes('/v1/store'),
+    'workers/translate-cache : lookup/store, pas de proxy Google',
+  );
+  assert(
+    !trWorker.includes('clients5.google.com')
+      && !trWorker.includes('translate.googleapis.com')
+      && !trWorker.includes('mymemory.translated.net'),
+    'workers/translate-cache : plus d’upstream MT (IP Cloudflare bloquée)',
   );
 }
 {

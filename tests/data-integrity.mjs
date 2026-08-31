@@ -263,12 +263,17 @@ for (const [id, floor] of Object.entries(COVERAGE_FLOOR)) {
   const prev = new Date(local);
   prev.setUTCDate(prev.getUTCDate() - 7);
   const lastMonday = prev.toISOString().slice(0, 10);
+  const older = new Date(prev);
+  older.setUTCDate(older.getUTCDate() - 7);
+  const twoAgoMonday = older.toISOString().slice(0, 10);
   const maxAgeMs = 14 * 24 * 60 * 60 * 1000;
   for (const [id, station] of Object.entries(schedules)) {
     const week = station.verifiedWeekOf;
+    // this / last : collecte hebdo. twoAgo : grille conservée sous plancher
+    // (CHOQ hors session) — checkedAt doit quand même être récent.
     assert(
-      week === thisMonday || week === lastMonday,
-      `radio-schedules.json ${id} : semaine ${week} hors ${lastMonday}–${thisMonday} — collecte manquée ou merge Labo local ?`,
+      week === thisMonday || week === lastMonday || week === twoAgoMonday,
+      `radio-schedules.json ${id} : semaine ${week} hors ${twoAgoMonday}–${thisMonday} — collecte manquée ou merge Labo local ?`,
     );
     const checked = new Date(station.checkedAt).getTime();
     assert(
