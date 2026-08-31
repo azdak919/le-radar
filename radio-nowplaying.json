@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-08-31T13:36:28.487Z",
+  "updatedAt": "2026-08-31T14:49:40.376Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Lundi Indie",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
-      },
+      "current": null,
       "next": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
       "track": "",
-      "showTitle": "Lundi Indie",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T13:35:59.377Z"
+      "checkedAt": "2026-08-31T14:49:14.427Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T13:36:01.576Z"
+      "checkedAt": "2026-08-31T14:49:16.503Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T13:36:03.672Z"
+      "checkedAt": "2026-08-31T14:49:18.975Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Death of the Midrange",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/death-of-the-midrange"
-      },
-      "next": {
         "title": "Democracy Now",
         "source": "schedule-live",
         "start": "10:00",
         "end": "11:00",
         "url": "http://www.cjlo.com/shows/democracy-now"
       },
+      "next": {
+        "title": "2 Days and a Night",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/2-days-and-a-night"
+      },
       "track": "",
-      "showTitle": "Death of the Midrange",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T13:36:17.300Z"
+      "checkedAt": "2026-08-31T14:49:33.203Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T13:36:18.133Z"
+      "checkedAt": "2026-08-31T14:49:34.255Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "18:00",
         "url": "https://www.choq.ca/emissions/faire-avec"
       },
-      "track": "La grossophobie, aujourd",
+      "track": "0001 - Write a Letter",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -158,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-31T13:36:28.136Z"
+      "checkedAt": "2026-08-31T14:49:40.025Z"
     }
   }
 }
