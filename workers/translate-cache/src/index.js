@@ -1,9 +1,12 @@
 /**
- * LE-RADAR — cache + repli MT (parité weather-cache).
+ * LE-RADAR — cache partagé de traductions (plus de proxy Google).
  *
- * Le navigateur tapait gtx + MyMemory tout seul : 429 Google et quota
- * MyMemory → plus aucune traduction en prod. Un cache partagé : une chaîne
- * chrome n’est traduite qu’une fois pour tout le site.
+ * Les IP Cloudflare sont souvent 403/429 sur clients5/gtx. Le navigateur
+ * traduit (IP résidentielle) ; ce Worker ne fait que lookup + store.
+ *
+ * GET  /v1/translate?tl=&q=  → HIT 200 {t} / MISS 404 {error:"miss"}
+ * POST /v1/lookup            → { hits, missed }  body { tl, q: string[] }
+ * POST /v1/store             → { ok, stored }    body { tl, items: [{q,t}] }
  */
 
 const ALLOWED_ORIGINS = new Set([
@@ -11,10 +14,9 @@ const ALLOWED_ORIGINS = new Set([
   'https://www.le-radar.ca',
   'https://azdak919.github.io',
 ]);
-const CACHE_MAX_AGE = 6 * 60 * 60; // 6 h — chrome + titres stables
-const FETCH_MS = 6000;
+const CACHE_MAX_AGE = 7 * 24 * 60 * 60; // 7 j — une paire (texte, langue) est stable
 const MAX_Q = 450;
-const UA = 'le-radar.ca translate-cache/1.0 (https://le-radar.ca)';
+const MAX_BATCH = 80;
 
 function isLabDevOrigin(origin) {
   if (!origin) return false;
@@ -35,7 +37,8 @@ function corsHeaders(request) {
   else if (isLabDevOrigin(origin)) allow = origin;
   return {
     'Access-Control-Allow-Origin': allow,
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400',
     Vary: 'Origin',
   };
@@ -105,50 +108,66 @@ function sameMtText(a = '', b = '') {
   return String(a).replace(/\s+/g, ' ').trim() === String(b).replace(/\s+/g, ' ').trim();
 }
 
-function usable(text, core) {
-  const t = String(text || '').trim();
-  if (!t || isJunkMt(t) || sameMtText(t, core) || t === core.toUpperCase()) return '';
-  return t;
+/** Traduction réelle seulement — pas d’écho (identité) ni de poubelle. */
+export function isStoreableMt(q, t) {
+  const core = String(q || '').trim();
+  const out = String(t || '').trim();
+  if (!core || !out) return false;
+  if (core.length > MAX_Q) return false;
+  if (isJunkMt(out)) return false;
+  if (sameMtText(out, core) || out === core.toUpperCase()) return false;
+  return true;
 }
 
-async function fetchJson(url, ms = FETCH_MS) {
-  const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), ms);
+function cacheRequest(tl, q) {
+  return new Request(
+    `https://translate-cache.internal/v2/translate?tl=${encodeURIComponent(tl)}&q=${encodeURIComponent(q)}`,
+    { method: 'GET' },
+  );
+}
+
+async function readHit(cache, tl, q) {
+  const cached = await cache.match(cacheRequest(tl, q));
+  if (!cached) return null;
   try {
-    const resp = await fetch(url, {
-      signal: ctrl.signal,
-      headers: { 'User-Agent': UA, Accept: 'application/json' },
-    });
-    if (!resp.ok) return null;
-    const ctype = resp.headers.get('content-type') || '';
-    if (ctype.includes('text/html')) return null;
-    return await resp.json();
+    const payload = await cached.json();
+    const hit = String(payload?.t || '').trim();
+    if (!isStoreableMt(q, hit)) return null;
+    return hit;
   } catch {
     return null;
-  } finally {
-    clearTimeout(timer);
   }
 }
 
-async function translateUpstream(core, sl, tl) {
-  if (sameMtLang(sl, tl)) return '';
-  const q = encodeURIComponent(core);
-  const dict = await fetchJson(
-    `https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=${encodeURIComponent(sl)}&tl=${encodeURIComponent(tl)}&q=${q}`,
-  );
-  let hit = usable(readMtPayload(dict), core);
-  if (hit) return hit;
+async function writeHit(cache, ctx, tl, q, t) {
+  if (!isStoreableMt(q, t)) return false;
+  const body = JSON.stringify({ t: String(t).trim() });
+  const toStore = new Response(body, {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': `public, max-age=${CACHE_MAX_AGE}`,
+    },
+  });
+  const key = cacheRequest(tl, q);
+  if (ctx && typeof ctx.waitUntil === 'function') {
+    ctx.waitUntil(cache.put(key, toStore));
+  } else {
+    try { await cache.put(key, toStore); } catch { /* Cache API */ }
+  }
+  return true;
+}
 
-  const gtx = await fetchJson(
-    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${encodeURIComponent(sl)}&tl=${encodeURIComponent(tl)}&dt=t&q=${q}`,
-  );
-  hit = usable(readMtPayload(gtx), core);
-  if (hit) return hit;
+function clipTl(raw) {
+  return String(raw || '').slice(0, 16);
+}
 
-  const mm = await fetchJson(
-    `https://api.mymemory.translated.net/get?q=${q}&langpair=${encodeURIComponent(sl)}|${encodeURIComponent(tl)}`,
-  );
-  return usable(readMtPayload(mm), core) || '';
+async function parseJsonBody(request) {
+  try {
+    return await request.json();
+  } catch {
+    return null;
+  }
 }
 
 export default {
@@ -156,70 +175,76 @@ export default {
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders(request) });
     }
-    if (request.method !== 'GET') return json({ error: 'Method not allowed' }, request, 405);
 
     const url = new URL(request.url);
     if (url.pathname === '/health') return json({ ok: true }, request);
 
+    const cache = caches.default;
+
+    if (url.pathname === '/v1/lookup' && request.method === 'POST') {
+      const body = await parseJsonBody(request);
+      const tl = clipTl(body?.tl);
+      const list = Array.isArray(body?.q) ? body.q : [];
+      if (!tl || list.length === 0) return json({ error: 'tl/q invalides' }, request, 400);
+      if (list.length > MAX_BATCH) return json({ error: 'batch trop grand' }, request, 400);
+
+      const hits = {};
+      const missed = [];
+      for (const raw of list) {
+        const q = String(raw || '');
+        if (!q || q.length > MAX_Q) {
+          missed.push(q);
+          continue;
+        }
+        const hit = await readHit(cache, tl, q);
+        if (hit) hits[q] = hit;
+        else missed.push(q);
+      }
+      return json({ hits, missed }, request, 200, { 'X-LR-Cache': 'LOOKUP' });
+    }
+
+    if (url.pathname === '/v1/store' && request.method === 'POST') {
+      const body = await parseJsonBody(request);
+      const tl = clipTl(body?.tl);
+      const items = Array.isArray(body?.items) ? body.items : [];
+      if (!tl) return json({ error: 'tl invalide' }, request, 400);
+      if (items.length > MAX_BATCH) return json({ error: 'batch trop grand' }, request, 400);
+
+      let stored = 0;
+      for (const item of items) {
+        const q = String(item?.q || '');
+        const t = String(item?.t || '');
+        if (await writeHit(cache, ctx, tl, q, t)) stored += 1;
+      }
+      return json({ ok: true, stored }, request);
+    }
+
+    if (request.method !== 'GET') return json({ error: 'Method not allowed' }, request, 405);
+
     if (url.pathname !== '/v1/translate') return json({ error: 'Not found' }, request, 404);
 
     const q = String(url.searchParams.get('q') || '');
-    const sl = String(url.searchParams.get('sl') || 'fr').slice(0, 16);
-    const tl = String(url.searchParams.get('tl') || '').slice(0, 16);
+    const sl = clipTl(url.searchParams.get('sl') || 'fr');
+    const tl = clipTl(url.searchParams.get('tl') || '');
     if (!q || !tl || q.length > MAX_Q) {
       return json({ error: 'q/tl invalides' }, request, 400);
     }
     if (sameMtLang(sl, tl)) {
-      return json({ error: 'same language' }, request, 503);
+      return json({ error: 'same language' }, request, 404, { 'X-LR-Cache': 'SKIP' });
     }
 
-    const cache = caches.default;
-    const cacheKey = new Request(
-      `https://translate-cache.internal/v1/translate?sl=${encodeURIComponent(sl)}&tl=${encodeURIComponent(tl)}&q=${encodeURIComponent(q)}`,
-      { method: 'GET' },
-    );
-    const cached = await cache.match(cacheKey);
-    if (cached) {
-      let poison = false;
-      try {
-        const payload = await cached.clone().json();
-        const hit = String(payload?.t || '');
-        if (!hit || isJunkMt(hit) || sameMtText(hit, q)) poison = true;
-      } catch {
-        poison = true;
-      }
-      if (!poison) {
-        const headers = new Headers(cached.headers);
-        Object.entries(corsHeaders(request)).forEach(([k, v]) => headers.set(k, v));
-        headers.set('X-LR-Cache', 'HIT');
-        headers.set('CDN-Cache-Control', 'no-store');
-        return new Response(cached.body, { status: cached.status, headers });
-      }
-    }
-
-    const translated = await translateUpstream(q, sl, tl);
-    if (!translated) return json({ error: 'Traduction indisponible' }, request, 503);
-
-    const body = JSON.stringify({ t: translated });
-    const storeHeaders = {
-      'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': `public, max-age=${CACHE_MAX_AGE}`,
-    };
-    const toStore = new Response(body, { status: 200, headers: storeHeaders });
-    if (ctx && typeof ctx.waitUntil === 'function') {
-      ctx.waitUntil(cache.put(cacheKey, toStore.clone()));
-    } else {
-      try { await cache.put(cacheKey, toStore.clone()); } catch { /* Cache API */ }
-    }
-
-    return new Response(body, {
-      status: 200,
-      headers: {
-        ...storeHeaders,
-        ...corsHeaders(request),
-        'X-LR-Cache': 'MISS',
+    const hit = await readHit(cache, tl, q);
+    if (hit) {
+      return json({ t: hit }, request, 200, {
+        'X-LR-Cache': 'HIT',
+        'Cache-Control': `public, max-age=${CACHE_MAX_AGE}`,
         'CDN-Cache-Control': 'no-store',
-      },
+      });
+    }
+    // MISS : 404 (pas 503). L’ancien client coupe alors le Worker et passe à clients5.
+    return json({ error: 'miss' }, request, 404, {
+      'X-LR-Cache': 'MISS',
+      'CDN-Cache-Control': 'no-store',
     });
   },
 };

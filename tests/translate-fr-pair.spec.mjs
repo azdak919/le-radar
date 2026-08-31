@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { mockRadarTranslateApis } from './translate-mt-route.mjs';
 
 /**
  * EN → FR : MyMemory fr|fr renvoyait « PLEASE SELECT TWO DISTINCT LANGUAGES »
@@ -12,65 +13,11 @@ const POISON_RE = /PLEASE SELECT TWO DISTINCT LANGUAGES|VEUILLEZ S[ÉE]LECTIONNE
 async function mockPoisonedMt(page) {
   await page.route('**/assets/news-images/**', (route) => route.abort());
   await page.route('**/assets/meteocons/**', (route) => route.abort());
-
-  await page.route(/le-radar-translate\.azdak\.workers\.dev/, async (route) => {
-    const u = new URL(route.request().url());
-    const sl = u.searchParams.get('sl') || '';
-    const tl = u.searchParams.get('tl') || '';
-    const q = u.searchParams.get('q') || '';
-    if (!tl || sl.toLowerCase() === tl.toLowerCase()) {
-      await route.fulfill({
-        contentType: 'application/json',
-        body: JSON.stringify({ t: POISON_EN }),
-      });
-      return;
-    }
-    if (tl === 'en' || tl.startsWith('en')) {
-      await route.fulfill({
-        contentType: 'application/json',
-        body: JSON.stringify({ t: `EN ${q}` }),
-      });
-      return;
-    }
-    await route.fulfill({
-      contentType: 'application/json',
-      body: JSON.stringify({ t: q }),
-    });
-  });
-
-  const fulfillGtx = async (route) => {
-    const u = new URL(route.request().url());
-    const sl = u.searchParams.get('sl') || '';
-    const tl = u.searchParams.get('tl') || '';
-    const q = u.searchParams.get('q') || '';
-    const out = (sl !== tl && (tl === 'en' || tl.startsWith('en'))) ? `EN ${q}` : q;
-    await route.fulfill({
-      contentType: 'application/json',
-      body: JSON.stringify([[[out, q]]]),
-    });
-  };
-  await page.route(/translate\.googleapis\.com/, fulfillGtx);
-  await page.route(/clients[45]\.google\.com/, async (route) => {
-    const u = new URL(route.request().url());
-    const sl = u.searchParams.get('sl') || '';
-    const tl = u.searchParams.get('tl') || '';
-    const q = u.searchParams.get('q') || '';
-    const out = (sl !== tl && (tl === 'en' || tl.startsWith('en'))) ? `EN ${q}` : q;
-    await route.fulfill({
-      contentType: 'application/json',
-      body: JSON.stringify([out]),
-    });
-  });
-
-  await page.route(/mymemory\.translated\.net/, async (route) => {
-    await route.fulfill({
-      contentType: 'application/json',
-      body: JSON.stringify({
-        responseStatus: '403',
-        responseData: { translatedText: POISON_EN },
-        responseDetails: POISON_EN,
-      }),
-    });
+  await mockRadarTranslateApis(page, ({ q, sl, tl, source }) => {
+    if (source === 'mymemory') return POISON_EN;
+    if (!tl || sl.toLowerCase() === tl.toLowerCase()) return q;
+    if (tl === 'en' || tl.startsWith('en')) return `EN ${q}`;
+    return q;
   });
 }
 
