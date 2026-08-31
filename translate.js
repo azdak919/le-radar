@@ -1519,6 +1519,13 @@
       zh: '下场比赛', ar: 'المباراة القادمة', ko: '다음 경기', ja: '次の試合',
       fr: 'Prochain match',
     },
+    Prochain: {
+      en: 'Next', es: 'Próximo', pt: 'Próximo',
+      de: 'Nächstes', it: 'Prossima', nl: 'Volgende',
+      pl: 'Następny', tr: 'Sonraki', ru: 'Следующий',
+      zh: '下场', ar: 'القادمة', ko: '다음', ja: '次',
+      fr: 'Prochain',
+    },
     match: {
       en: 'game', es: 'partido', pt: 'jogo', de: 'Spiel', it: 'partita',
       nl: 'wedstrijd', pl: 'mecz', tr: 'maç', ru: 'матч', uk: 'матч',

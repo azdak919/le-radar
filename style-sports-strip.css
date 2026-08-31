@@ -520,7 +520,7 @@
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-eyebrow--rail {
   display: none;
 }
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag {
+.masthead-sports-strip .sports-chip .sports-chip__cta-tag {
   flex: 0 0 auto;
   align-self: center;
   display: inline-flex;
@@ -541,15 +541,14 @@
 }
 /* Pastille = largeur du libellé. Plus de rail 8 rem : Hier / En direct
  * laissaient du vide, Aujourd’hui débordait d’un bout, l’accroche étouffait. */
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag:not(.sports-chip__cta-tag--brand) {
+.masthead-sports-strip .sports-chip .sports-chip__cta-tag:not(.sports-chip__cta-tag--brand) {
   justify-content: center;
   box-sizing: border-box;
   width: max-content;
   min-width: 0;
   max-width: 100%;
 }
-/* « Prochains match » : 2 lignes dans le rail, pas une pastille plus large. */
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag-lines {
+.masthead-sports-strip .sports-chip .sports-chip__cta-tag-lines {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -558,14 +557,16 @@
   line-height: 1.15;
   text-align: center;
 }
-/* Live : En direct + score sous la pastille (toujours visible, hors marquee). */
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag-score {
+/* F : kicker 1 ligne — pas de 2e ligne score/AM qui épaissit la carte. */
+.masthead-sports-strip .sports-chip--cta {
+  min-height: 44px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.masthead-sports-strip .sports-chip__score {
+  flex: 0 0 auto;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
-  text-transform: none;
   font-weight: 900;
-  font-size: 11px;
-  line-height: 1.15;
 }
 /* Pastilles datées : 2e ligne « cet AM » / « ce PM » (uppercase hérité). */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag-meridiem,
@@ -615,7 +616,7 @@
   text-align: center;
 }
 /* Prochain : pastille jaune (pas l’ambre radio). Encre sombre pour le contraste. */
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="next"],
+.masthead-sports-strip .sports-chip .sports-chip__cta-tag[data-cta-lamp="next"],
 .masthead-sports-strip .sports-chip--cta[data-cta-state="next"] .sports-chip__cta-tag:not(.sports-chip__cta-tag--brand):not([data-cta-lamp="soon"]) {
   background: #f5d000;
   color: #1a1500;
@@ -624,20 +625,17 @@
   padding-block: 3px;
 }
 /* Hier / Avant-hier / date : pourpre de marque (focus-group C). Pas le V, pas un feu. */
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="past"] {
+.masthead-sports-strip .sports-chip .sports-chip__cta-tag[data-cta-lamp="past"] {
   background: var(--lamp-past);
   color: var(--lamp-past-ink);
   -webkit-text-fill-color: var(--lamp-past-ink);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
 }
-/* Aujourd’hui (résultat) : fill rouge saturé, sans pulse. */
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="today"] {
-  background: #c8102e;
-  color: #fff;
-  box-shadow: inset 0 0 0 1px rgba(255, 180, 190, 0.35);
-}
-.masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag,
-.masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag[data-cta-lamp="soon"] {
+/* Aujourd’hui (résultat) : même rouge + pulse que En direct. */
+.masthead-sports-strip .sports-chip[data-cta-state="live"] .sports-chip__cta-tag,
+.masthead-sports-strip .sports-chip .sports-chip__cta-tag[data-cta-lamp="live"],
+.masthead-sports-strip .sports-chip .sports-chip__cta-tag[data-cta-lamp="soon"],
+.masthead-sports-strip .sports-chip .sports-chip__cta-tag[data-cta-lamp="today"] {
   background: #c8102e;
   color: #fff;
   font-weight: 900;
@@ -892,6 +890,7 @@
 @media (prefers-reduced-motion: reduce) {
   .masthead-sports-strip .sports-chip--cta,
   .masthead-sports-strip .sports-chip--cta[data-cta-state="live"],
+  .masthead-sports-strip .sports-chip .sports-chip__cta-tag,
   .masthead-sports-strip .sports-chip--cta .sports-chip__cta-tag,
   .masthead-sports-strip .sports-chip--cta[data-cta-state="live"] .sports-chip__cta-tag,
   .masthead-sports-strip .sports-chip--cta .sports-chip__cta-label,
