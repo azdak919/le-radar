@@ -33,9 +33,15 @@ const TIMEOUT = 9000;
 // L’antenne est le compte Centova `chyz` (tunein/chyz.pls → Title1=CHYZ 94,3 FM).
 const CHYZ_ONAIR_STREAM = 'https://ecoutez.chyz.ca/proxy/chyz/stream';
 
+// CFAK : le <audio> de cfak.ca pointe streams.radiomast.io/<uuid>.
+// validateStream suit le 302 vers audio-edge-*.yyz.g.radiomast.io — ces
+// hôtes géo sont éphémères ; on recanonicalise vers streams.radiomast.io.
+const CFAK_ONAIR_STREAM = 'https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a';
+
 // === KNOWN GOOD STREAMS (the bot trusts and re-validates these first) ===
 const KNOWN_STREAMS = {
   chyz: CHYZ_ONAIR_STREAM,
+  cfak: CFAK_ONAIR_STREAM,
   ckut: 'https://ckut.out.airtime.pro/ckut_a',
   // HTTPS mount — playable directly on the HTTPS site (the :8000 HTTP one is blocked as mixed content)
   cism: 'https://stream03.ustream.ca/cism128.mp3',
@@ -58,7 +64,7 @@ const STATION_HINTS = {
   cfou: [
     'http://streamer.xittel.net:8000/cfou',
   ],
-  cfak: ['https://cfak.ca/stream'],
+  cfak: [CFAK_ONAIR_STREAM],
   cjlo: [
     'https://cjlo.radioca.st/stream',
     'http://rosetta.shoutca.st:8883/stream',
@@ -177,15 +183,16 @@ async function validateStream(url, redirects = 0) {
             bytesRead += chunk.length;
             if (bytesRead > 8192) res.destroy();
           });
+          const catalogUrl = canonicalizeStreamUrl(url);
           const done = () => resolve({
             valid: true,
-            url,
+            url: catalogUrl,
             contentType,
             icyName: icyName || null,
             icyMetaint: icyMetaint ? parseInt(icyMetaint, 10) : null,
             status: res.statusCode,
             cors: hasCors(res.headers),
-            https: url.startsWith('https:'),
+            https: catalogUrl.startsWith('https:'),
           });
           res.on('close', done);
           res.on('end', done);
@@ -228,6 +235,24 @@ function isJunkIcyName(name = '') {
 
 function isJunkStreamUrl(url = '') {
   return /\/proxy\/tech(?:\/|$)/i.test(String(url));
+}
+
+/** RadioMast geo-edges (audio-edge-*.yyz.g.radiomast.io) are ephemeral CDN hosts. */
+function canonicalizeStreamUrl(url = '') {
+  try {
+    const parsed = new URL(url);
+    const uuid = parsed.pathname.match(
+      /^\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})\/?$/i,
+    );
+    if (!uuid) return url;
+    const host = parsed.hostname.toLowerCase();
+    const radioMast = host === 'streams.radiomast.io'
+      || /^audio-edge-[a-z0-9]+\.[a-z0-9]+\.g\.radiomast\.io$/.test(host);
+    if (!radioMast) return url;
+    return `https://streams.radiomast.io/${uuid[1].toLowerCase()}`;
+  } catch {
+    return url;
+  }
 }
 
 function centovaHttpsProxy(account, host = 'ecoutez.chyz.ca') {
@@ -309,6 +334,8 @@ function expandStreamVariants(url = '') {
   } catch {
     /* ignore */
   }
+  const canonical = canonicalizeStreamUrl(url);
+  if (canonical) out.add(canonical);
   return [...out];
 }
 
@@ -362,6 +389,7 @@ function extractStreamUrlsFromHtml(html, baseUrl) {
     /https?:\/\/[^"'\s<>()]+\.(?:m3u8?|pls|mp3|aac|ogg)(?:\?[^"'\s<>()]*)?/gi,
     /https?:\/\/[^"'\s<>()]+\.radioca\.st\/stream/gi,
     /https?:\/\/streams\.radiomast\.io\/[a-f0-9-]+/gi,
+    /https?:\/\/audio-edge-[a-z0-9]+\.[a-z0-9]+\.g\.radiomast\.io\/[a-f0-9-]+/gi,
     /https?:\/\/[^"'\s<>()]+\.live\.streamtheworld\.com\/[^"'\s<>()]+/gi,
     /"audio_stream_uri"\s*:\s*"([^"]+)"/gi,
     /https?:\/\/[^"'\s<>()]+\.out\.airtime\.pro\/[^"'\s<>()]+/gi,
@@ -522,8 +550,12 @@ async function discoverForRadio(radio) {
 
 function applyStreamToRadio(radio, discovery) {
   const entry = { ...radio };
+  const stream = canonicalizeStreamUrl(discovery.stream || radio.stream || '')
+    || discovery.stream
+    || radio.stream
+    || null;
   if (discovery.stream) {
-    entry.stream = discovery.stream;
+    entry.stream = stream;
     entry._streamStatus = discovery.status;
     entry._streamChecked = discovery.checked;
     if (discovery.meta?.icyName) entry._streamIcyName = discovery.meta.icyName;
@@ -531,8 +563,8 @@ function applyStreamToRadio(radio, discovery) {
     delete entry.listenHint;
     return entry;
   }
-  entry.stream = radio.stream || null;
-  entry._streamStatus = radio.stream ? 'working' : 'none';
+  entry.stream = stream;
+  entry._streamStatus = stream ? 'working' : 'none';
   entry._streamChecked = discovery.checked;
   return entry;
 }
@@ -664,6 +696,8 @@ async function main() {
 
 module.exports = {
   CHYZ_ONAIR_STREAM,
+  CFAK_ONAIR_STREAM,
+  canonicalizeStreamUrl,
   parseCentovaPls,
   isJunkIcyName,
   isJunkStreamUrl,
