@@ -1,30 +1,24 @@
 {
-  "updated": "2026-08-31T13:58:26.112Z",
+  "updated": "2026-08-31T20:14:59.568Z",
   "total": 185,
   "withPhoto": 169,
   "withStock": 30,
   "withCampusBank": 22,
   "fullyCovered": 185,
-  "leadReadyPhotos": 148,
-  "pageScraped": 36,
-  "photosRecovered": 31,
+  "leadReadyPhotos": 151,
+  "pageScraped": 37,
+  "photosRecovered": 32,
   "imagesCleared": 18,
   "stockSearches": 34,
-  "stockFound": 23,
+  "stockFound": 22,
   "campusBankFound": 16,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "Keep the Planet in Mind During Move-in",
-      "link": "https://www.mcgilldaily.com/2026/08/keep-the-planet-in-mind-during-move-in/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
-    },
-    {
-      "title": "Please Stop Listening to My Favourite Band",
-      "link": "https://www.mcgilldaily.com/2026/08/please-stop-listening-to-my-favourite-band/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/5/56/Walking_west_on_Sherbrooke_Street_near_McGill_University%2C_May_1%2C_2023.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "title": "Bulletin radio 14h",
+      "link": "https://lapige.atmjonquiere.com/2026/08/31/bulletin-radio-11h/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-radio-11h",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
     },
     {
       "title": "Élections provinciales 2026 : vos personnes candidates dans Saint-François (1/2)",
@@ -51,10 +45,16 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SPORTSETBIENETRE_Mauvaise-nutrition-et-maladies-chroniques_Source-Sante-education.jpg"
     },
     {
-      "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
-      "link": "https://thelinknewspaper.ca/article/16326",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
+      "title": "CSU fails to reach quorum at first special council meeting of new mandate",
+      "link": "https://thelinknewspaper.ca/article/16335",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+    },
+    {
+      "title": "Letters from the Editors May 2026",
+      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
     },
     {
       "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
@@ -66,7 +66,7 @@
       "title": "CSU approves $36,000 in funding for student-led initiatives",
       "link": "https://thelinknewspaper.ca/article/16319",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
     },
     {
       "title": "Mars enters Aries",
@@ -78,13 +78,13 @@
       "title": "Spotlighting Powerful McGill Alumnae",
       "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
     },
     {
-      "title": "National Golf tournament",
-      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg"
+      "title": "Gaiters wrap up hard-fought season with eyes on next year",
+      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }
