@@ -130,7 +130,9 @@ for (const radio of radios) {
     parseCentovaPls,
     isJunkIcyName,
     isJunkStreamUrl,
+    canonicalizeStreamUrl,
     CHYZ_ONAIR_STREAM,
+    CFAK_ONAIR_STREAM,
   } = require('../scripts/discover-streams.js');
   assert.equal(CHYZ_ONAIR_STREAM, CHYZ_ONAIR);
   assert.equal(
@@ -147,6 +149,27 @@ for (const radio of radios) {
   assert.equal(isJunkIcyName(''), false);
   assert.equal(isJunkStreamUrl('https://ecoutez.chyz.ca/proxy/tech/stream'), true);
   assert.equal(isJunkStreamUrl(CHYZ_ONAIR), false);
+
+  // CFAK : le player officiel pointe streams.radiomast.io/<uuid>. Le bot
+  // ne doit pas figer le 302 vers un audio-edge-* (hôte géo éphémère).
+  const CFAK_ONAIR = 'https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a';
+  const cfak = radios.find((radio) => radio.id === 'cfak');
+  assert.equal(cfak?.stream, CFAK_ONAIR, 'CFAK : flux = URL RadioMast canonique (pas un edge géo)');
+  assert.equal(CFAK_ONAIR_STREAM, CFAK_ONAIR);
+  assert(
+    discover.includes('cfak: CFAK_ONAIR_STREAM') || discover.includes(`'${CFAK_ONAIR}'`),
+    'discover-streams : KNOWN_STREAMS.cfak aligné sur radios.json',
+  );
+  assert(
+    !radios.some((radio) => /audio-edge-/i.test(String(radio.stream || ''))),
+    'radios.json : ne pas figer un hostname audio-edge RadioMast',
+  );
+  assert.equal(
+    canonicalizeStreamUrl('https://audio-edge-vqwx4.yyz.g.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a'),
+    CFAK_ONAIR,
+  );
+  assert.equal(canonicalizeStreamUrl(CFAK_ONAIR), CFAK_ONAIR);
+  assert.equal(canonicalizeStreamUrl(CHYZ_ONAIR), CHYZ_ONAIR);
 }
 
 /*
