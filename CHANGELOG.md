@@ -7,6 +7,9 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Modifié
 
+- Scores bandeau **F compact** : même épaisseur 2 lignes, glyphe sport. Kicker 1 ligne sauf Dernière heure / Avant-hier / dates (jour de la semaine, puis jour + mois). Noms d’équipe d’abord (Vert & Or, Carabins, Cheetahs). Match sans chiffre : **0–0**. Voile : club + place, pas de 0–0.
+- Ouverture **B** : une liste gauche→droite (directs → aujourd’hui → hier → reliquat 5 j). Cascade leave/arrive inchangée. Poll 15 s sur place.
+
 - Traduction plus rapide sans nouveau moteur ni hausse des quotas gtx : le chrome (mât, tuner, CTA, nav, tête du fil) passe **avant** le fil ; cache LRU plus large ; requêtes identiques partagées ; mutations pendant un passage sont rejouées au lieu d’être perdues.
 
 - Client découpé sans bundler : `weather-cities-data.js`, `radar-utils.js`, `radar-state.js`, `radar-weather.js`, `radar-sports-cta.js`, `radar-tuner.js`, `radar-news.js`, `radar-lifecycle.js` ; `app.js` reste le point d’entrée. CSS par surface (`style-sports-strip`, `style-masthead-chrome`, `style-tuner`, `style-feed`, `style-chrome`), toujours via `<link>`, jamais `@import`.

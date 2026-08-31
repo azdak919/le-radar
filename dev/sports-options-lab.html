@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>F — toutes les variantes — LE RADAR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style-masthead.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../style-sports-strip.css">
+  <link rel="stylesheet" href="../style-masthead-chrome.css">
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #0c0d10; color: #f1f2f4; font: 16px/1.45 Inter, system-ui, sans-serif; }
+    header { max-width: 720px; margin: 0 auto; padding: 32px 20px 12px; }
+    h1 { margin: 0; font: 700 28px/1.15 "Source Serif 4", Georgia, serif; }
+    .lede { color: #a9acb5; margin: 10px 0 0; font-size: 15px; }
+    nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+    nav a { color: #e1b95e; font-size: 13px; font-weight: 700; }
+    main { max-width: 720px; margin: 0 auto; padding: 8px 20px 80px; }
+    h2 {
+      margin: 36px 0 14px;
+      font: 800 12px/1 Inter;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #e1b95e;
+      border-top: 1px solid #2c3038;
+      padding-top: 20px;
+    }
+    .row { margin: 0 0 28px; }
+    .row p {
+      margin: 0 0 8px;
+      font: 700 13px/1.3 Inter;
+      color: #c3c6ce;
+    }
+    .masthead-sports-strip.strip {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: 100%;
+      max-width: 560px;
+      margin: 0;
+      padding: 0;
+      min-height: 52px;
+    }
+    .masthead-sports-strip.strip .sports-chip { flex: 1 1 auto; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>F — cartes normales</h1>
+    <p class="lede">Un seul modèle : la puce. Noms d’équipe (Vert & Or, Cheetahs…), pas la ville. Voile : club. Kicker 1 ligne, sauf Dernière heure / Avant-hier / dates. Issues : V, D, N, 7e, or, argent, bronze.</p>
+    <nav>
+      <a href="#live">En cours</a>
+      <a href="#soon">À venir</a>
+      <a href="#tomorrow">Demain</a>
+      <a href="#later">Prochain</a>
+      <a href="#today">Aujourd’hui</a>
+      <a href="#hier">Hier</a>
+      <a href="#avant">Avant-hier</a>
+      <a href="#date">Date</a>
+      <a href="#idle">Creux</a>
+    </nav>
+  </header>
+  <main id="main"></main>
+  <script>
+    function tagLinesHtml(tag) {
+      if (tag === 'Dernière heure') {
+        return '<span class="sports-chip__cta-tag-lines"><span>Dernière</span><span>heure</span></span>';
+      }
+      if (tag === 'Avant-hier') {
+        return '<span class="sports-chip__cta-tag-lines"><span>Avant</span><span>hier</span></span>';
+      }
+      const m = String(tag || '').trim().match(/^(\S+)\s+(\d{1,2}\s+\S.+)$/);
+      if (m) {
+        return `<span class="sports-chip__cta-tag-lines"><span>${m[1]}</span><span>${m[2]}</span></span>`;
+      }
+      return tag;
+    }
+    function strip(html) {
+      return `<div class="masthead-sports-strip strip" data-count="1" data-ready="1">${html}</div>`;
+    }
+    function names(home, mid, away) {
+      const m = mid.score
+        ? `<span class="sports-chip__score">${mid.score}</span>`
+        : `<span class="sports-chip__vs">${mid.vs}</span>`;
+      return `<span class="sports-chip__name">${home}</span> ${m} <span class="sports-chip__name sports-chip__opp">${away}</span>`;
+    }
+    function chip({
+      state, lamp, tag, glyph, badge, badgeMod,
+      home, away, score, vs, place, sub, tone, brand,
+    }) {
+      const lampA = lamp || (state === 'live' ? 'live' : state === 'next' && tag === 'À venir' ? 'soon'
+        : tag === 'Demain' || tag === 'Prochain' ? 'next'
+        : tag === 'Dernière heure' ? 'today'
+        : state === 'result' ? 'past' : 'idle');
+      const liveA = state === 'live' ? ' data-sports-live="1"' : '';
+      const g = glyph ? `<span class="sports-chip__glyph" aria-hidden="true">${glyph}</span>` : '';
+      const b = badge
+        ? `<span class="sports-chip__badge sports-chip__badge--${badgeMod}" aria-hidden="true">${badge}</span>`
+        : '';
+      const line = brand
+        ? 'LE-RADAR.ca'
+        : place
+          ? `<span class="sports-chip__name">${home}</span> <span class="sports-chip__score">${place}</span>`
+          : names(home, score ? { score } : { vs }, away);
+      const tagInner = brand
+        ? '<img class="sports-chip__cta-logo" src="../assets/icon.svg" width="18" height="18" alt="" decoding="async">'
+        : tagLinesHtml(tag);
+      const tagClass = brand
+        ? 'sports-chip__cta-tag sports-chip__cta-tag--brand notranslate'
+        : 'sports-chip__cta-tag notranslate';
+      return strip(`<a class="sports-chip sports-chip--match" data-cta-state="${state}"${liveA} href="#f" style="--sports-tone:${tone}">
+        <span class="${tagClass}" data-cta-tag="${tag}" data-cta-lamp="${lampA}">${tagInner}</span>
+        ${g}${b}
+        <span class="sports-chip__body">
+          <span class="sports-chip__line"><span class="sports-chip__line-inner">${line}</span></span>
+          <span class="sports-chip__sub"><span class="sports-chip__sub-text">${sub}</span></span>
+        </span>
+      </a>`);
+    }
+    function row(title, spec) {
+      return `<div class="row"><p>${title}</p>${chip(spec)}</div>`;
+    }
+
+    const MATCH = [
+      { key: 'V', label: 'Victoire', glyph: '🏀', tone: '#3d9a6a', badge: 'V', badgeMod: 'w', home: 'Carabins', away: 'Stingers', score: '78–71', sport: 'Basketball universitaire' },
+      { key: 'D', label: 'Défaite', glyph: '🏒', tone: '#c45c5c', badge: 'D', badgeMod: 'l', home: 'Gaiters', away: 'Redbirds', score: '2–5', sport: 'Hockey universitaire' },
+      { key: 'N', label: 'Nul', glyph: '⚽', tone: '#8fa3b0', badge: 'N', badgeMod: 'd', home: 'Rouge et Or', away: 'Carabins', score: '1–1', sport: 'Soccer universitaire' },
+    ];
+    const PLACE = [
+      { key: '7e', label: '7e hors podium', glyph: '⛵', tone: '#3d6fa8', home: 'McGill', place: '7e/12' },
+      { key: 'or', label: 'Or', glyph: '⛵', tone: '#3d6fa8', badge: '🥇', badgeMod: 'place', home: 'McGill', place: '1er/12' },
+      { key: 'ag', label: 'Argent', glyph: '⛵', tone: '#3d6fa8', badge: '🥈', badgeMod: 'place', home: 'Concordia', place: '2e/12' },
+      { key: 'br', label: 'Bronze', glyph: '⛵', tone: '#3d6fa8', badge: '🥉', badgeMod: 'place', home: 'UdeM', place: '3e/12' },
+    ];
+    const TIMES = [
+      { id: 'today', title: 'Résultat du jour', tag: 'Dernière heure', lead: '19 h 00 · ' },
+      { id: 'hier', title: 'Hier', tag: 'Hier', lead: '' },
+      { id: 'avant', title: 'Avant-hier', tag: 'Avant-hier', lead: '' },
+      { id: 'date', title: 'Date plus vieille', tag: 'mercredi 19 août', lead: '' },
+    ];
+
+    function resultRows(bucket) {
+      const rows = MATCH.map((m) => [
+        m.label,
+        {
+          state: 'result', tag: bucket.tag, glyph: m.glyph, tone: m.tone,
+          badge: m.badge, badgeMod: m.badgeMod, home: m.home, away: m.away,
+          score: m.score, sub: `${bucket.lead}${m.sport}`,
+        },
+      ]);
+      PLACE.forEach((p) => {
+        rows.push([
+          p.label,
+          {
+            state: 'result', tag: bucket.tag, glyph: p.glyph, tone: p.tone,
+            badge: p.badge, badgeMod: p.badgeMod, home: p.home, place: p.place,
+            sub: `${bucket.lead}Voile universitaire`,
+          },
+        ]);
+      });
+      if (bucket.id === 'hier') {
+        rows.push(['Cégeps, noms d’équipe', {
+          state: 'result', tag: 'Hier', glyph: '⚽', tone: '#3d9a6a',
+          badge: 'V', badgeMod: 'w', home: 'Diablos',
+          away: 'Cégep de Victoriaville', score: '3–1',
+          sub: 'Soccer collégial masculin D2',
+        }]);
+      }
+      if (bucket.id === 'date') {
+        rows.push(['Volleyball', {
+          state: 'result', tag: bucket.tag, glyph: '🏐', tone: '#3d9a6a',
+          badge: 'V', badgeMod: 'w', home: 'Vert & Or', away: 'Citadins', score: '3–1',
+          sub: 'Volleyball universitaire',
+        }]);
+        rows.push(['Rugby, défaite', {
+          state: 'result', tag: bucket.tag, glyph: '🏉', tone: '#c45c5c',
+          badge: 'D', badgeMod: 'l', home: 'Redbirds', away: 'Stingers', score: '12–19',
+          sub: 'Rugby universitaire',
+        }]);
+      }
+      return rows;
+    }
+
+    const S = [
+      ['live', 'En cours', [
+        ['Hockey, score, domicile', { state: 'live', tag: 'En direct', glyph: '🏒', tone: '#c8102e', home: 'Redbirds', away: 'Stingers', score: '2–1', sub: '19 h 00 · 2e période · Hockey universitaire' }],
+        ['Soccer, visiteur', { state: 'live', tag: 'En direct', glyph: '⚽', tone: '#c8102e', home: 'Cheetahs', away: 'Patriotes', score: '1–0', sub: '18 h 30 · 1re période · Soccer collégial' }],
+        ['Football, pas de score RSEQ', { state: 'live', tag: 'En direct', glyph: '🏈', tone: '#c8102e', home: 'Rouge et Or', away: 'Carabins', score: '0–0', sub: '19 h 00 · Football universitaire' }],
+        ['Basket, mi-temps', { state: 'live', tag: 'En direct', glyph: '🏀', tone: '#c8102e', home: 'Carabins', away: 'Stingers', score: '44–41', sub: '20 h 15 · mi-temps · Basketball universitaire' }],
+        ['Volleyball', { state: 'live', tag: 'En direct', glyph: '🏐', tone: '#c8102e', home: 'Vert & Or', away: 'Citadins', score: '1–0', sub: '18 h 00 · 1er set · Volleyball universitaire' }],
+      ]],
+      ['soon', 'À venir (aujourd’hui)', [
+        ['Reçoit, ce PM', { state: 'next', tag: 'À venir', lamp: 'soon', glyph: '⚽', tone: '#2e7d4f', home: 'Rouge et Or', away: 'Redbirds', vs: 'reçoivent', sub: 'Aujourd’hui · 19 h 00 · Soccer universitaire' }],
+        ['Chez, cet AM', { state: 'next', tag: 'À venir', lamp: 'soon', glyph: '⚽', tone: '#2e7d4f', home: 'Redbirds', away: 'Stingers', vs: 'chez', sub: 'Aujourd’hui · 10 h 00 · Soccer universitaire féminin' }],
+        ['Dans 45 min', { state: 'next', tag: 'À venir', lamp: 'soon', glyph: '🏀', tone: '#2e7d4f', home: 'Carabins', away: 'Redbirds', vs: 'reçoivent', sub: 'Aujourd’hui · dans 45 min · Basketball universitaire' }],
+      ]],
+      ['tomorrow', 'Demain', [
+        ['PM, reçoit', { state: 'next', tag: 'Demain', glyph: '🏈', tone: '#2e7d4f', home: 'Rouge et Or', away: 'Carabins', vs: 'reçoivent', sub: '13 h 00 · Football universitaire' }],
+        ['PM, chez', { state: 'next', tag: 'Demain', glyph: '🏈', tone: '#2e7d4f', home: 'Carabins', away: 'Rouge et Or', vs: 'chez', sub: '13 h 00 · Football universitaire' }],
+        ['AM, reçoit', { state: 'next', tag: 'Demain', glyph: '⚽', tone: '#2e7d4f', home: 'Rouge et Or', away: 'Redbirds', vs: 'reçoivent', sub: '10 h 00 · Soccer universitaire' }],
+        ['AM, visiteur', { state: 'next', tag: 'Demain', glyph: '⚽', tone: '#2e7d4f', home: 'Redbirds', away: 'Stingers', vs: 'chez', sub: '10 h 00 · Soccer universitaire féminin' }],
+      ]],
+      ['later', 'Prochain (plus tard)', [
+        ['Reçoit, 12 j', { state: 'next', tag: 'Prochain', glyph: '🏈', tone: '#6a7580', home: 'Rouge et Or', away: 'Carabins', vs: 'reçoivent', sub: 'ven. 4 sept. · 19 h 00 · Football universitaire' }],
+        ['Chez', { state: 'next', tag: 'Prochain', glyph: '🏀', tone: '#6a7580', home: 'Carabins', away: 'Rouge et Or', vs: 'chez', sub: 'ven. 4 sept. · 19 h 00 · Basketball universitaire' }],
+      ]],
+      ...TIMES.map((bucket) => [bucket.id, bucket.title, resultRows(bucket)]),
+      ['idle', 'Creux', [
+        ['Marque, pas de match', { state: 'idle', tag: 'LE-RADAR.ca', brand: true, tone: '#6a7580', home: 'LE-RADAR.ca', sub: 'Le Réseau Académique de Découverte et d’Agrégation de Ressources' }],
+      ]],
+    ];
+
+    document.getElementById('main').innerHTML = S.map(([id, title, rows]) =>
+      `<section id="${id}"><h2>${title}</h2>${rows.map(([label, spec]) => row(label, spec)).join('')}</section>`
+    ).join('');
+  </script>
+</body>
+</html>
