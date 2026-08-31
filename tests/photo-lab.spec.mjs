@@ -133,6 +133,11 @@ test('labo local : téléverser une image pour l’affiche', async ({ page }) =>
   await expect(page.locator('#photo-grid label[title="pavillon-test"] input')).toBeChecked({ timeout: 15000 });
   await expect(page.locator('#crop-tools')).toBeVisible();
   await expect(page.locator('#photo-meta')).toContainText('téléversée');
+  await expect(page.locator('#status')).not.toContainText('Photo indisponible');
+  await expect.poll(async () => {
+    const box = await page.locator('#preview canvas').boundingBox();
+    return box && box.height > 200 ? box.height : 0;
+  }, { timeout: 15000 }).toBeGreaterThan(200);
 });
 
 test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ page }) => {
