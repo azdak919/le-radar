@@ -15,6 +15,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Ajouté
 
+- Banque d’affiches Université Laval : un cliché Commons de chaque pavillon d’enseignement du campus principal et des quatre résidences (dont Agathe-Lacerte et Ernest-Lemieux). Studio `/affiches/?campus=laval&photo=ernest-lemieux`.
 - Affiches campus 11 × 17 : pas de barre colorée, grand pictogramme + wordmark logo à gauche, versions sans photo et multi-pavillons, zone QR blanche.
 - Générateur public `/affiches/` : 11×17, lettre, légal, banque de photos, JPEG 300 dpi.
 - Messages manuscrits sur les affiches (Bonne rentrée, mi-session, fêtes du Québec).
