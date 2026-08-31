@@ -201,9 +201,11 @@ const state = {
   angle: 0,
   zoom: 0.9,
   photoOpen: false,
+  uploads: [],
 };
 
 let lastPhotoImg = null;
+let uploadSeq = 0;
 
 const assets = { logo: null, qr: null, translate: null };
 const imageCache = new Map();
@@ -306,13 +308,19 @@ function fileNameFromUrl(url) {
   }
 }
 
+function isLocalPhoto(photo) {
+  return !!(photo && (photo.local === true || /^(blob|data):/i.test(String(photo.url || ''))));
+}
+
 function thumbUrl(photo, width) {
+  if (isLocalPhoto(photo)) return photo.url;
   const name = fileNameFromUrl(photo.url);
   if (!name) return photo.url.split('?')[0];
   return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(name)}?width=${width}`;
 }
 
 function printUrl(photo) {
+  if (isLocalPhoto(photo)) return photo.url;
   return (photo.url || '').split('?')[0];
 }
 
@@ -321,6 +329,7 @@ function photoKeyId(photo) {
 }
 
 function loadImage(src, cors = true) {
+  if (/^(blob|data):/i.test(src)) cors = false;
   const key = `${cors ? 'c' : 'n'}:${src}`;
   if (imageCache.has(key)) return imageCache.get(key);
   const job = new Promise((resolve, reject) => {
@@ -763,10 +772,11 @@ function isCampusPhoto(p) {
 
 function filteredPhotos() {
   const campus = campusOf(state.campus);
-  const pool = campus.places
+  const bank = campus.places
     ? state.photos.filter((p) => isCampusPhoto(p) && photoMatches(p, campus))
     : state.photos;
-  return pool.filter(printWorthy);
+  const uploads = isLocalHost() ? state.uploads : [];
+  return [...uploads, ...bank.filter(printWorthy)];
 }
 
 function printWorthy(p) {
@@ -809,9 +819,13 @@ function renderChoices() {
     moreBtn.hidden = true;
   }
   const n = photos.length;
-  document.getElementById('photo-meta').textContent = state.campus === 'generique'
+  const nLocal = photos.filter(isLocalPhoto).length;
+  const base = state.campus === 'generique'
     ? `${n} photos de toute la banque`
     : `${n} photos pour ${campusOf(state.campus).label}`;
+  document.getElementById('photo-meta').textContent = nLocal
+    ? `${base} · ${nLocal} téléversée${nLocal > 1 ? 's' : ''}`
+    : base;
   syncCropUi();
 }
 
@@ -1140,12 +1154,72 @@ async function downloadPrint(kind = 'pdf') {
   }
 }
 
+function syncUploadLab() {
+  const box = document.getElementById('photo-upload-box');
+  if (box) box.hidden = !isLocalHost();
+}
+
+function isUploadFile(file) {
+  const type = String(file.type || '').toLowerCase();
+  if (/^image\/(jpeg|jpg|png|webp)$/.test(type)) return true;
+  return /\.(jpe?g|png|webp)$/i.test(file.name || '');
+}
+
+async function addUploadedFiles(fileList) {
+  if (!isLocalHost()) return;
+  const status = document.getElementById('status');
+  const files = [...(fileList || [])];
+  if (!files.length) return;
+  let last = null;
+  for (const file of files) {
+    if (!isUploadFile(file)) {
+      if (status) status.textContent = `Format non pris en charge : ${file.name}. JPEG, PNG ou WebP.`;
+      continue;
+    }
+    const url = URL.createObjectURL(file);
+    let img;
+    try {
+      img = await loadImage(url, false);
+    } catch {
+      URL.revokeObjectURL(url);
+      if (status) status.textContent = `Impossible de lire ${file.name}.`;
+      continue;
+    }
+    const w = img.naturalWidth;
+    const h = img.naturalHeight;
+    if (Math.max(w, h) < 800 || Math.min(w, h) < 400) {
+      URL.revokeObjectURL(url);
+      if (status) status.textContent = `${file.name} est trop petite (${w} × ${h}). Minimum environ 800 px.`;
+      continue;
+    }
+    const title = String(file.name || 'Photo téléversée').replace(/\.[^.]+$/, '') || 'Photo téléversée';
+    const photo = {
+      id: `local-${++uploadSeq}`,
+      url,
+      title,
+      credit: title,
+      width: w,
+      height: h,
+      local: true,
+    };
+    state.uploads.push(photo);
+    last = { photo, img };
+  }
+  if (!last) return;
+  state.photoId = photoKeyId(last.photo);
+  resetCrop(last.photo);
+  lastPhotoImg = last.img;
+  renderChoices();
+  await preview();
+}
+
 function syncDpiLab() {
   const lab = document.getElementById('dpi-1200-choice');
   const hint = document.getElementById('dpi-hint');
   const local = isLocalHost();
   if (lab) lab.hidden = !local;
   if (!local && state.dpi === 1200) state.dpi = DEFAULT_DPI;
+  syncUploadLab();
   if (hint) {
     if (isAppleTouch()) {
       hint.textContent = '600 dpi par défaut. Sur iPad, le PDF est composé en tuiles ; le JPEG peut descendre si Safari refuse le canevas plein.';
@@ -1335,6 +1409,13 @@ function bind() {
     state.photoOpen = !state.photoOpen;
     renderChoices();
   });
+  const upload = document.getElementById('photo-upload');
+  if (upload) {
+    upload.addEventListener('change', async () => {
+      await addUploadedFiles(upload.files);
+      upload.value = '';
+    });
+  }
   document.getElementById('dl').addEventListener('click', () => downloadPrint('pdf'));
   document.getElementById('dl-jpg').addEventListener('click', () => downloadPrint('jpeg'));
   document.getElementById('dl-bottom').addEventListener('click', () => downloadPrint('pdf'));
@@ -1360,6 +1441,7 @@ async function main() {
   bind();
   applyQuery();
   syncDpiLab();
+  syncUploadLab();
   syncDpiLabels();
   syncLangChoice();
   await loadFonts();
