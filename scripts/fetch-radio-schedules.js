@@ -129,9 +129,11 @@ async function main() {
       );
       finalGrid = prevGrid;
       finalSources = prev.stations[radio.id].sources || [];
-      checkedAt = prev.stations[radio.id].checkedAt || now;
+      // On a bien sondé ce cycle : tamponner checkedAt. La semaine de la
+      // grille conservée (verifiedWeekOf) ne bouge pas.
+      checkedAt = now;
       verifiedWeekOf = prev.stations[radio.id].verifiedWeekOf
-        || weekStartIso(checkedAt, timezone);
+        || weekStartIso(prev.stations[radio.id].checkedAt || now, timezone);
       carried = true;
     }
 
