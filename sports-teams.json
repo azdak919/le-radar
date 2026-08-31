@@ -1,7 +1,7 @@
 {
   "description": "Registre des formations sportives RSEQ (collégial + universitaire QC) pour LE-RADAR. shortName = libellé puce/tableau ; fullName = établissement ; nickname = surnom d'équipe si connu. aliases + rseqTeamIds servent à rattacher le flux S1.",
   "source": "curated + sports.json (rseq-s1)",
-  "updated": "2026-07-30T03:06:27.199Z",
+  "updated": "2026-08-31T05:37:23.059Z",
   "teamCount": 85,
   "teams": [
     {
@@ -15,7 +15,8 @@
         "Laval",
         "LAV",
         "ULaval",
-        "U. Laval"
+        "U. Laval",
+        "Université Laval"
       ],
       "priority": 1,
       "sports": [
@@ -70,7 +71,9 @@
       "nickname": "Redbirds",
       "aliases": [
         "McGill",
-        "MCG"
+        "MCG",
+        "Université McGill",
+        "McGill University"
       ],
       "priority": 2,
       "sports": [
@@ -119,7 +122,8 @@
         "UCON",
         "CONCORDIA UNIVERSITY",
         "CON",
-        "Concordia University"
+        "Concordia University",
+        "Université Concordia"
       ],
       "priority": 3,
       "sports": [
@@ -166,7 +170,8 @@
         "MTL",
         "Montreal",
         "UdeM",
-        "U. de Montréal"
+        "U. de Montréal",
+        "Université de Montréal"
       ],
       "priority": 4,
       "sports": [
@@ -278,7 +283,8 @@
         "Sherbrooke",
         "USHE",
         "UdeS",
-        "U. de Sherbrooke"
+        "U. de Sherbrooke",
+        "Université de Sherbrooke"
       ],
       "priority": 6,
       "sports": [
@@ -361,7 +367,7 @@
       "code": "GAR",
       "sector": "collegial",
       "shortName": "Garneau",
-      "fullName": "Cégep François-Xavier-Garneau",
+      "fullName": "Cégep Garneau",
       "nickname": "Boomerang",
       "aliases": [
         "Garneau",
@@ -476,7 +482,8 @@
       "fullName": "Université du Québec à Trois-Rivières",
       "nickname": "Patriotes",
       "aliases": [
-        "UQTR"
+        "UQTR",
+        "Université du Québec à Trois-Rivières"
       ],
       "priority": 11,
       "sports": [
@@ -1095,12 +1102,14 @@
       "id": "outaouais",
       "code": "OUT",
       "sector": "collegial",
-      "shortName": "Cégep Outaouais",
+      "shortName": "Cégep de l'Outaouais",
       "fullName": "Cégep de l'Outaouais",
       "nickname": null,
       "aliases": [
         "Outaouais",
-        "OUT"
+        "OUT",
+        "Cégep de l'Outaouais",
+        "Cégep Outaouais"
       ],
       "priority": 33,
       "sports": [
@@ -1289,7 +1298,7 @@
       "id": "cegep-sherbrooke",
       "code": "SHE",
       "sector": "collegial",
-      "shortName": "Cégep Sherbrooke",
+      "shortName": "Cégep de Sherbrooke",
       "fullName": "Cégep de Sherbrooke",
       "nickname": null,
       "aliases": [
@@ -1373,7 +1382,7 @@
       "id": "trois-rivieres",
       "code": "TRV",
       "sector": "collegial",
-      "shortName": "Cégep Trois-Rivières",
+      "shortName": "Cégep de Trois-Rivières",
       "fullName": "Cégep de Trois-Rivières",
       "nickname": "Diablos",
       "aliases": [
@@ -1661,7 +1670,7 @@
       "code": "ALM",
       "sector": "collegial",
       "shortName": "Alma",
-      "fullName": "Cégep de Alma",
+      "fullName": "Cégep d'Alma",
       "nickname": null,
       "aliases": [
         "Alma",
@@ -1833,7 +1842,7 @@
       "id": "chicoutimi",
       "code": "CHI",
       "sector": "collegial",
-      "shortName": "Cégep Chicoutimi",
+      "shortName": "Cégep de Chicoutimi",
       "fullName": "Cégep de Chicoutimi",
       "nickname": null,
       "aliases": [
@@ -1940,7 +1949,7 @@
       "code": "ELI",
       "sector": "collegial",
       "shortName": "Ellis",
-      "fullName": "Cégep de Ellis",
+      "fullName": "Collège Ellis",
       "nickname": null,
       "aliases": [
         "Ellis",
@@ -1961,7 +1970,7 @@
       "code": "GAS",
       "sector": "collegial",
       "shortName": "Gaspésie et Îles",
-      "fullName": "Cégep de Gaspésie et Îles",
+      "fullName": "Cégep de la Gaspésie et des Îles",
       "nickname": null,
       "aliases": [
         "Gaspésie et Îles",
@@ -1980,7 +1989,7 @@
       "code": "CGG",
       "sector": "collegial",
       "shortName": "Gérald-Godin",
-      "fullName": "Cégep de Gérald-Godin",
+      "fullName": "Cégep Gérald-Godin",
       "nickname": null,
       "aliases": [
         "Gérald-Godin",
@@ -2046,7 +2055,7 @@
       "code": "HER",
       "sector": "collegial",
       "shortName": "Héritage",
-      "fullName": "Héritage College",
+      "fullName": "Collège Heritage",
       "nickname": null,
       "aliases": [
         "Héritage",
@@ -2073,7 +2082,7 @@
       "code": "JOL",
       "sector": "collegial",
       "shortName": "Joliette",
-      "fullName": "Cégep de Joliette",
+      "fullName": "Cégep régional de Lanaudière à Joliette",
       "nickname": null,
       "aliases": [
         "Joliette",
@@ -2101,7 +2110,7 @@
       "code": "LAS",
       "sector": "collegial",
       "shortName": "L'Assomption",
-      "fullName": "Cégep de L'Assomption",
+      "fullName": "Cégep régional de Lanaudière à L'Assomption",
       "nickname": null,
       "aliases": [
         "L'Assomption",
@@ -2166,7 +2175,7 @@
       "code": "LAN",
       "sector": "collegial",
       "shortName": "Lanaudière",
-      "fullName": "Cégep de Lanaudière",
+      "fullName": "Cégep régional de Lanaudière",
       "nickname": null,
       "aliases": [
         "Lanaudière",
@@ -2185,7 +2194,7 @@
       "code": "MAI",
       "sector": "collegial",
       "shortName": "Maisonneuve",
-      "fullName": "Cégep de Maisonneuve",
+      "fullName": "Collège de Maisonneuve",
       "nickname": null,
       "aliases": [
         "Maisonneuve",
@@ -2420,7 +2429,7 @@
       "id": "rimouski",
       "code": "RIM",
       "sector": "collegial",
-      "shortName": "Cégep Rimouski",
+      "shortName": "Cégep de Rimouski",
       "fullName": "Cégep de Rimouski",
       "nickname": null,
       "aliases": [
@@ -2486,7 +2495,7 @@
       "code": "ROS",
       "sector": "collegial",
       "shortName": "Rosemont",
-      "fullName": "Cégep de Rosemont",
+      "fullName": "Collège de Rosemont",
       "nickname": null,
       "aliases": [
         "Rosemont",
@@ -2658,7 +2667,7 @@
       "code": "TER",
       "sector": "collegial",
       "shortName": "Terrebonne",
-      "fullName": "Cégep de Terrebonne",
+      "fullName": "Cégep régional de Lanaudière à Terrebonne",
       "nickname": null,
       "aliases": [
         "Terrebonne",
@@ -2735,7 +2744,8 @@
       "nickname": null,
       "aliases": [
         "UQAR",
-        "UQAR"
+        "UQAR",
+        "Université du Québec à Rimouski"
       ],
       "priority": 80,
       "sports": [
