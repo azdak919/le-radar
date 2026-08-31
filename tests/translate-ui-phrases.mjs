@@ -98,6 +98,7 @@ assert.doesNotMatch(
 const phrases = [
   'Prochains match',
   'Prochain match',
+  'Prochain',
   'En direct',
   'En cours',
   'Demain',

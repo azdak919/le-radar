@@ -196,7 +196,7 @@ const SPORTS_CTA_TAG_LATEST = 'Dernière heure';
 /** Puces à-venir du jour — pas la CTA (À venir). */
 const SPORTS_MATCH_TAG_TODAY = 'Aujourd’hui';
 /** Prochains : deux lignes dans la pastille, pas un rail plus large. */
-const SPORTS_CTA_TAG_NEXT = 'Prochains match';
+const SPORTS_CTA_TAG_NEXT = 'Prochain';
 /** Repli idle (creux total, pas de match) ; sinon ton du sport via sportsCtaTone. Rouge = direct. */
 const SPORTS_CTA_REST_TONE = '#6a7580';
 const SPORTS_CTA_LIVE_TONE = '#c8102e';
@@ -486,9 +486,19 @@ function sportsCtaKickoffWithinHour(game, now = Date.now()) {
   return delta >= 0 && delta < SPORTS_CTA_WITHIN_HOUR_MS;
 }
 
-/** Score numérique collé (live non officiel ou résultat). */
+/** Sentinelle RSEQ : pas encore de rapport (soccer collégial surtout). */
+const SPORTS_SCORE_NONE = -999;
+
+/** Score numérique collé (live non officiel ou résultat). `-999` ne compte pas. */
+function sportsScoreNumber(n) {
+  if (n === '' || n == null) return null;
+  const v = Number(n);
+  if (!Number.isFinite(v) || v < 0 || v === SPORTS_SCORE_NONE) return null;
+  return v;
+}
+
 function sportsGameHasScore(game) {
-  return Number.isFinite(Number(game?.scoreFor)) && Number.isFinite(Number(game?.scoreAgainst));
+  return sportsScoreNumber(game?.scoreFor) != null && sportsScoreNumber(game?.scoreAgainst) != null;
 }
 
 /** Libellé de période / horloge collé par le bot (`1re mi-temps`). */
@@ -1145,49 +1155,16 @@ function sportsNextSlidesSorted() {
 }
 
 /**
- * État de la voie de gauche :
- *  - « results » : saison active (résultats chauds d’abord, puis prochains
- *    une face pour remplir le bandeau — la CTA garde « son » match).
- *  - « offseason » : creux (pas de résultats chauds)
- *    → matchs à venir par proximité, **sans** puces grises « Hors saison… »
- *      (celles-ci n’apparaissaient qu’en filet total — voir CTA idle).
+ * Voie unique (focus-group B) : même liste que le premier cran.
+ * kind reste « results » s’il y a un score récent, sinon offseason
+ * (rotation / hold).
  */
 function sportsLeftLaneState() {
-  const results = sportsResultSlidesSorted();
-  const nexts = sportsNextSlidesSorted();
-  const now = Date.now();
-  // Focus-group le-radar-sports-left-pool : 5 j civils Toronto
-  // (SSOT isMastheadChipResult) ; jamais le musée lastGame hors saison.
-  // Un prochain ≤14 j ne déverrouille plus les archives.
-  const recentResults = results.filter((s) => {
-    if (!sportsSlideIsDisplayable(s)) return false;
-    if (s?.game?.priorSeason || s?.team?.lastGamePriorSeason) return false;
-    return sportsResultIsRecent(s.game, now);
-  });
-
-  if (recentResults.length) {
-    // Résultats 5 j d’abord (V et D restent deux cartes). Puis les prochains
-    // pour remplir le bandeau — le picker n’y touche qu’une fois les scores
-    // épuisés (pas de saut football « pour la diversité »).
-    const seen = new Set(recentResults.map((s) => s.key));
-    const moreNexts = sportsDedupeMatchSlides(nexts.filter((s) => (
-      sportsSlideIsDisplayable(s) && !seen.has(s.key)
-    )));
-    return {
-      kind: 'results',
-      results: recentResults,
-      nexts: moreNexts,
-      pool: recentResults.concat(moreNexts),
-    };
-  }
-  // Hors saison / creux : calendrier à venir seulement (pas de musée d’avril).
-  // Filet ultime : un seul plus récent lastGame si vraiment zéro next.
-  const namedNexts = nexts.filter(sportsSlideIsDisplayable);
-  if (namedNexts.length) {
-    return { kind: 'offseason', pool: sportsDedupeMatchSlides(namedNexts) };
-  }
-  const staleFilet = results.slice(0, 1);
-  return { kind: 'offseason', pool: staleFilet };
+  const pool = sportsOpenOrderSlides();
+  const results = pool.filter((s) => s.mode === 'result');
+  const nexts = pool.filter((s) => s.mode === 'next' && !sportsGameIsLive(s.game));
+  const kind = results.length ? 'results' : 'offseason';
+  return { kind, results, nexts, pool };
 }
 
 /**
@@ -1388,6 +1365,40 @@ const SPORTS_UNI_CODE_ACRONYM = {
   CMR: 'CMR',
 };
 
+/**
+ * Short RSEQ = toponyme de ville. Sur une face universitaire, ça se lit comme
+ * le cégep homonyme (Sherbrooke / Cégep de Sherbrooke). Sigle obligatoire.
+ * Surnoms (Carabins, Rouge et Or) ne passent pas ici.
+ */
+const SPORTS_UNI_CITY_TO_ACRONYM = {
+  sherbrooke: 'UdeS',
+  laval: 'ULaval',
+  montreal: 'UdeM',
+  'trois-rivieres': 'UQTR',
+  rimouski: 'UQAR',
+  chicoutimi: 'UQAC',
+  saguenay: 'UQAC',
+  gatineau: 'UQO',
+  outaouais: 'UQO',
+  ottawa: 'uOttawa',
+  'rouyn-noranda': 'UQAT',
+  'abitibi-temiscamingue': 'UQAT',
+};
+
+function sportsFoldKey(s) {
+  return String(s || '')
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/['’]/g, '')
+    .replace(/\s+/g, '-');
+}
+
+function sportsUniCityAcronym(shortName) {
+  return SPORTS_UNI_CITY_TO_ACRONYM[sportsFoldKey(shortName)] || '';
+}
+
 /** Codes collégiaux qui ne doivent **jamais** recevoir un acronyme univ. */
 const SPORTS_COLLEGIAL_CODES = new Set([
   'SHE', // Cégep de Sherbrooke — pas USHE / UdeS
@@ -1503,6 +1514,8 @@ function sportsLooksUniversity({ fullName, shortName, sector, code } = {}) {
     const ac = SPORTS_UNI_CODE_ACRONYM[c];
     const s = String(shortName || '').trim();
     if (s && (s === ac || s === c || /^U[A-ZÉ]{2,}/i.test(s))) return true;
+    // USHE + « Sherbrooke » (pas Carabins + MTL).
+    if (s && sportsUniCityAcronym(s)) return true;
     if (!s && !f) return true;
     return false;
   }
@@ -1564,13 +1577,16 @@ function sportsPlainOpponentName(game) {
 
 /**
  * Libellé d’une face (équipe ou adversaire).
+ * - Nom d’équipe d’abord (Vert & Or, Cheetahs…) — univ et cégeps.
  * - Garde « Notre-Dame Bleu / Jaune ».
- * - `preferAcronym` (puces gauche) : univ → ULaval / UdeM / McGill…
- * - Sinon mono-token → fullName établissement (CTA plus aérée).
+ * - Repli puces : univ → ULaval / UdeS… ; collégial ville → Cégep Sherbrooke.
+ * - Sinon mono-token → fullName établissement (tooltip).
  */
 function sportsDisplaySideName({
-  shortName, fullName, code, sector, fallback = 'Équipe', preferAcronym = false,
+  shortName, fullName, code, sector, nickname, fallback = 'Équipe', preferAcronym = false,
 } = {}) {
+  const nick = String(nickname || '').trim();
+  if (nick) return nick;
   let short = String(shortName || '').trim();
   let full = String(fullName || '').trim();
   const codeU = String(code || '').toUpperCase();
@@ -1603,6 +1619,7 @@ function sportsDisplaySideName({
     // Ne pas passer le short « Sherbrooke » seul (collision cégep / univ).
     const ac = sportsLookupInstitutionAcronym(full)
       || SPORTS_UNI_CODE_ACRONYM[codeU]
+      || sportsUniCityAcronym(short)
       || '';
     if (ac) return ac;
     if (short && short.length <= 6 && /^[A-ZÉÙÛÂÊÎÔ0-9]{2,6}$/i.test(short)) return short;
@@ -1633,30 +1650,33 @@ function sportsDisplaySideName({
 }
 
 /**
- * Nom d’équipe pour **puce gauche** (largeur restreinte) :
- * univ → acronyme ; collégial → short ; voile → sans suffixe « Sailing ».
+ * Nom d’équipe pour **puce** : surnom d’abord (Vert & Or, Diablos).
+ * Repli univ = acronyme ; collégial ville = Cégep … ; voile = club, pas Rouge et Or.
  */
 function sportsChipTeamShort(team) {
+  const sport = String(team?.sport || '').toLowerCase();
+  const sailing = sport === 'sailing' || sport === 'voile';
   let name = sportsDisplaySideName({
-    shortName: team?.name,
+    shortName: team?.name || team?.shortName,
     fullName: team?.fullName,
     code: team?.code,
     sector: team?.sector,
+    nickname: sailing ? '' : (team?.nickname || ''),
     preferAcronym: true,
     fallback: 'Équipe',
   });
-  const sport = String(team?.sport || '').toLowerCase();
-  if (sport === 'sailing' || sport === 'voile') {
+  if (sailing) {
     name = name.replace(/\s+(sailing|voile)\s*$/i, '').trim() || name;
   }
   return name;
 }
 
-/** Adversaire sur puce gauche — acronyme si université (jamais si cégep). */
+/** Adversaire sur puce — surnom d’abord, comme l’équipe à domicile. */
 function sportsChipOpponentLabel(game) {
   const full = String(game?.opponentFullName || '');
   const code = String(game?.opponentCode || '').toUpperCase();
-  // Secteur implicite depuis fullName / code collégial connu
+  const sport = String(game?.sport || '').toLowerCase();
+  const sailing = sport === 'sailing' || sport === 'voile';
   let sector = '';
   if (sportsLooksCollegial({ fullName: full, shortName: game?.opponent, code })) {
     sector = 'collegial';
@@ -1668,6 +1688,7 @@ function sportsChipOpponentLabel(game) {
     fullName: game?.opponentFullName,
     code: game?.opponentCode,
     sector,
+    nickname: sailing ? '' : (game?.opponentNickname || ''),
     preferAcronym: sector === 'universitaire',
     fallback: 'adversaire',
   });
@@ -1709,13 +1730,21 @@ function sportsResultVsHtml() {
 }
 
 /**
- * Scorebug live : chiffre collé, sinon tiret. RSEQ soccer envoie souvent
- * -999 tant que le rapport n’est pas versé — on n’invente jamais un 0-0.
+ * Score live : chiffre collé, sinon 0–0 (soccer, hockey, football, basket,
+ * volleyball…). RSEQ envoie souvent -999 tant que le rapport n’est pas versé
+ * — un match sans chiffre s’affiche comme au coup d’envoi. Place / voile
+ * n’utilisent jamais ce 0–0.
  */
-const SPORTS_LIVE_SCORE_PENDING = '—';
+const SPORTS_LIVE_SCORE_PENDING_SIDE = '0';
+const SPORTS_LIVE_SCORE_PENDING = `${SPORTS_LIVE_SCORE_PENDING_SIDE}–${SPORTS_LIVE_SCORE_PENDING_SIDE}`;
 
 function sportsLiveScoreText(game) {
-  if (sportsGameHasScore(game)) return `${game.scoreFor}–${game.scoreAgainst}`;
+  if (sportsIsPlaceResult(game, game?.sport)) {
+    return sportsPlaceScoreText(game) || '';
+  }
+  const a = sportsScoreNumber(game?.scoreFor);
+  const b = sportsScoreNumber(game?.scoreAgainst);
+  if (a != null && b != null) return `${a}–${b}`;
   return SPORTS_LIVE_SCORE_PENDING;
 }
 
@@ -1726,6 +1755,109 @@ function sportsLiveTeamsScoreHtml(team, game) {
   return `<span class="sports-chip__name">${escapeHtml(home)}</span> `
     + `<span class="sports-chip__score">${escapeHtml(scoreTxt)}</span> `
     + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+}
+
+/**
+ * Live-first (focus-group le-radar-sports-scorebug E) : domicile dessus,
+ * visiteur dessous, chiffre à droite. `game.home === false` = on est l’extérieur
+ * donc l’adversaire est le domicile. Score « pour nous » reste scoreFor.
+ */
+function sportsScorebugSides(team, game) {
+  const us = sportsChipTeamShort(team);
+  const them = sportsChipOpponentLabel(game);
+  const has = sportsGameHasScore(game);
+  const usN = has ? String(game.scoreFor) : SPORTS_LIVE_SCORE_PENDING_SIDE;
+  const themN = has ? String(game.scoreAgainst) : SPORTS_LIVE_SCORE_PENDING_SIDE;
+  if (game?.home === false) {
+    return { homeName: them, homeNum: themN, awayName: us, awayNum: usN };
+  }
+  return { homeName: us, homeNum: usN, awayName: them, awayNum: themN };
+}
+
+function sportsScorebugLampWord() {
+  return window.RadarTranslate?.displayUiText?.(SPORTS_CTA_TAG_LIVE) || SPORTS_CTA_TAG_LIVE;
+}
+
+/** Scorebug live — lampe En direct + 2 rangées. aria-live seulement sur les chiffres. */
+function buildSportsScorebugEl(team, game, opts = {}) {
+  const sides = sportsScorebugSides(team, game);
+  const period = opts.period != null ? opts.period : sportsLivePeriodLabel(game);
+  const wrap = document.createElement('span');
+  wrap.className = opts.page ? 'scorebug scorebug--page' : 'scorebug';
+  wrap.setAttribute('aria-hidden', 'false');
+
+  const lamp = document.createElement('span');
+  lamp.className = 'scorebug__lamp';
+  markNoTranslate(lamp);
+  const dot = document.createElement('span');
+  dot.className = 'scorebug__dot';
+  dot.setAttribute('aria-hidden', 'true');
+  const word = document.createElement('span');
+  word.className = 'scorebug__lamp-word';
+  word.textContent = sportsScorebugLampWord();
+  lamp.append(dot, word);
+  if (period) {
+    const pEl = document.createElement('span');
+    pEl.className = 'scorebug__period';
+    pEl.textContent = period;
+    lamp.append(pEl);
+  }
+
+  const rows = document.createElement('span');
+  rows.className = 'scorebug__rows';
+  const addRow = (name, num, side) => {
+    const row = document.createElement('span');
+    row.className = 'scorebug__row';
+    const club = document.createElement('span');
+    club.className = 'scorebug__club';
+    club.textContent = name;
+    const n = document.createElement('span');
+    n.className = 'scorebug__num';
+    n.dataset.side = side;
+    n.setAttribute('aria-live', 'polite');
+    n.textContent = num;
+    row.append(club, n);
+    rows.append(row);
+  };
+  addRow(sides.homeName, sides.homeNum, 'home');
+  addRow(sides.awayName, sides.awayNum, 'away');
+  wrap.append(lamp, rows);
+  return wrap;
+}
+
+function sportsScorebugSubLine(slide) {
+  const kick = sportsKickoffClock(slide?.game);
+  const comp = sportsCompetitionLabel(slide);
+  const stamp = sportsUpdatedShort();
+  const parts = [kick, comp];
+  if (stamp && !(kick && stamp.includes(kick))) parts.push(stamp);
+  return parts.filter(Boolean).join(' · ');
+}
+
+function patchSportsScorebug(root, team, game) {
+  const bug = root?.querySelector?.('.scorebug') || (root?.classList?.contains('scorebug') ? root : null);
+  if (!bug || !team || !game) return false;
+  const sides = sportsScorebugSides(team, game);
+  const set = (sel, text) => {
+    const el = bug.querySelector(sel);
+    if (el && el.textContent !== text) el.textContent = text;
+  };
+  set('.scorebug__num[data-side="home"]', sides.homeNum);
+  set('.scorebug__num[data-side="away"]', sides.awayNum);
+  const clubs = bug.querySelectorAll('.scorebug__club');
+  if (clubs[0] && clubs[0].textContent !== sides.homeName) clubs[0].textContent = sides.homeName;
+  if (clubs[1] && clubs[1].textContent !== sides.awayName) clubs[1].textContent = sides.awayName;
+  const period = sportsLivePeriodLabel(game);
+  let pEl = bug.querySelector('.scorebug__period');
+  if (period) {
+    if (!pEl) {
+      pEl = document.createElement('span');
+      pEl.className = 'scorebug__period';
+      bug.querySelector('.scorebug__lamp')?.append(pEl);
+    }
+    if (pEl.textContent !== period) pEl.textContent = period;
+  }
+  return true;
 }
 
 /** Domicile / extérieur — tooltip / sous-ligne optionnelle. */
@@ -1861,26 +1993,28 @@ function sportsCompetitionLabel(slide) {
  * Mot de temps des puces (même vocabulaire que la CTA) :
  * À venir / Demain / aujourd’hui / hier / avant-hier. Vide → date courte.
  */
-/** Puces à-venir du jour / demain : pastille AM·PM. Pas Hier. */
+/** Kicker 1 ligne (F) sur toutes les puces : En direct / À venir / Demain / Prochain / Hier… */
 function sportsMatchWhenTag(slide) {
   const g = slide?.game || {};
-  if (slide?.mode !== 'next' || sportsGameIsLive(g)) return null;
-  const day = sportsSlideDayKey(slide);
-  if (!day) return null;
-  const today = torontoDayKey();
-  if (day === today) {
-    return {
-      word: SPORTS_MATCH_TAG_TODAY,
-      meridiem: sportsMeridiemLine(g, { today: true }),
-      lamp: 'soon',
-    };
+  if (sportsGameIsLive(g)) {
+    return { word: SPORTS_CTA_TAG_LIVE, lamp: 'live' };
   }
-  if (day === sportsCivilDayShift(today, 1)) {
-    return {
-      word: SPORTS_CTA_TAG_TOMORROW,
-      meridiem: sportsMeridiemLine(g, { today: false }),
-      lamp: 'next',
-    };
+  const day = sportsSlideDayKey(slide);
+  const today = torontoDayKey();
+  if (slide?.mode === 'next') {
+    if (day && day === today) {
+      return { word: SPORTS_CTA_TAG_SOON, lamp: 'soon' };
+    }
+    if (day && day === sportsCivilDayShift(today, 1)) {
+      return { word: SPORTS_CTA_TAG_TOMORROW, lamp: 'next' };
+    }
+    return { word: 'Prochain', lamp: 'next' };
+  }
+  if (slide?.mode === 'result') {
+    const word = sportsCtaResultTag(slide);
+    let lamp = 'past';
+    if (day && day === today) lamp = 'today';
+    return { word, lamp };
   }
   return null;
 }
@@ -1948,10 +2082,6 @@ function sportsCtaLabelFromSlide(slide) {
   if (slide.mode === 'result') {
     const placeKind = sportsIsPlaceResult(g, slide.team.sport);
     const score = sportsResultMarkText(g, slide.team.sport);
-    const scoreInPill = sportsCtaTagPutsResultScore(sportsCtaResultTag(slide));
-    if (scoreInPill) {
-      return placeKind ? `${glyph} ${home}` : `${glyph} ${home} ${SPORTS_RESULT_VS} ${opp}`;
-    }
     return placeKind
       ? `${glyph} ${home} ${score}`
       : `${glyph} ${home} ${score} ${opp}`;
@@ -1967,6 +2097,28 @@ function sportsCtaEyebrow(_slide, _state) {
   return '';
 }
 
+/**
+ * Date plus vieille que avant-hier : « mercredi » / « 19 août »
+ * (kicker 2 lignes). `formatToParts` pour ne pas parser la locale.
+ */
+function sportsCtaResultDateParts(iso) {
+  if (!iso) return null;
+  try {
+    const d = new Date(`${iso}T12:00:00`);
+    const parts = new Intl.DateTimeFormat('fr-CA', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'short',
+      timeZone: 'America/Toronto',
+    }).formatToParts(d);
+    const weekday = (parts.find((p) => p.type === 'weekday') || {}).value;
+    const dayNum = (parts.find((p) => p.type === 'day') || {}).value;
+    const month = (parts.find((p) => p.type === 'month') || {}).value;
+    if (weekday && dayNum && month) return [weekday, `${dayNum} ${month}`];
+  } catch { /* fall through */ }
+  return null;
+}
+
 /** Pastille d’un résultat : Aujourd’hui, Hier, Avant-hier, sinon date courte. */
 function sportsCtaResultTag(src) {
   const day = sportsSlideDayKey(src);
@@ -1976,16 +2128,8 @@ function sportsCtaResultTag(src) {
   if (day === sportsCivilDayShift(today, -1)) return 'Hier';
   if (day === sportsCivilDayShift(today, -2)) return 'Avant-hier';
   const iso = src?.game?.date || day;
-  try {
-    return new Intl.DateTimeFormat('fr-CA', {
-      weekday: 'short',
-      day: 'numeric',
-      month: 'short',
-      timeZone: 'America/Toronto',
-    }).format(new Date(`${iso}T12:00:00`));
-  } catch {
-    return iso;
-  }
+  const parts = sportsCtaResultDateParts(iso);
+  return parts ? parts.join(' ') : iso;
 }
 
 /** Coup d’envoi (ou résultat) le jour civil Toronto d’aujourd’hui. */
@@ -2018,56 +2162,49 @@ function sportsCtaTagLabel(slide, state) {
   return RADAR_BRAND_SHORT;
 }
 
-/** Remplit la pastille : Prochains match / En direct+score / mot + cet AM|ce PM. */
+/**
+ * Date courte « mercredi 19 août » / « mer. 19 août » → 2 lignes
+ * (jour de la semaine, puis jour + mois).
+ */
+function sportsCtaDateLinePair(raw) {
+  const s = String(raw || '').trim();
+  const m = s.match(/^(\S+)\s+(\d{1,2}\s+\S.+)$/u);
+  return m ? [m[1], m[2].trim()] : null;
+}
+
+/**
+ * Kicker F : 1 ligne, sauf « Dernière heure », « Avant-hier » et les dates
+ * plus vieilles (2 lignes, pastille plus étroite). Score entre les noms.
+ */
+function sportsCtaTagLinePair(wanted, shown) {
+  if (wanted === SPORTS_CTA_TAG_LATEST) {
+    const parts = String(shown).trim().split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) return [parts.slice(0, -1).join(' '), parts[parts.length - 1]];
+  }
+  if (wanted === 'Avant-hier') {
+    const raw = String(shown).trim();
+    const dash = raw.split(/-(.+)/).filter(Boolean);
+    if (dash.length >= 2) return [dash[0], dash[1]];
+    const parts = raw.split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) return [parts[0], parts.slice(1).join(' ')];
+  }
+  return sportsCtaDateLinePair(shown) || sportsCtaDateLinePair(wanted);
+}
+
 function fillSportsCtaTagCopy(tag, wanted, extra = {}) {
   tag.replaceChildren();
   markNoTranslate(tag);
   const shown = window.RadarTranslate?.displayUiText?.(wanted) || wanted;
-  if (wanted === SPORTS_CTA_TAG_LIVE || (sportsCtaTagPutsResultScore(wanted) && (extra.score || tag.dataset.ctaScore))) {
-    const score = extra.score || tag.dataset.ctaScore
-      || (wanted === SPORTS_CTA_TAG_LIVE ? SPORTS_LIVE_SCORE_PENDING : '');
+  const pair = sportsCtaTagLinePair(wanted, shown);
+  if (pair) {
     const lines = document.createElement('span');
     lines.className = 'sports-chip__cta-tag-lines';
-    const top = document.createElement('span');
-    top.textContent = shown;
-    lines.append(top);
-    if (score) {
-      const bot = document.createElement('span');
-      bot.className = 'sports-chip__cta-tag-score';
-      bot.textContent = score;
-      lines.append(bot);
-    }
+    pair.forEach((txt) => {
+      const line = document.createElement('span');
+      line.textContent = txt;
+      lines.append(line);
+    });
     tag.append(lines);
-    return;
-  }
-  if (wanted === SPORTS_CTA_TAG_NEXT || wanted === SPORTS_CTA_TAG_LATEST) {
-    const parts = String(shown).trim().split(/\s+/).filter(Boolean);
-    const topTxt = parts.length >= 2 ? parts.slice(0, -1).join(' ') : shown;
-    const botTxt = parts.length >= 2 ? parts[parts.length - 1] : '';
-    const lines = document.createElement('span');
-    lines.className = 'sports-chip__cta-tag-lines';
-    const top = document.createElement('span');
-    top.textContent = topTxt;
-    lines.append(top);
-    if (botTxt) {
-      const bot = document.createElement('span');
-      bot.textContent = botTxt;
-      lines.append(bot);
-    }
-    tag.append(lines);
-    return;
-  }
-  const line = extra.meridiemLine || tag.dataset.ctaMeridiemLine || '';
-  if (line && sportsCtaTagUsesMeridiem(wanted)) {
-    const wrap = document.createElement('span');
-    wrap.className = 'sports-chip__cta-tag-lines';
-    const top = document.createElement('span');
-    top.textContent = shown;
-    const bot = document.createElement('span');
-    bot.className = 'sports-chip__cta-tag-meridiem';
-    bot.textContent = window.RadarTranslate?.displayUiText?.(line) || line;
-    wrap.append(top, bot);
-    tag.append(wrap);
     return;
   }
   tag.append(document.createTextNode(shown));
@@ -2475,103 +2612,74 @@ function sportsCtaLiveSources(now = Date.now()) {
   return sportsDedupeMatchSlides(out);
 }
 
-function sportsCtaCandidateSlides() {
-  const now = Date.now();
+/** Buckets B : live → ce soir → résultat du jour → hier → reliquat 5 j → plus tard. */
+const SPORTS_OPEN_LIVE = 0;
+const SPORTS_OPEN_TODAY_NEXT = 1;
+const SPORTS_OPEN_TODAY_RESULT = 2;
+const SPORTS_OPEN_YESTERDAY = 3;
+const SPORTS_OPEN_OLDER_RESULT = 4;
+const SPORTS_OPEN_LATER_NEXT = 5;
+
+function sportsOpenOrderBucket(slide, now = Date.now()) {
+  const g = slide?.game;
+  if (!g) return 99;
+  if (sportsGameIsLive(g, now)) return SPORTS_OPEN_LIVE;
   const today = torontoDayKey(now);
   const yesterday = sportsCivilDayShift(today, -1);
-  const todayResults = [];
-  const yesterdayResults = [];
-  const nexts = [];
-  const seen = new Set();
+  const day = sportsGameDayKey(g, now) || sportsSlideDayKey(slide);
+  if (slide.mode === 'next') {
+    if (day === today) return SPORTS_OPEN_TODAY_NEXT;
+    return SPORTS_OPEN_LATER_NEXT;
+  }
+  if (slide.mode === 'result') {
+    if (day === today) return SPORTS_OPEN_TODAY_RESULT;
+    if (day === yesterday) return SPORTS_OPEN_YESTERDAY;
+    if (sportsResultIsRecent(g, now)) return SPORTS_OPEN_OLDER_RESULT;
+    return 99;
+  }
+  return 99;
+}
 
+/**
+ * Liste unique (go B). DOM = cet ordre. Pas de cycle éditorial à part,
+ * pas de codes phares, pas de skip football.
+ */
+function sportsOpenOrderSlides(now = Date.now()) {
+  const nexts = [];
+  const results = [];
+  const seen = new Set();
   for (const s of sportsSlides) {
-    if (!s || s.mode === 'cta' || !s.game || !s.key || seen.has(s.key)) continue;
+    if (!s || s.mode === 'cta' || s.mode === 'info' || !s.game || !s.key) continue;
+    if (seen.has(s.key)) continue;
     if (!sportsSlideIsDisplayable(s)) continue;
     seen.add(s.key);
-
+    const bucket = sportsOpenOrderBucket(s, now);
+    if (bucket > SPORTS_OPEN_LATER_NEXT) continue;
     if (s.mode === 'result') {
-      if (!sportsCtaResultIsTodayOrYesterday(s.game, now)) continue;
-      // CTA aujourd’hui / hier : le vainqueur seulement — pas la défaite.
-      if (String(s.game?.result || '') === 'L') continue;
-      const day = sportsSlideDayKey(s);
-      if (day === today) todayResults.push(s);
-      else if (day === yesterday) yesterdayResults.push(s);
-      continue;
-    }
-
-    if (s.mode === 'next') {
-      const ms = sportsGameMs(s.game);
-      if (!Number.isFinite(ms)) continue;
-      if (ms < now - SPORTS_LIVE_AFTER_MS) continue;
+      if (s.game?.priorSeason || s.team?.lastGamePriorSeason) continue;
+      results.push(s);
+    } else if (s.mode === 'next') {
       nexts.push(s);
     }
   }
+  const list = sportsDedupeMatchSlides(nexts).concat(results);
+  list.sort((a, b) => {
+    const ba = sportsOpenOrderBucket(a, now);
+    const bb = sportsOpenOrderBucket(b, now);
+    if (ba !== bb) return ba - bb;
+    const ma = sportsGameMs(a.game) || 0;
+    const mb = sportsGameMs(b.game) || 0;
+    const soonest = ba === SPORTS_OPEN_LIVE
+      || ba === SPORTS_OPEN_TODAY_NEXT
+      || ba === SPORTS_OPEN_LATER_NEXT;
+    if (soonest) return ma - mb;
+    return mb - ma;
+  });
+  return list.slice(0, SPORTS_CTA_MAX_POOL);
+}
 
-  const sportRank = (slide) => {
-    const sp = String(slide.team?.sport || slide.game?.sport || '').toLowerCase();
-    const i = SPORTS_POPULARITY.indexOf(sp);
-    return i < 0 ? 99 : i;
-  };
-
-  const byRecent = (a, b) => {
-    const fa = sportsGameMs(a.game) || 0;
-    const fb = sportsGameMs(b.game) || 0;
-    if (fb !== fa) return fb - fa;
-    return sportRank(a) - sportRank(b);
-  };
-  todayResults.sort(byRecent);
-  yesterdayResults.sort(byRecent);
-  const freshResults = todayResults.concat(yesterdayResults);
-
-  const bySoonest = (a, b) => {
-    const fa = sportsGameMs(a.game) || Number.POSITIVE_INFINITY;
-    const fb = sportsGameMs(b.game) || Number.POSITIVE_INFINITY;
-    if (fa !== fb) return fa - fb;
-    return sportRank(a) - sportRank(b);
-  };
-  nexts.sort(bySoonest);
-
-  const leadDay = sportsCtaLeadDayKey(nexts);
-  const leadDayNexts = leadDay
-    ? nexts.filter((s) => sportsSlideDayKey(s) === leadDay)
-    : [];
-
-  let nextPool = leadDayNexts;
-  if (!freshResults.length && leadDay) {
-    const endDay = sportsCivilDayShift(leadDay, SPORTS_CTA_OFFSEASON_LEAD_DAYS - 1);
-    const windowNexts = nexts.filter((s) => {
-      const day = sportsSlideDayKey(s);
-      return day && day >= leadDay && day <= endDay;
-    });
-    const firstByDay = new Map();
-    for (const s of windowNexts) {
-      const day = sportsSlideDayKey(s);
-      if (day && !firstByDay.has(day)) firstByDay.set(day, s);
-    }
-    const weekFirsts = [...firstByDay.values()];
-    if (weekFirsts.length) nextPool = weekFirsts;
-  }
-
-  // Direct : matchs en cours. Sinon : dans l’heure → hier (vainqueur) →
-  // aujourd’hui (vainqueur) → autres à venir.
-  const lives = sportsCtaLiveSources(now);
-  if (lives.length) {
-    lives.sort(bySoonest);
-    return lives.slice(0, SPORTS_CTA_MAX_POOL);
-  }
-
-  const imminent = [];
-  const laterNexts = [];
-  for (const s of nextPool) {
-    if (sportsCtaKickoffWithinHour(s.game, now)) imminent.push(s);
-    else laterNexts.push(s);
-  }
-  imminent.sort(bySoonest);
-  laterNexts.sort(bySoonest);
-
-  const raw = imminent.concat(yesterdayResults, todayResults, laterNexts);
-  const deduped = sportsDedupeMatchSlides(raw);
-  return sportsSoftSportDiversity(deduped).slice(0, SPORTS_CTA_MAX_POOL);
+function sportsCtaCandidateSlides() {
+  return sportsOpenOrderSlides();
 }
 
 /** Libellés CTA : matchs chauds, sinon messages hors saison / creux. */
@@ -2764,7 +2872,6 @@ function fillSportsCtaLayer(layer, slide) {
   line.className = 'sports-chip__cta-line';
   const text = document.createElement('span');
   text.className = 'sports-chip__cta-text';
-  // Noms / score seulement dans la zone qui défile (pas le glyphe).
   if (src?.team && src.game && sportsGameIsLive(src.game)) {
     text.innerHTML = sportsLiveTeamsScoreHtml(src.team, src.game);
   } else if (src?.mode === 'next' && src.team && src.game) {
@@ -2779,22 +2886,15 @@ function fillSportsCtaLayer(layer, slide) {
     const home = sportsChipTeamShort(src.team);
     const opp = sportsChipOpponentLabel(g);
     const placeKind = sportsIsPlaceResult(g, src.team.sport);
-    const scoreInPill = sportsCtaTagPutsResultScore(sportsCtaResultTag(src));
     if (placeKind) {
       const placeTxt = sportsPlaceScoreText(g);
-      text.innerHTML = scoreInPill
-        ? `<span class="sports-chip__name">${escapeHtml(home)}</span>`
-        : `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-          + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
+      text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
     } else {
-      const scoreTxt = `${g.scoreFor}–${g.scoreAgainst}`;
-      text.innerHTML = scoreInPill
-        ? `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-          + sportsResultVsHtml()
-          + ` <span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`
-        : `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-          + `<span class="sports-chip__score">${escapeHtml(scoreTxt)}</span> `
-          + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+      const scoreTxt = sportsLiveScoreText(g);
+      text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + `<span class="sports-chip__score">${escapeHtml(scoreTxt)}</span> `
+        + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
     }
   } else {
     markNoTranslate(text);
@@ -2874,6 +2974,7 @@ function applySportsCtaState(chip, slide) {
 
   const tag = chip.querySelector('.sports-chip__cta-tag');
   if (!tag) return;
+  tag.hidden = false;
   const wanted = sportsCtaTagLabel(slide, state);
   tag.dataset.ctaLamp = lamp;
   if (state === 'idle') {
@@ -2885,26 +2986,12 @@ function applySportsCtaState(chip, slide) {
     tag.classList.remove('sports-chip__cta-tag--brand');
     markNoTranslate(tag);
     const lang = window.RadarTranslate?.getMode?.() || 'original';
-    const game = slide?.ctaFrom?.game || slide?.game;
-    const sportKey = slide?.ctaFrom?.team?.sport || game?.sport || '';
-    const liveScore = (state === 'live' && game) ? sportsLiveScoreText(game) : '';
-    const resultScore = (state === 'result' && game && sportsCtaTagPutsResultScore(wanted))
-      ? sportsResultMarkText(game, sportKey)
-      : '';
-    const pillScore = liveScore || resultScore;
-    const scoreChanged = (tag.dataset.ctaScore || '') !== pillScore;
-    if (pillScore) tag.dataset.ctaScore = pillScore;
-    else delete tag.dataset.ctaScore;
-    const meridiemLine = sportsCtaTagUsesMeridiem(wanted)
-      ? sportsMeridiemLine(game, { today: sportsCtaTagIsToday(wanted) })
-      : '';
-    const meridiemChanged = (tag.dataset.ctaMeridiemLine || '') !== meridiemLine;
-    if (meridiemLine) tag.dataset.ctaMeridiemLine = meridiemLine;
-    else delete tag.dataset.ctaMeridiemLine;
-    if (tag.dataset.ctaTag !== wanted || tag.dataset.ctaLang !== lang || scoreChanged || meridiemChanged) {
+    delete tag.dataset.ctaScore;
+    delete tag.dataset.ctaMeridiemLine;
+    if (tag.dataset.ctaTag !== wanted || tag.dataset.ctaLang !== lang) {
       tag.dataset.ctaTag = wanted;
       tag.dataset.ctaLang = lang;
-      fillSportsCtaTagCopy(tag, wanted, { score: pillScore, meridiemLine });
+      fillSportsCtaTagCopy(tag, wanted);
     }
   }
   syncSportsCtaRail(chip, slide);
@@ -3237,7 +3324,11 @@ function paintSportsChip(slide, animate = false) {
     a.title = title;
     a.setAttribute('aria-label', aria);
 
-    // Pastille : Sports / En direct / Hier / Aujourd’hui (jour du résultat).
+    if (slide.ctaFrom?.game && sportsGameIsLive(slide.ctaFrom.game)) {
+      a.dataset.sportsLive = '1';
+    }
+
+    // Kicker 1 ligne (F) + glyphe dans la couche.
     const tag = document.createElement('span');
     tag.className = 'sports-chip__cta-tag';
     tag.setAttribute('aria-hidden', 'true');
@@ -3313,12 +3404,15 @@ function paintSportsChip(slide, animate = false) {
   const whenInfo = sportsMatchWhenTag(slide);
   const whenTag = whenInfo ? (() => {
     const el = document.createElement('span');
-    el.className = 'sports-chip__when-tag';
+    el.className = 'sports-chip__cta-tag';
     el.setAttribute('aria-hidden', 'true');
     el.dataset.whenTag = whenInfo.word;
-    if (whenInfo.lamp) el.dataset.whenLamp = whenInfo.lamp;
-    if (whenInfo.meridiem) el.dataset.meridiem = whenInfo.meridiem;
-    fillSportsCtaTagCopy(el, whenInfo.word, { meridiemLine: whenInfo.meridiem });
+    el.dataset.ctaTag = whenInfo.word;
+    if (whenInfo.lamp) {
+      el.dataset.whenLamp = whenInfo.lamp;
+      el.dataset.ctaLamp = whenInfo.lamp;
+    }
+    fillSportsCtaTagCopy(el, whenInfo.word);
     return el;
   })() : null;
 
@@ -3337,9 +3431,9 @@ function paintSportsChip(slide, animate = false) {
       inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
         + `<span class="sports-chip__score">${escapeHtml(placeTxt)}</span>`;
     } else {
-      const scoreTxt = `${g.scoreFor}–${g.scoreAgainst}`;
+      const scoreTxt = sportsLiveScoreText(g);
       inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-        + `<span class="sports-chip__score">${escapeHtml(String(scoreTxt))}</span> `
+        + `<span class="sports-chip__score">${escapeHtml(scoreTxt)}</span> `
         + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
     }
     setSportsLocalizableText(subText, subLine);
@@ -3347,13 +3441,14 @@ function paintSportsChip(slide, animate = false) {
     a.title = sportsChipTitle(slide) + (prior ? ' · Saison précédente' : '');
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
   } else if (slide.mode === 'next' && sportsGameIsLive(g)) {
+    a.dataset.sportsLive = '1';
+    a.dataset.ctaState = 'live';
     if (whenTag) a.append(whenTag, glyph);
     else a.append(glyph);
     inner.innerHTML = sportsLiveTeamsScoreHtml(team, g);
     setSportsLocalizableText(subText, sportsLiveSubParts(slide).join(' · '));
     a.title = sportsChipTitle(slide);
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
-    a.dataset.sportsLive = '1';
   } else {
     if (whenTag) a.append(whenTag, glyph);
     else a.append(glyph);
@@ -3384,22 +3479,11 @@ function paintSportsChip(slide, animate = false) {
  */
 function nextSportsSlide(usedKeys, opts = {}) {
   const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
-  // CTA à venir : une face, **reçoit** ou **chez** — pas le miroir.
-  // CTA résultat : vainqueur seulement (la puce score garde V/D/N de l’autre).
   sportsVisible.forEach((s) => {
     if (s?.mode !== 'cta') return;
     for (const k of sportsSlideOccupyKeys(s)) used.add(k);
   });
-  const lane = sportsLeftLaneState();
-  const avoidSport = String(opts.avoidSport || '').toLowerCase();
-  const usedSports = opts.usedSports instanceof Set
-    ? opts.usedSports
-    : new Set(
-      sportsVisible
-        .filter((s) => s && s.mode !== 'cta' && s.mode !== 'info')
-        .map((s) => String(s.team?.sport || '').toLowerCase())
-        .filter(Boolean),
-    );
+  const pool = sportsOpenOrderSlides();
   const avoidMatchKeys = opts.avoidMatchKeys instanceof Set
     ? opts.avoidMatchKeys
     : new Set(opts.avoidMatchKeys || []);
@@ -3408,74 +3492,12 @@ function nextSportsSlide(usedKeys, opts = {}) {
     const matchKey = sportsResultMatchKey(slide);
     return !(matchKey && avoidMatchKeys.has(matchKey));
   };
-
-  // ── Hors saison : prochains matchs seulement (pas d’accroches info) ──
-  if (lane.kind === 'offseason') {
-    // forceMode 'info' ignoré : les slogans ne vont plus à gauche.
-    if (!lane.pool.length) return null;
-    const pool = lane.pool;
-    // Diversité sport puis curseur (pool déjà trié plus proche → plus loin).
-    for (let i = 0; i < pool.length; i += 1) {
-      const s = pool[(sportsLeftCursor + i) % pool.length];
-      if (!isAvailable(s)) continue;
-      const sp = String(s.team?.sport || '').toLowerCase();
-      if (sp && usedSports.has(sp) && usedSports.size < pool.length) continue;
-      if (avoidSport && sp === avoidSport) continue;
-      sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
-      return s;
-    }
-    for (let i = 0; i < pool.length; i += 1) {
-      const s = pool[(sportsLeftCursor + i) % pool.length];
-      if (isAvailable(s)) {
-        sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
-        return s;
-      }
-    }
-    // Tout déjà affiché (hors CTA) : ne pas recycler le match CTA.
-    for (let i = 0; i < pool.length; i += 1) {
-      const s = pool[(sportsLeftCursor + i) % pool.length];
-      if (!isAvailable(s)) continue;
-      sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
-      return s;
-    }
-    return null;
-  }
-
-  // ── Saison : résultats 5 j civils d’abord, puis à-venir ──
-  const resultPool = Array.isArray(lane.results) && lane.results.length
-    ? lane.results
-    : [];
-  const nextPool = Array.isArray(lane.nexts) ? lane.nexts : [];
-  const lists = resultPool.length || nextPool.length
-    ? [resultPool, nextPool]
-    : [lane.pool || []];
-
-  const sportOf = (s) => String(s?.team?.sport || '').toLowerCase();
-  const pickFrom = (list) => {
-    if (!list.length) return null;
-    for (let i = 0; i < list.length; i += 1) {
-      const s = list[i];
-      if (!isAvailable(s)) continue;
-      const sp = sportOf(s);
-      if (sp && !usedSports.has(sp)) return s;
-    }
-    if (avoidSport) {
-      for (let i = 0; i < list.length; i += 1) {
-        const s = list[i];
-        if (!isAvailable(s)) continue;
-        if (sportOf(s) !== avoidSport) return s;
-      }
-    }
-    for (let i = 0; i < list.length; i += 1) {
-      const s = list[i];
-      if (isAvailable(s)) return s;
-    }
-    return null;
-  };
-
-  for (const list of lists) {
-    const s = pickFrom(list);
-    if (s) return s;
+  if (!pool.length) return null;
+  for (let i = 0; i < pool.length; i += 1) {
+    const s = pool[(sportsLeftCursor + i) % pool.length];
+    if (!isAvailable(s)) continue;
+    sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
+    return s;
   }
   return null;
 }
@@ -3490,16 +3512,8 @@ function arrangeSportsVisible(contentSlides, ctaOrList) {
   const ctas = (Array.isArray(ctaOrList) ? ctaOrList : [ctaOrList]).filter(Boolean);
   if (!ctas.length) return contentSlides.slice();
   if (!contentSlides.length) return ctas.slice();
-  if (typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode()) {
-    const leftN = Math.floor(contentSlides.length / 2);
-    return [
-      ...contentSlides.slice(0, leftN),
-      ...ctas,
-      ...contentSlides.slice(leftN),
-    ];
-  }
-  // Prod : une seule CTA en fin de bandeau
-  return [...contentSlides, ctas[0]];
+  // B : plus chaud à gauche (DOM = ordre visuel). Plus de pin à droite / au centre.
+  return [...ctas, ...contentSlides];
 }
 
 /**
@@ -3554,17 +3568,12 @@ function sportsCtaSlotIndices(visible = sportsVisible) {
 }
 
 /**
- * Première peinture.
- * ≥ 2 chips : scores + CTA(s) (droite en prod ; **centrée·s en wide E**).
- * Wide : jusqu’à 3 CTAs distinctes.
- * 1 chip : CTA « Au tableau » seule (fin de la cascade de fit, parité météo).
+ * Première peinture (go B) : préfixe de sportsOpenOrderSlides.
+ * 1 chip : tête de liste (CTA). Overflow = coupe la queue, pas de re-tri.
  */
 function pickInitialSportsVisible(count) {
-  // CTA : démarrer au plus récent / plus proche (pool trié), cycle 0→1→2…
   sportsCtaLabelIndex = 0;
   sportsLeftCursor = 0;
-
-  // Dernier cran de largeur / fit : uniquement l’ancre « Au tableau ».
   if (count <= 1) return [sportsCtaSlide(0)];
 
   const ctaN = sportsWideCtaCount(count);
@@ -3576,23 +3585,15 @@ function pickInitialSportsVisible(count) {
     for (const k of sportsSlideOccupyKeys(c)) usedKeys.add(k);
     usedKeys.add(c.key);
   });
-  const usedSports = new Set();
-
-  // sportsVisible temporaire pour que nextSportsSlide voie les CTAs.
   const prevVisible = sportsVisible;
   sportsVisible = ctas.slice();
   try {
-    while (picked.length < contentCount) {
-      const slide = nextSportsSlide(usedKeys, {
-        usedSports,
-        avoidSport: '',
-        avoidMatchKeys: new Set(),
-      });
-      if (!slide || slide.mode === 'info') break;
-      if (sportsSlideIsUsed(slide, usedKeys)) break;
+    const pool = sportsOpenOrderSlides();
+    for (const slide of pool) {
+      if (picked.length >= contentCount) break;
+      if (!slide || sportsSlideIsUsed(slide, usedKeys)) continue;
       picked.push(slide);
       for (const k of sportsSlideOccupyKeys(slide)) usedKeys.add(k);
-      if (slide.team?.sport) usedSports.add(String(slide.team.sport).toLowerCase());
     }
   } finally {
     sportsVisible = prevVisible;
@@ -4129,7 +4130,52 @@ function sportsLivePollNeeded() {
   try {
     if (sportsCtaLiveSources().length) return true;
   } catch { /* slides pas encore prêts */ }
-  return (sportsSlides || []).some((s) => s?.mode === 'next' && sportsGameIsLive(s.game));
+  return (sportsSlides || []).some((s) => {
+    const g = s?.game || s?.ctaFrom?.game;
+    return sportsGameIsLive(g);
+  });
+}
+
+function sportsBoardLiveSig() {
+  const parts = [];
+  for (const s of sportsSlides || []) {
+    const g = s.game || s.ctaFrom?.game;
+    if (!g || !sportsGameIsLive(g)) continue;
+    parts.push([s.key || s.ctaFrom?.key || '', sportsLiveScoreText(g), sportsLivePeriodLabel(g)].join('\t'));
+  }
+  parts.sort();
+  return parts.join('|');
+}
+
+function sportsVisibleLiveKeys() {
+  return (sportsVisible || [])
+    .filter((s) => sportsGameIsLive(s?.game || s?.ctaFrom?.game))
+    .map((s) => s.key || s.ctaFrom?.key || '')
+    .join('|');
+}
+
+function patchVisibleLiveScorebugs() {
+  const strip = MASTHEAD_SPORTS_STRIP;
+  if (!strip) return;
+  strip.querySelectorAll('.sports-chip').forEach((chip) => {
+    let team;
+    let game;
+    if (chip.classList.contains('sports-chip--cta')) {
+      const src = sportsCtaSlide(sportsCtaLabelIndex)?.ctaFrom;
+      team = src?.team;
+      game = src?.game;
+    } else {
+      const key = chip.dataset.sportsKey;
+      const slide = (sportsVisible || []).find((s) => s?.key === key)
+        || (sportsSlides || []).find((s) => s?.key === key);
+      team = slide?.team;
+      game = slide?.game;
+    }
+    if (!team || !game || !sportsGameIsLive(game)) return;
+    const scoreEl = chip.querySelector('.sports-chip__score');
+    const txt = sportsLiveScoreText(game);
+    if (scoreEl && scoreEl.textContent !== txt) scoreEl.textContent = txt;
+  });
 }
 
 function applySportsPayload(raw) {
@@ -4141,15 +4187,23 @@ function applySportsPayload(raw) {
 }
 
 async function pollLiveSportsJson() {
+  // Timer toujours allumé : un coup d’envoi peut entrer dans la fenêtre
+  // après le boot (page ouverte à 18 h, KO 19 h).
   if (!sportsLivePollNeeded()) return;
   try {
     const res = await fetch(appAsset('sports-masthead.json'), { cache: 'no-store' });
     if (!res.ok) return;
     const raw = await res.json();
-    const prev = sportsCtaSignature(sportsCtaSlide(sportsCtaLabelIndex));
+    const prevSig = sportsBoardLiveSig();
+    const prevKeys = sportsVisibleLiveKeys();
     applySportsPayload(raw);
-    const next = sportsCtaSignature(sportsCtaSlide(sportsCtaLabelIndex));
-    if (prev === next) return;
+    const nextSig = sportsBoardLiveSig();
+    const nextKeys = sportsVisibleLiveKeys();
+    if (prevSig === nextSig) return;
+    if (prevKeys && prevKeys === nextKeys) {
+      patchVisibleLiveScorebugs();
+      return;
+    }
     sportsFitCount = null;
     sportsFitDepth = 0;
     renderSportsStrip();
@@ -4158,11 +4212,7 @@ async function pollLiveSportsJson() {
 }
 
 function scheduleLiveSportsPoll() {
-  if (initMastheadSports._liveTimer) {
-    window.clearInterval(initMastheadSports._liveTimer);
-    initMastheadSports._liveTimer = 0;
-  }
-  if (!sportsLivePollNeeded()) return;
+  if (initMastheadSports._liveTimer) return;
   initMastheadSports._liveTimer = window.setInterval(pollLiveSportsJson, SPORTS_LIVE_POLL_MS);
 }
 
