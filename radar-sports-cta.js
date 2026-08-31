@@ -1414,24 +1414,22 @@ const SPORTS_COLLEGIAL_CODES = new Set([
  * Clé = code RSEQ collégial.
  */
 const SPORTS_COLLEGIAL_CITY_DISAMBIG = {
-  TRV: 'Cégep Trois-Rivières', // ≠ UQTR
-  RIM: 'Cégep Rimouski', // ≠ UQAR
-  CHI: 'Cégep Chicoutimi', // ≠ UQAC
-  OUT: 'Cégep Outaouais', // ≠ UQO
-  SHE: 'Cégep Sherbrooke', // ≠ UdeS (USHE)
-  CAT: "Cégep Abitibi-Témiscamingue", // ≠ UQAT
+  TRV: 'Cégep de Trois-Rivières', // ≠ UQTR
+  RIM: 'Cégep de Rimouski', // ≠ UQAR
+  CHI: 'Cégep de Chicoutimi', // ≠ UQAC
+  OUT: "Cégep de l'Outaouais", // ≠ UQO
+  SHE: 'Cégep de Sherbrooke', // ≠ UdeS (USHE)
+  CAT: "Cégep de l'Abitibi-Témiscamingue", // ≠ UQAT
 };
 
 /** Shorts collégiaux (sans code) qui collident avec une ville d’université. */
 const SPORTS_COLLEGIAL_CITY_SHORT_DISAMBIG = {
-  'trois-rivieres': 'Cégep Trois-Rivières',
-  'trois-rivières': 'Cégep Trois-Rivières',
-  rimouski: 'Cégep Rimouski',
-  chicoutimi: 'Cégep Chicoutimi',
-  outaouais: 'Cégep Outaouais',
-  sherbrooke: 'Cégep Sherbrooke', // seulement si collégial déjà établi
-  'abitibi-temiscamingue': "Cégep Abitibi-Témiscamingue",
-  'abitibi-témiscamingue': "Cégep Abitibi-Témiscamingue",
+  'trois-rivieres': 'Cégep de Trois-Rivières',
+  rimouski: 'Cégep de Rimouski',
+  chicoutimi: 'Cégep de Chicoutimi',
+  outaouais: "Cégep de l'Outaouais",
+  sherbrooke: 'Cégep de Sherbrooke',
+  'abitibi-temiscamingue': "Cégep de l'Abitibi-Témiscamingue",
 };
 
 /**
@@ -1650,18 +1648,59 @@ function sportsDisplaySideName({
 }
 
 /**
- * Nom d’équipe pour **puce** : surnom d’abord (Vert & Or, Diablos).
- * Repli univ = acronyme ; collégial ville = Cégep … ; voile = club, pas Rouge et Or.
+ * Sigle univ. (UdeS) ou nom officiel cégep (Cégep de l'Outaouais)
+ * à coller à droite du surnom : « Vert & Or (UdeS) ».
+ */
+function sportsInstitutionParen({ shortName, fullName, code, sector } = {}) {
+  const short = String(shortName || '').trim();
+  const full = String(fullName || '').trim();
+  const codeU = String(code || '').toUpperCase();
+  if (sportsLooksCollegial({ fullName: full, shortName: short, sector, code: codeU })) {
+    if (SPORTS_COLLEGIAL_CITY_DISAMBIG[codeU]) return SPORTS_COLLEGIAL_CITY_DISAMBIG[codeU];
+    const fold = sportsFoldKey(short.replace(/^Cégep\s+(de\s+|d'|du\s+|de\s+la\s+)?/i, ''));
+    if (SPORTS_COLLEGIAL_CITY_SHORT_DISAMBIG[fold]) return SPORTS_COLLEGIAL_CITY_SHORT_DISAMBIG[fold];
+    if (short && !/^Cégep\b/i.test(short)) return short;
+    return full || short;
+  }
+  if (sportsLooksUniversity({ fullName: full, shortName: short, sector, code: codeU })) {
+    return sportsLookupInstitutionAcronym(full)
+      || SPORTS_UNI_CODE_ACRONYM[codeU]
+      || sportsUniCityAcronym(short)
+      || '';
+  }
+  return '';
+}
+
+function sportsChipWithInstitution(label, paren) {
+  const l = String(label || '').trim();
+  const p = String(paren || '').trim();
+  if (!l) return p;
+  if (!p) return l;
+  if (l === p || l.includes(`(${p})`)) return l;
+  const foldL = sportsFoldKey(l);
+  const foldP = sportsFoldKey(p);
+  if (foldL === foldP || foldL.endsWith(foldP) || foldP.endsWith(foldL)) return l;
+  return `${l} (${p})`;
+}
+
+/**
+ * Nom d’équipe pour **puce** : surnom + (sigle) (Vert & Or (UdeS)).
+ * Sans surnom : acronyme univ. ou nom officiel cégep. Voile = club.
  */
 function sportsChipTeamShort(team) {
   const sport = String(team?.sport || '').toLowerCase();
   const sailing = sport === 'sailing' || sport === 'voile';
-  let name = sportsDisplaySideName({
+  const args = {
     shortName: team?.name || team?.shortName,
     fullName: team?.fullName,
     code: team?.code,
     sector: team?.sector,
-    nickname: sailing ? '' : (team?.nickname || ''),
+  };
+  const nick = sailing ? '' : String(team?.nickname || '').trim();
+  if (nick) return sportsChipWithInstitution(nick, sportsInstitutionParen(args));
+  let name = sportsDisplaySideName({
+    ...args,
+    nickname: '',
     preferAcronym: true,
     fallback: 'Équipe',
   });
@@ -1671,7 +1710,7 @@ function sportsChipTeamShort(team) {
   return name;
 }
 
-/** Adversaire sur puce — surnom d’abord, comme l’équipe à domicile. */
+/** Adversaire sur puce — surnom + (sigle), comme l’équipe à domicile. */
 function sportsChipOpponentLabel(game) {
   const full = String(game?.opponentFullName || '');
   const code = String(game?.opponentCode || '').toUpperCase();
@@ -1683,12 +1722,17 @@ function sportsChipOpponentLabel(game) {
   } else if (sportsLooksUniversity({ fullName: full, shortName: game?.opponent, code })) {
     sector = 'universitaire';
   }
-  return sportsDisplaySideName({
+  const args = {
     shortName: game?.opponent,
     fullName: game?.opponentFullName,
     code: game?.opponentCode,
     sector,
-    nickname: sailing ? '' : (game?.opponentNickname || ''),
+  };
+  const nick = sailing ? '' : String(game?.opponentNickname || '').trim();
+  if (nick) return sportsChipWithInstitution(nick, sportsInstitutionParen(args));
+  return sportsDisplaySideName({
+    ...args,
+    nickname: '',
     preferAcronym: sector === 'universitaire',
     fallback: 'adversaire',
   });
