@@ -288,13 +288,22 @@
         score = 'À venir';
         scoreAria = 'À venir';
       } else if (kind === 'live') {
-        if (r.score) {
-          score = r.score;
-          scoreAria = r.scoreAria || 'En direct';
-        } else {
-          score = '—';
-          scoreAria = 'En direct';
-        }
+        const parts = String(r.score || '0–0').split(/[–-]/);
+        const homeNum = (parts[0] || '0').trim();
+        const awayNum = (parts[1] || '0').trim();
+        const home = r.homeName || 'Domicile';
+        const away = r.opp || 'Visiteur';
+        const period = r.clock || '';
+        const p = period ? `<span class="scorebug__period">${period}</span>` : '';
+        score = `<span class="scorebug scorebug--page">
+          <span class="scorebug__lamp"><span class="scorebug__dot" aria-hidden="true"></span><span class="scorebug__lamp-word">En direct</span>${p}</span>
+          <span class="scorebug__rows">
+            <span class="scorebug__row"><span class="scorebug__club">${home}</span><span class="scorebug__num" data-side="home">${homeNum}</span></span>
+            <span class="scorebug__row"><span class="scorebug__club">${away}</span><span class="scorebug__num" data-side="away">${awayNum}</span></span>
+          </span>
+        </span>`;
+        scoreAria = r.scoreAria || 'En direct';
+        scoreCls += ' sports-result__score--live';
       }
       const vs = r.vs || 'vs';
       const school = r.oppSchool
@@ -319,6 +328,13 @@
       const priorMeta = r.prior
         ? `\n  <span class="sports-result__season-meta">Saison précédente</span>`
         : '';
+      if (kind === 'live') {
+        return `<li class="${cls}"${data}>
+  ${time}
+  <span class="${scoreCls}" aria-label="${scoreAria}">${score}</span>
+  ${badge}${priorMeta}
+</li>`;
+      }
       return `<li class="${cls}"${data}>
   ${time}
   <span class="${scoreCls}" aria-label="${scoreAria}">${score}</span>
@@ -422,13 +438,13 @@
         title: 'Prochain — demain',
         note: 'jour = Demain, heure empilée',
         panel: {
-          sport: 'football', sector: 'universitaire', name: 'Laval',
+          sport: 'football', sector: 'universitaire', name: 'ULaval',
           nick: 'Rouge et Or', code: 'LAV', sex: 'Masculin', sexKey: 'M',
           school: 'Université Laval',
           meta: 'Football · D1 · Universitaire',
           rows: [{
             kind: 'next', date: '2026-08-25', day: 'Demain', clock: '13 h 00',
-            opp: 'Carabins', oppSchool: 'Montréal',
+            opp: 'Carabins', oppSchool: 'UdeM',
             oppFull: 'Université de Montréal', venue: 'domicile',
             href: RSEQ,
           }],
@@ -438,14 +454,14 @@
         title: 'Victoire (V, vert)',
         note: 'sports-result--W · badge V',
         panel: {
-          sport: 'football', sector: 'universitaire', name: 'Montréal',
+          sport: 'football', sector: 'universitaire', name: 'UdeM',
           nick: 'Carabins', code: 'MTL', sex: 'Masculin', sexKey: 'M',
           school: 'Université de Montréal',
           meta: 'Football · D1 · Universitaire · Fiche 1-0',
           rows: [{
             kind: 'W', date: '2026-08-22', day: '22 août',
             score: '24–21', scoreAria: 'Victoire', badge: 'V', badgeTitle: 'Victoire',
-            opp: 'Rouge et Or', oppSchool: 'Laval',
+            opp: 'Rouge et Or', oppSchool: 'ULaval',
             oppFull: 'Université Laval', href: RSEQ,
           }],
         },
@@ -470,14 +486,14 @@
         title: 'Match nul (N, gris)',
         note: 'sports-result--D · badge N',
         panel: {
-          sport: 'soccer', sector: 'universitaire', name: 'Laval',
+          sport: 'soccer', sector: 'universitaire', name: 'ULaval',
           nick: 'Rouge et Or', code: 'LAV', sex: 'Masculin', sexKey: 'M',
           school: 'Université Laval',
           meta: 'Soccer · D1 · Universitaire · Fiche 0-0-1',
           rows: [{
             kind: 'D', date: '2026-08-23', day: '23 août',
             score: '1–1', scoreAria: 'Match nul', badge: 'N', badgeTitle: 'Match nul',
-            opp: 'Carabins', oppSchool: 'Montréal',
+            opp: 'Carabins', oppSchool: 'UdeM',
             oppFull: 'Université de Montréal', href: RSEQ,
           }],
         },
@@ -486,7 +502,7 @@
         title: 'Victoire + prochain',
         note: 'carte typique en saison : dernier résultat puis à venir',
         panel: {
-          sport: 'basketball', sector: 'universitaire', name: 'Montréal',
+          sport: 'basketball', sector: 'universitaire', name: 'UdeM',
           nick: 'Carabins', code: 'MTL', sex: 'Féminin', sexKey: 'F',
           school: 'Université de Montréal',
           meta: 'Basketball · D1 · Universitaire · Fiche 1-0',
@@ -509,8 +525,8 @@
       {
         title: 'Défaite + prochain',
         panel: {
-          sport: 'volleyball', sector: 'universitaire', name: 'Sherbrooke',
-          nick: 'Vert & Or', code: 'SHE', sex: 'Féminin', sexKey: 'F',
+          sport: 'volleyball', sector: 'universitaire', name: 'UdeS',
+          nick: 'Vert & Or', code: 'USHE', sex: 'Féminin', sexKey: 'F',
           school: 'Université de Sherbrooke',
           meta: 'Volleyball · D1 · Universitaire · Fiche 0-1',
           rows: [
@@ -522,7 +538,7 @@
             },
             {
               kind: 'next', date: '2026-08-28', day: '28 août', clock: '19 h 00',
-              opp: 'Carabins', oppSchool: 'Montréal',
+              opp: 'Carabins', oppSchool: 'UdeM',
               oppFull: 'Université de Montréal', venue: 'extérieur',
               href: RSEQ,
             },
@@ -612,7 +628,7 @@
           meta: 'Hockey · D1 · Universitaire',
           rows: [{
             kind: 'live', date: '2026-08-23', day: '23 août', clock: '2e période',
-            score: '2–1', scoreAria: 'En direct',
+            score: '2–1', scoreAria: 'En direct', homeName: 'McGill',
             opp: 'Stingers', oppSchool: 'Concordia',
             oppFull: 'Université Concordia', venue: 'domicile',
             href: RSEQ,
@@ -623,13 +639,13 @@
         title: 'Hors saison — prochain lointain',
         note: 'même ligne « À venir », date en septembre',
         panel: {
-          sport: 'football', sector: 'universitaire', name: 'Laval',
+          sport: 'football', sector: 'universitaire', name: 'ULaval',
           nick: 'Rouge et Or', code: 'LAV', sex: 'Masculin', sexKey: 'M',
           school: 'Université Laval',
           meta: 'Football · D1 · Universitaire',
           rows: [{
             kind: 'next', date: '2026-09-04', day: '4 sept.', clock: '19 h 00',
-            opp: 'Carabins', oppSchool: 'Montréal',
+            opp: 'Carabins', oppSchool: 'UdeM',
             oppFull: 'Université de Montréal', venue: 'extérieur',
             href: RSEQ,
           }],
@@ -639,14 +655,14 @@
         title: 'Hors saison — résultat saison précédente',
         note: 'sports-result--prior-season + méta sous le score',
         panel: {
-          sport: 'hockey', sector: 'universitaire', name: 'Laval',
+          sport: 'hockey', sector: 'universitaire', name: 'ULaval',
           nick: 'Rouge et Or', code: 'LAV', sex: 'Féminin', sexKey: 'F',
           school: 'Université Laval',
           meta: 'Hockey · D1 · Universitaire',
           rows: [{
             kind: 'W', date: '2026-03-12', day: '12 mars',
             score: '3–2', scoreAria: 'Victoire', badge: 'V', badgeTitle: 'Victoire',
-            opp: 'Carabins', oppSchool: 'Montréal',
+            opp: 'Carabins', oppSchool: 'UdeM',
             oppFull: 'Université de Montréal', href: RSEQ, prior: true,
           }],
         },
@@ -690,7 +706,7 @@
         title: 'Spotlight (deep-link ?team=)',
         note: 'halo de sélection, pas de voile sur le texte',
         panel: {
-          sport: 'football', sector: 'universitaire', name: 'Montréal',
+          sport: 'football', sector: 'universitaire', name: 'UdeM',
           nick: 'Carabins', code: 'MTL', sex: 'Masculin', sexKey: 'M',
           school: 'Université de Montréal',
           meta: 'Football · D1 · Universitaire · Fiche 1-0',
@@ -698,7 +714,7 @@
           rows: [{
             kind: 'W', date: '2026-08-22', day: '22 août',
             score: '24–21', scoreAria: 'Victoire', badge: 'V', badgeTitle: 'Victoire',
-            opp: 'Rouge et Or', oppSchool: 'Laval',
+            opp: 'Rouge et Or', oppSchool: 'ULaval',
             oppFull: 'Université Laval', href: RSEQ,
           }],
         },

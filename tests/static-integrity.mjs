@@ -1429,12 +1429,13 @@ assert(
 assert(
   /const SPORTS_CTA_TAG_LIVE\s*=\s*['"]En direct['"]/.test(appJs)
     && appJs.includes('function sportsCtaTagLabel')
-    && appJs.includes('sports-chip__cta-tag-score')
-    && appJs.includes('function sportsCtaTagPutsResultScore')
+    && appJs.includes('function sportsLiveTeamsScoreHtml')
     && appJs.includes('function sportsResultMarkText')
-    && appJs.includes("const SPORTS_RESULT_VS = 'v.'")
-    && appJs.includes('function sportsResultVsHtml'),
-  'app.js : pastille CTA = En direct + score / Hier + score / Sports ; v. entre les noms',
+    && appJs.includes('function sportsCtaTagLinePair')
+    && appJs.includes('function sportsCtaDateLinePair')
+    && appJs.includes('function sportsCtaResultDateParts')
+    && /function fillSportsCtaTagCopy[\s\S]*tag\.append\(document\.createTextNode/.test(appJs),
+  'app.js : kicker F 1 ligne sauf Dernière heure / Avant-hier / dates (2 lignes) ; score entre les noms',
 );
 // Pastille CTA : plus de voyant LED (ni span JS, ni ::before).
 assert(
@@ -1560,17 +1561,20 @@ assert(
     && appJs.includes('function sportsGameHasScore')
     && appJs.includes('function sportsCtaLiveSources')
     && appJs.includes('function sportsCtaHoldOnLive')
-    && /const lives = sportsCtaLiveSources\(now\)/.test(appJs)
+    && appJs.includes('function sportsOpenOrderSlides')
     && appJs.includes('function pollLiveSportsJson')
+    && appJs.includes('function sportsBoardLiveSig')
+    && appJs.includes('function patchVisibleLiveScorebugs')
     && /const SPORTS_LIVE_POLL_MS\s*=\s*15000/.test(appJs)
     && appJs.includes("if (state === 'live')"),
   'app.js : direct = pastille En direct + score collé + sondage sports.json aux 15 s',
 );
 assert(
-  /const lives = sportsCtaLiveSources\(now\);\s*if \(lives\.length\)/.test(appFlat)
+  appJs.includes('function sportsOpenOrderSlides')
     && appJs.includes('sportsCtaHoldOnLive(sportsVisible[slot])')
-    && appJs.includes('sportsCtaHoldOnLive(slide)'),
-  'app.js : CTA live exclusive — pool = directs ; 1 figé / plusieurs en cycle ; sinon cycle normal',
+    && appJs.includes('sportsCtaHoldOnLive(slide)')
+    && /sportsCtaLiveSources\(\)\.length < 2/.test(appJs),
+  'app.js : liste B unique ; 1 direct figé, plusieurs directs en cascade',
 );
 assert(
   !/state === 'live'[\s\S]{0,200}sportsRelativeAge/.test(appFlat)
@@ -1578,7 +1582,11 @@ assert(
     && appJs.includes('function sportsKickoffClock')
     && appJs.includes('function sportsLiveSubParts')
     && appJs.includes('SPORTS_LIVE_SCORE_PENDING')
+    && appJs.includes("SPORTS_LIVE_SCORE_PENDING_SIDE = '0'")
+    && /SPORTS_LIVE_SCORE_PENDING\s*=\s*`\$\{SPORTS_LIVE_SCORE_PENDING_SIDE\}–\$\{SPORTS_LIVE_SCORE_PENDING_SIDE\}`/.test(appJs)
     && appJs.includes('function sportsLiveScoreText')
+    && appJs.includes('function sportsScoreNumber')
+    && appJs.includes('SPORTS_SCORE_NONE')
     && appJs.includes('function sportsLiveTeamsScoreHtml')
     && /function sportsLiveSubParts[\s\S]{0,500}sportsKickoffClock/.test(appJs)
     && /function sportsLiveSubParts[\s\S]{0,500}sportsUpdatedShort/.test(appJs)
@@ -1630,7 +1638,13 @@ assert(
   'app.js : CTA sous-ligne relatif + V/D/N match + médaille podium + mot de temps puces',
 );
 assert(
-  appJs.includes('function sportsCtaResultIsTodayOrYesterday')
+  appJs.includes('function sportsOpenOrderSlides')
+    && appJs.includes('function sportsOpenOrderBucket')
+    && appJs.includes('SPORTS_OPEN_LIVE')
+    && appJs.includes('SPORTS_OPEN_TODAY_NEXT')
+    && appJs.includes('SPORTS_OPEN_YESTERDAY')
+    && appJs.includes('SPORTS_OPEN_OLDER_RESULT')
+    && appJs.includes('function sportsCtaResultIsTodayOrYesterday')
     && !appJs.includes('function sportsCtaResultIsRecent')
     && appJs.includes('function sportsCivilDayShift')
     && appJs.includes('isMastheadCtaResult')
@@ -1638,7 +1652,7 @@ assert(
     && !appJs.includes('SPORTS_RECENT_RESULT_MS')
     && !appJs.includes('SPORTS_CTA_UPCOMING_MS')
     && !/SPORTS_CTA_FRESH_RESULT_MS\s*=\s*48/.test(appJs),
-  'app.js : CTA résultats = aujourd’hui/hier (5 j civils = puces ; SSOT freshness-lib)',
+  'app.js : liste B live → ce soir → jour → hier → reliquat 5 j',
 );
 assert(
   /function sportsCtaEyebrow/.test(appJs)
@@ -1685,7 +1699,7 @@ assert(
     && translateJs.includes('CHROME_SELECTOR'),
   'translate.js D22 : glossaire sports + cache v9 + chrome-first ; quotas MT inchangés',
 );
-// CTA pool = live → dans l’heure → hier → aujourd’hui → jour lead.
+// Liste B = live → ce soir → jour → hier → reliquat 5 j → plus tard.
 assert(
   appJs.includes('function sportsSlideDayKey')
     && /const SPORTS_CTA_MAX_POOL\s*=\s*80/.test(appJs)
@@ -1693,16 +1707,19 @@ assert(
     && appJs.includes('team.nextGames')
     && !appJs.includes('SPORTS_CTA_NEXT_DAYS')
     && !appJs.includes('function sportsCtaNextWindowEndDay')
-    && appJs.includes('yesterdayResults')
-    && appJs.includes('le-radar-cta-sports-window')
+    && appJs.includes('function sportsOpenOrderSlides')
+    && appJs.includes('SPORTS_OPEN_OLDER_RESULT')
     && appJs.includes('SPORTS_PLACEHOLDER_OPPONENT_RE'),
-  'app.js : CTA = live / dans l’heure / hier / aujourd’hui / jour lead ; ADV exclu',
+  'app.js : liste B live → aujourd’hui → hier → reliquat ; ADV exclu',
 );
 assert(
   appJs.includes('function sportsCtaKickoffWithinHour')
     && /const SPORTS_CTA_WITHIN_HOUR_MS\s*=\s*60\s*\*\s*60\s*\*\s*1000/.test(appJs)
-    && /imminent\.concat\(\s*yesterdayResults,\s*todayResults,\s*laterNexts\)/.test(appJs),
-  'app.js : CTA sans live = dans l’heure → hier → aujourd’hui → autres à venir',
+    && /SPORTS_OPEN_LIVE = 0/.test(appJs)
+    && /SPORTS_OPEN_TODAY_NEXT = 1/.test(appJs)
+    && /SPORTS_OPEN_TODAY_RESULT = 2/.test(appJs)
+    && /SPORTS_OPEN_YESTERDAY = 3/.test(appJs),
+  'app.js : ordre B live → ce soir → jour → hier (buckets)',
 );
 assert(
   !appJs.includes('upcomingLater'),
@@ -1736,7 +1753,8 @@ assert(
     && appJs.includes('function sportsMatchFaceHash')
     && appJs.includes('function sportsResultFaceRank')
     && appJs.includes('sportsSoftSportDiversity')
-    && appJs.includes("if (String(s.game?.result || '') === 'L') continue")
+    && appJs.includes('function sportsOpenOrderSlides')
+    && !appJs.includes("if (String(s.game?.result || '') === 'L') continue")
     && !/CTA : carte stable — roulement/.test(appJs)
     && !appJs.includes('sportsCtaInPlaceViewport')
     && !appJs.includes('retouchSportsCtaChip')
@@ -1810,8 +1828,14 @@ assert(
     && appJs.includes("'chez'")
     && appJs.includes('sportsDisplaySideName')
     && appJs.includes('sportsChipOpponentLabel')
+    && /nickname: sailing \? '' : \(team\?\.nickname/.test(appJs)
+    && /nickname: sailing \? '' : \(game\?\.opponentNickname/.test(appJs)
     && appJs.includes('sportsLookupInstitutionAcronym')
     && appJs.includes('SPORTS_UNI_CODE_ACRONYM')
+    && appJs.includes('SPORTS_UNI_CITY_TO_ACRONYM')
+    && appJs.includes('function sportsUniCityAcronym')
+    && /sherbrooke:\s*'UdeS'/.test(appJs)
+    && /laval:\s*'ULaval'/.test(appJs)
     && appJs.includes('preferAcronym')
     && appJs.includes('SPORTS_TEAM_COLOR_SUFFIX_RE')
     && styleCss.includes('.sports-chip__vs')
@@ -1836,8 +1860,8 @@ assert(
     && !appJs.includes('SPORTS_RECENT_RESULT_MS')
     && appJs.includes('function sportsResultIsRecent')
     && appJs.includes('function sportsCivilDaysAgo')
-    && appJs.includes('recentResults')
-    && appJs.includes('le-radar-sports-left-pool')
+    && appJs.includes('function sportsOpenOrderSlides')
+    && appJs.includes('SPORTS_OPEN_OLDER_RESULT')
     && appJs.includes('function sportsTeamIsQuebecFocus')
     && appJs.includes('SPORTS_OUT_OF_PROVINCE_CODES')
     && appJs.includes("'OTT'")
