@@ -15,6 +15,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Ajouté
 
+- Messages manuscrits d’affiches : point d’exclamation sur les vœux (Bonne rentrée !, Joyeuses Fêtes !, Tu vas y arriver !). Pas sur les mentions solennelles ni les phrases projet.
 - Banque d’affiches Université Laval : un cliché Commons de chaque pavillon d’enseignement du campus principal et des quatre résidences (dont Agathe-Lacerte et Ernest-Lemieux). Studio `/affiches/?campus=laval&photo=ernest-lemieux`.
 - Affiches campus 11 × 17 : pas de barre colorée, grand pictogramme + wordmark logo à gauche, versions sans photo et multi-pavillons, zone QR blanche.
 - Générateur public `/affiches/` : 11×17, lettre, légal, banque de photos, JPEG 300 dpi.
