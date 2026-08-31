@@ -702,7 +702,9 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
     !/stroke-width/.test(readFileSync(join(root, 'assets/kit/translate-mark.svg'), 'utf8')),
     'icône traduction : pas de stroke (plus en gras)',
   );
-  assert(builderJs.includes('Bonne rentrée'), 'générateur public : message manuscrit rentrée');
+  assert(builderJs.includes("rentree: 'Bonne rentrée !'"), 'générateur public : message manuscrit rentrée');
+  assert(builderJs.includes("rentree: 'Have a great start!'"), 'générateur public : rentrée EN avec !');
+  assert(builder.includes('Bonne rentrée !'), 'menu manuscrit : rentrée avec !');
   assert(builderJs.includes('Pas de publicité'), 'générateur public : phrase manuscrite sans pub');
   assert(builderJs.includes("greeting: 'none'"), 'affiche générique : pas de message manuscrit par défaut');
   assert(builder.includes('value="none" selected'), 'affiche générique : Aucun coché');
