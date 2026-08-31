@@ -677,6 +677,10 @@ assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lie
   assert(builder.includes('name="langs" value="oui" checked'), 'affiche générique : langues du site par défaut');
   assert(builderJs.includes('syncGenericLangs'), 'affiche générique : langues rétablies sur Générique');
   assert(builder.includes('id="dpi-1200-choice" hidden'), '1200 dpi masqué hors labo local');
+  assert(builder.includes('id="photo-upload-box" hidden'), 'affiches : téléversement masqué hors labo local');
+  assert(builderJs.includes('function syncUploadLab'), 'affiches : téléversement seulement en local');
+  assert(builderJs.includes('function addUploadedFiles'), 'affiches : lecture du fichier local');
+  assert(builderJs.includes('function isLocalPhoto'), 'affiches : blob local ≠ Commons');
   assert(builder.includes('value="600" checked'), 'générateur public : 600 dpi coché');
   assert(builderJs.includes('jpegToPdfBlob'), 'générateur public : PDF dans le navigateur');
   assert(builderJs.includes('previewFit'), 'générateur public : aperçu dimensionné à la zone');

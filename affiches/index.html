@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="../style-feed.css" />
     <link rel="stylesheet" href="../style-chrome.css" />
   <link rel="stylesheet" href="../seo-pages.css">
-  <link rel="stylesheet" href="./poster-builder.css?v=ipad-dl">
+  <link rel="stylesheet" href="./poster-builder.css?v=local-upload">
   <link rel="stylesheet" href="../dev/midwidth-preview.css?v=wide-auto-e92">
   <link rel="stylesheet" href="../dev/wide-desktop-preview.css?v=wide-auto-e92">
 </head>
@@ -202,6 +202,13 @@
           <legend>Photo</legend>
           <div class="photo-grid" id="photo-grid"></div>
           <button type="button" class="photo-more" id="photo-more" hidden>Voir plus de photos</button>
+          <div id="photo-upload-box" hidden>
+            <label class="photo-upload">
+              <input type="file" id="photo-upload" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" multiple>
+              Téléverser une image
+            </label>
+            <p class="field-hint">Labo local seulement. JPEG, PNG ou WebP — l’image reste dans cet onglet.</p>
+          </div>
           <p class="photo-meta" id="photo-meta"></p>
         </fieldset>
 
@@ -281,6 +288,6 @@
   <script src="../engage-prompt.js" defer></script>
   <script src="../dev/midwidth-preview.js?v=wide-auto-e92"></script>
   <script src="../dev/wide-desktop-preview.js?v=wide-auto-e92"></script>
-  <script src="./poster-builder.js?v=greet-bang"></script>
+  <script src="./poster-builder.js?v=local-upload"></script>
 </body>
 </html>

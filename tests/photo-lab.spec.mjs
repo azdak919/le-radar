@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { spawn } from 'node:child_process';
+import { spawn, execFileSync } from 'node:child_process';
+import { mkdtempSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -72,6 +74,7 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.locator('#status')).toContainText('Lettre', { timeout: 15000 });
   await expect(page.locator('#status')).toContainText('5100 × 6600');
   await expect(page.locator('#dpi-1200-choice')).toBeVisible();
+  await expect(page.locator('#photo-upload-box')).toBeVisible();
   await page.locator('label:has(input[name="dpi"][value="1200"])').click();
   await expect(page.getByRole('button', { name: /JPEG 1200 dpi/ }).first()).toBeVisible();
   await expect(page.getByRole('button', { name: /PDF 1200 dpi/ }).first()).toBeVisible();
@@ -118,6 +121,18 @@ test('générateur d’affiches public', async ({ page }) => {
   await expect(page.locator('#crop-tools')).toBeVisible();
   await page.locator('#photo-angle').fill('8');
   await expect(page.locator('#status')).not.toContainText('qrSide');
+});
+
+test('labo local : téléverser une image pour l’affiche', async ({ page }) => {
+  const dir = mkdtempSync(join(tmpdir(), 'affiche-upload-'));
+  const file = join(dir, 'pavillon-test.jpg');
+  execFileSync('magick', ['-size', '1600x2400', 'xc:#6c2163', file]);
+  await page.goto(`${BASE}/affiches/`, { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#photo-upload-box')).toBeVisible();
+  await page.locator('#photo-upload').setInputFiles(file);
+  await expect(page.locator('#photo-grid label[title="pavillon-test"] input')).toBeChecked({ timeout: 15000 });
+  await expect(page.locator('#crop-tools')).toBeVisible();
+  await expect(page.locator('#photo-meta')).toContainText('téléversée');
 });
 
 test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ page }) => {
