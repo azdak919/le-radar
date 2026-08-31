@@ -422,7 +422,8 @@
  * Le contour pourpre et --sports-tone restent l’identité sports.
  * Live / soon : halo rouge sur ce verre (règles suivantes), pas un fond opaque.
  */
-[data-theme="light"] .masthead-sports-strip .sports-chip:not([data-cta-state="live"]):not([data-cta-lamp="soon"]) {
+[data-theme="light"] .masthead-sports-strip .sports-chip:not([data-cta-state="live"]):not([data-cta-lamp="soon"]),
+[data-theme="light"] .masthead-sports-strip .sports-chip--match:not([data-cta-state="live"]) {
   background:
     linear-gradient(90deg, color-mix(in srgb, var(--sports-tone, #66839e) 16%, transparent) 0%, transparent 55%),
     rgba(54, 59, 68, 0.68);
