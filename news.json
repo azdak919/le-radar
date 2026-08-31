@@ -1,6 +1,6 @@
 {
-  "updated": "2026-08-30T22:50:07.583Z",
-  "updatedSlot": "2026-08-30T23:00:00.000Z",
+  "updated": "2026-08-31T00:46:29.170Z",
+  "updatedSlot": null,
   "count": 185,
   "freshnessSessions": 3,
   "sources": {
@@ -10,7 +10,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": "2026-08-30T22:49:15.591Z"
+      "lastFetchOk": "2026-08-31T00:45:39.647Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-08-30T22:49:16.760Z"
+      "lastFetchOk": "2026-08-31T00:45:41.070Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,15 +26,15 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-03-25T11:00:00.000Z",
-      "lastFetchOk": "2026-08-30T22:49:21.402Z"
+      "lastFetchOk": "2026-08-31T00:45:46.403Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
       "stale": false,
       "articleCount": 15,
       "freshArticleCount": 15,
-      "lastArticle": "2026-07-31T12:00:00.000Z",
-      "lastFetchOk": "2026-08-30T22:49:22.292Z"
+      "lastArticle": "2026-08-30T23:43:11.000Z",
+      "lastFetchOk": "2026-08-31T00:45:47.319Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-08-27T16:33:00.000Z",
-      "lastFetchOk": "2026-08-30T22:49:23.667Z"
+      "lastFetchOk": "2026-08-31T00:45:48.686Z"
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,7 +50,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-08-30T22:49:25.380Z"
+      "lastFetchOk": "2026-08-31T00:45:50.140Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-08-30T22:49:26.952Z"
+      "lastFetchOk": "2026-08-31T00:45:51.669Z"
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-08-28T13:43:04.000Z",
-      "lastFetchOk": "2026-08-30T22:49:28.152Z"
+      "lastFetchOk": "2026-08-31T00:45:52.873Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-08-30T22:49:28.631Z"
+      "lastFetchOk": "2026-08-31T00:45:53.287Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -82,7 +82,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-08-24T21:00:55.000Z",
-      "lastFetchOk": "2026-08-30T22:49:29.628Z"
+      "lastFetchOk": "2026-08-31T00:45:54.153Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-08-30T22:49:32.439Z"
+      "lastFetchOk": "2026-08-31T00:45:57.838Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-08-30T17:15:53.000Z",
-      "lastFetchOk": "2026-08-30T22:49:32.778Z"
+      "lastFetchOk": "2026-08-31T00:45:58.087Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-08-30T22:49:33.157Z"
+      "lastFetchOk": "2026-08-31T00:45:58.636Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,10 +114,35 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-08-30T22:49:33.367Z"
+      "lastFetchOk": "2026-08-31T00:45:58.970Z"
     }
   },
   "items": [
+    {
+      "source": "The McGill Daily",
+      "institution": "McGill University",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "en",
+      "title": "Premier Christine Fréchette on Language",
+      "link": "https://www.mcgilldaily.com/2026/08/premier-christine-frechette-on-language/",
+      "author": "Benjamin-Taylor Sauvé",
+      "date": "2026-08-30T23:43:11.000Z",
+      "excerpt": "It has been 4 years since the incumbent Coalition Avenir Quebec (CAQ) won a landslide electoral victory . Since then, the party has seen a fall in support comparable to Prime Minister Trudeau’s Federal Liberal Party near the end of his term. To further the comparison, the",
+      "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/08/Screenshot-2026-08-30-at-6.46.36-PM-930x620.png",
+      "_pageAuthor": "Benjamin-Taylor Sauvé",
+      "authorCheckedAt": "2026-08-31T00:46:37.788Z",
+      "leadExcerpt": "Quebec’s new Premier, Christine Fréchette, has decided to embrace only a few of the policies from her predecessor, François Legault. His approach to Language and higher education are among them.",
+      "imageLocal": "assets/news-images/6a026d1620e7a58e.png",
+      "imageLocalKey": "6a026d1620e7a58e",
+      "sourceImageCredit": "Photo : Eva Marriott-Fabre",
+      "sourceImageCreator": "Eva Marriott-Fabre",
+      "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/08/premier-christine-frechette-on-language/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "screenshot-2026-08-30-at-6.46.36-pm.png",
+      "sourceImageCreditRev": 10
+    },
     {
       "source": "The Tribune",
       "institution": "McGill University",
@@ -823,7 +848,6 @@
       "excerpt": "Long before his tenure scientifically fighting cancer at McGill, Professor Ivan Topisirovic wanted to be a soccer player. However, a youth coach at a Belgrade club settled the matter early, telling him he would never make even a low-tier team. While it may have hurt at the time,",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/08/Untitled_Artwork-scaled.png",
       "authorCheckedAt": "2026-08-30T20:40:09.162Z",
-      "_pageAuthor": "Abraham Labban",
       "sourceImageCredit": "Photo : Eliot Loose",
       "sourceImageCreator": "Eliot Loose",
       "sourceImageCreditUrl": "https://www.thetribune.ca/sci-tech/meet-your-prof-ivan-topisirovic-10082026/?utm_source=rss&utm_medium=rss&utm_campaign=meet-your-prof-ivan-topisirovic-10082026",
@@ -875,7 +899,7 @@
       "date": "2026-08-02T00:33:53.000Z",
       "excerpt": "U.S. President Donald Trump’s latest threat to Canada: A tariff hike over wildfire smoke. As of July 28, 893 active fires are burning from British Columbia to the Atlantic provinces, affecting over 3.7 million hectares of land and forcing Canadians to flee their homes amid",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/08/IMG_1839.png",
-      "authorCheckedAt": "2026-08-30T00:38:06.584Z",
+      "authorCheckedAt": "2026-08-31T00:46:38.735Z",
       "sourceImageCredit": "Photo : Sophie Schuyler",
       "sourceImageCreator": "Sophie Schuyler",
       "sourceImageCreditUrl": "https://www.thetribune.ca/opinion/the-u-s-must-play-its-part-in-fighting-north-americannot-canadianwildfires-01082026/?utm_source=rss&utm_medium=rss&utm_campaign=the-u-s-must-play-its-part-in-fighting-north-americannot-canadianwildfires-01082026",
@@ -921,7 +945,7 @@
       "date": "2026-07-28T19:05:07.000Z",
       "excerpt": "Following a year-long break due to a breach of contract between Cricket Canada and its former tournament host, the sole professional cricket league in the country has made its comeback on July 16 in Toronto with the fifth installment of the Global T20 Canada tournament. In many",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/07/IMG_3442.png",
-      "authorCheckedAt": "2026-08-30T00:38:07.500Z",
+      "authorCheckedAt": "2026-08-31T00:46:39.616Z",
       "sourceImageCredit": "Photo : Gwendolyn Heffernan",
       "sourceImageCreator": "Gwendolyn Heffernan",
       "sourceImageCreditUrl": "https://www.thetribune.ca/sports/global-t20-cricket-tournament-returns-to-canada-yet-coverage-lags-behind-28072026/?utm_source=rss&utm_medium=rss&utm_campaign=global-t20-cricket-tournament-returns-to-canada-yet-coverage-lags-behind-28072026",
@@ -970,7 +994,7 @@
       "date": "2026-07-21T13:21:49.000Z",
       "excerpt": "On July 2, Folarin Balogun , star forward for the United States Men’s National Team ( USMNT ), received a straight red card in the 64th minute of the USA vs. Bosnia and Herzegovina Round of 32 match in the Fédération Internationale de Football Association ( FIFA ) World Cup 2026",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/07/Screen-Shot-2026-07-21-at-9.14.03-AM.png",
-      "authorCheckedAt": "2026-08-30T00:38:08.431Z",
+      "authorCheckedAt": "2026-08-31T00:46:40.450Z",
       "sourceImageCredit": "Photo credit: The Tribune",
       "sourceImageCreditUrl": "https://www.thetribune.ca/sports/the-balogun-scandal-is-just-the-latest-instance-of-fifas-political-pandering-21072026/?utm_source=rss&utm_medium=rss&utm_campaign=the-balogun-scandal-is-just-the-latest-instance-of-fifas-political-pandering-21072026",
       "sourceImageCreditFrom": "media",
@@ -1334,7 +1358,7 @@
       "date": "2026-05-15T16:00:00.000Z",
       "excerpt": "À Montréal, les murs parlent, sans jamais révéler celles et ceux qui les écrivent. Sous les couches de peinture et les signatures superposées, une présence discrète s’impose : celle d’une génération, souvent étudiante, qui investit l’espace urbain en marge des cadres établis.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/Photo-5_IMG_3586-1024x768.jpg",
-      "authorCheckedAt": "2026-08-30T00:38:08.786Z",
+      "authorCheckedAt": "2026-08-31T00:46:41.100Z",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/",
       "sourceImageCreditFrom": "media",
@@ -1358,7 +1382,7 @@
       "date": "2026-05-14T21:00:00.000Z",
       "excerpt": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatrième sortie depuis 2020, l’artiste gravit les échelons et devient une voix importante du hip-hop québécois. Composé de 18 titres d’ambiance estivale tels que « CHOP CHOP », « POLY",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg",
-      "authorCheckedAt": "2026-08-30T00:38:09.028Z",
+      "authorCheckedAt": "2026-08-31T00:46:41.436Z",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "sourceImageCreditFrom": "media",
@@ -1382,7 +1406,7 @@
       "date": "2026-05-14T19:09:17.000Z",
       "excerpt": "Le 5 mai dernier, le pavillon Roger-Gaudry a accueilli le premier forum du Réseau des écoles associées ( RÉA ). Ce projet ambitieux de la Faculté des sciences de l’éducation (FSÉ) transforme des écoles primaires et secondaires en véritables « hôpitaux universitaires » de la",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg",
-      "authorCheckedAt": "2026-08-30T00:38:09.268Z",
+      "authorCheckedAt": "2026-08-31T00:46:41.772Z",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
       "sourceImageCreditFrom": "media",
@@ -1406,7 +1430,7 @@
       "date": "2026-05-14T16:00:00.000Z",
       "excerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 (PL394) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s. Le député",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/12-13_Statuts-Politique-Parents-Proche-Aidants.jpg",
-      "authorCheckedAt": "2026-08-30T00:38:09.510Z",
+      "authorCheckedAt": "2026-08-31T00:46:42.109Z",
       "sourceImageCredit": "Photo : MOHAMMED AZIZ MESTIRI",
       "sourceImageCreator": "MOHAMMED AZIZ MESTIRI",
       "sourceImageCreditUrl": "https://quartierlibre.ca/projet-loi-etudiant-proche-aidante/",
@@ -1484,7 +1508,7 @@
       "date": "2026-05-13T16:00:00.000Z",
       "excerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg",
-      "authorCheckedAt": "2026-08-30T00:38:09.751Z",
+      "authorCheckedAt": "2026-08-31T00:46:42.449Z",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "sourceImageCreditFrom": "media",
@@ -1508,7 +1532,7 @@
       "date": "2026-05-12T20:00:00.000Z",
       "excerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/10-11_FAECUM_photo-assemblee.jpg",
-      "authorCheckedAt": "2026-08-30T00:38:09.992Z",
+      "authorCheckedAt": "2026-08-31T00:46:42.785Z",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/faecum-la-democratie-universitaire-critiquee/",
       "sourceImageCreditFrom": "media",
@@ -1751,7 +1775,7 @@
       "date": "2026-05-12T18:39:17.000Z",
       "excerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère, un événement encore jeune, mais déjà bien installé dans le",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/21_Montreal-Mystere.jpg",
-      "authorCheckedAt": "2026-08-30T00:38:10.233Z",
+      "authorCheckedAt": "2026-08-31T00:46:43.127Z",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/montreal-mystere-festival-bilingue/",
       "sourceImageCreditFrom": "media",
@@ -2025,7 +2049,7 @@
       "date": "2026-05-11T19:00:00.000Z",
       "excerpt": "La Coupe du monde 2026 (CM26), qui aura lieu du 11 juin au 19 juillet prochains, s’annonce comme le plus grand événement de soccer jamais organisé. La compétition se déroulera simultanément dans trois pays, les États-Unis, le Canada et le Mexique, et comptera un nombre record",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/16-17_CDM-1.jpg",
-      "authorCheckedAt": "2026-08-30T00:38:10.456Z",
+      "authorCheckedAt": "2026-08-31T00:46:43.463Z",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/coupe-du-monde-2026/",
       "sourceImageCreditFrom": "media",
@@ -2049,7 +2073,7 @@
       "date": "2026-05-11T15:57:40.000Z",
       "excerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/6-7_soutien-technique.jpg",
-      "authorCheckedAt": "2026-08-30T00:38:10.678Z",
+      "authorCheckedAt": "2026-08-31T00:46:43.799Z",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/soutien-technique-a-ludem/",
       "sourceImageCreditFrom": "media",
@@ -2125,7 +2149,7 @@
       "date": "2026-05-08T19:30:03.000Z",
       "excerpt": "Du 1 er au 9 mai, le festival Jamais Lu s’installe au théâtre Aux Écuries de Montréal, avec pour thème « Réparer nos Transmissions ». Le nouveau directeur artistique et cogénéral du festival, Éric Noël, partage son envie de mettre au cœur de cette édition la place des",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-1-1024x677.jpeg",
-      "authorCheckedAt": "2026-08-30T00:38:10.901Z",
+      "authorCheckedAt": "2026-08-31T00:46:44.134Z",
       "sourceImageCredit": "Photo : Maryse Boyce",
       "sourceImageCreator": "Maryse Boyce",
       "sourceImageCreditUrl": "https://quartierlibre.ca/festival-jamais-lu-2026/",
@@ -3677,80 +3701,6 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "La cassette commence à être usée",
-      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
-      "author": "Antoine Proulx",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Réponse au journal The Concordian et à l’économiste Moshe Lander.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/concordiareponseV2-scaled.jpeg",
-      "featured": true,
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "concordiareponsev2.jpeg",
-      "leadImageReady": true,
-      "leadExcerpt": "Première gaffe intellectuelle (in)volontaire du Concordian . En trente secondes de recherches plus ou moins rigoureuses, il aurait pu comprendre les réelles causes de la décote du Québec par la Standard and Poor’s (S&P) – qui n’a absolument rien à voir avec la recrudescence de l’intérêt des Québécois envers la souveraineté.",
-      "imageLocal": "assets/news-images/c4342ffde84293ec.jpg",
-      "imageLocalKey": "c4342ffde84293ec",
-      "imageLocalVia": "origin"
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "La performance de l’homosexualité : un privilège ?",
-      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
-      "author": "Joséphine Miton",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1.jpeg",
-      "featured": true,
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "coinqueer-1.jpeg",
-      "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
-      "imageLocal": "assets/news-images/4d808d99f444a191.jpg",
-      "imageLocalKey": "4d808d99f444a191",
-      "imageLocalVia": "origin"
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "L’épidémie de la nonchalance",
-      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "author": "Elie Nguyen",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
-      "featured": true,
-      "sourceImageCredit": "Photo : Elie Nguyen",
-      "sourceImageCreator": "Elie Nguyen",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
-      "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
       "title": "Le retard et les bienfaits du temps long",
       "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
       "author": "Dalia Djazouli",
@@ -3820,6 +3770,80 @@
       "imageLocal": "assets/news-images/5151f44467f66595.jpg",
       "imageLocalKey": "5151f44467f66595",
       "imageLocalVia": "origin"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "La cassette commence à être usée",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
+      "author": "Antoine Proulx",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Réponse au journal The Concordian et à l’économiste Moshe Lander.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/concordiareponseV2-scaled.jpeg",
+      "featured": true,
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "concordiareponsev2.jpeg",
+      "leadImageReady": true,
+      "leadExcerpt": "Première gaffe intellectuelle (in)volontaire du Concordian . En trente secondes de recherches plus ou moins rigoureuses, il aurait pu comprendre les réelles causes de la décote du Québec par la Standard and Poor’s (S&P) – qui n’a absolument rien à voir avec la recrudescence de l’intérêt des Québécois envers la souveraineté.",
+      "imageLocal": "assets/news-images/c4342ffde84293ec.jpg",
+      "imageLocalKey": "c4342ffde84293ec",
+      "imageLocalVia": "origin"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "author": "Joséphine Miton",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1.jpeg",
+      "featured": true,
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "coinqueer-1.jpeg",
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
+      "imageLocal": "assets/news-images/4d808d99f444a191.jpg",
+      "imageLocalKey": "4d808d99f444a191",
+      "imageLocalVia": "origin"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "L’épidémie de la nonchalance",
+      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "author": "Elie Nguyen",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
+      "featured": true,
+      "sourceImageCredit": "Photo : Elie Nguyen",
+      "sourceImageCreator": "Elie Nguyen",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
     },
     {
       "source": "The McGill Daily",
@@ -4155,30 +4179,6 @@
       "imageLocalVia": "origin"
     },
     {
-      "source": "The McGill Daily",
-      "institution": "McGill University",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "en",
-      "title": "Rewriting the Code: McGill Students Break Barriers in Computer Science",
-      "link": "https://www.mcgilldaily.com/2026/03/rewriting-the-code-mcgill-students-break-barriers-in-computer-science/",
-      "author": "Enid Kohler",
-      "date": "2026-03-23T12:00:00.000Z",
-      "excerpt": "Good People is a bi-weekly column highlighting McGill students doing community-oriented work on and around campus. Because it’s important to celebrate good people doing good things.",
-      "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/03/GirlsWhoCode_photo.jpg",
-      "authorCheckedAt": "2026-08-30T20:41:07.604Z",
-      "sourceImageCredit": "Photo credit: The McGill Daily",
-      "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/03/rewriting-the-code-mcgill-students-break-barriers-in-computer-science/",
-      "sourceImageCreditFrom": "media",
-      "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "girlswhocode_photo.jpg",
-      "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/4598d02e44e9208d.jpg",
-      "imageLocalKey": "4598d02e44e9208d",
-      "imageLocalVia": "origin"
-    },
-    {
       "source": "Le Délit",
       "institution": "Université McGill",
       "region": "Montréal",
@@ -4217,16 +4217,17 @@
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/MAGA_marius.png",
       "featured": true,
       "authorCheckedAt": "2026-08-30T22:50:20.006Z",
-      "leadExcerpt": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer en instrumentalisant certaines femmes pour reproduire les structures qui les subordonnent. C’est à travers ce mécanisme d’opacité que sa présence se resserre sur la société, et que ses contradictions se dissimulent sous le couvert de liberté individuelle, de traditions ou de choix personnels.",
-      "imageLocal": "assets/news-images/5b45f6fdc5b93dce.png",
-      "imageLocalKey": "5b45f6fdc5b93dce",
       "sourceImageCredit": "Photo : Stu Doré",
       "sourceImageCreator": "Stu Doré",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/18/les-femmes-maga-au-service-du-patriarcat/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "maga_marius.png",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Une des capacités distinctives de ce système patriarcal est son habileté remarquable à se perpétuer en instrumentalisant certaines femmes pour reproduire les structures qui les subordonnent. C’est à travers ce mécanisme d’opacité que sa présence se resserre sur la société, et que ses contradictions se dissimulent sous le couvert de liberté individuelle, de traditions ou de choix personnels.",
+      "imageLocal": "assets/news-images/5b45f6fdc5b93dce.png",
+      "imageLocalKey": "5b45f6fdc5b93dce",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Exil",
