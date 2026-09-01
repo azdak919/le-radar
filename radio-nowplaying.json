@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T15:04:08.188Z",
+  "updatedAt": "2026-09-01T18:43:05.426Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T15:03:34.823Z"
+      "checkedAt": "2026-09-01T18:42:40.501Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Roche aux platines",
+        "title": "Le palmarès",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/roche-aux-platines"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
       "next": {
-        "title": "Les sentinelles de l'art",
+        "title": "À la bonne heure",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/a-la-bonne-heure"
       },
       "track": "",
-      "showTitle": "Roche aux platines",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T15:03:37.347Z"
+      "checkedAt": "2026-09-01T18:42:42.701Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Ecolibrium/Environment in Canada",
+        "title": "Voice of Korea",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "14:00",
+        "end": "15:00"
       },
       "next": {
-        "title": "Universal Break",
+        "title": "Montreal Sessions",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "track": "",
-      "showTitle": "Ecolibrium/Environment in Canada",
+      "showTitle": "Voice of Korea",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T15:03:40.278Z"
+      "checkedAt": "2026-09-01T18:42:45.100Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mirror Journal",
+        "title": "Code Switch",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/mirror-journal"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/code-switch"
       },
       "next": {
-        "title": "World Beat News",
+        "title": "Sonic Lit: A SpokenWeb Radio Show",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/world-beat-news"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
       },
       "track": "",
-      "showTitle": "Mirror Journal",
+      "showTitle": "Code Switch",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T15:03:55.366Z"
+      "checkedAt": "2026-09-01T18:42:59.171Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T15:03:56.786Z"
+      "checkedAt": "2026-09-01T18:43:00.386Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "url": "https://www.choq.ca/emissions/palmareschoq"
       },
-      "track": "vice E roi - La myopie du coeur",
+      "track": "Malaime Soleil - Desert",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -151,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-01T15:04:07.838Z"
+      "checkedAt": "2026-09-01T18:43:05.075Z"
     }
   }
 }
