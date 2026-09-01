@@ -190,14 +190,14 @@
     <h1>Cartes sports</h1>
     <p class="lede">Labo mât : une carte = 390 px. Aujourd’hui a <strong>cet AM</strong> et <strong>ce PM</strong>. Demain : AM ou PM. <strong>Hier : pas d’AM/PM</strong>.</p>
     <div class="legend">
-      <div><code>CET AM</code> — aujourd’hui avant midi (À venir + résultat).</div>
+      <div><code>CET AM</code> — aujourd’hui avant midi (Aujourd’hui + résultat).</div>
       <div><code>CE PM</code> — aujourd’hui à partir de 12 h.</div>
       <div><code>AM</code> / <code>PM</code> — Demain seulement, sans « ce ».</div>
       <div><strong>Hier</strong> — une ligne, pas d’AM/PM.</div>
       <div>Pas d’AM/PM sur <strong>En direct</strong> (score) ni <strong>Prochain match</strong>.</div>
     </div>
     <nav class="toc">
-      <a href="#today-next">À venir</a>
+      <a href="#today-next">Aujourd’hui</a>
       <a href="#today-result">Résultat du jour</a>
       <a href="#tomorrow">Demain</a>
       <a href="#past">Hier</a>
@@ -213,7 +213,7 @@
       {
         title: 'CTA — à venir (reçoit)',
         cta: {
-          state: 'next', tone: '#2e7d4f', tag: 'À venir', meridiem: 'ce PM', glyph: '⚽',
+          state: 'next', tone: '#2e7d4f', tag: 'Aujourd’hui', meridiem: 'ce PM', glyph: '⚽',
           text: '<span class="sports-chip__name">Patriotes de Saint-Hyacinthe</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Champlain Saint-Lambert</span>',
           sub: 'Aujourd’hui · dans 3 h · Soccer collégial masculin division 1',
         },
@@ -221,7 +221,7 @@
       {
         title: 'CTA — à venir (visiteur)',
         cta: {
-          state: 'next', tone: '#2e7d4f', tag: 'À venir', meridiem: 'cet AM', glyph: '⚽',
+          state: 'next', tone: '#2e7d4f', tag: 'Aujourd’hui', meridiem: 'cet AM', glyph: '⚽',
           text: '<span class="sports-chip__name">Redbirds</span> <span class="sports-chip__vs">chez</span> <span class="sports-chip__name sports-chip__opp">Stingers</span>',
           sub: 'Aujourd’hui · 10 h 00 · Soccer universitaire féminin',
         },
@@ -229,7 +229,7 @@
       {
         title: 'CTA — à venir (dans 45 min)',
         cta: {
-          state: 'next', tone: '#2e7d4f', tag: 'À venir', meridiem: 'ce PM', glyph: '🏀',
+          state: 'next', tone: '#2e7d4f', tag: 'Aujourd’hui', meridiem: 'ce PM', glyph: '🏀',
           text: '<span class="sports-chip__name">Carabins</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Redbirds</span>',
           sub: 'Aujourd’hui · dans 45 min · Basketball universitaire',
         },
@@ -403,63 +403,63 @@
         },
       },
       {
-        title: 'CTA — avant-hier (victoire)',
+        title: 'CTA — dimanche 30 août (victoire)',
         cta: {
-          state: 'result', tone: '#3d9a6a', tag: 'Avant-hier', glyph: '🏈',
+          state: 'result', tone: '#3d9a6a', tag: 'dimanche 30 août', glyph: '🏈',
           badge: 'V', badgeMod: 'w', score: '24–21',
           text: '<span class="sports-chip__name">Carabins</span> <span class="sports-chip__score">24–21</span> <span class="sports-chip__name sports-chip__opp">Rouge et Or</span>',
           sub: 'Football universitaire',
         },
       },
       {
-        title: 'CTA — avant-hier (défaite)',
+        title: 'CTA — dimanche 30 août (défaite)',
         cta: {
-          state: 'result', tone: '#c45c5c', tag: 'Avant-hier', glyph: '🏒',
+          state: 'result', tone: '#c45c5c', tag: 'dimanche 30 août', glyph: '🏒',
           badge: 'D', badgeMod: 'l',
           text: '<span class="sports-chip__name">Gaiters</span> <span class="sports-chip__score">2–5</span> <span class="sports-chip__name sports-chip__opp">Redbirds</span>',
           sub: 'Hockey universitaire',
         },
       },
       {
-        title: 'CTA — avant-hier (match nul)',
+        title: 'CTA — dimanche 30 août (match nul)',
         cta: {
-          state: 'result', tone: '#8fa3b0', tag: 'Avant-hier', glyph: '⚽',
+          state: 'result', tone: '#8fa3b0', tag: 'dimanche 30 août', glyph: '⚽',
           badge: 'N', badgeMod: 'd',
           text: '<span class="sports-chip__name">Vert & Or</span> <span class="sports-chip__score">0–0</span> <span class="sports-chip__name sports-chip__opp">Gaiters</span>',
           sub: 'Soccer universitaire',
         },
       },
       {
-        title: 'CTA — avant-hier (place)',
+        title: 'CTA — dimanche 30 août (place)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Avant-hier', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'dimanche 30 août', glyph: '⛵',
           score: '7e/12',
           text: '<span class="sports-chip__name">McGill</span>',
           sub: 'Voile universitaire',
         },
       },
       {
-        title: 'CTA — avant-hier (or)',
+        title: 'CTA — dimanche 30 août (or)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Avant-hier', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'dimanche 30 août', glyph: '⛵',
           badge: '🥇', badgeMod: 'place', score: '1er/10',
           text: '<span class="sports-chip__name">ULaval</span>',
           sub: 'Voile universitaire',
         },
       },
       {
-        title: 'CTA — avant-hier (argent)',
+        title: 'CTA — dimanche 30 août (argent)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Avant-hier', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'dimanche 30 août', glyph: '⛵',
           badge: '🥈', badgeMod: 'place', score: '2e/10',
           text: '<span class="sports-chip__name">Concordia</span>',
           sub: 'Voile universitaire',
         },
       },
       {
-        title: 'CTA — avant-hier (bronze)',
+        title: 'CTA — dimanche 30 août (bronze)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Avant-hier', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'dimanche 30 août', glyph: '⛵',
           badge: '🥉', badgeMod: 'place', score: '3e/10',
           text: '<span class="sports-chip__name">UdeM</span>',
           sub: 'Voile universitaire',
@@ -551,17 +551,17 @@
       {
         title: 'CTA — hors saison (reçoit)',
         cta: {
-          state: 'next', tone: '#6a7580', tag: 'Prochain', glyph: '🏈',
+          state: 'next', tone: '#6a7580', tag: 'Prochain', dateLine: 'ven. 4 sept', glyph: '🏈',
           text: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Carabins</span>',
-          sub: 'dans 12 j · ven. 4 sept., 19 h 00 · Football universitaire',
+          sub: '19 h 00 · Football universitaire',
         },
       },
       {
         title: 'CTA — hors saison (visiteur)',
         cta: {
-          state: 'next', tone: '#6a7580', tag: 'Prochain', glyph: '🏈',
+          state: 'next', tone: '#6a7580', tag: 'Prochain', dateLine: 'ven. 4 sept', glyph: '🏈',
           text: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__vs">chez</span> <span class="sports-chip__name sports-chip__opp">Carabins</span>',
-          sub: 'dans 12 j · ven. 4 sept., 19 h 00 · Football universitaire',
+          sub: '19 h 00 · Football universitaire',
         },
       },
       {
@@ -581,7 +581,8 @@
         html: () => matchChip({
           tone: '#2e7d4f', glyph: '⚽',
           inner: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Redbirds</span>',
-          sub: 'À venir · 19 h 00 · Soccer universitaire masculin',
+          kicker: 'Aujourd’hui', lamp: 'soon',
+          sub: '19 h 00 · Soccer universitaire masculin',
         }),
       },
       {
@@ -589,7 +590,8 @@
         html: () => matchChip({
           tone: '#2e7d4f', glyph: '⚽',
           inner: '<span class="sports-chip__name">Redbirds</span> <span class="sports-chip__vs">chez</span> <span class="sports-chip__name sports-chip__opp">Stingers</span>',
-          sub: 'À venir · 10 h 00 · Soccer universitaire féminin',
+          kicker: 'Aujourd’hui', lamp: 'soon',
+          sub: '10 h 00 · Soccer universitaire féminin',
         }),
       },
       {
@@ -613,7 +615,8 @@
         html: () => matchChip({
           tone: '#6a7580', glyph: '🏀',
           inner: '<span class="sports-chip__name">Carabins</span> <span class="sports-chip__vs">chez</span> <span class="sports-chip__name sports-chip__opp">Rouge et Or</span>',
-          sub: 'ven. 4 sept. · 19 h 00 · Basketball universitaire',
+          kicker: 'Prochain', dateLine: 'ven. 4 sept', lamp: 'next',
+          sub: '19 h 00 · Basketball universitaire',
         }),
       },
       {
@@ -647,11 +650,12 @@
         }),
       },
       {
-        title: 'Puce — match nul avant-hier',
+        title: 'Puce — match nul dimanche 30 août',
         html: () => matchChip({
           tone: '#8fa3b0', glyph: '⚽', badge: 'N', badgeMod: 'd',
           inner: '<span class="sports-chip__name">Rouge et Or</span> <span class="sports-chip__score">1–1</span> <span class="sports-chip__name sports-chip__opp">Carabins</span>',
-          sub: 'avant-hier · Soccer universitaire masculin',
+          kicker: 'dimanche 30 août', lamp: 'past',
+          sub: 'Soccer universitaire masculin',
         }),
       },
       {
@@ -786,17 +790,18 @@
         html: () => matchChip({
           tone: '#2e7d4f', glyph: '🏀',
           inner: '<span class="sports-chip__name">Carabins</span> <span class="sports-chip__vs">reçoivent</span> <span class="sports-chip__name sports-chip__opp">Redbirds</span>',
-          sub: 'À venir · dans 45 min · Basketball universitaire',
+          kicker: 'Aujourd’hui', lamp: 'soon',
+          sub: 'dans 45 min · Basketball universitaire',
         }),
       },
     ];
 
-    function tagLinesHtml(tag) {
+    function tagLinesHtml(tag, dateLine) {
       if (tag === 'Dernière heure') {
         return '<span class="sports-chip__cta-tag-lines"><span>Dernière</span><span>heure</span></span>';
       }
-      if (tag === 'Avant-hier') {
-        return '<span class="sports-chip__cta-tag-lines"><span>Avant</span><span>hier</span></span>';
+      if (tag === 'Prochain' && dateLine) {
+        return `<span class="sports-chip__cta-tag-lines"><span>Prochain</span><span>${dateLine}</span></span>`;
       }
       const m = String(tag || '').trim().match(/^(\S+)\s+(\d{1,2}\s+\S.+)$/);
       if (m) {
@@ -818,16 +823,14 @@
       if (!wrap) return a;
       return `<div class="masthead-sports-strip" data-count="1" data-cta-pinned="0" data-ready="1">${a}</div>`;
     }
-    function matchChip({ tone, glyph, inner, sub, badge, badgeMod, live, kicker, lamp }) {
+    function matchChip({ tone, glyph, inner, sub, badge, badgeMod, live, kicker, lamp, dateLine }) {
       if (!kicker) {
         if (live) { kicker = 'En direct'; lamp = lamp || 'live'; }
         else {
           const first = String(sub || '').split('·')[0].trim();
-          if (/^À venir/i.test(first)) { kicker = 'À venir'; lamp = 'soon'; }
+          if (/^Aujourd/i.test(first) || /^À venir/i.test(first)) { kicker = 'Aujourd’hui'; lamp = lamp || 'soon'; }
           else if (/^Demain/i.test(first)) { kicker = 'Demain'; lamp = 'next'; }
-          else if (/^aujourd/i.test(first)) { kicker = 'Aujourd’hui'; lamp = 'today'; }
           else if (/^hier/i.test(first)) { kicker = 'Hier'; lamp = 'past'; }
-          else if (/avant-hier/i.test(first)) { kicker = 'Avant-hier'; lamp = 'past'; }
           else if (first) { kicker = first; lamp = lamp || 'past'; }
         }
       }
@@ -835,11 +838,11 @@
         ? `<span class="sports-chip__badge sports-chip__badge--${badgeMod}" aria-hidden="true">${badge}</span>`
         : '';
       const liveAttr = live ? ' data-sports-live="1" data-cta-state="live"' : '';
-      const kickInner = tagLinesHtml(kicker);
+      const kickInner = tagLinesHtml(kicker, dateLine);
       const kick = kicker
-        ? `<span class="sports-chip__cta-tag" data-cta-tag="${kicker}" data-cta-lamp="${lamp || ''}">${kickInner}</span>`
+        ? `<span class="sports-chip__cta-tag" data-cta-tag="${kicker}" data-cta-lamp="${lamp || ''}"${dateLine ? ` data-cta-date-line="${dateLine}"` : ''}>${kickInner}</span>`
         : '';
-      return `<a class="sports-chip sports-chip--match"${liveAttr} href="#lab" style="--sports-tone:${tone}">
+      return `<a class="sports-chip sports-chip--match" data-cta-lamp="${lamp || ''}"${liveAttr} href="#lab" style="--sports-tone:${tone}">
         ${kick}<span class="sports-chip__glyph" aria-hidden="true">${glyph}</span>${b}
         <span class="sports-chip__body">
           <span class="sports-chip__line"><span class="sports-chip__line-inner">${inner}</span></span>
@@ -855,20 +858,20 @@
       if (!today) return half;
       return half === 'AM' ? 'cet AM' : 'ce PM';
     }
-    function stripCta({ state, tone, tag, glyph, text, sub, badge, badgeMod, brand, score, meridiem }) {
+    function stripCta({ state, tone, tag, glyph, text, sub, badge, badgeMod, brand, score, meridiem, dateLine }) {
       if (score && text && !/sports-chip__score/.test(text)) {
         if (/sports-chip__vs/.test(text)) {
           text = text.replace(/<span class="sports-chip__vs"[^>]*>[^<]*<\/span>/, `<span class="sports-chip__score">${score}</span>`);
         } else if (state === 'live' && !/\d/.test(text)) {
           text = String(text).replace(/(<\/span>)/, `</span> <span class="sports-chip__score">${score}</span>`);
-        } else if (tag === 'Hier' || tag === 'Avant-hier') {
+        } else if (tag === 'Hier') {
           text = `${text} <span class="sports-chip__score">${score}</span>`;
         }
       }
       const tagLabel = tag || 'Sports';
       const lamp = state === 'live' ? 'live'
-        : tagLabel === 'À venir' ? 'soon'
-        : (tagLabel === 'Aujourd’hui' || tagLabel === 'Dernière heure') ? 'today'
+        : state === 'next' && (tagLabel === 'Aujourd’hui' || tagLabel === 'À venir') ? 'soon'
+        : tagLabel === 'Dernière heure' ? 'today'
         : (state === 'next' || tagLabel === 'Demain' || tagLabel === 'Prochain' || tagLabel === 'Prochain match') ? 'next'
         : state === 'result' ? 'past'
         : 'idle';
@@ -877,10 +880,9 @@
         || tagLabel === 'Prochain'
         || tagLabel === 'Prochain match'
         || tagLabel === 'Hier'
-        || tagLabel === 'Avant-hier'
         || tagLabel === 'Dernière heure'
         || /^\S+\s+\d{1,2}\s+\S/.test(tagLabel);
-      const todayTag = tagLabel === 'À venir' || tagLabel === 'Aujourd’hui';
+      const todayTag = tagLabel === 'Aujourd’hui' || tagLabel === 'À venir';
       const datedTag = todayTag || tagLabel === 'Demain';
       const half = skipMeridiem
         ? ''
@@ -891,7 +893,7 @@
         : '';
       const tagInner = brand
         ? '<img class="sports-chip__cta-logo" src="../assets/icon.svg" width="18" height="18" alt="" decoding="async" aria-hidden="true">'
-        : tagLinesHtml(tagLabel);
+        : tagLinesHtml(tagLabel, dateLine);
       const tagClass = brand
         ? 'sports-chip__cta-tag sports-chip__cta-tag--brand notranslate'
         : 'sports-chip__cta-tag notranslate';

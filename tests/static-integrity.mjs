@@ -1435,7 +1435,7 @@ assert(
     && appJs.includes('function sportsCtaDateLinePair')
     && appJs.includes('function sportsCtaResultDateParts')
     && /function fillSportsCtaTagCopy[\s\S]*tag\.append\(document\.createTextNode/.test(appJs),
-  'app.js : kicker F 1 ligne sauf Dernière heure / Avant-hier / dates (2 lignes) ; score entre les noms',
+  'app.js : kicker F 1 ligne sauf Dernière heure / Prochain+date / dates (2 lignes) ; score entre les noms',
 );
 // Pastille CTA : plus de voyant LED (ni span JS, ni ::before).
 assert(
@@ -1673,13 +1673,15 @@ assert(
     && appJs.includes('function sportsCtaTagUsesMeridiem')
     && appJs.includes('function sportsMatchWhenTag')
     && /sports-chip__when-tag/.test(styleCss)
-    && /wanted === 'Hier' \|\| wanted === 'Avant-hier'/.test(appJs)
+    && /wanted === 'Hier'/.test(appJs)
     && appJs.includes("SPORTS_MERIDIEM_AM_LINE = 'cet AM'")
     && appJs.includes("SPORTS_MERIDIEM_PM_LINE = 'ce PM'")
     && /sports-chip__cta-tag-meridiem/.test(styleCss)
     && appJs.includes('SPORTS_CTA_TAG_LATEST')
     && appJs.includes('return SPORTS_CTA_TAG_LATEST')
-    && appJs.includes("return 'Avant-hier'")
+    && appJs.includes('function sportsCtaCompactDateLine')
+    && appJs.includes('function sportsDedupeHomepageResults')
+    && !appJs.includes("return 'Avant-hier'")
     && !/return 'Reprise'/.test(appJs)
     && !appJs.includes('function sportsHasAnyResult')
     && appJs.includes('function sportsVsHtml')
@@ -1759,7 +1761,7 @@ assert(
     && !appJs.includes('sportsCtaInPlaceViewport')
     && !appJs.includes('retouchSportsCtaChip')
     && /if \(animate && !sportsReducedMotion\) a\.classList\.add\('is-arriving'\)/.test(appJs),
-  'app.js : CTA = dédup matchs + vainqueur seulement + même leave/arrive que les scores',
+  'app.js : une face par match (vainqueur / un N) + même leave/arrive',
 );
 assert(
   styleCss.includes('sports-chip__cta-stack')

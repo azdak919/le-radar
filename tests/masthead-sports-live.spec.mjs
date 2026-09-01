@@ -357,37 +357,32 @@ test('CTA live : un direct écarte résultats et prochains du cycle', async ({ p
   expect(after).not.toMatch(/Concordia/);
 });
 
-test('CTA live : plusieurs directs — cycle entre eux, pas le reste', async ({ page }) => {
-  const cta = await openWithSports(page, twoLivePlusResultPayload());
-  await expect(cta).toHaveAttribute('data-cta-state', 'live');
-  const pool = await page.evaluate(() => sportsCtaCandidateSlides().map((s) => ({
-    live: sportsGameIsLive(s.game),
-    name: s.team?.name || '',
-  })));
-  expect(pool.filter((s) => s.live).length, 'deux directs en tête').toBe(2);
-  expect(pool[0].live).toBe(true);
-  expect(pool[1].live).toBe(true);
-  expect(pool.some((s) => /Saint-Hyacinthe/i.test(s.name))).toBe(true);
-  expect(pool.some((s) => /Laval/i.test(s.name))).toBe(true);
-  const firstNonLive = pool.findIndex((s) => !s.live);
-  expect(firstNonLive, 'Concordia après les directs').toBeGreaterThanOrEqual(2);
-
-  const first = (await cta.locator('.sports-chip__line-inner').innerText()).replace(/\s+/g, ' ');
-  await page.evaluate(() => {
-    rotateSportsSlot(sportsCtaSlotIndex());
+test('bandeau : deux directs visibles, reliquat ensuite', async ({ page }) => {
+  await openWithSports(page, twoLivePlusResultPayload());
+  const info = await page.evaluate(() => {
+    const pool = sportsCtaCandidateSlides().map((s) => ({
+      live: sportsGameIsLive(s.game),
+      name: s.team?.name || '',
+    }));
+    const visible = (sportsVisible || []).map((s) => ({
+      live: !!(s?.game && sportsGameIsLive(s.game)),
+      name: s.team?.name || '',
+      state: s.ctaState || '',
+    }));
+    return { pool, visible };
   });
-  await expect.poll(async () => {
-    const chip = page.locator('#masthead-sports-strip .sports-chip').first();
-    const state = await chip.getAttribute('data-cta-state');
-    const text = (await chip.locator('.sports-chip__line-inner').innerText()).replace(/\s+/g, ' ');
-    return `${state}|${text}`;
-  }, { timeout: 4000 }).not.toBe(`live|${first}`);
-  const next = page.locator('#masthead-sports-strip .sports-chip').first();
-  await expect(next).toHaveAttribute('data-cta-state', 'live');
-  const second = (await next.locator('.sports-chip__line-inner').innerText()).replace(/\s+/g, ' ');
-  expect(second).not.toBe(first);
-  expect(second).not.toMatch(/Concordia/);
-  expect(second).toMatch(/Saint-Hyacinthe|Laval|Sainte-Foy/);
+  expect(info.pool.filter((s) => s.live).length, 'deux directs en tête de liste').toBe(2);
+  expect(info.pool[0].live).toBe(true);
+  expect(info.pool[1].live).toBe(true);
+  expect(info.pool.some((s) => /Saint-Hyacinthe/i.test(s.name))).toBe(true);
+  expect(info.pool.some((s) => /Laval/i.test(s.name))).toBe(true);
+  const firstNonLive = info.pool.findIndex((s) => !s.live);
+  expect(firstNonLive, 'Concordia après les directs').toBeGreaterThanOrEqual(2);
+  const liveVisible = info.visible.filter((s) => s.live);
+  expect(liveVisible.length, 'les deux directs sont des cartes distinctes').toBeGreaterThanOrEqual(2);
+  const chips = page.locator('#masthead-sports-strip .sports-chip');
+  await expect(chips.nth(0)).toHaveAttribute('data-cta-state', 'live');
+  await expect(chips.nth(1)).toHaveAttribute('data-cta-state', 'live');
 });
 
 test('iPad tactile : la CTA participe à la cascade', async ({ browser }) => {
@@ -515,7 +510,7 @@ test('CTA : sans live, à-venir d’aujourd’hui avant hier', async ({ page }) 
   expect(seq[0], 'B : ce soir avant hier').toMatchObject({ mode: 'next', code: 'STH' });
   expect(seq.some((s) => s.mode === 'result' && s.code === 'CON'), 'hier en reliquat').toBe(true);
   const cta = page.locator('#masthead-sports-strip .sports-chip').first();
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/À\s*venir/i);
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/Aujourd[’']hui/i);
 });
 
 test('CTA : à venir dans l’heure passe devant hier', async ({ page }) => {
@@ -542,7 +537,7 @@ test('CTA : à venir dans l’heure passe devant hier', async ({ page }) => {
   expect(seq.some((s) => s.mode === 'result' && s.code === 'CON')).toBe(true);
   const cta = page.locator('#masthead-sports-strip .sports-chip').first();
   await expect(cta).toHaveAttribute('data-cta-state', 'next');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/À\s*venir/i);
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/Aujourd[’']hui/i);
 });
 
 test('CTA prochain du jour : heure de coup d’envoi, pas « dans 3 h »', async ({ page }) => {
@@ -555,13 +550,13 @@ test('CTA prochain du jour : heure de coup d’envoi, pas « dans 3 h »', async
   const payload = upcomingTodayPayload(offsetMs);
   const cta = await openWithSports(page, payload);
   await expect(cta).toHaveAttribute('data-cta-state', 'next');
-  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/À\s*venir/i);
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/Aujourd[’']hui/i);
   await expect(cta.locator('.sports-chip__cta-tag-lines')).toHaveCount(0);
   await expect(cta.locator('.sports-chip__glyph')).toBeVisible();
   await expect(cta).toHaveAttribute('data-cta-lamp', 'soon');
+  await expect(cta.locator('.sports-chip__cta-tag')).toHaveAttribute('data-cta-lamp', 'soon');
   const clock = payload._kick.time.replace(':', ' h ');
   const sub = await cta.locator('.sports-chip__sub-text').innerText();
-  expect(sub).toMatch(/Aujourd[’']hui/);
   expect(sub).toMatch(new RegExp(clock.replace(' ', '\\s+')));
   expect(sub.toLowerCase()).not.toMatch(/dans \d/);
   expect(sub.toLowerCase()).not.toMatch(/il y a/);
@@ -623,6 +618,46 @@ test('CTA demain : pastille Demain, heure, pas Prochain match', async ({ page })
   const sub = await cta.locator('.sports-chip__sub-text').innerText();
   expect(sub).toMatch(/19\s*h\s*00/);
   expect(sub.toLowerCase()).not.toMatch(/demain/);
+});
+
+test('CTA Prochain : date en 2ᵉ ligne', async ({ page }) => {
+  const kick = torontoParts(Date.now() + 3 * 86400000);
+  const game = {
+    date: kick.date,
+    time: '19:00',
+    opponent: 'Carabins',
+    opponentCode: 'MTL',
+    opponentFullName: 'Carabins',
+    home: true,
+    sport: 'football',
+    competition: 'Football universitaire',
+    live: false,
+    gameId: 'later-next-date',
+  };
+  const team = teamShell('universitaire:football:lav-later', {
+    name: 'Rouge et Or',
+    fullName: 'Université Laval',
+    code: 'LAV',
+    sport: 'football',
+  });
+  team.sector = 'universitaire';
+  team.nextGame = game;
+  team.nextGames = [game];
+  const cta = await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: { [team.id]: team },
+  });
+  await expect(cta).toHaveAttribute('data-cta-state', 'next');
+  const tag = cta.locator('.sports-chip__cta-tag');
+  await expect(tag).toHaveAttribute('data-cta-tag', 'Prochain');
+  await expect(tag.locator('.sports-chip__cta-tag-lines > span')).toHaveCount(2);
+  await expect(tag.locator('.sports-chip__cta-tag-lines > span').nth(0)).toHaveText(/^Prochain$/i);
+  const dateLine = await tag.locator('.sports-chip__cta-tag-lines > span').nth(1).innerText();
+  expect(dateLine, '2ᵉ ligne = date courte').toMatch(/\d{1,2}\s+\S/);
+  expect(dateLine.toLowerCase()).not.toMatch(/prochain/);
+  const sub = await cta.locator('.sports-chip__sub-text').innerText();
+  expect(sub).toMatch(/19\s*h\s*00/);
 });
 
 test('CTA univ : acronymes UQAM / McGill, pas les noms longs', async ({ page }) => {
@@ -848,7 +883,7 @@ test('même match : une face reçoit ou chez, pas les deux', async ({ page }) =>
   expect(hasRecoit !== hasChez, 'un verbe, pas les deux').toBe(true);
 });
 
-test('liste B : V et D du même match restent deux cartes', async ({ page }) => {
+test('liste B : un match = une carte, le vainqueur', async ({ page }) => {
   const y = yesterdayResultGame();
   const win = {
     ...y,
@@ -896,7 +931,9 @@ test('liste B : V et D du même match restent deux cartes', async ({ page }) => 
       return { code: s.team?.code, result: s.game?.result, label };
     });
   });
-  expect(faces.map((f) => f.result).sort(), 'V et D dans la liste').toEqual(['L', 'W']);
+  expect(faces, 'une seule face').toHaveLength(1);
+  expect(faces[0].result, 'le vainqueur, pas la défaite').toBe('W');
+  expect(faces[0].code).toBe('STH');
   expect(faces.every((f) => !/reçoit|chez/.test(f.label))).toBe(true);
 });
 
@@ -932,7 +969,7 @@ test('CTA Hier : score entre les noms, kicker 1 ligne, glyphe', async ({ page })
   await expect(cta.locator('.sports-chip__line-inner .sports-chip__opp')).toHaveText(/Victoriaville/);
 });
 
-test('puces scores : V d’un côté et D de l’autre, pas de dédup', async ({ page }) => {
+test('accueil : une face par match (vainqueur / un N), pas V+D ni N+N', async ({ page }) => {
   const y = yesterdayResultGame();
   const win = {
     ...y,
@@ -1030,13 +1067,14 @@ test('puces scores : V d’un côté et D de l’autre, pas de dédup', async ({
       nnBlocks: nn.length === 2 ? blocked(nn[0], nn[1]) || blocked(nn[1], nn[0]) : true,
     };
   });
-  expect(faces.vd.length, 'V et D tous les deux').toBe(2);
-  expect(faces.vd.map((f) => f.result).sort()).toEqual(['L', 'W']);
-  expect(faces.vd.map((f) => f.badge).sort()).toEqual(['D', 'V']);
-  expect(faces.vdBlocks, 'V ne masque pas D').toBe(false);
-  expect(faces.nn.length, 'N des deux côtés').toBe(2);
-  expect(faces.nn.every((f) => f.result === 'D' && f.badge === 'N')).toBe(true);
-  expect(faces.nnBlocks, 'N ne masque pas l’autre N').toBe(false);
+  expect(faces.vd.length, 'une face pour le match V/D').toBe(1);
+  expect(faces.vd[0].result, 'vainqueur gardé').toBe('W');
+  expect(faces.vd[0].badge).toBe('V');
+  expect(faces.nn.length, 'un seul N pour le match nul').toBe(1);
+  expect(faces.nn[0].result).toBe('D');
+  expect(faces.nn[0].badge).toBe('N');
+  expect(faces.vdBlocks, 'la face gardée occupe le match').toBe(true);
+  expect(faces.nnBlocks, 'le N gardé occupe le match').toBe(true);
 
   const visible = await page.evaluate(() => {
     sportsFitCount = 4;

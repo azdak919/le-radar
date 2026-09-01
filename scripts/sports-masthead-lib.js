@@ -7,14 +7,15 @@
  *
  * Résultats = même fenêtre que les puces (5 j civils Toronto) ; si vide,
  * 1 lastGame filet (hors saison). Prochains = les plus proches. Les deux
- * faces d’un match restent pour le choix éditorial du client.
+ * faces d’un match restent dans le JSON (le client n’en montre qu’une).
  */
 'use strict';
 
 const SpF = require('./sports-freshness-lib');
 
 const MASTHEAD_NEXT_GAME_LIMIT = 48;
-const MASTHEAD_RESULT_LIMIT = 32;
+/** Tous les matchs uniques de la fenêtre 5 j (plus de 32 → des scores tombaient). */
+const MASTHEAD_RESULT_LIMIT = 80;
 
 function gameKey(game, team) {
   if (game?.gameId != null && String(game.gameId).trim()) return `id:${game.gameId}`;
