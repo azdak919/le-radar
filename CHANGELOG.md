@@ -7,8 +7,9 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Modifié
 
+- Cartes sports du mât : **en direct → à venir aujourd’hui → Dernière heure → autres à-venir** avant hier et le musée 5 j. Un match encore à jouer ne passe plus derrière un score d’hier.
 - Scores bandeau **F compact** : même épaisseur 2 lignes, glyphe sport. Kicker 1 ligne sauf Dernière heure / Avant-hier / dates (jour de la semaine, puis jour + mois). Noms d’équipe d’abord (Vert & Or, Carabins, Cheetahs). Match sans chiffre : **0–0**. Voile : club + place, pas de 0–0.
-- Ouverture **B** : une liste gauche→droite (directs → aujourd’hui → hier → reliquat 5 j). Cascade leave/arrive inchangée. Poll 15 s sur place.
+- Ouverture **B** : une liste gauche→droite (directs → aujourd’hui → à-venir → hier → reliquat 5 j). Cascade leave/arrive inchangée. Poll 15 s sur place.
 
 - Traduction plus rapide sans nouveau moteur ni hausse des quotas gtx : le chrome (mât, tuner, CTA, nav, tête du fil) passe **avant** le fil ; cache LRU plus large ; requêtes identiques partagées ; mutations pendant un passage sont rejouées au lieu d’être perdues.
 

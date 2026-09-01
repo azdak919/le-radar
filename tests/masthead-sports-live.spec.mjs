@@ -727,7 +727,7 @@ test('CTA : ADV n’est pas une institution (adversaire Spordle manquant)', asyn
   await expect(cta).not.toHaveAttribute('data-cta-state', 'next');
 });
 
-test('liste B : ce soir → résultat du jour → hier → plus tard', async ({ page }) => {
+test('liste : ce soir → résultat du jour → à-venir → hier', async ({ page }) => {
   const now = Date.now();
   const today = torontoParts(now);
   const plus3 = torontoParts(now + 3 * 86400000);
@@ -796,6 +796,10 @@ test('liste B : ce soir → résultat du jour → hier → plus tard', async ({ 
   const tFar = teamShell('collegial:soccer:far', { name: 'André-Laurendeau', fullName: 'Cégep André-Laurendeau', code: 'AND' });
   tFar.nextGame = far;
   tFar.nextGames = [far];
+  const old = civilDaysAgoResultGame(4, { gameId: 'four-day-result' });
+  const tOld = teamShell('collegial:soccer:old', { name: 'Shawinigan', fullName: 'Cégep de Shawinigan', code: 'SHA' });
+  tOld.lastGame = old;
+  tOld.results = [old];
 
   await openWithSports(page, {
     updated: new Date().toISOString(),
@@ -806,6 +810,7 @@ test('liste B : ce soir → résultat du jour → hier → plus tard', async ({ 
       [tMid.id]: tMid,
       [tY.id]: tY,
       [tFar.id]: tFar,
+      [tOld.id]: tOld,
     },
   });
 
@@ -821,8 +826,15 @@ test('liste B : ce soir → résultat du jour → hier → plus tard', async ({ 
     expect(iYest, 'hier après le jour').toBeGreaterThan(iToday);
   }
   const later = [seq.indexOf('next:MON'), seq.indexOf('next:AND')].filter((i) => i >= 0);
+  const iOld = seq.indexOf('result:SHA');
   if (later.length) {
-    expect(Math.min(...later), 'calendrier lointain en queue').toBeGreaterThan(iYest);
+    expect(Math.min(...later), 'à-venir avant hier').toBeLessThan(iYest);
+    if (iToday >= 0) {
+      expect(Math.min(...later), 'à-venir après le résultat du jour').toBeGreaterThan(iToday);
+    }
+    if (iOld >= 0) {
+      expect(Math.min(...later), 'à-venir avant le musée 5 j').toBeLessThan(iOld);
+    }
   }
 });
 

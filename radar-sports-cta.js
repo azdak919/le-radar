@@ -1154,7 +1154,7 @@ function sportsNextSlidesSorted() {
 }
 
 /**
- * Voie unique (focus-group B) : même liste que le premier cran.
+ * Voie unique : même liste que le premier cran (chaleur d’abord).
  * kind reste « results » s’il y a un score récent, sinon offseason
  * (rotation / hold).
  */
@@ -2702,13 +2702,18 @@ function sportsCtaLiveSources(now = Date.now()) {
   return sportsDedupeMatchSlides(out);
 }
 
-/** Buckets B : live → ce soir → résultat du jour → hier → reliquat 5 j → plus tard. */
+/**
+ * Chaleur du bandeau (plus bas = plus prioritaire) :
+ * live → à-venir aujourd’hui (dans l’heure d’abord) → dernière heure
+ * → autres à-venir → hier → reliquat 5 j.
+ * Hier / musée 5 j ne passent plus devant un match encore à jouer.
+ */
 const SPORTS_OPEN_LIVE = 0;
 const SPORTS_OPEN_TODAY_NEXT = 1;
 const SPORTS_OPEN_TODAY_RESULT = 2;
-const SPORTS_OPEN_YESTERDAY = 3;
-const SPORTS_OPEN_OLDER_RESULT = 4;
-const SPORTS_OPEN_LATER_NEXT = 5;
+const SPORTS_OPEN_LATER_NEXT = 3;
+const SPORTS_OPEN_YESTERDAY = 4;
+const SPORTS_OPEN_OLDER_RESULT = 5;
 
 function sportsOpenOrderBucket(slide, now = Date.now()) {
   const g = slide?.game;
@@ -2718,7 +2723,7 @@ function sportsOpenOrderBucket(slide, now = Date.now()) {
   const yesterday = sportsCivilDayShift(today, -1);
   const day = sportsGameDayKey(g, now) || sportsSlideDayKey(slide);
   if (slide.mode === 'next') {
-    if (day === today) return SPORTS_OPEN_TODAY_NEXT;
+    if (day === today || sportsCtaKickoffWithinHour(g, now)) return SPORTS_OPEN_TODAY_NEXT;
     return SPORTS_OPEN_LATER_NEXT;
   }
   if (slide.mode === 'result') {
@@ -2731,7 +2736,7 @@ function sportsOpenOrderBucket(slide, now = Date.now()) {
 }
 
 /**
- * Liste unique (go B). DOM = cet ordre. Pas de cycle éditorial à part,
+ * Liste unique. DOM = cet ordre. Pas de cycle éditorial à part,
  * pas de codes phares, pas de skip football.
  */
 function sportsOpenOrderSlides(now = Date.now()) {
@@ -2744,7 +2749,7 @@ function sportsOpenOrderSlides(now = Date.now()) {
     if (!sportsSlideIsDisplayable(s)) continue;
     seen.add(s.key);
     const bucket = sportsOpenOrderBucket(s, now);
-    if (bucket > SPORTS_OPEN_LATER_NEXT) continue;
+    if (bucket > SPORTS_OPEN_OLDER_RESULT) continue;
     if (s.mode === 'result') {
       if (s.game?.priorSeason || s.team?.lastGamePriorSeason) continue;
       results.push(s);
@@ -2801,8 +2806,8 @@ function sportsCtaHoldOnLive(slide) {
 }
 
 /**
- * Slide CTA — slot de droite.
- * Match du pool CTA (live / hier / aujourd’hui / jour lead) ou accroche idle.
+ * Slide CTA — tête de liste (live / à-venir / aujourd’hui / dernière heure).
+ * Match du pool ou accroche idle.
  */
 function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
   const candidates = sportsCtaCandidateSlides();
@@ -3574,10 +3579,8 @@ function paintSportsChip(slide, animate = false) {
 }
 
 /**
- * Prochaine carte de GAUCHE.
- * Saison : résultats passés uniquement, ordre fraîcheur (plus récent d’abord),
- * curseur circulaire + diversité de sport.
- * Hors saison : matchs à venir uniquement (prochains par proximité).
+ * Prochaine carte : même chaleur que le premier cran
+ * (live / à-venir / aujourd’hui / dernière heure avant le reliquat).
  * Jamais de puce grise « Hors saison / Calendrier… » ici.
  */
 function nextSportsSlide(usedKeys, opts = {}) {
@@ -3670,7 +3673,7 @@ function sportsCtaSlotIndices(visible = sportsVisible) {
 }
 
 /**
- * Première peinture (go B) : préfixe de sportsOpenOrderSlides.
+ * Première peinture : préfixe de sportsOpenOrderSlides.
  * Une seule famille visuelle (puce sport). Pas de chrome CTA.
  * Overflow = coupe la queue, pas de re-tri. Creux = marque.
  */
