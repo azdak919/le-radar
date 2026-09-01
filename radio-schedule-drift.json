@@ -1,14 +1,12 @@
 {
-  "checkedAt": "2026-08-31T01:21:22.389Z",
+  "checkedAt": "2026-09-01T01:47:52.084Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 2,
+    "stable": 4,
     "drift": [
-      "chyz",
-      "cism",
-      "ckut"
+      "cism"
     ],
     "overhaul": [
       "choq"
@@ -18,21 +16,13 @@
   "stations": [
     {
       "id": "chyz",
-      "published": 30,
+      "published": 26,
       "fresh": 26,
-      "added": [
-        "sam 18:30–22:30 Football du Rouge et Or"
-      ],
-      "removed": [
-        "dim 16:50–20:30 Capitales de Québec",
-        "lun 16:00–17:00 Chéri.e, Jme Mobilise!",
-        "lun 20:30–21:30 La Voie des Droits",
-        "ven 18:50–23:00 Capitales de Québec",
-        "sam 18:50–23:00 Capitales de Québec"
-      ],
-      "changed": 6,
-      "ratio": 0.2,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cism",
@@ -64,17 +54,13 @@
     },
     {
       "id": "ckut",
-      "published": 100,
-      "fresh": 100,
-      "added": [
-        "jeu 17:00–18:00 The Barricade"
-      ],
-      "removed": [
-        "jeu 17:00–18:00 Off the Hour"
-      ],
-      "changed": 2,
-      "ratio": 0.02,
-      "status": "drift"
+      "published": 101,
+      "fresh": 101,
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cjlo",
@@ -101,20 +87,20 @@
       "published": 18,
       "fresh": 12,
       "added": [
-        "lun 17:00–18:00 Bitume",
-        "mar 12:00–13:00 Le Monde Dans Mes Oreilles",
-        "jeu 20:00–21:00 La nouvelle école des surdoués"
+        "dim 14:00–16:00 Pôle hip-hop",
+        "jeu 18:30–19:30 Les Apatrides Anonymes",
+        "ven 13:00–14:00 CUCH CAST"
       ],
       "removed": [
-        "dim 17:00–18:00 Mutations",
         "lun 17:00–18:00 Faire avec",
+        "mar 15:00–16:00 Palmarès CHOQ.ca",
         "mar 19:30–20:30 Les Amazones",
         "mar 20:30–22:30 10 sur 10 : un podcast 100% rap",
         "mer 11:00–12:00 In Vélo Veritas",
-        "mer 17:00–18:00 Podcast Nomade: L'art de se rencontrer",
+        "mer 15:00–16:00 Palmarès CHOQ.ca",
         "mer 19:00–20:00 Le CHOC des Générations",
         "jeu 18:30–19:40 Les Apatrides Anonymes",
-        "sam 22:00–00:00 D'amour et de sexe"
+        "jeu 21:00–22:30 Le grand maître des jeux"
       ],
       "changed": 12,
       "ratio": 0.667,
