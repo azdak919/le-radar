@@ -1,19 +1,31 @@
 {
-  "updated": "2026-09-01T08:00:15.967Z",
+  "updated": "2026-09-01T15:36:50.357Z",
   "total": 185,
   "withPhoto": 169,
   "withStock": 30,
   "withCampusBank": 22,
   "fullyCovered": 185,
-  "leadReadyPhotos": 142,
-  "pageScraped": 35,
-  "photosRecovered": 30,
+  "leadReadyPhotos": 150,
+  "pageScraped": 33,
+  "photosRecovered": 28,
   "imagesCleared": 18,
   "stockSearches": 34,
   "stockFound": 22,
-  "campusBankFound": 15,
+  "campusBankFound": 16,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Faire du sport sans se ruiner quand on est aux études",
+      "link": "https://lecollectif.ca/sports-et-bien-etre/faire-du-sport-sans-se-ruiner-quand-on-est-aux-etudes/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SPORTS_Faire-du-sport-sans-se-ruiner-quand-on-est-etudiant_SourceUdeS-1.jpeg"
+    },
+    {
+      "title": "Vos personnes candidates dans Saint-François (1/2)",
+      "link": "https://lecollectif.ca/societe/vos-personnes-candidates-dans-saint-francois-1-2/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Vos-personnes-candidates-dans-Saint-Francois_Elections-Quebec-1.png"
+    },
     {
       "title": "Bulletin radio 16h30",
       "link": "https://lapige.atmjonquiere.com/2026/08/31/bulletin-radio-16h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-radio-16h30",
@@ -33,10 +45,10 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
     },
     {
-      "title": "Élections provinciales 2026 : vos personnes candidates dans Saint-François (1/2)",
-      "link": "https://lecollectif.ca/societe/elections-provinciales-2026-vos-personnes-candidates-dans-saint-francois-1-2/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Vos-personnes-candidates-dans-Saint-Francois_Elections-Quebec.png"
+      "title": "CSU terminates council’s chief election officer",
+      "link": "https://thelinknewspaper.ca/article/16334",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Letters from the Editors May 2026",
@@ -54,7 +66,7 @@
       "title": "CSU approves $36,000 in funding for student-led initiatives",
       "link": "https://thelinknewspaper.ca/article/16319",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
     },
     {
       "title": "Mars enters Aries",
@@ -73,18 +85,6 @@
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Le pays avant tout – esquisse",
-      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
-    },
-    {
-      "title": "Oui au budget, oui au programme FIL et non à la grève",
-      "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
     }
   ]
 }
