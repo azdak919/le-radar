@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T00:22:05.297Z",
+  "updatedAt": "2026-09-01T05:27:11.528Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T00:21:38.974Z"
+      "checkedAt": "2026-09-01T05:26:45.632Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rock à la casbah",
+        "title": "Les sentinelles de l'art (reprise)",
         "source": "schedule",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "https://cism893.ca/emissions/rock-a-la-casbah"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
       },
       "next": {
-        "title": "Toute est dans toute (reprise)",
+        "title": "Mix Franco",
         "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/tout-est-dans-toute"
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
       },
       "track": "",
-      "showTitle": "Rock à la casbah",
+      "showTitle": "Les sentinelles de l'art (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T00:21:40.934Z"
+      "checkedAt": "2026-09-01T05:26:47.310Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Underground Sounds",
+        "title": "Harmony Express",
         "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "next": {
-        "title": "Drastic Plastic",
+        "title": "Pirate et Libres",
         "source": "api-live",
-        "start": "22:00",
-        "end": "23:00"
+        "start": "02:00",
+        "end": "03:00"
       },
       "track": "",
-      "showTitle": "Underground Sounds",
+      "showTitle": "Harmony Express",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,60 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T00:21:43.445Z"
+      "checkedAt": "2026-09-01T05:26:49.799Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "In The Garage",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/in-the-garage"
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "LEKTOR DECODER",
+        "title": "Hip's Time to Wake Hop",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/lektor-decoder"
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
       },
       "track": "",
-      "showTitle": "In The Garage",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T00:21:58.139Z"
+      "checkedAt": "2026-09-01T05:27:04.170Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Le terrain sportif",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "00:01"
-      },
-      "next": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Le terrain sportif",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T00:21:59.096Z"
+      "checkedAt": "2026-09-01T05:27:05.016Z"
     },
     "choq": {
       "id": "choq",
@@ -135,24 +134,23 @@
       "current": null,
       "next": {
         "title": "Les rois de l'arène",
-        "source": "schedule",
+        "source": "api-live",
         "start": "05:00",
         "end": "07:00",
-        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
+        "slug": "les-rois-de-larene"
       },
-      "track": "Meloire - Bon Sang",
+      "track": "Empress Of - Dream House",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-01T00:22:04.946Z"
+      "checkedAt": "2026-09-01T05:27:11.177Z"
     }
   }
 }
