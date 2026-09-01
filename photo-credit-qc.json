@@ -1,26 +1,75 @@
 {
-  "updated": "2026-09-01T08:00:35.367Z",
+  "updated": "2026-09-01T09:34:13.540Z",
   "total": 185,
   "withImage": 169,
   "withCredit": 169,
-  "cited": 129,
+  "cited": 133,
   "pending": 15,
   "missingHero": 0,
   "ok": false,
-  "checked": 20,
-  "updatedCount": 9,
-  "citedNew": 4,
+  "checked": 25,
+  "updatedCount": 13,
+  "citedNew": 9,
   "fallbackNew": 16,
   "samples": [
     {
-      "title": "L’Odysée mcgilloise",
-      "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
+      "title": "Faire du sport sans se ruiner quand on est aux études",
+      "source": "Le Collectif",
+      "credit": "Photo : UdeS",
+      "cited": true,
+      "method": "body-tail"
     },
     {
-      "title": "La Fondation de l’UdeS",
+      "title": "Un important coup de pouce pour le futur aréna du Vert & Or",
+      "source": "Le Collectif",
+      "credit": "Photo : UdeS",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Le rôle de l’activité physique sur le stress étudiant",
+      "source": "Le Collectif",
+      "credit": "Photo : ICROQ",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Les conditions en psychiatrie",
+      "source": "Le Collectif",
+      "credit": "Photo : iStock Photo",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Les demandes d’admission au cégep dépassent l’offre",
+      "source": "Le Collectif",
+      "credit": "Photo : Université de Sherbrooke",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Le bien-être du personnel soignant au cœur de la qualité des soins",
+      "source": "Le Collectif",
+      "credit": "Photo : Hinterhaus Productions",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Les enjeux électoraux de 2026",
+      "source": "Le Collectif",
+      "credit": "Photo : Léger le journal TVA",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Vos personnes candidates dans Saint-François (1/2)",
+      "source": "Le Collectif",
+      "credit": "Photo : MACSF",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Vos personnes candidates dans Sherbrooke (1/2)",
       "source": "Le Collectif",
       "credit": "Crédit photo : Le Collectif",
       "cited": false,
@@ -46,34 +95,6 @@
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Inside Mile End Kicks",
-      "source": "The Link",
-      "credit": "Photo: Courtesy of Joe Fuda",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Maryse Boyce",
-      "cited": true,
-      "method": "figcaption-copyright"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
