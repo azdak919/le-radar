@@ -1652,7 +1652,7 @@ assert(
     && !appJs.includes('SPORTS_RECENT_RESULT_MS')
     && !appJs.includes('SPORTS_CTA_UPCOMING_MS')
     && !/SPORTS_CTA_FRESH_RESULT_MS\s*=\s*48/.test(appJs),
-  'app.js : liste B live → ce soir → jour → hier → reliquat 5 j',
+  'app.js : liste chaleur live → ce soir → jour → à-venir → hier → reliquat 5 j',
 );
 assert(
   /function sportsCtaEyebrow/.test(appJs)
@@ -1701,7 +1701,7 @@ assert(
     && translateJs.includes('CHROME_SELECTOR'),
   'translate.js D22 : glossaire sports + cache v9 + chrome-first ; quotas MT inchangés',
 );
-// Liste B = live → ce soir → jour → hier → reliquat 5 j → plus tard.
+// Liste = live → ce soir → jour → autres à-venir → hier → reliquat 5 j.
 assert(
   appJs.includes('function sportsSlideDayKey')
     && /const SPORTS_CTA_MAX_POOL\s*=\s*80/.test(appJs)
@@ -1712,7 +1712,7 @@ assert(
     && appJs.includes('function sportsOpenOrderSlides')
     && appJs.includes('SPORTS_OPEN_OLDER_RESULT')
     && appJs.includes('SPORTS_PLACEHOLDER_OPPONENT_RE'),
-  'app.js : liste B live → aujourd’hui → hier → reliquat ; ADV exclu',
+  'app.js : liste chaleur live → aujourd’hui → à-venir → hier → reliquat ; ADV exclu',
 );
 assert(
   appJs.includes('function sportsCtaKickoffWithinHour')
@@ -1720,8 +1720,9 @@ assert(
     && /SPORTS_OPEN_LIVE = 0/.test(appJs)
     && /SPORTS_OPEN_TODAY_NEXT = 1/.test(appJs)
     && /SPORTS_OPEN_TODAY_RESULT = 2/.test(appJs)
-    && /SPORTS_OPEN_YESTERDAY = 3/.test(appJs),
-  'app.js : ordre B live → ce soir → jour → hier (buckets)',
+    && /SPORTS_OPEN_LATER_NEXT = 3/.test(appJs)
+    && /SPORTS_OPEN_YESTERDAY = 4/.test(appJs),
+  'app.js : ordre live → ce soir → jour → à-venir → hier (buckets)',
 );
 assert(
   !appJs.includes('upcomingLater'),
