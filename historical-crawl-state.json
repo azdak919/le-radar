@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-08-31T14:24:57.086Z",
+  "updated": "2026-09-01T12:00:55.668Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -158,10 +158,10 @@
     },
     "the-plant": {
       "strategy": "unsupported",
-      "lastAttemptAt": "2026-08-02T08:58:52.562Z",
+      "lastAttemptAt": "2026-09-01T12:00:55.098Z",
       "error": "wordpress_http_404",
-      "retryAt": "2026-09-01T08:58:52.562Z",
-      "windowStart": "2023-08-02T14:58:44.473Z",
+      "retryAt": "2026-10-01T12:00:55.098Z",
+      "windowStart": "2023-09-01T18:00:55.038Z",
       "windowYears": 3
     },
     "the-tribune": {
