@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-01T15:36:50.357Z",
+  "updated": "2026-09-01T17:58:59.858Z",
   "total": 185,
   "withPhoto": 169,
   "withStock": 30,
   "withCampusBank": 22,
   "fullyCovered": 185,
-  "leadReadyPhotos": 150,
+  "leadReadyPhotos": 148,
   "pageScraped": 33,
   "photosRecovered": 28,
   "imagesCleared": 18,
   "stockSearches": 34,
   "stockFound": 22,
-  "campusBankFound": 16,
+  "campusBankFound": 15,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -27,7 +27,7 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Vos-personnes-candidates-dans-Saint-Francois_Elections-Quebec-1.png"
     },
     {
-      "title": "Bulletin radio 16h30",
+      "title": "Bulletins radio",
       "link": "https://lapige.atmjonquiere.com/2026/08/31/bulletin-radio-16h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-radio-16h30",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0117.jpg"
@@ -45,16 +45,16 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
     },
     {
-      "title": "CSU terminates council’s chief election officer",
-      "link": "https://thelinknewspaper.ca/article/16334",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
       "title": "Letters from the Editors May 2026",
       "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+    },
+    {
+      "title": "CSU approves affinity group policy, club rules update and councillor pay increase at special meeting",
+      "link": "https://thelinknewspaper.ca/article/16326",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/7089/7290404684_2750bb385f_b.jpg"
     },
     {
       "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
@@ -66,7 +66,7 @@
       "title": "CSU approves $36,000 in funding for student-led initiatives",
       "link": "https://thelinknewspaper.ca/article/16319",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Mars enters Aries",
@@ -81,10 +81,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
     },
     {
-      "title": "Gaiters wrap up hard-fought season with eyes on next year",
-      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "title": "National Golf tournament",
+      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg"
     }
   ]
 }
