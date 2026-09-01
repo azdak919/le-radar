@@ -1,14 +1,50 @@
 {
-  "updated": "2026-09-01T00:23:12.977Z",
+  "updated": "2026-09-01T04:15:50.931Z",
   "total": 185,
   "pool": 56,
-  "incomplete": 8,
-  "withLeadExcerpt": 101,
-  "candidates": 8,
-  "enriched": 0,
-  "failed": 3,
+  "incomplete": 11,
+  "withLeadExcerpt": 105,
+  "candidates": 11,
+  "enriched": 5,
+  "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Sensibilisation aux surdoses : une journée pour démystifier la problématique",
+      "link": "https://lapige.atmjonquiere.com/2026/08/31/sensibilisation-aux-surdoses-une-journee-pour-demystifier-la-problematique/?utm_source=rss&utm_medium=rss&utm_campaign=sensibilisation-aux-surdoses-une-journee-pour-demystifier-la-problematique",
+      "ok": true,
+      "score": 100,
+      "chars": 189,
+      "sample": "Depuis 2001, la Journée internationale de sensibilisation aux surdoses a lieu le 31 août. Cette init",
+      "changed": true
+    },
+    {
+      "title": "Partir ou rester : que doit-on faire devant un mur?",
+      "link": "https://www.delitfrancais.com/2026/08/31/partir-ou-rester-que-doit-on-faire-devant-un-mur/",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "Ce recentrage sur l’individu se reflète dans la structure sociale du roman. Dans ce monde, le pouvoi",
+      "changed": true
+    },
+    {
+      "title": "Sommes-nous ingrats?",
+      "link": "https://www.delitfrancais.com/2026/08/31/sommes-nous-ingrats/",
+      "ok": true,
+      "score": 66,
+      "chars": 400,
+      "sample": "Il est des étudiants qui attendent avec hâte de rentrer chez eux après une année épuisante de travai",
+      "changed": true
+    },
+    {
+      "title": "L’homosexualité : un sujet encore tabou",
+      "link": "https://www.delitfrancais.com/2026/08/31/lhomosexualite-un-sujet-encore-tabou/",
+      "ok": true,
+      "score": 96,
+      "chars": 394,
+      "sample": "Ces craintes ne sont d’ailleurs pas infondées. L’histoire tragique de Justin Fashanu, le premier foo",
+      "changed": true
+    },
     {
       "title": "My Midsummer’s Nightmare",
       "link": "https://www.mcgilldaily.com/2026/08/my-midsummers-nightmare/",
@@ -16,6 +52,15 @@
       "score": 72,
       "chars": 400,
       "sample": "Like many other European cities, Paris is dealing with a housing crisis and has faced a steady popul",
+      "changed": false
+    },
+    {
+      "title": "La mauvaise nutrition et les maladies chroniques",
+      "link": "https://lecollectif.ca/a-la-une/la-mauvaise-nutrition-et-les-maladies-chroniques/",
+      "ok": true,
+      "score": 76,
+      "chars": 400,
+      "sample": "Les repas à forte teneur calorique, glycémique et lipidique regorgent dans la plupart des marchés d’",
       "changed": false
     },
     {
@@ -28,31 +73,13 @@
       "changed": false
     },
     {
-      "title": "Review: Sullivan Fortner Solo at Gesú Concert Hall",
-      "link": "https://www.mcgilldaily.com/2026/07/review-sullivan-fortner-solo-at-gesu-concert-hall/",
+      "title": "Montréal en spectacles",
+      "link": "https://www.delitfrancais.com/2026/09/01/montreal-en-spectacles/",
       "ok": true,
-      "score": 74,
-      "chars": 399,
-      "sample": "Seated at a Kawai grand piano, he began with a crowd favourite, “Don’t You Worry ’Bout a Thing” by S",
-      "changed": false
-    },
-    {
-      "title": "A conversation with Ehab Lotayef: A lifelong voyage to the conscience of humanity",
-      "link": "https://www.thetribune.ca/news/a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026/?utm_source=rss&utm_medium=rss&utm_campaign=a-conversation-with-ehab-lotayef-a-lifelong-voyage-to-the-conscience-of-humanity-28072026",
-      "ok": true,
-      "score": 70,
+      "score": 77,
       "chars": 400,
-      "sample": "On May 14, 429 activists carrying more than 11,000 kilograms of humanitarian aid set sail to Gaza fr",
-      "changed": false
-    },
-    {
-      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
-      "link": "https://thelinknewspaper.ca/article/16338",
-      "ok": true,
-      "score": 90,
-      "chars": 177,
-      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
-      "changed": false
+      "sample": "Entre le 11 et le 20 juin, le quartier des spectacles a accueilli une variété d’artistes francophone",
+      "changed": true
     }
   ]
 }
