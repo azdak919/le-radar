@@ -1,31 +1,40 @@
 {
-  "updated": "2026-09-01T04:15:50.931Z",
+  "updated": "2026-09-01T05:20:01.187Z",
   "total": 185,
   "pool": 56,
-  "incomplete": 11,
-  "withLeadExcerpt": 105,
-  "candidates": 11,
-  "enriched": 5,
-  "failed": 0,
+  "incomplete": 9,
+  "withLeadExcerpt": 107,
+  "candidates": 9,
+  "enriched": 2,
+  "failed": 1,
   "ok": true,
   "samples": [
     {
-      "title": "Sensibilisation aux surdoses : une journée pour démystifier la problématique",
-      "link": "https://lapige.atmjonquiere.com/2026/08/31/sensibilisation-aux-surdoses-une-journee-pour-demystifier-la-problematique/?utm_source=rss&utm_medium=rss&utm_campaign=sensibilisation-aux-surdoses-une-journee-pour-demystifier-la-problematique",
+      "title": "Lumière sur les concerts gratuits!",
+      "link": "https://www.delitfrancais.com/2026/09/01/lumiere-sur-les-concerts-gratuits/",
       "ok": true,
       "score": 100,
-      "chars": 189,
-      "sample": "Depuis 2001, la Journée internationale de sensibilisation aux surdoses a lieu le 31 août. Cette init",
+      "chars": 397,
+      "sample": "En arrivant sur place, mon amie s’est exclamée : « awww c’est trop cute les humains. » J’avoue, il y",
       "changed": true
     },
     {
-      "title": "Partir ou rester : que doit-on faire devant un mur?",
-      "link": "https://www.delitfrancais.com/2026/08/31/partir-ou-rester-que-doit-on-faire-devant-un-mur/",
+      "title": "Le retour attendu de Phoebe Bridgers",
+      "link": "https://www.delitfrancais.com/2026/09/01/le-retour-attendu-de-phoebe-bridgers/",
       "ok": true,
-      "score": 96,
-      "chars": 400,
-      "sample": "Ce recentrage sur l’individu se reflète dans la structure sociale du roman. Dans ce monde, le pouvoi",
+      "score": 100,
+      "chars": 271,
+      "sample": "Le nouvel album de Phoebe Bridgers, Lost Weekend , fait preuve de créativité musicale et de maturité",
       "changed": true
+    },
+    {
+      "title": "Montréal en spectacles",
+      "link": "https://www.delitfrancais.com/2026/09/01/montreal-en-spectacles/",
+      "ok": true,
+      "score": 77,
+      "chars": 400,
+      "sample": "Entre le 11 et le 20 juin, le quartier des spectacles a accueilli une variété d’artistes francophone",
+      "changed": false
     },
     {
       "title": "Sommes-nous ingrats?",
@@ -34,16 +43,7 @@
       "score": 66,
       "chars": 400,
       "sample": "Il est des étudiants qui attendent avec hâte de rentrer chez eux après une année épuisante de travai",
-      "changed": true
-    },
-    {
-      "title": "L’homosexualité : un sujet encore tabou",
-      "link": "https://www.delitfrancais.com/2026/08/31/lhomosexualite-un-sujet-encore-tabou/",
-      "ok": true,
-      "score": 96,
-      "chars": 394,
-      "sample": "Ces craintes ne sont d’ailleurs pas infondées. L’histoire tragique de Justin Fashanu, le premier foo",
-      "changed": true
+      "changed": false
     },
     {
       "title": "My Midsummer’s Nightmare",
@@ -73,13 +73,13 @@
       "changed": false
     },
     {
-      "title": "Montréal en spectacles",
-      "link": "https://www.delitfrancais.com/2026/09/01/montreal-en-spectacles/",
+      "title": "Une finale enlevante dans le tournoi de soccer à Chicoutimi",
+      "link": "https://lapige.atmjonquiere.com/2026/08/31/une-finale-enlevante-dans-le-tournoi-de-soccer-a-chicoutimi/?utm_source=rss&utm_medium=rss&utm_campaign=une-finale-enlevante-dans-le-tournoi-de-soccer-a-chicoutimi",
       "ok": true,
-      "score": 77,
-      "chars": 400,
-      "sample": "Entre le 11 et le 20 juin, le quartier des spectacles a accueilli une variété d’artistes francophone",
-      "changed": true
+      "score": 100,
+      "chars": 179,
+      "sample": "La Coupe d’Afrique des Nations (CAN) de Saguenay a tenu sa cinquième finale ce samedi à Chicoutimi. ",
+      "changed": false
     }
   ]
 }
