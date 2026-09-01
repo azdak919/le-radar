@@ -1,17 +1,52 @@
 {
-  "updated": "2026-09-01T00:29:07.469Z",
+  "updated": "2026-09-01T04:22:34.951Z",
   "total": 185,
   "withImage": 169,
   "withCredit": 169,
-  "cited": 128,
-  "pending": 16,
+  "cited": 129,
+  "pending": 15,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 5,
-  "citedNew": 3,
-  "fallbackNew": 16,
+  "checked": 21,
+  "updatedCount": 8,
+  "citedNew": 6,
+  "fallbackNew": 15,
   "samples": [
+    {
+      "title": "Montréal en spectacles",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran l Le Délit",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Sensibilisation aux surdoses : une journée pour démystifier la problématique",
+      "source": "La Pige",
+      "credit": "Photo : Charles Pinel",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Questionner la réforme électorale au Québec",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Sommes-nous ingrats?",
+      "source": "Le Délit",
+      "credit": "Photo : Eugénie Vitrac",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "L’homosexualité : un sujet encore tabou",
+      "source": "Le Délit",
+      "credit": "Photo : Anastasia Kulinich",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
     {
       "title": "L’Odysée mcgilloise",
       "source": "Le Délit",
@@ -27,25 +62,11 @@
       "method": null
     },
     {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
       "title": "Inside Mile End Kicks",
       "source": "The Link",
       "credit": "Photo: Courtesy of Joe Fuda",
       "cited": true,
       "method": "figcaption-trailing"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
