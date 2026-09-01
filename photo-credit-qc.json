@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-31T23:02:58.027Z",
+  "updated": "2026-09-01T00:29:07.469Z",
   "total": 185,
   "withImage": 169,
   "withCredit": 169,
@@ -8,30 +8,44 @@
   "missingHero": 0,
   "ok": false,
   "checked": 19,
-  "updatedCount": 3,
+  "updatedCount": 5,
   "citedNew": 3,
   "fallbackNew": 16,
   "samples": [
     {
-      "title": "Manger les riches, c’est bon pour la culture",
+      "title": "L’Odysée mcgilloise",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "La musique en concert trop chère!",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-near"
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Les jeunes investisseurs : capitalistes malgré eux ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "via-attribution"
+    },
+    {
+      "title": "Inside Mile End Kicks",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Joe Fuda",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }

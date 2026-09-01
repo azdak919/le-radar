@@ -1,41 +1,14 @@
 {
-  "updated": "2026-08-31T22:56:29.015Z",
+  "updated": "2026-09-01T00:23:12.977Z",
   "total": 185,
   "pool": 56,
-  "incomplete": 11,
+  "incomplete": 8,
   "withLeadExcerpt": 101,
-  "candidates": 11,
-  "enriched": 3,
-  "failed": 0,
+  "candidates": 8,
+  "enriched": 0,
+  "failed": 3,
   "ok": true,
   "samples": [
-    {
-      "title": "Manger les riches, c’est bon pour la culture",
-      "link": "https://www.delitfrancais.com/2026/08/31/manger-les-riches-cest-bon-pour-la-culture/",
-      "ok": true,
-      "score": 96,
-      "chars": 313,
-      "sample": "Votre interlocuteur, fort éloquent, vient d’évoquer un opéra dont vous n’avez jamais entendu parler.",
-      "changed": true
-    },
-    {
-      "title": "La musique en concert trop chère!",
-      "link": "https://www.delitfrancais.com/2026/08/31/la-musique-en-concert-trop-chere/",
-      "ok": true,
-      "score": 100,
-      "chars": 395,
-      "sample": "Fans invétérés ou simples amateurs de musique live , la critique est unanime : tous expriment leurs ",
-      "changed": true
-    },
-    {
-      "title": "Les jeunes investisseurs : capitalistes malgré eux ?",
-      "link": "https://www.delitfrancais.com/2026/08/31/les-jeunes-investisseurs-capitalistes-malgre-eux/",
-      "ok": true,
-      "score": 96,
-      "chars": 282,
-      "sample": "Deux étudiants, même bibliothèque. L’un vérifie son portefeuille six fois par jour ; l’autre n’a jam",
-      "changed": true
-    },
     {
       "title": "My Midsummer’s Nightmare",
       "link": "https://www.mcgilldaily.com/2026/08/my-midsummers-nightmare/",
@@ -43,15 +16,6 @@
       "score": 72,
       "chars": 400,
       "sample": "Like many other European cities, Paris is dealing with a housing crisis and has faced a steady popul",
-      "changed": false
-    },
-    {
-      "title": "La mauvaise nutrition et les maladies chroniques",
-      "link": "https://lecollectif.ca/a-la-une/la-mauvaise-nutrition-et-les-maladies-chroniques/",
-      "ok": true,
-      "score": 76,
-      "chars": 400,
-      "sample": "Les repas à forte teneur calorique, glycémique et lipidique regorgent dans la plupart des marchés d’",
       "changed": false
     },
     {
@@ -79,6 +43,15 @@
       "score": 70,
       "chars": 400,
       "sample": "On May 14, 429 activists carrying more than 11,000 kilograms of humanitarian aid set sail to Gaza fr",
+      "changed": false
+    },
+    {
+      "title": "Coming Out of the Gay Village, a history of one of Montreal’s most prominent neighbourhoods",
+      "link": "https://thelinknewspaper.ca/article/16338",
+      "ok": true,
+      "score": 90,
+      "chars": 177,
+      "sample": "This history, and much more, is featured in the exhibition. Bellemare was able to gather never-befor",
       "changed": false
     }
   ]
