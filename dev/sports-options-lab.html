@@ -53,27 +53,27 @@
 <body>
   <header>
     <h1>F — cartes normales</h1>
-    <p class="lede">Un seul modèle : la puce. Noms d’équipe (Vert & Or, Cheetahs…), pas la ville. Voile : club. Kicker 1 ligne, sauf Dernière heure / Avant-hier / dates. Issues : V, D, N, 7e, or, argent, bronze.</p>
+    <p class="lede">Un seul modèle : la puce. Noms d’équipe (Vert & Or, Cheetahs…), pas la ville. Voile : club. Kicker 1 ligne, sauf Dernière heure / Prochain+date / dates plus vieilles que hier. Issues : V, D, N, 7e, or, argent, bronze. Accueil : une face par match.</p>
     <nav>
       <a href="#live">En cours</a>
-      <a href="#soon">À venir</a>
+      <a href="#soon">Aujourd’hui</a>
       <a href="#tomorrow">Demain</a>
       <a href="#later">Prochain</a>
-      <a href="#today">Aujourd’hui</a>
+      <a href="#today">Dernière heure</a>
       <a href="#hier">Hier</a>
-      <a href="#avant">Avant-hier</a>
+      <a href="#avant">Date (2 j)</a>
       <a href="#date">Date</a>
       <a href="#idle">Creux</a>
     </nav>
   </header>
   <main id="main"></main>
   <script>
-    function tagLinesHtml(tag) {
+    function tagLinesHtml(tag, dateLine) {
       if (tag === 'Dernière heure') {
         return '<span class="sports-chip__cta-tag-lines"><span>Dernière</span><span>heure</span></span>';
       }
-      if (tag === 'Avant-hier') {
-        return '<span class="sports-chip__cta-tag-lines"><span>Avant</span><span>hier</span></span>';
+      if (tag === 'Prochain' && dateLine) {
+        return `<span class="sports-chip__cta-tag-lines"><span>Prochain</span><span>${dateLine}</span></span>`;
       }
       const m = String(tag || '').trim().match(/^(\S+)\s+(\d{1,2}\s+\S.+)$/);
       if (m) {
@@ -92,9 +92,9 @@
     }
     function chip({
       state, lamp, tag, glyph, badge, badgeMod,
-      home, away, score, vs, place, sub, tone, brand,
+      home, away, score, vs, place, sub, tone, brand, dateLine,
     }) {
-      const lampA = lamp || (state === 'live' ? 'live' : state === 'next' && tag === 'À venir' ? 'soon'
+      const lampA = lamp || (state === 'live' ? 'live' : state === 'next' && (tag === 'Aujourd’hui' || tag === 'À venir') ? 'soon'
         : tag === 'Demain' || tag === 'Prochain' ? 'next'
         : tag === 'Dernière heure' ? 'today'
         : state === 'result' ? 'past' : 'idle');
@@ -110,12 +110,12 @@
           : names(home, score ? { score } : { vs }, away);
       const tagInner = brand
         ? '<img class="sports-chip__cta-logo" src="../assets/icon.svg" width="18" height="18" alt="" decoding="async">'
-        : tagLinesHtml(tag);
+        : tagLinesHtml(tag, dateLine);
       const tagClass = brand
         ? 'sports-chip__cta-tag sports-chip__cta-tag--brand notranslate'
         : 'sports-chip__cta-tag notranslate';
-      return strip(`<a class="sports-chip sports-chip--match" data-cta-state="${state}"${liveA} href="#f" style="--sports-tone:${tone}">
-        <span class="${tagClass}" data-cta-tag="${tag}" data-cta-lamp="${lampA}">${tagInner}</span>
+      return strip(`<a class="sports-chip sports-chip--match" data-cta-state="${state}" data-cta-lamp="${lampA}"${liveA} href="#f" style="--sports-tone:${tone}">
+        <span class="${tagClass}" data-cta-tag="${tag}" data-cta-lamp="${lampA}"${dateLine ? ` data-cta-date-line="${dateLine}"` : ''}>${tagInner}</span>
         ${g}${b}
         <span class="sports-chip__body">
           <span class="sports-chip__line"><span class="sports-chip__line-inner">${line}</span></span>
@@ -141,7 +141,7 @@
     const TIMES = [
       { id: 'today', title: 'Résultat du jour', tag: 'Dernière heure', lead: '19 h 00 · ' },
       { id: 'hier', title: 'Hier', tag: 'Hier', lead: '' },
-      { id: 'avant', title: 'Avant-hier', tag: 'Avant-hier', lead: '' },
+      { id: 'avant', title: 'Il y a 2 jours', tag: 'dimanche 30 août', lead: '' },
       { id: 'date', title: 'Date plus vieille', tag: 'mercredi 19 août', lead: '' },
     ];
 
@@ -195,10 +195,10 @@
         ['Basket, mi-temps', { state: 'live', tag: 'En direct', glyph: '🏀', tone: '#c8102e', home: 'Carabins', away: 'Stingers', score: '44–41', sub: '20 h 15 · mi-temps · Basketball universitaire' }],
         ['Volleyball', { state: 'live', tag: 'En direct', glyph: '🏐', tone: '#c8102e', home: 'Vert & Or', away: 'Citadins', score: '1–0', sub: '18 h 00 · 1er set · Volleyball universitaire' }],
       ]],
-      ['soon', 'À venir (aujourd’hui)', [
-        ['Reçoit, ce PM', { state: 'next', tag: 'À venir', lamp: 'soon', glyph: '⚽', tone: '#2e7d4f', home: 'Rouge et Or', away: 'Redbirds', vs: 'reçoivent', sub: 'Aujourd’hui · 19 h 00 · Soccer universitaire' }],
-        ['Chez, cet AM', { state: 'next', tag: 'À venir', lamp: 'soon', glyph: '⚽', tone: '#2e7d4f', home: 'Redbirds', away: 'Stingers', vs: 'chez', sub: 'Aujourd’hui · 10 h 00 · Soccer universitaire féminin' }],
-        ['Dans 45 min', { state: 'next', tag: 'À venir', lamp: 'soon', glyph: '🏀', tone: '#2e7d4f', home: 'Carabins', away: 'Redbirds', vs: 'reçoivent', sub: 'Aujourd’hui · dans 45 min · Basketball universitaire' }],
+      ['soon', 'Aujourd’hui (à venir)', [
+        ['Reçoit, ce PM', { state: 'next', tag: 'Aujourd’hui', lamp: 'soon', glyph: '⚽', tone: '#2e7d4f', home: 'Rouge et Or', away: 'Redbirds', vs: 'reçoivent', sub: '19 h 00 · Soccer universitaire' }],
+        ['Chez, cet AM', { state: 'next', tag: 'Aujourd’hui', lamp: 'soon', glyph: '⚽', tone: '#2e7d4f', home: 'Redbirds', away: 'Stingers', vs: 'chez', sub: '10 h 00 · Soccer universitaire féminin' }],
+        ['Dans 45 min', { state: 'next', tag: 'Aujourd’hui', lamp: 'soon', glyph: '🏀', tone: '#2e7d4f', home: 'Carabins', away: 'Redbirds', vs: 'reçoivent', sub: 'dans 45 min · Basketball universitaire' }],
       ]],
       ['tomorrow', 'Demain', [
         ['PM, reçoit', { state: 'next', tag: 'Demain', glyph: '🏈', tone: '#2e7d4f', home: 'Rouge et Or', away: 'Carabins', vs: 'reçoivent', sub: '13 h 00 · Football universitaire' }],
@@ -207,8 +207,8 @@
         ['AM, visiteur', { state: 'next', tag: 'Demain', glyph: '⚽', tone: '#2e7d4f', home: 'Redbirds', away: 'Stingers', vs: 'chez', sub: '10 h 00 · Soccer universitaire féminin' }],
       ]],
       ['later', 'Prochain (plus tard)', [
-        ['Reçoit, 12 j', { state: 'next', tag: 'Prochain', glyph: '🏈', tone: '#6a7580', home: 'Rouge et Or', away: 'Carabins', vs: 'reçoivent', sub: 'ven. 4 sept. · 19 h 00 · Football universitaire' }],
-        ['Chez', { state: 'next', tag: 'Prochain', glyph: '🏀', tone: '#6a7580', home: 'Carabins', away: 'Rouge et Or', vs: 'chez', sub: 'ven. 4 sept. · 19 h 00 · Basketball universitaire' }],
+        ['Reçoit, 12 j', { state: 'next', tag: 'Prochain', dateLine: 'ven. 4 sept', glyph: '🏈', tone: '#6a7580', home: 'Rouge et Or', away: 'Carabins', vs: 'reçoivent', sub: '19 h 00 · Football universitaire' }],
+        ['Chez', { state: 'next', tag: 'Prochain', dateLine: 'ven. 4 sept', glyph: '🏀', tone: '#6a7580', home: 'Carabins', away: 'Rouge et Or', vs: 'chez', sub: '19 h 00 · Basketball universitaire' }],
       ]],
       ...TIMES.map((bucket) => [bucket.id, bucket.title, resultRows(bucket)]),
       ['idle', 'Creux', [

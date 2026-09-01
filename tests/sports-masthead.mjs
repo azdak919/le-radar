@@ -63,6 +63,34 @@ test('sports masthead : résultats hors 5 j civils exclus, filet 1 si vide', () 
   assert.equal(onlyStale.teams.c.results[0].gameId, 'stale');
 });
 
+test('sports masthead : tous les matchs uniques de la fenêtre 5 j', () => {
+  const SpF = require(join(ROOT, 'scripts/sports-freshness-lib.js'));
+  const full = require(join(ROOT, 'sports.json'));
+  const ref = new Date();
+  function keyOf(game, team) {
+    if (game?.gameId != null && String(game.gameId).trim()) return `id:${game.gameId}`;
+    const pair = [team?.code, game?.opponentCode || game?.opponent]
+      .filter(Boolean).map((v) => String(v).toUpperCase()).sort().join('|');
+    return `pair:${game?.date || ''}|${game?.time || ''}|${game?.sport || team?.sport || ''}|${pair}`;
+  }
+  const wanted = new Set();
+  for (const team of Object.values(full.teams || {})) {
+    for (const g of [team.lastGame, ...(team.results || [])].filter(Boolean)) {
+      if (SpF.isMastheadChipResult(g, ref)) wanted.add(keyOf(g, team));
+    }
+  }
+  const compact = buildSportsMastheadPayload(full, { referenceDate: ref });
+  const got = new Set();
+  for (const team of Object.values(compact.teams || {})) {
+    for (const g of [team.lastGame, ...(team.results || [])].filter(Boolean)) {
+      got.add(keyOf(g, team));
+    }
+  }
+  const missing = [...wanted].filter((k) => !got.has(k));
+  assert.equal(missing.length, 0, `mât : ${missing.length} matchs 5 j absents (limite trop basse)`);
+  assert.ok(compact.masthead.resultLimit >= wanted.size);
+});
+
 test('sports masthead : snapshot commité léger et exploitable', () => {
   const full = require(join(ROOT, 'sports.json'));
   const compact = require(join(ROOT, 'sports-masthead.json'));
@@ -72,7 +100,7 @@ test('sports masthead : snapshot commité léger et exploitable', () => {
   assert.ok(compact.teamCount < Object.keys(full.teams).length);
   assert.ok(compact.masthead?.nextGameLimit >= 16);
   assert.ok(
-    statSync(join(ROOT, 'sports-masthead.json')).size < statSync(join(ROOT, 'sports.json')).size * 0.1,
-    'le snapshot du mât doit rester sous 10 % du payload complet',
+    statSync(join(ROOT, 'sports-masthead.json')).size < statSync(join(ROOT, 'sports.json')).size * 0.15,
+    'le snapshot du mât doit rester sous 15 % du payload complet',
   );
 });

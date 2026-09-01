@@ -50,7 +50,7 @@ test('glossaire sports : match n’est pas correspondre', async ({ page }) => {
   expect(JSON.stringify(out).toLowerCase()).not.toContain('correspondre');
 });
 
-test('pastille À venir + ce PM suit la langue (pas CE PM en anglais)', async ({ page }) => {
+test('pastille Aujourd’hui suit la langue (Today, pas Up next)', async ({ page }) => {
   await page.route(/translate\.googleapis\.com/, (route) => route.abort());
   await page.route(/clients[45]\.google\.com/, (route) => route.abort());
   await page.route(/le-radar-translate\.azdak\.workers\.dev/, (route) => route.fulfill({
@@ -64,12 +64,11 @@ test('pastille À venir + ce PM suit la langue (pas CE PM en anglais)', async ({
     const tag = document.createElement('span');
     tag.className = 'sports-chip__cta-tag';
     document.body.append(tag);
-    fillSportsCtaTagCopy(tag, 'À venir', { meridiemLine: 'ce PM' });
+    fillSportsCtaTagCopy(tag, 'Aujourd’hui');
     return (tag.innerText || '').replace(/\s+/g, ' ').trim();
   });
-  expect(txt).toMatch(/up next/i);
-  expect(txt).toMatch(/this pm/i);
-  expect(txt).not.toMatch(/ce pm/i);
+  expect(txt.toLowerCase()).toMatch(/today/);
+  expect(txt.toLowerCase()).not.toMatch(/up next/);
 });
 
 test('quotas MT inchangés ; chrome-first exposé', async ({ page }) => {

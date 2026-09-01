@@ -179,23 +179,22 @@ const SPORTS_ARRIVE_MS = 640;
 const SPORTS_CTA_TAG = 'Sports';
 /** Pastille pendant un match en cours — le seul cas qui remplace la rubrique. */
 const SPORTS_CTA_TAG_LIVE = 'En direct';
-/** Coup d’envoi du jour, pas encore commencé — rouge pulse, pas le jaune Prochain. */
-const SPORTS_CTA_TAG_SOON = 'À venir';
+/** Coup d’envoi du jour, pas encore commencé — mot Aujourd’hui, lamp soon (pulse). */
+const SPORTS_MATCH_TAG_TODAY = 'Aujourd’hui';
+const SPORTS_CTA_TAG_SOON = SPORTS_MATCH_TAG_TODAY;
 /**
  * 2e ligne des pastilles datées.
  * Aujourd’hui seulement : « cet AM » / « ce PM » (ce = ce jour-ci).
- * Demain : « AM » / « PM ». Pas Hier / Avant-hier / En direct / Prochain match.
+ * Demain : « AM » / « PM ». Pas Hier / En direct / Prochain.
  * Pas « cette AM ». Pas « ce PM hier ».
  */
 const SPORTS_MERIDIEM_AM_LINE = 'cet AM';
 const SPORTS_MERIDIEM_PM_LINE = 'ce PM';
-/** Demain : deux lignes (Demain / AM|PM), même jaune que Prochain match. */
+/** Demain : mot Demain, même jaune que Prochain. */
 const SPORTS_CTA_TAG_TOMORROW = 'Demain';
 /** Résultat du jour : deux lignes DERNIÈRE / HEURE. Pas d’AM/PM. */
 const SPORTS_CTA_TAG_LATEST = 'Dernière heure';
-/** Puces à-venir du jour — pas la CTA (À venir). */
-const SPORTS_MATCH_TAG_TODAY = 'Aujourd’hui';
-/** Prochains : deux lignes dans la pastille, pas un rail plus large. */
+/** Après demain : Prochain + date courte en 2ᵉ ligne. */
 const SPORTS_CTA_TAG_NEXT = 'Prochain';
 /** Repli idle (creux total, pas de match) ; sinon ton du sport via sportsCtaTone. Rouge = direct. */
 const SPORTS_CTA_REST_TONE = '#6a7580';
@@ -301,9 +300,9 @@ function sportsResultMarkText(game, sport) {
   return '';
 }
 
-/** Hier / Avant-hier : score ou place sous le mot, pas dans l’accroche. */
+/** Hier : score ou place sous le mot, pas dans l’accroche. */
 function sportsCtaTagPutsResultScore(wanted) {
-  return wanted === 'Hier' || wanted === 'Avant-hier';
+  return wanted === 'Hier';
 }
 
 /**
@@ -1754,7 +1753,7 @@ function sportsMatchVerb(game, lang = 'fr') {
 
 /**
  * Séparateur de score final quand le chiffre est déjà dans la pastille
- * (Hier / Avant-hier). Plus court que « vs » / « contre » ; lisible FR et EN
+ * (Hier). Plus court que « vs » / « contre » ; lisible FR et EN
  * (tennis, télégrammes). Pas un 2ᵉ score — le ton pâle de `.sports-chip__vs`.
  */
 const SPORTS_RESULT_VS = 'v.';
@@ -1962,13 +1961,13 @@ function sportsMeridiemLine(game, { today = false } = {}) {
   return half === 'AM' ? SPORTS_MERIDIEM_AM_LINE : SPORTS_MERIDIEM_PM_LINE;
 }
 
-/** AM/PM : aujourd’hui et demain. Pas Hier, En direct, Prochain match. */
+/** AM/PM : aujourd’hui et demain. Pas Hier, En direct, Prochain. */
 function sportsCtaTagUsesMeridiem(wanted) {
   if (!wanted) return false;
   if (wanted === SPORTS_CTA_TAG_LIVE) return false;
   if (wanted === SPORTS_CTA_TAG_NEXT) return false;
   if (wanted === RADAR_BRAND_SHORT) return false;
-  if (wanted === 'Hier' || wanted === 'Avant-hier') return false;
+  if (wanted === 'Hier') return false;
   if (wanted === SPORTS_CTA_TAG_LATEST) return false;
   return true;
 }
@@ -2035,9 +2034,9 @@ function sportsCompetitionLabel(slide) {
  */
 /**
  * Mot de temps des puces (même vocabulaire que la CTA) :
- * À venir / Demain / aujourd’hui / hier / avant-hier. Vide → date courte.
+ * Aujourd’hui / Demain / hier. Vide → date courte.
  */
-/** Kicker 1 ligne (F) sur toutes les puces : En direct / À venir / Demain / Prochain / Hier… */
+/** Kicker : En direct / Aujourd’hui / Demain / Prochain+date / Hier / date. */
 function sportsMatchWhenTag(slide) {
   const g = slide?.game || {};
   if (sportsGameIsLive(g)) {
@@ -2052,7 +2051,12 @@ function sportsMatchWhenTag(slide) {
     if (day && day === sportsCivilDayShift(today, 1)) {
       return { word: SPORTS_CTA_TAG_TOMORROW, lamp: 'next' };
     }
-    return { word: 'Prochain', lamp: 'next' };
+    const iso = g.date || day;
+    return {
+      word: SPORTS_CTA_TAG_NEXT,
+      lamp: 'next',
+      dateLine: sportsCtaCompactDateLine(iso),
+    };
   }
   if (slide?.mode === 'result') {
     const word = sportsCtaResultTag(slide);
@@ -2070,12 +2074,11 @@ function sportsWhenWord(slide) {
   if (!day) return '';
   const today = torontoDayKey();
   if (day === today) {
-    if (slide.mode === 'next') return 'À venir';
+    if (slide.mode === 'next') return SPORTS_MATCH_TAG_TODAY;
     if (slide.mode === 'result') return 'aujourd’hui';
   }
   if (day === sportsCivilDayShift(today, 1)) return 'Demain';
   if (day === sportsCivilDayShift(today, -1)) return 'hier';
-  if (day === sportsCivilDayShift(today, -2)) return 'avant-hier';
   return '';
 }
 
@@ -2088,7 +2091,7 @@ function sportsMatchSubLine(slide) {
     when = clock;
   } else {
     const word = sportsWhenWord(slide);
-    if (word === 'À venir' || word === 'Demain') {
+    if (word === SPORTS_MATCH_TAG_TODAY || word === 'Demain') {
       when = [word, clock].filter(Boolean).join(' · ');
     } else if (word) {
       when = word;
@@ -2142,7 +2145,36 @@ function sportsCtaEyebrow(_slide, _state) {
 }
 
 /**
- * Date plus vieille que avant-hier : « mercredi » / « 19 août »
+ * Date compacte pour la 2ᵉ ligne de Prochain : « ven. 4 sept ».
+ */
+function sportsCtaCompactDateLine(iso) {
+  const day = String(iso || '').slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return '';
+  try {
+    const parts = new Intl.DateTimeFormat('fr-CA', {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short',
+      timeZone: 'America/Toronto',
+    }).formatToParts(new Date(`${day}T12:00:00`));
+    const weekday = ((parts.find((p) => p.type === 'weekday') || {}).value || '')
+      .replace(/\.$/, '');
+    const dayNum = (parts.find((p) => p.type === 'day') || {}).value;
+    const month = (parts.find((p) => p.type === 'month') || {}).value;
+    if (weekday && dayNum && month) return `${weekday}. ${dayNum} ${month}`;
+    if (dayNum && month) return `${dayNum} ${month}`;
+  } catch { /* fall through */ }
+  return '';
+}
+
+function sportsCtaTagDateLine(slide, wanted) {
+  if (wanted !== SPORTS_CTA_TAG_NEXT) return '';
+  const src = slide?.ctaFrom || slide;
+  return sportsCtaCompactDateLine(src?.game?.date || sportsSlideDayKey(src));
+}
+
+/**
+ * Date plus vieille que hier : « mercredi » / « 19 août »
  * (kicker 2 lignes). `formatToParts` pour ne pas parser la locale.
  */
 function sportsCtaResultDateParts(iso) {
@@ -2163,14 +2195,13 @@ function sportsCtaResultDateParts(iso) {
   return null;
 }
 
-/** Pastille d’un résultat : Aujourd’hui, Hier, Avant-hier, sinon date courte. */
+/** Pastille d’un résultat : Dernière heure, Hier, sinon date (jour + mois). */
 function sportsCtaResultTag(src) {
   const day = sportsSlideDayKey(src);
   if (!day) return SPORTS_CTA_TAG;
   const today = torontoDayKey();
   if (day === today) return SPORTS_CTA_TAG_LATEST;
   if (day === sportsCivilDayShift(today, -1)) return 'Hier';
-  if (day === sportsCivilDayShift(today, -2)) return 'Avant-hier';
   const iso = src?.game?.date || day;
   const parts = sportsCtaResultDateParts(iso);
   return parts ? parts.join(' ') : iso;
@@ -2190,8 +2221,8 @@ function sportsCtaGameIsTomorrow(slide) {
 }
 
 /**
- * Pastille CTA : À venir (aujourd’hui) / Demain / Prochains match (après)
- * / En direct / Aujourd’hui (résultat) / Hier / date.
+ * Pastille : Aujourd’hui (à venir du jour) / Demain / Prochain+date
+ * / En direct / Dernière heure / Hier / date.
  * Creux : LE-RADAR.ca (logo PWA), pas « Sports ».
  */
 function sportsCtaTagLabel(slide, state) {
@@ -2217,20 +2248,17 @@ function sportsCtaDateLinePair(raw) {
 }
 
 /**
- * Kicker F : 1 ligne, sauf « Dernière heure », « Avant-hier » et les dates
- * plus vieilles (2 lignes, pastille plus étroite). Score entre les noms.
+ * Kicker F : 1 ligne, sauf « Dernière heure », « Prochain » + date, et les
+ * dates plus vieilles que hier (2 lignes). Score entre les noms.
  */
-function sportsCtaTagLinePair(wanted, shown) {
+function sportsCtaTagLinePair(wanted, shown, extra = {}) {
   if (wanted === SPORTS_CTA_TAG_LATEST) {
     const parts = String(shown).trim().split(/\s+/).filter(Boolean);
     if (parts.length >= 2) return [parts.slice(0, -1).join(' '), parts[parts.length - 1]];
   }
-  if (wanted === 'Avant-hier') {
-    const raw = String(shown).trim();
-    const dash = raw.split(/-(.+)/).filter(Boolean);
-    if (dash.length >= 2) return [dash[0], dash[1]];
-    const parts = raw.split(/\s+/).filter(Boolean);
-    if (parts.length >= 2) return [parts[0], parts.slice(1).join(' ')];
+  if (wanted === SPORTS_CTA_TAG_NEXT) {
+    const dateLine = String(extra.dateLine || '').trim();
+    if (dateLine) return [shown, dateLine];
   }
   return sportsCtaDateLinePair(shown) || sportsCtaDateLinePair(wanted);
 }
@@ -2239,7 +2267,7 @@ function fillSportsCtaTagCopy(tag, wanted, extra = {}) {
   tag.replaceChildren();
   markNoTranslate(tag);
   const shown = window.RadarTranslate?.displayUiText?.(wanted) || wanted;
-  const pair = sportsCtaTagLinePair(wanted, shown);
+  const pair = sportsCtaTagLinePair(wanted, shown, extra);
   if (pair) {
     const lines = document.createElement('span');
     lines.className = 'sports-chip__cta-tag-lines';
@@ -2263,10 +2291,11 @@ function setSportsLocalizableText(el, original) {
 
 function collectSportsChromeOriginals() {
   const out = new Set();
-  document.querySelectorAll('.sports-chip--cta .sports-chip__cta-tag[data-cta-tag]').forEach((tag) => {
+  document.querySelectorAll('.sports-chip .sports-chip__cta-tag[data-cta-tag]').forEach((tag) => {
     if (tag.classList.contains('sports-chip__cta-tag--brand')) return;
     if (tag.dataset.ctaTag) out.add(tag.dataset.ctaTag);
     if (tag.dataset.ctaMeridiemLine) out.add(tag.dataset.ctaMeridiemLine);
+    if (tag.dataset.ctaDateLine) out.add(tag.dataset.ctaDateLine);
   });
   document.querySelectorAll('.sports-chip--match .sports-chip__when-tag[data-when-tag]').forEach((tag) => {
     if (tag.dataset.whenTag) out.add(tag.dataset.whenTag);
@@ -2285,20 +2314,24 @@ function collectSportsChromeOriginals() {
 }
 
 function paintSportsChromeLanguage() {
-  document.querySelectorAll('.sports-chip--cta .sports-chip__cta-tag').forEach((tag) => {
+  document.querySelectorAll('.sports-chip .sports-chip__cta-tag').forEach((tag) => {
     if (tag.classList.contains('sports-chip__cta-tag--brand')) return;
     const wanted = tag.dataset.ctaTag;
     if (wanted) {
       fillSportsCtaTagCopy(tag, wanted, {
         score: tag.dataset.ctaScore,
         meridiemLine: tag.dataset.ctaMeridiemLine,
+        dateLine: tag.dataset.ctaDateLine,
       });
     }
   });
   document.querySelectorAll('.sports-chip--match .sports-chip__when-tag').forEach((tag) => {
     const wanted = tag.dataset.whenTag;
     if (wanted) {
-      fillSportsCtaTagCopy(tag, wanted, { meridiemLine: tag.dataset.meridiem || '' });
+      fillSportsCtaTagCopy(tag, wanted, {
+        meridiemLine: tag.dataset.meridiem || '',
+        dateLine: tag.dataset.ctaDateLine || '',
+      });
     }
   });
   document.querySelectorAll('[data-orig-fr]').forEach((el) => {
@@ -2498,9 +2531,23 @@ function sportsDedupeMatchSlides(slides) {
 }
 
 /**
- * Clé utilisée uniquement pour espacer les deux faces V/D (ou N/N) d'un
- * résultat. Elles restent toutes les deux dans le cycle, mais ne doivent pas
- * se retrouver dans deux cartes voisines du bandeau.
+ * Accueil : une carte par match à score (vainqueur, ou un seul N).
+ * Régate / place : chaque formation garde sa place (pas le même match V/D).
+ */
+function sportsDedupeHomepageResults(slides) {
+  const scored = [];
+  const place = [];
+  for (const s of slides || []) {
+    if (!s) continue;
+    if (sportsIsPlaceResult(s.game, s.team?.sport || s.game?.sport)) place.push(s);
+    else scored.push(s);
+  }
+  return sportsDedupeMatchSlides(scored).concat(place);
+}
+
+/**
+ * Clé d’un résultat à score. Plus utilisée pour coller V/D voisins :
+ * le pool n’en garde qu’une face.
  */
 function sportsResultMatchKey(slide) {
   if (slide?.mode !== 'result') return '';
@@ -2519,22 +2566,21 @@ function sportsAdjacentResultMatchKeys(slot, visible = sportsVisible) {
 
 /**
  * Clés d’occupation d’une slide.
- * Prochains / CTA : un match = une face (**reçoit** ou **chez**).
- * Résultats (puces scores) : V et D (ou N/N) sont deux cartes distinctes.
+ * Un match à score = une face (vainqueur / un N / reçoit ou chez).
+ * Régate / place : occupation par formation (slide.key), pas par match.
  */
 function sportsSlideOccupyKeys(slide) {
   const keys = new Set();
   if (!slide) return keys;
   if (slide.mode === 'cta' && slide.ctaFrom) {
     if (slide.ctaFrom.key) keys.add(slide.ctaFrom.key);
-    if (slide.ctaFrom.mode !== 'result') {
-      const dk = sportsMatchDedupeKey(slide.ctaFrom);
-      if (dk && dk !== 'pair:|||') keys.add(dk);
-    }
+    const dk = sportsMatchDedupeKey(slide.ctaFrom);
+    if (dk && dk !== 'pair:|||') keys.add(dk);
     return keys;
   }
   if (slide.key) keys.add(slide.key);
-  if (slide.mode === 'result') return keys;
+  const place = sportsIsPlaceResult(slide.game, slide.team?.sport || slide.game?.sport);
+  if (slide.mode === 'result' && place) return keys;
   const dk = sportsMatchDedupeKey(slide);
   if (dk && dk !== 'pair:|||') keys.add(dk);
   return keys;
@@ -2607,9 +2653,9 @@ function sportsSoftSportDiversity(slides) {
  *   • dédup miroir + diversité sport souple ; plafond SPORTS_CTA_MAX_POOL
  *   • adversaire placeholder (ADV / TBD) exclu
  *
- *  CARTES GAUCHE
- *   • Résultats jusqu’à 5 j civils d’âge d’abord (toutes les faces encore
- *     disponibles), puis à-venir. Hors saison : prochains.
+ *  CARTES (une famille)
+ *   • Résultats jusqu’à 5 j civils : une face par match (vainqueur / un N).
+ *     Régate : une carte par formation. Puis à-venir. Hors saison : prochains.
  */
 /** Jour civil America/Toronto d’une slide match (YYYY-MM-DD). */
 function sportsSlideDayKey(slide) {
@@ -2706,7 +2752,7 @@ function sportsOpenOrderSlides(now = Date.now()) {
       nexts.push(s);
     }
   }
-  const list = sportsDedupeMatchSlides(nexts).concat(results);
+  const list = sportsDedupeMatchSlides(nexts).concat(sportsDedupeHomepageResults(results));
   list.sort((a, b) => {
     const ba = sportsOpenOrderBucket(a, now);
     const bb = sportsOpenOrderBucket(b, now);
@@ -3033,10 +3079,14 @@ function applySportsCtaState(chip, slide) {
     const lang = window.RadarTranslate?.getMode?.() || 'original';
     delete tag.dataset.ctaScore;
     delete tag.dataset.ctaMeridiemLine;
-    if (tag.dataset.ctaTag !== wanted || tag.dataset.ctaLang !== lang) {
+    const dateLine = sportsCtaTagDateLine(slide, wanted);
+    const prevDate = tag.dataset.ctaDateLine || '';
+    if (dateLine) tag.dataset.ctaDateLine = dateLine;
+    else delete tag.dataset.ctaDateLine;
+    if (tag.dataset.ctaTag !== wanted || tag.dataset.ctaLang !== lang || prevDate !== dateLine) {
       tag.dataset.ctaTag = wanted;
       tag.dataset.ctaLang = lang;
-      fillSportsCtaTagCopy(tag, wanted);
+      fillSportsCtaTagCopy(tag, wanted, { dateLine });
     }
   }
   syncSportsCtaRail(chip, slide);
@@ -3314,9 +3364,9 @@ function sportsChipTitle(slide) {
       host,
     ].filter(Boolean).join(' · ');
   }
-  const status = sportsCtaGameIsToday(slide) ? 'À venir'
+  const status = sportsCtaGameIsToday(slide) ? SPORTS_MATCH_TAG_TODAY
     : sportsCtaGameIsTomorrow(slide) ? 'Demain'
-    : 'Prochains match';
+    : SPORTS_CTA_TAG_NEXT;
   const verb = sportsMatchVerb(g);
   return [status, sport, `${home} ${verb} ${opp}`, when, host].filter(Boolean).join(' · ');
 }
@@ -3460,9 +3510,12 @@ function paintSportsChip(slide, animate = false) {
       el.dataset.whenLamp = whenInfo.lamp;
       el.dataset.ctaLamp = whenInfo.lamp;
     }
-    fillSportsCtaTagCopy(el, whenInfo.word);
+    if (whenInfo.dateLine) el.dataset.ctaDateLine = whenInfo.dateLine;
+    else delete el.dataset.ctaDateLine;
+    fillSportsCtaTagCopy(el, whenInfo.word, { dateLine: whenInfo.dateLine || '' });
     return el;
   })() : null;
+  if (whenInfo?.lamp) a.dataset.ctaLamp = whenInfo.lamp;
 
   if (slide.mode === 'result') {
     a.dataset.ctaState = 'result';
@@ -3567,10 +3620,8 @@ function arrangeSportsVisible(contentSlides, ctaOrList) {
 }
 
 /**
- * Les deux faces V/D d’un même match restent dans le cycle, mais ne peuvent
- * pas être voisines. On filtre **après** le placement CTA (wide = CTA au
- * centre) : [V, CTA, D] est valide ; [V, D, CTA] recule D de l’autre côté
- * si une CTA sépare, sinon on n’en garde qu’une.
+ * Filet : si deux faces du même match à score se suivent (ne devrait plus
+ * arriver après dédup), on n’en garde qu’une hors wide.
  */
 function sportsSeparateAdjacentResults(visible) {
   if (!Array.isArray(visible) || visible.length < 2) return visible || [];
@@ -3605,7 +3656,8 @@ function sportsSeparateAdjacentResults(visible) {
 
 function sportsCtaSlotIndex(visible = sportsVisible) {
   const i = visible.findIndex((s) => s?.mode === 'cta');
-  return i >= 0 ? i : Math.max(0, visible.length - 1);
+  if (i >= 0) return i;
+  return 0;
 }
 
 /** Indices de toutes les CTAs visibles (wide multi). */
@@ -3793,7 +3845,7 @@ function rotateSportsSlot(slot) {
   if (!MASTHEAD_SPORTS_STRIP || sportsVisible.length < 1 || sportsSlides.length < 1) return;
   const n = sportsVisible.length;
   if (slot < 0 || slot >= n) return;
-  const used = sportsVisibleOccupyKeys(slot);
+  const used = sportsVisibleOccupyKeys();
   const avoidMatchKeys = sportsAdjacentResultMatchKeys(slot);
   const usedSports = new Set(
     sportsVisible
