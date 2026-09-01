@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-09-01T21:35:25.783Z",
+  "updatedAt": "2026-09-01T23:46:45.627Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
-      "next": {
         "title": "Capitales de Québec",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "18:50",
         "end": "23:00",
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
+      "next": {
+        "title": "Mercredi Bonbon",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mercredi-bonbon/"
+      },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "Capitales de Québec",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T21:34:40.692Z"
+      "checkedAt": "2026-09-01T23:46:19.213Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les Pénibles",
-        "source": "schedule",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-penibles"
-      },
-      "next": {
         "title": "Ailleurs: escales en musique",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/ailleurs-en-musique"
       },
+      "next": {
+        "title": "Les garçons pleurent aussi (reprise)",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+      },
       "track": "",
-      "showTitle": "Les Pénibles",
+      "showTitle": "Ailleurs: escales en musique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T21:34:42.793Z"
+      "checkedAt": "2026-09-01T23:46:21.600Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off The Hour: Local Journalism Stories",
+        "title": "Soul Perspectives",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:30"
       },
       "next": {
-        "title": "Rez Rock Radio",
+        "title": "Marca-RO",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "20:30",
+        "end": "21:00"
       },
       "track": "",
-      "showTitle": "Off The Hour: Local Journalism Stories",
+      "showTitle": "Soul Perspectives",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,83 +81,90 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T21:34:44.831Z"
+      "checkedAt": "2026-09-01T23:46:24.056Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Cherry Vamp and the Sonic Coffin",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
+        "title": "Ashes to Ashes",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
       },
       "next": {
-        "title": "Bikini Brrroadcast",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
+        "title": "Hittin' All The Bases",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
       },
       "track": "",
-      "showTitle": "Cherry Vamp and the Sonic Coffin",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-01T21:35:19.028Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "18:30"
-      },
-      "next": {
-        "title": "L'Aut'Rock",
-        "source": "schedule-live",
-        "start": "18:30",
-        "end": "20:00"
-      },
-      "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Ashes to Ashes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T21:35:19.952Z"
+      "checkedAt": "2026-09-01T23:46:38.204Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "L'Aut'Rock",
+        "source": "schedule-live",
+        "start": "18:30",
+        "end": "20:00"
+      },
+      "next": {
+        "title": "Dichotomie 88.3",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
+      "track": "",
+      "showTitle": "L'Aut'Rock",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-01T23:46:39.359Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
-        "title": "Le Studio",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00",
-        "slug": "live"
+      "current": {
+        "title": "Les Amazones",
+        "source": "schedule",
+        "start": "19:30",
+        "end": "20:30",
+        "url": "https://www.choq.ca/emissions/les-amazones"
       },
-      "track": "Bonne nuit, chérie - Sortie de secours",
-      "showTitle": "",
+      "next": {
+        "title": "10 sur 10 : un podcast 100% rap",
+        "source": "schedule",
+        "start": "20:30",
+        "end": "22:30",
+        "url": "https://www.choq.ca/emissions/10-sur-10-un-podcast-100-rap"
+      },
+      "track": "WIDOWSPEAK - Soft Cover",
+      "showTitle": "Les Amazones",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-01T21:35:25.432Z"
+      "checkedAt": "2026-09-01T23:46:45.276Z"
     }
   }
 }
