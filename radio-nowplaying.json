@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-31T20:38:39.320Z",
+  "updatedAt": "2026-09-01T00:22:05.297Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Les Arshitechs du Son",
+        "title": "Mardi Champ Gauche",
         "source": "schedule",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T20:38:11.899Z"
+      "checkedAt": "2026-09-01T00:21:38.974Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les garçons pleurent aussi",
+        "title": "Rock à la casbah",
         "source": "schedule",
-        "start": "15:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+        "start": "20:00",
+        "end": "21:00",
+        "url": "https://cism893.ca/emissions/rock-a-la-casbah"
       },
       "next": {
-        "title": "Les criquets crinqués",
+        "title": "Toute est dans toute (reprise)",
         "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-criquets-crinques"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/tout-est-dans-toute"
       },
       "track": "",
-      "showTitle": "Les garçons pleurent aussi",
+      "showTitle": "Rock à la casbah",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T20:38:14.107Z"
+      "checkedAt": "2026-09-01T00:21:40.934Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Whose Vibe Is It Anyway",
+        "title": "Underground Sounds",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "20:00",
+        "end": "22:00"
       },
       "next": {
-        "title": "En Profondeur",
+        "title": "Drastic Plastic",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "22:00",
+        "end": "23:00"
       },
       "track": "",
-      "showTitle": "Whose Vibe Is It Anyway",
+      "showTitle": "Underground Sounds",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,83 +74,85 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T20:38:16.920Z"
+      "checkedAt": "2026-09-01T00:21:43.445Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Dreamscapes",
+        "title": "In The Garage",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/dreamscapes"
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/in-the-garage"
       },
       "next": {
-        "title": "The Pressure Drop",
+        "title": "LEKTOR DECODER",
         "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-pressure-drop"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/lektor-decoder"
       },
       "track": "",
-      "showTitle": "Dreamscapes",
+      "showTitle": "In The Garage",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T20:38:31.655Z"
+      "checkedAt": "2026-09-01T00:21:58.139Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Solénoïde",
+        "title": "Le terrain sportif",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "18:00"
+        "start": "20:00",
+        "end": "00:01"
       },
       "next": {
-        "title": "Ma radio Académia",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "20:00"
+        "title": "Les nuits CFAK",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Le terrain sportif",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-08-31T20:38:33.004Z"
+      "checkedAt": "2026-09-01T00:21:59.096Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Podcast Nomade: L'art de se rencontrer",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "podcast-nomade-lart-de-se-rencontrer"
+        "title": "Les rois de l'arène",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "The New Pornographers - Ballad Of The Last Payphone",
+      "track": "Meloire - Bon Sang",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-08-31T20:38:38.970Z"
+      "checkedAt": "2026-09-01T00:22:04.946Z"
     }
   }
 }
