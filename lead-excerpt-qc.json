@@ -1,32 +1,14 @@
 {
-  "updated": "2026-09-01T05:20:01.187Z",
+  "updated": "2026-09-01T07:54:54.396Z",
   "total": 185,
   "pool": 56,
-  "incomplete": 9,
+  "incomplete": 7,
   "withLeadExcerpt": 107,
-  "candidates": 9,
-  "enriched": 2,
-  "failed": 1,
+  "candidates": 7,
+  "enriched": 1,
+  "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Lumière sur les concerts gratuits!",
-      "link": "https://www.delitfrancais.com/2026/09/01/lumiere-sur-les-concerts-gratuits/",
-      "ok": true,
-      "score": 100,
-      "chars": 397,
-      "sample": "En arrivant sur place, mon amie s’est exclamée : « awww c’est trop cute les humains. » J’avoue, il y",
-      "changed": true
-    },
-    {
-      "title": "Le retour attendu de Phoebe Bridgers",
-      "link": "https://www.delitfrancais.com/2026/09/01/le-retour-attendu-de-phoebe-bridgers/",
-      "ok": true,
-      "score": 100,
-      "chars": 271,
-      "sample": "Le nouvel album de Phoebe Bridgers, Lost Weekend , fait preuve de créativité musicale et de maturité",
-      "changed": true
-    },
     {
       "title": "Montréal en spectacles",
       "link": "https://www.delitfrancais.com/2026/09/01/montreal-en-spectacles/",
@@ -80,6 +62,15 @@
       "chars": 179,
       "sample": "La Coupe d’Afrique des Nations (CAN) de Saguenay a tenu sa cinquième finale ce samedi à Chicoutimi. ",
       "changed": false
+    },
+    {
+      "title": "Foire aux questions",
+      "link": "https://lecollectif.ca/campus/foire-aux-questions/",
+      "ok": true,
+      "score": 96,
+      "chars": 169,
+      "sample": "Attention cependant aux exceptions ! Consulte le site Web de ta faculté ou de ton centre universitai",
+      "changed": true
     }
   ]
 }
