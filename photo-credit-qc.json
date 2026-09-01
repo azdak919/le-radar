@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-01T04:22:34.951Z",
+  "updated": "2026-09-01T05:26:02.789Z",
   "total": 185,
   "withImage": 169,
   "withCredit": 169,
@@ -7,43 +7,22 @@
   "pending": 15,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 8,
+  "checked": 22,
+  "updatedCount": 11,
   "citedNew": 6,
-  "fallbackNew": 15,
+  "fallbackNew": 16,
   "samples": [
     {
-      "title": "Montréal en spectacles",
+      "title": "Lumière sur les concerts gratuits!",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran l Le Délit",
+      "credit": "Photo : Photo tirée du Facebook de Marie Céleste",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Sensibilisation aux surdoses : une journée pour démystifier la problématique",
-      "source": "La Pige",
-      "credit": "Photo : Charles Pinel",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Questionner la réforme électorale au Québec",
+      "title": "Le retour attendu de Phoebe Bridgers",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Sommes-nous ingrats?",
-      "source": "Le Délit",
-      "credit": "Photo : Eugénie Vitrac",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "L’homosexualité : un sujet encore tabou",
-      "source": "Le Délit",
-      "credit": "Photo : Anastasia Kulinich",
+      "credit": "Photo : Photo tirée du Facebook de Phoebe Bridgers",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -55,6 +34,13 @@
       "method": null
     },
     {
+      "title": "La Fondation de l’UdeS",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
+      "cited": false,
+      "method": null
+    },
+    {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
       "source": "Quartier Libre",
       "credit": "Crédit photo : Quartier Libre",
@@ -62,11 +48,46 @@
       "method": null
     },
     {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Recettes musicales québécoises pour l’été",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
+    },
+    {
       "title": "Inside Mile End Kicks",
       "source": "The Link",
       "credit": "Photo: Courtesy of Joe Fuda",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
