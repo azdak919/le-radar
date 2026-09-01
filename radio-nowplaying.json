@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-01T18:43:05.426Z",
+  "updatedAt": "2026-09-01T21:35:25.783Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Les Arshitechs du Son",
+        "source": "api-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "next": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "title": "Capitales de Québec",
+        "source": "schedule-live",
+        "start": "18:50",
+        "end": "23:00",
+        "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T18:42:40.501Z"
+      "checkedAt": "2026-09-01T21:34:40.692Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
+        "title": "Les Pénibles",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/les-penibles"
       },
       "next": {
-        "title": "À la bonne heure",
+        "title": "Ailleurs: escales en musique",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/a-la-bonne-heure"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/ailleurs-en-musique"
       },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Les Pénibles",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T18:42:42.701Z"
+      "checkedAt": "2026-09-01T21:34:42.793Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Voice of Korea",
+        "title": "Off The Hour: Local Journalism Stories",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "next": {
-        "title": "Montreal Sessions",
+        "title": "Rez Rock Radio",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "track": "",
-      "showTitle": "Voice of Korea",
+      "showTitle": "Off The Hour: Local Journalism Stories",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T18:42:45.100Z"
+      "checkedAt": "2026-09-01T21:34:44.831Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Code Switch",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/code-switch"
+        "title": "Cherry Vamp and the Sonic Coffin",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
       },
       "next": {
-        "title": "Sonic Lit: A SpokenWeb Radio Show",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
+        "title": "Bikini Brrroadcast",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
       },
       "track": "",
-      "showTitle": "Code Switch",
+      "showTitle": "Cherry Vamp and the Sonic Coffin",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T18:42:59.171Z"
+      "checkedAt": "2026-09-01T21:35:19.028Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,32 +133,31 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T18:43:00.386Z"
+      "checkedAt": "2026-09-01T21:35:19.952Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://www.choq.ca/emissions/palmareschoq"
+        "title": "Le Studio",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00",
+        "slug": "live"
       },
-      "track": "Malaime Soleil - Desert",
+      "track": "Bonne nuit, chérie - Sortie de secours",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-01T18:43:05.075Z"
+      "checkedAt": "2026-09-01T21:35:25.432Z"
     }
   }
 }
