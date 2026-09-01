@@ -1,14 +1,14 @@
 {
-  "updated": "2026-09-01T15:29:55.513Z",
-  "fetchedAt": "2026-09-01T15:29:55.513Z",
+  "updated": "2026-09-01T19:23:22.638Z",
+  "fetchedAt": "2026-09-01T19:23:22.638Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-01T15:29:55.513Z"
+    "referenceDate": "2026-09-01T19:23:22.638Z"
   },
   "registry": "sports-teams.json",
-  "registryMatched": 789,
+  "registryMatched": 788,
   "leagueCatalog": 109,
   "leaguesWithTeams": 100,
   "leaguesOk": 109,
@@ -73,7 +73,7 @@
     "ultimate",
     "volleyball"
   ],
-  "teamCount": 809,
+  "teamCount": 808,
   "errors": [
     {
       "leagueId": "spordle-collegial",
@@ -50879,29 +50879,6 @@
       "priority": 80,
       "fullName": "Champlain College St. Lawrence",
       "registryId": "ch-st-lawrence"
-    },
-    "collegial:golf:7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab:5453cdbf-e978-4b65-b3e2-bb1b25204879": {
-      "id": "collegial:golf:7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab:5453cdbf-e978-4b65-b3e2-bb1b25204879",
-      "rseqTeamId": "5453cdbf-e978-4b65-b3e2-bb1b25204879",
-      "leagueId": "7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab",
-      "name": "Granby",
-      "code": "GBY",
-      "sector": "collegial",
-      "sport": "golf",
-      "sportLabel": "Golf",
-      "sex": "X",
-      "division": null,
-      "usports": false,
-      "leagueLabel": "Golf collégial mixte",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [],
-      "nextGame": null,
-      "record": null,
-      "source": "rseq-s1",
-      "priority": 80,
-      "fullName": "Cégep de Granby",
-      "registryId": "granby"
     },
     "collegial:golf:7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab:582d083e-fb13-466d-b0ce-64b53aceec40": {
       "id": "collegial:golf:7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab:582d083e-fb13-466d-b0ce-64b53aceec40",
