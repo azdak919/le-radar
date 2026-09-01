@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T05:27:11.528Z",
+  "updatedAt": "2026-09-01T10:21:04.840Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T05:26:45.632Z"
+      "checkedAt": "2026-09-01T10:20:34.147Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les sentinelles de l'art (reprise)",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "next": {
-        "title": "Mix Franco",
+        "title": "Câlin collectif",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/calins-collectifs"
       },
       "track": "",
-      "showTitle": "Les sentinelles de l'art (reprise)",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T05:26:47.310Z"
+      "checkedAt": "2026-09-01T10:20:36.192Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harmony Express",
+        "title": "The Beat Power Hour",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "05:00",
+        "end": "07:00"
       },
       "next": {
-        "title": "Pirate et Libres",
+        "title": "Tuesday Morning After Pt1",
         "source": "api-live",
-        "start": "02:00",
-        "end": "03:00"
+        "start": "07:00",
+        "end": "08:00"
       },
       "track": "",
-      "showTitle": "Harmony Express",
+      "showTitle": "The Beat Power Hour",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T05:26:49.799Z"
+      "checkedAt": "2026-09-01T10:20:38.512Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Hip's Time to Wake Hop",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
       },
+      "next": {
+        "title": "At The Movies",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/at-the-movies"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Hip's Time to Wake Hop",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T05:27:04.170Z"
+      "checkedAt": "2026-09-01T10:20:52.708Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,31 +126,35 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-01T05:27:05.016Z"
+      "checkedAt": "2026-09-01T10:20:53.729Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les rois de l'arène",
         "source": "api-live",
         "start": "05:00",
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Empress Of - Dream House",
-      "showTitle": "",
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://www.choq.ca/emissions/palmareschoq"
+      },
+      "track": "Clément — les arbres",
+      "showTitle": "Les rois de l'arène",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-09-01T05:27:11.177Z"
+      "clientPoll": null,
+      "checkedAt": "2026-09-01T10:21:04.489Z"
     }
   }
 }
