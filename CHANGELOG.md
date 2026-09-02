@@ -43,6 +43,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Puces sports du mât : pause avant cascade ~9 s (plus 7,5 s). Un titre trop long défile **gauche → droite puis revient à l’origine** avant la vague — plus de « … » (le CSS wide forçait `ellipsis` + `animation: none` sur les scores).
+
 - Sélecteur de langue : bouton **×** (Fermer / Close) sur tous les formats ; la liste défile sur mobile (scroller interne — le geste ne repositionne plus le panneau). Le panneau est porté dans `<body>` pour ne plus passer sous la loupe.
 
 - Slogan du mât : air intérieur de la pastille (padding-inline > rayon) ; le texte **se resserre** (interlettrage, puis taille) pour rester sur ses lignes, sans se couper.

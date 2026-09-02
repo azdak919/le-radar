@@ -90,8 +90,8 @@
     0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 22%, transparent);
 }
 /* Puces scores 2 lignes : noms (haut) + date/compétition (bas).
- * Focus-group le-radar-sports-weather-fit A : jamais de marquee sur les scores
- * — si le texte déborde, le JS retire une puce (fit). CTA garde le marquee. */
+ * Fit JS d’abord (−1 puce). Si le texte déborde encore (pastille 2 lignes
+ * + noms longs) : marquee L→R + retour à l’origine — jamais « … ». */
 .masthead-sports-strip .sports-chip--match {
   white-space: normal;
   align-items: center;
@@ -294,27 +294,39 @@
   line-height: 1.35;
 }
 /* Défilement L→R du texte trop long (scores ET accroche CTA SPORTS).
- * La pastille « SPORTS » reste fixe ; seul le texte d’info défile.
- * Rotation de match = crossfade (app.js), pas de carte type gare.
- * Durée 5,5 s × alternate = 11 s aller-retour — app.js (SPORTS_SCROLL_*)
- * attend ce cycle + pause repos avant de changer le match (lecture confortable). */
+ * La pastille reste fixe ; seul le texte d’info défile.
+ * Durée 5,5 s (CTA) / 8 s (puces scores) × alternate = 1 aller-retour.
+ * Le JS attend ce cycle + pause à l’origine avant la cascade. */
 .masthead-sports-strip {
   /* Holds aux extrémités = moins d’à-coups aux virages. Titre et sous-ligne
    * partagent la même durée ; les holds (18/82 vs 32/68) restent distincts.
    * 2 alternate (pas infinite) + delay lecture — 1 aller-retour puis repos. */
   --sports-scroll-duration: 5.5s;
   --sports-scroll-delay: 1.6s;
+  --sports-scroll-trips: 2;
 }
-/*
- * Focus-group A : marquee **interdit** sur puces scores (.sports-chip--match).
- * Les sélecteurs is-overflowing / is-sub-overflowing + keyframes restent pour
- * la CTA seule (ci-dessous). Scores : fit JS (−1 puce) si overflow texte.
- */
+.masthead-sports-strip .sports-chip--match {
+  --sports-scroll-duration: 8s;
+}
 @keyframes sports-chip-scroll {
   /* Hold à l’origine (début + retour) puis à l’extrémité. Le JS attend
    * encore une pause au repos après le cycle avant de changer l’info. */
   0%, 24% { transform: translateX(0); }
   76%, 100% { transform: translateX(calc(var(--sports-scroll, 0) * -1)); }
+}
+.masthead-sports-strip .sports-chip--match.is-overflowing .sports-chip__line-inner {
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+  animation: sports-chip-scroll var(--sports-scroll-duration, 8s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both;
+  will-change: transform;
+}
+.masthead-sports-strip .sports-chip--match.is-sub-overflowing .sports-chip__sub-text {
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+  animation: sports-chip-scroll-sub var(--sports-scroll-duration, 8s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both;
+  will-change: transform;
 }
 /* CTA hors marquee : clip sur le texte seul — jamais d’ellipsis, jamais sur
  * toute la couche (sinon head+sub se collapsaient sans marquee). */
@@ -777,7 +789,7 @@
  * Titre → --sports-scroll ; sous-ligne → --sports-scroll-sub (décalages distincts). */
 .masthead-sports-strip .sports-chip--cta {
   --sports-scroll-delay: 0.7s;
-  --sports-scroll-trips: 4;
+  --sports-scroll-trips: 2;
 }
 @keyframes sports-cta-scroll {
   0%, 10% { transform: translateX(0); }
@@ -791,14 +803,14 @@
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-cta-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) var(--sports-scroll-trips, 4) alternate both;
+  animation: sports-cta-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) var(--sports-scroll-trips, 2) alternate both;
   will-change: transform;
 }
 .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
   max-width: none;
   overflow: visible;
   text-overflow: clip;
-  animation: sports-cta-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) var(--sports-scroll-trips, 4) alternate both;
+  animation: sports-cta-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) var(--sports-scroll-trips, 2) alternate both;
   will-change: transform;
 }
 @keyframes sports-chip-scroll-sub {
