@@ -53,13 +53,14 @@ test('sports strip : collapse progressif jusqu’à CTA SPORTS seule', async ({ 
   const midNarrow = await countAt(480);
   expect(midNarrow).toBeLessThanOrEqual(mid);
   expect(midNarrow).toBeGreaterThanOrEqual(1);
-  // Puces scores : titre + sous-ligne entiers (pas de marquee is-overflowing).
+  // Overflow restant : clip + marquee, jamais « … ».
   const matchChips = strip.locator('.sports-chip:not(.sports-chip--cta)');
   const matchCount = await matchChips.count();
   for (let i = 0; i < matchCount; i += 1) {
-    const chip = matchChips.nth(i);
-    await expect(chip).not.toHaveClass(/is-overflowing/);
-    await expect(chip).not.toHaveClass(/is-sub-overflowing/);
+    const overflow = await matchChips.nth(i).locator('.sports-chip__line-inner').evaluate(
+      (el) => getComputedStyle(el).textOverflow,
+    );
+    expect(overflow, 'puces scores : jamais ellipsis').toBe('clip');
   }
 
   const narrow = await countAt(520);
@@ -470,6 +471,56 @@ test('390 / 430 : pastille Prochain/Hier/Aujourd’hui à gauche de l’accroche
  * **jamais** les trois points d’ellipsis. Règle dure le-radar : tout ce qui
  * déborde dans le bandeau sports défile L→R ; on n’accepte pas « … ».
  */
+test('puce score : titre long défile L→R, jamais d’ellipsis …', async ({ page }) => {
+  const pageErrors = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const strip = page.locator('#masthead-sports-strip');
+  await expect(strip).toBeVisible({ timeout: 8000 });
+  const match = strip.locator('.sports-chip--match').first();
+  await expect(match).toBeVisible({ timeout: 8000 });
+
+  const longTitle = 'Notre-Dame Jaune reçoit Diablos (Cégep de Trois-Rivières)';
+  const ready = await page.evaluate((title) => {
+    const chip = document.querySelector('.sports-chip--match');
+    const inner = chip?.querySelector('.sports-chip__line-inner');
+    if (!chip || !inner) return { ok: false, reason: 'no-match' };
+    chip.style.flex = '0 0 220px';
+    chip.style.maxWidth = '220px';
+    chip.style.width = '220px';
+    inner.textContent = title;
+    if (typeof refreshSportsChipScroll === 'function') refreshSportsChipScroll(chip);
+    const cs = getComputedStyle(inner);
+    return {
+      ok: true,
+      isOverflowing: chip.classList.contains('is-overflowing'),
+      scroll: chip.style.getPropertyValue('--sports-scroll'),
+      textOverflow: cs.textOverflow,
+      animation: cs.animationName,
+      label: (inner.textContent || '').trim(),
+    };
+  }, longTitle);
+
+  expect(ready.ok, `préparation : ${ready.reason || 'ok'}`).toBe(true);
+  expect(ready.label).toBe(longTitle);
+  expect(ready.isOverflowing, 'titre long doit activer is-overflowing').toBe(true);
+  expect(parseFloat(ready.scroll), 'décalage marquee titre').toBeGreaterThan(2);
+  expect(ready.textOverflow, 'jamais text-overflow:ellipsis').toBe('clip');
+  expect(ready.animation, 'titre doit animer sports-chip-scroll').toMatch(/sports-chip-scroll/);
+
+  const titleEl = match.locator('.sports-chip__line-inner');
+  // Delay 1,6 s + hold 24 % de 8 s ≈ 3,5 s avant le 1er pixel.
+  const left0 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
+  await page.waitForTimeout(5200);
+  const left1 = await titleEl.evaluate((el) => el.getBoundingClientRect().left);
+  expect(left1, 'le titre doit glisser (marquee L→R)').toBeLessThan(left0 - 1);
+
+  expect(pageErrors).toEqual([]);
+});
+
 test('CTA sports : titre long défile, jamais d’ellipsis …', async ({ page }) => {
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
@@ -635,19 +686,26 @@ async function assertSportsCascadeAt(page, { width, height = 900, wide = false, 
   expect(now.some((row) => row.cta), 'la vague conserve au moins une CTA').toBe(true);
 }
 
-test('pause sports : lecture ~6,5–10 s, pas 11–16 s', async ({ page }) => {
+test('pause sports : lecture ~9 s, marquee complète si overflow', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const strip = page.locator('#masthead-sports-strip');
   await expect(strip).toBeVisible({ timeout: 8000 });
   await expect.poll(async () => strip.locator('.sports-chip').count(), { timeout: 8000 })
     .toBeGreaterThan(0);
-  const hold = await page.evaluate(() => (
-    typeof sportsBoardHoldMs === 'function' ? sportsBoardHoldMs() : null
-  ));
-  expect(hold, 'sportsBoardHoldMs exposé').toEqual(expect.any(Number));
-  expect(hold, `hold ${hold} ms trop court`).toBeGreaterThanOrEqual(6500);
-  expect(hold, `hold ${hold} ms trop long (prod 2026-08-29)`).toBeLessThanOrEqual(12000);
+  const info = await page.evaluate(() => {
+    const hold = typeof sportsBoardHoldMs === 'function' ? sportsBoardHoldMs() : null;
+    const overflowing = [...document.querySelectorAll('#masthead-sports-strip .sports-chip')]
+      .some((el) => el.classList.contains('is-overflowing') || el.classList.contains('is-sub-overflowing'));
+    return { hold, overflowing };
+  });
+  expect(info.hold, 'sportsBoardHoldMs exposé').toEqual(expect.any(Number));
+  expect(info.hold, `hold ${info.hold} ms trop court`).toBeGreaterThanOrEqual(9000);
+  if (!info.overflowing) {
+    expect(info.hold, `hold ${info.hold} ms trop long sans marquee`).toBeLessThanOrEqual(12000);
+  } else {
+    expect(info.hold, `hold ${info.hold} ms trop court pour un aller-retour`).toBeGreaterThanOrEqual(14000);
+  }
 });
 
 test('wide E : sports + CTA changent en cascade puis se figent', async ({ page }) => {

@@ -1831,8 +1831,8 @@ assert(
     'style : aucun text-overflow:ellipsis sur line-inner / sub-text / cta-text / cta-sub-text',
   );
 }
-// Puces scores 2 lignes : noms + date·compétition ; focus-group A :
-// jamais marquee scores (fit −1 puce) ; CTA garde marquee ; 0 ellipsis.
+// Puces scores 2 lignes : noms + date·compétition ; overflow → marquee L→R
+// + retour à l’origine (filet après le fit −1 puce) ; CTA marquee ; 0 ellipsis.
 assert(
   appJs.includes('sports-chip--match')
     && appJs.includes('sports-chip__body')
@@ -1894,12 +1894,12 @@ assert(
     && styleCss.includes('sports-chip--match')
     && styleCss.includes('sports-chip__body')
     && styleCss.includes('.sports-chip--match .sports-chip__sub')
-    // Plus de marquee CSS sur scores (seul CTA anime is-overflowing).
-    && !/:not\(\.sports-chip--cta\)\.is-overflowing \.sports-chip__line-inner/.test(cssFlat)
-    && !/:not\(\.sports-chip--cta\)\.is-sub-overflowing \.sports-chip__sub-text/.test(cssFlat)
+    && /\.sports-chip--match\.is-overflowing \.sports-chip__line-inner/.test(cssFlat)
+    && /\.sports-chip--match\.is-sub-overflowing \.sports-chip__sub-text/.test(cssFlat)
+    && /sports-chip-scroll[^;]*alternate\s+both/.test(cssFlat)
     && styleCss.includes('@keyframes sports-chip-scroll')
     && styleCss.includes('@keyframes sports-chip-scroll-sub'),
-  'puces scores : 2 lignes ; anti-marquee scores (FG A) ; CTA marquee ; 0 ellipsis',
+  'puces scores : 2 lignes ; marquee L→R si overflow ; CTA marquee ; 0 ellipsis',
 );
 // Jambages (j, g, y, p, q) : line-height ≥ 1.35 sous overflow:hidden
 // (régression « Collège » / « jeu. » / « collégial » — même leçon que Original).
@@ -1918,9 +1918,11 @@ assert(
     && appJs.includes('sportsSlotDwellMs')
     && appJs.includes('sportsLabelReadingMs')
     && appJs.includes('sportsChipNeedsMarquee')
+    && appJs.includes('function sportsSyncMarqueeCycle')
     && /SPORTS_READ_MIN_MS\s*=\s*6500/.test(appJs)
     && /SPORTS_READ_MAX_MS\s*=\s*10000/.test(appJs)
-    && /SPORTS_BOARD_HOLD_MS\s*=\s*7500/.test(appJs)
+    && /SPORTS_BOARD_HOLD_MS\s*=\s*9000/.test(appJs)
+    && /SPORTS_BOARD_HOLD_CAP_MS\s*=\s*12000/.test(appJs)
     && /SPORTS_SCROLL_ONE_WAY_MS\s*=\s*5500/.test(appJs)
     && appJs.includes('SPORTS_SCROLL_ROUND_TRIP_MS')
     && appJs.includes('SPORTS_SCROLL_READ_DELAY_MS')
@@ -1939,7 +1941,7 @@ assert(
   'app.js : cascade météo/sports tous écrans + marquee 1 cycle',
 );
 // Marquee site : alternate both + delay — jamais infinite. 2 = 1 aller-retour ;
-// CTA : 4 aller-retour (noms longs), delay 0.7s ; strip 1.6s pour le dial.
+// CTA delay 0.7s ; strip / puces 1.6s.
 assert(
   !/sports-chip-scroll[^;]*infinite/.test(cssFlat)
     && !/sports-chip-scroll-sub[^;]*infinite/.test(cssFlat)
