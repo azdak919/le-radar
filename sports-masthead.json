@@ -1,10 +1,10 @@
 {
-  "updated": "2026-09-02T08:47:47.280Z",
-  "fetchedAt": "2026-09-02T08:47:47.280Z",
+  "updated": "2026-09-02T15:09:57.568Z",
+  "fetchedAt": "2026-09-02T15:09:57.568Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-02T08:47:47.280Z"
+    "referenceDate": "2026-09-02T15:09:57.568Z"
   },
   "masthead": {
     "nextGameLimit": 48,
@@ -4248,7 +4248,7 @@
       "nextGames": [
         {
           "date": "2026-09-03",
-          "time": "21:00",
+          "time": "19:00",
           "opponent": "Cégep de Chicoutimi",
           "opponentCode": "CHI",
           "home": true,
@@ -4262,7 +4262,7 @@
       ],
       "nextGame": {
         "date": "2026-09-03",
-        "time": "21:00",
+        "time": "19:00",
         "opponent": "Cégep de Chicoutimi",
         "opponentCode": "CHI",
         "home": true,
@@ -8970,6 +8970,54 @@
       "nickname": "Citadins",
       "registryId": "uqam"
     },
+    "collegial:soccer:21c736b9-df07-4c83-a58e-c444ad22252c:ced14a5e-25d8-4566-917e-5fcae50e98a4": {
+      "id": "collegial:soccer:21c736b9-df07-4c83-a58e-c444ad22252c:ced14a5e-25d8-4566-917e-5fcae50e98a4",
+      "rseqTeamId": "ced14a5e-25d8-4566-917e-5fcae50e98a4",
+      "leagueId": "21c736b9-df07-4c83-a58e-c444ad22252c",
+      "name": "Cégep de Chicoutimi",
+      "code": "CHI",
+      "sector": "collegial",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "M",
+      "division": "D2",
+      "usports": false,
+      "leagueLabel": "Soccer collégial masculin D2",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-03",
+          "time": "19:00",
+          "opponent": "Alma",
+          "opponentCode": "ALM",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
+          "opponentFullName": "Cégep d'Alma",
+          "opponentRegistryId": "alma"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-03",
+        "time": "19:00",
+        "opponent": "Alma",
+        "opponentCode": "ALM",
+        "home": false,
+        "sport": "soccer",
+        "competition": "Soccer collégial masculin D2",
+        "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
+        "opponentFullName": "Cégep d'Alma",
+        "opponentRegistryId": "alma"
+      },
+      "source": "rseq-s1",
+      "priority": 80,
+      "fullName": "Cégep de Chicoutimi",
+      "registryId": "chicoutimi"
+    },
     "universitaire:soccer:bf91ad12-b8fc-4259-92a2-551a8da949e7:5574025c-bc34-41ce-bfd4-bcabc6c98120": {
       "id": "universitaire:soccer:bf91ad12-b8fc-4259-92a2-551a8da949e7:5574025c-bc34-41ce-bfd4-bcabc6c98120",
       "rseqTeamId": "5574025c-bc34-41ce-bfd4-bcabc6c98120",
@@ -9020,54 +9068,6 @@
       "fullName": "Université du Québec à Montréal",
       "nickname": "Citadins",
       "registryId": "uqam"
-    },
-    "collegial:soccer:21c736b9-df07-4c83-a58e-c444ad22252c:ced14a5e-25d8-4566-917e-5fcae50e98a4": {
-      "id": "collegial:soccer:21c736b9-df07-4c83-a58e-c444ad22252c:ced14a5e-25d8-4566-917e-5fcae50e98a4",
-      "rseqTeamId": "ced14a5e-25d8-4566-917e-5fcae50e98a4",
-      "leagueId": "21c736b9-df07-4c83-a58e-c444ad22252c",
-      "name": "Cégep de Chicoutimi",
-      "code": "CHI",
-      "sector": "collegial",
-      "sport": "soccer",
-      "sportLabel": "Soccer",
-      "sex": "M",
-      "division": "D2",
-      "usports": false,
-      "leagueLabel": "Soccer collégial masculin D2",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-03",
-          "time": "21:00",
-          "opponent": "Alma",
-          "opponentCode": "ALM",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
-          "opponentFullName": "Cégep d'Alma",
-          "opponentRegistryId": "alma"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-03",
-        "time": "21:00",
-        "opponent": "Alma",
-        "opponentCode": "ALM",
-        "home": false,
-        "sport": "soccer",
-        "competition": "Soccer collégial masculin D2",
-        "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
-        "opponentFullName": "Cégep d'Alma",
-        "opponentRegistryId": "alma"
-      },
-      "source": "rseq-s1",
-      "priority": 80,
-      "fullName": "Cégep de Chicoutimi",
-      "registryId": "chicoutimi"
     },
     "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:afd48cf0-d89e-43b2-89cf-0a5579bfaedb": {
       "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:afd48cf0-d89e-43b2-89cf-0a5579bfaedb",
