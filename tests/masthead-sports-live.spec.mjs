@@ -727,11 +727,18 @@ test('CTA : ADV n’est pas une institution (adversaire Spordle manquant)', asyn
   await expect(cta).not.toHaveAttribute('data-cta-state', 'next');
 });
 
-test('liste : ce soir → résultat du jour → à-venir → hier', async ({ page }) => {
+function civilShiftYmd(ymd, delta) {
+  const m = String(ymd).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  const utc = Date.UTC(+m[1], +m[2] - 1, +m[3] + delta);
+  return new Date(utc).toISOString().slice(0, 10);
+}
+
+test('liste E : ce soir → jour → hier → demain → 7 j → musée → loin', async ({ page }) => {
   const now = Date.now();
   const today = torontoParts(now);
-  const plus3 = torontoParts(now + 3 * 86400000);
-  const plus10 = torontoParts(now + 10 * 86400000);
+  const plus1 = { date: civilShiftYmd(today.date, 1) };
+  const plus3 = { date: civilShiftYmd(today.date, 3) };
+  const plus12 = { date: civilShiftYmd(today.date, 12) };
   const y = yesterdayResultGame();
 
   const soonOffset = todayUpcomingOffsetMs();
@@ -758,6 +765,18 @@ test('liste : ce soir → résultat du jour → à-venir → hier', async ({ pag
     final: true,
     gameId: 'today-clg-result',
   };
+  const tomorrowG = {
+    date: plus1.date,
+    time: '19:00',
+    opponent: 'Vanier',
+    opponentCode: 'VAN',
+    opponentFullName: 'Vanier College',
+    home: true,
+    sport: 'soccer',
+    competition: 'Soccer collégial masculin D1',
+    live: false,
+    gameId: 'tomorrow-next',
+  };
   const mid = {
     date: plus3.date,
     time: '18:00',
@@ -768,17 +787,19 @@ test('liste : ce soir → résultat du jour → à-venir → hier', async ({ pag
     sport: 'soccer',
     competition: 'Soccer collégial masculin D1',
     live: false,
+    gameId: 'week-next',
   };
   const far = {
-    date: plus10.date,
+    date: plus12.date,
     time: '18:00',
-    opponent: 'Ottawa',
-    opponentCode: 'OTT',
-    opponentFullName: 'uOttawa',
+    opponent: 'Sherbrooke',
+    opponentCode: 'SHE',
+    opponentFullName: 'Université de Sherbrooke',
     home: true,
     sport: 'soccer',
     competition: 'Soccer collégial masculin D1',
     live: false,
+    gameId: 'far-next',
   };
 
   const tSoon = teamShell('collegial:soccer:soon', { name: 'Saint-Hyacinthe', fullName: 'Cégep de Saint-Hyacinthe', code: 'STH' });
@@ -787,6 +808,9 @@ test('liste : ce soir → résultat du jour → à-venir → hier', async ({ pag
   const tToday = teamShell('collegial:soccer:today-r', { name: 'Lionel-Groulx', fullName: 'Cégep Lionel-Groulx', code: 'CLG' });
   tToday.lastGame = todayRes;
   tToday.results = [todayRes];
+  const tTom = teamShell('collegial:soccer:tom', { name: 'Garneau', fullName: 'Cégep Garneau', code: 'GAR' });
+  tTom.nextGame = tomorrowG;
+  tTom.nextGames = [tomorrowG];
   const tMid = teamShell('collegial:soccer:mid', { name: 'Montmorency', fullName: 'Collège Montmorency', code: 'MON' });
   tMid.nextGame = mid;
   tMid.nextGames = [mid];
@@ -807,6 +831,7 @@ test('liste : ce soir → résultat du jour → à-venir → hier', async ({ pag
     teams: {
       [tSoon.id]: tSoon,
       [tToday.id]: tToday,
+      [tTom.id]: tTom,
       [tMid.id]: tMid,
       [tY.id]: tY,
       [tFar.id]: tFar,
@@ -820,22 +845,94 @@ test('liste : ce soir → résultat du jour → à-venir → hier', async ({ pag
   expect(seq[0], 'ce soir d’abord').toMatch(/^next:STH$/);
   const iToday = seq.indexOf('result:CLG');
   const iYest = seq.indexOf('result:CON');
-  expect(iYest, 'hier dans la liste').toBeGreaterThan(0);
-  if (iToday >= 0) {
-    expect(iToday, 'résultat du jour après ce soir').toBeGreaterThan(0);
-    expect(iYest, 'hier après le jour').toBeGreaterThan(iToday);
-  }
-  const later = [seq.indexOf('next:MON'), seq.indexOf('next:AND')].filter((i) => i >= 0);
+  const iTom = seq.indexOf('next:GAR');
+  const iWeek = seq.indexOf('next:MON');
   const iOld = seq.indexOf('result:SHA');
-  if (later.length) {
-    expect(Math.min(...later), 'à-venir avant hier').toBeLessThan(iYest);
-    if (iToday >= 0) {
-      expect(Math.min(...later), 'à-venir après le résultat du jour').toBeGreaterThan(iToday);
-    }
-    if (iOld >= 0) {
-      expect(Math.min(...later), 'à-venir avant le musée 5 j').toBeLessThan(iOld);
-    }
-  }
+  const iFar = seq.indexOf('next:AND');
+  expect(iToday, 'résultat du jour').toBeGreaterThan(0);
+  expect(iYest, 'hier après le jour').toBeGreaterThan(iToday);
+  expect(iTom, 'demain après hier').toBeGreaterThan(iYest);
+  expect(iWeek, 'mercredi (≤7 j) après demain').toBeGreaterThan(iTom);
+  expect(iOld, 'musée après le calendrier 7 j').toBeGreaterThan(iWeek);
+  expect(iFar, '+12 j après le musée').toBeGreaterThan(iOld);
+});
+
+test('liste E : sans ce soir, hier → demain → 7 j → musée → +12 j', async ({ page }) => {
+  const today = torontoParts().date;
+  const y = yesterdayResultGame();
+  const tomorrowG = {
+    date: civilShiftYmd(today, 1),
+    time: '19:00',
+    opponent: 'Vanier',
+    opponentCode: 'VAN',
+    opponentFullName: 'Vanier College',
+    home: true,
+    sport: 'soccer',
+    competition: 'Soccer collégial masculin D1',
+    live: false,
+    gameId: 'e-tomorrow',
+  };
+  const weekG = {
+    date: civilShiftYmd(today, 3),
+    time: '19:00',
+    opponent: 'McGill',
+    opponentCode: 'MCG',
+    opponentFullName: 'McGill',
+    home: true,
+    sport: 'soccer',
+    competition: 'Soccer collégial masculin D1',
+    live: false,
+    gameId: 'e-week',
+  };
+  const farG = {
+    date: civilShiftYmd(today, 12),
+    time: '19:00',
+    opponent: 'Sherbrooke',
+    opponentCode: 'SHE',
+    opponentFullName: 'Université de Sherbrooke',
+    home: true,
+    sport: 'soccer',
+    competition: 'Soccer collégial masculin D1',
+    live: false,
+    gameId: 'e-far',
+  };
+  const old = civilDaysAgoResultGame(4, { gameId: 'e-museum' });
+  const tY = teamShell('collegial:soccer:e-y', { name: 'Concordia', fullName: 'Concordia', code: 'CON' });
+  tY.lastGame = y;
+  tY.results = [y];
+  const tTom = teamShell('collegial:soccer:e-t', { name: 'Garneau', fullName: 'Cégep Garneau', code: 'GAR' });
+  tTom.nextGame = tomorrowG;
+  tTom.nextGames = [tomorrowG];
+  const tWeek = teamShell('collegial:soccer:e-w', { name: 'Montmorency', fullName: 'Collège Montmorency', code: 'MON' });
+  tWeek.nextGame = weekG;
+  tWeek.nextGames = [weekG];
+  const tOld = teamShell('collegial:soccer:e-o', { name: 'Shawinigan', fullName: 'Cégep de Shawinigan', code: 'SHA' });
+  tOld.lastGame = old;
+  tOld.results = [old];
+  const tFar = teamShell('collegial:soccer:e-f', { name: 'André-Laurendeau', fullName: 'Cégep André-Laurendeau', code: 'AND' });
+  tFar.nextGame = farG;
+  tFar.nextGames = [farG];
+  await openWithSports(page, {
+    updated: new Date().toISOString(),
+    source: 'test-live',
+    teams: {
+      [tY.id]: tY,
+      [tTom.id]: tTom,
+      [tWeek.id]: tWeek,
+      [tOld.id]: tOld,
+      [tFar.id]: tFar,
+    },
+  });
+  const seq = await page.evaluate(() => (typeof sportsCtaCandidateSlides === 'function'
+    ? sportsCtaCandidateSlides().map((s) => `${s.mode}:${s.team?.code || ''}`)
+    : []));
+  expect(seq).toEqual([
+    'result:CON',
+    'next:GAR',
+    'next:MON',
+    'result:SHA',
+    'next:AND',
+  ]);
 });
 
 test('même match : une face reçoit ou chez, pas les deux', async ({ page }) => {
