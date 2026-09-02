@@ -1,12 +1,14 @@
 {
-  "checkedAt": "2026-09-01T01:47:52.084Z",
+  "checkedAt": "2026-09-02T01:00:08.446Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 4,
+    "stable": 2,
     "drift": [
-      "cism"
+      "chyz",
+      "cism",
+      "cjlo"
     ],
     "overhaul": [
       "choq"
@@ -17,12 +19,14 @@
     {
       "id": "chyz",
       "published": 26,
-      "fresh": 26,
-      "added": [],
+      "fresh": 27,
+      "added": [
+        "ven 16:00–17:30 L'Artiste du mois CHYZ"
+      ],
       "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "changed": 1,
+      "ratio": 0.038,
+      "status": "drift"
     },
     {
       "id": "cism",
@@ -65,12 +69,43 @@
     {
       "id": "cjlo",
       "published": 371,
-      "fresh": 371,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 374,
+      "added": [
+        "dim 22:00–00:00 CJLO's Alternative Mega Mix",
+        "lun 00:00–00:30 On the Right Track",
+        "lun 00:00–00:30 2 Days and a Night",
+        "lun 00:00–00:30 Eldest Daughter",
+        "lun 00:00–00:30 The Waxing Gibbous",
+        "lun 11:00–12:00 I Think You Might Like This",
+        "lun 14:00–15:00 L'Organe à la radio",
+        "mar 14:00–15:00 Something for the Mood",
+        "mer 11:00–12:00 Code Switch",
+        "mer 14:00–15:00 CJLO's Alternative Mega Mix",
+        "jeu 11:00–12:00 CJLO's Alternative Mega Mix",
+        "jeu 14:00–15:00 Secondhand Sounds",
+        "jeu 15:00–16:00 Weirdo Rippers",
+        "jeu 18:00–19:00 Unheard Of",
+        "jeu 19:00–20:00 Electric Messiah",
+        "ven 23:00–00:00 CJLO's Alternative Mega Mix"
+      ],
+      "removed": [
+        "dim 22:00–23:00 On The Right Track",
+        "dim 23:00–00:00 CJLO's Alternative Mega Mix",
+        "lun 11:00–12:00 2 Days and a Night",
+        "lun 14:00–15:00 Eldest Daughter",
+        "mar 14:00–15:00 Code Switch",
+        "mer 11:00–12:00 Unheard Of",
+        "mer 14:00–15:00 Something for the Mood",
+        "jeu 11:00–12:00 Weirdo Rippers",
+        "jeu 14:00–15:00 CJLO's Alternative Mega Mix",
+        "jeu 15:00–16:00 Secondhand Sounds",
+        "jeu 18:00–19:00 Electric Messiah",
+        "jeu 19:00–20:00 I Think You Might Like This",
+        "ven 23:00–00:00 The Waxing Gibbous"
+      ],
+      "changed": 29,
+      "ratio": 0.078,
+      "status": "drift"
     },
     {
       "id": "cfak",
