@@ -65,7 +65,8 @@ Système **sémantique** : chaque couleur a un rôle, pas seulement une esthéti
 | `--muted` | `#5F646C` | `#888D96` | Métadonnées, dates |
 | `--rule` | `#E7E7E3` | `#26282D` | Filets fins |
 | `--rule-strong` | `#14161A` | `#F1F2F4` | Filets forts (titres de section) |
-| `--tuner-bg` | `#111317` | `#1A1C21` | Bandeau du syntoniseur (toujours sombre) |
+| `--tuner-bg` | `#111317` | `#1A1C21` | Bandeau du syntoniseur mobile / repli (toujours sombre) |
+| `--tuner-session-base` | `#101816` | `#101816` | Bureau ≥720 px : teinte d’été, **toute l’année** (plus de rotation automne/hiver) |
 
 ### Couleurs des sources (établissements)
 

@@ -6,8 +6,8 @@
 /* ─────────────── TUNER (sticky) ─────────────── */
 /*
  * Mobile : --tuner-bg plat (couleur d’origine).
- * Bureau (≥720px) : teinte unie selon session univ. QC (data-uni-session).
- * Aucune texture, grain, échelle ni motif — fond 100 % opaque et lisse.
+ * Bureau (≥720px) : teinte d’été #101816, toute l’année (plus de rotation
+ * automne/hiver/été). Fond 100 % opaque et lisse — pas de texture ni grain.
  */
 .tuner {
   position: sticky;
@@ -34,24 +34,10 @@
 
 @media (min-width: 720px) {
   .tuner {
-    /* Défaut = hiver si attribut absent. */
-    --tuner-session-base: #121820;
+    --tuner-session-base: #101816;
     background: var(--tuner-session-base);
     background-image: none;
     box-shadow: 0 8px 24px -14px rgba(0, 0, 0, 0.78);
-  }
-
-  /* Automne — 1er sept → 31 déc */
-  html[data-uni-session="automne"] .tuner {
-    --tuner-session-base: #1a1214;
-  }
-  /* Hiver — 1er janv → 30 avr */
-  html[data-uni-session="hiver"] .tuner {
-    --tuner-session-base: #121820;
-  }
-  /* Été — 1er mai → 31 août */
-  html[data-uni-session="ete"] .tuner {
-    --tuner-session-base: #101816;
   }
 }
 

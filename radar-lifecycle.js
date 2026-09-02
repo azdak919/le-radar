@@ -6,7 +6,8 @@
 
 async function init() {
   initTheme();
-  // Thème bandeau radio bureau (sessions univ. QC).
+  // data-uni-session (fraîcheur articles). Le fond du bandeau radio est
+  // l’été toute l’année ; l’attribut n’y change plus rien.
   // RadarSessionFreshness (script defer avant app.js) l’applique déjà au load ;
   // rappel idempotent ici pour les chemins qui ne passent pas par le lib.
   try {
