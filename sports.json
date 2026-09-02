@@ -1,18 +1,19 @@
 {
-  "updated": "2026-09-02T01:06:41.276Z",
-  "fetchedAt": "2026-09-02T01:06:41.276Z",
+  "updated": "2026-09-02T03:36:13.927Z",
+  "fetchedAt": "2026-09-02T03:36:13.927Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-02T01:06:41.276Z"
+    "referenceDate": "2026-09-02T03:36:13.927Z"
   },
   "registry": "sports-teams.json",
-  "registryMatched": 6,
+  "registryMatched": 788,
   "leagueCatalog": 109,
-  "leaguesWithTeams": 1,
-  "leaguesOk": 1,
+  "leaguesWithTeams": 100,
+  "leaguesOk": 109,
   "leaguesFailed": 0,
+  "teamsPreservedOnError": 17,
   "sportsCovered": [
     "athletisme",
     "badminton",
@@ -34,14 +35,57 @@
     "volleyball"
   ],
   "sportsCatalog": [
-    "soccer"
+    "athletisme",
+    "badminton",
+    "baseball",
+    "basketball",
+    "cheerleading",
+    "cross-country",
+    "flag-football",
+    "football",
+    "futsal",
+    "golf",
+    "hockey",
+    "natation",
+    "rugby",
+    "soccer",
+    "soccer-interieur",
+    "ultimate",
+    "volleyball"
   ],
   "sportsFetched": [
+    "athletisme",
+    "badminton",
+    "baseball",
+    "basketball",
+    "cheerleading",
+    "cross-country",
+    "flag-football",
+    "football",
+    "futsal",
+    "golf",
     "hockey",
+    "natation",
+    "rugby",
     "sailing",
-    "soccer"
+    "soccer",
+    "soccer-interieur",
+    "ultimate",
+    "volleyball"
   ],
   "teamCount": 808,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -60636,6 +60680,23 @@
       "leagueLabel": "Soccer collégial féminin D2",
       "results": [
         {
+          "date": "2026-09-01",
+          "time": "20:30",
+          "opponent": "Saint-Hyacinthe",
+          "opponentCode": "STH",
+          "home": true,
+          "scoreFor": 0,
+          "scoreAgainst": 5,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D2",
+          "gameId": "cbbd8328-9d8d-4d73-a545-4c7055f17647",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cbbd8328-9d8d-4d73-a545-4c7055f17647",
+          "opponentFullName": "Cégep de Saint-Hyacinthe",
+          "opponentRegistryId": "saint-hyacinthe",
+          "priorSeason": false
+        },
+        {
           "date": "2026-08-28",
           "time": "18:30",
           "opponent": "Cégep de Sherbrooke",
@@ -60654,20 +60715,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-08-28",
-        "time": "18:30",
-        "opponent": "Cégep de Sherbrooke",
-        "opponentCode": "SHE",
-        "home": false,
+        "date": "2026-09-01",
+        "time": "20:30",
+        "opponent": "Saint-Hyacinthe",
+        "opponentCode": "STH",
+        "home": true,
         "scoreFor": 0,
-        "scoreAgainst": 1,
+        "scoreAgainst": 5,
         "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "ddc7384b-97a7-4a70-aa4c-052cc553349c",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ddc7384b-97a7-4a70-aa4c-052cc553349c",
-        "opponentFullName": "Cégep de Sherbrooke",
-        "opponentRegistryId": "cegep-sherbrooke",
+        "gameId": "cbbd8328-9d8d-4d73-a545-4c7055f17647",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cbbd8328-9d8d-4d73-a545-4c7055f17647",
+        "opponentFullName": "Cégep de Saint-Hyacinthe",
+        "opponentRegistryId": "saint-hyacinthe",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -60769,10 +60830,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "0-2"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -60795,6 +60856,23 @@
       "leagueLabel": "Soccer collégial féminin D2",
       "results": [
         {
+          "date": "2026-09-01",
+          "time": "20:30",
+          "opponent": "Granby",
+          "opponentCode": "GBY",
+          "home": false,
+          "scoreFor": 5,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D2",
+          "gameId": "cbbd8328-9d8d-4d73-a545-4c7055f17647",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cbbd8328-9d8d-4d73-a545-4c7055f17647",
+          "opponentFullName": "Cégep de Granby",
+          "opponentRegistryId": "granby",
+          "priorSeason": false
+        },
+        {
           "date": "2026-08-28",
           "time": "19:00",
           "opponent": "Champlain Lennoxville",
@@ -60813,20 +60891,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-08-28",
-        "time": "19:00",
-        "opponent": "Champlain Lennoxville",
-        "opponentCode": "LEN",
-        "home": true,
-        "scoreFor": 12,
+        "date": "2026-09-01",
+        "time": "20:30",
+        "opponent": "Granby",
+        "opponentCode": "GBY",
+        "home": false,
+        "scoreFor": 5,
         "scoreAgainst": 0,
         "result": "W",
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "8263a20a-b092-4905-8ee0-5e4665559716",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=8263a20a-b092-4905-8ee0-5e4665559716",
-        "opponentFullName": "Champlain College Lennoxville",
-        "opponentRegistryId": "champlain-lennoxville",
+        "gameId": "cbbd8328-9d8d-4d73-a545-4c7055f17647",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cbbd8328-9d8d-4d73-a545-4c7055f17647",
+        "opponentFullName": "Cégep de Granby",
+        "opponentRegistryId": "granby",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -60926,11 +61004,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 0,
         "draws": 0,
-        "played": 1,
-        "label": "1-0"
+        "played": 2,
+        "label": "2-0"
       },
       "source": "rseq-s1",
       "priority": 34,
