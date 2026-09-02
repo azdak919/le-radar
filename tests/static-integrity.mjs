@@ -1665,8 +1665,12 @@ assert(
     && appJs.includes('SPORTS_OPEN_WEEK_NEXT')
     && appJs.includes('SPORTS_OPEN_FAR_NEXT')
     && appJs.includes('SPORTS_OPEN_WEEK_HORIZON_DAYS')
-    && appJs.includes('function sportsCivilDaysBetween'),
-  'app.js : liste chaleur E live → ce soir → jour → hier → demain → 7 j → musée → loin',
+    && appJs.includes('function sportsCivilDaysBetween')
+    && appJs.includes('function sportsCompareOpenOrder')
+    && appJs.includes('function sportsSplitVisible')
+    && appJs.includes('function sportsSplitPreferBuckets')
+    && appJs.includes('function torontoHour'),
+  'app.js : liste chaleur E + split D (n=1 E ; n≥2 gauche scores / droite à-venir)',
 );
 assert(
   /function sportsCtaEyebrow/.test(appJs)
