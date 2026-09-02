@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-02T16:58:31.768Z",
+  "updatedAt": "2026-09-02T19:39:42.462Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-02T16:58:15.493Z"
+      "checkedAt": "2026-09-02T19:39:26.474Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La carte cadeau",
+        "title": "Parler pour jaser",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/parler-pour-jaser"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "Le cours de math",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/le-cours-de-math"
       },
       "track": "",
-      "showTitle": "La carte cadeau",
+      "showTitle": "Parler pour jaser",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-02T16:58:17.986Z"
+      "checkedAt": "2026-09-02T19:39:28.897Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "If You Got Ears",
+        "title": "All Da Way Live",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "Radyo Kapwa",
+        "title": "Off the Hour/Sounds of Resistance",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "If You Got Ears",
+      "showTitle": "All Da Way Live",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,73 +74,79 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-02T16:58:21.488Z"
+      "checkedAt": "2026-09-02T19:39:32.014Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "North-South Hockey",
+        "title": "Patch Notes",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/north-south-hockey"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/patch-notes"
       },
       "next": {
-        "title": "Beatnik Boy: Mixtape",
+        "title": "Borderline",
         "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/beatnik-boy-mixtape"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/borderline"
       },
       "track": "",
-      "showTitle": "North-South Hockey",
+      "showTitle": "Patch Notes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-02T16:58:24.281Z"
+      "checkedAt": "2026-09-02T19:39:35.611Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Le popcorn de l'infini",
         "source": "schedule-live",
         "start": "14:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Le popcorn de l'infini",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-02T16:58:25.817Z"
+      "checkedAt": "2026-09-02T19:39:36.673Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHOQ.ca",
         "source": "schedule",
         "start": "15:00",
         "end": "16:00",
         "url": "https://www.choq.ca/emissions/palmareschoq"
       },
-      "track": "Angelique Kidjo - Malaika (feat. Florent Pagny)",
-      "showTitle": "",
+      "next": {
+        "title": "Podcast Nomade: L'art de se rencontrer",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "podcast-nomade-lart-de-se-rencontrer"
+      },
+      "track": "CHUNG - WTB (What The Bl**dclot) FT. LORD FURY",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "schedule",
       "sources": [
@@ -151,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-02T16:58:31.418Z"
+      "checkedAt": "2026-09-02T19:39:42.112Z"
     }
   }
 }
