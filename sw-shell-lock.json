@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v871",
+    "cache": "radar-shell-v872",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -9,8 +9,8 @@
       "dev/midwidth-preview.js": "0e53d04bb4bd06d2",
       "dev/wide-desktop-preview.css": "7818039a42150258",
       "dev/wide-desktop-preview.js": "17c5654a2af6a3ae",
-      "embed.css": "6583009a1e2fd79e",
-      "embed.js": "3f821677d146c6d3",
+      "embed.css": "fc63d9d2951bf69c",
+      "embed.js": "a7cdd5601ec6c11d",
       "engage-prompt.js": "3d0c7986c1be1ced",
       "feeds-page.js": "23103d49de90f8fc",
       "mobile-playback.js": "955026530d5993b0",
@@ -22,7 +22,7 @@
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
       "quebec-nations-backgrounds-data.js": "11fbca15903973d4",
       "quebec-university-backgrounds-data.js": "bcfb70bbfada42ba",
-      "radar-lifecycle.js": "6845f17ec2713efb",
+      "radar-lifecycle.js": "e715a85b6cf07561",
       "radar-news.js": "c4f63130f40bae91",
       "radar-sports-cta.js": "a9e5c9add3a60478",
       "radar-state.js": "26dcd41bb6e2783d",
@@ -31,7 +31,7 @@
       "radar-weather.js": "8bba27375d456e97",
       "scripts/campus-fallback-lib.js": "1782f0c434ee1d34",
       "scripts/season-lib.js": "af99fef06683c37b",
-      "scripts/session-freshness-lib.js": "8864fadc8cd34ed1",
+      "scripts/session-freshness-lib.js": "a7fb0abbf1f68fc2",
       "scripts/sports-freshness-lib.js": "cb3ee31267516560",
       "seo-page-theme.js": "0f1d4a74dd3416a0",
       "style-chrome.css": "d3343c63aafc13f6",
@@ -40,7 +40,7 @@
       "style-masthead.css": "f47b93454b49f992",
       "style-sports-strip.css": "cffd5cf62b9f6744",
       "style-translate-overlay.css": "a53149d47f203a02",
-      "style-tuner.css": "2d79d7df1d02c13a",
+      "style-tuner.css": "15a53f325d25f793",
       "style.css": "f31b05655e776f2b",
       "translate-menu.css": "6bd5d163abf725e2",
       "translate-menu.js": "2f70f0aa5ff76db2",
@@ -96,7 +96,7 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v251",
+    "cache": "sports-shell-v252",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "0e0df2c60f5900e3",
@@ -110,7 +110,7 @@
       "mobile-playback.js": "955026530d5993b0",
       "nav-shell.js": "97c086a5c1ef5bca",
       "player-sync.js": "36e84f1afaff7fcb",
-      "radar-lifecycle.js": "6845f17ec2713efb",
+      "radar-lifecycle.js": "e715a85b6cf07561",
       "radar-news.js": "c4f63130f40bae91",
       "radar-sports-cta.js": "a9e5c9add3a60478",
       "radar-state.js": "26dcd41bb6e2783d",
@@ -125,7 +125,7 @@
       "style-masthead-chrome.css": "14f32bc972a5ccdc",
       "style-masthead.css": "f47b93454b49f992",
       "style-sports-strip.css": "cffd5cf62b9f6744",
-      "style-tuner.css": "2d79d7df1d02c13a",
+      "style-tuner.css": "15a53f325d25f793",
       "style.css": "f31b05655e776f2b",
       "weather-cities-data.js": "55d8ae8c518bfbdf"
     }

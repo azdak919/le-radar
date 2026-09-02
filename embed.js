@@ -11,7 +11,7 @@
   document.documentElement.dataset.surface = surface;
   if (surface === 'kiosque-v1') {
     document.documentElement.dataset.theme = 'dark';
-    // Fond de session univ. (automne/hiver/été) comme le site principal.
+    // data-uni-session (fraîcheur) : le fond de barre ne varie plus.
     try {
       if (typeof RadarSessionFreshness !== 'undefined'
           && typeof RadarSessionFreshness.applyUniversitySessionTheme === 'function') {

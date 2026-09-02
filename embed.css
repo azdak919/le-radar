@@ -1010,27 +1010,17 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] {
   /* Coral live = même soft que le site (--status-live-soft ≈ #ff7d6e). */
   --tuner-onair-live: #ff7d6e;
   --tuner-onair-idle: rgba(255, 255, 255, 0.42);
-  /* Fond session (défaut hiver) — comme style.css ≥720px. */
-  --tuner-session-base: #121820;
+  /* Fond d’été toute l’année — comme style-tuner.css ≥720px. */
+  --tuner-session-base: #101816;
   /*
-   * html/body toujours transparents : le fond session est UNIQUEMENT sur
+   * html/body toujours transparents : le fond est UNIQUEMENT sur
    * .tuner (hauteur fixe de la barre). Sinon, à l’ouverture du popover
    * volume l’iframe grandit et un bandeau noir pleine largeur flash
-   * pendant que html/body peignent encore la session.
+   * pendant que html/body peignent encore le fond de barre.
    */
   background: transparent !important;
   height: var(--embed-bar-h);
   max-height: var(--embed-bar-h);
-}
-
-html[data-embed="tuner"][data-surface="kiosque-v1"][data-uni-session="automne"] {
-  --tuner-session-base: #1a1214;
-}
-html[data-embed="tuner"][data-surface="kiosque-v1"][data-uni-session="hiver"] {
-  --tuner-session-base: #121820;
-}
-html[data-embed="tuner"][data-surface="kiosque-v1"][data-uni-session="ete"] {
-  --tuner-session-base: #101816;
 }
 
 html[data-embed="tuner"][data-surface="kiosque-v1"] body {
@@ -1042,7 +1032,7 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] body {
   font-family: var(--sans);
 }
 
-/* Seule la barre porte le fond session (pleine largeur, hauteur fixe). */
+/* Seule la barre porte le fond (pleine largeur, hauteur fixe). */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
   background: var(--tuner-session-base) !important;
   height: var(--embed-bar-h);
@@ -1054,7 +1044,7 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
 
 /*
  * Popover volume (téléphone) : l’iframe grandit pour peindre la bulle.
- * html/body restent transparents ; .tuner garde la barre session fixe.
+ * html/body restent transparents ; .tuner garde la barre fixe.
  */
 @media (max-width: 559.98px) {
   html[data-embed="tuner"][data-surface="kiosque-v1"]:has(.tuner-vol.is-open) {
