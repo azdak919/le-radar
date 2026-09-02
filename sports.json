@@ -1,14 +1,14 @@
 {
-  "updated": "2026-09-02T15:09:57.568Z",
-  "fetchedAt": "2026-09-02T15:09:57.568Z",
+  "updated": "2026-09-02T19:22:47.418Z",
+  "fetchedAt": "2026-09-02T19:22:47.418Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-02T15:09:57.568Z"
+    "referenceDate": "2026-09-02T19:22:47.418Z"
   },
   "registry": "sports-teams.json",
-  "registryMatched": 788,
+  "registryMatched": 787,
   "leagueCatalog": 109,
   "leaguesWithTeams": 100,
   "leaguesOk": 109,
@@ -73,7 +73,7 @@
     "ultimate",
     "volleyball"
   ],
-  "teamCount": 808,
+  "teamCount": 807,
   "errors": [
     {
       "leagueId": "spordle-collegial",
@@ -50832,30 +50832,6 @@
       "fullName": "Cégep André-Laurendeau",
       "nickname": "Cheetahs",
       "registryId": "andre-laurendeau"
-    },
-    "collegial:golf:7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab:a58bb01b-17a8-4c40-a3e4-93f76042a6c3": {
-      "id": "collegial:golf:7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab:a58bb01b-17a8-4c40-a3e4-93f76042a6c3",
-      "rseqTeamId": "a58bb01b-17a8-4c40-a3e4-93f76042a6c3",
-      "leagueId": "7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab",
-      "name": "Champlain St-Lambert",
-      "code": "SLA",
-      "sector": "collegial",
-      "sport": "golf",
-      "sportLabel": "Golf",
-      "sex": "X",
-      "division": null,
-      "usports": false,
-      "leagueLabel": "Golf collégial mixte",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [],
-      "nextGame": null,
-      "record": null,
-      "source": "rseq-s1",
-      "priority": 25,
-      "fullName": "Champlain College Saint-Lambert",
-      "nickname": "Barons",
-      "registryId": "champlain-st-lambert"
     },
     "collegial:golf:7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab:ed70b88e-aef4-48ba-a97d-7fc454312bae": {
       "id": "collegial:golf:7c9bb99b-eccb-4cbc-b00c-a54a9b6467ab:ed70b88e-aef4-48ba-a97d-7fc454312bae",
