@@ -1357,21 +1357,13 @@ html[data-wide-preview="e"] .news-hero-spacer {
 }
 
 /* ═══════════════════════════════════════════════════
-   Wide E — sports : look prod (pas densifié), 0 marquee
-   Plus de cartes seulement si le texte tient en entier (fit JS).
+   Wide E — sports : look prod (pas densifié)
+   Fit JS d’abord ; overflow restant → marquee L→R + retour, jamais « … ».
    ═══════════════════════════════════════════════════ */
 @media (min-width: 1281px) {
   html[data-wide-preview="e"] .masthead-sports-strip {
     max-width: var(--maxw);
     gap: 6px;
-  }
-
-  /* Interdit tout défilement de texte (scores + CTA) */
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text {
-    animation: none !important;
-    transform: none !important;
-    max-width: 100% !important;
   }
 
   /* CTA et scores : même flex, tous les comptes. */
@@ -1473,12 +1465,12 @@ html[data-wide-preview="e"] .news-hero-spacer {
     width: 0 !important;
     overflow: hidden;
   }
-  /* Texte long scores : ellipsis. CTA : clip + marquee (jamais …). */
+  /* Texte long scores : clip au repos, marquee si is-overflowing. Jamais « … ». */
   html[data-wide-preview="e"] .masthead-sports-strip .sports-chip__line-inner,
   html[data-wide-preview="e"] .masthead-sports-strip .sports-chip__title,
   html[data-wide-preview="e"] .masthead-sports-strip .sports-chip__sub-text {
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: clip;
     white-space: nowrap;
     max-width: 100%;
   }
@@ -1526,23 +1518,32 @@ html[data-wide-preview="e"] .news-hero-spacer {
     max-width: 100% !important;
   }
 
-  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
-  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
-  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
-  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text,
-  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text,
-  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text {
-    animation: none !important;
-    transform: none !important;
+  /* CTA + puces scores : défilement L→R même en shell E. */
+  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--match.is-overflowing .sports-chip__line-inner,
+  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--match.is-overflowing .sports-chip__line-inner,
+  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--match.is-overflowing .sports-chip__line-inner,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--match.is-overflowing .sports-chip__line-inner {
+    animation: sports-chip-scroll var(--sports-scroll-duration, 8s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both !important;
+    transform: unset;
+    max-width: none !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
   }
-  /* CTA : défilement L→R même en shell E (les scores restent sans marquee). */
+  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--match.is-sub-overflowing .sports-chip__sub-text,
+  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--match.is-sub-overflowing .sports-chip__sub-text,
+  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--match.is-sub-overflowing .sports-chip__sub-text,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--match.is-sub-overflowing .sports-chip__sub-text {
+    animation: sports-chip-scroll-sub var(--sports-scroll-duration, 8s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both !important;
+    transform: unset;
+    max-width: none !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+  }
   html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text,
   html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text,
   html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text,
   html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-text {
-    animation: sports-cta-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) 4 alternate both !important;
+    animation: sports-cta-scroll var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) var(--sports-scroll-trips, 2) alternate both !important;
     transform: unset;
     max-width: none !important;
     overflow: visible !important;
@@ -1552,7 +1553,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
   html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text,
   html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text,
   html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--cta.is-sub-overflowing .sports-chip__cta-label.is-front:not(.is-rolling-out) .sports-chip__cta-sub-text {
-    animation: sports-cta-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) 4 alternate both !important;
+    animation: sports-cta-scroll-sub var(--sports-scroll-duration, 5.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 0.7s) var(--sports-scroll-trips, 2) alternate both !important;
     transform: unset;
     max-width: none !important;
     overflow: visible !important;
@@ -1690,15 +1691,17 @@ html[data-wide-preview="e"] .news-hero-spacer {
     min-height: 45px;
   }
 
-  /* Scores : pas de marquee. Overflow → −1 carte (JS). */
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip:not(.sports-chip--cta).is-overflowing .sports-chip__line-inner,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip:not(.sports-chip--cta).is-sub-overflowing .sports-chip__sub-text {
-    animation: none !important;
-    transform: none !important;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--match.is-overflowing .sports-chip__line-inner,
+  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--match.is-overflowing .sports-chip__line-inner,
+  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--match.is-overflowing .sports-chip__line-inner,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--match.is-overflowing .sports-chip__line-inner,
+  html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--match.is-sub-overflowing .sports-chip__sub-text,
+  html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--match.is-sub-overflowing .sports-chip__sub-text,
+  html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--match.is-sub-overflowing .sports-chip__sub-text,
+  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip--match.is-sub-overflowing .sports-chip__sub-text,
   html[data-wide-preview="b"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-text,
   html[data-wide-preview="c"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-text,
   html[data-wide-preview="d"] .masthead-sports-strip .sports-chip--cta.is-overflowing .sports-chip__cta-text,
