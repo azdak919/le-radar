@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-02T04:54:04.543Z",
+  "updated": "2026-09-02T07:19:02.475Z",
   "total": 185,
   "withImage": 169,
   "withCredit": 169,
@@ -7,9 +7,9 @@
   "pending": 15,
   "missingHero": 0,
   "ok": false,
-  "checked": 17,
-  "updatedCount": 5,
-  "citedNew": 2,
+  "checked": 20,
+  "updatedCount": 8,
+  "citedNew": 5,
   "fallbackNew": 15,
   "samples": [
     {
@@ -46,6 +46,27 @@
       "credit": "Photo: Courtesy of Joe Fuda",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Festival Jamais Lu : « Quand le monde devient dur à lire, on doit se raconter des histoires »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Maryse Boyce",
+      "cited": true,
+      "method": "figcaption-copyright"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
