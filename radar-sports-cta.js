@@ -2703,17 +2703,29 @@ function sportsCtaLiveSources(now = Date.now()) {
 }
 
 /**
- * Chaleur du bandeau (plus bas = plus prioritaire) :
- * live → à-venir aujourd’hui (dans l’heure d’abord) → dernière heure
- * → autres à-venir → hier → reliquat 5 j.
- * Hier / musée 5 j ne passent plus devant un match encore à jouer.
+ * Chaleur du bandeau (plus bas = plus prioritaire), go E :
+ * live → ce soir → dernière heure → hier → demain
+ * → à-venir dans 7 j civils (après-demain…J+7) → scores J−2…J−5
+ * → à-venir au-delà de 7 j.
+ * Une liste, DOM = visuel. Filet 7 j America/Toronto.
  */
 const SPORTS_OPEN_LIVE = 0;
 const SPORTS_OPEN_TODAY_NEXT = 1;
 const SPORTS_OPEN_TODAY_RESULT = 2;
-const SPORTS_OPEN_LATER_NEXT = 3;
-const SPORTS_OPEN_YESTERDAY = 4;
-const SPORTS_OPEN_OLDER_RESULT = 5;
+const SPORTS_OPEN_YESTERDAY = 3;
+const SPORTS_OPEN_TOMORROW_NEXT = 4;
+const SPORTS_OPEN_WEEK_NEXT = 5;
+const SPORTS_OPEN_OLDER_RESULT = 6;
+const SPORTS_OPEN_FAR_NEXT = 7;
+const SPORTS_OPEN_WEEK_HORIZON_DAYS = 7;
+
+/** Jours civils de fromKey vers toKey (YYYY-MM-DD). 1 = demain si from = aujourd’hui. */
+function sportsCivilDaysBetween(fromKey, toKey) {
+  const a = Date.parse(`${fromKey}T12:00:00Z`);
+  const b = Date.parse(`${toKey}T12:00:00Z`);
+  if (!Number.isFinite(a) || !Number.isFinite(b)) return Number.NaN;
+  return Math.round((b - a) / 86400000);
+}
 
 function sportsOpenOrderBucket(slide, now = Date.now()) {
   const g = slide?.game;
@@ -2721,10 +2733,19 @@ function sportsOpenOrderBucket(slide, now = Date.now()) {
   if (sportsGameIsLive(g, now)) return SPORTS_OPEN_LIVE;
   const today = torontoDayKey(now);
   const yesterday = sportsCivilDayShift(today, -1);
+  const tomorrow = sportsCivilDayShift(today, 1);
   const day = sportsGameDayKey(g, now) || sportsSlideDayKey(slide);
   if (slide.mode === 'next') {
     if (day === today || sportsCtaKickoffWithinHour(g, now)) return SPORTS_OPEN_TODAY_NEXT;
-    return SPORTS_OPEN_LATER_NEXT;
+    if (day === tomorrow) return SPORTS_OPEN_TOMORROW_NEXT;
+    const ahead = sportsCivilDaysBetween(today, day);
+    if (Number.isFinite(ahead) && ahead >= 2 && ahead <= SPORTS_OPEN_WEEK_HORIZON_DAYS) {
+      return SPORTS_OPEN_WEEK_NEXT;
+    }
+    if (Number.isFinite(ahead) && ahead > SPORTS_OPEN_WEEK_HORIZON_DAYS) {
+      return SPORTS_OPEN_FAR_NEXT;
+    }
+    return 99;
   }
   if (slide.mode === 'result') {
     if (day === today) return SPORTS_OPEN_TODAY_RESULT;
@@ -2749,7 +2770,7 @@ function sportsOpenOrderSlides(now = Date.now()) {
     if (!sportsSlideIsDisplayable(s)) continue;
     seen.add(s.key);
     const bucket = sportsOpenOrderBucket(s, now);
-    if (bucket > SPORTS_OPEN_OLDER_RESULT) continue;
+    if (bucket > SPORTS_OPEN_FAR_NEXT) continue;
     if (s.mode === 'result') {
       if (s.game?.priorSeason || s.team?.lastGamePriorSeason) continue;
       results.push(s);
@@ -2766,7 +2787,9 @@ function sportsOpenOrderSlides(now = Date.now()) {
     const mb = sportsGameMs(b.game) || 0;
     const soonest = ba === SPORTS_OPEN_LIVE
       || ba === SPORTS_OPEN_TODAY_NEXT
-      || ba === SPORTS_OPEN_LATER_NEXT;
+      || ba === SPORTS_OPEN_TOMORROW_NEXT
+      || ba === SPORTS_OPEN_WEEK_NEXT
+      || ba === SPORTS_OPEN_FAR_NEXT;
     if (soonest) return ma - mb;
     return mb - ma;
   });
