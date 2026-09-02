@@ -413,6 +413,21 @@ function torontoDayKey(msOrDate = Date.now()) {
   }
 }
 
+/** Heure civile 0–23 America/Toronto. */
+function torontoHour(msOrDate = Date.now()) {
+  try {
+    const raw = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'America/Toronto',
+      hour: '2-digit',
+      hour12: false,
+    }).format(new Date(msOrDate));
+    const n = Number.parseInt(String(raw).replace(/[^\d]/g, ''), 10);
+    return Number.isFinite(n) ? n : new Date(msOrDate).getHours();
+  } catch {
+    return new Date(msOrDate).getHours();
+  }
+}
+
 /** true si le match est le jour civil d’aujourd’hui (QC). */
 function sportsGameIsToday(game) {
   const ms = sportsGameMs(game);
@@ -2778,21 +2793,196 @@ function sportsOpenOrderSlides(now = Date.now()) {
     }
   }
   const list = sportsDedupeMatchSlides(nexts).concat(sportsDedupeHomepageResults(results));
-  list.sort((a, b) => {
-    const ba = sportsOpenOrderBucket(a, now);
-    const bb = sportsOpenOrderBucket(b, now);
-    if (ba !== bb) return ba - bb;
-    const ma = sportsGameMs(a.game) || 0;
-    const mb = sportsGameMs(b.game) || 0;
-    const soonest = ba === SPORTS_OPEN_LIVE
-      || ba === SPORTS_OPEN_TODAY_NEXT
-      || ba === SPORTS_OPEN_TOMORROW_NEXT
-      || ba === SPORTS_OPEN_WEEK_NEXT
-      || ba === SPORTS_OPEN_FAR_NEXT;
-    if (soonest) return ma - mb;
-    return mb - ma;
-  });
+  list.sort((a, b) => sportsCompareOpenOrder(a, b, now));
   return list.slice(0, SPORTS_CTA_MAX_POOL);
+}
+
+function sportsTakeUnusedPrefix(pool, n, usedKeys) {
+  const picked = [];
+  const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
+  const limit = Math.max(0, n | 0);
+  for (const slide of pool || []) {
+    if (picked.length >= limit) break;
+    if (!slide || sportsSlideIsUsed(slide, used)) continue;
+    picked.push(slide);
+    for (const k of sportsSlideOccupyKeys(slide)) used.add(k);
+  }
+  return picked;
+}
+
+function sportsSplitNextUnused(list, usedKeys) {
+  for (const slide of list || []) {
+    if (slide && !sportsSlideIsUsed(slide, usedKeys)) return slide;
+  }
+  return null;
+}
+
+/**
+ * go D : n=1 → préfixe E. n≥2 → lives L→R, aujourd’hui vole les bords,
+ * reliquat 50/50 scores | à-venir. DOM = visuel. Une liste, pas deux timers.
+ */
+function sportsCompareOpenOrder(a, b, now = Date.now()) {
+  const ba = sportsOpenOrderBucket(a, now);
+  const bb = sportsOpenOrderBucket(b, now);
+  if (ba !== bb) return ba - bb;
+  const ma = sportsGameMs(a.game) || 0;
+  const mb = sportsGameMs(b.game) || 0;
+  const soonest = ba === SPORTS_OPEN_LIVE
+    || ba === SPORTS_OPEN_TODAY_NEXT
+    || ba === SPORTS_OPEN_TOMORROW_NEXT
+    || ba === SPORTS_OPEN_WEEK_NEXT
+    || ba === SPORTS_OPEN_FAR_NEXT;
+  if (soonest) return ma - mb;
+  return mb - ma;
+}
+
+function sportsSplitVisible(n, now = Date.now(), pool = null) {
+  const source = (Array.isArray(pool) ? pool.slice() : sportsOpenOrderSlides(now))
+    .filter(Boolean);
+  source.sort((a, b) => sportsCompareOpenOrder(a, b, now));
+  const count = Math.max(1, n | 0);
+  if (!source.length) return [];
+  if (count < 2) return sportsTakeUnusedPrefix(source, count);
+
+  const lives = [];
+  const todayNext = [];
+  const todayResult = [];
+  const resultsRest = [];
+  const upcomingRest = [];
+  for (const s of source) {
+    if (!s) continue;
+    const b = sportsOpenOrderBucket(s, now);
+    if (b === SPORTS_OPEN_LIVE) lives.push(s);
+    else if (b === SPORTS_OPEN_TODAY_NEXT) todayNext.push(s);
+    else if (b === SPORTS_OPEN_TODAY_RESULT) todayResult.push(s);
+    else if (b === SPORTS_OPEN_YESTERDAY || b === SPORTS_OPEN_OLDER_RESULT) {
+      resultsRest.push(s);
+    } else if (
+      b === SPORTS_OPEN_TOMORROW_NEXT
+      || b === SPORTS_OPEN_WEEK_NEXT
+      || b === SPORTS_OPEN_FAR_NEXT
+    ) {
+      upcomingRest.push(s);
+    }
+  }
+
+  const slots = new Array(count).fill(null);
+  const used = new Set();
+  const occupy = (index, slide) => {
+    if (index < 0 || index >= count || slots[index] || !slide) return false;
+    if (sportsSlideIsUsed(slide, used)) return false;
+    slots[index] = slide;
+    for (const k of sportsSlideOccupyKeys(slide)) used.add(k);
+    return true;
+  };
+  const freeIndices = () => {
+    const out = [];
+    for (let i = 0; i < count; i += 1) {
+      if (!slots[i]) out.push(i);
+    }
+    return out;
+  };
+
+  for (const s of lives) {
+    const idx = freeIndices()[0];
+    if (idx == null) break;
+    occupy(idx, s);
+  }
+
+  const tonightLead = lives.length === 0 && sportsSplitNextUnused(todayNext, used);
+  if (tonightLead) occupy(0, tonightLead);
+
+  {
+    const free = freeIndices();
+    for (let r = free.length - 1; r >= 0; r -= 1) {
+      const s = sportsSplitNextUnused(todayNext, used);
+      if (!s) break;
+      occupy(free[r], s);
+    }
+  }
+  {
+    const free = freeIndices();
+    for (const idx of free) {
+      const s = sportsSplitNextUnused(todayResult, used);
+      if (!s) break;
+      occupy(idx, s);
+    }
+  }
+
+  const leftover = freeIndices();
+  if (leftover.length) {
+    const hour = torontoHour(now);
+    const beforeNoon = hour < 12;
+    const hotIn = slots.some((s) => {
+      if (!s) return false;
+      const b = sportsOpenOrderBucket(s, now);
+      return b === SPORTS_OPEN_LIVE || b === SPORTS_OPEN_TODAY_NEXT;
+    });
+    const k = leftover.length;
+    let nResults;
+    if (k % 2 === 0) nResults = k / 2;
+    else if (beforeNoon) nResults = Math.floor(k / 2);
+    else nResults = hotIn ? Math.ceil(k / 2) : Math.floor(k / 2);
+    const resultSlots = leftover.slice(0, nResults);
+    const upcomingSlots = leftover.slice(nResults);
+    const resultFill = todayResult.concat(resultsRest);
+    const upcomingFill = todayNext.concat(upcomingRest);
+    for (const idx of resultSlots) {
+      occupy(
+        idx,
+        sportsSplitNextUnused(resultFill, used)
+          || sportsSplitNextUnused(upcomingFill, used)
+          || sportsSplitNextUnused(source, used),
+      );
+    }
+    for (const idx of upcomingSlots) {
+      occupy(
+        idx,
+        sportsSplitNextUnused(upcomingFill, used)
+          || sportsSplitNextUnused(resultFill, used)
+          || sportsSplitNextUnused(source, used),
+      );
+    }
+  }
+
+  for (let i = 0; i < count; i += 1) {
+    if (slots[i]) continue;
+    occupy(i, sportsSplitNextUnused(source, used));
+  }
+  return slots.filter(Boolean);
+}
+
+function sportsSplitPreferBuckets(outgoing, boardN, now = Date.now()) {
+  if ((boardN | 0) < 2 || !outgoing) return null;
+  const b = sportsOpenOrderBucket(outgoing, now);
+  if (
+    b === SPORTS_OPEN_TODAY_NEXT
+    || b === SPORTS_OPEN_TOMORROW_NEXT
+    || b === SPORTS_OPEN_WEEK_NEXT
+    || b === SPORTS_OPEN_FAR_NEXT
+  ) {
+    return [
+      SPORTS_OPEN_TODAY_NEXT,
+      SPORTS_OPEN_TOMORROW_NEXT,
+      SPORTS_OPEN_WEEK_NEXT,
+      SPORTS_OPEN_FAR_NEXT,
+    ];
+  }
+  if (
+    b === SPORTS_OPEN_TODAY_RESULT
+    || b === SPORTS_OPEN_YESTERDAY
+    || b === SPORTS_OPEN_OLDER_RESULT
+  ) {
+    return [
+      SPORTS_OPEN_TODAY_RESULT,
+      SPORTS_OPEN_YESTERDAY,
+      SPORTS_OPEN_OLDER_RESULT,
+    ];
+  }
+  if (b === SPORTS_OPEN_LIVE) {
+    return [SPORTS_OPEN_LIVE, SPORTS_OPEN_TODAY_NEXT];
+  }
+  return null;
 }
 
 function sportsCtaCandidateSlides() {
@@ -3620,16 +3810,24 @@ function nextSportsSlide(usedKeys, opts = {}) {
   const avoidMatchKeys = opts.avoidMatchKeys instanceof Set
     ? opts.avoidMatchKeys
     : new Set(opts.avoidMatchKeys || []);
+  const prefer = sportsSplitPreferBuckets(opts.outgoing, opts.boardN);
+  const ranked = prefer
+    ? pool.filter((s) => prefer.includes(sportsOpenOrderBucket(s))).concat(pool)
+    : pool;
   const isAvailable = (slide) => {
     if (sportsSlideIsUsed(slide, used)) return false;
     const matchKey = sportsResultMatchKey(slide);
     return !(matchKey && avoidMatchKeys.has(matchKey));
   };
-  if (!pool.length) return null;
-  for (let i = 0; i < pool.length; i += 1) {
-    const s = pool[(sportsLeftCursor + i) % pool.length];
+  if (!ranked.length) return null;
+  const seen = new Set();
+  const start = prefer ? 0 : sportsLeftCursor;
+  for (let i = 0; i < ranked.length; i += 1) {
+    const s = ranked[(start + i) % ranked.length];
+    if (!s || seen.has(s.key || i)) continue;
+    seen.add(s.key || i);
     if (!isAvailable(s)) continue;
-    sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
+    if (!prefer) sportsLeftCursor = (start + i + 1) % Math.max(1, pool.length);
     return s;
   }
   return null;
@@ -3700,9 +3898,8 @@ function sportsCtaSlotIndices(visible = sportsVisible) {
 }
 
 /**
- * Première peinture : préfixe de sportsOpenOrderSlides.
- * Une seule famille visuelle (puce sport). Pas de chrome CTA.
- * Overflow = coupe la queue, pas de re-tri. Creux = marque.
+ * Première peinture : go D. n=1 préfixe E ; n≥2 split gauche scores /
+ * droite à-venir (live + aujourd’hui volent les bords). Pas de chrome CTA.
  */
 function pickInitialSportsVisible(count) {
   sportsCtaLabelIndex = 0;
@@ -3710,14 +3907,7 @@ function pickInitialSportsVisible(count) {
   const pool = sportsOpenOrderSlides();
   const n = Math.max(1, count | 0);
   if (!pool.length) return [sportsCtaSlide(0)];
-  const picked = [];
-  const usedKeys = new Set();
-  for (const slide of pool) {
-    if (picked.length >= n) break;
-    if (!slide || sportsSlideIsUsed(slide, usedKeys)) continue;
-    picked.push(slide);
-    for (const k of sportsSlideOccupyKeys(slide)) usedKeys.add(k);
-  }
+  const picked = sportsSplitVisible(n, Date.now(), pool);
   if (!picked.length) return [sportsCtaSlide(0)];
   return sportsSeparateAdjacentResults(picked);
 }
@@ -3896,7 +4086,12 @@ function rotateSportsSlot(slot) {
       .filter(Boolean),
   );
 
-  let replacement = nextSportsSlide(used, { usedSports, avoidMatchKeys });
+  let replacement = nextSportsSlide(used, {
+    usedSports,
+    avoidMatchKeys,
+    outgoing: sportsVisible[slot],
+    boardN: n,
+  });
   if (!replacement && sportsVisible[slot]?.mode === 'cta') {
     const poolLen = Math.max(1, sportsCtaCandidateSlides().length || 1);
     const curIdx = Number(sportsVisible[slot]?.labelIndex) || 0;
@@ -3912,7 +4107,13 @@ function rotateSportsSlot(slot) {
   ) {
     const avoid = String(sportsVisible[slot]?.team?.sport || '').toLowerCase();
     sportsLeftCursor = (sportsLeftCursor + 1) % Math.max(1, sportsLeftLaneState().pool.length || 1);
-    replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid, avoidMatchKeys });
+    replacement = nextSportsSlide(used, {
+      usedSports,
+      avoidSport: avoid,
+      avoidMatchKeys,
+      outgoing: sportsVisible[slot],
+      boardN: n,
+    });
     if (!replacement || sportsSlideIsUsed(replacement, used)) return;
   }
 
