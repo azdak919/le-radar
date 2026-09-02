@@ -917,8 +917,17 @@ assert(
   'kiosque-v1 : hauteur embed 68 px pour les labels',
 );
 assert(
-  embedCss.includes('--tuner-session-base') && embedCss.includes('data-uni-session="automne"'),
-  'kiosque-v1 : fond de session univ. comme le bureau',
+  /--tuner-session-base:\s*#101816/.test(styleCss)
+    && !styleCss.includes('data-uni-session="automne"')
+    && !styleCss.includes('#1a1214'),
+  'tuner bureau : fond d’été #101816 toute l’année',
+);
+assert(
+  embedCss.includes('--tuner-session-base: #101816')
+    && !embedCss.includes('data-uni-session="automne"')
+    && !embedCss.includes('#1a1214')
+    && !embedCss.includes('#121820'),
+  'kiosque-v1 : fond d’été #101816 toute l’année (comme le bureau)',
 );
 const tunerEmbedHtml = readFileSync(join(root, 'tuner-embed.html'), 'utf8');
 assert(

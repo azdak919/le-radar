@@ -45,7 +45,8 @@
   }
 
   /**
-   * Id de session pour le thème UI (bandeau radio bureau).
+   * Id de session univ. QC (data-uni-session). Le fond du syntoniseur
+   * ne lit plus cet id (été #101816 toute l’année).
    * @returns {'automne'|'hiver'|'ete'}
    */
   function getCurrentUniversitySessionId(referenceDate = new Date()) {
@@ -56,8 +57,8 @@
   }
 
   /**
-   * Pose html[data-uni-session] pour le CSS du synthé (desktop).
-   * Calendrier : automne 1er sept · hiver 1er janv · été 1er mai.
+   * Pose html[data-uni-session]. Calendrier : automne 1er sept ·
+   * hiver 1er janv · été 1er mai. Le CSS du synthé n’en dépend plus.
    */
   function applyUniversitySessionTheme(referenceDate = new Date()) {
     const id = getCurrentUniversitySessionId(referenceDate);

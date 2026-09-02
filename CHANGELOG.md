@@ -7,6 +7,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Modifié
 
+- Barre radio bureau : fond d’été `#101816` **toute l’année** (plus de teinte automne bordeaux / hiver bleutée). Mobile inchangé (`--tuner-bg`).
 - Cartes sports du mât (**go E**) : live → ce soir → Dernière heure → **hier → demain** → à-venir dans **7 j civils** → scores J−2…J−5 → à-venir plus loin. Mercredi passe devant le 28–14 ; un football dans 12 j ne le chasse pas.
 - Scores bandeau **F compact** : même épaisseur 2 lignes, glyphe sport. Kicker 1 ligne sauf Dernière heure / Avant-hier / dates (jour de la semaine, puis jour + mois). Noms d’équipe d’abord (Vert & Or, Carabins, Cheetahs). Match sans chiffre : **0–0**. Voile : club + place, pas de 0–0.
 - Ouverture **B** : une liste gauche→droite (directs → aujourd’hui → à-venir → hier → reliquat 5 j). Cascade leave/arrive inchangée. Poll 15 s sur place.

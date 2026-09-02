@@ -87,6 +87,21 @@ for (const path of FOOTER_AIR_ROUTES) {
   });
 }
 
+test('tuner bureau : fond d’été toute l’année @ci-critical', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const tuner = page.locator('#tuner');
+  await expect(tuner).toBeVisible();
+  const summer = 'rgb(16, 24, 22)'; // #101816
+  const bg = await tuner.evaluate((el) => getComputedStyle(el).backgroundColor);
+  expect(bg, `fond courant ${bg}`).toBe(summer);
+  await page.evaluate(() => {
+    document.documentElement.setAttribute('data-uni-session', 'automne');
+  });
+  const forced = await tuner.evaluate((el) => getComputedStyle(el).backgroundColor);
+  expect(forced, 'automne ne doit plus teinter la barre').toBe(summer);
+});
+
 const WORDMARK_FONT_ROUTES = ['/', '/affiches/', '/kit-media/', '/en/media-kit/', '/sports/'];
 
 for (const path of WORDMARK_FONT_ROUTES) {
