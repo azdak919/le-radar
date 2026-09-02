@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-09-02T11:22:52.795Z",
+  "updatedAt": "2026-09-02T12:31:26.533Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mercredi Bonbon",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
+      "next": {
+        "title": "Conduite Antisportive",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://chyz.ca/emission/conduite-antisportive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Mercredi Bonbon",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-02T11:22:02.230Z"
+      "checkedAt": "2026-09-02T12:30:50.397Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-02T11:22:04.441Z"
+      "checkedAt": "2026-09-02T12:30:52.899Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,59 +81,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-02T11:22:07.161Z"
+      "checkedAt": "2026-09-02T12:30:56.037Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Morning Electro-shock",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/morning-electro-shock"
-      },
-      "next": {
-        "title": "Words and Culture",
-        "source": "schedule",
-        "start": "07:30",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/words-and-culture"
-      },
-      "track": "",
-      "showTitle": "Morning Electro-shock",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-02T11:22:41.737Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
-        "title": "Palmarès CFAK",
+        "title": "Trawling the Megahertz",
         "source": "schedule-live",
         "start": "08:00",
-        "end": "14:00"
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
+      },
+      "next": {
+        "title": "Are We There Yet?",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/are-we-there-yet"
       },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Trawling the Megahertz",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-02T11:22:42.580Z"
+      "checkedAt": "2026-09-02T12:31:11.418Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "14:00"
+      },
+      "next": {
+        "title": "Le popcorn de l'infini",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "00:00"
+      },
+      "track": "",
+      "showTitle": "Palmarès CFAK",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-02T12:31:13.042Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/in-velo-veritas"
       },
-      "track": "Célia Kameni; Claire days - Best Cards",
+      "track": "Mike Paul Kuekuatsheu - Shine bright",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -151,7 +158,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-02T11:22:52.444Z"
+      "checkedAt": "2026-09-02T12:31:26.182Z"
     }
   }
 }
