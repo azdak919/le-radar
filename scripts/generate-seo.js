@@ -73,7 +73,9 @@ const PAGES = [
   { loc: '/feeds.html', changefreq: 'monthly', priority: '0.5', file: 'feeds.html' },
   { loc: '/kit-media/', changefreq: 'monthly', priority: '0.4', file: 'kit-media/index.html' },
   { loc: '/affiches/', changefreq: 'monthly', priority: '0.4', file: 'affiches/index.html' },
+  { loc: '/iframes/', changefreq: 'monthly', priority: '0.4', file: 'iframes/index.html' },
   { loc: '/en/media-kit/', changefreq: 'monthly', priority: '0.3', file: 'en/media-kit/index.html' },
+  { loc: '/en/iframes/', changefreq: 'monthly', priority: '0.3', file: 'en/iframes/index.html' },
   { loc: '/pomo/', changefreq: 'monthly', priority: '0.3', file: 'pomo/index.html' },
   { loc: '/solitaire/', changefreq: 'monthly', priority: '0.3', file: 'solitaire/index.html' },
 ];
@@ -576,7 +578,7 @@ function main() {
       // page orpheline indexée derrière lui.
       // `en/` est généré, mais `en/media-kit/` est écrit à la main (miroir EN
       // de kit-media/) — le garder hors de la purge.
-      const handmadeUnderGenerated = ['en/media-kit/index.html'];
+      const handmadeUnderGenerated = ['en/media-kit/index.html', 'en/iframes/index.html'];
       const stashedHandmade = [];
       for (const rel of handmadeUnderGenerated) {
         const p = path.join(ROOT, rel);

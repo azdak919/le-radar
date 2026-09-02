@@ -1064,6 +1064,38 @@ for (const rel of ['index.html', 'tuner-embed.html', 'feeds.html']) {
     assert(connectSrc.includes(origin), `${rel}: connect-src doit autoriser ${origin}`);
   }
 }
+{
+  const rel = 'sports-embed.html';
+  const html = readFileSync(join(root, rel), 'utf8');
+  assert(/data-embed="sports"/.test(html), `${rel}: data-embed=sports requis`);
+  const csp = html.match(/Content-Security-Policy" content="([^"]+)"/i)?.[1] || '';
+  const connectSrc = csp.match(/(?:^|;\s*)connect-src\s+([^;]+)/i)?.[1] || '';
+  assert(connectSrc, `${rel}: directive connect-src CSP requise`);
+  assert(!/(^|\s)https:(?:\s|$)/.test(connectSrc), `${rel}: connect-src ne doit pas autoriser tout https:`);
+  for (const origin of CONNECT_ORIGINS) {
+    assert(connectSrc.includes(origin), `${rel}: connect-src doit autoriser ${origin}`);
+  }
+}
+{
+  const iframes = readFileSync(join(root, 'iframes/index.html'), 'utf8');
+  assert(iframes.includes('iFrames'), 'iframes : titre iFrames requis');
+  assert(iframes.includes('tuner-embed.html'), 'iframes : snippet radio requis');
+  assert(iframes.includes('surface=bar'), 'iframes : surface=bar pour la barre campus');
+  assert(iframes.includes('sports-ad-embed.html'), 'iframes : snippet sports IAB requis');
+  assert(!/Flipper|phosphore|Sports SAT|data-sat-skin/.test(iframes), 'iframes : plus de copy Flipper / SAT');
+  assert(iframes.includes('id="snippet-radio"'), 'iframes : bloc copiable radio requis');
+  assert(iframes.includes('id="snippet-300x250"'), 'iframes : bloc copiable 300×250 requis');
+  assert(iframes.includes('Copier le code radio'), 'iframes : bouton copier radio requis');
+  assert(iframes.includes('fmt=300x250'), 'iframes : format MPU 300×250 requis');
+  assert(iframes.includes('fmt=728x90'), 'iframes : format leaderboard requis');
+  assert(iframes.includes('fmt=320x50'), 'iframes : format mobile requis');
+  assert(iframes.includes('fmt=300x600'), 'iframes : format half-page requis');
+}
+{
+  const ad = readFileSync(join(root, 'sports-ad-embed.html'), 'utf8');
+  assert(/data-embed="sports-ad"/.test(ad), 'sports-ad-embed : data-embed=sports-ad requis');
+  assert(ad.includes('sports-ad-embed.js'), 'sports-ad-embed : script requis');
+}
 // Pages avec lecteur natif : sans media-src https:, les flux radio sont bloqués
 // par default-src 'self' (silence au play sur SEO / feeds).
 for (const rel of ['index.html', 'feeds.html', 'radios/chyz/index.html', 'scripts/seo-pages-lib.js']) {

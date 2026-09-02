@@ -1280,7 +1280,8 @@ function sportsResultRows(team, t, lang) {
     const badgeClass = placeKind && placeBadge
       ? 'sports-result__badge sports-result__badge--place'
       : 'sports-result__badge';
-    rows.push(`<li class="sports-result sports-result--${kindClass}${priorClass}" data-result="${placeKind ? 'place' : escapeHtml(last.result || 'D')}"${prior ? ' data-prior-season="1"' : ''}>
+    const lastGid = last.gameId ? ` data-game-id="${escapeHtml(String(last.gameId))}"` : '';
+    rows.push(`<li class="sports-result sports-result--${kindClass}${priorClass}" data-result="${placeKind ? 'place' : escapeHtml(last.result || 'D')}"${prior ? ' data-prior-season="1"' : ''}${lastGid}>
   <time class="sports-result__time" datetime="${escapeHtml(last.date || '')}">${escapeHtml(when)}</time>
   <span class="sports-result__score" aria-label="${escapeHtml(scoreAria)}">${escapeHtml(score)}</span>
   <span class="sports-result__title">${formatTitle(last, opp)}</span>
@@ -1304,20 +1305,21 @@ function sportsResultRows(team, t, lang) {
       : next.home
         ? `<span class="sports-result__venue">${escapeHtml(t.sportsHome)}</span>`
         : '';
+    const nextGid = next.gameId ? ` data-game-id="${escapeHtml(String(next.gameId))}"` : '';
     if (live) {
       const liveLabel = t.sportsLive || 'En direct';
       const hasScore = next.scoreFor != null && next.scoreAgainst != null
         && Number.isFinite(Number(next.scoreFor)) && Number.isFinite(Number(next.scoreAgainst))
         && Number(next.scoreFor) !== -999 && Number(next.scoreAgainst) !== -999;
       const scoreText = hasScore ? `${next.scoreFor}–${next.scoreAgainst}` : '—';
-      rows.push(`<li class="sports-result sports-result--live">
+      rows.push(`<li class="sports-result sports-result--live"${nextGid}>
   <time class="sports-result__time" datetime="${escapeHtml(next.date || '')}">${timeHtml}</time>
   <span class="sports-result__score" aria-label="${escapeHtml(liveLabel)}">${escapeHtml(scoreText)}</span>
   <span class="sports-result__title">${formatTitle(next, opp, venue)}</span>
   <span class="sports-result__badge" title="${escapeHtml(liveLabel)}"></span>
 </li>`);
     } else {
-      rows.push(`<li class="sports-result sports-result--next">
+      rows.push(`<li class="sports-result sports-result--next"${nextGid}>
   <time class="sports-result__time" datetime="${escapeHtml(next.date || '')}">${timeHtml}</time>
   <span class="sports-result__score sports-result__score--next" aria-label="${escapeHtml(t.sportsUpcoming)}">${escapeHtml(t.sportsUpcoming)}</span>
   <span class="sports-result__title">${formatTitle(next, opp, venue)}</span>

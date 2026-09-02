@@ -4,6 +4,8 @@
 
 // ─── DOM refs ────────────────────────────────────────────────────────────────
 var IS_TUNER_EMBED = document.documentElement.dataset.embed === 'tuner';
+var IS_SPORTS_EMBED = document.documentElement.dataset.embed === 'sports';
+var IS_EMBED = IS_TUNER_EMBED || IS_SPORTS_EMBED;
 // app.js est aussi chargé depuis les fiches SEO imbriquées : les données
 // restent ancrées à la racine du site, jamais au dossier courant de la fiche.
 var APP_BASE_URL = new URL('.', document.currentScript?.src || location.href);

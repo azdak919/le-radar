@@ -1,14 +1,69 @@
 // Iframe embed :
-// · legacy (Pomo/Solitaire, sans surface=) — barre compacte 62 px
-// · kiosque-v1 — parité barre bureau LE-RADAR (+ crédit), 68 px
+// · tuner legacy (Pomo/Solitaire, sans surface=) — barre compacte 62 px, indépendante
+// · tuner bar — barre opaque campus (clair/sombre), 62 px
+// · tuner kiosque-v1 — parité barre bureau LE-RADAR (+ crédit), 68 px, sombre
+// · sports — colonne de cartes CTA (+ promo LE-RADAR tous les N)
 // Signale le parent via postMessage (hauteur, ready, available).
 (function () {
-  if (document.documentElement.dataset.embed !== 'tuner') return;
+  const embedKind = document.documentElement.dataset.embed;
+  if (embedKind !== 'tuner' && embedKind !== 'sports') return;
+
+  if (embedKind === 'sports') {
+    document.documentElement.classList.add('is-radar-embed', 'is-radar-sports-embed');
+
+    function sportsHeight() {
+      const root = document.getElementById('sports-embed');
+      const h = Math.max(
+        root?.scrollHeight || 0,
+        document.documentElement.scrollHeight || 0,
+        document.body?.scrollHeight || 0,
+      );
+      return Math.max(56, Math.ceil(h));
+    }
+
+    function postSports(extra) {
+      try {
+        parent.postMessage({
+          type: 'radar-sports-embed',
+          protocol: 1,
+          height: sportsHeight(),
+          ready: true,
+          ...(extra || {}),
+        }, '*');
+      } catch (_) { /* ignore */ }
+    }
+
+    window.addEventListener('load', () => postSports({ event: 'load' }));
+    window.addEventListener('resize', () => postSports({ event: 'resize' }), { passive: true });
+    const kick = () => {
+      postSports({ event: 'dom' });
+      setTimeout(() => postSports({ event: 'hydrate' }), 400);
+      setTimeout(() => postSports({ event: 'hydrate' }), 1400);
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', kick);
+    } else {
+      kick();
+    }
+    if (typeof ResizeObserver === 'function') {
+      const root = document.getElementById('sports-embed');
+      if (root) new ResizeObserver(() => postSports({ event: 'ro' })).observe(root);
+    }
+    return;
+  }
 
   const params = new URLSearchParams(window.location.search);
-  const surface = params.get('surface') === 'kiosque-v1' ? 'kiosque-v1' : 'legacy';
+  const rawSurface = params.get('surface');
+  const surface = (rawSurface === 'kiosque-v1' || rawSurface === 'bar') ? rawSurface : 'legacy';
   const EMBED_H = surface === 'kiosque-v1' ? 68 : 62;
   document.documentElement.dataset.surface = surface;
+  const themeParam = params.get('theme');
+  if (themeParam === 'light' || themeParam === 'dark') {
+    document.documentElement.dataset.theme = themeParam;
+  }
+  if (surface === 'bar' && themeParam !== 'light' && themeParam !== 'dark') {
+    document.documentElement.dataset.theme = 'dark';
+  }
   if (surface === 'kiosque-v1') {
     document.documentElement.dataset.theme = 'dark';
     // data-uni-session (fraîcheur) : le fond de barre ne varie plus.
@@ -62,6 +117,7 @@
     if (event.origin !== window.location.origin) return;
     const data = event.data;
     if (data?.type === 'radar-embed-theme' && (data.theme === 'light' || data.theme === 'dark')) {
+      if (surface === 'kiosque-v1') return;
       document.documentElement.dataset.theme = data.theme;
     }
   });

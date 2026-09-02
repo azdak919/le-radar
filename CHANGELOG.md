@@ -20,6 +20,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Ajouté
 
+- Cartes sports IAB : bandeau **Sports étudiants collégiaux et universitaires du Québec** sur tous les formats ; horaire, domicile/extérieur, compétition, secteur. Le 728×90 n’est plus une seule ligne de noms.
+- Page `/iframes/` : barre radio campus (`tuner-embed.html?surface=bar`, clair/sombre opaque — Pomo et Solitaire restent sans `surface=`) et **cartes sports** aux formats pub IAB (300×250, 728×90, 320×50, 336×280, 300×600, 160×600), même identité que le site (pourpre, Inter, Source Serif, pastilles Prochain / Aujourd’hui / Hier). Lockup **logo PWA + LE-RADAR.ca**. Les matchs ouvrent le cycle ; la carte marque n’apparaît qu’après au moins 4 scores, avec le nom complet. Clic d’un match → `/sports/?sport=&team=&game=` : formation et ligne du résultat en surbrillance.
 - Studio d’affiches **en local** : téléverser une JPEG/PNG/WebP (reste dans l’onglet, hors banque publique). Comme le 1200 dpi, masqué hors `127.0.0.1`.
 - Messages manuscrits d’affiches : point d’exclamation sur les vœux (Bonne rentrée !, Joyeuses Fêtes !, Tu vas y arriver !). Pas sur les mentions solennelles ni les phrases projet.
 - Banque d’affiches Université Laval : un cliché Commons de chaque pavillon d’enseignement du campus principal et des quatre résidences (dont Agathe-Lacerte et Ernest-Lemieux). Studio `/affiches/?campus=laval&photo=ernest-lemieux`.
