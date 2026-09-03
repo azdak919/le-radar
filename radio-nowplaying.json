@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-09-03T11:20:35.773Z",
+  "updatedAt": "2026-09-03T12:49:07.511Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Jeudi Révolte",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Jeudi Révolte",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T11:19:53.694Z"
+      "checkedAt": "2026-09-03T12:48:48.536Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Plus de guit présente: un retour sur le Warped tour 2026",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/plus-de-guit"
-      },
-      "next": {
         "title": "Jimmy et Neutron",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/jimmy-et-neutron"
       },
+      "next": {
+        "title": "La collation",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
+      },
       "track": "",
-      "showTitle": "Plus de guit présente: un retour sur le Warped tour 2026",
+      "showTitle": "Jimmy et Neutron",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T11:19:55.847Z"
+      "checkedAt": "2026-09-03T12:48:50.940Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,59 +81,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T11:19:58.703Z"
+      "checkedAt": "2026-09-03T12:48:54.099Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Daydream Nation",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/daydream-nation"
-      },
-      "next": {
         "title": "Free City Radio",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "08:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/free-city-radio"
       },
-      "track": "",
-      "showTitle": "Daydream Nation",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-03T11:20:21.647Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
       "next": {
-        "title": "Palmarès CFAK",
+        "title": "Everything Everywhere",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "11:00"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/everything-everywhere"
       },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Free City Radio",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T11:20:22.966Z"
+      "checkedAt": "2026-09-03T12:48:57.369Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "11:00"
+      },
+      "next": {
+        "title": "À nous le futur",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "20:00"
+      },
+      "track": "",
+      "showTitle": "Palmarès CFAK",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-03T12:48:58.438Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Koyo - Oxidize (feat. Marisa Shirar)",
+      "track": "Boards of Canada - Somewhere Right Now In The Future",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-03T11:20:35.423Z"
+      "checkedAt": "2026-09-03T12:49:07.160Z"
     }
   }
 }
