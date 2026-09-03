@@ -20,6 +20,7 @@ export const WRITER_WORKFLOWS = [
   '.github/workflows/archive-articles.yml',
   '.github/workflows/detect-schedule-drift.yml',
   '.github/workflows/discover-news-sources.yml',
+  '.github/workflows/guard-harvest-freshness.yml',
   '.github/workflows/maintain.yml',
   '.github/workflows/probe-indigenous-mt.yml',
   '.github/workflows/retro-crawl-historical.yml',

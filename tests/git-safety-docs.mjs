@@ -24,6 +24,10 @@ assert(
 const maintenance = read('docs/maintenance.md');
 assert(!/push direct contrôlé/.test(maintenance), 'maintenance.md : plus de push direct humain');
 assert(/git push --force/.test(maintenance), 'maintenance.md : force-push sur main toujours interdit');
+assert(
+  maintenance.includes('guard-harvest-freshness.yml'),
+  'maintenance.md : gardien de récolte déclaré',
+);
 
 const adding = read('docs/adding-news-source.md');
 assert(
