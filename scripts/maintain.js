@@ -308,6 +308,8 @@ async function main() {
     ['News source maintainer', `node scripts/discover-news-sources.js ${flag}`.trim()],
     ['Stream tracker + radio promotion', `node scripts/discover-streams.js ${flag}`.trim()],
     ['Radio now-playing metadata', `node scripts/fetch-radio-nowplaying.js ${flag}`.trim()],
+    ['RSEQ sports league catalog', `node scripts/discover-sports.js ${flag}`.trim()],
+    ['RSEQ sports results', `node scripts/fetch-sports.js ${flag}`.trim()],
     // Après le now-playing : le rapport de dérive est lu par buildStatus() plus
     // bas, il doit donc être écrit dans la même passe.
     ['Radio schedule drift', `node scripts/detect-schedule-drift.js ${flag}`.trim()],

@@ -93,6 +93,8 @@ test('fetch-sports.js est du JS Node valide', () => {
   assert.match(src, /preserveByLeagueId|preservePreviousTeams/);
   assert.match(src, /ABORT/);
   assert.match(src, /teamsPreservedOnError/);
+  assert.match(src, /preserveHarvestCatalogStats/);
+  assert.match(src, /loadPreviousPayload/);
 });
 
 test('update-sports.yml couvre les heures de consultation QC', () => {
