@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-03T13:46:11.791Z",
+  "updatedAt": "2026-09-03T17:03:16.463Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Jeudi Révolte",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/jeudi-revolte/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Jeudi Révolte",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-03T13:45:38.819Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
-        "title": "Une fenêtre sur le monde",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
-      },
-      "track": "",
-      "showTitle": "La collation",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T13:45:40.755Z"
+      "checkedAt": "2026-09-03T17:02:59.590Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "La grande ludothèque",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+      },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
+      "track": "",
+      "showTitle": "La grande ludothèque",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-03T17:03:02.140Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Folk Directions",
+        "title": "Venus Radio",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "Under The Olive Tree",
+        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "14:00",
+        "end": "15:00"
       },
       "track": "",
-      "showTitle": "Folk Directions",
+      "showTitle": "Venus Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,59 +74,60 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T13:45:43.131Z"
+      "checkedAt": "2026-09-03T17:03:05.011Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Everything Everywhere",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/everything-everywhere"
+        "title": "What's Happening in NDG",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
       },
       "next": {
-        "title": "Democracy Now",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "title": "Secondhand Sounds",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/secondhand-sounds"
       },
       "track": "",
-      "showTitle": "Everything Everywhere",
+      "showTitle": "What's Happening in NDG",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
+        "schedule-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T13:46:05.285Z"
+      "checkedAt": "2026-09-03T17:03:08.526Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "À nous le futur",
         "source": "schedule-live",
         "start": "11:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "After 5@8",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "À nous le futur",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T13:46:06.252Z"
+      "checkedAt": "2026-09-03T17:03:10.489Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +140,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Phoebe Bridgers - Liberty Tree",
+      "track": "Kelela - outta time",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-03T13:46:11.440Z"
+      "checkedAt": "2026-09-03T17:03:16.112Z"
     }
   }
 }
