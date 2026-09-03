@@ -1,10 +1,10 @@
 {
-  "updated": "2026-09-03T22:33:37.962Z",
-  "fetchedAt": "2026-09-03T22:33:37.962Z",
+  "updated": "2026-09-03T22:49:41.750Z",
+  "fetchedAt": "2026-09-03T22:49:41.750Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-03T22:33:37.962Z"
+    "referenceDate": "2026-09-03T22:49:41.750Z"
   },
   "masthead": {
     "nextGameLimit": 48,
@@ -4160,7 +4160,8 @@
           "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
           "opponentFullName": "Cégep de Chicoutimi",
-          "opponentRegistryId": "chicoutimi"
+          "opponentRegistryId": "chicoutimi",
+          "live": true
         }
       ],
       "nextGame": {
@@ -4174,7 +4175,8 @@
         "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
         "opponentFullName": "Cégep de Chicoutimi",
-        "opponentRegistryId": "chicoutimi"
+        "opponentRegistryId": "chicoutimi",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -6320,7 +6322,8 @@
           "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
           "opponentFullName": "Cégep d'Alma",
-          "opponentRegistryId": "alma"
+          "opponentRegistryId": "alma",
+          "live": true
         }
       ],
       "nextGame": {
@@ -6334,7 +6337,8 @@
         "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
         "opponentFullName": "Cégep d'Alma",
-        "opponentRegistryId": "alma"
+        "opponentRegistryId": "alma",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 80,
