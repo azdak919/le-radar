@@ -1,10 +1,10 @@
 {
-  "updated": "2026-09-03T22:49:41.750Z",
-  "fetchedAt": "2026-09-03T22:49:41.750Z",
+  "updated": "2026-09-03T23:31:20.241Z",
+  "fetchedAt": "2026-09-03T23:31:20.241Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-03T22:49:41.750Z"
+    "referenceDate": "2026-09-03T23:31:20.241Z"
   },
   "masthead": {
     "nextGameLimit": 48,
@@ -12,7 +12,7 @@
     "chipResultMaxDaysAgo": 5,
     "ctaResultMaxDaysAgo": 1
   },
-  "teamCount": 136,
+  "teamCount": 137,
   "teams": {
     "collegial:soccer:48a59be5-0904-4b5c-b52b-1ef4cf1e8d8c:6ba50c57-09cc-4375-aef9-c36df6db1022": {
       "id": "collegial:soccer:48a59be5-0904-4b5c-b52b-1ef4cf1e8d8c:6ba50c57-09cc-4375-aef9-c36df6db1022",
@@ -4148,36 +4148,8 @@
         "priorSeason": false,
         "opponentSector": "collegial"
       },
-      "nextGames": [
-        {
-          "date": "2026-09-03",
-          "time": "19:00",
-          "opponent": "Cégep de Chicoutimi",
-          "opponentCode": "CHI",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
-          "opponentFullName": "Cégep de Chicoutimi",
-          "opponentRegistryId": "chicoutimi",
-          "live": true
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-03",
-        "time": "19:00",
-        "opponent": "Cégep de Chicoutimi",
-        "opponentCode": "CHI",
-        "home": true,
-        "sport": "soccer",
-        "competition": "Soccer collégial masculin D2",
-        "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
-        "opponentFullName": "Cégep de Chicoutimi",
-        "opponentRegistryId": "chicoutimi",
-        "live": true
-      },
+      "nextGames": [],
+      "nextGame": null,
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep d'Alma",
@@ -6294,56 +6266,6 @@
       "nickname": "Géants",
       "registryId": "sainte-foy",
       "lastGamePriorSeason": false
-    },
-    "collegial:soccer:21c736b9-df07-4c83-a58e-c444ad22252c:ced14a5e-25d8-4566-917e-5fcae50e98a4": {
-      "id": "collegial:soccer:21c736b9-df07-4c83-a58e-c444ad22252c:ced14a5e-25d8-4566-917e-5fcae50e98a4",
-      "rseqTeamId": "ced14a5e-25d8-4566-917e-5fcae50e98a4",
-      "leagueId": "21c736b9-df07-4c83-a58e-c444ad22252c",
-      "name": "Cégep de Chicoutimi",
-      "code": "CHI",
-      "sector": "collegial",
-      "sport": "soccer",
-      "sportLabel": "Soccer",
-      "sex": "M",
-      "division": "D2",
-      "usports": false,
-      "leagueLabel": "Soccer collégial masculin D2",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-03",
-          "time": "19:00",
-          "opponent": "Alma",
-          "opponentCode": "ALM",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
-          "opponentFullName": "Cégep d'Alma",
-          "opponentRegistryId": "alma",
-          "live": true
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-03",
-        "time": "19:00",
-        "opponent": "Alma",
-        "opponentCode": "ALM",
-        "home": false,
-        "sport": "soccer",
-        "competition": "Soccer collégial masculin D2",
-        "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
-        "opponentFullName": "Cégep d'Alma",
-        "opponentRegistryId": "alma",
-        "live": true
-      },
-      "source": "rseq-s1",
-      "priority": 80,
-      "fullName": "Cégep de Chicoutimi",
-      "registryId": "chicoutimi"
     },
     "universitaire:soccer:bf91ad12-b8fc-4259-92a2-551a8da949e7:5574025c-bc34-41ce-bfd4-bcabc6c98120": {
       "id": "universitaire:soccer:bf91ad12-b8fc-4259-92a2-551a8da949e7:5574025c-bc34-41ce-bfd4-bcabc6c98120",
@@ -9564,6 +9486,102 @@
       "fullName": "Cégep de l'Outaouais",
       "registryId": "outaouais",
       "lastGamePriorSeason": false
+    },
+    "collegial:rugby:7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2:2df178bd-1b07-42fa-a202-5b9b44c446be": {
+      "id": "collegial:rugby:7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2:2df178bd-1b07-42fa-a202-5b9b44c446be",
+      "rseqTeamId": "2df178bd-1b07-42fa-a202-5b9b44c446be",
+      "leagueId": "7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2",
+      "name": "Beauce-Appalaches",
+      "code": "BAP",
+      "sector": "collegial",
+      "sport": "rugby",
+      "sportLabel": "Rugby",
+      "sex": "F",
+      "division": null,
+      "usports": false,
+      "leagueLabel": "Rugby collégial féminin",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-05",
+          "time": "15:30",
+          "opponent": "Notre-Dame Bleu",
+          "opponentCode": "NDFB",
+          "home": false,
+          "sport": "rugby",
+          "competition": "Rugby collégial féminin",
+          "gameId": "d99805a3-055b-438e-be35-4a1dd0046d2a",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d99805a3-055b-438e-be35-4a1dd0046d2a",
+          "opponentFullName": "Campus Notre-Dame-de-Foy",
+          "opponentRegistryId": "notre-dame-bleu"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-05",
+        "time": "15:30",
+        "opponent": "Notre-Dame Bleu",
+        "opponentCode": "NDFB",
+        "home": false,
+        "sport": "rugby",
+        "competition": "Rugby collégial féminin",
+        "gameId": "d99805a3-055b-438e-be35-4a1dd0046d2a",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d99805a3-055b-438e-be35-4a1dd0046d2a",
+        "opponentFullName": "Campus Notre-Dame-de-Foy",
+        "opponentRegistryId": "notre-dame-bleu"
+      },
+      "source": "rseq-s1",
+      "priority": 80,
+      "fullName": "Cégep de Beauce-Appalaches",
+      "registryId": "beauce-appalaches"
+    },
+    "collegial:rugby:7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2:ba51f1e5-39cc-4335-8616-a62ed6793387": {
+      "id": "collegial:rugby:7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2:ba51f1e5-39cc-4335-8616-a62ed6793387",
+      "rseqTeamId": "ba51f1e5-39cc-4335-8616-a62ed6793387",
+      "leagueId": "7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2",
+      "name": "Notre-Dame Bleu",
+      "code": "NDFB",
+      "sector": "collegial",
+      "sport": "rugby",
+      "sportLabel": "Rugby",
+      "sex": "F",
+      "division": null,
+      "usports": false,
+      "leagueLabel": "Rugby collégial féminin",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-05",
+          "time": "15:30",
+          "opponent": "Beauce-Appalaches",
+          "opponentCode": "BAP",
+          "home": true,
+          "sport": "rugby",
+          "competition": "Rugby collégial féminin",
+          "gameId": "d99805a3-055b-438e-be35-4a1dd0046d2a",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d99805a3-055b-438e-be35-4a1dd0046d2a",
+          "opponentFullName": "Cégep de Beauce-Appalaches",
+          "opponentRegistryId": "beauce-appalaches"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-05",
+        "time": "15:30",
+        "opponent": "Beauce-Appalaches",
+        "opponentCode": "BAP",
+        "home": true,
+        "sport": "rugby",
+        "competition": "Rugby collégial féminin",
+        "gameId": "d99805a3-055b-438e-be35-4a1dd0046d2a",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d99805a3-055b-438e-be35-4a1dd0046d2a",
+        "opponentFullName": "Cégep de Beauce-Appalaches",
+        "opponentRegistryId": "beauce-appalaches"
+      },
+      "source": "rseq-s1",
+      "priority": 80,
+      "fullName": "Campus Notre-Dame-de-Foy",
+      "registryId": "notre-dame-bleu"
     }
   }
 }
