@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-31T16:28:29.154Z",
+  "updatedAt": "2026-09-03T13:24:51.142Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-08-31T16:28:29.154Z",
+      "checkedAt": "2026-09-03T13:24:51.142Z",
       "verifiedWeekOf": "2026-08-31",
       "grid": [
         {
@@ -83,6 +83,13 @@
         },
         {
           "day": 3,
+          "start": "10:00",
+          "end": "11:00",
+          "title": "Conduite Antisportive",
+          "url": "https://chyz.ca/emission/conduite-antisportive/"
+        },
+        {
+          "day": 3,
           "start": "16:00",
           "end": "17:30",
           "title": "Chéri.e, j’arrive!",
@@ -153,6 +160,20 @@
         },
         {
           "day": 5,
+          "start": "15:00",
+          "end": "16:30",
+          "title": "Conduite Antisportive",
+          "url": "https://chyz.ca/emission/conduite-antisportive/"
+        },
+        {
+          "day": 5,
+          "start": "16:00",
+          "end": "17:30",
+          "title": "L'Artiste du mois CHYZ",
+          "url": "https://chyz.ca/emission/lartist-du-mois-chyz/"
+        },
+        {
+          "day": 5,
           "start": "21:00",
           "end": "22:00",
           "title": "Crooch Control",
@@ -201,8 +222,8 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-08-31T16:28:29.154Z",
-      "verifiedWeekOf": "2026-08-24",
+      "checkedAt": "2026-09-03T13:24:51.142Z",
+      "verifiedWeekOf": "2026-08-31",
       "grid": [
         {
           "day": 0,
@@ -684,8 +705,8 @@
           "day": 4,
           "start": "07:00",
           "end": "08:00",
-          "title": "Plus de guit présente: un retour sur le Warped tour 2026",
-          "url": "https://cism893.ca/emissions/plus-de-guit"
+          "title": "La case à combler",
+          "url": "https://cism893.ca/emissions/ici-la-criminologie"
         },
         {
           "day": 4,
@@ -975,7 +996,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-08-31T16:28:29.154Z",
+      "checkedAt": "2026-09-03T13:24:51.142Z",
       "verifiedWeekOf": "2026-08-31",
       "grid": [
         {
@@ -1593,7 +1614,7 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-08-31T16:28:29.154Z",
+      "checkedAt": "2026-09-03T13:24:51.142Z",
       "verifiedWeekOf": "2026-08-31",
       "grid": [
         {
@@ -1718,13 +1739,6 @@
         {
           "day": 0,
           "start": "22:00",
-          "end": "23:00",
-          "title": "On The Right Track",
-          "url": "http://www.cjlo.com/shows/on-the-right-track"
-        },
-        {
-          "day": 0,
-          "start": "23:00",
           "end": "00:00",
           "title": "CJLO's Alternative Mega Mix",
           "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
@@ -1747,8 +1761,29 @@
           "day": 1,
           "start": "00:00",
           "end": "00:30",
+          "title": "On the Right Track",
+          "url": "http://www.cjlo.com/shows/on-the-right-track"
+        },
+        {
+          "day": 1,
+          "start": "00:00",
+          "end": "00:30",
           "title": "Teen Radio",
           "url": "http://www.cjlo.com/shows/teen-radio"
+        },
+        {
+          "day": 1,
+          "start": "00:00",
+          "end": "00:30",
+          "title": "2 Days and a Night",
+          "url": "http://www.cjlo.com/shows/2-days-and-a-night"
+        },
+        {
+          "day": 1,
+          "start": "00:00",
+          "end": "00:30",
+          "title": "Eldest Daughter",
+          "url": "http://www.cjlo.com/shows/eldest-daughter"
         },
         {
           "day": 1,
@@ -3475,6 +3510,13 @@
         {
           "day": 1,
           "start": "00:00",
+          "end": "00:30",
+          "title": "The Waxing Gibbous",
+          "url": "http://www.cjlo.com/shows/the-waxing-gibbous"
+        },
+        {
+          "day": 1,
+          "start": "00:00",
           "end": "06:00",
           "title": "CJLO Late Night",
           "url": "http://www.cjlo.com/shows/cjlo-late-night"
@@ -3504,8 +3546,8 @@
           "day": 1,
           "start": "11:00",
           "end": "12:00",
-          "title": "2 Days and a Night",
-          "url": "http://www.cjlo.com/shows/2-days-and-a-night"
+          "title": "I Think You Might Like This",
+          "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
         },
         {
           "day": 1,
@@ -3525,8 +3567,8 @@
           "day": 1,
           "start": "14:00",
           "end": "15:00",
-          "title": "Eldest Daughter",
-          "url": "http://www.cjlo.com/shows/eldest-daughter"
+          "title": "L'Organe à la radio",
+          "url": "http://www.cjlo.com/shows/lorgane-a-la-radio"
         },
         {
           "day": 1,
@@ -3644,8 +3686,8 @@
           "day": 2,
           "start": "14:00",
           "end": "15:00",
-          "title": "Code Switch",
-          "url": "http://www.cjlo.com/shows/code-switch"
+          "title": "Something for the Mood",
+          "url": "http://www.cjlo.com/shows/something-for-the-mood"
         },
         {
           "day": 2,
@@ -3749,8 +3791,8 @@
           "day": 3,
           "start": "11:00",
           "end": "12:00",
-          "title": "Unheard Of",
-          "url": "http://www.cjlo.com/shows/unheard-of"
+          "title": "Code Switch",
+          "url": "http://www.cjlo.com/shows/code-switch"
         },
         {
           "day": 3,
@@ -3770,8 +3812,8 @@
           "day": 3,
           "start": "14:00",
           "end": "15:00",
-          "title": "Something for the Mood",
-          "url": "http://www.cjlo.com/shows/something-for-the-mood"
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
         },
         {
           "day": 3,
@@ -3875,8 +3917,8 @@
           "day": 4,
           "start": "11:00",
           "end": "12:00",
-          "title": "Weirdo Rippers",
-          "url": "http://www.cjlo.com/shows/weirdo-rippers"
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
         },
         {
           "day": 4,
@@ -3903,15 +3945,15 @@
           "day": 4,
           "start": "14:00",
           "end": "15:00",
-          "title": "CJLO's Alternative Mega Mix",
-          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+          "title": "Secondhand Sounds",
+          "url": "http://www.cjlo.com/shows/secondhand-sounds"
         },
         {
           "day": 4,
           "start": "15:00",
           "end": "16:00",
-          "title": "Secondhand Sounds",
-          "url": "http://www.cjlo.com/shows/secondhand-sounds"
+          "title": "Weirdo Rippers",
+          "url": "http://www.cjlo.com/shows/weirdo-rippers"
         },
         {
           "day": 4,
@@ -3924,15 +3966,15 @@
           "day": 4,
           "start": "18:00",
           "end": "19:00",
-          "title": "Electric Messiah",
-          "url": "http://www.cjlo.com/shows/electric-messiah"
+          "title": "Unheard Of",
+          "url": "http://www.cjlo.com/shows/unheard-of"
         },
         {
           "day": 4,
           "start": "19:00",
           "end": "20:00",
-          "title": "I Think You Might Like This",
-          "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
+          "title": "Electric Messiah",
+          "url": "http://www.cjlo.com/shows/electric-messiah"
         },
         {
           "day": 4,
@@ -4078,8 +4120,8 @@
           "day": 5,
           "start": "23:00",
           "end": "00:00",
-          "title": "The Waxing Gibbous",
-          "url": "http://www.cjlo.com/shows/the-waxing-gibbous"
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
         },
         {
           "day": 6,
@@ -4201,7 +4243,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-08-31T16:28:29.154Z",
+      "checkedAt": "2026-09-03T13:24:51.142Z",
       "verifiedWeekOf": "2026-08-31",
       "grid": [
         {
@@ -4422,7 +4464,7 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-08-31T16:28:29.154Z",
+      "checkedAt": "2026-09-03T13:24:51.142Z",
       "verifiedWeekOf": "2026-08-17",
       "grid": [
         {
