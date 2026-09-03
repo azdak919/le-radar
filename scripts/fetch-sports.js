@@ -33,6 +33,7 @@ const {
 const SportsFreshness = require('./sports-freshness-lib');
 const SportsLive = require('./sports-live-lib');
 const { buildSportsMastheadPayload } = require('./sports-masthead-lib');
+const { preserveHarvestCatalogStats } = require('./harvest-freshness-lib');
 
 const update = process.argv.includes('--update');
 const liveOnly = process.argv.includes('--live');
@@ -748,14 +749,19 @@ function mergePreservedPast(entry, previousTeams) {
   return out;
 }
 
-function loadPreviousTeams() {
+function loadPreviousPayload() {
   try {
-    if (!fs.existsSync(OUT_PATH)) return {};
+    if (!fs.existsSync(OUT_PATH)) return null;
     const prev = JSON.parse(fs.readFileSync(OUT_PATH, 'utf8'));
-    return prev.teams && typeof prev.teams === 'object' ? prev.teams : {};
+    return prev && typeof prev === 'object' ? prev : null;
   } catch {
-    return {};
+    return null;
   }
+}
+
+function loadPreviousTeams() {
+  const prev = loadPreviousPayload();
+  return prev && prev.teams && typeof prev.teams === 'object' ? prev.teams : {};
 }
 
 /**
@@ -804,7 +810,10 @@ function preserveBySource(previousTeams, source, reason) {
 
 async function main() {
   const catalog = JSON.parse(fs.readFileSync(LEAGUES_PATH, 'utf8'));
-  const previousTeams = loadPreviousTeams();
+  const previousPayload = loadPreviousPayload();
+  const previousTeams = previousPayload && previousPayload.teams && typeof previousPayload.teams === 'object'
+    ? previousPayload.teams
+    : {};
   let leagues = catalog.leagues || [];
   if (liveOnly) {
     const ids = new Set(SportsLive.findLiveLeagueIds(previousTeams));
@@ -1034,7 +1043,7 @@ async function main() {
     }
   }
 
-  const payload = SportsFreshness.pruneSportsPayload({
+  let payload = SportsFreshness.pruneSportsPayload({
     updated: fetchedAt,
     fetchedAt,
     source: 'rseq-s1-all+spordle-hockey+sailing-qc',
@@ -1055,6 +1064,9 @@ async function main() {
     errors: errors.length ? errors : undefined,
     teams: prunedTeams,
   });
+  if (liveOnly) {
+    payload = preserveHarvestCatalogStats(payload, previousPayload);
+  }
 
   console.log(
     JSON.stringify(

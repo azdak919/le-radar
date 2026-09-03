@@ -122,7 +122,7 @@ porte jamais la barre radio.
 | `news-sources.json` | Registre des journaux (`active` + `candidates`) | `discover-news-sources.js`, `scan-media.js` |
 | `news.json` | Fil d'articles agrégé (lu par le site) | `fetch-news.js` |
 | `sports.json` | Résultats RSEQ collégial + universitaire QC | `fetch-sports.js` |
-| `sports-leagues.json` | Catalogue des ligues (LeagueId S1) | manuel |
+| `sports-leagues.json` | Catalogue des ligues (LeagueId S1) | `discover-sports.js` (hebdo `maintain.yml` + filet gardien 21 j) |
 | `radios.json` | Radios listées dans le syntoniseur | humain + `discover-streams.js` |
 | `radios-candidates.json` | Radios à tester avant promotion | `scan-media.js`, `discover-streams.js` |
 | `radio-schedules.seed.json` | Config sources + grilles manuelles | humain + `discover-schedule-sources.js` |
@@ -161,7 +161,7 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 | Santé + promotion journaux | `discover-news-sources.js` | Hebdo + quotidien via news |
 | Flux radio + promotion candidats | `discover-streams.js` | Quotidien + hebdo |
 | Agrégation articles | `fetch-news.js` | 7×/jour |
-| Résultats sportifs RSEQ | `fetch-sports.js` | **6×/jour + sam/dim 14 h** (`update-sports.yml`) — heures de consultation QC (matin, midi, fin de cours, soirée matchs, post-match, rattrapage) ; source en panne → snapshot précédent conservé |
+| Résultats sportifs RSEQ | `fetch-sports.js` | **6×/jour + sam/dim 14 h** (`update-sports.yml`) — heures de consultation QC (matin, midi, fin de cours, soirée matchs, post-match, rattrapage) ; source en panne → snapshot précédent conservé. Filet : `guard-harvest-freshness.yml` (horaire :10) si l’âge dépasse 90 min dès midi QC |
 | Scores **en direct** RSEQ | `fetch-sports.js --live` | **Toutes les 5 min** 12 h–minuit Québec (`update-sports-live.yml`) — ligues avec un match dans la fenêtre seulement ; filet horaire `:20` + enchaînement `workflow_run` sur la radio now-playing (GitHub lâche le `*/5`) ; le mât relit `sports.json` aux 15 s |
 | Extrait « à la une » | `enrich-lead-excerpts.js` | 7×/jour (après `fetch-news`) |
 | En cours + à venir (API / grille / ICY) | `fetch-radio-nowplaying.js` | Aux 30 min |
@@ -181,17 +181,19 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 - `maintain.yml` — pipeline complet + `bot-status.json` + issue si besoin
 - `update-news.yml` — articles frais (10 passes/jour **affichées** : 6 h, midi, et toutes les 2 h de 7 h à 21 h Québec). Le cron part **35 min plus tôt** (retard GitHub 20–40 min + fetch ~10 min). Filet horaire **:20** *et* enchaînement `workflow_run` sur **Update Radio Now Playing** + **Update Student Sports (RSEQ)** si la dernière mise à jour a > 75 min — GitHub lâche souvent les crons fréquents de ce dépôt. Une passe qui a réellement fetché **publie toujours** le tampon « mis à jour » (dernière vérification des sources, pas seulement un article neuf). Manuel = groupe à part, heure réelle. Si le gate `bot-prepush-check` casse (test HTML figé), `news.json` est quand même poussé pour que le fil JS reste à jour. Timeouts durs par source (90 s) et par étape.
 - `update-sports.yml` — scores RSEQ/Spordle/voile : **matin · midi · fin de cours · 20 h · 22 h 30 · minuit+** (UTC mappé sur Amérique/Toronto ±1 h EST/EDT) + **week-end après-midi**. Après le fetch : `generate-seo.js --sports-only` pour que `/sports/` (HTML prérendu) suive `sports.json`. Abort si chute >50 % d’équipes ou majorité de ligues en panne ; sinon préserve le snapshot précédent par ligue. Push avec retry comme les autres bots. `sports.json` est en `paths-ignore` du Vérification (pas de Chromium à chaque refresh).
+- `guard-harvest-freshness.yml` — **gardien** horaire `:10` : relance sports / radio / news / catalogue ligues si le tampon publié dépasse le SLA (`scripts/harvest-freshness-lib.js`). Compense les crons GitHub lâchés. Un `--live` ne doit plus écraser `leaguesOk` / `sportsCatalog` du crawl complet.
 - `update-streams.yml` — validation des flux (quotidien)
 - **Bots SEO/HTML** (news, streams, institutions, schedules, discover, maintain, archives) : étape **`bot-prepush-check.sh`** (`npm run check`) **avant** le commit pour éviter un mail Vérification après coup.
 - Playwright CI : **2 retries** + specs mât (météo/sports) en projet serial.
-- `update-radio-nowplaying.yml` — titre en ondes via API station / ICY (aux 30 min)
+- `update-radio-nowplaying.yml` — titre en ondes via API station / ICY (aux 30 min) ; filet gardien 45 min
 - `update-radio-schedules.yml` — horaires colligés « à l'antenne » (aux 2 semaines)
 - `detect-schedule-drift.yml` — écart grille publiée ↔ page du jour (quotidien, en soirée QC)
 - `discover-news-sources.yml` — santé des flux RSS (hebdo)
 - `update-institutions.yml` — catalogue établissements (3×/an)
 
-Les workflows quotidiens restent pour la fraîcheur ; `maintain.yml` fait la passe
-« long terme » (découverte de nouveaux médias, couverture, rapport).
+Les workflows quotidiens restent pour la fraîcheur ; `guard-harvest-freshness.yml`
+rattrape un créneau sauté ; `maintain.yml` fait la passe « long terme »
+(découverte de nouveaux médias, **catalogue ligues RSEQ**, couverture, rapport).
 
 ---
 
