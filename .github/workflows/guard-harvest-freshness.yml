@@ -1,0 +1,85 @@
+name: Guard Harvest Freshness
+
+on:
+  schedule:
+    # Filet horaire, décalé des :20 news, */30 radio, et des passes sports.
+    # GitHub lâche les crons fréquents : ce job relance une récolte si l’âge
+    # dépasse le SLA (voir scripts/harvest-freshness-lib.js).
+    - cron: '10 * * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: guard-harvest-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  guard:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+
+      - name: Evaluate harvest freshness
+        id: eval
+        run: node scripts/guard-harvest-freshness.js --github-output
+
+      - name: Rediscover RSEQ leagues
+        if: steps.eval.outputs.leagues == 'true'
+        run: node scripts/discover-sports.js --update
+
+      - name: Catch-up RSEQ sports
+        if: steps.eval.outputs.sports == 'true'
+        run: node scripts/fetch-sports.js --update
+
+      - name: Refresh /sports/ HTML from sports.json
+        if: steps.eval.outputs.sports == 'true' || steps.eval.outputs.sports_html == 'true'
+        continue-on-error: true
+        timeout-minutes: 3
+        run: node scripts/generate-seo.js --update --sports-only
+        env:
+          CI: true
+
+      - name: Catch-up radio now-playing
+        if: steps.eval.outputs.radio == 'true'
+        run: node scripts/fetch-radio-nowplaying.js --update
+
+      - name: Catch-up news feeds
+        if: steps.eval.outputs.news == 'true'
+        timeout-minutes: 10
+        run: node scripts/fetch-news.js --update
+        env:
+          CI: true
+          FIREBASE_POLYSCOPE_API_KEY: ${{ secrets.FIREBASE_POLYSCOPE_API_KEY }}
+
+      - name: Commit catch-up
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            sports.json sports-masthead.json sports-leagues.json sports-teams.json sports-sailing.json \
+            sports/index.html en/sports/index.html \
+            radio-nowplaying.json \
+            news.json news-archive.json news-sources.json \
+            2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "Harvest already within SLA (or catch-up produced an identical payload)."
+            exit 0
+          fi
+          git commit -m "chore(ops): harvest freshness catch-up"
+          for i in 1 2 3; do
+            git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
+            git rebase --abort 2>/dev/null || true
+            echo "push attempt $i failed, retrying…"
+            sleep $((i * 3))
+          done
+          echo "::error::could not push harvest catch-up after retries"
+          exit 1
