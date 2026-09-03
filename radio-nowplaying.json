@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-03T08:01:18.343Z",
+  "updatedAt": "2026-09-03T09:26:07.910Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T08:00:52.991Z"
+      "checkedAt": "2026-09-03T09:25:49.178Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Best of des sessions live",
-        "source": "schedule",
-        "start": "04:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/session-live-a-cism"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "05:00",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Plus de guit présente: un retour sur le Warped tour 2026",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/plus-de-guit"
+      },
       "track": "",
-      "showTitle": "Best of des sessions live",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T08:00:55.483Z"
+      "checkedAt": "2026-09-03T09:25:51.555Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T08:01:00.417Z"
+      "checkedAt": "2026-09-03T09:25:54.591Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T08:01:03.848Z"
+      "checkedAt": "2026-09-03T09:25:57.112Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T08:01:05.431Z"
+      "checkedAt": "2026-09-03T09:25:58.727Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "ID - Neimo-DJ-White-Socks",
+      "track": "BAIE - La tete a ses raisons",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-03T08:01:17.992Z"
+      "checkedAt": "2026-09-03T09:26:07.559Z"
     }
   }
 }
