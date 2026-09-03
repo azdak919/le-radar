@@ -1,16 +1,16 @@
 {
-  "updated": "2026-09-03T13:39:34.536Z",
-  "updatedSlot": "2026-09-03T13:00:00.000Z",
+  "updated": "2026-09-03T15:05:23.898Z",
+  "updatedSlot": null,
   "count": 185,
   "freshnessSessions": 3,
   "sources": {
     "Quartier Libre": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:00:00.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-09-03T15:04:42.695Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-09-03T13:39:15.259Z"
+      "lastFetchOk": "2026-09-03T15:04:44.482Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-01T04:35:43.000Z",
-      "lastFetchOk": "2026-09-03T13:39:20.199Z"
+      "lastFetchOk": "2026-09-03T15:04:49.239Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-08-31T12:39:00.000Z",
-      "lastFetchOk": "2026-09-03T13:39:20.880Z"
+      "lastFetchOk": "2026-09-03T15:04:50.004Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,15 +42,15 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-02T02:15:00.000Z",
-      "lastFetchOk": "2026-09-03T13:39:22.193Z"
+      "lastFetchOk": "2026-09-03T15:04:51.552Z"
     },
     "Zone Campus": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-09-03T15:04:52.930Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,15 +58,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-09-03T13:39:23.873Z"
+      "lastFetchOk": "2026-09-03T15:04:54.157Z"
     },
     "Le Collectif": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-01T08:00:00.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-09-03T15:04:55.188Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,15 +74,15 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-09-03T13:39:24.404Z"
+      "lastFetchOk": "2026-09-03T15:04:55.541Z"
     },
     "La Pige": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-01T03:15:39.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-09-03T15:04:56.350Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-09-03T13:39:26.644Z"
+      "lastFetchOk": "2026-09-03T15:04:59.265Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-08-30T17:15:53.000Z",
-      "lastFetchOk": "2026-09-03T13:39:26.945Z"
+      "lastFetchOk": "2026-09-03T15:05:00.635Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-09-03T13:39:27.196Z"
+      "lastFetchOk": "2026-09-03T15:05:01.070Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-09-03T13:39:27.449Z"
+      "lastFetchOk": "2026-09-03T15:05:01.336Z"
     }
   },
   "items": [
@@ -158,6 +158,7 @@
       "excerpt": "Entre le loyer, l’épicerie, le transport et les dépenses liées aux études, le budget d’une personne étudiante peut rapidement être serré. Dans ce contexte, payer un abonnement coûteux à la salle de musculation ou s’inscrire à plusieurs activités sportives peut sembler",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SPORTS_Faire-du-sport-sans-se-ruiner-quand-on-est-etudiant_SourceUdeS-1.jpeg",
       "authorCheckedAt": "2026-09-01T09:26:57.178Z",
+      "_pageAuthor": "Camille Guindon",
       "sourceImageCredit": "Photo : UdeS",
       "sourceImageCreator": "UdeS",
       "sourceImageCreditUrl": "https://lecollectif.ca/sports-et-bien-etre/faire-du-sport-sans-se-ruiner-quand-on-est-aux-etudes/",
@@ -167,7 +168,6 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
       "leadExcerpt": "Entre le loyer, l’épicerie, le transport et les dépenses liées aux études, le budget d’une personne étudiante peut rapidement être serré. Dans ce contexte, payer un abonnement coûteux à la salle de musculation ou s’inscrire à plusieurs activités sportives peut sembler impossible. Pourtant, à Sherbrooke, il existe plusieurs façons de rester actif sans vider son portefeuille.",
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/1db0110786007144.jpg",
       "imageLocalKey": "1db0110786007144",
       "imageLocalVia": "origin"
@@ -185,6 +185,7 @@
       "excerpt": "Le futur aréna de l’Université de Sherbrooke prend de l’ampleur. Un investissement privé de 15 millions de dollars vient donner un sérieux élan au projet d’infrastructure sportive, qui pourrait notamment accueillir l’équipe de hockey du Vert & Or.",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/09/SPORTS_FuturArenaUdeSHockeyVO_SourceUniversiteDeSherbrooke.png",
       "authorCheckedAt": "2026-09-01T09:26:58.168Z",
+      "_pageAuthor": "Camille Guindon",
       "sourceImageCredit": "Photo : UdeS",
       "sourceImageCreator": "UdeS",
       "sourceImageCreditUrl": "https://lecollectif.ca/sports-et-bien-etre/un-important-coup-de-pouce-pour-le-futur-arena-du-vert-or/",
@@ -193,7 +194,6 @@
       "sourceImageCreditImageKey": "sports_futurarenaudeshockeyvo_sourceuniversitedesherbrooke.png",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/9d9a390f8dbf3918.png",
       "imageLocalKey": "9d9a390f8dbf3918",
       "imageLocalVia": "origin"
@@ -211,6 +211,7 @@
       "excerpt": "Entre les cours, les travaux à remettre, les examens, les présentations et parfois un emploi à temps partiel, la vie étudiante peut rapidement devenir une course contre la montre. Pour plusieurs personnes étudiantes, le stress fait partie du quotidien. Pourtant, une solution",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SPORTS_Bouger-pour-decrocher_SourceCROQ-1024x680.jpeg",
       "authorCheckedAt": "2026-09-01T09:26:59.111Z",
+      "_pageAuthor": "Camille Guindon",
       "sourceImageCredit": "Photo : ICROQ",
       "sourceImageCreator": "ICROQ",
       "sourceImageCreditUrl": "https://lecollectif.ca/sports-et-bien-etre/le-role-de-lactivite-physique-sur-le-stress-etudiant/",
@@ -220,7 +221,6 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "Selon l’Organisation mondiale de la Santé (OMS), l’activité physique contribue à la santé physique et mentale. Elle peut notamment réduire les symptômes d’anxiété et favoriser le bien-être général. Chez la communauté étudiante, dont les journées sont souvent chargées et imprévisibles, intégrer le mouvement à la routine peut donc être une façon accessible de prendre une pause et de décrocher.",
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/f957d9dc55d64a05.jpg",
       "imageLocalKey": "f957d9dc55d64a05",
       "imageLocalVia": "origin"
@@ -237,6 +237,7 @@
       "date": "2026-09-01T08:00:00.000Z",
       "excerpt": "Dans les hôpitaux, une section est réservée aux personnes vivant avec des troubles de santé mentale : la psychiatrie. Les personnes peuvent y être admises avec leur consentement ou, dans certaines situations, contre leur gré, selon leur état et les règles prévues par la loi.",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Psychiatrie_SourceIStockPhoto-1024x683.png",
+      "_pageAuthor": "Salma Labiede",
       "sourceImageCredit": "Photo : iStock Photo",
       "sourceImageCreator": "iStock Photo",
       "sourceImageCreditUrl": "https://lecollectif.ca/societe/les-conditions-en-psychiatrie/",
@@ -245,7 +246,6 @@
       "sourceImageCreditImageKey": "societe_psychiatrie_sourceistockphoto.png",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/282016e9c7243bd1.png",
       "imageLocalKey": "282016e9c7243bd1",
       "imageLocalVia": "origin"
@@ -262,6 +262,7 @@
       "date": "2026-09-01T08:00:00.000Z",
       "excerpt": "Après le secondaire et le bal, les jeunes s’apprêtent à faire un grand pas vers le monde du cégep. Or, ces dernières années, plusieurs personnes étudiantes déposent des demandes d’admission au cégep et, dans certains programmes, la demande dépasse l’offre.",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_RentreeCegep_SourceCegepDeSherbrooke-1024x769.jpg",
+      "_pageAuthor": "Salma Labiede",
       "sourceImageCredit": "Photo : Université de Sherbrooke",
       "sourceImageCreator": "Université de Sherbrooke",
       "sourceImageCreditUrl": "https://lecollectif.ca/societe/les-demandes-dadmission-au-cegep-depassent-loffre/",
@@ -270,7 +271,6 @@
       "sourceImageCreditImageKey": "societe_rentreecegep_sourcecegepdesherbrooke.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/ef8b04d91aa1ec11.jpg",
       "imageLocalKey": "ef8b04d91aa1ec11",
       "imageLocalVia": "origin"
@@ -287,6 +287,7 @@
       "date": "2026-09-01T08:00:00.000Z",
       "excerpt": "Les personnes soignantes, pour qu’elles prennent soin des autres et qu’elles se sentent bien, il faut tout d’abord qu’elles prennent soin d’elles-mêmes. Les psychologues, les médecins, les infirmières et tous les autres membres du personnel soignant doivent avoir accès à des",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_sante-mentale-personnel-soignant_SourceHinterhausProductions.jpg",
+      "_pageAuthor": "Salma Labiede",
       "sourceImageCredit": "Photo : Hinterhaus Productions",
       "sourceImageCreator": "Hinterhaus Productions",
       "sourceImageCreditUrl": "https://lecollectif.ca/societe/le-bien-etre-du-personnel-soignant-au-coeur-de-la-qualite-des-soins/",
@@ -296,7 +297,6 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "Les personnes soignantes ont des horaires difficiles et, parfois, elles sont obligées de faire des heures supplémentaires en raison du manque de personnel. Plusieurs professionnels de la santé vivent avec de la fatigue physique et mentale. De plus, cette charge de travail importante entraine des difficultés à concilier la vie professionnelle et la vie personnelle.",
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/9658d634551d8b4c.jpg",
       "imageLocalKey": "9658d634551d8b4c",
       "imageLocalVia": "origin"
@@ -314,6 +314,7 @@
       "excerpt": "Dans son plus récent rapport, la firme de sondage Léger publie les résultats de plusieurs questions à mentions multiples visant à sonder les intentions de vote de la population québécoise face aux élections provinciales à venir. Quel parti ciblera le mieux les enjeux critiques ?",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Les-enjeux-electoraux-de-2026_Leger-Le-Journal-TVA-1024x520.png",
       "authorCheckedAt": "2026-09-01T09:26:59.894Z",
+      "_pageAuthor": "Fabrice Lamarre",
       "sourceImageCredit": "Photo : Léger le journal TVA",
       "sourceImageCreator": "Léger le journal TVA",
       "sourceImageCreditUrl": "https://lecollectif.ca/edition-papier/les-enjeux-electoraux-de-2026/",
@@ -322,7 +323,6 @@
       "sourceImageCreditImageKey": "societe_les-enjeux-electoraux-de-2026_leger-le-journal-tva.png",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/58f1b4284ffb876a.png",
       "imageLocalKey": "58f1b4284ffb876a",
       "imageLocalVia": "origin"
@@ -339,6 +339,7 @@
       "date": "2026-09-01T08:00:00.000Z",
       "excerpt": "De l’autre côté de la rivière, dans Saint-François, la circonscription vit une situation différente de celle dans Sherbrooke, à l’aube des élections. En fonction depuis 2018, Geneviève Hébert brigue un troisième mandat consécutif à Saint-François pour la CAQ, face à des",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Vos-personnes-candidates-dans-Saint-Francois_Elections-Quebec-1.png",
+      "_pageAuthor": "Médéric Dens",
       "sourceImageCredit": "Photo : MACSF",
       "sourceImageCreator": "MACSF",
       "sourceImageCreditUrl": "https://lecollectif.ca/societe/vos-personnes-candidates-dans-saint-francois-1-2/",
@@ -348,7 +349,6 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
       "leadExcerpt": "De l’autre côté de la rivière, dans Saint-François, la circonscription vit une situation différente de celle dans Sherbrooke, à l’aube des élections. En fonction depuis 2018, Geneviève Hébert brigue un troisième mandat consécutif à Saint-François pour la CAQ, face à des candidatures variées aux curriculums vitae différents.",
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/b13646ac11753779.png",
       "imageLocalKey": "b13646ac11753779",
       "imageLocalVia": "origin"
@@ -365,6 +365,7 @@
       "date": "2026-09-01T08:00:00.000Z",
       "excerpt": "Avec la tonne d’informations politiques qui circulent présentement, il devient difficile de bien cerner les personnes candidates de votre ville, mais aussi leurs promesses et ambitions. Les partis présentent des personnes provenant de différents domaines, et même une",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_VosPersonnesCandidatesDansSherbrooke_SourceSite-web-du-PQ.png",
+      "_pageAuthor": "Médéric Dens",
       "sourceImageCredit": "Crédit photo : Le Collectif",
       "sourceImageCreditUrl": "https://lecollectif.ca/societe/vos-personnes-candidates-dans-sherbrooke-1-2/",
       "sourceImageCreditFrom": "media",
@@ -373,7 +374,6 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "« Sherbrooke, comme comté, comme ville et comme région, c’est un petit Québec. Ce sont les mêmes problèmes qu’ailleurs l’augmentation du coût du logement l’augmentation du nombre d’itinérants et d’itinérantes l’accès aux services de soins et de santé ce sont tous des enjeux majeurs », ajoute-t-il.",
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/0909995620a1ca9c.png",
       "imageLocalKey": "0909995620a1ca9c",
       "imageLocalVia": "origin"
@@ -386,10 +386,11 @@
       "lang": "fr",
       "title": "Vos bonnes nouvelles environnementales #38",
       "link": "https://lecollectif.ca/environnement/vos-bonnes-nouvelles-environnementales-38/",
-      "author": "Sarah Gendreau Simoneau et Frédérique Richard",
+      "author": "Sarah Gendreau Simoneau",
       "date": "2026-09-01T08:00:00.000Z",
       "excerpt": "La crise environnementale actuelle accentue l’écoanxiété générale. Plusieurs études ont démontré le lien entre la consommation abusive de mauvaises nouvelles et la dépression, le stress et l’anxiété, rapporte Radio-Canada.",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/ENVIRONNEMENT_Lin_SourceGrainsDuQuebec.png",
+      "_pageAuthor": "Sarah Gendreau Simoneau et Frédérique Richard",
       "sourceImageCredit": "Photo : ItThalia Huarez",
       "sourceImageCreator": "ItThalia Huarez",
       "sourceImageCreditUrl": "https://lecollectif.ca/environnement/vos-bonnes-nouvelles-environnementales-38/",
@@ -398,7 +399,6 @@
       "sourceImageCreditImageKey": "environnement_lin_sourcegrainsduquebec.png",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/5bd396d4e457afa0.png",
       "imageLocalKey": "5bd396d4e457afa0",
       "imageLocalVia": "origin"
@@ -487,6 +487,7 @@
       "date": "2026-09-01T03:15:39.000Z",
       "excerpt": "Les intervenants du Service de travail de rue accueillaient les participants au souper du 31 août. (Photo : Charles Pinel) Depuis 2001, la Journée internationale de sensibilisation aux surdoses a lieu le 31 août. Cette initiative, née en Australie, a aussi l’objectif de",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/Image-8.jpg",
+      "_pageAuthor": "Charles Pinel",
       "sourceImageCredit": "Photo : Charles Pinel",
       "sourceImageCreator": "Charles Pinel",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/08/31/sensibilisation-aux-surdoses-une-journee-pour-demystifier-la-problematique/?utm_source=rss&utm_medium=rss&utm_campaign=sensibilisation-aux-surdoses-une-journee-pour-demystifier-la-problematique",
@@ -495,8 +496,7 @@
       "sourceImageCreditImageKey": "image-8.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "leadExcerpt": "Depuis 2001, la Journée internationale de sensibilisation aux surdoses a lieu le 31 août. Cette initiative, née en Australie, a aussi l’objectif de déstigmatiser la consommation de drogues.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Depuis 2001, la Journée internationale de sensibilisation aux surdoses a lieu le 31 août. Cette initiative, née en Australie, a aussi l’objectif de déstigmatiser la consommation de drogues."
     },
     {
       "source": "Le Délit",
@@ -688,6 +688,7 @@
       "date": "2026-08-31T21:25:51.000Z",
       "excerpt": "Bulletin de 18 h Grave accident sur la route 172, des maires de petites municipalités de la région espèrent que les programmes de subvention seront revus par le gouvernement du Québec et le prix de l’essence devrait augmenter dans les prochaines heures dans la région selon un",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0117.jpg",
+      "_pageAuthor": "Zachary Rivard",
       "sourceImageCredit": "Crédit photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/08/31/bulletin-radio-16h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-radio-16h30",
       "sourceImageCreditFrom": "media",
@@ -695,8 +696,7 @@
       "sourceImageCreditImageKey": "dsc0117.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
-      "leadExcerpt": "Un blessé grave dans une collision entre une camionnette et un véhicule lourd sur la 172. Le Groupe Rémabec fait l’acquisition d’une usine de cogénération à Saint-Félicien. Et une hausse des abandons d’animaux à la SPCA de Saguenay.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Un blessé grave dans une collision entre une camionnette et un véhicule lourd sur la 172. Le Groupe Rémabec fait l’acquisition d’une usine de cogénération à Saint-Félicien. Et une hausse des abandons d’animaux à la SPCA de Saguenay."
     },
     {
       "source": "La Pige",
@@ -710,6 +710,7 @@
       "date": "2026-08-31T21:05:16.000Z",
       "excerpt": "Des bannières publicitaires décorent la ville d’Arvida. (Photo : Émile Barthe) La fin de semaine des 5 et 6 septembre vibrera au rythme des célébrations grâce à la 7e édition d’« Arvida fête son patrimoine » qui sera, sans surprise, sous le thème du 100e anniversaire de la",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/Image-5-1.jpg",
+      "_pageAuthor": "Émile Barthe",
       "sourceImageCredit": "Photo : Émile Barthe",
       "sourceImageCreator": "Émile Barthe",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/08/31/arvida-patrimoine-et-histoire-a-lhonneur/?utm_source=rss&utm_medium=rss&utm_campaign=arvida-patrimoine-et-histoire-a-lhonneur",
@@ -718,8 +719,7 @@
       "sourceImageCreditImageKey": "image-5-1.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "leadExcerpt": "Le Musée du patrimoine d’Arvida sera au cœur des festivités du centenaire. Cette année, le musée collaborera avec le site du parc Moritz afin d’offrir une plus grande variété d’activités complètement gratuites pour « dynamiser nos centres-villes », selon le coordonnateur du centre-ville d’Arvida, William Émond.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Le Musée du patrimoine d’Arvida sera au cœur des festivités du centenaire. Cette année, le musée collaborera avec le site du parc Moritz afin d’offrir une plus grande variété d’activités complètement gratuites pour « dynamiser nos centres-villes », selon le coordonnateur du centre-ville d’Arvida, William Émond."
     },
     {
       "source": "La Pige",
@@ -733,6 +733,7 @@
       "date": "2026-08-31T21:01:12.000Z",
       "excerpt": "La Coupe d’Afrique des Nations (CAN) de Saguenay a tenu sa cinquième finale ce samedi à Chicoutimi. Ce tournoi de soccer amateur comprend des équipes représentant différents pays. La grande finale impliquait le Sénégal et le Burkina Faso. Les joueurs de ces équipes sont des",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/shared-image-7.jpg",
+      "_pageAuthor": "Colin Perron",
       "sourceImageCredit": "Photo : Colin Perron",
       "sourceImageCreator": "Colin Perron",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/08/31/une-finale-enlevante-dans-le-tournoi-de-soccer-a-chicoutimi/?utm_source=rss&utm_medium=rss&utm_campaign=une-finale-enlevante-dans-le-tournoi-de-soccer-a-chicoutimi",
@@ -742,7 +743,6 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "La Coupe d’Afrique des Nations (CAN) de Saguenay a tenu sa cinquième finale ce samedi à Chicoutimi. Ce tournoi de soccer amateur comprend des équipes représentant différents pays.",
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/f84b824a8d119daf.jpg",
       "imageLocalKey": "f84b824a8d119daf",
       "imageLocalVia": "origin"
@@ -759,6 +759,7 @@
       "date": "2026-08-31T20:51:04.000Z",
       "excerpt": "La campagne électorale dans la circonscription de Chicoutimi–Le Fjord entre dans sa dernière ligne droite alors que les électeurs sont appelés aux urnes aujourd’hui pour choisir leur prochain député fédéral. Du côté du Bloc Québécois, la candidate Caroline Dubé et son équipe se",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC_0121.jpg",
+      "_pageAuthor": "Rosalie Lepage",
       "sourceImageCredit": "Crédit photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/08/31/election-partielle-dans-chicoutimi-le-fjord-le-bloc-quebecois-se-dit-confiant/?utm_source=rss&utm_medium=rss&utm_campaign=election-partielle-dans-chicoutimi-le-fjord-le-bloc-quebecois-se-dit-confiant",
       "sourceImageCreditFrom": "media",
@@ -766,8 +767,7 @@
       "sourceImageCreditImageKey": "dsc_0121.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
-      "leadExcerpt": "« On se sent bien, on est fier de la campagne qu’on a faite. On a fait une campagne d’idées positive malgré la période estivale et la rentrée scolaire, ce qui a complexifié la campagne électorale », souligne Mme Dubé.",
-      "_retainedFromCache": true
+      "leadExcerpt": "« On se sent bien, on est fier de la campagne qu’on a faite. On a fait une campagne d’idées positive malgré la période estivale et la rentrée scolaire, ce qui a complexifié la campagne électorale », souligne Mme Dubé."
     },
     {
       "source": "La Pige",
@@ -781,6 +781,7 @@
       "date": "2026-08-31T20:50:07.000Z",
       "excerpt": "C’est jour de vote aujourd’hui alors qu’environ 75 000 électeurs de la circonscription fédérale de Chicoutimi-Le Fjord doivent choisir qui succèdera à Richard Martel. Rencontré à son bureau de campagne, le candidat libéral Daniel Gobeil est fier de la campagne qu’il a menée. Les",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/Image-6.jpg",
+      "_pageAuthor": "Noah Thomas",
       "sourceImageCredit": "Crédit photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/08/31/une-campagne-empreinte-de-fierte-pour-les-liberaux-a-chicoutimi-le-fjord/?utm_source=rss&utm_medium=rss&utm_campaign=une-campagne-empreinte-de-fierte-pour-les-liberaux-a-chicoutimi-le-fjord",
       "sourceImageCreditFrom": "media",
@@ -789,7 +790,6 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
       "leadExcerpt": "C’est jour de vote aujourd’hui alors qu’environ 75 000 électeurs de la circonscription fédérale de Chicoutimi-Le Fjord doivent choisir qui succèdera à Richard Martel. Rencontré à son bureau de campagne, le candidat libéral Daniel Gobeil est fier de la campagne qu’il a menée.",
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/7f89fd75b648c211.jpg",
       "imageLocalKey": "7f89fd75b648c211",
       "imageLocalVia": "origin"
@@ -806,6 +806,7 @@
       "date": "2026-08-31T20:18:59.000Z",
       "excerpt": "Le festival permet au groupe Québec Redneck Bluegrass Project de conclure leur tournée de festival en retournant au source, dans la région du Saguenay-Lac-Saint-Jean. (Photo : Julianne Landry) Le village de Saint-Nazaire a tourné « gawa » pour la troisième édition du Gawafest,",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/Image-1-1.jpg",
+      "_pageAuthor": "Julianne Landry",
       "sourceImageCredit": "Crédit photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/08/31/une-reussite-pour-le-gawafest-2026/?utm_source=rss&utm_medium=rss&utm_campaign=une-reussite-pour-le-gawafest-2026",
       "sourceImageCreditFrom": "media",
@@ -813,8 +814,7 @@
       "sourceImageCreditImageKey": "image-1-1.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "leadExcerpt": "Le village de Saint-Nazaire a tourné « gawa » pour la troisième édition du Gawafest, un festival de musique organisé par Québec Redneck Bluegrass Project. Entre les airs de Pépé et sa guitare, Zébulon et QRBP, les festivaliers ont signé présents, malgré l’intense averse de pluie de fin de soirée.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Le village de Saint-Nazaire a tourné « gawa » pour la troisième édition du Gawafest, un festival de musique organisé par Québec Redneck Bluegrass Project. Entre les airs de Pépé et sa guitare, Zébulon et QRBP, les festivaliers ont signé présents, malgré l’intense averse de pluie de fin de soirée."
     },
     {
       "source": "La Pige",
@@ -837,7 +837,6 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "Le Festival d’humour d’Alma est de retour du 4 au 6 septembre 2026, dans le stationnement de l’église Saint-Joseph. Pour sa neuvième édition, l’événement mise sur une nouvelle expérience pour les festivaliers, tout en conservant une programmation humoristique diversifiée.",
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/86c4b4b7d7c17944.jpg",
       "imageLocalKey": "86c4b4b7d7c17944",
       "imageLocalVia": "origin"
@@ -862,8 +861,7 @@
       "sourceImageCreditImageKey": "image-4.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "leadExcerpt": "Ces exercices permettent aux militaires d’améliorer leurs tactiques, de tester leur dynamique de vol et d’opération avec les Américains et de s’assurer qu’il n’y ait pas de « frictions » dans les airs s’il devait avoir une intervention. « Tout le monde connait son rôle et on sait comment on va s’organiser une fois dans les airs, qui devra faire quoi et de quelle façon », a précisé Majore Ratelle.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Ces exercices permettent aux militaires d’améliorer leurs tactiques, de tester leur dynamique de vol et d’opération avec les Américains et de s’assurer qu’il n’y ait pas de « frictions » dans les airs s’il devait avoir une intervention. « Tout le monde connait son rôle et on sait comment on va s’organiser une fois dans les airs, qui devra faire quoi et de quelle façon », a précisé Majore Ratelle."
     },
     {
       "source": "Le Délit",
@@ -952,8 +950,7 @@
       "sourceImageCreditImageKey": "dsc0108.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
-      "leadExcerpt": "Scrutin dans la circonscription fédérale de Chicoutimi-Le Fjord, nuit mouvementée pour les policiers de Saguenay et les Gaillards du Cégep de Jonquière ressortent triomphants de leur premier match de la saison de football collégial D3. Maxim Fauteux fait le point.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Scrutin dans la circonscription fédérale de Chicoutimi-Le Fjord, nuit mouvementée pour les policiers de Saguenay et les Gaillards du Cégep de Jonquière ressortent triomphants de leur premier match de la saison de football collégial D3. Maxim Fauteux fait le point."
     },
     {
       "source": "Le Délit",
@@ -1918,7 +1915,6 @@
       "sourceImageCreditImageKey": "photo-5_img_3586.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/dad04c2783594e3b.jpg",
       "imageLocalKey": "dad04c2783594e3b",
       "imageLocalVia": "origin"
@@ -1936,18 +1932,16 @@
       "excerpt": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatrième sortie depuis 2020, l’artiste gravit les échelons et devient une voix importante du hip-hop québécois. Composé de 18 titres d’ambiance estivale tels que « CHOP CHOP », « POLY",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg",
       "authorCheckedAt": "2026-09-03T07:17:30.238Z",
-      "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société.",
-      "_retainedFromCache": true,
-      "imageLocal": "assets/news-images/e7fd49aa202781bb.jpg",
-      "imageLocalKey": "e7fd49aa202781bb",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "20_calamine-1.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société.",
+      "imageLocal": "assets/news-images/e7fd49aa202781bb.jpg",
+      "imageLocalKey": "e7fd49aa202781bb",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -1962,18 +1956,16 @@
       "excerpt": "Le 5 mai dernier, le pavillon Roger-Gaudry a accueilli le premier forum du Réseau des écoles associées ( RÉA ). Ce projet ambitieux de la Faculté des sciences de l’éducation (FSÉ) transforme des écoles primaires et secondaires en véritables « hôpitaux universitaires » de la",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg",
       "authorCheckedAt": "2026-09-03T07:17:31.241Z",
-      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
-      "_retainedFromCache": true,
-      "imageLocal": "assets/news-images/f5291c863e27cad4.jpg",
-      "imageLocalKey": "f5291c863e27cad4",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image-2.jpeg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
+      "imageLocal": "assets/news-images/f5291c863e27cad4.jpg",
+      "imageLocalKey": "f5291c863e27cad4",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -1997,7 +1989,6 @@
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
       "leadExcerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 ( PL394 ) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s.",
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/a50bcc72f82c0178.jpg",
       "imageLocalKey": "a50bcc72f82c0178",
       "imageLocalVia": "origin"
@@ -2067,18 +2058,16 @@
       "excerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg",
       "authorCheckedAt": "2026-09-03T07:17:32.987Z",
-      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis .",
-      "_retainedFromCache": true,
-      "imageLocal": "assets/news-images/0aaf12beea2d8dbd.jpg",
-      "imageLocalKey": "0aaf12beea2d8dbd",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "20_florelaurentienne.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis .",
+      "imageLocal": "assets/news-images/0aaf12beea2d8dbd.jpg",
+      "imageLocalKey": "0aaf12beea2d8dbd",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -2101,7 +2090,6 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "Entre absence de quorum, élections houleuses et accusations de « campagnes de salissage », la Fédération des associations du campus de l’Université de Montréal (FAÉCUM) traverse une zone de turbulences. Du fonctionnement des associations étudiantes aux congrès mouvementés, récit d’une démocratie en difficulté.",
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/75faed9047858c77.jpg",
       "imageLocalKey": "75faed9047858c77",
       "imageLocalVia": "origin"
@@ -2340,7 +2328,6 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "Les 29 et 30 mai prochains, les adeptes d’ouvrages de suspense, à mystère et d’enquêtes auront rendez-vous au Centre culturel Georges-Vanier pour la troisième édition du festival du livre policier Montréal Mystère , un événement encore jeune, mais déjà bien installé dans le paysage littéraire montréalais.",
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/2e20cf914d14b398.jpg",
       "imageLocalKey": "2e20cf914d14b398",
       "imageLocalVia": "origin"
@@ -2614,7 +2601,6 @@
       "sourceImageCreditImageKey": "16-17_cdm-1.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/9570aaea4dc36d1a.jpg",
       "imageLocalKey": "9570aaea4dc36d1a",
       "imageLocalVia": "origin"
@@ -2640,7 +2626,6 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "Lors d’une assemblée universitaire tenue le 16 mars dernier, le professeur agrégé à l’École de psychoéducation de la Faculté des arts et des sciences de l’UdeM Jean-Sébastien Fallu a soulevé des préoccupations concernant le soutien informatique à l’Université. Il a partagé plusieurs difficultés que lui et ses collègues ont vécues, notamment liées aux délais, aux procédures et à la complexité de certains outils numériques.",
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/ee87629ac347e229.jpg",
       "imageLocalKey": "ee87629ac347e229",
       "imageLocalVia": "origin"
@@ -2716,7 +2701,6 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "image-1.jpeg",
       "sourceImageCreditRev": 10,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/cc8b5e2ca6c623dc.jpg",
       "imageLocalKey": "cc8b5e2ca6c623dc",
       "imageLocalVia": "origin"
@@ -2740,7 +2724,6 @@
       "sourceImageCreditImageKey": "1.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/2159b352022a804e.jpg",
       "imageLocalKey": "2159b352022a804e",
       "imageLocalVia": "origin"
@@ -2876,7 +2859,6 @@
       "sourceImageCreditImageKey": "img_3417.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/23af229881dbdeec.jpg",
       "imageLocalKey": "23af229881dbdeec",
       "imageLocalVia": "origin"
@@ -2973,7 +2955,6 @@
       "sourceImageCreditImageKey": "17c4541a-839d-48b8-b5aa-2cc81e91e3c8.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/2f88543ca8a04f2b.jpg",
       "imageLocalKey": "2f88543ca8a04f2b",
       "imageLocalVia": "origin"
@@ -3113,7 +3094,6 @@
       "sourceImageCreditImageKey": "img_3939.jpg",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/f49c9cf5fb2ef34f.jpg",
       "imageLocalKey": "f49c9cf5fb2ef34f",
       "imageLocalVia": "origin"
@@ -3138,7 +3118,6 @@
       "sourceImageCreditImageKey": "img_9786.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/96bf2e57f78195d2.jpg",
       "imageLocalKey": "96bf2e57f78195d2",
       "imageLocalVia": "origin"
@@ -3214,7 +3193,6 @@
       "sourceImageCreditImageKey": "img_3397-1.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/7428914d1b64d542.jpg",
       "imageLocalKey": "7428914d1b64d542",
       "imageLocalVia": "origin"
@@ -3239,7 +3217,6 @@
       "sourceImageCreditImageKey": "img_3405.jpeg",
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/7f86c6d6d4e73d30.jpg",
       "imageLocalKey": "7f86c6d6d4e73d30",
       "imageLocalVia": "origin"
@@ -3263,7 +3240,6 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/bca23ddde074c874.jpg",
       "imageLocalKey": "bca23ddde074c874",
       "imageLocalVia": "origin"
@@ -3287,7 +3263,6 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/1ea90acd9d61e587.jpg",
       "imageLocalKey": "1ea90acd9d61e587",
       "imageLocalVia": "origin"
@@ -3311,7 +3286,6 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
       "leadImageReady": true,
-      "_retainedFromCache": true,
       "imageLocal": "assets/news-images/85147fbddce0425c.jpg",
       "imageLocalKey": "85147fbddce0425c",
       "imageLocalVia": "origin"
@@ -3542,16 +3516,16 @@
       "excerpt": "Chandler Levack on Montreal’s music scene, early-2010s nostalgia and the charm of being awkward Chandler Levack on the set of her latest film Mile End Kicks. Courtesy Joe Fuda",
       "image": "https://thelinknewspaper.ca/images/articles/_resized/Screenshot_2026-04-11_17.01.52.png",
       "authorCheckedAt": "2026-09-03T00:27:49.642Z",
-      "imageLocal": "assets/news-images/56c3154b93336503.png",
-      "imageLocalKey": "56c3154b93336503",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Photo: Courtesy of Joe Fuda",
       "sourceImageCreator": "Joe Fuda",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16318",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "screenshot_2026-04-11_17.01.52.png",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "imageLocal": "assets/news-images/56c3154b93336503.png",
+      "imageLocalKey": "56c3154b93336503",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
