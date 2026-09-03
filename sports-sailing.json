@@ -1,5 +1,5 @@
 {
-  "description": "Voile campus QC. ICSA = régates scorees. watchlist = associations étudiantes confirmées (pas les programmes d’excellence type Rouge et Or / Carabins). Ne pas inventer d’équipages.",
+  "description": "Voile campus — Québec seulement. ICSA = scores réels. watchlist = clubs QC confirmés seulement (pas d’équipages inventés).",
   "region": "QC",
   "icsaBase": "https://scores.collegesailing.org/schools/",
   "schools": [
@@ -16,7 +16,8 @@
       "kind": "association-etudiante",
       "clubName": "McGill Sailing",
       "note": "Équipe de voile étudiante (student-led), distincte du programme d’excellence Redbirds.",
-      "url": "https://www.mcgillsailing.com/"
+      "url": "https://www.mcgillsailing.com/",
+      "lastSeen": "2026-09-03T08:00:10.942Z"
     }
   ],
   "watchlist": [
@@ -37,7 +38,8 @@
         "polymtl",
         "polytechnique-montreal",
         "polyvoile"
-      ]
+      ],
+      "lastChecked": "2026-09-03T08:00:11.563Z"
     },
     {
       "registryId": "ulaval",
@@ -56,7 +58,9 @@
         "ulaval",
         "universite-laval",
         "quebec-laval"
-      ]
+      ],
+      "lastChecked": "2026-09-03T08:00:12.236Z"
     }
-  ]
+  ],
+  "updated": "2026-09-03T08:00:12.236Z"
 }

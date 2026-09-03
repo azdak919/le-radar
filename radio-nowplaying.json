@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-03T04:54:51.060Z",
+  "updatedAt": "2026-09-03T08:01:18.343Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T04:54:36.309Z"
+      "checkedAt": "2026-09-03T08:00:52.991Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque (reprise)",
+        "title": "Best of des sessions live",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+        "start": "04:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/session-live-a-cism"
       },
       "next": {
-        "title": "Mix Franco",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "track": "",
-      "showTitle": "La grande ludothèque (reprise)",
+      "showTitle": "Best of des sessions live",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T04:54:38.178Z"
+      "checkedAt": "2026-09-03T08:00:55.483Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off The Hook",
+        "title": "William Shatner's Whiskey Tears",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "04:00",
+        "end": "06:00"
       },
       "next": {
-        "title": "Freeform Air",
+        "title": "Total €clipse of The ☾harts",
         "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
+        "start": "06:00",
+        "end": "07:00"
       },
-      "track": "",
-      "showTitle": "Off The Hook",
+      "track": "William Shatner",
+      "showTitle": "William Shatner's Whiskey Tears",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T04:54:40.940Z"
+      "checkedAt": "2026-09-03T08:01:00.417Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Night Watch",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "01:00",
-        "url": "http://www.cjlo.com/shows/the-night-watch"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "01:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Daydream Nation",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/daydream-nation"
+      },
       "track": "",
-      "showTitle": "The Night Watch",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T04:54:43.714Z"
+      "checkedAt": "2026-09-03T08:01:03.848Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T04:54:44.764Z"
+      "checkedAt": "2026-09-03T08:01:05.431Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Jonathan Personne - Faits divers",
+      "track": "ID - Neimo-DJ-White-Socks",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-03T04:54:50.709Z"
+      "checkedAt": "2026-09-03T08:01:17.992Z"
     }
   }
 }
