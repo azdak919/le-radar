@@ -3,8 +3,8 @@
   "source": "https://s1.rseq.ca/api/LeagueApi/GetLeagueList/",
   "schoolYearId": "89114c9a-bf46-4726-9345-85d8d4786f61",
   "schoolYear": "2026 - 2027",
-  "generated": "2026-07-30T03:06:25.171Z",
-  "leagueCount": 109,
+  "generated": "2026-09-03T08:00:10.539Z",
+  "leagueCount": 112,
   "leagues": [
     {
       "id": "1e6e37eb-bbd3-4c47-8afb-d2247eb95803",
@@ -29,7 +29,29 @@
       "s1SportId": 0
     },
     {
+      "id": "34e0a86a-0a41-446e-80c9-f992215d68cf",
+      "sector": "collegial",
+      "sport": "badminton",
+      "sportLabel": "Badminton",
+      "division": "D1",
+      "sex": "X",
+      "label": "Badminton collégial mixte D1",
+      "usports": false,
+      "s1SportId": 18
+    },
+    {
       "id": "cf8a85ed-70a7-4760-8066-52d8a8daea87",
+      "sector": "collegial",
+      "sport": "badminton",
+      "sportLabel": "Badminton",
+      "division": "D2",
+      "sex": "X",
+      "label": "Badminton collégial mixte D2",
+      "usports": false,
+      "s1SportId": 18
+    },
+    {
+      "id": "486253ea-7470-4138-9a06-de327e6bf172",
       "sector": "collegial",
       "sport": "badminton",
       "sportLabel": "Badminton",
@@ -620,6 +642,17 @@
       "sex": "M",
       "label": "Hockey collégial masculin D2",
       "usports": false,
+      "s1SportId": 9
+    },
+    {
+      "id": "cfe8425a-7d16-48a1-a14b-07583a698043",
+      "sector": "universitaire",
+      "sport": "hockey",
+      "sportLabel": "Hockey",
+      "division": "D2",
+      "sex": "M",
+      "label": "Hockey universitaire masculin D2",
+      "usports": true,
       "s1SportId": 9
     },
     {
