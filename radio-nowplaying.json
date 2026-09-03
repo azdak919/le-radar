@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-03T17:03:16.463Z",
+  "updatedAt": "2026-09-03T17:30:37.878Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T17:02:59.590Z"
+      "checkedAt": "2026-09-03T17:30:02.497Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T17:03:02.140Z"
+      "checkedAt": "2026-09-03T17:30:05.834Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,35 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T17:03:05.011Z"
+      "checkedAt": "2026-09-03T17:30:07.927Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "What's Happening in NDG",
-        "source": "schedule-live",
-        "start": "13:00",
+        "title": "Give Me Shelter",
+        "source": "schedule",
+        "start": "13:30",
         "end": "14:00",
-        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
+        "url": "http://www.cjlo.com/shows/give-me-shelter"
       },
       "next": {
         "title": "Secondhand Sounds",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/secondhand-sounds"
       },
       "track": "",
-      "showTitle": "What's Happening in NDG",
+      "showTitle": "Give Me Shelter",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T17:03:08.526Z"
+      "checkedAt": "2026-09-03T17:30:30.334Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T17:03:10.489Z"
+      "checkedAt": "2026-09-03T17:30:31.958Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Kelela - outta time",
+      "track": "FUUDGE - Le mentor",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-03T17:03:16.112Z"
+      "checkedAt": "2026-09-03T17:30:37.528Z"
     }
   }
 }
