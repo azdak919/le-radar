@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-03T02:12:52.521Z",
+  "updatedAt": "2026-09-03T04:54:51.060Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "api-live",
-        "start": "18:50",
-        "end": "23:00",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Jeudi Révolte",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
       "track": "",
-      "showTitle": "Capitales de Québec",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-03T02:12:36.326Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Mix anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
-        "title": "La grande ludothèque (reprise)",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
-      },
-      "track": "",
-      "showTitle": "Mix anglo",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T02:12:38.517Z"
+      "checkedAt": "2026-09-03T04:54:36.309Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "La grande ludothèque (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+      },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
+      "track": "",
+      "showTitle": "La grande ludothèque (reprise)",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-03T04:54:38.178Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Lo Signal / Meanwhile/ Rhizomatic",
-        "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Off The Hook",
         "source": "api-live",
         "start": "00:00",
         "end": "02:00"
       },
+      "next": {
+        "title": "Freeform Air",
+        "source": "api-live",
+        "start": "02:00",
+        "end": "04:00"
+      },
       "track": "",
-      "showTitle": "Lo Signal / Meanwhile/ Rhizomatic",
+      "showTitle": "Off The Hook",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,72 +74,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T02:12:41.399Z"
+      "checkedAt": "2026-09-03T04:54:40.940Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "There's a Synth in the House",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
-      },
-      "next": {
         "title": "The Night Watch",
         "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
+        "start": "00:00",
+        "end": "01:00",
         "url": "http://www.cjlo.com/shows/the-night-watch"
       },
+      "next": {
+        "title": "CJLO Late Night",
+        "source": "schedule-live",
+        "start": "01:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
       "track": "",
-      "showTitle": "There's a Synth in the House",
+      "showTitle": "The Night Watch",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T02:12:44.513Z"
+      "checkedAt": "2026-09-03T04:54:43.714Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Le popcorn de l'infini",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Le popcorn de l'infini",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-03T02:12:45.714Z"
+      "checkedAt": "2026-09-03T04:54:44.764Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Opération beurre de cinoche",
+        "title": "Palmarès CHOQ.ca",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
       },
-      "track": "Jimmie D - All Nighter",
+      "track": "Jonathan Personne - Faits divers",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-03T02:12:52.172Z"
+      "checkedAt": "2026-09-03T04:54:50.709Z"
     }
   }
 }
