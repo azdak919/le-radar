@@ -58,8 +58,9 @@ blacklist    →  scripts/quebec-backgrounds-blacklist.js  (ne revient jamais)
 - **Panneau toponyme** (titre = seul le lieu, image = enseigne) : hard-ban **fichier Commons exact** — ne pas bannir le lieu entier (ex. `Gesgapegiag.jpg` ban, `Gesgapegiag4` tipi OK).
 - Nations : spiritualité autochtone **OK** (hors filtre religieux institutionnel).
 - **Saisons** (`scripts/season-lib.js` + bot `detect-photo-seasons`)
-  - mât / pomo / campus → **4 saisons** météo (`season`: printemps|ete|automne|hiver)
-  - nations / Inuit → **6 saisons** Nunavik éducatif (`season6`: ukiuq…ukiaq)
+  - mât / pomo / campus → **4 saisons** astronomiques pour le **filtre** (été jusqu’au 21 sept. inclus ; automne dès le 22). Tags `season` = contenu visuel (printemps|ete|automne|hiver), mois de fichier encore météo.
+  - nations / Inuit → **6 saisons** Nunavik éducatif (`season6`: ukiuq…ukiaq) ; horloge live bascule au 21 comme les 4 saisons.
+  - Sessions univ. (fil news, 1er sept. = automne) : **autre** calendrier — ne pas les fusionner.
   - **Bot** (source de vérité tags) :
     ```bash
     npm run detect:seasons              # dry-run
