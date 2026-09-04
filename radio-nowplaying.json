@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-04T13:59:13.587Z",
+  "updatedAt": "2026-09-04T16:19:49.123Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Vendredi Nostalgie",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
-      },
+      "current": null,
       "next": {
-        "title": "Palmarès CHYZ",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
+        "title": "Détour",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://chyz.ca/emission/detour/"
       },
       "track": "",
-      "showTitle": "Vendredi Nostalgie",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-04T13:58:47.479Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
-        "title": "Accents ouverts",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/accents-ouverts"
-      },
-      "track": "",
-      "showTitle": "La collation",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T13:58:49.727Z"
+      "checkedAt": "2026-09-04T16:19:32.219Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Rebelles soniques",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/rebelles-soniques"
+      },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
+      "track": "",
+      "showTitle": "Rebelles soniques",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-04T16:19:34.792Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Jazz Amuck",
+        "title": "Butcher T's Noontime Cuts",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
+        "title": "NNB/SQUAT FM/QPIRG/knots",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "14:00",
+        "end": "15:00"
       },
-      "track": "",
-      "showTitle": "Jazz Amuck",
+      "track": "Butcher T",
+      "showTitle": "Butcher T's Noontime Cuts",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,73 +74,79 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T13:58:53.184Z"
+      "checkedAt": "2026-09-04T16:19:38.778Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO News Hour",
+        "title": "Charts & Crafts",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/cjlo-news-hour"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/charts-and-crafts"
       },
       "next": {
-        "title": "Democracy Now",
+        "title": "the castle",
         "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-castle"
       },
       "track": "",
-      "showTitle": "CJLO News Hour",
+      "showTitle": "Charts & Crafts",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T13:58:55.795Z"
+      "checkedAt": "2026-09-04T16:19:41.927Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "La Souterraine",
+        "title": "Ciné-Histoire",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "15:00"
       },
       "next": {
-        "title": "Le Ré-Show : Deuxième service",
+        "title": "Nouveautés Franco",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "15:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "La Souterraine",
+      "showTitle": "Ciné-Histoire",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T13:58:57.550Z"
+      "checkedAt": "2026-09-04T16:19:43.258Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Opération beurre de cinoche",
         "source": "api-live",
         "start": "11:30",
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Francouvertes 2026 - De Lafe",
-      "showTitle": "",
+      "next": {
+        "title": "CUCH CAST",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "14:00",
+        "slug": "cuch-cast"
+      },
+      "track": "ID - laraw",
+      "showTitle": "Opération beurre de cinoche",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -157,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-04T13:59:13.236Z"
+      "checkedAt": "2026-09-04T16:19:48.773Z"
     }
   }
 }
