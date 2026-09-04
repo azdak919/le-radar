@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-04T00:44:16.850Z",
-  "fetchedAt": "2026-09-04T00:44:16.850Z",
+  "updated": "2026-09-04T03:36:01.288Z",
+  "fetchedAt": "2026-09-04T03:36:01.288Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-04T00:44:16.850Z"
+    "referenceDate": "2026-09-04T03:36:01.288Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 816,
@@ -74,6 +74,18 @@
     "volleyball"
   ],
   "teamCount": 836,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -69486,6 +69498,23 @@
       "leagueLabel": "Soccer collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-03",
+          "time": "19:00",
+          "opponent": "Cégep de Chicoutimi",
+          "opponentCode": "CHI",
+          "home": true,
+          "scoreFor": 2,
+          "scoreAgainst": 1,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
+          "opponentFullName": "Cégep de Chicoutimi",
+          "opponentRegistryId": "chicoutimi",
+          "priorSeason": false
+        },
+        {
           "date": "2026-08-29",
           "time": "15:00",
           "opponent": "Thetford",
@@ -69504,20 +69533,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-08-29",
-        "time": "15:00",
-        "opponent": "Thetford",
-        "opponentCode": "THE",
-        "home": false,
+        "date": "2026-09-03",
+        "time": "19:00",
+        "opponent": "Cégep de Chicoutimi",
+        "opponentCode": "CHI",
+        "home": true,
         "scoreFor": 2,
-        "scoreAgainst": 0,
+        "scoreAgainst": 1,
         "result": "W",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "e8749cb2-c63f-4d07-ad73-139f3ace61ec",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e8749cb2-c63f-4d07-ad73-139f3ace61ec",
-        "opponentFullName": "Cégep de Thetford",
-        "opponentRegistryId": "thetford",
+        "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
+        "opponentFullName": "Cégep de Chicoutimi",
+        "opponentRegistryId": "chicoutimi",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -69616,11 +69645,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 0,
         "draws": 0,
-        "played": 1,
-        "label": "1-0"
+        "played": 2,
+        "label": "2-0"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -69788,8 +69817,43 @@
       "division": "D2",
       "usports": false,
       "leagueLabel": "Soccer collégial masculin D2",
-      "results": [],
-      "lastGame": null,
+      "results": [
+        {
+          "date": "2026-09-03",
+          "time": "19:00",
+          "opponent": "Alma",
+          "opponentCode": "ALM",
+          "home": false,
+          "scoreFor": 1,
+          "scoreAgainst": 2,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
+          "opponentFullName": "Cégep d'Alma",
+          "opponentRegistryId": "alma",
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-09-03",
+        "time": "19:00",
+        "opponent": "Alma",
+        "opponentCode": "ALM",
+        "home": false,
+        "scoreFor": 1,
+        "scoreAgainst": 2,
+        "result": "L",
+        "sport": "soccer",
+        "competition": "Soccer collégial masculin D2",
+        "gameId": "a304830d-52eb-46d1-b115-2e6c344cb4fd",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a304830d-52eb-46d1-b115-2e6c344cb4fd",
+        "opponentFullName": "Cégep d'Alma",
+        "opponentRegistryId": "alma",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
       "nextGames": [
         {
           "date": "2026-09-06",
@@ -69899,15 +69963,16 @@
       },
       "record": {
         "wins": 0,
-        "losses": 0,
+        "losses": 1,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "0-1"
       },
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Chicoutimi",
-      "registryId": "chicoutimi"
+      "registryId": "chicoutimi",
+      "lastGamePriorSeason": false
     },
     "collegial:soccer:21c736b9-df07-4c83-a58e-c444ad22252c:d6c4f103-21a2-4b35-9973-a3399892b994": {
       "id": "collegial:soccer:21c736b9-df07-4c83-a58e-c444ad22252c:d6c4f103-21a2-4b35-9973-a3399892b994",
@@ -74335,6 +74400,24 @@
       "leagueLabel": "Soccer universitaire féminin",
       "results": [
         {
+          "date": "2026-09-03",
+          "time": "18:00",
+          "opponent": "UQAM",
+          "opponentCode": "UQAM",
+          "home": false,
+          "scoreFor": 4,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "b3c32c6d-395d-4c7c-a0ab-50d9599096bd",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b3c32c6d-395d-4c7c-a0ab-50d9599096bd",
+          "opponentFullName": "Université du Québec à Montréal",
+          "opponentNickname": "Citadins",
+          "opponentRegistryId": "uqam",
+          "priorSeason": false
+        },
+        {
           "date": "2026-08-30",
           "time": "15:30",
           "opponent": "McGill",
@@ -74354,21 +74437,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-08-30",
-        "time": "15:30",
-        "opponent": "McGill",
-        "opponentCode": "MCG",
-        "home": true,
-        "scoreFor": 7,
+        "date": "2026-09-03",
+        "time": "18:00",
+        "opponent": "UQAM",
+        "opponentCode": "UQAM",
+        "home": false,
+        "scoreFor": 4,
         "scoreAgainst": 0,
         "result": "W",
         "sport": "soccer",
         "competition": "Soccer universitaire féminin",
-        "gameId": "8577100f-6d6b-401b-98be-c71270a0e63d",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=8577100f-6d6b-401b-98be-c71270a0e63d",
-        "opponentFullName": "Université McGill",
-        "opponentNickname": "Redbirds",
-        "opponentRegistryId": "mcgill",
+        "gameId": "b3c32c6d-395d-4c7c-a0ab-50d9599096bd",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b3c32c6d-395d-4c7c-a0ab-50d9599096bd",
+        "opponentFullName": "Université du Québec à Montréal",
+        "opponentNickname": "Citadins",
+        "opponentRegistryId": "uqam",
         "priorSeason": false,
         "opponentSector": "universitaire"
       },
@@ -74558,11 +74641,11 @@
         "opponentSector": "universitaire"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 0,
         "draws": 0,
-        "played": 1,
-        "label": "1-0"
+        "played": 2,
+        "label": "2-0"
       },
       "source": "rseq-s1",
       "priority": 4,
@@ -74797,8 +74880,45 @@
       "division": null,
       "usports": true,
       "leagueLabel": "Soccer universitaire féminin",
-      "results": [],
-      "lastGame": null,
+      "results": [
+        {
+          "date": "2026-09-03",
+          "time": "18:00",
+          "opponent": "Montréal",
+          "opponentCode": "MTL",
+          "home": true,
+          "scoreFor": 0,
+          "scoreAgainst": 4,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "b3c32c6d-395d-4c7c-a0ab-50d9599096bd",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b3c32c6d-395d-4c7c-a0ab-50d9599096bd",
+          "opponentFullName": "Université de Montréal",
+          "opponentNickname": "Carabins",
+          "opponentRegistryId": "udem",
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-09-03",
+        "time": "18:00",
+        "opponent": "Montréal",
+        "opponentCode": "MTL",
+        "home": true,
+        "scoreFor": 0,
+        "scoreAgainst": 4,
+        "result": "L",
+        "sport": "soccer",
+        "competition": "Soccer universitaire féminin",
+        "gameId": "b3c32c6d-395d-4c7c-a0ab-50d9599096bd",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b3c32c6d-395d-4c7c-a0ab-50d9599096bd",
+        "opponentFullName": "Université de Montréal",
+        "opponentNickname": "Carabins",
+        "opponentRegistryId": "udem",
+        "priorSeason": false,
+        "opponentSector": "universitaire"
+      },
       "nextGames": [
         {
           "date": "2026-09-06",
@@ -74986,16 +75106,17 @@
       },
       "record": {
         "wins": 0,
-        "losses": 0,
+        "losses": 1,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "0-1"
       },
       "source": "rseq-s1",
       "priority": 5,
       "fullName": "Université du Québec à Montréal",
       "nickname": "Citadins",
-      "registryId": "uqam"
+      "registryId": "uqam",
+      "lastGamePriorSeason": false
     },
     "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:070aa425-59f4-4039-9bfb-af19a23c4e63": {
       "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:070aa425-59f4-4039-9bfb-af19a23c4e63",
@@ -75888,6 +76009,24 @@
       "leagueLabel": "Soccer universitaire masculin",
       "results": [
         {
+          "date": "2026-09-03",
+          "time": "20:15",
+          "opponent": "UQAM",
+          "opponentCode": "UQAM",
+          "home": false,
+          "scoreFor": 3,
+          "scoreAgainst": 2,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer universitaire masculin",
+          "gameId": "26570d67-bd27-48f1-a500-43c7fb1445e1",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=26570d67-bd27-48f1-a500-43c7fb1445e1",
+          "opponentFullName": "Université du Québec à Montréal",
+          "opponentNickname": "Citadins",
+          "opponentRegistryId": "uqam",
+          "priorSeason": false
+        },
+        {
           "date": "2026-08-30",
           "time": "13:00",
           "opponent": "McGill",
@@ -75907,21 +76046,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-08-30",
-        "time": "13:00",
-        "opponent": "McGill",
-        "opponentCode": "MCG",
-        "home": true,
+        "date": "2026-09-03",
+        "time": "20:15",
+        "opponent": "UQAM",
+        "opponentCode": "UQAM",
+        "home": false,
         "scoreFor": 3,
-        "scoreAgainst": 0,
+        "scoreAgainst": 2,
         "result": "W",
         "sport": "soccer",
         "competition": "Soccer universitaire masculin",
-        "gameId": "0508c36d-7fda-4476-8982-47747b04eb29",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0508c36d-7fda-4476-8982-47747b04eb29",
-        "opponentFullName": "Université McGill",
-        "opponentNickname": "Redbirds",
-        "opponentRegistryId": "mcgill",
+        "gameId": "26570d67-bd27-48f1-a500-43c7fb1445e1",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=26570d67-bd27-48f1-a500-43c7fb1445e1",
+        "opponentFullName": "Université du Québec à Montréal",
+        "opponentNickname": "Citadins",
+        "opponentRegistryId": "uqam",
         "priorSeason": false,
         "opponentSector": "universitaire"
       },
@@ -76083,11 +76222,11 @@
         "opponentSector": "universitaire"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 0,
         "draws": 0,
-        "played": 1,
-        "label": "1-0"
+        "played": 2,
+        "label": "2-0"
       },
       "source": "rseq-s1",
       "priority": 4,
@@ -76322,8 +76461,45 @@
       "division": null,
       "usports": true,
       "leagueLabel": "Soccer universitaire masculin",
-      "results": [],
-      "lastGame": null,
+      "results": [
+        {
+          "date": "2026-09-03",
+          "time": "20:15",
+          "opponent": "Montréal",
+          "opponentCode": "MTL",
+          "home": true,
+          "scoreFor": 2,
+          "scoreAgainst": 3,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer universitaire masculin",
+          "gameId": "26570d67-bd27-48f1-a500-43c7fb1445e1",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=26570d67-bd27-48f1-a500-43c7fb1445e1",
+          "opponentFullName": "Université de Montréal",
+          "opponentNickname": "Carabins",
+          "opponentRegistryId": "udem",
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-09-03",
+        "time": "20:15",
+        "opponent": "Montréal",
+        "opponentCode": "MTL",
+        "home": true,
+        "scoreFor": 2,
+        "scoreAgainst": 3,
+        "result": "L",
+        "sport": "soccer",
+        "competition": "Soccer universitaire masculin",
+        "gameId": "26570d67-bd27-48f1-a500-43c7fb1445e1",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=26570d67-bd27-48f1-a500-43c7fb1445e1",
+        "opponentFullName": "Université de Montréal",
+        "opponentNickname": "Carabins",
+        "opponentRegistryId": "udem",
+        "priorSeason": false,
+        "opponentSector": "universitaire"
+      },
       "nextGames": [
         {
           "date": "2026-09-06",
@@ -76497,16 +76673,17 @@
       },
       "record": {
         "wins": 0,
-        "losses": 0,
+        "losses": 1,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "0-1"
       },
       "source": "rseq-s1",
       "priority": 5,
       "fullName": "Université du Québec à Montréal",
       "nickname": "Citadins",
-      "registryId": "uqam"
+      "registryId": "uqam",
+      "lastGamePriorSeason": false
     },
     "universitaire:soccer:bf91ad12-b8fc-4259-92a2-551a8da949e7:f493476b-8c11-4f01-bcb5-5eab25b2f6e8": {
       "id": "universitaire:soccer:bf91ad12-b8fc-4259-92a2-551a8da949e7:f493476b-8c11-4f01-bcb5-5eab25b2f6e8",
