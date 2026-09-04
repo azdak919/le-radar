@@ -315,8 +315,8 @@
   }
 
   /**
-   * Filtre saisonnier : 4 saisons (mât/campus/pomo) + 6 saisons (nations/Inuit).
-   * Voir scripts/season-lib.js (window.RadarSeason).
+   * Filtre saisonnier : 4 saisons astronomiques (mât/campus/pomo) +
+   * 6 saisons Nunavik (nations/Inuit). Voir scripts/season-lib.js (window.RadarSeason).
    *
    * minStrict élevé : avec peu de photos taguées « ete » en juillet, le tier
    * strict seul (~5 images) épuisait le mât après rejets QC → fond noir mobile.
