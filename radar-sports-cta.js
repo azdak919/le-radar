@@ -2619,21 +2619,82 @@ function sportsVisibleOccupyKeys(exceptSlot = null) {
   return used;
 }
 
+function sportsSlideSport(slide) {
+  return String(slide?.team?.sport || slide?.game?.sport || '').toLowerCase();
+}
+
+function sportsOccupiedSports(slots) {
+  const set = new Set();
+  for (const s of slots || []) {
+    const sp = sportsSlideSport(s);
+    if (sp && sp !== 'board') set.add(sp);
+  }
+  return set;
+}
+
 /**
- * Diversité sport souple après ordre chrono : évite 2× le même sport d’affilée
- * si une alternative existe dans les ~4 prochains slots — sans enterrer le
- * match le plus proche (verdict D, soft vs pure round-robin).
+ * Alterne les sports sans changer l’ordre interne de chaque sport.
+ * Le plus proche reste premier ; on tire ensuite un autre sport s’il y en a.
+ */
+function sportsInterleaveBySport(slides) {
+  if (!Array.isArray(slides) || slides.length < 2) return slides ? slides.slice() : [];
+  const remaining = slides.filter(Boolean);
+  const out = [];
+  while (remaining.length) {
+    const last = out.length ? sportsSlideSport(out[out.length - 1]) : '';
+    let idx = 0;
+    if (last) {
+      const alt = remaining.findIndex((s) => {
+        const sp = sportsSlideSport(s);
+        return sp && sp !== last;
+      });
+      if (alt >= 0) idx = alt;
+    }
+    out.push(remaining.splice(idx, 1)[0]);
+  }
+  return out;
+}
+
+/**
+ * Mélange à l’intérieur d’un même seau de chaleur et d’un même jour civil.
+ * Un samedi football ne passe pas devant un jeudi soccer.
+ */
+function sportsMixSportsPreservingHeat(slides, now = Date.now()) {
+  if (!Array.isArray(slides) || slides.length < 2) return slides ? slides.slice() : [];
+  const groups = [];
+  let currentKey = null;
+  let current = [];
+  for (const s of slides) {
+    if (!s) continue;
+    const b = sportsOpenOrderBucket(s, now);
+    const day = sportsGameDayKey(s.game, now) || sportsSlideDayKey(s) || '';
+    const key = `${b}|${day}`;
+    if (currentKey === null || key !== currentKey) {
+      if (current.length) groups.push(current);
+      current = [s];
+      currentKey = key;
+      continue;
+    }
+    current.push(s);
+  }
+  if (current.length) groups.push(current);
+  return groups.flatMap((g) => sportsInterleaveBySport(g));
+}
+
+/**
+ * Filet de jointure : évite 2× le même sport d’affilée à la frontière
+ * d’un seau (live soccer puis jeudi soccer) si un autre sport est tout près.
  */
 function sportsSoftSportDiversity(slides) {
   if (!Array.isArray(slides) || slides.length < 3) return slides || [];
   const arr = slides.slice();
-  const sportOf = (s) => String(s?.team?.sport || s?.game?.sport || '').toLowerCase();
   for (let i = 0; i < arr.length - 1; i += 1) {
-    if (sportOf(arr[i]) !== sportOf(arr[i + 1])) continue;
-    const same = sportOf(arr[i]);
+    if (sportsSlideSport(arr[i]) !== sportsSlideSport(arr[i + 1])) continue;
+    const same = sportsSlideSport(arr[i]);
     let swapAt = -1;
-    for (let j = i + 2; j < Math.min(arr.length, i + 5); j += 1) {
-      if (sportOf(arr[j]) && sportOf(arr[j]) !== same) {
+    for (let j = i + 2; j < Math.min(arr.length, i + 8); j += 1) {
+      const sp = sportsSlideSport(arr[j]);
+      if (sp && sp !== same) {
         swapAt = j;
         break;
       }
@@ -2772,7 +2833,8 @@ function sportsOpenOrderBucket(slide, now = Date.now()) {
 
 /**
  * Liste unique. DOM = cet ordre. Pas de cycle éditorial à part,
- * pas de codes phares, pas de skip football.
+ * pas de codes phares, pas de skip football. Mix sport par jour
+ * (un mercredi soccer ne noie pas le football du même soir).
  */
 function sportsOpenOrderSlides(now = Date.now()) {
   const nexts = [];
@@ -2794,7 +2856,8 @@ function sportsOpenOrderSlides(now = Date.now()) {
   }
   const list = sportsDedupeMatchSlides(nexts).concat(sportsDedupeHomepageResults(results));
   list.sort((a, b) => sportsCompareOpenOrder(a, b, now));
-  return list.slice(0, SPORTS_CTA_MAX_POOL);
+  return sportsSoftSportDiversity(sportsMixSportsPreservingHeat(list, now))
+    .slice(0, SPORTS_CTA_MAX_POOL);
 }
 
 function sportsTakeUnusedPrefix(pool, n, usedKeys) {
@@ -2810,11 +2873,17 @@ function sportsTakeUnusedPrefix(pool, n, usedKeys) {
   return picked;
 }
 
-function sportsSplitNextUnused(list, usedKeys) {
+function sportsSplitNextUnused(list, usedKeys, opts = {}) {
+  const avoidSports = opts.avoidSports instanceof Set ? opts.avoidSports : null;
+  let fallback = null;
   for (const slide of list || []) {
-    if (slide && !sportsSlideIsUsed(slide, usedKeys)) return slide;
+    if (!slide || sportsSlideIsUsed(slide, usedKeys)) continue;
+    if (!fallback) fallback = slide;
+    const sp = sportsSlideSport(slide);
+    if (avoidSports && avoidSports.size && avoidSports.has(sp)) continue;
+    return slide;
   }
-  return null;
+  return fallback;
 }
 
 /**
@@ -2866,6 +2935,13 @@ function sportsSplitVisible(n, now = Date.now(), pool = null) {
     }
   }
 
+  const livesMix = sportsInterleaveBySport(lives);
+  const todayNextMix = sportsInterleaveBySport(todayNext);
+  const todayResultMix = sportsInterleaveBySport(todayResult);
+  const resultsRestMix = sportsMixSportsPreservingHeat(resultsRest, now);
+  const upcomingRestMix = sportsMixSportsPreservingHeat(upcomingRest, now);
+  const sourceMix = sportsMixSportsPreservingHeat(source, now);
+
   const slots = new Array(count).fill(null);
   const used = new Set();
   const occupy = (index, slide) => {
@@ -2882,20 +2958,23 @@ function sportsSplitVisible(n, now = Date.now(), pool = null) {
     }
     return out;
   };
+  const pickMixed = (list) => sportsSplitNextUnused(list, used, {
+    avoidSports: sportsOccupiedSports(slots),
+  });
 
-  for (const s of lives) {
+  for (const s of livesMix) {
     const idx = freeIndices()[0];
     if (idx == null) break;
     occupy(idx, s);
   }
 
-  const tonightLead = lives.length === 0 && sportsSplitNextUnused(todayNext, used);
+  const tonightLead = lives.length === 0 && sportsSplitNextUnused(todayNextMix, used);
   if (tonightLead) occupy(0, tonightLead);
 
   {
     const free = freeIndices();
     for (let r = free.length - 1; r >= 0; r -= 1) {
-      const s = sportsSplitNextUnused(todayNext, used);
+      const s = pickMixed(todayNextMix);
       if (!s) break;
       occupy(free[r], s);
     }
@@ -2903,7 +2982,7 @@ function sportsSplitVisible(n, now = Date.now(), pool = null) {
   {
     const free = freeIndices();
     for (const idx of free) {
-      const s = sportsSplitNextUnused(todayResult, used);
+      const s = pickMixed(todayResultMix);
       if (!s) break;
       occupy(idx, s);
     }
@@ -2925,29 +3004,29 @@ function sportsSplitVisible(n, now = Date.now(), pool = null) {
     else nResults = hotIn ? Math.ceil(k / 2) : Math.floor(k / 2);
     const resultSlots = leftover.slice(0, nResults);
     const upcomingSlots = leftover.slice(nResults);
-    const resultFill = todayResult.concat(resultsRest);
-    const upcomingFill = todayNext.concat(upcomingRest);
+    const resultFill = todayResultMix.concat(resultsRestMix);
+    const upcomingFill = todayNextMix.concat(upcomingRestMix);
     for (const idx of resultSlots) {
       occupy(
         idx,
-        sportsSplitNextUnused(resultFill, used)
-          || sportsSplitNextUnused(upcomingFill, used)
-          || sportsSplitNextUnused(source, used),
+        pickMixed(resultFill)
+          || pickMixed(upcomingFill)
+          || pickMixed(sourceMix),
       );
     }
     for (const idx of upcomingSlots) {
       occupy(
         idx,
-        sportsSplitNextUnused(upcomingFill, used)
-          || sportsSplitNextUnused(resultFill, used)
-          || sportsSplitNextUnused(source, used),
+        pickMixed(upcomingFill)
+          || pickMixed(resultFill)
+          || pickMixed(sourceMix),
       );
     }
   }
 
   for (let i = 0; i < count; i += 1) {
     if (slots[i]) continue;
-    occupy(i, sportsSplitNextUnused(source, used));
+    occupy(i, pickMixed(sourceMix));
   }
   return slots.filter(Boolean);
 }
