@@ -1728,10 +1728,12 @@ assert(
     && !appJs.includes('SPORTS_CTA_NEXT_DAYS')
     && !appJs.includes('function sportsCtaNextWindowEndDay')
     && appJs.includes('function sportsOpenOrderSlides')
+    && appJs.includes('function sportsInterleaveBySport')
+    && appJs.includes('function sportsMixSportsPreservingHeat')
     && appJs.includes('SPORTS_OPEN_OLDER_RESULT')
     && appJs.includes('SPORTS_OPEN_FAR_NEXT')
     && appJs.includes('SPORTS_PLACEHOLDER_OPPONENT_RE'),
-  'app.js : liste chaleur E ; ADV exclu',
+  'app.js : liste chaleur E ; mix sport par jour ; ADV exclu',
 );
 assert(
   appJs.includes('function sportsCtaKickoffWithinHour')
