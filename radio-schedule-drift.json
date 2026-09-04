@@ -1,15 +1,11 @@
 {
-  "checkedAt": "2026-09-03T01:05:54.580Z",
+  "checkedAt": "2026-09-04T00:56:49.968Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 2,
-    "drift": [
-      "chyz",
-      "cism",
-      "cjlo"
-    ],
+    "stable": 5,
+    "drift": [],
     "overhaul": [
       "choq"
     ],
@@ -18,31 +14,23 @@
   "stations": [
     {
       "id": "chyz",
-      "published": 26,
+      "published": 29,
       "fresh": 29,
-      "added": [
-        "mer 10:00–11:00 Conduite Antisportive",
-        "ven 15:00–16:30 Conduite Antisportive",
-        "ven 16:00–17:30 L'Artiste du mois CHYZ"
-      ],
+      "added": [],
       "removed": [],
-      "changed": 3,
-      "ratio": 0.115,
-      "status": "drift"
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cism",
       "published": 109,
       "fresh": 109,
-      "added": [
-        "jeu 07:00–08:00 La case à combler"
-      ],
-      "removed": [
-        "jeu 07:00–08:00 Plus de guit présente: un retour sur le Warped tour 2026"
-      ],
-      "changed": 2,
-      "ratio": 0.018,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "ckut",
@@ -56,44 +44,13 @@
     },
     {
       "id": "cjlo",
-      "published": 371,
+      "published": 374,
       "fresh": 374,
-      "added": [
-        "dim 22:00–00:00 CJLO's Alternative Mega Mix",
-        "lun 00:00–00:30 On the Right Track",
-        "lun 00:00–00:30 2 Days and a Night",
-        "lun 00:00–00:30 Eldest Daughter",
-        "lun 00:00–00:30 The Waxing Gibbous",
-        "lun 11:00–12:00 I Think You Might Like This",
-        "lun 14:00–15:00 L'Organe à la radio",
-        "mar 14:00–15:00 Something for the Mood",
-        "mer 11:00–12:00 Code Switch",
-        "mer 14:00–15:00 CJLO's Alternative Mega Mix",
-        "jeu 11:00–12:00 CJLO's Alternative Mega Mix",
-        "jeu 14:00–15:00 Secondhand Sounds",
-        "jeu 15:00–16:00 Weirdo Rippers",
-        "jeu 18:00–19:00 Unheard Of",
-        "jeu 19:00–20:00 Electric Messiah",
-        "ven 23:00–00:00 CJLO's Alternative Mega Mix"
-      ],
-      "removed": [
-        "dim 22:00–23:00 On The Right Track",
-        "dim 23:00–00:00 CJLO's Alternative Mega Mix",
-        "lun 11:00–12:00 2 Days and a Night",
-        "lun 14:00–15:00 Eldest Daughter",
-        "mar 14:00–15:00 Code Switch",
-        "mer 11:00–12:00 Unheard Of",
-        "mer 14:00–15:00 Something for the Mood",
-        "jeu 11:00–12:00 Weirdo Rippers",
-        "jeu 14:00–15:00 CJLO's Alternative Mega Mix",
-        "jeu 15:00–16:00 Secondhand Sounds",
-        "jeu 18:00–19:00 Electric Messiah",
-        "jeu 19:00–20:00 I Think You Might Like This",
-        "ven 23:00–00:00 The Waxing Gibbous"
-      ],
-      "changed": 29,
-      "ratio": 0.078,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cfak",
