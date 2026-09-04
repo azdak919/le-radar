@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-04T05:27:24.655Z",
+  "updatedAt": "2026-09-04T09:51:50.884Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T05:27:09.415Z"
+      "checkedAt": "2026-09-04T09:51:30.194Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques (reprise)",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/rebelles-soniques"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "next": {
-        "title": "Mix Franco",
+        "title": "Toute est dans toute",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/tout-est-dans-toute"
       },
       "track": "",
-      "showTitle": "Rebelles soniques (reprise)",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T05:27:11.620Z"
+      "checkedAt": "2026-09-04T09:51:32.183Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Listen! You Smell Something?",
-        "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "G-Flex Survivor's Corner",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
-      "track": "",
-      "showTitle": "Listen! You Smell Something?",
+      "next": {
+        "title": "Morning Detour",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "09:00"
+      },
+      "track": "G-Flex Survivor",
+      "showTitle": "G-Flex Survivor's Corner",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T05:27:14.323Z"
+      "checkedAt": "2026-09-04T09:51:35.808Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Finally Midnight",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/finally-midnight"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "02:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Wake up Folks!",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/wake-up-folks"
+      },
       "track": "",
-      "showTitle": "Finally Midnight",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T05:27:17.215Z"
+      "checkedAt": "2026-09-04T09:51:38.333Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T05:27:18.133Z"
+      "checkedAt": "2026-09-04T09:51:42.980Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Nana Quinn - Oiseau migrateur",
+      "track": "Lysandre - Le cowboy aux mains d",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-04T05:27:24.305Z"
+      "checkedAt": "2026-09-04T09:51:50.534Z"
     }
   }
 }
