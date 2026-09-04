@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-03T23:31:20.241Z",
-  "fetchedAt": "2026-09-03T23:31:20.241Z",
+  "updated": "2026-09-04T00:44:16.850Z",
+  "fetchedAt": "2026-09-04T00:44:16.850Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-03T23:31:20.241Z"
+    "referenceDate": "2026-09-04T00:44:16.850Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 816,
@@ -75927,20 +75927,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-03",
-          "time": "20:15",
-          "opponent": "UQAM",
-          "opponentCode": "UQAM",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer universitaire masculin",
-          "gameId": "26570d67-bd27-48f1-a500-43c7fb1445e1",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=26570d67-bd27-48f1-a500-43c7fb1445e1",
-          "opponentFullName": "Université du Québec à Montréal",
-          "opponentNickname": "Citadins",
-          "opponentRegistryId": "uqam"
-        },
-        {
           "date": "2026-09-06",
           "time": "18:00",
           "opponent": "UQTR",
@@ -76082,18 +76068,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-03",
-        "time": "20:15",
-        "opponent": "UQAM",
-        "opponentCode": "UQAM",
-        "home": false,
+        "date": "2026-09-06",
+        "time": "18:00",
+        "opponent": "UQTR",
+        "opponentCode": "UQTR",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer universitaire masculin",
-        "gameId": "26570d67-bd27-48f1-a500-43c7fb1445e1",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=26570d67-bd27-48f1-a500-43c7fb1445e1",
-        "opponentFullName": "Université du Québec à Montréal",
-        "opponentNickname": "Citadins",
-        "opponentRegistryId": "uqam",
+        "gameId": "40664180-7597-4b28-93f9-5e314479732f",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=40664180-7597-4b28-93f9-5e314479732f",
+        "opponentFullName": "Université du Québec à Trois-Rivières",
+        "opponentNickname": "Patriotes",
+        "opponentRegistryId": "uqtr",
         "opponentSector": "universitaire"
       },
       "record": {
@@ -76340,20 +76326,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-09-03",
-          "time": "20:15",
-          "opponent": "Montréal",
-          "opponentCode": "MTL",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer universitaire masculin",
-          "gameId": "26570d67-bd27-48f1-a500-43c7fb1445e1",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=26570d67-bd27-48f1-a500-43c7fb1445e1",
-          "opponentFullName": "Université de Montréal",
-          "opponentNickname": "Carabins",
-          "opponentRegistryId": "udem"
-        },
-        {
           "date": "2026-09-06",
           "time": "13:00",
           "opponent": "Sherbrooke",
@@ -76509,18 +76481,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-03",
-        "time": "20:15",
-        "opponent": "Montréal",
-        "opponentCode": "MTL",
-        "home": true,
+        "date": "2026-09-06",
+        "time": "13:00",
+        "opponent": "Sherbrooke",
+        "opponentCode": "USHE",
+        "home": false,
         "sport": "soccer",
         "competition": "Soccer universitaire masculin",
-        "gameId": "26570d67-bd27-48f1-a500-43c7fb1445e1",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=26570d67-bd27-48f1-a500-43c7fb1445e1",
-        "opponentFullName": "Université de Montréal",
-        "opponentNickname": "Carabins",
-        "opponentRegistryId": "udem",
+        "gameId": "3104fe1b-4d23-4e72-8582-b13bdfe3d63f",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3104fe1b-4d23-4e72-8582-b13bdfe3d63f",
+        "opponentFullName": "Université de Sherbrooke",
+        "opponentNickname": "Vert & Or",
+        "opponentRegistryId": "usherbrooke",
         "opponentSector": "universitaire"
       },
       "record": {
