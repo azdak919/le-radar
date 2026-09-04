@@ -1,14 +1,16 @@
 /**
  * LE RADAR — saisons pour rotation des fonds photo
  *
- * Deux calendriers :
- *  A) 4 saisons météo (Québec méridional) — paysages mât / pomo / campus
+ * Deux calendriers (horloge, filtre mât / pomo / campus / nations) :
+ *  A) 4 saisons astronomiques (hémisphère nord, seuils civils au 21) —
+ *     paysages mât / pomo / campus. Été jusqu’au 21 septembre inclus.
  *  B) 6 saisons (calendrier Inuit du Nunavik, usage éducatif courant) —
- *     banque Premières Nations & Inuit
+ *     banque Premières Nations & Inuit ; mêmes blocs ~2 mois, bascule au 21.
  *
- * Champs photo (optionnels, inférés si absents) :
+ * Tags photo (contenu visuel, pas l’horloge) :
  *   season   : 'printemps' | 'ete' | 'automne' | 'hiver'
  *   season6  : 'ukiuq' | 'upingaksaaq' | 'upingaaq' | 'aujaq' | 'ukiaqsaaq' | 'ukiaq'
+ * Inférence depuis un mois de fichier = mois météo (SON = automne, etc.).
  *
  * UMD : require() Node ou window.RadarSeason en navigateur.
  */
@@ -27,7 +29,8 @@
   const SEASON6 = ['ukiuq', 'upingaksaaq', 'upingaaq', 'aujaq', 'ukiaqsaaq', 'ukiaq'];
 
   /**
-   * 6 saisons Inuit (Nunavik) — mois approximatifs (calendrier éducatif).
+   * 6 saisons Inuit (Nunavik) — mois approximatifs (tags / calendrier éducatif).
+   * Horloge live : mêmes blocs, démarrage au 21 (voir getCurrentSeason6).
    * Ordre cyclique : ukiuq → … → ukiaq → ukiuq.
    */
   const SEASON6_META = {
@@ -63,18 +66,49 @@
     },
   };
 
-  /** Mois 0–11 → saison 4 (météo). */
-  function getCurrentSeason4(date = new Date()) {
-    const m = date.getMonth();
-    if (m >= 2 && m <= 4) return 'printemps'; // mar–mai
-    if (m >= 5 && m <= 7) return 'ete'; // jun–aoû
-    if (m >= 8 && m <= 10) return 'automne'; // sep–nov
-    return 'hiver'; // déc–fév
+  /** Clé mois-jour (mois 0–11) : 21 mars → 221, 21 sept. → 821, 21 déc. → 1121. */
+  function monthDayKey(date) {
+    return date.getMonth() * 100 + date.getDate();
   }
 
-  /** Mois 0–11 → saison 6 (Nunavik éducatif). */
+  /**
+   * Saison 4 astronomique (hémisphère nord).
+   * Printemps 21 mar–20 jun · été 21 jun–21 sep · automne 22 sep–20 déc ·
+   * hiver 21 déc–20 mar.
+   */
+  function getCurrentSeason4(date = new Date()) {
+    const md = monthDayKey(date);
+    if (md >= 221 && md < 521) return 'printemps';
+    if (md >= 521 && md < 822) return 'ete';
+    if (md >= 822 && md < 1121) return 'automne';
+    return 'hiver';
+  }
+
+  /**
+   * Saison 6 (Nunavik éducatif) — blocs de ~2 mois, bascule au 21.
+   */
   function getCurrentSeason6(date = new Date()) {
-    const m = date.getMonth();
+    const md = monthDayKey(date);
+    if (md >= 1121 || md < 121) return 'ukiuq';
+    if (md < 321) return 'upingaksaaq';
+    if (md < 521) return 'upingaaq';
+    if (md < 721) return 'aujaq';
+    if (md < 921) return 'ukiaqsaaq';
+    return 'ukiaq';
+  }
+
+  /** Mois 0–11 → saison 4 météo (tags photo : MAM / JJA / SON / DJF). */
+  function season4FromPhotoMonth(month) {
+    const m = Number(month);
+    if (m >= 2 && m <= 4) return 'printemps';
+    if (m >= 5 && m <= 7) return 'ete';
+    if (m >= 8 && m <= 10) return 'automne';
+    return 'hiver';
+  }
+
+  /** Mois 0–11 → saison 6 éducative (tags photo, mois entiers). */
+  function season6FromPhotoMonth(month) {
+    const m = Number(month);
     for (const id of SEASON6) {
       if (SEASON6_META[id].months.includes(m)) return id;
     }
@@ -228,20 +262,20 @@
 
     const abbrMonth = monthFromAbbrevHaystack(t);
     if (abbrMonth != null) {
-      return getCurrentSeason4(new Date(2000, abbrMonth, 15));
+      return season4FromPhotoMonth(abbrMonth);
     }
 
     // Date dans le nom de fichier Commons …-2022-09-22…
     const dm = t.match(/(?:^|[^\d])((?:19|20)\d{2})[-_./](0[1-9]|1[0-2])(?:[-_./](0[1-9]|[12]\d|3[01]))?/);
     if (dm) {
       const month = parseInt(dm[2], 10) - 1;
-      return getCurrentSeason4(new Date(2000, month, 15));
+      return season4FromPhotoMonth(month);
     }
     // …20250104…
     const compact = t.match(/(?:^|[^\d])((?:19|20)\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])/);
     if (compact) {
       const month = parseInt(compact[2], 10) - 1;
-      return getCurrentSeason4(new Date(2000, month, 15));
+      return season4FromPhotoMonth(month);
     }
     return null;
   }
@@ -285,7 +319,7 @@
     const dm = t.match(/(?:^|[^\d])((?:19|20)\d{2})[-_./](0[1-9]|1[0-2])/);
     if (dm) {
       const month = parseInt(dm[2], 10) - 1;
-      return getCurrentSeason6(new Date(2000, month, 15));
+      return season6FromPhotoMonth(month);
     }
     return map[s4] || null;
   }
@@ -535,15 +569,15 @@
     const compact = t.match(/(?:^|[^\d])((?:19|20)\d{2})(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])/);
     let dateSeason = null;
     if (dm) {
-      dateSeason = getCurrentSeason4(new Date(2000, parseInt(dm[2], 10) - 1, 15));
+      dateSeason = season4FromPhotoMonth(parseInt(dm[2], 10) - 1);
       reasons.push(`date_filename:${dm[2]}`);
     } else if (compact) {
-      dateSeason = getCurrentSeason4(new Date(2000, parseInt(compact[2], 10) - 1, 15));
+      dateSeason = season4FromPhotoMonth(parseInt(compact[2], 10) - 1);
       reasons.push(`date_compact:${compact[2]}`);
     } else {
       const abbrMonth = monthFromAbbrevHaystack(t);
       if (abbrMonth != null) {
-        dateSeason = getCurrentSeason4(new Date(2000, abbrMonth, 15));
+        dateSeason = season4FromPhotoMonth(abbrMonth);
         reasons.push(`date_abbrev:${String(abbrMonth + 1).padStart(2, '0')}`);
       }
     }
@@ -632,7 +666,7 @@
         const mon = dm
           ? parseInt(dm[2], 10) - 1
           : parseInt(compact[2], 10) - 1;
-        season6 = getCurrentSeason6(new Date(2000, mon, 15));
+        season6 = season6FromPhotoMonth(mon);
       }
     }
 
@@ -702,6 +736,8 @@
     seasonTagTrusted,
     getCurrentSeason4,
     getCurrentSeason6,
+    season4FromPhotoMonth,
+    season6FromPhotoMonth,
     inferSeason4,
     inferSeason6,
     resolveItemSeason4,

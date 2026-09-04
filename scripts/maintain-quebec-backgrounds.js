@@ -247,7 +247,7 @@ function landscapeDiscoveryQueries(sessionId) {
       'fleuve Saint-Laurent printemps',
     ],
   };
-  // Toutes les saisons en banque (rotation année) + priorité saison météo courante.
+  // Toutes les saisons en banque (rotation année) + priorité saison astronomique courante.
   const season4 = getCurrentSeason4();
   const current = bySession[season4] || bySession[sessionId] || bySession.ete;
   const rest = ['ete', 'printemps', 'automne', 'hiver']
