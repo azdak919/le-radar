@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-04T00:43:44.593Z",
+  "updatedAt": "2026-09-04T05:27:24.655Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "api-live",
-        "start": "18:50",
-        "end": "23:00",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Vendredi Nostalgie",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/vendredi-nostalgie/"
       },
       "track": "",
-      "showTitle": "Capitales de Québec",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-04T00:43:30.774Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "La courbe 2.0",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/la-courbe-2-0"
-      },
-      "next": {
-        "title": "Mix anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "track": "",
-      "showTitle": "La courbe 2.0",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T00:43:32.773Z"
+      "checkedAt": "2026-09-04T05:27:09.415Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Rebelles soniques (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/rebelles-soniques"
+      },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
+      "track": "",
+      "showTitle": "Rebelles soniques (reprise)",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-04T05:27:11.620Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Other Worlds on Earth/Dromostexte",
+        "title": "Listen! You Smell Something?",
         "source": "api-live",
-        "start": "20:00",
-        "end": "21:00"
+        "start": "01:00",
+        "end": "04:00"
       },
       "next": {
-        "title": "Chaud Pour/Francis",
+        "title": "G-Flex Survivor's Corner",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "04:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Other Worlds on Earth/Dromostexte",
+      "showTitle": "Listen! You Smell Something?",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,84 +74,83 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T00:43:34.962Z"
+      "checkedAt": "2026-09-04T05:27:14.323Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Maiden Voyage",
+        "title": "Finally Midnight",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/maiden-voyage"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/finally-midnight"
       },
       "next": {
-        "title": "The 514",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-514"
+        "start": "02:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "track": "",
-      "showTitle": "Maiden Voyage",
+      "showTitle": "Finally Midnight",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T00:43:37.692Z"
+      "checkedAt": "2026-09-04T05:27:17.215Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "After 5@8",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "After 5@8",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T00:43:39.661Z"
+      "checkedAt": "2026-09-04T05:27:18.133Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Le grand maître des jeux",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "22:30",
-        "url": "https://www.choq.ca/emissions/le-maitre-des-jeux"
+        "title": "Opération beurre de cinoche",
+        "source": "api-live",
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
       },
-      "track": "Genevieve Bilodeau - Il a leve la voix",
+      "track": "Nana Quinn - Oiseau migrateur",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-04T00:43:44.242Z"
+      "checkedAt": "2026-09-04T05:27:24.305Z"
     }
   }
 }
