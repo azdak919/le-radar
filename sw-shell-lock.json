@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v873",
+    "cache": "radar-shell-v874",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -18,7 +18,7 @@
       "photo-bank-data.js": "73269d3f3412bf85",
       "player-sync.js": "36e84f1afaff7fcb",
       "quebec-backgrounds-data.js": "122c199cd4f1628e",
-      "quebec-backgrounds.js": "2b0d108cfaf47248",
+      "quebec-backgrounds.js": "ef8383d58e878229",
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
       "quebec-nations-backgrounds-data.js": "11fbca15903973d4",
       "quebec-university-backgrounds-data.js": "bcfb70bbfada42ba",
@@ -30,7 +30,7 @@
       "radar-utils.js": "8a0f9ef38187c11c",
       "radar-weather.js": "8bba27375d456e97",
       "scripts/campus-fallback-lib.js": "1782f0c434ee1d34",
-      "scripts/season-lib.js": "af99fef06683c37b",
+      "scripts/season-lib.js": "ff74cb33a15dc7ae",
       "scripts/session-freshness-lib.js": "a7fb0abbf1f68fc2",
       "scripts/sports-freshness-lib.js": "cb3ee31267516560",
       "seo-page-theme.js": "20b71c7d730f1db1",
@@ -49,7 +49,7 @@
     }
   },
   "pomo/sw.js": {
-    "cache": "pomo-shell-v144",
+    "cache": "pomo-shell-v145",
     "assets": {
       "bg-rotation-lib.js": "264ab71f12434497",
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
@@ -57,7 +57,7 @@
       "photo-bank-data.js": "73269d3f3412bf85",
       "pomo/js/app.js": "a8138a1bc0e114d6",
       "pomo/js/backgrounds-data.js": "2d0226d859a86c4a",
-      "pomo/js/backgrounds.js": "062cfa2e6dcfceb0",
+      "pomo/js/backgrounds.js": "583851988a59e754",
       "pomo/js/layout-boot.js": "f99ed7e90cdc3cbb",
       "pomo/js/layout.js": "427d70c84a1ac245",
       "pomo/js/panels.js": "a63605d3ae8779c3",
@@ -76,7 +76,7 @@
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
       "quebec-nations-backgrounds-data.js": "11fbca15903973d4",
       "quebec-pomo-backgrounds-data.js": "2db2dff13412f8e1",
-      "scripts/season-lib.js": "af99fef06683c37b",
+      "scripts/season-lib.js": "ff74cb33a15dc7ae",
       "translate-menu.css": "6bd5d163abf725e2",
       "translate-menu.js": "2f70f0aa5ff76db2",
       "weather-cities-data.js": "55d8ae8c518bfbdf"
