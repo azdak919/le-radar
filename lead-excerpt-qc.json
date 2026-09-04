@@ -1,12 +1,12 @@
 {
-  "updated": "2026-09-04T00:22:17.269Z",
+  "updated": "2026-09-04T03:37:32.643Z",
   "total": 185,
   "pool": 56,
   "incomplete": 5,
   "withLeadExcerpt": 96,
   "candidates": 5,
   "enriched": 0,
-  "failed": 1,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -43,6 +43,15 @@
       "score": 80,
       "chars": 400,
       "sample": "A motion calling on the city of Montreal to cut institutional ties with Israel will be heard on Aug.",
+      "changed": false
+    },
+    {
+      "title": "Une finale enlevante dans le tournoi de soccer à Chicoutimi",
+      "link": "https://lapige.atmjonquiere.com/2026/08/31/une-finale-enlevante-dans-le-tournoi-de-soccer-a-chicoutimi/?utm_source=rss&utm_medium=rss&utm_campaign=une-finale-enlevante-dans-le-tournoi-de-soccer-a-chicoutimi",
+      "ok": true,
+      "score": 100,
+      "chars": 179,
+      "sample": "La Coupe d’Afrique des Nations (CAN) de Saguenay a tenu sa cinquième finale ce samedi à Chicoutimi. ",
       "changed": false
     }
   ]
