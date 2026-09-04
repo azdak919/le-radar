@@ -27,7 +27,10 @@ ou `VisualCode/GIT-AND-TEST-SAFETY.md`.
 1. Baseline locale sur `main` **avant** de créer la branche (repro / smoke).
 2. Branche → **vérif locale** (tests + preview UI) verts → push → **PR**.
 3. **Lien PR cliquable** dans la réponse (l’humain regarde, puis dit **merge and delete**).
-4. Merger **seulement** sur cet ordre, après checks CI verts + `--delete-branch`.
+4. Merger **seulement** sur cet ordre, après checks CI verts.
+   Identité publique : **Azdak** / `azdak-qc@proton.me`. **Pas** `gh pr merge`
+   (GitHub tamponne le courriel du compte). Merge **local** (`git merge --no-ff`)
+   puis `git push origin main` + suppression de branche.
 
 **Push ≠ livré.** Ne pas merger tout seul.  
 **LE-RADAR UI/CSS** : `npm run check` + Playwright (au minimum mât/smoke) avant push.

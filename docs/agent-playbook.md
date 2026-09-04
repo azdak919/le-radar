@@ -174,7 +174,7 @@ Alias historiques : `maintain:backgrounds` = masthead ; `…:pomo` etc. inchang�
 3. `npm run test:unit` si possible (data-integrity inclut les banques)
 4. SW bump **seulement** si shell réellement impacté (mât et/ou pomo)
 5. Diff final : chaque hunk = pipeline / purge / blacklist / doc / scripts — pas d’UX gratuite
-6. Commit message orienté résultat ; branche → PR (jamais `git push origin main`). Merger seulement sur **merge and delete**.
+6. Commit message orienté résultat ; branche → PR (jamais `git push origin main`). Merger seulement sur **merge and delete** : merge **local** Azdak/proton, **pas** `gh pr merge`.
 
 ### Message type
 
