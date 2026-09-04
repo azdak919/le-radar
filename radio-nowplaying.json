@@ -1,79 +1,80 @@
 {
-  "updatedAt": "2026-09-04T17:31:33.846Z",
+  "updatedAt": "2026-09-04T19:33:41.913Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Détour",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://chyz.ca/emission/detour/"
-      },
-      "next": {
         "title": "Conduite Antisportive",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "15:00",
         "end": "16:30",
         "url": "https://chyz.ca/emission/conduite-antisportive/"
       },
+      "next": {
+        "title": "Crooch Control",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://chyz.ca/emission/crooch-control/"
+      },
       "track": "",
-      "showTitle": "Détour",
+      "showTitle": "Conduite Antisportive",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T17:31:17.819Z"
+      "checkedAt": "2026-09-04T19:33:26.640Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques",
+        "title": "Salsa & Bembê",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/rebelles-soniques"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/salsa-et-bembe"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "Turbo tannant",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/turbo-tannant"
       },
       "track": "",
-      "showTitle": "Rebelles soniques",
+      "showTitle": "Salsa & Bembê",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T17:31:20.321Z"
+      "checkedAt": "2026-09-04T19:33:29.108Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Butcher T's Noontime Cuts",
+        "title": "New Shit",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "NNB/SQUAT FM/QPIRG/knots",
+        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
-      "track": "Butcher T",
-      "showTitle": "Butcher T's Noontime Cuts",
+      "track": "",
+      "showTitle": "New Shit",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,70 +82,64 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T17:31:23.555Z"
+      "checkedAt": "2026-09-04T19:33:32.060Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "the castle",
+        "title": "Dead Beats",
         "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/the-castle"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/dead-beats"
       },
       "next": {
-        "title": "Spiral Bound",
+        "title": "Tapeworms",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/spiral-bound"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/tapeworms"
       },
       "track": "",
-      "showTitle": "the castle",
+      "showTitle": "Dead Beats",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T17:31:26.711Z"
+      "checkedAt": "2026-09-04T19:33:34.752Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Ciné-Histoire",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Nouveautés Franco",
         "source": "schedule-live",
         "start": "15:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "La récréation",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Ciné-Histoire",
+      "showTitle": "Nouveautés Franco",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T17:31:27.847Z"
+      "checkedAt": "2026-09-04T19:33:35.742Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "CUCH CAST",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "14:00",
-        "slug": "cuch-cast"
-      },
+      "current": null,
       "next": {
         "title": "Histoire de passer le temps",
         "source": "api-live",
@@ -152,8 +147,8 @@
         "end": "17:00",
         "slug": "histoire-de-passer-le-temps"
       },
-      "track": "Kaeley Jade - Growing Pains",
-      "showTitle": "CUCH CAST",
+      "track": "Wine Lips - Projector",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -163,7 +158,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-04T17:31:33.495Z"
+      "checkedAt": "2026-09-04T19:33:41.563Z"
     }
   }
 }
