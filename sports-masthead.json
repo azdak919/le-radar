@@ -1,10 +1,10 @@
 {
-  "updated": "2026-09-03T23:31:20.241Z",
-  "fetchedAt": "2026-09-03T23:31:20.241Z",
+  "updated": "2026-09-04T00:44:16.850Z",
+  "fetchedAt": "2026-09-04T00:44:16.850Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-03T23:31:20.241Z"
+    "referenceDate": "2026-09-04T00:44:16.850Z"
   },
   "masthead": {
     "nextGameLimit": 48,
@@ -2431,36 +2431,8 @@
         "priorSeason": false,
         "opponentSector": "universitaire"
       },
-      "nextGames": [
-        {
-          "date": "2026-09-03",
-          "time": "20:15",
-          "opponent": "UQAM",
-          "opponentCode": "UQAM",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer universitaire masculin",
-          "gameId": "26570d67-bd27-48f1-a500-43c7fb1445e1",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=26570d67-bd27-48f1-a500-43c7fb1445e1",
-          "opponentFullName": "Université du Québec à Montréal",
-          "opponentNickname": "Citadins",
-          "opponentRegistryId": "uqam"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-03",
-        "time": "20:15",
-        "opponent": "UQAM",
-        "opponentCode": "UQAM",
-        "home": false,
-        "sport": "soccer",
-        "competition": "Soccer universitaire masculin",
-        "gameId": "26570d67-bd27-48f1-a500-43c7fb1445e1",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=26570d67-bd27-48f1-a500-43c7fb1445e1",
-        "opponentFullName": "Université du Québec à Montréal",
-        "opponentNickname": "Citadins",
-        "opponentRegistryId": "uqam"
-      },
+      "nextGames": [],
+      "nextGame": null,
       "source": "rseq-s1",
       "priority": 4,
       "fullName": "Université de Montréal",
@@ -3995,8 +3967,34 @@
         "priorSeason": false,
         "opponentSector": "collegial"
       },
-      "nextGames": [],
-      "nextGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-05",
+          "time": "16:00",
+          "opponent": "Cégep de Rimouski",
+          "opponentCode": "RIM",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "f5aceb96-b7be-40e7-9437-5086b056d34d",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f5aceb96-b7be-40e7-9437-5086b056d34d",
+          "opponentFullName": "Cégep de Rimouski",
+          "opponentRegistryId": "rimouski"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-05",
+        "time": "16:00",
+        "opponent": "Cégep de Rimouski",
+        "opponentCode": "RIM",
+        "home": true,
+        "sport": "soccer",
+        "competition": "Soccer collégial masculin D2",
+        "gameId": "f5aceb96-b7be-40e7-9437-5086b056d34d",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f5aceb96-b7be-40e7-9437-5086b056d34d",
+        "opponentFullName": "Cégep de Rimouski",
+        "opponentRegistryId": "rimouski"
+      },
       "source": "rseq-s1",
       "priority": 50,
       "fullName": "Cégep de Lévis",
@@ -6266,57 +6264,6 @@
       "nickname": "Géants",
       "registryId": "sainte-foy",
       "lastGamePriorSeason": false
-    },
-    "universitaire:soccer:bf91ad12-b8fc-4259-92a2-551a8da949e7:5574025c-bc34-41ce-bfd4-bcabc6c98120": {
-      "id": "universitaire:soccer:bf91ad12-b8fc-4259-92a2-551a8da949e7:5574025c-bc34-41ce-bfd4-bcabc6c98120",
-      "rseqTeamId": "5574025c-bc34-41ce-bfd4-bcabc6c98120",
-      "leagueId": "bf91ad12-b8fc-4259-92a2-551a8da949e7",
-      "name": "UQAM",
-      "code": "UQAM",
-      "sector": "universitaire",
-      "sport": "soccer",
-      "sportLabel": "Soccer",
-      "sex": "M",
-      "division": null,
-      "usports": true,
-      "leagueLabel": "Soccer universitaire masculin",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-03",
-          "time": "20:15",
-          "opponent": "Montréal",
-          "opponentCode": "MTL",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer universitaire masculin",
-          "gameId": "26570d67-bd27-48f1-a500-43c7fb1445e1",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=26570d67-bd27-48f1-a500-43c7fb1445e1",
-          "opponentFullName": "Université de Montréal",
-          "opponentNickname": "Carabins",
-          "opponentRegistryId": "udem"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-03",
-        "time": "20:15",
-        "opponent": "Montréal",
-        "opponentCode": "MTL",
-        "home": true,
-        "sport": "soccer",
-        "competition": "Soccer universitaire masculin",
-        "gameId": "26570d67-bd27-48f1-a500-43c7fb1445e1",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=26570d67-bd27-48f1-a500-43c7fb1445e1",
-        "opponentFullName": "Université de Montréal",
-        "opponentNickname": "Carabins",
-        "opponentRegistryId": "udem"
-      },
-      "source": "rseq-s1",
-      "priority": 5,
-      "fullName": "Université du Québec à Montréal",
-      "nickname": "Citadins",
-      "registryId": "uqam"
     },
     "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:afd48cf0-d89e-43b2-89cf-0a5579bfaedb": {
       "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:afd48cf0-d89e-43b2-89cf-0a5579bfaedb",
@@ -9582,6 +9529,54 @@
       "priority": 80,
       "fullName": "Campus Notre-Dame-de-Foy",
       "registryId": "notre-dame-bleu"
+    },
+    "collegial:soccer:9111db6c-1311-475e-8c71-1cefd7cd9082:311f654d-298d-4ed4-bcba-87db544ec53d": {
+      "id": "collegial:soccer:9111db6c-1311-475e-8c71-1cefd7cd9082:311f654d-298d-4ed4-bcba-87db544ec53d",
+      "rseqTeamId": "311f654d-298d-4ed4-bcba-87db544ec53d",
+      "leagueId": "9111db6c-1311-475e-8c71-1cefd7cd9082",
+      "name": "Cégep de Rimouski",
+      "code": "RIM",
+      "sector": "collegial",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "M",
+      "division": "D2",
+      "usports": false,
+      "leagueLabel": "Soccer collégial masculin D2",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-05",
+          "time": "16:00",
+          "opponent": "Lévis",
+          "opponentCode": "LÉV",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "f5aceb96-b7be-40e7-9437-5086b056d34d",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f5aceb96-b7be-40e7-9437-5086b056d34d",
+          "opponentFullName": "Cégep de Lévis",
+          "opponentRegistryId": "levis"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-05",
+        "time": "16:00",
+        "opponent": "Lévis",
+        "opponentCode": "LÉV",
+        "home": false,
+        "sport": "soccer",
+        "competition": "Soccer collégial masculin D2",
+        "gameId": "f5aceb96-b7be-40e7-9437-5086b056d34d",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f5aceb96-b7be-40e7-9437-5086b056d34d",
+        "opponentFullName": "Cégep de Lévis",
+        "opponentRegistryId": "levis"
+      },
+      "source": "rseq-s1",
+      "priority": 80,
+      "fullName": "Cégep de Rimouski",
+      "registryId": "rimouski"
     }
   }
 }
