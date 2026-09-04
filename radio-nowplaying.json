@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-04T19:33:41.913Z",
+  "updatedAt": "2026-09-04T20:14:16.531Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -13,11 +13,11 @@
         "url": "https://chyz.ca/emission/conduite-antisportive/"
       },
       "next": {
-        "title": "Crooch Control",
+        "title": "L'Artiste du mois CHYZ",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "https://chyz.ca/emission/crooch-control/"
+        "start": "16:30",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/lartist-du-mois-chyz/"
       },
       "track": "",
       "showTitle": "Conduite Antisportive",
@@ -25,38 +25,37 @@
       "source": "api-live",
       "sources": [
         "api-live",
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T19:33:26.640Z"
+      "checkedAt": "2026-09-04T20:14:03.242Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Salsa & Bembê",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/salsa-et-bembe"
-      },
-      "next": {
         "title": "Turbo tannant",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "https://cism893.ca/emissions/turbo-tannant"
       },
+      "next": {
+        "title": "Ok Doomer",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/ok-doomer"
+      },
       "track": "",
-      "showTitle": "Salsa & Bembê",
+      "showTitle": "Turbo tannant",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T19:33:29.108Z"
+      "checkedAt": "2026-09-04T20:14:05.255Z"
     },
     "ckut": {
       "id": "ckut",
@@ -82,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T19:33:32.060Z"
+      "checkedAt": "2026-09-04T20:14:07.639Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Dead Beats",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/dead-beats"
-      },
-      "next": {
         "title": "Tapeworms",
         "source": "schedule-live",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/tapeworms"
       },
+      "next": {
+        "title": "The Groove Master's Hour",
+        "source": "schedule-live",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
+      },
       "track": "",
-      "showTitle": "Dead Beats",
+      "showTitle": "Tapeworms",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T19:33:34.752Z"
+      "checkedAt": "2026-09-04T20:14:09.786Z"
     },
     "cfak": {
       "id": "cfak",
@@ -134,31 +133,38 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T19:33:35.742Z"
+      "checkedAt": "2026-09-04T20:14:10.868Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Histoire de passer le temps",
         "source": "api-live",
         "start": "16:00",
         "end": "17:00",
         "slug": "histoire-de-passer-le-temps"
       },
-      "track": "Wine Lips - Projector",
-      "showTitle": "",
+      "next": {
+        "title": "D'amour et de sexe",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
+      },
+      "track": "No Joy - Big Life, Big Leaf",
+      "showTitle": "Histoire de passer le temps",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-04T19:33:41.563Z"
+      "checkedAt": "2026-09-04T20:14:16.180Z"
     }
   }
 }
