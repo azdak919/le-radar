@@ -53,7 +53,10 @@ test('une fiche de radio expose ses faits et renvoie vers les autres horaires', 
   await expect(scheduleMeta).not.toContainText('collecte réussie');
 
   // Le lien vers l'établissement doit résoudre, pas juste exister.
-  await page.getByRole('link', { name: 'Université Laval' }).first().click();
+  // La barre de prévisualisation locale est un outil de labo fixe qui peut
+  // recouvrir ce lien selon la hauteur réelle du mât; elle n’existe pas en prod.
+  await page.locator('.local-lab-bar').evaluateAll((bars) => bars.forEach((bar) => bar.remove()));
+  await page.locator('.seo-facts').getByRole('link', { name: 'Université Laval' }).click();
   await expect(page).toHaveURL(/\/etablissements\/universite-laval\/$/);
 });
 

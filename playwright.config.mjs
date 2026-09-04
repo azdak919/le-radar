@@ -11,7 +11,7 @@ export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
   // CI : 2 retries anti-flaky (contention runner / réseau) sans masquer un bug
   // local (0 retry hors CI pour feedback immédiat).
-  retries: process.env.CI ? 1 : 0,
+  retries: process.env.CI ? 2 : 0,
   // CI : 1 worker. Deux workers + 18 fixtures sports coincaient le runner
   // 15–20 min (filet D9 / webServer). Série = 5–8 min, pas un hang.
   workers: process.env.CI ? 1 : undefined,

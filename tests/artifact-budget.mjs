@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import assert from 'node:assert/strict';
-import { readdirSync, statSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { statSync, unlinkSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const root = new URL('../', import.meta.url).pathname;
@@ -9,22 +10,39 @@ const MB = 1024 * 1024;
 function fileSize(rel) {
   return statSync(join(root, rel)).size;
 }
-function dirSize(rel) {
-  const dir = join(root, rel);
-  let total = 0;
-  for (const name of readdirSync(dir)) {
-    const full = join(dir, name);
-    const st = statSync(full);
-    if (st.isDirectory()) total += dirSize(join(rel, name));
-    else total += st.size;
-  }
-  return total;
+function trackedDirSize(rel) {
+  const output = execFileSync('git', ['ls-files', '-z', '--', rel], {
+    cwd: root,
+    encoding: 'utf8',
+  });
+  return output.split('\0').filter(Boolean).reduce(
+    (total, trackedPath) => total + statSync(join(root, trackedPath)).size,
+    0,
+  );
 }
 
 const archive = fileSize('news-archive.json');
 const sports = fileSize('sports.json');
-const images = dirSize('assets/news-images');
-const kit = dirSize('assets/kit');
+const images = trackedDirSize('assets/news-images');
+const kit = trackedDirSize('assets/kit');
+
+// Régression : les originaux d’impression produits localement sont gitignorés
+// et ne font pas partie du site publié ni de son budget de dépôt.
+const ignoredProbe = join(
+  root,
+  'assets/kit/affiches',
+  `.artifact-budget-untracked-${process.pid}.jpg`,
+);
+try {
+  writeFileSync(ignoredProbe, Buffer.alloc(1024 * 1024));
+  assert.equal(
+    trackedDirSize('assets/kit'),
+    kit,
+    'un fichier gitignoré dans assets/kit ne doit pas entrer dans le budget',
+  );
+} finally {
+  unlinkSync(ignoredProbe);
+}
 
 assert(archive <= 16 * MB, `news-archive.json ${archive} > 16 Mo`);
 assert(sports <= 5 * MB, `sports.json ${sports} > 5 Mo`);

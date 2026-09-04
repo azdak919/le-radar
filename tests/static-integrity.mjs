@@ -31,7 +31,14 @@ const CLIENT_CSS_FILES = [
 ];
 const appJs = CLIENT_JS_FILES.map((file) => readFileSync(join(root, file), 'utf8')).join('\n');
 const styleCss = CLIENT_CSS_FILES.map((file) => readFileSync(join(root, file), 'utf8')).join('\n');
+const playwrightConfig = readFileSync(join(root, 'playwright.config.mjs'), 'utf8');
 const htmlFiles = [];
+
+assert.match(
+  playwrightConfig,
+  /retries:\s*process\.env\.CI\s*\?\s*2\s*:\s*0/,
+  'Playwright : 2 retries en CI et 0 en local',
+);
 
 // Les traces Playwright sont du HTML : sans cette exclusion, un run de tests
 // interrompu laisse des artefacts qui font échouer `npm run check` alors que

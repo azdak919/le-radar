@@ -449,7 +449,8 @@ function sportsCivilDayShift(yyyyMmDd, deltaDays) {
 
 /** Jour civil Toronto d’un match (YYYY-MM-DD) — champ `date`, pas l’heure locale. */
 function sportsGameDayKey(game, now = Date.now()) {
-  if (typeof RadarSportsFreshness?.gameCivilDayKey === 'function') {
+  if (typeof RadarSportsFreshness !== 'undefined'
+      && typeof RadarSportsFreshness.gameCivilDayKey === 'function') {
     const key = RadarSportsFreshness.gameCivilDayKey(game);
     if (key) return key;
   }
@@ -465,7 +466,8 @@ function sportsGameDayKey(game, now = Date.now()) {
  * Négatif si le match est à venir. Infini si la date est illisible.
  */
 function sportsCivilDaysAgo(game, now = Date.now()) {
-  if (typeof RadarSportsFreshness?.civilDaysAgo === 'function') {
+  if (typeof RadarSportsFreshness !== 'undefined'
+      && typeof RadarSportsFreshness.civilDaysAgo === 'function') {
     return RadarSportsFreshness.civilDaysAgo(game, new Date(now));
   }
   const day = sportsGameDayKey(game, now);
@@ -479,7 +481,8 @@ function sportsCivilDaysAgo(game, now = Date.now()) {
 
 /** Résultat dans la fenêtre des puces (5 jours civils, saison courante). */
 function sportsResultIsRecent(game, now = Date.now()) {
-  if (typeof RadarSportsFreshness?.isMastheadChipResult === 'function') {
+  if (typeof RadarSportsFreshness !== 'undefined'
+      && typeof RadarSportsFreshness.isMastheadChipResult === 'function') {
     return RadarSportsFreshness.isMastheadChipResult(game, new Date(now));
   }
   const days = sportsCivilDaysAgo(game, now);
@@ -490,7 +493,8 @@ function sportsResultIsRecent(game, now = Date.now()) {
  * Résultat admissible sur la CTA : jour civil Toronto = aujourd’hui **ou** hier.
  */
 function sportsCtaResultIsTodayOrYesterday(game, now = Date.now()) {
-  if (typeof RadarSportsFreshness?.isMastheadCtaResult === 'function') {
+  if (typeof RadarSportsFreshness !== 'undefined'
+      && typeof RadarSportsFreshness.isMastheadCtaResult === 'function') {
     return RadarSportsFreshness.isMastheadCtaResult(game, new Date(now));
   }
   const days = sportsCivilDaysAgo(game, now);
@@ -2682,19 +2686,23 @@ function sportsMixSportsPreservingHeat(slides, now = Date.now()) {
 }
 
 /**
- * Filet de jointure : évite 2× le même sport d’affilée à la frontière
- * d’un seau (live soccer puis jeudi soccer) si un autre sport est tout près.
+ * Filet de jointure : évite 2× le même sport d’affilée sans traverser le
+ * bucket de chaleur ni le jour civil Toronto déjà établis par le tri.
  */
-function sportsSoftSportDiversity(slides) {
+function sportsSoftSportDiversity(slides, now = Date.now()) {
   if (!Array.isArray(slides) || slides.length < 3) return slides || [];
   const arr = slides.slice();
   for (let i = 0; i < arr.length - 1; i += 1) {
     if (sportsSlideSport(arr[i]) !== sportsSlideSport(arr[i + 1])) continue;
     const same = sportsSlideSport(arr[i]);
+    const bucket = sportsOpenOrderBucket(arr[i], now);
+    const day = sportsGameDayKey(arr[i]?.game, now) || sportsSlideDayKey(arr[i]) || '';
     let swapAt = -1;
     for (let j = i + 2; j < Math.min(arr.length, i + 8); j += 1) {
       const sp = sportsSlideSport(arr[j]);
-      if (sp && sp !== same) {
+      const candidateBucket = sportsOpenOrderBucket(arr[j], now);
+      const candidateDay = sportsGameDayKey(arr[j]?.game, now) || sportsSlideDayKey(arr[j]) || '';
+      if (sp && sp !== same && candidateBucket === bucket && candidateDay === day) {
         swapAt = j;
         break;
       }
@@ -2856,7 +2864,7 @@ function sportsOpenOrderSlides(now = Date.now()) {
   }
   const list = sportsDedupeMatchSlides(nexts).concat(sportsDedupeHomepageResults(results));
   list.sort((a, b) => sportsCompareOpenOrder(a, b, now));
-  return sportsSoftSportDiversity(sportsMixSportsPreservingHeat(list, now))
+  return sportsSoftSportDiversity(sportsMixSportsPreservingHeat(list, now), now)
     .slice(0, SPORTS_CTA_MAX_POOL);
 }
 
@@ -4550,4 +4558,3 @@ async function initMastheadSports() {
 }
 
 window.addEventListener('radar:translate-mode', refreshSportsChromeLanguage);
-

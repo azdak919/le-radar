@@ -49,11 +49,17 @@ jobs:
       # Sans cette passe, le tampon « Mise à jour » et les cartes restent
       # figés même si sports.json est frais.
       - name: Refresh /sports/ HTML from sports.json
-        continue-on-error: true
         timeout-minutes: 3
         run: node scripts/generate-seo.js --update --sports-only
         env:
           CI: true
+
+      - name: Validate generated sports HTML
+        run: |
+          git add sports/index.html en/sports/index.html
+          if ! git diff --staged --quiet -- '*.html'; then
+            bash scripts/bot-prepush-check.sh
+          fi
 
       - name: Commit sports.json
         run: |

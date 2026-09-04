@@ -42,7 +42,6 @@ jobs:
 
       - name: Refresh /sports/ HTML from sports.json
         if: steps.eval.outputs.sports == 'true' || steps.eval.outputs.sports_html == 'true'
-        continue-on-error: true
         timeout-minutes: 3
         run: node scripts/generate-seo.js --update --sports-only
         env:
@@ -59,6 +58,13 @@ jobs:
         env:
           CI: true
           FIREBASE_POLYSCOPE_API_KEY: ${{ secrets.FIREBASE_POLYSCOPE_API_KEY }}
+
+      - name: Validate generated sports HTML
+        run: |
+          git add sports/index.html en/sports/index.html
+          if ! git diff --staged --quiet -- '*.html'; then
+            bash scripts/bot-prepush-check.sh
+          fi
 
       - name: Commit catch-up
         run: |

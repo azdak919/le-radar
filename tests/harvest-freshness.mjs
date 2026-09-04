@@ -90,6 +90,18 @@ assert.match(yml, /discover-sports\.js --update/);
 assert.match(yml, /fetch-radio-nowplaying\.js --update/);
 assert.match(yml, /fetch-news\.js --update/);
 
+const refreshStep = yml.match(
+  /- name: Refresh \/sports\/ HTML from sports\.json[\s\S]*?(?=\n      - name:)/,
+)?.[0] || '';
+assert.match(refreshStep, /generate-seo\.js --update --sports-only/);
+assert.doesNotMatch(refreshStep, /continue-on-error:\s*true/);
+const validateAt = yml.indexOf('bash scripts/bot-prepush-check.sh');
+const commitAt = yml.indexOf('- name: Commit catch-up');
+assert.ok(validateAt >= 0 && validateAt < commitAt, 'guard : prepush HTML avant commit');
+assert.match(yml.slice(0, commitAt), /git add sports\/index\.html en\/sports\/index\.html/);
+const commitStep = yml.slice(commitAt);
+assert.doesNotMatch(commitStep, /if:\s*always\(\)/, 'guard : commit dépend du succès generate-seo');
+
 const fetchSports = readFileSync(join(ROOT, 'scripts/fetch-sports.js'), 'utf8');
 assert.match(fetchSports, /preserveHarvestCatalogStats/);
 assert.match(fetchSports, /if \(liveOnly\) \{\s*\n\s*payload = preserveHarvestCatalogStats/m);
