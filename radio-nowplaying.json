@@ -1,139 +1,131 @@
 {
-  "updatedAt": "2026-09-04T22:27:06.720Z",
+  "updatedAt": "2026-09-05T00:16:47.299Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/",
-        "special": true
-      },
+      "current": null,
       "next": {
         "title": "Crooch Control",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "21:00",
         "end": "22:00",
         "url": "https://chyz.ca/emission/crooch-control/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-04T22:26:52.741Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Ok Doomer",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/ok-doomer"
-      },
-      "next": {
-        "title": "Mix électro",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/mix-electro"
-      },
-      "track": "",
-      "showTitle": "Ok Doomer",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T22:26:55.073Z"
+      "checkedAt": "2026-09-05T00:16:33.750Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Rave de nuit",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "https://cism893.ca/emissions/rave-de-nuit"
+      },
+      "next": {
+        "title": "Le 120e parallèle (reprise)",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/le-120e-parallele"
+      },
+      "track": "",
+      "showTitle": "Rave de nuit",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-05T00:16:35.822Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Café",
+        "title": "Macondo",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "20:00",
+        "end": "22:00"
       },
       "next": {
-        "title": "Listening to Latin America: Blanca-Victoria",
+        "title": "Weekend Groove",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "22:00",
+        "end": "00:00"
       },
       "track": "",
-      "showTitle": "Café",
+      "showTitle": "Macondo",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T22:26:59.521Z"
+      "checkedAt": "2026-09-05T00:16:38.151Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Go-Go Radio Magic Show",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
-      },
-      "next": {
         "title": "El Encuentro Latino",
         "source": "schedule-live",
         "start": "20:00",
         "end": "21:00",
         "url": "http://www.cjlo.com/shows/el-encuentro-latino"
       },
+      "next": {
+        "title": "Stereo Field Trip",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/stereo-field-trip"
+      },
       "track": "",
-      "showTitle": "The Go-Go Radio Magic Show",
+      "showTitle": "El Encuentro Latino",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T22:27:02.437Z"
+      "checkedAt": "2026-09-05T00:16:40.302Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "La récréation",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Enfin vendredi",
         "source": "schedule-live",
         "start": "19:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Mangue, Goyave et Reggae",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "La récréation",
+      "showTitle": "Enfin vendredi",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-04T22:27:03.886Z"
+      "checkedAt": "2026-09-05T00:16:41.704Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +138,7 @@
         "end": "00:00",
         "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
       },
-      "track": "Tkay Maidza - Romanticize",
+      "track": "Arielle Soucy - Around the Corner",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -158,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-04T22:27:06.369Z"
+      "checkedAt": "2026-09-05T00:16:46.948Z"
     }
   }
 }
