@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-05T17:28:13.476Z",
-  "fetchedAt": "2026-09-05T17:28:13.476Z",
+  "updated": "2026-09-05T17:50:34.004Z",
+  "fetchedAt": "2026-09-05T17:50:34.004Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-05T17:28:13.477Z"
+    "referenceDate": "2026-09-05T17:50:34.004Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 816,
@@ -62511,7 +62511,8 @@
           "gameId": "88e4e715-8d41-43bc-9c2e-6e4155c60a52",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=88e4e715-8d41-43bc-9c2e-6e4155c60a52",
           "opponentFullName": "Cégep de Rimouski",
-          "opponentRegistryId": "rimouski"
+          "opponentRegistryId": "rimouski",
+          "live": true
         },
         {
           "date": "2026-09-20",
@@ -62609,6 +62610,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=88e4e715-8d41-43bc-9c2e-6e4155c60a52",
         "opponentFullName": "Cégep de Rimouski",
         "opponentRegistryId": "rimouski",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -62827,7 +62829,8 @@
           "gameId": "88e4e715-8d41-43bc-9c2e-6e4155c60a52",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=88e4e715-8d41-43bc-9c2e-6e4155c60a52",
           "opponentFullName": "Cégep de Lévis",
-          "opponentRegistryId": "levis"
+          "opponentRegistryId": "levis",
+          "live": true
         },
         {
           "date": "2026-09-13",
@@ -62939,6 +62942,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=88e4e715-8d41-43bc-9c2e-6e4155c60a52",
         "opponentFullName": "Cégep de Lévis",
         "opponentRegistryId": "levis",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
