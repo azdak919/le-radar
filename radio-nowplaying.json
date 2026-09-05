@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-09-05T16:49:42.009Z",
+  "updatedAt": "2026-09-05T17:27:33.568Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Un Samedi d'Ici",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "https://chyz.ca/emission/un-samedi-dici/"
-      },
-      "next": {
         "title": "Radio Futura",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "13:00",
         "end": "16:00",
         "url": "https://chyz.ca/emission/radio-futura/"
       },
+      "next": {
+        "title": "Football du Rouge et Or",
+        "source": "schedule-live",
+        "start": "18:30",
+        "end": "22:30",
+        "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
+      },
       "track": "",
-      "showTitle": "Un Samedi d'Ici",
+      "showTitle": "Radio Futura",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T16:49:06.575Z"
+      "checkedAt": "2026-09-05T17:27:16.794Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Elkin Polo El Show",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/elkin-polo-el-show"
-      },
-      "next": {
         "title": "Change le beat",
         "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/change-le-beat"
       },
+      "next": {
+        "title": "Faites entrer un DJ",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/faites-entrer-un-dj"
+      },
       "track": "",
-      "showTitle": "Elkin Polo El Show",
+      "showTitle": "Change le beat",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T16:49:08.878Z"
+      "checkedAt": "2026-09-05T17:27:19.002Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,21 +81,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T16:49:12.129Z"
+      "checkedAt": "2026-09-05T17:27:21.758Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Anatomy of Caribbean Music",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "12:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
       },
       "next": {
         "title": "Caribbean Callaloo",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "14:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/caribbean-callaloo"
@@ -103,12 +103,12 @@
       "track": "",
       "showTitle": "Anatomy of Caribbean Music",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T16:49:34.905Z"
+      "checkedAt": "2026-09-05T17:27:24.827Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T16:49:36.299Z"
+      "checkedAt": "2026-09-05T17:27:26.365Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T16:49:41.658Z"
+      "checkedAt": "2026-09-05T17:27:33.217Z"
     }
   }
 }
