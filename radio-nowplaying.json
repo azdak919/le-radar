@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05T05:44:35.461Z",
+  "updatedAt": "2026-09-05T08:47:32.651Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,69 +21,70 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T05:44:21.401Z"
+      "checkedAt": "2026-09-05T08:47:14.983Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rythmologie (reprise)",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "schedule",
         "start": "02:00",
         "end": "05:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Voix tropicale",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/voix-tropicale"
+      },
       "track": "",
-      "showTitle": "Rythmologie (reprise)",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T05:44:23.478Z"
+      "checkedAt": "2026-09-05T08:47:17.371Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "WEFUNK",
+        "title": "The Mash Time Show",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "04:00",
+        "end": "06:00"
       },
       "next": {
-        "title": "Soca Sessions",
+        "title": "Quebec Acadie",
         "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
+        "start": "06:00",
+        "end": "10:00"
       },
-      "track": "",
-      "showTitle": "WEFUNK",
+      "track": "Airtime - offline",
+      "showTitle": "The Mash Time Show",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T05:44:25.828Z"
+      "checkedAt": "2026-09-05T08:47:20.231Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Jazz Boulevard",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/jazz-boulevard"
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "World-Up'",
@@ -93,14 +94,14 @@
         "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "Jazz Boulevard",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T05:44:28.542Z"
+      "checkedAt": "2026-09-05T08:47:23.389Z"
     },
     "cfak": {
       "id": "cfak",
@@ -120,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T05:44:29.637Z"
+      "checkedAt": "2026-09-05T08:47:24.630Z"
     },
     "choq": {
       "id": "choq",
@@ -133,18 +134,15 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "yaya bey - Forty Days",
+      "track": "Man/Woman/Chainsaw — Nosedive",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-09-05T05:44:35.110Z"
+      "clientPoll": null,
+      "checkedAt": "2026-09-05T08:47:32.300Z"
     }
   }
 }
