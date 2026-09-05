@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-05T12:54:51.092Z",
+  "updated": "2026-09-05T15:32:21.948Z",
   "total": 185,
   "withImage": 169,
   "withCredit": 169,
@@ -7,9 +7,9 @@
   "pending": 14,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 4,
-  "citedNew": 1,
+  "checked": 17,
+  "updatedCount": 6,
+  "citedNew": 3,
   "fallbackNew": 14,
   "samples": [
     {
@@ -39,6 +39,20 @@
       "credit": "Photo: Courtesy of Joe Fuda",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
