@@ -1,10 +1,10 @@
 {
-  "updated": "2026-09-05T00:17:21.213Z",
-  "fetchedAt": "2026-09-05T00:17:21.213Z",
+  "updated": "2026-09-05T00:46:21.408Z",
+  "fetchedAt": "2026-09-05T00:46:21.408Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-05T00:17:21.213Z"
+    "referenceDate": "2026-09-05T00:46:21.408Z"
   },
   "masthead": {
     "nextGameLimit": 48,
@@ -12,7 +12,7 @@
     "chipResultMaxDaysAgo": 5,
     "ctaResultMaxDaysAgo": 1
   },
-  "teamCount": 115,
+  "teamCount": 116,
   "teams": {
     "universitaire:soccer:bf91ad12-b8fc-4259-92a2-551a8da949e7:d6fe43e4-2b0f-4b97-9c8d-333916870f0c": {
       "id": "universitaire:soccer:bf91ad12-b8fc-4259-92a2-551a8da949e7:d6fe43e4-2b0f-4b97-9c8d-333916870f0c",
@@ -1209,36 +1209,8 @@
         "priorSeason": false,
         "opponentSector": "collegial"
       },
-      "nextGames": [
-        {
-          "date": "2026-09-04",
-          "time": "20:45",
-          "opponent": "Montmorency",
-          "opponentCode": "MON",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D1",
-          "gameId": "d4fffa62-7d6f-4f78-8451-f80fc7a734d2",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d4fffa62-7d6f-4f78-8451-f80fc7a734d2",
-          "opponentFullName": "Collège Montmorency",
-          "opponentNickname": "Nomades",
-          "opponentRegistryId": "montmorency"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-04",
-        "time": "20:45",
-        "opponent": "Montmorency",
-        "opponentCode": "MON",
-        "home": true,
-        "sport": "soccer",
-        "competition": "Soccer collégial masculin D1",
-        "gameId": "d4fffa62-7d6f-4f78-8451-f80fc7a734d2",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d4fffa62-7d6f-4f78-8451-f80fc7a734d2",
-        "opponentFullName": "Collège Montmorency",
-        "opponentNickname": "Nomades",
-        "opponentRegistryId": "montmorency"
-      },
+      "nextGames": [],
+      "nextGame": null,
       "source": "rseq-s1",
       "priority": 8,
       "fullName": "Cégep Garneau",
@@ -3104,57 +3076,6 @@
       "registryId": "vanier",
       "lastGamePriorSeason": false
     },
-    "collegial:soccer:3f4585ce-0bbf-41b0-a726-7a294098a074:7ed47ed6-c066-4d03-a7a2-0e6f0dbd1074": {
-      "id": "collegial:soccer:3f4585ce-0bbf-41b0-a726-7a294098a074:7ed47ed6-c066-4d03-a7a2-0e6f0dbd1074",
-      "rseqTeamId": "7ed47ed6-c066-4d03-a7a2-0e6f0dbd1074",
-      "leagueId": "3f4585ce-0bbf-41b0-a726-7a294098a074",
-      "name": "Montmorency",
-      "code": "MON",
-      "sector": "collegial",
-      "sport": "soccer",
-      "sportLabel": "Soccer",
-      "sex": "M",
-      "division": "D1",
-      "usports": false,
-      "leagueLabel": "Soccer collégial masculin D1",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-04",
-          "time": "20:45",
-          "opponent": "Garneau",
-          "opponentCode": "GAR",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D1",
-          "gameId": "d4fffa62-7d6f-4f78-8451-f80fc7a734d2",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d4fffa62-7d6f-4f78-8451-f80fc7a734d2",
-          "opponentFullName": "Cégep Garneau",
-          "opponentNickname": "Boomerang",
-          "opponentRegistryId": "garneau"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-04",
-        "time": "20:45",
-        "opponent": "Garneau",
-        "opponentCode": "GAR",
-        "home": false,
-        "sport": "soccer",
-        "competition": "Soccer collégial masculin D1",
-        "gameId": "d4fffa62-7d6f-4f78-8451-f80fc7a734d2",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d4fffa62-7d6f-4f78-8451-f80fc7a734d2",
-        "opponentFullName": "Cégep Garneau",
-        "opponentNickname": "Boomerang",
-        "opponentRegistryId": "garneau"
-      },
-      "source": "rseq-s1",
-      "priority": 31,
-      "fullName": "Collège Montmorency",
-      "nickname": "Nomades",
-      "registryId": "montmorency"
-    },
     "collegial:soccer:48a59be5-0904-4b5c-b52b-1ef4cf1e8d8c:4f4983e8-5e8b-48b0-a3ff-491bbda96b03": {
       "id": "collegial:soccer:48a59be5-0904-4b5c-b52b-1ef4cf1e8d8c:4f4983e8-5e8b-48b0-a3ff-491bbda96b03",
       "rseqTeamId": "4f4983e8-5e8b-48b0-a3ff-491bbda96b03",
@@ -3183,7 +3104,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3959dbdb-d9bf-4b47-817d-29af5be304bd",
           "opponentFullName": "Cégep de Trois-Rivières",
           "opponentNickname": "Diablos",
-          "opponentRegistryId": "trois-rivieres"
+          "opponentRegistryId": "trois-rivieres",
+          "live": true
         }
       ],
       "nextGame": {
@@ -3198,7 +3120,8 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3959dbdb-d9bf-4b47-817d-29af5be304bd",
         "opponentFullName": "Cégep de Trois-Rivières",
         "opponentNickname": "Diablos",
-        "opponentRegistryId": "trois-rivieres"
+        "opponentRegistryId": "trois-rivieres",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 24,
@@ -3233,7 +3156,8 @@
           "gameId": "3959dbdb-d9bf-4b47-817d-29af5be304bd",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3959dbdb-d9bf-4b47-817d-29af5be304bd",
           "opponentFullName": "Champlain College Lennoxville",
-          "opponentRegistryId": "champlain-lennoxville"
+          "opponentRegistryId": "champlain-lennoxville",
+          "live": true
         }
       ],
       "nextGame": {
@@ -3247,7 +3171,8 @@
         "gameId": "3959dbdb-d9bf-4b47-817d-29af5be304bd",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3959dbdb-d9bf-4b47-817d-29af5be304bd",
         "opponentFullName": "Champlain College Lennoxville",
-        "opponentRegistryId": "champlain-lennoxville"
+        "opponentRegistryId": "champlain-lennoxville",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 40,
@@ -3284,7 +3209,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ca81fcd7-b457-43d0-80b2-c20c78f6fbcc",
           "opponentFullName": "Vanier College",
           "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "vanier"
+          "opponentRegistryId": "vanier",
+          "live": true
         }
       ],
       "nextGame": {
@@ -3299,7 +3225,8 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ca81fcd7-b457-43d0-80b2-c20c78f6fbcc",
         "opponentFullName": "Vanier College",
         "opponentNickname": "Cheetahs",
-        "opponentRegistryId": "vanier"
+        "opponentRegistryId": "vanier",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 37,
@@ -3336,7 +3263,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ca81fcd7-b457-43d0-80b2-c20c78f6fbcc",
           "opponentFullName": "Cégep de Sainte-Foy",
           "opponentNickname": "Géants",
-          "opponentRegistryId": "sainte-foy"
+          "opponentRegistryId": "sainte-foy",
+          "live": true
         }
       ],
       "nextGame": {
@@ -3351,7 +3279,8 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ca81fcd7-b457-43d0-80b2-c20c78f6fbcc",
         "opponentFullName": "Cégep de Sainte-Foy",
         "opponentNickname": "Géants",
-        "opponentRegistryId": "sainte-foy"
+        "opponentRegistryId": "sainte-foy",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 10,
@@ -7122,6 +7051,110 @@
       "fullName": "Université de Montréal",
       "nickname": "Carabins",
       "registryId": "udem",
+      "lastGamePriorSeason": false
+    },
+    "collegial:soccer:48f1f0c8-7f9b-410d-91f9-56bfb62a5aa3:82c18d4a-1399-4985-982e-c98674f4a30c": {
+      "id": "collegial:soccer:48f1f0c8-7f9b-410d-91f9-56bfb62a5aa3:82c18d4a-1399-4985-982e-c98674f4a30c",
+      "rseqTeamId": "82c18d4a-1399-4985-982e-c98674f4a30c",
+      "leagueId": "48f1f0c8-7f9b-410d-91f9-56bfb62a5aa3",
+      "name": "Garneau",
+      "code": "GAR",
+      "sector": "collegial",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "F",
+      "division": "D2",
+      "usports": false,
+      "leagueLabel": "Soccer collégial féminin D2",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-06",
+          "time": "13:00",
+          "opponent": "Limoilou",
+          "opponentCode": "LIM",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D2",
+          "gameId": "b192ca96-8150-4a33-93c9-703f59267ae5",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b192ca96-8150-4a33-93c9-703f59267ae5",
+          "opponentFullName": "Cégep Limoilou",
+          "opponentNickname": "Titans",
+          "opponentRegistryId": "limoilou"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-06",
+        "time": "13:00",
+        "opponent": "Limoilou",
+        "opponentCode": "LIM",
+        "home": true,
+        "sport": "soccer",
+        "competition": "Soccer collégial féminin D2",
+        "gameId": "b192ca96-8150-4a33-93c9-703f59267ae5",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b192ca96-8150-4a33-93c9-703f59267ae5",
+        "opponentFullName": "Cégep Limoilou",
+        "opponentNickname": "Titans",
+        "opponentRegistryId": "limoilou"
+      },
+      "source": "rseq-s1",
+      "priority": 8,
+      "fullName": "Cégep Garneau",
+      "nickname": "Boomerang",
+      "registryId": "garneau",
+      "lastGamePriorSeason": false
+    },
+    "collegial:soccer:48f1f0c8-7f9b-410d-91f9-56bfb62a5aa3:92729c91-96dd-471c-80ae-3186cd1f7b03": {
+      "id": "collegial:soccer:48f1f0c8-7f9b-410d-91f9-56bfb62a5aa3:92729c91-96dd-471c-80ae-3186cd1f7b03",
+      "rseqTeamId": "92729c91-96dd-471c-80ae-3186cd1f7b03",
+      "leagueId": "48f1f0c8-7f9b-410d-91f9-56bfb62a5aa3",
+      "name": "Limoilou",
+      "code": "LIM",
+      "sector": "collegial",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "F",
+      "division": "D2",
+      "usports": false,
+      "leagueLabel": "Soccer collégial féminin D2",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-06",
+          "time": "13:00",
+          "opponent": "Garneau",
+          "opponentCode": "GAR",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D2",
+          "gameId": "b192ca96-8150-4a33-93c9-703f59267ae5",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b192ca96-8150-4a33-93c9-703f59267ae5",
+          "opponentFullName": "Cégep Garneau",
+          "opponentNickname": "Boomerang",
+          "opponentRegistryId": "garneau"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-06",
+        "time": "13:00",
+        "opponent": "Garneau",
+        "opponentCode": "GAR",
+        "home": false,
+        "sport": "soccer",
+        "competition": "Soccer collégial féminin D2",
+        "gameId": "b192ca96-8150-4a33-93c9-703f59267ae5",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b192ca96-8150-4a33-93c9-703f59267ae5",
+        "opponentFullName": "Cégep Garneau",
+        "opponentNickname": "Boomerang",
+        "opponentRegistryId": "garneau"
+      },
+      "source": "rseq-s1",
+      "priority": 9,
+      "fullName": "Cégep Limoilou",
+      "nickname": "Titans",
+      "registryId": "limoilou",
       "lastGamePriorSeason": false
     }
   }
