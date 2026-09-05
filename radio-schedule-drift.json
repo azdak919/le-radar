@@ -1,11 +1,14 @@
 {
-  "checkedAt": "2026-09-04T00:56:49.968Z",
+  "checkedAt": "2026-09-05T00:53:18.725Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
-    "drift": [],
+    "stable": 3,
+    "drift": [
+      "chyz",
+      "cism"
+    ],
     "overhaul": [
       "choq"
     ],
@@ -15,22 +18,36 @@
     {
       "id": "chyz",
       "published": 29,
-      "fresh": 29,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 30,
+      "added": [
+        "ven 16:30–18:00 L'Artiste du mois CHYZ",
+        "ven 18:00–19:00 Les Arshitechs du Son"
+      ],
+      "removed": [
+        "ven 16:00–17:30 L'Artiste du mois CHYZ"
+      ],
+      "changed": 3,
+      "ratio": 0.103,
+      "status": "drift"
     },
     {
       "id": "cism",
       "published": 109,
-      "fresh": 109,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 106,
+      "added": [
+        "ven 16:00–18:00 En direct du FME : Arielle Soucy et Afternoon Bike Ride",
+        "ven 18:00–19:00 Ok Doomer"
+      ],
+      "removed": [
+        "dim 00:00–02:00 Basses fréquences (reprise)",
+        "dim 20:00–21:30 London café (reprise)",
+        "dim 21:30–00:00 Mix Anglo",
+        "ven 16:00–17:00 Turbo tannant",
+        "ven 17:00–19:00 Ok Doomer"
+      ],
+      "changed": 7,
+      "ratio": 0.064,
+      "status": "drift"
     },
     {
       "id": "ckut",
