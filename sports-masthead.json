@@ -1,10 +1,10 @@
 {
-  "updated": "2026-09-05T22:19:32.286Z",
-  "fetchedAt": "2026-09-05T22:19:32.286Z",
+  "updated": "2026-09-05T23:11:46.138Z",
+  "fetchedAt": "2026-09-05T23:11:46.138Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-05T22:19:32.286Z"
+    "referenceDate": "2026-09-05T23:11:46.138Z"
   },
   "masthead": {
     "nextGameLimit": 48,
@@ -12,7 +12,7 @@
     "chipResultMaxDaysAgo": 5,
     "ctaResultMaxDaysAgo": 1
   },
-  "teamCount": 168,
+  "teamCount": 164,
   "teams": {
     "collegial:flag-football:9b8a3ee0-667b-43ba-9377-30176c5f5ce3:7f29fa90-2fb2-467e-a299-31fecb769e41": {
       "id": "collegial:flag-football:9b8a3ee0-667b-43ba-9377-30176c5f5ce3:7f29fa90-2fb2-467e-a299-31fecb769e41",
@@ -8272,309 +8272,6 @@
       "registryId": "saint-hyacinthe",
       "lastGamePriorSeason": false
     },
-    "collegial:soccer:05798bd7-130d-4b88-ae8d-8f934e7963ed:101ca532-2b93-4785-ab87-0d329c40a552": {
-      "id": "collegial:soccer:05798bd7-130d-4b88-ae8d-8f934e7963ed:101ca532-2b93-4785-ab87-0d329c40a552",
-      "rseqTeamId": "101ca532-2b93-4785-ab87-0d329c40a552",
-      "leagueId": "05798bd7-130d-4b88-ae8d-8f934e7963ed",
-      "name": "Ellis",
-      "code": "ELI",
-      "sector": "collegial",
-      "sport": "soccer",
-      "sportLabel": "Soccer",
-      "sex": "M",
-      "division": "D3",
-      "usports": false,
-      "leagueLabel": "Soccer collégial masculin D3",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-05",
-          "time": "18:30",
-          "opponent": "Marie-Victorin",
-          "opponentCode": "CMV",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D3",
-          "gameId": "645dff11-a3ae-49a8-b515-7462c3ded86f",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=645dff11-a3ae-49a8-b515-7462c3ded86f",
-          "opponentFullName": "Cégep de Marie-Victorin",
-          "opponentRegistryId": "marie-victorin",
-          "live": true
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-05",
-        "time": "18:30",
-        "opponent": "Marie-Victorin",
-        "opponentCode": "CMV",
-        "home": true,
-        "sport": "soccer",
-        "competition": "Soccer collégial masculin D3",
-        "gameId": "645dff11-a3ae-49a8-b515-7462c3ded86f",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=645dff11-a3ae-49a8-b515-7462c3ded86f",
-        "opponentFullName": "Cégep de Marie-Victorin",
-        "opponentRegistryId": "marie-victorin",
-        "live": true
-      },
-      "source": "rseq-s1",
-      "priority": 80,
-      "fullName": "Collège Ellis",
-      "registryId": "ellis"
-    },
-    "collegial:soccer:05798bd7-130d-4b88-ae8d-8f934e7963ed:e74e265e-c4ef-4833-a9a3-16bbfb449c52": {
-      "id": "collegial:soccer:05798bd7-130d-4b88-ae8d-8f934e7963ed:e74e265e-c4ef-4833-a9a3-16bbfb449c52",
-      "rseqTeamId": "e74e265e-c4ef-4833-a9a3-16bbfb449c52",
-      "leagueId": "05798bd7-130d-4b88-ae8d-8f934e7963ed",
-      "name": "Marie-Victorin",
-      "code": "CMV",
-      "sector": "collegial",
-      "sport": "soccer",
-      "sportLabel": "Soccer",
-      "sex": "M",
-      "division": "D3",
-      "usports": false,
-      "leagueLabel": "Soccer collégial masculin D3",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-05",
-          "time": "18:30",
-          "opponent": "Ellis",
-          "opponentCode": "ELI",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D3",
-          "gameId": "645dff11-a3ae-49a8-b515-7462c3ded86f",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=645dff11-a3ae-49a8-b515-7462c3ded86f",
-          "opponentFullName": "Collège Ellis",
-          "opponentRegistryId": "ellis",
-          "live": true
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-05",
-        "time": "18:30",
-        "opponent": "Ellis",
-        "opponentCode": "ELI",
-        "home": false,
-        "sport": "soccer",
-        "competition": "Soccer collégial masculin D3",
-        "gameId": "645dff11-a3ae-49a8-b515-7462c3ded86f",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=645dff11-a3ae-49a8-b515-7462c3ded86f",
-        "opponentFullName": "Collège Ellis",
-        "opponentRegistryId": "ellis",
-        "live": true
-      },
-      "source": "rseq-s1",
-      "priority": 80,
-      "fullName": "Cégep de Marie-Victorin",
-      "registryId": "marie-victorin"
-    },
-    "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:d9e8bc5a-48c6-4507-bbb9-cde12dcaf4a7": {
-      "id": "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:d9e8bc5a-48c6-4507-bbb9-cde12dcaf4a7",
-      "rseqTeamId": "d9e8bc5a-48c6-4507-bbb9-cde12dcaf4a7",
-      "leagueId": "357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f",
-      "name": "Limoilou",
-      "code": "LIM",
-      "sector": "collegial",
-      "sport": "football",
-      "sportLabel": "Football",
-      "sex": "M",
-      "division": "D1",
-      "usports": false,
-      "leagueLabel": "Football collégial masculin D1",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-05",
-          "time": "19:00",
-          "opponent": "Vieux Montréal",
-          "opponentCode": "CVM",
-          "home": true,
-          "sport": "football",
-          "competition": "Football collégial masculin D1",
-          "gameId": "05260c3c-f147-4738-b620-0058ad3de582",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=05260c3c-f147-4738-b620-0058ad3de582",
-          "opponentFullName": "Cégep du Vieux Montréal",
-          "opponentRegistryId": "vieux-montreal"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-05",
-        "time": "19:00",
-        "opponent": "Vieux Montréal",
-        "opponentCode": "CVM",
-        "home": true,
-        "sport": "football",
-        "competition": "Football collégial masculin D1",
-        "gameId": "05260c3c-f147-4738-b620-0058ad3de582",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=05260c3c-f147-4738-b620-0058ad3de582",
-        "opponentFullName": "Cégep du Vieux Montréal",
-        "opponentRegistryId": "vieux-montreal"
-      },
-      "source": "rseq-s1",
-      "priority": 9,
-      "fullName": "Cégep Limoilou",
-      "nickname": "Titans",
-      "registryId": "limoilou",
-      "lastGamePriorSeason": false
-    },
-    "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:253fe1e5-95e3-4f72-8597-ab2de6b038db": {
-      "id": "collegial:football:357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f:253fe1e5-95e3-4f72-8597-ab2de6b038db",
-      "rseqTeamId": "253fe1e5-95e3-4f72-8597-ab2de6b038db",
-      "leagueId": "357ee497-0d4f-4152-a7a4-b3a6a2c3cf8f",
-      "name": "Vieux Montréal",
-      "code": "CVM",
-      "sector": "collegial",
-      "sport": "football",
-      "sportLabel": "Football",
-      "sex": "M",
-      "division": "D1",
-      "usports": false,
-      "leagueLabel": "Football collégial masculin D1",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-05",
-          "time": "19:00",
-          "opponent": "Limoilou",
-          "opponentCode": "LIM",
-          "home": false,
-          "sport": "football",
-          "competition": "Football collégial masculin D1",
-          "gameId": "05260c3c-f147-4738-b620-0058ad3de582",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=05260c3c-f147-4738-b620-0058ad3de582",
-          "opponentFullName": "Cégep Limoilou",
-          "opponentNickname": "Titans",
-          "opponentRegistryId": "limoilou"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-05",
-        "time": "19:00",
-        "opponent": "Limoilou",
-        "opponentCode": "LIM",
-        "home": false,
-        "sport": "football",
-        "competition": "Football collégial masculin D1",
-        "gameId": "05260c3c-f147-4738-b620-0058ad3de582",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=05260c3c-f147-4738-b620-0058ad3de582",
-        "opponentFullName": "Cégep Limoilou",
-        "opponentNickname": "Titans",
-        "opponentRegistryId": "limoilou"
-      },
-      "source": "rseq-s1",
-      "priority": 41,
-      "fullName": "Cégep du Vieux Montréal",
-      "registryId": "vieux-montreal",
-      "lastGamePriorSeason": false
-    },
-    "universitaire:football:d9538539-2732-439b-8521-02da4f3da6e8:26271cd6-bce1-44ff-9bd2-830e7b66139c": {
-      "id": "universitaire:football:d9538539-2732-439b-8521-02da4f3da6e8:26271cd6-bce1-44ff-9bd2-830e7b66139c",
-      "rseqTeamId": "26271cd6-bce1-44ff-9bd2-830e7b66139c",
-      "leagueId": "d9538539-2732-439b-8521-02da4f3da6e8",
-      "name": "Concordia",
-      "code": "UCON",
-      "sector": "universitaire",
-      "sport": "football",
-      "sportLabel": "Football",
-      "sex": "M",
-      "division": null,
-      "usports": true,
-      "leagueLabel": "Football universitaire masculin",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-05",
-          "time": "19:00",
-          "opponent": "Laval",
-          "opponentCode": "LAV",
-          "home": false,
-          "sport": "football",
-          "competition": "Football universitaire masculin",
-          "gameId": "cefad0b9-0e2e-42e0-9bf0-90cf7ba44070",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cefad0b9-0e2e-42e0-9bf0-90cf7ba44070",
-          "opponentFullName": "Université Laval",
-          "opponentNickname": "Rouge et Or",
-          "opponentRegistryId": "ulaval"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-05",
-        "time": "19:00",
-        "opponent": "Laval",
-        "opponentCode": "LAV",
-        "home": false,
-        "sport": "football",
-        "competition": "Football universitaire masculin",
-        "gameId": "cefad0b9-0e2e-42e0-9bf0-90cf7ba44070",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cefad0b9-0e2e-42e0-9bf0-90cf7ba44070",
-        "opponentFullName": "Université Laval",
-        "opponentNickname": "Rouge et Or",
-        "opponentRegistryId": "ulaval"
-      },
-      "source": "rseq-s1",
-      "priority": 3,
-      "fullName": "Université Concordia",
-      "nickname": "Stingers",
-      "registryId": "concordia"
-    },
-    "universitaire:football:d9538539-2732-439b-8521-02da4f3da6e8:2f98c3ef-7627-4b7d-8933-f497c21c3cf9": {
-      "id": "universitaire:football:d9538539-2732-439b-8521-02da4f3da6e8:2f98c3ef-7627-4b7d-8933-f497c21c3cf9",
-      "rseqTeamId": "2f98c3ef-7627-4b7d-8933-f497c21c3cf9",
-      "leagueId": "d9538539-2732-439b-8521-02da4f3da6e8",
-      "name": "Laval",
-      "code": "LAV",
-      "sector": "universitaire",
-      "sport": "football",
-      "sportLabel": "Football",
-      "sex": "M",
-      "division": null,
-      "usports": true,
-      "leagueLabel": "Football universitaire masculin",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-05",
-          "time": "19:00",
-          "opponent": "Concordia",
-          "opponentCode": "UCON",
-          "home": true,
-          "sport": "football",
-          "competition": "Football universitaire masculin",
-          "gameId": "cefad0b9-0e2e-42e0-9bf0-90cf7ba44070",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cefad0b9-0e2e-42e0-9bf0-90cf7ba44070",
-          "opponentFullName": "Université Concordia",
-          "opponentNickname": "Stingers",
-          "opponentRegistryId": "concordia"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-05",
-        "time": "19:00",
-        "opponent": "Concordia",
-        "opponentCode": "UCON",
-        "home": true,
-        "sport": "football",
-        "competition": "Football universitaire masculin",
-        "gameId": "cefad0b9-0e2e-42e0-9bf0-90cf7ba44070",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cefad0b9-0e2e-42e0-9bf0-90cf7ba44070",
-        "opponentFullName": "Université Concordia",
-        "opponentNickname": "Stingers",
-        "opponentRegistryId": "concordia"
-      },
-      "source": "rseq-s1",
-      "priority": 1,
-      "fullName": "Université Laval",
-      "nickname": "Rouge et Or",
-      "registryId": "ulaval"
-    },
     "collegial:football:e0cda4d1-7f2b-43fa-bf3d-b68166903237:059e433f-c69d-4001-8db1-f84d2778b9bd": {
       "id": "collegial:football:e0cda4d1-7f2b-43fa-bf3d-b68166903237:059e433f-c69d-4001-8db1-f84d2778b9bd",
       "rseqTeamId": "059e433f-c69d-4001-8db1-f84d2778b9bd",
@@ -11511,6 +11208,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bf196b25-7eec-44af-a6d9-ce1b0adb53c6",
           "opponentFullName": "Cégep de Shawinigan",
           "opponentRegistryId": "shawinigan"
+        },
+        {
+          "date": "2026-09-07",
+          "time": "13:30",
+          "opponent": "Granby",
+          "opponentCode": "GBY",
+          "home": true,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "16d1908c-8fe9-4966-a24c-7e150064fa58",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=16d1908c-8fe9-4966-a24c-7e150064fa58",
+          "opponentFullName": "Cégep de Granby",
+          "opponentRegistryId": "granby"
         }
       ],
       "nextGame": {
@@ -11559,6 +11269,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bf196b25-7eec-44af-a6d9-ce1b0adb53c6",
           "opponentFullName": "Séminaire de Sherbrooke",
           "opponentRegistryId": "seminaire-de-sherbrooke"
+        },
+        {
+          "date": "2026-09-07",
+          "time": "15:00",
+          "opponent": "Laflèche",
+          "opponentCode": "LAF",
+          "home": true,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "5f33c043-de9e-45f9-aca8-90fbb0b2f58b",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5f33c043-de9e-45f9-aca8-90fbb0b2f58b",
+          "opponentFullName": "Collège Laflèche",
+          "opponentRegistryId": "lafleche"
         }
       ],
       "nextGame": {
@@ -11655,6 +11378,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=947f954e-408f-424a-9d66-b8837867105b",
           "opponentFullName": "Cégep régional de Lanaudière à Joliette",
           "opponentRegistryId": "joliette"
+        },
+        {
+          "date": "2026-09-07",
+          "time": "13:30",
+          "opponent": "Marie-Victorin",
+          "opponentCode": "CMV",
+          "home": true,
+          "sport": "flag-football",
+          "competition": "Flag football collégial masculin D3",
+          "gameId": "bb6fd772-6bf3-4bb8-b251-946a471edf97",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bb6fd772-6bf3-4bb8-b251-946a471edf97",
+          "opponentFullName": "Cégep de Marie-Victorin",
+          "opponentRegistryId": "marie-victorin"
         }
       ],
       "nextGame": {
@@ -11703,6 +11439,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e6cfaa6e-eca3-4074-b558-b652012abab5",
           "opponentFullName": "Campus Notre-Dame-de-Foy",
           "opponentRegistryId": "notre-dame-foy"
+        },
+        {
+          "date": "2026-09-07",
+          "time": "15:00",
+          "opponent": "Shawinigan",
+          "opponentCode": "SHA",
+          "home": false,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "5f33c043-de9e-45f9-aca8-90fbb0b2f58b",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5f33c043-de9e-45f9-aca8-90fbb0b2f58b",
+          "opponentFullName": "Cégep de Shawinigan",
+          "opponentRegistryId": "shawinigan"
         }
       ],
       "nextGame": {
@@ -11866,6 +11615,102 @@
       "priority": 80,
       "fullName": "Marianopolis College",
       "registryId": "marianopolis"
+    },
+    "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:16a1057c-b320-4b1a-a8db-c5aa49c3cc3e": {
+      "id": "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:16a1057c-b320-4b1a-a8db-c5aa49c3cc3e",
+      "rseqTeamId": "16a1057c-b320-4b1a-a8db-c5aa49c3cc3e",
+      "leagueId": "bb172f86-5983-4fab-9cdc-5be7f33cadca",
+      "name": "Granby",
+      "code": "GBY",
+      "sector": "collegial",
+      "sport": "flag-football",
+      "sportLabel": "Flag football",
+      "sex": "F",
+      "division": "D2",
+      "usports": false,
+      "leagueLabel": "Flag football collégial féminin D2",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-07",
+          "time": "13:30",
+          "opponent": "Séminaire de Sherbrooke",
+          "opponentCode": "SSH",
+          "home": false,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "16d1908c-8fe9-4966-a24c-7e150064fa58",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=16d1908c-8fe9-4966-a24c-7e150064fa58",
+          "opponentFullName": "Séminaire de Sherbrooke",
+          "opponentRegistryId": "seminaire-de-sherbrooke"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-07",
+        "time": "13:30",
+        "opponent": "Séminaire de Sherbrooke",
+        "opponentCode": "SSH",
+        "home": false,
+        "sport": "flag-football",
+        "competition": "Flag football collégial féminin D2",
+        "gameId": "16d1908c-8fe9-4966-a24c-7e150064fa58",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=16d1908c-8fe9-4966-a24c-7e150064fa58",
+        "opponentFullName": "Séminaire de Sherbrooke",
+        "opponentRegistryId": "seminaire-de-sherbrooke"
+      },
+      "source": "rseq-s1",
+      "priority": 80,
+      "fullName": "Cégep de Granby",
+      "registryId": "granby"
+    },
+    "collegial:flag-football:045ac13a-79e2-4505-8c90-bf29697756c1:7a963f15-659c-42a9-b890-cbcb0e9760f4": {
+      "id": "collegial:flag-football:045ac13a-79e2-4505-8c90-bf29697756c1:7a963f15-659c-42a9-b890-cbcb0e9760f4",
+      "rseqTeamId": "7a963f15-659c-42a9-b890-cbcb0e9760f4",
+      "leagueId": "045ac13a-79e2-4505-8c90-bf29697756c1",
+      "name": "Marie-Victorin",
+      "code": "CMV",
+      "sector": "collegial",
+      "sport": "flag-football",
+      "sportLabel": "Flag football",
+      "sex": "M",
+      "division": "D3",
+      "usports": false,
+      "leagueLabel": "Flag football collégial masculin D3",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-07",
+          "time": "13:30",
+          "opponent": "L'Assomption",
+          "opponentCode": "LAS",
+          "home": false,
+          "sport": "flag-football",
+          "competition": "Flag football collégial masculin D3",
+          "gameId": "bb6fd772-6bf3-4bb8-b251-946a471edf97",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bb6fd772-6bf3-4bb8-b251-946a471edf97",
+          "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
+          "opponentRegistryId": "lassomption"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-07",
+        "time": "13:30",
+        "opponent": "L'Assomption",
+        "opponentCode": "LAS",
+        "home": false,
+        "sport": "flag-football",
+        "competition": "Flag football collégial masculin D3",
+        "gameId": "bb6fd772-6bf3-4bb8-b251-946a471edf97",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bb6fd772-6bf3-4bb8-b251-946a471edf97",
+        "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
+        "opponentRegistryId": "lassomption"
+      },
+      "source": "rseq-s1",
+      "priority": 80,
+      "fullName": "Cégep de Marie-Victorin",
+      "registryId": "marie-victorin"
     }
   }
 }
