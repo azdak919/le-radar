@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-05T19:18:07.342Z",
+  "updatedAt": "2026-09-05T21:13:20.388Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Radio Futura",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/radio-futura/"
-      },
+      "current": null,
       "next": {
         "title": "Football du Rouge et Or",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "18:30",
         "end": "22:30",
         "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
       },
       "track": "",
-      "showTitle": "Radio Futura",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-05T19:17:54.660Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Faites entrer un DJ",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/faites-entrer-un-dj"
-      },
-      "next": {
-        "title": "Contenu explicite",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/contenu-explicite"
-      },
-      "track": "",
-      "showTitle": "Faites entrer un DJ",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T19:17:56.753Z"
+      "checkedAt": "2026-09-05T21:13:07.537Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Le radar",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "17:30",
+        "url": "https://cism893.ca/emissions/le-radar-2"
+      },
+      "next": {
+        "title": "Disconomique",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/disconomique"
+      },
+      "track": "",
+      "showTitle": "Le radar",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-05T21:13:09.555Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Funky Revolutions",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
-      },
-      "next": {
         "title": "West Indian Rhythms",
         "source": "api-live",
         "start": "16:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Masters At Work",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Funky Revolutions",
+      "showTitle": "West Indian Rhythms",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T19:17:59.529Z"
+      "checkedAt": "2026-09-05T21:13:12.115Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Caribbean Callaloo",
+        "title": "Mo' Ritmo Radio",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
       },
       "next": {
-        "title": "Mi Dun Talk",
+        "title": "The Limelight",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/mi-dun-talk"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-limelight"
       },
       "track": "",
-      "showTitle": "Caribbean Callaloo",
+      "showTitle": "Mo' Ritmo Radio",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T19:18:01.838Z"
+      "checkedAt": "2026-09-05T21:13:14.057Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T19:18:03.059Z"
+      "checkedAt": "2026-09-05T21:13:15.303Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Les Breastfeeders - Funny Funiculaire",
+      "track": "Xavier Caféïne - La Fin Du Monde",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -152,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-05T19:18:06.992Z"
+      "checkedAt": "2026-09-05T21:13:20.038Z"
     }
   }
 }
