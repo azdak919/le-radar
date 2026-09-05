@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-05T19:07:29.866Z",
-  "fetchedAt": "2026-09-05T19:07:29.866Z",
+  "updated": "2026-09-05T19:18:39.139Z",
+  "fetchedAt": "2026-09-05T19:18:39.139Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-05T19:07:29.866Z"
+    "referenceDate": "2026-09-05T19:18:39.140Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 816,
@@ -54660,7 +54660,8 @@
           "gameId": "d99805a3-055b-438e-be35-4a1dd0046d2a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d99805a3-055b-438e-be35-4a1dd0046d2a",
           "opponentFullName": "Campus Notre-Dame-de-Foy",
-          "opponentRegistryId": "notre-dame-bleu"
+          "opponentRegistryId": "notre-dame-bleu",
+          "live": true
         },
         {
           "date": "2026-09-13",
@@ -54743,6 +54744,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d99805a3-055b-438e-be35-4a1dd0046d2a",
         "opponentFullName": "Campus Notre-Dame-de-Foy",
         "opponentRegistryId": "notre-dame-bleu",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -54773,6 +54775,19 @@
       "results": [],
       "lastGame": null,
       "nextGames": [
+        {
+          "date": "2026-09-05",
+          "time": "12:00",
+          "opponent": "Lévis",
+          "opponentCode": "LÉV",
+          "home": false,
+          "sport": "rugby",
+          "competition": "Rugby collégial féminin",
+          "gameId": "a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+          "opponentFullName": "Cégep de Lévis",
+          "opponentRegistryId": "levis"
+        },
         {
           "date": "2026-09-12",
           "time": "13:00",
@@ -54842,18 +54857,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-12",
-        "time": "13:00",
-        "opponent": "Sainte-Foy",
-        "opponentCode": "CSF",
-        "home": true,
+        "date": "2026-09-05",
+        "time": "12:00",
+        "opponent": "Lévis",
+        "opponentCode": "LÉV",
+        "home": false,
         "sport": "rugby",
         "competition": "Rugby collégial féminin",
-        "gameId": "56874514-c2db-4b26-9a72-1ddda48ddc4e",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=56874514-c2db-4b26-9a72-1ddda48ddc4e",
-        "opponentFullName": "Cégep de Sainte-Foy",
-        "opponentNickname": "Géants",
-        "opponentRegistryId": "sainte-foy",
+        "gameId": "a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+        "opponentFullName": "Cégep de Lévis",
+        "opponentRegistryId": "levis",
         "opponentSector": "collegial"
       },
       "record": {
@@ -54885,6 +54899,20 @@
       "results": [],
       "lastGame": null,
       "nextGames": [
+        {
+          "date": "2026-09-05",
+          "time": "12:00",
+          "opponent": "Garneau",
+          "opponentCode": "GAR",
+          "home": true,
+          "sport": "rugby",
+          "competition": "Rugby collégial féminin",
+          "gameId": "a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+          "opponentFullName": "Cégep Garneau",
+          "opponentNickname": "Boomerang",
+          "opponentRegistryId": "garneau"
+        },
         {
           "date": "2026-09-12",
           "time": "13:00",
@@ -54955,17 +54983,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-12",
-        "time": "13:00",
-        "opponent": "Notre-Dame Bleu",
-        "opponentCode": "NDFB",
-        "home": false,
+        "date": "2026-09-05",
+        "time": "12:00",
+        "opponent": "Garneau",
+        "opponentCode": "GAR",
+        "home": true,
         "sport": "rugby",
         "competition": "Rugby collégial féminin",
-        "gameId": "08c6cc95-232e-4569-90d8-017ef29d7c89",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=08c6cc95-232e-4569-90d8-017ef29d7c89",
-        "opponentFullName": "Campus Notre-Dame-de-Foy",
-        "opponentRegistryId": "notre-dame-bleu",
+        "gameId": "a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+        "opponentFullName": "Cégep Garneau",
+        "opponentNickname": "Boomerang",
+        "opponentRegistryId": "garneau",
         "opponentSector": "collegial"
       },
       "record": {
@@ -55156,7 +55185,8 @@
           "gameId": "d99805a3-055b-438e-be35-4a1dd0046d2a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d99805a3-055b-438e-be35-4a1dd0046d2a",
           "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches"
+          "opponentRegistryId": "beauce-appalaches",
+          "live": true
         },
         {
           "date": "2026-09-12",
@@ -55239,6 +55269,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d99805a3-055b-438e-be35-4a1dd0046d2a",
         "opponentFullName": "Cégep de Beauce-Appalaches",
         "opponentRegistryId": "beauce-appalaches",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {

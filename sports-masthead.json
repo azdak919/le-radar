@@ -1,10 +1,10 @@
 {
-  "updated": "2026-09-05T19:07:29.866Z",
-  "fetchedAt": "2026-09-05T19:07:29.866Z",
+  "updated": "2026-09-05T19:18:39.139Z",
+  "fetchedAt": "2026-09-05T19:18:39.139Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-05T19:07:29.866Z"
+    "referenceDate": "2026-09-05T19:18:39.140Z"
   },
   "masthead": {
     "nextGameLimit": 48,
@@ -5271,6 +5271,105 @@
       "fullName": "Cégep de Victoriaville",
       "registryId": "victoriaville"
     },
+    "collegial:rugby:7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2:2517a315-587d-493c-bc8c-bc7f38a9f8f8": {
+      "id": "collegial:rugby:7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2:2517a315-587d-493c-bc8c-bc7f38a9f8f8",
+      "rseqTeamId": "2517a315-587d-493c-bc8c-bc7f38a9f8f8",
+      "leagueId": "7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2",
+      "name": "Garneau",
+      "code": "GAR",
+      "sector": "collegial",
+      "sport": "rugby",
+      "sportLabel": "Rugby",
+      "sex": "F",
+      "division": null,
+      "usports": false,
+      "leagueLabel": "Rugby collégial féminin",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-05",
+          "time": "12:00",
+          "opponent": "Lévis",
+          "opponentCode": "LÉV",
+          "home": false,
+          "sport": "rugby",
+          "competition": "Rugby collégial féminin",
+          "gameId": "a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+          "opponentFullName": "Cégep de Lévis",
+          "opponentRegistryId": "levis"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-05",
+        "time": "12:00",
+        "opponent": "Lévis",
+        "opponentCode": "LÉV",
+        "home": false,
+        "sport": "rugby",
+        "competition": "Rugby collégial féminin",
+        "gameId": "a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+        "opponentFullName": "Cégep de Lévis",
+        "opponentRegistryId": "levis"
+      },
+      "source": "rseq-s1",
+      "priority": 8,
+      "fullName": "Cégep Garneau",
+      "nickname": "Boomerang",
+      "registryId": "garneau"
+    },
+    "collegial:rugby:7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2:61bbe2bf-d97d-4ec8-9f17-9a90bc917c77": {
+      "id": "collegial:rugby:7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2:61bbe2bf-d97d-4ec8-9f17-9a90bc917c77",
+      "rseqTeamId": "61bbe2bf-d97d-4ec8-9f17-9a90bc917c77",
+      "leagueId": "7ae4e0f5-26d4-4f52-ba86-55bbf72e3cf2",
+      "name": "Lévis",
+      "code": "LÉV",
+      "sector": "collegial",
+      "sport": "rugby",
+      "sportLabel": "Rugby",
+      "sex": "F",
+      "division": null,
+      "usports": false,
+      "leagueLabel": "Rugby collégial féminin",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-05",
+          "time": "12:00",
+          "opponent": "Garneau",
+          "opponentCode": "GAR",
+          "home": true,
+          "sport": "rugby",
+          "competition": "Rugby collégial féminin",
+          "gameId": "a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+          "opponentFullName": "Cégep Garneau",
+          "opponentNickname": "Boomerang",
+          "opponentRegistryId": "garneau"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-05",
+        "time": "12:00",
+        "opponent": "Garneau",
+        "opponentCode": "GAR",
+        "home": true,
+        "sport": "rugby",
+        "competition": "Rugby collégial féminin",
+        "gameId": "a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
+        "opponentFullName": "Cégep Garneau",
+        "opponentNickname": "Boomerang",
+        "opponentRegistryId": "garneau"
+      },
+      "source": "rseq-s1",
+      "priority": 50,
+      "fullName": "Cégep de Lévis",
+      "registryId": "levis"
+    },
     "collegial:flag-football:48369892-577a-4679-9308-5f7cf91168b7:65edf9cc-e1a6-4a0c-b020-8a0e44831166": {
       "id": "collegial:flag-football:48369892-577a-4679-9308-5f7cf91168b7:65edf9cc-e1a6-4a0c-b020-8a0e44831166",
       "rseqTeamId": "65edf9cc-e1a6-4a0c-b020-8a0e44831166",
@@ -5348,7 +5447,8 @@
           "gameId": "d99805a3-055b-438e-be35-4a1dd0046d2a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d99805a3-055b-438e-be35-4a1dd0046d2a",
           "opponentFullName": "Campus Notre-Dame-de-Foy",
-          "opponentRegistryId": "notre-dame-bleu"
+          "opponentRegistryId": "notre-dame-bleu",
+          "live": true
         }
       ],
       "nextGame": {
@@ -5362,7 +5462,8 @@
         "gameId": "d99805a3-055b-438e-be35-4a1dd0046d2a",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d99805a3-055b-438e-be35-4a1dd0046d2a",
         "opponentFullName": "Campus Notre-Dame-de-Foy",
-        "opponentRegistryId": "notre-dame-bleu"
+        "opponentRegistryId": "notre-dame-bleu",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -5396,7 +5497,8 @@
           "gameId": "d99805a3-055b-438e-be35-4a1dd0046d2a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d99805a3-055b-438e-be35-4a1dd0046d2a",
           "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches"
+          "opponentRegistryId": "beauce-appalaches",
+          "live": true
         }
       ],
       "nextGame": {
@@ -5410,7 +5512,8 @@
         "gameId": "d99805a3-055b-438e-be35-4a1dd0046d2a",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d99805a3-055b-438e-be35-4a1dd0046d2a",
         "opponentFullName": "Cégep de Beauce-Appalaches",
-        "opponentRegistryId": "beauce-appalaches"
+        "opponentRegistryId": "beauce-appalaches",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -8502,105 +8605,6 @@
       "nickname": "Vert & Or",
       "registryId": "usherbrooke",
       "lastGamePriorSeason": false
-    },
-    "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:688a5b04-1a18-4e62-a0d3-60f6244089bc": {
-      "id": "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:688a5b04-1a18-4e62-a0d3-60f6244089bc",
-      "rseqTeamId": "688a5b04-1a18-4e62-a0d3-60f6244089bc",
-      "leagueId": "42502722-0306-48e4-a178-00ed129c282d",
-      "name": "Marie-Victorin",
-      "code": "CMV",
-      "sector": "collegial",
-      "sport": "flag-football",
-      "sportLabel": "Flag football",
-      "sex": "F",
-      "division": "D3",
-      "usports": false,
-      "leagueLabel": "Flag football collégial féminin D3",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-06",
-          "time": "16:30",
-          "opponent": "Vanier",
-          "opponentCode": "VAN",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "46fdf411-fcf1-4294-953e-8573d33014ad",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=46fdf411-fcf1-4294-953e-8573d33014ad",
-          "opponentFullName": "Vanier College",
-          "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "vanier"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-06",
-        "time": "16:30",
-        "opponent": "Vanier",
-        "opponentCode": "VAN",
-        "home": true,
-        "sport": "flag-football",
-        "competition": "Flag football collégial féminin D3",
-        "gameId": "46fdf411-fcf1-4294-953e-8573d33014ad",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=46fdf411-fcf1-4294-953e-8573d33014ad",
-        "opponentFullName": "Vanier College",
-        "opponentNickname": "Cheetahs",
-        "opponentRegistryId": "vanier"
-      },
-      "source": "rseq-s1",
-      "priority": 80,
-      "fullName": "Cégep de Marie-Victorin",
-      "registryId": "marie-victorin"
-    },
-    "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:4e1b90f9-7432-4150-a1f4-476b7a69080a": {
-      "id": "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:4e1b90f9-7432-4150-a1f4-476b7a69080a",
-      "rseqTeamId": "4e1b90f9-7432-4150-a1f4-476b7a69080a",
-      "leagueId": "42502722-0306-48e4-a178-00ed129c282d",
-      "name": "Vanier",
-      "code": "VAN",
-      "sector": "collegial",
-      "sport": "flag-football",
-      "sportLabel": "Flag football",
-      "sex": "F",
-      "division": "D3",
-      "usports": false,
-      "leagueLabel": "Flag football collégial féminin D3",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-06",
-          "time": "16:30",
-          "opponent": "Marie-Victorin",
-          "opponentCode": "CMV",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "46fdf411-fcf1-4294-953e-8573d33014ad",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=46fdf411-fcf1-4294-953e-8573d33014ad",
-          "opponentFullName": "Cégep de Marie-Victorin",
-          "opponentRegistryId": "marie-victorin"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-06",
-        "time": "16:30",
-        "opponent": "Marie-Victorin",
-        "opponentCode": "CMV",
-        "home": false,
-        "sport": "flag-football",
-        "competition": "Flag football collégial féminin D3",
-        "gameId": "46fdf411-fcf1-4294-953e-8573d33014ad",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=46fdf411-fcf1-4294-953e-8573d33014ad",
-        "opponentFullName": "Cégep de Marie-Victorin",
-        "opponentRegistryId": "marie-victorin"
-      },
-      "source": "rseq-s1",
-      "priority": 10,
-      "fullName": "Vanier College",
-      "nickname": "Cheetahs",
-      "registryId": "vanier"
     }
   }
 }
