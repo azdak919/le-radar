@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05T17:27:33.568Z",
+  "updatedAt": "2026-09-05T19:02:05.175Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T17:27:16.794Z"
+      "checkedAt": "2026-09-05T19:01:32.990Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Change le beat",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/change-le-beat"
-      },
-      "next": {
         "title": "Faites entrer un DJ",
         "source": "schedule",
         "start": "14:00",
         "end": "16:00",
         "url": "https://cism893.ca/emissions/faites-entrer-un-dj"
       },
+      "next": {
+        "title": "Contenu explicite",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/contenu-explicite"
+      },
       "track": "",
-      "showTitle": "Change le beat",
+      "showTitle": "Faites entrer un DJ",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T17:27:19.002Z"
+      "checkedAt": "2026-09-05T19:01:35.199Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Samedi Midi",
-        "source": "api-live",
-        "start": "10:30",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Funky Revolutions",
         "source": "api-live",
         "start": "14:00",
         "end": "16:00"
       },
+      "next": {
+        "title": "West Indian Rhythms",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Samedi Midi",
+      "showTitle": "Funky Revolutions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T17:27:21.758Z"
+      "checkedAt": "2026-09-05T19:01:42.286Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Anatomy of Caribbean Music",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
-      },
-      "next": {
         "title": "Caribbean Callaloo",
         "source": "schedule-live",
         "start": "14:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/caribbean-callaloo"
       },
+      "next": {
+        "title": "Mi Dun Talk",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/mi-dun-talk"
+      },
       "track": "",
-      "showTitle": "Anatomy of Caribbean Music",
+      "showTitle": "Caribbean Callaloo",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T17:27:24.827Z"
+      "checkedAt": "2026-09-05T19:01:45.633Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T17:27:26.365Z"
+      "checkedAt": "2026-09-05T19:01:46.956Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T17:27:33.217Z"
+      "checkedAt": "2026-09-05T19:02:04.825Z"
     }
   }
 }
