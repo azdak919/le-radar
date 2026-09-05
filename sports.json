@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-05T00:46:21.408Z",
-  "fetchedAt": "2026-09-05T00:46:21.408Z",
+  "updated": "2026-09-05T01:05:39.142Z",
+  "fetchedAt": "2026-09-05T01:05:39.142Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-05T00:46:21.408Z"
+    "referenceDate": "2026-09-05T01:05:39.142Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 816,
@@ -60963,21 +60963,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-04",
-          "time": "21:00",
-          "opponent": "Cégep de Trois-Rivières",
-          "opponentCode": "TRV",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "3959dbdb-d9bf-4b47-817d-29af5be304bd",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3959dbdb-d9bf-4b47-817d-29af5be304bd",
-          "opponentFullName": "Cégep de Trois-Rivières",
-          "opponentNickname": "Diablos",
-          "opponentRegistryId": "trois-rivieres",
-          "live": true
-        },
-        {
           "date": "2026-09-13",
           "time": "15:30",
           "opponent": "Granby",
@@ -61058,19 +61043,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-04",
-        "time": "21:00",
-        "opponent": "Cégep de Trois-Rivières",
-        "opponentCode": "TRV",
-        "home": false,
+        "date": "2026-09-13",
+        "time": "15:30",
+        "opponent": "Granby",
+        "opponentCode": "GBY",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "3959dbdb-d9bf-4b47-817d-29af5be304bd",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3959dbdb-d9bf-4b47-817d-29af5be304bd",
-        "opponentFullName": "Cégep de Trois-Rivières",
-        "opponentNickname": "Diablos",
-        "opponentRegistryId": "trois-rivieres",
-        "live": true,
+        "gameId": "24dcce59-b67f-4b99-a93f-e278c07b38ba",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=24dcce59-b67f-4b99-a93f-e278c07b38ba",
+        "opponentFullName": "Cégep de Granby",
+        "opponentRegistryId": "granby",
         "opponentSector": "collegial"
       },
       "record": {
@@ -61661,20 +61644,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-04",
-          "time": "21:00",
-          "opponent": "Champlain Lennoxville",
-          "opponentCode": "LEN",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "3959dbdb-d9bf-4b47-817d-29af5be304bd",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3959dbdb-d9bf-4b47-817d-29af5be304bd",
-          "opponentFullName": "Champlain College Lennoxville",
-          "opponentRegistryId": "champlain-lennoxville",
-          "live": true
-        },
-        {
           "date": "2026-09-11",
           "time": "19:00",
           "opponent": "Cégep de Sherbrooke",
@@ -61754,18 +61723,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-04",
-        "time": "21:00",
-        "opponent": "Champlain Lennoxville",
-        "opponentCode": "LEN",
+        "date": "2026-09-11",
+        "time": "19:00",
+        "opponent": "Cégep de Sherbrooke",
+        "opponentCode": "SHE",
         "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "3959dbdb-d9bf-4b47-817d-29af5be304bd",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3959dbdb-d9bf-4b47-817d-29af5be304bd",
-        "opponentFullName": "Champlain College Lennoxville",
-        "opponentRegistryId": "champlain-lennoxville",
-        "live": true,
+        "gameId": "e52374e5-8de6-4485-974a-e441c4d11dd4",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e52374e5-8de6-4485-974a-e441c4d11dd4",
+        "opponentFullName": "Cégep de Sherbrooke",
+        "opponentRegistryId": "cegep-sherbrooke",
         "opponentSector": "collegial"
       },
       "record": {
@@ -66679,21 +66647,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-04",
-          "time": "21:00",
-          "opponent": "Vanier",
-          "opponentCode": "VAN",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D1",
-          "gameId": "ca81fcd7-b457-43d0-80b2-c20c78f6fbcc",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ca81fcd7-b457-43d0-80b2-c20c78f6fbcc",
-          "opponentFullName": "Vanier College",
-          "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "vanier",
-          "live": true
-        },
-        {
           "date": "2026-09-18",
           "time": "21:00",
           "opponent": "Champlain St-Lambert",
@@ -66789,19 +66742,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-04",
+        "date": "2026-09-18",
         "time": "21:00",
-        "opponent": "Vanier",
-        "opponentCode": "VAN",
-        "home": false,
+        "opponent": "Champlain St-Lambert",
+        "opponentCode": "SLA",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D1",
-        "gameId": "ca81fcd7-b457-43d0-80b2-c20c78f6fbcc",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ca81fcd7-b457-43d0-80b2-c20c78f6fbcc",
-        "opponentFullName": "Vanier College",
-        "opponentNickname": "Cheetahs",
-        "opponentRegistryId": "vanier",
-        "live": true,
+        "gameId": "b978bd06-d335-4582-870d-d506be61e518",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b978bd06-d335-4582-870d-d506be61e518",
+        "opponentFullName": "Champlain College Saint-Lambert",
+        "opponentNickname": "Barons",
+        "opponentRegistryId": "champlain-st-lambert",
         "opponentSector": "collegial"
       },
       "record": {
@@ -67288,21 +67240,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-04",
-          "time": "21:00",
-          "opponent": "Sainte-Foy",
-          "opponentCode": "CSF",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D1",
-          "gameId": "ca81fcd7-b457-43d0-80b2-c20c78f6fbcc",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ca81fcd7-b457-43d0-80b2-c20c78f6fbcc",
-          "opponentFullName": "Cégep de Sainte-Foy",
-          "opponentNickname": "Géants",
-          "opponentRegistryId": "sainte-foy",
-          "live": true
-        },
-        {
           "date": "2026-09-11",
           "time": "21:00",
           "opponent": "Bois-de-Boulogne",
@@ -67399,19 +67336,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-04",
+        "date": "2026-09-11",
         "time": "21:00",
-        "opponent": "Sainte-Foy",
-        "opponentCode": "CSF",
+        "opponent": "Bois-de-Boulogne",
+        "opponentCode": "BDB",
         "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D1",
-        "gameId": "ca81fcd7-b457-43d0-80b2-c20c78f6fbcc",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ca81fcd7-b457-43d0-80b2-c20c78f6fbcc",
-        "opponentFullName": "Cégep de Sainte-Foy",
-        "opponentNickname": "Géants",
-        "opponentRegistryId": "sainte-foy",
-        "live": true,
+        "gameId": "f702412a-1ee1-4bc4-bd33-e3e688b921f5",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f702412a-1ee1-4bc4-bd33-e3e688b921f5",
+        "opponentFullName": "Collège de Bois-de-Boulogne",
+        "opponentRegistryId": "bois-de-boulogne",
         "opponentSector": "collegial"
       },
       "record": {
