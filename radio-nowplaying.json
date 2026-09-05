@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05T19:02:05.175Z",
+  "updatedAt": "2026-09-05T19:18:07.342Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T19:01:32.990Z"
+      "checkedAt": "2026-09-05T19:17:54.660Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T19:01:35.199Z"
+      "checkedAt": "2026-09-05T19:17:56.753Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T19:01:42.286Z"
+      "checkedAt": "2026-09-05T19:17:59.529Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T19:01:45.633Z"
+      "checkedAt": "2026-09-05T19:18:01.838Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T19:01:46.956Z"
+      "checkedAt": "2026-09-05T19:18:03.059Z"
     },
     "choq": {
       "id": "choq",
@@ -141,15 +141,18 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Man/Woman/Chainsaw — Nosedive",
+      "track": "Les Breastfeeders - Funny Funiculaire",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-05T19:02:04.825Z"
+      "clientPoll": {
+        "type": "triton-np",
+        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
+      },
+      "checkedAt": "2026-09-05T19:18:06.992Z"
     }
   }
 }
