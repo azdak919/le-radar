@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-05T17:50:34.004Z",
-  "fetchedAt": "2026-09-05T17:50:34.004Z",
+  "updated": "2026-09-05T18:15:49.633Z",
+  "fetchedAt": "2026-09-05T18:15:49.633Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-05T17:50:34.004Z"
+    "referenceDate": "2026-09-05T18:15:49.634Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 816,
@@ -74,6 +74,18 @@
     "volleyball"
   ],
   "teamCount": 836,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -39522,7 +39534,8 @@
           "gameId": "23f42331-97f9-4843-883c-b03873a1019d",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=23f42331-97f9-4843-883c-b03873a1019d",
           "opponentFullName": "Collège Lionel-Groulx",
-          "opponentRegistryId": "lionel-groulx"
+          "opponentRegistryId": "lionel-groulx",
+          "live": true
         },
         {
           "date": "2026-09-12",
@@ -39670,7 +39683,8 @@
           "gameId": "23f42331-97f9-4843-883c-b03873a1019d",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=23f42331-97f9-4843-883c-b03873a1019d",
           "opponentFullName": "Collège Jean-de-Brébeuf",
-          "opponentRegistryId": "brebeuf"
+          "opponentRegistryId": "brebeuf",
+          "live": true
         },
         {
           "date": "2026-09-12",
@@ -62501,20 +62515,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-05",
-          "time": "14:00",
-          "opponent": "Cégep de Rimouski",
-          "opponentCode": "RIM",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "88e4e715-8d41-43bc-9c2e-6e4155c60a52",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=88e4e715-8d41-43bc-9c2e-6e4155c60a52",
-          "opponentFullName": "Cégep de Rimouski",
-          "opponentRegistryId": "rimouski",
-          "live": true
-        },
-        {
           "date": "2026-09-20",
           "time": "12:00",
           "opponent": "Garneau",
@@ -62599,18 +62599,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-05",
-        "time": "14:00",
-        "opponent": "Cégep de Rimouski",
-        "opponentCode": "RIM",
-        "home": true,
+        "date": "2026-09-20",
+        "time": "12:00",
+        "opponent": "Garneau",
+        "opponentCode": "GAR",
+        "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "88e4e715-8d41-43bc-9c2e-6e4155c60a52",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=88e4e715-8d41-43bc-9c2e-6e4155c60a52",
-        "opponentFullName": "Cégep de Rimouski",
-        "opponentRegistryId": "rimouski",
-        "live": true,
+        "gameId": "04125bff-2e3a-414e-8a74-af5034f44fbc",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=04125bff-2e3a-414e-8a74-af5034f44fbc",
+        "opponentFullName": "Cégep Garneau",
+        "opponentNickname": "Boomerang",
+        "opponentRegistryId": "garneau",
         "opponentSector": "collegial"
       },
       "record": {
@@ -62819,20 +62819,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-09-05",
-          "time": "14:00",
-          "opponent": "Lévis",
-          "opponentCode": "LÉV",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "88e4e715-8d41-43bc-9c2e-6e4155c60a52",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=88e4e715-8d41-43bc-9c2e-6e4155c60a52",
-          "opponentFullName": "Cégep de Lévis",
-          "opponentRegistryId": "levis",
-          "live": true
-        },
-        {
           "date": "2026-09-13",
           "time": "13:00",
           "opponent": "Garneau",
@@ -62931,18 +62917,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-05",
-        "time": "14:00",
-        "opponent": "Lévis",
-        "opponentCode": "LÉV",
-        "home": false,
+        "date": "2026-09-13",
+        "time": "13:00",
+        "opponent": "Garneau",
+        "opponentCode": "GAR",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "88e4e715-8d41-43bc-9c2e-6e4155c60a52",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=88e4e715-8d41-43bc-9c2e-6e4155c60a52",
-        "opponentFullName": "Cégep de Lévis",
-        "opponentRegistryId": "levis",
-        "live": true,
+        "gameId": "05d8b5e6-713f-4677-8ca5-c01774c32b6b",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=05d8b5e6-713f-4677-8ca5-c01774c32b6b",
+        "opponentFullName": "Cégep Garneau",
+        "opponentNickname": "Boomerang",
+        "opponentRegistryId": "garneau",
         "opponentSector": "collegial"
       },
       "record": {
