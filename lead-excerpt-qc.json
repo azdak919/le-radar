@@ -1,23 +1,14 @@
 {
-  "updated": "2026-09-04T22:28:50.896Z",
+  "updated": "2026-09-05T00:08:02.147Z",
   "total": 185,
   "pool": 56,
-  "incomplete": 10,
+  "incomplete": 8,
   "withLeadExcerpt": 97,
-  "candidates": 10,
-  "enriched": 4,
+  "candidates": 8,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Une 6e coopérative en vue à Jonquière : Loge m’entraide demande l’appui des candidats",
-      "link": "https://lapige.atmjonquiere.com/2026/09/04/une-6e-cooperative-en-vue-a-jonquiere-loge-mentraide-demande-lappui-des-candidats/?utm_source=rss&utm_medium=rss&utm_campaign=une-6e-cooperative-en-vue-a-jonquiere-loge-mentraide-demande-lappui-des-candidats",
-      "ok": true,
-      "score": 96,
-      "chars": 202,
-      "sample": "Loge m’entraide s’apprête à fonder sa sixième coopérative à Jonquière, sur l’ancien terrain de la Bo",
-      "changed": true
-    },
     {
       "title": "Et si on parlait de travail autrement : une soirée pour réinventer le travail, ensemble",
       "link": "https://lapige.atmjonquiere.com/2026/09/04/et-si-on-parlait-de-travail-autrement-une-soiree-pour-reinventer-le-travail-ensemble/?utm_source=rss&utm_medium=rss&utm_campaign=et-si-on-parlait-de-travail-autrement-une-soiree-pour-reinventer-le-travail-ensemble",
@@ -25,16 +16,16 @@
       "score": 82,
       "chars": 400,
       "sample": "Le travail vu non pas comme un problème à subir, mais comme quelque chose qu’on peut encore réinvent",
-      "changed": true
+      "changed": false
     },
     {
-      "title": "Danses turques et roumaines : un camp de folklore pour l’anniversaire de l’école Les Farandoles",
-      "link": "https://lapige.atmjonquiere.com/2026/09/04/danses-turques-et-roumaines-un-camp-de-folklore-international-pour-lanniversaire-de-lecole-les-farandoles/?utm_source=rss&utm_medium=rss&utm_campaign=danses-turques-et-roumaines-un-camp-de-folklore-international-pour-lanniversaire-de-lecole-les-farandoles",
+      "title": "Cinq nouvelles marquantes de l’été",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-marquantes-de-lete/",
       "ok": true,
       "score": 100,
-      "chars": 284,
-      "sample": "La danse folklorique internationale s’invite à Saguenay. L’école de danse Les Farandoles organise un",
-      "changed": true
+      "chars": 400,
+      "sample": "Quartier Libre est finalement de retour après un été mouvementé. Voici les nouvelles qui ont marqué ",
+      "changed": false
     },
     {
       "title": "Montréal en spectacles",
@@ -73,13 +64,22 @@
       "changed": false
     },
     {
-      "title": "Cinq nouvelles marquantes de l’été",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-marquantes-de-lete/",
+      "title": "Les libéraux mettent la main sur Chicoutimi-Le Fjord",
+      "link": "https://lapige.atmjonquiere.com/2026/09/04/les-liberaux-mettent-la-main-sur-chicoutimi-le-fjord/?utm_source=rss&utm_medium=rss&utm_campaign=les-liberaux-mettent-la-main-sur-chicoutimi-le-fjord",
       "ok": true,
       "score": 100,
-      "chars": 400,
-      "sample": "Quartier Libre est finalement de retour après un été mouvementé. Voici les nouvelles qui ont marqué ",
-      "changed": true
+      "chars": 179,
+      "sample": "Daniel Gobeil et le Parti libéral du Canada remportent l’élection partielle dans la circonscription ",
+      "changed": false
+    },
+    {
+      "title": "Une finale enlevante dans le tournoi de soccer à Chicoutimi",
+      "link": "https://lapige.atmjonquiere.com/2026/08/31/une-finale-enlevante-dans-le-tournoi-de-soccer-a-chicoutimi/?utm_source=rss&utm_medium=rss&utm_campaign=une-finale-enlevante-dans-le-tournoi-de-soccer-a-chicoutimi",
+      "ok": true,
+      "score": 100,
+      "chars": 179,
+      "sample": "La Coupe d’Afrique des Nations (CAN) de Saguenay a tenu sa cinquième finale ce samedi à Chicoutimi. ",
+      "changed": false
     }
   ]
 }
