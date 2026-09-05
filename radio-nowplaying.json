@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05T08:47:32.651Z",
+  "updatedAt": "2026-09-05T10:32:20.717Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T08:47:14.983Z"
+      "checkedAt": "2026-09-05T10:32:05.409Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "Voix tropicale",
         "source": "schedule",
         "start": "05:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/voix-tropicale"
       },
+      "next": {
+        "title": "Elkin Polo El Show",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/elkin-polo-el-show"
+      },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "Voix tropicale",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T08:47:17.371Z"
+      "checkedAt": "2026-09-05T10:32:07.526Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Mash Time Show",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
-      },
-      "next": {
         "title": "Quebec Acadie",
         "source": "api-live",
         "start": "06:00",
         "end": "10:00"
       },
-      "track": "Airtime - offline",
-      "showTitle": "The Mash Time Show",
+      "next": {
+        "title": "Making Contact/Anything Goes",
+        "source": "api-live",
+        "start": "10:00",
+        "end": "10:30"
+      },
+      "track": "",
+      "showTitle": "Quebec Acadie",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T08:47:20.231Z"
+      "checkedAt": "2026-09-05T10:32:10.873Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "World-Up'",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
       },
+      "next": {
+        "title": "The Live Wire Show",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/the-live-wire-show"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "World-Up'",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T08:47:23.389Z"
+      "checkedAt": "2026-09-05T10:32:13.359Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T08:47:24.630Z"
+      "checkedAt": "2026-09-05T10:32:14.459Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-05T08:47:32.300Z"
+      "checkedAt": "2026-09-05T10:32:20.366Z"
     }
   }
 }
