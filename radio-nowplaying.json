@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06T04:35:00.352Z",
+  "updatedAt": "2026-09-06T06:16:36.684Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,87 +21,86 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T04:34:46.661Z"
+      "checkedAt": "2026-09-06T06:16:17.519Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences (reprise)",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "schedule",
         "start": "02:00",
         "end": "06:30",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Les mignardises littéraires",
+        "source": "schedule",
+        "start": "06:30",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/les-mignardises-litteraires"
+      },
       "track": "",
-      "showTitle": "Basses fréquences (reprise)",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T04:34:48.722Z"
+      "checkedAt": "2026-09-06T06:16:20.121Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "stereOphobic",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Utopia's Paradise",
         "source": "api-live",
         "start": "02:00",
         "end": "06:00"
       },
-      "track": "",
-      "showTitle": "stereOphobic",
+      "next": {
+        "title": "Mind, Soul, & Spirit",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "09:00"
+      },
+      "track": "Utopia",
+      "showTitle": "Utopia's Paradise",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T04:34:51.706Z"
+      "checkedAt": "2026-09-06T06:16:23.200Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Floydian Slip",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "01:00",
-        "url": "http://www.cjlo.com/shows/floydian-slip"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "01:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Sun Ra, Sun Rise",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
+      },
       "track": "",
-      "showTitle": "Floydian Slip",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T04:34:53.911Z"
+      "checkedAt": "2026-09-06T06:16:28.870Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +125,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T04:34:55.025Z"
+      "checkedAt": "2026-09-06T06:16:30.094Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +138,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "The Blind Philosopher - Indomitable",
+      "track": "coffret de bijoux - covet",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +149,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-06T04:35:00.001Z"
+      "checkedAt": "2026-09-06T06:16:36.333Z"
     }
   }
 }
