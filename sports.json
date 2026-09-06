@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-06T17:14:24.902Z",
-  "fetchedAt": "2026-09-06T17:14:24.902Z",
+  "updated": "2026-09-06T17:55:32.654Z",
+  "fetchedAt": "2026-09-06T17:55:32.654Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-06T17:14:24.902Z"
+    "referenceDate": "2026-09-06T17:55:32.654Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 814,
@@ -37637,7 +37637,8 @@
           "gameId": "585815ef-94e8-4c3a-a230-56733488bc99",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=585815ef-94e8-4c3a-a230-56733488bc99",
           "opponentFullName": "Cégep régional de Lanaudière à Joliette",
-          "opponentRegistryId": "joliette"
+          "opponentRegistryId": "joliette",
+          "live": true
         },
         {
           "date": "2026-09-10",
@@ -37773,6 +37774,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=585815ef-94e8-4c3a-a230-56733488bc99",
         "opponentFullName": "Cégep régional de Lanaudière à Joliette",
         "opponentRegistryId": "joliette",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -38205,7 +38207,8 @@
           "gameId": "585815ef-94e8-4c3a-a230-56733488bc99",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=585815ef-94e8-4c3a-a230-56733488bc99",
           "opponentFullName": "Collège de Bois-de-Boulogne",
-          "opponentRegistryId": "bois-de-boulogne"
+          "opponentRegistryId": "bois-de-boulogne",
+          "live": true
         },
         {
           "date": "2026-09-13",
@@ -38327,6 +38330,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=585815ef-94e8-4c3a-a230-56733488bc99",
         "opponentFullName": "Collège de Bois-de-Boulogne",
         "opponentRegistryId": "bois-de-boulogne",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -38950,6 +38954,23 @@
           "opponentFullName": "Collège Lionel-Groulx",
           "opponentRegistryId": "lionel-groulx",
           "priorSeason": false
+        },
+        {
+          "date": "2026-09-06",
+          "time": "12:00",
+          "opponent": "Valleyfield",
+          "opponentCode": "VAL",
+          "home": false,
+          "scoreFor": 18,
+          "scoreAgainst": 9,
+          "result": "W",
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D3",
+          "gameId": "0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
+          "opponentFullName": "Cégep de Valleyfield",
+          "opponentRegistryId": "valleyfield",
+          "priorSeason": false
         }
       ],
       "lastGame": {
@@ -38971,20 +38992,6 @@
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-09-06",
-          "time": "12:00",
-          "opponent": "Valleyfield",
-          "opponentCode": "VAL",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
-          "opponentFullName": "Cégep de Valleyfield",
-          "opponentRegistryId": "valleyfield",
-          "live": true
-        },
         {
           "date": "2026-09-13",
           "time": "13:30",
@@ -39095,26 +39102,25 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-06",
-        "time": "12:00",
-        "opponent": "Valleyfield",
-        "opponentCode": "VAL",
+        "date": "2026-09-13",
+        "time": "13:30",
+        "opponent": "Bois-de-Boulogne",
+        "opponentCode": "BDB",
         "home": false,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
-        "opponentFullName": "Cégep de Valleyfield",
-        "opponentRegistryId": "valleyfield",
-        "live": true,
+        "gameId": "dffb34c9-8d26-4d97-8b4b-e6ce75bc864f",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=dffb34c9-8d26-4d97-8b4b-e6ce75bc864f",
+        "opponentFullName": "Collège de Bois-de-Boulogne",
+        "opponentRegistryId": "bois-de-boulogne",
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 1,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "1-1"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -39135,23 +39141,44 @@
       "division": "D3",
       "usports": false,
       "leagueLabel": "Flag football collégial féminin D3",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
+      "results": [
         {
           "date": "2026-09-06",
           "time": "12:00",
           "opponent": "Terrebonne",
           "opponentCode": "TER",
           "home": true,
+          "scoreFor": 9,
+          "scoreAgainst": 18,
+          "result": "L",
           "sport": "flag-football",
           "competition": "Flag football collégial féminin D3",
           "gameId": "0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
           "opponentFullName": "Cégep régional de Lanaudière à Terrebonne",
           "opponentRegistryId": "terrebonne",
-          "live": true
-        },
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-09-06",
+        "time": "12:00",
+        "opponent": "Terrebonne",
+        "opponentCode": "TER",
+        "home": true,
+        "scoreFor": 9,
+        "scoreAgainst": 18,
+        "result": "L",
+        "sport": "flag-football",
+        "competition": "Flag football collégial féminin D3",
+        "gameId": "0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
+        "opponentFullName": "Cégep régional de Lanaudière à Terrebonne",
+        "opponentRegistryId": "terrebonne",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
+      "nextGames": [
         {
           "date": "2026-09-13",
           "time": "9:00",
@@ -39275,31 +39302,31 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-06",
-        "time": "12:00",
-        "opponent": "Terrebonne",
-        "opponentCode": "TER",
-        "home": true,
+        "date": "2026-09-13",
+        "time": "9:00",
+        "opponent": "Lionel-Groulx",
+        "opponentCode": "CLG",
+        "home": false,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
-        "opponentFullName": "Cégep régional de Lanaudière à Terrebonne",
-        "opponentRegistryId": "terrebonne",
-        "live": true,
+        "gameId": "ed63baf9-364a-4d5f-8126-1d24c0466b6b",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ed63baf9-364a-4d5f-8126-1d24c0466b6b",
+        "opponentFullName": "Collège Lionel-Groulx",
+        "opponentRegistryId": "lionel-groulx",
         "opponentSector": "collegial"
       },
       "record": {
         "wins": 0,
-        "losses": 0,
+        "losses": 1,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "0-1"
       },
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Valleyfield",
-      "registryId": "valleyfield"
+      "registryId": "valleyfield",
+      "lastGamePriorSeason": false
     },
     "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:4e1b90f9-7432-4150-a1f4-476b7a69080a": {
       "id": "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:4e1b90f9-7432-4150-a1f4-476b7a69080a",

@@ -1,10 +1,10 @@
 {
-  "updated": "2026-09-06T17:14:24.902Z",
-  "fetchedAt": "2026-09-06T17:14:24.902Z",
+  "updated": "2026-09-06T17:55:32.654Z",
+  "fetchedAt": "2026-09-06T17:55:32.654Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-06T17:14:24.902Z"
+    "referenceDate": "2026-09-06T17:55:32.654Z"
   },
   "masthead": {
     "nextGameLimit": 48,
@@ -12,7 +12,7 @@
     "chipResultMaxDaysAgo": 5,
     "ctaResultMaxDaysAgo": 1
   },
-  "teamCount": 169,
+  "teamCount": 170,
   "teams": {
     "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:6dca32e2-627f-4650-8f94-a20c331013b3": {
       "id": "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:6dca32e2-627f-4650-8f94-a20c331013b3",
@@ -138,6 +138,23 @@
           "opponentFullName": "Collège Lionel-Groulx",
           "opponentRegistryId": "lionel-groulx",
           "priorSeason": false
+        },
+        {
+          "date": "2026-09-06",
+          "time": "12:00",
+          "opponent": "Valleyfield",
+          "opponentCode": "VAL",
+          "home": false,
+          "scoreFor": 18,
+          "scoreAgainst": 9,
+          "result": "W",
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D3",
+          "gameId": "0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
+          "opponentFullName": "Cégep de Valleyfield",
+          "opponentRegistryId": "valleyfield",
+          "priorSeason": false
         }
       ],
       "lastGame": {
@@ -158,40 +175,88 @@
         "priorSeason": false,
         "opponentSector": "collegial"
       },
-      "nextGames": [
-        {
-          "date": "2026-09-06",
-          "time": "12:00",
-          "opponent": "Valleyfield",
-          "opponentCode": "VAL",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
-          "opponentFullName": "Cégep de Valleyfield",
-          "opponentRegistryId": "valleyfield",
-          "live": true
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-06",
-        "time": "12:00",
-        "opponent": "Valleyfield",
-        "opponentCode": "VAL",
-        "home": false,
-        "sport": "flag-football",
-        "competition": "Flag football collégial féminin D3",
-        "gameId": "0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
-        "opponentFullName": "Cégep de Valleyfield",
-        "opponentRegistryId": "valleyfield",
-        "live": true
-      },
+      "nextGames": [],
+      "nextGame": null,
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep régional de Lanaudière à Terrebonne",
       "registryId": "terrebonne",
+      "lastGamePriorSeason": false
+    },
+    "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:8287ef4c-3e0b-4254-a218-d88d04d4622d": {
+      "id": "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:8287ef4c-3e0b-4254-a218-d88d04d4622d",
+      "rseqTeamId": "8287ef4c-3e0b-4254-a218-d88d04d4622d",
+      "leagueId": "42502722-0306-48e4-a178-00ed129c282d",
+      "name": "Valleyfield",
+      "code": "VAL",
+      "sector": "collegial",
+      "sport": "flag-football",
+      "sportLabel": "Flag football",
+      "sex": "F",
+      "division": "D3",
+      "usports": false,
+      "leagueLabel": "Flag football collégial féminin D3",
+      "results": [
+        {
+          "date": "2026-09-06",
+          "time": "12:00",
+          "opponent": "Terrebonne",
+          "opponentCode": "TER",
+          "home": true,
+          "scoreFor": 9,
+          "scoreAgainst": 18,
+          "result": "L",
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D3",
+          "gameId": "0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
+          "opponentFullName": "Cégep régional de Lanaudière à Terrebonne",
+          "opponentRegistryId": "terrebonne",
+          "priorSeason": false,
+          "opponentSector": "collegial"
+        },
+        {
+          "date": "2026-09-06",
+          "time": "12:00",
+          "opponent": "Terrebonne",
+          "opponentCode": "TER",
+          "home": true,
+          "scoreFor": 9,
+          "scoreAgainst": 18,
+          "result": "L",
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D3",
+          "gameId": "0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
+          "opponentFullName": "Cégep régional de Lanaudière à Terrebonne",
+          "opponentRegistryId": "terrebonne",
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-09-06",
+        "time": "12:00",
+        "opponent": "Terrebonne",
+        "opponentCode": "TER",
+        "home": true,
+        "scoreFor": 9,
+        "scoreAgainst": 18,
+        "result": "L",
+        "sport": "flag-football",
+        "competition": "Flag football collégial féminin D3",
+        "gameId": "0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
+        "opponentFullName": "Cégep régional de Lanaudière à Terrebonne",
+        "opponentRegistryId": "terrebonne",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
+      "nextGames": [],
+      "nextGame": null,
+      "source": "rseq-s1",
+      "priority": 80,
+      "fullName": "Cégep de Valleyfield",
+      "registryId": "valleyfield",
       "lastGamePriorSeason": false
     },
     "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:c77450f2-b5e6-4516-8739-57d40b3dd448": {
@@ -437,7 +502,8 @@
           "gameId": "585815ef-94e8-4c3a-a230-56733488bc99",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=585815ef-94e8-4c3a-a230-56733488bc99",
           "opponentFullName": "Collège de Bois-de-Boulogne",
-          "opponentRegistryId": "bois-de-boulogne"
+          "opponentRegistryId": "bois-de-boulogne",
+          "live": true
         }
       ],
       "nextGame": {
@@ -451,7 +517,8 @@
         "gameId": "585815ef-94e8-4c3a-a230-56733488bc99",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=585815ef-94e8-4c3a-a230-56733488bc99",
         "opponentFullName": "Collège de Bois-de-Boulogne",
-        "opponentRegistryId": "bois-de-boulogne"
+        "opponentRegistryId": "bois-de-boulogne",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -8621,8 +8688,36 @@
         "priorSeason": false,
         "opponentSector": "collegial"
       },
-      "nextGames": [],
-      "nextGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-11",
+          "time": "19:00",
+          "opponent": "Cégep de Trois-Rivières",
+          "opponentCode": "TRV",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D1",
+          "gameId": "556ee162-c241-4633-b788-f825dbdaa4f4",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=556ee162-c241-4633-b788-f825dbdaa4f4",
+          "opponentFullName": "Cégep de Trois-Rivières",
+          "opponentNickname": "Diablos",
+          "opponentRegistryId": "trois-rivieres"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-11",
+        "time": "19:00",
+        "opponent": "Cégep de Trois-Rivières",
+        "opponentCode": "TRV",
+        "home": true,
+        "sport": "soccer",
+        "competition": "Soccer collégial masculin D1",
+        "gameId": "556ee162-c241-4633-b788-f825dbdaa4f4",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=556ee162-c241-4633-b788-f825dbdaa4f4",
+        "opponentFullName": "Cégep de Trois-Rivières",
+        "opponentNickname": "Diablos",
+        "opponentRegistryId": "trois-rivieres"
+      },
       "source": "rseq-s1",
       "priority": 34,
       "fullName": "Cégep de Saint-Hyacinthe",
@@ -10554,56 +10649,6 @@
       "registryId": "saint-hyacinthe",
       "lastGamePriorSeason": false
     },
-    "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:8287ef4c-3e0b-4254-a218-d88d04d4622d": {
-      "id": "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:8287ef4c-3e0b-4254-a218-d88d04d4622d",
-      "rseqTeamId": "8287ef4c-3e0b-4254-a218-d88d04d4622d",
-      "leagueId": "42502722-0306-48e4-a178-00ed129c282d",
-      "name": "Valleyfield",
-      "code": "VAL",
-      "sector": "collegial",
-      "sport": "flag-football",
-      "sportLabel": "Flag football",
-      "sex": "F",
-      "division": "D3",
-      "usports": false,
-      "leagueLabel": "Flag football collégial féminin D3",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-06",
-          "time": "12:00",
-          "opponent": "Terrebonne",
-          "opponentCode": "TER",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
-          "opponentFullName": "Cégep régional de Lanaudière à Terrebonne",
-          "opponentRegistryId": "terrebonne",
-          "live": true
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-06",
-        "time": "12:00",
-        "opponent": "Terrebonne",
-        "opponentCode": "TER",
-        "home": true,
-        "sport": "flag-football",
-        "competition": "Flag football collégial féminin D3",
-        "gameId": "0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
-        "opponentFullName": "Cégep régional de Lanaudière à Terrebonne",
-        "opponentRegistryId": "terrebonne",
-        "live": true
-      },
-      "source": "rseq-s1",
-      "priority": 80,
-      "fullName": "Cégep de Valleyfield",
-      "registryId": "valleyfield"
-    },
     "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:0a066e81-53bf-46c4-9347-3cc99c244d74": {
       "id": "collegial:flag-football:4e5998ab-0f02-4601-b4da-a656fb5dd6d8:0a066e81-53bf-46c4-9347-3cc99c244d74",
       "rseqTeamId": "0a066e81-53bf-46c4-9347-3cc99c244d74",
@@ -10736,7 +10781,8 @@
           "gameId": "585815ef-94e8-4c3a-a230-56733488bc99",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=585815ef-94e8-4c3a-a230-56733488bc99",
           "opponentFullName": "Cégep régional de Lanaudière à Joliette",
-          "opponentRegistryId": "joliette"
+          "opponentRegistryId": "joliette",
+          "live": true
         },
         {
           "date": "2026-09-10",
@@ -10764,7 +10810,8 @@
         "gameId": "585815ef-94e8-4c3a-a230-56733488bc99",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=585815ef-94e8-4c3a-a230-56733488bc99",
         "opponentFullName": "Cégep régional de Lanaudière à Joliette",
-        "opponentRegistryId": "joliette"
+        "opponentRegistryId": "joliette",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 23,
@@ -13048,6 +13095,56 @@
       "priority": 38,
       "fullName": "Cégep de Sherbrooke",
       "registryId": "cegep-sherbrooke",
+      "lastGamePriorSeason": false
+    },
+    "collegial:soccer:3f4585ce-0bbf-41b0-a726-7a294098a074:40e9464d-53a8-4380-a90f-09a19eb968f7": {
+      "id": "collegial:soccer:3f4585ce-0bbf-41b0-a726-7a294098a074:40e9464d-53a8-4380-a90f-09a19eb968f7",
+      "rseqTeamId": "40e9464d-53a8-4380-a90f-09a19eb968f7",
+      "leagueId": "3f4585ce-0bbf-41b0-a726-7a294098a074",
+      "name": "Cégep de Trois-Rivières",
+      "code": "TRV",
+      "sector": "collegial",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "M",
+      "division": "D1",
+      "usports": false,
+      "leagueLabel": "Soccer collégial masculin D1",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-11",
+          "time": "19:00",
+          "opponent": "Saint-Hyacinthe",
+          "opponentCode": "STH",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D1",
+          "gameId": "556ee162-c241-4633-b788-f825dbdaa4f4",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=556ee162-c241-4633-b788-f825dbdaa4f4",
+          "opponentFullName": "Cégep de Saint-Hyacinthe",
+          "opponentRegistryId": "saint-hyacinthe"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-11",
+        "time": "19:00",
+        "opponent": "Saint-Hyacinthe",
+        "opponentCode": "STH",
+        "home": false,
+        "sport": "soccer",
+        "competition": "Soccer collégial masculin D1",
+        "gameId": "556ee162-c241-4633-b788-f825dbdaa4f4",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=556ee162-c241-4633-b788-f825dbdaa4f4",
+        "opponentFullName": "Cégep de Saint-Hyacinthe",
+        "opponentRegistryId": "saint-hyacinthe"
+      },
+      "source": "rseq-s1",
+      "priority": 40,
+      "fullName": "Cégep de Trois-Rivières",
+      "nickname": "Diablos",
+      "registryId": "trois-rivieres",
       "lastGamePriorSeason": false
     }
   }
