@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-03T13:24:51.142Z",
+  "updatedAt": "2026-09-06T19:37:03.717Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-09-03T13:24:51.142Z",
+      "checkedAt": "2026-09-06T19:37:03.717Z",
       "verifiedWeekOf": "2026-08-31",
       "grid": [
         {
@@ -31,6 +31,13 @@
           "end": "16:00",
           "title": "Radio Futura",
           "url": "https://chyz.ca/emission/radio-futura/"
+        },
+        {
+          "day": 0,
+          "start": "19:00",
+          "end": "21:00",
+          "title": "Le Monde d'Erik Arsenault - 10 ans",
+          "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
         },
         {
           "day": 1,
@@ -167,10 +174,17 @@
         },
         {
           "day": 5,
-          "start": "16:00",
-          "end": "17:30",
+          "start": "16:30",
+          "end": "18:00",
           "title": "L'Artiste du mois CHYZ",
           "url": "https://chyz.ca/emission/lartist-du-mois-chyz/"
+        },
+        {
+          "day": 5,
+          "start": "18:00",
+          "end": "19:00",
+          "title": "Les Arshitechs du Son",
+          "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
         },
         {
           "day": 5,
@@ -222,16 +236,9 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-09-03T13:24:51.142Z",
+      "checkedAt": "2026-09-06T19:37:03.717Z",
       "verifiedWeekOf": "2026-08-31",
       "grid": [
-        {
-          "day": 0,
-          "start": "00:00",
-          "end": "02:00",
-          "title": "Basses fréquences (reprise)",
-          "url": "https://cism893.ca/emissions/basses-frequences"
-        },
         {
           "day": 0,
           "start": "02:00",
@@ -315,20 +322,6 @@
           "end": "20:00",
           "title": "Symbiose",
           "url": "https://cism893.ca/emissions/symbiose"
-        },
-        {
-          "day": 0,
-          "start": "20:00",
-          "end": "21:30",
-          "title": "London café (reprise)",
-          "url": "https://cism893.ca/emissions/london-cafe"
-        },
-        {
-          "day": 0,
-          "start": "21:30",
-          "end": "00:00",
-          "title": "Mix Anglo",
-          "url": "https://cism893.ca/emissions/mix-anglo"
         },
         {
           "day": 1,
@@ -865,13 +858,13 @@
         {
           "day": 5,
           "start": "16:00",
-          "end": "17:00",
-          "title": "Turbo tannant",
-          "url": "https://cism893.ca/emissions/turbo-tannant"
+          "end": "18:00",
+          "title": "En direct du FME : Arielle Soucy et Afternoon Bike Ride",
+          "url": "https://cism893.ca/emissions/cism-en-direct-du-fme-2026"
         },
         {
           "day": 5,
-          "start": "17:00",
+          "start": "18:00",
           "end": "19:00",
           "title": "Ok Doomer",
           "url": "https://cism893.ca/emissions/ok-doomer"
@@ -996,7 +989,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-09-03T13:24:51.142Z",
+      "checkedAt": "2026-09-06T19:37:03.717Z",
       "verifiedWeekOf": "2026-08-31",
       "grid": [
         {
@@ -1614,7 +1607,7 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-09-03T13:24:51.142Z",
+      "checkedAt": "2026-09-06T19:37:03.717Z",
       "verifiedWeekOf": "2026-08-31",
       "grid": [
         {
@@ -4243,7 +4236,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-09-03T13:24:51.142Z",
+      "checkedAt": "2026-09-06T19:37:03.717Z",
       "verifiedWeekOf": "2026-08-31",
       "grid": [
         {
@@ -4464,22 +4457,22 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-09-03T13:24:51.142Z",
-      "verifiedWeekOf": "2026-08-17",
+      "checkedAt": "2026-09-06T19:37:03.717Z",
+      "verifiedWeekOf": "2026-08-31",
       "grid": [
+        {
+          "day": 0,
+          "start": "14:00",
+          "end": "16:00",
+          "title": "Pôle hip-hop",
+          "url": "https://www.choq.ca/emissions/pole-hip-hop"
+        },
         {
           "day": 0,
           "start": "17:00",
           "end": "18:00",
           "title": "Mutations",
           "url": "https://www.choq.ca/emissions/mutations"
-        },
-        {
-          "day": 1,
-          "start": "17:00",
-          "end": "18:00",
-          "title": "Faire avec",
-          "url": "https://www.choq.ca/emissions/faire-avec"
         },
         {
           "day": 2,
@@ -4490,45 +4483,10 @@
         },
         {
           "day": 2,
-          "start": "15:00",
-          "end": "16:00",
-          "title": "Palmarès CHOQ.ca",
-          "url": "https://www.choq.ca/emissions/palmareschoq"
-        },
-        {
-          "day": 2,
           "start": "18:00",
           "end": "19:00",
           "title": "Le Studio",
           "url": "https://www.choq.ca/emissions/live"
-        },
-        {
-          "day": 2,
-          "start": "19:30",
-          "end": "20:30",
-          "title": "Les Amazones",
-          "url": "https://www.choq.ca/emissions/les-amazones"
-        },
-        {
-          "day": 2,
-          "start": "20:30",
-          "end": "22:30",
-          "title": "10 sur 10 : un podcast 100% rap",
-          "url": "https://www.choq.ca/emissions/10-sur-10-un-podcast-100-rap"
-        },
-        {
-          "day": 3,
-          "start": "11:00",
-          "end": "12:00",
-          "title": "In Vélo Veritas",
-          "url": "https://www.choq.ca/emissions/in-velo-veritas"
-        },
-        {
-          "day": 3,
-          "start": "15:00",
-          "end": "16:00",
-          "title": "Palmarès CHOQ.ca",
-          "url": "https://www.choq.ca/emissions/palmareschoq"
         },
         {
           "day": 3,
@@ -4536,13 +4494,6 @@
           "end": "18:00",
           "title": "Podcast Nomade: L'art de se rencontrer",
           "url": "https://www.choq.ca/emissions/podcast-nomade-lart-de-se-rencontrer"
-        },
-        {
-          "day": 3,
-          "start": "19:00",
-          "end": "20:00",
-          "title": "Le CHOC des Générations",
-          "url": "https://www.choq.ca/emissions/le-choc-des-generations"
         },
         {
           "day": 4,
@@ -4561,16 +4512,9 @@
         {
           "day": 4,
           "start": "18:30",
-          "end": "19:40",
+          "end": "19:30",
           "title": "Les Apatrides Anonymes",
           "url": "https://www.choq.ca/emissions/apatrides-anonymes"
-        },
-        {
-          "day": 4,
-          "start": "21:00",
-          "end": "22:30",
-          "title": "Le grand maître des jeux",
-          "url": "https://www.choq.ca/emissions/le-maitre-des-jeux"
         },
         {
           "day": 5,
@@ -4578,6 +4522,13 @@
           "end": "12:30",
           "title": "Opération beurre de cinoche",
           "url": "https://www.choq.ca/emissions/box-sophisme"
+        },
+        {
+          "day": 5,
+          "start": "13:00",
+          "end": "14:00",
+          "title": "CUCH CAST",
+          "url": "https://www.choq.ca/emissions/cuch-cast"
         },
         {
           "day": 5,

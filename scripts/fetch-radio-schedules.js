@@ -4,7 +4,8 @@
  * plusieurs sources (Airtime/LibreTime + grilles manuelles du seed) et écrit
  * radio-schedules.json. Le site y lit l'émission en cours selon l'heure.
  *
- * Comme les horaires changent rarement, ce bot tourne aux deux semaines.
+ * CHOQ publie des épisodes datés en cours de semaine : le workflow tourne
+ * chaque jour (no-op s’il n’y a rien de nouveau).
  *
  *   node scripts/fetch-radio-schedules.js            # dry-run
  *   node scripts/fetch-radio-schedules.js --update   # écrit radio-schedules.json

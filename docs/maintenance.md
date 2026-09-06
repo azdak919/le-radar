@@ -186,7 +186,7 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 - **Bots SEO/HTML** (news, streams, institutions, schedules, discover, maintain, archives) : étape **`bot-prepush-check.sh`** (`npm run check`) **avant** le commit pour éviter un mail Vérification après coup.
 - Playwright CI : **2 retries** + specs mât (météo/sports) en projet serial.
 - `update-radio-nowplaying.yml` — titre en ondes via API station / ICY (aux 30 min) ; filet gardien 45 min
-- `update-radio-schedules.yml` — horaires colligés « à l'antenne » (aux 2 semaines)
+- `update-radio-schedules.yml` — horaires colligés « à l'antenne » (quotidien 09:00 UTC ; CHOQ = épisodes datés)
 - `detect-schedule-drift.yml` — écart grille publiée ↔ page du jour (quotidien, en soirée QC)
 - `discover-news-sources.yml` — santé des flux RSS (hebdo)
 - `update-institutions.yml` — catalogue établissements (3×/an)
@@ -498,8 +498,9 @@ préservées). Il tourne en CI juste **avant** `fetch-radio-schedules.js`.
   de `radio-schedules.json` est conservée.
 
 Régénérer : `node scripts/fetch-radio-schedules.js --update`. En CI, le workflow
-`update-radio-schedules.yml` tourne **aux 2 semaines** (les horaires bougent
-rarement, inutile de solliciter les sources plus souvent).
+`update-radio-schedules.yml` tourne **chaque jour** (09:00 UTC). CHOQ publie
+des épisodes datés en cours de semaine ; les autres postes no-op s’il n’y a
+rien de nouveau.
 
 ### Émissions spéciales / hors programmation
 

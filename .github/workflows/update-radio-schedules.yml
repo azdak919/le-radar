@@ -2,16 +2,11 @@ name: Update Radio Schedules
 
 on:
   schedule:
-    # Hebdomadaire (lundi 09:00 UTC). Mesuré sur l'historique de
-    # radio-schedules.json : entre deux passes espacées de huit jours, trois à
-    # cinq stations changeaient réellement de contenu (CKUT « Dykes on Mykes »
-    # → « Lesbo-sons », spéciales festival à CISM…). Les grilles portent des
-    # occurrences propres à la semaine, pas une grille type : à la quinzaine on
-    # se trompait une semaine sur deux pour les émissions en alternance.
-    - cron: '0 9 * * 1'
-    # Rentrées (janvier, août, septembre) : les grilles sont refaites au
-    # complet, on repasse le jeudi en plus du lundi.
-    - cron: '0 9 * 1,8,9 4'
+    # Quotidien 09:00 UTC. Les grilles portent des occurrences de la semaine,
+    # pas un gabarit type : CHOQ publie des épisodes datés en cours de semaine
+    # (Pôle hip-hop le dimanche n’existait pas encore à la passe du jeudi).
+    # Les autres postes no-op s’il n’y a rien de nouveau (pas de commit).
+    - cron: '0 9 * * *'
   workflow_dispatch:
 
 concurrency:

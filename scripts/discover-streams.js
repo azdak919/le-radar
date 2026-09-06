@@ -38,6 +38,10 @@ const CHYZ_ONAIR_STREAM = 'https://ecoutez.chyz.ca/proxy/chyz/stream';
 // hôtes géo sont éphémères ; on recanonicalise vers streams.radiomast.io.
 const CFAK_ONAIR_STREAM = 'https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a';
 
+// CHOQ : /api/live et le PLS Triton renvoient NNNN.live.streamtheworld.com.
+// Ces hôtes géo tournent (14223 → 18213 → 18303…). Cataloguer le redirecteur.
+const CHOQ_ONAIR_STREAM = 'https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC';
+
 // === KNOWN GOOD STREAMS (the bot trusts and re-validates these first) ===
 const KNOWN_STREAMS = {
   chyz: CHYZ_ONAIR_STREAM,
@@ -46,7 +50,7 @@ const KNOWN_STREAMS = {
   // HTTPS mount — playable directly on the HTTPS site (the :8000 HTTP one is blocked as mixed content)
   cism: 'https://stream03.ustream.ca/cism128.mp3',
   cjlo: 'https://cjlo.radioca.st/stream',
-  choq: 'https://14223.live.streamtheworld.com/SP_R4799664_SC',
+  choq: CHOQ_ONAIR_STREAM,
 };
 
 // Per-station hints for faster/better discovery
@@ -71,7 +75,7 @@ const STATION_HINTS = {
     'http://www.cjlo.com/player.html',
   ],
   choq: [
-    'https://14223.live.streamtheworld.com/SP_R4799664_SC',
+    CHOQ_ONAIR_STREAM,
     'https://www.choq.ca/api/live',
   ],
 };
@@ -237,19 +241,34 @@ function isJunkStreamUrl(url = '') {
   return /\/proxy\/tech(?:\/|$)/i.test(String(url));
 }
 
-/** RadioMast geo-edges (audio-edge-*.yyz.g.radiomast.io) are ephemeral CDN hosts. */
+/**
+ * RadioMast geo-edges (audio-edge-*.yyz.g.radiomast.io) and StreamTheWorld
+ * numbered edges (14223.live.streamtheworld.com) are ephemeral CDN hosts.
+ */
 function canonicalizeStreamUrl(url = '') {
   try {
     const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase();
     const uuid = parsed.pathname.match(
       /^\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})\/?$/i,
     );
-    if (!uuid) return url;
-    const host = parsed.hostname.toLowerCase();
-    const radioMast = host === 'streams.radiomast.io'
-      || /^audio-edge-[a-z0-9]+\.[a-z0-9]+\.g\.radiomast\.io$/.test(host);
-    if (!radioMast) return url;
-    return `https://streams.radiomast.io/${uuid[1].toLowerCase()}`;
+    if (uuid) {
+      const radioMast = host === 'streams.radiomast.io'
+        || /^audio-edge-[a-z0-9]+\.[a-z0-9]+\.g\.radiomast\.io$/.test(host);
+      if (radioMast) {
+        return `https://streams.radiomast.io/${uuid[1].toLowerCase()}`;
+      }
+    }
+
+    const stwMount = parsed.pathname.match(/(?:^|\/)(SP_[A-Z0-9]+(?:_[A-Z0-9]+)?)$/i);
+    const stwGeo = /^\d+\.live\.streamtheworld\.com$/.test(host);
+    const stwRedirect = host === 'playerservices.streamtheworld.com'
+      && /\/api\/livestream-redirect\//i.test(parsed.pathname);
+    if (stwMount && (stwGeo || stwRedirect)) {
+      return `https://playerservices.streamtheworld.com/api/livestream-redirect/${stwMount[1]}`;
+    }
+
+    return url;
   } catch {
     return url;
   }
@@ -697,6 +716,7 @@ async function main() {
 module.exports = {
   CHYZ_ONAIR_STREAM,
   CFAK_ONAIR_STREAM,
+  CHOQ_ONAIR_STREAM,
   canonicalizeStreamUrl,
   parseCentovaPls,
   isJunkIcyName,

@@ -133,6 +133,7 @@ for (const radio of radios) {
     canonicalizeStreamUrl,
     CHYZ_ONAIR_STREAM,
     CFAK_ONAIR_STREAM,
+    CHOQ_ONAIR_STREAM,
   } = require('../scripts/discover-streams.js');
   assert.equal(CHYZ_ONAIR_STREAM, CHYZ_ONAIR);
   assert.equal(
@@ -170,6 +171,30 @@ for (const radio of radios) {
   );
   assert.equal(canonicalizeStreamUrl(CFAK_ONAIR), CFAK_ONAIR);
   assert.equal(canonicalizeStreamUrl(CHYZ_ONAIR), CHYZ_ONAIR);
+
+  // CHOQ : /api/live et le PLS Triton 302 vers NNNN.live.streamtheworld.com.
+  // Ne pas figer cet edge géo (même classe que CFAK audio-edge-*).
+  const CHOQ_ONAIR = 'https://playerservices.streamtheworld.com/api/livestream-redirect/SP_R4799664_SC';
+  const choq = radios.find((radio) => radio.id === 'choq');
+  assert.equal(choq?.stream, CHOQ_ONAIR, 'CHOQ : flux = redirecteur StreamTheWorld (pas un edge géo)');
+  assert.equal(CHOQ_ONAIR_STREAM, CHOQ_ONAIR);
+  assert(
+    discover.includes('choq: CHOQ_ONAIR_STREAM') || discover.includes(`'${CHOQ_ONAIR}'`),
+    'discover-streams : KNOWN_STREAMS.choq aligné sur radios.json',
+  );
+  assert(
+    !radios.some((radio) => /\d+\.live\.streamtheworld\.com/i.test(String(radio.stream || ''))),
+    'radios.json : ne pas figer un hostname NNNN.live.streamtheworld.com',
+  );
+  assert.equal(
+    canonicalizeStreamUrl('https://14223.live.streamtheworld.com/SP_R4799664_SC'),
+    CHOQ_ONAIR,
+  );
+  assert.equal(
+    canonicalizeStreamUrl('https://18213.live.streamtheworld.com:443/SP_R4799664_SC'),
+    CHOQ_ONAIR,
+  );
+  assert.equal(canonicalizeStreamUrl(CHOQ_ONAIR), CHOQ_ONAIR);
 }
 
 /*
@@ -255,7 +280,7 @@ for (const [label, value] of airTextFields) {
  * COLLAPSE_RATIO), et ce test dit pourquoi. Les relever quand une station
  * publie mieux ; ne jamais les baisser sans savoir ce qui a été perdu.
  */
-assert.equal(COVERAGE_FLOOR.choq, 10, 'plancher CHOQ partagé bot / intégrité');
+assert.equal(COVERAGE_FLOOR.choq, 5, 'plancher CHOQ partagé bot / intégrité (épisodes datés, semaine mince réelle)');
 assert(
   readFileSync(new URL('scripts/fetch-radio-schedules.js', root), 'utf8').includes('belowCoverageFloor'),
   'bot horaires : ne pas publier une grille sous le plancher d’intégrité',
