@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06T21:23:16.621Z",
+  "updatedAt": "2026-09-06T21:32:30.561Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T21:22:48.518Z"
+      "checkedAt": "2026-09-06T21:31:56.009Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T21:22:51.227Z"
+      "checkedAt": "2026-09-06T21:31:58.192Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T21:22:54.391Z"
+      "checkedAt": "2026-09-06T21:32:01.218Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Grade A Explosives",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/grade-a-explosives"
       },
       "next": {
         "title": "Bills Country and Western Favourites",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "Grade A Explosives",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T21:23:08.630Z"
+      "checkedAt": "2026-09-06T21:32:24.330Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T21:23:09.682Z"
+      "checkedAt": "2026-09-06T21:32:25.093Z"
     },
     "choq": {
       "id": "choq",
@@ -156,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-06T21:23:16.271Z"
+      "checkedAt": "2026-09-06T21:32:30.211Z"
     }
   }
 }
