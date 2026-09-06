@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-06T21:32:30.561Z",
+  "updatedAt": "2026-09-06T23:27:56.494Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le Monde d'Erik Arsenault - 10 ans",
-        "source": "schedule",
+        "source": "api-live",
         "start": "19:00",
         "end": "21:00",
         "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
       },
+      "next": {
+        "title": "Lundi Indie",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Le Monde d'Erik Arsenault - 10 ans",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T21:31:56.009Z"
+      "checkedAt": "2026-09-06T23:27:21.099Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "L'Avenue des concerts",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/lavenue-des-concerts"
-      },
-      "next": {
         "title": "Symbiose",
         "source": "schedule",
         "start": "18:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/symbiose"
       },
+      "next": {
+        "title": "L'Alter Ego (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/lalter-ego"
+      },
       "track": "",
-      "showTitle": "L'Avenue des concerts",
+      "showTitle": "Symbiose",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T21:31:58.192Z"
+      "checkedAt": "2026-09-06T23:27:23.204Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Bhum Bhum Time",
+        "title": "Bluegrass Rambling",
         "source": "api-live",
-        "start": "16:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "next": {
-        "title": "Desi Beats",
+        "title": "Country Classics",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "20:00",
+        "end": "21:00"
       },
-      "track": "",
-      "showTitle": "Bhum Bhum Time",
+      "track": "- Parlez Nous a Boire",
+      "showTitle": "Bluegrass Rambling",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T21:32:01.218Z"
+      "checkedAt": "2026-09-06T23:27:26.062Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Grade A Explosives",
+        "title": "No Boundaries",
         "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/grade-a-explosives"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/no-boundaries"
       },
       "next": {
-        "title": "Bills Country and Western Favourites",
+        "title": "Eastern Promises",
         "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
+        "start": "20:00",
+        "end": "20:30",
+        "url": "http://www.cjlo.com/shows/eastern-promises"
       },
       "track": "",
-      "showTitle": "Grade A Explosives",
+      "showTitle": "No Boundaries",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T21:32:24.330Z"
+      "checkedAt": "2026-09-06T23:27:48.632Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +133,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T21:32:25.093Z"
+      "checkedAt": "2026-09-06T23:27:49.692Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Mutations",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "mutations"
-      },
+      "current": null,
       "next": {
         "title": "Les rois de l'arène",
         "source": "api-live",
@@ -145,8 +146,8 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Mutations - episode-du-6-septembre-2026",
-      "showTitle": "Mutations",
+      "track": "Chaude Chaleur - Chambre noire",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -156,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-06T21:32:30.211Z"
+      "checkedAt": "2026-09-06T23:27:56.144Z"
     }
   }
 }
