@@ -506,7 +506,14 @@ test('thème clair : sports et slogan partagent le verre météo @ci-critical', 
       };
     };
     const chips = [...document.querySelectorAll('#masthead-sports-strip .sports-chip--match')];
-    const rest = chips.find((el) => el.getAttribute('data-cta-state') !== 'live') || chips[0];
+    // Un dimanche en direct : toutes les puces peuvent être live. Le verre
+    // clair exclut [data-cta-state="live"] → fond sombre 42,46,54. On mesure
+    // le verre au repos, puis on repose live sur une 2e carte.
+    for (const el of chips) {
+      el.removeAttribute('data-cta-state');
+      el.removeAttribute('data-cta-lamp');
+    }
+    const rest = chips[0];
     const liveProbe = chips.find((el) => el !== rest) || rest;
     if (liveProbe && liveProbe !== rest) {
       liveProbe.setAttribute('data-cta-state', 'live');
