@@ -283,7 +283,11 @@ function resolveNextSlot(grid, date = new Date(), timeZone = DEFAULT_TZ) {
  */
 /** Planchers de couverture hebdo — partagés bot + data-integrity. Ne pas baisser sans diagnostic. */
 const COVERAGE_FLOOR = {
-  cism: 95, cjlo: 95, ckut: 95, cfak: 80, chyz: 20, choq: 10,
+  cism: 95, cjlo: 95, ckut: 95, cfak: 80, chyz: 20,
+  // CHOQ = épisodes datés, pas une grille type. Une semaine de rentrée à ~9 %
+  // est réelle (GraphQL a répondu) ; le plancher 10 % gardait une semaine
+  // d’avant et masquait Pôle hip-hop le dimanche. 5 % = parseur quasi vide.
+  choq: 5,
 };
 
 function gridCoverage(grid) {
