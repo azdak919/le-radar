@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-06T19:24:04.644Z",
-  "fetchedAt": "2026-09-06T19:24:04.644Z",
+  "updated": "2026-09-06T19:51:53.261Z",
+  "fetchedAt": "2026-09-06T19:51:53.261Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-06T19:24:04.645Z"
+    "referenceDate": "2026-09-06T19:51:53.261Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 814,
@@ -6031,7 +6031,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5c888d15-8804-418d-b362-8476723d4a7c",
           "opponentFullName": "John Abbott College",
           "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott"
+          "opponentRegistryId": "john-abbott",
+          "live": true
         },
         {
           "date": "2026-09-12",
@@ -6197,6 +6198,7 @@
         "opponentFullName": "John Abbott College",
         "opponentNickname": "Islanders",
         "opponentRegistryId": "john-abbott",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -6862,7 +6864,8 @@
           "gameId": "5c888d15-8804-418d-b362-8476723d4a7c",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5c888d15-8804-418d-b362-8476723d4a7c",
           "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches"
+          "opponentRegistryId": "beauce-appalaches",
+          "live": true
         },
         {
           "date": "2026-09-09",
@@ -7028,6 +7031,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5c888d15-8804-418d-b362-8476723d4a7c",
         "opponentFullName": "Cégep de Beauce-Appalaches",
         "opponentRegistryId": "beauce-appalaches",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -34768,7 +34772,8 @@
           "gameId": "cd67fa04-2aaa-4d40-a392-5df39630c3b5",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cd67fa04-2aaa-4d40-a392-5df39630c3b5",
           "opponentFullName": "Cégep de l'Outaouais",
-          "opponentRegistryId": "outaouais"
+          "opponentRegistryId": "outaouais",
+          "live": true
         },
         {
           "date": "2026-09-12",
@@ -34877,6 +34882,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cd67fa04-2aaa-4d40-a392-5df39630c3b5",
         "opponentFullName": "Cégep de l'Outaouais",
         "opponentRegistryId": "outaouais",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -35142,7 +35148,8 @@
           "gameId": "cd67fa04-2aaa-4d40-a392-5df39630c3b5",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cd67fa04-2aaa-4d40-a392-5df39630c3b5",
           "opponentFullName": "Collège de Maisonneuve",
-          "opponentRegistryId": "maisonneuve"
+          "opponentRegistryId": "maisonneuve",
+          "live": true
         },
         {
           "date": "2026-09-12",
@@ -35252,6 +35259,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cd67fa04-2aaa-4d40-a392-5df39630c3b5",
         "opponentFullName": "Collège de Maisonneuve",
         "opponentRegistryId": "maisonneuve",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -58903,6 +58911,24 @@
       "leagueLabel": "Rugby universitaire féminin",
       "results": [
         {
+          "date": "2026-09-06",
+          "time": "13:00",
+          "opponent": "Montréal",
+          "opponentCode": "MTL",
+          "home": true,
+          "scoreFor": 43,
+          "scoreAgainst": 19,
+          "result": "W",
+          "sport": "rugby",
+          "competition": "Rugby universitaire féminin",
+          "gameId": "066633c0-3274-4e38-b93a-0c2fbe2b52bb",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=066633c0-3274-4e38-b93a-0c2fbe2b52bb",
+          "opponentFullName": "Université de Montréal",
+          "opponentNickname": "Carabins",
+          "opponentRegistryId": "udem",
+          "priorSeason": false
+        },
+        {
           "date": "2026-08-30",
           "time": "13:00",
           "opponent": "Bishop's",
@@ -58922,21 +58948,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-08-30",
+        "date": "2026-09-06",
         "time": "13:00",
-        "opponent": "Bishop's",
-        "opponentCode": "BIS",
-        "home": false,
-        "scoreFor": 74,
-        "scoreAgainst": 0,
+        "opponent": "Montréal",
+        "opponentCode": "MTL",
+        "home": true,
+        "scoreFor": 43,
+        "scoreAgainst": 19,
         "result": "W",
         "sport": "rugby",
         "competition": "Rugby universitaire féminin",
-        "gameId": "f1662a96-f423-4171-87ff-e963f8ae3238",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f1662a96-f423-4171-87ff-e963f8ae3238",
-        "opponentFullName": "Bishop's University",
-        "opponentNickname": "Gaiters",
-        "opponentRegistryId": "bishops",
+        "gameId": "066633c0-3274-4e38-b93a-0c2fbe2b52bb",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=066633c0-3274-4e38-b93a-0c2fbe2b52bb",
+        "opponentFullName": "Université de Montréal",
+        "opponentNickname": "Carabins",
+        "opponentRegistryId": "udem",
         "priorSeason": false,
         "opponentSector": "universitaire"
       },
@@ -59014,11 +59040,11 @@
         "opponentSector": "universitaire"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 0,
         "draws": 0,
-        "played": 1,
-        "label": "1-0"
+        "played": 2,
+        "label": "2-0"
       },
       "source": "rseq-s1",
       "priority": 1,
@@ -59042,6 +59068,24 @@
       "leagueLabel": "Rugby universitaire féminin",
       "results": [
         {
+          "date": "2026-09-06",
+          "time": "13:00",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": false,
+          "scoreFor": 19,
+          "scoreAgainst": 43,
+          "result": "L",
+          "sport": "rugby",
+          "competition": "Rugby universitaire féminin",
+          "gameId": "066633c0-3274-4e38-b93a-0c2fbe2b52bb",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=066633c0-3274-4e38-b93a-0c2fbe2b52bb",
+          "opponentFullName": "Université Laval",
+          "opponentNickname": "Rouge et Or",
+          "opponentRegistryId": "ulaval",
+          "priorSeason": false
+        },
+        {
           "date": "2026-08-29",
           "time": "13:00",
           "opponent": "Ottawa",
@@ -59061,21 +59105,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-08-29",
+        "date": "2026-09-06",
         "time": "13:00",
-        "opponent": "Ottawa",
-        "opponentCode": "OTT",
-        "home": true,
-        "scoreFor": 31,
-        "scoreAgainst": 38,
+        "opponent": "Laval",
+        "opponentCode": "LAV",
+        "home": false,
+        "scoreFor": 19,
+        "scoreAgainst": 43,
         "result": "L",
         "sport": "rugby",
         "competition": "Rugby universitaire féminin",
-        "gameId": "cc2c577f-ff29-4917-bf69-8957a1f37b90",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cc2c577f-ff29-4917-bf69-8957a1f37b90",
-        "opponentFullName": "University of Ottawa",
-        "opponentNickname": "Gee-Gees",
-        "opponentRegistryId": "ottawa",
+        "gameId": "066633c0-3274-4e38-b93a-0c2fbe2b52bb",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=066633c0-3274-4e38-b93a-0c2fbe2b52bb",
+        "opponentFullName": "Université Laval",
+        "opponentNickname": "Rouge et Or",
+        "opponentRegistryId": "ulaval",
         "priorSeason": false,
         "opponentSector": "universitaire"
       },
@@ -59154,10 +59198,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "0-2"
       },
       "source": "rseq-s1",
       "priority": 4,
@@ -59231,7 +59275,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=97f08fff-3134-4000-b65e-bf63674a3ddc",
           "opponentFullName": "Université de Sherbrooke",
           "opponentNickname": "Vert & Or",
-          "opponentRegistryId": "usherbrooke"
+          "opponentRegistryId": "usherbrooke",
+          "live": true
         },
         {
           "date": "2026-09-13",
@@ -59303,6 +59348,7 @@
         "opponentFullName": "Université de Sherbrooke",
         "opponentNickname": "Vert & Or",
         "opponentRegistryId": "usherbrooke",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -59384,7 +59430,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=97f08fff-3134-4000-b65e-bf63674a3ddc",
           "opponentFullName": "University of Ottawa",
           "opponentNickname": "Gee-Gees",
-          "opponentRegistryId": "ottawa"
+          "opponentRegistryId": "ottawa",
+          "live": true
         },
         {
           "date": "2026-09-13",
@@ -59456,6 +59503,7 @@
         "opponentFullName": "University of Ottawa",
         "opponentNickname": "Gee-Gees",
         "opponentRegistryId": "ottawa",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -75030,21 +75078,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-06",
-          "time": "15:30",
-          "opponent": "Laval",
-          "opponentCode": "LAV",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer universitaire féminin",
-          "gameId": "39475171-f053-4d9c-bbef-806646a2a6bc",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=39475171-f053-4d9c-bbef-806646a2a6bc",
-          "opponentFullName": "Université Laval",
-          "opponentNickname": "Rouge et Or",
-          "opponentRegistryId": "ulaval",
-          "live": true
-        },
-        {
           "date": "2026-09-11",
           "time": "18:00",
           "opponent": "UQAM",
@@ -75197,22 +75230,35 @@
           "opponentFullName": "Université McGill",
           "opponentNickname": "Redbirds",
           "opponentRegistryId": "mcgill"
+        },
+        {
+          "date": "2026-10-25",
+          "time": "15:30",
+          "opponent": "UQTR",
+          "opponentCode": "UQTR",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "8f26c68b-5011-4c3b-8b66-80de94cbdfae",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=8f26c68b-5011-4c3b-8b66-80de94cbdfae",
+          "opponentFullName": "Université du Québec à Trois-Rivières",
+          "opponentNickname": "Patriotes",
+          "opponentRegistryId": "uqtr"
         }
       ],
       "nextGame": {
-        "date": "2026-09-06",
-        "time": "15:30",
-        "opponent": "Laval",
-        "opponentCode": "LAV",
-        "home": true,
+        "date": "2026-09-11",
+        "time": "18:00",
+        "opponent": "UQAM",
+        "opponentCode": "UQAM",
+        "home": false,
         "sport": "soccer",
         "competition": "Soccer universitaire féminin",
-        "gameId": "39475171-f053-4d9c-bbef-806646a2a6bc",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=39475171-f053-4d9c-bbef-806646a2a6bc",
-        "opponentFullName": "Université Laval",
-        "opponentNickname": "Rouge et Or",
-        "opponentRegistryId": "ulaval",
-        "live": true,
+        "gameId": "6fff45b4-21ae-4d43-b321-9d745b7a2492",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6fff45b4-21ae-4d43-b321-9d745b7a2492",
+        "opponentFullName": "Université du Québec à Montréal",
+        "opponentNickname": "Citadins",
+        "opponentRegistryId": "uqam",
         "opponentSector": "universitaire"
       },
       "record": {
@@ -75282,21 +75328,6 @@
         "opponentSector": "universitaire"
       },
       "nextGames": [
-        {
-          "date": "2026-09-06",
-          "time": "15:30",
-          "opponent": "Concordia",
-          "opponentCode": "UCON",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer universitaire féminin",
-          "gameId": "39475171-f053-4d9c-bbef-806646a2a6bc",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=39475171-f053-4d9c-bbef-806646a2a6bc",
-          "opponentFullName": "Université Concordia",
-          "opponentNickname": "Stingers",
-          "opponentRegistryId": "concordia",
-          "live": true
-        },
         {
           "date": "2026-09-11",
           "time": "18:00",
@@ -75450,22 +75481,35 @@
           "opponentFullName": "Université de Montréal",
           "opponentNickname": "Carabins",
           "opponentRegistryId": "udem"
+        },
+        {
+          "date": "2026-10-25",
+          "time": "15:30",
+          "opponent": "UQAM",
+          "opponentCode": "UQAM",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "812c32bb-cb8b-46fa-b2ca-3198335e0ff8",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=812c32bb-cb8b-46fa-b2ca-3198335e0ff8",
+          "opponentFullName": "Université du Québec à Montréal",
+          "opponentNickname": "Citadins",
+          "opponentRegistryId": "uqam"
         }
       ],
       "nextGame": {
-        "date": "2026-09-06",
-        "time": "15:30",
-        "opponent": "Concordia",
-        "opponentCode": "UCON",
-        "home": false,
+        "date": "2026-09-11",
+        "time": "18:00",
+        "opponent": "McGill",
+        "opponentCode": "MCG",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer universitaire féminin",
-        "gameId": "39475171-f053-4d9c-bbef-806646a2a6bc",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=39475171-f053-4d9c-bbef-806646a2a6bc",
-        "opponentFullName": "Université Concordia",
-        "opponentNickname": "Stingers",
-        "opponentRegistryId": "concordia",
-        "live": true,
+        "gameId": "87053615-bf0e-46c5-81aa-b67e86da97ee",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=87053615-bf0e-46c5-81aa-b67e86da97ee",
+        "opponentFullName": "Université McGill",
+        "opponentNickname": "Redbirds",
+        "opponentRegistryId": "mcgill",
         "opponentSector": "universitaire"
       },
       "record": {
@@ -75827,21 +75871,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-06",
-          "time": "15:30",
-          "opponent": "UQTR",
-          "opponentCode": "UQTR",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer universitaire féminin",
-          "gameId": "7f86268e-c622-408f-b319-a8bb3fd19625",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7f86268e-c622-408f-b319-a8bb3fd19625",
-          "opponentFullName": "Université du Québec à Trois-Rivières",
-          "opponentNickname": "Patriotes",
-          "opponentRegistryId": "uqtr",
-          "live": true
-        },
-        {
           "date": "2026-09-11",
           "time": "18:00",
           "opponent": "Sherbrooke",
@@ -75997,19 +76026,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-06",
-        "time": "15:30",
-        "opponent": "UQTR",
-        "opponentCode": "UQTR",
+        "date": "2026-09-11",
+        "time": "18:00",
+        "opponent": "Sherbrooke",
+        "opponentCode": "USHE",
         "home": true,
         "sport": "soccer",
         "competition": "Soccer universitaire féminin",
-        "gameId": "7f86268e-c622-408f-b319-a8bb3fd19625",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7f86268e-c622-408f-b319-a8bb3fd19625",
-        "opponentFullName": "Université du Québec à Trois-Rivières",
-        "opponentNickname": "Patriotes",
-        "opponentRegistryId": "uqtr",
-        "live": true,
+        "gameId": "4509e8ef-9836-4632-b869-350600f1f057",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4509e8ef-9836-4632-b869-350600f1f057",
+        "opponentFullName": "Université de Sherbrooke",
+        "opponentNickname": "Vert & Or",
+        "opponentRegistryId": "usherbrooke",
         "opponentSector": "universitaire"
       },
       "record": {
@@ -76079,21 +76107,6 @@
         "opponentSector": "universitaire"
       },
       "nextGames": [
-        {
-          "date": "2026-09-06",
-          "time": "15:30",
-          "opponent": "UQAM",
-          "opponentCode": "UQAM",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer universitaire féminin",
-          "gameId": "c7b42a9f-5c6a-4aec-8a11-92fadb853c16",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c7b42a9f-5c6a-4aec-8a11-92fadb853c16",
-          "opponentFullName": "Université du Québec à Montréal",
-          "opponentNickname": "Citadins",
-          "opponentRegistryId": "uqam",
-          "live": true
-        },
         {
           "date": "2026-09-11",
           "time": "18:00",
@@ -76247,22 +76260,35 @@
           "opponentFullName": "Université du Québec à Trois-Rivières",
           "opponentNickname": "Patriotes",
           "opponentRegistryId": "uqtr"
+        },
+        {
+          "date": "2026-10-25",
+          "time": "13:00",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "e6d3cab2-e916-48cc-9b51-1152a5a93a8e",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e6d3cab2-e916-48cc-9b51-1152a5a93a8e",
+          "opponentFullName": "Bishop's University",
+          "opponentNickname": "Gaiters",
+          "opponentRegistryId": "bishops"
         }
       ],
       "nextGame": {
-        "date": "2026-09-06",
-        "time": "15:30",
-        "opponent": "UQAM",
-        "opponentCode": "UQAM",
-        "home": true,
+        "date": "2026-09-11",
+        "time": "18:00",
+        "opponent": "Montréal",
+        "opponentCode": "MTL",
+        "home": false,
         "sport": "soccer",
         "competition": "Soccer universitaire féminin",
-        "gameId": "c7b42a9f-5c6a-4aec-8a11-92fadb853c16",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c7b42a9f-5c6a-4aec-8a11-92fadb853c16",
-        "opponentFullName": "Université du Québec à Montréal",
-        "opponentNickname": "Citadins",
-        "opponentRegistryId": "uqam",
-        "live": true,
+        "gameId": "4509e8ef-9836-4632-b869-350600f1f057",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4509e8ef-9836-4632-b869-350600f1f057",
+        "opponentFullName": "Université de Montréal",
+        "opponentNickname": "Carabins",
+        "opponentRegistryId": "udem",
         "opponentSector": "universitaire"
       },
       "record": {
@@ -76332,21 +76358,6 @@
         "opponentSector": "universitaire"
       },
       "nextGames": [
-        {
-          "date": "2026-09-06",
-          "time": "15:30",
-          "opponent": "Sherbrooke",
-          "opponentCode": "USHE",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer universitaire féminin",
-          "gameId": "c7b42a9f-5c6a-4aec-8a11-92fadb853c16",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c7b42a9f-5c6a-4aec-8a11-92fadb853c16",
-          "opponentFullName": "Université de Sherbrooke",
-          "opponentNickname": "Vert & Or",
-          "opponentRegistryId": "usherbrooke",
-          "live": true
-        },
         {
           "date": "2026-09-11",
           "time": "18:00",
@@ -76500,22 +76511,35 @@
           "opponentFullName": "Bishop's University",
           "opponentNickname": "Gaiters",
           "opponentRegistryId": "bishops"
+        },
+        {
+          "date": "2026-10-25",
+          "time": "15:30",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "812c32bb-cb8b-46fa-b2ca-3198335e0ff8",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=812c32bb-cb8b-46fa-b2ca-3198335e0ff8",
+          "opponentFullName": "Université Laval",
+          "opponentNickname": "Rouge et Or",
+          "opponentRegistryId": "ulaval"
         }
       ],
       "nextGame": {
-        "date": "2026-09-06",
-        "time": "15:30",
-        "opponent": "Sherbrooke",
-        "opponentCode": "USHE",
-        "home": false,
+        "date": "2026-09-11",
+        "time": "18:00",
+        "opponent": "Concordia",
+        "opponentCode": "UCON",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer universitaire féminin",
-        "gameId": "c7b42a9f-5c6a-4aec-8a11-92fadb853c16",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c7b42a9f-5c6a-4aec-8a11-92fadb853c16",
-        "opponentFullName": "Université de Sherbrooke",
-        "opponentNickname": "Vert & Or",
-        "opponentRegistryId": "usherbrooke",
-        "live": true,
+        "gameId": "6fff45b4-21ae-4d43-b321-9d745b7a2492",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6fff45b4-21ae-4d43-b321-9d745b7a2492",
+        "opponentFullName": "Université Concordia",
+        "opponentNickname": "Stingers",
+        "opponentRegistryId": "concordia",
         "opponentSector": "universitaire"
       },
       "record": {
@@ -76585,21 +76609,6 @@
         "opponentSector": "universitaire"
       },
       "nextGames": [
-        {
-          "date": "2026-09-06",
-          "time": "15:30",
-          "opponent": "Montréal",
-          "opponentCode": "MTL",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer universitaire féminin",
-          "gameId": "7f86268e-c622-408f-b319-a8bb3fd19625",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7f86268e-c622-408f-b319-a8bb3fd19625",
-          "opponentFullName": "Université de Montréal",
-          "opponentNickname": "Carabins",
-          "opponentRegistryId": "udem",
-          "live": true
-        },
         {
           "date": "2026-09-11",
           "time": "18:00",
@@ -76753,22 +76762,35 @@
           "opponentFullName": "Université de Sherbrooke",
           "opponentNickname": "Vert & Or",
           "opponentRegistryId": "usherbrooke"
+        },
+        {
+          "date": "2026-10-25",
+          "time": "15:30",
+          "opponent": "Concordia",
+          "opponentCode": "UCON",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "8f26c68b-5011-4c3b-8b66-80de94cbdfae",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=8f26c68b-5011-4c3b-8b66-80de94cbdfae",
+          "opponentFullName": "Université Concordia",
+          "opponentNickname": "Stingers",
+          "opponentRegistryId": "concordia"
         }
       ],
       "nextGame": {
-        "date": "2026-09-06",
-        "time": "15:30",
-        "opponent": "Montréal",
-        "opponentCode": "MTL",
+        "date": "2026-09-11",
+        "time": "18:00",
+        "opponent": "Bishop's",
+        "opponentCode": "BIS",
         "home": false,
         "sport": "soccer",
         "competition": "Soccer universitaire féminin",
-        "gameId": "7f86268e-c622-408f-b319-a8bb3fd19625",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7f86268e-c622-408f-b319-a8bb3fd19625",
-        "opponentFullName": "Université de Montréal",
-        "opponentNickname": "Carabins",
-        "opponentRegistryId": "udem",
-        "live": true,
+        "gameId": "855252c3-b74a-41ed-9246-e25bd5fdfb3a",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=855252c3-b74a-41ed-9246-e25bd5fdfb3a",
+        "opponentFullName": "Bishop's University",
+        "opponentNickname": "Gaiters",
+        "opponentRegistryId": "bishops",
         "opponentSector": "universitaire"
       },
       "record": {
