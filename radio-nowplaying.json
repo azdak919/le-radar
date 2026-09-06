@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06T10:57:46.139Z",
+  "updatedAt": "2026-09-06T11:12:40.830Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T10:57:20.440Z"
+      "checkedAt": "2026-09-06T11:12:26.637Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les mignardises littéraires",
-        "source": "schedule",
-        "start": "06:30",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/les-mignardises-litteraires"
-      },
-      "next": {
         "title": "Genre de bleu",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/genre-de-bleu"
       },
+      "next": {
+        "title": "Par mots et par vaux",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
+      },
       "track": "",
-      "showTitle": "Les mignardises littéraires",
+      "showTitle": "Genre de bleu",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T10:57:22.847Z"
+      "checkedAt": "2026-09-06T11:12:28.738Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T10:57:25.871Z"
+      "checkedAt": "2026-09-06T11:12:31.245Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T10:57:38.824Z"
+      "checkedAt": "2026-09-06T11:12:33.804Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T10:57:39.710Z"
+      "checkedAt": "2026-09-06T11:12:34.770Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "Magi Merlin - SpiceKick",
+      "track": "Avec pas d",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-06T10:57:45.788Z"
+      "checkedAt": "2026-09-06T11:12:40.480Z"
     }
   }
 }
