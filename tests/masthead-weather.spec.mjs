@@ -506,12 +506,17 @@ test('thème clair : sports et slogan partagent le verre météo @ci-critical', 
       };
     };
     const chips = [...document.querySelectorAll('#masthead-sports-strip .sports-chip--match')];
-    const rest = chips.find((el) => el.getAttribute('data-cta-state') !== 'live') || chips[0];
+    /* Un dimanche avec tous les matchs « live » ferait tomber le repli
+       chips[0] sur une puce encore live → fond 42,46,54 au lieu du verre. */
+    const rest = chips[0];
     const liveProbe = chips.find((el) => el !== rest) || rest;
+    rest?.removeAttribute('data-cta-state');
+    rest?.removeAttribute('data-cta-lamp');
     if (liveProbe && liveProbe !== rest) {
       liveProbe.setAttribute('data-cta-state', 'live');
       liveProbe.removeAttribute('data-cta-lamp');
     }
+    rest?.offsetHeight;
     return {
       weather: parse(document.querySelector('.masthead-weather__city.is-active')),
       sports: parse(rest),
