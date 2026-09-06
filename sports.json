@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-06T17:55:32.654Z",
-  "fetchedAt": "2026-09-06T17:55:32.654Z",
+  "updated": "2026-09-06T18:16:18.968Z",
+  "fetchedAt": "2026-09-06T18:16:18.968Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-06T17:55:32.654Z"
+    "referenceDate": "2026-09-06T18:16:18.968Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 814,
@@ -74,6 +74,18 @@
     "volleyball"
   ],
   "teamCount": 834,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -74120,8 +74132,43 @@
       "division": "D3",
       "usports": false,
       "leagueLabel": "Soccer collégial masculin D3",
-      "results": [],
-      "lastGame": null,
+      "results": [
+        {
+          "date": "2026-09-06",
+          "time": "12:00",
+          "opponent": "Valleyfield",
+          "opponentCode": "VAL",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 4,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D3",
+          "gameId": "66cb305e-00ff-482f-97e1-5ab00392cca0",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=66cb305e-00ff-482f-97e1-5ab00392cca0",
+          "opponentFullName": "Cégep de Valleyfield",
+          "opponentRegistryId": "valleyfield",
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-09-06",
+        "time": "12:00",
+        "opponent": "Valleyfield",
+        "opponentCode": "VAL",
+        "home": false,
+        "scoreFor": 0,
+        "scoreAgainst": 4,
+        "result": "L",
+        "sport": "soccer",
+        "competition": "Soccer collégial masculin D3",
+        "gameId": "66cb305e-00ff-482f-97e1-5ab00392cca0",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=66cb305e-00ff-482f-97e1-5ab00392cca0",
+        "opponentFullName": "Cégep de Valleyfield",
+        "opponentRegistryId": "valleyfield",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
       "nextGames": [
         {
           "date": "2026-09-12",
@@ -74231,15 +74278,16 @@
       },
       "record": {
         "wins": 0,
-        "losses": 0,
+        "losses": 1,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "0-1"
       },
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Collège de Maisonneuve",
-      "registryId": "maisonneuve"
+      "registryId": "maisonneuve",
+      "lastGamePriorSeason": false
     },
     "collegial:soccer:05798bd7-130d-4b88-ae8d-8f934e7963ed:e74e265e-c4ef-4833-a9a3-16bbfb449c52": {
       "id": "collegial:soccer:05798bd7-130d-4b88-ae8d-8f934e7963ed:e74e265e-c4ef-4833-a9a3-16bbfb449c52",
@@ -74558,8 +74606,43 @@
       "division": "D3",
       "usports": false,
       "leagueLabel": "Soccer collégial masculin D3",
-      "results": [],
-      "lastGame": null,
+      "results": [
+        {
+          "date": "2026-09-06",
+          "time": "12:00",
+          "opponent": "Maisonneuve",
+          "opponentCode": "MAI",
+          "home": true,
+          "scoreFor": 4,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D3",
+          "gameId": "66cb305e-00ff-482f-97e1-5ab00392cca0",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=66cb305e-00ff-482f-97e1-5ab00392cca0",
+          "opponentFullName": "Collège de Maisonneuve",
+          "opponentRegistryId": "maisonneuve",
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-09-06",
+        "time": "12:00",
+        "opponent": "Maisonneuve",
+        "opponentCode": "MAI",
+        "home": true,
+        "scoreFor": 4,
+        "scoreAgainst": 0,
+        "result": "W",
+        "sport": "soccer",
+        "competition": "Soccer collégial masculin D3",
+        "gameId": "66cb305e-00ff-482f-97e1-5ab00392cca0",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=66cb305e-00ff-482f-97e1-5ab00392cca0",
+        "opponentFullName": "Collège de Maisonneuve",
+        "opponentRegistryId": "maisonneuve",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
       "nextGames": [
         {
           "date": "2026-09-11",
@@ -74668,16 +74751,17 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "1-0"
       },
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Valleyfield",
-      "registryId": "valleyfield"
+      "registryId": "valleyfield",
+      "lastGamePriorSeason": false
     },
     "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:afd48cf0-d89e-43b2-89cf-0a5579bfaedb": {
       "id": "universitaire:soccer:56d5b9e4-84d5-4622-9cd4-f89b41ce9f2b:afd48cf0-d89e-43b2-89cf-0a5579bfaedb",
