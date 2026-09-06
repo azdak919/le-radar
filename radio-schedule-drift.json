@@ -1,10 +1,10 @@
 {
-  "checkedAt": "2026-09-05T00:53:18.725Z",
+  "checkedAt": "2026-09-06T00:52:40.232Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 3,
+    "stable": 2,
     "drift": [
       "chyz",
       "cism"
@@ -12,22 +12,25 @@
     "overhaul": [
       "choq"
     ],
-    "unreachable": []
+    "unreachable": [
+      "cjlo"
+    ]
   },
   "stations": [
     {
       "id": "chyz",
       "published": 29,
-      "fresh": 30,
+      "fresh": 31,
       "added": [
+        "dim 19:00–21:00 Le Monde d'Erik Arsenault - 10 ans",
         "ven 16:30–18:00 L'Artiste du mois CHYZ",
         "ven 18:00–19:00 Les Arshitechs du Son"
       ],
       "removed": [
         "ven 16:00–17:30 L'Artiste du mois CHYZ"
       ],
-      "changed": 3,
-      "ratio": 0.103,
+      "changed": 4,
+      "ratio": 0.138,
       "status": "drift"
     },
     {
@@ -62,12 +65,12 @@
     {
       "id": "cjlo",
       "published": 374,
-      "fresh": 374,
+      "fresh": 0,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
-      "status": "stable"
+      "status": "unreachable"
     },
     {
       "id": "cfak",
