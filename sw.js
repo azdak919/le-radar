@@ -1,4 +1,4 @@
-const CACHE_NAME = "radar-shell-v876";
+const CACHE_NAME = "radar-shell-v877";
 const CACHE_PREFIX = "radar-";
 /** Cache permanent : page maintenance / hors-ligne (ne se purge pas au bump shell). */
 const OFFLINE_CACHE = "radar-offline-v22";
