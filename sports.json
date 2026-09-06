@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-06T08:41:45.646Z",
-  "fetchedAt": "2026-09-06T08:41:45.646Z",
+  "updated": "2026-09-06T13:43:25.702Z",
+  "fetchedAt": "2026-09-06T13:43:25.702Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-06T08:41:45.646Z"
+    "referenceDate": "2026-09-06T13:43:25.702Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 814,
@@ -74,18 +74,6 @@
     "volleyball"
   ],
   "teamCount": 834,
-  "errors": [
-    {
-      "leagueId": "spordle-collegial",
-      "label": "Hockey collegial",
-      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
-    },
-    {
-      "leagueId": "spordle-universitaire",
-      "label": "Hockey universitaire",
-      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
-    }
-  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -38336,19 +38324,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-09-06",
-          "time": "9:00",
-          "opponent": "Terrebonne",
-          "opponentCode": "TER",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "5065f19c-f656-4fe9-b3e9-2d9711a3510b",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5065f19c-f656-4fe9-b3e9-2d9711a3510b",
-          "opponentFullName": "Cégep régional de Lanaudière à Terrebonne",
-          "opponentRegistryId": "terrebonne"
-        },
-        {
           "date": "2026-09-13",
           "time": "9:00",
           "opponent": "Valleyfield",
@@ -38471,17 +38446,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-06",
+        "date": "2026-09-13",
         "time": "9:00",
-        "opponent": "Terrebonne",
-        "opponentCode": "TER",
-        "home": false,
+        "opponent": "Valleyfield",
+        "opponentCode": "VAL",
+        "home": true,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "5065f19c-f656-4fe9-b3e9-2d9711a3510b",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5065f19c-f656-4fe9-b3e9-2d9711a3510b",
-        "opponentFullName": "Cégep régional de Lanaudière à Terrebonne",
-        "opponentRegistryId": "terrebonne",
+        "gameId": "ed63baf9-364a-4d5f-8126-1d24c0466b6b",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ed63baf9-364a-4d5f-8126-1d24c0466b6b",
+        "opponentFullName": "Cégep de Valleyfield",
+        "opponentRegistryId": "valleyfield",
         "opponentSector": "collegial"
       },
       "record": {
@@ -38869,19 +38844,6 @@
       "nextGames": [
         {
           "date": "2026-09-06",
-          "time": "9:00",
-          "opponent": "Lionel-Groulx",
-          "opponentCode": "CLG",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "5065f19c-f656-4fe9-b3e9-2d9711a3510b",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5065f19c-f656-4fe9-b3e9-2d9711a3510b",
-          "opponentFullName": "Collège Lionel-Groulx",
-          "opponentRegistryId": "lionel-groulx"
-        },
-        {
-          "date": "2026-09-06",
           "time": "12:00",
           "opponent": "Valleyfield",
           "opponentCode": "VAL",
@@ -39004,16 +38966,16 @@
       ],
       "nextGame": {
         "date": "2026-09-06",
-        "time": "9:00",
-        "opponent": "Lionel-Groulx",
-        "opponentCode": "CLG",
-        "home": true,
+        "time": "12:00",
+        "opponent": "Valleyfield",
+        "opponentCode": "VAL",
+        "home": false,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "5065f19c-f656-4fe9-b3e9-2d9711a3510b",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5065f19c-f656-4fe9-b3e9-2d9711a3510b",
-        "opponentFullName": "Collège Lionel-Groulx",
-        "opponentRegistryId": "lionel-groulx",
+        "gameId": "0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
+        "opponentFullName": "Cégep de Valleyfield",
+        "opponentRegistryId": "valleyfield",
         "opponentSector": "collegial"
       },
       "record": {

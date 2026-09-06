@@ -1,10 +1,10 @@
 {
-  "updated": "2026-09-06T08:41:45.646Z",
-  "fetchedAt": "2026-09-06T08:41:45.646Z",
+  "updated": "2026-09-06T13:43:25.702Z",
+  "fetchedAt": "2026-09-06T13:43:25.702Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-06T08:41:45.646Z"
+    "referenceDate": "2026-09-06T13:43:25.702Z"
   },
   "masthead": {
     "nextGameLimit": 48,
@@ -6725,8 +6725,36 @@
         "priorSeason": false,
         "opponentSector": "collegial"
       },
-      "nextGames": [],
-      "nextGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-09",
+          "time": "21:00",
+          "opponent": "Édouard-Montpetit",
+          "opponentCode": "CEM",
+          "home": true,
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D3",
+          "gameId": "63552b18-f53e-4905-a45d-e811a4cabfeb",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63552b18-f53e-4905-a45d-e811a4cabfeb",
+          "opponentFullName": "Cégep Édouard-Montpetit",
+          "opponentNickname": "Cougars",
+          "opponentRegistryId": "edouard-montpetit"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-09",
+        "time": "21:00",
+        "opponent": "Édouard-Montpetit",
+        "opponentCode": "CEM",
+        "home": true,
+        "sport": "soccer",
+        "competition": "Soccer collégial féminin D3",
+        "gameId": "63552b18-f53e-4905-a45d-e811a4cabfeb",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63552b18-f53e-4905-a45d-e811a4cabfeb",
+        "opponentFullName": "Cégep Édouard-Montpetit",
+        "opponentNickname": "Cougars",
+        "opponentRegistryId": "edouard-montpetit"
+      },
       "source": "rseq-s1",
       "priority": 21,
       "fullName": "Collège André-Grasset",
@@ -10072,19 +10100,6 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e72ee47-a3d0-40a1-9910-7a680ddd4fd6",
           "opponentFullName": "Cégep de Valleyfield",
           "opponentRegistryId": "valleyfield"
-        },
-        {
-          "date": "2026-09-06",
-          "time": "9:00",
-          "opponent": "Lionel-Groulx",
-          "opponentCode": "CLG",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "5065f19c-f656-4fe9-b3e9-2d9711a3510b",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5065f19c-f656-4fe9-b3e9-2d9711a3510b",
-          "opponentFullName": "Collège Lionel-Groulx",
-          "opponentRegistryId": "lionel-groulx"
         }
       ],
       "nextGame": {
@@ -12103,54 +12118,6 @@
       "registryId": "andre-grasset",
       "lastGamePriorSeason": false
     },
-    "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:6dca32e2-627f-4650-8f94-a20c331013b3": {
-      "id": "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:6dca32e2-627f-4650-8f94-a20c331013b3",
-      "rseqTeamId": "6dca32e2-627f-4650-8f94-a20c331013b3",
-      "leagueId": "42502722-0306-48e4-a178-00ed129c282d",
-      "name": "Lionel-Groulx",
-      "code": "CLG",
-      "sector": "collegial",
-      "sport": "flag-football",
-      "sportLabel": "Flag football",
-      "sex": "F",
-      "division": "D3",
-      "usports": false,
-      "leagueLabel": "Flag football collégial féminin D3",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-06",
-          "time": "9:00",
-          "opponent": "Terrebonne",
-          "opponentCode": "TER",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "5065f19c-f656-4fe9-b3e9-2d9711a3510b",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5065f19c-f656-4fe9-b3e9-2d9711a3510b",
-          "opponentFullName": "Cégep régional de Lanaudière à Terrebonne",
-          "opponentRegistryId": "terrebonne"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-06",
-        "time": "9:00",
-        "opponent": "Terrebonne",
-        "opponentCode": "TER",
-        "home": false,
-        "sport": "flag-football",
-        "competition": "Flag football collégial féminin D3",
-        "gameId": "5065f19c-f656-4fe9-b3e9-2d9711a3510b",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5065f19c-f656-4fe9-b3e9-2d9711a3510b",
-        "opponentFullName": "Cégep régional de Lanaudière à Terrebonne",
-        "opponentRegistryId": "terrebonne"
-      },
-      "source": "rseq-s1",
-      "priority": 30,
-      "fullName": "Collège Lionel-Groulx",
-      "registryId": "lionel-groulx"
-    },
     "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:f91d0a36-7e00-41dc-bbd4-1c1e34615b36": {
       "id": "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:f91d0a36-7e00-41dc-bbd4-1c1e34615b36",
       "rseqTeamId": "f91d0a36-7e00-41dc-bbd4-1c1e34615b36",
@@ -13003,6 +12970,55 @@
       "fullName": "Cégep André-Laurendeau",
       "nickname": "Cheetahs",
       "registryId": "andre-laurendeau"
+    },
+    "collegial:soccer:415ca649-0fd3-4bda-8163-c8c0013c37a9:4b148d3a-40c4-4276-b3b5-79c860804861": {
+      "id": "collegial:soccer:415ca649-0fd3-4bda-8163-c8c0013c37a9:4b148d3a-40c4-4276-b3b5-79c860804861",
+      "rseqTeamId": "4b148d3a-40c4-4276-b3b5-79c860804861",
+      "leagueId": "415ca649-0fd3-4bda-8163-c8c0013c37a9",
+      "name": "Édouard-Montpetit",
+      "code": "CEM",
+      "sector": "collegial",
+      "sport": "soccer",
+      "sportLabel": "Soccer",
+      "sex": "F",
+      "division": "D3",
+      "usports": false,
+      "leagueLabel": "Soccer collégial féminin D3",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-09",
+          "time": "21:00",
+          "opponent": "André-Grasset",
+          "opponentCode": "CAG",
+          "home": false,
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D3",
+          "gameId": "63552b18-f53e-4905-a45d-e811a4cabfeb",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63552b18-f53e-4905-a45d-e811a4cabfeb",
+          "opponentFullName": "Collège André-Grasset",
+          "opponentRegistryId": "andre-grasset"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-09",
+        "time": "21:00",
+        "opponent": "André-Grasset",
+        "opponentCode": "CAG",
+        "home": false,
+        "sport": "soccer",
+        "competition": "Soccer collégial féminin D3",
+        "gameId": "63552b18-f53e-4905-a45d-e811a4cabfeb",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63552b18-f53e-4905-a45d-e811a4cabfeb",
+        "opponentFullName": "Collège André-Grasset",
+        "opponentRegistryId": "andre-grasset"
+      },
+      "source": "rseq-s1",
+      "priority": 42,
+      "fullName": "Cégep Édouard-Montpetit",
+      "nickname": "Cougars",
+      "registryId": "edouard-montpetit"
     }
   }
 }
