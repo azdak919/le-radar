@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-09-06T14:19:35.418Z",
+  "updatedAt": "2026-09-06T17:01:52.744Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Palmarès CHYZ",
+        "title": "Radio Futura",
         "source": "api-live",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
+        "start": "13:00",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/radio-futura/"
       },
       "next": {
-        "title": "Le Ré-Show : Deuxième Service",
+        "title": "Le Monde d'Erik Arsenault - 10 ans",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+        "start": "19:00",
+        "end": "21:00",
+        "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
       },
       "track": "",
-      "showTitle": "Palmarès CHYZ",
+      "showTitle": "Radio Futura",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T14:19:18.845Z"
+      "checkedAt": "2026-09-06T17:01:37.938Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ya Raï",
+        "title": "Basses fréquences",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/ya-rai"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/basses-frequences"
       },
       "next": {
-        "title": "Yallah lâcher prise",
+        "title": "Le char de marge",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
       },
       "track": "",
-      "showTitle": "Ya Raï",
+      "showTitle": "Basses fréquences",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T14:19:21.391Z"
+      "checkedAt": "2026-09-06T17:01:40.073Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Latin Time",
+        "title": "Modular Systems/Future Classics",
         "source": "api-live",
-        "start": "09:00",
-        "end": "10:30"
+        "start": "13:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "International Radio Report",
+        "title": "The Magic Roundabout",
         "source": "api-live",
-        "start": "10:30",
-        "end": "11:00"
+        "start": "14:00",
+        "end": "16:00"
       },
       "track": "",
-      "showTitle": "Latin Time",
+      "showTitle": "Modular Systems/Future Classics",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T14:19:24.225Z"
+      "checkedAt": "2026-09-06T17:01:43.286Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Rigged Sessions",
+        "title": "Northern Stagelights",
         "source": "schedule-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/rigged-sessions"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/northern-stagelights"
       },
       "next": {
-        "title": "Brave Little Emo Girl",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "Rigged Sessions",
+      "showTitle": "Northern Stagelights",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T14:19:27.491Z"
+      "checkedAt": "2026-09-06T17:01:46.312Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T14:19:28.532Z"
+      "checkedAt": "2026-09-06T17:01:47.238Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "ID - Velours-Velours",
+      "track": "Lisa Hannigan - Undertow",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-06T14:19:35.068Z"
+      "checkedAt": "2026-09-06T17:01:52.393Z"
     }
   }
 }
