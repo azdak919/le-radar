@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-06T13:43:25.702Z",
-  "fetchedAt": "2026-09-06T13:43:25.702Z",
+  "updated": "2026-09-06T14:16:12.348Z",
+  "fetchedAt": "2026-09-06T14:16:12.348Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-06T13:43:25.702Z"
+    "referenceDate": "2026-09-06T14:16:12.349Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 814,
@@ -74,6 +74,18 @@
     "volleyball"
   ],
   "teamCount": 834,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -38157,7 +38169,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=633b9357-f660-44c4-b10f-fceb519c1645",
           "opponentFullName": "Collège Montmorency",
           "opponentNickname": "Nomades",
-          "opponentRegistryId": "montmorency"
+          "opponentRegistryId": "montmorency",
+          "live": true
         },
         {
           "date": "2026-09-06",
@@ -38293,6 +38306,7 @@
         "opponentFullName": "Collège Montmorency",
         "opponentNickname": "Nomades",
         "opponentRegistryId": "montmorency",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -38676,7 +38690,8 @@
           "gameId": "633b9357-f660-44c4-b10f-fceb519c1645",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=633b9357-f660-44c4-b10f-fceb519c1645",
           "opponentFullName": "Cégep régional de Lanaudière à Joliette",
-          "opponentRegistryId": "joliette"
+          "opponentRegistryId": "joliette",
+          "live": true
         },
         {
           "date": "2026-09-13",
@@ -38811,6 +38826,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=633b9357-f660-44c4-b10f-fceb519c1645",
         "opponentFullName": "Cégep régional de Lanaudière à Joliette",
         "opponentRegistryId": "joliette",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
