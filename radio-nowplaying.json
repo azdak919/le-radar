@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06T11:12:40.830Z",
+  "updatedAt": "2026-09-06T13:40:32.197Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T11:12:26.637Z"
+      "checkedAt": "2026-09-06T13:40:13.717Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Genre de bleu",
+        "title": "Le 120e parallèle",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/genre-de-bleu"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/le-120e-parallele"
       },
       "next": {
-        "title": "Par mots et par vaux",
+        "title": "Ya Raï",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/ya-rai"
       },
       "track": "",
-      "showTitle": "Genre de bleu",
+      "showTitle": "Le 120e parallèle",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T11:12:28.738Z"
+      "checkedAt": "2026-09-06T13:40:16.230Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Mind, Soul, & Spirit",
-        "source": "api-live",
-        "start": "06:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Latin Time",
         "source": "api-live",
         "start": "09:00",
         "end": "10:30"
       },
+      "next": {
+        "title": "International Radio Report",
+        "source": "api-live",
+        "start": "10:30",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Mind, Soul, & Spirit",
+      "showTitle": "Latin Time",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,35 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T11:12:31.245Z"
+      "checkedAt": "2026-09-06T13:40:20.584Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Sun Ra, Sun Rise",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
+        "title": "REVC",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/revc"
       },
       "next": {
-        "title": "The Gigi Brown Experience",
+        "title": "Rigged Sessions",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
+        "start": "10:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/rigged-sessions"
       },
       "track": "",
-      "showTitle": "Sun Ra, Sun Rise",
+      "showTitle": "REVC",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T11:12:33.804Z"
+      "checkedAt": "2026-09-06T13:40:23.822Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +127,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T11:12:34.770Z"
+      "checkedAt": "2026-09-06T13:40:24.697Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +140,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "Avec pas d",
+      "track": "ID - Raccoon",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-06T11:12:40.480Z"
+      "checkedAt": "2026-09-06T13:40:31.847Z"
     }
   }
 }
