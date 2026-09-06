@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-06T19:23:34.123Z",
+  "updatedAt": "2026-09-06T21:23:16.621Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Radio Futura",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/radio-futura/"
-      },
+      "current": null,
       "next": {
         "title": "Le Monde d'Erik Arsenault - 10 ans",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "19:00",
         "end": "21:00",
         "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
       },
       "track": "",
-      "showTitle": "Radio Futura",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-06T19:23:23.505Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Le char de marge",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/le-char-de-marge"
-      },
-      "next": {
-        "title": "Vibrance",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/vibrance"
-      },
-      "track": "",
-      "showTitle": "Le char de marge",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T19:23:25.621Z"
+      "checkedAt": "2026-09-06T21:22:48.518Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "L'Avenue des concerts",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/lavenue-des-concerts"
+      },
+      "next": {
+        "title": "Symbiose",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/symbiose"
+      },
+      "track": "",
+      "showTitle": "L'Avenue des concerts",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-06T21:22:51.227Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Magic Roundabout",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
-      },
-      "next": {
         "title": "Bhum Bhum Time",
         "source": "api-live",
         "start": "16:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Desi Beats",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "The Magic Roundabout",
+      "showTitle": "Bhum Bhum Time",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T19:23:28.273Z"
+      "checkedAt": "2026-09-06T21:22:54.391Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Fukubukuro",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/fukubukuro"
-      },
-      "next": {
         "title": "Grade A Explosives",
         "source": "schedule-live",
         "start": "16:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/grade-a-explosives"
       },
+      "next": {
+        "title": "Bills Country and Western Favourites",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
+      },
       "track": "",
-      "showTitle": "Fukubukuro",
+      "showTitle": "Grade A Explosives",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T19:23:30.166Z"
+      "checkedAt": "2026-09-06T21:23:08.630Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,27 +126,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T19:23:31.310Z"
+      "checkedAt": "2026-09-06T21:23:09.682Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Pôle hip-hop",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "16:00",
-        "slug": "pole-hip-hop"
-      },
-      "next": {
         "title": "Mutations",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Los Campesinos! - You! Me! Dancing!",
-      "showTitle": "Pôle hip-hop",
+      "next": {
+        "title": "Les rois de l'arène",
+        "source": "api-live",
+        "start": "05:00",
+        "end": "07:00",
+        "slug": "les-rois-de-larene"
+      },
+      "track": "Mutations - episode-du-6-septembre-2026",
+      "showTitle": "Mutations",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -163,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-06T19:23:33.773Z"
+      "checkedAt": "2026-09-06T21:23:16.271Z"
     }
   }
 }
