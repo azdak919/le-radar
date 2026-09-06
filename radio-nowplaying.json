@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06T06:16:36.684Z",
+  "updatedAt": "2026-09-06T09:25:32.709Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T06:16:17.519Z"
+      "checkedAt": "2026-09-06T09:24:54.776Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T06:16:20.121Z"
+      "checkedAt": "2026-09-06T09:24:56.916Z"
     },
     "ckut": {
       "id": "ckut",
@@ -73,21 +73,21 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T06:16:23.200Z"
+      "checkedAt": "2026-09-06T09:24:59.701Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "01:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Sun Ra, Sun Rise",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
@@ -95,12 +95,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T06:16:28.870Z"
+      "checkedAt": "2026-09-06T09:25:22.269Z"
     },
     "cfak": {
       "id": "cfak",
@@ -125,7 +125,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T06:16:30.094Z"
+      "checkedAt": "2026-09-06T09:25:23.359Z"
     },
     "choq": {
       "id": "choq",
@@ -138,7 +138,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "coffret de bijoux - covet",
+      "track": "Vagabon - Cleaning House",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-06T06:16:36.333Z"
+      "checkedAt": "2026-09-06T09:25:32.359Z"
     }
   }
 }
