@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-05T23:59:43.693Z",
-  "fetchedAt": "2026-09-05T23:59:43.693Z",
+  "updated": "2026-09-06T01:02:13.692Z",
+  "fetchedAt": "2026-09-06T01:02:13.692Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-05T23:59:43.693Z"
+    "referenceDate": "2026-09-06T01:02:13.692Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 816,
@@ -47232,19 +47232,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-05",
-          "time": "20:30",
-          "opponent": "La Pocatière",
-          "opponentCode": "POC",
-          "home": false,
-          "sport": "football",
-          "competition": "Football collégial masculin D3",
-          "gameId": "0e77107b-3280-46a7-a7d1-539b3af93fb6",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e77107b-3280-46a7-a7d1-539b3af93fb6",
-          "opponentFullName": "Cégep de La Pocatière",
-          "opponentRegistryId": "la-pocatiere"
-        },
-        {
           "date": "2026-09-12",
           "time": "13:00",
           "opponent": "Mérici",
@@ -47324,17 +47311,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-05",
-        "time": "20:30",
-        "opponent": "La Pocatière",
-        "opponentCode": "POC",
-        "home": false,
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Mérici",
+        "opponentCode": "MER",
+        "home": true,
         "sport": "football",
         "competition": "Football collégial masculin D3",
-        "gameId": "0e77107b-3280-46a7-a7d1-539b3af93fb6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e77107b-3280-46a7-a7d1-539b3af93fb6",
-        "opponentFullName": "Cégep de La Pocatière",
-        "opponentRegistryId": "la-pocatiere",
+        "gameId": "c006097e-0a40-449c-8365-581b3b56a6df",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c006097e-0a40-449c-8365-581b3b56a6df",
+        "opponentFullName": "Cégep de Mérici",
+        "opponentRegistryId": "merici",
         "opponentSector": "collegial"
       },
       "record": {
@@ -47576,19 +47563,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-05",
-          "time": "20:30",
-          "opponent": "Cégep de Chicoutimi",
-          "opponentCode": "CHI",
-          "home": true,
-          "sport": "football",
-          "competition": "Football collégial masculin D3",
-          "gameId": "0e77107b-3280-46a7-a7d1-539b3af93fb6",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e77107b-3280-46a7-a7d1-539b3af93fb6",
-          "opponentFullName": "Cégep de Chicoutimi",
-          "opponentRegistryId": "chicoutimi"
-        },
-        {
           "date": "2026-09-13",
           "time": "13:00",
           "opponent": "Cégep de Rimouski",
@@ -47668,17 +47642,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-05",
-        "time": "20:30",
-        "opponent": "Cégep de Chicoutimi",
-        "opponentCode": "CHI",
+        "date": "2026-09-13",
+        "time": "13:00",
+        "opponent": "Cégep de Rimouski",
+        "opponentCode": "RIM",
         "home": true,
         "sport": "football",
         "competition": "Football collégial masculin D3",
-        "gameId": "0e77107b-3280-46a7-a7d1-539b3af93fb6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e77107b-3280-46a7-a7d1-539b3af93fb6",
-        "opponentFullName": "Cégep de Chicoutimi",
-        "opponentRegistryId": "chicoutimi",
+        "gameId": "7abd8bfb-9f0d-49e0-a115-779c6797599a",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7abd8bfb-9f0d-49e0-a115-779c6797599a",
+        "opponentFullName": "Cégep de Rimouski",
+        "opponentRegistryId": "rimouski",
         "opponentSector": "collegial"
       },
       "record": {

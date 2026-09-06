@@ -1,10 +1,10 @@
 {
-  "updated": "2026-09-05T23:59:43.693Z",
-  "fetchedAt": "2026-09-05T23:59:43.693Z",
+  "updated": "2026-09-06T01:02:13.692Z",
+  "fetchedAt": "2026-09-06T01:02:13.692Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-05T23:59:43.693Z"
+    "referenceDate": "2026-09-06T01:02:13.692Z"
   },
   "masthead": {
     "nextGameLimit": 48,
@@ -12,7 +12,7 @@
     "chipResultMaxDaysAgo": 5,
     "ctaResultMaxDaysAgo": 1
   },
-  "teamCount": 158,
+  "teamCount": 157,
   "teams": {
     "collegial:flag-football:9b8a3ee0-667b-43ba-9377-30176c5f5ce3:7f29fa90-2fb2-467e-a299-31fecb769e41": {
       "id": "collegial:flag-football:9b8a3ee0-667b-43ba-9377-30176c5f5ce3:7f29fa90-2fb2-467e-a299-31fecb769e41",
@@ -8272,104 +8272,6 @@
       "registryId": "saint-hyacinthe",
       "lastGamePriorSeason": false
     },
-    "collegial:football:717b5738-88ea-4949-a696-839be500ea98:ab2aa041-5c5c-4d6d-8c17-794c9f08fd22": {
-      "id": "collegial:football:717b5738-88ea-4949-a696-839be500ea98:ab2aa041-5c5c-4d6d-8c17-794c9f08fd22",
-      "rseqTeamId": "ab2aa041-5c5c-4d6d-8c17-794c9f08fd22",
-      "leagueId": "717b5738-88ea-4949-a696-839be500ea98",
-      "name": "Cégep de Chicoutimi",
-      "code": "CHI",
-      "sector": "collegial",
-      "sport": "football",
-      "sportLabel": "Football",
-      "sex": "M",
-      "division": "D3",
-      "usports": false,
-      "leagueLabel": "Football collégial masculin D3",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-05",
-          "time": "20:30",
-          "opponent": "La Pocatière",
-          "opponentCode": "POC",
-          "home": false,
-          "sport": "football",
-          "competition": "Football collégial masculin D3",
-          "gameId": "0e77107b-3280-46a7-a7d1-539b3af93fb6",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e77107b-3280-46a7-a7d1-539b3af93fb6",
-          "opponentFullName": "Cégep de La Pocatière",
-          "opponentRegistryId": "la-pocatiere"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-05",
-        "time": "20:30",
-        "opponent": "La Pocatière",
-        "opponentCode": "POC",
-        "home": false,
-        "sport": "football",
-        "competition": "Football collégial masculin D3",
-        "gameId": "0e77107b-3280-46a7-a7d1-539b3af93fb6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e77107b-3280-46a7-a7d1-539b3af93fb6",
-        "opponentFullName": "Cégep de La Pocatière",
-        "opponentRegistryId": "la-pocatiere"
-      },
-      "source": "rseq-s1",
-      "priority": 80,
-      "fullName": "Cégep de Chicoutimi",
-      "registryId": "chicoutimi",
-      "lastGamePriorSeason": false
-    },
-    "collegial:football:717b5738-88ea-4949-a696-839be500ea98:c54735b4-f2e5-4186-9184-31a5c695127f": {
-      "id": "collegial:football:717b5738-88ea-4949-a696-839be500ea98:c54735b4-f2e5-4186-9184-31a5c695127f",
-      "rseqTeamId": "c54735b4-f2e5-4186-9184-31a5c695127f",
-      "leagueId": "717b5738-88ea-4949-a696-839be500ea98",
-      "name": "La Pocatière",
-      "code": "POC",
-      "sector": "collegial",
-      "sport": "football",
-      "sportLabel": "Football",
-      "sex": "M",
-      "division": "D3",
-      "usports": false,
-      "leagueLabel": "Football collégial masculin D3",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-05",
-          "time": "20:30",
-          "opponent": "Cégep de Chicoutimi",
-          "opponentCode": "CHI",
-          "home": true,
-          "sport": "football",
-          "competition": "Football collégial masculin D3",
-          "gameId": "0e77107b-3280-46a7-a7d1-539b3af93fb6",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e77107b-3280-46a7-a7d1-539b3af93fb6",
-          "opponentFullName": "Cégep de Chicoutimi",
-          "opponentRegistryId": "chicoutimi"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-05",
-        "time": "20:30",
-        "opponent": "Cégep de Chicoutimi",
-        "opponentCode": "CHI",
-        "home": true,
-        "sport": "football",
-        "competition": "Football collégial masculin D3",
-        "gameId": "0e77107b-3280-46a7-a7d1-539b3af93fb6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e77107b-3280-46a7-a7d1-539b3af93fb6",
-        "opponentFullName": "Cégep de Chicoutimi",
-        "opponentRegistryId": "chicoutimi"
-      },
-      "source": "rseq-s1",
-      "priority": 80,
-      "fullName": "Cégep de La Pocatière",
-      "registryId": "la-pocatiere",
-      "lastGamePriorSeason": false
-    },
     "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:6175d30c-eaa2-4ebb-ac87-cd85e44e4e01": {
       "id": "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:6175d30c-eaa2-4ebb-ac87-cd85e44e4e01",
       "rseqTeamId": "6175d30c-eaa2-4ebb-ac87-cd85e44e4e01",
@@ -9059,6 +8961,20 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5c888d15-8804-418d-b362-8476723d4a7c",
           "opponentFullName": "Cégep de Beauce-Appalaches",
           "opponentRegistryId": "beauce-appalaches"
+        },
+        {
+          "date": "2026-09-09",
+          "time": "19:30",
+          "opponent": "André-Laurendeau",
+          "opponentCode": "CAL",
+          "home": false,
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+          "opponentFullName": "Cégep André-Laurendeau",
+          "opponentNickname": "Cheetahs",
+          "opponentRegistryId": "andre-laurendeau"
         }
       ],
       "nextGame": {
@@ -11480,6 +11396,57 @@
       "priority": 80,
       "fullName": "Cégep Gérald-Godin",
       "registryId": "gerald-godin"
+    },
+    "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:75d3749d-c79f-4b5f-bc54-f1dd13fae290": {
+      "id": "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:75d3749d-c79f-4b5f-bc54-f1dd13fae290",
+      "rseqTeamId": "75d3749d-c79f-4b5f-bc54-f1dd13fae290",
+      "leagueId": "b30acc8a-4be1-4d58-917e-59d7d3aa4a88",
+      "name": "André-Laurendeau",
+      "code": "CAL",
+      "sector": "collegial",
+      "sport": "baseball",
+      "sportLabel": "Baseball",
+      "sex": "M",
+      "division": null,
+      "usports": false,
+      "leagueLabel": "Baseball collégial masculin",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-09",
+          "time": "19:30",
+          "opponent": "John Abbott",
+          "opponentCode": "JAC",
+          "home": true,
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+          "opponentFullName": "John Abbott College",
+          "opponentNickname": "Islanders",
+          "opponentRegistryId": "john-abbott"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-09",
+        "time": "19:30",
+        "opponent": "John Abbott",
+        "opponentCode": "JAC",
+        "home": true,
+        "sport": "baseball",
+        "competition": "Baseball collégial masculin",
+        "gameId": "1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+        "opponentFullName": "John Abbott College",
+        "opponentNickname": "Islanders",
+        "opponentRegistryId": "john-abbott"
+      },
+      "source": "rseq-s1",
+      "priority": 22,
+      "fullName": "Cégep André-Laurendeau",
+      "nickname": "Cheetahs",
+      "registryId": "andre-laurendeau"
     }
   }
 }
