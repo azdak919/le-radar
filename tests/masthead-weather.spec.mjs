@@ -519,6 +519,7 @@ test('thème clair : sports et slogan partagent le verre météo @ci-critical', 
       liveProbe.setAttribute('data-cta-state', 'live');
       liveProbe.removeAttribute('data-cta-lamp');
     }
+    rest?.offsetHeight;
     return {
       weather: parse(document.querySelector('.masthead-weather__city.is-active')),
       sports: parse(rest),

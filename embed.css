@@ -1573,25 +1573,43 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-actions {
 
 /* Mobile kiosque : volume en popover (comme l’embed générique < 560 px). */
 @media (max-width: 559.98px) {
+  /*
+   * 68 px (pas 62) : embed.js pose --embed-bar-h en inline à 68.
+   * 62 + padding 10+10 + contrôles 42 ne laissait aucune place sous le
+   * panneau poste — le crédit recouvrait « À l’antenne » et le chevron
+   * fendait « le-radar.ca ». Rangée 42 px en haut, crédit dans le bas.
+   */
   html[data-embed="tuner"][data-surface="kiosque-v1"] {
-    --embed-bar-h: 62px;
+    --embed-bar-h: 68px;
     --embed-vol-track: 72px;
     --embed-pad: 12px;
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-inner {
+    padding: 4px var(--embed-pad) 14px;
+    align-items: start;
+    overflow: visible;
+  }
+
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-controls {
+    /* Ne pas créer de bloc contenant : le crédit se cale sur .tuner-inner. */
+    position: static;
+    align-items: flex-start;
   }
 
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-onair {
     display: none !important;
   }
   /*
-   * Mobile : .tuner-label ne contient plus que le crédit → sous le dial,
-   * aligné à gauche (padding texte du panneau). Boutons non décalés.
+   * Mobile : .tuner-label = crédit seul, sous le panneau poste (pas dessus).
+   * left = padding inner + prev + gap + padding texte du panneau.
    */
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-label {
     display: flex !important;
     position: absolute !important;
-    left: calc(var(--embed-ctrl, 42px) + var(--embed-gap, 8px) + 11px) !important;
+    left: calc(var(--embed-pad, 12px) + var(--embed-ctrl, 42px) + var(--embed-gap, 8px) + 11px) !important;
     right: auto !important;
-    bottom: 2px !important;
+    bottom: 3px !important;
     top: auto !important;
     z-index: 4;
     flex-direction: row !important;
@@ -1606,12 +1624,17 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-actions {
     max-width: min(44vw, 9rem);
     pointer-events: auto;
     transform: none !important;
+    white-space: nowrap;
   }
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-dial {
     padding-bottom: 0 !important;
     margin-bottom: 0 !important;
-    align-self: center !important;
+    align-self: flex-start !important;
     min-height: var(--embed-ctrl, 42px);
+  }
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-step,
+  html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-actions {
+    align-self: flex-start;
   }
 
   html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol {
