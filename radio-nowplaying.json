@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06T09:25:32.709Z",
+  "updatedAt": "2026-09-06T10:57:46.139Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,86 +21,87 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T09:24:54.776Z"
+      "checkedAt": "2026-09-06T10:57:20.440Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "06:30",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "Les mignardises littéraires",
         "source": "schedule",
         "start": "06:30",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/les-mignardises-litteraires"
       },
+      "next": {
+        "title": "Genre de bleu",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/genre-de-bleu"
+      },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "Les mignardises littéraires",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T09:24:56.916Z"
+      "checkedAt": "2026-09-06T10:57:22.847Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Utopia's Paradise",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "06:00"
-      },
-      "next": {
         "title": "Mind, Soul, & Spirit",
         "source": "api-live",
         "start": "06:00",
         "end": "09:00"
       },
-      "track": "Utopia",
-      "showTitle": "Utopia's Paradise",
+      "next": {
+        "title": "Latin Time",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "10:30"
+      },
+      "track": "",
+      "showTitle": "Mind, Soul, & Spirit",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T09:24:59.701Z"
+      "checkedAt": "2026-09-06T10:57:25.871Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Sun Ra, Sun Rise",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
       },
+      "next": {
+        "title": "The Gigi Brown Experience",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Sun Ra, Sun Rise",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T09:25:22.269Z"
+      "checkedAt": "2026-09-06T10:57:38.824Z"
     },
     "cfak": {
       "id": "cfak",
@@ -125,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T09:25:23.359Z"
+      "checkedAt": "2026-09-06T10:57:39.710Z"
     },
     "choq": {
       "id": "choq",
@@ -138,7 +139,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "Vagabon - Cleaning House",
+      "track": "Magi Merlin - SpiceKick",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-06T09:25:32.359Z"
+      "checkedAt": "2026-09-06T10:57:45.788Z"
     }
   }
 }
