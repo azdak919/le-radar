@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06T17:13:54.606Z",
+  "updatedAt": "2026-09-06T19:09:15.668Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T17:13:38.998Z"
+      "checkedAt": "2026-09-06T19:09:01.070Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
-      },
-      "next": {
         "title": "Le char de marge",
         "source": "schedule",
         "start": "14:00",
         "end": "16:00",
         "url": "https://cism893.ca/emissions/le-char-de-marge"
       },
+      "next": {
+        "title": "Vibrance",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/vibrance"
+      },
       "track": "",
-      "showTitle": "Basses fréquences",
+      "showTitle": "Le char de marge",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T17:13:41.077Z"
+      "checkedAt": "2026-09-06T19:09:03.467Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Modular Systems/Future Classics",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "The Magic Roundabout",
         "source": "api-live",
         "start": "14:00",
         "end": "16:00"
       },
+      "next": {
+        "title": "Bhum Bhum Time",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Modular Systems/Future Classics",
+      "showTitle": "The Magic Roundabout",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T17:13:44.056Z"
+      "checkedAt": "2026-09-06T19:09:05.973Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Northern Stagelights",
+        "title": "Fukubukuro",
         "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/northern-stagelights"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/fukubukuro"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "Grade A Explosives",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/grade-a-explosives"
       },
       "track": "",
-      "showTitle": "Northern Stagelights",
+      "showTitle": "Fukubukuro",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T17:13:46.930Z"
+      "checkedAt": "2026-09-06T19:09:08.368Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,21 +133,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T17:13:47.712Z"
+      "checkedAt": "2026-09-06T19:09:09.672Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Pôle hip-hop",
         "source": "api-live",
         "start": "14:00",
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "Lisa Hannigan - Undertow",
-      "showTitle": "",
+      "next": {
+        "title": "Mutations",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "mutations"
+      },
+      "track": "Honeyblood - Killer Bangs",
+      "showTitle": "Pôle hip-hop",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -157,7 +163,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-06T17:13:54.255Z"
+      "checkedAt": "2026-09-06T19:09:15.317Z"
     }
   }
 }
