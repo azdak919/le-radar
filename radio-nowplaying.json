@@ -1,125 +1,17 @@
 {
-  "updatedAt": "2026-09-06T01:11:54.438Z",
+  "updatedAt": "2026-09-06T04:35:00.352Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Football du Rouge et Or",
-        "source": "api-live",
-        "start": "18:30",
-        "end": "22:30",
-        "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHYZ",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
-      },
-      "track": "",
-      "showTitle": "Football du Rouge et Or",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-06T01:11:41.906Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Les criquets crinqués (reprise)",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/les-criquets-crinques"
-      },
-      "next": {
-        "title": "Mix anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "track": "",
-      "showTitle": "Les criquets crinqués (reprise)",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-06T01:11:43.914Z"
-    },
-    "ckut": {
-      "id": "ckut",
-      "name": "CKUT 90,3",
-      "current": {
-        "title": "Howls From Hell/Too Loud For The Crowd",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
-      },
-      "next": {
-        "title": "SKEwInGTheWaBeS$$",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
-      },
-      "track": "",
-      "showTitle": "Howls From Hell/Too Loud For The Crowd",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "stream"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-06T01:11:46.373Z"
-    },
-    "cjlo": {
-      "id": "cjlo",
-      "name": "CJLO 1690AM",
-      "current": {
-        "title": "The Spacious Astrology Playlist",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-spacious-astrology-playlist"
-      },
-      "next": {
-        "title": "Brave New Jams",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/brave-new-jams"
-      },
-      "track": "",
-      "showTitle": "The Spacious Astrology Playlist",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live",
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-06T01:11:48.470Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": null,
-      "next": {
-        "title": "Les nuits CFAK",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "21:00"
       },
       "track": "",
       "showTitle": "",
@@ -129,20 +21,125 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T01:11:49.509Z"
+      "checkedAt": "2026-09-06T04:34:46.661Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Basses fréquences (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/basses-frequences"
+      },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "06:30",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
+      "track": "",
+      "showTitle": "Basses fréquences (reprise)",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-06T04:34:48.722Z"
+    },
+    "ckut": {
+      "id": "ckut",
+      "name": "CKUT 90,3",
+      "current": {
+        "title": "stereOphobic",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "02:00"
+      },
+      "next": {
+        "title": "Utopia's Paradise",
+        "source": "api-live",
+        "start": "02:00",
+        "end": "06:00"
+      },
+      "track": "",
+      "showTitle": "stereOphobic",
+      "host": "",
+      "source": "api-live",
+      "sources": [
+        "api-live",
+        "stream"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-06T04:34:51.706Z"
+    },
+    "cjlo": {
+      "id": "cjlo",
+      "name": "CJLO 1690AM",
+      "current": {
+        "title": "Floydian Slip",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "01:00",
+        "url": "http://www.cjlo.com/shows/floydian-slip"
+      },
+      "next": {
+        "title": "CJLO Late Night",
+        "source": "schedule-live",
+        "start": "01:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
+      "track": "",
+      "showTitle": "Floydian Slip",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-06T04:34:53.911Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "21:00"
+      },
+      "next": {
+        "title": "Solénoïde",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "00:00"
+      },
+      "track": "",
+      "showTitle": "Les nuits CFAK",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-06T04:34:55.025Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "D'amour et de sexe",
+        "title": "Pôle hip-hop",
         "source": "api-live",
-        "start": "22:00",
-        "end": "00:00",
-        "slug": "damour-et-de-sexe"
+        "start": "14:00",
+        "end": "16:00",
+        "slug": "pole-hip-hop"
       },
-      "track": "Spoon - WhisperI",
+      "track": "The Blind Philosopher - Indomitable",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -153,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-06T01:11:54.088Z"
+      "checkedAt": "2026-09-06T04:35:00.001Z"
     }
   }
 }
