@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-07T10:19:52.915Z",
+  "updated": "2026-09-07T12:55:16.567Z",
   "updatedSlot": null,
   "count": 185,
   "freshnessSessions": 3,
@@ -10,7 +10,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-04T21:00:00.000Z",
-      "lastFetchOk": "2026-09-07T10:19:08.243Z"
+      "lastFetchOk": "2026-09-07T12:54:39.889Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-09-07T10:19:09.307Z"
+      "lastFetchOk": "2026-09-07T12:54:40.820Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-01T04:35:43.000Z",
-      "lastFetchOk": "2026-09-07T10:19:13.498Z"
+      "lastFetchOk": "2026-09-07T12:54:44.709Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-08-31T12:39:00.000Z",
-      "lastFetchOk": "2026-09-07T10:19:14.101Z"
+      "lastFetchOk": "2026-09-07T12:54:45.176Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-02T02:15:00.000Z",
-      "lastFetchOk": "2026-09-07T10:19:15.505Z"
+      "lastFetchOk": "2026-09-07T12:54:45.706Z"
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,15 +50,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-09-07T10:19:18.666Z"
+      "lastFetchOk": "2026-09-07T12:54:46.753Z"
     },
     "L'Exemplaire": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-09-07T12:54:49.994Z"
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-01T08:00:00.000Z",
-      "lastFetchOk": "2026-09-07T10:19:32.408Z"
+      "lastFetchOk": "2026-09-07T12:54:51.144Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-09-07T10:19:32.622Z"
+      "lastFetchOk": "2026-09-07T12:54:51.304Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -82,7 +82,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-04T21:07:40.000Z",
-      "lastFetchOk": "2026-09-07T10:19:33.419Z"
+      "lastFetchOk": "2026-09-07T12:54:52.076Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 13,
       "lastArticle": "2026-02-25T14:38:32.764Z",
-      "lastFetchOk": "2026-09-07T10:19:34.802Z"
+      "lastFetchOk": "2026-09-07T12:54:53.373Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-08-30T17:15:53.000Z",
-      "lastFetchOk": "2026-09-07T10:19:34.980Z"
+      "lastFetchOk": "2026-09-07T12:54:53.513Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-09-07T10:19:35.205Z"
+      "lastFetchOk": "2026-09-07T12:54:53.655Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-09-07T10:19:35.360Z"
+      "lastFetchOk": "2026-09-07T12:54:54.146Z"
     }
   },
   "items": [
@@ -1923,8 +1923,7 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2004.jpg",
       "imageLocal": "assets/news-images/4df75cf87015c28b.png",
       "imageLocalKey": "4df75cf87015c28b",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -2153,8 +2152,7 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Louis-Jacques-Casault_3.jpg",
       "imageLocal": "assets/news-images/85c53107d1e4248f.webp",
       "imageLocalKey": "85c53107d1e4248f",
-      "imageLocalVia": "photon",
-      "_retainedFromCache": true
+      "imageLocalVia": "photon"
     },
     {
       "source": "L'Exemplaire",
@@ -2185,8 +2183,7 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2005.jpg",
       "imageLocal": "assets/news-images/fb608c4f6ca425ad.jpg",
       "imageLocalKey": "fb608c4f6ca425ad",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "L'Exemplaire",
@@ -2207,7 +2204,6 @@
       "sourceImageCreditImageKey": "chatgpt-image-7-mai-2026-11-h-02-min-08-s.png",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "leadExcerpt": "Illustration générée par ChatGPT à partir du prompt d’Olivier Verreault pour L’Exemplaire. Ce prompt vise à illustrer avec humour les différences entre les protestations québécoises et albertaines au sujet du rachat des armes à feu.",
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/5/57/Pavillon_DKN%2C_Universit%C3%A9_Laval_07.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
       "imageTitle": "Pavillon DKN, Université Laval 07",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
@@ -2215,7 +2211,7 @@
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2007.jpg",
-      "_retainedFromCache": true
+      "leadExcerpt": "Illustration générée par ChatGPT à partir du prompt d’Olivier Verreault pour L’Exemplaire. Ce prompt vise à illustrer avec humour les différences entre les protestations québécoises et albertaines au sujet du rachat des armes à feu."
     },
     {
       "source": "L'Exemplaire",
@@ -2245,8 +2241,7 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2006.jpg",
       "imageLocal": "assets/news-images/c8c65f429a9e4a92.jpg",
       "imageLocalKey": "c8c65f429a9e4a92",
-      "imageLocalVia": "wayback",
-      "_retainedFromCache": true
+      "imageLocalVia": "wayback"
     },
     {
       "source": "L'Exemplaire",
@@ -2277,8 +2272,7 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2011.jpg",
       "imageLocal": "assets/news-images/bbce4110e22a994d.jpg",
       "imageLocalKey": "bbce4110e22a994d",
-      "imageLocalVia": "wayback",
-      "_retainedFromCache": true
+      "imageLocalVia": "wayback"
     },
     {
       "source": "L'Exemplaire",
@@ -2309,8 +2303,7 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2003.jpg",
       "imageLocal": "assets/news-images/400cbabd32c81933.jpg",
       "imageLocalKey": "400cbabd32c81933",
-      "imageLocalVia": "wayback",
-      "_retainedFromCache": true
+      "imageLocalVia": "wayback"
     },
     {
       "source": "L'Exemplaire",
@@ -2323,7 +2316,7 @@
       "author": "Mano Le Bris",
       "date": "2026-05-12T18:48:26.000Z",
       "excerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus ont explosé, début 2026, sur les réseaux sociaux. Mais derrière ces visuels",
-      "image": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/05/SKIBIDI-MINIA-2.png",
+      "image": "https://i0.wp.com/www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/05/SKIBIDI-MINIA-2.png?resize=696%2C392&ssl=1",
       "sourceImageCredit": "Illustration : Mano Le Bris / L’Exemplaire",
       "sourceImageCreator": "Mano Le Bris",
       "sourceImageCreditUrl": "https://www.exemplaire.com.ulaval.ca/a-la-une/skibidi-tentafruit-ou-quand-lia-accentue-les-stereotypes/?utm_source=rss&utm_medium=rss&utm_campaign=skibidi-tentafruit-ou-quand-lia-accentue-les-stereotypes",
@@ -2332,7 +2325,6 @@
       "sourceImageCreditImageKey": "skibidi-minia-2.png",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus explosent sur les réseaux sociaux. Mais, derrière ces visuels enfantins générés par intelligence artificielle, se dessinent des discours moins légers qui dépassent le simple divertissement.",
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg",
       "imageTitle": "Pavillon Ferdinand-Vandry, Université Laval",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
@@ -2340,7 +2332,9 @@
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg",
-      "_retainedFromCache": true
+      "leadExcerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus explosent sur les réseaux sociaux. Mais, derrière ces visuels enfantins générés par intelligence artificielle, se dessinent des discours moins légers qui dépassent le simple divertissement.",
+      "imageLocal": "assets/news-images/44f01b932a4f2373.webp",
+      "imageLocalKey": "44f01b932a4f2373"
     },
     {
       "source": "Quartier Libre",
@@ -2768,8 +2762,7 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_Laval,_Quebec,_Canada_02.jpg",
       "imageLocal": "assets/news-images/a867f9e5235ae71d.jpg",
       "imageLocalKey": "a867f9e5235ae71d",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "L'Exemplaire",
@@ -2800,8 +2793,7 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Grand_Axe_ULaval.jpg",
       "imageLocal": "assets/news-images/e4469fb7576e9660.png",
       "imageLocalKey": "e4469fb7576e9660",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -3959,55 +3951,6 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "L’épidémie de la nonchalance",
-      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "author": "Elie Nguyen",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
-      "featured": true,
-      "sourceImageCredit": "Photo : Elie Nguyen",
-      "sourceImageCreator": "Elie Nguyen",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
-      "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "Le retard et les bienfaits du temps long",
-      "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
-      "author": "Dalia Djazouli",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Imposer sa propre subjectivité temporelle.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/retard-1-scaled.jpeg",
-      "featured": true,
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "retard-1.jpeg",
-      "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "L’imposition de la ponctualité comme norme suprême ne se cantonne pas à notre journal étudiant : elle est propre à nos sociétés industrialisées, dont la conception du temps est particulièrement rigoureuse et utilitariste. La temporalité est perçue comme un objet tangible, que l’on peut et doit rentabiliser autant que possible. Les journées sont compartimentées, et chaque heure doit être mise à profit.",
-      "imageLocal": "assets/news-images/6589fd0fc667fccd.jpg",
-      "imageLocalKey": "6589fd0fc667fccd",
-      "imageLocalVia": "origin"
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
       "title": "Rassembler pour mieux diviser",
       "link": "https://www.delitfrancais.com/2026/03/25/rassembler-pour-mieux-diviser/",
       "author": "Catherine Brunet Rodriguez",
@@ -4101,6 +4044,55 @@
       "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
       "imageLocal": "assets/news-images/4d808d99f444a191.jpg",
       "imageLocalKey": "4d808d99f444a191",
+      "imageLocalVia": "origin"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "L’épidémie de la nonchalance",
+      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "author": "Elie Nguyen",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
+      "featured": true,
+      "sourceImageCredit": "Photo : Elie Nguyen",
+      "sourceImageCreator": "Elie Nguyen",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "Le retard et les bienfaits du temps long",
+      "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
+      "author": "Dalia Djazouli",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Imposer sa propre subjectivité temporelle.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/retard-1-scaled.jpeg",
+      "featured": true,
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "retard-1.jpeg",
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "L’imposition de la ponctualité comme norme suprême ne se cantonne pas à notre journal étudiant : elle est propre à nos sociétés industrialisées, dont la conception du temps est particulièrement rigoureuse et utilitariste. La temporalité est perçue comme un objet tangible, que l’on peut et doit rentabiliser autant que possible. Les journées sont compartimentées, et chaque heure doit être mise à profit.",
+      "imageLocal": "assets/news-images/6589fd0fc667fccd.jpg",
+      "imageLocalKey": "6589fd0fc667fccd",
       "imageLocalVia": "origin"
     },
     {
