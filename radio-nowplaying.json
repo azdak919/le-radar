@@ -1,45 +1,32 @@
 {
-  "updatedAt": "2026-09-06T23:27:56.494Z",
+  "updatedAt": "2026-09-07T01:13:28.868Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Le Monde d'Erik Arsenault - 10 ans",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
-      },
+      "current": null,
       "next": {
         "title": "Lundi Indie",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "Le Monde d'Erik Arsenault - 10 ans",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T23:27:21.099Z"
+      "checkedAt": "2026-09-07T01:13:12.388Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
-      "current": {
-        "title": "Symbiose",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/symbiose"
-      },
+      "current": null,
       "next": {
         "title": "L'Alter Ego (reprise)",
         "source": "schedule",
@@ -48,32 +35,32 @@
         "url": "https://cism893.ca/emissions/lalter-ego"
       },
       "track": "",
-      "showTitle": "Symbiose",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T23:27:23.204Z"
+      "checkedAt": "2026-09-07T01:13:15.009Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Bluegrass Rambling",
+        "title": "Cha Cha In Blue",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "21:00",
+        "end": "23:00"
       },
       "next": {
-        "title": "Country Classics",
+        "title": "Ill Groove Garden",
         "source": "api-live",
-        "start": "20:00",
-        "end": "21:00"
+        "start": "23:00",
+        "end": "00:00"
       },
-      "track": "- Parlez Nous a Boire",
-      "showTitle": "Bluegrass Rambling",
+      "track": "",
+      "showTitle": "Cha Cha In Blue",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,59 +68,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T23:27:26.062Z"
+      "checkedAt": "2026-09-07T01:13:17.772Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "No Boundaries",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/no-boundaries"
-      },
-      "next": {
-        "title": "Eastern Promises",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "20:30",
-        "url": "http://www.cjlo.com/shows/eastern-promises"
-      },
-      "track": "",
-      "showTitle": "No Boundaries",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-06T23:27:48.632Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "21:00"
-      },
-      "next": {
-        "title": "Solénoïde",
+        "title": "Afro Archives",
         "source": "schedule-live",
         "start": "21:00",
-        "end": "00:00"
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/afro-archives"
+      },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Afro Archives",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-06T23:27:49.692Z"
+      "checkedAt": "2026-09-07T01:13:20.941Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Solénoïde",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "00:00"
+      },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:01",
+        "end": "07:00"
+      },
+      "track": "",
+      "showTitle": "Solénoïde",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-07T01:13:22.059Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +133,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Chaude Chaleur - Chambre noire",
+      "track": "Waingro - Van Sant",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +144,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-06T23:27:56.144Z"
+      "checkedAt": "2026-09-07T01:13:28.517Z"
     }
   }
 }
