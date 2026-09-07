@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-06T19:37:03.717Z",
+  "updatedAt": "2026-09-07T14:30:58.545Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,8 +8,8 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-09-06T19:37:03.717Z",
-      "verifiedWeekOf": "2026-08-31",
+      "checkedAt": "2026-09-07T14:30:58.545Z",
+      "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
           "day": 0,
@@ -236,22 +236,22 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-09-06T19:37:03.717Z",
-      "verifiedWeekOf": "2026-08-31",
+      "checkedAt": "2026-09-07T14:30:58.545Z",
+      "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
           "day": 0,
-          "start": "02:00",
-          "end": "06:30",
-          "title": "Mix Franco",
-          "url": "https://cism893.ca/emissions/mix-franco"
+          "start": "00:00",
+          "end": "02:00",
+          "title": "Basses fréquences (reprise)",
+          "url": "https://cism893.ca/emissions/basses-frequences"
         },
         {
           "day": 0,
-          "start": "06:30",
+          "start": "02:00",
           "end": "07:00",
-          "title": "Les mignardises littéraires",
-          "url": "https://cism893.ca/emissions/les-mignardises-litteraires"
+          "title": "Mix franco",
+          "url": "https://cism893.ca/emissions/mix-franco"
         },
         {
           "day": 0,
@@ -285,15 +285,15 @@
           "day": 0,
           "start": "11:00",
           "end": "12:00",
-          "title": "Yallah lâcher prise",
-          "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
+          "title": "Effets sonores",
+          "url": "https://cism893.ca/emissions/effets-sonores"
         },
         {
           "day": 0,
           "start": "12:00",
           "end": "14:00",
-          "title": "Basses fréquences",
-          "url": "https://cism893.ca/emissions/basses-frequences"
+          "title": "Les sirènes",
+          "url": "https://cism893.ca/emissions/les-sirenes"
         },
         {
           "day": 0,
@@ -306,15 +306,15 @@
           "day": 0,
           "start": "16:00",
           "end": "17:00",
-          "title": "Vibrance",
-          "url": "https://cism893.ca/emissions/vibrance"
+          "title": "La Grapevine",
+          "url": "https://cism893.ca/emissions/la-grapevine"
         },
         {
           "day": 0,
           "start": "17:00",
           "end": "18:00",
-          "title": "L'Avenue des concerts",
-          "url": "https://cism893.ca/emissions/lavenue-des-concerts"
+          "title": "Le grand repos",
+          "url": "https://cism893.ca/emissions/le-grand-repos"
         },
         {
           "day": 0,
@@ -324,17 +324,31 @@
           "url": "https://cism893.ca/emissions/symbiose"
         },
         {
+          "day": 0,
+          "start": "20:00",
+          "end": "21:30",
+          "title": "London café (reprise)",
+          "url": "https://cism893.ca/emissions/london-cafe"
+        },
+        {
+          "day": 0,
+          "start": "21:30",
+          "end": "00:00",
+          "title": "Mix Anglo",
+          "url": "https://cism893.ca/emissions/mix-anglo"
+        },
+        {
           "day": 1,
           "start": "00:00",
           "end": "02:00",
-          "title": "L'Alter Ego (reprise)",
+          "title": "L'alter ego (reprise)",
           "url": "https://cism893.ca/emissions/lalter-ego"
         },
         {
           "day": 1,
           "start": "02:00",
           "end": "03:00",
-          "title": "Mix Franco",
+          "title": "Mix franco",
           "url": "https://cism893.ca/emissions/mix-franco"
         },
         {
@@ -362,15 +376,22 @@
           "day": 1,
           "start": "08:00",
           "end": "09:00",
-          "title": "Ya Raï (reprise)",
-          "url": "https://cism893.ca/emissions/ya-rai"
+          "title": "Yallah! Lâcher prise avec Rhabibiii",
+          "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
         },
         {
           "day": 1,
           "start": "09:00",
-          "end": "11:00",
+          "end": "10:00",
           "title": "La collation",
           "url": "https://cism893.ca/emissions/mix-collation"
+        },
+        {
+          "day": 1,
+          "start": "10:00",
+          "end": "11:00",
+          "title": "Faits de société!",
+          "url": "https://cism893.ca/emissions/faits-de-societe"
         },
         {
           "day": 1,
@@ -383,7 +404,7 @@
           "day": 1,
           "start": "12:00",
           "end": "14:00",
-          "title": "L'Alter Ego",
+          "title": "L'alter ego",
           "url": "https://cism893.ca/emissions/lalter-ego"
         },
         {
@@ -417,22 +438,15 @@
         {
           "day": 1,
           "start": "20:00",
-          "end": "21:00",
-          "title": "Rock à la casbah",
-          "url": "https://cism893.ca/emissions/rock-a-la-casbah"
-        },
-        {
-          "day": 1,
-          "start": "21:00",
           "end": "22:00",
-          "title": "Toute est dans toute (reprise)",
-          "url": "https://cism893.ca/emissions/tout-est-dans-toute"
+          "title": "Mono Fred (en stéréo)",
+          "url": "https://cism893.ca/emissions/mono-fred-en-stereo"
         },
         {
           "day": 1,
           "start": "22:00",
           "end": "00:00",
-          "title": "Mix anglo",
+          "title": "Mix Anglo",
           "url": "https://cism893.ca/emissions/mix-anglo"
         },
         {
@@ -446,7 +460,7 @@
           "day": 2,
           "start": "02:00",
           "end": "03:00",
-          "title": "Mix Franco",
+          "title": "Mix franco",
           "url": "https://cism893.ca/emissions/mix-franco"
         },
         {
@@ -467,29 +481,29 @@
           "day": 2,
           "start": "07:00",
           "end": "08:00",
-          "title": "Câlin collectif",
-          "url": "https://cism893.ca/emissions/calins-collectifs"
-        },
-        {
-          "day": 2,
-          "start": "08:00",
-          "end": "09:00",
           "title": "Raconte ton quartier",
           "url": "https://cism893.ca/emissions/raconte-ton-quartier"
         },
         {
           "day": 2,
+          "start": "08:00",
+          "end": "09:00",
+          "title": "450DB",
+          "url": "https://cism893.ca/emissions/450db"
+        },
+        {
+          "day": 2,
           "start": "09:00",
-          "end": "11:00",
+          "end": "10:00",
           "title": "La collation",
           "url": "https://cism893.ca/emissions/mix-collation"
         },
         {
           "day": 2,
-          "start": "11:00",
+          "start": "10:00",
           "end": "12:00",
-          "title": "Roche aux platines",
-          "url": "https://cism893.ca/emissions/roche-aux-platines"
+          "title": "Lentement mais sûrement",
+          "url": "https://cism893.ca/emissions/lentement-mais-surement"
         },
         {
           "day": 2,
@@ -523,15 +537,15 @@
           "day": 2,
           "start": "17:30",
           "end": "19:00",
-          "title": "Les Pénibles",
+          "title": "les pénibles",
           "url": "https://cism893.ca/emissions/les-penibles"
         },
         {
           "day": 2,
           "start": "19:00",
           "end": "20:00",
-          "title": "Ailleurs: escales en musique",
-          "url": "https://cism893.ca/emissions/ailleurs-en-musique"
+          "title": "Catharmix",
+          "url": "https://cism893.ca/emissions/catharmix"
         },
         {
           "day": 2,
@@ -544,21 +558,21 @@
           "day": 2,
           "start": "22:00",
           "end": "00:00",
-          "title": "Mix anglo",
+          "title": "Mix Anglo",
           "url": "https://cism893.ca/emissions/mix-anglo"
         },
         {
           "day": 3,
           "start": "00:00",
           "end": "02:00",
-          "title": "Club classique (reprise)",
-          "url": "https://cism893.ca/emissions/club-classique"
+          "title": "La carte cadeau (reprise)",
+          "url": "https://cism893.ca/emissions/la-carte-cadeau"
         },
         {
           "day": 3,
           "start": "02:00",
           "end": "03:00",
-          "title": "Mix Franco",
+          "title": "Mix franco",
           "url": "https://cism893.ca/emissions/mix-franco"
         },
         {
@@ -572,8 +586,8 @@
           "day": 3,
           "start": "04:00",
           "end": "05:00",
-          "title": "Hors cadre",
-          "url": "https://cism893.ca/emissions/hors-cadre"
+          "title": "Ailleurs: escales en musique",
+          "url": "https://cism893.ca/emissions/ailleurs-en-musique"
         },
         {
           "day": 3,
@@ -592,16 +606,23 @@
         {
           "day": 3,
           "start": "09:00",
-          "end": "11:00",
+          "end": "10:00",
           "title": "La collation",
           "url": "https://cism893.ca/emissions/mix-collation"
         },
         {
           "day": 3,
+          "start": "10:00",
+          "end": "11:00",
+          "title": "La 13e",
+          "url": "https://cism893.ca/emissions/la-13e"
+        },
+        {
+          "day": 3,
           "start": "11:00",
           "end": "12:00",
-          "title": "Genre de bleu (reprise)",
-          "url": "https://cism893.ca/emissions/genre-de-bleu"
+          "title": "À la loupe du droit",
+          "url": "https://cism893.ca/emissions/a-la-loupe-du-droit"
         },
         {
           "day": 3,
@@ -621,8 +642,8 @@
           "day": 3,
           "start": "15:00",
           "end": "16:00",
-          "title": "Parler pour jaser",
-          "url": "https://cism893.ca/emissions/parler-pour-jaser"
+          "title": "Vibrance: voyage dance vers Montréal et ailleurs",
+          "url": "https://cism893.ca/emissions/vibrance"
         },
         {
           "day": 3,
@@ -642,8 +663,8 @@
           "day": 3,
           "start": "19:00",
           "end": "20:00",
-          "title": "O'Keb (reprise)",
-          "url": "https://cism893.ca/emissions/okeb"
+          "title": "Effets sonores (reprise)",
+          "url": "https://cism893.ca/emissions/effets-sonores"
         },
         {
           "day": 3,
@@ -656,7 +677,7 @@
           "day": 3,
           "start": "22:00",
           "end": "00:00",
-          "title": "Mix anglo",
+          "title": "Mix Anglo",
           "url": "https://cism893.ca/emissions/mix-anglo"
         },
         {
@@ -670,22 +691,15 @@
           "day": 4,
           "start": "02:00",
           "end": "03:00",
-          "title": "Mix Franco",
+          "title": "Mix franco",
           "url": "https://cism893.ca/emissions/mix-franco"
         },
         {
           "day": 4,
           "start": "03:00",
-          "end": "04:00",
-          "title": "Par mots et par vaux (reprise)",
-          "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
-        },
-        {
-          "day": 4,
-          "start": "04:00",
           "end": "05:00",
-          "title": "Best of des sessions live",
-          "url": "https://cism893.ca/emissions/session-live-a-cism"
+          "title": "Les Charlottes",
+          "url": "https://cism893.ca/emissions/les-charlottes"
         },
         {
           "day": 4,
@@ -698,8 +712,8 @@
           "day": 4,
           "start": "07:00",
           "end": "08:00",
-          "title": "La case à combler",
-          "url": "https://cism893.ca/emissions/ici-la-criminologie"
+          "title": "La lecture pis toi",
+          "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
         },
         {
           "day": 4,
@@ -711,16 +725,23 @@
         {
           "day": 4,
           "start": "09:00",
-          "end": "11:00",
+          "end": "10:00",
           "title": "La collation",
           "url": "https://cism893.ca/emissions/mix-collation"
         },
         {
           "day": 4,
-          "start": "11:00",
-          "end": "12:00",
+          "start": "10:00",
+          "end": "11:00",
           "title": "Une fenêtre sur le monde",
           "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
+        },
+        {
+          "day": 4,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "Présentement à l'écoute",
+          "url": "https://cism893.ca/emissions/presentement-a-lecoute-2"
         },
         {
           "day": 4,
@@ -740,8 +761,8 @@
           "day": 4,
           "start": "15:00",
           "end": "16:00",
-          "title": "La boussole culturelle",
-          "url": "https://cism893.ca/emissions/la-boussole-culturelle"
+          "title": "La session live",
+          "url": "https://cism893.ca/emissions/session-live-a-cism"
         },
         {
           "day": 4,
@@ -761,7 +782,7 @@
           "day": 4,
           "start": "19:00",
           "end": "20:00",
-          "title": "La rumba",
+          "title": "La rumba latina",
           "url": "https://cism893.ca/emissions/la-rumba"
         },
         {
@@ -775,7 +796,7 @@
           "day": 4,
           "start": "22:00",
           "end": "00:00",
-          "title": "Mix anglo",
+          "title": "Mix Anglo",
           "url": "https://cism893.ca/emissions/mix-anglo"
         },
         {
@@ -789,15 +810,15 @@
           "day": 5,
           "start": "02:00",
           "end": "03:00",
-          "title": "Mix Franco",
+          "title": "Mix franco",
           "url": "https://cism893.ca/emissions/mix-franco"
         },
         {
           "day": 5,
           "start": "03:00",
           "end": "05:00",
-          "title": "La carte cadeau (reprise)",
-          "url": "https://cism893.ca/emissions/la-carte-cadeau"
+          "title": "Club classique (reprise)",
+          "url": "https://cism893.ca/emissions/club-classique"
         },
         {
           "day": 5,
@@ -817,15 +838,22 @@
           "day": 5,
           "start": "08:00",
           "end": "09:00",
-          "title": "As-tu vu?",
-          "url": "https://cism893.ca/emissions/lart-en-ondes"
+          "title": "Quartier libre",
+          "url": "https://cism893.ca/emissions/quartier-libre"
         },
         {
           "day": 5,
           "start": "09:00",
-          "end": "11:00",
+          "end": "10:00",
           "title": "La collation",
           "url": "https://cism893.ca/emissions/mix-collation"
+        },
+        {
+          "day": 5,
+          "start": "10:00",
+          "end": "11:00",
+          "title": "En-quêtes artistiques",
+          "url": "https://cism893.ca/emissions/en-quetes-artistiques"
         },
         {
           "day": 5,
@@ -852,19 +880,19 @@
           "day": 5,
           "start": "15:00",
           "end": "16:00",
-          "title": "Salsa & Bembê",
+          "title": "Salsa et Bembê",
           "url": "https://cism893.ca/emissions/salsa-et-bembe"
         },
         {
           "day": 5,
           "start": "16:00",
-          "end": "18:00",
-          "title": "En direct du FME : Arielle Soucy et Afternoon Bike Ride",
-          "url": "https://cism893.ca/emissions/cism-en-direct-du-fme-2026"
+          "end": "17:00",
+          "title": "Turbo Tannant",
+          "url": "https://cism893.ca/emissions/turbo-tannant"
         },
         {
           "day": 5,
-          "start": "18:00",
+          "start": "17:00",
           "end": "19:00",
           "title": "Ok Doomer",
           "url": "https://cism893.ca/emissions/ok-doomer"
@@ -894,7 +922,7 @@
           "day": 5,
           "start": "22:00",
           "end": "00:00",
-          "title": "Mix anglo",
+          "title": "Mix Anglo",
           "url": "https://cism893.ca/emissions/mix-anglo"
         },
         {
@@ -908,7 +936,7 @@
           "day": 6,
           "start": "02:00",
           "end": "05:00",
-          "title": "Mix Franco",
+          "title": "Mix franco",
           "url": "https://cism893.ca/emissions/mix-franco"
         },
         {
@@ -936,8 +964,8 @@
           "day": 6,
           "start": "14:00",
           "end": "16:00",
-          "title": "Faites entrer un DJ",
-          "url": "https://cism893.ca/emissions/faites-entrer-un-dj"
+          "title": "Basses fréquences",
+          "url": "https://cism893.ca/emissions/basses-frequences"
         },
         {
           "day": 6,
@@ -970,15 +998,15 @@
         {
           "day": 6,
           "start": "20:00",
-          "end": "22:00",
-          "title": "Les criquets crinqués (reprise)",
-          "url": "https://cism893.ca/emissions/les-criquets-crinques"
+          "end": "21:30",
+          "title": "InfiniBIT!",
+          "url": "https://cism893.ca/emissions/infinibit"
         },
         {
           "day": 6,
-          "start": "22:00",
+          "start": "21:30",
           "end": "00:00",
-          "title": "Mix anglo",
+          "title": "Mix Anglo",
           "url": "https://cism893.ca/emissions/mix-anglo"
         }
       ]
@@ -989,8 +1017,8 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-09-06T19:37:03.717Z",
-      "verifiedWeekOf": "2026-08-31",
+      "checkedAt": "2026-09-07T14:30:58.545Z",
+      "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
           "day": 0,
@@ -1248,7 +1276,7 @@
           "day": 2,
           "start": "18:00",
           "end": "19:00",
-          "title": "Rez Rock Radio"
+          "title": "Prison Radio"
         },
         {
           "day": 2,
@@ -1355,8 +1383,14 @@
         {
           "day": 3,
           "start": "22:00",
+          "end": "23:00",
+          "title": "Rhizomatic Hour 1"
+        },
+        {
+          "day": 3,
+          "start": "23:00",
           "end": "00:00",
-          "title": "Lo Signal / Meanwhile/ Rhizomatic"
+          "title": "Rhizomatic Hour 2"
         },
         {
           "day": 4,
@@ -1422,7 +1456,7 @@
           "day": 4,
           "start": "17:00",
           "end": "18:00",
-          "title": "Off the Hour: Trib Talks"
+          "title": "Off The Hour: La Voix des Immigrants"
         },
         {
           "day": 4,
@@ -1452,7 +1486,7 @@
           "day": 4,
           "start": "23:00",
           "end": "01:00",
-          "title": "You Need A Heart To Live 2"
+          "title": "L'aire du Diable"
         },
         {
           "day": 5,
@@ -1517,14 +1551,8 @@
         {
           "day": 5,
           "start": "19:00",
-          "end": "20:00",
-          "title": "Listening to Latin America: Blanca-Victoria"
-        },
-        {
-          "day": 5,
-          "start": "20:00",
           "end": "22:00",
-          "title": "Macondo"
+          "title": "LLA/Macondo"
         },
         {
           "day": 5,
@@ -1607,8 +1635,8 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-09-06T19:37:03.717Z",
-      "verifiedWeekOf": "2026-08-31",
+      "checkedAt": "2026-09-07T14:30:58.545Z",
+      "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
           "day": 0,
@@ -4236,8 +4264,8 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-09-06T19:37:03.717Z",
-      "verifiedWeekOf": "2026-08-31",
+      "checkedAt": "2026-09-07T14:30:58.545Z",
+      "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
           "day": 0,
@@ -4457,16 +4485,9 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-09-06T19:37:03.717Z",
-      "verifiedWeekOf": "2026-08-31",
+      "checkedAt": "2026-09-07T14:30:58.545Z",
+      "verifiedWeekOf": "2026-09-07",
       "grid": [
-        {
-          "day": 0,
-          "start": "14:00",
-          "end": "16:00",
-          "title": "Pôle hip-hop",
-          "url": "https://www.choq.ca/emissions/pole-hip-hop"
-        },
         {
           "day": 0,
           "start": "17:00",
@@ -4489,14 +4510,14 @@
           "url": "https://www.choq.ca/emissions/live"
         },
         {
-          "day": 3,
-          "start": "17:00",
-          "end": "18:00",
-          "title": "Podcast Nomade: L'art de se rencontrer",
-          "url": "https://www.choq.ca/emissions/podcast-nomade-lart-de-se-rencontrer"
+          "day": 2,
+          "start": "19:30",
+          "end": "20:30",
+          "title": "Les Amazones",
+          "url": "https://www.choq.ca/emissions/les-amazones"
         },
         {
-          "day": 4,
+          "day": 3,
           "start": "15:00",
           "end": "16:00",
           "title": "Palmarès CHOQ.ca",
@@ -4510,25 +4531,11 @@
           "url": "https://www.choq.ca/emissions/le-12-mtlsup"
         },
         {
-          "day": 4,
-          "start": "18:30",
-          "end": "19:30",
-          "title": "Les Apatrides Anonymes",
-          "url": "https://www.choq.ca/emissions/apatrides-anonymes"
-        },
-        {
           "day": 5,
           "start": "11:30",
           "end": "12:30",
           "title": "Opération beurre de cinoche",
           "url": "https://www.choq.ca/emissions/box-sophisme"
-        },
-        {
-          "day": 5,
-          "start": "13:00",
-          "end": "14:00",
-          "title": "CUCH CAST",
-          "url": "https://www.choq.ca/emissions/cuch-cast"
         },
         {
           "day": 5,
