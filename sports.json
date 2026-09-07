@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-07T19:31:10.010Z",
-  "fetchedAt": "2026-09-07T19:31:10.010Z",
+  "updated": "2026-09-07T19:56:39.312Z",
+  "fetchedAt": "2026-09-07T19:56:39.312Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-07T19:31:10.011Z"
+    "referenceDate": "2026-09-07T19:56:39.312Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 814,
@@ -74,6 +74,18 @@
     "volleyball"
   ],
   "teamCount": 833,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -61161,6 +61173,24 @@
       "leagueLabel": "Soccer collégial féminin D1",
       "results": [
         {
+          "date": "2026-09-07",
+          "time": "12:00",
+          "opponent": "Montmorency",
+          "opponentCode": "MON",
+          "home": true,
+          "scoreFor": 2,
+          "scoreAgainst": 2,
+          "result": "D",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D1",
+          "gameId": "f81cedfc-89c4-4cfc-b5a6-461b7c8ef0ba",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f81cedfc-89c4-4cfc-b5a6-461b7c8ef0ba",
+          "opponentFullName": "Collège Montmorency",
+          "opponentNickname": "Nomades",
+          "opponentRegistryId": "montmorency",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-04",
           "time": "19:00",
           "opponent": "Cégep de Trois-Rivières",
@@ -61180,21 +61210,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-04",
-        "time": "19:00",
-        "opponent": "Cégep de Trois-Rivières",
-        "opponentCode": "TRV",
-        "home": false,
+        "date": "2026-09-07",
+        "time": "12:00",
+        "opponent": "Montmorency",
+        "opponentCode": "MON",
+        "home": true,
         "scoreFor": 2,
         "scoreAgainst": 2,
         "result": "D",
         "sport": "soccer",
         "competition": "Soccer collégial féminin D1",
-        "gameId": "98803167-e2aa-4cf9-a770-656bef0048bd",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=98803167-e2aa-4cf9-a770-656bef0048bd",
-        "opponentFullName": "Cégep de Trois-Rivières",
-        "opponentNickname": "Diablos",
-        "opponentRegistryId": "trois-rivieres",
+        "gameId": "f81cedfc-89c4-4cfc-b5a6-461b7c8ef0ba",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f81cedfc-89c4-4cfc-b5a6-461b7c8ef0ba",
+        "opponentFullName": "Collège Montmorency",
+        "opponentNickname": "Nomades",
+        "opponentRegistryId": "montmorency",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -61329,9 +61359,9 @@
       "record": {
         "wins": 0,
         "losses": 0,
-        "draws": 1,
-        "played": 1,
-        "label": "0-0-1"
+        "draws": 2,
+        "played": 2,
+        "label": "0-0-2"
       },
       "source": "rseq-s1",
       "priority": 25,
@@ -61784,6 +61814,24 @@
       "leagueLabel": "Soccer collégial féminin D1",
       "results": [
         {
+          "date": "2026-09-07",
+          "time": "12:00",
+          "opponent": "Champlain St-Lambert",
+          "opponentCode": "SLA",
+          "home": false,
+          "scoreFor": 2,
+          "scoreAgainst": 2,
+          "result": "D",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D1",
+          "gameId": "f81cedfc-89c4-4cfc-b5a6-461b7c8ef0ba",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f81cedfc-89c4-4cfc-b5a6-461b7c8ef0ba",
+          "opponentFullName": "Champlain College Saint-Lambert",
+          "opponentNickname": "Barons",
+          "opponentRegistryId": "champlain-st-lambert",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-04",
           "time": "18:45",
           "opponent": "Garneau",
@@ -61821,21 +61869,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-04",
-        "time": "18:45",
-        "opponent": "Garneau",
-        "opponentCode": "GAR",
+        "date": "2026-09-07",
+        "time": "12:00",
+        "opponent": "Champlain St-Lambert",
+        "opponentCode": "SLA",
         "home": false,
         "scoreFor": 2,
         "scoreAgainst": 2,
         "result": "D",
         "sport": "soccer",
         "competition": "Soccer collégial féminin D1",
-        "gameId": "449b6afd-1e9b-4f18-ab42-2eb8f466336a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=449b6afd-1e9b-4f18-ab42-2eb8f466336a",
-        "opponentFullName": "Cégep Garneau",
-        "opponentNickname": "Boomerang",
-        "opponentRegistryId": "garneau",
+        "gameId": "f81cedfc-89c4-4cfc-b5a6-461b7c8ef0ba",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f81cedfc-89c4-4cfc-b5a6-461b7c8ef0ba",
+        "opponentFullName": "Champlain College Saint-Lambert",
+        "opponentNickname": "Barons",
+        "opponentRegistryId": "champlain-st-lambert",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -61956,9 +62004,9 @@
       "record": {
         "wins": 1,
         "losses": 0,
-        "draws": 1,
-        "played": 2,
-        "label": "1-0-1"
+        "draws": 2,
+        "played": 3,
+        "label": "1-0-2"
       },
       "source": "rseq-s1",
       "priority": 31,
