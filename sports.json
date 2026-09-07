@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-07T21:42:24.501Z",
-  "fetchedAt": "2026-09-07T21:42:24.501Z",
+  "updated": "2026-09-07T22:13:56.580Z",
+  "fetchedAt": "2026-09-07T22:13:56.580Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-07T21:42:24.502Z"
+    "referenceDate": "2026-09-07T22:13:56.580Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 814,
@@ -33052,6 +33052,23 @@
           "opponentFullName": "Cégep de Granby",
           "opponentRegistryId": "granby",
           "priorSeason": false
+        },
+        {
+          "date": "2026-09-07",
+          "time": "16:30",
+          "opponent": "Notre-Dame",
+          "opponentCode": "NDF",
+          "home": false,
+          "scoreFor": 15,
+          "scoreAgainst": 14,
+          "result": "W",
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "56dca4fa-586a-4b60-976d-c27f89866a78",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=56dca4fa-586a-4b60-976d-c27f89866a78",
+          "opponentFullName": "Campus Notre-Dame-de-Foy",
+          "opponentRegistryId": "notre-dame-foy",
+          "priorSeason": false
         }
       ],
       "lastGame": {
@@ -33073,20 +33090,6 @@
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-09-07",
-          "time": "16:30",
-          "opponent": "Notre-Dame",
-          "opponentCode": "NDF",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D2",
-          "gameId": "56dca4fa-586a-4b60-976d-c27f89866a78",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=56dca4fa-586a-4b60-976d-c27f89866a78",
-          "opponentFullName": "Campus Notre-Dame-de-Foy",
-          "opponentRegistryId": "notre-dame-foy",
-          "live": true
-        },
         {
           "date": "2026-09-13",
           "time": "10:00",
@@ -33193,26 +33196,25 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-07",
-        "time": "16:30",
-        "opponent": "Notre-Dame",
-        "opponentCode": "NDF",
+        "date": "2026-09-13",
+        "time": "10:00",
+        "opponent": "Laflèche",
+        "opponentCode": "LAF",
         "home": false,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D2",
-        "gameId": "56dca4fa-586a-4b60-976d-c27f89866a78",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=56dca4fa-586a-4b60-976d-c27f89866a78",
-        "opponentFullName": "Campus Notre-Dame-de-Foy",
-        "opponentRegistryId": "notre-dame-foy",
-        "live": true,
+        "gameId": "2a9ce4db-de16-4697-8386-54ca875c4e1a",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2a9ce4db-de16-4697-8386-54ca875c4e1a",
+        "opponentFullName": "Collège Laflèche",
+        "opponentRegistryId": "lafleche",
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 0,
         "draws": 0,
-        "played": 1,
-        "label": "1-0"
+        "played": 2,
+        "label": "2-0"
       },
       "source": "rseq-s1",
       "priority": 24,
@@ -33650,6 +33652,23 @@
           "opponentFullName": "Collège Laflèche",
           "opponentRegistryId": "lafleche",
           "priorSeason": false
+        },
+        {
+          "date": "2026-09-07",
+          "time": "16:30",
+          "opponent": "Champlain Lennoxville",
+          "opponentCode": "LEN",
+          "home": true,
+          "scoreFor": 14,
+          "scoreAgainst": 15,
+          "result": "L",
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "56dca4fa-586a-4b60-976d-c27f89866a78",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=56dca4fa-586a-4b60-976d-c27f89866a78",
+          "opponentFullName": "Champlain College Lennoxville",
+          "opponentRegistryId": "champlain-lennoxville",
+          "priorSeason": false
         }
       ],
       "lastGame": {
@@ -33671,20 +33690,6 @@
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-09-07",
-          "time": "16:30",
-          "opponent": "Champlain Lennoxville",
-          "opponentCode": "LEN",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D2",
-          "gameId": "56dca4fa-586a-4b60-976d-c27f89866a78",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=56dca4fa-586a-4b60-976d-c27f89866a78",
-          "opponentFullName": "Champlain College Lennoxville",
-          "opponentRegistryId": "champlain-lennoxville",
-          "live": true
-        },
         {
           "date": "2026-09-12",
           "time": "11:00",
@@ -33791,26 +33796,25 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-07",
-        "time": "16:30",
-        "opponent": "Champlain Lennoxville",
-        "opponentCode": "LEN",
-        "home": true,
+        "date": "2026-09-12",
+        "time": "11:00",
+        "opponent": "Shawinigan",
+        "opponentCode": "SHA",
+        "home": false,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D2",
-        "gameId": "56dca4fa-586a-4b60-976d-c27f89866a78",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=56dca4fa-586a-4b60-976d-c27f89866a78",
-        "opponentFullName": "Champlain College Lennoxville",
-        "opponentRegistryId": "champlain-lennoxville",
-        "live": true,
+        "gameId": "ace54456-a94a-4127-826d-281cbec60acf",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ace54456-a94a-4127-826d-281cbec60acf",
+        "opponentFullName": "Cégep de Shawinigan",
+        "opponentRegistryId": "shawinigan",
         "opponentSector": "collegial"
       },
       "record": {
         "wins": 1,
-        "losses": 0,
+        "losses": 1,
         "draws": 0,
-        "played": 1,
-        "label": "1-0"
+        "played": 2,
+        "label": "1-1"
       },
       "source": "rseq-s1",
       "priority": 32,
