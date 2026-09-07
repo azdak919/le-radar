@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-07T20:34:25.332Z",
+  "updatedAt": "2026-09-07T21:41:54.427Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule",
+        "source": "api-live",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Mardi Champ Gauche",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-07T20:33:58.352Z"
+      "checkedAt": "2026-09-07T21:41:27.506Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les garçons pleurent aussi",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
-      },
-      "next": {
         "title": "Les criquets crinqués",
         "source": "schedule",
         "start": "17:00",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/les-criquets-crinques"
       },
+      "next": {
+        "title": "Les vinyles versatiles",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
+      },
       "track": "",
-      "showTitle": "Les garçons pleurent aussi",
+      "showTitle": "Les criquets crinqués",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-07T20:33:59.552Z"
+      "checkedAt": "2026-09-07T21:41:28.928Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Whose Vibe Is It Anyway",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "En Profondeur",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Queercorps",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Whose Vibe Is It Anyway",
+      "showTitle": "En Profondeur",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-07T20:34:02.821Z"
+      "checkedAt": "2026-09-07T21:41:31.883Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Dreamscapes",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/dreamscapes"
-      },
-      "next": {
         "title": "The Pressure Drop",
         "source": "schedule-live",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/the-pressure-drop"
       },
+      "next": {
+        "title": "Voice of the Voiceless",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
+      },
       "track": "",
-      "showTitle": "Dreamscapes",
+      "showTitle": "The Pressure Drop",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-07T20:34:17.822Z"
+      "checkedAt": "2026-09-07T21:41:47.139Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-07T20:34:18.699Z"
+      "checkedAt": "2026-09-07T21:41:47.944Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Iceage — True Blue",
+      "track": "meeting by chance - Crossroad",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -147,8 +154,11 @@
         "api-live",
         "schedule"
       ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-07T20:34:24.981Z"
+      "clientPoll": {
+        "type": "triton-np",
+        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
+      },
+      "checkedAt": "2026-09-07T21:41:54.076Z"
     }
   }
 }
