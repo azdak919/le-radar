@@ -1,10 +1,10 @@
 {
-  "updated": "2026-09-06T23:14:00.167Z",
-  "fetchedAt": "2026-09-06T23:14:00.167Z",
+  "updated": "2026-09-07T12:54:42.386Z",
+  "fetchedAt": "2026-09-07T12:54:42.386Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-06T23:14:00.167Z"
+    "referenceDate": "2026-09-07T12:54:42.387Z"
   },
   "masthead": {
     "nextGameLimit": 48,
@@ -12,7 +12,7 @@
     "chipResultMaxDaysAgo": 5,
     "ctaResultMaxDaysAgo": 1
   },
-  "teamCount": 182,
+  "teamCount": 181,
   "teams": {
     "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:6dca32e2-627f-4650-8f94-a20c331013b3": {
       "id": "collegial:flag-football:42502722-0306-48e4-a178-00ed129c282d:6dca32e2-627f-4650-8f94-a20c331013b3",
@@ -3621,8 +3621,34 @@
         "priorSeason": false,
         "opponentSector": "collegial"
       },
-      "nextGames": [],
-      "nextGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-12",
+          "time": "11:00",
+          "opponent": "Ahuntsic",
+          "opponentCode": "AHU",
+          "home": false,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "7f3dccf0-3fcd-4165-8aa3-3bcbeafef26e",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7f3dccf0-3fcd-4165-8aa3-3bcbeafef26e",
+          "opponentFullName": "Collège Ahuntsic",
+          "opponentRegistryId": "ahuntsic"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-12",
+        "time": "11:00",
+        "opponent": "Ahuntsic",
+        "opponentCode": "AHU",
+        "home": false,
+        "sport": "flag-football",
+        "competition": "Flag football collégial féminin D2",
+        "gameId": "7f3dccf0-3fcd-4165-8aa3-3bcbeafef26e",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7f3dccf0-3fcd-4165-8aa3-3bcbeafef26e",
+        "opponentFullName": "Collège Ahuntsic",
+        "opponentRegistryId": "ahuntsic"
+      },
       "source": "rseq-s1",
       "priority": 35,
       "fullName": "Cégep Saint-Jean-sur-Richelieu",
@@ -12610,148 +12636,6 @@
       "registryId": "usherbrooke",
       "lastGamePriorSeason": false
     },
-    "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:d4e804cb-0fbb-4a6a-902b-864e6bb1a71d": {
-      "id": "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:d4e804cb-0fbb-4a6a-902b-864e6bb1a71d",
-      "rseqTeamId": "d4e804cb-0fbb-4a6a-902b-864e6bb1a71d",
-      "leagueId": "b30acc8a-4be1-4d58-917e-59d7d3aa4a88",
-      "name": "Beauce-Appalaches",
-      "code": "BAP",
-      "sector": "collegial",
-      "sport": "baseball",
-      "sportLabel": "Baseball",
-      "sex": "M",
-      "division": null,
-      "usports": false,
-      "leagueLabel": "Baseball collégial masculin",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-06",
-          "time": "13:00",
-          "opponent": "John Abbott",
-          "opponentCode": "JAC",
-          "home": false,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "d05009cd-b6c9-4346-847b-003bf747f3c1",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d05009cd-b6c9-4346-847b-003bf747f3c1",
-          "opponentFullName": "John Abbott College",
-          "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott"
-        },
-        {
-          "date": "2026-09-06",
-          "time": "16:00",
-          "opponent": "John Abbott",
-          "opponentCode": "JAC",
-          "home": true,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "5c888d15-8804-418d-b362-8476723d4a7c",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5c888d15-8804-418d-b362-8476723d4a7c",
-          "opponentFullName": "John Abbott College",
-          "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott",
-          "live": true
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-06",
-        "time": "13:00",
-        "opponent": "John Abbott",
-        "opponentCode": "JAC",
-        "home": false,
-        "sport": "baseball",
-        "competition": "Baseball collégial masculin",
-        "gameId": "d05009cd-b6c9-4346-847b-003bf747f3c1",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d05009cd-b6c9-4346-847b-003bf747f3c1",
-        "opponentFullName": "John Abbott College",
-        "opponentNickname": "Islanders",
-        "opponentRegistryId": "john-abbott"
-      },
-      "source": "rseq-s1",
-      "priority": 80,
-      "fullName": "Cégep de Beauce-Appalaches",
-      "registryId": "beauce-appalaches"
-    },
-    "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:11475f0b-100e-48b6-99f3-cf7a7fc22eea": {
-      "id": "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:11475f0b-100e-48b6-99f3-cf7a7fc22eea",
-      "rseqTeamId": "11475f0b-100e-48b6-99f3-cf7a7fc22eea",
-      "leagueId": "b30acc8a-4be1-4d58-917e-59d7d3aa4a88",
-      "name": "John Abbott",
-      "code": "JAC",
-      "sector": "collegial",
-      "sport": "baseball",
-      "sportLabel": "Baseball",
-      "sex": "M",
-      "division": null,
-      "usports": false,
-      "leagueLabel": "Baseball collégial masculin",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-09-06",
-          "time": "13:00",
-          "opponent": "Beauce-Appalaches",
-          "opponentCode": "BAP",
-          "home": true,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "d05009cd-b6c9-4346-847b-003bf747f3c1",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d05009cd-b6c9-4346-847b-003bf747f3c1",
-          "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches"
-        },
-        {
-          "date": "2026-09-06",
-          "time": "16:00",
-          "opponent": "Beauce-Appalaches",
-          "opponentCode": "BAP",
-          "home": false,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "5c888d15-8804-418d-b362-8476723d4a7c",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5c888d15-8804-418d-b362-8476723d4a7c",
-          "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches",
-          "live": true
-        },
-        {
-          "date": "2026-09-09",
-          "time": "19:30",
-          "opponent": "André-Laurendeau",
-          "opponentCode": "CAL",
-          "home": false,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
-          "opponentFullName": "Cégep André-Laurendeau",
-          "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "andre-laurendeau"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-09-06",
-        "time": "13:00",
-        "opponent": "Beauce-Appalaches",
-        "opponentCode": "BAP",
-        "home": true,
-        "sport": "baseball",
-        "competition": "Baseball collégial masculin",
-        "gameId": "d05009cd-b6c9-4346-847b-003bf747f3c1",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d05009cd-b6c9-4346-847b-003bf747f3c1",
-        "opponentFullName": "Cégep de Beauce-Appalaches",
-        "opponentRegistryId": "beauce-appalaches"
-      },
-      "source": "rseq-s1",
-      "priority": 28,
-      "fullName": "John Abbott College",
-      "nickname": "Islanders",
-      "registryId": "john-abbott"
-    },
     "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:f91d0a36-7e00-41dc-bbd4-1c1e34615b36": {
       "id": "collegial:flag-football:bb172f86-5983-4fab-9cdc-5be7f33cadca:f91d0a36-7e00-41dc-bbd4-1c1e34615b36",
       "rseqTeamId": "f91d0a36-7e00-41dc-bbd4-1c1e34615b36",
@@ -12854,6 +12738,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5f33c043-de9e-45f9-aca8-90fbb0b2f58b",
           "opponentFullName": "Collège Laflèche",
           "opponentRegistryId": "lafleche"
+        },
+        {
+          "date": "2026-09-12",
+          "time": "11:00",
+          "opponent": "Notre-Dame",
+          "opponentCode": "NDF",
+          "home": true,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "ace54456-a94a-4127-826d-281cbec60acf",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ace54456-a94a-4127-826d-281cbec60acf",
+          "opponentFullName": "Campus Notre-Dame-de-Foy",
+          "opponentRegistryId": "notre-dame-foy"
         }
       ],
       "nextGame": {
@@ -13085,6 +12982,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=56dca4fa-586a-4b60-976d-c27f89866a78",
           "opponentFullName": "Champlain College Lennoxville",
           "opponentRegistryId": "champlain-lennoxville"
+        },
+        {
+          "date": "2026-09-12",
+          "time": "11:00",
+          "opponent": "Shawinigan",
+          "opponentCode": "SHA",
+          "home": false,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "ace54456-a94a-4127-826d-281cbec60acf",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ace54456-a94a-4127-826d-281cbec60acf",
+          "opponentFullName": "Cégep de Shawinigan",
+          "opponentRegistryId": "shawinigan"
         }
       ],
       "nextGame": {
@@ -13280,7 +13190,8 @@
           "gameId": "2c50968b-fe84-4fa3-b983-438c591aaab0",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2c50968b-fe84-4fa3-b983-438c591aaab0",
           "opponentFullName": "Champlain College Lennoxville",
-          "opponentRegistryId": "champlain-lennoxville"
+          "opponentRegistryId": "champlain-lennoxville",
+          "live": true
         }
       ],
       "nextGame": {
@@ -13341,7 +13252,8 @@
           "gameId": "f87cbc2b-4c21-48e4-afd5-868bf7ed4439",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f87cbc2b-4c21-48e4-afd5-868bf7ed4439",
           "opponentFullName": "Cégep Gérald-Godin",
-          "opponentRegistryId": "gerald-godin"
+          "opponentRegistryId": "gerald-godin",
+          "live": true
         }
       ],
       "nextGame": {
@@ -13463,7 +13375,8 @@
           "gameId": "2c50968b-fe84-4fa3-b983-438c591aaab0",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2c50968b-fe84-4fa3-b983-438c591aaab0",
           "opponentFullName": "Cégep de Granby",
-          "opponentRegistryId": "granby"
+          "opponentRegistryId": "granby",
+          "live": true
         }
       ],
       "nextGame": {
@@ -13559,7 +13472,8 @@
           "gameId": "f87cbc2b-4c21-48e4-afd5-868bf7ed4439",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f87cbc2b-4c21-48e4-afd5-868bf7ed4439",
           "opponentFullName": "Cégep de Marie-Victorin",
-          "opponentRegistryId": "marie-victorin"
+          "opponentRegistryId": "marie-victorin",
+          "live": true
         }
       ],
       "nextGame": {
@@ -13573,7 +13487,8 @@
         "gameId": "f87cbc2b-4c21-48e4-afd5-868bf7ed4439",
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f87cbc2b-4c21-48e4-afd5-868bf7ed4439",
         "opponentFullName": "Cégep de Marie-Victorin",
-        "opponentRegistryId": "marie-victorin"
+        "opponentRegistryId": "marie-victorin",
+        "live": true
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -13630,6 +13545,57 @@
       "fullName": "Cégep André-Laurendeau",
       "nickname": "Cheetahs",
       "registryId": "andre-laurendeau"
+    },
+    "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:11475f0b-100e-48b6-99f3-cf7a7fc22eea": {
+      "id": "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:11475f0b-100e-48b6-99f3-cf7a7fc22eea",
+      "rseqTeamId": "11475f0b-100e-48b6-99f3-cf7a7fc22eea",
+      "leagueId": "b30acc8a-4be1-4d58-917e-59d7d3aa4a88",
+      "name": "John Abbott",
+      "code": "JAC",
+      "sector": "collegial",
+      "sport": "baseball",
+      "sportLabel": "Baseball",
+      "sex": "M",
+      "division": null,
+      "usports": false,
+      "leagueLabel": "Baseball collégial masculin",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [
+        {
+          "date": "2026-09-09",
+          "time": "19:30",
+          "opponent": "André-Laurendeau",
+          "opponentCode": "CAL",
+          "home": false,
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+          "opponentFullName": "Cégep André-Laurendeau",
+          "opponentNickname": "Cheetahs",
+          "opponentRegistryId": "andre-laurendeau"
+        }
+      ],
+      "nextGame": {
+        "date": "2026-09-09",
+        "time": "19:30",
+        "opponent": "André-Laurendeau",
+        "opponentCode": "CAL",
+        "home": false,
+        "sport": "baseball",
+        "competition": "Baseball collégial masculin",
+        "gameId": "1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+        "opponentFullName": "Cégep André-Laurendeau",
+        "opponentNickname": "Cheetahs",
+        "opponentRegistryId": "andre-laurendeau"
+      },
+      "source": "rseq-s1",
+      "priority": 28,
+      "fullName": "John Abbott College",
+      "nickname": "Islanders",
+      "registryId": "john-abbott"
     },
     "collegial:soccer:415ca649-0fd3-4bda-8163-c8c0013c37a9:4b148d3a-40c4-4276-b3b5-79c860804861": {
       "id": "collegial:soccer:415ca649-0fd3-4bda-8163-c8c0013c37a9:4b148d3a-40c4-4276-b3b5-79c860804861",
@@ -13961,6 +13927,20 @@
           "opponentFullName": "Collège Montmorency",
           "opponentNickname": "Nomades",
           "opponentRegistryId": "montmorency"
+        },
+        {
+          "date": "2026-09-12",
+          "time": "11:00",
+          "opponent": "Saint-Jean",
+          "opponentCode": "SJR",
+          "home": true,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "7f3dccf0-3fcd-4165-8aa3-3bcbeafef26e",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7f3dccf0-3fcd-4165-8aa3-3bcbeafef26e",
+          "opponentFullName": "Cégep Saint-Jean-sur-Richelieu",
+          "opponentNickname": "Dragons",
+          "opponentRegistryId": "saint-jean-sur-richelieu"
         }
       ],
       "nextGame": {

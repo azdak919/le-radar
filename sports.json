@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-06T23:14:00.167Z",
-  "fetchedAt": "2026-09-06T23:14:00.167Z",
+  "updated": "2026-09-07T12:54:42.386Z",
+  "fetchedAt": "2026-09-07T12:54:42.386Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-06T23:14:00.167Z"
+    "referenceDate": "2026-09-07T12:54:42.387Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 814,
@@ -6020,35 +6020,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-09-06",
-          "time": "13:00",
-          "opponent": "John Abbott",
-          "opponentCode": "JAC",
-          "home": false,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "d05009cd-b6c9-4346-847b-003bf747f3c1",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d05009cd-b6c9-4346-847b-003bf747f3c1",
-          "opponentFullName": "John Abbott College",
-          "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott"
-        },
-        {
-          "date": "2026-09-06",
-          "time": "16:00",
-          "opponent": "John Abbott",
-          "opponentCode": "JAC",
-          "home": true,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "5c888d15-8804-418d-b362-8476723d4a7c",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5c888d15-8804-418d-b362-8476723d4a7c",
-          "opponentFullName": "John Abbott College",
-          "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott",
-          "live": true
-        },
-        {
           "date": "2026-09-12",
           "time": "13:00",
           "opponent": "Édouard-Montpetit",
@@ -6185,21 +6156,7 @@
           "opponentRegistryId": "limoilou"
         }
       ],
-      "nextGame": {
-        "date": "2026-09-06",
-        "time": "13:00",
-        "opponent": "John Abbott",
-        "opponentCode": "JAC",
-        "home": false,
-        "sport": "baseball",
-        "competition": "Baseball collégial masculin",
-        "gameId": "d05009cd-b6c9-4346-847b-003bf747f3c1",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d05009cd-b6c9-4346-847b-003bf747f3c1",
-        "opponentFullName": "John Abbott College",
-        "opponentNickname": "Islanders",
-        "opponentRegistryId": "john-abbott",
-        "opponentSector": "collegial"
-      },
+      "nextGame": null,
       "record": {
         "wins": 0,
         "losses": 0,
@@ -6853,33 +6810,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-09-06",
-          "time": "13:00",
-          "opponent": "Beauce-Appalaches",
-          "opponentCode": "BAP",
-          "home": true,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "d05009cd-b6c9-4346-847b-003bf747f3c1",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d05009cd-b6c9-4346-847b-003bf747f3c1",
-          "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches"
-        },
-        {
-          "date": "2026-09-06",
-          "time": "16:00",
-          "opponent": "Beauce-Appalaches",
-          "opponentCode": "BAP",
-          "home": false,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "5c888d15-8804-418d-b362-8476723d4a7c",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5c888d15-8804-418d-b362-8476723d4a7c",
-          "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches",
-          "live": true
-        },
-        {
           "date": "2026-09-09",
           "time": "19:30",
           "opponent": "André-Laurendeau",
@@ -7018,20 +6948,7 @@
           "opponentRegistryId": "edouard-montpetit"
         }
       ],
-      "nextGame": {
-        "date": "2026-09-06",
-        "time": "13:00",
-        "opponent": "Beauce-Appalaches",
-        "opponentCode": "BAP",
-        "home": true,
-        "sport": "baseball",
-        "competition": "Baseball collégial masculin",
-        "gameId": "d05009cd-b6c9-4346-847b-003bf747f3c1",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d05009cd-b6c9-4346-847b-003bf747f3c1",
-        "opponentFullName": "Cégep de Beauce-Appalaches",
-        "opponentRegistryId": "beauce-appalaches",
-        "opponentSector": "collegial"
-      },
+      "nextGame": null,
       "record": {
         "wins": 0,
         "losses": 0,
@@ -32941,7 +32858,8 @@
           "gameId": "2c50968b-fe84-4fa3-b983-438c591aaab0",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2c50968b-fe84-4fa3-b983-438c591aaab0",
           "opponentFullName": "Cégep de Granby",
-          "opponentRegistryId": "granby"
+          "opponentRegistryId": "granby",
+          "live": true
         },
         {
           "date": "2026-09-07",
@@ -33073,6 +32991,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2c50968b-fe84-4fa3-b983-438c591aaab0",
         "opponentFullName": "Cégep de Granby",
         "opponentRegistryId": "granby",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -33114,7 +33033,8 @@
           "gameId": "2c50968b-fe84-4fa3-b983-438c591aaab0",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2c50968b-fe84-4fa3-b983-438c591aaab0",
           "opponentFullName": "Champlain College Lennoxville",
-          "opponentRegistryId": "champlain-lennoxville"
+          "opponentRegistryId": "champlain-lennoxville",
+          "live": true
         },
         {
           "date": "2026-09-07",
@@ -33246,6 +33166,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2c50968b-fe84-4fa3-b983-438c591aaab0",
         "opponentFullName": "Champlain College Lennoxville",
         "opponentRegistryId": "champlain-lennoxville",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -41563,7 +41484,8 @@
           "gameId": "f87cbc2b-4c21-48e4-afd5-868bf7ed4439",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f87cbc2b-4c21-48e4-afd5-868bf7ed4439",
           "opponentFullName": "Cégep de Marie-Victorin",
-          "opponentRegistryId": "marie-victorin"
+          "opponentRegistryId": "marie-victorin",
+          "live": true
         },
         {
           "date": "2026-09-12",
@@ -41695,6 +41617,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f87cbc2b-4c21-48e4-afd5-868bf7ed4439",
         "opponentFullName": "Cégep de Marie-Victorin",
         "opponentRegistryId": "marie-victorin",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -42428,7 +42351,8 @@
           "gameId": "f87cbc2b-4c21-48e4-afd5-868bf7ed4439",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f87cbc2b-4c21-48e4-afd5-868bf7ed4439",
           "opponentFullName": "Cégep Gérald-Godin",
-          "opponentRegistryId": "gerald-godin"
+          "opponentRegistryId": "gerald-godin",
+          "live": true
         },
         {
           "date": "2026-09-07",
@@ -42560,6 +42484,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f87cbc2b-4c21-48e4-afd5-868bf7ed4439",
         "opponentFullName": "Cégep Gérald-Godin",
         "opponentRegistryId": "gerald-godin",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
