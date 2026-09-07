@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-07T22:56:45.490Z",
+  "updated": "2026-09-07T23:05:51.455Z",
   "total": 186,
   "withPhoto": 170,
   "withStock": 30,
   "withCampusBank": 22,
   "fullyCovered": 186,
-  "leadReadyPhotos": 153,
-  "pageScraped": 31,
+  "leadReadyPhotos": 151,
+  "pageScraped": 32,
   "photosRecovered": 26,
   "imagesCleared": 17,
-  "stockSearches": 32,
-  "stockFound": 21,
-  "campusBankFound": 15,
+  "stockSearches": 35,
+  "stockFound": 23,
+  "campusBankFound": 16,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -39,6 +39,18 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0117.jpg"
     },
     {
+      "title": "Élection partielle dans Chicoutimi–Le Fjord : le Bloc Québécois se dit confiant",
+      "link": "https://lapige.atmjonquiere.com/2026/08/31/election-partielle-dans-chicoutimi-le-fjord-le-bloc-quebecois-se-dit-confiant/?utm_source=rss&utm_medium=rss&utm_campaign=election-partielle-dans-chicoutimi-le-fjord-le-bloc-quebecois-se-dit-confiant",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/Capture-decran-2026-08-31-a-16.45.08.png"
+    },
+    {
+      "title": "CSU terminates council’s chief election officer",
+      "link": "https://thelinknewspaper.ca/article/16334",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "Letters from the Editors May 2026",
       "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
       "reason": "campus-bank",
@@ -54,7 +66,7 @@
       "title": "CSU approves $36,000 in funding for student-led initiatives",
       "link": "https://thelinknewspaper.ca/article/16319",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
     },
     {
       "title": "Mars enters Aries",
@@ -67,24 +79,6 @@
       "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
-    },
-    {
-      "title": "Gaiters wrap up hard-fought season with eyes on next year",
-      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Le pays avant tout – esquisse",
-      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
-    },
-    {
-      "title": "Oui au budget, oui au programme FIL et non à la grève",
-      "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
     }
   ]
 }
