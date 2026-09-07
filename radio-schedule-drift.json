@@ -1,56 +1,36 @@
 {
-  "checkedAt": "2026-09-06T00:52:40.232Z",
+  "checkedAt": "2026-09-07T00:56:41.111Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 2,
-    "drift": [
-      "chyz",
-      "cism"
-    ],
-    "overhaul": [
-      "choq"
-    ],
+    "stable": 5,
+    "drift": [],
+    "overhaul": [],
     "unreachable": [
-      "cjlo"
+      "cism"
     ]
   },
   "stations": [
     {
       "id": "chyz",
-      "published": 29,
+      "published": 31,
       "fresh": 31,
-      "added": [
-        "dim 19:00–21:00 Le Monde d'Erik Arsenault - 10 ans",
-        "ven 16:30–18:00 L'Artiste du mois CHYZ",
-        "ven 18:00–19:00 Les Arshitechs du Son"
-      ],
-      "removed": [
-        "ven 16:00–17:30 L'Artiste du mois CHYZ"
-      ],
-      "changed": 4,
-      "ratio": 0.138,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cism",
-      "published": 109,
-      "fresh": 106,
-      "added": [
-        "ven 16:00–18:00 En direct du FME : Arielle Soucy et Afternoon Bike Ride",
-        "ven 18:00–19:00 Ok Doomer"
-      ],
-      "removed": [
-        "dim 00:00–02:00 Basses fréquences (reprise)",
-        "dim 20:00–21:30 London café (reprise)",
-        "dim 21:30–00:00 Mix Anglo",
-        "ven 16:00–17:00 Turbo tannant",
-        "ven 17:00–19:00 Ok Doomer"
-      ],
-      "changed": 7,
-      "ratio": 0.064,
-      "status": "drift"
+      "published": 106,
+      "fresh": 0,
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "unreachable"
     },
     {
       "id": "ckut",
@@ -65,12 +45,12 @@
     {
       "id": "cjlo",
       "published": 374,
-      "fresh": 0,
+      "fresh": 374,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
-      "status": "unreachable"
+      "status": "stable"
     },
     {
       "id": "cfak",
@@ -84,27 +64,13 @@
     },
     {
       "id": "choq",
-      "published": 18,
+      "published": 12,
       "fresh": 12,
-      "added": [
-        "dim 14:00–16:00 Pôle hip-hop",
-        "jeu 18:30–19:30 Les Apatrides Anonymes",
-        "ven 13:00–14:00 CUCH CAST"
-      ],
-      "removed": [
-        "lun 17:00–18:00 Faire avec",
-        "mar 15:00–16:00 Palmarès CHOQ.ca",
-        "mar 19:30–20:30 Les Amazones",
-        "mar 20:30–22:30 10 sur 10 : un podcast 100% rap",
-        "mer 11:00–12:00 In Vélo Veritas",
-        "mer 15:00–16:00 Palmarès CHOQ.ca",
-        "mer 19:00–20:00 Le CHOC des Générations",
-        "jeu 18:30–19:40 Les Apatrides Anonymes",
-        "jeu 21:00–22:30 Le grand maître des jeux"
-      ],
-      "changed": 12,
-      "ratio": 0.667,
-      "status": "overhaul"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     }
   ]
 }
