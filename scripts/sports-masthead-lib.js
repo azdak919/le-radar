@@ -14,8 +14,8 @@
 const SpF = require('./sports-freshness-lib');
 
 const MASTHEAD_NEXT_GAME_LIMIT = 48;
-/** Tous les matchs uniques de la fenêtre 5 j (plus de 32 → des scores tombaient). */
-const MASTHEAD_RESULT_LIMIT = 80;
+/** Tous les matchs uniques de la fenêtre 5 j (80 → 4 scores du 7 sept. 2026 tombaient). */
+const MASTHEAD_RESULT_LIMIT = 128;
 
 function gameKey(game, team) {
   if (game?.gameId != null && String(game.gameId).trim()) return `id:${game.gameId}`;
