@@ -1,6 +1,6 @@
 {
-  "updated": "2026-09-08T19:27:19.692Z",
-  "updatedSlot": null,
+  "updated": "2026-09-08T21:16:00.905Z",
+  "updatedSlot": "2026-09-08T21:00:00.000Z",
   "count": 186,
   "freshnessSessions": 3,
   "sources": {
@@ -10,7 +10,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-04T21:00:00.000Z",
-      "lastFetchOk": "2026-09-08T19:26:25.612Z"
+      "lastFetchOk": "2026-09-08T21:15:04.041Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-09-08T19:26:26.569Z"
+      "lastFetchOk": "2026-09-08T21:15:05.444Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-01T04:35:43.000Z",
-      "lastFetchOk": "2026-09-08T19:26:31.505Z"
+      "lastFetchOk": "2026-09-08T21:15:10.909Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-08-31T12:39:00.000Z",
-      "lastFetchOk": "2026-09-08T19:26:32.060Z"
+      "lastFetchOk": "2026-09-08T21:15:11.862Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,15 +42,15 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-08T13:00:00.000Z",
-      "lastFetchOk": "2026-09-08T19:26:33.281Z"
+      "lastFetchOk": "2026-09-08T21:15:12.758Z"
     },
     "Zone Campus": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-09-08T19:26:34.183Z"
+      "lastFetchOk": null
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-09-08T19:26:35.193Z"
+      "lastFetchOk": "2026-09-08T21:15:15.952Z"
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-08T13:51:18.000Z",
-      "lastFetchOk": "2026-09-08T19:26:36.256Z"
+      "lastFetchOk": "2026-09-08T21:15:17.244Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-09-08T19:26:36.450Z"
+      "lastFetchOk": "2026-09-08T21:15:17.684Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -82,7 +82,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-08T18:51:04.000Z",
-      "lastFetchOk": "2026-09-08T19:26:37.157Z"
+      "lastFetchOk": "2026-09-08T21:15:18.554Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 14,
       "lastArticle": "2026-09-07T16:27:02.134Z",
-      "lastFetchOk": "2026-09-08T19:26:38.596Z"
+      "lastFetchOk": "2026-09-08T21:15:21.866Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-08T15:35:43.000Z",
-      "lastFetchOk": "2026-09-08T19:26:38.821Z"
+      "lastFetchOk": "2026-09-08T21:15:22.166Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-09-08T19:26:39.054Z"
+      "lastFetchOk": "2026-09-08T21:15:22.871Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-09-08T19:26:39.266Z"
+      "lastFetchOk": "2026-09-08T21:15:23.208Z"
     }
   },
   "items": [
@@ -131,15 +131,15 @@
       "excerpt": "Il existe autour de 115 émissions ou concepts d’émissions différentes au Québec. (Photo : Émile Beauséjour) Les téléréalités du genre Occupation Double ou Big Brother Célébrités continuent d’être populaires au Québec et ce, malgré la montée grandissante des plateformes",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_1396.jpeg",
       "_pageAuthor": "Émile Beauséjour",
-      "leadExcerpt": "Les téléréalités du genre Occupation Double ou Big Brother Célébrités continuent d’être populaires au Québec et ce, malgré la montée grandissante des plateformes numériques telles que Netflix et Amazon Prime. Étonnamment, les jeunes suivent cette tendance télévisuelle.",
-      "leadImageReady": true,
       "sourceImageCredit": "Photo : Émile Beauséjour",
       "sourceImageCreator": "Émile Beauséjour",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/08/la-telerealite-garde-la-cote-au-quebec-aupres-des-jeunes/?utm_source=rss&utm_medium=rss&utm_campaign=la-telerealite-garde-la-cote-au-quebec-aupres-des-jeunes",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_1396.jpeg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Les téléréalités du genre Occupation Double ou Big Brother Célébrités continuent d’être populaires au Québec et ce, malgré la montée grandissante des plateformes numériques telles que Netflix et Amazon Prime. Étonnamment, les jeunes suivent cette tendance télévisuelle."
     },
     {
       "source": "La Pige",
@@ -154,17 +154,17 @@
       "excerpt": "Alexandra Bachand est créatrice de parfums et a fondé sa maison de parfums il y a une dizaine d’années à Magog. (Crédit photo : Tirée d’Instagram – lagrangeduparfumeur) Quand vient le temps de se faire des amis, les odeurs corporelles auraient autant d’impact sur la relation que",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Johannes-Frasnelli-e1788542038748.jpg",
       "_pageAuthor": "Alexis Auclair",
-      "leadExcerpt": "Une étude publiée en 2022 dans Science Advances intitulée « There is chemistry in social chemistry » ( Il y a de la chimie dans la chimie sociale ) suggère que, sans en avoir conscience, nos odeurs auraient autant d’impact que les similarités « de base » qu’on tente de trouver chez un nouvel ami.",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/02c2f7c4a917d6ab.jpg",
-      "imageLocalKey": "02c2f7c4a917d6ab",
       "sourceImageCredit": "Crédit photo : La Pige",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/08/votre-nez-choisit-il-vos-amis/?utm_source=rss&utm_medium=rss&utm_campaign=votre-nez-choisit-il-vos-amis",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "johannes-frasnelli-e1788542038748.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Une étude publiée en 2022 dans Science Advances intitulée « There is chemistry in social chemistry » ( Il y a de la chimie dans la chimie sociale ) suggère que, sans en avoir conscience, nos odeurs auraient autant d’impact que les similarités « de base » qu’on tente de trouver chez un nouvel ami.",
+      "imageLocal": "assets/news-images/02c2f7c4a917d6ab.jpg",
+      "imageLocalKey": "02c2f7c4a917d6ab",
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -179,15 +179,15 @@
       "excerpt": "Une affiche d’Élections Canada est visible devant un bureau de vote situé sur la rue Racine, à Chicoutimi. (Photo : Anaëlle Chevert) En 1998, 65 % des jeunes Québécois âgés de 18 à 24 ans ont voté aux élections provinciales. Vingt-quatre ans plus tard, leur participation avait",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_9055.jpg",
       "_pageAuthor": "Anaëlle Chevert",
-      "leadExcerpt": "En 1998, 65 % des jeunes Québécois âgés de 18 à 24 ans ont voté aux élections provinciales. Vingt-quatre ans plus tard, leur participation avait chuté de 11%. Pour Emy Massie, étudiante et membre de l’association étudiante du Cégep de Chicoutimi, le manque de participation ne signifie pas nécessairement un manque d’intérêt. « Je ne pense pas qu’on est désintéressés. Je pense juste que c’est la pol",
-      "leadImageReady": true,
       "sourceImageCredit": "Photo : Rosalie Lepage",
       "sourceImageCreator": "Rosalie Lepage",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/08/jeunes-et-politique-un-desinteret-ou-un-manque-de-representation/?utm_source=rss&utm_medium=rss&utm_campaign=jeunes-et-politique-un-desinteret-ou-un-manque-de-representation",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_9055.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "En 1998, 65 % des jeunes Québécois âgés de 18 à 24 ans ont voté aux élections provinciales. Vingt-quatre ans plus tard, leur participation avait chuté de 11%. Pour Emy Massie, étudiante et membre de l’association étudiante du Cégep de Chicoutimi, le manque de participation ne signifie pas nécessairement un manque d’intérêt. « Je ne pense pas qu’on est désintéressés. Je pense juste que c’est la pol"
     },
     {
       "source": "La Pige",
@@ -202,17 +202,18 @@
       "excerpt": "La cocaÏne est souvent utilisée comme un psychostimulant chez les jeunes (mise en scène). Crédit photo: Lia Chayer Les jeunes d’aujourd’hui semblent de moins en moins cacher leur consommation de cocaïne. Ce phénomène crée une impression de hausse de consommation de cette",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Substances-2.png",
       "_pageAuthor": "Lia Chayer",
-      "leadExcerpt": "Les jeunes d’aujourd’hui semblent de moins en moins cacher leur consommation de cocaïne. Ce phénomène crée une impression de hausse de consommation de cette substance chez les 18-24 ans.",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/d6133cde868b76f3.png",
-      "imageLocalKey": "d6133cde868b76f3",
       "sourceImageCredit": "Photo : Lia Chayer",
       "sourceImageCreator": "Lia Chayer",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/08/linquietante-banalisation-de-la-cocaine-chez-les-jeunes/?utm_source=rss&utm_medium=rss&utm_campaign=linquietante-banalisation-de-la-cocaine-chez-les-jeunes",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "substances-2.png",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Les jeunes d’aujourd’hui semblent de moins en moins cacher leur consommation de cocaïne. Ce phénomène crée une impression de hausse de consommation de cette substance chez les 18-24 ans.",
+      "imageLocal": "assets/news-images/d6133cde868b76f3.png",
+      "imageLocalKey": "d6133cde868b76f3",
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -227,15 +228,15 @@
       "excerpt": "En cas d’arrêt cardiaque, la pratique immédiate de la réanimation cardio-respiratoire maintient la circulation du sang pour préserver la fonction du cerveau et d’autres organes vitaux. (Photo : Vittoria Caputo) Même si elle est, en théorie, obligatoire depuis 2017 dans les",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/20260831_160327894_iOS.jpg",
       "_pageAuthor": "Vittoria Caputo",
-      "leadExcerpt": "Même si elle est, en théorie, obligatoire depuis 2017 dans les écoles secondaires du Québec, la formation de secourisme n’est pas enseignée partout. C’est qu’elle ne fait pas partie du cursus d’un cours spécifique.",
-      "leadImageReady": false,
       "sourceImageCredit": "Photo : Vittoria Caputo",
       "sourceImageCreator": "Vittoria Caputo",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/08/formation-en-rcr-dans-les-ecoles-une-obligation-peu-respectee/?utm_source=rss&utm_medium=rss&utm_campaign=formation-en-rcr-dans-les-ecoles-une-obligation-peu-respectee",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "20260831_160327894_ios.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": false,
+      "leadExcerpt": "Même si elle est, en théorie, obligatoire depuis 2017 dans les écoles secondaires du Québec, la formation de secourisme n’est pas enseignée partout. C’est qu’elle ne fait pas partie du cursus d’un cours spécifique."
     },
     {
       "source": "La Pige",
@@ -257,8 +258,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "golf1.jpg",
       "sourceImageCreditRev": 10,
-      "leadExcerpt": "Par ailleurs, les prix à la ronde n’ont pas significativement fluctué malgré l’inflation, contrairement à de nombreux loisirs. « On est quand même sur une tendance très raisonnable pour un sport que vous faites pendant quatre heures, puis sur un parcours qui demande de l’entretien et beaucoup d’employés », rappelle le directeur général de l’Association des clubs de golf du Québec, Stéphane Dubé.",
       "leadImageReady": true,
+      "leadExcerpt": "Par ailleurs, les prix à la ronde n’ont pas significativement fluctué malgré l’inflation, contrairement à de nombreux loisirs. « On est quand même sur une tendance très raisonnable pour un sport que vous faites pendant quatre heures, puis sur un parcours qui demande de l’entretien et beaucoup d’employés », rappelle le directeur général de l’Association des clubs de golf du Québec, Stéphane Dubé.",
       "imageLocal": "assets/news-images/e1fd4038770a579e.jpg",
       "imageLocalKey": "e1fd4038770a579e",
       "imageLocalVia": "origin"
@@ -276,17 +277,18 @@
       "excerpt": "Des graffitis sont présents sur le mur d’une station d’essence laissée à l’abandon dans le secteur Jonquière. (Photo : Arthur Bakhache) Quelque 7% des jeunes de 12 à 17 ans ont commis un acte de vandalisme au cours de la dernière année sur le territoire de Saguenay, selon les",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Image-2.jpg",
       "_pageAuthor": "Arthur Bakhache",
-      "leadExcerpt": "Quelque 7% des jeunes de 12 à 17 ans ont commis un acte de vandalisme au cours de la dernière année sur le territoire de Saguenay, selon les statistiques d’ÉquiJustice. Depuis 2023, la Ville de Saguenay tente de contrer les méfaits du vandalisme.",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/cdfc4110408c8709.jpg",
-      "imageLocalKey": "cdfc4110408c8709",
       "sourceImageCredit": "Photo : Arthur Bakhache",
       "sourceImageCreator": "Arthur Bakhache",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/08/pression-des-pairs-lelement-declencheur-du-vandalisme-chez-les-jeunes/?utm_source=rss&utm_medium=rss&utm_campaign=pression-des-pairs-lelement-declencheur-du-vandalisme-chez-les-jeunes",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "image-2.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Quelque 7% des jeunes de 12 à 17 ans ont commis un acte de vandalisme au cours de la dernière année sur le territoire de Saguenay, selon les statistiques d’ÉquiJustice. Depuis 2023, la Ville de Saguenay tente de contrer les méfaits du vandalisme.",
+      "imageLocal": "assets/news-images/cdfc4110408c8709.jpg",
+      "imageLocalKey": "cdfc4110408c8709",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Tribune",
@@ -308,8 +310,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "design-sans-titre.png",
       "sourceImageCreditRev": 10,
-      "leadExcerpt": "From 1906 to 1946, McGill student newspaper archives record definitive evidence of blackface on and around campus. Although the majority of clippings publicize nearby local theatre productions of minstrel shows , several excerpts explicitly describe blackface performances as taking place at McGill.",
       "leadImageReady": false,
+      "leadExcerpt": "From 1906 to 1946, McGill student newspaper archives record definitive evidence of blackface on and around campus. Although the majority of clippings publicize nearby local theatre productions of minstrel shows , several excerpts explicitly describe blackface performances as taking place at McGill.",
       "imageLocal": "assets/news-images/e55f4ee1282bb316.png",
       "imageLocalKey": "e55f4ee1282bb316",
       "imageLocalVia": "origin"
@@ -403,7 +405,7 @@
       "author": "The editorial team",
       "date": "2026-09-08T13:00:00.000Z",
       "excerpt": "The team seeks its first championship as the top seed in the NSL standings The Montreal Roses look poised to challenge for their first championship. Courtesy Pablo A. Ortiz/Roses de Montréal This article originally appeared in The Link Volume 47, Issue 1, published September 8,",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/PAB19368.JPG",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/PAB19368_900_600_90.JPG",
       "authorCheckedAt": "2026-09-08T13:20:09.086Z",
       "sourceImageCredit": "Photo credit: The Link",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16370",
@@ -413,8 +415,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "Halifax Tides FC coach Stephen Hart knew exactly what the moment meant for the Montreal Roses. Fresh off a 1-0 loss that sent Montreal to the top spot in the Northern Super League (NSL) standings, he reflected on the raucous crowd that welcomed the two teams to Stade Saputo.",
-      "imageLocal": "assets/news-images/c49af3a1fc3892d6.jpg",
-      "imageLocalKey": "c49af3a1fc3892d6"
+      "imageLocal": "assets/news-images/0804781d89d07ce6.jpg",
+      "imageLocalKey": "0804781d89d07ce6"
     },
     {
       "source": "The Link",
@@ -454,7 +456,7 @@
       "author": "Samuel Kayll",
       "date": "2026-09-08T13:00:00.000Z",
       "excerpt": "A program revived looks towards a sustainable future Concordia men’s golf captain Sacha Riverin-Cholewicki hopes to lead the team to a nationals appearance. Courtesy Liam Mahoney/Concordia Athletics This article originally appeared in The Link Volume 47, Issue 1, published",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/DSC00912.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/DSC00912_900_626_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:12.025Z",
       "_pageAuthor": "Samuel Kayll",
       "sourceImageCredit": "Photo credit: The Link",
@@ -465,8 +467,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "For one, the sport's individual nature means athletes often train and prepare for tournaments at their own golf courses. While the team organizes group practices, much of the preparation occurs through individual work.",
-      "imageLocal": "assets/news-images/9f1558f8964f2517.jpg",
-      "imageLocalKey": "9f1558f8964f2517"
+      "imageLocal": "assets/news-images/cd11922e275a9a28.jpg",
+      "imageLocalKey": "cd11922e275a9a28"
     },
     {
       "source": "The Link",
@@ -815,7 +817,7 @@
       "author": "Ryan Pyke",
       "date": "2026-09-08T13:00:00.000Z",
       "excerpt": "Samuel Rancourt, a Montreal-based multidisciplinary artist and Concordia alumnus, processes the world around him through creativ Samuel Rancourt leaning over his latest painting project in the sunlit studio of his apartment. Photo Ryan Pyke This article originally appeared in",
-      "image": "https://thelinknewspaper.ca/images/articles/_resized/DSC06884-2.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/DSC06884-2_900_600_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:32.265Z",
       "_pageAuthor": "Ryan Pyke",
       "sourceImageCredit": "Photo: Ryan Pyke",
@@ -827,8 +829,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "Concordia alumnus and artist Samuel Rancourt’s paintings focus on the human face rendered using unconventional colours, with a special emphasis on eyes. He also plays with texture by building forms beyond the canvas.",
-      "imageLocal": "assets/news-images/028750c6c060f71e.jpg",
-      "imageLocalKey": "028750c6c060f71e"
+      "imageLocal": "assets/news-images/ce6f4dfbd5737d77.jpg",
+      "imageLocalKey": "ce6f4dfbd5737d77"
     },
     {
       "source": "The Link",
@@ -841,7 +843,7 @@
       "author": "Ikram Dridi",
       "date": "2026-09-08T13:00:00.000Z",
       "excerpt": "Concordia’s urban campus trades community for efficiency SGW campus was built for efficiency, at the cost of student life. Graphic Halle Keays This article originally appeared in The Link Volume 47, Issue 1, published September 8, 2026.",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Social_Antisocial.Halle_Keays_900_333_90.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Social_Antisocial.Halle_Keays_690_255_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:33.662Z",
       "sourceImageCredit": "Illustration: Halle Keays",
       "sourceImageCreator": "Halle Keays",
@@ -851,9 +853,8 @@
       "sourceImageCreditImageKey": "01.ops.social_antisocial.halle_keays.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
-      "imageLocal": "assets/news-images/c54d000261e05e8b.jpg",
-      "imageLocalKey": "c54d000261e05e8b",
-      "imageLocalVia": "origin"
+      "imageLocal": "assets/news-images/50a8acd65ce733ab.jpg",
+      "imageLocalKey": "50a8acd65ce733ab"
     },
     {
       "source": "The Tribune",
@@ -1505,7 +1506,7 @@
       "author": "Camille Guindon",
       "date": "2026-09-01T08:00:00.000Z",
       "excerpt": "Entre les cours, les travaux à remettre, les examens, les présentations et parfois un emploi à temps partiel, la vie étudiante peut rapidement devenir une course contre la montre. Pour plusieurs personnes étudiantes, le stress fait partie du quotidien. Pourtant, une solution",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SPORTS_Bouger-pour-decrocher_SourceCROQ.jpeg",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SPORTS_Bouger-pour-decrocher_SourceCROQ-1024x680.jpeg",
       "authorCheckedAt": "2026-09-01T09:26:59.111Z",
       "sourceImageCredit": "Photo : ICROQ",
       "sourceImageCreator": "ICROQ",
@@ -1516,8 +1517,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "Selon l’Organisation mondiale de la Santé (OMS), l’activité physique contribue à la santé physique et mentale. Elle peut notamment réduire les symptômes d’anxiété et favoriser le bien-être général. Chez la communauté étudiante, dont les journées sont souvent chargées et imprévisibles, intégrer le mouvement à la routine peut donc être une façon accessible de prendre une pause et de décrocher.",
-      "imageLocal": "assets/news-images/81856f432b651093.jpg",
-      "imageLocalKey": "81856f432b651093"
+      "imageLocal": "assets/news-images/f957d9dc55d64a05.jpg",
+      "imageLocalKey": "f957d9dc55d64a05"
     },
     {
       "source": "Le Collectif",
@@ -1530,7 +1531,7 @@
       "author": "Salma Labiede",
       "date": "2026-09-01T08:00:00.000Z",
       "excerpt": "Dans les hôpitaux, une section est réservée aux personnes vivant avec des troubles de santé mentale : la psychiatrie. Les personnes peuvent y être admises avec leur consentement ou, dans certaines situations, contre leur gré, selon leur état et les règles prévues par la loi.",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Psychiatrie_SourceIStockPhoto.png",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Psychiatrie_SourceIStockPhoto-1024x683.png",
       "sourceImageCredit": "Photo : iStock Photo",
       "sourceImageCreator": "iStock Photo",
       "sourceImageCreditUrl": "https://lecollectif.ca/societe/les-conditions-en-psychiatrie/",
@@ -1539,8 +1540,8 @@
       "sourceImageCreditImageKey": "societe_psychiatrie_sourceistockphoto.png",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/5eff2ab7750089e5.png",
-      "imageLocalKey": "5eff2ab7750089e5"
+      "imageLocal": "assets/news-images/282016e9c7243bd1.png",
+      "imageLocalKey": "282016e9c7243bd1"
     },
     {
       "source": "Le Collectif",
@@ -1553,7 +1554,7 @@
       "author": "Salma Labiede",
       "date": "2026-09-01T08:00:00.000Z",
       "excerpt": "Après le secondaire et le bal, les jeunes s’apprêtent à faire un grand pas vers le monde du cégep. Or, ces dernières années, plusieurs personnes étudiantes déposent des demandes d’admission au cégep et, dans certains programmes, la demande dépasse l’offre.",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_RentreeCegep_SourceCegepDeSherbrooke.jpg",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_RentreeCegep_SourceCegepDeSherbrooke-1024x769.jpg",
       "sourceImageCredit": "Photo : Université de Sherbrooke",
       "sourceImageCreator": "Université de Sherbrooke",
       "sourceImageCreditUrl": "https://lecollectif.ca/societe/les-demandes-dadmission-au-cegep-depassent-loffre/",
@@ -1562,8 +1563,8 @@
       "sourceImageCreditImageKey": "societe_rentreecegep_sourcecegepdesherbrooke.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/a87625900bde410a.jpg",
-      "imageLocalKey": "a87625900bde410a"
+      "imageLocal": "assets/news-images/ef8b04d91aa1ec11.jpg",
+      "imageLocalKey": "ef8b04d91aa1ec11"
     },
     {
       "source": "Le Collectif",
@@ -1601,7 +1602,7 @@
       "author": "Fabrice Lamarre",
       "date": "2026-09-01T08:00:00.000Z",
       "excerpt": "Dans son plus récent rapport, la firme de sondage Léger publie les résultats de plusieurs questions à mentions multiples visant à sonder les intentions de vote de la population québécoise face aux élections provinciales à venir. Quel parti ciblera le mieux les enjeux critiques ?",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Les-enjeux-electoraux-de-2026_Leger-Le-Journal-TVA.png",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Les-enjeux-electoraux-de-2026_Leger-Le-Journal-TVA-1024x520.png",
       "authorCheckedAt": "2026-09-01T09:26:59.894Z",
       "sourceImageCredit": "Photo : Léger le journal TVA",
       "sourceImageCreator": "Léger le journal TVA",
@@ -1611,8 +1612,8 @@
       "sourceImageCreditImageKey": "societe_les-enjeux-electoraux-de-2026_leger-le-journal-tva.png",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/bcb0551ccfe8abf9.png",
-      "imageLocalKey": "bcb0551ccfe8abf9"
+      "imageLocal": "assets/news-images/58f1b4284ffb876a.png",
+      "imageLocalKey": "58f1b4284ffb876a"
     },
     {
       "source": "Le Collectif",
@@ -1650,7 +1651,7 @@
       "author": "Médéric Dens",
       "date": "2026-09-01T08:00:00.000Z",
       "excerpt": "Avec la tonne d’informations politiques qui circulent présentement, il devient difficile de bien cerner les personnes candidates de votre ville, mais aussi leurs promesses et ambitions. Les partis présentent des personnes provenant de différents domaines, et même une",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Vos-personnes-candidates-dans-Sherbrooke_Site-web-du-PLQ-1.png",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Vos-personnes-candidates-dans-Sherbrooke_Site-web-du-PLQ-1-1024x838.png",
       "sourceImageCredit": "Crédit photo : Le Collectif",
       "sourceImageCreditUrl": "https://lecollectif.ca/societe/vos-personnes-candidates-dans-sherbrooke-1-2/",
       "sourceImageCreditFrom": "media",
@@ -1659,8 +1660,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "« Sherbrooke, comme comté, comme ville et comme région, c’est un petit Québec. Ce sont les mêmes problèmes qu’ailleurs l’augmentation du coût du logement l’augmentation du nombre d’itinérants et d’itinérantes l’accès aux services de soins et de santé ce sont tous des enjeux majeurs », ajoute-t-il.",
-      "imageLocal": "assets/news-images/1692af7402ebcfca.png",
-      "imageLocalKey": "1692af7402ebcfca"
+      "imageLocal": "assets/news-images/a2be3a19434b68b3.png",
+      "imageLocalKey": "a2be3a19434b68b3"
     },
     {
       "source": "Le Délit",
@@ -1981,7 +1982,7 @@
       "author": "Timotée Allouch-Chantepie",
       "date": "2026-08-31T15:07:02.000Z",
       "excerpt": "Nouvelle guerre commerciale suite à l’échec des négociations.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/08/tarifs.png",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/08/tarifs-768x768.png",
       "featured": true,
       "authorCheckedAt": "2026-08-31T20:06:49.272Z",
       "sourceImageCredit": "Photo : Catvy Tran",
@@ -1992,7 +1993,9 @@
       "sourceImageCreditImageKey": "tarifs.png",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "leadExcerpt": "Son gouvernement s’est montré intransigeant face aux efforts américains qui cherchent à affaiblir le soutien d’Ottawa vis-à-vis de la préservation du français et de sa politique de bilinguisme. De son côté, la première ministre québécoise Christine Fréchette n’a pas tardé à réagir sur X avec le message « notre identité n’est pas à négocier »."
+      "leadExcerpt": "Son gouvernement s’est montré intransigeant face aux efforts américains qui cherchent à affaiblir le soutien d’Ottawa vis-à-vis de la préservation du français et de sa politique de bilinguisme. De son côté, la première ministre québécoise Christine Fréchette n’a pas tardé à réagir sur X avec le message « notre identité n’est pas à négocier ».",
+      "imageLocal": "assets/news-images/97fd8a15a802a9c0.png",
+      "imageLocalKey": "97fd8a15a802a9c0"
     },
     {
       "source": "The McGill Daily",
@@ -2331,7 +2334,7 @@
       "author": "Emilie Rizkallah",
       "date": "2026-05-15T16:00:00.000Z",
       "excerpt": "À Montréal, les murs parlent, sans jamais révéler celles et ceux qui les écrivent. Sous les couches de peinture et les signatures superposées, une présence discrète s’impose : celle d’une génération, souvent étudiante, qui investit l’espace urbain en marge des cadres établis.",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/Photo-5_IMG_3586.jpg",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/Photo-5_IMG_3586-1024x768.jpg",
       "authorCheckedAt": "2026-09-08T11:21:13.893Z",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/presences-invisibles-ecrire-la-ville/",
@@ -2339,7 +2342,9 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "photo-5_img_3586.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/dad04c2783594e3b.jpg",
+      "imageLocalKey": "dad04c2783594e3b"
     },
     {
       "source": "Quartier Libre",
@@ -2352,19 +2357,18 @@
       "author": "Samuel Roy",
       "date": "2026-05-14T21:00:00.000Z",
       "excerpt": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatrième sortie depuis 2020, l’artiste gravit les échelons et devient une voix importante du hip-hop québécois. Composé de 18 titres d’ambiance estivale tels que « CHOP CHOP », « POLY",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/18-19_calamine-1024x1024.jpg",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg",
       "authorCheckedAt": "2026-09-08T11:21:14.143Z",
+      "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société.",
+      "imageLocal": "assets/news-images/e7fd49aa202781bb.jpg",
+      "imageLocalKey": "e7fd49aa202781bb",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
+      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "18-19_calamine.jpg",
-      "sourceImageCreditRev": 10,
-      "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société.",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/d9f7e6df158c0b1d.jpg",
-      "imageLocalKey": "d9f7e6df158c0b1d",
-      "sourceImageCreator": ""
+      "sourceImageCreditImageKey": "20_calamine-1.jpg",
+      "sourceImageCreditRev": 10
     },
     {
       "source": "Quartier Libre",
@@ -2377,19 +2381,18 @@
       "author": "Ulysse Taillard-Hodez",
       "date": "2026-05-14T19:09:17.000Z",
       "excerpt": "Le 5 mai dernier, le pavillon Roger-Gaudry a accueilli le premier forum du Réseau des écoles associées ( RÉA ). Ce projet ambitieux de la Faculté des sciences de l’éducation (FSÉ) transforme des écoles primaires et secondaires en véritables « hôpitaux universitaires » de la",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/PXL_20260505_174149744-1024x768.jpg",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg",
       "authorCheckedAt": "2026-09-08T11:21:14.399Z",
+      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
+      "imageLocal": "assets/news-images/f5291c863e27cad4.jpg",
+      "imageLocalKey": "f5291c863e27cad4",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
+      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "pxl_20260505_174149744.jpg",
-      "sourceImageCreditRev": 10,
-      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/3d0fb4f9c4b03e07.jpg",
-      "imageLocalKey": "3d0fb4f9c4b03e07",
-      "sourceImageCreator": ""
+      "sourceImageCreditImageKey": "image-2.jpeg",
+      "sourceImageCreditRev": 10
     },
     {
       "source": "Quartier Libre",
@@ -2428,19 +2431,18 @@
       "author": "Bérénice Lemarié",
       "date": "2026-05-13T16:00:00.000Z",
       "excerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_marieceleste.jpg",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg",
       "authorCheckedAt": "2026-09-08T11:21:14.881Z",
+      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis .",
+      "imageLocal": "assets/news-images/0aaf12beea2d8dbd.jpg",
+      "imageLocalKey": "0aaf12beea2d8dbd",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
+      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "20_marieceleste.jpg",
-      "sourceImageCreditRev": 10,
-      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis .",
-      "leadImageReady": false,
-      "imageLocal": "assets/news-images/ef87347e34e67032.jpg",
-      "imageLocalKey": "ef87347e34e67032",
-      "sourceImageCreator": ""
+      "sourceImageCreditImageKey": "20_florelaurentienne.jpg",
+      "sourceImageCreditRev": 10
     },
     {
       "source": "Quartier Libre",
@@ -2547,14 +2549,14 @@
       "sourceImageCreditImageKey": "chatgpt-image-7-mai-2026-11-h-02-min-08-s.png",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "leadExcerpt": "Illustration générée par ChatGPT à partir du prompt d’Olivier Verreault pour L’Exemplaire. Ce prompt vise à illustrer avec humour les différences entre les protestations québécoises et albertaines au sujet du rachat des armes à feu.",
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/5/57/Pavillon_DKN%2C_Universit%C3%A9_Laval_07.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
       "imageTitle": "Pavillon DKN, Université Laval 07",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2007.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2007.jpg",
+      "leadExcerpt": "Illustration générée par ChatGPT à partir du prompt d’Olivier Verreault pour L’Exemplaire. Ce prompt vise à illustrer avec humour les différences entre les protestations québécoises et albertaines au sujet du rachat des armes à feu."
     },
     {
       "source": "L'Exemplaire",
@@ -2659,7 +2661,7 @@
       "author": "Mano Le Bris",
       "date": "2026-05-12T18:48:26.000Z",
       "excerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus ont explosé, début 2026, sur les réseaux sociaux. Mais derrière ces visuels",
-      "image": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/05/SKIBIDI-MINIA-2.png",
+      "image": "https://i0.wp.com/www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/05/SKIBIDI-MINIA-2.png?resize=696%2C392&ssl=1",
       "sourceImageCredit": "Illustration : Mano Le Bris / L’Exemplaire",
       "sourceImageCreator": "Mano Le Bris",
       "sourceImageCreditUrl": "https://www.exemplaire.com.ulaval.ca/a-la-une/skibidi-tentafruit-ou-quand-lia-accentue-les-stereotypes/?utm_source=rss&utm_medium=rss&utm_campaign=skibidi-tentafruit-ou-quand-lia-accentue-les-stereotypes",
@@ -2668,14 +2670,16 @@
       "sourceImageCreditImageKey": "skibidi-minia-2.png",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
-      "leadExcerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus explosent sur les réseaux sociaux. Mais, derrière ces visuels enfantins générés par intelligence artificielle, se dessinent des discours moins légers qui dépassent le simple divertissement.",
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg",
       "imageTitle": "Pavillon Ferdinand-Vandry, Université Laval",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg",
+      "leadExcerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus explosent sur les réseaux sociaux. Mais, derrière ces visuels enfantins générés par intelligence artificielle, se dessinent des discours moins légers qui dépassent le simple divertissement.",
+      "imageLocal": "assets/news-images/44f01b932a4f2373.webp",
+      "imageLocalKey": "44f01b932a4f2373"
     },
     {
       "source": "Quartier Libre",
@@ -2913,18 +2917,17 @@
       "author": "Minola Grent",
       "date": "2026-05-11T20:43:48.000Z",
       "excerpt": "Via My Little Princess (2011) Minola GrentEditor-in-Chief Every story has the right to be told. Even difficult stories of abuse and manipulation do. So, with an asterisk: leave the children out of this. In the midst of the 1970s cultural confusion, Franco-Romanian photographer",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-5.png",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.jpeg?w=731",
       "authorCheckedAt": "2026-09-08T08:36:51.820Z",
       "sourceImageCredit": "Photo: My Little Princess (2011)",
       "sourceImageCreator": "My Little Princess (2011)",
       "sourceImageCreditUrl": "https://theplantnews.com/2026/05/11/leave-the-children-out-of-this/",
-      "sourceImageCreditFrom": "article",
+      "sourceImageCreditFrom": "rss-content",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "image-5.png",
+      "sourceImageCreditImageKey": "image-4.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/870cb1894ff8b3e6.png",
-      "imageLocalKey": "870cb1894ff8b3e6"
+      "imageLocal": "assets/news-images/a7f72017b9324103.webp",
+      "imageLocalKey": "a7f72017b9324103"
     },
     {
       "source": "The Plant",
@@ -3045,7 +3048,9 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/7aa5ab9dd7648781.jpg",
-      "imageLocalKey": "7aa5ab9dd7648781"
+      "imageLocalKey": "7aa5ab9dd7648781",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "L'Exemplaire",
@@ -3180,7 +3185,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/23af229881dbdeec.jpg",
       "imageLocalKey": "23af229881dbdeec",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -3275,7 +3281,9 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/16a813216f7afeb2.jpg",
-      "imageLocalKey": "16a813216f7afeb2"
+      "imageLocalKey": "16a813216f7afeb2",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -3390,7 +3398,9 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/debd9bf479305512.jpg",
-      "imageLocalKey": "debd9bf479305512"
+      "imageLocalKey": "debd9bf479305512",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3411,7 +3421,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_9786.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -3435,7 +3446,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/7428914d1b64d542.jpg",
       "imageLocalKey": "7428914d1b64d542",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -3459,7 +3471,8 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/7f86c6d6d4e73d30.jpg",
       "imageLocalKey": "7f86c6d6d4e73d30",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -3481,7 +3494,9 @@
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/df8807d73a194404.jpg",
-      "imageLocalKey": "df8807d73a194404"
+      "imageLocalKey": "df8807d73a194404",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3503,7 +3518,9 @@
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/4828a1e7cbf0e7ff.jpg",
-      "imageLocalKey": "4828a1e7cbf0e7ff"
+      "imageLocalKey": "4828a1e7cbf0e7ff",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3525,7 +3542,9 @@
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/fcac91d58ef48893.jpg",
-      "imageLocalKey": "fcac91d58ef48893"
+      "imageLocalKey": "fcac91d58ef48893",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Exil",
@@ -3907,8 +3926,7 @@
       "imageCreator": "Balcer",
       "imageLicense": "CC BY 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop%27s_University_McGreer_Hall.jpg",
-      "_campusBank": true
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
       "source": "The Campus",
@@ -3921,7 +3939,7 @@
       "author": "Tallula Russell",
       "date": "2026-04-06T12:12:39.000Z",
       "excerpt": "Every person who entered Turner Studio’s theatre from Mar. 25 to 29 was given a necklace with a small locket on it and was welcomed to the world of “The Numbered.” A poster on the door to the theatre stated, “This is your locket. You’ve worn it since you were born. You cherish",
-      "image": "https://i0.wp.com/thebucampus.ca/wp-content/uploads/2026/04/numbered-crd-journey-bardati.jpg?fit=676%2C1200&ssl=1",
+      "image": "https://thebucampus.ca/wp-content/uploads/2026/04/numbered-crd-journey-bardati.jpg",
       "authorCheckedAt": "2026-09-08T08:37:12.645Z",
       "sourceImageCredit": "Photo: Journey Bardati",
       "sourceImageCreator": "Journey Bardati",
@@ -3931,8 +3949,8 @@
       "sourceImageCreditImageKey": "numbered-crd-journey-bardati.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
-      "imageLocal": "assets/news-images/d60a94c260951f9c.webp",
-      "imageLocalKey": "d60a94c260951f9c"
+      "imageLocal": "assets/news-images/81342b278c0d0e4c.jpg",
+      "imageLocalKey": "81342b278c0d0e4c"
     },
     {
       "source": "The Campus",
@@ -3965,12 +3983,62 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
+      "title": "La cassette commence à être usée",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
+      "author": "Antoine Proulx",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Réponse au journal The Concordian et à l’économiste Moshe Lander.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/concordiareponseV2-scaled.jpeg",
+      "featured": true,
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "concordiareponsev2.jpeg",
+      "leadImageReady": true,
+      "leadExcerpt": "Première gaffe intellectuelle (in)volontaire du Concordian . En trente secondes de recherches plus ou moins rigoureuses, il aurait pu comprendre les réelles causes de la décote du Québec par la Standard and Poor’s (S&P) – qui n’a absolument rien à voir avec la recrudescence de l’intérêt des Québécois envers la souveraineté.",
+      "imageLocal": "assets/news-images/c4342ffde84293ec.jpg",
+      "imageLocalKey": "c4342ffde84293ec",
+      "imageLocalVia": "origin"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "author": "Joséphine Miton",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1.jpeg",
+      "featured": true,
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "coinqueer-1.jpeg",
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
+      "imageLocal": "assets/news-images/4d808d99f444a191.jpg",
+      "imageLocalKey": "4d808d99f444a191"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
       "title": "L’épidémie de la nonchalance",
       "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
       "author": "Elie Nguyen",
       "date": "2026-03-25T07:00:00.000Z",
       "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-930x620.png",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
       "featured": true,
       "sourceImageCredit": "Photo : Elie Nguyen",
       "sourceImageCreator": "Elie Nguyen",
@@ -4059,56 +4127,6 @@
       "imageLocalVia": "origin"
     },
     {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "La cassette commence à être usée",
-      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
-      "author": "Antoine Proulx",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Réponse au journal The Concordian et à l’économiste Moshe Lander.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/concordiareponseV2-scaled.jpeg",
-      "featured": true,
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "concordiareponsev2.jpeg",
-      "leadImageReady": true,
-      "leadExcerpt": "Première gaffe intellectuelle (in)volontaire du Concordian . En trente secondes de recherches plus ou moins rigoureuses, il aurait pu comprendre les réelles causes de la décote du Québec par la Standard and Poor’s (S&P) – qui n’a absolument rien à voir avec la recrudescence de l’intérêt des Québécois envers la souveraineté.",
-      "imageLocal": "assets/news-images/c4342ffde84293ec.jpg",
-      "imageLocalKey": "c4342ffde84293ec",
-      "imageLocalVia": "origin"
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "La performance de l’homosexualité : un privilège ?",
-      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
-      "author": "Joséphine Miton",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1-863x620.jpeg",
-      "featured": true,
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "coinqueer-1.jpeg",
-      "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
-      "imageLocal": "assets/news-images/5fac953e4fd2d827.jpg",
-      "imageLocalKey": "5fac953e4fd2d827"
-    },
-    {
       "source": "The McGill Daily",
       "institution": "McGill University",
       "region": "Montréal",
@@ -4128,8 +4146,7 @@
       "imageCreator": "Jeangagnon",
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Wilson_Hall,_McGill_University.jpg",
-      "_campusBank": true
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Wilson_Hall,_McGill_University.jpg"
     },
     {
       "source": "The McGill Daily",
@@ -4151,7 +4168,9 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "moffat.jpg",
       "sourceImageCreditRev": 7,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/5e458fab66e0c06a.jpg",
+      "imageLocalKey": "5e458fab66e0c06a"
     },
     {
       "source": "The Campus",
@@ -4195,8 +4214,7 @@
       "imageCreator": "Jason Paris",
       "imageLicense": "CC BY 2.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop's%20University%20campus%202011%2004.jpg",
-      "_campusBank": true
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop's%20University%20campus%202011%2004.jpg"
     },
     {
       "source": "The Campus",
@@ -4260,7 +4278,7 @@
       "author": "La rédaction",
       "date": "2026-03-13T19:42:16.000Z",
       "excerpt": "GardaWorld, la compagnie québécoise qui fournit les gardes de sécurité du Cégep du Vieux-Montréal, est au centre de la controverse. L’entreprise entretient des relations avec la police immigratoire américaine ICE – qui est reconnue par plusieurs organisations humanitaires comme",
-      "image": "https://exilecvm.wordpress.com/wp-content/uploads/2026/03/img_3527.jpg",
+      "image": "https://exilecvm.wordpress.com/wp-content/uploads/2026/03/img_3527.jpg?w=1024",
       "authorCheckedAt": "2026-09-08T08:37:14.576Z",
       "sourceImageCredit": "Crédit photo : Exil",
       "sourceImageCreditUrl": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
@@ -4268,7 +4286,9 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "img_3527.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/045f5213d022a229.webp",
+      "imageLocalKey": "045f5213d022a229"
     },
     {
       "source": "Exil",
@@ -4308,7 +4328,9 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditUrl": "https://www.polyscope.qc.ca/blog/post/2DJ12PrwK7u4Dq9D8fKu",
-      "leadImageReady": true
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/9a3a0f7a9ff9c32d.jpg",
+      "imageLocalKey": "9a3a0f7a9ff9c32d"
     },
     {
       "source": "Le Polyscope",
@@ -4394,7 +4416,9 @@
       "imageCreator": "Lea-Kim",
       "imageLicense": "by-sa",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=178637127"
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=178637127",
+      "imageLocal": "assets/news-images/b8cbafcbd6e6aa33.png",
+      "imageLocalKey": "b8cbafcbd6e6aa33"
     },
     {
       "source": "Le Polyscope",
@@ -4507,15 +4531,14 @@
       "author": "Alexia Lehouillier-Berthiaume",
       "date": "2025-10-24T13:00:00.000Z",
       "excerpt": "Crédit photo: Alexia Lehouillier-Berthiaume Alors que l’âge moyen des élus municipaux était, au moment du déclenchement des élections, de 53 ans, la question de la représentativité de la jeunesse en politique demeure d’actualité. Candidate pour Transition Montréal au poste de",
-      "image": "https://exilecvm.wordpress.com/wp-content/uploads/2025/10/pancarte-shirley-barnea.jpg",
+      "image": "https://exilecvm.wordpress.com/wp-content/uploads/2025/10/shirley-barnea-1.jpg?w=727",
       "sourceImageCredit": "Photo : Alexia Lehouillier-Berthiaume",
       "sourceImageCreator": "Alexia Lehouillier-Berthiaume",
       "sourceImageCreditUrl": "https://exilecvm.wordpress.com/2025/10/24/une-jeune-candidate-qui-na-pas-froid-aux-yeux/",
-      "sourceImageCreditFrom": "article",
+      "sourceImageCreditFrom": "rss-content",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "pancarte-shirley-barnea.jpg",
-      "sourceImageCreditRev": 10,
-      "leadImageReady": false
+      "sourceImageCreditImageKey": "shirley-barnea-1.jpg",
+      "sourceImageCreditRev": 10
     },
     {
       "source": "Le Polyscope",
