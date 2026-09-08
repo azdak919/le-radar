@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-09-06T11:20:52.290Z",
+  "updated": "2026-09-08T17:34:11.439Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -119,14 +119,15 @@
     },
     "quartier-libre": {
       "strategy": "unsupported",
-      "nextPage": 13,
+      "nextPage": null,
       "totalPages": 13,
-      "lastAttemptAt": "2026-09-06T11:20:50.824Z",
-      "lastSuccessAt": "2026-09-06T11:20:50.824Z",
+      "lastAttemptAt": "2026-09-08T17:34:10.257Z",
+      "lastSuccessAt": "2026-09-08T17:34:10.257Z",
       "retryAt": null,
       "error": null,
-      "windowStart": "2023-09-06T17:20:45.332Z",
-      "windowYears": 3
+      "windowStart": "2023-09-08T23:34:10.198Z",
+      "windowYears": 3,
+      "completedAt": "2026-09-08T17:34:10.257Z"
     },
     "the-campus": {
       "strategy": "unsupported",
