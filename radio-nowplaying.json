@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-08T13:18:35.454Z",
+  "updatedAt": "2026-09-08T17:20:18.611Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Mardi Champ Gauche",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Mardi Champ Gauche",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-08T13:17:53.926Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
-        "title": "Lentement mais sûrement",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/lentement-mais-surement"
-      },
-      "track": "",
-      "showTitle": "La collation",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-08T13:17:55.102Z"
+      "checkedAt": "2026-09-08T17:19:47.619Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Les sentinelles de l'art",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+      },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
+      "track": "",
+      "showTitle": "Les sentinelles de l'art",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-08T17:19:49.314Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Basa Basa",
+        "title": "Universal Break",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "Ecolibrium/Environment in Canada",
+        "title": "Voice of Korea",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "14:00",
+        "end": "15:00"
       },
-      "track": "",
-      "showTitle": "Basa Basa",
+      "track": "- Let Us Be Sweethearts Again",
+      "showTitle": "Universal Break",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-08T13:17:57.597Z"
+      "checkedAt": "2026-09-08T17:19:52.288Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "At The Movies",
+        "title": "Shaking the Habitual",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/at-the-movies"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/shaking-the-habitual"
       },
       "next": {
-        "title": "Democracy Now",
+        "title": "Something for the Mood",
         "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/something-for-the-mood"
       },
       "track": "",
-      "showTitle": "At The Movies",
+      "showTitle": "Shaking the Habitual",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-08T13:18:11.436Z"
+      "checkedAt": "2026-09-08T17:20:07.772Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-08T13:18:12.633Z"
+      "checkedAt": "2026-09-08T17:20:09.972Z"
     },
     "choq": {
       "id": "choq",
@@ -146,15 +139,18 @@
         "end": "19:00",
         "slug": "live"
       },
-      "track": "Iceage — True Blue",
+      "track": "Pastel Barbo - Ra",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-08T13:18:35.103Z"
+      "clientPoll": {
+        "type": "triton-np",
+        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
+      },
+      "checkedAt": "2026-09-08T17:20:18.260Z"
     }
   }
 }
