@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-08T18:05:29.272Z",
+  "updated": "2026-09-08T19:33:59.906Z",
   "total": 186,
   "withImage": 173,
   "withCredit": 173,
@@ -7,9 +7,87 @@
   "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 0,
-  "citedNew": 0,
+  "checked": 20,
+  "updatedCount": 11,
+  "citedNew": 7,
   "fallbackNew": 13,
-  "samples": []
+  "samples": [
+    {
+      "title": "La téléréalité garde la cote au Québec auprès des jeunes",
+      "source": "La Pige",
+      "credit": "Photo : Émile Beauséjour",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Votre nez choisit-il vos amis ?",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Jeunes et politique : un désintérêt ou un manque de représentation ?",
+      "source": "La Pige",
+      "credit": "Photo : Rosalie Lepage",
+      "cited": true,
+      "method": "wp-caption"
+    },
+    {
+      "title": "L’inquiétante banalisation de la cocaïne chez les jeunes",
+      "source": "La Pige",
+      "credit": "Photo : Lia Chayer",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Formation en RCR dans les écoles : une obligation peu respectée",
+      "source": "La Pige",
+      "credit": "Photo : Vittoria Caputo",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Pression des pairs : l’élément déclencheur du vandalisme chez les jeunes",
+      "source": "La Pige",
+      "credit": "Photo : Arthur Bakhache",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Recettes musicales québécoises pour l’été",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
+    }
+  ]
 }

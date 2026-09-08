@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-08T15:17:04.093Z",
+  "updated": "2026-09-08T19:33:45.429Z",
   "total": 186,
   "withPhoto": 173,
   "withStock": 27,
@@ -7,13 +7,25 @@
   "fullyCovered": 186,
   "leadReadyPhotos": 152,
   "pageScraped": 31,
-  "photosRecovered": 28,
-  "imagesCleared": 21,
+  "photosRecovered": 27,
+  "imagesCleared": 20,
   "stockSearches": 33,
-  "stockFound": 19,
-  "campusBankFound": 14,
+  "stockFound": 18,
+  "campusBankFound": 13,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Formation en RCR dans les écoles : une obligation peu respectée",
+      "link": "https://lapige.atmjonquiere.com/2026/09/08/formation-en-rcr-dans-les-ecoles-une-obligation-peu-respectee/?utm_source=rss&utm_medium=rss&utm_campaign=formation-en-rcr-dans-les-ecoles-une-obligation-peu-respectee",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/20260831_160327894_iOS.jpg"
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/?utm_source=rss&utm_medium=rss&utm_campaign=blackface-at-mcgill",
+      "reason": "no-stock-match",
+      "image": "https://www.thetribune.ca/wp-content/uploads/2026/04/Design-sans-titre.png"
+    },
     {
       "title": "Nostalgia Nook: The return of recession pop-timism",
       "link": "https://thelinknewspaper.ca/article/16356",
@@ -39,24 +51,6 @@
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/09/CAMILA_SIERRA_ORDONEZ_2_EK-scaled.jpg"
     },
     {
-      "title": "What we liked this summer break",
-      "link": "https://www.thetribune.ca/a-e/what-we-liked-this-summer-break-08092026/?utm_source=rss&utm_medium=rss&utm_campaign=what-we-liked-this-summer-break-08092026",
-      "reason": "no-stock-match",
-      "image": "https://www.thetribune.ca/wp-content/uploads/2026/09/AE4-Sophie-Schuyler-scaled.jpg"
-    },
-    {
-      "title": "L'éléphant dans ta salle de classe",
-      "link": "https://www.polyscope.qc.ca/blog/post/rSFKjw5RmyR9tkTNM9x4",
-      "reason": "no-stock-match",
-      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Felephant_code_qr.png?alt=media&token=ced37e6b-12b1-4369-8289-3f2dacb19067"
-    },
-    {
-      "title": "Letters from the Editors May 2026",
-      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
-    },
-    {
       "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
       "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
       "reason": "stock-too-small",
@@ -78,13 +72,19 @@
       "title": "National Golf tournament",
       "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
       "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531909%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531487%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Le pays avant tout – esquisse",
+      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
     }
   ]
 }
