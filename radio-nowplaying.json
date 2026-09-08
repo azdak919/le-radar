@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-08T22:42:13.718Z",
+  "updatedAt": "2026-09-08T22:53:06.359Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-08T22:41:40.379Z"
+      "checkedAt": "2026-09-08T22:52:18.838Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-08T22:41:41.676Z"
+      "checkedAt": "2026-09-08T22:52:20.073Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-08T22:41:44.618Z"
+      "checkedAt": "2026-09-08T22:52:22.847Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Bikini Brrroadcast",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
       },
       "next": {
         "title": "Ashes to Ashes",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/ashes-to-ashes"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "Bikini Brrroadcast",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-08T22:41:59.818Z"
+      "checkedAt": "2026-09-08T22:52:57.876Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-08T22:42:01.352Z"
+      "checkedAt": "2026-09-08T22:52:59.332Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +145,7 @@
         "end": "20:30",
         "slug": "les-amazones"
       },
-      "track": "WHITESOCKS x KAMA x NAWFAL - L",
+      "track": "feeble little horse - Rewind",
       "showTitle": "Le Studio",
       "host": "",
       "source": "api-live",
@@ -156,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-08T22:42:13.368Z"
+      "checkedAt": "2026-09-08T22:53:06.009Z"
     }
   }
 }
