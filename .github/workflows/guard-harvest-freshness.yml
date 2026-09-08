@@ -54,15 +54,40 @@ jobs:
       - name: Catch-up news feeds
         if: steps.eval.outputs.news == 'true'
         timeout-minutes: 10
-        run: node scripts/fetch-news.js --update
+        run: |
+          node scripts/fetch-news.js --update
+          # RSS doit suivre news.json (tests/news-representations.mjs).
+          node scripts/generate-feed.js --update
         env:
           CI: true
           FIREBASE_POLYSCOPE_API_KEY: ${{ secrets.FIREBASE_POLYSCOPE_API_KEY }}
 
-      - name: Validate generated sports HTML
+      # Filet : si Update Student News a publié news.json sans index.html
+      # (ancien « HTML gate deferred »), régénérer le prérendu / JSON-LD
+      # avant la gate — sinon bot-prepush échoue sur news-representations.
+      - name: Sync news SEO artefacts
+        id: news_seo
         run: |
-          git add sports/index.html en/sports/index.html
-          if ! git diff --staged --quiet -- '*.html'; then
+          if node tests/news-representations.mjs; then
+            echo "needed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "News SEO out of sync with news.json — regenerating"
+          node scripts/generate-feed.js --update
+          node scripts/generate-seo.js --update
+          # Re-vérifie le fil seul ; le reste de la gate suit.
+          node tests/news-representations.mjs
+          echo "needed=true" >> "$GITHUB_OUTPUT"
+        env:
+          CI: true
+
+      - name: Validate generated HTML
+        run: |
+          git add sports/index.html en/sports/index.html \
+            index.html sitemap.xml sitemap-archives.xml llms.txt \
+            2>/dev/null || true
+          git add -A radios journaux etablissements medias horaires en archives 2>/dev/null || true
+          if ! git diff --staged --quiet -- '*.html' 'sitemap*.xml' 'llms.txt'; then
             bash scripts/bot-prepush-check.sh
           fi
 
@@ -74,8 +99,10 @@ jobs:
             sports.json sports-masthead.json sports-leagues.json sports-teams.json sports-sailing.json \
             sports/index.html en/sports/index.html \
             radio-nowplaying.json \
-            news.json news-archive.json news-sources.json \
+            news.json news-archive.json news-sources.json feed.xml \
+            index.html sitemap.xml sitemap-archives.xml llms.txt \
             2>/dev/null || true
+          git add -A radios journaux etablissements medias horaires en archives 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "Harvest already within SLA (or catch-up produced an identical payload)."
             exit 0

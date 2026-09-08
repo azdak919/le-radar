@@ -166,8 +166,10 @@ jobs:
       # Référencement : prérendu du fil dans index.html (les robots des IA
       # n'exécutent pas JS) + sitemap + llms.txt. Après un fetch publié, pour
       # que le HTML suive news.json. continue-on-error : un échec ici ne doit
-      # jamais bloquer la publication éditoriale.
+      # jamais bloquer la publication éditoriale — mais si SEO a réussi, on
+      # committe toujours les artefacts (voir étape Commit).
       - name: Regenerate SEO artefacts
+        id: seo
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true'
         timeout-minutes: 2
         run: node scripts/generate-seo.js --update
@@ -197,15 +199,25 @@ jobs:
             lead-image-qc.json photo-credit-qc.json feed.xml
             news-sources.json assets/news-images
           )
-          if [ "${{ steps.prepush.outcome }}" = "success" ]; then
-            git add "${DATA_FILES[@]}" index.html sitemap.xml sitemap-archives.xml llms.txt 2>/dev/null || true
+          SEO_FILES=(index.html sitemap.xml sitemap-archives.xml llms.txt)
+          git add "${DATA_FILES[@]}" 2>/dev/null || true
+          # Toujours publier le prérendu / JSON-LD quand generate-seo a réussi.
+          # Un échec artifact-budget (image purgée encore listée par git) ne
+          # doit plus laisser news.json diverger de index.html — Guard échoue
+          # sinon sur tests/news-representations.mjs.
+          if [ "${{ steps.seo.outcome }}" = "success" ]; then
+            git add "${SEO_FILES[@]}" 2>/dev/null || true
             # Pages d'entités : dossiers entièrement régénérés. `-A` est
             # indispensable — sans lui, une fiche retirée resterait en ligne.
             git add -A radios journaux etablissements medias horaires en archives 2>/dev/null || true
+          fi
+          if [ "${{ steps.prepush.outcome }}" = "success" ]; then
             MSG='bot: update student news feed, excerpts, images, photo credits, RSS and social (auto)'
+          elif [ "${{ steps.seo.outcome }}" = "success" ]; then
+            echo "::warning::integrity check failed — publishing news data + SEO so JSON-LD stays in sync"
+            MSG='bot: update student news feed (auto; integrity gate deferred)'
           else
-            echo "::warning::integrity check failed — publishing news data only so the live feed still updates"
-            git add "${DATA_FILES[@]}" 2>/dev/null || true
+            echo "::warning::integrity + SEO failed — publishing news data only so the live feed still updates"
             MSG='bot: update student news feed (auto; HTML gate deferred)'
           fi
           git commit -m "$MSG" || exit 0

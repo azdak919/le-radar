@@ -15,10 +15,16 @@ function trackedDirSize(rel) {
     cwd: root,
     encoding: 'utf8',
   });
-  return output.split('\0').filter(Boolean).reduce(
-    (total, trackedPath) => total + statSync(join(root, trackedPath)).size,
-    0,
-  );
+  // Fichiers encore listés par git mais déjà purgés du disque (miroir news
+  // avant git add) : compter 0 plutôt que faire échouer toute la gate bot.
+  return output.split('\0').filter(Boolean).reduce((total, trackedPath) => {
+    try {
+      return total + statSync(join(root, trackedPath)).size;
+    } catch (err) {
+      if (err && err.code === 'ENOENT') return total;
+      throw err;
+    }
+  }, 0);
 }
 
 const archive = fileSize('news-archive.json');
