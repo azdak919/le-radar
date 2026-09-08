@@ -1,58 +1,100 @@
 {
-  "updated": "2026-09-08T08:43:34.024Z",
+  "updated": "2026-09-08T11:28:37.777Z",
   "total": 186,
   "withImage": 169,
   "withCredit": 169,
-  "cited": 135,
+  "cited": 129,
   "pending": 14,
   "missingHero": 0,
   "ok": false,
-  "checked": 17,
-  "updatedCount": 6,
-  "citedNew": 3,
-  "fallbackNew": 14,
+  "checked": 34,
+  "updatedCount": 23,
+  "citedNew": 12,
+  "fallbackNew": 22,
   "samples": [
     {
-      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
+      "title": "After McGill Athletics cuts, teams navigate a new future under SSMU",
+      "source": "The Tribune",
+      "credit": "Photo : Gwen Heffernan",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "Tricky transitions: How Mc Gillians are adjusting to a new semester",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
       "cited": false,
       "method": null
     },
     {
-      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
+      "title": "McGill Wellness Hub reinstates GAC for trans American students under the age of 19",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
       "cited": false,
       "method": null
     },
     {
-      "title": "Recettes musicales québécoises pour l’été",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
+      "title": "Reading the static and exploring long COVID’s impact on the brain’s electrical rhythm",
+      "source": "The Tribune",
+      "credit": "Photo : Lilly Guilbeault",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "McGill science students: You don’t need to know where you’re going yet",
+      "source": "The Tribune",
+      "credit": "Photo : Zoe Lee",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "McGill security required to wear recognizable badges per new policy",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
       "cited": false,
       "method": null
     },
     {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
+      "title": "AMNAS challenges McGill at the Tribunal administratif du travail",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Inside Mile End Kicks",
-      "source": "The Link",
-      "credit": "Photo: Courtesy of Joe Fuda",
+      "title": "Know Your Artist: Stina Baudin",
+      "source": "The Tribune",
+      "credit": "Photo : Stina Baudin",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "figcaption-attribution"
     },
     {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "title": "Meta’s $18 billion USD settlement is just loose change",
+      "source": "The Tribune",
+      "credit": "Photo : Gwen Heffernan",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "Clear bags: A simple remedy for Montreal’s lacklustre composting habits?",
+      "source": "The Tribune",
+      "credit": "Photo : Holden Callif",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "HIV care informed by social determinants of health",
+      "source": "The Tribune",
+      "credit": "Photo : Gwen Heffernan",
+      "cited": true,
+      "method": "figcaption-attribution"
+    },
+    {
+      "title": "Belonging is not something we have to earn",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
     }
   ]
 }
