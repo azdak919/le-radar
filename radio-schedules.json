@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-07T14:30:58.545Z",
+  "updatedAt": "2026-09-08T17:35:44.315Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-09-07T14:30:58.545Z",
+      "checkedAt": "2026-09-08T17:35:44.315Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
@@ -75,13 +75,6 @@
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
         },
         {
-          "day": 2,
-          "start": "18:50",
-          "end": "23:00",
-          "title": "Capitales de Québec",
-          "url": "https://chyz.ca/emission/capitales-de-quebec/"
-        },
-        {
           "day": 3,
           "start": "08:00",
           "end": "10:00",
@@ -138,13 +131,6 @@
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
         },
         {
-          "day": 4,
-          "start": "18:50",
-          "end": "23:00",
-          "title": "Capitales de Québec",
-          "url": "https://chyz.ca/emission/capitales-de-quebec/"
-        },
-        {
           "day": 5,
           "start": "08:00",
           "end": "10:00",
@@ -167,31 +153,31 @@
         },
         {
           "day": 5,
-          "start": "15:00",
-          "end": "16:30",
+          "start": "14:30",
+          "end": "16:00",
           "title": "Conduite Antisportive",
           "url": "https://chyz.ca/emission/conduite-antisportive/"
         },
         {
           "day": 5,
-          "start": "16:30",
-          "end": "18:00",
+          "start": "16:00",
+          "end": "17:30",
           "title": "L'Artiste du mois CHYZ",
           "url": "https://chyz.ca/emission/lartist-du-mois-chyz/"
         },
         {
           "day": 5,
-          "start": "18:00",
-          "end": "19:00",
+          "start": "17:30",
+          "end": "18:30",
           "title": "Les Arshitechs du Son",
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
         },
         {
           "day": 5,
-          "start": "21:00",
-          "end": "22:00",
-          "title": "Crooch Control",
-          "url": "https://chyz.ca/emission/crooch-control/"
+          "start": "18:30",
+          "end": "22:30",
+          "title": "Football du Rouge et Or",
+          "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
         },
         {
           "day": 6,
@@ -209,13 +195,6 @@
         },
         {
           "day": 6,
-          "start": "12:00",
-          "end": "13:00",
-          "title": "Un Samedi d'Ici",
-          "url": "https://chyz.ca/emission/un-samedi-dici/"
-        },
-        {
-          "day": 6,
           "start": "13:00",
           "end": "16:00",
           "title": "Radio Futura",
@@ -223,10 +202,10 @@
         },
         {
           "day": 6,
-          "start": "18:30",
-          "end": "22:30",
-          "title": "Football du Rouge et Or",
-          "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
+          "start": "18:50",
+          "end": "23:00",
+          "title": "Capitales de Québec",
+          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         }
       ]
     },
@@ -236,7 +215,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-09-07T14:30:58.545Z",
+      "checkedAt": "2026-09-08T17:35:44.315Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
@@ -1017,7 +996,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-09-07T14:30:58.545Z",
+      "checkedAt": "2026-09-08T17:35:44.315Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
@@ -1635,7 +1614,7 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-09-07T14:30:58.545Z",
+      "checkedAt": "2026-09-08T17:35:44.315Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
@@ -3720,16 +3699,9 @@
         {
           "day": 2,
           "start": "16:00",
-          "end": "17:00",
-          "title": "The Fluid Mosaic",
-          "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
-        },
-        {
-          "day": 2,
-          "start": "17:00",
           "end": "18:00",
-          "title": "Cherry Vamp and the Sonic Coffin",
-          "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
         },
         {
           "day": 2,
@@ -3833,8 +3805,8 @@
           "day": 3,
           "start": "14:00",
           "end": "15:00",
-          "title": "CJLO's Alternative Mega Mix",
-          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+          "title": "Cherry Vamp and the Sonic Coffin",
+          "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
         },
         {
           "day": 3,
@@ -3938,8 +3910,8 @@
           "day": 4,
           "start": "11:00",
           "end": "12:00",
-          "title": "CJLO's Alternative Mega Mix",
-          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+          "title": "The Fluid Mosaic",
+          "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
         },
         {
           "day": 4,
@@ -4264,7 +4236,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-09-07T14:30:58.545Z",
+      "checkedAt": "2026-09-08T17:35:44.315Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
@@ -4485,7 +4457,7 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-09-07T14:30:58.545Z",
+      "checkedAt": "2026-09-08T17:35:44.315Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
