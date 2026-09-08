@@ -34,8 +34,8 @@ const TIMEOUT = 9000;
 const CHYZ_ONAIR_STREAM = 'https://ecoutez.chyz.ca/proxy/chyz/stream';
 
 // CFAK : le <audio> de cfak.ca pointe streams.radiomast.io/<uuid>.
-// validateStream suit le 302 vers audio-edge-*.yyz.g.radiomast.io — ces
-// hôtes géo sont éphémères ; on recanonicalise vers streams.radiomast.io.
+// validateStream suit le 302 vers audio-edge-*.*.*.radiomast.io (.g./.o./…) —
+// hôtes géo éphémères ; on recanonicalise vers streams.radiomast.io.
 const CFAK_ONAIR_STREAM = 'https://streams.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a';
 
 // CHOQ : /api/live et le PLS Triton renvoient NNNN.live.streamtheworld.com.
@@ -242,8 +242,9 @@ function isJunkStreamUrl(url = '') {
 }
 
 /**
- * RadioMast geo-edges (audio-edge-*.yyz.g.radiomast.io) and StreamTheWorld
- * numbered edges (14223.live.streamtheworld.com) are ephemeral CDN hosts.
+ * RadioMast geo-edges (audio-edge-*.*.*.radiomast.io — .g., .o., …) and
+ * StreamTheWorld numbered edges (14223.live.streamtheworld.com) are ephemeral
+ * CDN hosts. Always catalog streams.radiomast.io/<uuid> instead.
  */
 function canonicalizeStreamUrl(url = '') {
   try {
@@ -253,8 +254,9 @@ function canonicalizeStreamUrl(url = '') {
       /^\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})\/?$/i,
     );
     if (uuid) {
+      // Any radiomast.io host with a UUID path (streams + audio-edge CDN pops).
       const radioMast = host === 'streams.radiomast.io'
-        || /^audio-edge-[a-z0-9]+\.[a-z0-9]+\.g\.radiomast\.io$/.test(host);
+        || host.endsWith('.radiomast.io');
       if (radioMast) {
         return `https://streams.radiomast.io/${uuid[1].toLowerCase()}`;
       }

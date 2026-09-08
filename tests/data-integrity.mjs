@@ -169,6 +169,11 @@ for (const radio of radios) {
     canonicalizeStreamUrl('https://audio-edge-vqwx4.yyz.g.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a'),
     CFAK_ONAIR,
   );
+  // CDN pops use .o. / other labels — not only the historical .g. pattern.
+  assert.equal(
+    canonicalizeStreamUrl('https://audio-edge-5r6yd.cdg.o.radiomast.io/a372c74f-6c78-48b9-9933-81a8fc50b54a'),
+    CFAK_ONAIR,
+  );
   assert.equal(canonicalizeStreamUrl(CFAK_ONAIR), CFAK_ONAIR);
   assert.equal(canonicalizeStreamUrl(CHYZ_ONAIR), CHYZ_ONAIR);
 

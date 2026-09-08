@@ -381,56 +381,6 @@
       "via": "origin",
       "nameKey": "image1.jpg"
     },
-    "79de1d267ddf2567": {
-      "local": "assets/news-images/79de1d267ddf2567.jpg",
-      "remote": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Fpolyscope_ia_rossignol_empereur_version_web.jpg?alt=media&token=867a678f-fd1d-4c06-a1f5-1514376b1678",
-      "host": "firebasestorage.googleapis.com",
-      "bytes": 498764,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-07-30T05:25:15.472Z",
-      "via": "origin",
-      "nameKey": "polyscope_ia_rossignol_empereur_version_web.jpg"
-    },
-    "9995daff792d6afc": {
-      "local": "assets/news-images/9995daff792d6afc.png",
-      "remote": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2FIng%C3%A9nieurs_de_demain_illustration.png?alt=media&token=2338965f-2bff-4881-b368-3ad04e843e01",
-      "host": "firebasestorage.googleapis.com",
-      "bytes": 468401,
-      "contentType": "image/png",
-      "updatedAt": "2026-07-30T05:25:15.570Z",
-      "via": "origin",
-      "nameKey": "ingénieurs_de_demain_illustration.png"
-    },
-    "d40a92002c072967": {
-      "local": "assets/news-images/d40a92002c072967.png",
-      "remote": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2FEt_si_l'IA_avait_des_emotions_illustration.png?alt=media&token=c4b60ea2-bbc9-4e97-97d8-005cb48c0f4a",
-      "host": "firebasestorage.googleapis.com",
-      "bytes": 628043,
-      "contentType": "image/png",
-      "updatedAt": "2026-07-30T05:25:15.705Z",
-      "via": "origin",
-      "nameKey": "et_si_l'ia_avait_des_emotions_illustration.png"
-    },
-    "f1ff32d9f81cbf04": {
-      "local": "assets/news-images/f1ff32d9f81cbf04.png",
-      "remote": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2FIllustration%20par%20Heba%20Jawad.png?alt=media&token=c37e944b-05b2-4282-b0b6-73c4e414ac6d",
-      "host": "firebasestorage.googleapis.com",
-      "bytes": 719039,
-      "contentType": "image/png",
-      "updatedAt": "2026-07-30T05:25:15.870Z",
-      "via": "origin",
-      "nameKey": "illustration par heba jawad.png"
-    },
-    "17b33d14bee4d009": {
-      "local": "assets/news-images/17b33d14bee4d009.jpg",
-      "remote": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2FIMG_0473.jpeg?alt=media&token=e2246ea0-fe0f-4e29-8159-273f96966628",
-      "host": "firebasestorage.googleapis.com",
-      "bytes": 292734,
-      "contentType": "image/jpeg",
-      "updatedAt": "2026-07-30T05:25:15.871Z",
-      "via": "origin",
-      "nameKey": "img_0473.jpeg"
-    },
     "e4469fb7576e9660": {
       "local": "assets/news-images/e4469fb7576e9660.png",
       "remote": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/05/politiquetable.png",
@@ -1382,10 +1332,11 @@
       "nameKey": "shirley-barnea-1.jpg"
     }
   },
-  "updatedAt": "2026-09-08T17:28:38.386Z",
-  "count": 138,
+  "updatedAt": "2026-09-08T17:32:37.847Z",
+  "count": 133,
   "fragileHosts": [
     "exemplaire.com.ulaval.ca",
     "www.exemplaire.com.ulaval.ca"
-  ]
+  ],
+  "dirBudgetBytes": 50331648
 }

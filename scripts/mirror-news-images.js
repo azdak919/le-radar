@@ -19,9 +19,10 @@
  *   node scripts/mirror-news-images.js --update --force   # re-télécharge tout
  *
  * Env :
- *   CI=true           → moins de logs verbeux
- *   MIRROR_MAX_BYTES  → plafond par fichier (défaut 750000)
- *   MIRROR_CONCURRENCY → téléchargements parallèles (défaut 4)
+ *   CI=true                 → moins de logs verbeux
+ *   MIRROR_MAX_BYTES        → plafond par fichier (défaut 1200000)
+ *   MIRROR_DIR_BUDGET_BYTES → plafond dossier miroir (défaut 48 MiB)
+ *   MIRROR_CONCURRENCY      → téléchargements parallèles (défaut 4)
  */
 
 const fs = require('fs');
@@ -39,6 +40,9 @@ const forceAll = process.argv.includes('--force');
 /* 1,2 Mo : une illustration PNG 16:9 (~760 ko, ex. Sans fin(s) / L’Exemplaire)
  * passait juste au-dessus de 750 ko et n’était jamais mirroirée. */
 const MAX_BYTES = Number(process.env.MIRROR_MAX_BYTES) || 1_200_000;
+/* tests/artifact-budget.mjs plafonne le dossier suivi à 50 Mo — viser 48 Mo
+ * pour laisser de la marge aux prochains miroirs avant la prochaine purge. */
+const DIR_BUDGET_BYTES = Number(process.env.MIRROR_DIR_BUDGET_BYTES) || 48 * 1024 * 1024;
 const MIN_BYTES = 1_200;
 const CONCURRENCY = Math.max(1, Number(process.env.MIRROR_CONCURRENCY) || 4);
 const TIMEOUT_MS = 18_000;
@@ -325,14 +329,73 @@ async function main() {
     }
   }
 
+  // Sous le plafond dépôt (50 Mo) : retirer d'abord les plus gros miroirs
+  // rattachés aux articles les plus anciens (le client garde image distante).
+  let budgetDropped = 0;
+  const articleAge = new Map();
+  for (const item of news.items || []) {
+    const key = item.imageLocalKey || (item.imageLocal
+      ? path.basename(item.imageLocal).replace(/\.[^.]+$/, '')
+      : '');
+    if (!key) continue;
+    const ts = Date.parse(item.date || 0) || 0;
+    const prev = articleAge.get(key);
+    if (prev == null || ts > prev) articleAge.set(key, ts);
+  }
+  function trackedBytes() {
+    return Object.values(manifest.files).reduce((sum, entry) => {
+      if (!entry?.local) return sum;
+      try {
+        return sum + fs.statSync(path.join(ROOT, entry.local)).size;
+      } catch {
+        return sum + (Number(entry.bytes) || 0);
+      }
+    }, 0);
+  }
+  while (trackedBytes() > DIR_BUDGET_BYTES) {
+    const ranked = Object.entries(manifest.files)
+      .map(([key, entry]) => {
+        let bytes = Number(entry?.bytes) || 0;
+        if (entry?.local) {
+          try { bytes = fs.statSync(path.join(ROOT, entry.local)).size; } catch { /* keep */ }
+        }
+        return {
+          key,
+          entry,
+          bytes,
+          age: articleAge.has(key) ? articleAge.get(key) : 0,
+        };
+      })
+      .sort((a, b) => (a.age - b.age) || (b.bytes - a.bytes));
+    const victim = ranked[0];
+    if (!victim) break;
+    if (victim.entry?.local) {
+      try { fs.unlinkSync(path.join(ROOT, victim.entry.local)); } catch { /* gone */ }
+    }
+    delete manifest.files[victim.key];
+    for (const item of news.items || []) {
+      if (item.imageLocalKey === victim.key
+        || (item.imageLocal && path.basename(item.imageLocal).startsWith(victim.key))) {
+        delete item.imageLocal;
+        delete item.imageLocalKey;
+        delete item.imageLocalVia;
+      }
+    }
+    budgetDropped += 1;
+    pruned += 1;
+  }
+
   manifest.version = 1;
   manifest.updatedAt = new Date().toISOString();
   manifest.count = Object.keys(manifest.files).length;
   manifest.fragileHosts = [...FRAGILE_HOSTS];
+  manifest.dirBudgetBytes = DIR_BUDGET_BYTES;
 
   console.log(
     `Résultat : +${downloaded} téléchargés, ${reused} réutilisés, ${failed} échecs,`
-    + ` ${pruned} purgés, fragile OK ${fragileOk}, total miroir ${manifest.count}`,
+    + ` ${pruned} purgés, fragile OK ${fragileOk}, total miroir ${manifest.count}`
+    + (budgetDropped ? `, budget ${budgetDropped} retirés` : '')
+    + `, ${(trackedBytes() / (1024 * 1024)).toFixed(1)} Mo`,
   );
 
   if (!doUpdate) {
