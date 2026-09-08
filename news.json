@@ -1,6 +1,6 @@
 {
-  "updated": "2026-09-08T13:42:18.923Z",
-  "updatedSlot": "2026-09-08T13:00:00.000Z",
+  "updated": "2026-09-08T15:11:41.727Z",
+  "updatedSlot": null,
   "count": 186,
   "freshnessSessions": 3,
   "sources": {
@@ -10,7 +10,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-04T21:00:00.000Z",
-      "lastFetchOk": "2026-09-08T13:41:33.920Z"
+      "lastFetchOk": "2026-09-08T15:10:14.380Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-09-08T13:41:34.862Z"
+      "lastFetchOk": "2026-09-08T15:10:15.362Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-01T04:35:43.000Z",
-      "lastFetchOk": "2026-09-08T13:41:39.387Z"
+      "lastFetchOk": "2026-09-08T15:10:19.784Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-08-31T12:39:00.000Z",
-      "lastFetchOk": "2026-09-08T13:41:40.187Z"
+      "lastFetchOk": "2026-09-08T15:10:20.993Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-08T13:00:00.000Z",
-      "lastFetchOk": "2026-09-08T13:41:41.352Z"
+      "lastFetchOk": "2026-09-08T15:10:22.172Z"
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,7 +50,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-09-08T13:41:42.173Z"
+      "lastFetchOk": "2026-09-08T15:10:23.670Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,15 +58,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-09-08T13:41:43.029Z"
+      "lastFetchOk": "2026-09-08T15:10:24.694Z"
     },
     "Le Collectif": {
       "fetchOk": true,
       "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
-      "lastArticle": "2026-09-01T08:00:00.000Z",
-      "lastFetchOk": "2026-09-08T13:41:44.429Z"
+      "lastArticle": "2026-09-08T13:51:18.000Z",
+      "lastFetchOk": "2026-09-08T15:10:25.761Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-09-08T13:41:44.648Z"
+      "lastFetchOk": "2026-09-08T15:10:25.970Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -82,7 +82,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-04T21:07:40.000Z",
-      "lastFetchOk": "2026-09-08T13:41:45.509Z"
+      "lastFetchOk": "2026-09-08T15:10:26.907Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 14,
       "lastArticle": "2026-09-07T16:27:02.134Z",
-      "lastFetchOk": "2026-09-08T13:41:46.891Z"
+      "lastFetchOk": "2026-09-08T15:10:28.488Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-08T10:05:00.000Z",
-      "lastFetchOk": "2026-09-08T13:41:47.140Z"
+      "lastFetchOk": "2026-09-08T15:10:29.708Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-09-08T13:41:47.361Z"
+      "lastFetchOk": "2026-09-08T15:10:29.921Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,17 +114,41 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-09-08T13:41:47.582Z"
+      "lastFetchOk": "2026-09-08T15:10:30.087Z"
     }
   },
   "items": [
+    {
+      "source": "Le Collectif",
+      "institution": "Université de Sherbrooke",
+      "region": "Estrie",
+      "type": "universite",
+      "lang": "fr",
+      "title": "Présences troubles : le corps en métamorphose",
+      "link": "https://lecollectif.ca/culture/presences-troubles-le-corps-en-metamorphose/",
+      "author": "Elizabeth Gagné",
+      "date": "2026-09-08T13:51:18.000Z",
+      "excerpt": "La Galerie d’art Antoine-Sirois prépare sa rentrée avec une nouvelle exposition qui prendra vie du 17 septembre au 19 décembre. Présences troubles promet d’être l’une des expositions les plus intéressantes et surprenantes de la galerie à ce jour.",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/09/CULTURE_ExpositionGalerieDartAntoineSirois_LaccordTacite_CreditSarahCloutier.png",
+      "_pageAuthor": "Elizabeth Gagné",
+      "sourceImageCredit": "Photo : ItSarahCloutier",
+      "sourceImageCreator": "ItSarahCloutier",
+      "sourceImageCreditUrl": "https://lecollectif.ca/culture/presences-troubles-le-corps-en-metamorphose/",
+      "sourceImageCreditFrom": "rss-content",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "culture_expositiongaleriedartantoinesirois_laccordtacite_creditsarahcloutier.png",
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/d4d626163206ca3e.png",
+      "imageLocalKey": "d4d626163206ca3e"
+    },
     {
       "source": "The Link",
       "institution": "Concordia University",
       "region": "Montréal",
       "type": "universite",
       "lang": "en",
-      "title": "Third space recs near campus",
+      "title": "Third space recommendations near campus",
       "link": "https://thelinknewspaper.ca/article/16372",
       "author": "Ryan Pyke",
       "date": "2026-09-08T13:00:00.000Z",
@@ -132,17 +156,17 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_5694_1_900_571_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:05.872Z",
       "_pageAuthor": "Ryan Pyke",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/e8b88c063bca8c9b.jpg",
-      "imageLocalKey": "e8b88c063bca8c9b",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Photo: Nicolas Tremblay",
       "sourceImageCreator": "Nicolas Tremblay",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16372",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_5694_1.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/e8b88c063bca8c9b.jpg",
+      "imageLocalKey": "e8b88c063bca8c9b",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -158,18 +182,18 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Sabrina_Paixao_favorite-DSC01093_900_506_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:07.299Z",
       "_pageAuthor": "Sydney Nethersole",
-      "leadImageReady": true,
-      "leadExcerpt": "Concordia University’s Webster Library hosts various exhibitions on the second floor beside the printing section, directly across from the stairwell leading to the third floor. Students can come in and explore different topics through these showcases.",
-      "imageLocal": "assets/news-images/b2efd7fa821bf09d.jpg",
-      "imageLocalKey": "b2efd7fa821bf09d",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Photo: Sabrina Paixao",
       "sourceImageCreator": "Sabrina Paixao",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16371",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sabrina_paixao_favorite-dsc01093.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Concordia University’s Webster Library hosts various exhibitions on the second floor beside the printing section, directly across from the stairwell leading to the third floor. Students can come in and explore different topics through these showcases.",
+      "imageLocal": "assets/news-images/b2efd7fa821bf09d.jpg",
+      "imageLocalKey": "b2efd7fa821bf09d",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -184,17 +208,17 @@
       "excerpt": "The team seeks its first championship as the top seed in the NSL standings The Montreal Roses look poised to challenge for their first championship. Courtesy Pablo A. Ortiz/Roses de Montréal This article originally appeared in The Link Volume 47, Issue 1, published September 8,",
       "image": "https://thelinknewspaper.ca/images/articles/_resized/PAB19368.JPG",
       "authorCheckedAt": "2026-09-08T13:20:09.086Z",
-      "leadImageReady": true,
-      "leadExcerpt": "Halifax Tides FC coach Stephen Hart knew exactly what the moment meant for the Montreal Roses. Fresh off a 1-0 loss that sent Montreal to the top spot in the Northern Super League (NSL) standings, he reflected on the raucous crowd that welcomed the two teams to Stade Saputo.",
-      "imageLocal": "assets/news-images/c49af3a1fc3892d6.jpg",
-      "imageLocalKey": "c49af3a1fc3892d6",
       "sourceImageCredit": "Photo credit: The Link",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16370",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "pab19368.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Halifax Tides FC coach Stephen Hart knew exactly what the moment meant for the Montreal Roses. Fresh off a 1-0 loss that sent Montreal to the top spot in the Northern Super League (NSL) standings, he reflected on the raucous crowd that welcomed the two teams to Stade Saputo.",
+      "imageLocal": "assets/news-images/c49af3a1fc3892d6.jpg",
+      "imageLocalKey": "c49af3a1fc3892d6",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -210,18 +234,18 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.SPORTS.Intramural_Sports.Halle_Keays_900_434_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:10.464Z",
       "_pageAuthor": "Samuel Kayll",
-      "leadImageReady": true,
-      "leadExcerpt": "Oscar Horeau first heard about Concordia’s intramural sports leagues during his time in student residence. A message from his resident assistant convinced the second-year finance student to sign up for one of the university's weekly soccer leagues.",
-      "imageLocal": "assets/news-images/056326a2429010a1.jpg",
-      "imageLocalKey": "056326a2429010a1",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Illustration: Halle Keays",
       "sourceImageCreator": "Halle Keays",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16368",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "01.sports.intramural_sports.halle_keays.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Oscar Horeau first heard about Concordia’s intramural sports leagues during his time in student residence. A message from his resident assistant convinced the second-year finance student to sign up for one of the university's weekly soccer leagues.",
+      "imageLocal": "assets/news-images/056326a2429010a1.jpg",
+      "imageLocalKey": "056326a2429010a1",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -237,17 +261,17 @@
       "image": "https://thelinknewspaper.ca/images/articles/_resized/DSC00912.jpg",
       "authorCheckedAt": "2026-09-08T13:20:12.025Z",
       "_pageAuthor": "Samuel Kayll",
-      "leadImageReady": true,
-      "leadExcerpt": "For one, the sport's individual nature means athletes often train and prepare for tournaments at their own golf courses. While the team organizes group practices, much of the preparation occurs through individual work.",
-      "imageLocal": "assets/news-images/9f1558f8964f2517.jpg",
-      "imageLocalKey": "9f1558f8964f2517",
       "sourceImageCredit": "Photo credit: The Link",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16367",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "dsc00912.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "For one, the sport's individual nature means athletes often train and prepare for tournaments at their own golf courses. While the team organizes group practices, much of the preparation occurs through individual work.",
+      "imageLocal": "assets/news-images/9f1558f8964f2517.jpg",
+      "imageLocalKey": "9f1558f8964f2517",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -262,18 +286,18 @@
       "excerpt": "Graphic Halle Keays This article originally appeared in The Link Volume 47, Issue 1, published September 8, 2026.",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.EDITORIAL.Halle_Keays_900_675.png",
       "authorCheckedAt": "2026-09-08T13:20:13.413Z",
-      "leadImageReady": true,
-      "leadExcerpt": "Today's students—not just here at Concordia University—live thoroughly digital lives, surrounded by an almost constant influx of online information. As news consumption has shifted almost entirely to social media platforms and automated feeds, the need for robust digital literacy is higher than ever before.",
-      "imageLocal": "assets/news-images/e4c5cb6f559b77ef.png",
-      "imageLocalKey": "e4c5cb6f559b77ef",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Photo : Graphic Halle Keays",
       "sourceImageCreator": "Graphic Halle Keays",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16366",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "01.editorial.halle_keays_900_675.png",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Today's students—not just here at Concordia University—live thoroughly digital lives, surrounded by an almost constant influx of online information. As news consumption has shifted almost entirely to social media platforms and automated feeds, the need for robust digital literacy is higher than ever before.",
+      "imageLocal": "assets/news-images/e4c5cb6f559b77ef.png",
+      "imageLocalKey": "e4c5cb6f559b77ef",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -312,18 +336,17 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_5699_900_543_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:16.373Z",
       "_pageAuthor": "Frances Smith",
-      "leadImageReady": true,
-      "leadExcerpt": "The Concordia University Part-time Faculty Association (CUPFA) reported that 63 LTA faculty members would not have their contracts renewed this year. This threatened not only staff employment but also the stability of departments that rely on LTA positions, particularly their ability to maintain autonomy and plan courses.",
-      "imageLocal": "assets/news-images/3be8a87ad2c1552d.jpg",
-      "imageLocalKey": "3be8a87ad2c1552d",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Photo credit: The Link",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16364",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "img_5699.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "The Concordia University Part-time Faculty Association (CUPFA) reported that 63 LTA faculty members would not have their contracts renewed this year. This threatened not only staff employment but also the stability of departments that rely on LTA positions, particularly their ability to maintain autonomy and plan courses.",
+      "imageLocal": "assets/news-images/3be8a87ad2c1552d.jpg",
+      "imageLocalKey": "3be8a87ad2c1552d",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -339,18 +362,18 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.SPORTS.Stingers_Games.Halle_Keays_900_675_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:17.905Z",
       "_pageAuthor": "Marie Latifpour Moozar",
-      "leadImageReady": true,
-      "leadExcerpt": "The first step in attending a Stingers game involves knowing when one is taking place. You always have two options: home games, played here at Concordia, and away games played at the opponent’s university.",
-      "imageLocal": "assets/news-images/1fea48bd24015510.jpg",
-      "imageLocalKey": "1fea48bd24015510",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Illustration: Halle Keays",
       "sourceImageCreator": "Halle Keays",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16363",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "01.sports.stingers_games.halle_keays.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "The first step in attending a Stingers game involves knowing when one is taking place. You always have two options: home games, played here at Concordia, and away games played at the opponent’s university.",
+      "imageLocal": "assets/news-images/1fea48bd24015510.jpg",
+      "imageLocalKey": "1fea48bd24015510",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -366,18 +389,18 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_3116_900_550_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:19.283Z",
       "_pageAuthor": "Julie Seguin",
-      "leadImageReady": true,
-      "leadExcerpt": "Virginia Battaglini, a second-year student in the department of English literature, occasionally uses the first-floor washroom in the EV building. She has noticed the space’s uncleanliness and believes there could be room for improvement.",
-      "imageLocal": "assets/news-images/d3a76317bb53f6d6.jpg",
-      "imageLocalKey": "d3a76317bb53f6d6",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Photo: Aren Scarano",
       "sourceImageCreator": "Aren Scarano",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16361",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3116.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Virginia Battaglini, a second-year student in the department of English literature, occasionally uses the first-floor washroom in the EV building. She has noticed the space’s uncleanliness and believes there could be room for improvement.",
+      "imageLocal": "assets/news-images/d3a76317bb53f6d6.jpg",
+      "imageLocalKey": "d3a76317bb53f6d6",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -393,18 +416,17 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/DSC_4640-edit_900_600_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:20.779Z",
       "_pageAuthor": "Francis Turcotte Vera",
-      "leadImageReady": true,
-      "leadExcerpt": "Concordia University welcomes tens of thousands of students every day, commuting from across Montreal and its off-island suburbs. Students can get to campus in many different ways, such as by metro, bus, walking, car or bike.",
-      "imageLocal": "assets/news-images/79d640971713429e.jpg",
-      "imageLocalKey": "79d640971713429e",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Photo credit: The Link",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16360",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "dsc_4640-edit.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Concordia University welcomes tens of thousands of students every day, commuting from across Montreal and its off-island suburbs. Students can get to campus in many different ways, such as by metro, bus, walking, car or bike.",
+      "imageLocal": "assets/news-images/79d640971713429e.jpg",
+      "imageLocalKey": "79d640971713429e",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -420,18 +442,18 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_5745_900_600_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:22.154Z",
       "_pageAuthor": "Nathalie Bucur",
-      "leadImageReady": true,
-      "leadExcerpt": "On Concordia University’s official website , the Liberal Arts building on Mackay St. is described as being “the heart of the student experience.” It goes on to describe key features of the RR Annex, namely its lounge and library.",
-      "imageLocal": "assets/news-images/83e03871b895f88f.jpg",
-      "imageLocalKey": "83e03871b895f88f",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Photo: Nicolas Tremblay",
       "sourceImageCreator": "Nicolas Tremblay",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16359",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_5745.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "On Concordia University’s official website , the Liberal Arts building on Mackay St. is described as being “the heart of the student experience.” It goes on to describe key features of the RR Annex, namely its lounge and library.",
+      "imageLocal": "assets/news-images/83e03871b895f88f.jpg",
+      "imageLocalKey": "83e03871b895f88f",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -447,18 +469,18 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_5742_900_568_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:23.653Z",
       "_pageAuthor": "Helena Reyes Teruel",
-      "leadImageReady": true,
-      "leadExcerpt": "The hike was a 33 per cent increase, pushing tuition from $9,000 to $12,000 for all out-of-province students. The decision stands to this day despite legal battles with Concordia University and McGill University.",
-      "imageLocal": "assets/news-images/1ae3077c67ab8367.jpg",
-      "imageLocalKey": "1ae3077c67ab8367",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Photo: Nicolas Tremblay",
       "sourceImageCreator": "Nicolas Tremblay",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16358",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_5742.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "The hike was a 33 per cent increase, pushing tuition from $9,000 to $12,000 for all out-of-province students. The decision stands to this day despite legal battles with Concordia University and McGill University.",
+      "imageLocal": "assets/news-images/1ae3077c67ab8367.jpg",
+      "imageLocalKey": "1ae3077c67ab8367",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -474,17 +496,17 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Y2K_Escapism.Aia_Segal_900_1200_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:25.036Z",
       "_pageAuthor": "Marissa Guthrie",
-      "leadImageReady": false,
-      "imageLocal": "assets/news-images/95178c8a8bfa0f00.jpg",
-      "imageLocalKey": "95178c8a8bfa0f00",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Illustration: Aia Segal",
       "sourceImageCreator": "Aia Segal",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16356",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "01.ops.y2k_escapism.aia_segal.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": false,
+      "imageLocal": "assets/news-images/95178c8a8bfa0f00.jpg",
+      "imageLocalKey": "95178c8a8bfa0f00",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -497,17 +519,19 @@
       "author": "Osei Agyemang",
       "date": "2026-09-08T13:00:00.000Z",
       "excerpt": "A full breakdown of some of the fees behind your Concordia bill The CSU Advocacy Center is one of the many student-funded services. Nicolas Tremblay This article originally appeared in The Link Volume 47, Issue 1, published September 8, 2026.",
-      "image": "",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_5737_3_900_600_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:26.536Z",
       "_pageAuthor": "Osei Agyemang",
-      "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG",
-      "imageTitle": "Mackay Street near Concordia University, Montreal",
-      "imageCredit": "Photo : Thomas1313 / CC BY-SA 3.0 · Wikimedia Commons",
-      "imageCreator": "Thomas1313",
-      "imageLicense": "CC BY-SA 3.0",
-      "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:2135-2149_Mackay_Street,_Montreal.JPG"
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/19ceada83f6fadde.jpg",
+      "imageLocalKey": "19ceada83f6fadde",
+      "sourceImageCredit": "Photo credit: The Link",
+      "sourceImageCreator": "",
+      "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16355",
+      "sourceImageCreditFrom": "media",
+      "sourceImageCreditCited": false,
+      "sourceImageCreditImageKey": "img_5737_3.jpg",
+      "sourceImageCreditRev": 10
     },
     {
       "source": "The Link",
@@ -523,17 +547,17 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Student_Exchanges._Kasey_Lamer_900_661_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:27.872Z",
       "_pageAuthor": "Maggie McLean",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/02e024427f006a51.jpg",
-      "imageLocalKey": "02e024427f006a51",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Photo: Kasey Lamer",
       "sourceImageCreator": "Kasey Lamer",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16354",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "01.ops.student_exchanges._kasey_lamer.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/02e024427f006a51.jpg",
+      "imageLocalKey": "02e024427f006a51",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -549,18 +573,18 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Province.James_Issa_900_720_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:29.374Z",
       "_pageAuthor": "Marissa Guthrie",
-      "leadImageReady": true,
-      "leadExcerpt": "I've met driven, brilliant people from every corner of Canada and the world. These are people who've thrown themselves into everything Concordia has to offer and been crucial in building Montreal's vibrant social scene.",
-      "imageLocal": "assets/news-images/b8abc6e1ec73b280.jpg",
-      "imageLocalKey": "b8abc6e1ec73b280",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Illustration: James Issa",
       "sourceImageCreator": "James Issa",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16353",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "01.ops.province.james_issa.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "I've met driven, brilliant people from every corner of Canada and the world. These are people who've thrown themselves into everything Concordia has to offer and been crucial in building Montreal's vibrant social scene.",
+      "imageLocal": "assets/news-images/b8abc6e1ec73b280.jpg",
+      "imageLocalKey": "b8abc6e1ec73b280",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -576,14 +600,14 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Library.Evelyn_Ho_Lee_900_1125.png",
       "authorCheckedAt": "2026-09-08T13:20:30.756Z",
       "_pageAuthor": "Sofia Gonzalez",
-      "leadImageReady": false,
       "sourceImageCredit": "Illustration: Evelyn Ho Lee",
       "sourceImageCreator": "Evelyn Ho Lee",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16350",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "01.ops.library.evelyn_ho_lee_900_1125.png",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": false
     },
     {
       "source": "The Link",
@@ -599,17 +623,18 @@
       "image": "https://thelinknewspaper.ca/images/articles/_resized/DSC06884-2.jpg",
       "authorCheckedAt": "2026-09-08T13:20:32.265Z",
       "_pageAuthor": "Ryan Pyke",
-      "leadImageReady": true,
-      "leadExcerpt": "Concordia alumnus and artist Samuel Rancourt’s paintings focus on the human face rendered using unconventional colours, with a special emphasis on eyes. He also plays with texture by building forms beyond the canvas.",
-      "imageLocal": "assets/news-images/028750c6c060f71e.jpg",
-      "imageLocalKey": "028750c6c060f71e",
       "sourceImageCredit": "Photo: Ryan Pyke",
       "sourceImageCreator": "Ryan Pyke",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16349",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "dsc06884-2.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Concordia alumnus and artist Samuel Rancourt’s paintings focus on the human face rendered using unconventional colours, with a special emphasis on eyes. He also plays with texture by building forms beyond the canvas.",
+      "imageLocal": "assets/news-images/028750c6c060f71e.jpg",
+      "imageLocalKey": "028750c6c060f71e",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -625,17 +650,17 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Social_Antisocial.Halle_Keays_900_333_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:33.662Z",
       "_pageAuthor": "Ikram Dridi",
-      "leadImageReady": false,
-      "imageLocal": "assets/news-images/c54d000261e05e8b.jpg",
-      "imageLocalKey": "c54d000261e05e8b",
-      "imageLocalVia": "origin",
       "sourceImageCredit": "Illustration: Halle Keays",
       "sourceImageCreator": "Halle Keays",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16347",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "01.ops.social_antisocial.halle_keays.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": false,
+      "imageLocal": "assets/news-images/c54d000261e05e8b.jpg",
+      "imageLocalKey": "c54d000261e05e8b",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Tribune",
@@ -650,7 +675,6 @@
       "excerpt": "On Aug. 24, the Montreal City Council adopted a motion introduced by the Official Opposition, Projet Montréal, that expresses solidarity with the Palestinian people and civilian casualties under the Israeli siege. Passed by a 54 to 6 vote, the approved motion diverges",
       "image": "",
       "authorCheckedAt": "2026-09-08T11:20:49.990Z",
-      "_pageAuthor": "The Tribune Editorial Board",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg",
       "imageTitle": "McGill University, Montreal, Quebec 2009",
@@ -674,7 +698,6 @@
       "excerpt": "McGill Athletics and Recreation announced last November that it would cut 25 varsity and club teams across 15 sports, citing issues with human resource capacity and budget constraints. Since then, most of the 25 teams have worked with the Students’ Society of McGill University (",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/09/SPORTS-1-Gwen-Heffernan-1000x600.png",
       "authorCheckedAt": "2026-09-08T11:20:51.157Z",
-      "_pageAuthor": "Ivanna Zhang and Zain Ahmed",
       "sourceImageCredit": "Photo : Gwen Heffernan",
       "sourceImageCreator": "Gwen Heffernan",
       "sourceImageCreditUrl": "https://www.thetribune.ca/sports/after-mcgill-athletics-cuts-teams-navigate-a-new-future-under-ssmu-08092026/?utm_source=rss&utm_medium=rss&utm_campaign=after-mcgill-athletics-cuts-teams-navigate-a-new-future-under-ssmu-08092026",
@@ -701,7 +724,6 @@
       "excerpt": "With winter semester exams concluding on April 30 and fall semester classes beginning Aug. 31, McGillians were given four luxurious months to let their minds roam free from endless readings, WeBWorKs , and lab reports. Many students leave Montreal, returning to hometowns and",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/09/SL2-EMIKO-KAMIYA-scaled.jpg",
       "authorCheckedAt": "2026-09-08T11:20:52.202Z",
-      "_pageAuthor": "Rachel Blackstone",
       "sourceImageCredit": "Photo credit: The Tribune",
       "sourceImageCreditUrl": "https://www.thetribune.ca/student-life/tricky-transitions-how-mcgillians-are-adjusting-to-a-new-semester-08092026/?utm_source=rss&utm_medium=rss&utm_campaign=tricky-transitions-how-mcgillians-are-adjusting-to-a-new-semester-08092026",
       "sourceImageCreditFrom": "media",
@@ -727,7 +749,6 @@
       "excerpt": "The Montreal Trans Patient Union ( TPU )—a collective advocating for healthcare for trans and nonbinary people— announced on July 12 that McGill’s Student Wellness Hub will once again provide gender-affirming care ( GAC ) services to trans American students under the age of 19.",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/09/News-5-Eliot-Loose-scaled.jpg",
       "authorCheckedAt": "2026-09-08T11:20:53.481Z",
-      "_pageAuthor": "Mairin Burke",
       "sourceImageCredit": "Photo credit: The Tribune",
       "sourceImageCreditUrl": "https://www.thetribune.ca/news/mcgill-wellness-hub-reinstates-gac-for-trans-american-students-under-the-age-of-19-08092026/?utm_source=rss&utm_medium=rss&utm_campaign=mcgill-wellness-hub-reinstates-gac-for-trans-american-students-under-the-age-of-19-08092026",
       "sourceImageCreditFrom": "media",
@@ -752,7 +773,6 @@
       "excerpt": "For some individuals, recovering from COVID-19 is only the beginning of a longer battle with persistent symptoms. The World Health Organization estimates that 10 to 20 per cent of people infected with COVID-19 develop long COVID ( LC ), a condition marked by more than 200",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/09/Lilly-Guilbeault-Scitech-1-.png",
       "authorCheckedAt": "2026-09-08T11:20:54.449Z",
-      "_pageAuthor": "Shivaani Mohanraj",
       "sourceImageCredit": "Photo : Lilly Guilbeault",
       "sourceImageCreator": "Lilly Guilbeault",
       "sourceImageCreditUrl": "https://www.thetribune.ca/sci-tech/reading-the-static-and-exploring-long-covids-impact-on-the-brains-electrical-rhythm-08092026/?utm_source=rss&utm_medium=rss&utm_campaign=reading-the-static-and-exploring-long-covids-impact-on-the-brains-electrical-rhythm-08092026",
@@ -826,7 +846,6 @@
       "excerpt": "On Aug. 28, the Association of McGill Nursing Academic Staff (AMNAS) and McGill attended a hearing at the Tribunal administratif du travail . AMNAS represents academic staff in the Ingram School of Nursing , one of six schools that fall under McGill’s Faculty of Medicine and",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/09/News-2-Claire-McCallum-scaled.jpg",
       "authorCheckedAt": "2026-09-08T11:20:57.725Z",
-      "_pageAuthor": "Asher Kui",
       "sourceImageCredit": "Photo credit: The Tribune",
       "sourceImageCreditUrl": "https://www.thetribune.ca/news/amnas-challenges-mcgill-at-the-tribunal-administratif-du-travail-08092026/?utm_source=rss&utm_medium=rss&utm_campaign=amnas-challenges-mcgill-at-the-tribunal-administratif-du-travail-08092026",
       "sourceImageCreditFrom": "media",
@@ -1256,7 +1275,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Quartier Libre est finalement de retour après un été mouvementé. Voici les nouvelles qui ont marqué l’actualité des derniers mois afin de commencer la session bien informés. Des feux de forêt ont sévi dans de nombreux pays cet été, parmi lesquels la France et la Belgique. Entre 96 000 et 115 000 hectares auraient brûlé cette année en France, bien plus que le record de 66 000 hectares de surface br",
       "imageLocal": "assets/news-images/55ee370802cc825c.png",
-      "imageLocalKey": "55ee370802cc825c"
+      "imageLocalKey": "55ee370802cc825c",
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -1379,7 +1399,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Selon l’Organisation mondiale de la Santé (OMS), l’activité physique contribue à la santé physique et mentale. Elle peut notamment réduire les symptômes d’anxiété et favoriser le bien-être général. Chez la communauté étudiante, dont les journées sont souvent chargées et imprévisibles, intégrer le mouvement à la routine peut donc être une façon accessible de prendre une pause et de décrocher.",
       "imageLocal": "assets/news-images/81856f432b651093.jpg",
-      "imageLocalKey": "81856f432b651093"
+      "imageLocalKey": "81856f432b651093",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -1402,7 +1423,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/5eff2ab7750089e5.png",
-      "imageLocalKey": "5eff2ab7750089e5"
+      "imageLocalKey": "5eff2ab7750089e5",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -1425,7 +1447,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/a87625900bde410a.jpg",
-      "imageLocalKey": "a87625900bde410a"
+      "imageLocalKey": "a87625900bde410a",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -1474,7 +1497,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/bcb0551ccfe8abf9.png",
-      "imageLocalKey": "bcb0551ccfe8abf9"
+      "imageLocalKey": "bcb0551ccfe8abf9",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -1513,38 +1537,17 @@
       "date": "2026-09-01T08:00:00.000Z",
       "excerpt": "Avec la tonne d’informations politiques qui circulent présentement, il devient difficile de bien cerner les personnes candidates de votre ville, mais aussi leurs promesses et ambitions. Les partis présentent des personnes provenant de différents domaines, et même une",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SOCIETE_Vos-personnes-candidates-dans-Sherbrooke_Site-web-du-PLQ-1.png",
-      "leadImageReady": true,
-      "leadExcerpt": "« Sherbrooke, comme comté, comme ville et comme région, c’est un petit Québec. Ce sont les mêmes problèmes qu’ailleurs l’augmentation du coût du logement l’augmentation du nombre d’itinérants et d’itinérantes l’accès aux services de soins et de santé ce sont tous des enjeux majeurs », ajoute-t-il.",
-      "imageLocal": "assets/news-images/1692af7402ebcfca.png",
-      "imageLocalKey": "1692af7402ebcfca",
       "sourceImageCredit": "Crédit photo : Le Collectif",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://lecollectif.ca/societe/vos-personnes-candidates-dans-sherbrooke-1-2/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "societe_vos-personnes-candidates-dans-sherbrooke_site-web-du-plq-1.png",
-      "sourceImageCreditRev": 10
-    },
-    {
-      "source": "Le Collectif",
-      "institution": "Université de Sherbrooke",
-      "region": "Estrie",
-      "type": "universite",
-      "lang": "fr",
-      "title": "Vos bonnes nouvelles environnementales #38",
-      "link": "https://lecollectif.ca/environnement/vos-bonnes-nouvelles-environnementales-38/",
-      "author": "Sarah Gendreau Simoneau",
-      "date": "2026-09-01T08:00:00.000Z",
-      "excerpt": "La crise environnementale actuelle accentue l’écoanxiété générale. Plusieurs études ont démontré le lien entre la consommation abusive de mauvaises nouvelles et la dépression, le stress et l’anxiété, rapporte Radio-Canada.",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/ENVIRONNEMENT_JardinEnsauvage_CreditThalia-Huarez.png",
-      "sourceImageCredit": "Photo : ItThalia Huarez",
-      "sourceImageCreator": "ItThalia Huarez",
-      "sourceImageCreditUrl": "https://lecollectif.ca/environnement/vos-bonnes-nouvelles-environnementales-38/",
-      "sourceImageCreditFrom": "rss-content",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "environnement_jardinensauvage_creditthalia-huarez.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true
+      "leadImageReady": true,
+      "leadExcerpt": "« Sherbrooke, comme comté, comme ville et comme région, c’est un petit Québec. Ce sont les mêmes problèmes qu’ailleurs l’augmentation du coût du logement l’augmentation du nombre d’itinérants et d’itinérantes l’accès aux services de soins et de santé ce sont tous des enjeux majeurs », ajoute-t-il.",
+      "imageLocal": "assets/news-images/1692af7402ebcfca.png",
+      "imageLocalKey": "1692af7402ebcfca",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Délit",
@@ -2353,6 +2356,7 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/d9f7e6df158c0b1d.jpg",
       "imageLocalKey": "d9f7e6df158c0b1d",
+      "imageLocalVia": "origin",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/calamine-rapper-autrement/",
@@ -2378,6 +2382,7 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/3d0fb4f9c4b03e07.jpg",
       "imageLocalKey": "3d0fb4f9c4b03e07",
+      "imageLocalVia": "origin",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
@@ -2429,6 +2434,7 @@
       "leadImageReady": false,
       "imageLocal": "assets/news-images/ef87347e34e67032.jpg",
       "imageLocalKey": "ef87347e34e67032",
+      "imageLocalVia": "origin",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
@@ -2920,7 +2926,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/870cb1894ff8b3e6.png",
-      "imageLocalKey": "870cb1894ff8b3e6"
+      "imageLocalKey": "870cb1894ff8b3e6",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Plant",
@@ -3041,7 +3048,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/7aa5ab9dd7648781.jpg",
-      "imageLocalKey": "7aa5ab9dd7648781"
+      "imageLocalKey": "7aa5ab9dd7648781",
+      "imageLocalVia": "origin"
     },
     {
       "source": "L'Exemplaire",
@@ -3271,7 +3279,8 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/16a813216f7afeb2.jpg",
-      "imageLocalKey": "16a813216f7afeb2"
+      "imageLocalKey": "16a813216f7afeb2",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -3386,7 +3395,8 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/debd9bf479305512.jpg",
-      "imageLocalKey": "debd9bf479305512"
+      "imageLocalKey": "debd9bf479305512",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3477,7 +3487,8 @@
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/df8807d73a194404.jpg",
-      "imageLocalKey": "df8807d73a194404"
+      "imageLocalKey": "df8807d73a194404",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3499,7 +3510,8 @@
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/4828a1e7cbf0e7ff.jpg",
-      "imageLocalKey": "4828a1e7cbf0e7ff"
+      "imageLocalKey": "4828a1e7cbf0e7ff",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3521,7 +3533,8 @@
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/fcac91d58ef48893.jpg",
-      "imageLocalKey": "fcac91d58ef48893"
+      "imageLocalKey": "fcac91d58ef48893",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Exil",
@@ -3928,7 +3941,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
       "imageLocal": "assets/news-images/d60a94c260951f9c.webp",
-      "imageLocalKey": "d60a94c260951f9c"
+      "imageLocalKey": "d60a94c260951f9c",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Campus",
@@ -3961,56 +3975,6 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "La cassette commence à être usée",
-      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
-      "author": "Antoine Proulx",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Réponse au journal The Concordian et à l’économiste Moshe Lander.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/concordiareponseV2-scaled.jpeg",
-      "featured": true,
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "concordiareponsev2.jpeg",
-      "leadImageReady": true,
-      "leadExcerpt": "Première gaffe intellectuelle (in)volontaire du Concordian . En trente secondes de recherches plus ou moins rigoureuses, il aurait pu comprendre les réelles causes de la décote du Québec par la Standard and Poor’s (S&P) – qui n’a absolument rien à voir avec la recrudescence de l’intérêt des Québécois envers la souveraineté.",
-      "imageLocal": "assets/news-images/c4342ffde84293ec.jpg",
-      "imageLocalKey": "c4342ffde84293ec",
-      "imageLocalVia": "origin"
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "La performance de l’homosexualité : un privilège ?",
-      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
-      "author": "Joséphine Miton",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1-863x620.jpeg",
-      "featured": true,
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "coinqueer-1.jpeg",
-      "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
-      "imageLocal": "assets/news-images/5fac953e4fd2d827.jpg",
-      "imageLocalKey": "5fac953e4fd2d827"
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
       "title": "L’épidémie de la nonchalance",
       "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
       "author": "Elie Nguyen",
@@ -4028,7 +3992,8 @@
       "leadImageReady": true,
       "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance.",
       "imageLocal": "assets/news-images/bfabfa70e701a18f.png",
-      "imageLocalKey": "bfabfa70e701a18f"
+      "imageLocalKey": "bfabfa70e701a18f",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Délit",
@@ -4107,6 +4072,57 @@
       "imageLocalVia": "origin"
     },
     {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "La cassette commence à être usée",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
+      "author": "Antoine Proulx",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Réponse au journal The Concordian et à l’économiste Moshe Lander.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/concordiareponseV2-scaled.jpeg",
+      "featured": true,
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "concordiareponsev2.jpeg",
+      "leadImageReady": true,
+      "leadExcerpt": "Première gaffe intellectuelle (in)volontaire du Concordian . En trente secondes de recherches plus ou moins rigoureuses, il aurait pu comprendre les réelles causes de la décote du Québec par la Standard and Poor’s (S&P) – qui n’a absolument rien à voir avec la recrudescence de l’intérêt des Québécois envers la souveraineté.",
+      "imageLocal": "assets/news-images/c4342ffde84293ec.jpg",
+      "imageLocalKey": "c4342ffde84293ec",
+      "imageLocalVia": "origin"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "author": "Joséphine Miton",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Blague innocente, signe d’ouverture ou nouveau costume ?",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/coinqueer-1-863x620.jpeg",
+      "featured": true,
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "coinqueer-1.jpeg",
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
+      "imageLocal": "assets/news-images/5fac953e4fd2d827.jpg",
+      "imageLocalKey": "5fac953e4fd2d827",
+      "imageLocalVia": "origin"
+    },
+    {
       "source": "The McGill Daily",
       "institution": "McGill University",
       "region": "Montréal",
@@ -4168,13 +4184,13 @@
       "image": "",
       "authorCheckedAt": "2026-09-08T08:37:13.728Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288689651576%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "File:Masters Tournament - 2013 - Dogwood Cabin, August National Golf Club (8689651576).jpg",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531909%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "File:Masters Tournament - 2013 - Dogwood Cabin, August National Golf Club (8688531909).jpg",
       "imageCredit": "Photo : Dan Perry from Atlanta, USA / CC BY 2.0 · Wikimedia Commons",
       "imageCreator": "Dan Perry from Atlanta, USA",
       "imageLicense": "CC BY 2.0",
       "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Masters_Tournament_-_2013_-_Dogwood_Cabin,_August_National_Golf_Club_(8689651576).jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Masters_Tournament_-_2013_-_Dogwood_Cabin,_August_National_Golf_Club_(8688531909).jpg"
     },
     {
       "source": "The Campus",
