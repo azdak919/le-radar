@@ -1,15 +1,15 @@
 {
-  "updated": "2026-09-08T01:20:16.269Z",
+  "updated": "2026-09-08T03:53:47.560Z",
   "total": 186,
-  "withImage": 170,
-  "withCredit": 170,
+  "withImage": 169,
+  "withCredit": 169,
   "cited": 135,
   "pending": 14,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 4,
-  "citedNew": 1,
+  "checked": 17,
+  "updatedCount": 7,
+  "citedNew": 3,
   "fallbackNew": 14,
   "samples": [
     {
@@ -39,6 +39,27 @@
       "credit": "Photo: Courtesy of Joe Fuda",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Élection partielle dans Chicoutimi–Le Fjord : le Bloc Québécois se dit confiant",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
