@@ -1,24 +1,36 @@
 {
-  "updated": "2026-09-08T11:28:21.525Z",
+  "updated": "2026-09-08T13:47:13.808Z",
   "total": 186,
-  "withPhoto": 169,
-  "withStock": 31,
-  "withCampusBank": 23,
+  "withPhoto": 172,
+  "withStock": 28,
+  "withCampusBank": 21,
   "fullyCovered": 186,
-  "leadReadyPhotos": 148,
-  "pageScraped": 39,
-  "photosRecovered": 33,
+  "leadReadyPhotos": 151,
+  "pageScraped": 31,
+  "photosRecovered": 28,
   "imagesCleared": 21,
-  "stockSearches": 36,
-  "stockFound": 23,
-  "campusBankFound": 17,
+  "stockSearches": 33,
+  "stockFound": 19,
+  "campusBankFound": 14,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
-      "link": "https://www.thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/?utm_source=rss&utm_medium=rss&utm_campaign=montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
+      "title": "Nostalgia Nook: The return of recession pop-timism",
+      "link": "https://thelinknewspaper.ca/article/16356",
+      "reason": "no-stock-match",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Y2K_Escapism.Aia_Segal_900_1200_90.jpg"
+    },
+    {
+      "title": "The catalogue of stories at the Webster Library",
+      "link": "https://thelinknewspaper.ca/article/16350",
+      "reason": "no-stock-match",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Library.Evelyn_Ho_Lee_900_1125.png"
+    },
+    {
+      "title": "Concrete jungle where dreams end",
+      "link": "https://thelinknewspaper.ca/article/16347",
+      "reason": "no-stock-match",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Social_Antisocial.Halle_Keays_900_333_90.jpg"
     },
     {
       "title": "Belonging is not something we have to earn",
@@ -39,24 +51,6 @@
       "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Felephant_code_qr.png?alt=media&token=ced37e6b-12b1-4369-8289-3f2dacb19067"
     },
     {
-      "title": "Faire du sport sans se ruiner quand on est aux études",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/faire-du-sport-sans-se-ruiner-quand-on-est-aux-etudes/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SPORTS_Faire-du-sport-sans-se-ruiner-quand-on-est-etudiant_SourceUdeS-1.jpeg"
-    },
-    {
-      "title": "Vos personnes candidates dans Saint-François (1/2)",
-      "link": "https://lecollectif.ca/societe/vos-personnes-candidates-dans-saint-francois-1-2/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/02/couverture_lecollectif_linkedin.png"
-    },
-    {
-      "title": "CSU terminates council’s chief election officer",
-      "link": "https://thelinknewspaper.ca/article/16334",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Henry_F._Hall_Building_06.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
       "title": "Letters from the Editors May 2026",
       "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
       "reason": "campus-bank",
@@ -69,12 +63,6 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
     },
     {
-      "title": "CSU approves $36,000 in funding for student-led initiatives",
-      "link": "https://thelinknewspaper.ca/article/16319",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
-    },
-    {
       "title": "Mars enters Aries",
       "link": "https://thebucampus.ca/2026/04/06/mars-enters-aries/",
       "reason": "campus-bank",
@@ -84,7 +72,19 @@
       "title": "Spotlighting Powerful McGill Alumnae",
       "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2d/McGill_University_Montr%C3%A9al.jpeg"
+    },
+    {
+      "title": "National Golf tournament",
+      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288689651576%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Gaiters wrap up hard-fought season with eyes on next year",
+      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }
