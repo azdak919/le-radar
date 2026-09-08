@@ -1,21 +1,21 @@
 {
-  "updated": "2026-09-08T15:17:14.228Z",
+  "updated": "2026-09-08T17:28:44.751Z",
   "total": 186,
   "withImage": 173,
   "withCredit": 173,
-  "cited": 128,
+  "cited": 127,
   "pending": 14,
   "missingHero": 0,
   "ok": false,
-  "checked": 17,
-  "updatedCount": 6,
-  "citedNew": 2,
+  "checked": 15,
+  "updatedCount": 4,
+  "citedNew": 0,
   "fallbackNew": 15,
   "samples": [
     {
-      "title": "Where is my tuition going?",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
+      "title": "Blackface at McGill",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
       "cited": false,
       "method": null
     },
@@ -39,20 +39,6 @@
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
