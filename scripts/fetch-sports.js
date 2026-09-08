@@ -1094,9 +1094,11 @@ async function main() {
   if (update) {
     fs.writeFileSync(OUT_PATH, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
     const mastheadPath = path.join(ROOT, 'sports-masthead.json');
+    // Snapshot d’accueil : JSON compact (sans indent) pour rester largement
+    // sous le plafond 15 % du payload complet (tests/sports-masthead.mjs).
     fs.writeFileSync(
       mastheadPath,
-      `${JSON.stringify(buildSportsMastheadPayload(payload), null, 2)}\n`,
+      `${JSON.stringify(buildSportsMastheadPayload(payload))}\n`,
       'utf8',
     );
     console.error(`sports: écrit ${path.relative(ROOT, OUT_PATH)} (${teamCount} équipes, ${leaguesFailed} erreurs ligue)`);

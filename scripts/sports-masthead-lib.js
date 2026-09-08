@@ -35,7 +35,12 @@ function compactTeam(team, { results = [], nextGames = [] } = {}) {
   const out = { ...team, results, nextGames };
   out.lastGame = results[0] || null;
   out.nextGame = nextGames[0] || null;
+  // Champs utiles seulement au tableau complet / au crawl — pas au mât.
   delete out.record;
+  delete out.schedule;
+  delete out.standings;
+  delete out.raw;
+  delete out.events;
   return out;
 }
 
