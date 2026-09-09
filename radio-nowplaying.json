@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-09T11:41:27.139Z",
+  "updatedAt": "2026-09-09T15:52:47.284Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Mercredi Bonbon",
+        "title": "Chéri.e, j’arrive!",
         "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mercredi-bonbon/"
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
       "showTitle": "",
@@ -21,112 +21,106 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T11:41:02.254Z"
+      "checkedAt": "2026-09-09T15:52:26.724Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique",
+        "title": "À la loupe du droit",
         "source": "schedule",
-        "start": "07:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/club-classique"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/a-la-loupe-du-droit"
       },
       "next": {
-        "title": "La collation",
+        "title": "La carte cadeau",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
       "track": "",
-      "showTitle": "Club classique",
+      "showTitle": "À la loupe du droit",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T11:41:03.427Z"
+      "checkedAt": "2026-09-09T15:52:28.380Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
-      "current": {
-        "title": "The Wednesday Morning After",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
-      },
+      "current": null,
       "next": {
-        "title": "The Sleepy King/Terminal 5",
+        "title": "If You Got Ears",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "14:00"
       },
-      "track": "",
-      "showTitle": "The Wednesday Morning After",
+      "track": "ffiles",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T11:41:05.648Z"
+      "checkedAt": "2026-09-09T15:52:31.209Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Words and Culture",
+        "title": "Code Switch",
         "source": "schedule-live",
-        "start": "07:30",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/words-and-culture"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/code-switch"
       },
       "next": {
-        "title": "Trawling the Megahertz",
+        "title": "North-South Hockey",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/north-south-hockey"
       },
       "track": "",
-      "showTitle": "Words and Culture",
+      "showTitle": "Code Switch",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T11:41:19.114Z"
+      "checkedAt": "2026-09-09T15:52:34.470Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Palmarès CFAK",
         "source": "schedule-live",
         "start": "08:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Le popcorn de l'infini",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T11:41:20.225Z"
+      "checkedAt": "2026-09-09T15:52:35.374Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +133,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Gabriella Olivo - Cruise control",
+      "track": "Love Spells - Devour Me",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +144,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-09T11:41:26.788Z"
+      "checkedAt": "2026-09-09T15:52:46.934Z"
     }
   }
 }
