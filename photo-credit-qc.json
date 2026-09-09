@@ -1,30 +1,30 @@
 {
-  "updated": "2026-09-09T13:53:47.150Z",
+  "updated": "2026-09-09T15:19:59.829Z",
   "total": 187,
   "withImage": 174,
   "withCredit": 174,
-  "cited": 129,
+  "cited": 128,
   "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 17,
-  "updatedCount": 7,
-  "citedNew": 4,
-  "fallbackNew": 13,
+  "checked": 15,
+  "updatedCount": 5,
+  "citedNew": 1,
+  "fallbackNew": 14,
   "samples": [
     {
-      "title": "Les cafés, les nouveaux espaces d’étude",
+      "title": "À Jonquière, se déplacer sans voiture se paie en temps",
       "source": "La Pige",
-      "credit": "Photo : Emmaëlle Lacave — Jonneaux",
+      "credit": "Photo : Diego Pinto de Queiros",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-paren-kind"
     },
     {
       "title": "The catalogue of stories at the Webster Library",
       "source": "The Link",
-      "credit": "Illustration: Evelyn Ho Lee",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
@@ -46,20 +46,6 @@
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
