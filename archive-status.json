@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-09T18:58:57.313Z",
+  "updated": "2026-09-09T23:32:50.226Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -49,7 +49,7 @@
       "source": "Exil"
     },
     "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/": {
-      "at": "2026-03-13T19:43:03.000Z",
+      "at": "2026-07-26T00:18:15.000Z",
       "via": "existant",
       "source": "Exil"
     },
@@ -2118,14 +2118,48 @@
       "via": "save-page-now",
       "source": "La Pige",
       "snapshot": "https://web.archive.org/web/20260909185811/https://lapige.atmjonquiere.com/2026/09/09/les-cafes-les-nouveaux-espaces-detude/"
+    },
+    "https://lecollectif.ca/a-la-une/comment-fonctionnent-les-elections-au-quebec/": {
+      "at": "2026-09-08T23:41:08.000Z",
+      "via": "existant",
+      "source": "Le Collectif"
+    },
+    "https://www.polyscope.qc.ca/blog/post/gKYl5KTDrc4PqSK4XSDj": {
+      "at": "2026-07-28T17:13:08.000Z",
+      "via": "existant",
+      "source": "Le Polyscope"
+    },
+    "https://thelinknewspaper.ca/article/16356": {
+      "at": "2026-09-09T23:30:01.720Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20260909232941/https://thelinknewspaper.ca/article/16356"
+    },
+    "https://thelinknewspaper.ca/article/16354": {
+      "at": "2026-09-09T23:30:30.294Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20260909233010/https://thelinknewspaper.ca/article/16354"
+    },
+    "https://thelinknewspaper.ca/article/16350": {
+      "at": "2026-09-09T23:31:13.938Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20260909233053/https://thelinknewspaper.ca/article/16350"
+    },
+    "https://lapige.atmjonquiere.com/2026/09/09/a-jonquiere-se-deplacer-sans-voiture-se-paie-en-temps/": {
+      "at": "2026-09-09T23:32:50.226Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20260909233235/https://lapige.atmjonquiere.com/2026/09/09/a-jonquiere-se-deplacer-sans-voiture-se-paie-en-temps/"
     }
   },
   "stats": {
-    "total": 371,
+    "total": 377,
     "lastRun": {
-      "saved": 7,
-      "skipped": 0,
-      "failed": 5,
+      "saved": 4,
+      "skipped": 3,
+      "failed": 0,
       "stoppedEarly": false
     }
   },
