@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-09T19:03:22.052Z",
+  "updatedAt": "2026-09-09T21:48:50.313Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Les Arshitechs du Son",
+        "source": "api-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "next": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "title": "Capitales de Québec",
+        "source": "schedule-live",
+        "start": "18:50",
+        "end": "23:00",
+        "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T19:03:05.901Z"
+      "checkedAt": "2026-09-09T21:48:34.161Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Vibrance: voyage dance vers Montréal et ailleurs",
+        "title": "Feu | Metal | Chaos",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/vibrance"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/feu-metal-chaos"
       },
       "next": {
-        "title": "Le cours de math",
+        "title": "Effets sonores (reprise)",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/le-cours-de-math"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/effets-sonores"
       },
       "track": "",
-      "showTitle": "Vibrance: voyage dance vers Montréal et ailleurs",
+      "showTitle": "Feu | Metal | Chaos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T19:03:07.707Z"
+      "checkedAt": "2026-09-09T21:48:36.358Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "All Da Way Live",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Off the Hour/Sounds of Resistance",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "All Da Way Live",
+      "showTitle": "Off the Hour/Sounds of Resistance",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T19:03:10.473Z"
+      "checkedAt": "2026-09-09T21:48:39.233Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Patch Notes",
+        "title": "Advice By The Fireplace",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/patch-notes"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
       },
       "next": {
-        "title": "Borderline",
+        "title": "The New Consonance",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/borderline"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-new-consonance"
       },
       "track": "",
-      "showTitle": "Patch Notes",
+      "showTitle": "Advice By The Fireplace",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T19:03:13.392Z"
+      "checkedAt": "2026-09-09T21:48:42.252Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,38 +133,31 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T19:03:15.654Z"
+      "checkedAt": "2026-09-09T21:48:43.623Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
-      },
+      "current": null,
       "next": {
-        "title": "La 3ème demie",
-        "source": "schedule",
-        "start": "17:15",
-        "end": "18:00",
-        "url": "https://www.choq.ca/emissions/le-12-mtlsup"
+        "title": "Opération beurre de cinoche",
+        "source": "api-live",
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
       },
-      "track": "ID - Kat-Pereira",
-      "showTitle": "Palmarès CHOQ.ca",
+      "track": "Dee Joyce - Solo",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-09T19:03:21.701Z"
+      "checkedAt": "2026-09-09T21:48:49.962Z"
     }
   }
 }
