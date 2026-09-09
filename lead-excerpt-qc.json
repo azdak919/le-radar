@@ -1,14 +1,32 @@
 {
-  "updated": "2026-09-08T21:16:13.543Z",
+  "updated": "2026-09-09T00:22:05.495Z",
   "total": 186,
   "pool": 58,
-  "incomplete": 4,
+  "incomplete": 5,
   "withLeadExcerpt": 98,
-  "candidates": 4,
-  "enriched": 0,
-  "failed": 1,
+  "candidates": 5,
+  "enriched": 2,
+  "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Trois sièges de plus pour Mark Carney",
+      "link": "https://lecollectif.ca/a-la-une/trois-sieges-de-plus-pour-mark-carney/",
+      "ok": true,
+      "score": 100,
+      "chars": 268,
+      "sample": "Dans les deux dernières circonscriptions mentionnées, les résultats étaient prévisibles. Beaches – E",
+      "changed": true
+    },
+    {
+      "title": "Comment fonctionnent les élections au Québec ?",
+      "link": "https://lecollectif.ca/a-la-une/comment-fonctionnent-les-elections-au-quebec/",
+      "ok": true,
+      "score": 96,
+      "chars": 331,
+      "sample": "Pour participer à la vie démocratique et exercer son droit de vote, il faut d’abord comprendre le fo",
+      "changed": true
+    },
     {
       "title": "Jeunes et politique : un désintérêt ou un manque de représentation ?",
       "link": "https://lapige.atmjonquiere.com/2026/09/08/jeunes-et-politique-un-desinteret-ou-un-manque-de-representation/?utm_source=rss&utm_medium=rss&utm_campaign=jeunes-et-politique-un-desinteret-ou-un-manque-de-representation",
