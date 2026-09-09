@@ -50,8 +50,8 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   expect(await ribbon.locator('.masthead-weather__city').evaluateAll((cities) => cities.every(
     (city) => city.href.startsWith('https://www.meteomedia.com/fr/ville/ca/quebec/'),
   ))).toBe(true);
-  // Bureau : 3 cartes — slot 0 = ancre MTL **ou** QC exclusive ; 1–2 = secondaires.
-  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(3);
+  // Bureau shell E : 4 cartes — MTL+QC dual persistants + 2 secondaires (file wide).
+  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(4);
   const fill = await ribbon.evaluate((el) => {
     const board = el.querySelector('.masthead-weather__board');
     return {
@@ -62,23 +62,29 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   expect(fill.weatherW, 'colonne météo mesurable').toBeGreaterThan(400);
   expect(fill.boardW, 'le ruban occupe la colonne (pas shrink-wrap)').toBeGreaterThan(fill.weatherW - 8);
   const activePrimary = ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
-  await expect(activePrimary).toHaveCount(1);
-  // Ancre = campus + 1 secondaire campus + 1 nation (ou 2 campus si nation absente).
-  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="campus"]')).toHaveCount(2);
-  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="nation"]')).toHaveCount(1);
-  await expect(activePrimary).not.toHaveClass(/is-compact/);
-  const primaryLabel = await activePrimary.locator('.masthead-weather__name-full').evaluate(
-    (el) => (el.textContent || '').trim(),
+  await expect(activePrimary).toHaveCount(2);
+  // Dual : secondaires via file wide (pôles régionaux d’abord ; nations plus loin).
+  const campusN = await ribbon.locator('.masthead-weather__city.is-active[data-weather-group="campus"]').count();
+  const nationN = await ribbon.locator('.masthead-weather__city.is-active[data-weather-group="nation"]').count();
+  expect(campusN + nationN, '4 cartes actives groupées').toBe(4);
+  expect(campusN, 'MTL+QC + secondaires campus').toBeGreaterThanOrEqual(2);
+  const primaryCompact = await activePrimary.evaluateAll((els) => els.map((el) => el.classList.contains('is-compact')));
+  expect(primaryCompact.every((c) => !c), 'MTL/QC pas compactes').toBe(true);
+  const primaryLabels = await activePrimary.locator('.masthead-weather__name-full').evaluateAll(
+    (els) => els.map((el) => (el.textContent || '').trim()),
   );
-  expect(['Montréal', 'Québec']).toContain(primaryLabel);
+  expect(primaryLabels.sort()).toEqual(['Montréal', 'Québec'].sort());
   const activeBoxes = (await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities
     .map((city) => city.getBoundingClientRect())
     .sort((a, b) => a.x - b.x)
     .map(({ width }) => width)));
   expect(Math.min(...activeBoxes)).toBeGreaterThanOrEqual(90);
-  expect(activeBoxes[0]).toBeGreaterThanOrEqual(120);
-  const initialPrimary = await activePrimary.evaluate((el) => ({ id: el.dataset.weatherCity, href: el.href }));
-  expect(initialPrimary.href).toBe(`https://www.meteomedia.com/fr/ville/ca/quebec/${initialPrimary.id}/actuelle`);
+  expect(activeBoxes[0]).toBeGreaterThanOrEqual(90);
+  const initialPrimaries = await activePrimary.evaluateAll((els) => els.map((el) => ({ id: el.dataset.weatherCity, href: el.href })));
+  expect(initialPrimaries.map((p) => p.id).sort()).toEqual(['montreal', 'quebec']);
+  for (const p of initialPrimaries) {
+    expect(p.href).toBe(`https://www.meteomedia.com/fr/ville/ca/quebec/${p.id}/actuelle`);
+  }
   await expect(ribbon.locator('[data-weather-city="vaudreuil-dorion"]')).toHaveAttribute(
     'href',
     'https://www.meteomedia.com/fr/ville/ca/quebec/vaudreuil-dorion/actuelle',
@@ -99,14 +105,16 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
     window.RadarTranslate = { ...(window.RadarTranslate || {}), getMode: () => 'en' };
     window.dispatchEvent(new CustomEvent('radar:translate-mode', { detail: { mode: 'en' } }));
   });
-  const translatedPrimary = await activePrimary.evaluate((el) => ({ id: el.dataset.weatherCity, href: el.href }));
-  expect(translatedPrimary.href).toBe(`https://www.meteomedia.com/fr/ville/ca/quebec/${translatedPrimary.id}/actuelle`);
+  const translatedPrimaries = await activePrimary.evaluateAll((els) => els.map((el) => ({ id: el.dataset.weatherCity, href: el.href })));
+  for (const p of translatedPrimaries) {
+    expect(p.href).toBe(`https://www.meteomedia.com/fr/ville/ca/quebec/${p.id}/actuelle`);
+  }
   const [weatherBox, actionsBox] = await Promise.all([
     ribbon.boundingBox(), page.locator('.masthead-actions').boundingBox(),
   ]);
   expect(actionsBox.x).toBeGreaterThan(weatherBox.x + weatherBox.width);
 
-  // Rotation forcée : leave (~280ms) + arrive — slot 0 alterne MTL↔QC.
+  // Rotation forcée : leave (~280ms) + arrive — secondaires tournent ; MTL/QC fixes.
   const beforeRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity));
   const leaveAnimOk = await page.evaluate(() => {
     if (typeof rotateOneMastheadWeatherCard !== 'function') return false;
@@ -123,7 +131,8 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
     .not.toEqual(beforeRotation);
   const afterRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity));
   expect(afterRotation).toHaveLength(beforeRotation.length);
-  expect(['montreal', 'quebec']).toContain(afterRotation[0]);
+  expect(afterRotation[0]).toBe('montreal');
+  expect(afterRotation[1]).toBe('quebec');
   // 2ᵉ tick : vérifier is-arriving après la leave (swap DOM déjà fait).
   const arriveAnimOk = await page.evaluate(async () => {
     if (typeof rotateOneMastheadWeatherCard !== 'function') return false;
@@ -140,8 +149,8 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await page.waitForTimeout(150);
   await expect(ribbon).not.toHaveClass(/masthead-weather--docked/);
   const deskCount = await ribbon.locator('.masthead-weather__city.is-active').count();
-  expect(deskCount).toBe(3);
-  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]')).toHaveCount(1);
+  expect(deskCount).toBe(4);
+  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]')).toHaveCount(2);
 
   // Tablette dockée : ancre + secondaires (board pleine largeur).
   await page.setViewportSize({ width: 920, height: 900 });
@@ -374,7 +383,7 @@ test('wide E : météo secondaire cascade puis pause', async ({ page }) => {
   expectWeatherCascadeFlips(start, await weatherActiveIds(ribbon), { dualPrimary: true });
 });
 
-async function assertWeatherCascadeAt(page, { width, height = 900, docked = false }) {
+async function assertWeatherCascadeAt(page, { width, height = 900, docked = false, dualPrimary = false }) {
   await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => {
     route.fulfill({
       contentType: 'application/json',
@@ -391,9 +400,15 @@ async function assertWeatherCascadeAt(page, { width, height = 900, docked = fals
   else await expect(ribbon).not.toHaveClass(/masthead-weather--docked/);
 
   const start = await weatherActiveIds(ribbon);
-  expect(['montreal', 'quebec']).toContain(start[0]);
   const primaryCount = start.filter((id) => id === 'montreal' || id === 'quebec').length;
-  expect(primaryCount, 'une seule ancre MTL/QC hors wide').toBe(1);
+  if (dualPrimary) {
+    expect(start[0], 'Montréal à gauche (shell E)').toBe('montreal');
+    expect(start[1], 'Québec en 2e (shell E)').toBe('quebec');
+    expect(primaryCount, 'dual MTL+QC dès shell E').toBe(2);
+  } else {
+    expect(['montreal', 'quebec']).toContain(start[0]);
+    expect(primaryCount, 'une seule ancre MTL/QC hors wide').toBe(1);
+  }
 
   const armed = await page.evaluate(() => {
     if (typeof scheduleWeatherCascade !== 'function') return false;
@@ -408,12 +423,12 @@ async function assertWeatherCascadeAt(page, { width, height = 900, docked = fals
 
   await page.waitForTimeout(Math.min(2800, 500 * Math.max(2, start.length)));
   const now = await weatherActiveIds(ribbon);
-  expectWeatherCascadeFlips(start, now, { dualPrimary: false });
+  expectWeatherCascadeFlips(start, now, { dualPrimary });
   if (docked) await expect(ribbon).toHaveClass(/masthead-weather--docked/);
 }
 
-test('bureau 1280 : météo cascade (ancre + secondaires)', async ({ page }) => {
-  await assertWeatherCascadeAt(page, { width: 1280, docked: false });
+test('bureau 1280 : météo cascade (shell E dual MTL/QC)', async ({ page }) => {
+  await assertWeatherCascadeAt(page, { width: 1280, docked: false, dualPrimary: true });
 });
 
 test('tablette 768 : météo cascade dockée', async ({ page }) => {

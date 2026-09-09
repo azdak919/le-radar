@@ -125,7 +125,7 @@ test('mât : les quantités météo / scores / CTA suivent la largeur @ci-critic
   const at1280 = await resizeAndSettle(page, 1280, 800);
   expect(at1280.wide, '1280 : shell E').toBe('e');
   expect(at1280.docked).toBe(false);
-  expect(at1280.weather, '1280 : 3 cartes (pas coincé à 1 après 390)').toBe(3);
+  expect(at1280.weather, '1280 : 4 cartes (shell E dual)').toBe(4);
   expect(at1280.chips).toBeGreaterThanOrEqual(1);
   expect(at1280.match, '1280 : plus qu’une carte').toBeGreaterThanOrEqual(1);
   expect(at1280.cta).toBe(0);
@@ -196,7 +196,7 @@ test('mât : revenir à la taille d’origine restaure les quantités', async ({
 
   const from1920 = await resizeAndSettle(page, 1920, 1080);
   const at1280 = await resizeAndSettle(page, 1280, 800);
-  expect(at1280.weather, '1920→1280 : 3 cartes, pas 1').toBe(3);
+  expect(at1280.weather, '1920→1280 : 4 cartes (shell E), pas 1').toBe(4);
   expect(at1280.wide).toBe('e');
   expect(from1920.weather).toBeGreaterThanOrEqual(4);
 });
