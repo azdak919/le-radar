@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-09T15:52:47.284Z",
+  "updatedAt": "2026-09-09T19:03:22.052Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,130 +21,143 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T15:52:26.724Z"
+      "checkedAt": "2026-09-09T19:03:05.901Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "À la loupe du droit",
+        "title": "Vibrance: voyage dance vers Montréal et ailleurs",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/a-la-loupe-du-droit"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/vibrance"
       },
       "next": {
-        "title": "La carte cadeau",
+        "title": "Le cours de math",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/le-cours-de-math"
       },
       "track": "",
-      "showTitle": "À la loupe du droit",
+      "showTitle": "Vibrance: voyage dance vers Montréal et ailleurs",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T15:52:28.380Z"
+      "checkedAt": "2026-09-09T19:03:07.707Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
-      "current": null,
-      "next": {
-        "title": "If You Got Ears",
+      "current": {
+        "title": "All Da Way Live",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "15:00",
+        "end": "17:00"
       },
-      "track": "ffiles",
-      "showTitle": "",
+      "next": {
+        "title": "Off the Hour/Sounds of Resistance",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
+      "track": "",
+      "showTitle": "All Da Way Live",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T15:52:31.209Z"
+      "checkedAt": "2026-09-09T19:03:10.473Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Code Switch",
+        "title": "Patch Notes",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/code-switch"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/patch-notes"
       },
       "next": {
-        "title": "North-South Hockey",
+        "title": "Borderline",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/north-south-hockey"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/borderline"
       },
       "track": "",
-      "showTitle": "Code Switch",
+      "showTitle": "Patch Notes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T15:52:34.470Z"
+      "checkedAt": "2026-09-09T19:03:13.392Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Le popcorn de l'infini",
         "source": "schedule-live",
         "start": "14:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Le popcorn de l'infini",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T15:52:35.374Z"
+      "checkedAt": "2026-09-09T19:03:15.654Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
         "start": "15:00",
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Love Spells - Devour Me",
-      "showTitle": "",
+      "next": {
+        "title": "La 3ème demie",
+        "source": "schedule",
+        "start": "17:15",
+        "end": "18:00",
+        "url": "https://www.choq.ca/emissions/le-12-mtlsup"
+      },
+      "track": "ID - Kat-Pereira",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-09T15:52:46.934Z"
+      "checkedAt": "2026-09-09T19:03:21.701Z"
     }
   }
 }
