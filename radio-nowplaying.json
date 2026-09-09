@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-09T11:19:43.842Z",
+  "updatedAt": "2026-09-09T11:41:27.139Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T11:19:14.486Z"
+      "checkedAt": "2026-09-09T11:41:02.254Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T11:19:16.041Z"
+      "checkedAt": "2026-09-09T11:41:03.427Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,17 +74,17 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T11:19:19.415Z"
+      "checkedAt": "2026-09-09T11:41:05.648Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Morning Electro-shock",
+        "title": "Words and Culture",
         "source": "schedule-live",
-        "start": "06:00",
+        "start": "07:30",
         "end": "08:00",
-        "url": "http://www.cjlo.com/shows/morning-electro-shock"
+        "url": "http://www.cjlo.com/shows/words-and-culture"
       },
       "next": {
         "title": "Trawling the Megahertz",
@@ -94,15 +94,14 @@
         "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
       },
       "track": "",
-      "showTitle": "Morning Electro-shock",
+      "showTitle": "Words and Culture",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T11:19:35.099Z"
+      "checkedAt": "2026-09-09T11:41:19.114Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T11:19:36.079Z"
+      "checkedAt": "2026-09-09T11:41:20.225Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Dominique Fils-Aimé - The River",
+      "track": "Gabriella Olivo - Cruise control",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-09T11:19:43.492Z"
+      "checkedAt": "2026-09-09T11:41:26.788Z"
     }
   }
 }
