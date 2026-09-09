@@ -1,14 +1,14 @@
 {
-  "updated": "2026-09-09T15:12:04.787Z",
-  "fetchedAt": "2026-09-09T15:12:04.787Z",
+  "updated": "2026-09-09T19:15:54.817Z",
+  "fetchedAt": "2026-09-09T19:15:54.817Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-09T15:12:04.788Z"
+    "referenceDate": "2026-09-09T19:15:54.817Z"
   },
   "registry": "sports-teams.json",
-  "registryMatched": 814,
+  "registryMatched": 816,
   "leagueCatalog": 112,
   "leaguesWithTeams": 104,
   "leaguesOk": 112,
@@ -73,7 +73,7 @@
     "ultimate",
     "volleyball"
   ],
-  "teamCount": 833,
+  "teamCount": 835,
   "errors": [
     {
       "leagueId": "spordle-collegial",
@@ -5825,20 +5825,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-09-09",
-          "time": "19:30",
-          "opponent": "John Abbott",
-          "opponentCode": "JAC",
-          "home": true,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
-          "opponentFullName": "John Abbott College",
-          "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott"
-        },
-        {
           "date": "2026-09-12",
           "time": "13:00",
           "opponent": "Limoilou",
@@ -5865,6 +5851,20 @@
           "opponentFullName": "Cégep Limoilou",
           "opponentNickname": "Titans",
           "opponentRegistryId": "limoilou"
+        },
+        {
+          "date": "2026-09-16",
+          "time": "19:30",
+          "opponent": "John Abbott",
+          "opponentCode": "JAC",
+          "home": true,
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+          "opponentFullName": "John Abbott College",
+          "opponentNickname": "Islanders",
+          "opponentRegistryId": "john-abbott"
         },
         {
           "date": "2026-09-20",
@@ -5988,18 +5988,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-09",
-        "time": "19:30",
-        "opponent": "John Abbott",
-        "opponentCode": "JAC",
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Limoilou",
+        "opponentCode": "LIM",
         "home": true,
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
-        "opponentFullName": "John Abbott College",
-        "opponentNickname": "Islanders",
-        "opponentRegistryId": "john-abbott",
+        "gameId": "a9e6dd87-21a2-4daf-ac29-34ed9e89b8c1",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a9e6dd87-21a2-4daf-ac29-34ed9e89b8c1",
+        "opponentFullName": "Cégep Limoilou",
+        "opponentNickname": "Titans",
+        "opponentRegistryId": "limoilou",
         "opponentSector": "collegial"
       },
       "record": {
@@ -6972,7 +6972,7 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-09",
+          "date": "2026-09-16",
           "time": "19:30",
           "opponent": "André-Laurendeau",
           "opponentCode": "CAL",
@@ -7137,7 +7137,7 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-09",
+        "date": "2026-09-16",
         "time": "19:30",
         "opponent": "André-Laurendeau",
         "opponentCode": "CAL",
@@ -31758,6 +31758,29 @@
       "nickname": "Citadins",
       "registryId": "uqam"
     },
+    "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:b4add6fc-e2b9-467a-8302-0d9e0e182ec3": {
+      "id": "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:b4add6fc-e2b9-467a-8302-0d9e0e182ec3",
+      "rseqTeamId": "b4add6fc-e2b9-467a-8302-0d9e0e182ec3",
+      "leagueId": "d5c1b71b-8741-4485-90e4-7c28666a2270",
+      "name": "UQAR",
+      "code": "UQAR",
+      "sector": "universitaire",
+      "sport": "cross-country",
+      "sportLabel": "Cross-country",
+      "sex": "F",
+      "division": null,
+      "usports": true,
+      "leagueLabel": "Cross-country universitaire féminin",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [],
+      "nextGame": null,
+      "record": null,
+      "source": "rseq-s1",
+      "priority": 80,
+      "fullName": "Université du Québec à Rimouski",
+      "registryId": "uqar"
+    },
     "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:cc80b423-a0af-4dfb-8a69-6c60b867bcfe": {
       "id": "universitaire:cross-country:d5c1b71b-8741-4485-90e4-7c28666a2270:cc80b423-a0af-4dfb-8a69-6c60b867bcfe",
       "rseqTeamId": "cc80b423-a0af-4dfb-8a69-6c60b867bcfe",
@@ -31995,6 +32018,29 @@
       "fullName": "Université du Québec à Montréal",
       "nickname": "Citadins",
       "registryId": "uqam"
+    },
+    "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:baca51a1-496a-4979-8e90-6c2bb631f46d": {
+      "id": "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:baca51a1-496a-4979-8e90-6c2bb631f46d",
+      "rseqTeamId": "baca51a1-496a-4979-8e90-6c2bb631f46d",
+      "leagueId": "263716c3-348b-4a18-8ebd-a81ced5cbd80",
+      "name": "UQAR",
+      "code": "UQAR",
+      "sector": "universitaire",
+      "sport": "cross-country",
+      "sportLabel": "Cross-country",
+      "sex": "M",
+      "division": null,
+      "usports": true,
+      "leagueLabel": "Cross-country universitaire masculin",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [],
+      "nextGame": null,
+      "record": null,
+      "source": "rseq-s1",
+      "priority": 80,
+      "fullName": "Université du Québec à Rimouski",
+      "registryId": "uqar"
     },
     "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:4bdf936d-5df9-4fb4-8c40-1b054425be0d": {
       "id": "universitaire:cross-country:263716c3-348b-4a18-8ebd-a81ced5cbd80:4bdf936d-5df9-4fb4-8c40-1b054425be0d",
@@ -38251,7 +38297,7 @@
         },
         {
           "date": "2026-09-27",
-          "time": "15:00",
+          "time": "14:30",
           "opponent": "Terrebonne",
           "opponentCode": "TER",
           "home": true,
@@ -39441,7 +39487,7 @@
         },
         {
           "date": "2026-09-27",
-          "time": "15:00",
+          "time": "14:30",
           "opponent": "Champlain St-Lambert",
           "opponentCode": "SLA",
           "home": false,
