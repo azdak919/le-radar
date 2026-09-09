@@ -1,32 +1,14 @@
 {
-  "updated": "2026-09-09T00:22:05.495Z",
-  "total": 186,
+  "updated": "2026-09-09T03:49:18.904Z",
+  "total": 187,
   "pool": 58,
-  "incomplete": 5,
+  "incomplete": 3,
   "withLeadExcerpt": 98,
-  "candidates": 5,
-  "enriched": 2,
-  "failed": 0,
+  "candidates": 3,
+  "enriched": 0,
+  "failed": 1,
   "ok": true,
   "samples": [
-    {
-      "title": "Trois sièges de plus pour Mark Carney",
-      "link": "https://lecollectif.ca/a-la-une/trois-sieges-de-plus-pour-mark-carney/",
-      "ok": true,
-      "score": 100,
-      "chars": 268,
-      "sample": "Dans les deux dernières circonscriptions mentionnées, les résultats étaient prévisibles. Beaches – E",
-      "changed": true
-    },
-    {
-      "title": "Comment fonctionnent les élections au Québec ?",
-      "link": "https://lecollectif.ca/a-la-une/comment-fonctionnent-les-elections-au-quebec/",
-      "ok": true,
-      "score": 96,
-      "chars": 331,
-      "sample": "Pour participer à la vie démocratique et exercer son droit de vote, il faut d’abord comprendre le fo",
-      "changed": true
-    },
     {
       "title": "Jeunes et politique : un désintérêt ou un manque de représentation ?",
       "link": "https://lapige.atmjonquiere.com/2026/09/08/jeunes-et-politique-un-desinteret-ou-un-manque-de-representation/?utm_source=rss&utm_medium=rss&utm_campaign=jeunes-et-politique-un-desinteret-ou-un-manque-de-representation",
@@ -43,15 +25,6 @@
       "score": 72,
       "chars": 400,
       "sample": "Over the summer, I caught the world-premiere musical adaptation of The Lunchbox at the Berkeley Repe",
-      "changed": false
-    },
-    {
-      "title": "Your McGill program, your next cafe",
-      "link": "https://www.thetribune.ca/student-life/your-mcgill-program-your-next-cafe-08092026/?utm_source=rss&utm_medium=rss&utm_campaign=your-mcgill-program-your-next-cafe-08092026",
-      "ok": true,
-      "score": 70,
-      "chars": 400,
-      "sample": "Coffee shops are an undeniable cornerstone of student life in Montreal. While our campus libraries a",
       "changed": false
     }
   ]

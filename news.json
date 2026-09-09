@@ -1,7 +1,7 @@
 {
-  "updated": "2026-09-09T00:21:35.103Z",
+  "updated": "2026-09-09T03:48:54.153Z",
   "updatedSlot": null,
-  "count": 186,
+  "count": 187,
   "freshnessSessions": 3,
   "sources": {
     "Quartier Libre": {
@@ -10,7 +10,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-04T21:00:00.000Z",
-      "lastFetchOk": "2026-09-09T00:20:30.544Z"
+      "lastFetchOk": "2026-09-09T03:47:55.726Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-09-09T00:20:31.715Z"
+      "lastFetchOk": "2026-09-09T03:47:56.957Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-01T04:35:43.000Z",
-      "lastFetchOk": "2026-09-09T00:20:36.513Z"
+      "lastFetchOk": "2026-09-09T03:48:01.270Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-08-31T12:39:00.000Z",
-      "lastFetchOk": "2026-09-09T00:20:37.443Z"
+      "lastFetchOk": "2026-09-09T03:48:01.968Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-08T13:00:00.000Z",
-      "lastFetchOk": "2026-09-09T00:20:38.842Z"
+      "lastFetchOk": "2026-09-09T03:48:03.288Z"
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,15 +50,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-09-09T00:20:40.896Z"
+      "lastFetchOk": "2026-09-09T03:48:04.943Z"
     },
     "L'Exemplaire": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-09-09T00:20:42.296Z"
+      "lastFetchOk": null
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-08T22:18:02.000Z",
-      "lastFetchOk": "2026-09-09T00:20:43.389Z"
+      "lastFetchOk": "2026-09-09T03:48:19.615Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-09-09T00:20:43.811Z"
+      "lastFetchOk": "2026-09-09T03:48:19.951Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -82,15 +82,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-08T18:51:04.000Z",
-      "lastFetchOk": "2026-09-09T00:20:44.784Z"
+      "lastFetchOk": "2026-09-09T03:48:21.153Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
       "stale": false,
       "articleCount": 20,
-      "freshArticleCount": 14,
-      "lastArticle": "2026-09-07T16:27:02.134Z",
-      "lastFetchOk": "2026-09-09T00:20:48.570Z"
+      "freshArticleCount": 15,
+      "lastArticle": "2026-09-09T00:53:34.359Z",
+      "lastFetchOk": "2026-09-09T03:48:23.729Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-08T15:35:43.000Z",
-      "lastFetchOk": "2026-09-09T00:20:48.834Z"
+      "lastFetchOk": "2026-09-09T03:48:24.036Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-09-09T00:20:49.574Z"
+      "lastFetchOk": "2026-09-09T03:48:24.332Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,10 +114,32 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-09-09T00:20:49.907Z"
+      "lastFetchOk": "2026-09-09T03:48:24.625Z"
     }
   },
   "items": [
+    {
+      "source": "Le Polyscope",
+      "institution": "Polytechnique Montréal",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "Le Polyscope - Journal des étudiants de l",
+      "link": "https://www.polyscope.qc.ca/blog/post/0UULVhDNL8rXrjepo479",
+      "author": "Coralie Nadeau",
+      "date": "2026-09-09T00:53:34.359Z",
+      "excerpt": "Un courriel de la part de la Direction des affaires académiques est paru il y a peu de temps. Son contenu : une réduction de l’utilisation de motivation d’absence sur l’honneur.",
+      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Fmotivation_absence.png?alt=media&token=90423a72-bd6f-4216-a5aa-a875fac93763",
+      "imageLocal": "assets/news-images/afa3d85e0bb061a0.png",
+      "imageLocalKey": "afa3d85e0bb061a0",
+      "sourceImageCredit": "Crédit photo : Le Polyscope",
+      "sourceImageCreator": "",
+      "sourceImageCreditUrl": "https://www.polyscope.qc.ca/blog/post/0UULVhDNL8rXrjepo479",
+      "sourceImageCreditFrom": "media",
+      "sourceImageCreditCited": false,
+      "sourceImageCreditImageKey": "motivation_absence.png",
+      "sourceImageCreditRev": 10
+    },
     {
       "source": "Le Collectif",
       "institution": "Université de Sherbrooke",
@@ -131,16 +153,17 @@
       "excerpt": "Le Parti libéral du Canada (PLC), minoritaire à la sortie des élections fédérales de 2025, voit sa majorité se renforcir davantage grâce à trois élections partielles dans trois provinces différentes, toutes remportées par le PLC de Mark Carney. Le départ de Richard Martel se",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/09/SOCIETE_Trois-sieges-de-plus-pour-Mark-Carney_Getty-Images.jpg",
       "_pageAuthor": "Médéric Dens",
-      "leadExcerpt": "Dans les deux dernières circonscriptions mentionnées, les résultats étaient prévisibles. Beaches – East York, était représentée par les couleurs libérales depuis 1993, sauf de 2011 à 2015, lors de la « vague orange ». Nate Erskine-Smith en était le député depuis 2015.",
-      "imageLocal": "assets/news-images/53b02654727b3572.jpg",
-      "imageLocalKey": "53b02654727b3572",
       "sourceImageCredit": "Photo : Getty Images",
       "sourceImageCreator": "Getty Images",
       "sourceImageCreditUrl": "https://lecollectif.ca/a-la-une/trois-sieges-de-plus-pour-mark-carney/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_trois-sieges-de-plus-pour-mark-carney_getty-images.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Dans les deux dernières circonscriptions mentionnées, les résultats étaient prévisibles. Beaches – East York, était représentée par les couleurs libérales depuis 1993, sauf de 2011 à 2015, lors de la « vague orange ». Nate Erskine-Smith en était le député depuis 2015.",
+      "imageLocal": "assets/news-images/53b02654727b3572.jpg",
+      "imageLocalKey": "53b02654727b3572",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -155,16 +178,17 @@
       "excerpt": "Pour participer à la vie démocratique et exercer son droit de vote, il faut d’abord comprendre le fonctionnement des élections. Pour qui vote-t-on réellement ? Le parti ? Le chef ? Et lorsque l’on est une personne étudiante, comment voter et pour quelle circonscription ? Est-ce",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/09/SOCIETE_Comment-fonctionnent-les-elections-au-Quebec_Pixabay-1024x684.jpg",
       "_pageAuthor": "Médéric Dens",
-      "leadExcerpt": "Pour participer à la vie démocratique et exercer son droit de vote, il faut d’abord comprendre le fonctionnement des élections. Pour qui vote-t-on réellement ? Le parti ? Le chef ? Et lorsque l’on est une personne étudiante, comment voter et pour quelle circonscription ? Est-ce le même processus que lors des élections fédérales ?",
-      "imageLocal": "assets/news-images/57b1d28ed9a02aa8.jpg",
-      "imageLocalKey": "57b1d28ed9a02aa8",
       "sourceImageCredit": "Photo : Pixabay",
       "sourceImageCreator": "Pixabay",
       "sourceImageCreditUrl": "https://lecollectif.ca/a-la-une/comment-fonctionnent-les-elections-au-quebec/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_comment-fonctionnent-les-elections-au-quebec_pixabay.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Pour participer à la vie démocratique et exercer son droit de vote, il faut d’abord comprendre le fonctionnement des élections. Pour qui vote-t-on réellement ? Le parti ? Le chef ? Et lorsque l’on est une personne étudiante, comment voter et pour quelle circonscription ? Est-ce le même processus que lors des élections fédérales ?",
+      "imageLocal": "assets/news-images/57b1d28ed9a02aa8.jpg",
+      "imageLocalKey": "57b1d28ed9a02aa8",
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -817,9 +841,8 @@
       "author": "Marissa Guthrie",
       "date": "2026-09-08T13:00:00.000Z",
       "excerpt": "Quebec residents, Canadian students, and international students. Long ago, the three demographics lived in harmony until the CAQ CAQ’s tutition hikes are ruining the university experience for many. Graphic James Issa This article originally appeared in The Link Volume 47, Issue",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Province.James_Issa_900_720_90.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Province.James_Issa_690_552_90.jpg",
       "authorCheckedAt": "2026-09-08T13:20:29.374Z",
-      "_pageAuthor": "Marissa Guthrie",
       "sourceImageCredit": "Illustration: James Issa",
       "sourceImageCreator": "James Issa",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16353",
@@ -829,9 +852,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "I've met driven, brilliant people from every corner of Canada and the world. These are people who've thrown themselves into everything Concordia has to offer and been crucial in building Montreal's vibrant social scene.",
-      "imageLocal": "assets/news-images/b8abc6e1ec73b280.jpg",
-      "imageLocalKey": "b8abc6e1ec73b280",
-      "imageLocalVia": "origin"
+      "imageLocal": "assets/news-images/5a360724cf57ab72.jpg",
+      "imageLocalKey": "5a360724cf57ab72"
     },
     {
       "source": "The Link",
@@ -846,15 +868,15 @@
       "excerpt": "Tracing a bigger story about underfunded public spaces in Montreal Webster Library’s mess is both a student etiquette and city problem. Graphic Evelyn Ho Lee This article originally appeared in The Link Volume 47, Issue 1, published September 8, 2026.",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Library.Evelyn_Ho_Lee_690_863.png",
       "authorCheckedAt": "2026-09-08T13:20:30.756Z",
-      "imageLocal": "assets/news-images/03e1c13d474fd60d.png",
-      "imageLocalKey": "03e1c13d474fd60d",
       "sourceImageCredit": "Photo credit: The Link",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16350",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "01.ops.library.evelyn_ho_lee_690_863.png",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "imageLocal": "assets/news-images/03e1c13d474fd60d.png",
+      "imageLocalKey": "03e1c13d474fd60d",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -879,7 +901,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Concordia alumnus and artist Samuel Rancourt’s paintings focus on the human face rendered using unconventional colours, with a special emphasis on eyes. He also plays with texture by building forms beyond the canvas.",
       "imageLocal": "assets/news-images/941a3f690f5f825b.jpg",
-      "imageLocalKey": "941a3f690f5f825b"
+      "imageLocalKey": "941a3f690f5f825b",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -1481,7 +1504,7 @@
       "date": "2026-09-04T21:00:00.000Z",
       "excerpt": "Quartier Libre est finalement de retour après un été mouvementé. Voici les nouvelles qui ont marqué l’actualité des derniers mois afin de commencer la session bien informés.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/09/5-infos-marquantes-de-lete.png",
-      "authorCheckedAt": "2026-09-08T01:13:26.138Z",
+      "authorCheckedAt": "2026-09-09T03:49:03.074Z",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/cinq-nouvelles-marquantes-de-lete/",
       "sourceImageCreditFrom": "media",
@@ -2328,7 +2351,8 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2004.jpg",
       "imageLocal": "assets/news-images/4df75cf87015c28b.png",
       "imageLocalKey": "4df75cf87015c28b",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -2505,7 +2529,8 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Louis-Jacques-Casault_3.jpg",
       "imageLocal": "assets/news-images/85c53107d1e4248f.webp",
       "imageLocalKey": "85c53107d1e4248f",
-      "imageLocalVia": "photon"
+      "imageLocalVia": "photon",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -2536,7 +2561,8 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2005.jpg",
       "imageLocal": "assets/news-images/fb608c4f6ca425ad.jpg",
       "imageLocalKey": "fb608c4f6ca425ad",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -2564,7 +2590,8 @@
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2007.jpg",
-      "leadExcerpt": "Illustration générée par ChatGPT à partir du prompt d’Olivier Verreault pour L’Exemplaire. Ce prompt vise à illustrer avec humour les différences entre les protestations québécoises et albertaines au sujet du rachat des armes à feu."
+      "leadExcerpt": "Illustration générée par ChatGPT à partir du prompt d’Olivier Verreault pour L’Exemplaire. Ce prompt vise à illustrer avec humour les différences entre les protestations québécoises et albertaines au sujet du rachat des armes à feu.",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -2594,7 +2621,8 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2006.jpg",
       "imageLocal": "assets/news-images/c8c65f429a9e4a92.jpg",
       "imageLocalKey": "c8c65f429a9e4a92",
-      "imageLocalVia": "wayback"
+      "imageLocalVia": "wayback",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -2625,7 +2653,8 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2011.jpg",
       "imageLocal": "assets/news-images/bbce4110e22a994d.jpg",
       "imageLocalKey": "bbce4110e22a994d",
-      "imageLocalVia": "wayback"
+      "imageLocalVia": "wayback",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -2656,7 +2685,8 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2003.jpg",
       "imageLocal": "assets/news-images/400cbabd32c81933.jpg",
       "imageLocalKey": "400cbabd32c81933",
-      "imageLocalVia": "wayback"
+      "imageLocalVia": "wayback",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -2688,7 +2718,8 @@
       "leadExcerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus explosent sur les réseaux sociaux. Mais, derrière ces visuels enfantins générés par intelligence artificielle, se dessinent des discours moins légers qui dépassent le simple divertissement.",
       "imageLocal": "assets/news-images/44f01b932a4f2373.webp",
       "imageLocalKey": "44f01b932a4f2373",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -3058,7 +3089,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/2159b352022a804e.jpg",
-      "imageLocalKey": "2159b352022a804e"
+      "imageLocalKey": "2159b352022a804e",
+      "imageLocalVia": "origin"
     },
     {
       "source": "L'Exemplaire",
@@ -3089,7 +3121,8 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_Laval,_Quebec,_Canada_02.jpg",
       "imageLocal": "assets/news-images/a867f9e5235ae71d.jpg",
       "imageLocalKey": "a867f9e5235ae71d",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -3120,7 +3153,8 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Grand_Axe_ULaval.jpg",
       "imageLocal": "assets/news-images/e4469fb7576e9660.png",
       "imageLocalKey": "e4469fb7576e9660",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -3288,7 +3322,8 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/2f88543ca8a04f2b.jpg",
-      "imageLocalKey": "2f88543ca8a04f2b"
+      "imageLocalKey": "2f88543ca8a04f2b",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -3403,7 +3438,8 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/f49c9cf5fb2ef34f.jpg",
-      "imageLocalKey": "f49c9cf5fb2ef34f"
+      "imageLocalKey": "f49c9cf5fb2ef34f",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3426,7 +3462,8 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/96bf2e57f78195d2.jpg",
-      "imageLocalKey": "96bf2e57f78195d2"
+      "imageLocalKey": "96bf2e57f78195d2",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3496,7 +3533,8 @@
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/bca23ddde074c874.jpg",
-      "imageLocalKey": "bca23ddde074c874"
+      "imageLocalKey": "bca23ddde074c874",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3518,7 +3556,8 @@
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/1ea90acd9d61e587.jpg",
-      "imageLocalKey": "1ea90acd9d61e587"
+      "imageLocalKey": "1ea90acd9d61e587",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3540,7 +3579,8 @@
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/85147fbddce0425c.jpg",
-      "imageLocalKey": "85147fbddce0425c"
+      "imageLocalKey": "85147fbddce0425c",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Exil",
@@ -4463,7 +4503,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
       "imageLocal": "assets/news-images/238606fcb609215a.png",
-      "imageLocalKey": "238606fcb609215a"
+      "imageLocalKey": "238606fcb609215a",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Polyscope",
@@ -4504,7 +4545,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
       "imageLocal": "assets/news-images/c3a8a5ebab530517.png",
-      "imageLocalKey": "c3a8a5ebab530517"
+      "imageLocalKey": "c3a8a5ebab530517",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Exil",
@@ -4526,7 +4568,8 @@
       "sourceImageCreditImageKey": "image-1.png",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/d26219c5681e257b.png",
-      "imageLocalKey": "d26219c5681e257b"
+      "imageLocalKey": "d26219c5681e257b",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Exil",
@@ -4548,7 +4591,8 @@
       "sourceImageCreditImageKey": "shirley-barnea-1.jpg",
       "sourceImageCreditRev": 10,
       "imageLocal": "assets/news-images/b3e61b02132170d1.webp",
-      "imageLocalKey": "b3e61b02132170d1"
+      "imageLocalKey": "b3e61b02132170d1",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Polyscope",
@@ -4569,7 +4613,8 @@
       "sourceImageCreditUrl": "https://www.polyscope.qc.ca/blog/post/u5Hy8Rq9hwdfzclCUhEz",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/77eec1b1a3ae4d31.jpg",
-      "imageLocalKey": "77eec1b1a3ae4d31"
+      "imageLocalKey": "77eec1b1a3ae4d31",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Polyscope",
@@ -4591,7 +4636,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
       "imageLocal": "assets/news-images/79de1d267ddf2567.jpg",
-      "imageLocalKey": "79de1d267ddf2567"
+      "imageLocalKey": "79de1d267ddf2567",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Polyscope",
