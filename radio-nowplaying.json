@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-08T22:53:06.359Z",
+  "updatedAt": "2026-09-09T00:12:46.372Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-08T22:52:18.838Z"
+      "checkedAt": "2026-09-09T00:12:18.181Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "les pénibles",
+        "title": "Les garçons pleurent aussi (reprise)",
         "source": "schedule",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-penibles"
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
       },
       "next": {
-        "title": "Catharmix",
+        "title": "Mix Anglo",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/catharmix"
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
       },
       "track": "",
-      "showTitle": "les pénibles",
+      "showTitle": "Les garçons pleurent aussi (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-08T22:52:20.073Z"
+      "checkedAt": "2026-09-09T00:12:19.681Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Prison Radio",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Soul Perspectives",
         "source": "api-live",
         "start": "19:00",
         "end": "20:30"
       },
+      "next": {
+        "title": "Marca-RO",
+        "source": "api-live",
+        "start": "20:30",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Prison Radio",
+      "showTitle": "Soul Perspectives",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,89 +74,90 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-08T22:52:22.847Z"
+      "checkedAt": "2026-09-09T00:12:22.534Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Bikini Brrroadcast",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
-      },
-      "next": {
-        "title": "Ashes to Ashes",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
-      },
-      "track": "",
-      "showTitle": "Bikini Brrroadcast",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-08T22:52:57.876Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "L'Aut'Rock",
-        "source": "schedule-live",
-        "start": "18:30",
-        "end": "20:00"
-      },
-      "next": {
-        "title": "Dichotomie 88.3",
+        "title": "Hittin' All The Bases",
         "source": "schedule-live",
         "start": "20:00",
-        "end": "22:00"
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
+      },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "L'Aut'Rock",
+      "showTitle": "Hittin' All The Bases",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-08T22:52:59.332Z"
+      "checkedAt": "2026-09-09T00:12:37.422Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Dichotomie 88.3",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
+      "track": "",
+      "showTitle": "Dichotomie 88.3",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-09T00:12:39.079Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Le Studio",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00",
-        "slug": "live"
-      },
-      "next": {
         "title": "Les Amazones",
         "source": "api-live",
         "start": "19:30",
         "end": "20:30",
         "slug": "les-amazones"
       },
-      "track": "feeble little horse - Rewind",
-      "showTitle": "Le Studio",
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://www.choq.ca/emissions/palmareschoq"
+      },
+      "track": "Rae Spoon - Last Cigarette",
+      "showTitle": "Les Amazones",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-08T22:53:06.009Z"
+      "checkedAt": "2026-09-09T00:12:46.021Z"
     }
   }
 }
