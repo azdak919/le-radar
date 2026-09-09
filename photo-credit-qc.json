@@ -1,30 +1,23 @@
 {
-  "updated": "2026-09-09T15:19:59.829Z",
+  "updated": "2026-09-09T17:58:37.043Z",
   "total": 187,
   "withImage": 174,
   "withCredit": 174,
-  "cited": 128,
+  "cited": 129,
   "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 5,
-  "citedNew": 1,
-  "fallbackNew": 14,
+  "checked": 16,
+  "updatedCount": 6,
+  "citedNew": 3,
+  "fallbackNew": 13,
   "samples": [
-    {
-      "title": "À Jonquière, se déplacer sans voiture se paie en temps",
-      "source": "La Pige",
-      "credit": "Photo : Diego Pinto de Queiros",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
     {
       "title": "The catalogue of stories at the Webster Library",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Evelyn Ho Lee",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
@@ -46,6 +39,20 @@
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
