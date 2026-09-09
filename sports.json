@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-09T19:15:54.817Z",
-  "fetchedAt": "2026-09-09T19:15:54.817Z",
+  "updated": "2026-09-09T22:32:47.901Z",
+  "fetchedAt": "2026-09-09T22:32:47.901Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-09T19:15:54.817Z"
+    "referenceDate": "2026-09-09T22:32:47.902Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 816,
@@ -40872,19 +40872,6 @@
           "opponentRegistryId": "marianopolis"
         },
         {
-          "date": "2026-09-13",
-          "time": "15:00",
-          "opponent": "Universel",
-          "opponentCode": "UNI",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "2a3d1a2c-e988-48ca-9fac-834fd1ec625d",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2a3d1a2c-e988-48ca-9fac-834fd1ec625d",
-          "opponentFullName": "Cégep de Universel",
-          "opponentRegistryId": "universel"
-        },
-        {
           "date": "2026-09-19",
           "time": "10:00",
           "opponent": "Rosemont",
@@ -40978,11 +40965,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "1-0"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -41007,20 +40994,7 @@
       "nextGames": [
         {
           "date": "2026-09-13",
-          "time": "9:00",
-          "opponent": "Marianopolis",
-          "opponentCode": "MAR",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "22d011fb-f762-4068-930b-2d6147441c03",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=22d011fb-f762-4068-930b-2d6147441c03",
-          "opponentFullName": "Marianopolis College",
-          "opponentRegistryId": "marianopolis"
-        },
-        {
-          "date": "2026-09-13",
-          "time": "13:30",
+          "time": "10:30",
           "opponent": "Sainte-Anne",
           "opponentCode": "CSA",
           "home": false,
@@ -41030,6 +41004,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1e93ea9b-4e3e-4f64-80cd-a498bb2c6dba",
           "opponentFullName": "Cégep de Sainte-Anne",
           "opponentRegistryId": "sainte-anne"
+        },
+        {
+          "date": "2026-09-13",
+          "time": "15:00",
+          "opponent": "Marianopolis",
+          "opponentCode": "MAR",
+          "home": true,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D3",
+          "gameId": "22d011fb-f762-4068-930b-2d6147441c03",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=22d011fb-f762-4068-930b-2d6147441c03",
+          "opponentFullName": "Marianopolis College",
+          "opponentRegistryId": "marianopolis"
         },
         {
           "date": "2026-09-19",
@@ -41112,16 +41099,16 @@
       ],
       "nextGame": {
         "date": "2026-09-13",
-        "time": "9:00",
-        "opponent": "Marianopolis",
-        "opponentCode": "MAR",
-        "home": true,
+        "time": "10:30",
+        "opponent": "Sainte-Anne",
+        "opponentCode": "CSA",
+        "home": false,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "22d011fb-f762-4068-930b-2d6147441c03",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=22d011fb-f762-4068-930b-2d6147441c03",
-        "opponentFullName": "Marianopolis College",
-        "opponentRegistryId": "marianopolis",
+        "gameId": "1e93ea9b-4e3e-4f64-80cd-a498bb2c6dba",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1e93ea9b-4e3e-4f64-80cd-a498bb2c6dba",
+        "opponentFullName": "Cégep de Sainte-Anne",
+        "opponentRegistryId": "sainte-anne",
         "opponentSector": "collegial"
       },
       "record": {
@@ -41167,19 +41154,6 @@
         },
         {
           "date": "2026-09-13",
-          "time": "9:00",
-          "opponent": "Joliette",
-          "opponentCode": "JOL",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "22d011fb-f762-4068-930b-2d6147441c03",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=22d011fb-f762-4068-930b-2d6147441c03",
-          "opponentFullName": "Cégep régional de Lanaudière à Joliette",
-          "opponentRegistryId": "joliette"
-        },
-        {
-          "date": "2026-09-13",
           "time": "12:00",
           "opponent": "Héritage",
           "opponentCode": "HER",
@@ -41190,6 +41164,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0f0488c0-b51a-41a6-89fc-f521a045df3a",
           "opponentFullName": "Collège Heritage",
           "opponentRegistryId": "heritage"
+        },
+        {
+          "date": "2026-09-13",
+          "time": "15:00",
+          "opponent": "Joliette",
+          "opponentCode": "JOL",
+          "home": false,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D3",
+          "gameId": "22d011fb-f762-4068-930b-2d6147441c03",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=22d011fb-f762-4068-930b-2d6147441c03",
+          "opponentFullName": "Cégep régional de Lanaudière à Joliette",
+          "opponentRegistryId": "joliette"
         },
         {
           "date": "2026-09-19",
@@ -41301,20 +41288,7 @@
       "nextGames": [
         {
           "date": "2026-09-13",
-          "time": "10:30",
-          "opponent": "Universel",
-          "opponentCode": "UNI",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "5b928cb0-e998-48bd-979f-7a049ce2a3f3",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5b928cb0-e998-48bd-979f-7a049ce2a3f3",
-          "opponentFullName": "Cégep de Universel",
-          "opponentRegistryId": "universel"
-        },
-        {
-          "date": "2026-09-13",
-          "time": "16:30",
+          "time": "13:30",
           "opponent": "Sainte-Anne",
           "opponentCode": "CSA",
           "home": true,
@@ -41406,24 +41380,24 @@
       ],
       "nextGame": {
         "date": "2026-09-13",
-        "time": "10:30",
-        "opponent": "Universel",
-        "opponentCode": "UNI",
-        "home": false,
+        "time": "13:30",
+        "opponent": "Sainte-Anne",
+        "opponentCode": "CSA",
+        "home": true,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "5b928cb0-e998-48bd-979f-7a049ce2a3f3",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5b928cb0-e998-48bd-979f-7a049ce2a3f3",
-        "opponentFullName": "Cégep de Universel",
-        "opponentRegistryId": "universel",
+        "gameId": "61916035-d7d7-4179-a857-f1e187eb1b1d",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=61916035-d7d7-4179-a857-f1e187eb1b1d",
+        "opponentFullName": "Cégep de Sainte-Anne",
+        "opponentRegistryId": "sainte-anne",
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "1-0"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -41461,7 +41435,7 @@
         },
         {
           "date": "2026-09-13",
-          "time": "13:30",
+          "time": "10:30",
           "opponent": "Joliette",
           "opponentCode": "JOL",
           "home": true,
@@ -41474,7 +41448,7 @@
         },
         {
           "date": "2026-09-13",
-          "time": "16:30",
+          "time": "13:30",
           "opponent": "Rosemont",
           "opponentCode": "ROS",
           "home": false,
@@ -41594,32 +41568,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-09-13",
-          "time": "10:30",
-          "opponent": "Rosemont",
-          "opponentCode": "ROS",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "5b928cb0-e998-48bd-979f-7a049ce2a3f3",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5b928cb0-e998-48bd-979f-7a049ce2a3f3",
-          "opponentFullName": "Collège de Rosemont",
-          "opponentRegistryId": "rosemont"
-        },
-        {
-          "date": "2026-09-13",
-          "time": "15:00",
-          "opponent": "Héritage",
-          "opponentCode": "HER",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "2a3d1a2c-e988-48ca-9fac-834fd1ec625d",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2a3d1a2c-e988-48ca-9fac-834fd1ec625d",
-          "opponentFullName": "Collège Heritage",
-          "opponentRegistryId": "heritage"
-        },
-        {
           "date": "2026-09-19",
           "time": "11:30",
           "opponent": "Joliette",
@@ -41699,25 +41647,25 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-13",
-        "time": "10:30",
-        "opponent": "Rosemont",
-        "opponentCode": "ROS",
-        "home": true,
+        "date": "2026-09-19",
+        "time": "11:30",
+        "opponent": "Joliette",
+        "opponentCode": "JOL",
+        "home": false,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "5b928cb0-e998-48bd-979f-7a049ce2a3f3",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5b928cb0-e998-48bd-979f-7a049ce2a3f3",
-        "opponentFullName": "Collège de Rosemont",
-        "opponentRegistryId": "rosemont",
+        "gameId": "a6892f7a-9d0e-4267-af51-761972004214",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a6892f7a-9d0e-4267-af51-761972004214",
+        "opponentFullName": "Cégep régional de Lanaudière à Joliette",
+        "opponentRegistryId": "joliette",
         "opponentSector": "collegial"
       },
       "record": {
         "wins": 0,
-        "losses": 0,
+        "losses": 2,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 2,
+        "label": "0-2"
       },
       "source": "rseq-s1",
       "priority": 80,
