@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-09T06:20:36.410Z",
+  "updatedAt": "2026-09-09T11:21:01.029Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T06:20:09.059Z"
+      "checkedAt": "2026-09-09T11:20:33.616Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
+        "title": "Club classique",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "07:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/club-classique"
       },
       "next": {
-        "title": "Fréquence 440",
+        "title": "La collation",
         "source": "schedule",
-        "start": "03:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/frequence-440"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "Club classique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T06:20:10.697Z"
+      "checkedAt": "2026-09-09T11:20:34.783Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "WarpCor / Out of the Void",
+        "title": "The Wednesday Morning After",
         "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
+        "start": "07:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "Full Circle",
+        "title": "The Sleepy King/Terminal 5",
         "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "track": "",
-      "showTitle": "WarpCor / Out of the Void",
+      "showTitle": "The Wednesday Morning After",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,60 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T06:20:13.285Z"
+      "checkedAt": "2026-09-09T11:20:37.359Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Morning Electro-shock",
         "source": "schedule-live",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/morning-electro-shock"
       },
+      "next": {
+        "title": "Trawling the Megahertz",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Morning Electro-shock",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T06:20:28.191Z"
+      "checkedAt": "2026-09-09T11:20:51.175Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule-live",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-09T06:20:29.554Z"
+      "checkedAt": "2026-09-09T11:20:52.251Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +140,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Karcius - Darkest Heir",
+      "track": "Dominique Fils-Aimé - The River",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-09T06:20:36.060Z"
+      "checkedAt": "2026-09-09T11:21:00.679Z"
     }
   }
 }
