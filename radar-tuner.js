@@ -1819,7 +1819,7 @@ function renderTunerNowAir() {
     paintWideDial(radio);
     // La voie wide return avant les markTunerDialReady() du chemin compact :
     // sans cet appel le carré reste opacity: 0 (rectangle vide) sur tout
-    // écran ≥ 1281 px — accueil, kit média, fiches.
+    // écran ≥ 1280 px — accueil, kit média, fiches.
     markTunerDialReady();
     syncWideStickyTop();
     if (previewing) {

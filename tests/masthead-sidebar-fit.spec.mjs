@@ -126,8 +126,8 @@ test('mât : toutes tailles + sidebar — météo et sports restent dans leur ca
     expect(snap.cities, `${w}: au moins une ville`).toBeGreaterThanOrEqual(1);
     expect(snap.chips, `${w}: bandeau sports`).toBeGreaterThanOrEqual(1);
     if (w <= 1023) expect(snap.docked, `${w}: météo dockée`).toBe(true);
-    if (w >= 1281) expect(snap.wide, `${w}: shell E`).toBe('e');
-    if (w <= 1280) expect(snap.wide, `${w}: pas E`).toBe('');
+    if (w >= 1280) expect(snap.wide, `${w}: shell E`).toBe('e');
+    if (w <= 1279) expect(snap.wide, `${w}: pas E`).toBe('');
   }
 
   expect(pageErrors).toEqual([]);

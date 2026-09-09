@@ -5,7 +5,7 @@
  * paint — sinon une personne en mode sombre reçoit une page blanche en
  * arrivant depuis un moteur de recherche.
  *
- * Layout : E s’active tout seul dès 1281 px (1440 / 1920 / 2560 / 3440 /
+ * Layout : E s’active tout seul dès 1280 px (1280@150% Edge / 1440 / 1920 / 2560 / 3440 /
  * 3840 via media queries). Aucun `?wide=e` en prod. `?wide=off` reste le
  * témoin lab de l’ancien shell ~1180. Pomo / solitaire n’embarquent pas
  * ce fichier.
@@ -16,8 +16,8 @@
 (function () {
   'use strict';
 
-  var WIDE_CSS = 'dev/wide-desktop-preview.css?v=wide-auto-e100';
-  var WIDE_MQ = '(min-width: 1281px)';
+  var WIDE_CSS = 'dev/wide-desktop-preview.css?v=wide-auto-e101';
+  var WIDE_MQ = '(min-width: 1280px)';
 
   try {
     var saved = localStorage.getItem('radar-theme');

@@ -13,8 +13,8 @@
 
   const WIDE_PARAM = 'wide';
   const STACK_ID = 'wide-rail-stack';
-  /** E / rail chrome : strictement au-delà de la ref. bureau 1280. */
-  const WIDE_E_MQ = '(min-width: 1281px)';
+  /** E / rail chrome : dès la ref. bureau 1280 (inclus) — Edge 1920@150% = CSS 1280. */
+  const WIDE_E_MQ = '(min-width: 1280px)';
 
   /** Placeholders pour restaurer l’ordre DOM en quittant E. */
   let sectionsHome = null;
@@ -42,7 +42,7 @@
   }
 
   // Dataset immédiat (double avec midwidth / seo-page-theme — idempotent)
-  // ⛔ ≤1280 : ne pas poser data-wide-preview (layouts compact / mid / 1280).
+  // ⛔ <1280 : ne pas poser data-wide-preview (layouts compact / mid / <1280).
   try {
     const id = currentWide();
     if (id && id !== 'off' && isWideEViewport()) {
@@ -81,7 +81,7 @@
    */
   function applyWideRailChrome() {
     const id = currentWide();
-    // ≤1280 : jamais de reparent rail (prod inchangée)
+    // <1280 : jamais de reparent rail (layout étroit prod)
     if (id !== 'e' || !isWideEViewport()) {
       restoreWideRailChrome();
       return;

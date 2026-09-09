@@ -4,7 +4,7 @@
  * Visible uniquement sur localhost / 127.0.0.1.
  * Ne s’injecte pas dans l’iframe lab (`?labFrame=1`) ni en prod le-radar.ca.
  *
- * Prod / main : E s’active tout seul dès 1281 px (aucun ?wide=).
+ * Prod / main : E s’active tout seul dès 1280 px (aucun ?wide=).
  * `?wide=off` = témoin de l’ancien shell ~1180 (lab seulement).
  *
  * Formats : largeurs iframe (media queries réelles). Si > écran hôte, scale
@@ -61,11 +61,11 @@
   /* Verdict mainteneur : E seulement (A–D retirés de la barre lab). */
   const WIDE_OPTIONS = {
     off: { id: 'off', label: '1180', hint: 'Ancien shell ~1180 — témoin lab' },
-    e: { id: 'e', label: 'Auto', hint: 'Défaut prod : E dès 1281, densités 1440/1920/2560…' },
+    e: { id: 'e', label: 'Auto', hint: 'Défaut prod : E dès 1280, densités 1440/1920/2560…' },
   };
 
-  /** E uniquement au-delà de la ref. bureau 1280 (format lab ou viewport). */
-  const WIDE_E_MIN_PX = 1281;
+  /** E dès la ref. bureau 1280 inclus (format lab ou viewport). */
+  const WIDE_E_MIN_PX = 1280;
 
   function formatWidthPx(fmtKey) {
     const f = FORMATS[fmtKey || currentFormat()];
@@ -167,7 +167,7 @@
   /** Wide : pas de reload (évite la « disparition » de la barre). */
   function applyWide(wideId, { pushUrl = true } = {}) {
     let id = WIDE_OPTIONS[wideId] ? wideId : 'off';
-    // ≤1280 : E refusé — on peut garder ?wide=e dans l’URL pour y revenir
+    // <1280 : E refusé — on peut garder ?wide=e dans l’URL pour y revenir
     // après un format large, mais le dataset n’est jamais posé.
     const allowed = canApplyWideE();
     const effective = (id !== 'off' && allowed) ? id : 'off';
@@ -199,7 +199,7 @@
         btn.disabled = locked;
         btn.setAttribute('aria-disabled', locked ? 'true' : 'false');
         if (locked) {
-          btn.title = 'E disponible seulement en >1280 (formats 1440+ ou fenêtre large)';
+          btn.title = 'E disponible dès 1280 (fenêtre large ou formats 1280+)';
         } else {
           btn.title = WIDE_OPTIONS[wid]?.hint || '';
         }
@@ -207,7 +207,7 @@
       const hint = bar.querySelector('[data-wide-hint]');
       if (hint) {
         if (!allowed && id === 'e') {
-          hint.textContent = 'E inactif ≤1280 — passe en 1440+ ou Plein large pour l’activer';
+          hint.textContent = 'E inactif <1280 — passe en 1280+ ou Plein large pour l’activer';
         } else {
           hint.textContent = WIDE_OPTIONS[id]?.hint || '';
         }
@@ -242,7 +242,7 @@
   }
 
   // Dataset le plus tôt possible (host + iframe)
-  // ⛔ ≤1280 : jamais de data-wide-preview
+  // ⛔ <1280 : jamais de data-wide-preview
   try {
     const early = currentWide();
     if (early && early !== 'off' && canApplyWideE()) {
@@ -470,7 +470,7 @@
     bar.appendChild(fmtLarge);
 
     document.body.appendChild(bar);
-    // Applique le gating ≤1280 (dataset + boutons + badge)
+    // Applique le gating <1280 (dataset + boutons + badge)
     applyWide(wideNow, { pushUrl: false });
 
     if (format !== 'full') {
@@ -484,7 +484,7 @@
     injectBar();
   }
 
-  // Plein écran : bascule E actif/inactif au franchissement de 1281 px
+  // Plein écran : bascule E actif/inactif au franchissement de 1280 px
   window.addEventListener('resize', () => {
     if (currentFormat() !== 'full') return;
     if (currentWide() !== 'e') return;

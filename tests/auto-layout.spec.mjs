@@ -17,7 +17,7 @@ async function openAt(page, path, width, height = 900) {
   await page.goto(path, { waitUntil: 'domcontentloaded' });
 }
 
-test('390 / 768 / 1280 : layouts compact-mid-bureau, pas de E', async ({ page }) => {
+test('390 / 768 / 1279 : layouts compact-mid-bureau, pas de E', async ({ page }) => {
   await openAt(page, '/', 390, 844);
   expect(new URL(page.url()).search).toBe('');
   expect(await wideAttr(page)).toBe('');
@@ -27,9 +27,15 @@ test('390 / 768 / 1280 : layouts compact-mid-bureau, pas de E', async ({ page })
   await expect.poll(() => wideAttr(page)).toBe('');
   await expect(page.locator('.news-list')).toHaveCSS('display', 'grid');
 
-  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.setViewportSize({ width: 1279, height: 800 });
   await expect.poll(() => wideAttr(page)).toBe('');
   expect(await maxwToken(page)).toMatch(/1180px/);
+});
+
+test('1280 : E auto (Edge 1920@150% CSS width)', async ({ page }) => {
+  await openAt(page, '/', 1280, 800);
+  expect(new URL(page.url()).search).toBe('');
+  expect(await wideAttr(page)).toBe('e');
 });
 
 test('1920 Philips : E auto sans query, shell plus large que 1180', async ({ page }) => {

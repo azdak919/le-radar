@@ -251,7 +251,7 @@ test.describe('overlay traduction articles', () => {
         ).toBe(true);
       }
       if (vp.width === 1280) {
-        expect(snap.wideLeft, '1280 : pas de .tuner-wide-left').toBe(false);
+        expect(snap.wideLeft, '1280 : shell E / .tuner-wide-left').toBe(true);
       }
       if (vp.width <= 430) {
         expect(snap.prevPe === 'none' || snap.nextPe !== 'none', `${vp.name}: skips`).toBeTruthy();

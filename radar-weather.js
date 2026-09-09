@@ -305,7 +305,7 @@ function dropWeatherCardForFit() {
 }
 
 /**
- * Grand écran (wide / super-wide) — défaut prod dès 1281 px :
+ * Grand écran (wide / super-wide) — défaut prod dès 1280 px :
  * - pas de marquee
  * - pas de clip / nom compact : les conteneurs s’ajustent ; si ça ne rentre
  *   pas, on retire une carte (fit), on n’ampute pas le texte.
@@ -317,7 +317,7 @@ function isWideNoMarqueeMode() {
   try {
     const id = document.documentElement.dataset.widePreview;
     if (id === 'off' || id === 'a') return false;
-    return window.matchMedia('(min-width: 1281px)').matches;
+    return window.matchMedia('(min-width: 1280px)').matches;
   } catch {
     return false;
   }
@@ -1551,7 +1551,7 @@ function bindMastheadWeatherLayoutWatchers() {
   } catch { /* ignore */ }
   [
     MASTHEAD_WEATHER_PHONE_MQ,
-    window.matchMedia('(min-width: 1281px)'),
+    window.matchMedia('(min-width: 1280px)'),
     window.matchMedia('(min-width: 1440px)'),
     window.matchMedia('(min-width: 1920px)'),
     window.matchMedia('(min-width: 2560px)'),

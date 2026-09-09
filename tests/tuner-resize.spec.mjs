@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 /**
  * Resize fenêtre : le synthé doit changer de coque sans refresh.
  *
- * Régression : au-delà de 1281 px le JS posait des wrappers wide + une largeur
+ * Régression : dès 1280 px le JS posait des wrappers wide + une largeur
  * inline sur le dial. En resserrant, le CSS wide partait mais le DOM restait
  * — barre cassée jusqu’au rechargement.
  */
@@ -35,7 +35,7 @@ function health(page) {
   });
 }
 
-test('1920 → 1280 → 390 → 1920 : la barre radio reste entière', async ({ page }) => {
+test('1920 → 1279 → 390 → 1920 : la barre radio reste entière', async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await waitDial(page);
@@ -47,17 +47,17 @@ test('1920 → 1280 → 390 → 1920 : la barre radio reste entière', async ({ 
   expect(wide.wideLeft, 'wide : wrappers E absents').toBe(true);
   expect(wide.name.length, 'wide : carré vide').toBeGreaterThan(0);
 
-  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.setViewportSize({ width: 1279, height: 800 });
   await expect.poll(() => page.evaluate(() => !!document.querySelector('.tuner-wide-left')), {
     timeout: 4000,
   }).toBe(false);
   const desk = await health(page);
-  expect(desk.ready, '1280 : is-dial-ready').toBe(true);
-  expect(desk.height, '1280 : barre trop basse').toBeGreaterThan(36);
-  expect(desk.playH, '1280 : play invisible').toBeGreaterThan(20);
-  expect(desk.dialWidth, '1280 : largeur inline du wide encore là').toBe('');
-  expect(desk.overflow, `1280 : débordement ${desk.overflow}px`).toBeLessThanOrEqual(2);
-  expect(desk.name.length, '1280 : carré vide').toBeGreaterThan(0);
+  expect(desk.ready, '1279 : is-dial-ready').toBe(true);
+  expect(desk.height, '1279 : barre trop basse').toBeGreaterThan(36);
+  expect(desk.playH, '1279 : play invisible').toBeGreaterThan(20);
+  expect(desk.dialWidth, '1279 : largeur inline du wide encore là').toBe('');
+  expect(desk.overflow, `1279 : débordement ${desk.overflow}px`).toBeLessThanOrEqual(2);
+  expect(desk.name.length, '1279 : carré vide').toBeGreaterThan(0);
 
   await page.setViewportSize({ width: 390, height: 844 });
   await expect.poll(() => page.evaluate(() => !!document.querySelector('.tuner-wide-left')), {

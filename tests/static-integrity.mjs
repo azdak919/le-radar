@@ -861,7 +861,7 @@ assert(feedsHtml.includes('src="seo-page-theme.js"'), 'feeds.html : amorçage de
       && /return 'e'/.test(midJs)
       && /return 'e'/.test(wideJs)
       && /if \(id === 'off' \|\| id === 'a'\) return false/.test(appJs),
-    'layout : E auto dès 1281 px sans ?wide= (prod / main)',
+    'layout : E auto dès 1280 px sans ?wide= (prod / main)',
   );
   assert(
     !midJs.includes("searchParams.get(WIDE_PARAM) || 'off'")

@@ -691,7 +691,7 @@ function bindMagazineViewportRelayout() {
   for (const q of [
     '(min-width: 768px)',
     '(min-width: 1100px)',
-    '(min-width: 1281px)',
+    '(min-width: 1280px)',
     '(min-width: 1920px)',
     '(min-width: 3440px)',
     '(min-width: 3840px)',

@@ -1,11 +1,11 @@
 # Labo — viewport local
 
 Outil **local** pour voir le site aux largeurs téléphone / tablette / bureau.
-Ce n’est pas « labo E » : E est juste le layout prod (≥1281 px). Ici on dit **le Labo**.
+Ce n’est pas « labo E » : E est juste le layout prod (≥1280 px). Ici on dit **le Labo**.
 
-**Prod / main :** le layout large s’active tout seul dès **1281 px**. Aucun `?wide=e`.
+**Prod / main :** le layout large s’active tout seul dès **1280 px**. Aucun `?wide=e`.
 Les densités 1440 / 1600 / 1920 / 2560 / 3440 / 3840 suivent le viewport.
-Téléphone, mid et bureau compact (≤1280) restent les layouts existants.
+Téléphone, mid et fenêtres <1280 restent les layouts étroits existants.
 
 Barre Format (Base + Grand) : **localhost seulement**.
 
@@ -24,7 +24,7 @@ Affiches à imprimer (11×17, lettre, légal) : `/affiches/`.
 ```bash
 cd VisualCode/le-radar
 python3 -m http.server 8766 --bind 127.0.0.1
-# → http://127.0.0.1:8766/          (Auto = E dès 1281)
+# → http://127.0.0.1:8766/          (Auto = E dès 1280)
 # → http://127.0.0.1:8766/?wide=off (ancien shell ~1180)
 ```
 
