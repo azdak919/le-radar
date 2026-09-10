@@ -1,10 +1,18 @@
 {
-  "updated": "2026-09-10T20:57:34.906Z",
+  "updated": "2026-09-10T22:48:43.630Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 8,
+  "mismatches": 9,
   "ok": true,
   "samples": [
+    {
+      "title": "L’Association canadienne-française pour l’avancement des sciences (ACFAS) dévoile ses revendications envers les partis politiques",
+      "link": "https://quartierlibre.ca/acfas-devoile-ses-revendications/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Samuel Girard",
+      "reason": "page-byline"
+    },
     {
       "title": "Lo, how the Roses e’er blooming",
       "link": "https://thelinknewspaper.ca/article/16370",
@@ -70,5 +78,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 8
+  "fixed": 9
 }
