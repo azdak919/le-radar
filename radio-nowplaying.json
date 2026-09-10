@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-10T16:53:22.261Z",
+  "updatedAt": "2026-09-10T19:27:22.833Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T16:53:05.667Z"
+      "checkedAt": "2026-09-10T19:27:08.272Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque",
+        "title": "La session live",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/session-live-a-cism"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "Rythmologie",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/rythmologie"
       },
       "track": "",
-      "showTitle": "La grande ludothèque",
+      "showTitle": "La session live",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T16:53:08.198Z"
+      "checkedAt": "2026-09-10T19:27:09.766Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Venus Radio",
+        "title": "Positive Vibes",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+        "title": "Off The Hour: La Voix des Immigrants",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Venus Radio",
+      "showTitle": "Positive Vibes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T16:53:10.913Z"
+      "checkedAt": "2026-09-10T19:27:12.549Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Power Hour",
+        "title": "Weirdo Rippers",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/the-power-hour"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/weirdo-rippers"
       },
       "next": {
-        "title": "What's Happening in NDG",
+        "title": "Hooked On Sonics",
         "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
       },
       "track": "",
-      "showTitle": "The Power Hour",
+      "showTitle": "Weirdo Rippers",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T16:53:13.435Z"
+      "checkedAt": "2026-09-10T19:27:15.562Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T16:53:14.784Z"
+      "checkedAt": "2026-09-10T19:27:16.715Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "le-12-mtlsup"
       },
-      "track": "Eartheater - Eartheater & Oklou - Fast Asleep",
+      "track": "Genesis Owusu - BLESSED ARE THE MEEK",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-10T16:53:21.910Z"
+      "checkedAt": "2026-09-10T19:27:22.482Z"
     }
   }
 }
