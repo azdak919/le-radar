@@ -1,16 +1,16 @@
 {
-  "updated": "2026-09-10T08:57:52.043Z",
-  "fetchedAt": "2026-09-10T08:57:52.043Z",
+  "updated": "2026-09-10T15:04:03.343Z",
+  "fetchedAt": "2026-09-10T15:04:03.343Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-10T08:57:52.044Z"
+    "referenceDate": "2026-09-10T15:04:03.343Z"
   },
   "registry": "sports-teams.json",
-  "registryMatched": 816,
+  "registryMatched": 817,
   "leagueCatalog": 112,
-  "leaguesWithTeams": 104,
+  "leaguesWithTeams": 106,
   "leaguesOk": 112,
   "leaguesFailed": 0,
   "teamsPreservedOnError": 17,
@@ -73,7 +73,7 @@
     "ultimate",
     "volleyball"
   ],
-  "teamCount": 835,
+  "teamCount": 838,
   "errors": [
     {
       "leagueId": "spordle-collegial",
@@ -25538,6 +25538,20 @@
           "opponentRegistryId": "maisonneuve"
         },
         {
+          "date": "2027-02-05",
+          "time": "19:00",
+          "opponent": "Saint-Laurent",
+          "opponentCode": "SL",
+          "home": false,
+          "sport": "basketball",
+          "competition": "Basketball collégial masculin D3",
+          "gameId": "ec4163f1-9dc9-42b3-8fbf-6e59bebe10fb",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ec4163f1-9dc9-42b3-8fbf-6e59bebe10fb",
+          "opponentFullName": "Cégep de Saint-Laurent",
+          "opponentNickname": "Cavaliers",
+          "opponentRegistryId": "saint-laurent"
+        },
+        {
           "date": "2027-02-13",
           "time": "15:00",
           "opponent": "Saint-Jérôme",
@@ -25549,19 +25563,6 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=47b5ec95-52fb-42a1-a1e6-81e4539b2127",
           "opponentFullName": "Cégep de Saint-Jérôme",
           "opponentRegistryId": "saint-jerome"
-        },
-        {
-          "date": "2027-02-27",
-          "time": "21:00",
-          "opponent": "Abitibi-Témiscamingue",
-          "opponentCode": "CAT",
-          "home": true,
-          "sport": "basketball",
-          "competition": "Basketball collégial masculin D3",
-          "gameId": "27d74383-c9e2-48bc-90fe-6c95e0d2604d",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=27d74383-c9e2-48bc-90fe-6c95e0d2604d",
-          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
-          "opponentRegistryId": "abitibi-temisc"
         }
       ],
       "nextGame": {
@@ -26546,6 +26547,19 @@
           "opponentRegistryId": "abitibi-temisc"
         },
         {
+          "date": "2027-02-05",
+          "time": "19:00",
+          "opponent": "Lionel-Groulx",
+          "opponentCode": "CLG",
+          "home": true,
+          "sport": "basketball",
+          "competition": "Basketball collégial masculin D3",
+          "gameId": "ec4163f1-9dc9-42b3-8fbf-6e59bebe10fb",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ec4163f1-9dc9-42b3-8fbf-6e59bebe10fb",
+          "opponentFullName": "Collège Lionel-Groulx",
+          "opponentRegistryId": "lionel-groulx"
+        },
+        {
           "date": "2027-02-06",
           "time": "18:00",
           "opponent": "L'Assomption",
@@ -26557,19 +26571,6 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ae4e0cab-7d42-4cc0-8f95-5f6c51ee11e1",
           "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
           "opponentRegistryId": "lassomption"
-        },
-        {
-          "date": "2027-02-18",
-          "time": "19:30",
-          "opponent": "Maisonneuve",
-          "opponentCode": "MAI",
-          "home": false,
-          "sport": "basketball",
-          "competition": "Basketball collégial masculin D3",
-          "gameId": "ed4a6d3f-64c7-47e3-9650-11a16fc53dc3",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ed4a6d3f-64c7-47e3-9650-11a16fc53dc3",
-          "opponentFullName": "Collège de Maisonneuve",
-          "opponentRegistryId": "maisonneuve"
         }
       ],
       "nextGame": {
@@ -91699,6 +91700,71 @@
       "priority": 80,
       "fullName": "Cégep de Valleyfield",
       "registryId": "valleyfield"
+    },
+    "collegial:volleyball:3ee75d69-3d70-44cd-9f75-f3847ba89dcf:1c5b3580-ffcf-48e5-8e22-813514e767ea": {
+      "id": "collegial:volleyball:3ee75d69-3d70-44cd-9f75-f3847ba89dcf:1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "rseqTeamId": "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+      "leagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "name": "Beauce-Appalaches SG",
+      "code": "BAPS",
+      "sector": "collegial",
+      "sport": "volleyball",
+      "sportLabel": "Volleyball",
+      "sex": "F",
+      "division": "D3",
+      "usports": false,
+      "leagueLabel": "Volleyball collégial féminin D3",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [],
+      "nextGame": null,
+      "record": null,
+      "source": "rseq-s1",
+      "priority": 99
+    },
+    "collegial:volleyball:3ee75d69-3d70-44cd-9f75-f3847ba89dcf:0f79a19a-5f25-4c93-b92b-771c052d5299": {
+      "id": "collegial:volleyball:3ee75d69-3d70-44cd-9f75-f3847ba89dcf:0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "rseqTeamId": "0f79a19a-5f25-4c93-b92b-771c052d5299",
+      "leagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
+      "name": "Beauce-Appalaches SM",
+      "code": "BAPS",
+      "sector": "collegial",
+      "sport": "volleyball",
+      "sportLabel": "Volleyball",
+      "sex": "F",
+      "division": "D3",
+      "usports": false,
+      "leagueLabel": "Volleyball collégial féminin D3",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [],
+      "nextGame": null,
+      "record": null,
+      "source": "rseq-s1",
+      "priority": 99
+    },
+    "collegial:volleyball:e3685a9f-3213-4e86-9463-a3813b164ebe:21fdf732-865e-419d-b640-664e1f9e22a4": {
+      "id": "collegial:volleyball:e3685a9f-3213-4e86-9463-a3813b164ebe:21fdf732-865e-419d-b640-664e1f9e22a4",
+      "rseqTeamId": "21fdf732-865e-419d-b640-664e1f9e22a4",
+      "leagueId": "e3685a9f-3213-4e86-9463-a3813b164ebe",
+      "name": "Saint-Félicien",
+      "code": "FEL",
+      "sector": "collegial",
+      "sport": "volleyball",
+      "sportLabel": "Volleyball",
+      "sex": "F",
+      "division": "D3",
+      "usports": false,
+      "leagueLabel": "Volleyball collégial féminin D3",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [],
+      "nextGame": null,
+      "record": null,
+      "source": "rseq-s1",
+      "priority": 80,
+      "fullName": "Cégep de Saint-Félicien",
+      "registryId": "saint-felicien"
     },
     "collegial:volleyball:d004d42a-8c7d-4c4e-8188-a598adfd0235:ce37611a-5f49-4359-be79-06e420470d8a": {
       "id": "collegial:volleyball:d004d42a-8c7d-4c4e-8188-a598adfd0235:ce37611a-5f49-4359-be79-06e420470d8a",
