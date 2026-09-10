@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-09-10T11:17:06.990Z",
+  "updatedAt": "2026-09-10T12:45:15.034Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Jeudi Révolte",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
+      "next": {
+        "title": "Conduite Antisportive",
+        "source": "schedule-live",
+        "start": "11:30",
+        "end": "12:30",
+        "url": "https://chyz.ca/emission/conduite-antisportive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Jeudi Révolte",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T11:16:48.154Z"
+      "checkedAt": "2026-09-10T12:44:50.590Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La lecture pis toi",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
-      },
-      "next": {
         "title": "Jimmy et Neutron",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/jimmy-et-neutron"
       },
+      "next": {
+        "title": "La collation",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
+      },
       "track": "",
-      "showTitle": "La lecture pis toi",
+      "showTitle": "Jimmy et Neutron",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T11:16:49.717Z"
+      "checkedAt": "2026-09-10T12:44:51.933Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,17 +81,17 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T11:16:52.878Z"
+      "checkedAt": "2026-09-10T12:44:54.646Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Daydream Nation",
+        "title": "Free City Radio",
         "source": "schedule-live",
-        "start": "06:00",
+        "start": "08:00",
         "end": "09:00",
-        "url": "http://www.cjlo.com/shows/daydream-nation"
+        "url": "http://www.cjlo.com/shows/free-city-radio"
       },
       "next": {
         "title": "Everything Everywhere",
@@ -94,40 +101,39 @@
         "url": "http://www.cjlo.com/shows/everything-everywhere"
       },
       "track": "",
-      "showTitle": "Daydream Nation",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live",
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-10T11:16:55.564Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "11:00"
-      },
-      "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Free City Radio",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T11:16:56.500Z"
+      "checkedAt": "2026-09-10T12:44:57.537Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "11:00"
+      },
+      "next": {
+        "title": "À nous le futur",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "20:00"
+      },
+      "track": "",
+      "showTitle": "Palmarès CFAK",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-10T12:44:59.262Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +146,7 @@
         "end": "18:00",
         "slug": "le-12-mtlsup"
       },
-      "track": "Mike Paul Kuekuatsheu - Shine bright",
+      "track": "Fontaines D.C. - Marianne",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-10T11:17:06.641Z"
+      "checkedAt": "2026-09-10T12:45:14.683Z"
     }
   }
 }
