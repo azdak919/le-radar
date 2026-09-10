@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-10T01:03:39.700Z",
+  "updatedAt": "2026-09-10T02:58:02.311Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T01:03:24.952Z"
+      "checkedAt": "2026-09-10T02:57:29.675Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Jeunesse cosmique",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/jeunesse-cosmique"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule",
         "start": "22:00",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "La grande ludothèque (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+      },
       "track": "",
-      "showTitle": "Jeunesse cosmique",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T01:03:26.541Z"
+      "checkedAt": "2026-09-10T02:57:30.900Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Jazz Euphorium",
-        "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Rhizomatic Hour 1",
         "source": "api-live",
         "start": "22:00",
         "end": "23:00"
       },
+      "next": {
+        "title": "Rhizomatic Hour 2",
+        "source": "api-live",
+        "start": "23:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Jazz Euphorium",
+      "showTitle": "Rhizomatic Hour 1",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,35 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T01:03:29.359Z"
+      "checkedAt": "2026-09-10T02:57:33.342Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "There's a Synth in the House",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house",
-        "special": true
-      },
-      "next": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "22:00",
         "end": "23:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
+      },
+      "next": {
+        "title": "The Night Watch",
+        "source": "schedule",
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/the-night-watch"
       },
       "track": "",
       "showTitle": "There's a Synth in the House",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T01:03:31.764Z"
+      "checkedAt": "2026-09-10T02:57:55.563Z"
     },
     "cfak": {
       "id": "cfak",
@@ -134,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T01:03:32.852Z"
+      "checkedAt": "2026-09-10T02:57:56.685Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +146,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Taxi Girls - So Quaint",
+      "track": "Magi Merlin - Workout",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -158,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-10T01:03:39.350Z"
+      "checkedAt": "2026-09-10T02:58:01.960Z"
     }
   }
 }
