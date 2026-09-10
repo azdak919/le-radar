@@ -1,28 +1,28 @@
 {
-  "updated": "2026-09-09T23:55:22.188Z",
+  "updated": "2026-09-10T00:26:01.755Z",
   "total": 188,
   "withImage": 175,
   "withCredit": 175,
-  "cited": 129,
+  "cited": 127,
   "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 17,
-  "updatedCount": 7,
-  "citedNew": 3,
-  "fallbackNew": 14,
+  "checked": 16,
+  "updatedCount": 6,
+  "citedNew": 0,
+  "fallbackNew": 16,
   "samples": [
+    {
+      "title": "Editorial: The importance of student journalism",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "The catalogue of stories at the Webster Library",
       "source": "The Link",
-      "credit": "Illustration: Evelyn Ho Lee",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Un campus en transformation : entre manque d’espace, nouvelles salles de cours et réinvention des lieux de vie à Polytechnique",
-      "source": "Le Polyscope",
-      "credit": "Crédit photo : Le Polyscope",
+      "credit": "Photo credit: The Link",
       "cited": false,
       "method": null
     },
@@ -48,18 +48,11 @@
       "method": null
     },
     {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
+      "title": "Blackface at McGill",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
     }
   ]
 }
