@@ -443,6 +443,15 @@
     );
   }
 
+  /** Microsoft Edge (Chromium) — Edg/ UA ; canvas getImageData a crashé le renderer. */
+  function _isEdgeBrowser() {
+    try {
+      return /Edg\//.test((typeof navigator !== "undefined" && navigator.userAgent) || "");
+    } catch (_) {
+      return false;
+    }
+  }
+
   /**
    * Dimensions pour le gate « low_resolution » : préférer la méta banque
    * (résolution native Commons). Le thumb Special:FilePath a un naturalWidth
@@ -549,6 +558,8 @@
    * @param {{ campus?: boolean, title?: string, url?: string }} [opts]
    */
   function computeBestFocalY(img, mastheadAr, opts) {
+    // Edge : éviter getImageData (crash renderer connu) — centre du cover.
+    if (_isEdgeBrowser()) return 0.5;
     const campusMode = !!(opts && opts.campus);
     const subjectHay = [opts && opts.title, opts && opts.url]
       .filter(Boolean)
@@ -1247,7 +1258,7 @@
     let focalY = 0.5;
     if (bg && typeof bg.focalY === "number" && !Number.isNaN(bg.focalY)) {
       focalY = Math.min(1, Math.max(0, bg.focalY));
-    } else if (img) {
+    } else if (img && !_isEdgeBrowser()) {
       try {
         focalY = computeBestFocalY(img, _mastheadAspect(), {
           campus: isCampusBackground(bg),
@@ -1563,6 +1574,22 @@
       return {
         ok: false,
         reason: "low_resolution",
+        metrics: {
+          aspect: +aspect.toFixed(3),
+          width: w,
+          height: h,
+          megapixels: +(pixels / 1e6).toFixed(2),
+          dimSource: dimSrc,
+        },
+      };
+    }
+
+    // Edge : pas d'analyse canvas (risque crash renderer / Error code 4).
+    // Même esprit que le fallback sans CORS — aspect + méta résolution seulement.
+    if (_isEdgeBrowser()) {
+      return {
+        ok: true,
+        reason: "edge_skip_canvas",
         metrics: {
           aspect: +aspect.toFixed(3),
           width: w,
@@ -2442,18 +2469,30 @@
 
     // 1) Tentative CORS pour score canvas (luminance / nuit plate).
     // 2) Si CORS échoue → rechargement sans crossOrigin (aspect seul).
+    const edgeUa = _isEdgeBrowser();
     const img = new Image();
     try {
       img.decoding = "async";
-      img.crossOrigin = "anonymous";
+      // Edge n'utilise pas le QC canvas : pas besoin de CORS (esprit fallback).
+      if (!edgeUa) img.crossOrigin = "anonymous";
     } catch (_) {}
     img.onload = () => {
-      const verdict = scoreMastheadPhoto(img, bg);
+      let verdict;
+      try {
+        verdict = scoreMastheadPhoto(img, bg);
+      } catch (err) {
+        if (typeof console !== "undefined" && console.warn) {
+          console.warn("[bg] scoreMastheadPhoto a levé ; paint quand même", err);
+        }
+        _paintBackground(bg, url, edgeUa ? null : img);
+        return;
+      }
       if (!verdict.ok && !_skipCanvasReject(bg, verdict)) {
         _rejectAndRetry(bg, pool, verdict);
         return;
       }
-      _paintBackground(bg, url, img);
+      // Edge : paint sans img → pas de computeBestFocalY canvas.
+      _paintBackground(bg, url, edgeUa ? null : img);
     };
     img.onerror = () => {
       const fallback = new Image();
