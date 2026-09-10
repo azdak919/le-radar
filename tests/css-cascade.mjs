@@ -78,4 +78,24 @@ assertMastheadBeforeStyle('tuner-embed.html');
 assertMastheadBeforeStyle('dev/sports-strip-lab.html');
 assertMastheadBeforeStyle('dev/cta-hier-color-lab.html');
 
+const utils = readFileSync(join(root, 'radar-utils.js'), 'utf8');
+const hd = utils.match(/var RADAR_HD_MIN_PX = (\d+)/);
+assert(hd, 'radar-utils.js : RADAR_HD_MIN_PX');
+assert.equal(hd[1], '1880', 'RADAR_HD_MIN_PX : Full HD moins scrollbar Chromium');
+const wideCss = readFileSync(join(root, 'dev/wide-desktop-preview.css'), 'utf8');
+const hdMq = `@media (min-width: ${hd[1]}px)`;
+assert(
+  (wideCss.match(new RegExp(hdMq.replace(/[()]/g, '\\$&'), 'g')) || []).length >= 4,
+  `wide-desktop-preview.css : ${hdMq} (densité Full HD)`,
+);
+assert(
+  !/@media \(min-width: 1920px\)/.test(wideCss),
+  'wide-desktop-preview.css : plus de palier 1920 px pile (Edge/Chromium scrollbar)',
+);
+const newsJs = readFileSync(join(root, 'radar-news.js'), 'utf8');
+assert(
+  !newsJs.includes("matchMedia('(min-width: 1920px)')"),
+  'radar-news.js : dual-lead via isRadarHdViewport, pas 1920 px pile',
+);
+
 console.log('OK css-cascade');

@@ -5,6 +5,10 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
+### Corrigé
+
+- Full HD (Philips 1920) : 2 unes + densité 1920 aussi sur **Edge / Chromium**. Le palier `min-width: 1920px` ratait dès qu’une barre de défilement classique retranchait ~15 px (Firefox overlay passait). Seuil **1880 px**, JS et CSS alignés.
+
 ### Modifié
 
 - Bandeau sports accueil (**go D**) : une puce = ordre E (live / ce soir / jour / hier). Dès **2 puces** entièrement visibles : gauche = derniers résultats, droite = à-venir ; directs et matchs du jour d’abord. Une liste, un mouvement.

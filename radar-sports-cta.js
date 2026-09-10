@@ -701,7 +701,7 @@ function isWide1600SportsBand() {
   try {
     return isWideDesktopComfort()
       && window.matchMedia('(min-width: 1600px)').matches
-      && !window.matchMedia('(min-width: 1920px)').matches;
+      && !isRadarHdViewport();
   } catch {
     return false;
   }

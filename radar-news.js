@@ -692,7 +692,7 @@ function bindMagazineViewportRelayout() {
     '(min-width: 768px)',
     '(min-width: 1100px)',
     '(min-width: 1280px)',
-    '(min-width: 1920px)',
+    (typeof RADAR_HD_MQ === 'string' ? RADAR_HD_MQ : '(min-width: 1880px)'),
     '(min-width: 3440px)',
     '(min-width: 3840px)',
   ]) {
@@ -1357,7 +1357,7 @@ function renderNews() {
     NEWS_LIST.removeAttribute('data-autumn-grace');
   }
 
-  // Wide E : 2 unes dès 1920, 3 à 3840 — même gabarit fil général et vue source.
+  // Wide E : 2 unes dès Full HD (1880, voir RADAR_HD_MIN_PX), 3 à 3840.
   const wideDualLead = isWideDualLeadViewport();
   const leadCount = wideDualLead ? Math.min(wideHeroLeadCount(), heroItems.length) : 1;
   if (wideDualLead) hero.dataset.leads = String(leadCount);
@@ -1601,7 +1601,7 @@ function updateNewsLayout() {
 const HERO_FEATURE_MIN = 4; /* 4 vedettes + 1 une = 5 (prod) */
 const HERO_FEATURE_MAX = 4;
 const HERO_SPOTLIGHT_MAX = 1 + HERO_FEATURE_MIN; /* 5 au total prod */
-/* Wide E : 2 unes dès 1920 ; 3 unes + 6 vedettes (3 col) à 3840. */
+/* Wide E : 2 unes dès Full HD (1880) ; 3 unes + 6 vedettes (3 col) à 3840. */
 const HERO_WIDE_LEAD_COUNT = 2;
 const HERO_WIDE_FEATURE_MIN = 4;
 const HERO_UHD_LEAD_COUNT = 3;
@@ -1611,7 +1611,7 @@ function isWideDualLeadViewport() {
   try {
     return typeof isWideNoMarqueeMode === 'function'
       && isWideNoMarqueeMode()
-      && window.matchMedia('(min-width: 1920px)').matches;
+      && isRadarHdViewport();
   } catch {
     return false;
   }
@@ -1660,7 +1660,7 @@ const AVG_BRIEF_TITLE_H = 42;
  */
 const COLUMN_HEIGHT_TOL = 40;
 /* Vue source hors wide dual : 1 une + jusqu’à 2 vedettes (fraîcheur).
- * Wide E (≥1920) : même N que le fil général (2 unes + vedettes, 3 à 3840). */
+ * Wide E (Full HD / 1880) : même N que le fil général (2 unes + vedettes, 3 à 3840). */
 const SOURCE_FEATURE_MAX = 2;
 const SOURCE_HERO_SPOTLIGHT_MAX = 1 + SOURCE_FEATURE_MAX;
 
@@ -2868,7 +2868,7 @@ function pickSourceLead(pool) {
  *  - Une + vedettes = tranche contiguë des plus frais
  *    · hors wide dual : 1 une + ≤2 vedettes (évite le « double look » vs En bref
  *      sur mobile)
- *    · wide E (≥1920) : même N que le fil général (2 unes + vedettes)
+ *    · wide E (Full HD / 1880) : même N que le fil général (2 unes + vedettes)
  *  - En bref = suite chronologique (graine ≈ hauteur hero)
  *  - Suite du fil = le reste
  */
