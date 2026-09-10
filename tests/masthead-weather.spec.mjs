@@ -221,7 +221,7 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await expect(page.locator('.masthead-top #masthead-weather')).toHaveCount(1);
 });
 
-test('wide : MTL/QC calés sur Montréal, secondaires plus larges', async ({ page }) => {
+test('wide : MTL/QC calés, secondaires packés (pas de vide nom→°C)', async ({ page }) => {
   await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => route.fulfill({
     contentType: 'application/json',
     headers: { 'access-control-allow-origin': '*' },
@@ -236,11 +236,20 @@ test('wide : MTL/QC calés sur Montréal, secondaires plus larges', async ({ pag
     .toBeGreaterThan(3);
 
   const layout = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => {
-    const rows = cities.map((el) => ({
-      id: el.dataset.weatherCity,
-      w: Math.round(el.getBoundingClientRect().width),
-      overflowing: el.classList.contains('is-overflowing'),
-    }));
+    const rows = cities.map((el) => {
+      const name = el.querySelector('.masthead-weather__name');
+      const temp = el.querySelector('.masthead-weather__temp');
+      const nr = name.getBoundingClientRect();
+      const tr = temp.getBoundingClientRect();
+      const cr = el.getBoundingClientRect();
+      return {
+        id: el.dataset.weatherCity,
+        w: Math.round(cr.width),
+        nameTempGap: Math.round(tr.left - nr.right),
+        trailingSlack: Math.round(cr.right - tr.right),
+        overflowing: el.classList.contains('is-overflowing'),
+      };
+    });
     const mtl = rows.find((r) => r.id === 'montreal');
     const qc = rows.find((r) => r.id === 'quebec');
     const secondaries = rows.filter((r) => r.id !== 'montreal' && r.id !== 'quebec');
@@ -248,6 +257,7 @@ test('wide : MTL/QC calés sur Montréal, secondaires plus larges', async ({ pag
       mtlW: mtl?.w || 0,
       qcW: qc?.w || 0,
       secW: secondaries.map((r) => r.w),
+      secGaps: secondaries.map((r) => ({ id: r.id, gap: r.nameTempGap, slack: r.trailingSlack })),
       secOverflow: secondaries.filter((r) => r.overflowing).length,
     };
   });
@@ -256,20 +266,34 @@ test('wide : MTL/QC calés sur Montréal, secondaires plus larges', async ({ pag
   expect(layout.qcW, 'Québec mesurable').toBeGreaterThan(80);
   expect(layout.qcW, `QC ${layout.qcW} ne dépasse pas MTL ${layout.mtlW}`).toBeLessThanOrEqual(layout.mtlW + 4);
   expect(layout.secW.length, 'au moins deux secondaires').toBeGreaterThanOrEqual(2);
-  const secMin = Math.min(...layout.secW);
-  expect(secMin, `secondaires ${layout.secW} vs MTL ${layout.mtlW}`).toBeGreaterThanOrEqual(layout.mtlW);
-  expect(layout.secOverflow, 'le reliquat doit éviter le marquee des secondaires').toBe(0);
+  expect(layout.secOverflow, 'tuiles calées au contenu : pas de marquee secondaire').toBe(0);
+  for (const row of layout.secGaps) {
+    expect(row.gap, `${row.id} nom→temp (pas de stretch flex)`).toBeLessThanOrEqual(14);
+    expect(row.slack, `${row.id} pas de grand vide après °C`).toBeLessThanOrEqual(16);
+  }
 
-  const paint = await ribbon.locator('.masthead-weather__board').evaluate((board) => {
+  const boardPack = await ribbon.locator('.masthead-weather__board').evaluate((board) => {
     const cs = getComputedStyle(board);
-    const cities = [...board.querySelectorAll('.masthead-weather__city.is-active')];
+    const cities = [...board.querySelectorAll('.masthead-weather__city.is-active')]
+      .map((el) => el.getBoundingClientRect())
+      .sort((a, b) => a.x - b.x);
+    const br = board.getBoundingClientRect();
+    const gaps = [];
+    for (let i = 1; i < cities.length; i += 1) {
+      gaps.push(Math.round(cities[i].left - cities[i - 1].right));
+    }
     return {
       display: cs.display,
-      inlineWidths: cities.filter((el) => (el.style.width || '').trim()).length,
+      inlineWidths: [...board.querySelectorAll('.masthead-weather__city.is-active')]
+        .filter((el) => (el.style.width || '').trim()).length,
+      gaps,
+      trailing: Math.round(br.right - cities[cities.length - 1].right),
     };
   });
-  expect(paint.display, 'option D : grille CSS').toBe('grid');
-  expect(paint.inlineWidths, 'pas de width inline JS').toBe(0);
+  expect(boardPack.display, 'option D : grille CSS').toBe('grid');
+  expect(boardPack.inlineWidths, 'pas de width inline JS').toBe(0);
+  expect(Math.max(...boardPack.gaps), `écarts inter-cartes ${boardPack.gaps}`).toBeLessThanOrEqual(10);
+  expect(boardPack.trailing, 'reliquat à droite du board OK').toBeGreaterThanOrEqual(0);
 
   const firstMtl = layout.mtlW;
   await page.waitForTimeout(1000);
@@ -476,17 +500,15 @@ test('wide E : ≥2560 ajoute une carte météo et resserre les slots', async ({
       secondary: secondaries.map((r) => r.w),
     };
   });
-  expect(layout.min).toBeGreaterThanOrEqual(118);
+  expect(layout.min, 'tuiles max-content encore lisibles').toBeGreaterThanOrEqual(90);
   expect(layout.primary.length, 'MTL + QC visibles').toBe(2);
   expect(
     Math.max(...layout.primary) - Math.min(...layout.primary),
     `MTL/QC compactes (QC ≤ MTL), got ${layout.primary}`,
   ).toBeLessThanOrEqual(40);
   if (layout.secondary.length) {
-    const secMin = Math.min(...layout.secondary);
-    const secMax = Math.max(...layout.secondary);
-    expect(secMax - secMin, `secondaires uniformes, got ${layout.secondary}`).toBeLessThanOrEqual(4);
-    expect(secMin, 'secondaires au moins aussi larges que Montréal').toBeGreaterThanOrEqual(Math.min(...layout.primary) - 1);
+    // Dual max-content : largeurs suivent les toponymes (pas d’égalisation 1fr).
+    expect(Math.min(...layout.secondary), 'secondaires mesurables').toBeGreaterThanOrEqual(90);
   }
 });
 

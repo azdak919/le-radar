@@ -1,13 +1,13 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v878",
+    "cache": "radar-shell-v879",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
       "cast.js": "9ac30d507e71388d",
       "dev/midwidth-preview.css": "2bf07c9f5920ef77",
       "dev/midwidth-preview.js": "b7dc33f06cac70b9",
-      "dev/wide-desktop-preview.css": "99d9f490e42b0760",
+      "dev/wide-desktop-preview.css": "638fc8c91766d7d6",
       "dev/wide-desktop-preview.js": "3879a96a2264f004",
       "embed.css": "fe79c136a3feda03",
       "embed.js": "a7cdd5601ec6c11d",
@@ -37,7 +37,7 @@
       "style-chrome.css": "d3343c63aafc13f6",
       "style-feed.css": "8a614664dea92011",
       "style-masthead-chrome.css": "14f32bc972a5ccdc",
-      "style-masthead.css": "f47b93454b49f992",
+      "style-masthead.css": "66b0942353f9eb02",
       "style-sports-strip.css": "62514fae1a9c757e",
       "style-translate-overlay.css": "a53149d47f203a02",
       "style-tuner.css": "15a53f325d25f793",
@@ -96,14 +96,14 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v256",
+    "cache": "sports-shell-v257",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "0e0df2c60f5900e3",
       "cast.js": "9ac30d507e71388d",
       "dev/midwidth-preview.css": "2bf07c9f5920ef77",
       "dev/midwidth-preview.js": "b7dc33f06cac70b9",
-      "dev/wide-desktop-preview.css": "99d9f490e42b0760",
+      "dev/wide-desktop-preview.css": "638fc8c91766d7d6",
       "dev/wide-desktop-preview.js": "3879a96a2264f004",
       "engage-prompt.js": "3d0c7986c1be1ced",
       "institution-acronyms-data.js": "0d9e4eaa631af54c",
@@ -123,7 +123,7 @@
       "style-chrome.css": "d3343c63aafc13f6",
       "style-feed.css": "8a614664dea92011",
       "style-masthead-chrome.css": "14f32bc972a5ccdc",
-      "style-masthead.css": "f47b93454b49f992",
+      "style-masthead.css": "66b0942353f9eb02",
       "style-sports-strip.css": "62514fae1a9c757e",
       "style-tuner.css": "15a53f325d25f793",
       "style.css": "f31b05655e776f2b",

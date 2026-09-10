@@ -961,7 +961,9 @@ a { color: inherit; }
 .masthead-weather__board[data-weather-count="11"] { --weather-sec: 9; }
 .masthead-weather__board[data-weather-count="12"] { --weather-sec: 10; }
 /*
- * ≥1440 dual : une rangée. MTL + QC = contenu ; le reliquat va aux autres.
+ * ≥1440 dual : une rangée. MTL + QC + secondaires = max-content (tuiles
+ * calées au contenu, gap fixe). Le reliquat reste à droite du board — ne
+ * pas étirer les secondaires en 1fr (Chromium : nom flex qui pousse °C).
  */
 @media (min-width: 1440px) {
   .masthead-weather__board[data-weather-dual-primary] {
@@ -970,7 +972,8 @@ a { color: inherit; }
     max-width: 100%;
     height: 29px;
     grid-template-rows: 29px;
-    grid-template-columns: max-content max-content repeat(var(--weather-sec, 2), minmax(0, 1fr));
+    grid-template-columns: max-content max-content repeat(var(--weather-sec, 2), minmax(0, max-content));
+    justify-content: start;
     overflow: hidden;
   }
 }
@@ -1017,7 +1020,7 @@ a { color: inherit; }
 /* Nom : ne pas s’étirer (évite le grand vide avant la température). */
 .masthead-weather__name {
   display: block;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-width: 0;
   max-width: 100%;
   overflow: hidden;

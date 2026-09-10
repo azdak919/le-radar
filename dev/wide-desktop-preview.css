@@ -1582,7 +1582,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
 
 /* ═══════════════════════════════════════════════════
    ≥1440 : noms complets (météo + sports). Pas d’ellipsis.
-   Météo D : jumeau MTL/QC iso-largeur + secondaires 1fr.
+   Météo D : jumeau MTL/QC + secondaires max-content (packés, reliquat à droite).
    CTA sports = gabarit 900/1280 ; scores égaux, −1 carte si trop long.
    ═══════════════════════════════════════════════════ */
 @media (min-width: 1440px) {
@@ -1592,14 +1592,14 @@ html[data-wide-preview="e"] .news-hero-spacer {
   html[data-wide-preview="e"] .masthead-weather__board[data-weather-dual-primary] {
     display: grid !important;
     flex-wrap: unset;
-    justify-content: stretch;
+    justify-content: start;
     align-items: stretch;
     width: 100% !important;
     max-width: 100%;
     height: 29px !important;
     margin-inline: 0;
     grid-template-rows: 29px !important;
-    grid-template-columns: max-content max-content repeat(var(--weather-sec, 2), minmax(0, 1fr)) !important;
+    grid-template-columns: max-content max-content repeat(var(--weather-sec, 2), minmax(0, max-content)) !important;
     grid-auto-flow: row !important;
     overflow: hidden;
   }
@@ -1622,7 +1622,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
   /* Nom (gauche, peut défiler) + température toujours visible à droite. */
   html[data-wide-preview="e"] .masthead-weather__name {
-    flex: 1 1 auto !important;
+    flex: 0 1 auto !important;
     min-width: 0 !important;
     overflow: hidden !important;
     max-width: none !important;
