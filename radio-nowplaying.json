@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-09-10T16:22:30.140Z",
+  "updatedAt": "2026-09-10T16:53:22.261Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Conduite Antisportive",
-        "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "url": "https://chyz.ca/emission/conduite-antisportive/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Conduite Antisportive",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T16:22:12.322Z"
+      "checkedAt": "2026-09-10T16:53:05.667Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T16:22:14.683Z"
+      "checkedAt": "2026-09-10T16:53:08.198Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T16:22:17.432Z"
+      "checkedAt": "2026-09-10T16:53:10.913Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T16:22:20.568Z"
+      "checkedAt": "2026-09-10T16:53:13.435Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T16:22:22.583Z"
+      "checkedAt": "2026-09-10T16:53:14.784Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "18:00",
         "slug": "le-12-mtlsup"
       },
-      "track": "Genesis Owusu - 4LIFE",
+      "track": "Eartheater - Eartheater & Oklou - Fast Asleep",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-10T16:22:29.789Z"
+      "checkedAt": "2026-09-10T16:53:21.910Z"
     }
   }
 }
