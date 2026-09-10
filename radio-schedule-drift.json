@@ -1,11 +1,15 @@
 {
-  "checkedAt": "2026-09-09T01:13:04.208Z",
+  "checkedAt": "2026-09-10T01:01:24.322Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 6,
-    "drift": [],
+    "stable": 3,
+    "drift": [
+      "chyz",
+      "cism",
+      "cjlo"
+    ],
     "overhaul": [],
     "unreachable": []
   },
@@ -13,22 +17,30 @@
     {
       "id": "chyz",
       "published": 28,
-      "fresh": 28,
-      "added": [],
+      "fresh": 29,
+      "added": [
+        "jeu 11:30–12:30 Conduite Antisportive"
+      ],
       "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "changed": 1,
+      "ratio": 0.036,
+      "status": "drift"
     },
     {
       "id": "cism",
       "published": 110,
-      "fresh": 110,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 108,
+      "added": [
+        "mer 09:00–12:00 La collation"
+      ],
+      "removed": [
+        "mer 09:00–10:00 La collation",
+        "mer 10:00–11:00 La 13e",
+        "mer 11:00–12:00 À la loupe du droit"
+      ],
+      "changed": 4,
+      "ratio": 0.036,
+      "status": "drift"
     },
     {
       "id": "ckut",
@@ -43,12 +55,23 @@
     {
       "id": "cjlo",
       "published": 373,
-      "fresh": 373,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 374,
+      "added": [
+        "lun 00:00–00:30 Rap Radar",
+        "mar 16:00–17:00 Bikini Brrroadcast",
+        "mar 17:00–19:00 CJLO's Alternative Mega Mix",
+        "mer 21:00–22:00 There's a Synth in the House",
+        "mer 22:00–23:00 CJLO's Alternative Mega Mix"
+      ],
+      "removed": [
+        "mar 16:00–18:00 CJLO's Alternative Mega Mix",
+        "mar 18:00–19:00 Bikini Brrroadcast",
+        "mer 21:00–22:00 Rap Radar",
+        "mer 22:00–23:00 There's a Synth in the House"
+      ],
+      "changed": 9,
+      "ratio": 0.024,
+      "status": "drift"
     },
     {
       "id": "cfak",
