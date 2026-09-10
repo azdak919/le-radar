@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-09T13:12:52.482Z",
+  "updatedAt": "2026-09-10T13:10:42.741Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-09-09T13:12:52.482Z",
+      "checkedAt": "2026-09-10T13:10:42.741Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
@@ -118,6 +118,13 @@
         },
         {
           "day": 4,
+          "start": "11:30",
+          "end": "12:30",
+          "title": "Conduite Antisportive",
+          "url": "https://chyz.ca/emission/conduite-antisportive/"
+        },
+        {
+          "day": 4,
           "start": "16:00",
           "end": "17:30",
           "title": "Chéri.e, j’arrive!",
@@ -215,7 +222,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-09-09T13:12:52.482Z",
+      "checkedAt": "2026-09-10T13:10:42.741Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
@@ -585,23 +592,9 @@
         {
           "day": 3,
           "start": "09:00",
-          "end": "10:00",
+          "end": "12:00",
           "title": "La collation",
           "url": "https://cism893.ca/emissions/mix-collation"
-        },
-        {
-          "day": 3,
-          "start": "10:00",
-          "end": "11:00",
-          "title": "La 13e",
-          "url": "https://cism893.ca/emissions/la-13e"
-        },
-        {
-          "day": 3,
-          "start": "11:00",
-          "end": "12:00",
-          "title": "À la loupe du droit",
-          "url": "https://cism893.ca/emissions/a-la-loupe-du-droit"
         },
         {
           "day": 3,
@@ -996,7 +989,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-09-09T13:12:52.482Z",
+      "checkedAt": "2026-09-10T13:10:42.741Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
@@ -1614,7 +1607,7 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-09-09T13:12:52.482Z",
+      "checkedAt": "2026-09-10T13:10:42.741Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
@@ -1749,6 +1742,13 @@
           "end": "00:30",
           "title": "Cinema Smackdown",
           "url": "http://www.cjlo.com/shows/cinema-smackdown"
+        },
+        {
+          "day": 1,
+          "start": "00:00",
+          "end": "00:30",
+          "title": "Rap Radar",
+          "url": "http://www.cjlo.com/shows/rap-radar"
         },
         {
           "day": 1,
@@ -3699,16 +3699,16 @@
         {
           "day": 2,
           "start": "16:00",
-          "end": "18:00",
-          "title": "CJLO's Alternative Mega Mix",
-          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+          "end": "17:00",
+          "title": "Bikini Brrroadcast",
+          "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
         },
         {
           "day": 2,
-          "start": "18:00",
+          "start": "17:00",
           "end": "19:00",
-          "title": "Bikini Brrroadcast",
-          "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
         },
         {
           "day": 2,
@@ -3847,15 +3847,15 @@
           "day": 3,
           "start": "21:00",
           "end": "22:00",
-          "title": "Rap Radar",
-          "url": "http://www.cjlo.com/shows/rap-radar"
+          "title": "There's a Synth in the House",
+          "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
         },
         {
           "day": 3,
           "start": "22:00",
           "end": "23:00",
-          "title": "There's a Synth in the House",
-          "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
         },
         {
           "day": 3,
@@ -4236,7 +4236,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-09-09T13:12:52.482Z",
+      "checkedAt": "2026-09-10T13:10:42.741Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
@@ -4457,7 +4457,7 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-09-09T13:12:52.482Z",
+      "checkedAt": "2026-09-10T13:10:42.741Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
