@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-10T05:57:33.291Z",
+  "updatedAt": "2026-09-10T07:57:09.813Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T05:57:17.503Z"
+      "checkedAt": "2026-09-10T07:56:55.651Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque (reprise)",
+        "title": "Les Charlottes",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/les-charlottes"
       },
       "next": {
-        "title": "Mix franco",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "track": "",
-      "showTitle": "La grande ludothèque (reprise)",
+      "showTitle": "Les Charlottes",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T05:57:19.117Z"
+      "checkedAt": "2026-09-10T07:56:56.834Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off The Hook",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Freeform Air",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "William Shatner's Whiskey Tears",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "06:00"
+      },
       "track": "",
-      "showTitle": "Off The Hook",
+      "showTitle": "Freeform Air",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T05:57:21.776Z"
+      "checkedAt": "2026-09-10T07:56:59.498Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T05:57:25.278Z"
+      "checkedAt": "2026-09-10T07:57:02.301Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T05:57:26.622Z"
+      "checkedAt": "2026-09-10T07:57:03.397Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "le-12-mtlsup"
       },
-      "track": "Immolation - God",
+      "track": "Zao - Hopes Of Harmony",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-10T05:57:32.941Z"
+      "checkedAt": "2026-09-10T07:57:09.463Z"
     }
   }
 }
