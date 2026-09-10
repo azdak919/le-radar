@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-09T22:46:17.749Z",
-  "fetchedAt": "2026-09-09T22:46:17.749Z",
+  "updated": "2026-09-10T01:03:09.872Z",
+  "fetchedAt": "2026-09-10T01:03:09.872Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-09T22:46:17.750Z"
+    "referenceDate": "2026-09-10T01:03:09.872Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 816,
@@ -66299,20 +66299,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-09",
-          "time": "21:00",
-          "opponent": "Édouard-Montpetit",
-          "opponentCode": "CEM",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D3",
-          "gameId": "63552b18-f53e-4905-a45d-e811a4cabfeb",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63552b18-f53e-4905-a45d-e811a4cabfeb",
-          "opponentFullName": "Cégep Édouard-Montpetit",
-          "opponentNickname": "Cougars",
-          "opponentRegistryId": "edouard-montpetit"
-        },
-        {
           "date": "2026-09-13",
           "time": "16:00",
           "opponent": "Saint-Jean",
@@ -66381,18 +66367,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-09",
-        "time": "21:00",
-        "opponent": "Édouard-Montpetit",
-        "opponentCode": "CEM",
-        "home": true,
+        "date": "2026-09-13",
+        "time": "16:00",
+        "opponent": "Saint-Jean",
+        "opponentCode": "SJR",
+        "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D3",
-        "gameId": "63552b18-f53e-4905-a45d-e811a4cabfeb",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63552b18-f53e-4905-a45d-e811a4cabfeb",
-        "opponentFullName": "Cégep Édouard-Montpetit",
-        "opponentNickname": "Cougars",
-        "opponentRegistryId": "edouard-montpetit",
+        "gameId": "aeb218c9-e77f-4a86-b389-05288bdfccda",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=aeb218c9-e77f-4a86-b389-05288bdfccda",
+        "opponentFullName": "Cégep Saint-Jean-sur-Richelieu",
+        "opponentNickname": "Dragons",
+        "opponentRegistryId": "saint-jean-sur-richelieu",
         "opponentSector": "collegial"
       },
       "record": {
@@ -66774,19 +66760,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-09-09",
-          "time": "21:00",
-          "opponent": "André-Grasset",
-          "opponentCode": "CAG",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D3",
-          "gameId": "63552b18-f53e-4905-a45d-e811a4cabfeb",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63552b18-f53e-4905-a45d-e811a4cabfeb",
-          "opponentFullName": "Collège André-Grasset",
-          "opponentRegistryId": "andre-grasset"
-        },
-        {
           "date": "2026-09-13",
           "time": "12:30",
           "opponent": "Valleyfield",
@@ -66882,17 +66855,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-09",
-        "time": "21:00",
-        "opponent": "André-Grasset",
-        "opponentCode": "CAG",
-        "home": false,
+        "date": "2026-09-13",
+        "time": "12:30",
+        "opponent": "Valleyfield",
+        "opponentCode": "VAL",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D3",
-        "gameId": "63552b18-f53e-4905-a45d-e811a4cabfeb",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63552b18-f53e-4905-a45d-e811a4cabfeb",
-        "opponentFullName": "Collège André-Grasset",
-        "opponentRegistryId": "andre-grasset",
+        "gameId": "a56916e9-c64b-41b3-ab0b-2d304454898d",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a56916e9-c64b-41b3-ab0b-2d304454898d",
+        "opponentFullName": "Cégep de Valleyfield",
+        "opponentRegistryId": "valleyfield",
         "opponentSector": "collegial"
       },
       "record": {
