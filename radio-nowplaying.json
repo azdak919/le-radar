@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-10T19:27:22.833Z",
+  "updatedAt": "2026-09-10T21:46:23.051Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Les Arshitechs du Son",
+        "source": "api-live",
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "next": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "title": "Vendredi Nostalgie",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T19:27:08.272Z"
+      "checkedAt": "2026-09-10T21:45:50.096Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La session live",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/session-live-a-cism"
-      },
-      "next": {
         "title": "Rythmologie",
         "source": "schedule",
         "start": "16:00",
         "end": "18:00",
         "url": "https://cism893.ca/emissions/rythmologie"
       },
+      "next": {
+        "title": "Entropie",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/entropie"
+      },
       "track": "",
-      "showTitle": "La session live",
+      "showTitle": "Rythmologie",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T19:27:09.766Z"
+      "checkedAt": "2026-09-10T21:45:51.805Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Positive Vibes",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Off The Hour: La Voix des Immigrants",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Upstage",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Positive Vibes",
+      "showTitle": "Off The Hour: La Voix des Immigrants",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T19:27:12.549Z"
+      "checkedAt": "2026-09-10T21:45:59.657Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Weirdo Rippers",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/weirdo-rippers"
-      },
-      "next": {
         "title": "Hooked On Sonics",
         "source": "schedule-live",
         "start": "16:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/hooked-on-sonics"
       },
+      "next": {
+        "title": "Unheard Of",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/unheard-of"
+      },
       "track": "",
-      "showTitle": "Weirdo Rippers",
+      "showTitle": "Hooked On Sonics",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T19:27:15.562Z"
+      "checkedAt": "2026-09-10T21:46:14.782Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +133,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T19:27:16.715Z"
+      "checkedAt": "2026-09-10T21:46:15.964Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "La 3ème demie",
         "source": "api-live",
         "start": "17:15",
         "end": "18:00",
         "slug": "le-12-mtlsup"
       },
-      "track": "Genesis Owusu - BLESSED ARE THE MEEK",
-      "showTitle": "",
+      "next": {
+        "title": "D'amour et de sexe",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "00:00",
+        "slug": "damour-et-de-sexe"
+      },
+      "track": "Low - Days Like These",
+      "showTitle": "La 3ème demie",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +163,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-10T19:27:22.482Z"
+      "checkedAt": "2026-09-10T21:46:22.700Z"
     }
   }
 }
