@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-10T07:57:09.813Z",
+  "updatedAt": "2026-09-10T11:15:28.821Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T07:56:55.651Z"
+      "checkedAt": "2026-09-10T11:15:15.815Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les Charlottes",
+        "title": "La lecture pis toi",
         "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/les-charlottes"
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
       },
       "next": {
-        "title": "Le Séismix",
+        "title": "Jimmy et Neutron",
         "source": "schedule",
-        "start": "05:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/jimmy-et-neutron"
       },
       "track": "",
-      "showTitle": "Les Charlottes",
+      "showTitle": "La lecture pis toi",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T07:56:56.834Z"
+      "checkedAt": "2026-09-10T11:15:16.979Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Freeform Air",
+        "title": "OFC Podcast Radio",
         "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
+        "start": "07:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "William Shatner's Whiskey Tears",
+        "title": "Folk Directions",
         "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "track": "",
-      "showTitle": "Freeform Air",
+      "showTitle": "OFC Podcast Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,60 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T07:56:59.498Z"
+      "checkedAt": "2026-09-10T11:15:19.033Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Daydream Nation",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/daydream-nation"
       },
+      "next": {
+        "title": "Everything Everywhere",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/everything-everywhere"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Daydream Nation",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T07:57:02.301Z"
+      "checkedAt": "2026-09-10T11:15:21.723Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule-live",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-10T07:57:03.397Z"
+      "checkedAt": "2026-09-10T11:15:22.744Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +140,7 @@
         "end": "18:00",
         "slug": "le-12-mtlsup"
       },
-      "track": "Zao - Hopes Of Harmony",
+      "track": "Mike Paul Kuekuatsheu - Shine bright",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-10T07:57:09.463Z"
+      "checkedAt": "2026-09-10T11:15:28.471Z"
     }
   }
 }
