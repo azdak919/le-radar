@@ -1,12 +1,40 @@
 {
-  "updated": "2026-09-10T17:46:46.218Z",
+  "updated": "2026-09-10T19:09:18.201Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 2,
+  "incomplete": 4,
   "withLeadExcerpt": 98,
-  "candidates": 2,
-  "enriched": 0,
-  "failed": 2,
+  "candidates": 4,
+  "enriched": 2,
+  "failed": 1,
   "ok": true,
-  "samples": []
+  "samples": [
+    {
+      "title": "Des restaurants végétaliens? Pas pour tout de suite!",
+      "link": "https://lapige.atmjonquiere.com/2026/09/10/des-restaurants-vegetaliens-pas-pour-tout-de-suite/?utm_source=rss&utm_medium=rss&utm_campaign=des-restaurants-vegetaliens-pas-pour-tout-de-suite",
+      "ok": true,
+      "score": 96,
+      "chars": 363,
+      "sample": "« C’est déjà arrivé que je mange un bol de frites et les autres leur repas », confie Julie Gauthier-",
+      "changed": true
+    },
+    {
+      "title": "Bulletin 13h30 La Pige Radio",
+      "link": "https://lapige.atmjonquiere.com/2026/09/10/bulletin-12h-la-pige-radio/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-12h-la-pige-radio",
+      "ok": true,
+      "score": 68,
+      "chars": 201,
+      "sample": "Christine Fréchette présente aux côtés de ses candidats à Alma, Noah Thomas nous résume ce qui a ret",
+      "changed": true
+    },
+    {
+      "title": "Jeunes et politique : un désintérêt ou un manque de représentation ?",
+      "link": "https://lapige.atmjonquiere.com/2026/09/08/jeunes-et-politique-un-desinteret-ou-un-manque-de-representation/?utm_source=rss&utm_medium=rss&utm_campaign=jeunes-et-politique-un-desinteret-ou-un-manque-de-representation",
+      "ok": true,
+      "score": 100,
+      "chars": 400,
+      "sample": "En 1998, 65 % des jeunes Québécois âgés de 18 à 24 ans ont voté aux élections provinciales. Vingt-qu",
+      "changed": false
+    }
+  ]
 }
