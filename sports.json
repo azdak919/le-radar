@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-10T01:03:09.872Z",
-  "fetchedAt": "2026-09-10T01:03:09.872Z",
+  "updated": "2026-09-10T03:45:48.097Z",
+  "fetchedAt": "2026-09-10T03:45:48.097Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-10T01:03:09.872Z"
+    "referenceDate": "2026-09-10T03:45:48.098Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 816,
@@ -66244,6 +66244,24 @@
       "leagueLabel": "Soccer collégial féminin D3",
       "results": [
         {
+          "date": "2026-09-09",
+          "time": "21:00",
+          "opponent": "Édouard-Montpetit",
+          "opponentCode": "CEM",
+          "home": true,
+          "scoreFor": 2,
+          "scoreAgainst": 3,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D3",
+          "gameId": "63552b18-f53e-4905-a45d-e811a4cabfeb",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63552b18-f53e-4905-a45d-e811a4cabfeb",
+          "opponentFullName": "Cégep Édouard-Montpetit",
+          "opponentNickname": "Cougars",
+          "opponentRegistryId": "edouard-montpetit",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-04",
           "time": "19:30",
           "opponent": "Bois-de-Boulogne",
@@ -66280,20 +66298,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-04",
-        "time": "19:30",
-        "opponent": "Bois-de-Boulogne",
-        "opponentCode": "BDB",
-        "home": false,
-        "scoreFor": 0,
-        "scoreAgainst": 1,
+        "date": "2026-09-09",
+        "time": "21:00",
+        "opponent": "Édouard-Montpetit",
+        "opponentCode": "CEM",
+        "home": true,
+        "scoreFor": 2,
+        "scoreAgainst": 3,
         "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial féminin D3",
-        "gameId": "7567604d-3777-40ae-9004-4690b76483c9",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7567604d-3777-40ae-9004-4690b76483c9",
-        "opponentFullName": "Collège de Bois-de-Boulogne",
-        "opponentRegistryId": "bois-de-boulogne",
+        "gameId": "63552b18-f53e-4905-a45d-e811a4cabfeb",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63552b18-f53e-4905-a45d-e811a4cabfeb",
+        "opponentFullName": "Cégep Édouard-Montpetit",
+        "opponentNickname": "Cougars",
+        "opponentRegistryId": "edouard-montpetit",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -66383,10 +66402,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 2,
+        "losses": 3,
         "draws": 0,
-        "played": 2,
-        "label": "0-2"
+        "played": 3,
+        "label": "0-3"
       },
       "source": "rseq-s1",
       "priority": 21,
@@ -66756,8 +66775,43 @@
       "division": "D3",
       "usports": false,
       "leagueLabel": "Soccer collégial féminin D3",
-      "results": [],
-      "lastGame": null,
+      "results": [
+        {
+          "date": "2026-09-09",
+          "time": "21:00",
+          "opponent": "André-Grasset",
+          "opponentCode": "CAG",
+          "home": false,
+          "scoreFor": 3,
+          "scoreAgainst": 2,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D3",
+          "gameId": "63552b18-f53e-4905-a45d-e811a4cabfeb",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63552b18-f53e-4905-a45d-e811a4cabfeb",
+          "opponentFullName": "Collège André-Grasset",
+          "opponentRegistryId": "andre-grasset",
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-09-09",
+        "time": "21:00",
+        "opponent": "André-Grasset",
+        "opponentCode": "CAG",
+        "home": false,
+        "scoreFor": 3,
+        "scoreAgainst": 2,
+        "result": "W",
+        "sport": "soccer",
+        "competition": "Soccer collégial féminin D3",
+        "gameId": "63552b18-f53e-4905-a45d-e811a4cabfeb",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63552b18-f53e-4905-a45d-e811a4cabfeb",
+        "opponentFullName": "Collège André-Grasset",
+        "opponentRegistryId": "andre-grasset",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
       "nextGames": [
         {
           "date": "2026-09-13",
@@ -66869,17 +66923,18 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "1-0"
       },
       "source": "rseq-s1",
       "priority": 42,
       "fullName": "Cégep Édouard-Montpetit",
       "nickname": "Cougars",
-      "registryId": "edouard-montpetit"
+      "registryId": "edouard-montpetit",
+      "lastGamePriorSeason": false
     },
     "collegial:soccer:415ca649-0fd3-4bda-8163-c8c0013c37a9:58840701-bbdf-4939-a9ed-3679e7f3a609": {
       "id": "collegial:soccer:415ca649-0fd3-4bda-8163-c8c0013c37a9:58840701-bbdf-4939-a9ed-3679e7f3a609",
