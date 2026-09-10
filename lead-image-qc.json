@@ -1,24 +1,30 @@
 {
-  "updated": "2026-09-10T19:16:50.984Z",
+  "updated": "2026-09-10T21:03:49.007Z",
   "total": 188,
   "withPhoto": 175,
-  "withStock": 28,
+  "withStock": 29,
   "withCampusBank": 20,
   "fullyCovered": 188,
-  "leadReadyPhotos": 153,
-  "pageScraped": 38,
-  "photosRecovered": 31,
+  "leadReadyPhotos": 151,
+  "pageScraped": 36,
+  "photosRecovered": 29,
   "imagesCleared": 20,
-  "stockSearches": 32,
-  "stockFound": 19,
+  "stockSearches": 34,
+  "stockFound": 21,
   "campusBankFound": 14,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "Formation en RCR dans les écoles : une obligation peu respectée",
-      "link": "https://lapige.atmjonquiere.com/2026/09/08/formation-en-rcr-dans-les-ecoles-une-obligation-peu-respectee/?utm_source=rss&utm_medium=rss&utm_campaign=formation-en-rcr-dans-les-ecoles-une-obligation-peu-respectee",
+      "title": "Les préoccupations des aînés au cœur de la campagne",
+      "link": "https://lapige.atmjonquiere.com/2026/09/10/les-preoccupations-des-aines-au-coeur-de-la-campagne/?utm_source=rss&utm_medium=rss&utm_campaign=les-preoccupations-des-aines-au-coeur-de-la-campagne",
       "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/20260831_160327894_iOS.jpg"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Image-Josee-Savard.jpg"
+    },
+    {
+      "title": "Bulletin 13h30 La Pige Radio",
+      "link": "https://lapige.atmjonquiere.com/2026/09/10/bulletin-12h-la-pige-radio/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-12h-la-pige-radio",
+      "reason": "stock-too-small",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0117.jpg"
     },
     {
       "title": "Blackface at McGill",
@@ -79,12 +85,6 @@
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Le pays avant tout – esquisse",
-      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
     }
   ]
 }
