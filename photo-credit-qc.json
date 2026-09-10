@@ -1,30 +1,30 @@
 {
-  "updated": "2026-09-10T03:06:30.564Z",
+  "updated": "2026-09-10T04:50:29.046Z",
   "total": 188,
   "withImage": 175,
   "withCredit": 175,
-  "cited": 128,
+  "cited": 129,
   "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 6,
-  "citedNew": 1,
-  "fallbackNew": 15,
+  "checked": 17,
+  "updatedCount": 7,
+  "citedNew": 3,
+  "fallbackNew": 14,
   "samples": [
     {
-      "title": "Editorial: The importance of student journalism",
-      "source": "The Link",
-      "credit": "Photo : Graphic Halle Keays",
-      "cited": true,
-      "method": "figcaption-bare"
+      "title": "Blackface at McGill",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
     },
     {
       "title": "The catalogue of stories at the Webster Library",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Evelyn Ho Lee",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
@@ -48,11 +48,18 @@
       "method": null
     },
     {
-      "title": "Blackface at McGill",
-      "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
-      "cited": false,
-      "method": null
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
