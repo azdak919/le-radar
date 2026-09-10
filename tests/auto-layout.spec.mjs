@@ -81,6 +81,14 @@ async function measureMagazine(page) {
   });
 }
 
+test('1600 : 1 une pleine piste, pas encore le couple Full HD', async ({ page }) => {
+  await openAt(page, '/', 1600, 900);
+  const layout = await measureMagazine(page);
+  expect(layout.dataLeads, '1600 ne doit pas poser data-leads=2').not.toBe('2');
+  expect(layout.leadCount, '1600 : une seule une').toBe(1);
+  expect(layout.leadsSideBySide).toBe(false);
+});
+
 test('1920 Philips : 2 unes, En bref 1 col, une plus large que le rail', async ({ page }) => {
   await openAt(page, '/', 1920, 1080);
   const layout = await measureMagazine(page);
@@ -92,6 +100,17 @@ test('1920 Philips : 2 unes, En bref 1 col, une plus large que le rail', async (
   expect(layout.heroW, `une trop étroite (${layout.heroW} vs bref ${layout.briefW})`)
     .toBeGreaterThan(layout.briefW * 1.55);
   expect(layout.leadW, `chaque une trop étroite (${layout.leadW} px)`).toBeGreaterThanOrEqual(480);
+});
+
+test('1905 Chromium scrollbar : 2 unes comme à 1920', async ({ page }) => {
+  /* 1920 − ~15 px de barre classique : Edge/Chrome rataient min-width: 1920px. */
+  await openAt(page, '/', 1905, 1080);
+  const layout = await measureMagazine(page);
+  expect(layout.dataLeads).toBe('2');
+  expect(layout.briefCols, 'En bref doit rester 1 colonne à 1905').toBe(1);
+  expect(layout.leadsSideBySide, 'Edge/Chromium à 1920−scrollbar : 2 unes côte à côte').toBe(true);
+  expect(layout.overlap, `unes qui se chevauchent (${layout.overlap} px)`).toBeLessThanOrEqual(0);
+  expect(layout.leadW, `chaque une trop étroite (${layout.leadW} px)`).toBeGreaterThanOrEqual(460);
 });
 
 test('2560 : En bref 1 col un peu plus large, unes toujours lisibles', async ({ page }) => {

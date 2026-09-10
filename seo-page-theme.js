@@ -16,7 +16,7 @@
 (function () {
   'use strict';
 
-  var WIDE_CSS = 'dev/wide-desktop-preview.css?v=wide-auto-e101';
+  var WIDE_CSS = 'dev/wide-desktop-preview.css?v=wide-auto-e102';
   var WIDE_MQ = '(min-width: 1280px)';
 
   try {

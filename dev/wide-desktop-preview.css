@@ -50,7 +50,7 @@ html[data-wide-preview="e"] {
     --maxw: min(1560px, calc(100vw - 40px));
   }
 }
-@media (min-width: 1920px) {
+@media (min-width: 1880px) {
   html[data-wide-preview="e"] {
     --maxw: min(1860px, calc(100vw - 48px));
     --wide-rail: 280px;
@@ -861,7 +861,7 @@ html[data-wide-preview="e"] {
   html[data-wide-preview="e"] .news-hero {
     min-width: 0;
     padding-right: 20px;
-    /* stack prod par défaut ; 2 col vedettes dès 1920 (ci-dessous) */
+    /* stack prod par défaut ; 2 col vedettes dès Full HD / 1880 (ci-dessous) */
     display: flex;
     flex-direction: column;
     height: auto;
@@ -968,7 +968,7 @@ html[data-wide-preview="e"] {
 /*
  * À la une en 2 col (wide) :
  *  - 1 une à 1600 (comme prod)
- *  - 2 unes côte à côte dès ≥1920 ; En bref 1 col jusqu’à 3439
+ *  - 2 unes côte à côte dès ≥1880 (Full HD ; 1920 Chromium − scrollbar) ; En bref 1 col jusqu’à 3439
  *  - Dès 3440 : En bref 2 col, piste plus large (unes moins étirées)
  *  - 2560 / 3840 : même esprit, plus doux (En bref un peu plus large)
  *  - 3 unes + vedettes 3 col à 3840
@@ -1000,8 +1000,8 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
 }
 
-/* ── E ≥1920 : 2 unes + vedettes 2 col ; En bref reste 1 col ── */
-@media (min-width: 1920px) {
+/* ── E ≥1880 (Full HD, y compris Edge/Chromium + scrollbar) : 2 unes + vedettes 2 col ; En bref 1 col ── */
+@media (min-width: 1880px) {
   html[data-wide-preview="e"] .news-list:has(> .news-hero) {
     /* 2 unes lisibles ; En bref 1 col un cran plus large qu’au premier essai. */
     grid-template-columns: minmax(540px, 1.58fr) minmax(300px, 0.72fr);
@@ -1305,7 +1305,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
-@media (min-width: 1920px) {
+@media (min-width: 1880px) {
   html[data-wide-preview="e"] .seo-schedule {
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 18px;
@@ -1338,7 +1338,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   }
 }
-@media (min-width: 1920px) {
+@media (min-width: 1880px) {
   html[data-wide-preview="e"] .sports-board {
     grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
     gap: 18px;

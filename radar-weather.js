@@ -1553,7 +1553,7 @@ function bindMastheadWeatherLayoutWatchers() {
     MASTHEAD_WEATHER_PHONE_MQ,
     window.matchMedia('(min-width: 1280px)'),
     window.matchMedia('(min-width: 1440px)'),
-    window.matchMedia('(min-width: 1920px)'),
+    window.matchMedia(typeof RADAR_HD_MQ === 'string' ? RADAR_HD_MQ : '(min-width: 1880px)'),
     window.matchMedia('(min-width: 2560px)'),
     window.matchMedia('(min-width: 3440px)'),
   ].forEach((mq) => onMediaQueryChange(mq, () => scheduleMastheadWeatherLayout('mq')));
