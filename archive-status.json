@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-11T08:22:08.387Z",
+  "updated": "2026-09-11T13:48:31.671Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2176,14 +2176,24 @@
       "via": "save-page-now",
       "source": "Quartier Libre",
       "snapshot": "https://web.archive.org/web/20260911082149/https://quartierlibre.ca/acfas-devoile-ses-revendications/"
+    },
+    "https://lapige.atmjonquiere.com/2026/09/10/les-epiceries-ethniques-phenomene-grandissant-au-saguenay-lac-saint-jean/": {
+      "at": "2026-09-11T08:19:37.000Z",
+      "via": "existant",
+      "source": "La Pige"
+    },
+    "https://lapige.atmjonquiere.com/2026/09/10/bulletin-12h-la-pige-radio/": {
+      "at": "2026-09-11T08:21:09.000Z",
+      "via": "existant",
+      "source": "La Pige"
     }
   },
   "stats": {
-    "total": 381,
+    "total": 383,
     "lastRun": {
-      "saved": 1,
-      "skipped": 0,
-      "failed": 2,
+      "saved": 0,
+      "skipped": 2,
+      "failed": 0,
       "stoppedEarly": false
     }
   },
