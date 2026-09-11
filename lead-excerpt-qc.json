@@ -1,12 +1,85 @@
 {
-  "updated": "2026-09-11T19:10:37.542Z",
+  "updated": "2026-09-11T21:04:17.557Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 2,
-  "withLeadExcerpt": 97,
-  "candidates": 2,
-  "enriched": 0,
-  "failed": 2,
+  "incomplete": 11,
+  "withLeadExcerpt": 98,
+  "candidates": 11,
+  "enriched": 10,
+  "failed": 1,
   "ok": true,
-  "samples": []
+  "samples": [
+    {
+      "title": "Débat électoral : beaucoup d’amour pour la culture, mais combien d’argent ?",
+      "link": "https://quartierlibre.ca/culture-debat-electoral/",
+      "ok": true,
+      "score": 96,
+      "chars": 310,
+      "sample": "Cette connaissance des dossiers s’est toutefois traduite par des engagements financiers inégaux. « J",
+      "changed": true
+    },
+    {
+      "title": "Christine Fréchette visite la centrale hydroélectrique de Jonquière.",
+      "link": "https://lapige.atmjonquiere.com/2026/09/11/christine-frechette-visite-la-centrale-hydroelectrique-de-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=christine-frechette-visite-la-centrale-hydroelectrique-de-jonquiere",
+      "ok": true,
+      "score": 96,
+      "chars": 255,
+      "sample": "Christine Fréchette, qui était de passage dans la région ce jeudi, dans le cadre de la campagne élec",
+      "changed": true
+    },
+    {
+      "title": "Christine Fréchette, en campagne au Saguenay Lac-Saint-Jean",
+      "link": "https://lapige.atmjonquiere.com/2026/09/11/christine-frechette-en-campagne-au-saguenay-lac-saint-jean/?utm_source=rss&utm_medium=rss&utm_campaign=christine-frechette-en-campagne-au-saguenay-lac-saint-jean",
+      "ok": true,
+      "score": 100,
+      "chars": 202,
+      "sample": "La première ministre du Québec était de passage ce jeudi, en région. Une visite monopolisée par la q",
+      "changed": true
+    },
+    {
+      "title": "Une première saison de chasse avec l’application Nord Quest",
+      "link": "https://lapige.atmjonquiere.com/2026/09/11/une-premiere-saison-de-chasse-avec-lapplication-nordquest/?utm_source=rss&utm_medium=rss&utm_campaign=une-premiere-saison-de-chasse-avec-lapplication-nordquest",
+      "ok": true,
+      "score": 100,
+      "chars": 250,
+      "sample": "L’application de plein air NordQuest vivra sa première saison de chasse dans les prochaines semaines",
+      "changed": true
+    },
+    {
+      "title": "Un nouveau souffle pour le centre-ville de Jonquière",
+      "link": "https://lapige.atmjonquiere.com/2026/09/11/un-nouveau-souffle-pour-le-centre-ville-de-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=un-nouveau-souffle-pour-le-centre-ville-de-jonquiere",
+      "ok": true,
+      "score": 100,
+      "chars": 284,
+      "sample": "Alors que la désuétude du centre-ville de Jonquière fait parler certains citoyens, des commerçants t",
+      "changed": true
+    },
+    {
+      "title": "Plus de 400 coureurs collégiaux attendus à Saguenay",
+      "link": "https://lapige.atmjonquiere.com/2026/09/11/plus-de-400-coureurs-collegiaux-attendus-a-saguenay/?utm_source=rss&utm_medium=rss&utm_campaign=plus-de-400-coureurs-collegiaux-attendus-a-saguenay",
+      "ok": true,
+      "score": 100,
+      "chars": 203,
+      "sample": "Saguenay accueillera la première compétition de cross-country collégial Nord-Est ce dimanche. Plus d",
+      "changed": true
+    },
+    {
+      "title": "Le recrutement pour le conseil jeunesse a débuté",
+      "link": "https://lapige.atmjonquiere.com/2026/09/11/le-recrutement-pour-le-conseil-jeunesse-a-debute/?utm_source=rss&utm_medium=rss&utm_campaign=le-recrutement-pour-le-conseil-jeunesse-a-debute",
+      "ok": true,
+      "score": 100,
+      "chars": 262,
+      "sample": "Depuis mardi dernier et jusqu’au 2 octobre, les jeunes peuvent envoyer leurs candidatures pour parti",
+      "changed": true
+    },
+    {
+      "title": "Les fermes du Québec ouvriront leurs portes dimanche",
+      "link": "https://lapige.atmjonquiere.com/2026/09/11/les-fermes-du-quebec-ouvriront-leurs-portes-dimanche/?utm_source=rss&utm_medium=rss&utm_campaign=les-fermes-du-quebec-ouvriront-leurs-portes-dimanche",
+      "ok": true,
+      "score": 100,
+      "chars": 351,
+      "sample": "Plus de 60 fermes québécoises accueilleront les visiteurs dimanche à l’occasion de la 22e édition de",
+      "changed": true
+    }
+  ]
 }

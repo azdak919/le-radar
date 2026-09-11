@@ -1,44 +1,100 @@
 {
-  "updated": "2026-09-11T19:16:08.781Z",
+  "updated": "2026-09-11T21:10:53.883Z",
   "total": 188,
   "withImage": 175,
   "withCredit": 175,
-  "cited": 130,
-  "pending": 12,
+  "cited": 131,
+  "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 4,
-  "citedNew": 3,
-  "fallbackNew": 13,
+  "checked": 21,
+  "updatedCount": 12,
+  "citedNew": 9,
+  "fallbackNew": 12,
   "samples": [
+    {
+      "title": "Débat électoral : beaucoup d’amour pour la culture, mais combien d’argent ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Daphnée Bouchard",
+      "cited": true,
+      "method": "figcaption-copyright"
+    },
+    {
+      "title": "Christine Fréchette visite la centrale hydroélectrique de Jonquière.",
+      "source": "La Pige",
+      "credit": "Photo : Elena Simet",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Christine Fréchette, en campagne au Saguenay Lac-Saint-Jean",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Un nouveau souffle pour le centre-ville de Jonquière",
+      "source": "La Pige",
+      "credit": "Photo : Lia Chayer",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Plus de 400 coureurs collégiaux attendus à Saguenay",
+      "source": "La Pige",
+      "credit": "Photo : Courtoisie",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Le recrutement pour le conseil jeunesse a débuté",
+      "source": "La Pige",
+      "credit": "Photo : Ville de Saguenay",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Les fermes du Québec ouvriront leurs portes dimanche",
+      "source": "La Pige",
+      "credit": "Photo : Augustin Spièce",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "25 ans après le 11 septembre, les souvenirs restent au Saguenay",
+      "source": "La Pige",
+      "credit": "Photo : National Park Service",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Sclérose en plaques Saguenay transforme les cafés en liens d’amitié",
+      "source": "La Pige",
+      "credit": "Photo : Vittoria Caputo",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Prévention du suicide : briser le silence, le premier geste qui sauve",
+      "source": "La Pige",
+      "credit": "Photo : Diego Pinto de Queiros",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "The catalogue of stories at the Webster Library",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Blackface at McGill",
       "source": "The Tribune",
       "credit": "Photo credit: The Tribune",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "The catalogue of stories at the Webster Library",
-      "source": "The Link",
-      "credit": "Illustration: Evelyn Ho Lee",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
