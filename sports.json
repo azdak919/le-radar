@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-10T23:42:20.216Z",
-  "fetchedAt": "2026-09-10T23:42:20.216Z",
+  "updated": "2026-09-11T01:04:48.194Z",
+  "fetchedAt": "2026-09-11T01:04:48.194Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-10T23:42:20.216Z"
+    "referenceDate": "2026-09-11T01:04:48.194Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 818,
@@ -41110,7 +41110,8 @@
           "gameId": "57ab6042-128a-4d30-be09-a274f91dbb24",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=57ab6042-128a-4d30-be09-a274f91dbb24",
           "opponentFullName": "Cégep de Sainte-Anne",
-          "opponentRegistryId": "sainte-anne"
+          "opponentRegistryId": "sainte-anne",
+          "live": true
         },
         {
           "date": "2026-09-13",
@@ -41216,6 +41217,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=57ab6042-128a-4d30-be09-a274f91dbb24",
         "opponentFullName": "Cégep de Sainte-Anne",
         "opponentRegistryId": "sainte-anne",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -41391,7 +41393,8 @@
           "gameId": "57ab6042-128a-4d30-be09-a274f91dbb24",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=57ab6042-128a-4d30-be09-a274f91dbb24",
           "opponentFullName": "Marianopolis College",
-          "opponentRegistryId": "marianopolis"
+          "opponentRegistryId": "marianopolis",
+          "live": true
         },
         {
           "date": "2026-09-13",
@@ -41497,6 +41500,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=57ab6042-128a-4d30-be09-a274f91dbb24",
         "opponentFullName": "Marianopolis College",
         "opponentRegistryId": "marianopolis",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
