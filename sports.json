@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-11T02:53:54.746Z",
-  "fetchedAt": "2026-09-11T02:53:54.746Z",
+  "updated": "2026-09-11T13:33:26.787Z",
+  "fetchedAt": "2026-09-11T13:33:26.787Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-11T02:53:54.746Z"
+    "referenceDate": "2026-09-11T13:33:26.788Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 818,
@@ -74,6 +74,18 @@
     "volleyball"
   ],
   "teamCount": 839,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -37993,6 +38005,24 @@
       "leagueLabel": "Flag football collégial féminin D3",
       "results": [
         {
+          "date": "2026-09-10",
+          "time": "19:30",
+          "opponent": "Vanier",
+          "opponentCode": "VAN",
+          "home": true,
+          "scoreFor": 21,
+          "scoreAgainst": 20,
+          "result": "W",
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D3",
+          "gameId": "b566cd44-5b71-4220-a17c-1e94f9cab63c",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b566cd44-5b71-4220-a17c-1e94f9cab63c",
+          "opponentFullName": "Vanier College",
+          "opponentNickname": "Cheetahs",
+          "opponentRegistryId": "vanier",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-06",
           "time": "13:30",
           "opponent": "Joliette",
@@ -38011,20 +38041,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-06",
-        "time": "13:30",
-        "opponent": "Joliette",
-        "opponentCode": "JOL",
-        "home": false,
-        "scoreFor": 0,
-        "scoreAgainst": 35,
-        "result": "L",
+        "date": "2026-09-10",
+        "time": "19:30",
+        "opponent": "Vanier",
+        "opponentCode": "VAN",
+        "home": true,
+        "scoreFor": 21,
+        "scoreAgainst": 20,
+        "result": "W",
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "585815ef-94e8-4c3a-a230-56733488bc99",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=585815ef-94e8-4c3a-a230-56733488bc99",
-        "opponentFullName": "Cégep régional de Lanaudière à Joliette",
-        "opponentRegistryId": "joliette",
+        "gameId": "b566cd44-5b71-4220-a17c-1e94f9cab63c",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b566cd44-5b71-4220-a17c-1e94f9cab63c",
+        "opponentFullName": "Vanier College",
+        "opponentNickname": "Cheetahs",
+        "opponentRegistryId": "vanier",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -38152,11 +38183,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 1,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "1-1"
       },
       "source": "rseq-s1",
       "priority": 23,
@@ -39768,6 +39799,23 @@
       "leagueLabel": "Flag football collégial féminin D3",
       "results": [
         {
+          "date": "2026-09-10",
+          "time": "19:30",
+          "opponent": "Bois-de-Boulogne",
+          "opponentCode": "BDB",
+          "home": false,
+          "scoreFor": 20,
+          "scoreAgainst": 21,
+          "result": "L",
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D3",
+          "gameId": "b566cd44-5b71-4220-a17c-1e94f9cab63c",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b566cd44-5b71-4220-a17c-1e94f9cab63c",
+          "opponentFullName": "Collège de Bois-de-Boulogne",
+          "opponentRegistryId": "bois-de-boulogne",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-06",
           "time": "16:30",
           "opponent": "Marie-Victorin",
@@ -39786,20 +39834,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-06",
-        "time": "16:30",
-        "opponent": "Marie-Victorin",
-        "opponentCode": "CMV",
+        "date": "2026-09-10",
+        "time": "19:30",
+        "opponent": "Bois-de-Boulogne",
+        "opponentCode": "BDB",
         "home": false,
-        "scoreFor": 12,
-        "scoreAgainst": 13,
+        "scoreFor": 20,
+        "scoreAgainst": 21,
         "result": "L",
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "46fdf411-fcf1-4294-953e-8573d33014ad",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=46fdf411-fcf1-4294-953e-8573d33014ad",
-        "opponentFullName": "Cégep de Marie-Victorin",
-        "opponentRegistryId": "marie-victorin",
+        "gameId": "b566cd44-5b71-4220-a17c-1e94f9cab63c",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b566cd44-5b71-4220-a17c-1e94f9cab63c",
+        "opponentFullName": "Collège de Bois-de-Boulogne",
+        "opponentRegistryId": "bois-de-boulogne",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -39928,10 +39976,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "0-2"
       },
       "source": "rseq-s1",
       "priority": 10,
@@ -41096,23 +41144,44 @@
       "division": "D3",
       "usports": false,
       "leagueLabel": "Flag football collégial féminin D3",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
+      "results": [
         {
           "date": "2026-09-10",
           "time": "21:00",
           "opponent": "Sainte-Anne",
           "opponentCode": "CSA",
           "home": true,
+          "scoreFor": 0,
+          "scoreAgainst": 22,
+          "result": "L",
           "sport": "flag-football",
           "competition": "Flag football collégial féminin D3",
           "gameId": "57ab6042-128a-4d30-be09-a274f91dbb24",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=57ab6042-128a-4d30-be09-a274f91dbb24",
           "opponentFullName": "Cégep de Sainte-Anne",
           "opponentRegistryId": "sainte-anne",
-          "live": true
-        },
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-09-10",
+        "time": "21:00",
+        "opponent": "Sainte-Anne",
+        "opponentCode": "CSA",
+        "home": true,
+        "scoreFor": 0,
+        "scoreAgainst": 22,
+        "result": "L",
+        "sport": "flag-football",
+        "competition": "Flag football collégial féminin D3",
+        "gameId": "57ab6042-128a-4d30-be09-a274f91dbb24",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=57ab6042-128a-4d30-be09-a274f91dbb24",
+        "opponentFullName": "Cégep de Sainte-Anne",
+        "opponentRegistryId": "sainte-anne",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
+      "nextGames": [
         {
           "date": "2026-09-13",
           "time": "12:00",
@@ -41206,31 +41275,31 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-10",
-        "time": "21:00",
-        "opponent": "Sainte-Anne",
-        "opponentCode": "CSA",
+        "date": "2026-09-13",
+        "time": "12:00",
+        "opponent": "Héritage",
+        "opponentCode": "HER",
         "home": true,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "57ab6042-128a-4d30-be09-a274f91dbb24",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=57ab6042-128a-4d30-be09-a274f91dbb24",
-        "opponentFullName": "Cégep de Sainte-Anne",
-        "opponentRegistryId": "sainte-anne",
-        "live": true,
+        "gameId": "0f0488c0-b51a-41a6-89fc-f521a045df3a",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0f0488c0-b51a-41a6-89fc-f521a045df3a",
+        "opponentFullName": "Collège Heritage",
+        "opponentRegistryId": "heritage",
         "opponentSector": "collegial"
       },
       "record": {
         "wins": 0,
-        "losses": 0,
+        "losses": 1,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "0-1"
       },
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Marianopolis College",
-      "registryId": "marianopolis"
+      "registryId": "marianopolis",
+      "lastGamePriorSeason": false
     },
     "collegial:flag-football:34b10d25-6e4b-48ae-b7e0-aed1d1fff2c4:2f69bb56-abb4-488c-a584-3c0ea9777293": {
       "id": "collegial:flag-football:34b10d25-6e4b-48ae-b7e0-aed1d1fff2c4:2f69bb56-abb4-488c-a584-3c0ea9777293",
@@ -41379,23 +41448,44 @@
       "division": "D3",
       "usports": false,
       "leagueLabel": "Flag football collégial féminin D3",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
+      "results": [
         {
           "date": "2026-09-10",
           "time": "21:00",
           "opponent": "Marianopolis",
           "opponentCode": "MAR",
           "home": false,
+          "scoreFor": 22,
+          "scoreAgainst": 0,
+          "result": "W",
           "sport": "flag-football",
           "competition": "Flag football collégial féminin D3",
           "gameId": "57ab6042-128a-4d30-be09-a274f91dbb24",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=57ab6042-128a-4d30-be09-a274f91dbb24",
           "opponentFullName": "Marianopolis College",
           "opponentRegistryId": "marianopolis",
-          "live": true
-        },
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-09-10",
+        "time": "21:00",
+        "opponent": "Marianopolis",
+        "opponentCode": "MAR",
+        "home": false,
+        "scoreFor": 22,
+        "scoreAgainst": 0,
+        "result": "W",
+        "sport": "flag-football",
+        "competition": "Flag football collégial féminin D3",
+        "gameId": "57ab6042-128a-4d30-be09-a274f91dbb24",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=57ab6042-128a-4d30-be09-a274f91dbb24",
+        "opponentFullName": "Marianopolis College",
+        "opponentRegistryId": "marianopolis",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
+      "nextGames": [
         {
           "date": "2026-09-13",
           "time": "10:30",
@@ -41489,31 +41579,31 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-10",
-        "time": "21:00",
-        "opponent": "Marianopolis",
-        "opponentCode": "MAR",
-        "home": false,
+        "date": "2026-09-13",
+        "time": "10:30",
+        "opponent": "Joliette",
+        "opponentCode": "JOL",
+        "home": true,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "57ab6042-128a-4d30-be09-a274f91dbb24",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=57ab6042-128a-4d30-be09-a274f91dbb24",
-        "opponentFullName": "Marianopolis College",
-        "opponentRegistryId": "marianopolis",
-        "live": true,
+        "gameId": "1e93ea9b-4e3e-4f64-80cd-a498bb2c6dba",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1e93ea9b-4e3e-4f64-80cd-a498bb2c6dba",
+        "opponentFullName": "Cégep régional de Lanaudière à Joliette",
+        "opponentRegistryId": "joliette",
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "1-0"
       },
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Sainte-Anne",
-      "registryId": "sainte-anne"
+      "registryId": "sainte-anne",
+      "lastGamePriorSeason": false
     },
     "collegial:flag-football:34b10d25-6e4b-48ae-b7e0-aed1d1fff2c4:0f334a4e-c3e0-4f54-99cb-e58c2b2905a2": {
       "id": "collegial:flag-football:34b10d25-6e4b-48ae-b7e0-aed1d1fff2c4:0f334a4e-c3e0-4f54-99cb-e58c2b2905a2",
@@ -42639,6 +42729,23 @@
       "leagueLabel": "Flag football collégial masculin D3",
       "results": [
         {
+          "date": "2026-09-10",
+          "time": "19:30",
+          "opponent": "Sainte-Anne",
+          "opponentCode": "CSA",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 25,
+          "result": "L",
+          "sport": "flag-football",
+          "competition": "Flag football collégial masculin D3",
+          "gameId": "be9e02d9-da24-47da-8b37-14714767c331",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=be9e02d9-da24-47da-8b37-14714767c331",
+          "opponentFullName": "Cégep de Sainte-Anne",
+          "opponentRegistryId": "sainte-anne",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-07",
           "time": "12:00",
           "opponent": "André-Grasset",
@@ -42674,20 +42781,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-07",
-        "time": "12:00",
-        "opponent": "André-Grasset",
-        "opponentCode": "CAG",
+        "date": "2026-09-10",
+        "time": "19:30",
+        "opponent": "Sainte-Anne",
+        "opponentCode": "CSA",
         "home": false,
-        "scoreFor": 20,
-        "scoreAgainst": 27,
+        "scoreFor": 0,
+        "scoreAgainst": 25,
         "result": "L",
         "sport": "flag-football",
         "competition": "Flag football collégial masculin D3",
-        "gameId": "1a6cd68b-bc0d-4220-959c-fad38d1be34f",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1a6cd68b-bc0d-4220-959c-fad38d1be34f",
-        "opponentFullName": "Collège André-Grasset",
-        "opponentRegistryId": "andre-grasset",
+        "gameId": "be9e02d9-da24-47da-8b37-14714767c331",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=be9e02d9-da24-47da-8b37-14714767c331",
+        "opponentFullName": "Cégep de Sainte-Anne",
+        "opponentRegistryId": "sainte-anne",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -42800,10 +42907,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 2,
+        "losses": 3,
         "draws": 0,
-        "played": 2,
-        "label": "0-2"
+        "played": 3,
+        "label": "0-3"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -43026,6 +43133,23 @@
       "leagueLabel": "Flag football collégial masculin D3",
       "results": [
         {
+          "date": "2026-09-10",
+          "time": "19:30",
+          "opponent": "Marianopolis",
+          "opponentCode": "MAR",
+          "home": true,
+          "scoreFor": 25,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "flag-football",
+          "competition": "Flag football collégial masculin D3",
+          "gameId": "be9e02d9-da24-47da-8b37-14714767c331",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=be9e02d9-da24-47da-8b37-14714767c331",
+          "opponentFullName": "Marianopolis College",
+          "opponentRegistryId": "marianopolis",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-07",
           "time": "15:00",
           "opponent": "André-Grasset",
@@ -43044,20 +43168,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-07",
-        "time": "15:00",
-        "opponent": "André-Grasset",
-        "opponentCode": "CAG",
+        "date": "2026-09-10",
+        "time": "19:30",
+        "opponent": "Marianopolis",
+        "opponentCode": "MAR",
         "home": true,
-        "scoreFor": 6,
-        "scoreAgainst": 21,
-        "result": "L",
+        "scoreFor": 25,
+        "scoreAgainst": 0,
+        "result": "W",
         "sport": "flag-football",
         "competition": "Flag football collégial masculin D3",
-        "gameId": "8cd0b2c8-abf7-468f-a422-af9c03521625",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=8cd0b2c8-abf7-468f-a422-af9c03521625",
-        "opponentFullName": "Collège André-Grasset",
-        "opponentRegistryId": "andre-grasset",
+        "gameId": "be9e02d9-da24-47da-8b37-14714767c331",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=be9e02d9-da24-47da-8b37-14714767c331",
+        "opponentFullName": "Marianopolis College",
+        "opponentRegistryId": "marianopolis",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -43182,11 +43306,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 1,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "1-1"
       },
       "source": "rseq-s1",
       "priority": 80,
