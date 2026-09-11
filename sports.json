@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-11T19:09:11.390Z",
-  "fetchedAt": "2026-09-11T19:09:11.390Z",
+  "updated": "2026-09-11T21:51:12.608Z",
+  "fetchedAt": "2026-09-11T21:51:12.608Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-11T19:09:11.390Z"
+    "referenceDate": "2026-09-11T21:51:12.608Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 838,
@@ -74,18 +74,6 @@
     "volleyball"
   ],
   "teamCount": 866,
-  "errors": [
-    {
-      "leagueId": "spordle-collegial",
-      "label": "Hockey collegial",
-      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
-    },
-    {
-      "leagueId": "spordle-universitaire",
-      "label": "Hockey universitaire",
-      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
-    }
-  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -75922,7 +75910,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=855252c3-b74a-41ed-9246-e25bd5fdfb3a",
           "opponentFullName": "Université du Québec à Trois-Rivières",
           "opponentNickname": "Patriotes",
-          "opponentRegistryId": "uqtr"
+          "opponentRegistryId": "uqtr",
+          "live": true
         },
         {
           "date": "2026-09-18",
@@ -76092,6 +76081,7 @@
         "opponentFullName": "Université du Québec à Trois-Rivières",
         "opponentNickname": "Patriotes",
         "opponentRegistryId": "uqtr",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -76191,7 +76181,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6fff45b4-21ae-4d43-b321-9d745b7a2492",
           "opponentFullName": "Université du Québec à Montréal",
           "opponentNickname": "Citadins",
-          "opponentRegistryId": "uqam"
+          "opponentRegistryId": "uqam",
+          "live": true
         },
         {
           "date": "2026-09-18",
@@ -76361,6 +76352,7 @@
         "opponentFullName": "Université du Québec à Montréal",
         "opponentNickname": "Citadins",
         "opponentRegistryId": "uqam",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -76460,7 +76452,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=87053615-bf0e-46c5-81aa-b67e86da97ee",
           "opponentFullName": "Université McGill",
           "opponentNickname": "Redbirds",
-          "opponentRegistryId": "mcgill"
+          "opponentRegistryId": "mcgill",
+          "live": true
         },
         {
           "date": "2026-09-18",
@@ -76630,6 +76623,7 @@
         "opponentFullName": "Université McGill",
         "opponentNickname": "Redbirds",
         "opponentRegistryId": "mcgill",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -76747,7 +76741,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=87053615-bf0e-46c5-81aa-b67e86da97ee",
           "opponentFullName": "Université Laval",
           "opponentNickname": "Rouge et Or",
-          "opponentRegistryId": "ulaval"
+          "opponentRegistryId": "ulaval",
+          "live": true
         },
         {
           "date": "2026-09-18",
@@ -76903,6 +76898,7 @@
         "opponentFullName": "Université Laval",
         "opponentNickname": "Rouge et Or",
         "opponentRegistryId": "ulaval",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -77020,7 +77016,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4509e8ef-9836-4632-b869-350600f1f057",
           "opponentFullName": "Université de Sherbrooke",
           "opponentNickname": "Vert & Or",
-          "opponentRegistryId": "usherbrooke"
+          "opponentRegistryId": "usherbrooke",
+          "live": true
         },
         {
           "date": "2026-09-18",
@@ -77176,6 +77173,7 @@
         "opponentFullName": "Université de Sherbrooke",
         "opponentNickname": "Vert & Or",
         "opponentRegistryId": "usherbrooke",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -77275,7 +77273,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4509e8ef-9836-4632-b869-350600f1f057",
           "opponentFullName": "Université de Montréal",
           "opponentNickname": "Carabins",
-          "opponentRegistryId": "udem"
+          "opponentRegistryId": "udem",
+          "live": true
         },
         {
           "date": "2026-09-18",
@@ -77445,6 +77444,7 @@
         "opponentFullName": "Université de Montréal",
         "opponentNickname": "Carabins",
         "opponentRegistryId": "udem",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -77544,7 +77544,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6fff45b4-21ae-4d43-b321-9d745b7a2492",
           "opponentFullName": "Université Concordia",
           "opponentNickname": "Stingers",
-          "opponentRegistryId": "concordia"
+          "opponentRegistryId": "concordia",
+          "live": true
         },
         {
           "date": "2026-09-18",
@@ -77714,6 +77715,7 @@
         "opponentFullName": "Université Concordia",
         "opponentNickname": "Stingers",
         "opponentRegistryId": "concordia",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -77813,7 +77815,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=855252c3-b74a-41ed-9246-e25bd5fdfb3a",
           "opponentFullName": "Bishop's University",
           "opponentNickname": "Gaiters",
-          "opponentRegistryId": "bishops"
+          "opponentRegistryId": "bishops",
+          "live": true
         },
         {
           "date": "2026-09-18",
@@ -77983,6 +77986,7 @@
         "opponentFullName": "Bishop's University",
         "opponentNickname": "Gaiters",
         "opponentRegistryId": "bishops",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
