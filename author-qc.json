@@ -1,10 +1,18 @@
 {
-  "updated": "2026-09-11T15:09:23.316Z",
+  "updated": "2026-09-11T17:49:19.496Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 8,
+  "mismatches": 9,
   "ok": true,
   "samples": [
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-7/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Samuel Girard",
+      "reason": "page-byline"
+    },
     {
       "title": "Lo, how the Roses e’er blooming",
       "link": "https://thelinknewspaper.ca/article/16370",
@@ -70,5 +78,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 8
+  "fixed": 9
 }
