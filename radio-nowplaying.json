@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-11T16:26:42.405Z",
+  "updatedAt": "2026-09-11T16:53:51.222Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-11T16:26:26.172Z"
+      "checkedAt": "2026-09-11T16:53:35.677Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-11T16:26:27.750Z"
+      "checkedAt": "2026-09-11T16:53:37.204Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-11T16:26:30.623Z"
+      "checkedAt": "2026-09-11T16:53:40.255Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-11T16:26:33.612Z"
+      "checkedAt": "2026-09-11T16:53:42.740Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +126,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-11T16:26:35.243Z"
+      "checkedAt": "2026-09-11T16:53:44.724Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Opération beurre de cinoche",
-        "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
-      },
+      "current": null,
       "next": {
         "title": "Histoire de passer le temps",
         "source": "api-live",
@@ -145,8 +139,8 @@
         "end": "17:00",
         "slug": "histoire-de-passer-le-temps"
       },
-      "track": "cinemacinema2026mixage - final",
-      "showTitle": "Opération beurre de cinoche",
+      "track": "Quicksand - Agency",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -156,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-11T16:26:42.054Z"
+      "checkedAt": "2026-09-11T16:53:50.871Z"
     }
   }
 }
