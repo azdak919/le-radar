@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-11T22:40:26.209Z",
-  "fetchedAt": "2026-09-11T22:40:26.209Z",
+  "updated": "2026-09-11T22:48:26.276Z",
+  "fetchedAt": "2026-09-11T22:48:26.276Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-11T22:40:26.209Z"
+    "referenceDate": "2026-09-11T22:48:26.276Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 838,
@@ -74,6 +74,18 @@
     "volleyball"
   ],
   "teamCount": 866,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -50793,7 +50805,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d0831d5c-cb71-4ce6-9a62-3bf31671d9db",
           "opponentFullName": "Université McGill",
           "opponentNickname": "Redbirds",
-          "opponentRegistryId": "mcgill"
+          "opponentRegistryId": "mcgill",
+          "live": true
         },
         {
           "date": "2026-09-19",
@@ -50893,6 +50906,7 @@
         "opponentFullName": "Université McGill",
         "opponentNickname": "Redbirds",
         "opponentRegistryId": "mcgill",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -50974,7 +50988,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d0831d5c-cb71-4ce6-9a62-3bf31671d9db",
           "opponentFullName": "Université Laval",
           "opponentNickname": "Rouge et Or",
-          "opponentRegistryId": "ulaval"
+          "opponentRegistryId": "ulaval",
+          "live": true
         },
         {
           "date": "2026-09-19",
@@ -51074,6 +51089,7 @@
         "opponentFullName": "Université Laval",
         "opponentNickname": "Rouge et Or",
         "opponentRegistryId": "ulaval",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -61114,7 +61130,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6145303f-07bc-4b8a-8e9e-9447226220bc",
           "opponentFullName": "Cégep de Trois-Rivières",
           "opponentNickname": "Diablos",
-          "opponentRegistryId": "trois-rivieres"
+          "opponentRegistryId": "trois-rivieres",
+          "live": true
         },
         {
           "date": "2026-09-18",
@@ -61228,6 +61245,7 @@
         "opponentFullName": "Cégep de Trois-Rivières",
         "opponentNickname": "Diablos",
         "opponentRegistryId": "trois-rivieres",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -61554,7 +61572,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c068307f-59b6-4a13-ac01-1ee1237df0d2",
           "opponentFullName": "Cégep de Sainte-Foy",
           "opponentNickname": "Géants",
-          "opponentRegistryId": "sainte-foy"
+          "opponentRegistryId": "sainte-foy",
+          "live": true
         },
         {
           "date": "2026-09-20",
@@ -61653,6 +61672,7 @@
         "opponentFullName": "Cégep de Sainte-Foy",
         "opponentNickname": "Géants",
         "opponentRegistryId": "sainte-foy",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -61985,7 +62005,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d7ac0bfe-9e45-4f22-a1ef-b7dd5f57f601",
           "opponentFullName": "Vanier College",
           "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "vanier"
+          "opponentRegistryId": "vanier",
+          "live": true
         },
         {
           "date": "2026-09-18",
@@ -62084,6 +62105,7 @@
         "opponentFullName": "Vanier College",
         "opponentNickname": "Cheetahs",
         "opponentRegistryId": "vanier",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -62201,7 +62223,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c068307f-59b6-4a13-ac01-1ee1237df0d2",
           "opponentFullName": "Dawson College",
           "opponentNickname": "Blues",
-          "opponentRegistryId": "dawson"
+          "opponentRegistryId": "dawson",
+          "live": true
         },
         {
           "date": "2026-09-18",
@@ -62299,6 +62322,7 @@
         "opponentFullName": "Dawson College",
         "opponentNickname": "Blues",
         "opponentRegistryId": "dawson",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -62415,7 +62439,8 @@
           "gameId": "6145303f-07bc-4b8a-8e9e-9447226220bc",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6145303f-07bc-4b8a-8e9e-9447226220bc",
           "opponentFullName": "Collège Ahuntsic",
-          "opponentRegistryId": "ahuntsic"
+          "opponentRegistryId": "ahuntsic",
+          "live": true
         },
         {
           "date": "2026-09-20",
@@ -62514,6 +62539,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6145303f-07bc-4b8a-8e9e-9447226220bc",
         "opponentFullName": "Collège Ahuntsic",
         "opponentRegistryId": "ahuntsic",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -62631,7 +62657,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d7ac0bfe-9e45-4f22-a1ef-b7dd5f57f601",
           "opponentFullName": "Collège Montmorency",
           "opponentNickname": "Nomades",
-          "opponentRegistryId": "montmorency"
+          "opponentRegistryId": "montmorency",
+          "live": true
         },
         {
           "date": "2026-09-18",
@@ -62730,6 +62757,7 @@
         "opponentFullName": "Collège Montmorency",
         "opponentNickname": "Nomades",
         "opponentRegistryId": "montmorency",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -63337,7 +63365,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e52374e5-8de6-4485-974a-e441c4d11dd4",
           "opponentFullName": "Cégep de Trois-Rivières",
           "opponentNickname": "Diablos",
-          "opponentRegistryId": "trois-rivieres"
+          "opponentRegistryId": "trois-rivieres",
+          "live": true
         },
         {
           "date": "2026-09-13",
@@ -63431,6 +63460,7 @@
         "opponentFullName": "Cégep de Trois-Rivières",
         "opponentNickname": "Diablos",
         "opponentRegistryId": "trois-rivieres",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -63525,7 +63555,8 @@
           "gameId": "e52374e5-8de6-4485-974a-e441c4d11dd4",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e52374e5-8de6-4485-974a-e441c4d11dd4",
           "opponentFullName": "Cégep de Sherbrooke",
-          "opponentRegistryId": "cegep-sherbrooke"
+          "opponentRegistryId": "cegep-sherbrooke",
+          "live": true
         },
         {
           "date": "2026-09-19",
@@ -63605,6 +63636,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e52374e5-8de6-4485-974a-e441c4d11dd4",
         "opponentFullName": "Cégep de Sherbrooke",
         "opponentRegistryId": "cegep-sherbrooke",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -69166,7 +69198,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=556ee162-c241-4633-b788-f825dbdaa4f4",
           "opponentFullName": "Cégep de Trois-Rivières",
           "opponentNickname": "Diablos",
-          "opponentRegistryId": "trois-rivieres"
+          "opponentRegistryId": "trois-rivieres",
+          "live": true
         },
         {
           "date": "2026-09-18",
@@ -69264,6 +69297,7 @@
         "opponentFullName": "Cégep de Trois-Rivières",
         "opponentNickname": "Diablos",
         "opponentRegistryId": "trois-rivieres",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -69377,7 +69411,8 @@
           "gameId": "556ee162-c241-4633-b788-f825dbdaa4f4",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=556ee162-c241-4633-b788-f825dbdaa4f4",
           "opponentFullName": "Cégep de Saint-Hyacinthe",
-          "opponentRegistryId": "saint-hyacinthe"
+          "opponentRegistryId": "saint-hyacinthe",
+          "live": true
         },
         {
           "date": "2026-09-18",
@@ -69474,6 +69509,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=556ee162-c241-4633-b788-f825dbdaa4f4",
         "opponentFullName": "Cégep de Saint-Hyacinthe",
         "opponentRegistryId": "saint-hyacinthe",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
