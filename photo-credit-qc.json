@@ -1,23 +1,23 @@
 {
-  "updated": "2026-09-11T03:00:08.164Z",
+  "updated": "2026-09-11T04:49:19.918Z",
   "total": 188,
   "withImage": 175,
   "withCredit": 175,
-  "cited": 130,
+  "cited": 129,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 6,
-  "citedNew": 3,
-  "fallbackNew": 12,
+  "checked": 14,
+  "updatedCount": 5,
+  "citedNew": 0,
+  "fallbackNew": 14,
   "samples": [
     {
       "title": "The catalogue of stories at the Webster Library",
       "source": "The Link",
-      "credit": "Illustration: Evelyn Ho Lee",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
@@ -41,18 +41,11 @@
       "method": null
     },
     {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
+      "title": "Blackface at McGill",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
     }
   ]
 }
