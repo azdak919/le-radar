@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-09-11T19:26:23.100Z",
+  "updatedAt": "2026-09-11T21:50:38.956Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Conduite Antisportive",
+        "title": "Les Arshitechs du Son",
         "source": "api-live",
-        "start": "14:30",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/conduite-antisportive/"
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
       "next": {
-        "title": "L'Artiste du mois CHYZ",
+        "title": "Football du Rouge et Or",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/lartist-du-mois-chyz/"
+        "start": "18:30",
+        "end": "22:30",
+        "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
       },
       "track": "",
-      "showTitle": "Conduite Antisportive",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-11T19:26:08.752Z"
+      "checkedAt": "2026-09-11T21:50:21.627Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Salsa et Bembê",
+        "title": "Ok Doomer",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/salsa-et-bembe"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/ok-doomer"
       },
       "next": {
-        "title": "Turbo Tannant",
+        "title": "Mix électro",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/turbo-tannant"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/mix-electro"
       },
       "track": "",
-      "showTitle": "Salsa et Bembê",
+      "showTitle": "Ok Doomer",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-11T19:26:10.028Z"
+      "checkedAt": "2026-09-11T21:50:22.889Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "New Shit",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Café",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "New Shit",
+      "showTitle": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-11T19:26:12.715Z"
+      "checkedAt": "2026-09-11T21:50:25.567Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Dead Beats",
+        "title": "The Groove Master's Hour",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/dead-beats"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
       },
       "next": {
-        "title": "Tapeworms",
+        "title": "The Go-Go Radio Magic Show",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/tapeworms"
+        "start": "18:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
       },
       "track": "",
-      "showTitle": "Dead Beats",
+      "showTitle": "The Groove Master's Hour",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-11T19:26:15.391Z"
+      "checkedAt": "2026-09-11T21:50:28.487Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,31 +133,32 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-11T19:26:16.557Z"
+      "checkedAt": "2026-09-11T21:50:29.605Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Histoire de passer le temps",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:00",
-        "slug": "histoire-de-passer-le-temps"
+        "title": "D'amour et de sexe",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
       },
-      "track": "DAWN - baby, can we?",
+      "track": "Olivia Khoury - Saving Face",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-11T19:26:22.749Z"
+      "checkedAt": "2026-09-11T21:50:38.605Z"
     }
   }
 }
