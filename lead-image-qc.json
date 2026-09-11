@@ -1,19 +1,37 @@
 {
-  "updated": "2026-09-11T15:15:38.682Z",
+  "updated": "2026-09-11T19:15:54.026Z",
   "total": 188,
   "withPhoto": 175,
-  "withStock": 29,
+  "withStock": 32,
   "withCampusBank": 20,
   "fullyCovered": 188,
-  "leadReadyPhotos": 149,
+  "leadReadyPhotos": 125,
   "pageScraped": 27,
-  "photosRecovered": 22,
+  "photosRecovered": 21,
   "imagesCleared": 13,
-  "stockSearches": 35,
-  "stockFound": 20,
-  "campusBankFound": 14,
+  "stockSearches": 66,
+  "stockFound": 22,
+  "campusBankFound": 13,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-7/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990-1024x703.png"
+    },
+    {
+      "title": "L’Association canadienne-française pour l’avancement des sciences (ACFAS) dévoile ses revendications envers les partis politiques",
+      "link": "https://quartierlibre.ca/acfas-devoile-ses-revendications/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/09/Photo_Lab_QL.jpeg"
+    },
+    {
+      "title": "Élections : Cinq priorités réclamées par les éleveurs de volaille du Québec",
+      "link": "https://lapige.atmjonquiere.com/2026/09/10/elections-cinq-priorites-reclamees-par-les-eleveurs-de-volaille-du-quebec/?utm_source=rss&utm_medium=rss&utm_campaign=elections-cinq-priorites-reclamees-par-les-eleveurs-de-volaille-du-quebec",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_0201-scaled-1.jpg"
+    },
     {
       "title": "Les préoccupations des aînés au cœur de la campagne",
       "link": "https://lapige.atmjonquiere.com/2026/09/10/les-preoccupations-des-aines-au-coeur-de-la-campagne/?utm_source=rss&utm_medium=rss&utm_campaign=les-preoccupations-des-aines-au-coeur-de-la-campagne",
@@ -21,70 +39,52 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Image-Josee-Savard.jpg"
     },
     {
-      "title": "Blackface at McGill",
-      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/?utm_source=rss&utm_medium=rss&utm_campaign=blackface-at-mcgill",
+      "title": "Les épiceries ethniques, phénomène grandissant au Saguenay-Lac-Saint-Jean",
+      "link": "https://lapige.atmjonquiere.com/2026/09/10/les-epiceries-ethniques-phenomene-grandissant-au-saguenay-lac-saint-jean/?utm_source=rss&utm_medium=rss&utm_campaign=les-epiceries-ethniques-phenomene-grandissant-au-saguenay-lac-saint-jean",
       "reason": "no-stock-match",
-      "image": "https://www.thetribune.ca/wp-content/uploads/2026/04/Design-sans-titre.png"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_2893.jpeg"
     },
     {
-      "title": "Nostalgia Nook: The return of recession pop-timism",
-      "link": "https://thelinknewspaper.ca/article/16356",
+      "title": "Des restaurants végétaliens? Pas pour tout de suite!",
+      "link": "https://lapige.atmjonquiere.com/2026/09/10/des-restaurants-vegetaliens-pas-pour-tout-de-suite/?utm_source=rss&utm_medium=rss&utm_campaign=des-restaurants-vegetaliens-pas-pour-tout-de-suite",
       "reason": "no-stock-match",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Y2K_Escapism.Aia_Segal_900_1200_90.jpg"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_7961.jpg"
     },
     {
-      "title": "Tuition hikes compromise Concordia’s future",
-      "link": "https://thelinknewspaper.ca/article/16353",
+      "title": "À Jonquière, se déplacer sans voiture se paie en temps",
+      "link": "https://lapige.atmjonquiere.com/2026/09/09/a-jonquiere-se-deplacer-sans-voiture-se-paie-en-temps/?utm_source=rss&utm_medium=rss&utm_campaign=a-jonquiere-se-deplacer-sans-voiture-se-paie-en-temps",
       "reason": "no-stock-match",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Province.James_Issa_690_552_90.jpg"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Image-4-1-scaled-e1788549888314.jpg"
     },
     {
-      "title": "The catalogue of stories at the Webster Library",
-      "link": "https://thelinknewspaper.ca/article/16350",
+      "title": "Les cafés, les nouveaux espaces d’étude",
+      "link": "https://lapige.atmjonquiere.com/2026/09/09/les-cafes-les-nouveaux-espaces-detude/?utm_source=rss&utm_medium=rss&utm_campaign=les-cafes-les-nouveaux-espaces-detude",
       "reason": "no-stock-match",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Library.Evelyn_Ho_Lee_690_863.png"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_6590.jpeg"
     },
     {
-      "title": "Concrete jungle where dreams end",
-      "link": "https://thelinknewspaper.ca/article/16347",
+      "title": "Comment fonctionnent les élections au Québec ?",
+      "link": "https://lecollectif.ca/a-la-une/comment-fonctionnent-les-elections-au-quebec/",
       "reason": "no-stock-match",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Social_Antisocial.Halle_Keays_690_255_90.jpg"
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/09/SOCIETE_Comment-fonctionnent-les-elections-au-Quebec_Pixabay-1024x684.jpg"
     },
     {
-      "title": "Letters from the Editors May 2026",
-      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
-    },
-    {
-      "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
-      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
+      "title": "La téléréalité garde la cote au Québec auprès des jeunes",
+      "link": "https://lapige.atmjonquiere.com/2026/09/08/la-telerealite-garde-la-cote-au-quebec-aupres-des-jeunes/?utm_source=rss&utm_medium=rss&utm_campaign=la-telerealite-garde-la-cote-au-quebec-aupres-des-jeunes",
       "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_1396.jpeg"
     },
     {
-      "title": "Mars enters Aries",
-      "link": "https://thebucampus.ca/2026/04/06/mars-enters-aries/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+      "title": "Votre nez choisit-il vos amis ?",
+      "link": "https://lapige.atmjonquiere.com/2026/09/08/votre-nez-choisit-il-vos-amis/?utm_source=rss&utm_medium=rss&utm_campaign=votre-nez-choisit-il-vos-amis",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Johannes-Frasnelli-e1788542038748.jpg"
     },
     {
-      "title": "Spotlighting Powerful McGill Alumnae",
-      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2d/McGill_University_Montr%C3%A9al.jpeg"
-    },
-    {
-      "title": "National Golf tournament",
-      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531487%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Gaiters wrap up hard-fought season with eyes on next year",
-      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "title": "Jeunes et politique : un désintérêt ou un manque de représentation ?",
+      "link": "https://lapige.atmjonquiere.com/2026/09/08/jeunes-et-politique-un-desinteret-ou-un-manque-de-representation/?utm_source=rss&utm_medium=rss&utm_campaign=jeunes-et-politique-un-desinteret-ou-un-manque-de-representation",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_9055.jpg"
     }
   ]
 }

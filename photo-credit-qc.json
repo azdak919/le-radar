@@ -1,51 +1,44 @@
 {
-  "updated": "2026-09-11T17:57:20.035Z",
+  "updated": "2026-09-11T19:16:08.781Z",
   "total": 188,
   "withImage": 175,
   "withCredit": 175,
-  "cited": 129,
+  "cited": 130,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 5,
-  "citedNew": 0,
+  "checked": 16,
+  "updatedCount": 4,
+  "citedNew": 3,
   "fallbackNew": 13,
   "samples": [
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Recettes musicales québécoises pour l’été",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "Blackface at McGill",
       "source": "The Tribune",
       "credit": "Photo credit: The Tribune",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "The catalogue of stories at the Webster Library",
+      "source": "The Link",
+      "credit": "Illustration: Evelyn Ho Lee",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
