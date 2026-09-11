@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-10T13:10:42.741Z",
+  "updatedAt": "2026-09-11T13:34:43.020Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-09-10T13:10:42.741Z",
+      "checkedAt": "2026-09-11T13:34:43.020Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
@@ -73,6 +73,13 @@
           "end": "18:30",
           "title": "Les Arshitechs du Son",
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        },
+        {
+          "day": 2,
+          "start": "19:00",
+          "end": "20:00",
+          "title": "CATHJO FAIT DE LA RADIO",
+          "url": "https://chyz.ca/emission/la-plug/"
         },
         {
           "day": 3,
@@ -222,7 +229,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-09-10T13:10:42.741Z",
+      "checkedAt": "2026-09-11T13:34:43.020Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
@@ -989,7 +996,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-09-10T13:10:42.741Z",
+      "checkedAt": "2026-09-11T13:34:43.020Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
@@ -1607,7 +1614,7 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-09-10T13:10:42.741Z",
+      "checkedAt": "2026-09-11T13:34:43.020Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
@@ -4236,7 +4243,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-09-10T13:10:42.741Z",
+      "checkedAt": "2026-09-11T13:34:43.020Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
         {
@@ -4457,9 +4464,16 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-09-10T13:10:42.741Z",
+      "checkedAt": "2026-09-11T13:34:43.020Z",
       "verifiedWeekOf": "2026-09-07",
       "grid": [
+        {
+          "day": 0,
+          "start": "14:00",
+          "end": "16:00",
+          "title": "Pôle hip-hop",
+          "url": "https://www.choq.ca/emissions/pole-hip-hop"
+        },
         {
           "day": 0,
           "start": "17:00",
@@ -4501,6 +4515,13 @@
           "end": "18:00",
           "title": "La 3ème demie",
           "url": "https://www.choq.ca/emissions/le-12-mtlsup"
+        },
+        {
+          "day": 4,
+          "start": "21:00",
+          "end": "22:00",
+          "title": "Le Studio",
+          "url": "https://www.choq.ca/emissions/live"
         },
         {
           "day": 5,
