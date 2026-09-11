@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-11T12:34:43.052Z",
+  "updatedAt": "2026-09-11T13:34:26.933Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-11T12:34:30.609Z"
+      "checkedAt": "2026-09-11T13:33:40.050Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Quartier libre",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/quartier-libre"
-      },
-      "next": {
         "title": "La collation",
         "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "https://cism893.ca/emissions/mix-collation"
       },
+      "next": {
+        "title": "En-quêtes artistiques",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/en-quetes-artistiques"
+      },
       "track": "",
-      "showTitle": "Quartier libre",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-11T12:34:31.911Z"
+      "checkedAt": "2026-09-11T13:33:41.477Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Morning Detour",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Jazz Amuck",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "Morning Detour",
+      "showTitle": "Jazz Amuck",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,59 +81,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-11T12:34:34.415Z"
+      "checkedAt": "2026-09-11T13:33:44.559Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Wake up Folks!",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/wake-up-folks"
-      },
-      "next": {
         "title": "CJLO News Hour",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/cjlo-news-hour"
       },
+      "next": {
+        "title": "Democracy Now",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
+      },
       "track": "",
-      "showTitle": "Wake up Folks!",
+      "showTitle": "CJLO News Hour",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-11T12:34:36.539Z"
+      "checkedAt": "2026-09-11T13:34:07.745Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "La Souterraine",
         "source": "schedule-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Le Ré-Show : Deuxième service",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "La Souterraine",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-11T12:34:37.405Z"
+      "checkedAt": "2026-09-11T13:34:08.793Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Maryze - SHY PRTY GRL",
+      "track": "ID — Raccoon",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-11T12:34:42.702Z"
+      "checkedAt": "2026-09-11T13:34:26.582Z"
     }
   }
 }
