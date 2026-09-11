@@ -7,6 +7,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- JSON-LD du fil : manchettes **complètes** (plus de coupe à 110 car. dans `generate-seo.js`). Une manchette longue (ACFAS) faisait diverger `index.html` de `news.json` et faisait échouer `tests/news-representations.mjs` — donc tous les bots qui passent `bot-prepush`. Guard force aussi la régénération SEO après un catch-up news ; Update Student News retente SEO une fois avant « HTML gate deferred ».
+
 - Full HD (Philips 1920) : 2 unes + densité 1920 aussi sur **Edge / Chromium**. Le palier `min-width: 1920px` ratait dès qu’une barre de défilement classique retranchait ~15 px (Firefox overlay passait). Seuil **1880 px**, JS et CSS alignés.
 
 ### Modifié

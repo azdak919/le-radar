@@ -177,6 +177,18 @@ jobs:
           CI: true
         continue-on-error: true
 
+      # Une 2e passe si la 1re a planté (timeout / flaky) : ne pas laisser
+      # news.json partir sans index.html (« HTML gate deferred ») alors que
+      # generate-seo aurait pu réussir au retry.
+      - name: Retry SEO artefacts
+        id: seo_retry
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success' && steps.check.outputs.changed == 'true' && steps.seo.outcome == 'failure'
+        timeout-minutes: 2
+        run: node scripts/generate-seo.js --update
+        env:
+          CI: true
+        continue-on-error: true
+
       # Gate locale avant push HTML : évite un Vérification rouge (mail) si
       # generate-seo / données ont cassé l’intégrité statique.
       # continue-on-error : un test figé (date d’article sortie de la fiche)
@@ -205,7 +217,11 @@ jobs:
           # Un échec artifact-budget (image purgée encore listée par git) ne
           # doit plus laisser news.json diverger de index.html — Guard échoue
           # sinon sur tests/news-representations.mjs.
-          if [ "${{ steps.seo.outcome }}" = "success" ]; then
+          SEO_OK=false
+          if [ "${{ steps.seo.outcome }}" = "success" ] || [ "${{ steps.seo_retry.outcome }}" = "success" ]; then
+            SEO_OK=true
+          fi
+          if [ "$SEO_OK" = true ]; then
             git add "${SEO_FILES[@]}" 2>/dev/null || true
             # Pages d'entités : dossiers entièrement régénérés. `-A` est
             # indispensable — sans lui, une fiche retirée resterait en ligne.
@@ -213,7 +229,7 @@ jobs:
           fi
           if [ "${{ steps.prepush.outcome }}" = "success" ]; then
             MSG='bot: update student news feed, excerpts, images, photo credits, RSS and social (auto)'
-          elif [ "${{ steps.seo.outcome }}" = "success" ]; then
+          elif [ "$SEO_OK" = true ]; then
             echo "::warning::integrity check failed — publishing news data + SEO so JSON-LD stays in sync"
             MSG='bot: update student news feed (auto; integrity gate deferred)'
           else

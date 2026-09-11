@@ -488,7 +488,9 @@ function buildItemListJsonLd(items) {
       url: item.link,
       item: {
         '@type': 'NewsArticle',
-        headline: cleanText(item.title).slice(0, 110),
+        // Titre complet : news-representations exige l'égalité stricte avec news.json + HTML.
+        // Ne pas tronquer (plafond 110 car.) — une coupe casse bot-prepush dès qu'une manchette longue entre au top 10.
+        headline: cleanText(item.title),
         url: item.link,
         ...(item.date ? { datePublished: item.date } : {}),
         ...(item.excerpt ? { description: cleanText(item.excerpt).slice(0, 300) } : {}),

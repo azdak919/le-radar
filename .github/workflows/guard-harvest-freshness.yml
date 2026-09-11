@@ -62,17 +62,20 @@ jobs:
           CI: true
           FIREBASE_POLYSCOPE_API_KEY: ${{ secrets.FIREBASE_POLYSCOPE_API_KEY }}
 
-      # Filet : si Update Student News a publié news.json sans index.html
-      # (ancien « HTML gate deferred »), régénérer le prérendu / JSON-LD
-      # avant la gate — sinon bot-prepush échoue sur news-representations.
+      # Filet : (1) après un catch-up news, toujours régénérer le prérendu /
+      # JSON-LD ; (2) sinon, si Update Student News a publié news.json sans
+      # index.html (« HTML gate deferred »), guérir avant bot-prepush.
+      # Les manchettes JSON-LD doivent rester des titres complets (pas un
+      # slice 110 car.) — voir generate-seo.js + tests/news-representations.mjs.
       - name: Sync news SEO artefacts
         id: news_seo
         run: |
-          if node tests/news-representations.mjs; then
+          FORCE="${{ steps.eval.outputs.news }}"
+          if [ "$FORCE" != "true" ] && node tests/news-representations.mjs; then
             echo "needed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          echo "News SEO out of sync with news.json — regenerating"
+          echo "Syncing news SEO artefacts (force=$FORCE)"
           node scripts/generate-feed.js --update
           node scripts/generate-seo.js --update
           # Re-vérifie le fil seul ; le reste de la gate suit.
