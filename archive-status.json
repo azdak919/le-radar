@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-11T13:48:31.671Z",
+  "updated": "2026-09-11T18:44:11.831Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2186,13 +2186,19 @@
       "at": "2026-09-11T08:21:09.000Z",
       "via": "existant",
       "source": "La Pige"
+    },
+    "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-7/": {
+      "at": "2026-09-11T18:44:11.831Z",
+      "via": "save-page-now",
+      "source": "Quartier Libre",
+      "snapshot": "https://web.archive.org/web/20260911184356/https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-7/"
     }
   },
   "stats": {
-    "total": 383,
+    "total": 384,
     "lastRun": {
-      "saved": 0,
-      "skipped": 2,
+      "saved": 1,
+      "skipped": 0,
       "failed": 0,
       "stoppedEarly": false
     }
