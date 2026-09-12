@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-12T20:14:57.131Z",
-  "fetchedAt": "2026-09-12T20:14:57.131Z",
+  "updated": "2026-09-12T20:26:56.300Z",
+  "fetchedAt": "2026-09-12T20:26:56.300Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-12T20:14:57.131Z"
+    "referenceDate": "2026-09-12T20:26:56.300Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 838,
@@ -74,18 +74,6 @@
     "volleyball"
   ],
   "teamCount": 867,
-  "errors": [
-    {
-      "leagueId": "spordle-collegial",
-      "label": "Hockey collegial",
-      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
-    },
-    {
-      "leagueId": "spordle-universitaire",
-      "label": "Hockey universitaire",
-      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
-    }
-  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -6030,6 +6018,24 @@
       "leagueLabel": "Baseball collégial masculin",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Édouard-Montpetit",
+          "opponentCode": "CEM",
+          "home": true,
+          "scoreFor": 7,
+          "scoreAgainst": 2,
+          "result": "W",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "c4a8c4e5-3940-4980-b875-f7562a7c693f",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4a8c4e5-3940-4980-b875-f7562a7c693f",
+          "opponentFullName": "Cégep Édouard-Montpetit",
+          "opponentNickname": "Cougars",
+          "opponentRegistryId": "edouard-montpetit",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-06",
           "time": "13:00",
           "opponent": "John Abbott",
@@ -6067,39 +6073,25 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-06",
+        "date": "2026-09-12",
         "time": "13:00",
-        "opponent": "John Abbott",
-        "opponentCode": "JAC",
-        "home": false,
-        "scoreFor": 9,
-        "scoreAgainst": 12,
-        "result": "L",
+        "opponent": "Édouard-Montpetit",
+        "opponentCode": "CEM",
+        "home": true,
+        "scoreFor": 7,
+        "scoreAgainst": 2,
+        "result": "W",
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "d05009cd-b6c9-4346-847b-003bf747f3c1",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d05009cd-b6c9-4346-847b-003bf747f3c1",
-        "opponentFullName": "John Abbott College",
-        "opponentNickname": "Islanders",
-        "opponentRegistryId": "john-abbott",
+        "gameId": "c4a8c4e5-3940-4980-b875-f7562a7c693f",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4a8c4e5-3940-4980-b875-f7562a7c693f",
+        "opponentFullName": "Cégep Édouard-Montpetit",
+        "opponentNickname": "Cougars",
+        "opponentRegistryId": "edouard-montpetit",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-09-12",
-          "time": "13:00",
-          "opponent": "Édouard-Montpetit",
-          "opponentCode": "CEM",
-          "home": true,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "c4a8c4e5-3940-4980-b875-f7562a7c693f",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4a8c4e5-3940-4980-b875-f7562a7c693f",
-          "opponentFullName": "Cégep Édouard-Montpetit",
-          "opponentNickname": "Cougars",
-          "opponentRegistryId": "edouard-montpetit"
-        },
         {
           "date": "2026-09-12",
           "time": "16:00",
@@ -6254,25 +6246,26 @@
       ],
       "nextGame": {
         "date": "2026-09-12",
-        "time": "13:00",
+        "time": "16:00",
         "opponent": "Édouard-Montpetit",
         "opponentCode": "CEM",
-        "home": true,
+        "home": false,
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "c4a8c4e5-3940-4980-b875-f7562a7c693f",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4a8c4e5-3940-4980-b875-f7562a7c693f",
+        "gameId": "e8a8151c-7ab3-4bfd-a369-5ec5f7ca290e",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e8a8151c-7ab3-4bfd-a369-5ec5f7ca290e",
         "opponentFullName": "Cégep Édouard-Montpetit",
         "opponentNickname": "Cougars",
         "opponentRegistryId": "edouard-montpetit",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 1,
         "draws": 0,
-        "played": 2,
-        "label": "1-1"
+        "played": 3,
+        "label": "2-1"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -6713,22 +6706,44 @@
       "division": null,
       "usports": false,
       "leagueLabel": "Baseball collégial masculin",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
+      "results": [
         {
           "date": "2026-09-12",
           "time": "13:00",
           "opponent": "Beauce-Appalaches",
           "opponentCode": "BAP",
           "home": false,
+          "scoreFor": 2,
+          "scoreAgainst": 7,
+          "result": "L",
           "sport": "baseball",
           "competition": "Baseball collégial masculin",
           "gameId": "c4a8c4e5-3940-4980-b875-f7562a7c693f",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4a8c4e5-3940-4980-b875-f7562a7c693f",
           "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches"
-        },
+          "opponentRegistryId": "beauce-appalaches",
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Beauce-Appalaches",
+        "opponentCode": "BAP",
+        "home": false,
+        "scoreFor": 2,
+        "scoreAgainst": 7,
+        "result": "L",
+        "sport": "baseball",
+        "competition": "Baseball collégial masculin",
+        "gameId": "c4a8c4e5-3940-4980-b875-f7562a7c693f",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4a8c4e5-3940-4980-b875-f7562a7c693f",
+        "opponentFullName": "Cégep de Beauce-Appalaches",
+        "opponentRegistryId": "beauce-appalaches",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
+      "nextGames": [
         {
           "date": "2026-09-12",
           "time": "16:00",
@@ -6878,34 +6893,50 @@
           "opponentFullName": "Cégep André-Laurendeau",
           "opponentNickname": "Cheetahs",
           "opponentRegistryId": "andre-laurendeau"
+        },
+        {
+          "date": "2026-10-17",
+          "time": "13:00",
+          "opponent": "Limoilou",
+          "opponentCode": "LIM",
+          "home": false,
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "1105e550-987a-436f-82f4-cc500558cead",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1105e550-987a-436f-82f4-cc500558cead",
+          "opponentFullName": "Cégep Limoilou",
+          "opponentNickname": "Titans",
+          "opponentRegistryId": "limoilou"
         }
       ],
       "nextGame": {
         "date": "2026-09-12",
-        "time": "13:00",
+        "time": "16:00",
         "opponent": "Beauce-Appalaches",
         "opponentCode": "BAP",
-        "home": false,
+        "home": true,
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "c4a8c4e5-3940-4980-b875-f7562a7c693f",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4a8c4e5-3940-4980-b875-f7562a7c693f",
+        "gameId": "e8a8151c-7ab3-4bfd-a369-5ec5f7ca290e",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e8a8151c-7ab3-4bfd-a369-5ec5f7ca290e",
         "opponentFullName": "Cégep de Beauce-Appalaches",
         "opponentRegistryId": "beauce-appalaches",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
         "wins": 0,
-        "losses": 0,
+        "losses": 1,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "0-1"
       },
       "source": "rseq-s1",
       "priority": 42,
       "fullName": "Cégep Édouard-Montpetit",
       "nickname": "Cougars",
-      "registryId": "edouard-montpetit"
+      "registryId": "edouard-montpetit",
+      "lastGamePriorSeason": false
     },
     "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:11475f0b-100e-48b6-99f3-cf7a7fc22eea": {
       "id": "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:11475f0b-100e-48b6-99f3-cf7a7fc22eea",
@@ -42776,7 +42807,8 @@
           "gameId": "5a7193c2-0d4d-4163-a55d-ebb7c5193081",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5a7193c2-0d4d-4163-a55d-ebb7c5193081",
           "opponentFullName": "Cégep de Sainte-Anne",
-          "opponentRegistryId": "sainte-anne"
+          "opponentRegistryId": "sainte-anne",
+          "live": true
         },
         {
           "date": "2026-09-20",
@@ -42882,6 +42914,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5a7193c2-0d4d-4163-a55d-ebb7c5193081",
         "opponentFullName": "Cégep de Sainte-Anne",
         "opponentRegistryId": "sainte-anne",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -43403,7 +43436,8 @@
           "gameId": "5a7193c2-0d4d-4163-a55d-ebb7c5193081",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5a7193c2-0d4d-4163-a55d-ebb7c5193081",
           "opponentFullName": "Collège de Maisonneuve",
-          "opponentRegistryId": "maisonneuve"
+          "opponentRegistryId": "maisonneuve",
+          "live": true
         },
         {
           "date": "2026-09-20",
@@ -43496,6 +43530,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5a7193c2-0d4d-4163-a55d-ebb7c5193081",
         "opponentFullName": "Collège de Maisonneuve",
         "opponentRegistryId": "maisonneuve",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
