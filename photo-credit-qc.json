@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-12T03:07:05.990Z",
+  "updated": "2026-09-12T04:47:26.780Z",
   "total": 188,
   "withImage": 175,
   "withCredit": 175,
@@ -9,8 +9,8 @@
   "ok": false,
   "checked": 14,
   "updatedCount": 7,
-  "citedNew": 3,
-  "fallbackNew": 11,
+  "citedNew": 4,
+  "fallbackNew": 10,
   "samples": [
     {
       "title": "The catalogue of stories at the Webster Library",
@@ -41,11 +41,11 @@
       "method": null
     },
     {
-      "title": "Blackface at McGill",
-      "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
-      "cited": false,
-      "method": null
+      "title": "Une première saison de chasse avec l’application Nord Quest",
+      "source": "La Pige",
+      "credit": "Photo : Arthur Bakhache",
+      "cited": true,
+      "method": "body-line"
     },
     {
       "title": "Leave the Children Out of This",
