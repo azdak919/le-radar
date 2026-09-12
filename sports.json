@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-12T08:39:15.517Z",
-  "fetchedAt": "2026-09-12T08:39:15.517Z",
+  "updated": "2026-09-12T14:13:36.259Z",
+  "fetchedAt": "2026-09-12T14:13:36.259Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-12T08:39:15.517Z"
+    "referenceDate": "2026-09-12T14:13:36.259Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 838,
@@ -74,18 +74,6 @@
     "volleyball"
   ],
   "teamCount": 866,
-  "errors": [
-    {
-      "leagueId": "spordle-collegial",
-      "label": "Hockey collegial",
-      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
-    },
-    {
-      "leagueId": "spordle-universitaire",
-      "label": "Hockey universitaire",
-      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
-    }
-  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -36209,7 +36197,8 @@
           "gameId": "0cfed40f-e4da-4adc-8588-71302122a404",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0cfed40f-e4da-4adc-8588-71302122a404",
           "opponentFullName": "Cégep de Mérici",
-          "opponentRegistryId": "merici"
+          "opponentRegistryId": "merici",
+          "live": true
         },
         {
           "date": "2026-09-12",
@@ -36367,6 +36356,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0cfed40f-e4da-4adc-8588-71302122a404",
         "opponentFullName": "Cégep de Mérici",
         "opponentRegistryId": "merici",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -36397,19 +36387,6 @@
       "results": [],
       "lastGame": null,
       "nextGames": [
-        {
-          "date": "2026-09-12",
-          "time": "10:00",
-          "opponent": "Cégep de Chicoutimi",
-          "opponentCode": "CHI",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "eb2f6bd2-64a0-49a8-93b5-3822126e9355",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=eb2f6bd2-64a0-49a8-93b5-3822126e9355",
-          "opponentFullName": "Cégep de Chicoutimi",
-          "opponentRegistryId": "chicoutimi"
-        },
         {
           "date": "2026-09-12",
           "time": "11:15",
@@ -36556,16 +36533,16 @@
       ],
       "nextGame": {
         "date": "2026-09-12",
-        "time": "10:00",
-        "opponent": "Cégep de Chicoutimi",
-        "opponentCode": "CHI",
-        "home": true,
+        "time": "11:15",
+        "opponent": "Mérici",
+        "opponentCode": "MER",
+        "home": false,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "eb2f6bd2-64a0-49a8-93b5-3822126e9355",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=eb2f6bd2-64a0-49a8-93b5-3822126e9355",
-        "opponentFullName": "Cégep de Chicoutimi",
-        "opponentRegistryId": "chicoutimi",
+        "gameId": "09ec0ef9-f9ec-428e-b98e-90d62bbe5f51",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=09ec0ef9-f9ec-428e-b98e-90d62bbe5f51",
+        "opponentFullName": "Cégep de Mérici",
+        "opponentRegistryId": "merici",
         "opponentSector": "collegial"
       },
       "record": {
@@ -36596,19 +36573,6 @@
       "results": [],
       "lastGame": null,
       "nextGames": [
-        {
-          "date": "2026-09-12",
-          "time": "10:00",
-          "opponent": "Charlevoix",
-          "opponentCode": "CHX",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "eb2f6bd2-64a0-49a8-93b5-3822126e9355",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=eb2f6bd2-64a0-49a8-93b5-3822126e9355",
-          "opponentFullName": "Cégep de Charlevoix",
-          "opponentRegistryId": "charlevoix"
-        },
         {
           "date": "2026-09-12",
           "time": "11:15",
@@ -36755,16 +36719,16 @@
       ],
       "nextGame": {
         "date": "2026-09-12",
-        "time": "10:00",
-        "opponent": "Charlevoix",
-        "opponentCode": "CHX",
+        "time": "11:15",
+        "opponent": "Beauce-Appalaches",
+        "opponentCode": "BAP",
         "home": false,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "eb2f6bd2-64a0-49a8-93b5-3822126e9355",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=eb2f6bd2-64a0-49a8-93b5-3822126e9355",
-        "opponentFullName": "Cégep de Charlevoix",
-        "opponentRegistryId": "charlevoix",
+        "gameId": "96baf6a2-112c-4683-ae19-5d84cbf1994c",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=96baf6a2-112c-4683-ae19-5d84cbf1994c",
+        "opponentFullName": "Cégep de Beauce-Appalaches",
+        "opponentRegistryId": "beauce-appalaches",
         "opponentSector": "collegial"
       },
       "record": {
@@ -37204,7 +37168,8 @@
           "gameId": "0cfed40f-e4da-4adc-8588-71302122a404",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0cfed40f-e4da-4adc-8588-71302122a404",
           "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches"
+          "opponentRegistryId": "beauce-appalaches",
+          "live": true
         },
         {
           "date": "2026-09-12",
@@ -37362,6 +37327,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0cfed40f-e4da-4adc-8588-71302122a404",
         "opponentFullName": "Cégep de Beauce-Appalaches",
         "opponentRegistryId": "beauce-appalaches",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -40388,19 +40354,6 @@
       "nextGames": [
         {
           "date": "2026-09-12",
-          "time": "10:00",
-          "opponent": "Vieux Montréal",
-          "opponentCode": "CVM",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "55bfdac7-6f18-4d79-bc08-1dc14ceda2be",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=55bfdac7-6f18-4d79-bc08-1dc14ceda2be",
-          "opponentFullName": "Cégep du Vieux Montréal",
-          "opponentRegistryId": "vieux-montreal"
-        },
-        {
-          "date": "2026-09-12",
           "time": "13:00",
           "opponent": "Maisonneuve",
           "opponentCode": "MAI",
@@ -40467,16 +40420,16 @@
       ],
       "nextGame": {
         "date": "2026-09-12",
-        "time": "10:00",
-        "opponent": "Vieux Montréal",
-        "opponentCode": "CVM",
-        "home": true,
+        "time": "13:00",
+        "opponent": "Maisonneuve",
+        "opponentCode": "MAI",
+        "home": false,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "55bfdac7-6f18-4d79-bc08-1dc14ceda2be",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=55bfdac7-6f18-4d79-bc08-1dc14ceda2be",
-        "opponentFullName": "Cégep du Vieux Montréal",
-        "opponentRegistryId": "vieux-montreal",
+        "gameId": "3d4e4180-75dc-4065-ba53-a18dc89c71da",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3d4e4180-75dc-4065-ba53-a18dc89c71da",
+        "opponentFullName": "Collège de Maisonneuve",
+        "opponentRegistryId": "maisonneuve",
         "opponentSector": "collegial"
       },
       "record": {
@@ -40719,19 +40672,6 @@
       "nextGames": [
         {
           "date": "2026-09-12",
-          "time": "10:00",
-          "opponent": "Lionel-Groulx",
-          "opponentCode": "CLG",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "55bfdac7-6f18-4d79-bc08-1dc14ceda2be",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=55bfdac7-6f18-4d79-bc08-1dc14ceda2be",
-          "opponentFullName": "Collège Lionel-Groulx",
-          "opponentRegistryId": "lionel-groulx"
-        },
-        {
-          "date": "2026-09-12",
           "time": "14:30",
           "opponent": "Gérald-Godin",
           "opponentCode": "CGG",
@@ -40811,16 +40751,16 @@
       ],
       "nextGame": {
         "date": "2026-09-12",
-        "time": "10:00",
-        "opponent": "Lionel-Groulx",
-        "opponentCode": "CLG",
+        "time": "14:30",
+        "opponent": "Gérald-Godin",
+        "opponentCode": "CGG",
         "home": false,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "55bfdac7-6f18-4d79-bc08-1dc14ceda2be",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=55bfdac7-6f18-4d79-bc08-1dc14ceda2be",
-        "opponentFullName": "Collège Lionel-Groulx",
-        "opponentRegistryId": "lionel-groulx",
+        "gameId": "629e0265-ef0d-481d-b089-32ce730f8db8",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=629e0265-ef0d-481d-b089-32ce730f8db8",
+        "opponentFullName": "Cégep Gérald-Godin",
+        "opponentRegistryId": "gerald-godin",
         "opponentSector": "collegial"
       },
       "record": {
