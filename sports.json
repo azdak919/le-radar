@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-12T20:10:02.595Z",
-  "fetchedAt": "2026-09-12T20:10:02.595Z",
+  "updated": "2026-09-12T20:14:57.131Z",
+  "fetchedAt": "2026-09-12T20:14:57.131Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-12T20:10:02.595Z"
+    "referenceDate": "2026-09-12T20:14:57.131Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 838,
@@ -74,6 +74,18 @@
     "volleyball"
   ],
   "teamCount": 867,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -34849,6 +34861,23 @@
       "leagueLabel": "Flag football collégial féminin D2",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "14:00",
+          "opponent": "Maisonneuve",
+          "opponentCode": "MAI",
+          "home": true,
+          "scoreFor": 7,
+          "scoreAgainst": 6,
+          "result": "W",
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "f5d78dff-c57c-4886-bb89-5efc0cba522a",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f5d78dff-c57c-4886-bb89-5efc0cba522a",
+          "opponentFullName": "Collège de Maisonneuve",
+          "opponentRegistryId": "maisonneuve",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-06",
           "time": "17:30",
           "opponent": "Montmorency",
@@ -34885,21 +34914,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-06",
-        "time": "17:30",
-        "opponent": "Montmorency",
-        "opponentCode": "MON",
+        "date": "2026-09-12",
+        "time": "14:00",
+        "opponent": "Maisonneuve",
+        "opponentCode": "MAI",
         "home": true,
-        "scoreFor": 0,
-        "scoreAgainst": 39,
-        "result": "L",
+        "scoreFor": 7,
+        "scoreAgainst": 6,
+        "result": "W",
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D2",
-        "gameId": "0a67ca90-7a91-4ba1-8238-6036fd3f5a5b",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0a67ca90-7a91-4ba1-8238-6036fd3f5a5b",
-        "opponentFullName": "Collège Montmorency",
-        "opponentNickname": "Nomades",
-        "opponentRegistryId": "montmorency",
+        "gameId": "f5d78dff-c57c-4886-bb89-5efc0cba522a",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f5d78dff-c57c-4886-bb89-5efc0cba522a",
+        "opponentFullName": "Collège de Maisonneuve",
+        "opponentRegistryId": "maisonneuve",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -35002,11 +35030,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 2,
         "draws": 0,
-        "played": 2,
-        "label": "0-2"
+        "played": 3,
+        "label": "1-2"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -35028,6 +35056,23 @@
       "usports": false,
       "leagueLabel": "Flag football collégial féminin D2",
       "results": [
+        {
+          "date": "2026-09-12",
+          "time": "14:00",
+          "opponent": "L'Assomption",
+          "opponentCode": "LAS",
+          "home": false,
+          "scoreFor": 6,
+          "scoreAgainst": 7,
+          "result": "L",
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "f5d78dff-c57c-4886-bb89-5efc0cba522a",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f5d78dff-c57c-4886-bb89-5efc0cba522a",
+          "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
+          "opponentRegistryId": "lassomption",
+          "priorSeason": false
+        },
         {
           "date": "2026-09-06",
           "time": "16:00",
@@ -35065,20 +35110,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-06",
-        "time": "16:00",
-        "opponent": "Cégep de l'Outaouais",
-        "opponentCode": "OUT",
-        "home": true,
+        "date": "2026-09-12",
+        "time": "14:00",
+        "opponent": "L'Assomption",
+        "opponentCode": "LAS",
+        "home": false,
         "scoreFor": 6,
-        "scoreAgainst": 38,
+        "scoreAgainst": 7,
         "result": "L",
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D2",
-        "gameId": "cd67fa04-2aaa-4d40-a392-5df39630c3b5",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cd67fa04-2aaa-4d40-a392-5df39630c3b5",
-        "opponentFullName": "Cégep de l'Outaouais",
-        "opponentRegistryId": "outaouais",
+        "gameId": "f5d78dff-c57c-4886-bb89-5efc0cba522a",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f5d78dff-c57c-4886-bb89-5efc0cba522a",
+        "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
+        "opponentRegistryId": "lassomption",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -35182,10 +35227,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 2,
+        "losses": 3,
         "draws": 0,
-        "played": 2,
-        "label": "0-2"
+        "played": 3,
+        "label": "0-3"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -44949,6 +44994,24 @@
       "leagueLabel": "Football collégial masculin D1",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Limoilou",
+          "opponentCode": "LIM",
+          "home": false,
+          "scoreFor": 30,
+          "scoreAgainst": 35,
+          "result": "L",
+          "sport": "football",
+          "competition": "Football collégial masculin D1",
+          "gameId": "0e812fb0-8042-4318-83c9-ee42fa24af11",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e812fb0-8042-4318-83c9-ee42fa24af11",
+          "opponentFullName": "Cégep Limoilou",
+          "opponentNickname": "Titans",
+          "opponentRegistryId": "limoilou",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-04",
           "time": "19:30",
           "opponent": "Champlain Lennoxville",
@@ -44985,20 +45048,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-04",
-        "time": "19:30",
-        "opponent": "Champlain Lennoxville",
-        "opponentCode": "LEN",
-        "home": true,
-        "scoreFor": 38,
-        "scoreAgainst": 42,
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Limoilou",
+        "opponentCode": "LIM",
+        "home": false,
+        "scoreFor": 30,
+        "scoreAgainst": 35,
         "result": "L",
         "sport": "football",
         "competition": "Football collégial masculin D1",
-        "gameId": "0bbf2fea-01d3-4a9f-8717-4da781a58315",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0bbf2fea-01d3-4a9f-8717-4da781a58315",
-        "opponentFullName": "Champlain College Lennoxville",
-        "opponentRegistryId": "champlain-lennoxville",
+        "gameId": "0e812fb0-8042-4318-83c9-ee42fa24af11",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e812fb0-8042-4318-83c9-ee42fa24af11",
+        "opponentFullName": "Cégep Limoilou",
+        "opponentNickname": "Titans",
+        "opponentRegistryId": "limoilou",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -45089,10 +45153,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 2,
+        "losses": 3,
         "draws": 0,
-        "played": 2,
-        "label": "0-2"
+        "played": 3,
+        "label": "0-3"
       },
       "source": "rseq-s1",
       "priority": 21,
@@ -45478,6 +45542,23 @@
       "leagueLabel": "Football collégial masculin D1",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "André-Grasset",
+          "opponentCode": "CAG",
+          "home": true,
+          "scoreFor": 35,
+          "scoreAgainst": 30,
+          "result": "W",
+          "sport": "football",
+          "competition": "Football collégial masculin D1",
+          "gameId": "0e812fb0-8042-4318-83c9-ee42fa24af11",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e812fb0-8042-4318-83c9-ee42fa24af11",
+          "opponentFullName": "Collège André-Grasset",
+          "opponentRegistryId": "andre-grasset",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-05",
           "time": "19:00",
           "opponent": "Vieux Montréal",
@@ -45513,20 +45594,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-05",
-        "time": "19:00",
-        "opponent": "Vieux Montréal",
-        "opponentCode": "CVM",
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "André-Grasset",
+        "opponentCode": "CAG",
         "home": true,
-        "scoreFor": 46,
-        "scoreAgainst": 0,
+        "scoreFor": 35,
+        "scoreAgainst": 30,
         "result": "W",
         "sport": "football",
         "competition": "Football collégial masculin D1",
-        "gameId": "05260c3c-f147-4738-b620-0058ad3de582",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=05260c3c-f147-4738-b620-0058ad3de582",
-        "opponentFullName": "Cégep du Vieux Montréal",
-        "opponentRegistryId": "vieux-montreal",
+        "gameId": "0e812fb0-8042-4318-83c9-ee42fa24af11",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e812fb0-8042-4318-83c9-ee42fa24af11",
+        "opponentFullName": "Collège André-Grasset",
+        "opponentRegistryId": "andre-grasset",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -45616,11 +45697,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 1,
         "draws": 0,
-        "played": 2,
-        "label": "1-1"
+        "played": 3,
+        "label": "2-1"
       },
       "source": "rseq-s1",
       "priority": 9,
@@ -45883,6 +45964,20 @@
       },
       "nextGames": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Vanier",
+          "opponentCode": "VAN",
+          "home": true,
+          "sport": "football",
+          "competition": "Football collégial masculin D1",
+          "gameId": "2814a88f-848b-4a88-8853-f78afd1a06b6",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2814a88f-848b-4a88-8853-f78afd1a06b6",
+          "opponentFullName": "Vanier College",
+          "opponentNickname": "Cheetahs",
+          "opponentRegistryId": "vanier"
+        },
+        {
           "date": "2026-09-26",
           "time": "19:30",
           "opponent": "Champlain Lennoxville",
@@ -45950,17 +46045,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-26",
-        "time": "19:30",
-        "opponent": "Champlain Lennoxville",
-        "opponentCode": "LEN",
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Vanier",
+        "opponentCode": "VAN",
         "home": true,
         "sport": "football",
         "competition": "Football collégial masculin D1",
-        "gameId": "3c17bdcc-bb63-40e0-8946-7c8206b6e042",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3c17bdcc-bb63-40e0-8946-7c8206b6e042",
-        "opponentFullName": "Champlain College Lennoxville",
-        "opponentRegistryId": "champlain-lennoxville",
+        "gameId": "2814a88f-848b-4a88-8853-f78afd1a06b6",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2814a88f-848b-4a88-8853-f78afd1a06b6",
+        "opponentFullName": "Vanier College",
+        "opponentNickname": "Cheetahs",
+        "opponentRegistryId": "vanier",
         "opponentSector": "collegial"
       },
       "record": {
@@ -46046,6 +46142,20 @@
       },
       "nextGames": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Saint-Jean",
+          "opponentCode": "SJR",
+          "home": false,
+          "sport": "football",
+          "competition": "Football collégial masculin D1",
+          "gameId": "2814a88f-848b-4a88-8853-f78afd1a06b6",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2814a88f-848b-4a88-8853-f78afd1a06b6",
+          "opponentFullName": "Cégep Saint-Jean-sur-Richelieu",
+          "opponentNickname": "Dragons",
+          "opponentRegistryId": "saint-jean-sur-richelieu"
+        },
+        {
           "date": "2026-09-25",
           "time": "19:30",
           "opponent": "André-Grasset",
@@ -46114,17 +46224,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-25",
-        "time": "19:30",
-        "opponent": "André-Grasset",
-        "opponentCode": "CAG",
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Saint-Jean",
+        "opponentCode": "SJR",
         "home": false,
         "sport": "football",
         "competition": "Football collégial masculin D1",
-        "gameId": "d510aac3-e9f6-4e26-8ca9-c1ac68d3bd31",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d510aac3-e9f6-4e26-8ca9-c1ac68d3bd31",
-        "opponentFullName": "Collège André-Grasset",
-        "opponentRegistryId": "andre-grasset",
+        "gameId": "2814a88f-848b-4a88-8853-f78afd1a06b6",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2814a88f-848b-4a88-8853-f78afd1a06b6",
+        "opponentFullName": "Cégep Saint-Jean-sur-Richelieu",
+        "opponentNickname": "Dragons",
+        "opponentRegistryId": "saint-jean-sur-richelieu",
         "opponentSector": "collegial"
       },
       "record": {
@@ -47359,6 +47470,19 @@
       },
       "nextGames": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Saint-Hyacinthe",
+          "opponentCode": "STH",
+          "home": false,
+          "sport": "football",
+          "competition": "Football collégial masculin D2",
+          "gameId": "515c4239-b7ee-4b96-a602-f22541f34071",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=515c4239-b7ee-4b96-a602-f22541f34071",
+          "opponentFullName": "Cégep de Saint-Hyacinthe",
+          "opponentRegistryId": "saint-hyacinthe"
+        },
+        {
           "date": "2026-09-19",
           "time": "19:30",
           "opponent": "Valleyfield",
@@ -47440,17 +47564,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-19",
-        "time": "19:30",
-        "opponent": "Valleyfield",
-        "opponentCode": "VAL",
-        "home": true,
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Saint-Hyacinthe",
+        "opponentCode": "STH",
+        "home": false,
         "sport": "football",
         "competition": "Football collégial masculin D2",
-        "gameId": "afe18fe7-8c3d-411c-9545-4e06b09b440f",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=afe18fe7-8c3d-411c-9545-4e06b09b440f",
-        "opponentFullName": "Cégep de Valleyfield",
-        "opponentRegistryId": "valleyfield",
+        "gameId": "515c4239-b7ee-4b96-a602-f22541f34071",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=515c4239-b7ee-4b96-a602-f22541f34071",
+        "opponentFullName": "Cégep de Saint-Hyacinthe",
+        "opponentRegistryId": "saint-hyacinthe",
         "opponentSector": "collegial"
       },
       "record": {
@@ -47536,6 +47660,20 @@
       },
       "nextGames": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Montmorency",
+          "opponentCode": "MON",
+          "home": true,
+          "sport": "football",
+          "competition": "Football collégial masculin D2",
+          "gameId": "515c4239-b7ee-4b96-a602-f22541f34071",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=515c4239-b7ee-4b96-a602-f22541f34071",
+          "opponentFullName": "Collège Montmorency",
+          "opponentNickname": "Nomades",
+          "opponentRegistryId": "montmorency"
+        },
+        {
           "date": "2026-09-19",
           "time": "19:30",
           "opponent": "John Abbott",
@@ -47618,18 +47756,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-19",
-        "time": "19:30",
-        "opponent": "John Abbott",
-        "opponentCode": "JAC",
-        "home": false,
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Montmorency",
+        "opponentCode": "MON",
+        "home": true,
         "sport": "football",
         "competition": "Football collégial masculin D2",
-        "gameId": "34a2bbac-ed87-43b9-ac1e-7d575898db37",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=34a2bbac-ed87-43b9-ac1e-7d575898db37",
-        "opponentFullName": "John Abbott College",
-        "opponentNickname": "Islanders",
-        "opponentRegistryId": "john-abbott",
+        "gameId": "515c4239-b7ee-4b96-a602-f22541f34071",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=515c4239-b7ee-4b96-a602-f22541f34071",
+        "opponentFullName": "Collège Montmorency",
+        "opponentNickname": "Nomades",
+        "opponentRegistryId": "montmorency",
         "opponentSector": "collegial"
       },
       "record": {
@@ -47907,6 +48045,19 @@
       },
       "nextGames": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Valleyfield",
+          "opponentCode": "VAL",
+          "home": true,
+          "sport": "football",
+          "competition": "Football collégial masculin D2",
+          "gameId": "b2f279c0-ed61-43f3-8e15-8428c19a92d6",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b2f279c0-ed61-43f3-8e15-8428c19a92d6",
+          "opponentFullName": "Cégep de Valleyfield",
+          "opponentRegistryId": "valleyfield"
+        },
+        {
           "date": "2026-09-19",
           "time": "13:00",
           "opponent": "Cégep de Sherbrooke",
@@ -47988,17 +48139,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-19",
+        "date": "2026-09-12",
         "time": "13:00",
-        "opponent": "Cégep de Sherbrooke",
-        "opponentCode": "SHE",
-        "home": false,
+        "opponent": "Valleyfield",
+        "opponentCode": "VAL",
+        "home": true,
         "sport": "football",
         "competition": "Football collégial masculin D2",
-        "gameId": "a263c911-34b2-4d2e-82d5-77675adc879c",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a263c911-34b2-4d2e-82d5-77675adc879c",
-        "opponentFullName": "Cégep de Sherbrooke",
-        "opponentRegistryId": "cegep-sherbrooke",
+        "gameId": "b2f279c0-ed61-43f3-8e15-8428c19a92d6",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b2f279c0-ed61-43f3-8e15-8428c19a92d6",
+        "opponentFullName": "Cégep de Valleyfield",
+        "opponentRegistryId": "valleyfield",
         "opponentSector": "collegial"
       },
       "record": {
@@ -48086,6 +48237,20 @@
       },
       "nextGames": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Cégep de Trois-Rivières",
+          "opponentCode": "TRV",
+          "home": false,
+          "sport": "football",
+          "competition": "Football collégial masculin D2",
+          "gameId": "b2f279c0-ed61-43f3-8e15-8428c19a92d6",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b2f279c0-ed61-43f3-8e15-8428c19a92d6",
+          "opponentFullName": "Cégep de Trois-Rivières",
+          "opponentNickname": "Diablos",
+          "opponentRegistryId": "trois-rivieres"
+        },
+        {
           "date": "2026-09-19",
           "time": "19:30",
           "opponent": "Montmorency",
@@ -48167,18 +48332,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-19",
-        "time": "19:30",
-        "opponent": "Montmorency",
-        "opponentCode": "MON",
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Cégep de Trois-Rivières",
+        "opponentCode": "TRV",
         "home": false,
         "sport": "football",
         "competition": "Football collégial masculin D2",
-        "gameId": "afe18fe7-8c3d-411c-9545-4e06b09b440f",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=afe18fe7-8c3d-411c-9545-4e06b09b440f",
-        "opponentFullName": "Collège Montmorency",
-        "opponentNickname": "Nomades",
-        "opponentRegistryId": "montmorency",
+        "gameId": "b2f279c0-ed61-43f3-8e15-8428c19a92d6",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b2f279c0-ed61-43f3-8e15-8428c19a92d6",
+        "opponentFullName": "Cégep de Trois-Rivières",
+        "opponentNickname": "Diablos",
+        "opponentRegistryId": "trois-rivieres",
         "opponentSector": "collegial"
       },
       "record": {
@@ -48208,6 +48373,23 @@
       "usports": false,
       "leagueLabel": "Football collégial masculin D3",
       "results": [
+        {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Mérici",
+          "opponentCode": "MER",
+          "home": true,
+          "scoreFor": 20,
+          "scoreAgainst": 24,
+          "result": "L",
+          "sport": "football",
+          "competition": "Football collégial masculin D3",
+          "gameId": "c006097e-0a40-449c-8365-581b3b56a6df",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c006097e-0a40-449c-8365-581b3b56a6df",
+          "opponentFullName": "Cégep de Mérici",
+          "opponentRegistryId": "merici",
+          "priorSeason": false
+        },
         {
           "date": "2026-09-05",
           "time": "20:30",
@@ -48244,20 +48426,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-05",
-        "time": "20:30",
-        "opponent": "La Pocatière",
-        "opponentCode": "POC",
-        "home": false,
-        "scoreFor": 24,
-        "scoreAgainst": 38,
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Mérici",
+        "opponentCode": "MER",
+        "home": true,
+        "scoreFor": 20,
+        "scoreAgainst": 24,
         "result": "L",
         "sport": "football",
         "competition": "Football collégial masculin D3",
-        "gameId": "0e77107b-3280-46a7-a7d1-539b3af93fb6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0e77107b-3280-46a7-a7d1-539b3af93fb6",
-        "opponentFullName": "Cégep de La Pocatière",
-        "opponentRegistryId": "la-pocatiere",
+        "gameId": "c006097e-0a40-449c-8365-581b3b56a6df",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c006097e-0a40-449c-8365-581b3b56a6df",
+        "opponentFullName": "Cégep de Mérici",
+        "opponentRegistryId": "merici",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -48344,10 +48526,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 2,
+        "losses": 3,
         "draws": 0,
-        "played": 2,
-        "label": "0-2"
+        "played": 3,
+        "label": "0-3"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -48718,6 +48900,23 @@
       "leagueLabel": "Football collégial masculin D3",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Cégep de Chicoutimi",
+          "opponentCode": "CHI",
+          "home": false,
+          "scoreFor": 24,
+          "scoreAgainst": 20,
+          "result": "W",
+          "sport": "football",
+          "competition": "Football collégial masculin D3",
+          "gameId": "c006097e-0a40-449c-8365-581b3b56a6df",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c006097e-0a40-449c-8365-581b3b56a6df",
+          "opponentFullName": "Cégep de Chicoutimi",
+          "opponentRegistryId": "chicoutimi",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-05",
           "time": "13:00",
           "opponent": "Thetford",
@@ -48753,20 +48952,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-05",
+        "date": "2026-09-12",
         "time": "13:00",
-        "opponent": "Thetford",
-        "opponentCode": "THE",
+        "opponent": "Cégep de Chicoutimi",
+        "opponentCode": "CHI",
         "home": false,
-        "scoreFor": 16,
-        "scoreAgainst": 40,
-        "result": "L",
+        "scoreFor": 24,
+        "scoreAgainst": 20,
+        "result": "W",
         "sport": "football",
         "competition": "Football collégial masculin D3",
-        "gameId": "05ad22b4-0dca-483f-8f7e-aeb49e997c8d",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=05ad22b4-0dca-483f-8f7e-aeb49e997c8d",
-        "opponentFullName": "Cégep de Thetford",
-        "opponentRegistryId": "thetford",
+        "gameId": "c006097e-0a40-449c-8365-581b3b56a6df",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c006097e-0a40-449c-8365-581b3b56a6df",
+        "opponentFullName": "Cégep de Chicoutimi",
+        "opponentRegistryId": "chicoutimi",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -48852,11 +49051,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 2,
         "draws": 0,
-        "played": 2,
-        "label": "0-2"
+        "played": 3,
+        "label": "1-2"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -50479,6 +50678,20 @@
       },
       "nextGames": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Sherbrooke",
+          "opponentCode": "USHE",
+          "home": true,
+          "sport": "football",
+          "competition": "Football universitaire masculin",
+          "gameId": "4ccbc202-3e28-4d03-af74-cd8dd716b256",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4ccbc202-3e28-4d03-af74-cd8dd716b256",
+          "opponentFullName": "Université de Sherbrooke",
+          "opponentNickname": "Vert & Or",
+          "opponentRegistryId": "usherbrooke"
+        },
+        {
           "date": "2026-09-18",
           "time": "19:00",
           "opponent": "Montréal",
@@ -50564,18 +50777,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-18",
-        "time": "19:00",
-        "opponent": "Montréal",
-        "opponentCode": "MTL",
-        "home": false,
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Sherbrooke",
+        "opponentCode": "USHE",
+        "home": true,
         "sport": "football",
         "competition": "Football universitaire masculin",
-        "gameId": "6aed2be9-1d3d-44f5-9523-3972318f493d",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6aed2be9-1d3d-44f5-9523-3972318f493d",
-        "opponentFullName": "Université de Montréal",
-        "opponentNickname": "Carabins",
-        "opponentRegistryId": "udem",
+        "gameId": "4ccbc202-3e28-4d03-af74-cd8dd716b256",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4ccbc202-3e28-4d03-af74-cd8dd716b256",
+        "opponentFullName": "Université de Sherbrooke",
+        "opponentNickname": "Vert & Or",
+        "opponentRegistryId": "usherbrooke",
         "opponentSector": "universitaire"
       },
       "record": {
@@ -51378,6 +51591,20 @@
       },
       "nextGames": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": false,
+          "sport": "football",
+          "competition": "Football universitaire masculin",
+          "gameId": "4ccbc202-3e28-4d03-af74-cd8dd716b256",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4ccbc202-3e28-4d03-af74-cd8dd716b256",
+          "opponentFullName": "Bishop's University",
+          "opponentNickname": "Gaiters",
+          "opponentRegistryId": "bishops"
+        },
+        {
           "date": "2026-09-19",
           "time": "19:00",
           "opponent": "Laval",
@@ -51463,18 +51690,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-19",
-        "time": "19:00",
-        "opponent": "Laval",
-        "opponentCode": "LAV",
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Bishop's",
+        "opponentCode": "BIS",
         "home": false,
         "sport": "football",
         "competition": "Football universitaire masculin",
-        "gameId": "39cb9424-5edf-49e5-9040-cde1871e821c",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=39cb9424-5edf-49e5-9040-cde1871e821c",
-        "opponentFullName": "Université Laval",
-        "opponentNickname": "Rouge et Or",
-        "opponentRegistryId": "ulaval",
+        "gameId": "4ccbc202-3e28-4d03-af74-cd8dd716b256",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4ccbc202-3e28-4d03-af74-cd8dd716b256",
+        "opponentFullName": "Bishop's University",
+        "opponentNickname": "Gaiters",
+        "opponentRegistryId": "bishops",
         "opponentSector": "universitaire"
       },
       "record": {
@@ -56279,6 +56506,20 @@
       },
       "nextGames": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Sainte-Foy",
+          "opponentCode": "CSF",
+          "home": true,
+          "sport": "rugby",
+          "competition": "Rugby collégial féminin",
+          "gameId": "56874514-c2db-4b26-9a72-1ddda48ddc4e",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=56874514-c2db-4b26-9a72-1ddda48ddc4e",
+          "opponentFullName": "Cégep de Sainte-Foy",
+          "opponentNickname": "Géants",
+          "opponentRegistryId": "sainte-foy"
+        },
+        {
           "date": "2026-09-19",
           "time": "12:00",
           "opponent": "Beauce-Appalaches",
@@ -56333,17 +56574,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-19",
-        "time": "12:00",
-        "opponent": "Beauce-Appalaches",
-        "opponentCode": "BAP",
-        "home": false,
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Sainte-Foy",
+        "opponentCode": "CSF",
+        "home": true,
         "sport": "rugby",
         "competition": "Rugby collégial féminin",
-        "gameId": "10cf0f45-fcd1-4797-8225-872818e645a5",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=10cf0f45-fcd1-4797-8225-872818e645a5",
-        "opponentFullName": "Cégep de Beauce-Appalaches",
-        "opponentRegistryId": "beauce-appalaches",
+        "gameId": "56874514-c2db-4b26-9a72-1ddda48ddc4e",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=56874514-c2db-4b26-9a72-1ddda48ddc4e",
+        "opponentFullName": "Cégep de Sainte-Foy",
+        "opponentNickname": "Géants",
+        "opponentRegistryId": "sainte-foy",
         "opponentSector": "collegial"
       },
       "record": {
@@ -56375,6 +56617,23 @@
       "leagueLabel": "Rugby collégial féminin",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Notre-Dame Bleu",
+          "opponentCode": "NDFB",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 76,
+          "result": "L",
+          "sport": "rugby",
+          "competition": "Rugby collégial féminin",
+          "gameId": "08c6cc95-232e-4569-90d8-017ef29d7c89",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=08c6cc95-232e-4569-90d8-017ef29d7c89",
+          "opponentFullName": "Campus Notre-Dame-de-Foy",
+          "opponentRegistryId": "notre-dame-bleu",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-05",
           "time": "12:00",
           "opponent": "Garneau",
@@ -56394,21 +56653,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-05",
-        "time": "12:00",
-        "opponent": "Garneau",
-        "opponentCode": "GAR",
-        "home": true,
-        "scoreFor": 17,
-        "scoreAgainst": 24,
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Notre-Dame Bleu",
+        "opponentCode": "NDFB",
+        "home": false,
+        "scoreFor": 0,
+        "scoreAgainst": 76,
         "result": "L",
         "sport": "rugby",
         "competition": "Rugby collégial féminin",
-        "gameId": "a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a6d6bdac-3bad-4fd2-8fc8-0a562bc79c08",
-        "opponentFullName": "Cégep Garneau",
-        "opponentNickname": "Boomerang",
-        "opponentRegistryId": "garneau",
+        "gameId": "08c6cc95-232e-4569-90d8-017ef29d7c89",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=08c6cc95-232e-4569-90d8-017ef29d7c89",
+        "opponentFullName": "Campus Notre-Dame-de-Foy",
+        "opponentRegistryId": "notre-dame-bleu",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -56486,10 +56744,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "0-2"
       },
       "source": "rseq-s1",
       "priority": 50,
@@ -56661,6 +56919,23 @@
       "leagueLabel": "Rugby collégial féminin",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Lévis",
+          "opponentCode": "LÉV",
+          "home": true,
+          "scoreFor": 76,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "rugby",
+          "competition": "Rugby collégial féminin",
+          "gameId": "08c6cc95-232e-4569-90d8-017ef29d7c89",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=08c6cc95-232e-4569-90d8-017ef29d7c89",
+          "opponentFullName": "Cégep de Lévis",
+          "opponentRegistryId": "levis",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-05",
           "time": "15:30",
           "opponent": "Beauce-Appalaches",
@@ -56679,20 +56954,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-05",
-        "time": "15:30",
-        "opponent": "Beauce-Appalaches",
-        "opponentCode": "BAP",
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Lévis",
+        "opponentCode": "LÉV",
         "home": true,
-        "scoreFor": 82,
-        "scoreAgainst": 12,
+        "scoreFor": 76,
+        "scoreAgainst": 0,
         "result": "W",
         "sport": "rugby",
         "competition": "Rugby collégial féminin",
-        "gameId": "d99805a3-055b-438e-be35-4a1dd0046d2a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d99805a3-055b-438e-be35-4a1dd0046d2a",
-        "opponentFullName": "Cégep de Beauce-Appalaches",
-        "opponentRegistryId": "beauce-appalaches",
+        "gameId": "08c6cc95-232e-4569-90d8-017ef29d7c89",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=08c6cc95-232e-4569-90d8-017ef29d7c89",
+        "opponentFullName": "Cégep de Lévis",
+        "opponentRegistryId": "levis",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -56769,11 +57044,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 0,
         "draws": 0,
-        "played": 1,
-        "label": "1-0"
+        "played": 2,
+        "label": "2-0"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -56835,6 +57110,20 @@
       },
       "nextGames": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Garneau",
+          "opponentCode": "GAR",
+          "home": false,
+          "sport": "rugby",
+          "competition": "Rugby collégial féminin",
+          "gameId": "56874514-c2db-4b26-9a72-1ddda48ddc4e",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=56874514-c2db-4b26-9a72-1ddda48ddc4e",
+          "opponentFullName": "Cégep Garneau",
+          "opponentNickname": "Boomerang",
+          "opponentRegistryId": "garneau"
+        },
+        {
           "date": "2026-09-20",
           "time": "10:00",
           "opponent": "Lévis",
@@ -56889,17 +57178,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-20",
-        "time": "10:00",
-        "opponent": "Lévis",
-        "opponentCode": "LÉV",
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Garneau",
+        "opponentCode": "GAR",
         "home": false,
         "sport": "rugby",
         "competition": "Rugby collégial féminin",
-        "gameId": "c15fd142-c7b3-4d18-bbb0-9631f22bc7a1",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c15fd142-c7b3-4d18-bbb0-9631f22bc7a1",
-        "opponentFullName": "Cégep de Lévis",
-        "opponentRegistryId": "levis",
+        "gameId": "56874514-c2db-4b26-9a72-1ddda48ddc4e",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=56874514-c2db-4b26-9a72-1ddda48ddc4e",
+        "opponentFullName": "Cégep Garneau",
+        "opponentNickname": "Boomerang",
+        "opponentRegistryId": "garneau",
         "opponentSector": "collegial"
       },
       "record": {
@@ -58614,8 +58904,45 @@
       "division": null,
       "usports": false,
       "leagueLabel": "Rugby collégial masculin",
-      "results": [],
-      "lastGame": null,
+      "results": [
+        {
+          "date": "2026-09-12",
+          "time": "12:45",
+          "opponent": "John Abbott",
+          "opponentCode": "JAC",
+          "home": true,
+          "scoreFor": 10,
+          "scoreAgainst": 26,
+          "result": "L",
+          "sport": "rugby",
+          "competition": "Rugby collégial masculin",
+          "gameId": "5ccfd171-8198-4219-bfbf-4603adf74a6d",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5ccfd171-8198-4219-bfbf-4603adf74a6d",
+          "opponentFullName": "John Abbott College",
+          "opponentNickname": "Islanders",
+          "opponentRegistryId": "john-abbott",
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-09-12",
+        "time": "12:45",
+        "opponent": "John Abbott",
+        "opponentCode": "JAC",
+        "home": true,
+        "scoreFor": 10,
+        "scoreAgainst": 26,
+        "result": "L",
+        "sport": "rugby",
+        "competition": "Rugby collégial masculin",
+        "gameId": "5ccfd171-8198-4219-bfbf-4603adf74a6d",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5ccfd171-8198-4219-bfbf-4603adf74a6d",
+        "opponentFullName": "John Abbott College",
+        "opponentNickname": "Islanders",
+        "opponentRegistryId": "john-abbott",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
       "nextGames": [
         {
           "date": "2026-09-19",
@@ -58703,16 +59030,17 @@
       },
       "record": {
         "wins": 0,
-        "losses": 0,
+        "losses": 1,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "0-1"
       },
       "source": "rseq-s1",
       "priority": 26,
       "fullName": "Dawson College",
       "nickname": "Blues",
-      "registryId": "dawson"
+      "registryId": "dawson",
+      "lastGamePriorSeason": false
     },
     "collegial:rugby:8c753c49-dbd6-496f-b942-12a75f0b29f8:08785d73-4eee-48ae-b8a9-99ea0f902190": {
       "id": "collegial:rugby:8c753c49-dbd6-496f-b942-12a75f0b29f8:08785d73-4eee-48ae-b8a9-99ea0f902190",
@@ -58855,8 +59183,45 @@
       "division": null,
       "usports": false,
       "leagueLabel": "Rugby collégial masculin",
-      "results": [],
-      "lastGame": null,
+      "results": [
+        {
+          "date": "2026-09-12",
+          "time": "12:45",
+          "opponent": "Dawson",
+          "opponentCode": "DAW",
+          "home": false,
+          "scoreFor": 26,
+          "scoreAgainst": 10,
+          "result": "W",
+          "sport": "rugby",
+          "competition": "Rugby collégial masculin",
+          "gameId": "5ccfd171-8198-4219-bfbf-4603adf74a6d",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5ccfd171-8198-4219-bfbf-4603adf74a6d",
+          "opponentFullName": "Dawson College",
+          "opponentNickname": "Blues",
+          "opponentRegistryId": "dawson",
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-09-12",
+        "time": "12:45",
+        "opponent": "Dawson",
+        "opponentCode": "DAW",
+        "home": false,
+        "scoreFor": 26,
+        "scoreAgainst": 10,
+        "result": "W",
+        "sport": "rugby",
+        "competition": "Rugby collégial masculin",
+        "gameId": "5ccfd171-8198-4219-bfbf-4603adf74a6d",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5ccfd171-8198-4219-bfbf-4603adf74a6d",
+        "opponentFullName": "Dawson College",
+        "opponentNickname": "Blues",
+        "opponentRegistryId": "dawson",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
       "nextGames": [
         {
           "date": "2026-09-18",
@@ -58943,17 +59308,18 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "1-0"
       },
       "source": "rseq-s1",
       "priority": 28,
       "fullName": "John Abbott College",
       "nickname": "Islanders",
-      "registryId": "john-abbott"
+      "registryId": "john-abbott",
+      "lastGamePriorSeason": false
     },
     "collegial:rugby:8c753c49-dbd6-496f-b942-12a75f0b29f8:16b97c13-583d-472f-aed1-68481ca0cb39": {
       "id": "collegial:rugby:8c753c49-dbd6-496f-b942-12a75f0b29f8:16b97c13-583d-472f-aed1-68481ca0cb39",
@@ -59097,6 +59463,24 @@
       "leagueLabel": "Rugby universitaire féminin",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Montréal",
+          "opponentCode": "MTL",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 62,
+          "result": "L",
+          "sport": "rugby",
+          "competition": "Rugby universitaire féminin",
+          "gameId": "2b74b762-7c4e-4bcc-890d-2cafabffbc27",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2b74b762-7c4e-4bcc-890d-2cafabffbc27",
+          "opponentFullName": "Université de Montréal",
+          "opponentNickname": "Carabins",
+          "opponentRegistryId": "udem",
+          "priorSeason": false
+        },
+        {
           "date": "2026-08-30",
           "time": "13:00",
           "opponent": "Laval",
@@ -59116,21 +59500,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-08-30",
+        "date": "2026-09-12",
         "time": "13:00",
-        "opponent": "Laval",
-        "opponentCode": "LAV",
-        "home": true,
+        "opponent": "Montréal",
+        "opponentCode": "MTL",
+        "home": false,
         "scoreFor": 0,
-        "scoreAgainst": 74,
+        "scoreAgainst": 62,
         "result": "L",
         "sport": "rugby",
         "competition": "Rugby universitaire féminin",
-        "gameId": "f1662a96-f423-4171-87ff-e963f8ae3238",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f1662a96-f423-4171-87ff-e963f8ae3238",
-        "opponentFullName": "Université Laval",
-        "opponentNickname": "Rouge et Or",
-        "opponentRegistryId": "ulaval",
+        "gameId": "2b74b762-7c4e-4bcc-890d-2cafabffbc27",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2b74b762-7c4e-4bcc-890d-2cafabffbc27",
+        "opponentFullName": "Université de Montréal",
+        "opponentNickname": "Carabins",
+        "opponentRegistryId": "udem",
         "priorSeason": false,
         "opponentSector": "universitaire"
       },
@@ -59209,10 +59593,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "0-2"
       },
       "source": "rseq-s1",
       "priority": 7,
@@ -59703,6 +60087,24 @@
       "leagueLabel": "Rugby universitaire féminin",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "scoreFor": 62,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "rugby",
+          "competition": "Rugby universitaire féminin",
+          "gameId": "2b74b762-7c4e-4bcc-890d-2cafabffbc27",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2b74b762-7c4e-4bcc-890d-2cafabffbc27",
+          "opponentFullName": "Bishop's University",
+          "opponentNickname": "Gaiters",
+          "opponentRegistryId": "bishops",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-06",
           "time": "13:00",
           "opponent": "Laval",
@@ -59740,21 +60142,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-06",
+        "date": "2026-09-12",
         "time": "13:00",
-        "opponent": "Laval",
-        "opponentCode": "LAV",
-        "home": false,
-        "scoreFor": 19,
-        "scoreAgainst": 43,
-        "result": "L",
+        "opponent": "Bishop's",
+        "opponentCode": "BIS",
+        "home": true,
+        "scoreFor": 62,
+        "scoreAgainst": 0,
+        "result": "W",
         "sport": "rugby",
         "competition": "Rugby universitaire féminin",
-        "gameId": "066633c0-3274-4e38-b93a-0c2fbe2b52bb",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=066633c0-3274-4e38-b93a-0c2fbe2b52bb",
-        "opponentFullName": "Université Laval",
-        "opponentNickname": "Rouge et Or",
-        "opponentRegistryId": "ulaval",
+        "gameId": "2b74b762-7c4e-4bcc-890d-2cafabffbc27",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2b74b762-7c4e-4bcc-890d-2cafabffbc27",
+        "opponentFullName": "Bishop's University",
+        "opponentNickname": "Gaiters",
+        "opponentRegistryId": "bishops",
         "priorSeason": false,
         "opponentSector": "universitaire"
       },
@@ -59818,11 +60220,11 @@
         "opponentSector": "universitaire"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 2,
         "draws": 0,
-        "played": 2,
-        "label": "0-2"
+        "played": 3,
+        "label": "1-2"
       },
       "source": "rseq-s1",
       "priority": 4,
@@ -64882,6 +65284,23 @@
       "leagueLabel": "Soccer collégial féminin D2",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Thetford",
+          "opponentCode": "THE",
+          "home": true,
+          "scoreFor": 5,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D2",
+          "gameId": "045143a8-fb3f-4c24-bdb0-16888c559c03",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=045143a8-fb3f-4c24-bdb0-16888c559c03",
+          "opponentFullName": "Cégep de Thetford",
+          "opponentRegistryId": "thetford",
+          "priorSeason": false
+        },
+        {
           "date": "2026-08-30",
           "time": "14:00",
           "opponent": "Champlain St-Lawrence",
@@ -64900,20 +65319,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-08-30",
-        "time": "14:00",
-        "opponent": "Champlain St-Lawrence",
-        "opponentCode": "SLC",
-        "home": false,
-        "scoreFor": 4,
-        "scoreAgainst": 1,
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Thetford",
+        "opponentCode": "THE",
+        "home": true,
+        "scoreFor": 5,
+        "scoreAgainst": 0,
         "result": "W",
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-        "opponentFullName": "Champlain College St. Lawrence",
-        "opponentRegistryId": "ch-st-lawrence",
+        "gameId": "045143a8-fb3f-4c24-bdb0-16888c559c03",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=045143a8-fb3f-4c24-bdb0-16888c559c03",
+        "opponentFullName": "Cégep de Thetford",
+        "opponentRegistryId": "thetford",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -65012,11 +65431,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 0,
         "draws": 0,
-        "played": 1,
-        "label": "1-0"
+        "played": 2,
+        "label": "2-0"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -65196,6 +65615,23 @@
       "leagueLabel": "Soccer collégial féminin D2",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Beauce-Appalaches",
+          "opponentCode": "BAP",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 5,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D2",
+          "gameId": "045143a8-fb3f-4c24-bdb0-16888c559c03",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=045143a8-fb3f-4c24-bdb0-16888c559c03",
+          "opponentFullName": "Cégep de Beauce-Appalaches",
+          "opponentRegistryId": "beauce-appalaches",
+          "priorSeason": false
+        },
+        {
           "date": "2026-08-29",
           "time": "13:00",
           "opponent": "Alma",
@@ -65214,20 +65650,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-08-29",
+        "date": "2026-09-12",
         "time": "13:00",
-        "opponent": "Alma",
-        "opponentCode": "ALM",
-        "home": true,
-        "scoreFor": 3,
-        "scoreAgainst": 0,
-        "result": "W",
+        "opponent": "Beauce-Appalaches",
+        "opponentCode": "BAP",
+        "home": false,
+        "scoreFor": 0,
+        "scoreAgainst": 5,
+        "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "35a79885-e753-4bdf-bd59-0924f365ceaa",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=35a79885-e753-4bdf-bd59-0924f365ceaa",
-        "opponentFullName": "Cégep d'Alma",
-        "opponentRegistryId": "alma",
+        "gameId": "045143a8-fb3f-4c24-bdb0-16888c559c03",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=045143a8-fb3f-4c24-bdb0-16888c559c03",
+        "opponentFullName": "Cégep de Beauce-Appalaches",
+        "opponentRegistryId": "beauce-appalaches",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -65327,10 +65763,10 @@
       },
       "record": {
         "wins": 1,
-        "losses": 0,
+        "losses": 1,
         "draws": 0,
-        "played": 1,
-        "label": "1-0"
+        "played": 2,
+        "label": "1-1"
       },
       "source": "rseq-s1",
       "priority": 39,
@@ -69712,6 +70148,23 @@
       "leagueLabel": "Soccer collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Granby",
+          "opponentCode": "GBY",
+          "home": true,
+          "scoreFor": 1,
+          "scoreAgainst": 2,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "99b80eda-fa1a-496e-809c-f98cad061e72",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=99b80eda-fa1a-496e-809c-f98cad061e72",
+          "opponentFullName": "Cégep de Granby",
+          "opponentRegistryId": "granby",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-06",
           "time": "15:00",
           "opponent": "Cégep de Trois-Rivières",
@@ -69748,21 +70201,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-06",
-        "time": "15:00",
-        "opponent": "Cégep de Trois-Rivières",
-        "opponentCode": "TRV",
-        "home": false,
-        "scoreFor": 0,
-        "scoreAgainst": 1,
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Granby",
+        "opponentCode": "GBY",
+        "home": true,
+        "scoreFor": 1,
+        "scoreAgainst": 2,
         "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "000d528c-07d7-4576-ac97-53dd955d665b",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=000d528c-07d7-4576-ac97-53dd955d665b",
-        "opponentFullName": "Cégep de Trois-Rivières",
-        "opponentNickname": "Diablos",
-        "opponentRegistryId": "trois-rivieres",
+        "gameId": "99b80eda-fa1a-496e-809c-f98cad061e72",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=99b80eda-fa1a-496e-809c-f98cad061e72",
+        "opponentFullName": "Cégep de Granby",
+        "opponentRegistryId": "granby",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -69850,10 +70302,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 2,
+        "losses": 3,
         "draws": 0,
-        "played": 2,
-        "label": "0-2"
+        "played": 3,
+        "label": "0-3"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -69876,6 +70328,23 @@
       "leagueLabel": "Soccer collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Drummondville",
+          "opponentCode": "DRU",
+          "home": false,
+          "scoreFor": 2,
+          "scoreAgainst": 1,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "99b80eda-fa1a-496e-809c-f98cad061e72",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=99b80eda-fa1a-496e-809c-f98cad061e72",
+          "opponentFullName": "Cégep de Drummondville",
+          "opponentRegistryId": "drummondville",
+          "priorSeason": false
+        },
+        {
           "date": "2026-08-28",
           "time": "20:30",
           "opponent": "Cégep de Sherbrooke",
@@ -69894,20 +70363,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-08-28",
-        "time": "20:30",
-        "opponent": "Cégep de Sherbrooke",
-        "opponentCode": "SHE",
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Drummondville",
+        "opponentCode": "DRU",
         "home": false,
-        "scoreFor": 0,
-        "scoreAgainst": 6,
-        "result": "L",
+        "scoreFor": 2,
+        "scoreAgainst": 1,
+        "result": "W",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9876cd7c-84c9-4e4c-a289-4483f7bfe53a",
-        "opponentFullName": "Cégep de Sherbrooke",
-        "opponentRegistryId": "cegep-sherbrooke",
+        "gameId": "99b80eda-fa1a-496e-809c-f98cad061e72",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=99b80eda-fa1a-496e-809c-f98cad061e72",
+        "opponentFullName": "Cégep de Drummondville",
+        "opponentRegistryId": "drummondville",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -70009,11 +70478,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 1,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "1-1"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -72300,6 +72769,23 @@
       "leagueLabel": "Soccer collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Thetford",
+          "opponentCode": "THE",
+          "home": false,
+          "scoreFor": 1,
+          "scoreAgainst": 4,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "25b1eec0-463e-46f9-8873-4fbcdd9baca2",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=25b1eec0-463e-46f9-8873-4fbcdd9baca2",
+          "opponentFullName": "Cégep de Thetford",
+          "opponentRegistryId": "thetford",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-04",
           "time": "20:00",
           "opponent": "Jonquière",
@@ -72318,20 +72804,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-04",
-        "time": "20:00",
-        "opponent": "Jonquière",
-        "opponentCode": "JON",
-        "home": true,
-        "scoreFor": 2,
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Thetford",
+        "opponentCode": "THE",
+        "home": false,
+        "scoreFor": 1,
         "scoreAgainst": 4,
         "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "9de31609-5245-498f-ab1d-eb63e28f1acc",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9de31609-5245-498f-ab1d-eb63e28f1acc",
-        "opponentFullName": "Cégep de Jonquière",
-        "opponentRegistryId": "jonquiere",
+        "gameId": "25b1eec0-463e-46f9-8873-4fbcdd9baca2",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=25b1eec0-463e-46f9-8873-4fbcdd9baca2",
+        "opponentFullName": "Cégep de Thetford",
+        "opponentRegistryId": "thetford",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -72431,10 +72917,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "0-2"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -72456,6 +72942,23 @@
       "usports": false,
       "leagueLabel": "Soccer collégial masculin D2",
       "results": [
+        {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Saint-Félicien",
+          "opponentCode": "FEL",
+          "home": true,
+          "scoreFor": 4,
+          "scoreAgainst": 1,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "25b1eec0-463e-46f9-8873-4fbcdd9baca2",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=25b1eec0-463e-46f9-8873-4fbcdd9baca2",
+          "opponentFullName": "Cégep de Saint-Félicien",
+          "opponentRegistryId": "saint-felicien",
+          "priorSeason": false
+        },
         {
           "date": "2026-09-06",
           "time": "12:00",
@@ -72509,20 +73012,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-06",
-        "time": "12:00",
-        "opponent": "Jonquière",
-        "opponentCode": "JON",
-        "home": false,
-        "scoreFor": 1,
-        "scoreAgainst": 2,
-        "result": "L",
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Saint-Félicien",
+        "opponentCode": "FEL",
+        "home": true,
+        "scoreFor": 4,
+        "scoreAgainst": 1,
+        "result": "W",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "46def760-ff77-4161-9e8d-30f75f8cf14f",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=46def760-ff77-4161-9e8d-30f75f8cf14f",
-        "opponentFullName": "Cégep de Jonquière",
-        "opponentRegistryId": "jonquiere",
+        "gameId": "25b1eec0-463e-46f9-8873-4fbcdd9baca2",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=25b1eec0-463e-46f9-8873-4fbcdd9baca2",
+        "opponentFullName": "Cégep de Saint-Félicien",
+        "opponentRegistryId": "saint-felicien",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -72595,11 +73098,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 3,
         "draws": 0,
-        "played": 3,
-        "label": "0-3"
+        "played": 4,
+        "label": "1-3"
       },
       "source": "rseq-s1",
       "priority": 39,
@@ -74341,6 +74844,23 @@
       "leagueLabel": "Soccer collégial masculin D3",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Maisonneuve",
+          "opponentCode": "MAI",
+          "home": false,
+          "scoreFor": 3,
+          "scoreAgainst": 4,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D3",
+          "gameId": "cbf45729-1c1e-4feb-b57f-f81da8b0a759",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cbf45729-1c1e-4feb-b57f-f81da8b0a759",
+          "opponentFullName": "Collège de Maisonneuve",
+          "opponentRegistryId": "maisonneuve",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-05",
           "time": "18:30",
           "opponent": "Marie-Victorin",
@@ -74359,20 +74879,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-05",
-        "time": "18:30",
-        "opponent": "Marie-Victorin",
-        "opponentCode": "CMV",
-        "home": true,
-        "scoreFor": 1,
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Maisonneuve",
+        "opponentCode": "MAI",
+        "home": false,
+        "scoreFor": 3,
         "scoreAgainst": 4,
         "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D3",
-        "gameId": "645dff11-a3ae-49a8-b515-7462c3ded86f",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=645dff11-a3ae-49a8-b515-7462c3ded86f",
-        "opponentFullName": "Cégep de Marie-Victorin",
-        "opponentRegistryId": "marie-victorin",
+        "gameId": "cbf45729-1c1e-4feb-b57f-f81da8b0a759",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cbf45729-1c1e-4feb-b57f-f81da8b0a759",
+        "opponentFullName": "Collège de Maisonneuve",
+        "opponentRegistryId": "maisonneuve",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -74472,10 +74992,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "0-2"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -75008,6 +75528,23 @@
       "leagueLabel": "Soccer collégial masculin D3",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "13:00",
+          "opponent": "Ellis",
+          "opponentCode": "ELI",
+          "home": true,
+          "scoreFor": 4,
+          "scoreAgainst": 3,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D3",
+          "gameId": "cbf45729-1c1e-4feb-b57f-f81da8b0a759",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cbf45729-1c1e-4feb-b57f-f81da8b0a759",
+          "opponentFullName": "Collège Ellis",
+          "opponentRegistryId": "ellis",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-06",
           "time": "12:00",
           "opponent": "Valleyfield",
@@ -75026,20 +75563,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-06",
-        "time": "12:00",
-        "opponent": "Valleyfield",
-        "opponentCode": "VAL",
-        "home": false,
-        "scoreFor": 0,
-        "scoreAgainst": 4,
-        "result": "L",
+        "date": "2026-09-12",
+        "time": "13:00",
+        "opponent": "Ellis",
+        "opponentCode": "ELI",
+        "home": true,
+        "scoreFor": 4,
+        "scoreAgainst": 3,
+        "result": "W",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D3",
-        "gameId": "66cb305e-00ff-482f-97e1-5ab00392cca0",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=66cb305e-00ff-482f-97e1-5ab00392cca0",
-        "opponentFullName": "Cégep de Valleyfield",
-        "opponentRegistryId": "valleyfield",
+        "gameId": "cbf45729-1c1e-4feb-b57f-f81da8b0a759",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cbf45729-1c1e-4feb-b57f-f81da8b0a759",
+        "opponentFullName": "Collège Ellis",
+        "opponentRegistryId": "ellis",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -75138,11 +75675,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 1,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "1-1"
       },
       "source": "rseq-s1",
       "priority": 80,
