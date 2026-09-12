@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-12T20:09:32.804Z",
+  "updatedAt": "2026-09-12T22:16:20.639Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-12T20:09:19.295Z"
+      "checkedAt": "2026-09-12T22:16:05.091Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Contenu explicite",
+        "title": "Disconomique",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/contenu-explicite"
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/disconomique"
       },
       "next": {
-        "title": "Le radar",
+        "title": "Solénoïde",
         "source": "schedule",
-        "start": "17:00",
-        "end": "17:30",
-        "url": "https://cism893.ca/emissions/le-radar-2"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/solenoide"
       },
       "track": "",
-      "showTitle": "Contenu explicite",
+      "showTitle": "Disconomique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-12T20:09:20.633Z"
+      "checkedAt": "2026-09-12T22:16:06.846Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-12T20:09:22.887Z"
+      "checkedAt": "2026-09-12T22:16:09.828Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mi Dun Talk",
+        "title": "The Limelight",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/mi-dun-talk"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-limelight"
       },
       "next": {
-        "title": "Mo' Ritmo Radio",
+        "title": "Screamers",
         "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/screamers"
       },
       "track": "",
-      "showTitle": "Mi Dun Talk",
+      "showTitle": "The Limelight",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-12T20:09:25.038Z"
+      "checkedAt": "2026-09-12T22:16:13.098Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-12T20:09:25.890Z"
+      "checkedAt": "2026-09-12T22:16:14.023Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "The Pack A.D. - Everyone Looks Like Everyone",
+      "track": "Dominique Fils-Aimé - The River",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-12T20:09:32.454Z"
+      "checkedAt": "2026-09-12T22:16:20.288Z"
     }
   }
 }
