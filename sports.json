@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-12T18:00:29.655Z",
-  "fetchedAt": "2026-09-12T18:00:29.655Z",
+  "updated": "2026-09-12T18:21:17.586Z",
+  "fetchedAt": "2026-09-12T18:21:17.586Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-12T18:00:29.655Z"
+    "referenceDate": "2026-09-12T18:21:17.586Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 838,
@@ -74,6 +74,18 @@
     "volleyball"
   ],
   "teamCount": 867,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -40140,7 +40152,8 @@
           "gameId": "629e0265-ef0d-481d-b089-32ce730f8db8",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=629e0265-ef0d-481d-b089-32ce730f8db8",
           "opponentFullName": "Cégep du Vieux Montréal",
-          "opponentRegistryId": "vieux-montreal"
+          "opponentRegistryId": "vieux-montreal",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -40220,6 +40233,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=629e0265-ef0d-481d-b089-32ce730f8db8",
         "opponentFullName": "Cégep du Vieux Montréal",
         "opponentRegistryId": "vieux-montreal",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -40848,7 +40862,8 @@
           "gameId": "629e0265-ef0d-481d-b089-32ce730f8db8",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=629e0265-ef0d-481d-b089-32ce730f8db8",
           "opponentFullName": "Cégep Gérald-Godin",
-          "opponentRegistryId": "gerald-godin"
+          "opponentRegistryId": "gerald-godin",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -40928,6 +40943,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=629e0265-ef0d-481d-b089-32ce730f8db8",
         "opponentFullName": "Cégep Gérald-Godin",
         "opponentRegistryId": "gerald-godin",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -66933,6 +66949,24 @@
       "leagueLabel": "Soccer collégial féminin D3",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "12:00",
+          "opponent": "John Abbott",
+          "opponentCode": "JAC",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 4,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D3",
+          "gameId": "4033c054-0b3b-4def-8072-aa56b5c43447",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4033c054-0b3b-4def-8072-aa56b5c43447",
+          "opponentFullName": "John Abbott College",
+          "opponentNickname": "Islanders",
+          "opponentRegistryId": "john-abbott",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-04",
           "time": "20:15",
           "opponent": "L'Assomption",
@@ -66951,20 +66985,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-04",
-        "time": "20:15",
-        "opponent": "L'Assomption",
-        "opponentCode": "LAS",
-        "home": true,
-        "scoreFor": 1,
-        "scoreAgainst": 5,
+        "date": "2026-09-12",
+        "time": "12:00",
+        "opponent": "John Abbott",
+        "opponentCode": "JAC",
+        "home": false,
+        "scoreFor": 0,
+        "scoreAgainst": 4,
         "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial féminin D3",
-        "gameId": "82fd4208-3b15-4d62-a268-c10227da9c2b",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=82fd4208-3b15-4d62-a268-c10227da9c2b",
-        "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
-        "opponentRegistryId": "lassomption",
+        "gameId": "4033c054-0b3b-4def-8072-aa56b5c43447",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4033c054-0b3b-4def-8072-aa56b5c43447",
+        "opponentFullName": "John Abbott College",
+        "opponentNickname": "Islanders",
+        "opponentRegistryId": "john-abbott",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -67068,10 +67103,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "0-2"
       },
       "source": "rseq-s1",
       "priority": 27,
@@ -67093,6 +67128,23 @@
       "usports": false,
       "leagueLabel": "Soccer collégial féminin D3",
       "results": [
+        {
+          "date": "2026-09-12",
+          "time": "12:00",
+          "opponent": "Jean-de-Brébeuf",
+          "opponentCode": "BRÉ",
+          "home": true,
+          "scoreFor": 4,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D3",
+          "gameId": "4033c054-0b3b-4def-8072-aa56b5c43447",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4033c054-0b3b-4def-8072-aa56b5c43447",
+          "opponentFullName": "Collège Jean-de-Brébeuf",
+          "opponentRegistryId": "brebeuf",
+          "priorSeason": false
+        },
         {
           "date": "2026-09-05",
           "time": "10:00",
@@ -67129,20 +67181,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-05",
-        "time": "10:00",
-        "opponent": "Valleyfield",
-        "opponentCode": "VAL",
-        "home": false,
-        "scoreFor": 2,
+        "date": "2026-09-12",
+        "time": "12:00",
+        "opponent": "Jean-de-Brébeuf",
+        "opponentCode": "BRÉ",
+        "home": true,
+        "scoreFor": 4,
         "scoreAgainst": 0,
         "result": "W",
         "sport": "soccer",
         "competition": "Soccer collégial féminin D3",
-        "gameId": "7dfeaf86-8f07-48b4-b337-cfd4c60d39d8",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7dfeaf86-8f07-48b4-b337-cfd4c60d39d8",
-        "opponentFullName": "Cégep de Valleyfield",
-        "opponentRegistryId": "valleyfield",
+        "gameId": "4033c054-0b3b-4def-8072-aa56b5c43447",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4033c054-0b3b-4def-8072-aa56b5c43447",
+        "opponentFullName": "Collège Jean-de-Brébeuf",
+        "opponentRegistryId": "brebeuf",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -67231,11 +67283,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 2,
+        "wins": 3,
         "losses": 0,
         "draws": 0,
-        "played": 2,
-        "label": "2-0"
+        "played": 3,
+        "label": "3-0"
       },
       "source": "rseq-s1",
       "priority": 28,
