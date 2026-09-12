@@ -1,6 +1,6 @@
 {
-  "updated": "2026-09-12T19:23:29.359Z",
-  "updatedSlot": "2026-09-12T19:00:00.000Z",
+  "updated": "2026-09-12T19:22:44.771Z",
+  "updatedSlot": null,
   "count": 188,
   "freshnessSessions": 3,
   "sources": {
@@ -10,7 +10,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-11T20:57:22.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-09-12T19:22:00.573Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-09-12T19:22:51.158Z"
+      "lastFetchOk": "2026-09-12T19:22:01.107Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-01T04:35:43.000Z",
-      "lastFetchOk": "2026-09-12T19:22:56.155Z"
+      "lastFetchOk": "2026-09-12T19:22:06.010Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-08-31T12:39:00.000Z",
-      "lastFetchOk": "2026-09-12T19:22:57.104Z"
+      "lastFetchOk": "2026-09-12T19:22:06.658Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-08T13:00:00.000Z",
-      "lastFetchOk": "2026-09-12T19:22:58.477Z"
+      "lastFetchOk": "2026-09-12T19:22:07.808Z"
     },
     "Zone Campus": {
       "fetchOk": false,
@@ -50,7 +50,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-09-12T19:22:08.658Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-09-12T19:23:00.324Z"
+      "lastFetchOk": "2026-09-12T19:22:09.805Z"
     },
     "Le Collectif": {
       "fetchOk": false,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-08T22:18:02.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-09-12T19:22:10.778Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-09-12T19:23:00.819Z"
+      "lastFetchOk": "2026-09-12T19:22:11.005Z"
     },
     "La Pige": {
       "fetchOk": false,
@@ -82,7 +82,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-11T20:22:21.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-09-12T19:22:11.548Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 16,
       "lastArticle": "2026-09-09T00:53:34.359Z",
-      "lastFetchOk": "2026-09-12T19:23:04.764Z"
+      "lastFetchOk": "2026-09-12T19:22:12.852Z"
     },
     "The Tribune": {
       "fetchOk": false,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-09-12T19:23:05.227Z"
+      "lastFetchOk": "2026-09-12T19:22:13.225Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-09-12T19:23:05.388Z"
+      "lastFetchOk": "2026-09-12T19:22:13.443Z"
     }
   },
   "items": [
@@ -400,7 +400,8 @@
       "date": "2026-09-11T16:00:00.000Z",
       "excerpt": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de la semaine passée, cliquer ici.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990.png",
-      "authorCheckedAt": "2026-09-11T17:49:19.237Z",
+      "authorCheckedAt": "2026-09-12T19:22:53.189Z",
+      "_pageAuthor": "Samuel Girard",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-7/",
       "sourceImageCreditFrom": "media",
@@ -531,8 +532,8 @@
       "author": "Ellen Lurie",
       "date": "2026-09-08T15:35:43.000Z",
       "excerpt": "From 1906 to 1946, McGill student newspaper archives record definitive evidence of blackface on and around campus. Although the majority of clippings publicize nearby local theatre productions of minstrel shows, several excerpts explicitly describe blackface performances as",
-      "image": "https://www.thetribune.ca/wp-content/uploads/2026/09/image2.png",
-      "authorCheckedAt": "2026-09-11T19:10:23.917Z",
+      "image": "https://www.thetribune.ca/wp-content/uploads/2026/04/Design-sans-titre.png",
+      "authorCheckedAt": "2026-09-12T19:22:54.191Z",
       "sourceImageCredit": "Photo credit: The Tribune",
       "sourceImageCreditUrl": "https://www.thetribune.ca/features/blackface-at-mcgill/?utm_source=rss&utm_medium=rss&utm_campaign=blackface-at-mcgill",
       "sourceImageCreditFrom": "media",
@@ -1032,7 +1033,7 @@
       "date": "2026-09-08T10:05:00.000Z",
       "excerpt": "For some individuals, recovering from COVID-19 is only the beginning of a longer battle with persistent symptoms. The World Health Organization estimates that 10 to 20 per cent of people infected with COVID-19 develop long COVID ( LC ), a condition marked by more than 200",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/09/Lilly-Guilbeault-Scitech-1-.png",
-      "authorCheckedAt": "2026-09-11T15:08:51.008Z",
+      "authorCheckedAt": "2026-09-12T19:22:55.185Z",
       "sourceImageCredit": "Photo : Lilly Guilbeault",
       "sourceImageCreator": "Lilly Guilbeault",
       "sourceImageCreditUrl": "https://www.thetribune.ca/sci-tech/reading-the-static-and-exploring-long-covids-impact-on-the-brains-electrical-rhythm-08092026/?utm_source=rss&utm_medium=rss&utm_campaign=reading-the-static-and-exploring-long-covids-impact-on-the-brains-electrical-rhythm-08092026",
@@ -1059,7 +1060,7 @@
       "date": "2026-09-08T10:05:00.000Z",
       "excerpt": "With winter semester exams concluding on April 30 and fall semester classes beginning Aug. 31, McGillians were given four luxurious months to let their minds roam free from endless readings, WeBWorKs , and lab reports. Many students leave Montreal, returning to hometowns and",
       "image": "https://www.thetribune.ca/wp-content/uploads/2026/09/SL2-EMIKO-KAMIYA-scaled.jpg",
-      "authorCheckedAt": "2026-09-11T15:08:51.955Z",
+      "authorCheckedAt": "2026-09-12T19:22:56.161Z",
       "sourceImageCredit": "Photo credit: The Tribune",
       "sourceImageCreditUrl": "https://www.thetribune.ca/student-life/tricky-transitions-how-mcgillians-are-adjusting-to-a-new-semester-08092026/?utm_source=rss&utm_medium=rss&utm_campaign=tricky-transitions-how-mcgillians-are-adjusting-to-a-new-semester-08092026",
       "sourceImageCreditFrom": "media",
@@ -4050,13 +4051,13 @@
       "image": "",
       "authorCheckedAt": "2026-09-12T14:16:03.081Z",
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/5/58/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531487%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "File:Masters Tournament - 2013 - Dogwood Cabin, August National Golf Club (8688531487).jpg",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531909%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "File:Masters Tournament - 2013 - Dogwood Cabin, August National Golf Club (8688531909).jpg",
       "imageCredit": "Photo : Dan Perry from Atlanta, USA / CC BY 2.0 · Wikimedia Commons",
       "imageCreator": "Dan Perry from Atlanta, USA",
       "imageLicense": "CC BY 2.0",
       "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Masters_Tournament_-_2013_-_Dogwood_Cabin,_August_National_Golf_Club_(8688531487).jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Masters_Tournament_-_2013_-_Dogwood_Cabin,_August_National_Golf_Club_(8688531909).jpg"
     },
     {
       "source": "The Campus",
@@ -4190,7 +4191,10 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditUrl": "https://www.polyscope.qc.ca/blog/post/2DJ12PrwK7u4Dq9D8fKu",
-      "leadImageReady": true
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/9a3a0f7a9ff9c32d.jpg",
+      "imageLocalKey": "9a3a0f7a9ff9c32d",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Polyscope",
