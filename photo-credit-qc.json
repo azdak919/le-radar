@@ -1,23 +1,23 @@
 {
-  "updated": "2026-09-12T04:47:26.780Z",
+  "updated": "2026-09-12T04:56:44.276Z",
   "total": 188,
   "withImage": 175,
   "withCredit": 175,
-  "cited": 132,
+  "cited": 131,
   "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 7,
-  "citedNew": 4,
-  "fallbackNew": 10,
+  "checked": 12,
+  "updatedCount": 5,
+  "citedNew": 0,
+  "fallbackNew": 12,
   "samples": [
     {
       "title": "The catalogue of stories at the Webster Library",
       "source": "The Link",
-      "credit": "Illustration: Evelyn Ho Lee",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
@@ -41,25 +41,11 @@
       "method": null
     },
     {
-      "title": "Une première saison de chasse avec l’application Nord Quest",
-      "source": "La Pige",
-      "credit": "Photo : Arthur Bakhache",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
+      "title": "Blackface at McGill",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
     }
   ]
 }
