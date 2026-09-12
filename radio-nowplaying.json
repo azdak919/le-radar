@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-09-12T14:06:22.288Z",
+  "updatedAt": "2026-09-12T15:11:53.242Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Palmarès CHYZ",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
-      },
-      "next": {
         "title": "Le Ré-Show : Deuxième Service",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "11:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
       },
+      "next": {
+        "title": "Radio Futura",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/radio-futura/"
+      },
       "track": "",
-      "showTitle": "Palmarès CHYZ",
+      "showTitle": "Le Ré-Show : Deuxième Service",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-12T14:05:59.301Z"
+      "checkedAt": "2026-09-12T15:11:39.147Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-12T14:06:01.060Z"
+      "checkedAt": "2026-09-12T15:11:40.411Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Making Contact/Anything Goes",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "10:30"
-      },
-      "next": {
         "title": "Samedi Midi",
         "source": "api-live",
         "start": "10:30",
         "end": "14:00"
       },
+      "next": {
+        "title": "Funky Revolutions",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "16:00"
+      },
       "track": "",
-      "showTitle": "Making Contact/Anything Goes",
+      "showTitle": "Samedi Midi",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-12T14:06:04.365Z"
+      "checkedAt": "2026-09-12T15:11:42.910Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-12T14:06:13.555Z"
+      "checkedAt": "2026-09-12T15:11:45.823Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-12T14:06:14.490Z"
+      "checkedAt": "2026-09-12T15:11:47.039Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Xela Edna - [USE ME] then [RE-USE ME]",
+      "track": "Jamaz - LONDON",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -152,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-12T14:06:21.938Z"
+      "checkedAt": "2026-09-12T15:11:52.892Z"
     }
   }
 }
