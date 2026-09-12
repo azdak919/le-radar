@@ -1,13 +1,12 @@
 {
-  "checkedAt": "2026-09-11T01:00:13.144Z",
+  "checkedAt": "2026-09-12T01:04:14.996Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 4,
+    "stable": 5,
     "drift": [
-      "chyz",
-      "choq"
+      "chyz"
     ],
     "overhaul": [],
     "unreachable": []
@@ -15,14 +14,14 @@
   "stations": [
     {
       "id": "chyz",
-      "published": 29,
-      "fresh": 30,
+      "published": 30,
+      "fresh": 31,
       "added": [
-        "mar 19:00–20:00 CATHJO FAIT DE LA RADIO"
+        "ven 11:00–12:00 Punk-o-rama"
       ],
       "removed": [],
       "changed": 1,
-      "ratio": 0.034,
+      "ratio": 0.033,
       "status": "drift"
     },
     {
@@ -67,16 +66,13 @@
     },
     {
       "id": "choq",
-      "published": 9,
+      "published": 11,
       "fresh": 11,
-      "added": [
-        "dim 14:00–16:00 Pôle hip-hop",
-        "jeu 21:00–22:00 Le Studio"
-      ],
+      "added": [],
       "removed": [],
-      "changed": 2,
-      "ratio": 0.222,
-      "status": "drift"
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     }
   ]
 }
