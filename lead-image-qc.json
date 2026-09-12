@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-12T04:47:15.885Z",
+  "updated": "2026-09-12T07:20:39.691Z",
   "total": 188,
   "withPhoto": 175,
-  "withStock": 29,
+  "withStock": 28,
   "withCampusBank": 20,
   "fullyCovered": 188,
-  "leadReadyPhotos": 150,
-  "pageScraped": 31,
-  "photosRecovered": 24,
+  "leadReadyPhotos": 154,
+  "pageScraped": 30,
+  "photosRecovered": 23,
   "imagesCleared": 13,
-  "stockSearches": 33,
-  "stockFound": 20,
-  "campusBankFound": 14,
+  "stockSearches": 32,
+  "stockFound": 18,
+  "campusBankFound": 13,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -45,12 +45,6 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Social_Antisocial.Halle_Keays_900_333_90.jpg"
     },
     {
-      "title": "Letters from the Editors May 2026",
-      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
-    },
-    {
       "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
       "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
       "reason": "stock-too-small",
@@ -72,7 +66,7 @@
       "title": "National Golf tournament",
       "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
       "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531487%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531909%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
@@ -85,6 +79,12 @@
       "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
+    },
+    {
+      "title": "Oui au budget, oui au programme FIL et non à la grève",
+      "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
     }
   ]
 }
