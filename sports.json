@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-13T00:09:51.920Z",
-  "fetchedAt": "2026-09-13T00:09:51.920Z",
+  "updated": "2026-09-13T01:09:30.355Z",
+  "fetchedAt": "2026-09-13T01:09:30.355Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-13T00:09:51.920Z"
+    "referenceDate": "2026-09-13T01:09:30.356Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 838,
@@ -42164,6 +42164,23 @@
           "priorSeason": false
         },
         {
+          "date": "2026-09-12",
+          "time": "19:30",
+          "opponent": "L'Assomption",
+          "opponentCode": "LAS",
+          "home": false,
+          "scoreFor": 8,
+          "scoreAgainst": 6,
+          "result": "W",
+          "sport": "flag-football",
+          "competition": "Flag football collégial masculin D3",
+          "gameId": "e7956a19-b1d4-4f6e-a7f3-a21fa297d588",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e7956a19-b1d4-4f6e-a7f3-a21fa297d588",
+          "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
+          "opponentRegistryId": "lassomption",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-07",
           "time": "9:00",
           "opponent": "Marie-Victorin",
@@ -42200,20 +42217,6 @@
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-09-12",
-          "time": "19:30",
-          "opponent": "L'Assomption",
-          "opponentCode": "LAS",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial masculin D3",
-          "gameId": "e7956a19-b1d4-4f6e-a7f3-a21fa297d588",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e7956a19-b1d4-4f6e-a7f3-a21fa297d588",
-          "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
-          "opponentRegistryId": "lassomption",
-          "live": true
-        },
         {
           "date": "2026-09-20",
           "time": "10:00",
@@ -42307,26 +42310,25 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-12",
-        "time": "19:30",
+        "date": "2026-09-20",
+        "time": "10:00",
         "opponent": "L'Assomption",
         "opponentCode": "LAS",
-        "home": false,
+        "home": true,
         "sport": "flag-football",
         "competition": "Flag football collégial masculin D3",
-        "gameId": "e7956a19-b1d4-4f6e-a7f3-a21fa297d588",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e7956a19-b1d4-4f6e-a7f3-a21fa297d588",
+        "gameId": "bd3857c5-294c-4af1-b9b3-3f9752d9d203",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bd3857c5-294c-4af1-b9b3-3f9752d9d203",
         "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
         "opponentRegistryId": "lassomption",
-        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 2,
+        "wins": 3,
         "losses": 0,
         "draws": 0,
-        "played": 2,
-        "label": "2-0"
+        "played": 3,
+        "label": "3-0"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -42549,6 +42551,23 @@
       "leagueLabel": "Flag football collégial masculin D3",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "19:30",
+          "opponent": "Gérald-Godin",
+          "opponentCode": "CGG",
+          "home": true,
+          "scoreFor": 6,
+          "scoreAgainst": 8,
+          "result": "L",
+          "sport": "flag-football",
+          "competition": "Flag football collégial masculin D3",
+          "gameId": "e7956a19-b1d4-4f6e-a7f3-a21fa297d588",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e7956a19-b1d4-4f6e-a7f3-a21fa297d588",
+          "opponentFullName": "Cégep Gérald-Godin",
+          "opponentRegistryId": "gerald-godin",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-07",
           "time": "10:30",
           "opponent": "Joliette",
@@ -42584,38 +42603,24 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-07",
-        "time": "10:30",
-        "opponent": "Joliette",
-        "opponentCode": "JOL",
-        "home": false,
-        "scoreFor": 12,
-        "scoreAgainst": 6,
-        "result": "W",
+        "date": "2026-09-12",
+        "time": "19:30",
+        "opponent": "Gérald-Godin",
+        "opponentCode": "CGG",
+        "home": true,
+        "scoreFor": 6,
+        "scoreAgainst": 8,
+        "result": "L",
         "sport": "flag-football",
         "competition": "Flag football collégial masculin D3",
-        "gameId": "947f954e-408f-424a-9d66-b8837867105b",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=947f954e-408f-424a-9d66-b8837867105b",
-        "opponentFullName": "Cégep régional de Lanaudière à Joliette",
-        "opponentRegistryId": "joliette",
+        "gameId": "e7956a19-b1d4-4f6e-a7f3-a21fa297d588",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e7956a19-b1d4-4f6e-a7f3-a21fa297d588",
+        "opponentFullName": "Cégep Gérald-Godin",
+        "opponentRegistryId": "gerald-godin",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-09-12",
-          "time": "19:30",
-          "opponent": "Gérald-Godin",
-          "opponentCode": "CGG",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial masculin D3",
-          "gameId": "e7956a19-b1d4-4f6e-a7f3-a21fa297d588",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e7956a19-b1d4-4f6e-a7f3-a21fa297d588",
-          "opponentFullName": "Cégep Gérald-Godin",
-          "opponentRegistryId": "gerald-godin",
-          "live": true
-        },
         {
           "date": "2026-09-20",
           "time": "10:00",
@@ -42709,26 +42714,25 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-12",
-        "time": "19:30",
+        "date": "2026-09-20",
+        "time": "10:00",
         "opponent": "Gérald-Godin",
         "opponentCode": "CGG",
-        "home": true,
+        "home": false,
         "sport": "flag-football",
         "competition": "Flag football collégial masculin D3",
-        "gameId": "e7956a19-b1d4-4f6e-a7f3-a21fa297d588",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e7956a19-b1d4-4f6e-a7f3-a21fa297d588",
+        "gameId": "bd3857c5-294c-4af1-b9b3-3f9752d9d203",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bd3857c5-294c-4af1-b9b3-3f9752d9d203",
         "opponentFullName": "Cégep Gérald-Godin",
         "opponentRegistryId": "gerald-godin",
-        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
         "wins": 2,
-        "losses": 0,
+        "losses": 1,
         "draws": 0,
-        "played": 2,
-        "label": "2-0"
+        "played": 3,
+        "label": "2-1"
       },
       "source": "rseq-s1",
       "priority": 80,
