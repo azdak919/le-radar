@@ -1,28 +1,24 @@
 {
-  "checkedAt": "2026-09-12T01:04:14.996Z",
+  "checkedAt": "2026-09-13T00:55:32.160Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
-    "drift": [
-      "chyz"
-    ],
+    "stable": 6,
+    "drift": [],
     "overhaul": [],
     "unreachable": []
   },
   "stations": [
     {
       "id": "chyz",
-      "published": 30,
+      "published": 31,
       "fresh": 31,
-      "added": [
-        "ven 11:00–12:00 Punk-o-rama"
-      ],
+      "added": [],
       "removed": [],
-      "changed": 1,
-      "ratio": 0.033,
-      "status": "drift"
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cism",
