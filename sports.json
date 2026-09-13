@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-13T17:55:04.820Z",
-  "fetchedAt": "2026-09-13T17:55:04.820Z",
+  "updated": "2026-09-13T18:27:22.374Z",
+  "fetchedAt": "2026-09-13T18:27:22.374Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-13T17:55:04.820Z"
+    "referenceDate": "2026-09-13T18:27:22.375Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 838,
@@ -74690,21 +74690,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-13",
-          "time": "14:00",
-          "opponent": "Saint-Jean",
-          "opponentCode": "SJR",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "93167b76-8946-48bb-8d21-71d62fc32bdc",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=93167b76-8946-48bb-8d21-71d62fc32bdc",
-          "opponentFullName": "Cégep Saint-Jean-sur-Richelieu",
-          "opponentNickname": "Dragons",
-          "opponentRegistryId": "saint-jean-sur-richelieu",
-          "live": true
-        },
-        {
           "date": "2026-09-19",
           "time": "15:00",
           "opponent": "André-Laurendeau",
@@ -74760,19 +74745,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-13",
-        "time": "14:00",
-        "opponent": "Saint-Jean",
-        "opponentCode": "SJR",
-        "home": false,
+        "date": "2026-09-19",
+        "time": "15:00",
+        "opponent": "André-Laurendeau",
+        "opponentCode": "CAL",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "93167b76-8946-48bb-8d21-71d62fc32bdc",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=93167b76-8946-48bb-8d21-71d62fc32bdc",
-        "opponentFullName": "Cégep Saint-Jean-sur-Richelieu",
-        "opponentNickname": "Dragons",
-        "opponentRegistryId": "saint-jean-sur-richelieu",
-        "live": true,
+        "gameId": "e1a6e437-85f3-4b1e-87b7-5377136a6078",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e1a6e437-85f3-4b1e-87b7-5377136a6078",
+        "opponentFullName": "Cégep André-Laurendeau",
+        "opponentNickname": "Cheetahs",
+        "opponentRegistryId": "andre-laurendeau",
         "opponentSector": "collegial"
       },
       "record": {
@@ -74860,20 +74844,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-13",
-          "time": "14:00",
-          "opponent": "Cégep de l'Outaouais",
-          "opponentCode": "OUT",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "93167b76-8946-48bb-8d21-71d62fc32bdc",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=93167b76-8946-48bb-8d21-71d62fc32bdc",
-          "opponentFullName": "Cégep de l'Outaouais",
-          "opponentRegistryId": "outaouais",
-          "live": true
-        },
-        {
           "date": "2026-09-19",
           "time": "13:00",
           "opponent": "Vieux Montréal",
@@ -74942,18 +74912,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-13",
-        "time": "14:00",
-        "opponent": "Cégep de l'Outaouais",
-        "opponentCode": "OUT",
-        "home": true,
+        "date": "2026-09-19",
+        "time": "13:00",
+        "opponent": "Vieux Montréal",
+        "opponentCode": "CVM",
+        "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "93167b76-8946-48bb-8d21-71d62fc32bdc",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=93167b76-8946-48bb-8d21-71d62fc32bdc",
-        "opponentFullName": "Cégep de l'Outaouais",
-        "opponentRegistryId": "outaouais",
-        "live": true,
+        "gameId": "9cfb944e-19c1-4cda-bf69-820cbbf05d93",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9cfb944e-19c1-4cda-bf69-820cbbf05d93",
+        "opponentFullName": "Cégep du Vieux Montréal",
+        "opponentRegistryId": "vieux-montreal",
         "opponentSector": "collegial"
       },
       "record": {
