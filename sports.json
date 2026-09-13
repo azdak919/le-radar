@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-13T22:29:18.567Z",
-  "fetchedAt": "2026-09-13T22:29:18.567Z",
+  "updated": "2026-09-13T22:32:54.398Z",
+  "fetchedAt": "2026-09-13T22:32:54.398Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-13T22:29:18.568Z"
+    "referenceDate": "2026-09-13T22:32:54.399Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 838,
@@ -37727,20 +37727,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-09-13",
-          "time": "18:30",
-          "opponent": "Thetford",
-          "opponentCode": "THE",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "6eb388ba-1d27-48f3-a412-b972f09c30f5",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6eb388ba-1d27-48f3-a412-b972f09c30f5",
-          "opponentFullName": "Cégep de Thetford",
-          "opponentRegistryId": "thetford",
-          "live": true
-        },
-        {
           "date": "2026-09-26",
           "time": "10:00",
           "opponent": "Charlevoix",
@@ -37859,18 +37845,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-13",
-        "time": "18:30",
-        "opponent": "Thetford",
-        "opponentCode": "THE",
-        "home": true,
+        "date": "2026-09-26",
+        "time": "10:00",
+        "opponent": "Charlevoix",
+        "opponentCode": "CHX",
+        "home": false,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
-        "gameId": "6eb388ba-1d27-48f3-a412-b972f09c30f5",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6eb388ba-1d27-48f3-a412-b972f09c30f5",
-        "opponentFullName": "Cégep de Thetford",
-        "opponentRegistryId": "thetford",
-        "live": true,
+        "gameId": "f9003178-ea5d-4721-9905-cd20e9f8a582",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f9003178-ea5d-4721-9905-cd20e9f8a582",
+        "opponentFullName": "Cégep de Charlevoix",
+        "opponentRegistryId": "charlevoix",
         "opponentSector": "collegial"
       },
       "record": {
@@ -37927,20 +37912,6 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9dbdd062-0b69-4c02-a302-170a704bdf76",
           "opponentFullName": "Cégep de La Pocatière",
           "opponentRegistryId": "la-pocatiere",
-          "live": true
-        },
-        {
-          "date": "2026-09-13",
-          "time": "18:30",
-          "opponent": "Notre-Dame",
-          "opponentCode": "NDF",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D3",
-          "gameId": "6eb388ba-1d27-48f3-a412-b972f09c30f5",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6eb388ba-1d27-48f3-a412-b972f09c30f5",
-          "opponentFullName": "Campus Notre-Dame-de-Foy",
-          "opponentRegistryId": "notre-dame-foy",
           "live": true
         },
         {
@@ -76022,20 +75993,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-13",
-          "time": "18:30",
-          "opponent": "L'Assomption",
-          "opponentCode": "LAS",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D3",
-          "gameId": "da80121f-6d25-46a8-9faa-0650b0586cf0",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=da80121f-6d25-46a8-9faa-0650b0586cf0",
-          "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
-          "opponentRegistryId": "lassomption",
-          "live": true
-        },
-        {
           "date": "2026-09-19",
           "time": "13:00",
           "opponent": "Ellis",
@@ -76115,18 +76072,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-13",
-        "time": "18:30",
-        "opponent": "L'Assomption",
-        "opponentCode": "LAS",
-        "home": false,
+        "date": "2026-09-19",
+        "time": "13:00",
+        "opponent": "Ellis",
+        "opponentCode": "ELI",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D3",
-        "gameId": "da80121f-6d25-46a8-9faa-0650b0586cf0",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=da80121f-6d25-46a8-9faa-0650b0586cf0",
-        "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
-        "opponentRegistryId": "lassomption",
-        "live": true,
+        "gameId": "bf0a45a0-b7c6-4408-8e03-347b680926a4",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bf0a45a0-b7c6-4408-8e03-347b680926a4",
+        "opponentFullName": "Collège Ellis",
+        "opponentRegistryId": "ellis",
         "opponentSector": "collegial"
       },
       "record": {
@@ -76368,20 +76324,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-13",
-          "time": "18:30",
-          "opponent": "Gérald-Godin",
-          "opponentCode": "CGG",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D3",
-          "gameId": "da80121f-6d25-46a8-9faa-0650b0586cf0",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=da80121f-6d25-46a8-9faa-0650b0586cf0",
-          "opponentFullName": "Cégep Gérald-Godin",
-          "opponentRegistryId": "gerald-godin",
-          "live": true
-        },
-        {
           "date": "2026-09-19",
           "time": "14:00",
           "opponent": "Valleyfield",
@@ -76461,18 +76403,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-13",
-        "time": "18:30",
-        "opponent": "Gérald-Godin",
-        "opponentCode": "CGG",
+        "date": "2026-09-19",
+        "time": "14:00",
+        "opponent": "Valleyfield",
+        "opponentCode": "VAL",
         "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D3",
-        "gameId": "da80121f-6d25-46a8-9faa-0650b0586cf0",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=da80121f-6d25-46a8-9faa-0650b0586cf0",
-        "opponentFullName": "Cégep Gérald-Godin",
-        "opponentRegistryId": "gerald-godin",
-        "live": true,
+        "gameId": "aab71c00-6d58-482d-a2da-e40c73588b5b",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=aab71c00-6d58-482d-a2da-e40c73588b5b",
+        "opponentFullName": "Cégep de Valleyfield",
+        "opponentRegistryId": "valleyfield",
         "opponentSector": "collegial"
       },
       "record": {
