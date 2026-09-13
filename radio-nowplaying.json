@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-13T20:16:34.935Z",
+  "updatedAt": "2026-09-13T22:23:42.062Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-13T20:16:17.744Z"
+      "checkedAt": "2026-09-13T22:23:26.334Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La Grapevine",
+        "title": "Symbiose",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/la-grapevine"
+        "start": "18:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/symbiose"
       },
       "next": {
-        "title": "Le grand repos",
+        "title": "London café (reprise)",
         "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/le-grand-repos"
+        "start": "20:00",
+        "end": "21:30",
+        "url": "https://cism893.ca/emissions/london-cafe"
       },
       "track": "",
-      "showTitle": "La Grapevine",
+      "showTitle": "Symbiose",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-13T20:16:19.578Z"
+      "checkedAt": "2026-09-13T22:23:28.057Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Bhum Bhum Time",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Desi Beats",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
-      "track": "Blxck Cxsper -",
-      "showTitle": "Bhum Bhum Time",
+      "next": {
+        "title": "Bluegrass Rambling",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
+      "track": "",
+      "showTitle": "Desi Beats",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-13T20:16:22.403Z"
+      "checkedAt": "2026-09-13T22:23:30.916Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Grade A Explosives",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/grade-a-explosives"
-      },
-      "next": {
         "title": "Bills Country and Western Favourites",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
       },
+      "next": {
+        "title": "No Boundaries",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/no-boundaries"
+      },
       "track": "",
-      "showTitle": "Grade A Explosives",
+      "showTitle": "Bills Country and Western Favourites",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-13T20:16:26.199Z"
+      "checkedAt": "2026-09-13T22:23:33.897Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,20 +126,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-13T20:16:27.448Z"
+      "checkedAt": "2026-09-13T22:23:35.224Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Mutations",
+        "title": "Les rois de l'arène",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "mutations"
+        "start": "05:00",
+        "end": "07:00",
+        "slug": "les-rois-de-larene"
       },
-      "track": "Four Tet - Hands",
+      "track": "Kèthe Magané - Peur du soleil",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-13T20:16:34.584Z"
+      "checkedAt": "2026-09-13T22:23:41.712Z"
     }
   }
 }
