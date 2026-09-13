@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-12T22:27:56.400Z",
+  "updatedAt": "2026-09-13T00:09:24.432Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Capitales de Québec",
-        "source": "schedule",
+        "source": "api-live",
         "start": "18:50",
         "end": "23:00",
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
+      "next": {
+        "title": "Palmarès CHYZ",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "10:30",
+        "url": "https://chyz.ca/emission/palmares-chyz/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Capitales de Québec",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-12T22:27:45.155Z"
+      "checkedAt": "2026-09-13T00:09:11.958Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Disconomique",
+        "title": "InfiniBIT!",
         "source": "schedule",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/disconomique"
+        "start": "20:00",
+        "end": "21:30",
+        "url": "https://cism893.ca/emissions/infinibit"
       },
       "next": {
-        "title": "Solénoïde",
+        "title": "Mix Anglo",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/solenoide"
+        "start": "21:30",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
       },
       "track": "",
-      "showTitle": "Disconomique",
+      "showTitle": "InfiniBIT!",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-12T22:27:46.621Z"
+      "checkedAt": "2026-09-13T00:09:13.249Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "West Indian Rhythms",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Masters At Work",
         "source": "api-live",
         "start": "19:00",
         "end": "21:00"
       },
-      "track": "Blxck Cxsper -",
-      "showTitle": "West Indian Rhythms",
+      "next": {
+        "title": "Howls From Hell/Too Loud For The Crowd",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "23:00"
+      },
+      "track": "",
+      "showTitle": "Masters At Work",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-12T22:27:49.743Z"
+      "checkedAt": "2026-09-13T00:09:15.313Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Limelight",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/the-limelight"
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "Screamers",
+        "title": "The Spacious Astrology Playlist",
         "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/screamers"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/the-spacious-astrology-playlist"
       },
       "track": "",
-      "showTitle": "The Limelight",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-12T22:27:52.000Z"
+      "checkedAt": "2026-09-13T00:09:17.098Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-12T22:27:53.169Z"
+      "checkedAt": "2026-09-13T00:09:18.245Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +141,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Maddie Bay - reves en hd",
+      "track": "B0YG1RL & NOVAGANG - B0YG1RL & NOVAGANG - Machine",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -145,7 +152,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-12T22:27:56.049Z"
+      "checkedAt": "2026-09-13T00:09:24.082Z"
     }
   }
 }
