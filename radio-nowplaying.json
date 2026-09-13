@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-13T14:36:17.896Z",
+  "updatedAt": "2026-09-13T16:14:30.749Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Le Ré-Show : Deuxième Service",
+        "title": "Radio Futura",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+        "start": "13:00",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/radio-futura/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-13T14:36:01.620Z"
+      "checkedAt": "2026-09-13T16:14:14.892Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ya Raï",
+        "title": "Les sirènes",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/ya-rai"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/les-sirenes"
       },
       "next": {
-        "title": "Effets sonores",
+        "title": "Le char de marge",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/effets-sonores"
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
       },
       "track": "",
-      "showTitle": "Ya Raï",
+      "showTitle": "Les sirènes",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-13T14:36:03.424Z"
+      "checkedAt": "2026-09-13T16:14:16.703Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "International Radio Report",
-        "source": "api-live",
-        "start": "10:30",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Free Kick",
         "source": "api-live",
         "start": "11:00",
         "end": "13:00"
       },
+      "next": {
+        "title": "Modular Systems/Future Classics",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "International Radio Report",
+      "showTitle": "Free Kick",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-13T14:36:06.397Z"
+      "checkedAt": "2026-09-13T16:14:19.447Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Rigged Sessions",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/rigged-sessions"
-      },
-      "next": {
         "title": "Brave Little Emo Girl",
         "source": "schedule-live",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
       },
+      "next": {
+        "title": "Northern Stagelights",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/northern-stagelights"
+      },
       "track": "",
-      "showTitle": "Rigged Sessions",
+      "showTitle": "Brave Little Emo Girl",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-13T14:36:09.358Z"
+      "checkedAt": "2026-09-13T16:14:22.784Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-13T14:36:10.739Z"
+      "checkedAt": "2026-09-13T16:14:23.927Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "The Lemon Twigs - Your True Enemy",
+      "track": "Genevieve Stokes - You See Me",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-13T14:36:17.545Z"
+      "checkedAt": "2026-09-13T16:14:30.398Z"
     }
   }
 }
