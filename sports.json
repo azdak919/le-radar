@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-13T14:36:48.195Z",
-  "fetchedAt": "2026-09-13T14:36:48.195Z",
+  "updated": "2026-09-13T14:57:44.500Z",
+  "fetchedAt": "2026-09-13T14:57:44.500Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-13T14:36:48.195Z"
+    "referenceDate": "2026-09-13T14:57:44.500Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 838,
@@ -74,6 +74,18 @@
     "volleyball"
   ],
   "teamCount": 867,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -43855,7 +43867,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9723f2ce-f3af-4646-869f-553b0c7cf6ee",
           "opponentFullName": "Université du Québec à Montréal",
           "opponentNickname": "Citadins",
-          "opponentRegistryId": "uqam"
+          "opponentRegistryId": "uqam",
+          "live": true
         },
         {
           "date": "2026-09-13",
@@ -43996,6 +44009,7 @@
         "opponentFullName": "Université du Québec à Montréal",
         "opponentNickname": "Citadins",
         "opponentRegistryId": "uqam",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -44407,7 +44421,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9723f2ce-f3af-4646-869f-553b0c7cf6ee",
           "opponentFullName": "Université McGill",
           "opponentNickname": "Redbirds",
-          "opponentRegistryId": "mcgill"
+          "opponentRegistryId": "mcgill",
+          "live": true
         },
         {
           "date": "2026-09-13",
@@ -44548,6 +44563,7 @@
         "opponentFullName": "Université McGill",
         "opponentNickname": "Redbirds",
         "opponentRegistryId": "mcgill",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -44774,7 +44790,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=493b559c-8e4e-4872-a932-fd23bd0a2861",
           "opponentFullName": "Université Laval",
           "opponentNickname": "Rouge et Or",
-          "opponentRegistryId": "ulaval"
+          "opponentRegistryId": "ulaval",
+          "live": true
         },
         {
           "date": "2026-09-13",
@@ -44916,6 +44933,7 @@
         "opponentFullName": "Université Laval",
         "opponentNickname": "Rouge et Or",
         "opponentRegistryId": "ulaval",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -44957,7 +44975,8 @@
           "gameId": "493b559c-8e4e-4872-a932-fd23bd0a2861",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=493b559c-8e4e-4872-a932-fd23bd0a2861",
           "opponentFullName": "École de technologie supérieure",
-          "opponentRegistryId": "ets"
+          "opponentRegistryId": "ets",
+          "live": true
         },
         {
           "date": "2026-09-13",
@@ -45097,6 +45116,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=493b559c-8e4e-4872-a932-fd23bd0a2861",
         "opponentFullName": "École de technologie supérieure",
         "opponentRegistryId": "ets",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -57756,8 +57776,8 @@
           "opponent": "John Abbott",
           "opponentCode": "JAC",
           "home": true,
-          "scoreFor": 28,
-          "scoreAgainst": 38,
+          "scoreFor": 0,
+          "scoreAgainst": 30,
           "result": "L",
           "sport": "rugby",
           "competition": "Rugby collégial féminin",
@@ -57775,8 +57795,8 @@
         "opponent": "John Abbott",
         "opponentCode": "JAC",
         "home": true,
-        "scoreFor": 28,
-        "scoreAgainst": 38,
+        "scoreFor": 0,
+        "scoreAgainst": 30,
         "result": "L",
         "sport": "rugby",
         "competition": "Rugby collégial féminin",
@@ -57909,8 +57929,8 @@
           "opponent": "Dawson",
           "opponentCode": "DAW",
           "home": false,
-          "scoreFor": 38,
-          "scoreAgainst": 28,
+          "scoreFor": 30,
+          "scoreAgainst": 0,
           "result": "W",
           "sport": "rugby",
           "competition": "Rugby collégial féminin",
@@ -57928,8 +57948,8 @@
         "opponent": "Dawson",
         "opponentCode": "DAW",
         "home": false,
-        "scoreFor": 38,
-        "scoreAgainst": 28,
+        "scoreFor": 30,
+        "scoreAgainst": 0,
         "result": "W",
         "sport": "rugby",
         "competition": "Rugby collégial féminin",
@@ -58199,7 +58219,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f29dd3d5-74bb-4b33-b571-a85541f14e69",
           "opponentFullName": "Cégep Limoilou",
           "opponentNickname": "Titans",
-          "opponentRegistryId": "limoilou"
+          "opponentRegistryId": "limoilou",
+          "live": true
         },
         {
           "date": "2026-09-13",
@@ -58311,6 +58332,7 @@
         "opponentFullName": "Cégep Limoilou",
         "opponentNickname": "Titans",
         "opponentRegistryId": "limoilou",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -58533,7 +58555,8 @@
           "gameId": "f29dd3d5-74bb-4b33-b571-a85541f14e69",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f29dd3d5-74bb-4b33-b571-a85541f14e69",
           "opponentFullName": "Cégep de Baie-Comeau",
-          "opponentRegistryId": "baie-comeau"
+          "opponentRegistryId": "baie-comeau",
+          "live": true
         },
         {
           "date": "2026-09-13",
@@ -73860,7 +73883,8 @@
           "gameId": "06278682-af46-4fbe-aad2-d0d7a2da7caf",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=06278682-af46-4fbe-aad2-d0d7a2da7caf",
           "opponentFullName": "Collège Lionel-Groulx",
-          "opponentRegistryId": "lionel-groulx"
+          "opponentRegistryId": "lionel-groulx",
+          "live": true
         },
         {
           "date": "2026-09-18",
@@ -73943,6 +73967,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=06278682-af46-4fbe-aad2-d0d7a2da7caf",
         "opponentFullName": "Collège Lionel-Groulx",
         "opponentRegistryId": "lionel-groulx",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -74388,7 +74413,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=06278682-af46-4fbe-aad2-d0d7a2da7caf",
           "opponentFullName": "Dawson College",
           "opponentNickname": "Blues",
-          "opponentRegistryId": "dawson"
+          "opponentRegistryId": "dawson",
+          "live": true
         },
         {
           "date": "2026-09-20",
@@ -74459,6 +74485,7 @@
         "opponentFullName": "Dawson College",
         "opponentNickname": "Blues",
         "opponentRegistryId": "dawson",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -111094,9 +111121,31 @@
       "division": "NEISA",
       "usports": false,
       "leagueLabel": "Voile · association étudiante QC",
-      "lastGame": null,
+      "lastGame": {
+        "date": "2026-09-12",
+        "time": "",
+        "opponent": "Charles Invite",
+        "opponentFullName": "Charles Invite · Bentley",
+        "opponentCode": "BEN",
+        "home": null,
+        "sport": "sailing",
+        "scoreKind": "place",
+        "competition": "ICSA NEISA · Fundamental",
+        "url": "https://scores.collegesailing.org/f26/charles-invite/",
+        "scoreFor": 7,
+        "scoreAgainst": 15,
+        "result": "D",
+        "opponentSector": "universitaire",
+        "priorSeason": false
+      },
       "nextGame": null,
-      "record": null,
+      "record": {
+        "wins": 1,
+        "losses": 0,
+        "draws": 0,
+        "played": 1,
+        "label": "1-0"
+      },
       "source": "icsa-collegesailing",
       "fullName": "Université McGill",
       "province": "QC",
@@ -111104,7 +111153,8 @@
       "kind": "association-etudiante",
       "clubNote": "Équipe de voile étudiante (student-led), distincte du programme d’excellence Redbirds.",
       "url": "https://www.mcgillsailing.com/",
-      "priority": 2
+      "priority": 2,
+      "lastGamePriorSeason": false
     },
     "sailing:universitaire:watch:polytechnique": {
       "id": "sailing:universitaire:watch:polytechnique",
