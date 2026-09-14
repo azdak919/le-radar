@@ -1,30 +1,51 @@
 {
-  "updated": "2026-09-14T13:12:32.071Z",
-  "total": 188,
-  "withImage": 175,
-  "withCredit": 175,
-  "cited": 130,
-  "pending": 10,
+  "updated": "2026-09-14T16:00:47.206Z",
+  "total": 168,
+  "withImage": 155,
+  "withCredit": 155,
+  "cited": 119,
+  "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 6,
-  "citedNew": 0,
-  "fallbackNew": 13,
+  "checked": 17,
+  "updatedCount": 10,
+  "citedNew": 6,
+  "fallbackNew": 11,
   "samples": [
     {
-      "title": "A Life-Changing Experience”: Student-Led Organization Welcomes Refugee Students to Mc Gil",
-      "source": "The McGill Daily",
-      "credit": "Photo credit: The McGill Daily",
+      "title": "Bulletin 10h30 La Pige radio",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
       "cited": false,
       "method": null
     },
     {
+      "title": "Fou Art : un franc succès cette année à La Baie",
+      "source": "La Pige",
+      "credit": "Photo : Mathieu Bisson",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Maison des jeunes : 15 000 $ pour financer des activités",
+      "source": "La Pige",
+      "credit": "Photo : Maison des jeunes de Laterrière",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
       "title": "The catalogue of stories at the Webster Library",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Evelyn Ho Lee",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Faire du sport sans se ruiner quand on est aux études",
+      "source": "Le Collectif",
+      "credit": "Photo : UdeS",
+      "cited": true,
+      "method": "body-tail"
     },
     {
       "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
@@ -48,11 +69,18 @@
       "method": null
     },
     {
-      "title": "Blackface at McGill",
-      "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
-      "cited": false,
-      "method": null
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }

@@ -1,22 +1,49 @@
 {
-  "updated": "2026-09-14T13:06:05.553Z",
-  "total": 188,
+  "updated": "2026-09-14T15:56:22.187Z",
+  "total": 168,
   "pool": 58,
-  "incomplete": 2,
-  "withLeadExcerpt": 99,
-  "candidates": 2,
-  "enriched": 1,
-  "failed": 1,
+  "incomplete": 8,
+  "withLeadExcerpt": 80,
+  "candidates": 8,
+  "enriched": 3,
+  "failed": 4,
   "ok": true,
   "samples": [
     {
-      "title": "A Life-Changing Experience”: Student-Led Organization Welcomes Refugee Students to Mc Gil",
-      "link": "https://www.mcgilldaily.com/2026/09/a-life-changing-experience-student-led-organization-welcomes-refugee-students-to-mcgil/",
+      "title": "Fou Art : un franc succès cette année à La Baie",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/fouart-un-franc-succes-cette-annee-a-la-baie/?utm_source=rss&utm_medium=rss&utm_campaign=fouart-un-franc-succes-cette-annee-a-la-baie",
       "ok": true,
-      "score": 96,
-      "chars": 400,
-      "sample": "Good People is an article series highlighting McGill students doing community-oriented work on and a",
+      "score": 100,
+      "chars": 261,
+      "sample": "Fidèle à son habitude, la FouArt a attiré des milliers de visiteurs au cœur du centre-ville de La Ba",
       "changed": true
+    },
+    {
+      "title": "Maison des jeunes : 15 000 $ pour financer des activités",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/maison-des-jeunes-15-000-pour-financer-des-activites/?utm_source=rss&utm_medium=rss&utm_campaign=maison-des-jeunes-15-000-pour-financer-des-activites",
+      "ok": true,
+      "score": 100,
+      "chars": 195,
+      "sample": "Grâce à un don de la caisse Desjardins, les jeunes bénéficieront d’un accès plus abordable aux activ",
+      "changed": true
+    },
+    {
+      "title": "Le département d’inhalothérapie de Chicoutimi fermé pour des craintes d’amiante",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/le-departement-dinhalotherapie-de-chicoutimi-ferme-pour-des-craintes-damiante/?utm_source=rss&utm_medium=rss&utm_campaign=le-departement-dinhalotherapie-de-chicoutimi-ferme-pour-des-craintes-damiante",
+      "ok": true,
+      "score": 100,
+      "chars": 400,
+      "sample": "Pour cette raison, des pneumologues ont refusé de travailler dans le département lors de la fin de s",
+      "changed": true
+    },
+    {
+      "title": "Cinq nouvelles marquantes de l’été",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-marquantes-de-lete/",
+      "ok": true,
+      "score": 100,
+      "chars": 400,
+      "sample": "Quartier Libre est finalement de retour après un été mouvementé. Voici les nouvelles qui ont marqué ",
+      "changed": false
     }
   ]
 }
