@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-09-13T12:17:02.184Z",
+  "updated": "2026-09-14T13:21:26.363Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -28,14 +28,15 @@
     },
     "le-collectif": {
       "strategy": "unsupported",
-      "nextPage": 33,
+      "nextPage": null,
       "totalPages": 34,
-      "lastAttemptAt": "2026-09-13T12:16:59.922Z",
-      "lastSuccessAt": "2026-09-13T12:16:59.922Z",
+      "lastAttemptAt": "2026-09-14T13:21:25.420Z",
+      "lastSuccessAt": "2026-09-14T13:21:25.420Z",
       "retryAt": null,
       "error": null,
-      "windowStart": "2023-09-13T18:16:52.958Z",
-      "windowYears": 3
+      "windowStart": "2023-09-14T19:21:22.826Z",
+      "windowYears": 3,
+      "completedAt": "2026-09-14T13:21:25.420Z"
     },
     "exil": {
       "strategy": "wordpress-com-rest",
