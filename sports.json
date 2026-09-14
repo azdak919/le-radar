@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-13T23:04:34.786Z",
-  "fetchedAt": "2026-09-13T23:04:34.786Z",
+  "updated": "2026-09-14T00:41:59.432Z",
+  "fetchedAt": "2026-09-14T00:41:59.432Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-13T23:04:34.786Z"
+    "referenceDate": "2026-09-14T00:41:59.432Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 838,
@@ -37133,6 +37133,19 @@
         },
         {
           "date": "2026-09-13",
+          "time": "17:15",
+          "opponent": "Notre-Dame",
+          "opponentCode": "NDF",
+          "home": false,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D3",
+          "gameId": "680fd65c-03dd-4ad2-a6c2-1ce4565f863f",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=680fd65c-03dd-4ad2-a6c2-1ce4565f863f",
+          "opponentFullName": "Campus Notre-Dame-de-Foy",
+          "opponentRegistryId": "notre-dame-foy"
+        },
+        {
+          "date": "2026-09-13",
           "time": "18:30",
           "opponent": "La Pocatière",
           "opponentCode": "POC",
@@ -37329,8 +37342,7 @@
           "gameId": "9dbdd062-0b69-4c02-a302-170a704bdf76",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9dbdd062-0b69-4c02-a302-170a704bdf76",
           "opponentFullName": "Cégep de Thetford",
-          "opponentRegistryId": "thetford",
-          "live": true
+          "opponentRegistryId": "thetford"
         },
         {
           "date": "2026-09-13",
@@ -37750,6 +37762,19 @@
           "opponentRegistryId": "la-pocatiere"
         },
         {
+          "date": "2026-09-13",
+          "time": "17:15",
+          "opponent": "Jonquière",
+          "opponentCode": "JON",
+          "home": true,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D3",
+          "gameId": "680fd65c-03dd-4ad2-a6c2-1ce4565f863f",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=680fd65c-03dd-4ad2-a6c2-1ce4565f863f",
+          "opponentFullName": "Cégep de Jonquière",
+          "opponentRegistryId": "jonquiere"
+        },
+        {
           "date": "2026-09-26",
           "time": "10:00",
           "opponent": "Charlevoix",
@@ -37933,8 +37958,7 @@
           "gameId": "9dbdd062-0b69-4c02-a302-170a704bdf76",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9dbdd062-0b69-4c02-a302-170a704bdf76",
           "opponentFullName": "Cégep de La Pocatière",
-          "opponentRegistryId": "la-pocatiere",
-          "live": true
+          "opponentRegistryId": "la-pocatiere"
         },
         {
           "date": "2026-09-27",
