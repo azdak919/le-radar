@@ -1,10 +1,18 @@
 {
-  "updated": "2026-09-14T00:16:30.515Z",
+  "updated": "2026-09-14T05:07:14.425Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 8,
+  "mismatches": 9,
   "ok": true,
   "samples": [
+    {
+      "title": "Unregulated but essential?",
+      "link": "https://thelinknewspaper.ca/article/16375",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Jude Khashman",
+      "reason": "page-byline"
+    },
     {
       "title": "Lo, how the Roses e’er blooming",
       "link": "https://thelinknewspaper.ca/article/16370",
@@ -70,5 +78,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 8
+  "fixed": 9
 }
