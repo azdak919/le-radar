@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-14T16:59:28.649Z",
-  "fetchedAt": "2026-09-14T16:59:28.649Z",
+  "updated": "2026-09-14T19:20:29.576Z",
+  "fetchedAt": "2026-09-14T19:20:29.576Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-14T16:59:28.650Z"
+    "referenceDate": "2026-09-14T19:20:29.576Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 838,
@@ -66766,6 +66766,23 @@
       "leagueLabel": "Soccer collégial féminin D2",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "14:00",
+          "opponent": "Champlain St-Lawrence",
+          "opponentCode": "SLC",
+          "home": false,
+          "scoreFor": 2,
+          "scoreAgainst": 6,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D2",
+          "gameId": "6dde0e95-6759-47d9-96d5-236c3097fffe",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6dde0e95-6759-47d9-96d5-236c3097fffe",
+          "opponentFullName": "Champlain College St. Lawrence",
+          "opponentRegistryId": "ch-st-lawrence",
+          "priorSeason": false
+        },
+        {
           "date": "2026-08-29",
           "time": "13:00",
           "opponent": "Thetford",
@@ -66784,20 +66801,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-08-29",
-        "time": "13:00",
-        "opponent": "Thetford",
-        "opponentCode": "THE",
+        "date": "2026-09-12",
+        "time": "14:00",
+        "opponent": "Champlain St-Lawrence",
+        "opponentCode": "SLC",
         "home": false,
-        "scoreFor": 0,
-        "scoreAgainst": 3,
+        "scoreFor": 2,
+        "scoreAgainst": 6,
         "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "35a79885-e753-4bdf-bd59-0924f365ceaa",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=35a79885-e753-4bdf-bd59-0924f365ceaa",
-        "opponentFullName": "Cégep de Thetford",
-        "opponentRegistryId": "thetford",
+        "gameId": "6dde0e95-6759-47d9-96d5-236c3097fffe",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6dde0e95-6759-47d9-96d5-236c3097fffe",
+        "opponentFullName": "Champlain College St. Lawrence",
+        "opponentRegistryId": "ch-st-lawrence",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -66897,10 +66914,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "0-2"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -67097,6 +67114,23 @@
       "leagueLabel": "Soccer collégial féminin D2",
       "results": [
         {
+          "date": "2026-09-12",
+          "time": "14:00",
+          "opponent": "Alma",
+          "opponentCode": "ALM",
+          "home": true,
+          "scoreFor": 6,
+          "scoreAgainst": 2,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D2",
+          "gameId": "6dde0e95-6759-47d9-96d5-236c3097fffe",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6dde0e95-6759-47d9-96d5-236c3097fffe",
+          "opponentFullName": "Cégep d'Alma",
+          "opponentRegistryId": "alma",
+          "priorSeason": false
+        },
+        {
           "date": "2026-08-30",
           "time": "14:00",
           "opponent": "Beauce-Appalaches",
@@ -67115,20 +67149,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-08-30",
+        "date": "2026-09-12",
         "time": "14:00",
-        "opponent": "Beauce-Appalaches",
-        "opponentCode": "BAP",
+        "opponent": "Alma",
+        "opponentCode": "ALM",
         "home": true,
-        "scoreFor": 1,
-        "scoreAgainst": 4,
-        "result": "L",
+        "scoreFor": 6,
+        "scoreAgainst": 2,
+        "result": "W",
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4cb9a91d-e8da-40e3-bdba-c3efefe8d079",
-        "opponentFullName": "Cégep de Beauce-Appalaches",
-        "opponentRegistryId": "beauce-appalaches",
+        "gameId": "6dde0e95-6759-47d9-96d5-236c3097fffe",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6dde0e95-6759-47d9-96d5-236c3097fffe",
+        "opponentFullName": "Cégep d'Alma",
+        "opponentRegistryId": "alma",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -67227,11 +67261,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 1,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "1-1"
       },
       "source": "rseq-s1",
       "priority": 80,
