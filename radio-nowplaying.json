@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-13T22:32:24.384Z",
+  "updatedAt": "2026-09-14T00:41:31.420Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le Monde d'Erik Arsenault - 10 ans",
-        "source": "schedule",
+        "source": "api-live",
         "start": "19:00",
         "end": "21:00",
         "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
       },
+      "next": {
+        "title": "Lundi Indie",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Le Monde d'Erik Arsenault - 10 ans",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-13T22:32:13.117Z"
+      "checkedAt": "2026-09-14T00:41:18.075Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Symbiose",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/symbiose"
-      },
-      "next": {
         "title": "London café (reprise)",
         "source": "schedule",
         "start": "20:00",
         "end": "21:30",
         "url": "https://cism893.ca/emissions/london-cafe"
       },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "21:30",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "Symbiose",
+      "showTitle": "London café (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-13T22:32:14.338Z"
+      "checkedAt": "2026-09-14T00:41:19.481Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Desi Beats",
+        "title": "Country Classics",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "20:00",
+        "end": "21:00"
       },
       "next": {
-        "title": "Bluegrass Rambling",
+        "title": "Cha Cha In Blue",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "21:00",
+        "end": "23:00"
       },
       "track": "",
-      "showTitle": "Desi Beats",
+      "showTitle": "Country Classics",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-13T22:32:16.325Z"
+      "checkedAt": "2026-09-14T00:41:21.957Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Bills Country and Western Favourites",
+        "title": "Towards A Common Horizon",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/towards-a-common-horizon"
       },
       "next": {
-        "title": "No Boundaries",
+        "title": "Afro Archives",
         "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/no-boundaries"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/afro-archives"
       },
       "track": "",
-      "showTitle": "Bills Country and Western Favourites",
+      "showTitle": "Towards A Common Horizon",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-13T22:32:18.299Z"
+      "checkedAt": "2026-09-14T00:41:24.167Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-13T22:32:19.235Z"
+      "checkedAt": "2026-09-14T00:41:24.993Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Saints Martyrs - Kyrie eleison",
+      "track": "Mykalle - Unita",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-13T22:32:24.034Z"
+      "checkedAt": "2026-09-14T00:41:31.069Z"
     }
   }
 }
