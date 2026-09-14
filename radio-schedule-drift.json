@@ -1,11 +1,13 @@
 {
-  "checkedAt": "2026-09-13T00:55:32.160Z",
+  "checkedAt": "2026-09-14T00:59:40.767Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 6,
-    "drift": [],
+    "stable": 5,
+    "drift": [
+      "cism"
+    ],
     "overhaul": [],
     "unreachable": []
   },
@@ -23,12 +25,18 @@
     {
       "id": "cism",
       "published": 108,
-      "fresh": 108,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 110,
+      "added": [
+        "mer 09:00–10:00 La collation",
+        "mer 10:00–11:00 La 13e",
+        "mer 11:00–12:00 À la loupe du droit"
+      ],
+      "removed": [
+        "mer 09:00–12:00 La collation"
+      ],
+      "changed": 4,
+      "ratio": 0.037,
+      "status": "drift"
     },
     {
       "id": "ckut",
