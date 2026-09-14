@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-14T19:20:58.413Z",
+  "updatedAt": "2026-09-14T21:25:54.376Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-14T19:20:45.031Z"
+      "checkedAt": "2026-09-14T21:25:41.276Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les garçons pleurent aussi",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
-      },
-      "next": {
         "title": "Les criquets crinqués",
         "source": "schedule",
         "start": "17:00",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/les-criquets-crinques"
       },
+      "next": {
+        "title": "Les vinyles versatiles",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
+      },
       "track": "",
-      "showTitle": "Les garçons pleurent aussi",
+      "showTitle": "Les criquets crinqués",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-14T19:20:46.529Z"
+      "checkedAt": "2026-09-14T21:25:42.487Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Whose Vibe Is It Anyway",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "En Profondeur",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Queercorps",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Whose Vibe Is It Anyway",
+      "showTitle": "En Profondeur",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-14T19:20:48.926Z"
+      "checkedAt": "2026-09-14T21:25:44.848Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Whip Appeal",
+        "title": "The Pressure Drop",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/whip-appeal"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-pressure-drop"
       },
       "next": {
-        "title": "Dreamscapes",
+        "title": "Voice of the Voiceless",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/dreamscapes"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
       },
       "track": "",
-      "showTitle": "Whip Appeal",
+      "showTitle": "The Pressure Drop",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-14T19:20:50.929Z"
+      "checkedAt": "2026-09-14T21:25:46.986Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +126,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-14T19:20:52.249Z"
+      "checkedAt": "2026-09-14T21:25:48.289Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
-      },
+      "current": null,
       "next": {
         "title": "Les rois de l'arène",
         "source": "schedule",
@@ -145,10 +139,10 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Hush - Saturnday",
-      "showTitle": "Palmarès CHOQ.ca",
+      "track": "Gia Margaret - Phenomenon",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
         "api-live",
         "schedule"
@@ -157,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-14T19:20:58.063Z"
+      "checkedAt": "2026-09-14T21:25:54.026Z"
     }
   }
 }
