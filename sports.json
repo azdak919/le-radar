@@ -1,14 +1,14 @@
 {
-  "updated": "2026-09-14T19:20:29.576Z",
-  "fetchedAt": "2026-09-14T19:20:29.576Z",
+  "updated": "2026-09-14T20:18:18.818Z",
+  "fetchedAt": "2026-09-14T20:18:18.818Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-14T19:20:29.576Z"
+    "referenceDate": "2026-09-14T20:18:18.818Z"
   },
   "registry": "sports-teams.json",
-  "registryMatched": 838,
+  "registryMatched": 837,
   "leagueCatalog": 112,
   "leaguesWithTeams": 108,
   "leaguesOk": 112,
@@ -73,7 +73,7 @@
     "ultimate",
     "volleyball"
   ],
-  "teamCount": 867,
+  "teamCount": 866,
   "errors": [
     {
       "leagueId": "spordle-collegial",
@@ -25019,29 +25019,6 @@
       "priority": 32,
       "fullName": "Campus Notre-Dame-de-Foy",
       "registryId": "notre-dame-foy"
-    },
-    "collegial:basketball:b789a3e0-33ed-400b-87cc-287ab9819540:6b81c505-9bfc-4476-8516-e5223d3d640a": {
-      "id": "collegial:basketball:b789a3e0-33ed-400b-87cc-287ab9819540:6b81c505-9bfc-4476-8516-e5223d3d640a",
-      "rseqTeamId": "6b81c505-9bfc-4476-8516-e5223d3d640a",
-      "leagueId": "b789a3e0-33ed-400b-87cc-287ab9819540",
-      "name": "Rivière-du-Loup",
-      "code": "RDL",
-      "sector": "collegial",
-      "sport": "basketball",
-      "sportLabel": "Basketball",
-      "sex": "M",
-      "division": "D3",
-      "usports": false,
-      "leagueLabel": "Basketball collégial masculin D3",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [],
-      "nextGame": null,
-      "record": null,
-      "source": "rseq-s1",
-      "priority": 80,
-      "fullName": "Cégep de Rivière-du-Loup",
-      "registryId": "riviere-du-loup"
     },
     "collegial:basketball:b789a3e0-33ed-400b-87cc-287ab9819540:24c9c6bd-69da-424a-b310-a9019f4fe011": {
       "id": "collegial:basketball:b789a3e0-33ed-400b-87cc-287ab9819540:24c9c6bd-69da-424a-b310-a9019f4fe011",
