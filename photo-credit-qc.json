@@ -1,30 +1,44 @@
 {
-  "updated": "2026-09-14T16:00:47.206Z",
+  "updated": "2026-09-14T17:46:55.357Z",
   "total": 168,
-  "withImage": 155,
-  "withCredit": 155,
-  "cited": 119,
-  "pending": 11,
+  "withImage": 156,
+  "withCredit": 156,
+  "cited": 118,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 17,
+  "checked": 18,
   "updatedCount": 10,
-  "citedNew": 6,
-  "fallbackNew": 11,
+  "citedNew": 5,
+  "fallbackNew": 13,
   "samples": [
     {
-      "title": "Bulletin 10h30 La Pige radio",
+      "title": "Les priorités de la jeunesse, vues par Yannick Gagnon",
       "source": "La Pige",
       "credit": "Crédit photo : La Pige",
       "cited": false,
       "method": null
     },
     {
-      "title": "Fou Art : un franc succès cette année à La Baie",
-      "source": "La Pige",
-      "credit": "Photo : Mathieu Bisson",
+      "title": "The Art of Losing Listeners",
+      "source": "The McGill Daily",
+      "credit": "Photo : Joshua Burnside",
       "cited": true,
-      "method": "body-line"
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "A (Not-So) Montreal Story",
+      "source": "The McGill Daily",
+      "credit": "Photo : Golnar Saegh",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "El Niño: Back and Stronger than Ever",
+      "source": "The McGill Daily",
+      "credit": "Photo : Dietmar Rabich, CC BY-SA 4.0",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "Maison des jeunes : 15 000 $ pour financer des activités",
@@ -36,9 +50,9 @@
     {
       "title": "The catalogue of stories at the Webster Library",
       "source": "The Link",
-      "credit": "Illustration: Evelyn Ho Lee",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Faire du sport sans se ruiner quand on est aux études",
@@ -67,20 +81,6 @@
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }

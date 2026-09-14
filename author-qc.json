@@ -1,10 +1,34 @@
 {
-  "updated": "2026-09-14T15:56:17.785Z",
+  "updated": "2026-09-14T17:39:58.578Z",
   "total": 168,
   "withAuthor": 168,
-  "mismatches": 8,
+  "mismatches": 10,
   "ok": true,
   "samples": [
+    {
+      "title": "The Art of Losing Listeners",
+      "link": "https://www.mcgilldaily.com/2026/09/the-art-of-losing-listeners/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Jad Morin",
+      "reason": "page-byline"
+    },
+    {
+      "title": "A (Not-So) Montreal Story",
+      "link": "https://www.mcgilldaily.com/2026/09/a-not-so-montreal-story/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Olivia Epstein",
+      "reason": "page-byline"
+    },
+    {
+      "title": "El Niño: Back and Stronger than Ever",
+      "link": "https://www.mcgilldaily.com/2026/09/el-nino-back-and-stronger-than-ever/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Emilie Behrens",
+      "reason": "page-byline"
+    },
     {
       "title": "Lo, how the Roses e’er blooming",
       "link": "https://thelinknewspaper.ca/article/16370",
@@ -54,14 +78,6 @@
       "reason": "no-author-source"
     },
     {
-      "title": "Spotlighting Powerful McGill Alumnae",
-      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
-      "source": "The McGill Daily",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
-    },
-    {
       "title": "Garda World au CVM (Éditorial)",
       "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
       "source": "Exil",
@@ -70,5 +86,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 8
+  "fixed": 10
 }
