@@ -1,27 +1,33 @@
 {
-  "updated": "2026-09-14T16:00:29.685Z",
+  "updated": "2026-09-14T20:28:38.987Z",
   "total": 168,
-  "withPhoto": 155,
-  "withStock": 28,
-  "withCampusBank": 20,
+  "withPhoto": 156,
+  "withStock": 27,
+  "withCampusBank": 19,
   "fullyCovered": 168,
-  "leadReadyPhotos": 139,
-  "pageScraped": 21,
-  "photosRecovered": 16,
+  "leadReadyPhotos": 137,
+  "pageScraped": 24,
+  "photosRecovered": 19,
   "imagesCleared": 5,
   "stockSearches": 29,
-  "stockFound": 20,
-  "campusBankFound": 15,
+  "stockFound": 19,
+  "campusBankFound": 13,
   "mainPageLeadReady": true,
   "gaps": [
     {
-      "title": "Le département d’inhalothérapie de Chicoutimi fermé pour des craintes d’amiante",
-      "link": "https://lapige.atmjonquiere.com/2026/09/14/le-departement-dinhalotherapie-de-chicoutimi-ferme-pour-des-craintes-damiante/?utm_source=rss&utm_medium=rss&utm_campaign=le-departement-dinhalotherapie-de-chicoutimi-ferme-pour-des-craintes-damiante",
+      "title": "McGill Students Demand an Academic Boycott of Israeli Institution Partnership",
+      "link": "https://www.mcgilldaily.com/2026/09/mcgill-students-demand-an-academic-boycott-of-israeli-institution-partnership/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Pavillon_principal_du_C%C3%A9gep_de_Jonqui%C3%A8re.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     },
     {
-      "title": "Bulletin 10h30 La Pige radio",
+      "title": "Bulletin La Pige radio 14h30 et 15h30",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-14h30",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
+    },
+    {
+      "title": "Bulletin 12h La Pige radio",
       "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-10h30-la-pige-10h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-10h30-la-pige-10h30",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0115.jpg"
@@ -45,12 +51,6 @@
       "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Felephant_code_qr.png?alt=media&token=ced37e6b-12b1-4369-8289-3f2dacb19067"
     },
     {
-      "title": "Letters from the Editors May 2026",
-      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
-    },
-    {
       "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
       "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
       "reason": "stock-too-small",
@@ -63,10 +63,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
     },
     {
-      "title": "Spotlighting Powerful McGill Alumnae",
-      "link": "https://www.mcgilldaily.com/2026/03/spotlighting-powerful-mcgill-alumnae/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
+      "title": "National Golf tournament",
+      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg"
     },
     {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
