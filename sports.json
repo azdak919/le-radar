@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-14T23:07:06.215Z",
-  "fetchedAt": "2026-09-14T23:07:06.215Z",
+  "updated": "2026-09-14T23:29:58.724Z",
+  "fetchedAt": "2026-09-14T23:29:58.724Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-14T23:07:06.216Z"
+    "referenceDate": "2026-09-14T23:29:58.724Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 837,
@@ -6366,7 +6366,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=514adf05-a654-4b64-8c53-080cc7f30e77",
           "opponentFullName": "Cégep Édouard-Montpetit",
           "opponentNickname": "Cougars",
-          "opponentRegistryId": "edouard-montpetit"
+          "opponentRegistryId": "edouard-montpetit",
+          "live": true
         },
         {
           "date": "2026-09-19",
@@ -6532,6 +6533,7 @@
         "opponentFullName": "Cégep Édouard-Montpetit",
         "opponentNickname": "Cougars",
         "opponentRegistryId": "edouard-montpetit",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -6892,7 +6894,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=514adf05-a654-4b64-8c53-080cc7f30e77",
           "opponentFullName": "Dawson College",
           "opponentNickname": "Blues",
-          "opponentRegistryId": "dawson"
+          "opponentRegistryId": "dawson",
+          "live": true
         },
         {
           "date": "2026-09-19",
@@ -7058,6 +7061,7 @@
         "opponentFullName": "Dawson College",
         "opponentNickname": "Blues",
         "opponentRegistryId": "dawson",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -74104,7 +74108,8 @@
           "gameId": "a550541a-0abd-4289-a2d3-c6baa98dbc44",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a550541a-0abd-4289-a2d3-c6baa98dbc44",
           "opponentFullName": "Cégep de Jonquière",
-          "opponentRegistryId": "jonquiere"
+          "opponentRegistryId": "jonquiere",
+          "live": true
         },
         {
           "date": "2026-09-19",
@@ -74184,6 +74189,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a550541a-0abd-4289-a2d3-c6baa98dbc44",
         "opponentFullName": "Cégep de Jonquière",
         "opponentRegistryId": "jonquiere",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -74295,7 +74301,8 @@
           "gameId": "a550541a-0abd-4289-a2d3-c6baa98dbc44",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a550541a-0abd-4289-a2d3-c6baa98dbc44",
           "opponentFullName": "Cégep de Chicoutimi",
-          "opponentRegistryId": "chicoutimi"
+          "opponentRegistryId": "chicoutimi",
+          "live": true
         },
         {
           "date": "2026-09-20",
@@ -74362,6 +74369,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a550541a-0abd-4289-a2d3-c6baa98dbc44",
         "opponentFullName": "Cégep de Chicoutimi",
         "opponentRegistryId": "chicoutimi",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
