@@ -1,14 +1,32 @@
 {
-  "updated": "2026-09-14T20:21:54.753Z",
+  "updated": "2026-09-14T22:31:51.037Z",
   "total": 168,
   "pool": 58,
-  "incomplete": 10,
+  "incomplete": 11,
   "withLeadExcerpt": 81,
-  "candidates": 10,
-  "enriched": 4,
+  "candidates": 11,
+  "enriched": 2,
   "failed": 4,
   "ok": true,
   "samples": [
+    {
+      "title": "Québec solidaire : un cadre financier pour les générations futures ?",
+      "link": "https://quartierlibre.ca/quebec-solidaire-cadre-financier/",
+      "ok": true,
+      "score": 100,
+      "chars": 400,
+      "sample": "Québec solidaire a dévoilé son cadre financier, intitulé Les moyens de nos ambitions , le vendredi 1",
+      "changed": true
+    },
+    {
+      "title": "Saguenay veut faire avancer ses dossiers à Québec",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/saguenay-veut-faire-avancer-ses-dossiers-a-quebec/?utm_source=rss&utm_medium=rss&utm_campaign=saguenay-veut-faire-avancer-ses-dossiers-a-quebec",
+      "ok": true,
+      "score": 100,
+      "chars": 337,
+      "sample": "La Ville de Saguenay entend profiter de la prochaine campagne électorale provinciale pour faire avan",
+      "changed": true
+    },
     {
       "title": "McGill Students Demand an Academic Boycott of Israeli Institution Partnership",
       "link": "https://www.mcgilldaily.com/2026/09/mcgill-students-demand-an-academic-boycott-of-israeli-institution-partnership/",
@@ -16,16 +34,7 @@
       "score": 77,
       "chars": 400,
       "sample": "While the exchange program fact sheet for the 2026-2027 exchange year is available on the McGill Abr",
-      "changed": true
-    },
-    {
-      "title": "Bulletin La Pige radio 14h30 et 15h30",
-      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-14h30",
-      "ok": true,
-      "score": 73,
-      "chars": 153,
-      "sample": "Starbucks arrive à Jonquière, une marche pour sensibiliser au myélome multiple et plus de variétés d",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Le Festival de Cinéma de la Ville de Québec et le Festival REGARD, une amitié qui traverse le parc des Laurentides",
@@ -34,16 +43,7 @@
       "score": 83,
       "chars": 400,
       "sample": "Le Festival de Cinéma de la Ville de Québec (FCVQ) a souligné la 30 e édition du Festival REGARD lor",
-      "changed": true
-    },
-    {
-      "title": "Do the police really protect us?",
-      "link": "https://thelinknewspaper.ca/article/16376",
-      "ok": true,
-      "score": 96,
-      "chars": 348,
-      "sample": "The Defund La Police Festival held its fifth iteration on Sept. 12, where people attended panels and",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Le département d’inhalothérapie de Chicoutimi fermé pour des craintes d’amiante",
@@ -61,6 +61,15 @@
       "score": 100,
       "chars": 400,
       "sample": "Quartier Libre est finalement de retour après un été mouvementé. Voici les nouvelles qui ont marqué ",
+      "changed": false
+    },
+    {
+      "title": "Bulletin La Pige radio 14h30 et 15h30",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-14h30",
+      "ok": true,
+      "score": 73,
+      "chars": 153,
+      "sample": "Starbucks arrive à Jonquière, une marche pour sensibiliser au myélome multiple et plus de variétés d",
       "changed": false
     }
   ]

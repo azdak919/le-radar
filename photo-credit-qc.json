@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-14T20:28:25.012Z",
+  "updated": "2026-09-14T22:38:24.571Z",
   "total": 168,
   "withImage": 156,
   "withCredit": 156,
@@ -7,11 +7,25 @@
   "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 17,
-  "updatedCount": 5,
-  "citedNew": 3,
-  "fallbackNew": 14,
+  "checked": 21,
+  "updatedCount": 13,
+  "citedNew": 6,
+  "fallbackNew": 15,
   "samples": [
+    {
+      "title": "Québec solidaire : un cadre financier pour les générations futures ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Samuel Girard",
+      "cited": true,
+      "method": "figcaption-copyright"
+    },
+    {
+      "title": "Saguenay veut faire avancer ses dossiers à Québec",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Bulletin La Pige radio 14h30 et 15h30",
       "source": "La Pige",
@@ -34,6 +48,13 @@
       "method": "figcaption"
     },
     {
+      "title": "Maison des jeunes : 15 000 $ pour financer des activités",
+      "source": "La Pige",
+      "credit": "Photo : Maison des jeunes de Laterrière",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
       "title": "Le département d’inhalothérapie de Chicoutimi fermé pour des craintes d’amiante",
       "source": "La Pige",
       "credit": "Photo : Zachary Rivard",
@@ -44,6 +65,34 @@
       "title": "Editorial: The importance of student journalism",
       "source": "The Link",
       "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "The catalogue of stories at the Webster Library",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Faire du sport sans se ruiner quand on est aux études",
+      "source": "Le Collectif",
+      "credit": "Photo : UdeS",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
     }
