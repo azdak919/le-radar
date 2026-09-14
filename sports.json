@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-14T23:29:58.724Z",
-  "fetchedAt": "2026-09-14T23:29:58.724Z",
+  "updated": "2026-09-14T23:57:27.129Z",
+  "fetchedAt": "2026-09-14T23:57:27.129Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-14T23:29:58.724Z"
+    "referenceDate": "2026-09-14T23:57:27.129Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 837,
@@ -74,18 +74,6 @@
     "volleyball"
   ],
   "teamCount": 866,
-  "errors": [
-    {
-      "leagueId": "spordle-collegial",
-      "label": "Hockey collegial",
-      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
-    },
-    {
-      "leagueId": "spordle-universitaire",
-      "label": "Hockey universitaire",
-      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
-    }
-  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -6355,21 +6343,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-14",
-          "time": "19:30",
-          "opponent": "Édouard-Montpetit",
-          "opponentCode": "CEM",
-          "home": true,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "514adf05-a654-4b64-8c53-080cc7f30e77",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=514adf05-a654-4b64-8c53-080cc7f30e77",
-          "opponentFullName": "Cégep Édouard-Montpetit",
-          "opponentNickname": "Cougars",
-          "opponentRegistryId": "edouard-montpetit",
-          "live": true
-        },
-        {
           "date": "2026-09-19",
           "time": "13:00",
           "opponent": "Limoilou",
@@ -6521,19 +6494,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-14",
-        "time": "19:30",
-        "opponent": "Édouard-Montpetit",
-        "opponentCode": "CEM",
-        "home": true,
+        "date": "2026-09-19",
+        "time": "13:00",
+        "opponent": "Limoilou",
+        "opponentCode": "LIM",
+        "home": false,
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "514adf05-a654-4b64-8c53-080cc7f30e77",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=514adf05-a654-4b64-8c53-080cc7f30e77",
-        "opponentFullName": "Cégep Édouard-Montpetit",
-        "opponentNickname": "Cougars",
-        "opponentRegistryId": "edouard-montpetit",
-        "live": true,
+        "gameId": "f44f6b61-9dad-4493-b354-13a290b1a871",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f44f6b61-9dad-4493-b354-13a290b1a871",
+        "opponentFullName": "Cégep Limoilou",
+        "opponentNickname": "Titans",
+        "opponentRegistryId": "limoilou",
         "opponentSector": "collegial"
       },
       "record": {
@@ -6883,21 +6855,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-14",
-          "time": "19:30",
-          "opponent": "Dawson",
-          "opponentCode": "DAW",
-          "home": false,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "514adf05-a654-4b64-8c53-080cc7f30e77",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=514adf05-a654-4b64-8c53-080cc7f30e77",
-          "opponentFullName": "Dawson College",
-          "opponentNickname": "Blues",
-          "opponentRegistryId": "dawson",
-          "live": true
-        },
-        {
           "date": "2026-09-19",
           "time": "13:00",
           "opponent": "Rivière-du-Loup",
@@ -7049,19 +7006,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-14",
-        "time": "19:30",
-        "opponent": "Dawson",
-        "opponentCode": "DAW",
+        "date": "2026-09-19",
+        "time": "13:00",
+        "opponent": "Rivière-du-Loup",
+        "opponentCode": "RDL",
         "home": false,
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "514adf05-a654-4b64-8c53-080cc7f30e77",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=514adf05-a654-4b64-8c53-080cc7f30e77",
-        "opponentFullName": "Dawson College",
-        "opponentNickname": "Blues",
-        "opponentRegistryId": "dawson",
-        "live": true,
+        "gameId": "df873bde-42c1-4f51-8955-b314f006087d",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=df873bde-42c1-4f51-8955-b314f006087d",
+        "opponentFullName": "Cégep de Rivière-du-Loup",
+        "opponentRegistryId": "riviere-du-loup",
         "opponentSector": "collegial"
       },
       "record": {
@@ -74098,20 +74053,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-14",
-          "time": "19:30",
-          "opponent": "Jonquière",
-          "opponentCode": "JON",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "a550541a-0abd-4289-a2d3-c6baa98dbc44",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a550541a-0abd-4289-a2d3-c6baa98dbc44",
-          "opponentFullName": "Cégep de Jonquière",
-          "opponentRegistryId": "jonquiere",
-          "live": true
-        },
-        {
           "date": "2026-09-19",
           "time": "14:00",
           "opponent": "Rivière-du-Loup",
@@ -74178,18 +74119,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-14",
-        "time": "19:30",
-        "opponent": "Jonquière",
-        "opponentCode": "JON",
+        "date": "2026-09-19",
+        "time": "14:00",
+        "opponent": "Rivière-du-Loup",
+        "opponentCode": "RDL",
         "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "a550541a-0abd-4289-a2d3-c6baa98dbc44",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a550541a-0abd-4289-a2d3-c6baa98dbc44",
-        "opponentFullName": "Cégep de Jonquière",
-        "opponentRegistryId": "jonquiere",
-        "live": true,
+        "gameId": "5c2f02db-5703-41b5-9a38-280c560a02d3",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5c2f02db-5703-41b5-9a38-280c560a02d3",
+        "opponentFullName": "Cégep de Rivière-du-Loup",
+        "opponentRegistryId": "riviere-du-loup",
         "opponentSector": "collegial"
       },
       "record": {
@@ -74291,20 +74231,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-14",
-          "time": "19:30",
-          "opponent": "Cégep de Chicoutimi",
-          "opponentCode": "CHI",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "a550541a-0abd-4289-a2d3-c6baa98dbc44",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a550541a-0abd-4289-a2d3-c6baa98dbc44",
-          "opponentFullName": "Cégep de Chicoutimi",
-          "opponentRegistryId": "chicoutimi",
-          "live": true
-        },
-        {
           "date": "2026-09-20",
           "time": "12:00",
           "opponent": "Rivière-du-Loup",
@@ -74358,18 +74284,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-14",
-        "time": "19:30",
-        "opponent": "Cégep de Chicoutimi",
-        "opponentCode": "CHI",
-        "home": false,
+        "date": "2026-09-20",
+        "time": "12:00",
+        "opponent": "Rivière-du-Loup",
+        "opponentCode": "RDL",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "a550541a-0abd-4289-a2d3-c6baa98dbc44",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a550541a-0abd-4289-a2d3-c6baa98dbc44",
-        "opponentFullName": "Cégep de Chicoutimi",
-        "opponentRegistryId": "chicoutimi",
-        "live": true,
+        "gameId": "00368cad-f59d-4219-ad87-0df310fb1660",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=00368cad-f59d-4219-ad87-0df310fb1660",
+        "opponentFullName": "Cégep de Rivière-du-Loup",
+        "opponentRegistryId": "riviere-du-loup",
         "opponentSector": "collegial"
       },
       "record": {
