@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-15T11:45:38.248Z",
+  "updatedAt": "2026-09-15T13:31:19.787Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mardi Champ Gauche",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Mardi Champ Gauche",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T11:45:23.267Z"
+      "checkedAt": "2026-09-15T13:30:57.761Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Raconte ton quartier",
+        "title": "La collation",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/raconte-ton-quartier"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "next": {
-        "title": "450DB",
+        "title": "Lentement mais sûrement",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/450db"
+        "start": "10:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/lentement-mais-surement"
       },
       "track": "",
-      "showTitle": "Raconte ton quartier",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T11:45:24.867Z"
+      "checkedAt": "2026-09-15T13:30:59.484Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Tuesday Morning After Pt1",
+        "title": "Basa Basa",
         "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "next": {
-        "title": "Tuesday Morning After Pt2",
+        "title": "Ecolibrium/Environment in Canada",
         "source": "api-live",
-        "start": "08:00",
-        "end": "09:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "track": "",
-      "showTitle": "Tuesday Morning After Pt1",
+      "showTitle": "Basa Basa",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +81,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T11:45:27.739Z"
+      "checkedAt": "2026-09-15T13:31:02.493Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hip's Time to Wake Hop",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
-      },
-      "next": {
         "title": "At The Movies",
         "source": "schedule-live",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/at-the-movies"
       },
+      "next": {
+        "title": "Democracy Now",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
+      },
       "track": "",
-      "showTitle": "Hip's Time to Wake Hop",
+      "showTitle": "At The Movies",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T11:45:30.582Z"
+      "checkedAt": "2026-09-15T13:31:05.890Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Palmarès CFAK",
         "source": "schedule-live",
         "start": "08:00",
         "end": "18:30"
       },
+      "next": {
+        "title": "L'Aut'Rock",
+        "source": "schedule-live",
+        "start": "18:30",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T11:45:31.795Z"
+      "checkedAt": "2026-09-15T13:31:07.280Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "12:00",
         "slug": "le-monde-dans-mes-oreilles"
       },
-      "track": "Lapelúda, José Lobo - Maldita Falta (Acoustic Version)",
+      "track": "Status/Non-Status - Bitumen Eyes",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-15T11:45:37.897Z"
+      "checkedAt": "2026-09-15T13:31:19.437Z"
     }
   }
 }
