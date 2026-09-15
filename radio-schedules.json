@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-14T15:18:46.061Z",
+  "updatedAt": "2026-09-15T13:55:50.754Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-09-14T15:18:46.061Z",
+      "checkedAt": "2026-09-15T13:55:50.754Z",
       "verifiedWeekOf": "2026-09-14",
       "grid": [
         {
@@ -31,6 +31,13 @@
           "end": "16:00",
           "title": "Radio Futura",
           "url": "https://chyz.ca/emission/radio-futura/"
+        },
+        {
+          "day": 0,
+          "start": "15:45",
+          "end": "18:30",
+          "title": "Remparts de Québec",
+          "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
         },
         {
           "day": 1,
@@ -257,7 +264,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-09-14T15:18:46.061Z",
+      "checkedAt": "2026-09-15T13:55:50.754Z",
       "verifiedWeekOf": "2026-09-14",
       "grid": [
         {
@@ -1038,7 +1045,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-09-14T15:18:46.061Z",
+      "checkedAt": "2026-09-15T13:55:50.754Z",
       "verifiedWeekOf": "2026-09-14",
       "grid": [
         {
@@ -1656,7 +1663,7 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-09-14T15:18:46.061Z",
+      "checkedAt": "2026-09-15T13:55:50.754Z",
       "verifiedWeekOf": "2026-09-14",
       "grid": [
         {
@@ -4285,7 +4292,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-09-14T15:18:46.061Z",
+      "checkedAt": "2026-09-15T13:55:50.754Z",
       "verifiedWeekOf": "2026-09-14",
       "grid": [
         {
@@ -4506,7 +4513,7 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-09-14T15:18:46.061Z",
+      "checkedAt": "2026-09-15T13:55:50.754Z",
       "verifiedWeekOf": "2026-09-14",
       "grid": [
         {
@@ -4564,6 +4571,13 @@
           "end": "19:00",
           "title": "Le Studio",
           "url": "https://www.choq.ca/emissions/live"
+        },
+        {
+          "day": 2,
+          "start": "19:30",
+          "end": "20:30",
+          "title": "Les Amazones",
+          "url": "https://www.choq.ca/emissions/les-amazones"
         },
         {
           "day": 2,
