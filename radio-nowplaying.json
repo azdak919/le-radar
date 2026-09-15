@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-15T03:44:53.368Z",
+  "updatedAt": "2026-09-15T07:42:34.567Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T03:44:38.772Z"
+      "checkedAt": "2026-09-15T07:42:01.593Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
+        "title": "À l'horizon",
         "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/a-lhorizon"
       },
       "next": {
-        "title": "Les sentinelles de l'art (reprise)",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "À l'horizon",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T03:44:40.240Z"
+      "checkedAt": "2026-09-15T07:42:03.001Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "27th Hr.",
+        "title": "Attik / Show For Children",
         "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
+        "start": "03:00",
+        "end": "05:00"
       },
       "next": {
-        "title": "Harmony Express",
+        "title": "The Beat Power Hour",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "05:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "27th Hr.",
+      "showTitle": "Attik / Show For Children",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,60 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T03:44:42.989Z"
+      "checkedAt": "2026-09-15T07:42:05.278Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "CJLO Late Night",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Hip's Time to Wake Hop",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "CJLO Late Night",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-15T07:42:27.706Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
+      "track": "",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T03:44:46.130Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Le terrain sportif",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "00:01"
-      },
-      "next": {
-        "title": "Les nuits CFAK",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "07:00"
-      },
-      "track": "",
-      "showTitle": "Le terrain sportif",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live",
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-15T03:44:47.079Z"
+      "checkedAt": "2026-09-15T07:42:28.722Z"
     },
     "choq": {
       "id": "choq",
@@ -135,24 +134,23 @@
       "current": null,
       "next": {
         "title": "Les rois de l'arène",
-        "source": "schedule",
+        "source": "api-live",
         "start": "05:00",
         "end": "07:00",
-        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
+        "slug": "les-rois-de-larene"
       },
-      "track": "Kelela - against me",
+      "track": "Converge - Hum of Hurt",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-15T03:44:53.017Z"
+      "checkedAt": "2026-09-15T07:42:34.216Z"
     }
   }
 }
