@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-15T00:00:58.852Z",
+  "updated": "2026-09-15T09:03:14.487Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2265,8 +2265,8 @@
     "lastRun": {
       "saved": 0,
       "skipped": 0,
-      "failed": 8,
-      "stoppedEarly": true
+      "failed": 16,
+      "stoppedEarly": false
     }
   },
   "sources": {
@@ -2309,12 +2309,14 @@
     "The Plant": {
       "host": "theplantnews.com",
       "pages": 3,
-      "checkedAt": "2026-09-08T08:19:05.286Z"
+      "checkedAt": "2026-09-08T08:19:05.286Z",
+      "stale": true
     },
     "Montréal Campus": {
       "host": "montrealcampus.ca",
       "pages": 36,
-      "checkedAt": "2026-09-08T08:19:08.267Z"
+      "checkedAt": "2026-09-08T08:19:08.267Z",
+      "stale": true
     },
     "Zone Campus": {
       "host": "zonecampus.ca",
