@@ -1,14 +1,14 @@
 {
-  "updated": "2026-09-15T09:28:32.892Z",
-  "fetchedAt": "2026-09-15T09:28:32.892Z",
+  "updated": "2026-09-15T15:37:23.202Z",
+  "fetchedAt": "2026-09-15T15:37:23.202Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-15T09:28:32.892Z"
+    "referenceDate": "2026-09-15T15:37:23.202Z"
   },
   "registry": "sports-teams.json",
-  "registryMatched": 837,
+  "registryMatched": 838,
   "leagueCatalog": 112,
   "leaguesWithTeams": 108,
   "leaguesOk": 112,
@@ -73,7 +73,7 @@
     "ultimate",
     "volleyball"
   ],
-  "teamCount": 866,
+  "teamCount": 867,
   "errors": [
     {
       "leagueId": "spordle-collegial",
@@ -17312,7 +17312,7 @@
       "nextGames": [
         {
           "date": "2026-10-17",
-          "time": "14:00",
+          "time": "15:00",
           "opponent": "Sainte-Foy",
           "opponentCode": "CSF",
           "home": true,
@@ -17476,7 +17476,7 @@
       ],
       "nextGame": {
         "date": "2026-10-17",
-        "time": "14:00",
+        "time": "15:00",
         "opponent": "Sainte-Foy",
         "opponentCode": "CSF",
         "home": true,
@@ -18557,7 +18557,7 @@
       "nextGames": [
         {
           "date": "2026-10-17",
-          "time": "14:00",
+          "time": "15:00",
           "opponent": "Dawson",
           "opponentCode": "DAW",
           "home": false,
@@ -18721,7 +18721,7 @@
       ],
       "nextGame": {
         "date": "2026-10-17",
-        "time": "14:00",
+        "time": "15:00",
         "opponent": "Dawson",
         "opponentCode": "DAW",
         "home": false,
@@ -63118,8 +63118,8 @@
           "opponentRegistryId": "sainte-foy"
         },
         {
-          "date": "2026-09-27",
-          "time": "13:00",
+          "date": "2026-10-02",
+          "time": "19:00",
           "opponent": "Sainte-Foy",
           "opponentCode": "CSF",
           "home": false,
@@ -64224,8 +64224,8 @@
           "opponentRegistryId": "ahuntsic"
         },
         {
-          "date": "2026-09-27",
-          "time": "13:00",
+          "date": "2026-10-02",
+          "time": "19:00",
           "opponent": "Ahuntsic",
           "opponentCode": "AHU",
           "home": true,
@@ -74049,6 +74049,23 @@
       "leagueLabel": "Soccer collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-14",
+          "time": "19:30",
+          "opponent": "Jonquière",
+          "opponentCode": "JON",
+          "home": true,
+          "scoreFor": 2,
+          "scoreAgainst": 4,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "a550541a-0abd-4289-a2d3-c6baa98dbc44",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a550541a-0abd-4289-a2d3-c6baa98dbc44",
+          "opponentFullName": "Cégep de Jonquière",
+          "opponentRegistryId": "jonquiere",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-06",
           "time": "16:30",
           "opponent": "Thetford",
@@ -74084,20 +74101,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-06",
-        "time": "16:30",
-        "opponent": "Thetford",
-        "opponentCode": "THE",
+        "date": "2026-09-14",
+        "time": "19:30",
+        "opponent": "Jonquière",
+        "opponentCode": "JON",
         "home": true,
-        "scoreFor": 1,
-        "scoreAgainst": 0,
-        "result": "W",
+        "scoreFor": 2,
+        "scoreAgainst": 4,
+        "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "21a7a4b3-1178-43da-8a2a-ba77a59bdb15",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=21a7a4b3-1178-43da-8a2a-ba77a59bdb15",
-        "opponentFullName": "Cégep de Thetford",
-        "opponentRegistryId": "thetford",
+        "gameId": "a550541a-0abd-4289-a2d3-c6baa98dbc44",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a550541a-0abd-4289-a2d3-c6baa98dbc44",
+        "opponentFullName": "Cégep de Jonquière",
+        "opponentRegistryId": "jonquiere",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -74184,10 +74201,10 @@
       },
       "record": {
         "wins": 1,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 2,
-        "label": "1-1"
+        "played": 3,
+        "label": "1-2"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -74209,6 +74226,23 @@
       "usports": false,
       "leagueLabel": "Soccer collégial masculin D2",
       "results": [
+        {
+          "date": "2026-09-14",
+          "time": "19:30",
+          "opponent": "Cégep de Chicoutimi",
+          "opponentCode": "CHI",
+          "home": false,
+          "scoreFor": 4,
+          "scoreAgainst": 2,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "a550541a-0abd-4289-a2d3-c6baa98dbc44",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a550541a-0abd-4289-a2d3-c6baa98dbc44",
+          "opponentFullName": "Cégep de Chicoutimi",
+          "opponentRegistryId": "chicoutimi",
+          "priorSeason": false
+        },
         {
           "date": "2026-09-12",
           "time": "15:00",
@@ -74262,20 +74296,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-12",
-        "time": "15:00",
-        "opponent": "Beauce-Appalaches",
-        "opponentCode": "BAP",
+        "date": "2026-09-14",
+        "time": "19:30",
+        "opponent": "Cégep de Chicoutimi",
+        "opponentCode": "CHI",
         "home": false,
-        "scoreFor": 3,
-        "scoreAgainst": 0,
+        "scoreFor": 4,
+        "scoreAgainst": 2,
         "result": "W",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "6970e913-d5b3-4c37-be9b-eb8834c624a6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6970e913-d5b3-4c37-be9b-eb8834c624a6",
-        "opponentFullName": "Cégep de Beauce-Appalaches",
-        "opponentRegistryId": "beauce-appalaches",
+        "gameId": "a550541a-0abd-4289-a2d3-c6baa98dbc44",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a550541a-0abd-4289-a2d3-c6baa98dbc44",
+        "opponentFullName": "Cégep de Chicoutimi",
+        "opponentRegistryId": "chicoutimi",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -74348,11 +74382,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 3,
+        "wins": 4,
         "losses": 0,
         "draws": 0,
-        "played": 3,
-        "label": "3-0"
+        "played": 4,
+        "label": "4-0"
       },
       "source": "rseq-s1",
       "priority": 29,
@@ -76089,7 +76123,7 @@
       "nextGames": [
         {
           "date": "2026-09-19",
-          "time": "13:00",
+          "time": "17:30",
           "opponent": "Vieux Montréal",
           "opponentCode": "CVM",
           "home": false,
@@ -76157,7 +76191,7 @@
       ],
       "nextGame": {
         "date": "2026-09-19",
-        "time": "13:00",
+        "time": "17:30",
         "opponent": "Vieux Montréal",
         "opponentCode": "CVM",
         "home": false,
@@ -76476,7 +76510,7 @@
       "nextGames": [
         {
           "date": "2026-09-19",
-          "time": "13:00",
+          "time": "17:30",
           "opponent": "Saint-Jean",
           "opponentCode": "SJR",
           "home": true,
@@ -76531,7 +76565,7 @@
       ],
       "nextGame": {
         "date": "2026-09-19",
-        "time": "13:00",
+        "time": "17:30",
         "opponent": "Saint-Jean",
         "opponentCode": "SJR",
         "home": true,
@@ -94834,6 +94868,29 @@
       "priority": 80,
       "fullName": "Cégep de Saint-Félicien",
       "registryId": "saint-felicien"
+    },
+    "collegial:volleyball:e3685a9f-3213-4e86-9463-a3813b164ebe:0dee606d-0960-4763-adca-e09541bd4a07": {
+      "id": "collegial:volleyball:e3685a9f-3213-4e86-9463-a3813b164ebe:0dee606d-0960-4763-adca-e09541bd4a07",
+      "rseqTeamId": "0dee606d-0960-4763-adca-e09541bd4a07",
+      "leagueId": "e3685a9f-3213-4e86-9463-a3813b164ebe",
+      "name": "Sept-Îles",
+      "code": "CSI",
+      "sector": "collegial",
+      "sport": "volleyball",
+      "sportLabel": "Volleyball",
+      "sex": "F",
+      "division": "D3",
+      "usports": false,
+      "leagueLabel": "Volleyball collégial féminin D3",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [],
+      "nextGame": null,
+      "record": null,
+      "source": "rseq-s1",
+      "priority": 80,
+      "fullName": "Cégep de Sept-Îles",
+      "registryId": "sept-iles"
     },
     "collegial:volleyball:d004d42a-8c7d-4c4e-8188-a598adfd0235:ce37611a-5f49-4359-be79-06e420470d8a": {
       "id": "collegial:volleyball:d004d42a-8c7d-4c4e-8188-a598adfd0235:ce37611a-5f49-4359-be79-06e420470d8a",
