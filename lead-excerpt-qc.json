@@ -1,14 +1,23 @@
 {
-  "updated": "2026-09-15T21:32:42.790Z",
+  "updated": "2026-09-15T23:12:56.187Z",
   "total": 168,
   "pool": 58,
-  "incomplete": 8,
-  "withLeadExcerpt": 82,
-  "candidates": 8,
-  "enriched": 2,
+  "incomplete": 9,
+  "withLeadExcerpt": 83,
+  "candidates": 9,
+  "enriched": 1,
   "failed": 4,
   "ok": true,
   "samples": [
+    {
+      "title": "Every pizza is a blessing at 5 Pizza",
+      "link": "https://thelinknewspaper.ca/article/16377",
+      "ok": true,
+      "score": 96,
+      "chars": 206,
+      "sample": "5 Pizza is a pizzeria that opened two years ago in the quieter part of La Petite-Patrie, at the edge",
+      "changed": true
+    },
     {
       "title": "McGill Students Demand an Academic Boycott of Israeli Institution Partnership",
       "link": "https://www.mcgilldaily.com/2026/09/mcgill-students-demand-an-academic-boycott-of-israeli-institution-partnership/",
@@ -19,22 +28,13 @@
       "changed": false
     },
     {
-      "title": "Bulletin La Pige radio 14h30 et 15h30",
-      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-14h30",
-      "ok": true,
-      "score": 73,
-      "chars": 153,
-      "sample": "Starbucks arrive à Jonquière, une marche pour sensibiliser au myélome multiple et plus de variétés d",
-      "changed": true
-    },
-    {
       "title": "Le Festival de Cinéma de la Ville de Québec et le Festival REGARD, une amitié qui traverse le parc des Laurentides",
       "link": "https://lapige.atmjonquiere.com/2026/09/14/le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides/?utm_source=rss&utm_medium=rss&utm_campaign=le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides",
       "ok": true,
       "score": 83,
       "chars": 400,
       "sample": "Le Festival de Cinéma de la Ville de Québec (FCVQ) a souligné la 30 e édition du Festival REGARD lor",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Cinq nouvelles marquantes de l’été",
@@ -43,6 +43,15 @@
       "score": 100,
       "chars": 400,
       "sample": "Quartier Libre est finalement de retour après un été mouvementé. Voici les nouvelles qui ont marqué ",
+      "changed": false
+    },
+    {
+      "title": "Bulletin La Pige radio 14h30 et 15h30",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-14h30",
+      "ok": true,
+      "score": 73,
+      "chars": 153,
+      "sample": "Starbucks arrive à Jonquière, une marche pour sensibiliser au myélome multiple et plus de variétés d",
       "changed": false
     }
   ]
