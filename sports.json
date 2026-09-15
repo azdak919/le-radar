@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-14T23:57:27.129Z",
-  "fetchedAt": "2026-09-14T23:57:27.129Z",
+  "updated": "2026-09-15T04:00:38.239Z",
+  "fetchedAt": "2026-09-15T04:00:38.239Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-14T23:57:27.129Z"
+    "referenceDate": "2026-09-15T04:00:38.239Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 837,
@@ -74,6 +74,18 @@
     "volleyball"
   ],
   "teamCount": 866,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -6289,6 +6301,24 @@
       "leagueLabel": "Baseball collégial masculin",
       "results": [
         {
+          "date": "2026-09-14",
+          "time": "19:30",
+          "opponent": "Édouard-Montpetit",
+          "opponentCode": "CEM",
+          "home": true,
+          "scoreFor": 3,
+          "scoreAgainst": 15,
+          "result": "L",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "514adf05-a654-4b64-8c53-080cc7f30e77",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=514adf05-a654-4b64-8c53-080cc7f30e77",
+          "opponentFullName": "Cégep Édouard-Montpetit",
+          "opponentNickname": "Cougars",
+          "opponentRegistryId": "edouard-montpetit",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-12",
           "time": "13:00",
           "opponent": "Drummondville",
@@ -6324,20 +6354,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-12",
-        "time": "13:00",
-        "opponent": "Drummondville",
-        "opponentCode": "DRU",
+        "date": "2026-09-14",
+        "time": "19:30",
+        "opponent": "Édouard-Montpetit",
+        "opponentCode": "CEM",
         "home": true,
-        "scoreFor": 1,
-        "scoreAgainst": 12,
+        "scoreFor": 3,
+        "scoreAgainst": 15,
         "result": "L",
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "dc07f30f-f008-4606-8cab-9431b097e6f0",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=dc07f30f-f008-4606-8cab-9431b097e6f0",
-        "opponentFullName": "Cégep de Drummondville",
-        "opponentRegistryId": "drummondville",
+        "gameId": "514adf05-a654-4b64-8c53-080cc7f30e77",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=514adf05-a654-4b64-8c53-080cc7f30e77",
+        "opponentFullName": "Cégep Édouard-Montpetit",
+        "opponentNickname": "Cougars",
+        "opponentRegistryId": "edouard-montpetit",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -6510,10 +6541,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 2,
+        "losses": 3,
         "draws": 0,
-        "played": 2,
-        "label": "0-2"
+        "played": 3,
+        "label": "0-3"
       },
       "source": "rseq-s1",
       "priority": 26,
@@ -6801,6 +6832,24 @@
       "leagueLabel": "Baseball collégial masculin",
       "results": [
         {
+          "date": "2026-09-14",
+          "time": "19:30",
+          "opponent": "Dawson",
+          "opponentCode": "DAW",
+          "home": false,
+          "scoreFor": 15,
+          "scoreAgainst": 3,
+          "result": "W",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "514adf05-a654-4b64-8c53-080cc7f30e77",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=514adf05-a654-4b64-8c53-080cc7f30e77",
+          "opponentFullName": "Dawson College",
+          "opponentNickname": "Blues",
+          "opponentRegistryId": "dawson",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-12",
           "time": "13:00",
           "opponent": "Beauce-Appalaches",
@@ -6836,20 +6885,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-12",
-        "time": "13:00",
-        "opponent": "Beauce-Appalaches",
-        "opponentCode": "BAP",
+        "date": "2026-09-14",
+        "time": "19:30",
+        "opponent": "Dawson",
+        "opponentCode": "DAW",
         "home": false,
-        "scoreFor": 2,
-        "scoreAgainst": 7,
-        "result": "L",
+        "scoreFor": 15,
+        "scoreAgainst": 3,
+        "result": "W",
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "c4a8c4e5-3940-4980-b875-f7562a7c693f",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c4a8c4e5-3940-4980-b875-f7562a7c693f",
-        "opponentFullName": "Cégep de Beauce-Appalaches",
-        "opponentRegistryId": "beauce-appalaches",
+        "gameId": "514adf05-a654-4b64-8c53-080cc7f30e77",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=514adf05-a654-4b64-8c53-080cc7f30e77",
+        "opponentFullName": "Dawson College",
+        "opponentNickname": "Blues",
+        "opponentRegistryId": "dawson",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -7020,11 +7070,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 1,
         "draws": 0,
-        "played": 2,
-        "label": "1-1"
+        "played": 3,
+        "label": "2-1"
       },
       "source": "rseq-s1",
       "priority": 42,
