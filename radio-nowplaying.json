@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-15T18:22:21.704Z",
+  "updatedAt": "2026-09-15T21:36:38.428Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Les Arshitechs du Son",
+        "source": "api-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "next": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "title": "Débat électoral Provicial 2026",
+        "source": "schedule-live",
+        "start": "18:30",
+        "end": "20:00",
+        "url": "https://chyz.ca/emission/progamation-special-debat-electoral-provicial-2026-jean-talon/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T18:22:06.238Z"
+      "checkedAt": "2026-09-15T21:36:23.257Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
+        "title": "les pénibles",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/les-penibles"
       },
       "next": {
-        "title": "À la bonne heure",
+        "title": "Catharmix",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/a-la-bonne-heure"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/catharmix"
       },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "les pénibles",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T18:22:07.892Z"
+      "checkedAt": "2026-09-15T21:36:24.968Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Voice of Korea",
+        "title": "Off The Hour: Local Journalism Stories",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "next": {
-        "title": "Montreal Sessions",
+        "title": "Rez Rock Radio",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "track": "",
-      "showTitle": "Voice of Korea",
+      "showTitle": "Off The Hour: Local Journalism Stories",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T18:22:10.556Z"
+      "checkedAt": "2026-09-15T21:36:28.726Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Something for the Mood",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/something-for-the-mood"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "Sonic Lit: A SpokenWeb Radio Show",
+        "title": "Ashes to Ashes",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
       },
       "track": "",
-      "showTitle": "Something for the Mood",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T18:22:13.539Z"
+      "checkedAt": "2026-09-15T21:36:31.196Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T18:22:14.639Z"
+      "checkedAt": "2026-09-15T21:36:31.999Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "19:00",
         "slug": "live"
       },
-      "track": "Bombe - cote jardin, cote cour",
+      "track": "Alewya - Night Drive (feat. Dagmawit Ameha)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-15T18:22:21.353Z"
+      "checkedAt": "2026-09-15T21:36:38.077Z"
     }
   }
 }
