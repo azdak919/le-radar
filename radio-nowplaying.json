@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-15T14:24:28.441Z",
+  "updatedAt": "2026-09-15T18:11:18.166Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T14:24:12.926Z"
+      "checkedAt": "2026-09-15T18:11:03.311Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Lentement mais sûrement",
+        "title": "Le palmarès",
         "source": "schedule",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/lentement-mais-surement"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
       "next": {
-        "title": "Les sentinelles de l'art",
+        "title": "À la bonne heure",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/a-la-bonne-heure"
       },
       "track": "",
-      "showTitle": "Lentement mais sûrement",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T14:24:14.585Z"
+      "checkedAt": "2026-09-15T18:11:04.780Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Basa Basa",
+        "title": "Voice of Korea",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "14:00",
+        "end": "15:00"
       },
       "next": {
-        "title": "Ecolibrium/Environment in Canada",
+        "title": "Montreal Sessions",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "track": "",
-      "showTitle": "Basa Basa",
+      "showTitle": "Voice of Korea",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T14:24:17.540Z"
+      "checkedAt": "2026-09-15T18:11:07.269Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
+        "title": "Something for the Mood",
         "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/something-for-the-mood"
       },
       "next": {
-        "title": "Mirror Journal",
+        "title": "Sonic Lit: A SpokenWeb Radio Show",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/mirror-journal"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
       },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Something for the Mood",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T14:24:20.867Z"
+      "checkedAt": "2026-09-15T18:11:09.291Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,20 +126,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T14:24:21.669Z"
+      "checkedAt": "2026-09-15T18:11:10.521Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Le Monde Dans Mes Oreilles",
+        "title": "Le Studio",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "slug": "le-monde-dans-mes-oreilles"
+        "start": "18:00",
+        "end": "19:00",
+        "slug": "live"
       },
-      "track": "The Knife - Full Of Fire",
+      "track": "Geneviève Legault - Laisse couler",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-15T14:24:28.090Z"
+      "checkedAt": "2026-09-15T18:11:17.815Z"
     }
   }
 }
