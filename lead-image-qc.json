@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-15T21:31:15.354Z",
+  "updated": "2026-09-15T21:36:54.989Z",
   "total": 168,
   "withPhoto": 157,
   "withStock": 26,
   "withCampusBank": 18,
   "fullyCovered": 168,
-  "leadReadyPhotos": 135,
+  "leadReadyPhotos": 138,
   "pageScraped": 25,
   "photosRecovered": 20,
   "imagesCleared": 5,
   "stockSearches": 29,
   "stockFound": 19,
-  "campusBankFound": 12,
+  "campusBankFound": 13,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -43,6 +43,12 @@
       "link": "https://thelinknewspaper.ca/article/16350",
       "reason": "no-stock-match",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Library.Evelyn_Ho_Lee_900_1125.png"
+    },
+    {
+      "title": "Letters from the Editors May 2026",
+      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
     },
     {
       "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
@@ -85,6 +91,12 @@
       "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
+    },
+    {
+      "title": "L'éléphant dans ta salle de classe",
+      "link": "https://www.polyscope.qc.ca/blog/post/rSFKjw5RmyR9tkTNM9x4",
+      "reason": "no-stock-match",
+      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Felephant_code_qr.png?alt=media&token=ced37e6b-12b1-4369-8289-3f2dacb19067"
     }
   ]
 }
