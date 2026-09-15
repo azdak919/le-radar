@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-14T15:59:33.292Z",
+  "updated": "2026-09-15T00:00:58.852Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2265,8 +2265,8 @@
     "lastRun": {
       "saved": 0,
       "skipped": 0,
-      "failed": 2,
-      "stoppedEarly": false
+      "failed": 8,
+      "stoppedEarly": true
     }
   },
   "sources": {
@@ -2288,12 +2288,13 @@
     "The McGill Daily": {
       "host": "www.mcgilldaily.com",
       "pages": 229,
-      "checkedAt": "2026-09-07T23:44:41.215Z"
+      "checkedAt": "2026-09-07T23:44:41.215Z",
+      "stale": true
     },
     "La Pige": {
       "host": "lapige.atmjonquiere.com",
       "pages": 8,
-      "checkedAt": "2026-09-07T23:44:40.452Z"
+      "checkedAt": "2026-09-14T23:58:23.095Z"
     },
     "L'Exemplaire": {
       "host": "www.exemplaire.com.ulaval.ca",
@@ -2303,7 +2304,7 @@
     "Quartier Libre": {
       "host": "quartierlibre.ca",
       "pages": 38,
-      "checkedAt": "2026-09-07T23:44:42.107Z"
+      "checkedAt": "2026-09-14T23:58:34.525Z"
     },
     "The Plant": {
       "host": "theplantnews.com",
