@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-15T07:56:53.221Z",
+  "updated": "2026-09-15T09:29:50.460Z",
   "updatedSlot": null,
   "count": 168,
   "freshnessSessions": 3,
@@ -10,15 +10,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-14T22:00:00.000Z",
-      "lastFetchOk": "2026-09-15T07:56:01.141Z"
+      "lastFetchOk": "2026-09-15T09:29:15.172Z"
     },
     "Montréal Campus": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-09-15T09:29:15.808Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-01T04:35:43.000Z",
-      "lastFetchOk": "2026-09-15T07:56:18.018Z"
+      "lastFetchOk": "2026-09-15T09:29:20.200Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-09-14T19:16:31.000Z",
-      "lastFetchOk": "2026-09-15T07:56:18.843Z"
+      "lastFetchOk": "2026-09-15T09:29:20.917Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-14T17:39:00.000Z",
-      "lastFetchOk": "2026-09-15T07:56:19.510Z"
+      "lastFetchOk": "2026-09-15T09:29:22.388Z"
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,7 +50,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-09-15T07:56:21.008Z"
+      "lastFetchOk": "2026-09-15T09:29:23.319Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-09-15T07:56:22.594Z"
+      "lastFetchOk": "2026-09-15T09:29:24.853Z"
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-08T22:18:02.000Z",
-      "lastFetchOk": "2026-09-15T07:56:23.480Z"
+      "lastFetchOk": "2026-09-15T09:29:25.666Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-09-15T07:56:23.830Z"
+      "lastFetchOk": "2026-09-15T09:29:26.092Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -82,7 +82,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-14T20:44:57.000Z",
-      "lastFetchOk": "2026-09-15T07:56:25.516Z"
+      "lastFetchOk": "2026-09-15T09:29:26.884Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 16,
       "lastArticle": "2026-09-09T00:53:34.359Z",
-      "lastFetchOk": "2026-09-15T07:56:28.409Z"
+      "lastFetchOk": "2026-09-15T09:29:28.991Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-04-06T16:03:16.000Z",
-      "lastFetchOk": "2026-09-15T07:56:28.935Z"
+      "lastFetchOk": "2026-09-15T09:29:29.268Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-09-15T07:56:29.229Z"
+      "lastFetchOk": "2026-09-15T09:29:29.568Z"
     }
   },
   "items": [
@@ -134,7 +134,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Québec solidaire a dévoilé son cadre financier, intitulé Les moyens de nos ambitions , le vendredi 11 septembre dernier. Le parti y annonce un retour à l’équilibre budgétaire à la troisième année d’un mandat solidaire, de nombreux investissements financés notamment par l’imposition des grandes fortunes, et un portefeuille dédié à la transition écologique de 4,2 milliards de dollars sur quatre ans.",
       "imageLocal": "assets/news-images/57d8703f2b12cbf1.jpg",
-      "imageLocalKey": "57d8703f2b12cbf1"
+      "imageLocalKey": "57d8703f2b12cbf1",
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -182,7 +183,8 @@
       "leadImageReady": true,
       "leadExcerpt": "While the exchange program fact sheet for the 2026-2027 exchange year is available on the McGill Abroad website, the page notes that “Travel to Israel is currently not permitted as the region is a Level 3: Avoid non-essential travel on Canada’s Travel Advisories . As per McGill’s policy, students are not allowed to travel to Level 3 and 4 destinations.” The Daily has reached out to the student coo",
       "imageLocal": "assets/news-images/3a094dcf367eaa13.jpg",
-      "imageLocalKey": "3a094dcf367eaa13"
+      "imageLocalKey": "3a094dcf367eaa13",
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -328,7 +330,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/109541b6d19f8468.jpg",
-      "imageLocalKey": "109541b6d19f8468"
+      "imageLocalKey": "109541b6d19f8468",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The McGill Daily",
@@ -354,7 +357,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Now, El Niño is a natural phenomenon, and scientists state that it has been occurring for centuries. In the 1600s, locals in Peru noticed tropical fish coming into their seas every couple of years. Although at the time they couldn’t name it, this event was the result of El Niño. This raises the question: if El Niño has been happening for so long, why are we talking about this specific one so much?",
       "imageLocal": "assets/news-images/1a5b948e421e34dc.jpg",
-      "imageLocalKey": "1a5b948e421e34dc"
+      "imageLocalKey": "1a5b948e421e34dc",
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -413,16 +417,17 @@
       "excerpt": "La Maison des jeunes de Laterrière a sa propre radio diffusée sur YouTube. (Photo : Maison des jeunes de Laterrière) Grâce à un don de la caisse Desjardins, les jeunes bénéficieront d’un accès plus abordable aux activités. Ils ont donné 5000 $ par année à la Maison des jeunes",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/shared-image.jpg",
       "_pageAuthor": "Gabriel Barrette",
-      "leadExcerpt": "Grâce à un don de la caisse Desjardins, les jeunes bénéficieront d’un accès plus abordable aux activités. Ils ont donné 5000 $ par année à la Maison des jeunes (MDJ) de Latterière le 8 septembre.",
-      "imageLocal": "assets/news-images/64f0b2bf37877484.jpg",
-      "imageLocalKey": "64f0b2bf37877484",
       "sourceImageCredit": "Photo : Maison des jeunes de Laterrière",
       "sourceImageCreator": "Maison des jeunes de Laterrière",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/14/maison-des-jeunes-15-000-pour-financer-des-activites/?utm_source=rss&utm_medium=rss&utm_campaign=maison-des-jeunes-15-000-pour-financer-des-activites",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "shared-image.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Grâce à un don de la caisse Desjardins, les jeunes bénéficieront d’un accès plus abordable aux activités. Ils ont donné 5000 $ par année à la Maison des jeunes (MDJ) de Latterière le 8 septembre.",
+      "imageLocal": "assets/news-images/64f0b2bf37877484.jpg",
+      "imageLocalKey": "64f0b2bf37877484",
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -470,7 +475,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Good People is an article series highlighting McGill students doing community-oriented work on and around campus. Because it’s important to celebrate good people doing good things. The World University Service of Canada’s Student Refugee Program is a unique initiative that combines refugee resettlement with access to higher education. Founded in the 1920s, World University Service of Canada (WUSC)",
       "imageLocal": "assets/news-images/c2026c867f500abc.jpg",
-      "imageLocalKey": "c2026c867f500abc"
+      "imageLocalKey": "c2026c867f500abc",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -522,7 +528,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Cette connaissance des dossiers s’est toutefois traduite par des engagements financiers inégaux. « J’ai l’impression que c’était un peu le débat du statu quo, nuance Mme Gignac . Ce qui a été le plus répété, c’est qu’il n’y aura pas de coupes, mais ne pas avoir de coupes ne veut pas dire d’investissements. ».",
       "imageLocal": "assets/news-images/4ef22302b0e186e7.jpg",
-      "imageLocalKey": "4ef22302b0e186e7"
+      "imageLocalKey": "4ef22302b0e186e7",
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -592,7 +599,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Dans la région de Saxe-Anhalt, en Allemagne, le parti d’extrême droite Alternative für Deutschland (AfD) a remporté l’élection régionale avec environ 44 % des voix, un résultat sans précédent depuis la Deuxième Guerre mondiale. Cette victoire choquante rapproche le parti des portes du pouvoir, puisque trois sièges manquent à celui-ci pour avoir la majorité absolue au parlement régional.",
       "imageLocal": "assets/news-images/70d779abf4792bc3.png",
-      "imageLocalKey": "70d779abf4792bc3"
+      "imageLocalKey": "70d779abf4792bc3",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -700,7 +708,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Pour participer à la vie démocratique et exercer son droit de vote, il faut d’abord comprendre le fonctionnement des élections. Pour qui vote-t-on réellement ? Le parti ? Le chef ? Et lorsque l’on est une personne étudiante, comment voter et pour quelle circonscription ? Est-ce le même processus que lors des élections fédérales ?",
       "imageLocal": "assets/news-images/57b1d28ed9a02aa8.jpg",
-      "imageLocalKey": "57b1d28ed9a02aa8"
+      "imageLocalKey": "57b1d28ed9a02aa8",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -802,7 +811,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Halifax Tides FC coach Stephen Hart knew exactly what the moment meant for the Montreal Roses. Fresh off a 1-0 loss that sent Montreal to the top spot in the Northern Super League (NSL) standings, he reflected on the raucous crowd that welcomed the two teams to Stade Saputo.",
       "imageLocal": "assets/news-images/0804781d89d07ce6.jpg",
-      "imageLocalKey": "0804781d89d07ce6"
+      "imageLocalKey": "0804781d89d07ce6",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -827,7 +837,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Oscar Horeau first heard about Concordia’s intramural sports leagues during his time in student residence. A message from his resident assistant convinced the second-year finance student to sign up for one of the university's weekly soccer leagues.",
       "imageLocal": "assets/news-images/92d3c94da030619a.jpg",
-      "imageLocalKey": "92d3c94da030619a"
+      "imageLocalKey": "92d3c94da030619a",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -851,7 +862,8 @@
       "leadImageReady": true,
       "leadExcerpt": "For one, the sport's individual nature means athletes often train and prepare for tournaments at their own golf courses. While the team organizes group practices, much of the preparation occurs through individual work.",
       "imageLocal": "assets/news-images/6f7bfa0ddd4cfbba.jpg",
-      "imageLocalKey": "6f7bfa0ddd4cfbba"
+      "imageLocalKey": "6f7bfa0ddd4cfbba",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -866,16 +878,16 @@
       "excerpt": "Graphic Halle Keays This article originally appeared in The Link Volume 47, Issue 1, published September 8, 2026.",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.EDITORIAL.Halle_Keays_690_518.png",
       "authorCheckedAt": "2026-09-14T17:39:26.067Z",
-      "leadExcerpt": "Today's students—not just here at Concordia University—live thoroughly digital lives, surrounded by an almost constant influx of online information. As news consumption has shifted almost entirely to social media platforms and automated feeds, the need for robust digital literacy is higher than ever before.",
-      "imageLocal": "assets/news-images/d563ee68b4d77a3e.png",
-      "imageLocalKey": "d563ee68b4d77a3e",
       "sourceImageCredit": "Photo credit: The Link",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16366",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "01.editorial.halle_keays_690_518.png",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Today's students—not just here at Concordia University—live thoroughly digital lives, surrounded by an almost constant influx of online information. As news consumption has shifted almost entirely to social media platforms and automated feeds, the need for robust digital literacy is higher than ever before.",
+      "imageLocal": "assets/news-images/d563ee68b4d77a3e.png",
+      "imageLocalKey": "d563ee68b4d77a3e",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -922,7 +934,8 @@
       "leadImageReady": true,
       "leadExcerpt": "The Concordia University Part-time Faculty Association (CUPFA) reported that 63 LTA faculty members would not have their contracts renewed this year. This threatened not only staff employment but also the stability of departments that rely on LTA positions, particularly their ability to maintain autonomy and plan courses.",
       "imageLocal": "assets/news-images/2b4810085f8d11a5.jpg",
-      "imageLocalKey": "2b4810085f8d11a5"
+      "imageLocalKey": "2b4810085f8d11a5",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -947,7 +960,8 @@
       "leadImageReady": true,
       "leadExcerpt": "The first step in attending a Stingers game involves knowing when one is taking place. You always have two options: home games, played here at Concordia, and away games played at the opponent’s university.",
       "imageLocal": "assets/news-images/c73a29191a578001.jpg",
-      "imageLocalKey": "c73a29191a578001"
+      "imageLocalKey": "c73a29191a578001",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -972,7 +986,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Virginia Battaglini, a second-year student in the department of English literature, occasionally uses the first-floor washroom in the EV building. She has noticed the space’s uncleanliness and believes there could be room for improvement.",
       "imageLocal": "assets/news-images/b9cb616a2bb24561.jpg",
-      "imageLocalKey": "b9cb616a2bb24561"
+      "imageLocalKey": "b9cb616a2bb24561",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -996,7 +1011,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Concordia University welcomes tens of thousands of students every day, commuting from across Montreal and its off-island suburbs. Students can get to campus in many different ways, such as by metro, bus, walking, car or bike.",
       "imageLocal": "assets/news-images/2e02a50f22322b95.jpg",
-      "imageLocalKey": "2e02a50f22322b95"
+      "imageLocalKey": "2e02a50f22322b95",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -1021,7 +1037,8 @@
       "leadImageReady": true,
       "leadExcerpt": "On Concordia University’s official website , the Liberal Arts building on Mackay St. is described as being “the heart of the student experience.” It goes on to describe key features of the RR Annex, namely its lounge and library.",
       "imageLocal": "assets/news-images/3b2f99271fd5daef.jpg",
-      "imageLocalKey": "3b2f99271fd5daef"
+      "imageLocalKey": "3b2f99271fd5daef",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -1046,7 +1063,8 @@
       "leadImageReady": true,
       "leadExcerpt": "The hike was a 33 per cent increase, pushing tuition from $9,000 to $12,000 for all out-of-province students. The decision stands to this day despite legal battles with Concordia University and McGill University.",
       "imageLocal": "assets/news-images/55779769d96b10aa.jpg",
-      "imageLocalKey": "55779769d96b10aa"
+      "imageLocalKey": "55779769d96b10aa",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -1070,7 +1088,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
       "imageLocal": "assets/news-images/754f8426d54d8835.jpg",
-      "imageLocalKey": "754f8426d54d8835"
+      "imageLocalKey": "754f8426d54d8835",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -1093,7 +1112,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/22ad4aa2ecc32711.jpg",
-      "imageLocalKey": "22ad4aa2ecc32711"
+      "imageLocalKey": "22ad4aa2ecc32711",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -1117,7 +1137,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/b662b55d00c431cd.jpg",
-      "imageLocalKey": "b662b55d00c431cd"
+      "imageLocalKey": "b662b55d00c431cd",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -1142,7 +1163,8 @@
       "leadImageReady": true,
       "leadExcerpt": "I've met driven, brilliant people from every corner of Canada and the world. These are people who've thrown themselves into everything Concordia has to offer and been crucial in building Montreal's vibrant social scene.",
       "imageLocal": "assets/news-images/5a360724cf57ab72.jpg",
-      "imageLocalKey": "5a360724cf57ab72"
+      "imageLocalKey": "5a360724cf57ab72",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -1157,15 +1179,15 @@
       "excerpt": "Tracing a bigger story about underfunded public spaces in Montreal Webster Library’s mess is both a student etiquette and city problem. Graphic Evelyn Ho Lee This article originally appeared in The Link Volume 47, Issue 1, published September 8, 2026.",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Library.Evelyn_Ho_Lee_690_863.png",
       "authorCheckedAt": "2026-09-14T17:39:44.900Z",
-      "imageLocal": "assets/news-images/03e1c13d474fd60d.png",
-      "imageLocalKey": "03e1c13d474fd60d",
       "sourceImageCredit": "Photo credit: The Link",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16350",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "01.ops.library.evelyn_ho_lee_690_863.png",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "imageLocal": "assets/news-images/03e1c13d474fd60d.png",
+      "imageLocalKey": "03e1c13d474fd60d",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Polyscope",
@@ -1247,16 +1269,17 @@
       "excerpt": "Entre le loyer, l’épicerie, le transport et les dépenses liées aux études, le budget d’une personne étudiante peut rapidement être serré. Dans ce contexte, payer un abonnement coûteux à la salle de musculation ou s’inscrire à plusieurs activités sportives peut sembler",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/08/SPORTS_Faire-du-sport-sans-se-ruiner-quand-on-est-etudiant_SourceUdeS-1.jpeg",
       "authorCheckedAt": "2026-09-01T09:26:57.178Z",
-      "leadExcerpt": "Entre le loyer, l’épicerie, le transport et les dépenses liées aux études, le budget d’une personne étudiante peut rapidement être serré. Dans ce contexte, payer un abonnement coûteux à la salle de musculation ou s’inscrire à plusieurs activités sportives peut sembler impossible. Pourtant, à Sherbrooke, il existe plusieurs façons de rester actif sans vider son portefeuille.",
-      "imageLocal": "assets/news-images/1db0110786007144.jpg",
-      "imageLocalKey": "1db0110786007144",
       "sourceImageCredit": "Photo : UdeS",
       "sourceImageCreator": "UdeS",
       "sourceImageCreditUrl": "https://lecollectif.ca/sports-et-bien-etre/faire-du-sport-sans-se-ruiner-quand-on-est-aux-etudes/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sports_faire-du-sport-sans-se-ruiner-quand-on-est-etudiant_sourceudes-1.jpeg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Entre le loyer, l’épicerie, le transport et les dépenses liées aux études, le budget d’une personne étudiante peut rapidement être serré. Dans ce contexte, payer un abonnement coûteux à la salle de musculation ou s’inscrire à plusieurs activités sportives peut sembler impossible. Pourtant, à Sherbrooke, il existe plusieurs façons de rester actif sans vider son portefeuille.",
+      "imageLocal": "assets/news-images/1db0110786007144.jpg",
+      "imageLocalKey": "1db0110786007144",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -1306,7 +1329,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Selon l’Organisation mondiale de la Santé (OMS), l’activité physique contribue à la santé physique et mentale. Elle peut notamment réduire les symptômes d’anxiété et favoriser le bien-être général. Chez la communauté étudiante, dont les journées sont souvent chargées et imprévisibles, intégrer le mouvement à la routine peut donc être une façon accessible de prendre une pause et de décrocher.",
       "imageLocal": "assets/news-images/f957d9dc55d64a05.jpg",
-      "imageLocalKey": "f957d9dc55d64a05"
+      "imageLocalKey": "f957d9dc55d64a05",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -1329,7 +1353,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/282016e9c7243bd1.png",
-      "imageLocalKey": "282016e9c7243bd1"
+      "imageLocalKey": "282016e9c7243bd1",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -1352,7 +1377,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/ef8b04d91aa1ec11.jpg",
-      "imageLocalKey": "ef8b04d91aa1ec11"
+      "imageLocalKey": "ef8b04d91aa1ec11",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -1401,7 +1427,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/58f1b4284ffb876a.png",
-      "imageLocalKey": "58f1b4284ffb876a"
+      "imageLocalKey": "58f1b4284ffb876a",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Délit",
@@ -1735,7 +1762,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Son gouvernement s’est montré intransigeant face aux efforts américains qui cherchent à affaiblir le soutien d’Ottawa vis-à-vis de la préservation du français et de sa politique de bilinguisme. De son côté, la première ministre québécoise Christine Fréchette n’a pas tardé à réagir sur X avec le message « notre identité n’est pas à négocier ».",
       "imageLocal": "assets/news-images/97fd8a15a802a9c0.png",
-      "imageLocalKey": "97fd8a15a802a9c0"
+      "imageLocalKey": "97fd8a15a802a9c0",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The McGill Daily",
@@ -2033,7 +2061,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/dad04c2783594e3b.jpg",
-      "imageLocalKey": "dad04c2783594e3b"
+      "imageLocalKey": "dad04c2783594e3b",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -2048,16 +2077,16 @@
       "excerpt": "Le 13 mars dernier, la rappeuse Calamine a dévoilé son nouvel album , Rétrograde . Avec cette quatrième sortie depuis 2020, l’artiste gravit les échelons et devient une voix importante du hip-hop québécois. Composé de 18 titres d’ambiance estivale tels que « CHOP CHOP », « POLY",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_calamine-1.jpg",
       "authorCheckedAt": "2026-09-14T17:39:49.436Z",
-      "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société.",
-      "imageLocal": "assets/news-images/e7fd49aa202781bb.jpg",
-      "imageLocalKey": "e7fd49aa202781bb",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/calamine-rapper-autrement/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "20_calamine-1.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société.",
+      "imageLocal": "assets/news-images/e7fd49aa202781bb.jpg",
+      "imageLocalKey": "e7fd49aa202781bb",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -2072,16 +2101,16 @@
       "excerpt": "Le 5 mai dernier, le pavillon Roger-Gaudry a accueilli le premier forum du Réseau des écoles associées ( RÉA ). Ce projet ambitieux de la Faculté des sciences de l’éducation (FSÉ) transforme des écoles primaires et secondaires en véritables « hôpitaux universitaires » de la",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/image-2-768x1024.jpeg",
       "authorCheckedAt": "2026-09-14T17:39:49.800Z",
-      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
-      "imageLocal": "assets/news-images/f5291c863e27cad4.jpg",
-      "imageLocalKey": "f5291c863e27cad4",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/forum-rea-education-en-milieu-defavorise/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image-2.jpeg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
+      "imageLocal": "assets/news-images/f5291c863e27cad4.jpg",
+      "imageLocalKey": "f5291c863e27cad4",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -2122,16 +2151,16 @@
       "excerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_florelaurentienne.jpg",
       "authorCheckedAt": "2026-09-14T17:39:50.524Z",
-      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis .",
-      "imageLocal": "assets/news-images/0aaf12beea2d8dbd.jpg",
-      "imageLocalKey": "0aaf12beea2d8dbd",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
-      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "20_florelaurentienne.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Cette année marque une période chargée pour la musique au Québec, en raison d’un bon nombre de beaux projets émergents. À l’approche de la saison estivale, quelles sont les nouveautés qui feront danser les mélomanes cet été ? Quartier Libre présente quelques recommandations d’albums 100 % québécois récemment sortis .",
+      "imageLocal": "assets/news-images/0aaf12beea2d8dbd.jpg",
+      "imageLocalKey": "0aaf12beea2d8dbd",
+      "imageLocalVia": "origin"
     },
     {
       "source": "L'Exemplaire",
@@ -2343,7 +2372,8 @@
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg",
       "leadExcerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus explosent sur les réseaux sociaux. Mais, derrière ces visuels enfantins générés par intelligence artificielle, se dessinent des discours moins légers qui dépassent le simple divertissement.",
       "imageLocal": "assets/news-images/44f01b932a4f2373.webp",
-      "imageLocalKey": "44f01b932a4f2373"
+      "imageLocalKey": "44f01b932a4f2373",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Plant",
@@ -2566,7 +2596,8 @@
       "sourceImageCreditImageKey": "image-4.jpeg",
       "sourceImageCreditRev": 10,
       "imageLocal": "assets/news-images/a7f72017b9324103.webp",
-      "imageLocalKey": "a7f72017b9324103"
+      "imageLocalKey": "a7f72017b9324103",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Plant",
@@ -2616,8 +2647,7 @@
       "leadExcerpt": "D’origine moldave, Iulian Ciobanu arrive au Canada en 2010 sans même connaître le boccia. Cinq ans plus tard, il quitte son emploi pour devenir joueur BC4 breveté avec l’équipe nationale. « Je n’avais jamais fait de sport de ma vie, mais j’ai toujours été curieux et capable de saisir les opportunités », lance-t-il en entrevue avec le Montréal Campus .",
       "imageLocal": "assets/news-images/439534304d9d95e4.jpg",
       "imageLocalKey": "439534304d9d95e4",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -2639,7 +2669,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/2159b352022a804e.jpg",
-      "imageLocalKey": "2159b352022a804e"
+      "imageLocalKey": "2159b352022a804e",
+      "imageLocalVia": "origin"
     },
     {
       "source": "L'Exemplaire",
@@ -2725,8 +2756,7 @@
       "leadExcerpt": "Une odeur de vieux livres, des allées étroites, des kiosques débordant d’objets oubliés, le Marché aux puces Saint-Michel n’a pas changé. Alors que les friperies vintage et les reventes en ligne gagnent en popularité, ce précurseur tient bon. Il continue de séduire par ses trouvailles insolites et par ses trésors millésimés. Le Montréal Campus a poussé la porte du marché et est allé à la rencontre de ceux et de celles qui y tiennent boutique ou qui continuent de s’y aventurer.",
       "imageLocal": "assets/news-images/5352acf482638899.jpg",
       "imageLocalKey": "5352acf482638899",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -2751,8 +2781,7 @@
       "leadExcerpt": "Entre le texto et l’appel téléphonique, il y a le message vocal. S’il est bien ancré chez les plus jeunes, comment se fait-il que certains adorent cette méthode de communication et que d’autres la boudent complètement? Le Montréal Campus a rencontré une experte et des étudiant(e)s de l’UQAM pour mieux comprendre le phénomène.",
       "imageLocal": "assets/news-images/423a678cfa0a2916.jpg",
       "imageLocalKey": "423a678cfa0a2916",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -2801,8 +2830,7 @@
       "leadExcerpt": "Le club de tricot de la Faculté des sciences de l’UQAM se réunit chaque semaine autour d’activités créatives pour contrer le stress engendré par des études en sciences. Le Montréal Campus a participé à une de leurs activités d’initiation au tricot.",
       "imageLocal": "assets/news-images/3d4df54493c50e0d.jpg",
       "imageLocalKey": "3d4df54493c50e0d",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -2827,8 +2855,7 @@
       "leadExcerpt": "La chaîne de gyms montréalaise Le Vestiaire propose des cours de groupe aux futurs ou très jeunes parents. Poids adaptés, temps alloué à l’allaitement et ambiance décontractée : le fonctionnement des cours « Moms and Dads » est pensé spécialement pour les parents accompagnés de leurs bébés.",
       "imageLocal": "assets/news-images/35faa68ae67e5762.jpg",
       "imageLocalKey": "35faa68ae67e5762",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -2850,8 +2877,7 @@
       "sourceImageCreditImageKey": "mankind-template-1.png",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "« Êtes-vous prêt à réveiller l’homme que vous voulez être? », c’est ce qu’affiche le site Web de ManKind Project. Actif dans une vingtaine de pays, cet organisme a pour objectif de « développer un sentiment de masculinité sain et mature ».",
-      "_retainedFromCache": true
+      "leadExcerpt": "« Êtes-vous prêt à réveiller l’homme que vous voulez être? », c’est ce qu’affiche le site Web de ManKind Project. Actif dans une vingtaine de pays, cet organisme a pour objectif de « développer un sentiment de masculinité sain et mature »."
     },
     {
       "source": "Zone Campus",
@@ -2874,7 +2900,8 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/2f88543ca8a04f2b.jpg",
-      "imageLocalKey": "2f88543ca8a04f2b"
+      "imageLocalKey": "2f88543ca8a04f2b",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -2895,8 +2922,7 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "wegovy-template-1.png",
       "sourceImageCreditRev": 7,
-      "leadImageReady": true,
-      "_retainedFromCache": true
+      "leadImageReady": true
     },
     {
       "source": "Montréal Campus",
@@ -2918,8 +2944,7 @@
       "sourceImageCreditImageKey": "template-da-radio-vegan.jpg",
       "sourceImageCreditRev": 7,
       "leadImageReady": true,
-      "leadExcerpt": "Avec le dérèglement climatique, certain(e)s sont tenté(e)s de modifier leurs habitudes alimentaires pour donner un répit à la planète. Est-il possible de réaliser un basculement de régime alimentaire vers le végétalisme en un mois? À titre de cobaye, notre chroniqueur Pierre-Alexandre Larouche s’est prêté au jeu en devenant végétalien pendant trente jours.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Avec le dérèglement climatique, certain(e)s sont tenté(e)s de modifier leurs habitudes alimentaires pour donner un répit à la planète. Est-il possible de réaliser un basculement de régime alimentaire vers le végétalisme en un mois? À titre de cobaye, notre chroniqueur Pierre-Alexandre Larouche s’est prêté au jeu en devenant végétalien pendant trente jours."
     },
     {
       "source": "Montréal Campus",
@@ -2944,8 +2969,7 @@
       "leadExcerpt": "L’artiste québécois Alphonse Bisaillon remplit les salles de spectacle sans l’appui des algorithmes. Il construit son public lentement, une conversation à la fois. Une stratégie portée par le bouche-à-oreille presque à contre-courant dans une époque où la visibilité culturelle dépend largement des plateformes numériques.",
       "imageLocal": "assets/news-images/eb265b3ed05548cf.jpg",
       "imageLocalKey": "eb265b3ed05548cf",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -2969,8 +2993,7 @@
       "leadExcerpt": "Sous-estimées et sous-représentées dans le milieu du plein air, les femmes ne composent que 14 % des guides au Québec. Si ce métier est encore considéré comme « non traditionnel pour les femmes » , des initiatives féminines apparaissent depuis quelques années pour faire progresser la parité dans le milieu.",
       "imageLocal": "assets/news-images/3f6b4c813d55239b.jpg",
       "imageLocalKey": "3f6b4c813d55239b",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -2993,7 +3016,8 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/f49c9cf5fb2ef34f.jpg",
-      "imageLocalKey": "f49c9cf5fb2ef34f"
+      "imageLocalKey": "f49c9cf5fb2ef34f",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3016,7 +3040,8 @@
       "sourceImageCreditRev": 8,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/96bf2e57f78195d2.jpg",
-      "imageLocalKey": "96bf2e57f78195d2"
+      "imageLocalKey": "96bf2e57f78195d2",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3086,7 +3111,8 @@
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/bca23ddde074c874.jpg",
-      "imageLocalKey": "bca23ddde074c874"
+      "imageLocalKey": "bca23ddde074c874",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3108,7 +3134,8 @@
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/1ea90acd9d61e587.jpg",
-      "imageLocalKey": "1ea90acd9d61e587"
+      "imageLocalKey": "1ea90acd9d61e587",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3130,7 +3157,8 @@
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
       "leadImageReady": true,
       "imageLocal": "assets/news-images/85147fbddce0425c.jpg",
-      "imageLocalKey": "85147fbddce0425c"
+      "imageLocalKey": "85147fbddce0425c",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Exil",
@@ -3514,7 +3542,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
       "imageLocal": "assets/news-images/81342b278c0d0e4c.jpg",
-      "imageLocalKey": "81342b278c0d0e4c"
+      "imageLocalKey": "81342b278c0d0e4c",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Campus",
@@ -3539,6 +3568,80 @@
       "leadImageReady": true,
       "imageLocal": "assets/news-images/9c1ec3f2b909fb16.jpg",
       "imageLocalKey": "9c1ec3f2b909fb16",
+      "imageLocalVia": "origin"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "L’épidémie de la nonchalance",
+      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "author": "Elie Nguyen",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
+      "featured": true,
+      "sourceImageCredit": "Photo : Elie Nguyen",
+      "sourceImageCreator": "Elie Nguyen",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "Le retard et les bienfaits du temps long",
+      "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
+      "author": "Dalia Djazouli",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Imposer sa propre subjectivité temporelle.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/retard-1-scaled.jpeg",
+      "featured": true,
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "retard-1.jpeg",
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "L’imposition de la ponctualité comme norme suprême ne se cantonne pas à notre journal étudiant : elle est propre à nos sociétés industrialisées, dont la conception du temps est particulièrement rigoureuse et utilitariste. La temporalité est perçue comme un objet tangible, que l’on peut et doit rentabiliser autant que possible. Les journées sont compartimentées, et chaque heure doit être mise à profit.",
+      "imageLocal": "assets/news-images/6589fd0fc667fccd.jpg",
+      "imageLocalKey": "6589fd0fc667fccd",
+      "imageLocalVia": "origin"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "Rassembler pour mieux diviser",
+      "link": "https://www.delitfrancais.com/2026/03/25/rassembler-pour-mieux-diviser/",
+      "author": "Catherine Brunet Rodriguez",
+      "date": "2026-03-25T07:00:00.000Z",
+      "excerpt": "Analyse critique du projet de loi 1 sur la Constitution québécoise.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/QC-scaled.jpeg",
+      "featured": true,
+      "sourceImageCredit": "Photo : Félix Fournier",
+      "sourceImageCreator": "Félix Fournier",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/rassembler-pour-mieux-diviser/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "qc.jpeg",
+      "leadImageReady": true,
+      "leadExcerpt": "Cela fait maintenant presque six mois que notre cher ministre de la Justice, Simon Jolin-Barrette, a présenté aux Québécois·e·s son fameux projet de loi 1, la Constitution québécoise. Six mois à discuter d’une constitution illégitime, issue d’un processus de non-consultation flagrant et d’un manque d’écoute évident de la part du gouvernement.",
+      "imageLocal": "assets/news-images/2f031fc49e60e66c.jpg",
+      "imageLocalKey": "2f031fc49e60e66c",
       "imageLocalVia": "origin"
     },
     {
@@ -3614,80 +3717,7 @@
       "leadImageReady": true,
       "leadExcerpt": "Deux hommes hétéros imitent une voix, se prennent par la taille, font semblant d’être en couple pour une photo, puis éclatent de rire. L’un ajoute « no homo » et tout rentre dans l’ordre. Pendant ce temps, un homme gai tient la main de son partenaire. Il surveille autour de lui, sonde le quartier, évalue le risque. Pour les uns, l’homosexualité est un prétexte pour rire. Pour les autres, c’est juste une vie.",
       "imageLocal": "assets/news-images/4d808d99f444a191.jpg",
-      "imageLocalKey": "4d808d99f444a191"
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "L’épidémie de la nonchalance",
-      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "author": "Elie Nguyen",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Pour en finir avec l’insouciance de façade et embrasser pleinement l’authenticité.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/Creation-sans-titre-2-768x1024.png",
-      "featured": true,
-      "sourceImageCredit": "Photo : Elie Nguyen",
-      "sourceImageCreator": "Elie Nguyen",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "creation-sans-titre-2.png",
-      "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "L’un des travers de notre génération est la tendance à adopter une attitude indifférente face à la vie. La nonchalance est devenue une forme de protection, où on minimise tout ce que l’on ressent : on cache ce qui pourrait nous atteindre et on évite de trop s’exposer. En paraissant insouciant, on garde le contrôle, puisque personne ne peut utiliser contre nous ce dont il ne mesure pas l’importance."
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "Le retard et les bienfaits du temps long",
-      "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
-      "author": "Dalia Djazouli",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Imposer sa propre subjectivité temporelle.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/retard-1-scaled.jpeg",
-      "featured": true,
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "retard-1.jpeg",
-      "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "L’imposition de la ponctualité comme norme suprême ne se cantonne pas à notre journal étudiant : elle est propre à nos sociétés industrialisées, dont la conception du temps est particulièrement rigoureuse et utilitariste. La temporalité est perçue comme un objet tangible, que l’on peut et doit rentabiliser autant que possible. Les journées sont compartimentées, et chaque heure doit être mise à profit.",
-      "imageLocal": "assets/news-images/6589fd0fc667fccd.jpg",
-      "imageLocalKey": "6589fd0fc667fccd",
-      "imageLocalVia": "origin"
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
-      "title": "Rassembler pour mieux diviser",
-      "link": "https://www.delitfrancais.com/2026/03/25/rassembler-pour-mieux-diviser/",
-      "author": "Catherine Brunet Rodriguez",
-      "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Analyse critique du projet de loi 1 sur la Constitution québécoise.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/QC-scaled.jpeg",
-      "featured": true,
-      "sourceImageCredit": "Photo : Félix Fournier",
-      "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/rassembler-pour-mieux-diviser/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "qc.jpeg",
-      "leadImageReady": true,
-      "leadExcerpt": "Cela fait maintenant presque six mois que notre cher ministre de la Justice, Simon Jolin-Barrette, a présenté aux Québécois·e·s son fameux projet de loi 1, la Constitution québécoise. Six mois à discuter d’une constitution illégitime, issue d’un processus de non-consultation flagrant et d’un manque d’écoute évident de la part du gouvernement.",
-      "imageLocal": "assets/news-images/2f031fc49e60e66c.jpg",
-      "imageLocalKey": "2f031fc49e60e66c",
+      "imageLocalKey": "4d808d99f444a191",
       "imageLocalVia": "origin"
     },
     {
@@ -4070,7 +4100,8 @@
       "sourceImageCreditImageKey": "shirley-barnea-1.jpg",
       "sourceImageCreditRev": 10,
       "imageLocal": "assets/news-images/b3e61b02132170d1.webp",
-      "imageLocalKey": "b3e61b02132170d1"
+      "imageLocalKey": "b3e61b02132170d1",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Polyscope",
