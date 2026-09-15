@@ -1,61 +1,54 @@
 {
-  "updatedAt": "2026-09-15T13:31:19.787Z",
+  "updatedAt": "2026-09-15T14:24:28.441Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Mardi Champ Gauche",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Mardi Champ Gauche",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-15T13:30:57.761Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
-        "title": "Lentement mais sûrement",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/lentement-mais-surement"
-      },
-      "track": "",
-      "showTitle": "La collation",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T13:30:59.484Z"
+      "checkedAt": "2026-09-15T14:24:12.926Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Lentement mais sûrement",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/lentement-mais-surement"
+      },
+      "next": {
+        "title": "Les sentinelles de l'art",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+      },
+      "track": "",
+      "showTitle": "Lentement mais sûrement",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-15T14:24:14.585Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T13:31:02.493Z"
+      "checkedAt": "2026-09-15T14:24:17.540Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "At The Movies",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/at-the-movies"
-      },
-      "next": {
         "title": "Democracy Now",
         "source": "schedule-live",
         "start": "10:00",
         "end": "11:00",
         "url": "http://www.cjlo.com/shows/democracy-now"
       },
+      "next": {
+        "title": "Mirror Journal",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/mirror-journal"
+      },
       "track": "",
-      "showTitle": "At The Movies",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T13:31:05.890Z"
+      "checkedAt": "2026-09-15T14:24:20.867Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T13:31:07.280Z"
+      "checkedAt": "2026-09-15T14:24:21.669Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "12:00",
         "slug": "le-monde-dans-mes-oreilles"
       },
-      "track": "Status/Non-Status - Bitumen Eyes",
+      "track": "The Knife - Full Of Fire",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-15T13:31:19.437Z"
+      "checkedAt": "2026-09-15T14:24:28.090Z"
     }
   }
 }
