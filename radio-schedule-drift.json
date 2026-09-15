@@ -1,12 +1,13 @@
 {
-  "checkedAt": "2026-09-14T00:59:40.767Z",
+  "checkedAt": "2026-09-15T01:23:47.104Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
+    "stable": 4,
     "drift": [
-      "cism"
+      "chyz",
+      "choq"
     ],
     "overhaul": [],
     "unreachable": []
@@ -14,29 +15,25 @@
   "stations": [
     {
       "id": "chyz",
-      "published": 31,
-      "fresh": 31,
+      "published": 34,
+      "fresh": 35,
+      "added": [
+        "dim 15:45–18:30 Remparts de Québec"
+      ],
+      "removed": [],
+      "changed": 1,
+      "ratio": 0.029,
+      "status": "drift"
+    },
+    {
+      "id": "cism",
+      "published": 110,
+      "fresh": 110,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
       "status": "stable"
-    },
-    {
-      "id": "cism",
-      "published": 108,
-      "fresh": 110,
-      "added": [
-        "mer 09:00–10:00 La collation",
-        "mer 10:00–11:00 La 13e",
-        "mer 11:00–12:00 À la loupe du droit"
-      ],
-      "removed": [
-        "mer 09:00–12:00 La collation"
-      ],
-      "changed": 4,
-      "ratio": 0.037,
-      "status": "drift"
     },
     {
       "id": "ckut",
@@ -70,13 +67,15 @@
     },
     {
       "id": "choq",
-      "published": 11,
-      "fresh": 11,
-      "added": [],
+      "published": 15,
+      "fresh": 16,
+      "added": [
+        "mar 19:30–20:30 Les Amazones"
+      ],
       "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "changed": 1,
+      "ratio": 0.067,
+      "status": "drift"
     }
   ]
 }
