@@ -1,8 +1,8 @@
 {
-  "updated": "2026-09-16T20:09:36.740Z",
+  "updated": "2026-09-16T21:24:45.833Z",
   "total": 168,
   "withAuthor": 168,
-  "mismatches": 8,
+  "mismatches": 7,
   "ok": true,
   "samples": [
     {
@@ -54,14 +54,6 @@
       "reason": "no-author-source"
     },
     {
-      "title": "L’épidémie de la nonchalance",
-      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "source": "Le Délit",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Elie Nguyen",
-      "reason": "page-byline"
-    },
-    {
       "title": "Garda World au CVM (Éditorial)",
       "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
       "source": "Exil",
@@ -70,5 +62,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 8
+  "fixed": 7
 }

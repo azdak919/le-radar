@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-16T20:09:54.963Z",
+  "updated": "2026-09-16T21:24:49.942Z",
   "total": 168,
   "pool": 53,
-  "incomplete": 11,
+  "incomplete": 7,
   "withLeadExcerpt": 82,
-  "candidates": 11,
-  "enriched": 6,
+  "candidates": 7,
+  "enriched": 0,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -17,33 +17,6 @@
       "chars": 400,
       "sample": "Montée des extrêmes telle que celle déjà observée et largement décrite ailleurs en Europe ? Ou réel ",
       "changed": false
-    },
-    {
-      "title": "L’épidémie de la nonchalance",
-      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "ok": true,
-      "score": 96,
-      "chars": 391,
-      "sample": "À force de craindre d’être « trop » – trop sensible, trop sincère – on finit par se taire. Je me sui",
-      "changed": true
-    },
-    {
-      "title": "Le plaisir de lire",
-      "link": "https://www.delitfrancais.com/2026/09/16/le-plaisir-de-lire/",
-      "ok": true,
-      "score": 100,
-      "chars": 344,
-      "sample": "En cette rentrée scolaire, pourquoi ne pas se donner des nouveaux objectifs de lecture ? En cette oc",
-      "changed": true
-    },
-    {
-      "title": "La flûte enchantée : des voix pour sauver Mozart",
-      "link": "https://www.delitfrancais.com/2026/09/16/la-flute-enchantee-des-voix-pour-sauver-mozart/",
-      "ok": true,
-      "score": 96,
-      "chars": 382,
-      "sample": "C’est à la maison symphonique qu’a eu lieu la performance de La Flûte enchantée de Mozart jeudi dern",
-      "changed": true
     },
     {
       "title": "Antisémitisme : McGill, mauvaise élève?",
@@ -64,22 +37,22 @@
       "changed": false
     },
     {
-      "title": "Bulletin La Pige radio 14h30 et 15h30",
-      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-14h30",
-      "ok": true,
-      "score": 73,
-      "chars": 153,
-      "sample": "Starbucks arrive à Jonquière, une marche pour sensibiliser au myélome multiple et plus de variétés d",
-      "changed": true
-    },
-    {
       "title": "Le Festival de Cinéma de la Ville de Québec et le Festival REGARD, une amitié qui traverse le parc des Laurentides",
       "link": "https://lapige.atmjonquiere.com/2026/09/14/le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides/?utm_source=rss&utm_medium=rss&utm_campaign=le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides",
       "ok": true,
       "score": 83,
       "chars": 400,
       "sample": "Le Festival de Cinéma de la Ville de Québec (FCVQ) a souligné la 30 e édition du Festival REGARD lor",
-      "changed": true
+      "changed": false
+    },
+    {
+      "title": "Bulletin La Pige radio 14h30 et 15h30",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-14h30",
+      "ok": true,
+      "score": 73,
+      "chars": 153,
+      "sample": "Starbucks arrive à Jonquière, une marche pour sensibiliser au myélome multiple et plus de variétés d",
+      "changed": false
     }
   ]
 }
