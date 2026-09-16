@@ -1,14 +1,14 @@
 {
-  "updated": "2026-09-16T09:19:06.216Z",
-  "fetchedAt": "2026-09-16T09:19:06.216Z",
+  "updated": "2026-09-16T15:27:47.461Z",
+  "fetchedAt": "2026-09-16T15:27:47.461Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-16T09:19:06.216Z"
+    "referenceDate": "2026-09-16T15:27:47.461Z"
   },
   "registry": "sports-teams.json",
-  "registryMatched": 838,
+  "registryMatched": 839,
   "leagueCatalog": 112,
   "leaguesWithTeams": 108,
   "leaguesOk": 112,
@@ -73,7 +73,7 @@
     "ultimate",
     "volleyball"
   ],
-  "teamCount": 867,
+  "teamCount": 868,
   "errors": [
     {
       "leagueId": "spordle-collegial",
@@ -30929,6 +30929,29 @@
       "nickname": "Boomerang",
       "registryId": "garneau"
     },
+    "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:17273c69-9a31-4258-a1b7-caa780f41b5f": {
+      "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:17273c69-9a31-4258-a1b7-caa780f41b5f",
+      "rseqTeamId": "17273c69-9a31-4258-a1b7-caa780f41b5f",
+      "leagueId": "bcb2a117-9b55-4781-9d1d-e86e799c1d9d",
+      "name": "Gaspésie et Îles",
+      "code": "GAS",
+      "sector": "collegial",
+      "sport": "cross-country",
+      "sportLabel": "Cross-country",
+      "sex": "X",
+      "division": null,
+      "usports": false,
+      "leagueLabel": "Cross-country collégial mixte",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [],
+      "nextGame": null,
+      "record": null,
+      "source": "rseq-s1",
+      "priority": 80,
+      "fullName": "Cégep de la Gaspésie et des Îles",
+      "registryId": "gaspesie-et-iles"
+    },
     "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:9d31fd9f-df19-4c9c-9d01-67b2918cc862": {
       "id": "collegial:cross-country:bcb2a117-9b55-4781-9d1d-e86e799c1d9d:9d31fd9f-df19-4c9c-9d01-67b2918cc862",
       "rseqTeamId": "9d31fd9f-df19-4c9c-9d01-67b2918cc862",
@@ -33454,19 +33477,6 @@
         },
         {
           "date": "2026-10-03",
-          "time": "10:30",
-          "opponent": "Notre-Dame",
-          "opponentCode": "NDF",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D2",
-          "gameId": "20b3609c-cc04-4e83-9a9e-02ab722dd2f9",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=20b3609c-cc04-4e83-9a9e-02ab722dd2f9",
-          "opponentFullName": "Campus Notre-Dame-de-Foy",
-          "opponentRegistryId": "notre-dame-foy"
-        },
-        {
-          "date": "2026-10-03",
           "time": "15:00",
           "opponent": "Shawinigan",
           "opponentCode": "SHA",
@@ -33477,6 +33487,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=50b1b945-2352-4028-b875-34a6ea05d181",
           "opponentFullName": "Cégep de Shawinigan",
           "opponentRegistryId": "shawinigan"
+        },
+        {
+          "date": "2026-10-03",
+          "time": "16:30",
+          "opponent": "Notre-Dame",
+          "opponentCode": "NDF",
+          "home": true,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "20b3609c-cc04-4e83-9a9e-02ab722dd2f9",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=20b3609c-cc04-4e83-9a9e-02ab722dd2f9",
+          "opponentFullName": "Campus Notre-Dame-de-Foy",
+          "opponentRegistryId": "notre-dame-foy"
         },
         {
           "date": "2026-10-16",
@@ -33662,6 +33685,19 @@
         },
         {
           "date": "2026-10-03",
+          "time": "10:30",
+          "opponent": "Laflèche",
+          "opponentCode": "LAF",
+          "home": false,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "7b514546-f49c-4e56-a12c-41508ff8fc50",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7b514546-f49c-4e56-a12c-41508ff8fc50",
+          "opponentFullName": "Collège Laflèche",
+          "opponentRegistryId": "lafleche"
+        },
+        {
+          "date": "2026-10-03",
           "time": "12:00",
           "opponent": "Shawinigan",
           "opponentCode": "SHA",
@@ -33672,19 +33708,6 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=70f8824b-d61f-4729-b24a-cfc0f6d9e894",
           "opponentFullName": "Cégep de Shawinigan",
           "opponentRegistryId": "shawinigan"
-        },
-        {
-          "date": "2026-10-03",
-          "time": "16:30",
-          "opponent": "Laflèche",
-          "opponentCode": "LAF",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D2",
-          "gameId": "7b514546-f49c-4e56-a12c-41508ff8fc50",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7b514546-f49c-4e56-a12c-41508ff8fc50",
-          "opponentFullName": "Collège Laflèche",
-          "opponentRegistryId": "lafleche"
         },
         {
           "date": "2026-10-16",
@@ -33883,7 +33906,7 @@
         },
         {
           "date": "2026-10-03",
-          "time": "16:30",
+          "time": "10:30",
           "opponent": "Granby",
           "opponentCode": "GBY",
           "home": true,
@@ -34078,19 +34101,6 @@
         },
         {
           "date": "2026-10-03",
-          "time": "10:30",
-          "opponent": "Champlain Lennoxville",
-          "opponentCode": "LEN",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D2",
-          "gameId": "20b3609c-cc04-4e83-9a9e-02ab722dd2f9",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=20b3609c-cc04-4e83-9a9e-02ab722dd2f9",
-          "opponentFullName": "Champlain College Lennoxville",
-          "opponentRegistryId": "champlain-lennoxville"
-        },
-        {
-          "date": "2026-10-03",
           "time": "13:30",
           "opponent": "Séminaire de Sherbrooke",
           "opponentCode": "SSH",
@@ -34101,6 +34111,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c07cffcd-4c3d-4187-b6d1-b0e3f53800e4",
           "opponentFullName": "Séminaire de Sherbrooke",
           "opponentRegistryId": "seminaire-de-sherbrooke"
+        },
+        {
+          "date": "2026-10-03",
+          "time": "16:30",
+          "opponent": "Champlain Lennoxville",
+          "opponentCode": "LEN",
+          "home": false,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "20b3609c-cc04-4e83-9a9e-02ab722dd2f9",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=20b3609c-cc04-4e83-9a9e-02ab722dd2f9",
+          "opponentFullName": "Champlain College Lennoxville",
+          "opponentRegistryId": "champlain-lennoxville"
         },
         {
           "date": "2026-10-17",
@@ -66833,7 +66856,7 @@
         },
         {
           "date": "2026-10-04",
-          "time": "13:00",
+          "time": "15:00",
           "opponent": "Thetford",
           "opponentCode": "THE",
           "home": true,
@@ -67368,7 +67391,7 @@
         },
         {
           "date": "2026-10-04",
-          "time": "13:00",
+          "time": "15:00",
           "opponent": "Alma",
           "opponentCode": "ALM",
           "home": false,
@@ -73794,7 +73817,7 @@
           "opponentRegistryId": "beauce-appalaches"
         },
         {
-          "date": "2026-10-07",
+          "date": "2026-10-06",
           "time": "20:00",
           "opponent": "Jonquière",
           "opponentCode": "JON",
@@ -74328,7 +74351,7 @@
           "opponentRegistryId": "riviere-du-loup"
         },
         {
-          "date": "2026-10-07",
+          "date": "2026-10-06",
           "time": "20:00",
           "opponent": "Alma",
           "opponentCode": "ALM",
