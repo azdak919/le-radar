@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-16T16:57:17.049Z",
+  "updated": "2026-09-16T18:14:56.622Z",
   "total": 168,
   "pool": 53,
-  "incomplete": 8,
-  "withLeadExcerpt": 79,
-  "candidates": 8,
-  "enriched": 1,
+  "incomplete": 10,
+  "withLeadExcerpt": 81,
+  "candidates": 10,
+  "enriched": 3,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -19,12 +19,30 @@
       "changed": false
     },
     {
-      "title": "La performance de l’homosexualité : un privilège ?",
-      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "title": "L’épidémie de la nonchalance",
+      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
       "ok": true,
       "score": 96,
-      "chars": 258,
-      "sample": "Entre la brutalité toujours très réelle des LGBTIphobies et ces « bromances » : que penser d’un gest",
+      "chars": 391,
+      "sample": "À force de craindre d’être « trop » – trop sensible, trop sincère – on finit par se taire. Je me sui",
+      "changed": true
+    },
+    {
+      "title": "Gee-Gees 31, Stingers 10: Concordia falters in home opener",
+      "link": "https://thelinknewspaper.ca/article/16381",
+      "ok": true,
+      "score": 96,
+      "chars": 240,
+      "sample": "The Concordia University men’s rugby team had their home opener spoiled by the University of Ottawa ",
+      "changed": true
+    },
+    {
+      "title": "Gee-Gees 26, Stingers 21: Ottawa outlasts Concordia",
+      "link": "https://thelinknewspaper.ca/article/16380",
+      "ok": true,
+      "score": 96,
+      "chars": 256,
+      "sample": "The Concordia University women’s rugby team suffered its first loss of the season on Sunday, Sept. 4",
       "changed": true
     },
     {

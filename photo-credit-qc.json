@@ -1,23 +1,30 @@
 {
-  "updated": "2026-09-16T17:01:36.955Z",
+  "updated": "2026-09-16T18:19:27.231Z",
   "total": 168,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 119,
+  "cited": 120,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 10,
-  "citedNew": 7,
+  "checked": 20,
+  "updatedCount": 11,
+  "citedNew": 8,
   "fallbackNew": 12,
   "samples": [
     {
-      "title": "Une programmation record pour le salon du livre 2026",
-      "source": "La Pige",
-      "credit": "Photo : Vicky Dallaire",
+      "title": "Gee-Gees 31, Stingers 10: Concordia falters in home opener",
+      "source": "The Link",
+      "credit": "Photo: Nicolas Tremblay",
       "cited": true,
-      "method": "figcaption-paren-kind"
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Gee-Gees 26, Stingers 21: Ottawa outlasts Concordia",
+      "source": "The Link",
+      "credit": "Photo: Nicolas Tremblay",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "Unregulated but essential?",
@@ -27,9 +34,9 @@
       "method": "figcaption-trailing"
     },
     {
-      "title": "La performance de l’homosexualité : un privilège ?",
+      "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "credit": "Photo : Elie Nguyen",
       "cited": true,
       "method": "media-credit-featured"
     },
