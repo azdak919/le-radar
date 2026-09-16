@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-16T07:40:39.462Z",
+  "updatedAt": "2026-09-16T09:03:16.870Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T07:40:05.883Z"
+      "checkedAt": "2026-09-16T09:02:56.883Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Fréquence 440",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "03:00",
-        "end": "04:00",
-        "url": "https://cism893.ca/emissions/frequence-440"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "next": {
-        "title": "Ailleurs: escales en musique",
+        "title": "Club classique",
         "source": "schedule",
-        "start": "04:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/ailleurs-en-musique"
+        "start": "07:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/club-classique"
       },
       "track": "",
-      "showTitle": "Fréquence 440",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T07:40:07.270Z"
+      "checkedAt": "2026-09-16T09:03:00.095Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "WarpCor / Out of the Void",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "Full Circle",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "The Wednesday Morning After",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "09:00"
+      },
       "track": "",
-      "showTitle": "WarpCor / Out of the Void",
+      "showTitle": "Full Circle",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T07:40:10.347Z"
+      "checkedAt": "2026-09-16T09:03:02.949Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Morning Electro-shock",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/morning-electro-shock"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T07:40:32.675Z"
+      "checkedAt": "2026-09-16T09:03:06.277Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T07:40:33.717Z"
+      "checkedAt": "2026-09-16T09:03:08.141Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Lammoth - Farewell, Good Beast of Burden",
+      "track": "Birds of Prrrey - LOL",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-16T07:40:39.111Z"
+      "checkedAt": "2026-09-16T09:03:16.519Z"
     }
   }
 }
