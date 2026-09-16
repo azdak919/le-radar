@@ -1,16 +1,16 @@
 {
-  "updated": "2026-09-16T18:19:27.231Z",
+  "updated": "2026-09-16T18:32:09.828Z",
   "total": 168,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 120,
+  "cited": 118,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 20,
-  "updatedCount": 11,
-  "citedNew": 8,
-  "fallbackNew": 12,
+  "checked": 18,
+  "updatedCount": 9,
+  "citedNew": 4,
+  "fallbackNew": 14,
   "samples": [
     {
       "title": "Gee-Gees 31, Stingers 10: Concordia falters in home opener",
@@ -29,12 +29,12 @@
     {
       "title": "Unregulated but essential?",
       "source": "The Link",
-      "credit": "Illustration: Mira De Koven",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "L’épidémie de la nonchalance",
+      "title": "Rassembler pour mieux diviser",
       "source": "Le Délit",
       "credit": "Photo : Elie Nguyen",
       "cited": true,
@@ -43,9 +43,9 @@
     {
       "title": "Editorial: The importance of student journalism",
       "source": "The Link",
-      "credit": "Photo : Graphic Halle Keays",
-      "cited": true,
-      "method": "figcaption-bare"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Faire du sport sans se ruiner quand on est aux études",
@@ -74,20 +74,6 @@
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
