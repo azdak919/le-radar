@@ -1,100 +1,86 @@
 {
-  "updated": "2026-09-16T14:19:46.823Z",
+  "updated": "2026-09-16T17:01:36.955Z",
   "total": 168,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 118,
-  "pending": 13,
+  "cited": 119,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 36,
-  "updatedCount": 26,
-  "citedNew": 23,
-  "fallbackNew": 13,
+  "checked": 19,
+  "updatedCount": 10,
+  "citedNew": 7,
+  "fallbackNew": 12,
   "samples": [
     {
-      "title": "Épidemie de rougeole au Bangladesh",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "title": "Une programmation record pour le salon du livre 2026",
+      "source": "La Pige",
+      "credit": "Photo : Vicky Dallaire",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-paren-kind"
     },
     {
-      "title": "Antisémitisme : McGill, mauvaise élève?",
+      "title": "Unregulated but essential?",
+      "source": "The Link",
+      "credit": "Illustration: Mira De Koven",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "La performance de l’homosexualité : un privilège ?",
       "source": "Le Délit",
       "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Outil d’émancipation ou vecteur d’exclusion",
-      "source": "Le Délit",
-      "credit": "Photo : Bebe Cutter",
+      "title": "Editorial: The importance of student journalism",
+      "source": "The Link",
+      "credit": "Photo : Graphic Halle Keays",
       "cited": true,
-      "method": "media-credit-near"
+      "method": "figcaption-bare"
     },
     {
-      "title": "L’impact potentiel des élections québécoises sur McGill",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "title": "Faire du sport sans se ruiner quand on est aux études",
+      "source": "Le Collectif",
+      "credit": "Photo : UdeS",
       "cited": true,
-      "method": "media-credit-near"
+      "method": "body-tail"
     },
     {
-      "title": "La tyrannie du silence : vous êtes tous complices",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Un droit accordé, mais jamais entretenu",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "5e édition du Festival « Defund la Police »",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier l Le Délit",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Recettes musicales québécoises pour l’été",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "La syndicalisation gagne du terrain à McGill",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier l Le Délit",
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "via-attribution"
     },
     {
-      "title": "La transidentité dans les slashers",
-      "source": "Le Délit",
-      "credit": "Photo : Image tirée de Teenage death and sex at Camp Miasama",
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
       "cited": true,
-      "method": "media-credit-near"
-    },
-    {
-      "title": "La fabrique de la boîte de nuit",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Il faut le voir pour le croire",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Attention : virage à droite",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
+      "method": "body-line"
     }
   ]
 }
