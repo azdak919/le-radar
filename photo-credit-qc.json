@@ -1,21 +1,28 @@
 {
-  "updated": "2026-09-16T11:42:37.167Z",
+  "updated": "2026-09-16T14:19:46.823Z",
   "total": 168,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 116,
+  "cited": 118,
   "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 28,
-  "updatedCount": 18,
-  "citedNew": 13,
-  "fallbackNew": 15,
+  "checked": 36,
+  "updatedCount": 26,
+  "citedNew": 23,
+  "fallbackNew": 13,
   "samples": [
     {
       "title": "Épidemie de rougeole au Bangladesh",
       "source": "Le Délit",
       "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Antisémitisme : McGill, mauvaise élève?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -34,20 +41,6 @@
       "method": "media-credit-near"
     },
     {
-      "title": "Victoire de l’AFD en Saxe-Anhalt",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Il faut le voir pour le croire",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
       "title": "La tyrannie du silence : vous êtes tous complices",
       "source": "Le Délit",
       "credit": "Photo : Catvy Tran",
@@ -58,13 +51,6 @@
       "title": "Un droit accordé, mais jamais entretenu",
       "source": "Le Délit",
       "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Attention : virage à droite",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -90,11 +76,25 @@
       "method": "media-credit-near"
     },
     {
-      "title": "Nouvelle étape dans le parcours électoral",
+      "title": "La fabrique de la boîte de nuit",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier l Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
-      "method": "media-credit-near"
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Il faut le voir pour le croire",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Attention : virage à droite",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
     }
   ]
 }

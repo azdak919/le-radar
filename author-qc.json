@@ -1,10 +1,18 @@
 {
-  "updated": "2026-09-16T11:35:45.304Z",
+  "updated": "2026-09-16T14:15:01.196Z",
   "total": 168,
   "withAuthor": 168,
-  "mismatches": 7,
+  "mismatches": 9,
   "ok": true,
   "samples": [
+    {
+      "title": "Un an du Club DD’s",
+      "link": "https://www.delitfrancais.com/2026/09/16/un-an-du-club-dds/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Sixtine Nicolaÿ",
+      "reason": "page-byline"
+    },
     {
       "title": "Lo, how the Roses e’er blooming",
       "link": "https://thelinknewspaper.ca/article/16370",
@@ -54,6 +62,14 @@
       "reason": "no-author-source"
     },
     {
+      "title": "La cassette commence à être usée",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Antoine Proulx et Louis-Justin Sauvé",
+      "reason": "page-byline"
+    },
+    {
       "title": "Garda World au CVM (Éditorial)",
       "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
       "source": "Exil",
@@ -62,5 +78,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 7
+  "fixed": 9
 }
