@@ -1,72 +1,80 @@
 {
-  "updatedAt": "2026-09-16T18:18:16.944Z",
+  "updatedAt": "2026-09-16T21:31:36.773Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Les Arshitechs du Son",
+        "source": "api-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "next": {
-        "title": "Chéri.e, j’arrive!",
+        "title": "Capitales de Québec",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "start": "18:50",
+        "end": "23:00",
+        "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
+        "api-live",
+        "schedule-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T18:17:52.485Z"
+      "checkedAt": "2026-09-16T21:31:09.071Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
+        "title": "Feu | Metal | Chaos",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/feu-metal-chaos"
       },
       "next": {
-        "title": "Vibrance: voyage dance vers Montréal et ailleurs",
+        "title": "Effets sonores (reprise)",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/vibrance"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/effets-sonores"
       },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Feu | Metal | Chaos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T18:17:54.150Z"
+      "checkedAt": "2026-09-16T21:31:10.690Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Radyo Kapwa",
+        "title": "Off the Hour/Sounds of Resistance",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "next": {
-        "title": "All Da Way Live",
+        "title": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "track": "",
-      "showTitle": "Radyo Kapwa",
+      "showTitle": "Off the Hour/Sounds of Resistance",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +82,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T18:17:57.219Z"
+      "checkedAt": "2026-09-16T21:31:13.724Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Cherry Vamp and the Sonic Coffin",
+        "title": "Advice By The Fireplace",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
       },
       "next": {
-        "title": "Patch Notes",
+        "title": "The New Consonance",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/patch-notes"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-new-consonance"
       },
       "track": "",
-      "showTitle": "Cherry Vamp and the Sonic Coffin",
+      "showTitle": "Advice By The Fireplace",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T18:18:12.413Z"
+      "checkedAt": "2026-09-16T21:31:28.184Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,20 +134,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T18:18:13.746Z"
+      "checkedAt": "2026-09-16T21:31:29.755Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Palmarès CHOQ.ca",
+        "title": "Opération beurre de cinoche",
         "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
       },
-      "track": "A Tribe Called Red - Sisters (ft. Northern Voice)",
+      "track": "Allison Russell - Really Real",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +158,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-16T18:18:16.595Z"
+      "checkedAt": "2026-09-16T21:31:36.422Z"
     }
   }
 }
