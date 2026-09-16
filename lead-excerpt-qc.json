@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-16T03:46:28.484Z",
+  "updated": "2026-09-16T06:03:28.586Z",
   "total": 168,
   "pool": 58,
   "incomplete": 8,
   "withLeadExcerpt": 83,
   "candidates": 8,
-  "enriched": 3,
+  "enriched": 0,
   "failed": 4,
   "ok": true,
   "samples": [
@@ -19,22 +19,13 @@
       "changed": false
     },
     {
-      "title": "Bulletin La Pige radio 14h30 et 15h30",
-      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-14h30",
-      "ok": true,
-      "score": 73,
-      "chars": 153,
-      "sample": "Starbucks arrive à Jonquière, une marche pour sensibiliser au myélome multiple et plus de variétés d",
-      "changed": true
-    },
-    {
       "title": "Le Festival de Cinéma de la Ville de Québec et le Festival REGARD, une amitié qui traverse le parc des Laurentides",
       "link": "https://lapige.atmjonquiere.com/2026/09/14/le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides/?utm_source=rss&utm_medium=rss&utm_campaign=le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides",
       "ok": true,
       "score": 83,
       "chars": 400,
       "sample": "Le Festival de Cinéma de la Ville de Québec (FCVQ) a souligné la 30 e édition du Festival REGARD lor",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Cinq nouvelles marquantes de l’été",
@@ -43,7 +34,16 @@
       "score": 100,
       "chars": 400,
       "sample": "Quartier Libre est finalement de retour après un été mouvementé. Voici les nouvelles qui ont marqué ",
-      "changed": true
+      "changed": false
+    },
+    {
+      "title": "Bulletin La Pige radio 14h30 et 15h30",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-14h30",
+      "ok": true,
+      "score": 73,
+      "chars": 153,
+      "sample": "Starbucks arrive à Jonquière, une marche pour sensibiliser au myélome multiple et plus de variétés d",
+      "changed": false
     }
   ]
 }
