@@ -1,16 +1,16 @@
 {
-  "updated": "2026-09-15T23:12:26.245Z",
-  "updatedSlot": null,
+  "updated": "2026-09-16T00:28:22.739Z",
+  "updatedSlot": "2026-09-16T01:00:00.000Z",
   "count": 168,
   "freshnessSessions": 3,
   "sources": {
     "Quartier Libre": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-14T22:00:00.000Z",
-      "lastFetchOk": "2026-09-15T23:11:51.326Z"
+      "lastFetchOk": null
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-09-15T23:11:51.731Z"
+      "lastFetchOk": "2026-09-16T00:27:59.087Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-01T04:35:43.000Z",
-      "lastFetchOk": "2026-09-15T23:11:56.494Z"
+      "lastFetchOk": "2026-09-16T00:28:03.470Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,23 +34,23 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-09-14T19:16:31.000Z",
-      "lastFetchOk": "2026-09-15T23:11:56.983Z"
+      "lastFetchOk": "2026-09-16T00:28:04.230Z"
     },
     "The Link": {
       "fetchOk": true,
       "stale": false,
       "articleCount": 20,
       "freshArticleCount": 20,
-      "lastArticle": "2026-09-15T21:33:00.000Z",
-      "lastFetchOk": "2026-09-15T23:11:58.290Z"
+      "lastArticle": "2026-09-16T00:06:00.000Z",
+      "lastFetchOk": "2026-09-16T00:28:05.427Z"
     },
     "Zone Campus": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-09-15T23:11:59.085Z"
+      "lastFetchOk": null
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,15 +58,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-09-15T23:12:00.980Z"
+      "lastFetchOk": "2026-09-16T00:28:07.563Z"
     },
     "Le Collectif": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-08T22:18:02.000Z",
-      "lastFetchOk": "2026-09-15T23:12:02.409Z"
+      "lastFetchOk": null
     },
     "Exil": {
       "fetchOk": true,
@@ -74,15 +74,15 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-09-15T23:12:02.608Z"
+      "lastFetchOk": "2026-09-16T00:28:08.133Z"
     },
     "La Pige": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-14T23:46:24.000Z",
-      "lastFetchOk": "2026-09-15T23:12:03.282Z"
+      "lastFetchOk": null
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 16,
       "lastArticle": "2026-09-09T00:53:34.359Z",
-      "lastFetchOk": "2026-09-15T23:12:05.256Z"
+      "lastFetchOk": "2026-09-16T00:28:09.773Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-15T17:33:58.000Z",
-      "lastFetchOk": "2026-09-15T23:12:05.462Z"
+      "lastFetchOk": "2026-09-16T00:28:09.994Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -106,10 +106,36 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-09-15T23:12:05.596Z"
+      "lastFetchOk": "2026-09-16T00:28:10.164Z"
     }
   },
   "items": [
+    {
+      "source": "The Link",
+      "institution": "Concordia University",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "en",
+      "title": "Montrealers gather for the city’s first-ever Climate Week",
+      "link": "https://thelinknewspaper.ca/article/16379",
+      "author": "Abigail Best",
+      "date": "2026-09-16T00:06:00.000Z",
+      "excerpt": "The week invited locals to get involved in climate-centred events relating to fields of their personal interests Participants gathered at Café SAT on Sept. 10 for Mydas Greenworks’ networking cocktail as part of Montreal Climate Week. Photo by Abigail Best",
+      "image": "https://thelinknewspaper.ca/images/articles/_resized/01.news.montrealclimateweek.AbigailBest.online.0146.jpeg",
+      "_pageAuthor": "Abigail Best",
+      "authorCheckedAt": "2026-09-16T00:28:33.940Z",
+      "leadExcerpt": "Montreal Climate Week brought experts and businesses together to address pressing climate concerns and how Montrealers could take action. The event took place across the city from Sept. 8 to Sept. 13.",
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/bc37c96678447e67.jpg",
+      "imageLocalKey": "bc37c96678447e67",
+      "sourceImageCredit": "Photo : Abigail Best",
+      "sourceImageCreator": "Abigail Best",
+      "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16379",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "01.news.montrealclimateweek.abigailbest.online.0146.jpeg",
+      "sourceImageCreditRev": 10
+    },
     {
       "source": "The Link",
       "institution": "Concordia University",
@@ -122,19 +148,20 @@
       "date": "2026-09-15T21:33:00.000Z",
       "excerpt": "Owner Jon Block believes in quality ingredients and human connection 5 Pizza owner Jon Block adding sauce to pizza dough. Photo Asmaa Stora",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/02.5pizza.Asmaa_Stora.online_5117-edit_900_601_90.jpg",
-      "_pageAuthor": "Asmaa Stora",
       "authorCheckedAt": "2026-09-15T23:12:36.216Z",
-      "leadExcerpt": "5 Pizza is a pizzeria that opened two years ago in the quieter part of La Petite-Patrie, at the edge of Villeray. The restaurant has become a popular spot in the neighbourhood, particularly in the evenings.",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/f9db66d398c8bdba.jpg",
-      "imageLocalKey": "f9db66d398c8bdba",
+      "_pageAuthor": "Asmaa Stora",
       "sourceImageCredit": "Photo: Asmaa Stora",
       "sourceImageCreator": "Asmaa Stora",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16377",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "02.5pizza.asmaa_stora.online_5117-edit.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "5 Pizza is a pizzeria that opened two years ago in the quieter part of La Petite-Patrie, at the edge of Villeray. The restaurant has become a popular spot in the neighbourhood, particularly in the evenings.",
+      "imageLocal": "assets/news-images/f9db66d398c8bdba.jpg",
+      "imageLocalKey": "f9db66d398c8bdba",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Campus",
@@ -181,7 +208,6 @@
       "date": "2026-09-14T23:46:24.000Z",
       "excerpt": "L’isolation serait visible à certains endroits du département d’inhalothérapie. (Photo: Zachary Rivard) Le département d’inhalothérapie de l’hôpital de Chicoutimi est fermé temporairement pour des craintes liées à la présence d’amiante. Selon les informations obtenues par La",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/DSC02936.jpg",
-      "_pageAuthor": "Zachary Rivard",
       "sourceImageCredit": "Photo : Zachary Rivard",
       "sourceImageCreator": "Zachary Rivard",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/14/le-departement-dinhalotherapie-de-chicoutimi-ferme-pour-des-craintes-damiante/?utm_source=rss&utm_medium=rss&utm_campaign=le-departement-dinhalotherapie-de-chicoutimi-ferme-pour-des-craintes-damiante",
@@ -189,8 +215,9 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "dsc02936.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Selon les informations obtenues par La Pige , l’isolation serait visible à certains endroits, notamment dans une salle de pause pour les employés. Un dégât d’eau survenu le 28 août a entraîné un bris au niveau d’une partie du plafond dans le secteur."
+      "leadImageReady": false,
+      "leadExcerpt": "Selon les informations obtenues par La Pige , l’isolation serait visible à certains endroits, notamment dans une salle de pause pour les employés. Un dégât d’eau survenu le 28 août a entraîné un bris au niveau d’une partie du plafond dans le secteur.",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -205,7 +232,6 @@
       "excerpt": "Québec solidaire a dévoilé son cadre financier, intitulé Les moyens de nos ambitions, le vendredi 11 septembre dernier. Le parti y annonce un retour à l’équilibre budgétaire à la troisième année d’un mandat solidaire, de nombreux investissements financés notamment par",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/09/Devoilement-Cadre-Financier-QS.jpeg",
       "authorCheckedAt": "2026-09-15T23:12:36.810Z",
-      "_pageAuthor": "Samuel Girard",
       "sourceImageCredit": "Photo : Samuel Girard",
       "sourceImageCreator": "Samuel Girard",
       "sourceImageCreditUrl": "https://quartierlibre.ca/quebec-solidaire-cadre-financier/",
@@ -213,11 +239,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "devoilement-cadre-financier-qs.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Québec solidaire a dévoilé son cadre financier, intitulé Les moyens de nos ambitions , le vendredi 11 septembre dernier. Le parti y annonce un retour à l’équilibre budgétaire à la troisième année d’un mandat solidaire, de nombreux investissements financés notamment par l’imposition des grandes fortunes, et un portefeuille dédié à la transition écologique de 4,2 milliards de dollars sur quatre ans.",
       "imageLocal": "assets/news-images/1effe24d0017bea7.jpg",
       "imageLocalKey": "1effe24d0017bea7",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -231,15 +258,15 @@
       "date": "2026-09-14T20:44:57.000Z",
       "excerpt": "La Ville de Saguenay entend profiter de la prochaine campagne électorale provinciale pour faire avancer plusieurs dossiers qui touchent directement les citoyens. Réunis ce lundi à l’hôtel de ville de Chicoutimi, le maire Luc Boivin et les présidents des trois arrondissements ont",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Adobe-Express-file.png",
-      "_pageAuthor": "augustinspiece",
       "sourceImageCredit": "Crédit photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/14/saguenay-veut-faire-avancer-ses-dossiers-a-quebec/?utm_source=rss&utm_medium=rss&utm_campaign=saguenay-veut-faire-avancer-ses-dossiers-a-quebec",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "adobe-express-file.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "La Ville de Saguenay entend profiter de la prochaine campagne électorale provinciale pour faire avancer plusieurs dossiers qui touchent directement les citoyens. Réunis ce lundi à l’hôtel de ville de Chicoutimi, le maire Luc Boivin et les présidents des trois arrondissements ont présenté leurs principales demandes aux futurs candidats."
+      "leadImageReady": false,
+      "leadExcerpt": "La Ville de Saguenay entend profiter de la prochaine campagne électorale provinciale pour faire avancer plusieurs dossiers qui touchent directement les citoyens. Réunis ce lundi à l’hôtel de ville de Chicoutimi, le maire Luc Boivin et les présidents des trois arrondissements ont présenté leurs principales demandes aux futurs candidats.",
+      "_retainedFromCache": true
     },
     {
       "source": "The McGill Daily",
@@ -277,7 +304,6 @@
       "date": "2026-09-14T19:11:44.000Z",
       "excerpt": "Bulletin de 14h30 Serdex vient en aide aux entreprises touchées par les contre-tarifs, la Voie Maltée fête son départ de la rue Saint-Dominique et le libéral Serge Bergeron sensible à la réalité des étudiants. Pour écouter le bulletin de Marine De Ville, cliquez-ici. Bulletin de",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg",
-      "_pageAuthor": "juliebergeron",
       "sourceImageCredit": "Crédit photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-14h30",
       "sourceImageCreditFrom": "media",
@@ -285,7 +311,7 @@
       "sourceImageCreditImageKey": "dsc0108.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
-      "leadExcerpt": "Starbucks arrive à Jonquière, une marche pour sensibiliser au myélome multiple et plus de variétés de pommes peuvent maintenant être produites au Québec."
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -299,7 +325,6 @@
       "date": "2026-09-14T18:23:51.000Z",
       "excerpt": "Dix courts-métrages d’animation jeunesse ont été présentés lors de « P’tites vues & céréales » samedi matin. (Photo : Vittoria Caputo) Le Festival de Cinéma de la Ville de Québec (FCVQ) a souligné la 30e édition du Festival REGARD lors d’une projection carte blanche du volet",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_7510.jpg",
-      "_pageAuthor": "Vittoria Caputo",
       "sourceImageCredit": "Photo : Vittoria Caputo",
       "sourceImageCreator": "Vittoria Caputo",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/14/le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides/?utm_source=rss&utm_medium=rss&utm_campaign=le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides",
@@ -307,8 +332,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_7510.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Le Festival de Cinéma de la Ville de Québec (FCVQ) a souligné la 30 e édition du Festival REGARD lors d’une projection carte blanche du volet jeunesse samedi matin à la Place d’Youville. Bol de céréales à la main, jeunes et moins jeunes étaient installés confortablement devant les remparts du Vieux-Québec pour « P’tites vues & céréales », une projection destinée aux plus petits. Pour l’occasion, l"
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -349,15 +374,15 @@
       "date": "2026-09-14T17:12:28.000Z",
       "excerpt": "Le député sortant de Jonquière et son parti sont présentement deuxième dans les intentions de vote dans la région et en Côte-Nord avec 24% des voix selon un récent sondage Léger. (Photo : Colin Boucher) Que répondent les partis politiques aux préoccupations des jeunes électeurs",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_2947.jpeg",
-      "_pageAuthor": "Colin Boucher",
       "sourceImageCredit": "Crédit photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/14/les-priorites-de-la-jeunesse-vues-par-yannick-gagnon/?utm_source=rss&utm_medium=rss&utm_campaign=les-priorites-de-la-jeunesse-vues-par-yannick-gagnon",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "img_2947.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Que répondent les partis politiques aux préoccupations des jeunes électeurs ? C’est ce que l’équipe de La Pige a voulu savoir. Dans cette série d’articles, nos journalistes sont allés à la rencontre de candidats de la région (à l’exception des conservateurs) et leurs ont soumis cinq thèmes qui les interpellent et pour lesquels ils souhaitent entendre les candidats."
+      "leadImageReady": false,
+      "leadExcerpt": "Que répondent les partis politiques aux préoccupations des jeunes électeurs ? C’est ce que l’équipe de La Pige a voulu savoir. Dans cette série d’articles, nos journalistes sont allés à la rencontre de candidats de la région (à l’exception des conservateurs) et leurs ont soumis cinq thèmes qui les interpellent et pour lesquels ils souhaitent entendre les candidats.",
+      "_retainedFromCache": true
     },
     {
       "source": "The McGill Daily",
@@ -451,14 +476,14 @@
       "date": "2026-09-14T15:55:03.000Z",
       "excerpt": "Bulletin 12h La Voie Maltée tourne la page sur la rue Saint-Dominique et succès pour la Fouart et les Gaillards cette fin de semaine. Écoutez le bulletin d’Aglaé Delisle ici. Bulletin 10h30 Le PQ toujours en tête dans les sondages et la série Empathie rafle tout au gala des Prix",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0115.jpg",
-      "_pageAuthor": "juliebergeron",
       "sourceImageCredit": "Crédit photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-10h30-la-pige-10h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-10h30-la-pige-10h30",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "dsc0115.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -472,7 +497,6 @@
       "date": "2026-09-14T15:14:27.000Z",
       "excerpt": "Très tôt samedi, de nombreux visiteurs étaient déjà au parc Mars pour profiter des activités. (Photo : Mathieu Bisson) Fidèle à son habitude, la FouArt a attiré des milliers de visiteurs au cœur du centre-ville de La Baie les 12 et 13 septembre dernier. La tradition",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_4203.jpeg",
-      "_pageAuthor": "Mathieu Bisson",
       "sourceImageCredit": "Photo : Mathieu Bisson",
       "sourceImageCreator": "Mathieu Bisson",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/14/fouart-un-franc-succes-cette-annee-a-la-baie/?utm_source=rss&utm_medium=rss&utm_campaign=fouart-un-franc-succes-cette-annee-a-la-baie",
@@ -480,8 +504,9 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_4203.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Fidèle à son habitude, la FouArt a attiré des milliers de visiteurs au cœur du centre-ville de La Baie les 12 et 13 septembre dernier. La tradition baieriveraine a su compter sur plusieurs nouveautés et une clientèle rarement vue auparavant : les croisiéristes."
+      "leadImageReady": false,
+      "leadExcerpt": "Fidèle à son habitude, la FouArt a attiré des milliers de visiteurs au cœur du centre-ville de La Baie les 12 et 13 septembre dernier. La tradition baieriveraine a su compter sur plusieurs nouveautés et une clientèle rarement vue auparavant : les croisiéristes.",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -495,16 +520,16 @@
       "date": "2026-09-14T15:10:23.000Z",
       "excerpt": "La Maison des jeunes de Laterrière a sa propre radio diffusée sur YouTube. (Photo : Maison des jeunes de Laterrière) Grâce à un don de la caisse Desjardins, les jeunes bénéficieront d’un accès plus abordable aux activités. Ils ont donné 5000 $ par année à la Maison des jeunes",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/shared-image.png",
-      "_pageAuthor": "Gabriel Barrette",
       "leadExcerpt": "Grâce à un don de la caisse Desjardins, les jeunes bénéficieront d’un accès plus abordable aux activités. Ils ont donné 5000 $ par année à la Maison des jeunes (MDJ) de Latterière le 8 septembre.",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "sourceImageCredit": "Photo : Maison des jeunes de Laterrière",
       "sourceImageCreator": "Maison des jeunes de Laterrière",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/14/maison-des-jeunes-15-000-pour-financer-des-activites/?utm_source=rss&utm_medium=rss&utm_campaign=maison-des-jeunes-15-000-pour-financer-des-activites",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "shared-image.png",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "_retainedFromCache": true
     },
     {
       "source": "The McGill Daily",
@@ -571,7 +596,6 @@
       "excerpt": "Quartier Libre a assisté, le mercredi 9 septembre dernier, au débat électoral sur l’avenir de la culture organisé par Réseau Culture 360° , Culture Montréal et le Front commun pour les arts . Devant une salle de 300 places de HEC Montréal, la représentante de la Coalition avenir",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/09/802976486_2899205943805197_1798626515862610346_n.jpeg",
       "authorCheckedAt": "2026-09-15T01:29:20.781Z",
-      "_pageAuthor": "Carla Roche",
       "sourceImageCredit": "Photo : Daphnée Bouchard",
       "sourceImageCreator": "Daphnée Bouchard",
       "sourceImageCreditUrl": "https://quartierlibre.ca/culture-debat-electoral/",
@@ -579,11 +603,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "802976486_2899205943805197_1798626515862610346_n.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Cette connaissance des dossiers s’est toutefois traduite par des engagements financiers inégaux. « J’ai l’impression que c’était un peu le débat du statu quo, nuance Mme Gignac . Ce qui a été le plus répété, c’est qu’il n’y aura pas de coupes, mais ne pas avoir de coupes ne veut pas dire d’investissements. ».",
       "imageLocal": "assets/news-images/f4cf5dccf794e9b9.jpg",
       "imageLocalKey": "f4cf5dccf794e9b9",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -597,7 +622,6 @@
       "date": "2026-09-11T20:22:21.000Z",
       "excerpt": "Christine Fréchette était accompagnée des candidats régionaux dont Yannick Gagnon pour la circonscription de Jonquière.(Photo : Elena Simet) Christine Fréchette, qui était de passage dans la région ce jeudi, dans le cadre de la campagne électorale, en a profité pour visiter le",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/photo-1.jpg",
-      "_pageAuthor": "Elena Simet",
       "sourceImageCredit": "Photo : Elena Simet",
       "sourceImageCreator": "Elena Simet",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/11/christine-frechette-visite-la-centrale-hydroelectrique-de-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=christine-frechette-visite-la-centrale-hydroelectrique-de-jonquiere",
@@ -605,8 +629,16 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "photo-1.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Christine Fréchette, qui était de passage dans la région ce jeudi, dans le cadre de la campagne électorale, en a profité pour visiter la centrale hydroélectrique Hydrep. Une démarche qui s’inscrit dans un contexte de guerre tarifaire avec les États-Unis ."
+      "leadImageReady": false,
+      "leadExcerpt": "Christine Fréchette, qui était de passage dans la région ce jeudi, dans le cadre de la campagne électorale, en a profité pour visiter la centrale hydroélectrique Hydrep. Une démarche qui s’inscrit dans un contexte de guerre tarifaire avec les États-Unis .",
+      "_retainedFromCache": true,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/7/71/Christine_Fr%C3%A9chette.jpg",
+      "imageTitle": "Christine Fréchette",
+      "imageCredit": "Photo : TVA Nouvelles / CC0 · Openverse",
+      "imageCreator": "TVA Nouvelles",
+      "imageLicense": "cc0",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=146469713"
     },
     {
       "source": "La Pige",
@@ -620,15 +652,15 @@
       "date": "2026-09-11T20:20:34.000Z",
       "excerpt": "La première ministre du Québec est arrivée vers 14 h à Alma et a été accueillie par le candidat sortant et actuel ministre du Développement régional, Éric Girard. La première ministre du Québec était de passage ce jeudi, en région. Une visite monopolisée par la question de la",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Photo-mise-de-lavant.jpg",
-      "_pageAuthor": "Colin Boucher",
       "sourceImageCredit": "Crédit photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/11/christine-frechette-en-campagne-au-saguenay-lac-saint-jean/?utm_source=rss&utm_medium=rss&utm_campaign=christine-frechette-en-campagne-au-saguenay-lac-saint-jean",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "photo-mise-de-lavant.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "La première ministre du Québec était de passage ce jeudi, en région. Une visite monopolisée par la question de la guerre commerciale, les préoccupations régionales et la position référendaire de la CAQ."
+      "leadImageReady": false,
+      "leadExcerpt": "La première ministre du Québec était de passage ce jeudi, en région. Une visite monopolisée par la question de la guerre commerciale, les préoccupations régionales et la position référendaire de la CAQ.",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -643,18 +675,18 @@
       "excerpt": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de la semaine passée, cliquer ici.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990.png",
       "authorCheckedAt": "2026-09-15T23:12:37.047Z",
-      "_pageAuthor": "Samuel Girard",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-7/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "5infos_ql-e1769792962990.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Dans la région de Saxe-Anhalt, en Allemagne, le parti d’extrême droite Alternative für Deutschland (AfD) a remporté l’élection régionale avec environ 44 % des voix, un résultat sans précédent depuis la Deuxième Guerre mondiale. Cette victoire choquante rapproche le parti des portes du pouvoir, puisque trois sièges manquent à celui-ci pour avoir la majorité absolue au parlement régional.",
       "imageLocal": "assets/news-images/95d1c982cd32b09e.png",
       "imageLocalKey": "95d1c982cd32b09e",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -669,7 +701,6 @@
       "excerpt": "L’ ACFAS a dévoilé le mercredi 9 septembre dernier sa feuille de route « Pour un Québec qui croit en sa science », dans l’espoir d’attirer l’attention du futur gouvernement sur les besoins de la communauté scientifique. Les trois priorités de l’Association sont un meilleur",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/09/Photo_Lab_QL.jpeg",
       "authorCheckedAt": "2026-09-15T01:29:21.133Z",
-      "_pageAuthor": "Samuel Girard",
       "sourceImageCredit": "Photo : Murat Kizaibek",
       "sourceImageCreator": "Murat Kizaibek",
       "sourceImageCreditUrl": "https://quartierlibre.ca/acfas-devoile-ses-revendications/",
@@ -677,11 +708,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "photo_lab_ql.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "La directrice générale de l’ACFAS, Sophie Montreuil, s’est montrée catégorique auprès de Quartier Libre sur l’importance du lien entre la science et la politique. « On voulait rappeler qu’il n’y aura pas d’avenir pour le Québec s’il n’y a pas un intérêt à bien soutenir le système d’enseignement supérieur, l’écosystème de la recherche et les chercheurs », précise-t-elle.",
       "imageLocal": "assets/news-images/e67a135472444de3.jpg",
       "imageLocalKey": "e67a135472444de3",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Polyscope",
@@ -718,7 +750,6 @@
       "date": "2026-09-08T22:18:02.000Z",
       "excerpt": "Le Parti libéral du Canada (PLC), minoritaire à la sortie des élections fédérales de 2025, voit sa majorité se renforcir davantage grâce à trois élections partielles dans trois provinces différentes, toutes remportées par le PLC de Mark Carney. Le départ de Richard Martel se",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/09/SOCIETE_Trois-sieges-de-plus-pour-Mark-Carney_Getty-Images.jpg",
-      "_pageAuthor": "Médéric Dens",
       "sourceImageCredit": "Photo : Getty Images",
       "sourceImageCreator": "Getty Images",
       "sourceImageCreditUrl": "https://lecollectif.ca/a-la-une/trois-sieges-de-plus-pour-mark-carney/",
@@ -737,7 +768,8 @@
       "leadExcerpt": "Dans les deux dernières circonscriptions mentionnées, les résultats étaient prévisibles. Beaches – East York, était représentée par les couleurs libérales depuis 1993, sauf de 2011 à 2015, lors de la « vague orange ». Nate Erskine-Smith en était le député depuis 2015.",
       "imageLocal": "assets/news-images/53b02654727b3572.jpg",
       "imageLocalKey": "53b02654727b3572",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -751,7 +783,6 @@
       "date": "2026-09-08T21:55:34.000Z",
       "excerpt": "Pour participer à la vie démocratique et exercer son droit de vote, il faut d’abord comprendre le fonctionnement des élections. Pour qui vote-t-on réellement ? Le parti ? Le chef ? Et lorsque l’on est une personne étudiante, comment voter et pour quelle circonscription ? Est-ce",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/09/SOCIETE_Comment-fonctionnent-les-elections-au-Quebec_Pixabay.jpg",
-      "_pageAuthor": "Médéric Dens",
       "sourceImageCredit": "Photo : Pixabay",
       "sourceImageCreator": "Pixabay",
       "sourceImageCreditUrl": "https://lecollectif.ca/a-la-une/comment-fonctionnent-les-elections-au-quebec/",
@@ -759,11 +790,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_comment-fonctionnent-les-elections-au-quebec_pixabay.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Pour participer à la vie démocratique et exercer son droit de vote, il faut d’abord comprendre le fonctionnement des élections. Pour qui vote-t-on réellement ? Le parti ? Le chef ? Et lorsque l’on est une personne étudiante, comment voter et pour quelle circonscription ? Est-ce le même processus que lors des élections fédérales ?",
       "imageLocal": "assets/news-images/fee17ab14daa6285.jpg",
       "imageLocalKey": "fee17ab14daa6285",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -777,7 +809,6 @@
       "date": "2026-09-08T13:51:18.000Z",
       "excerpt": "La Galerie d’art Antoine-Sirois prépare sa rentrée avec une nouvelle exposition qui prendra vie du 17 septembre au 19 décembre. Présences troubles promet d’être l’une des expositions les plus intéressantes et surprenantes de la galerie à ce jour.",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/09/CULTURE_ExpositionGalerieDartAntoineSirois_LaccordTacite_CreditSarahCloutier.png",
-      "_pageAuthor": "Elizabeth Gagné",
       "sourceImageCredit": "Photo : ItSarahCloutier",
       "sourceImageCreator": "ItSarahCloutier",
       "sourceImageCreditUrl": "https://lecollectif.ca/culture/presences-troubles-le-corps-en-metamorphose/",
@@ -785,10 +816,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "culture_expositiongaleriedartantoinesirois_laccordtacite_creditsarahcloutier.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/d4d626163206ca3e.png",
       "imageLocalKey": "d4d626163206ca3e",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -803,7 +835,6 @@
       "excerpt": "The Link masthead tells you where you can go to relax, lock in or grab a bite Hang Time Pizza at 1390 De Maisonneuve Blvd. W. Photo Nicolas Tremblay This article originally appeared in The Link Volume 47, Issue 1, published September 8, 2026.",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_5694_1_900_571_90.jpg",
       "authorCheckedAt": "2026-09-15T18:24:20.949Z",
-      "_pageAuthor": "Ryan Pyke",
       "sourceImageCredit": "Photo: Nicolas Tremblay",
       "sourceImageCreator": "Nicolas Tremblay",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16372",
@@ -1196,32 +1227,6 @@
       "imageLocalVia": "origin"
     },
     {
-      "source": "The Link",
-      "institution": "Concordia University",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "en",
-      "title": "Tuition hikes compromise Concordia’s future",
-      "link": "https://thelinknewspaper.ca/article/16353",
-      "author": "Marissa Guthrie",
-      "date": "2026-09-08T13:00:00.000Z",
-      "excerpt": "Quebec residents, Canadian students, and international students. Long ago, the three demographics lived in harmony until the CAQ CAQ’s tutition hikes are ruining the university experience for many. Graphic James Issa This article originally appeared in The Link Volume 47, Issue",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Province.James_Issa_900_720_90.jpg",
-      "authorCheckedAt": "2026-09-15T18:24:51.357Z",
-      "sourceImageCredit": "Illustration: James Issa",
-      "sourceImageCreator": "James Issa",
-      "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16353",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "01.ops.province.james_issa.jpg",
-      "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "I've met driven, brilliant people from every corner of Canada and the world. These are people who've thrown themselves into everything Concordia has to offer and been crucial in building Montreal's vibrant social scene.",
-      "imageLocal": "assets/news-images/b8abc6e1ec73b280.jpg",
-      "imageLocalKey": "b8abc6e1ec73b280",
-      "imageLocalVia": "origin"
-    },
-    {
       "source": "Le Polyscope",
       "institution": "Polytechnique Montréal",
       "region": "Montréal",
@@ -1282,11 +1287,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "5-infos-marquantes-de-lete.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Quartier Libre est finalement de retour après un été mouvementé. Voici les nouvelles qui ont marqué l’actualité des derniers mois afin de commencer la session bien informés. Des feux de forêt ont sévi dans de nombreux pays cet été, parmi lesquels la France et la Belgique. Entre 96 000 et 115 000 hectares auraient brûlé cette année en France, bien plus que le record de 66 000 hectares de surface br",
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/55ee370802cc825c.png",
       "imageLocalKey": "55ee370802cc825c",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1302,7 +1307,7 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/09/antidote-bannie╠Cre-JLC-1920x1005_2026@2x-scaled.jpg",
       "authorCheckedAt": "2026-09-01T09:26:57.178Z",
       "leadExcerpt": "Entre le loyer, l’épicerie, le transport et les dépenses liées aux études, le budget d’une personne étudiante peut rapidement être serré. Dans ce contexte, payer un abonnement coûteux à la salle de musculation ou s’inscrire à plusieurs activités sportives peut sembler impossible. Pourtant, à Sherbrooke, il existe plusieurs façons de rester actif sans vider son portefeuille.",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/2d33e283f404704f.jpg",
       "imageLocalKey": "2d33e283f404704f",
       "imageLocalVia": "origin",
@@ -1312,7 +1317,8 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "antidote-bannie╠cre-jlc-1920x1005_2026@2x.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1334,10 +1340,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sports_futurarenaudeshockeyvo_sourceuniversitedesherbrooke.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/9d9a390f8dbf3918.png",
       "imageLocalKey": "9d9a390f8dbf3918",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1359,11 +1366,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sports_bouger-pour-decrocher_sourcecroq.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Selon l’Organisation mondiale de la Santé (OMS), l’activité physique contribue à la santé physique et mentale. Elle peut notamment réduire les symptômes d’anxiété et favoriser le bien-être général. Chez la communauté étudiante, dont les journées sont souvent chargées et imprévisibles, intégrer le mouvement à la routine peut donc être une façon accessible de prendre une pause et de décrocher.",
       "imageLocal": "assets/news-images/81856f432b651093.jpg",
       "imageLocalKey": "81856f432b651093",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1384,10 +1392,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_psychiatrie_sourceistockphoto.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/5eff2ab7750089e5.png",
       "imageLocalKey": "5eff2ab7750089e5",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1408,10 +1417,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_rentreecegep_sourcecegepdesherbrooke.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/a87625900bde410a.jpg",
       "imageLocalKey": "a87625900bde410a",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1432,11 +1442,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_sante-mentale-personnel-soignant_sourcehinterhausproductions.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Les personnes soignantes ont des horaires difficiles et, parfois, elles sont obligées de faire des heures supplémentaires en raison du manque de personnel. Plusieurs professionnels de la santé vivent avec de la fatigue physique et mentale. De plus, cette charge de travail importante entraine des difficultés à concilier la vie professionnelle et la vie personnelle.",
       "imageLocal": "assets/news-images/9658d634551d8b4c.jpg",
       "imageLocalKey": "9658d634551d8b4c",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Collectif",
@@ -1458,10 +1469,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_les-enjeux-electoraux-de-2026_leger-le-journal-tva.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/bcb0551ccfe8abf9.png",
       "imageLocalKey": "bcb0551ccfe8abf9",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Le Délit",
@@ -2089,7 +2101,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "photo-5_img_3586.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -2105,7 +2118,7 @@
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/18-19_calamine-1024x1024.jpg",
       "authorCheckedAt": "2026-09-15T18:24:55.819Z",
       "leadExcerpt": "Le concept même de Rétrograde , c’est cette sensation d’un recul sociétal, le fait qu’on est en train de retourner en arrière, politiquement parlant. Même après des avancées dans le féminisme, on est quand même en train de reculer avec la montée du masculinisme. En nommant l’album Rétrograde , ça me permettait donc de relier à la fois le queer dating et le recul général de la société.",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/d9f7e6df158c0b1d.jpg",
       "imageLocalKey": "d9f7e6df158c0b1d",
       "imageLocalVia": "origin",
@@ -2115,7 +2128,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "18-19_calamine.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -2131,7 +2145,7 @@
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/PXL_20260505_174149744-1024x768.jpg",
       "authorCheckedAt": "2026-09-15T18:24:56.162Z",
       "leadExcerpt": "Mme Fournier Dubé a insisté sur le fait que les enseignant·e·s sont les véritables « agents de changement ». Son rôle n’est pas d’imposer un cadre scientifique rigide, mais de vulgariser la recherche pour l’adapter aux besoins du terrain.",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/3d0fb4f9c4b03e07.jpg",
       "imageLocalKey": "3d0fb4f9c4b03e07",
       "imageLocalVia": "origin",
@@ -2141,7 +2155,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "pxl_20260505_174149744.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -2163,11 +2178,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "12-13_statuts-politique-parents-proche-aidants.jpg",
       "sourceImageCreditRev": 9,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Depuis mars 2024, l’Université de Montréal (UdeM) dispose d’une politique de soutien aux parents aux études. Le projet de loi 394 ( PL394 ) de Québec solidaire lui imposerait, en cas d’adoption, d’en créer une destinée également aux proches aidant·e·s.",
       "imageLocal": "assets/news-images/a50bcc72f82c0178.jpg",
       "imageLocalKey": "a50bcc72f82c0178",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -2193,7 +2209,8 @@
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "20_marieceleste.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -2699,10 +2716,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "1.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/7aa5ab9dd7648781.jpg",
       "imageLocalKey": "7aa5ab9dd7648781",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -2834,10 +2852,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3417.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/23af229881dbdeec.jpg",
       "imageLocalKey": "23af229881dbdeec",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -2930,10 +2949,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "17c4541a-839d-48b8-b5aa-2cc81e91e3c8.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/16a813216f7afeb2.jpg",
       "imageLocalKey": "16a813216f7afeb2",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -3046,10 +3066,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3939.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/debd9bf479305512.jpg",
       "imageLocalKey": "debd9bf479305512",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -3070,7 +3091,15 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_9786.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/3505/3973947773_f685cd523c_b.jpg",
+      "imageTitle": "Installation (Detail) FASTFORWARDFOSSIL: Part 2 by Ellen Driscoll at Smack Mellon / Dumbo Arts Center: Art Under the Bridge Festival 2009 / 20090926.10D.54754.P1.L1.BW / SML",
+      "imageCredit": "Photo : See-ming Lee (SML) / CC BY-SA · Openverse",
+      "imageCreator": "See-ming Lee (SML)",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/48973657@N00/3973947773"
     },
     {
       "source": "Zone Campus",
@@ -3091,10 +3120,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3397-1.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/7428914d1b64d542.jpg",
       "imageLocalKey": "7428914d1b64d542",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -3115,10 +3145,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3405.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/7f86c6d6d4e73d30.jpg",
       "imageLocalKey": "7f86c6d6d4e73d30",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -3138,10 +3169,11 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/df8807d73a194404.jpg",
       "imageLocalKey": "df8807d73a194404",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -3161,10 +3193,11 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/4828a1e7cbf0e7ff.jpg",
       "imageLocalKey": "4828a1e7cbf0e7ff",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -3184,10 +3217,11 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/fcac91d58ef48893.jpg",
       "imageLocalKey": "fcac91d58ef48893",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Exil",

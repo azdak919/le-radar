@@ -1,21 +1,21 @@
 {
-  "updated": "2026-09-15T23:12:56.187Z",
+  "updated": "2026-09-16T00:28:51.054Z",
   "total": 168,
   "pool": 58,
   "incomplete": 9,
   "withLeadExcerpt": 83,
   "candidates": 9,
   "enriched": 1,
-  "failed": 4,
+  "failed": 7,
   "ok": true,
   "samples": [
     {
-      "title": "Every pizza is a blessing at 5 Pizza",
-      "link": "https://thelinknewspaper.ca/article/16377",
+      "title": "Montrealers gather for the city’s first-ever Climate Week",
+      "link": "https://thelinknewspaper.ca/article/16379",
       "ok": true,
       "score": 96,
-      "chars": 206,
-      "sample": "5 Pizza is a pizzeria that opened two years ago in the quieter part of La Petite-Patrie, at the edge",
+      "chars": 200,
+      "sample": "Montreal Climate Week brought experts and businesses together to address pressing climate concerns a",
       "changed": true
     },
     {
@@ -25,33 +25,6 @@
       "score": 77,
       "chars": 400,
       "sample": "While the exchange program fact sheet for the 2026-2027 exchange year is available on the McGill Abr",
-      "changed": false
-    },
-    {
-      "title": "Le Festival de Cinéma de la Ville de Québec et le Festival REGARD, une amitié qui traverse le parc des Laurentides",
-      "link": "https://lapige.atmjonquiere.com/2026/09/14/le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides/?utm_source=rss&utm_medium=rss&utm_campaign=le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides",
-      "ok": true,
-      "score": 83,
-      "chars": 400,
-      "sample": "Le Festival de Cinéma de la Ville de Québec (FCVQ) a souligné la 30 e édition du Festival REGARD lor",
-      "changed": false
-    },
-    {
-      "title": "Cinq nouvelles marquantes de l’été",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-marquantes-de-lete/",
-      "ok": true,
-      "score": 100,
-      "chars": 400,
-      "sample": "Quartier Libre est finalement de retour après un été mouvementé. Voici les nouvelles qui ont marqué ",
-      "changed": false
-    },
-    {
-      "title": "Bulletin La Pige radio 14h30 et 15h30",
-      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-14h30",
-      "ok": true,
-      "score": 73,
-      "chars": 153,
-      "sample": "Starbucks arrive à Jonquière, une marche pour sensibiliser au myélome multiple et plus de variétés d",
       "changed": false
     }
   ]
