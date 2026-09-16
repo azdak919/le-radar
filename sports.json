@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-16T18:11:25.848Z",
-  "fetchedAt": "2026-09-16T18:11:25.848Z",
+  "updated": "2026-09-16T22:09:00.129Z",
+  "fetchedAt": "2026-09-16T22:09:00.129Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-16T18:11:25.848Z"
+    "referenceDate": "2026-09-16T22:09:00.130Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 839,
@@ -94464,9 +94464,9 @@
       "fullName": "Cégep de Lévis",
       "registryId": "levis"
     },
-    "collegial:volleyball:51caab24-24ed-4115-ae38-1121b560d797:8ec38051-3a83-422b-8660-92441c1c51fa": {
-      "id": "collegial:volleyball:51caab24-24ed-4115-ae38-1121b560d797:8ec38051-3a83-422b-8660-92441c1c51fa",
-      "rseqTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
+    "collegial:volleyball:51caab24-24ed-4115-ae38-1121b560d797:54e98b08-a6c2-42cc-b6b2-80a0b4c1f0dc": {
+      "id": "collegial:volleyball:51caab24-24ed-4115-ae38-1121b560d797:54e98b08-a6c2-42cc-b6b2-80a0b4c1f0dc",
+      "rseqTeamId": "54e98b08-a6c2-42cc-b6b2-80a0b4c1f0dc",
       "leagueId": "51caab24-24ed-4115-ae38-1121b560d797",
       "name": "Limoilou",
       "code": "LIM",
@@ -94646,9 +94646,9 @@
       "nickname": "Boomerang",
       "registryId": "garneau"
     },
-    "collegial:volleyball:3ee75d69-3d70-44cd-9f75-f3847ba89dcf:54e98b08-a6c2-42cc-b6b2-80a0b4c1f0dc": {
-      "id": "collegial:volleyball:3ee75d69-3d70-44cd-9f75-f3847ba89dcf:54e98b08-a6c2-42cc-b6b2-80a0b4c1f0dc",
-      "rseqTeamId": "54e98b08-a6c2-42cc-b6b2-80a0b4c1f0dc",
+    "collegial:volleyball:3ee75d69-3d70-44cd-9f75-f3847ba89dcf:8ec38051-3a83-422b-8660-92441c1c51fa": {
+      "id": "collegial:volleyball:3ee75d69-3d70-44cd-9f75-f3847ba89dcf:8ec38051-3a83-422b-8660-92441c1c51fa",
+      "rseqTeamId": "8ec38051-3a83-422b-8660-92441c1c51fa",
       "leagueId": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
       "name": "Limoilou",
       "code": "LIM",
