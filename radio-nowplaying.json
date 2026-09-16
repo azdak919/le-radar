@@ -1,80 +1,72 @@
 {
-  "updatedAt": "2026-09-15T23:57:11.803Z",
+  "updatedAt": "2026-09-16T01:24:23.483Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Débat électoral Provicial 2026",
-        "source": "api-live",
-        "start": "18:30",
-        "end": "20:00",
-        "url": "https://chyz.ca/emission/progamation-special-debat-electoral-provicial-2026-jean-talon/",
-        "special": true
-      },
+      "current": null,
       "next": {
         "title": "Mercredi Bonbon",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
       "track": "",
-      "showTitle": "Débat électoral Provicial 2026",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-15T23:56:59.272Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Catharmix",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/catharmix"
-      },
-      "next": {
-        "title": "Les garçons pleurent aussi (reprise)",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
-      },
-      "track": "",
-      "showTitle": "Catharmix",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T23:57:00.556Z"
+      "checkedAt": "2026-09-16T01:24:09.214Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Les garçons pleurent aussi (reprise)",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+      },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
+      "track": "",
+      "showTitle": "Les garçons pleurent aussi (reprise)",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-16T01:24:10.802Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Soul Perspectives",
+        "title": "Montreal Sound Ark",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:30"
+        "start": "21:00",
+        "end": "23:00"
       },
       "next": {
-        "title": "Marca-RO",
+        "title": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever",
         "source": "api-live",
-        "start": "20:30",
-        "end": "21:00"
+        "start": "23:00",
+        "end": "00:00"
       },
       "track": "",
-      "showTitle": "Soul Perspectives",
+      "showTitle": "Montreal Sound Ark",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,89 +74,90 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T23:57:02.861Z"
+      "checkedAt": "2026-09-16T01:24:13.530Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Ashes to Ashes",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
+        "start": "21:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "Hittin' All The Bases",
+        "title": "Turn Off The Lights",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/turn-off-the-lights"
       },
       "track": "",
-      "showTitle": "Ashes to Ashes",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T23:57:05.194Z"
+      "checkedAt": "2026-09-16T01:24:15.585Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "L'Aut'Rock",
-        "source": "schedule-live",
-        "start": "18:30",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Dichotomie 88.3",
         "source": "schedule-live",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "L'Aut'Rock",
+      "showTitle": "Dichotomie 88.3",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-15T23:57:06.398Z"
+      "checkedAt": "2026-09-16T01:24:16.630Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Les Amazones",
-        "source": "api-live",
-        "start": "19:30",
-        "end": "20:30",
-        "slug": "les-amazones"
-      },
-      "next": {
         "title": "10 sur 10 : un podcast 100% rap",
         "source": "api-live",
         "start": "20:30",
         "end": "22:30",
         "slug": "10-sur-10-un-podcast-100-rap"
       },
-      "track": "Elisabeth Simpson - Theme Amazone",
-      "showTitle": "Les Amazones",
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://www.choq.ca/emissions/palmareschoq"
+      },
+      "track": "BLAMM - Discours decousu",
+      "showTitle": "10 sur 10 : un podcast 100% rap",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-15T23:57:11.453Z"
+      "checkedAt": "2026-09-16T01:24:23.132Z"
     }
   }
 }
