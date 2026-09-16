@@ -1,13 +1,12 @@
 {
-  "checkedAt": "2026-09-15T01:23:47.104Z",
+  "checkedAt": "2026-09-16T01:22:20.813Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 4,
+    "stable": 5,
     "drift": [
-      "chyz",
-      "choq"
+      "chyz"
     ],
     "overhaul": [],
     "unreachable": []
@@ -15,14 +14,17 @@
   "stations": [
     {
       "id": "chyz",
-      "published": 34,
-      "fresh": 35,
+      "published": 35,
+      "fresh": 36,
       "added": [
-        "dim 15:45–18:30 Remparts de Québec"
+        "lun 10:00–11:00 K-C'EST ÇA ?",
+        "mar 18:30–20:00 Débat électoral Provicial 2026"
       ],
-      "removed": [],
-      "changed": 1,
-      "ratio": 0.029,
+      "removed": [
+        "mar 18:00–20:00 Débat électoral Provicial 2026"
+      ],
+      "changed": 3,
+      "ratio": 0.086,
       "status": "drift"
     },
     {
@@ -67,15 +69,13 @@
     },
     {
       "id": "choq",
-      "published": 15,
+      "published": 16,
       "fresh": 16,
-      "added": [
-        "mar 19:30–20:30 Les Amazones"
-      ],
+      "added": [],
       "removed": [],
-      "changed": 1,
-      "ratio": 0.067,
-      "status": "drift"
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     }
   ]
 }
