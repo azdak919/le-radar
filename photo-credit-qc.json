@@ -1,44 +1,58 @@
 {
-  "updated": "2026-09-16T00:33:56.596Z",
+  "updated": "2026-09-16T03:53:05.745Z",
   "total": 168,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 118,
+  "cited": 117,
   "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 17,
-  "updatedCount": 4,
-  "citedNew": 4,
-  "fallbackNew": 13,
+  "checked": 16,
+  "updatedCount": 6,
+  "citedNew": 2,
+  "fallbackNew": 14,
   "samples": [
     {
-      "title": "Montrealers gather for the city’s first-ever Climate Week",
-      "source": "The Link",
-      "credit": "Photo : Abigail Best",
+      "title": "Maison des jeunes : 15 000 $ pour financer des activités",
+      "source": "La Pige",
+      "credit": "Photo : Maison des jeunes de Laterrière",
       "cited": true,
-      "method": "figcaption"
+      "method": "body-line"
     },
     {
       "title": "Editorial: The importance of student journalism",
       "source": "The Link",
-      "credit": "Photo : Graphic Halle Keays",
-      "cited": true,
-      "method": "figcaption-bare"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
+      "title": "Faire du sport sans se ruiner quand on est aux études",
+      "source": "Le Collectif",
+      "credit": "Photo : UdeS",
       "cited": true,
-      "method": "via-attribution"
+      "method": "body-tail"
     },
     {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Recettes musicales québécoises pour l’été",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
     }
   ]
 }

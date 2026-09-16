@@ -1,7 +1,36 @@
 {
-  "updated": "2026-09-16T00:34:47.683Z",
-  "count": 18,
+  "updated": "2026-09-16T03:54:49.701Z",
+  "count": 22,
   "items": [
+    {
+      "name": "Quartier Libre",
+      "institution": "Université de Montréal",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/quartierlibre.ca/",
+          "handle": "@quartierlibre.ca",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/QuartierLibre.ca",
+          "handle": "QuartierLibre.ca",
+          "stats": "Quartier Libre, Montreal. 6,555 followers. Magazine indépendant des étudiant(e)s de l'UdeM, émission tous les vendredis à 12 h sur CISM",
+          "label": "Facebook"
+        },
+        {
+          "type": "x",
+          "url": "https://twitter.com/quartierlibre",
+          "handle": "@quartierlibre",
+          "stats": "",
+          "label": "X"
+        }
+      ]
+    },
     {
       "name": "Montréal Campus",
       "institution": "UQAM",
@@ -126,6 +155,28 @@
       ]
     },
     {
+      "name": "Zone Campus",
+      "institution": "Université du Québec à Trois-Rivières",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/zonecampus/",
+          "handle": "@zonecampus",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/zonecampus",
+          "handle": "zonecampus",
+          "stats": "Zone Campus. 2,040 followers · 1 talking about this. Zone Campus, le journal étudiant indépendant de l'UQTR. Retrouvez nos mots au zonecampus.ca.",
+          "label": "Facebook"
+        }
+      ]
+    },
+    {
       "name": "L'Exemplaire",
       "institution": "Université Laval",
       "type": "universite",
@@ -148,6 +199,28 @@
       ]
     },
     {
+      "name": "Le Collectif",
+      "institution": "Université de Sherbrooke",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/jlecollectif/",
+          "handle": "@jlecollectif",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/journallecollectif",
+          "handle": "journallecollectif",
+          "stats": "",
+          "label": "Facebook"
+        }
+      ]
+    },
+    {
       "name": "Exil",
       "institution": "Cégep du Vieux Montréal",
       "type": "cegep",
@@ -164,8 +237,30 @@
           "type": "facebook",
           "url": "https://www.facebook.com/WordPresscom",
           "handle": "WordPresscom",
-          "stats": "WordPress.com. 749,289 followers · 249 talking about this. WordPress.com is the best place \nfor your personal blog or business site.",
+          "stats": "WordPress.com. 749,297 followers · 278 talking about this. WordPress.com is the best place \nfor your personal blog or business site.",
           "label": "Facebook"
+        }
+      ]
+    },
+    {
+      "name": "La Pige",
+      "institution": "Cégep de Jonquière (ATM – journalisme)",
+      "type": "cegep",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/2008",
+          "handle": "2008",
+          "stats": "",
+          "label": "Facebook"
+        },
+        {
+          "type": "youtube",
+          "url": "https://www.youtube.com/@atmlapige",
+          "handle": "@atmlapige",
+          "stats": "",
+          "label": "YouTube"
         }
       ]
     },
@@ -186,7 +281,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/p/Polyscope-61550693026725",
           "handle": "p",
-          "stats": "",
+          "stats": "Polyscope. 98 followers · 2 talking about this. Média étudiant de Polytechnique depuis 1967!\nJournalisme, Reportages, Couverture d'événements, ",
           "label": "Facebook"
         },
         {
@@ -215,7 +310,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/thetribuneca",
           "handle": "thetribuneca",
-          "stats": "",
+          "stats": "The Tribune, Montreal. 6,235 followers · 32 were here. The Tribune is entirely student-run and has covered McGill, Montreal, and the world since 1981.",
           "label": "Facebook"
         },
         {
@@ -324,7 +419,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/WordPresscom",
           "handle": "WordPresscom",
-          "stats": "",
+          "stats": "WordPress.com. 749,297 followers · 278 talking about this. WordPress.com is the best place \nfor your personal blog or business site.",
           "label": "Facebook"
         }
       ]
