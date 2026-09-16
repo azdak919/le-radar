@@ -1,19 +1,25 @@
 {
-  "updated": "2026-09-16T09:08:54.501Z",
+  "updated": "2026-09-16T11:43:26.710Z",
   "total": 168,
   "withPhoto": 157,
-  "withStock": 26,
-  "withCampusBank": 18,
+  "withStock": 18,
+  "withCampusBank": 10,
   "fullyCovered": 168,
-  "leadReadyPhotos": 139,
-  "pageScraped": 25,
-  "photosRecovered": 21,
-  "imagesCleared": 5,
-  "stockSearches": 27,
-  "stockFound": 18,
-  "campusBankFound": 13,
+  "leadReadyPhotos": 135,
+  "pageScraped": 23,
+  "photosRecovered": 19,
+  "imagesCleared": 2,
+  "stockSearches": 29,
+  "stockFound": 11,
+  "campusBankFound": 5,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Il faut le voir pour le croire",
+      "link": "https://www.delitfrancais.com/2026/09/16/il-faut-le-voir-pour-le-croire/",
+      "reason": "no-stock-match",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/BanalisationViolence2-scaled.jpg"
+    },
     {
       "title": "Bulletin La Pige radio 14h30 et 15h30",
       "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-14h30",
@@ -25,12 +31,6 @@
       "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-10h30-la-pige-10h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-10h30-la-pige-10h30",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0115.jpg"
-    },
-    {
-      "title": "Nostalgia Nook: The return of recession pop-timism",
-      "link": "https://thelinknewspaper.ca/article/16356",
-      "reason": "no-stock-match",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Y2K_Escapism.Aia_Segal_900_1200_90.jpg"
     },
     {
       "title": "Letters from the Editors May 2026",
@@ -45,10 +45,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
     },
     {
+      "title": "From the rink to the links",
+      "link": "https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
+    },
+    {
       "title": "Mars enters Aries",
       "link": "https://thebucampus.ca/2026/04/06/mars-enters-aries/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+    },
+    {
+      "title": "National Golf tournament",
+      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg"
     },
     {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
@@ -69,22 +81,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
     },
     {
-      "title": "L'éléphant dans ta salle de classe",
-      "link": "https://www.polyscope.qc.ca/blog/post/rSFKjw5RmyR9tkTNM9x4",
+      "title": "Nostalgia Nook: The return of recession pop-timism",
+      "link": "https://thelinknewspaper.ca/article/16356",
       "reason": "no-stock-match",
-      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Felephant_code_qr.png?alt=media&token=ced37e6b-12b1-4369-8289-3f2dacb19067"
-    },
-    {
-      "title": "Recettes musicales québécoises pour l’été",
-      "link": "https://quartierlibre.ca/ete-recettes-musicales-quebecoises/",
-      "reason": "no-stock-match",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/05/20_marieceleste.jpg"
-    },
-    {
-      "title": "Gothic Cinema Rises from the Grave",
-      "link": "https://theplantnews.com/2026/05/11/gothic-cinema-rises-from-the-grave/",
-      "reason": "no-stock-match",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.png"
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.OPS.Y2K_Escapism.Aia_Segal_900_1200_90.jpg"
     }
   ]
 }

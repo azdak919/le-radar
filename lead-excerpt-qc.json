@@ -1,49 +1,85 @@
 {
-  "updated": "2026-09-16T09:04:45.370Z",
+  "updated": "2026-09-16T11:35:53.486Z",
   "total": 168,
   "pool": 58,
-  "incomplete": 8,
-  "withLeadExcerpt": 83,
-  "candidates": 8,
-  "enriched": 0,
-  "failed": 4,
+  "incomplete": 14,
+  "withLeadExcerpt": 82,
+  "candidates": 14,
+  "enriched": 9,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
-      "title": "McGill Students Demand an Academic Boycott of Israeli Institution Partnership",
-      "link": "https://www.mcgilldaily.com/2026/09/mcgill-students-demand-an-academic-boycott-of-israeli-institution-partnership/",
-      "ok": true,
-      "score": 77,
-      "chars": 400,
-      "sample": "While the exchange program fact sheet for the 2026-2027 exchange year is available on the McGill Abr",
-      "changed": false
-    },
-    {
-      "title": "Le Festival de Cinéma de la Ville de Québec et le Festival REGARD, une amitié qui traverse le parc des Laurentides",
-      "link": "https://lapige.atmjonquiere.com/2026/09/14/le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides/?utm_source=rss&utm_medium=rss&utm_campaign=le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides",
-      "ok": true,
-      "score": 83,
-      "chars": 400,
-      "sample": "Le Festival de Cinéma de la Ville de Québec (FCVQ) a souligné la 30 e édition du Festival REGARD lor",
-      "changed": false
-    },
-    {
-      "title": "Cinq nouvelles marquantes de l’été",
-      "link": "https://quartierlibre.ca/cinq-nouvelles-marquantes-de-lete/",
+      "title": "Épidemie de rougeole au Bangladesh",
+      "link": "https://www.delitfrancais.com/2026/09/16/epidemie-de-rougeole-au-bangladesh/",
       "ok": true,
       "score": 100,
-      "chars": 400,
-      "sample": "Quartier Libre est finalement de retour après un été mouvementé. Voici les nouvelles qui ont marqué ",
-      "changed": false
+      "chars": 397,
+      "sample": "Alors que le Bangladesh semblait en voie d’éradiquer la rougeole, le pays connaît aujourd’hui une im",
+      "changed": true
     },
     {
-      "title": "Bulletin La Pige radio 14h30 et 15h30",
-      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-14h30",
+      "title": "Outil d’émancipation ou vecteur d’exclusion",
+      "link": "https://www.delitfrancais.com/2026/09/16/outil-demancipation-ou-vecteur-dexclusion/",
       "ok": true,
-      "score": 73,
-      "chars": 153,
-      "sample": "Starbucks arrive à Jonquière, une marche pour sensibiliser au myélome multiple et plus de variétés d",
-      "changed": false
+      "score": 100,
+      "chars": 388,
+      "sample": "Dans un monde valorisant l’individualité, le confort et l’efficacité personnelle, la voiture trouve ",
+      "changed": true
+    },
+    {
+      "title": "L’impact potentiel des élections québécoises sur McGill",
+      "link": "https://www.delitfrancais.com/2026/09/16/limpact-potentiel-des-elections-quebecoises-sur-mcgill/",
+      "ok": true,
+      "score": 100,
+      "chars": 363,
+      "sample": "Dans un régime démocratique, les élections agissent comme un levier de renouvellement politique, éco",
+      "changed": true
+    },
+    {
+      "title": "Victoire de l’AFD en Saxe-Anhalt",
+      "link": "https://www.delitfrancais.com/2026/09/16/victoire-de-lafd-en-saxe-anhalt/",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "Montée des extrêmes telle que celle déjà observée et largement décrite ailleurs en Europe ? Ou réel ",
+      "changed": true
+    },
+    {
+      "title": "Il faut le voir pour le croire",
+      "link": "https://www.delitfrancais.com/2026/09/16/il-faut-le-voir-pour-le-croire/",
+      "ok": true,
+      "score": 90,
+      "chars": 333,
+      "sample": "Or, la vidéo de la mort de Cisneros ne comportait aucun floutage et aucun avertissement. Pas une seu",
+      "changed": true
+    },
+    {
+      "title": "Attention : virage à droite",
+      "link": "https://www.delitfrancais.com/2026/09/16/attention-virage-a-droite/",
+      "ok": true,
+      "score": 90,
+      "chars": 330,
+      "sample": "Tyler Austin Harper s’égare donc lorsqu’il démonise les mesures d’EDI et les définit comme des moyen",
+      "changed": true
+    },
+    {
+      "title": "5e édition du Festival « Defund la Police »",
+      "link": "https://www.delitfrancais.com/2026/09/16/5e-edition-du-festival-defund-la-police/",
+      "ok": true,
+      "score": 100,
+      "chars": 330,
+      "sample": "Ce samedi 12 septembre s’est tenue la cinquième édition du festival Defund la police à la Cité-des-H",
+      "changed": true
+    },
+    {
+      "title": "La transidentité dans les slashers",
+      "link": "https://www.delitfrancais.com/2026/09/16/la-transidentite-dans-les-slashers/",
+      "ok": true,
+      "score": 90,
+      "chars": 317,
+      "sample": "Cette représentation évidemment stéréotypée, péjorative mais surtout inadéquate de la transidentité ",
+      "changed": true
     }
   ]
 }
