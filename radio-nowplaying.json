@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-16T03:44:41.839Z",
+  "updatedAt": "2026-09-16T07:40:39.462Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T03:44:29.803Z"
+      "checkedAt": "2026-09-16T07:40:05.883Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
+        "title": "Fréquence 440",
         "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "03:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/frequence-440"
       },
       "next": {
-        "title": "La carte cadeau (reprise)",
+        "title": "Ailleurs: escales en musique",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+        "start": "04:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/ailleurs-en-musique"
       },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Fréquence 440",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T03:44:30.775Z"
+      "checkedAt": "2026-09-16T07:40:07.270Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever",
+        "title": "WarpCor / Out of the Void",
         "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "next": {
-        "title": "Space Plane",
+        "title": "Full Circle",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "04:00",
+        "end": "07:00"
       },
-      "track": "Easy Sonic Living/Zoe",
-      "showTitle": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever",
+      "track": "",
+      "showTitle": "WarpCor / Out of the Void",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T03:44:33.073Z"
+      "checkedAt": "2026-09-16T07:40:10.347Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Turn Off The Lights",
-        "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/turn-off-the-lights"
-      },
-      "next": {
         "title": "CJLO Late Night",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Morning Electro-shock",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/morning-electro-shock"
+      },
       "track": "",
-      "showTitle": "Turn Off The Lights",
+      "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T03:44:35.194Z"
+      "checkedAt": "2026-09-16T07:40:32.675Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Mix Franco",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Mix Franco",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T03:44:36.103Z"
+      "checkedAt": "2026-09-16T07:40:33.717Z"
     },
     "choq": {
       "id": "choq",
@@ -134,24 +134,23 @@
       "current": null,
       "next": {
         "title": "Palmarès CHOQ.ca",
-        "source": "schedule",
+        "source": "api-live",
         "start": "15:00",
         "end": "16:00",
-        "url": "https://www.choq.ca/emissions/palmareschoq"
+        "slug": "palmareschoq"
       },
-      "track": "Rosegaze - Petrifie",
+      "track": "Lammoth - Farewell, Good Beast of Burden",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-16T03:44:41.488Z"
+      "checkedAt": "2026-09-16T07:40:39.111Z"
     }
   }
 }
