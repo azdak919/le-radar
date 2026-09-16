@@ -1,51 +1,58 @@
 {
-  "updated": "2026-09-16T18:32:09.828Z",
+  "updated": "2026-09-16T20:14:12.926Z",
   "total": 168,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 118,
-  "pending": 12,
+  "cited": 119,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 9,
-  "citedNew": 4,
-  "fallbackNew": 14,
+  "checked": 21,
+  "updatedCount": 12,
+  "citedNew": 8,
+  "fallbackNew": 13,
   "samples": [
     {
-      "title": "Gee-Gees 31, Stingers 10: Concordia falters in home opener",
-      "source": "The Link",
-      "credit": "Photo: Nicolas Tremblay",
+      "title": "Le plaisir de lire",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier l Le Délit",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Gee-Gees 26, Stingers 21: Ottawa outlasts Concordia",
-      "source": "The Link",
-      "credit": "Photo: Nicolas Tremblay",
+      "title": "Repenser le système",
+      "source": "Le Délit",
+      "credit": "Photo : Jiayuan Cao l Le Délit",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Unregulated but essential?",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
+      "title": "La flûte enchantée : des voix pour sauver Mozart",
+      "source": "Le Délit",
+      "credit": "Crédit photo : Le Délit",
       "cited": false,
       "method": null
     },
     {
-      "title": "Rassembler pour mieux diviser",
+      "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
       "credit": "Photo : Elie Nguyen",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
+      "title": "Unregulated but essential?",
+      "source": "The Link",
+      "credit": "Illustration: Mira De Koven",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
       "title": "Editorial: The importance of student journalism",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Graphic Halle Keays",
+      "cited": true,
+      "method": "figcaption-bare"
     },
     {
       "title": "Faire du sport sans se ruiner quand on est aux études",
@@ -74,6 +81,20 @@
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
