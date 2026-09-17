@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-17T11:39:54.107Z",
+  "updatedAt": "2026-09-17T15:10:35.935Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Jeudi Révolte",
+        "title": "Conduite Antisportive",
         "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/jeudi-revolte/"
+        "start": "11:30",
+        "end": "12:30",
+        "url": "https://chyz.ca/emission/conduite-antisportive/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-17T11:39:26.566Z"
+      "checkedAt": "2026-09-17T15:10:03.416Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La lecture pis toi",
+        "title": "Présentement à l'écoute",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/presentement-a-lecoute-2"
       },
       "next": {
-        "title": "Jimmy et Neutron",
+        "title": "La grande ludothèque",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/jimmy-et-neutron"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
       },
       "track": "",
-      "showTitle": "La lecture pis toi",
+      "showTitle": "Présentement à l'écoute",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-17T11:39:28.236Z"
+      "checkedAt": "2026-09-17T15:10:04.883Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "OFC Podcast Radio",
+        "title": "Under The Olive Tree",
         "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "next": {
-        "title": "Folk Directions",
+        "title": "Venus Radio",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "track": "",
-      "showTitle": "OFC Podcast Radio",
+      "showTitle": "Under The Olive Tree",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,60 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-17T11:39:31.195Z"
+      "checkedAt": "2026-09-17T15:10:12.037Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Daydream Nation",
+        "title": "The Fluid Mosaic",
         "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/daydream-nation"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
       },
       "next": {
-        "title": "Everything Everywhere",
+        "title": "The Power Hour",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/everything-everywhere"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/the-power-hour"
       },
       "track": "",
-      "showTitle": "Daydream Nation",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live",
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-17T11:39:46.513Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "11:00"
-      },
-      "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "The Fluid Mosaic",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-17T11:39:47.443Z"
+      "checkedAt": "2026-09-17T15:10:26.314Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "À nous le futur",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "20:00"
+      },
+      "next": {
+        "title": "After 5@8",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "00:00"
+      },
+      "track": "",
+      "showTitle": "À nous le futur",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-17T15:10:27.644Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +139,7 @@
         "end": "18:00",
         "slug": "le-12-mtlsup"
       },
-      "track": "Tiffany Day - DOIT4ME",
+      "track": "Gaelle - home",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-17T11:39:53.756Z"
+      "checkedAt": "2026-09-17T15:10:35.585Z"
     }
   }
 }
