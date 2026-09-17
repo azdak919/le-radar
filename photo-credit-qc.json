@@ -1,37 +1,37 @@
 {
-  "updated": "2026-09-17T00:43:25.986Z",
+  "updated": "2026-09-17T04:12:38.225Z",
   "total": 168,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 120,
+  "cited": 118,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 8,
-  "citedNew": 6,
-  "fallbackNew": 12,
+  "checked": 16,
+  "updatedCount": 6,
+  "citedNew": 2,
+  "fallbackNew": 14,
   "samples": [
-    {
-      "title": "Parti québécois : un cadre financier « prudent », mais encore flou ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Samuel Girard",
-      "cited": true,
-      "method": "figcaption-copyright"
-    },
     {
       "title": "Unregulated but essential?",
       "source": "The Link",
-      "credit": "Illustration: Mira De Koven",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Au revoir !",
+      "source": "Le Délit",
+      "credit": "Photo : Matthieu Juge",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "media-credit-featured"
     },
     {
       "title": "Editorial: The importance of student journalism",
       "source": "The Link",
-      "credit": "Photo : Graphic Halle Keays",
-      "cited": true,
-      "method": "figcaption-bare"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Faire du sport sans se ruiner quand on est aux études",
@@ -53,20 +53,6 @@
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
