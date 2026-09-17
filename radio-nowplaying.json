@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-09-17T00:03:46.664Z",
+  "updatedAt": "2026-09-17T05:07:07.693Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Capitales de Québec",
-        "source": "schedule",
-        "start": "18:50",
-        "end": "23:00",
-        "url": "https://chyz.ca/emission/capitales-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Jeudi Révolte",
         "source": "schedule",
@@ -20,59 +14,59 @@
         "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
       "track": "",
-      "showTitle": "Capitales de Québec",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-17T00:03:19.412Z"
+      "checkedAt": "2026-09-17T05:06:40.615Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Jeunesse cosmique",
+        "title": "La grande ludothèque (reprise)",
         "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/jeunesse-cosmique"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
       },
       "next": {
-        "title": "Mix Anglo",
+        "title": "Mix franco",
         "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
       },
       "track": "",
-      "showTitle": "Jeunesse cosmique",
+      "showTitle": "La grande ludothèque (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-17T00:03:20.958Z"
+      "checkedAt": "2026-09-17T05:06:41.983Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Jazz Euphorium",
+        "title": "Off The Hook",
         "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "next": {
-        "title": "Lo Signal - 3rd Wed Of The Week",
+        "title": "Freeform Air",
         "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "track": "",
-      "showTitle": "Jazz Euphorium",
+      "showTitle": "Off The Hook",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -80,73 +74,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-17T00:03:23.817Z"
+      "checkedAt": "2026-09-17T05:06:46.208Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "BVST",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/bvst"
+        "title": "CJLO Late Night",
+        "source": "schedule-live",
+        "start": "01:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "There's a Synth in the House",
+        "title": "Daydream Nation",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/daydream-nation"
       },
       "track": "",
-      "showTitle": "BVST",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule-live",
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-17T00:03:38.410Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Le popcorn de l'infini",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "00:00"
-      },
-      "next": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
-      },
-      "track": "",
-      "showTitle": "Le popcorn de l'infini",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-17T00:03:39.495Z"
+      "checkedAt": "2026-09-17T05:07:00.345Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
+      "track": "",
+      "showTitle": "Les nuits CFAK",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-17T05:07:01.483Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Opération beurre de cinoche",
+        "title": "La 3ème demie",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "17:15",
+        "end": "18:00",
+        "slug": "le-12-mtlsup"
       },
-      "track": "Sandrine Masse - Les soufflees",
+      "track": "Show Me The Body - Dance In The USA",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-17T00:03:46.313Z"
+      "checkedAt": "2026-09-17T05:07:07.344Z"
     }
   }
 }
