@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-17T00:04:16.589Z",
-  "fetchedAt": "2026-09-17T00:04:16.589Z",
+  "updated": "2026-09-17T04:04:25.758Z",
+  "fetchedAt": "2026-09-17T04:04:25.758Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-17T00:04:16.590Z"
+    "referenceDate": "2026-09-17T04:04:25.758Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 839,
@@ -74,6 +74,18 @@
     "volleyball"
   ],
   "teamCount": 868,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -5809,8 +5821,45 @@
       "division": null,
       "usports": false,
       "leagueLabel": "Baseball collégial masculin",
-      "results": [],
-      "lastGame": null,
+      "results": [
+        {
+          "date": "2026-09-16",
+          "time": "19:30",
+          "opponent": "John Abbott",
+          "opponentCode": "JAC",
+          "home": true,
+          "scoreFor": 5,
+          "scoreAgainst": 4,
+          "result": "W",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+          "opponentFullName": "John Abbott College",
+          "opponentNickname": "Islanders",
+          "opponentRegistryId": "john-abbott",
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-09-16",
+        "time": "19:30",
+        "opponent": "John Abbott",
+        "opponentCode": "JAC",
+        "home": true,
+        "scoreFor": 5,
+        "scoreAgainst": 4,
+        "result": "W",
+        "sport": "baseball",
+        "competition": "Baseball collégial masculin",
+        "gameId": "1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+        "opponentFullName": "John Abbott College",
+        "opponentNickname": "Islanders",
+        "opponentRegistryId": "john-abbott",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
       "nextGames": [
         {
           "date": "2026-09-20",
@@ -5990,17 +6039,18 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "1-0"
       },
       "source": "rseq-s1",
       "priority": 22,
       "fullName": "Cégep André-Laurendeau",
       "nickname": "Cheetahs",
-      "registryId": "andre-laurendeau"
+      "registryId": "andre-laurendeau",
+      "lastGamePriorSeason": false
     },
     "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:d4e804cb-0fbb-4a6a-902b-864e6bb1a71d": {
       "id": "collegial:baseball:b30acc8a-4be1-4d58-917e-59d7d3aa4a88:d4e804cb-0fbb-4a6a-902b-864e6bb1a71d",
@@ -7085,6 +7135,24 @@
       "leagueLabel": "Baseball collégial masculin",
       "results": [
         {
+          "date": "2026-09-16",
+          "time": "19:30",
+          "opponent": "André-Laurendeau",
+          "opponentCode": "CAL",
+          "home": false,
+          "scoreFor": 4,
+          "scoreAgainst": 5,
+          "result": "L",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+          "opponentFullName": "Cégep André-Laurendeau",
+          "opponentNickname": "Cheetahs",
+          "opponentRegistryId": "andre-laurendeau",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-06",
           "time": "13:00",
           "opponent": "Beauce-Appalaches",
@@ -7120,20 +7188,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-06",
-        "time": "13:00",
-        "opponent": "Beauce-Appalaches",
-        "opponentCode": "BAP",
-        "home": true,
-        "scoreFor": 12,
-        "scoreAgainst": 9,
-        "result": "W",
+        "date": "2026-09-16",
+        "time": "19:30",
+        "opponent": "André-Laurendeau",
+        "opponentCode": "CAL",
+        "home": false,
+        "scoreFor": 4,
+        "scoreAgainst": 5,
+        "result": "L",
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "d05009cd-b6c9-4346-847b-003bf747f3c1",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d05009cd-b6c9-4346-847b-003bf747f3c1",
-        "opponentFullName": "Cégep de Beauce-Appalaches",
-        "opponentRegistryId": "beauce-appalaches",
+        "gameId": "1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1932c8fa-2bc0-4117-88ac-c20ff3be1b8f",
+        "opponentFullName": "Cégep André-Laurendeau",
+        "opponentNickname": "Cheetahs",
+        "opponentRegistryId": "andre-laurendeau",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -7305,10 +7374,10 @@
       },
       "record": {
         "wins": 1,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 2,
-        "label": "1-1"
+        "played": 3,
+        "label": "1-2"
       },
       "source": "rseq-s1",
       "priority": 28,
