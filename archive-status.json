@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-17T19:22:22.696Z",
+  "updated": "2026-09-17T23:39:58.091Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2323,15 +2323,20 @@
       "at": "2026-09-17T14:27:14.000Z",
       "via": "existant",
       "source": "La Pige"
+    },
+    "https://thebucampus.ca/2026/09/15/whats-with-all-these-election-posters-around-lennoxville/": {
+      "at": "2026-09-17T19:14:41.000Z",
+      "via": "existant",
+      "source": "The Campus"
     }
   },
   "stats": {
-    "total": 408,
+    "total": 409,
     "lastRun": {
       "saved": 0,
       "skipped": 1,
-      "failed": 19,
-      "stoppedEarly": false
+      "failed": 3,
+      "stoppedEarly": true
     }
   },
   "sources": {
