@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-09-17T20:19:50.940Z",
+  "updatedAt": "2026-09-17T22:20:34.830Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "17:30",
         "end": "19:00",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Crooch Control",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://chyz.ca/emission/crooch-control/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,87 +28,86 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-17T20:19:24.196Z"
+      "checkedAt": "2026-09-17T22:20:09.634Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rythmologie",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
-      },
-      "next": {
         "title": "Entropie",
         "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/entropie"
       },
+      "next": {
+        "title": "La rumba latina",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/la-rumba"
+      },
       "track": "",
-      "showTitle": "Rythmologie",
+      "showTitle": "Entropie",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-17T20:19:25.824Z"
+      "checkedAt": "2026-09-17T22:20:11.215Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Positive Vibes",
+        "title": "Upstage",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "next": {
-        "title": "Off the Hour: Labour Radio",
+        "title": "Grey Matters",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "Positive Vibes",
+      "showTitle": "Upstage",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-17T20:19:28.615Z"
+      "checkedAt": "2026-09-17T22:20:13.522Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hooked On Sonics",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
-      },
-      "next": {
         "title": "Unheard Of",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/unheard-of"
       },
+      "next": {
+        "title": "Electric Messiah",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/electric-messiah"
+      },
       "track": "",
-      "showTitle": "Hooked On Sonics",
+      "showTitle": "Unheard Of",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-17T20:19:43.601Z"
+      "checkedAt": "2026-09-17T22:20:27.944Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,20 +132,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-17T20:19:45.040Z"
+      "checkedAt": "2026-09-17T22:20:29.131Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "La 3ème demie",
+        "title": "Les Apatrides Anonymes",
         "source": "api-live",
-        "start": "17:15",
-        "end": "18:00",
-        "slug": "le-12-mtlsup"
+        "start": "18:30",
+        "end": "19:30",
+        "slug": "apatrides-anonymes"
       },
-      "track": "CRABE - Musique electrique",
+      "track": "Geneviève Legault - Drapeaux blancs",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-17T20:19:50.589Z"
+      "checkedAt": "2026-09-17T22:20:34.479Z"
     }
   }
 }
