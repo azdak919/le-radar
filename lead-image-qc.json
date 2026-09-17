@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-17T21:28:34.035Z",
+  "updated": "2026-09-17T21:37:11.285Z",
   "total": 168,
   "withPhoto": 157,
   "withStock": 26,
   "withCampusBank": 18,
   "fullyCovered": 168,
-  "leadReadyPhotos": 142,
+  "leadReadyPhotos": 143,
   "pageScraped": 21,
   "photosRecovered": 19,
   "imagesCleared": 3,
-  "stockSearches": 26,
-  "stockFound": 18,
-  "campusBankFound": 13,
+  "stockSearches": 25,
+  "stockFound": 17,
+  "campusBankFound": 12,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -31,12 +31,6 @@
       "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-10h30-la-pige-10h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-10h30-la-pige-10h30",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0115.jpg"
-    },
-    {
-      "title": "Letters from the Editors May 2026",
-      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
     },
     {
       "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
@@ -85,6 +79,12 @@
       "link": "https://theplantnews.com/2026/05/11/on-manon-from-katseye-how-k-pop-takes-its-roots-from-black-culture/",
       "reason": "no-stock-match",
       "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-5.jpeg"
+    },
+    {
+      "title": "Step outside… and change your life",
+      "link": "https://thebucampus.ca/2026/04/06/step-outside-and-change-your-life/",
+      "reason": "no-stock-match",
+      "image": "https://thebucampus.ca/wp-content/uploads/2026/04/opinions_1_step-outside_cred-piper-howell.jpg"
     }
   ]
 }
