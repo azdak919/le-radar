@@ -1,16 +1,16 @@
 {
-  "updated": "2026-09-16T23:03:16.068Z",
+  "updated": "2026-09-17T00:43:12.277Z",
   "total": 168,
   "withPhoto": 157,
   "withStock": 26,
   "withCampusBank": 18,
   "fullyCovered": 168,
-  "leadReadyPhotos": 136,
-  "pageScraped": 23,
+  "leadReadyPhotos": 140,
+  "pageScraped": 22,
   "photosRecovered": 19,
   "imagesCleared": 3,
-  "stockSearches": 29,
-  "stockFound": 19,
+  "stockSearches": 27,
+  "stockFound": 18,
   "campusBankFound": 13,
   "mainPageLeadReady": true,
   "gaps": [
@@ -51,12 +51,6 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
     },
     {
-      "title": "National Golf tournament",
-      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg"
-    },
-    {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "campus-bank",
@@ -85,6 +79,12 @@
       "link": "https://www.polyscope.qc.ca/blog/post/rSFKjw5RmyR9tkTNM9x4",
       "reason": "no-stock-match",
       "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Felephant_code_qr.png?alt=media&token=ced37e6b-12b1-4369-8289-3f2dacb19067"
+    },
+    {
+      "title": "Gothic Cinema Rises from the Grave",
+      "link": "https://theplantnews.com/2026/05/11/gothic-cinema-rises-from-the-grave/",
+      "reason": "no-stock-match",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.png"
     }
   ]
 }
