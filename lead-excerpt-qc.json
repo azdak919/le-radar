@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-17T09:29:28.219Z",
+  "updated": "2026-09-17T13:29:22.963Z",
   "total": 168,
   "pool": 53,
-  "incomplete": 8,
+  "incomplete": 9,
   "withLeadExcerpt": 82,
-  "candidates": 8,
-  "enriched": 1,
+  "candidates": 9,
+  "enriched": 2,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -19,12 +19,21 @@
       "changed": false
     },
     {
-      "title": "Rassembler pour mieux diviser",
-      "link": "https://www.delitfrancais.com/2026/03/25/rassembler-pour-mieux-diviser/",
+      "title": "La cassette commence à être usée",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
       "ok": true,
-      "score": 100,
-      "chars": 344,
-      "sample": "Cela fait maintenant presque six mois que notre cher ministre de la Justice, Simon Jolin-Barrette, a",
+      "score": 96,
+      "chars": 390,
+      "sample": "Cette fois-ci, c’est la bonne. Je promets de quitter l’équipe éditoriale du Délit après cet article,",
+      "changed": true
+    },
+    {
+      "title": "Les priorités de la jeunesse, vues par Serge Bergeron",
+      "link": "https://lapige.atmjonquiere.com/2026/09/17/les-priorites-de-la-jeunesse-vues-par-serge-bergeron/?utm_source=rss&utm_medium=rss&utm_campaign=les-priorites-de-la-jeunesse-vues-par-serge-bergeron",
+      "ok": true,
+      "score": 96,
+      "chars": 333,
+      "sample": "Que répondent les partis politiques aux préoccupations des jeunes électeurs ? C’est ce que l’équipe ",
       "changed": true
     },
     {
