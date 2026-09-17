@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-17T19:43:23.372Z",
-  "fetchedAt": "2026-09-17T19:43:23.372Z",
+  "updated": "2026-09-17T23:07:01.404Z",
+  "fetchedAt": "2026-09-17T23:07:01.404Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-17T19:43:23.372Z"
+    "referenceDate": "2026-09-17T23:07:01.404Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 839,
@@ -43767,7 +43767,8 @@
           "gameId": "6c97ae86-6807-415a-b3dd-4cdbc9d29271",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6c97ae86-6807-415a-b3dd-4cdbc9d29271",
           "opponentFullName": "Marianopolis College",
-          "opponentRegistryId": "marianopolis"
+          "opponentRegistryId": "marianopolis",
+          "live": true
         },
         {
           "date": "2026-09-26",
@@ -43860,6 +43861,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6c97ae86-6807-415a-b3dd-4cdbc9d29271",
         "opponentFullName": "Marianopolis College",
         "opponentRegistryId": "marianopolis",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -44800,7 +44802,8 @@
           "gameId": "6c97ae86-6807-415a-b3dd-4cdbc9d29271",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6c97ae86-6807-415a-b3dd-4cdbc9d29271",
           "opponentFullName": "Collège André-Grasset",
-          "opponentRegistryId": "andre-grasset"
+          "opponentRegistryId": "andre-grasset",
+          "live": true
         },
         {
           "date": "2026-09-26",
@@ -44880,6 +44883,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6c97ae86-6807-415a-b3dd-4cdbc9d29271",
         "opponentFullName": "Collège André-Grasset",
         "opponentRegistryId": "andre-grasset",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -66997,20 +67001,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-17",
-          "time": "19:00",
-          "opponent": "Limoilou",
-          "opponentCode": "LIM",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "42d59749-2389-42ad-a835-2e73dbffe58b",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=42d59749-2389-42ad-a835-2e73dbffe58b",
-          "opponentFullName": "Cégep Limoilou",
-          "opponentNickname": "Titans",
-          "opponentRegistryId": "limoilou"
-        },
-        {
           "date": "2026-09-20",
           "time": "12:00",
           "opponent": "Lévis",
@@ -67065,18 +67055,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-17",
-        "time": "19:00",
-        "opponent": "Limoilou",
-        "opponentCode": "LIM",
-        "home": false,
+        "date": "2026-09-20",
+        "time": "12:00",
+        "opponent": "Lévis",
+        "opponentCode": "LÉV",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "42d59749-2389-42ad-a835-2e73dbffe58b",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=42d59749-2389-42ad-a835-2e73dbffe58b",
-        "opponentFullName": "Cégep Limoilou",
-        "opponentNickname": "Titans",
-        "opponentRegistryId": "limoilou",
+        "gameId": "04125bff-2e3a-414e-8a74-af5034f44fbc",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=04125bff-2e3a-414e-8a74-af5034f44fbc",
+        "opponentFullName": "Cégep de Lévis",
+        "opponentRegistryId": "levis",
         "opponentSector": "collegial"
       },
       "record": {
@@ -67363,20 +67352,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-17",
-          "time": "19:00",
-          "opponent": "Garneau",
-          "opponentCode": "GAR",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "42d59749-2389-42ad-a835-2e73dbffe58b",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=42d59749-2389-42ad-a835-2e73dbffe58b",
-          "opponentFullName": "Cégep Garneau",
-          "opponentNickname": "Boomerang",
-          "opponentRegistryId": "garneau"
-        },
-        {
           "date": "2026-09-26",
           "time": "13:00",
           "opponent": "Cégep de Rimouski",
@@ -67431,18 +67406,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-17",
-        "time": "19:00",
-        "opponent": "Garneau",
-        "opponentCode": "GAR",
+        "date": "2026-09-26",
+        "time": "13:00",
+        "opponent": "Cégep de Rimouski",
+        "opponentCode": "RIM",
         "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "42d59749-2389-42ad-a835-2e73dbffe58b",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=42d59749-2389-42ad-a835-2e73dbffe58b",
-        "opponentFullName": "Cégep Garneau",
-        "opponentNickname": "Boomerang",
-        "opponentRegistryId": "garneau",
+        "gameId": "345b1eab-a2f9-4dc3-b746-fc397e5a3175",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=345b1eab-a2f9-4dc3-b746-fc397e5a3175",
+        "opponentFullName": "Cégep de Rimouski",
+        "opponentRegistryId": "rimouski",
         "opponentSector": "collegial"
       },
       "record": {
@@ -83169,7 +83143,13 @@
       "lastGame": null,
       "nextGames": [],
       "nextGame": null,
-      "record": null,
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 0,
+        "played": 0,
+        "label": "0-0"
+      },
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de l'Abitibi-Témiscamingue",
@@ -83192,7 +83172,13 @@
       "lastGame": null,
       "nextGames": [],
       "nextGame": null,
-      "record": null,
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 0,
+        "played": 0,
+        "label": "0-0"
+      },
       "source": "rseq-s1",
       "priority": 20,
       "fullName": "Collège Ahuntsic",
@@ -83215,7 +83201,13 @@
       "lastGame": null,
       "nextGames": [],
       "nextGame": null,
-      "record": null,
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 0,
+        "played": 0,
+        "label": "0-0"
+      },
       "source": "rseq-s1",
       "priority": 21,
       "fullName": "Collège André-Grasset",
@@ -83238,7 +83230,13 @@
       "lastGame": null,
       "nextGames": [],
       "nextGame": null,
-      "record": null,
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 0,
+        "played": 0,
+        "label": "0-0"
+      },
       "source": "rseq-s1",
       "priority": 27,
       "fullName": "Collège Jean-de-Brébeuf",
@@ -83261,7 +83259,13 @@
       "lastGame": null,
       "nextGames": [],
       "nextGame": null,
-      "record": null,
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 0,
+        "played": 0,
+        "label": "0-0"
+      },
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep régional de Lanaudière à Joliette",
@@ -83284,7 +83288,13 @@
       "lastGame": null,
       "nextGames": [],
       "nextGame": null,
-      "record": null,
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 0,
+        "played": 0,
+        "label": "0-0"
+      },
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Marie-Victorin",
@@ -83307,7 +83317,13 @@
       "lastGame": null,
       "nextGames": [],
       "nextGame": null,
-      "record": null,
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 0,
+        "played": 0,
+        "label": "0-0"
+      },
       "source": "rseq-s1",
       "priority": 33,
       "fullName": "Cégep de l'Outaouais",
@@ -83330,7 +83346,13 @@
       "lastGame": null,
       "nextGames": [],
       "nextGame": null,
-      "record": null,
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 0,
+        "played": 0,
+        "label": "0-0"
+      },
       "source": "rseq-s1",
       "priority": 36,
       "fullName": "Cégep de Saint-Jérôme",
@@ -83353,7 +83375,13 @@
       "lastGame": null,
       "nextGames": [],
       "nextGame": null,
-      "record": null,
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 0,
+        "played": 0,
+        "label": "0-0"
+      },
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep régional de Lanaudière à Terrebonne",
@@ -83376,7 +83404,13 @@
       "lastGame": null,
       "nextGames": [],
       "nextGame": null,
-      "record": null,
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "draws": 0,
+        "played": 0,
+        "label": "0-0"
+      },
       "source": "rseq-s1",
       "priority": 80,
       "fullName": "Cégep de Valleyfield",
