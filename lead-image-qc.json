@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-17T21:37:11.285Z",
+  "updated": "2026-09-17T23:16:53.030Z",
   "total": 168,
   "withPhoto": 157,
   "withStock": 26,
   "withCampusBank": 18,
   "fullyCovered": 168,
-  "leadReadyPhotos": 143,
+  "leadReadyPhotos": 137,
   "pageScraped": 21,
   "photosRecovered": 19,
   "imagesCleared": 3,
-  "stockSearches": 25,
-  "stockFound": 17,
-  "campusBankFound": 12,
+  "stockSearches": 27,
+  "stockFound": 19,
+  "campusBankFound": 13,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -33,16 +33,34 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0115.jpg"
     },
     {
+      "title": "Letters from the Editors May 2026",
+      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+    },
+    {
       "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
       "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
       "reason": "stock-too-small",
       "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
     },
     {
+      "title": "From the rink to the links",
+      "link": "https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
+    },
+    {
       "title": "Mars enters Aries",
       "link": "https://thebucampus.ca/2026/04/06/mars-enters-aries/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+    },
+    {
+      "title": "National Golf tournament",
+      "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531487%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
@@ -67,24 +85,6 @@
       "link": "https://www.polyscope.qc.ca/blog/post/rSFKjw5RmyR9tkTNM9x4",
       "reason": "no-stock-match",
       "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Felephant_code_qr.png?alt=media&token=ced37e6b-12b1-4369-8289-3f2dacb19067"
-    },
-    {
-      "title": "Gothic Cinema Rises from the Grave",
-      "link": "https://theplantnews.com/2026/05/11/gothic-cinema-rises-from-the-grave/",
-      "reason": "no-stock-match",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.png"
-    },
-    {
-      "title": "On Manon from KATSEYE: How K-Pop Takes Its Roots from Black Culture",
-      "link": "https://theplantnews.com/2026/05/11/on-manon-from-katseye-how-k-pop-takes-its-roots-from-black-culture/",
-      "reason": "no-stock-match",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-5.jpeg"
-    },
-    {
-      "title": "Step outside… and change your life",
-      "link": "https://thebucampus.ca/2026/04/06/step-outside-and-change-your-life/",
-      "reason": "no-stock-match",
-      "image": "https://thebucampus.ca/wp-content/uploads/2026/04/opinions_1_step-outside_cred-piper-howell.jpg"
     }
   ]
 }
