@@ -1,80 +1,78 @@
 {
-  "updatedAt": "2026-09-16T21:31:36.773Z",
+  "updatedAt": "2026-09-17T00:03:46.664Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
-      "next": {
         "title": "Capitales de Québec",
         "source": "schedule",
         "start": "18:50",
         "end": "23:00",
         "url": "https://chyz.ca/emission/capitales-de-quebec/"
       },
-      "track": "",
-      "showTitle": "Les Arshitechs du Son",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live",
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-16T21:31:09.071Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Feu | Metal | Chaos",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/feu-metal-chaos"
-      },
       "next": {
-        "title": "Effets sonores (reprise)",
+        "title": "Jeudi Révolte",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/effets-sonores"
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
       "track": "",
-      "showTitle": "Feu | Metal | Chaos",
+      "showTitle": "Capitales de Québec",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T21:31:10.690Z"
+      "checkedAt": "2026-09-17T00:03:19.412Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Jeunesse cosmique",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/jeunesse-cosmique"
+      },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
+      "track": "",
+      "showTitle": "Jeunesse cosmique",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-17T00:03:20.958Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off the Hour/Sounds of Resistance",
+        "title": "Jazz Euphorium",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "20:00",
+        "end": "22:00"
       },
       "next": {
-        "title": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
+        "title": "Lo Signal - 3rd Wed Of The Week",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "22:00",
+        "end": "00:00"
       },
       "track": "",
-      "showTitle": "Off the Hour/Sounds of Resistance",
+      "showTitle": "Jazz Euphorium",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,34 +80,35 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T21:31:13.724Z"
+      "checkedAt": "2026-09-17T00:03:23.817Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Advice By The Fireplace",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
+        "title": "BVST",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/bvst"
       },
       "next": {
-        "title": "The New Consonance",
+        "title": "There's a Synth in the House",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/the-new-consonance"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
       },
       "track": "",
-      "showTitle": "Advice By The Fireplace",
+      "showTitle": "BVST",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T21:31:28.184Z"
+      "checkedAt": "2026-09-17T00:03:38.410Z"
     },
     "cfak": {
       "id": "cfak",
@@ -134,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-16T21:31:29.755Z"
+      "checkedAt": "2026-09-17T00:03:39.495Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +146,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Allison Russell - Really Real",
+      "track": "Sandrine Masse - Les soufflees",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -158,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-16T21:31:36.422Z"
+      "checkedAt": "2026-09-17T00:03:46.313Z"
     }
   }
 }
