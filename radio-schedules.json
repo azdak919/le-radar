@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-16T13:48:20.002Z",
+  "updatedAt": "2026-09-17T13:51:29.056Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-09-16T13:48:20.002Z",
+      "checkedAt": "2026-09-17T13:51:29.056Z",
       "verifiedWeekOf": "2026-09-14",
       "grid": [
         {
@@ -131,13 +131,6 @@
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
         },
         {
-          "day": 3,
-          "start": "18:50",
-          "end": "23:00",
-          "title": "Capitales de Québec",
-          "url": "https://chyz.ca/emission/capitales-de-quebec/"
-        },
-        {
           "day": 4,
           "start": "08:00",
           "end": "10:00",
@@ -211,8 +204,8 @@
           "day": 5,
           "start": "16:00",
           "end": "17:30",
-          "title": "L'Artiste du mois CHYZ",
-          "url": "https://chyz.ca/emission/lartist-du-mois-chyz/"
+          "title": "Chéri.e, j’arrive!",
+          "url": "https://chyz.ca/emission/cheri-e-jarrive/"
         },
         {
           "day": 5,
@@ -255,13 +248,6 @@
           "end": "22:30",
           "title": "Football du Rouge et Or",
           "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
-        },
-        {
-          "day": 6,
-          "start": "18:50",
-          "end": "23:00",
-          "title": "Capitales de Québec",
-          "url": "https://chyz.ca/emission/capitales-de-quebec/"
         }
       ]
     },
@@ -271,7 +257,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-09-16T13:48:20.002Z",
+      "checkedAt": "2026-09-17T13:51:29.056Z",
       "verifiedWeekOf": "2026-09-14",
       "grid": [
         {
@@ -649,7 +635,7 @@
           "day": 3,
           "start": "10:00",
           "end": "11:00",
-          "title": "La 13e",
+          "title": "La 13",
           "url": "https://cism893.ca/emissions/la-13e"
         },
         {
@@ -1052,7 +1038,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-09-16T13:48:20.002Z",
+      "checkedAt": "2026-09-17T13:51:29.056Z",
       "verifiedWeekOf": "2026-09-14",
       "grid": [
         {
@@ -1670,7 +1656,7 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-09-16T13:48:20.002Z",
+      "checkedAt": "2026-09-17T13:51:29.056Z",
       "verifiedWeekOf": "2026-09-14",
       "grid": [
         {
@@ -1840,6 +1826,13 @@
           "end": "00:30",
           "title": "2 Days and a Night",
           "url": "http://www.cjlo.com/shows/2-days-and-a-night"
+        },
+        {
+          "day": 1,
+          "start": "00:00",
+          "end": "00:30",
+          "title": "Stereo Field Trip",
+          "url": "http://www.cjlo.com/shows/stereo-field-trip"
         },
         {
           "day": 1,
@@ -3790,6 +3783,13 @@
         {
           "day": 2,
           "start": "21:00",
+          "end": "22:00",
+          "title": "NSIDE",
+          "url": "http://www.cjlo.com/shows/nside"
+        },
+        {
+          "day": 2,
+          "start": "22:00",
           "end": "23:00",
           "title": "CJLO's Alternative Mega Mix",
           "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
@@ -4162,8 +4162,8 @@
           "day": 5,
           "start": "21:00",
           "end": "22:00",
-          "title": "Stereo Field Trip",
-          "url": "http://www.cjlo.com/shows/stereo-field-trip"
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
         },
         {
           "day": 5,
@@ -4299,7 +4299,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-09-16T13:48:20.002Z",
+      "checkedAt": "2026-09-17T13:51:29.056Z",
       "verifiedWeekOf": "2026-09-14",
       "grid": [
         {
@@ -4520,7 +4520,7 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-09-16T13:48:20.002Z",
+      "checkedAt": "2026-09-17T13:51:29.056Z",
       "verifiedWeekOf": "2026-09-14",
       "grid": [
         {
@@ -4613,6 +4613,13 @@
           "end": "19:30",
           "title": "Les Apatrides Anonymes",
           "url": "https://www.choq.ca/emissions/apatrides-anonymes"
+        },
+        {
+          "day": 4,
+          "start": "21:00",
+          "end": "22:30",
+          "title": "Le grand maître des jeux",
+          "url": "https://www.choq.ca/emissions/le-maitre-des-jeux"
         },
         {
           "day": 5,
