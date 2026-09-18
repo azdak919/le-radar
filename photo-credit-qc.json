@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-18T10:40:47.981Z",
+  "updated": "2026-09-18T13:45:27.109Z",
   "total": 168,
   "withImage": 157,
   "withCredit": 157,
@@ -7,9 +7,59 @@
   "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 0,
-  "citedNew": 0,
+  "checked": 18,
+  "updatedCount": 7,
+  "citedNew": 5,
   "fallbackNew": 13,
-  "samples": []
+  "samples": [
+    {
+      "title": "Unregulated but essential?",
+      "source": "The Link",
+      "credit": "Illustration: Mira De Koven",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Editorial: The importance of student journalism",
+      "source": "The Link",
+      "credit": "Photo : Graphic Halle Keays",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Faire du sport sans se ruiner quand on est aux études",
+      "source": "Le Collectif",
+      "credit": "Photo : UdeS",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "CALAMINE : RAPPER AUTREMENT QUE LE « BOYS CLUB »",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Forum RÉA : une alliance pour l’éducation en milieu défavorisé",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
+    }
+  ]
 }

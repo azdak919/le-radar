@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-18T07:36:53.608Z",
+  "updated": "2026-09-18T13:45:07.167Z",
   "total": 168,
   "withPhoto": 157,
   "withStock": 26,
   "withCampusBank": 18,
   "fullyCovered": 168,
-  "leadReadyPhotos": 137,
+  "leadReadyPhotos": 140,
   "pageScraped": 22,
   "photosRecovered": 19,
   "imagesCleared": 4,
-  "stockSearches": 28,
-  "stockFound": 19,
-  "campusBankFound": 13,
+  "stockSearches": 27,
+  "stockFound": 18,
+  "campusBankFound": 12,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -37,12 +37,6 @@
       "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-10h30-la-pige-10h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-10h30-la-pige-10h30",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0115.jpg"
-    },
-    {
-      "title": "Letters from the Editors May 2026",
-      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
     },
     {
       "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
@@ -85,6 +79,12 @@
       "link": "https://www.polyscope.qc.ca/blog/post/rSFKjw5RmyR9tkTNM9x4",
       "reason": "no-stock-match",
       "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Felephant_code_qr.png?alt=media&token=ced37e6b-12b1-4369-8289-3f2dacb19067"
+    },
+    {
+      "title": "It’s Festival Summer!",
+      "link": "https://theplantnews.com/2026/05/11/its-festival-summer/",
+      "reason": "stock-too-small",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-1-1.jpeg?w=1024"
     }
   ]
 }
