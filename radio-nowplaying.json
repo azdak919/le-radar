@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-18T18:03:42.687Z",
+  "updatedAt": "2026-09-18T21:06:26.330Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "next": {
-        "title": "Conduite Antisportive",
-        "source": "schedule",
-        "start": "14:30",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/conduite-antisportive/"
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T18:03:14.732Z"
+      "checkedAt": "2026-09-18T21:05:57.139Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
+        "title": "Ok Doomer",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/ok-doomer"
       },
       "next": {
-        "title": "Salsa et Bembê",
+        "title": "Mix électro",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/salsa-et-bembe"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/mix-electro"
       },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Ok Doomer",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T18:03:16.485Z"
+      "checkedAt": "2026-09-18T21:05:58.941Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "NNB/SQUAT FM/QPIRG/knots",
+        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "next": {
-        "title": "New Shit",
+        "title": "Café",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "track": "",
-      "showTitle": "NNB/SQUAT FM/QPIRG/knots",
+      "showTitle": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,83 +81,84 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T18:03:19.291Z"
+      "checkedAt": "2026-09-18T21:06:01.928Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Spiral Bound",
+        "title": "The Groove Master's Hour",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/spiral-bound"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
       },
       "next": {
-        "title": "Dead Beats",
+        "title": "The Go-Go Radio Magic Show",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/dead-beats"
+        "start": "18:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
       },
       "track": "",
-      "showTitle": "Spiral Bound",
+      "showTitle": "The Groove Master's Hour",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T18:03:34.419Z"
+      "checkedAt": "2026-09-18T21:06:17.548Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Ciné-Histoire",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Nouveautés Franco",
         "source": "schedule-live",
         "start": "15:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "La récréation",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "Ciné-Histoire",
+      "showTitle": "Nouveautés Franco",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T18:03:35.368Z"
+      "checkedAt": "2026-09-18T21:06:19.049Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Histoire de passer le temps",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:00",
-        "slug": "histoire-de-passer-le-temps"
+        "title": "D'amour et de sexe",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
       },
-      "track": "Hovvdy - Try Try Try",
+      "track": "Clément - la fin du monde",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-18T18:03:42.336Z"
+      "checkedAt": "2026-09-18T21:06:25.980Z"
     }
   }
 }
