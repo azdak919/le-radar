@@ -1,12 +1,12 @@
 {
-  "updated": "2026-09-18T03:53:48.056Z",
+  "updated": "2026-09-18T05:33:31.579Z",
   "total": 168,
   "pool": 53,
   "incomplete": 8,
   "withLeadExcerpt": 82,
   "candidates": 8,
   "enriched": 0,
-  "failed": 5,
+  "failed": 3,
   "ok": true,
   "samples": [
     {
@@ -34,6 +34,24 @@
       "score": 77,
       "chars": 400,
       "sample": "While the exchange program fact sheet for the 2026-2027 exchange year is available on the McGill Abr",
+      "changed": false
+    },
+    {
+      "title": "Le Festival de Cinéma de la Ville de Québec et le Festival REGARD, une amitié qui traverse le parc des Laurentides",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides/?utm_source=rss&utm_medium=rss&utm_campaign=le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides",
+      "ok": true,
+      "score": 83,
+      "chars": 400,
+      "sample": "Le Festival de Cinéma de la Ville de Québec (FCVQ) a souligné la 30 e édition du Festival REGARD lor",
+      "changed": false
+    },
+    {
+      "title": "Bulletin La Pige radio 14h30 et 15h30",
+      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-14h30",
+      "ok": true,
+      "score": 73,
+      "chars": 153,
+      "sample": "Starbucks arrive à Jonquière, une marche pour sensibiliser au myélome multiple et plus de variétés d",
       "changed": false
     }
   ]
