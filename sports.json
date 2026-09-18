@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-17T23:07:01.404Z",
-  "fetchedAt": "2026-09-17T23:07:01.404Z",
+  "updated": "2026-09-18T00:28:46.805Z",
+  "fetchedAt": "2026-09-18T00:28:46.805Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-17T23:07:01.404Z"
+    "referenceDate": "2026-09-18T00:28:46.806Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 839,
@@ -74,18 +74,6 @@
     "volleyball"
   ],
   "teamCount": 868,
-  "errors": [
-    {
-      "leagueId": "spordle-collegial",
-      "label": "Hockey collegial",
-      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
-    },
-    {
-      "leagueId": "spordle-universitaire",
-      "label": "Hockey universitaire",
-      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
-    }
-  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -35937,7 +35925,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6142b9f2-823e-42cd-8506-4c21e879b8ae",
           "opponentFullName": "Cégep Édouard-Montpetit",
           "opponentNickname": "Cougars",
-          "opponentRegistryId": "edouard-montpetit"
+          "opponentRegistryId": "edouard-montpetit",
+          "live": true
         },
         {
           "date": "2026-09-20",
@@ -36033,6 +36022,7 @@
         "opponentFullName": "Cégep Édouard-Montpetit",
         "opponentNickname": "Cougars",
         "opponentRegistryId": "edouard-montpetit",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -36128,7 +36118,8 @@
           "gameId": "6142b9f2-823e-42cd-8506-4c21e879b8ae",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6142b9f2-823e-42cd-8506-4c21e879b8ae",
           "opponentFullName": "Collège André-Grasset",
-          "opponentRegistryId": "andre-grasset"
+          "opponentRegistryId": "andre-grasset",
+          "live": true
         },
         {
           "date": "2026-09-20",
@@ -36223,6 +36214,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6142b9f2-823e-42cd-8506-4c21e879b8ae",
         "opponentFullName": "Collège André-Grasset",
         "opponentRegistryId": "andre-grasset",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
