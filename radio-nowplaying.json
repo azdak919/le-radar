@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-18T14:46:35.265Z",
+  "updatedAt": "2026-09-18T18:03:42.687Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Punk-o-rama",
+        "title": "Conduite Antisportive",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/punk-o-rama/"
+        "start": "14:30",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/conduite-antisportive/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T14:46:00.343Z"
+      "checkedAt": "2026-09-18T18:03:14.732Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "En-quêtes artistiques",
+        "title": "Le palmarès",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/en-quetes-artistiques"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
       "next": {
-        "title": "Accents ouverts",
+        "title": "Salsa et Bembê",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/accents-ouverts"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/salsa-et-bembe"
       },
       "track": "",
-      "showTitle": "En-quêtes artistiques",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T14:46:02.036Z"
+      "checkedAt": "2026-09-18T18:03:16.485Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Jazz Amuck",
+        "title": "NNB/SQUAT FM/QPIRG/knots",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "14:00",
+        "end": "15:00"
       },
       "next": {
-        "title": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
+        "title": "New Shit",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "track": "",
-      "showTitle": "Jazz Amuck",
+      "showTitle": "NNB/SQUAT FM/QPIRG/knots",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,72 +74,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T14:46:05.448Z"
+      "checkedAt": "2026-09-18T18:03:19.291Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
+        "title": "Spiral Bound",
         "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/spiral-bound"
       },
       "next": {
-        "title": "The Alley",
+        "title": "Dead Beats",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/the-alley"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/dead-beats"
       },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Spiral Bound",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T14:46:20.630Z"
+      "checkedAt": "2026-09-18T18:03:34.419Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "La Souterraine",
+        "title": "Ciné-Histoire",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "15:00"
       },
       "next": {
-        "title": "Le Ré-Show : Deuxième service",
+        "title": "Nouveautés Franco",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "15:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "La Souterraine",
+      "showTitle": "Ciné-Histoire",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T14:46:22.343Z"
+      "checkedAt": "2026-09-18T18:03:35.368Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Opération beurre de cinoche",
+        "title": "Histoire de passer le temps",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "16:00",
+        "end": "17:00",
+        "slug": "histoire-de-passer-le-temps"
       },
-      "track": "Valence - Pruneau",
+      "track": "Hovvdy - Try Try Try",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-18T14:46:34.915Z"
+      "checkedAt": "2026-09-18T18:03:42.336Z"
     }
   }
 }
