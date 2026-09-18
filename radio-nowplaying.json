@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-18T09:44:04.236Z",
+  "updatedAt": "2026-09-18T10:31:46.912Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T09:43:34.492Z"
+      "checkedAt": "2026-09-18T10:31:06.813Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T09:43:36.237Z"
+      "checkedAt": "2026-09-18T10:31:08.182Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T09:43:39.141Z"
+      "checkedAt": "2026-09-18T10:31:13.356Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "02:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Wake up Folks!",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/wake-up-folks"
       },
+      "next": {
+        "title": "CJLO News Hour",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/cjlo-news-hour"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Wake up Folks!",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T09:43:54.071Z"
+      "checkedAt": "2026-09-18T10:31:27.525Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T09:43:54.985Z"
+      "checkedAt": "2026-09-18T10:31:28.526Z"
     },
     "choq": {
       "id": "choq",
@@ -139,18 +139,15 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Satya - Heaven",
+      "track": "Maria BC - Night & day",
       "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-09-18T09:44:03.885Z"
+      "clientPoll": null,
+      "checkedAt": "2026-09-18T10:31:46.561Z"
     }
   }
 }
