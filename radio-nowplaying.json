@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-18T04:40:07.669Z",
+  "updatedAt": "2026-09-18T05:32:19.820Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T04:39:39.686Z"
+      "checkedAt": "2026-09-18T05:31:43.058Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T04:39:41.373Z"
+      "checkedAt": "2026-09-18T05:31:44.422Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "You Need A Heart To Live 2",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "01:00"
-      },
-      "next": {
         "title": "Listen! You Smell Something?",
         "source": "api-live",
         "start": "01:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "G-Flex Survivor's Corner",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "You Need A Heart To Live 2",
+      "showTitle": "Listen! You Smell Something?",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T04:39:44.448Z"
+      "checkedAt": "2026-09-18T05:31:46.512Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T04:39:59.909Z"
+      "checkedAt": "2026-09-18T05:32:00.539Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T04:40:01.264Z"
+      "checkedAt": "2026-09-18T05:32:01.544Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Protest The Hero - ii.below",
+      "track": "Cancer Bats — Don't Trip",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-18T04:40:07.318Z"
+      "checkedAt": "2026-09-18T05:32:19.470Z"
     }
   }
 }
