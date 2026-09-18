@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-18T18:39:57.077Z",
+  "updated": "2026-09-18T23:36:57.821Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2363,14 +2363,19 @@
       "at": "2026-09-17T19:19:59.000Z",
       "via": "existant",
       "source": "Le Délit"
+    },
+    "https://quartierlibre.ca/parti-quebecois-cadre-financier/": {
+      "at": "2026-09-17T14:31:27.000Z",
+      "via": "existant",
+      "source": "Quartier Libre"
     }
   },
   "stats": {
-    "total": 416,
+    "total": 417,
     "lastRun": {
       "saved": 0,
-      "skipped": 0,
-      "failed": 6,
+      "skipped": 1,
+      "failed": 8,
       "stoppedEarly": true
     }
   },
