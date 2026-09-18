@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-18T14:31:14.619Z",
+  "updatedAt": "2026-09-18T14:46:35.265Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T14:30:22.142Z"
+      "checkedAt": "2026-09-18T14:46:00.343Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T14:30:23.820Z"
+      "checkedAt": "2026-09-18T14:46:02.036Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T14:30:26.735Z"
+      "checkedAt": "2026-09-18T14:46:05.448Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Democracy Now",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "10:00",
         "end": "11:00",
         "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "next": {
         "title": "The Alley",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/the-alley"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "Democracy Now",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T14:31:01.393Z"
+      "checkedAt": "2026-09-18T14:46:20.630Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-18T14:31:02.713Z"
+      "checkedAt": "2026-09-18T14:46:22.343Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "100 gecs - money machine",
+      "track": "Valence - Pruneau",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-18T14:31:14.269Z"
+      "checkedAt": "2026-09-18T14:46:34.915Z"
     }
   }
 }
