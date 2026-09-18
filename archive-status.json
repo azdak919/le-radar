@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-17T23:39:58.091Z",
+  "updated": "2026-09-18T08:35:57.680Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2328,15 +2328,35 @@
       "at": "2026-09-17T19:14:41.000Z",
       "via": "existant",
       "source": "The Campus"
+    },
+    "https://www.delitfrancais.com/2026/09/16/repenser-le-systeme/": {
+      "at": "2026-09-17T14:32:01.000Z",
+      "via": "existant",
+      "source": "Le Délit"
+    },
+    "https://www.delitfrancais.com/2026/09/16/la-flute-enchantee-des-voix-pour-sauver-mozart/": {
+      "at": "2026-09-17T19:22:19.000Z",
+      "via": "existant",
+      "source": "Le Délit"
+    },
+    "https://www.delitfrancais.com/2026/09/16/epidemie-de-rougeole-au-bangladesh/": {
+      "at": "2026-09-17T19:17:43.000Z",
+      "via": "existant",
+      "source": "Le Délit"
+    },
+    "https://www.delitfrancais.com/2026/09/16/antisemitisme-mcgill-mauvaise-eleve/": {
+      "at": "2026-09-17T19:19:07.000Z",
+      "via": "existant",
+      "source": "Le Délit"
     }
   },
   "stats": {
-    "total": 409,
+    "total": 413,
     "lastRun": {
       "saved": 0,
-      "skipped": 1,
-      "failed": 3,
-      "stoppedEarly": true
+      "skipped": 4,
+      "failed": 16,
+      "stoppedEarly": false
     }
   },
   "sources": {
