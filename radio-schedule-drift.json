@@ -1,15 +1,12 @@
 {
-  "checkedAt": "2026-09-17T01:20:13.449Z",
+  "checkedAt": "2026-09-18T01:15:05.985Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 2,
+    "stable": 5,
     "drift": [
-      "chyz",
-      "cism",
-      "cjlo",
-      "choq"
+      "chyz"
     ],
     "overhaul": [],
     "unreachable": []
@@ -17,33 +14,27 @@
   "stations": [
     {
       "id": "chyz",
-      "published": 36,
+      "published": 34,
       "fresh": 34,
       "added": [
-        "ven 16:00–17:30 Chéri.e, j’arrive!"
+        "ven 13:00–14:00 Le Détour"
       ],
       "removed": [
-        "mer 18:50–23:00 Capitales de Québec",
-        "ven 16:00–17:30 L'Artiste du mois CHYZ",
-        "sam 18:50–23:00 Capitales de Québec"
+        "ven 13:00–14:00 Détour"
       ],
-      "changed": 4,
-      "ratio": 0.111,
+      "changed": 2,
+      "ratio": 0.059,
       "status": "drift"
     },
     {
       "id": "cism",
       "published": 110,
       "fresh": 110,
-      "added": [
-        "mer 10:00–11:00 La 13"
-      ],
-      "removed": [
-        "mer 10:00–11:00 La 13e"
-      ],
-      "changed": 2,
-      "ratio": 0.018,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "ckut",
@@ -57,21 +48,13 @@
     },
     {
       "id": "cjlo",
-      "published": 374,
+      "published": 376,
       "fresh": 376,
-      "added": [
-        "lun 00:00–00:30 Stereo Field Trip",
-        "mar 21:00–22:00 NSIDE",
-        "mar 22:00–23:00 CJLO's Alternative Mega Mix",
-        "ven 21:00–22:00 CJLO's Alternative Mega Mix"
-      ],
-      "removed": [
-        "mar 21:00–23:00 CJLO's Alternative Mega Mix",
-        "ven 21:00–22:00 Stereo Field Trip"
-      ],
-      "changed": 6,
-      "ratio": 0.016,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cfak",
@@ -85,15 +68,13 @@
     },
     {
       "id": "choq",
-      "published": 16,
+      "published": 17,
       "fresh": 17,
-      "added": [
-        "jeu 21:00–22:30 Le grand maître des jeux"
-      ],
+      "added": [],
       "removed": [],
-      "changed": 1,
-      "ratio": 0.063,
-      "status": "drift"
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     }
   ]
 }
