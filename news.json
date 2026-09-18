@@ -1,6 +1,6 @@
 {
-  "updated": "2026-09-18T17:43:50.911Z",
-  "updatedSlot": "2026-09-18T17:00:00.000Z",
+  "updated": "2026-09-18T19:02:35.858Z",
+  "updatedSlot": null,
   "count": 168,
   "freshnessSessions": 3,
   "sources": {
@@ -10,7 +10,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-18T16:00:00.000Z",
-      "lastFetchOk": "2026-09-18T17:43:23.042Z"
+      "lastFetchOk": "2026-09-18T19:02:06.967Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-09-18T17:43:23.651Z"
+      "lastFetchOk": "2026-09-18T19:02:07.474Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-16T19:30:26.000Z",
-      "lastFetchOk": "2026-09-18T17:43:28.206Z"
+      "lastFetchOk": "2026-09-18T19:02:11.922Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-09-14T19:16:31.000Z",
-      "lastFetchOk": "2026-09-18T17:43:28.840Z"
+      "lastFetchOk": "2026-09-18T19:02:12.518Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-17T18:30:00.000Z",
-      "lastFetchOk": "2026-09-18T17:43:29.376Z"
+      "lastFetchOk": "2026-09-18T19:02:13.744Z"
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,7 +50,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-09-18T17:43:30.502Z"
+      "lastFetchOk": "2026-09-18T19:02:15.469Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-09-18T17:43:32.355Z"
+      "lastFetchOk": "2026-09-18T19:02:17.208Z"
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-08T22:18:02.000Z",
-      "lastFetchOk": "2026-09-18T17:43:33.348Z"
+      "lastFetchOk": "2026-09-18T19:02:18.177Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,15 +74,15 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-09-18T17:43:33.718Z"
+      "lastFetchOk": "2026-09-18T19:02:18.525Z"
     },
     "La Pige": {
       "fetchOk": true,
       "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
-      "lastArticle": "2026-09-17T11:58:12.000Z",
-      "lastFetchOk": "2026-09-18T17:43:34.439Z"
+      "lastArticle": "2026-09-18T18:30:45.000Z",
+      "lastFetchOk": "2026-09-18T19:02:19.276Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 16,
       "lastArticle": "2026-09-09T00:53:34.359Z",
-      "lastFetchOk": "2026-09-18T17:43:36.880Z"
+      "lastFetchOk": "2026-09-18T19:02:21.361Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-15T17:33:58.000Z",
-      "lastFetchOk": "2026-09-18T17:43:37.230Z"
+      "lastFetchOk": "2026-09-18T19:02:21.595Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -106,10 +106,33 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-09-18T17:43:37.433Z"
+      "lastFetchOk": "2026-09-18T19:02:21.837Z"
     }
   },
   "items": [
+    {
+      "source": "La Pige",
+      "institution": "Cégep de Jonquière (ATM – journalisme)",
+      "region": "Saguenay–Lac-Saint-Jean",
+      "type": "cegep",
+      "lang": "fr",
+      "title": "Le communautaire à boutte interpelle les candidats à Jonquière",
+      "link": "https://lapige.atmjonquiere.com/2026/09/18/le-communautaire-a-boutte-interpelle-les-candidats-a-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=le-communautaire-a-boutte-interpelle-les-candidats-a-jonquiere",
+      "author": "Anaëlle Chevert",
+      "date": "2026-09-18T18:30:45.000Z",
+      "excerpt": "Un porte-parole s’adresse aux manifestants à l’aide d’un mégaphone. (Photo : Anaëlle Chevert) Le mouvement « Le communautaire à boutte! » s’est mobilisé mardi à Jonquière pour interpeller les candidats aux élections provinciales. Moins d’une centaine de personnes se sont",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/20260915_152024529_iOS.jpg",
+      "_pageAuthor": "Anaëlle Chevert",
+      "leadExcerpt": "Le mouvement « Le communautaire à boutte! » s’est mobilisé mardi à Jonquière pour interpeller les candidats aux élections provinciales. Moins d’une centaine de personnes se sont rassemblées devant le bureau du député sortant Yannick Gagnon pour réclamer des engagements concrets envers les organismes communautaires.",
+      "leadImageReady": true,
+      "sourceImageCredit": "Photo : Anaëlle Chevert",
+      "sourceImageCreator": "Anaëlle Chevert",
+      "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/18/le-communautaire-a-boutte-interpelle-les-candidats-a-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=le-communautaire-a-boutte-interpelle-les-candidats-a-jonquiere",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "20260915_152024529_ios.jpg",
+      "sourceImageCreditRev": 10
+    },
     {
       "source": "Quartier Libre",
       "institution": "Université de Montréal",
@@ -122,19 +145,20 @@
       "date": "2026-09-18T16:00:00.000Z",
       "excerpt": "Le grand débat des chef·fe·s de Noovo et de Crave a eu lieu le mercredi 16 septembre dernier. Quartier Libre s’est rendu sur place pour interroger les chef·fe·s de parti sur les questions qui concernent la jeunesse, telles que la santé mentale et la préservation de",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/09/157_Grand_Debat_des_Chefs_Noovo_2026.jpg",
-      "_pageAuthor": "Samuel Girard",
       "authorCheckedAt": "2026-09-18T17:43:59.421Z",
-      "leadExcerpt": "Le grand débat des chef·fe·s de Noovo et de Crave a eu lieu le mercredi 16 septembre dernier. Quartier Libre s’ est rendu sur place pour interroger les chef·fe·s de parti sur les questions qui concernent la jeunesse, telles que la santé mentale et la préservation de l’environnement. Le débat a d’ailleurs particulièrement visé ce segment de l’électorat, puisque l’un des cinq thèmes portait sur « l’",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/d6a2490d4d7abc7d.jpg",
-      "imageLocalKey": "d6a2490d4d7abc7d",
+      "_pageAuthor": "Samuel Girard",
       "sourceImageCredit": "Photo : Noovo et Crave / Paul Ducharme",
       "sourceImageCreator": "Noovo et Crave / Paul Ducharme",
       "sourceImageCreditUrl": "https://quartierlibre.ca/elections-debat-des-cheffes-jeunesse/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "157_grand_debat_des_chefs_noovo_2026.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Le grand débat des chef·fe·s de Noovo et de Crave a eu lieu le mercredi 16 septembre dernier. Quartier Libre s’ est rendu sur place pour interroger les chef·fe·s de parti sur les questions qui concernent la jeunesse, telles que la santé mentale et la préservation de l’environnement. Le débat a d’ailleurs particulièrement visé ce segment de l’électorat, puisque l’un des cinq thèmes portait sur « l’",
+      "imageLocal": "assets/news-images/d6a2490d4d7abc7d.jpg",
+      "imageLocalKey": "d6a2490d4d7abc7d",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -331,7 +355,7 @@
       "date": "2026-09-16T17:12:00.000Z",
       "excerpt": "The Concordia men’s rugby team stumbled out of the gate against Ottawa A stiff Gee-Gees defence kept the Stingers out of the end zone for a prolonged period of time. Photo Andrae Lerone Lewis",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/02.Rugbyrecap.andrae%CC%81_lerone_lewis.9127_900_600_90.jpg",
-      "authorCheckedAt": "2026-09-17T18:23:10.637Z",
+      "authorCheckedAt": "2026-09-18T19:02:46.472Z",
       "_pageAuthor": "Samuel Kayll",
       "sourceImageCredit": "Photo: Nicolas Tremblay",
       "sourceImageCreator": "Nicolas Tremblay",
@@ -358,7 +382,7 @@
       "date": "2026-09-16T16:44:00.000Z",
       "excerpt": "The Stingers women’s rugby team fell short against their conference rivals The Stingers celebrate after scoring a try. Photo Andrae Lerone Lewis",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/02.Rugbyrecap.andrae%CC%81_lerone_lewis.7543_900_600_90.jpg",
-      "authorCheckedAt": "2026-09-17T18:23:12.493Z",
+      "authorCheckedAt": "2026-09-18T19:02:48.002Z",
       "_pageAuthor": "Samuel Kayll",
       "sourceImageCredit": "Photo: Nicolas Tremblay",
       "sourceImageCreator": "Nicolas Tremblay",
@@ -823,7 +847,6 @@
       "date": "2026-09-15T14:44:42.000Z",
       "excerpt": "La librairie Marie-Laura à Jonquière. (Photo : Emmaëlle Lacave–Jonneaux) Pas moins de 350 auteurs et autrices seront réunis au Salon du livre de Saguenay qui vient de dévoiler sa programmation. Le Salon du livre se tiendra du 1er au 3 octobre, à Place Centre-Ville à Jonquière.",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_6697.jpeg",
-      "_pageAuthor": "Emmaëlle Lacave-Jonneaux",
       "sourceImageCredit": "Photo : Vicky Dallaire",
       "sourceImageCreator": "Vicky Dallaire",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/15/nouveau-record-pour-le-salon-du-livre-2026/?utm_source=rss&utm_medium=rss&utm_campaign=nouveau-record-pour-le-salon-du-livre-2026",
@@ -1137,28 +1160,6 @@
       "imageLocalVia": "origin"
     },
     {
-      "source": "La Pige",
-      "institution": "Cégep de Jonquière (ATM – journalisme)",
-      "region": "Saguenay–Lac-Saint-Jean",
-      "type": "cegep",
-      "lang": "fr",
-      "title": "Maison des jeunes : 15 000 $ pour financer des activités",
-      "link": "https://lapige.atmjonquiere.com/2026/09/14/maison-des-jeunes-15-000-pour-financer-des-activites/?utm_source=rss&utm_medium=rss&utm_campaign=maison-des-jeunes-15-000-pour-financer-des-activites",
-      "author": "Gabriel Barrette",
-      "date": "2026-09-14T15:10:23.000Z",
-      "excerpt": "La Maison des jeunes de Laterrière a sa propre radio diffusée sur YouTube. (Photo : Maison des jeunes de Laterrière) Grâce à un don de la caisse Desjardins, les jeunes bénéficieront d’un accès plus abordable aux activités. Ils ont donné 5000 $ par année à la Maison des jeunes",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/shared-image.png",
-      "sourceImageCredit": "Photo : Maison des jeunes de Laterrière",
-      "sourceImageCreator": "Maison des jeunes de Laterrière",
-      "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/14/maison-des-jeunes-15-000-pour-financer-des-activites/?utm_source=rss&utm_medium=rss&utm_campaign=maison-des-jeunes-15-000-pour-financer-des-activites",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "shared-image.png",
-      "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Grâce à un don de la caisse Desjardins, les jeunes bénéficieront d’un accès plus abordable aux activités. Ils ont donné 5000 $ par année à la Maison des jeunes (MDJ) de Latterière le 8 septembre."
-    },
-    {
       "source": "The McGill Daily",
       "institution": "McGill University",
       "region": "Montréal",
@@ -1170,7 +1171,7 @@
       "date": "2026-09-14T12:00:00.000Z",
       "excerpt": "Good People is an article series highlighting McGill students doing community-oriented work on and around campus. Because it’s important to celebrate good people doing good things.",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/09/WUSCMcGill.jpeg",
-      "authorCheckedAt": "2026-09-17T18:23:13.417Z",
+      "authorCheckedAt": "2026-09-18T19:02:48.634Z",
       "sourceImageCredit": "Photo credit: The McGill Daily",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/09/a-life-changing-experience-student-led-organization-welcomes-refugee-students-to-mcgil/",
       "sourceImageCreditFrom": "media",
@@ -1773,7 +1774,7 @@
       "date": "2026-09-04T21:00:00.000Z",
       "excerpt": "Quartier Libre est finalement de retour après un été mouvementé. Voici les nouvelles qui ont marqué l’actualité des derniers mois afin de commencer la session bien informés.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/09/5-infos-marquantes-de-lete.png",
-      "authorCheckedAt": "2026-09-17T18:23:14.085Z",
+      "authorCheckedAt": "2026-09-18T19:02:49.019Z",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/cinq-nouvelles-marquantes-de-lete/",
       "sourceImageCreditFrom": "media",
@@ -2019,7 +2020,7 @@
       "date": "2026-08-31T12:39:00.000Z",
       "excerpt": "As the school year is set in motion, first years, returning undergrads, and graduate students alike flood McGill’s residences on move-in day. Behind the scenes are current McGill students known as Residence Life Facilitators (RLFs) who facilitate move-in and residence life. The",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/08/ffa7cf5a-701c-49f4-8dad-7a22c74b1aeb.jpg",
-      "authorCheckedAt": "2026-09-17T18:23:14.574Z",
+      "authorCheckedAt": "2026-09-18T19:02:49.309Z",
       "sourceImageCredit": "Photo credit: The McGill Daily",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/08/whats-it-like-to-run-move-in-weekend/",
       "sourceImageCreditFrom": "media",
@@ -2044,7 +2045,7 @@
       "date": "2026-08-31T12:00:00.000Z",
       "excerpt": "When it comes to AI in the classroom, educators pay too much attention to ethics and not enough to the environment",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/01/Screenshot-2026-01-26-at-17.35.14.png",
-      "authorCheckedAt": "2026-09-17T18:23:14.932Z",
+      "authorCheckedAt": "2026-09-18T19:02:49.575Z",
       "sourceImageCredit": "Photo : Zoe Sanguin",
       "sourceImageCreator": "Zoe Sanguin",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/08/the-environmental-cost-of-ai/",
@@ -2070,7 +2071,7 @@
       "date": "2026-08-31T12:00:00.000Z",
       "excerpt": "While I was out for drinks with friends, our debrief was rudely interrupted by the table of adults behind us, exclaiming how teens these days are so boring compared to how they were in their youth. After listening to them go on about how no one parties anymore, we had had",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/08/Untitled_Artwork.jpg",
-      "authorCheckedAt": "2026-09-17T18:23:15.287Z",
+      "authorCheckedAt": "2026-09-18T19:02:49.840Z",
       "sourceImageCredit": "Photo : Eva Marriott-Fabre",
       "sourceImageCreator": "Eva Marriott-Fabre",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/08/the-death-of-futurity/",
@@ -2096,7 +2097,7 @@
       "date": "2026-08-31T12:00:00.000Z",
       "excerpt": "I walked around Paris’ “beaux quartiers” this summer, at the request of a visiting friend who wanted to see the sights. Yet, the longer I walked, the more uncanny the urban landscape appeared. The grass was immaculate, and the streets looked remarkably clean. Everybody we saw",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/08/Untitled_Artwork-3.png",
-      "authorCheckedAt": "2026-09-17T18:23:15.643Z",
+      "authorCheckedAt": "2026-09-18T19:02:50.108Z",
       "sourceImageCredit": "Photo : Nikhila Shanker",
       "sourceImageCreator": "Nikhila Shanker",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/08/my-midsummers-nightmare/",
@@ -2122,7 +2123,7 @@
       "date": "2026-08-31T12:00:00.000Z",
       "excerpt": "As July turns to August, and August to September, slowly but surely the streets between University and Parc come out of a summer hibernation. Each year, over seven thousand undergraduate students begin their studies at McGill, with 52 per cent of the incoming class arriving from",
       "image": "",
-      "authorCheckedAt": "2026-09-17T18:23:15.996Z",
+      "authorCheckedAt": "2026-09-18T19:02:50.376Z",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg",
       "imageTitle": "Wilson Hall, McGill University",
@@ -2145,7 +2146,7 @@
       "date": "2026-08-31T12:00:00.000Z",
       "excerpt": "Into the Blue by Emma Brodie is a romance novel released earlier this year and has since gained much praise. Contrary to its positive reviews, this book did not live up to my expectations. The novel follows protagonists AJ and Noah as they meet, fall apart, and reconnect",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/08/IntoTheBlue.jpg",
-      "authorCheckedAt": "2026-09-17T18:23:16.374Z",
+      "authorCheckedAt": "2026-09-18T19:02:50.641Z",
       "sourceImageCredit": "Photo : Eva Marriott-Fabre",
       "sourceImageCreator": "Eva Marriott-Fabre",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/08/into-the-editing-room/",
@@ -2171,7 +2172,7 @@
       "date": "2026-08-31T12:00:00.000Z",
       "excerpt": "The ‘Niche Connoisseur’: someone who knows more about a mainstream topic than anyone reasonably should, or someone who seeks to know everything about something you’ve never heard of. In either case, both ‘Niche Connoisseurs’ look for every opportunity to prove to everyone else",
       "image": "",
-      "authorCheckedAt": "2026-09-17T18:23:16.740Z",
+      "authorCheckedAt": "2026-09-18T19:02:50.907Z",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b9/View_from_McGill_University_downtown_campus_01.JPG",
       "imageTitle": "View from McGill University downtown campus 01",
@@ -2194,7 +2195,7 @@
       "date": "2026-08-31T12:00:00.000Z",
       "excerpt": "On July 16, the 230-member blue collar workers’ union at Parc Jean-Drapeau voted unanimously in favour of increasing pressure tactics, such as a general strike, following unsuccessful negotiations with the City of Montreal over a new collective agreement. The union voted on this",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/08/R1-03924-0013.jpg",
-      "authorCheckedAt": "2026-09-17T18:23:17.090Z",
+      "authorCheckedAt": "2026-09-18T19:02:51.169Z",
       "sourceImageCredit": "Photo : Courtesy of Ingara Maidou",
       "sourceImageCreator": "Courtesy of Ingara Maidou",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/08/the-citys-ours/",
@@ -2655,13 +2656,13 @@
       "sourceImageCreditImageKey": "image-1-1.jpeg",
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/43/Marine_Stage_at_Summer_Sonic_Festival.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "File:Marine Stage at Summer Sonic Festival.jpg",
-      "imageCredit": "Photo : LuxTonnerre / CC BY 2.0 · Wikimedia Commons",
-      "imageCreator": "LuxTonnerre",
-      "imageLicense": "CC BY 2.0",
-      "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Marine_Stage_at_Summer_Sonic_Festival.jpg",
+      "stockImage": "https://live.staticflickr.com/3907/14575571714_699088529c_b.jpg",
+      "imageTitle": "saugeile Stelle Fusion Festival Festival Summer at Fusion Festival",
+      "imageCredit": "Photo : _Tasmo / CC BY-SA · Openverse",
+      "imageCreator": "_Tasmo",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/73942751@N00/14575571714",
       "imageLocal": "assets/news-images/642182c28d092414.webp",
       "imageLocalKey": "642182c28d092414",
       "imageLocalVia": "origin"
@@ -3196,7 +3197,7 @@
       "author": "Chiara Guillon",
       "date": "2026-04-28T14:45:25.000Z",
       "excerpt": "Jeudi dernier, le 23 avril, a eu lieu le vernissage de l’exposition CAPHARNAÜM, portée par les finissants en arts visuels de l’UQTR. Un moment important pour eux ; celui où leur travail sort enfin des ateliers pour rencontrer le public. Onze étudiant.e.s et autant de regard sur",
-      "image": "https://zonecampus.ca/wp-content/uploads/2026/04/IMG_9786-1024x665.jpeg",
+      "image": "https://zonecampus.ca/wp-content/uploads/2026/04/IMG_9786.jpeg",
       "sourceImageCredit": "Photo : Chiara Guillon",
       "sourceImageCreator": "Chiara Guillon",
       "sourceImageCreditUrl": "https://zonecampus.ca/capharnaum-les-finissants-en-arts-de-luqtr-a-la-rencontre-du-public/",
@@ -3204,9 +3205,7 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_9786.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/96bf2e57f78195d2.jpg",
-      "imageLocalKey": "96bf2e57f78195d2"
+      "leadImageReady": true
     },
     {
       "source": "Zone Campus",
@@ -3267,7 +3266,7 @@
       "author": "Dany Menguele",
       "date": "2026-04-24T12:41:21.000Z",
       "excerpt": "Alors que le ministre des Finances, Eric Girard, promet un retour à l’équilibre budgétaire d’ici 2029‑2030, une menace silencieuse, mais dévastatrice plane au‑dessus de l’économie québécoise, à savoir la renégociation de l’Accord Canada–États-Unis–Mexique (ACEUM). Ce n’est pas",
-      "image": "https://zonecampus.ca/wp-content/uploads/2026/04/Dany_portrait_vignette_ZC-copie-1068x641-3-2-1024x615.jpg",
+      "image": "https://zonecampus.ca/wp-content/uploads/2026/04/Dany_portrait_vignette_ZC-copie-1068x641-3-2.jpg",
       "sourceImageCredit": "Photo : Camille Limoges",
       "sourceImageCreator": "Camille Limoges",
       "sourceImageCreditUrl": "https://zonecampus.ca/leconomie-du-pays-ce-qui-attend-le-quebec-si-washington-revoit-sa-copie-dans-la-negociation-de-laceum/",
@@ -3275,8 +3274,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/bca23ddde074c874.jpg",
-      "imageLocalKey": "bca23ddde074c874"
+      "imageLocal": "assets/news-images/df8807d73a194404.jpg",
+      "imageLocalKey": "df8807d73a194404"
     },
     {
       "source": "Zone Campus",
@@ -3289,7 +3288,7 @@
       "author": "Anaïs Gendron",
       "date": "2026-04-21T17:20:27.000Z",
       "excerpt": "Une association étudiante plutôt méconnue sur le campus de l’UQTR fête pourtant ses 10 ans d’existence cette année. En effet, les troupes de danse Paturn et Paturn X sont plus en vie que jamais. Laurane Bédard, vice-présidente, et Arianne Grenier, danseuse dans Paturn, nous",
-      "image": "https://zonecampus.ca/wp-content/uploads/2026/04/604823445_853711280773514_928679255052921821_n-1024x683.jpg",
+      "image": "https://zonecampus.ca/wp-content/uploads/2026/04/604823445_853711280773514_928679255052921821_n.jpg",
       "sourceImageCredit": "Photo : Page Facebook",
       "sourceImageCreator": "Page Facebook",
       "sourceImageCreditUrl": "https://zonecampus.ca/paturn-place-a-la-danse-sur-le-campus-de-luqtr/",
@@ -3297,8 +3296,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/1ea90acd9d61e587.jpg",
-      "imageLocalKey": "1ea90acd9d61e587"
+      "imageLocal": "assets/news-images/4828a1e7cbf0e7ff.jpg",
+      "imageLocalKey": "4828a1e7cbf0e7ff"
     },
     {
       "source": "Zone Campus",
@@ -3311,7 +3310,7 @@
       "author": "Anaïs Gendron",
       "date": "2026-04-20T20:46:41.000Z",
       "excerpt": "Le jeudi 16 avril dernier, le festival international DANSEncore a réuni ses partenaires, les médias et des membres de la communauté pour un cocktail festif à l’occasion du lancement de leur programmation 2026. Pour leur 32e édition, le festival nous réserve une programmation",
-      "image": "https://zonecampus.ca/wp-content/uploads/2026/04/672687004_1331193022389249_583407324812045529_n-1024x683.jpg",
+      "image": "https://zonecampus.ca/wp-content/uploads/2026/04/672687004_1331193022389249_583407324812045529_n.jpg",
       "sourceImageCredit": "Photo : Luc Levesque",
       "sourceImageCreator": "Luc Levesque",
       "sourceImageCreditUrl": "https://zonecampus.ca/dansencore-devoile-la-programmation-de-sa-32eme-edition/",
@@ -3319,8 +3318,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/85147fbddce0425c.jpg",
-      "imageLocalKey": "85147fbddce0425c"
+      "imageLocal": "assets/news-images/fcac91d58ef48893.jpg",
+      "imageLocalKey": "fcac91d58ef48893"
     },
     {
       "source": "Exil",
