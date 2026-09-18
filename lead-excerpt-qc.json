@@ -1,12 +1,12 @@
 {
-  "updated": "2026-09-18T19:03:11.630Z",
+  "updated": "2026-09-18T21:00:00.819Z",
   "total": 168,
   "pool": 53,
   "incomplete": 10,
   "withLeadExcerpt": 82,
   "candidates": 10,
-  "enriched": 1,
-  "failed": 3,
+  "enriched": 4,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
@@ -19,12 +19,39 @@
       "changed": false
     },
     {
-      "title": "Le communautaire à boutte interpelle les candidats à Jonquière",
-      "link": "https://lapige.atmjonquiere.com/2026/09/18/le-communautaire-a-boutte-interpelle-les-candidats-a-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=le-communautaire-a-boutte-interpelle-les-candidats-a-jonquiere",
+      "title": "La STS redresse la barre, les usagers en doutent",
+      "link": "https://lapige.atmjonquiere.com/2026/09/18/la-sts-redresse-la-barre-les-usagers-en-doutent/?utm_source=rss&utm_medium=rss&utm_campaign=la-sts-redresse-la-barre-les-usagers-en-doutent",
       "ok": true,
       "score": 100,
-      "chars": 316,
-      "sample": "Le mouvement « Le communautaire à boutte! » s’est mobilisé mardi à Jonquière pour interpeller les ca",
+      "chars": 375,
+      "sample": "Septembre, le mois de la mobilité durable, où l’usage du transport en commun est encouragé, la fiabi",
+      "changed": true
+    },
+    {
+      "title": "Saguenay acquiert officiellement l’église Saint-Édouard",
+      "link": "https://lapige.atmjonquiere.com/2026/09/18/saguenay-acquiert-officiellement-leglise-saint-edouard/?utm_source=rss&utm_medium=rss&utm_campaign=saguenay-acquiert-officiellement-leglise-saint-edouard",
+      "ok": true,
+      "score": 100,
+      "chars": 226,
+      "sample": "Annoncée en avril dernier, la vente a été conclue jeudi en avant-midi. La Ville de Saguenay a acheté",
+      "changed": true
+    },
+    {
+      "title": "Les priorités de la jeunesse, vues par Jeanne Palardy",
+      "link": "https://lapige.atmjonquiere.com/2026/09/18/les-priorites-de-la-jeunesse-vues-par-jeanne-palardy/?utm_source=rss&utm_medium=rss&utm_campaign=les-priorites-de-la-jeunesse-vues-par-jeanne-palardy",
+      "ok": true,
+      "score": 96,
+      "chars": 395,
+      "sample": "Que répondent les partis politiques aux préoccupations des jeunes électeurs ? C’est ce que l’équipe ",
+      "changed": true
+    },
+    {
+      "title": "Femme pays : retour sur la première à Chicoutimi",
+      "link": "https://lapige.atmjonquiere.com/2026/09/18/femme-pays-retour-sur-la-premiere-a-chicoutimi/?utm_source=rss&utm_medium=rss&utm_campaign=femme-pays-retour-sur-la-premiere-a-chicoutimi",
+      "ok": true,
+      "score": 100,
+      "chars": 253,
+      "sample": "C’est mardi dernier qu’avait lieu la première du film « Femme pays », au cinéma l’Odyssée à Chicouti",
       "changed": true
     },
     {
@@ -52,24 +79,6 @@
       "score": 77,
       "chars": 400,
       "sample": "While the exchange program fact sheet for the 2026-2027 exchange year is available on the McGill Abr",
-      "changed": false
-    },
-    {
-      "title": "Le Festival de Cinéma de la Ville de Québec et le Festival REGARD, une amitié qui traverse le parc des Laurentides",
-      "link": "https://lapige.atmjonquiere.com/2026/09/14/le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides/?utm_source=rss&utm_medium=rss&utm_campaign=le-festival-de-cinema-de-la-ville-de-quebec-et-le-festival-regard-une-amitie-qui-traverse-le-parc-des-laurentides",
-      "ok": true,
-      "score": 83,
-      "chars": 400,
-      "sample": "Le Festival de Cinéma de la Ville de Québec (FCVQ) a souligné la 30 e édition du Festival REGARD lor",
-      "changed": false
-    },
-    {
-      "title": "Bulletin La Pige radio 14h30 et 15h30",
-      "link": "https://lapige.atmjonquiere.com/2026/09/14/bulletin-la-pige-radio-14h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-14h30",
-      "ok": true,
-      "score": 73,
-      "chars": 153,
-      "sample": "Starbucks arrive à Jonquière, une marche pour sensibiliser au myélome multiple et plus de variétés d",
       "changed": false
     }
   ]
