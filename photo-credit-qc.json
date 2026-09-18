@@ -1,44 +1,30 @@
 {
-  "updated": "2026-09-18T00:32:18.366Z",
+  "updated": "2026-09-18T04:02:17.970Z",
   "total": 168,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 119,
+  "cited": 117,
   "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 9,
-  "citedNew": 6,
-  "fallbackNew": 13,
+  "checked": 16,
+  "updatedCount": 5,
+  "citedNew": 1,
+  "fallbackNew": 15,
   "samples": [
     {
-      "title": "Affaire Daniel Rochefort : qu’est-ce qui a changé dans le traitement des plaintes à l’Université de Montréal ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Service de Police de la Ville de Montréal",
-      "cited": true,
-      "method": "figcaption"
-    },
-    {
-      "title": "Québec solidaire : un cadre financier pour les générations futures ?",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
+      "title": "Unregulated but essential?",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
       "cited": false,
       "method": null
     },
     {
-      "title": "Unregulated but essential?",
-      "source": "The Link",
-      "credit": "Illustration: Mira De Koven",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
       "title": "Editorial: The importance of student journalism",
       "source": "The Link",
-      "credit": "Photo : Graphic Halle Keays",
-      "cited": true,
-      "method": "figcaption-bare"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Faire du sport sans se ruiner quand on est aux études",
@@ -60,20 +46,6 @@
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
