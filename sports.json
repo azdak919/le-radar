@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-18T22:40:12.893Z",
-  "fetchedAt": "2026-09-18T22:40:12.893Z",
+  "updated": "2026-09-18T22:49:55.198Z",
+  "fetchedAt": "2026-09-18T22:49:55.198Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-18T22:40:12.893Z"
+    "referenceDate": "2026-09-18T22:49:55.198Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 839,
@@ -74,6 +74,18 @@
     "volleyball"
   ],
   "teamCount": 868,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -40133,7 +40145,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b0711a02-5083-4f9a-a8da-391ffa0a8f00",
           "opponentFullName": "Vanier College",
           "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "vanier"
+          "opponentRegistryId": "vanier",
+          "live": true
         },
         {
           "date": "2026-09-20",
@@ -40255,6 +40268,7 @@
         "opponentFullName": "Vanier College",
         "opponentNickname": "Cheetahs",
         "opponentRegistryId": "vanier",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -41610,7 +41624,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b0711a02-5083-4f9a-a8da-391ffa0a8f00",
           "opponentFullName": "John Abbott College",
           "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott"
+          "opponentRegistryId": "john-abbott",
+          "live": true
         },
         {
           "date": "2026-09-19",
@@ -41706,6 +41721,7 @@
         "opponentFullName": "John Abbott College",
         "opponentNickname": "Islanders",
         "opponentRegistryId": "john-abbott",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -52853,7 +52869,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6aed2be9-1d3d-44f5-9523-3972318f493d",
           "opponentFullName": "Université de Montréal",
           "opponentNickname": "Carabins",
-          "opponentRegistryId": "udem"
+          "opponentRegistryId": "udem",
+          "live": true
         },
         {
           "date": "2026-09-26",
@@ -52939,6 +52956,7 @@
         "opponentFullName": "Université de Montréal",
         "opponentNickname": "Carabins",
         "opponentRegistryId": "udem",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -53593,7 +53611,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6aed2be9-1d3d-44f5-9523-3972318f493d",
           "opponentFullName": "Bishop's University",
           "opponentNickname": "Gaiters",
-          "opponentRegistryId": "bishops"
+          "opponentRegistryId": "bishops",
+          "live": true
         },
         {
           "date": "2026-09-26",
@@ -53679,6 +53698,7 @@
         "opponentFullName": "Bishop's University",
         "opponentNickname": "Gaiters",
         "opponentRegistryId": "bishops",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -58114,7 +58134,8 @@
           "gameId": "a6ca337c-6f23-446c-a7f9-87c150310562",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a6ca337c-6f23-446c-a7f9-87c150310562",
           "opponentFullName": "Cégep de Victoriaville",
-          "opponentRegistryId": "victoriaville"
+          "opponentRegistryId": "victoriaville",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -58182,6 +58203,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a6ca337c-6f23-446c-a7f9-87c150310562",
         "opponentFullName": "Cégep de Victoriaville",
         "opponentRegistryId": "victoriaville",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -58425,7 +58447,8 @@
           "gameId": "a6ca337c-6f23-446c-a7f9-87c150310562",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a6ca337c-6f23-446c-a7f9-87c150310562",
           "opponentFullName": "Cégep de Sherbrooke",
-          "opponentRegistryId": "cegep-sherbrooke"
+          "opponentRegistryId": "cegep-sherbrooke",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -58480,6 +58503,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a6ca337c-6f23-446c-a7f9-87c150310562",
         "opponentFullName": "Cégep de Sherbrooke",
         "opponentRegistryId": "cegep-sherbrooke",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -59781,7 +59805,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=257d434b-a1e2-4ff2-859d-e7d6486bbabd",
           "opponentFullName": "Vanier College",
           "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "vanier"
+          "opponentRegistryId": "vanier",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -59853,6 +59878,7 @@
         "opponentFullName": "Vanier College",
         "opponentNickname": "Cheetahs",
         "opponentRegistryId": "vanier",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -59934,7 +59960,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=257d434b-a1e2-4ff2-859d-e7d6486bbabd",
           "opponentFullName": "John Abbott College",
           "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott"
+          "opponentRegistryId": "john-abbott",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -60006,6 +60033,7 @@
         "opponentFullName": "John Abbott College",
         "opponentNickname": "Islanders",
         "opponentRegistryId": "john-abbott",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -64392,7 +64420,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=824d9317-0db1-4711-9501-749bee83a1e3",
           "opponentFullName": "Cégep de Sainte-Foy",
           "opponentNickname": "Géants",
-          "opponentRegistryId": "sainte-foy"
+          "opponentRegistryId": "sainte-foy",
+          "live": true
         },
         {
           "date": "2026-09-25",
@@ -64491,6 +64520,7 @@
         "opponentFullName": "Cégep de Sainte-Foy",
         "opponentNickname": "Géants",
         "opponentRegistryId": "sainte-foy",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -64833,21 +64863,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-18",
-          "time": "18:45",
-          "opponent": "Vanier",
-          "opponentCode": "VAN",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D1",
-          "gameId": "65313dee-13ce-46d1-8b67-befd2c51e382",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=65313dee-13ce-46d1-8b67-befd2c51e382",
-          "opponentFullName": "Vanier College",
-          "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "vanier",
-          "live": true
-        },
-        {
           "date": "2026-09-25",
           "time": "21:00",
           "opponent": "Cégep de Trois-Rivières",
@@ -64918,19 +64933,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-18",
-        "time": "18:45",
-        "opponent": "Vanier",
-        "opponentCode": "VAN",
-        "home": true,
+        "date": "2026-09-25",
+        "time": "21:00",
+        "opponent": "Cégep de Trois-Rivières",
+        "opponentCode": "TRV",
+        "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D1",
-        "gameId": "65313dee-13ce-46d1-8b67-befd2c51e382",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=65313dee-13ce-46d1-8b67-befd2c51e382",
-        "opponentFullName": "Vanier College",
-        "opponentNickname": "Cheetahs",
-        "opponentRegistryId": "vanier",
-        "live": true,
+        "gameId": "c487b3e7-aa5e-4d19-aaf8-cf6238f63062",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c487b3e7-aa5e-4d19-aaf8-cf6238f63062",
+        "opponentFullName": "Cégep de Trois-Rivières",
+        "opponentNickname": "Diablos",
+        "opponentRegistryId": "trois-rivieres",
         "opponentSector": "collegial"
       },
       "record": {
@@ -65273,7 +65287,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=824d9317-0db1-4711-9501-749bee83a1e3",
           "opponentFullName": "Champlain College Saint-Lambert",
           "opponentNickname": "Barons",
-          "opponentRegistryId": "champlain-st-lambert"
+          "opponentRegistryId": "champlain-st-lambert",
+          "live": true
         },
         {
           "date": "2026-09-25",
@@ -65357,6 +65372,7 @@
         "opponentFullName": "Champlain College Saint-Lambert",
         "opponentNickname": "Barons",
         "opponentRegistryId": "champlain-st-lambert",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -65700,21 +65716,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-18",
-          "time": "18:45",
-          "opponent": "Garneau",
-          "opponentCode": "GAR",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D1",
-          "gameId": "65313dee-13ce-46d1-8b67-befd2c51e382",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=65313dee-13ce-46d1-8b67-befd2c51e382",
-          "opponentFullName": "Cégep Garneau",
-          "opponentNickname": "Boomerang",
-          "opponentRegistryId": "garneau",
-          "live": true
-        },
-        {
           "date": "2026-09-25",
           "time": "19:00",
           "opponent": "Champlain St-Lambert",
@@ -65785,19 +65786,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-18",
-        "time": "18:45",
-        "opponent": "Garneau",
-        "opponentCode": "GAR",
-        "home": false,
+        "date": "2026-09-25",
+        "time": "19:00",
+        "opponent": "Champlain St-Lambert",
+        "opponentCode": "SLA",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D1",
-        "gameId": "65313dee-13ce-46d1-8b67-befd2c51e382",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=65313dee-13ce-46d1-8b67-befd2c51e382",
-        "opponentFullName": "Cégep Garneau",
-        "opponentNickname": "Boomerang",
-        "opponentRegistryId": "garneau",
-        "live": true,
+        "gameId": "2b66d110-2fa0-4865-97ff-7e645d8809b3",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2b66d110-2fa0-4865-97ff-7e645d8809b3",
+        "opponentFullName": "Champlain College Saint-Lambert",
+        "opponentNickname": "Barons",
+        "opponentRegistryId": "champlain-st-lambert",
         "opponentSector": "collegial"
       },
       "record": {
@@ -66271,7 +66271,8 @@
           "gameId": "f18973de-4dd7-4405-aecc-42156537d091",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f18973de-4dd7-4405-aecc-42156537d091",
           "opponentFullName": "Cégep de Sherbrooke",
-          "opponentRegistryId": "cegep-sherbrooke"
+          "opponentRegistryId": "cegep-sherbrooke",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -66339,6 +66340,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f18973de-4dd7-4405-aecc-42156537d091",
         "opponentFullName": "Cégep de Sherbrooke",
         "opponentRegistryId": "cegep-sherbrooke",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -66451,7 +66453,8 @@
           "gameId": "f18973de-4dd7-4405-aecc-42156537d091",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f18973de-4dd7-4405-aecc-42156537d091",
           "opponentFullName": "Cégep de Saint-Hyacinthe",
-          "opponentRegistryId": "saint-hyacinthe"
+          "opponentRegistryId": "saint-hyacinthe",
+          "live": true
         },
         {
           "date": "2026-09-25",
@@ -66518,6 +66521,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f18973de-4dd7-4405-aecc-42156537d091",
         "opponentFullName": "Cégep de Saint-Hyacinthe",
         "opponentRegistryId": "saint-hyacinthe",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -68622,7 +68626,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=26b97006-b2c1-48e8-8525-572d6cebe379",
           "opponentFullName": "Collège Montmorency",
           "opponentNickname": "Nomades",
-          "opponentRegistryId": "montmorency"
+          "opponentRegistryId": "montmorency",
+          "live": true
         },
         {
           "date": "2026-10-03",
@@ -68677,6 +68682,7 @@
         "opponentFullName": "Collège Montmorency",
         "opponentNickname": "Nomades",
         "opponentRegistryId": "montmorency",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -68972,7 +68978,8 @@
           "gameId": "26b97006-b2c1-48e8-8525-572d6cebe379",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=26b97006-b2c1-48e8-8525-572d6cebe379",
           "opponentFullName": "Collège Ahuntsic",
-          "opponentRegistryId": "ahuntsic"
+          "opponentRegistryId": "ahuntsic",
+          "live": true
         },
         {
           "date": "2026-09-25",
@@ -69039,6 +69046,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=26b97006-b2c1-48e8-8525-572d6cebe379",
         "opponentFullName": "Collège Ahuntsic",
         "opponentRegistryId": "ahuntsic",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -71322,7 +71330,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=fb6f818f-0b39-446d-8d2b-9be34e6bda2e",
           "opponentFullName": "Cégep de Trois-Rivières",
           "opponentNickname": "Diablos",
-          "opponentRegistryId": "trois-rivieres"
+          "opponentRegistryId": "trois-rivieres",
+          "live": true
         },
         {
           "date": "2026-09-20",
@@ -71434,6 +71443,7 @@
         "opponentFullName": "Cégep de Trois-Rivières",
         "opponentNickname": "Diablos",
         "opponentRegistryId": "trois-rivieres",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -72632,7 +72642,8 @@
           "gameId": "fb6f818f-0b39-446d-8d2b-9be34e6bda2e",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=fb6f818f-0b39-446d-8d2b-9be34e6bda2e",
           "opponentFullName": "Collège de Bois-de-Boulogne",
-          "opponentRegistryId": "bois-de-boulogne"
+          "opponentRegistryId": "bois-de-boulogne",
+          "live": true
         },
         {
           "date": "2026-09-25",
@@ -72716,6 +72727,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=fb6f818f-0b39-446d-8d2b-9be34e6bda2e",
         "opponentFullName": "Collège de Bois-de-Boulogne",
         "opponentRegistryId": "bois-de-boulogne",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -74859,7 +74871,8 @@
           "gameId": "ac3792cc-6ef2-4c10-8097-7b4352cb48fe",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ac3792cc-6ef2-4c10-8097-7b4352cb48fe",
           "opponentFullName": "Cégep de Saint-Félicien",
-          "opponentRegistryId": "saint-felicien"
+          "opponentRegistryId": "saint-felicien",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -74926,6 +74939,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ac3792cc-6ef2-4c10-8097-7b4352cb48fe",
         "opponentFullName": "Cégep de Saint-Félicien",
         "opponentRegistryId": "saint-felicien",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -75728,7 +75742,8 @@
           "gameId": "ac3792cc-6ef2-4c10-8097-7b4352cb48fe",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ac3792cc-6ef2-4c10-8097-7b4352cb48fe",
           "opponentFullName": "Cégep d'Alma",
-          "opponentRegistryId": "alma"
+          "opponentRegistryId": "alma",
+          "live": true
         },
         {
           "date": "2026-09-26",
@@ -75808,6 +75823,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ac3792cc-6ef2-4c10-8097-7b4352cb48fe",
         "opponentFullName": "Cégep d'Alma",
         "opponentRegistryId": "alma",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
