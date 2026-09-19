@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-19T14:41:27.412Z",
+  "updated": "2026-09-19T17:20:00.996Z",
   "total": 168,
   "pool": 53,
-  "incomplete": 6,
+  "incomplete": 7,
   "withLeadExcerpt": 82,
-  "candidates": 6,
-  "enriched": 0,
+  "candidates": 7,
+  "enriched": 1,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -17,6 +17,15 @@
       "chars": 400,
       "sample": "Montée des extrêmes telle que celle déjà observée et largement décrite ailleurs en Europe ? Ou réel ",
       "changed": false
+    },
+    {
+      "title": "L’épidémie de la nonchalance",
+      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "ok": true,
+      "score": 96,
+      "chars": 391,
+      "sample": "À force de craindre d’être « trop » – trop sensible, trop sincère – on finit par se taire. Je me sui",
+      "changed": true
     },
     {
       "title": "Un débat des chef·fe·s pour la jeunesse",
