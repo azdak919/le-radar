@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-19T18:41:36.652Z",
+  "updated": "2026-09-19T20:06:06.594Z",
   "total": 168,
   "withImage": 157,
   "withCredit": 157,
@@ -7,24 +7,24 @@
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
+  "checked": 16,
   "updatedCount": 7,
-  "citedNew": 6,
+  "citedNew": 7,
   "fallbackNew": 9,
   "samples": [
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "La STS redresse la barre, les usagers en doutent",
       "source": "La Pige",
       "credit": "Photo : Diego Pinto de Queiros",
       "cited": true,
       "method": "body-line"
+    },
+    {
+      "title": "Rassembler pour mieux diviser",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "Unregulated but essential?",
