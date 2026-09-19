@@ -1,8 +1,8 @@
 {
-  "updated": "2026-09-18T22:51:48.576Z",
+  "updated": "2026-09-19T00:25:36.423Z",
   "total": 168,
   "withAuthor": 168,
-  "mismatches": 7,
+  "mismatches": 8,
   "ok": true,
   "samples": [
     {
@@ -54,6 +54,14 @@
       "reason": "no-author-source"
     },
     {
+      "title": "Rassembler pour mieux diviser",
+      "link": "https://www.delitfrancais.com/2026/03/25/rassembler-pour-mieux-diviser/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Catherine Brunet Rodriguez",
+      "reason": "page-byline"
+    },
+    {
       "title": "Garda World au CVM (Éditorial)",
       "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
       "source": "Exil",
@@ -62,5 +70,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 7
+  "fixed": 8
 }
