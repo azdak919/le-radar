@@ -35,6 +35,7 @@ const SportsLive = require('./sports-live-lib');
 const { buildSportsMastheadPayload } = require('./sports-masthead-lib');
 const { preserveHarvestCatalogStats } = require('./harvest-freshness-lib');
 const { isChallengeOrInterstitialPage } = require('./source-retention-lib');
+const CampusHockey = require('./campus-hockey-lib');
 
 const update = process.argv.includes('--update');
 const liveOnly = process.argv.includes('--live');
@@ -441,7 +442,27 @@ async function fetchHockeyTeams(reg) {
       });
     }
   }
-  return { teams: out, errors };
+
+  let campusTeams = {};
+  process.stderr.write('sports: hockey calendriers campus (UQO+UQAC)… ');
+  try {
+    const campus = await CampusHockey.fetchCampusHockey({ reg });
+    campusTeams = campus.teams || {};
+    errors.push(...(campus.errors || []));
+    process.stderr.write(`${Object.keys(campusTeams).length} équipes, ${(campus.games || []).length} matchs\n`);
+    const ontoSpordle = CampusHockey.overlayCampusHockey(out, campusTeams);
+    if (ontoSpordle.attached || ontoSpordle.added) {
+      process.stderr.write(`sports: hockey campus → Spordle ${ontoSpordle.attached} attachés, ${ontoSpordle.added} ajoutés\n`);
+    }
+  } catch (err) {
+    process.stderr.write(`ERREUR ${err.message}\n`);
+    errors.push({
+      leagueId: 'campus-hockey',
+      label: 'Calendriers campus hockey',
+      error: String(err.message || err),
+    });
+  }
+  return { teams: out, errors, campusTeams };
 }
 
 /**
@@ -956,7 +977,7 @@ async function main() {
   }
 
   // Hockey / voile : ignorés en --live (S1 seulement, pour rester sous la minute).
-  const hockey = liveOnly ? { teams: {}, errors: [] } : await fetchHockeyTeams(reg);
+  const hockey = liveOnly ? { teams: {}, errors: [], campusTeams: {} } : await fetchHockeyTeams(reg);
   if (Object.keys(hockey.teams).length) {
     for (const [key, team] of Object.entries(hockey.teams)) {
       if (Array.isArray(team.results)) {
@@ -982,6 +1003,12 @@ async function main() {
     }
   }
   errors.push(...hockey.errors);
+  if (!liveOnly && hockey.campusTeams && Object.keys(hockey.campusTeams).length) {
+    const ontoS1 = CampusHockey.overlayCampusHockey(teams, hockey.campusTeams);
+    if (ontoS1.attached || ontoS1.added) {
+      process.stderr.write(`sports: hockey campus → S1 ${ontoS1.attached} attachés, ${ontoS1.added} ajoutés\n`);
+    }
+  }
   sportsFetched.add('hockey');
 
   // Voile campus QC (ICSA + watchlist) — sport hors S1.
