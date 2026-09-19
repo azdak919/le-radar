@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-18T23:36:57.821Z",
+  "updated": "2026-09-19T08:24:12.752Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2368,15 +2368,30 @@
       "at": "2026-09-17T14:31:27.000Z",
       "via": "existant",
       "source": "Quartier Libre"
+    },
+    "https://lapige.atmjonquiere.com/2026/09/18/le-communautaire-a-boutte-interpelle-les-candidats-a-jonquiere/": {
+      "at": "2026-09-18T23:33:49.000Z",
+      "via": "existant",
+      "source": "La Pige"
+    },
+    "https://lapige.atmjonquiere.com/2026/09/17/les-priorites-de-la-jeunesse-vues-par-serge-bergeron/": {
+      "at": "2026-09-18T23:34:14.000Z",
+      "via": "existant",
+      "source": "La Pige"
+    },
+    "https://quartierlibre.ca/daniel-rochefort-plaintes-udem/": {
+      "at": "2026-09-18T23:35:44.000Z",
+      "via": "existant",
+      "source": "Quartier Libre"
     }
   },
   "stats": {
-    "total": 417,
+    "total": 420,
     "lastRun": {
       "saved": 0,
-      "skipped": 1,
-      "failed": 8,
-      "stoppedEarly": true
+      "skipped": 3,
+      "failed": 17,
+      "stoppedEarly": false
     }
   },
   "sources": {
