@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-19T18:20:00.114Z",
+  "updated": "2026-09-19T23:35:42.998Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2413,14 +2413,24 @@
       "at": "2026-09-18T13:52:47.000Z",
       "via": "existant",
       "source": "Le Délit"
+    },
+    "https://www.delitfrancais.com/2026/09/16/attention-virage-a-droite/": {
+      "at": "2026-09-16T19:12:05.000Z",
+      "via": "existant",
+      "source": "Le Délit"
+    },
+    "https://www.delitfrancais.com/2026/09/16/un-an-du-club-dds/": {
+      "at": "2026-09-19T18:17:29.000Z",
+      "via": "existant",
+      "source": "Le Délit"
     }
   },
   "stats": {
-    "total": 426,
+    "total": 428,
     "lastRun": {
       "saved": 0,
-      "skipped": 1,
-      "failed": 19,
+      "skipped": 2,
+      "failed": 18,
       "stoppedEarly": false
     }
   },
