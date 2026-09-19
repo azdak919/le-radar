@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-19T03:49:22.333Z",
+  "updated": "2026-09-19T04:47:39.477Z",
   "total": 168,
   "pool": 53,
-  "incomplete": 6,
-  "withLeadExcerpt": 81,
-  "candidates": 6,
-  "enriched": 0,
+  "incomplete": 9,
+  "withLeadExcerpt": 82,
+  "candidates": 9,
+  "enriched": 3,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -17,6 +17,33 @@
       "chars": 400,
       "sample": "Montée des extrêmes telle que celle déjà observée et largement décrite ailleurs en Europe ? Ou réel ",
       "changed": false
+    },
+    {
+      "title": "L’épidémie de la nonchalance",
+      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "ok": true,
+      "score": 96,
+      "chars": 391,
+      "sample": "À force de craindre d’être « trop » – trop sensible, trop sincère – on finit par se taire. Je me sui",
+      "changed": true
+    },
+    {
+      "title": "Hundreds protest AI expansion outside Montreal’s ALL IN summit",
+      "link": "https://thelinknewspaper.ca/article/16384",
+      "ok": true,
+      "score": 100,
+      "chars": 217,
+      "sample": "Hundreds of protesters gathered outside Montreal’s Palais des congrès on Sept. 16 to oppose the expa",
+      "changed": true
+    },
+    {
+      "title": "Somaya takes LAYALI to the stage",
+      "link": "https://thelinknewspaper.ca/article/16385",
+      "ok": true,
+      "score": 96,
+      "chars": 305,
+      "sample": "In the first half of the performance, Somaya took a moment to tell the story of how she got her stag",
+      "changed": true
     },
     {
       "title": "Un débat des chef·fe·s pour la jeunesse",
