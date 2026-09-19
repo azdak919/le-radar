@@ -1,61 +1,54 @@
 {
-  "updatedAt": "2026-09-19T20:00:50.183Z",
+  "updatedAt": "2026-09-19T22:18:49.738Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Radio Futura",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/radio-futura/"
-      },
+      "current": null,
       "next": {
         "title": "Football du Rouge et Or",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "18:30",
         "end": "22:30",
         "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
       },
       "track": "",
-      "showTitle": "Radio Futura",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-19T20:00:01.883Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Contenu explicite",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/contenu-explicite"
-      },
-      "next": {
-        "title": "Le radar",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "17:30",
-        "url": "https://cism893.ca/emissions/le-radar-2"
-      },
-      "track": "",
-      "showTitle": "Contenu explicite",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-19T20:00:04.102Z"
+      "checkedAt": "2026-09-19T22:18:02.807Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Disconomique",
+        "source": "schedule",
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/disconomique"
+      },
+      "next": {
+        "title": "Solénoïde",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/solenoide"
+      },
+      "track": "",
+      "showTitle": "Disconomique",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-19T22:18:04.334Z"
     },
     "ckut": {
       "id": "ckut",
@@ -72,7 +65,7 @@
         "start": "19:00",
         "end": "21:00"
       },
-      "track": "",
+      "track": "Blxck Cxsper -",
       "showTitle": "West Indian Rhythms",
       "host": "",
       "source": "api-live",
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-19T20:00:08.320Z"
+      "checkedAt": "2026-09-19T22:18:07.249Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mi Dun Talk",
+        "title": "The Limelight",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/mi-dun-talk"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-limelight"
       },
       "next": {
-        "title": "Mo' Ritmo Radio",
+        "title": "Screamers",
         "source": "schedule",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/screamers"
       },
       "track": "",
-      "showTitle": "Mi Dun Talk",
+      "showTitle": "The Limelight",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-19T20:00:42.719Z"
+      "checkedAt": "2026-09-19T22:18:41.770Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-19T20:00:43.972Z"
+      "checkedAt": "2026-09-19T22:18:42.839Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Soul Coughing — Screenwriters Blues",
+      "track": "Duu — Aline",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -152,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-19T20:00:49.833Z"
+      "checkedAt": "2026-09-19T22:18:49.387Z"
     }
   }
 }
