@@ -315,10 +315,10 @@ async function main() {
     ['Radio schedule drift', `node scripts/detect-schedule-drift.js ${flag}`.trim()],
     ['News sources verify', 'node scripts/verify-news-sources.js'],
     ['News aggregator', `node scripts/fetch-news.js ${flag}`.trim()],
-    ['Author QC', `node scripts/verify-authors.js ${flag}`.trim()],
-    ['Lead excerpt enrichment', `node scripts/enrich-lead-excerpts.js ${flag}`.trim()],
-    ['Lead image QC', `node scripts/ensure-lead-images.js ${flag}`.trim()],
-    ['Photo credit QC', `node scripts/verify-photo-credits.js ${flag}`.trim()],
+    // Auteurs / extraits / photos : déjà dans update-news.yml (10×/jour).
+    // Les relancer ici faisait timeout le job 50 min (6 lundis cancelled,
+    // bot-status figé au 27 juillet). Le résumé lit les JSON laissés par
+    // le bot news.
     // Wallpaper compartimenté + nations partagée (mât + pomo)
     ['Quebec masthead landscape bank', `node scripts/maintain-quebec-backgrounds.js --profile masthead ${flag}`.trim()],
     ['Quebec masthead university bank', `node scripts/maintain-quebec-backgrounds.js --profile universities ${flag}`.trim()],

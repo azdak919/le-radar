@@ -34,6 +34,7 @@ const SportsFreshness = require('./sports-freshness-lib');
 const SportsLive = require('./sports-live-lib');
 const { buildSportsMastheadPayload } = require('./sports-masthead-lib');
 const { preserveHarvestCatalogStats } = require('./harvest-freshness-lib');
+const { isChallengeOrInterstitialPage } = require('./source-retention-lib');
 
 const update = process.argv.includes('--update');
 const liveOnly = process.argv.includes('--live');
@@ -286,14 +287,22 @@ function fetchText(url) {
           fetchText(next).then(resolve, reject);
           return;
         }
-        if (res.statusCode !== 200) {
-          reject(new Error(`HTTP ${res.statusCode} ${url}`));
-          res.resume();
-          return;
-        }
         const chunks = [];
         res.on('data', (c) => chunks.push(c));
-        res.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
+        res.on('end', () => {
+          const body = Buffer.concat(chunks).toString('utf8');
+          const challenged = isChallengeOrInterstitialPage(body)
+            || res.statusCode === 403;
+          if (challenged) {
+            reject(new Error(`Cloudflare challenge HTTP ${res.statusCode} ${url}`));
+            return;
+          }
+          if (res.statusCode !== 200) {
+            reject(new Error(`HTTP ${res.statusCode} ${url}`));
+            return;
+          }
+          resolve(body);
+        });
       },
     );
     req.on('error', reject);
@@ -423,10 +432,12 @@ async function fetchHockeyTeams(reg) {
       process.stderr.write(`${Object.keys(batch).length} équipes\n`);
     } catch (err) {
       process.stderr.write(`ERREUR ${err.message}\n`);
+      const msg = String(err.message || err);
       errors.push({
         leagueId: `spordle-${src.sector}`,
         label: `Hockey ${src.sector}`,
-        error: String(err.message || err),
+        error: msg,
+        blocked: /cloudflare challenge/i.test(msg),
       });
     }
   }

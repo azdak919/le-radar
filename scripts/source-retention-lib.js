@@ -140,6 +140,68 @@ function getBotHints(src = {}, bot = '') {
  * Whether a source may be dropped from news.json / marked dead.
  * Requires no fresh articles in cache AND no fresh _lastItemDate in registry.
  */
+const INSTITUTIONAL_PLACEHOLDER = /^m[eé]dia\s*[—–\-:]/i;
+
+/** Portail institutionnel, pas un journal étudiant. */
+function isInstitutionalPlaceholder(name = '') {
+  return INSTITUTIONAL_PLACEHOLDER.test(String(name || ''));
+}
+
+/**
+ * A `dead` registry row must still be re-fetched: a Cloudflare interstitial
+ * or empty body can mark a live paper dead, and September return would
+ * otherwise never resurrect it.
+ */
+function isFetchableNewsSource(src = {}) {
+  if (!src || !src.url) return false;
+  if (isInstitutionalPlaceholder(src.name)) return false;
+  return true;
+}
+
+function looksLikeRssOrAtom(xml = '') {
+  return /<rss[\s>]|<feed[\s>]/i.test(String(xml).slice(0, 800));
+}
+
+/** Cloudflare managed challenge / WAF interstitial served as HTTP 200 or 403. */
+function isChallengeOrInterstitialPage(body = '') {
+  const text = String(body || '');
+  if (!text) return false;
+  if (/<rss[\s>]|<feed[\s>]/i.test(text.slice(0, 800))) return false;
+  return /just a moment/i.test(text)
+    || /<title>\s*un instant/i.test(text)
+    || /cf-mitigated/i.test(text)
+    || /challenges\.cloudflare\.com/i.test(text)
+    || /cdn-cgi\/challenge/i.test(text)
+    || /attention required.*cloudflare/i.test(text);
+}
+
+/**
+ * HTTP 200 with a non-feed body is unreachable, not proof the paper is dead.
+ * Tribune 2026-09-14: a challenge page set `_status=dead` with failCount 0.
+ */
+function applyUnreachableRegistryUpdate(src, {
+  cachedFresh = false,
+  lastItemDate = null,
+  referenceDate = new Date(),
+  maxFails = 4,
+} = {}) {
+  if (!src) return src;
+  src._failCount = (src._failCount || 0) + 1;
+  const lastFreshMs = Math.max(
+    Date.parse(src._lastItemDate || '') || 0,
+    Date.parse(lastItemDate || '') || 0,
+  );
+  const insideWindow = lastFreshMs >= freshnessWindowStart(referenceDate).getTime();
+  if (cachedFresh || insideWindow) {
+    src._status = 'stale';
+  } else if (src._failCount >= maxFails) {
+    src._status = 'dead';
+  } else if (src._status !== 'dead') {
+    src._status = src._status || 'ok';
+  }
+  return src;
+}
+
 function shouldDropSource({
   sourceName,
   priorItems = [],
@@ -178,7 +240,12 @@ function applyFetchRegistryUpdate(src, {
   if (fetchOk && !usedStaleCache) {
     src._failCount = 0;
     src._lastFetchOk = src._lastChecked;
-    if (src._status === 'dead') src._status = 'ok';
+    const lastMs = Date.parse(src._lastItemDate || '') || Date.parse(lastArticle || '');
+    const classified = Number.isFinite(lastMs)
+      ? classifyFeedFreshness(lastMs, referenceDate)
+      : { status: 'ok' };
+    // A successful fetch never stays `dead` — silent-in-window papers are stale.
+    src._status = classified.status === 'dead' ? 'stale' : classified.status;
     return;
   }
 
@@ -261,7 +328,13 @@ module.exports = {
   getBotHints,
   shouldDropSource,
   applyFetchRegistryUpdate,
+  applyUnreachableRegistryUpdate,
   buildSourceRunMeta,
   classifyFeedFreshness,
+  isFetchableNewsSource,
+  isInstitutionalPlaceholder,
+  looksLikeRssOrAtom,
+  isChallengeOrInterstitialPage,
+  INSTITUTIONAL_PLACEHOLDER,
   OK_DAYS,
 };
