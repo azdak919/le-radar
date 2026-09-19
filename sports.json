@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-19T14:31:12.190Z",
-  "fetchedAt": "2026-09-19T14:31:12.190Z",
+  "updated": "2026-09-19T14:33:10.768Z",
+  "fetchedAt": "2026-09-19T14:33:10.768Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-19T14:31:12.191Z"
+    "referenceDate": "2026-09-19T14:33:10.768Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 839,
@@ -74,6 +74,18 @@
     "volleyball"
   ],
   "teamCount": 868,
+  "errors": [
+    {
+      "leagueId": "spordle-collegial",
+      "label": "Hockey collegial",
+      "error": "HTTP 403 https://collegial.rseqhockey.com/fr"
+    },
+    {
+      "leagueId": "spordle-universitaire",
+      "label": "Hockey universitaire",
+      "error": "HTTP 403 https://universitaire.rseqhockey.com/fr"
+    }
+  ],
   "teams": {
     "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25": {
       "id": "universitaire:athletisme:1e6e37eb-bbd3-4c47-8afb-d2247eb95803:f608bc62-d943-45e9-bf55-b0c7786b4e25",
@@ -61587,6 +61599,24 @@
       "leagueLabel": "Rugby collégial masculin",
       "results": [
         {
+          "date": "2026-09-18",
+          "time": "20:45",
+          "opponent": "Vanier",
+          "opponentCode": "VAN",
+          "home": true,
+          "scoreFor": 35,
+          "scoreAgainst": 5,
+          "result": "W",
+          "sport": "rugby",
+          "competition": "Rugby collégial masculin",
+          "gameId": "6ce43a40-2b69-4600-9d7f-237603b54c06",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6ce43a40-2b69-4600-9d7f-237603b54c06",
+          "opponentFullName": "Vanier College",
+          "opponentNickname": "Cheetahs",
+          "opponentRegistryId": "vanier",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-12",
           "time": "12:45",
           "opponent": "Dawson",
@@ -61606,21 +61636,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-12",
-        "time": "12:45",
-        "opponent": "Dawson",
-        "opponentCode": "DAW",
-        "home": false,
-        "scoreFor": 26,
-        "scoreAgainst": 10,
+        "date": "2026-09-18",
+        "time": "20:45",
+        "opponent": "Vanier",
+        "opponentCode": "VAN",
+        "home": true,
+        "scoreFor": 35,
+        "scoreAgainst": 5,
         "result": "W",
         "sport": "rugby",
         "competition": "Rugby collégial masculin",
-        "gameId": "5ccfd171-8198-4219-bfbf-4603adf74a6d",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5ccfd171-8198-4219-bfbf-4603adf74a6d",
-        "opponentFullName": "Dawson College",
-        "opponentNickname": "Blues",
-        "opponentRegistryId": "dawson",
+        "gameId": "6ce43a40-2b69-4600-9d7f-237603b54c06",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6ce43a40-2b69-4600-9d7f-237603b54c06",
+        "opponentFullName": "Vanier College",
+        "opponentNickname": "Cheetahs",
+        "opponentRegistryId": "vanier",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -61695,11 +61725,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 0,
         "draws": 0,
-        "played": 1,
-        "label": "1-0"
+        "played": 2,
+        "label": "2-0"
       },
       "source": "rseq-s1",
       "priority": 28,
@@ -61723,6 +61753,24 @@
       "leagueLabel": "Rugby collégial masculin",
       "results": [
         {
+          "date": "2026-09-18",
+          "time": "20:45",
+          "opponent": "John Abbott",
+          "opponentCode": "JAC",
+          "home": false,
+          "scoreFor": 5,
+          "scoreAgainst": 35,
+          "result": "L",
+          "sport": "rugby",
+          "competition": "Rugby collégial masculin",
+          "gameId": "6ce43a40-2b69-4600-9d7f-237603b54c06",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6ce43a40-2b69-4600-9d7f-237603b54c06",
+          "opponentFullName": "John Abbott College",
+          "opponentNickname": "Islanders",
+          "opponentRegistryId": "john-abbott",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-13",
           "time": "13:45",
           "opponent": "André-Laurendeau",
@@ -61742,21 +61790,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-13",
-        "time": "13:45",
-        "opponent": "André-Laurendeau",
-        "opponentCode": "CAL",
-        "home": true,
-        "scoreFor": 0,
-        "scoreAgainst": 30,
+        "date": "2026-09-18",
+        "time": "20:45",
+        "opponent": "John Abbott",
+        "opponentCode": "JAC",
+        "home": false,
+        "scoreFor": 5,
+        "scoreAgainst": 35,
         "result": "L",
         "sport": "rugby",
         "competition": "Rugby collégial masculin",
-        "gameId": "5c0a31bd-f47c-4e43-8bae-2b46b910e001",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5c0a31bd-f47c-4e43-8bae-2b46b910e001",
-        "opponentFullName": "Cégep André-Laurendeau",
-        "opponentNickname": "Cheetahs",
-        "opponentRegistryId": "andre-laurendeau",
+        "gameId": "6ce43a40-2b69-4600-9d7f-237603b54c06",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6ce43a40-2b69-4600-9d7f-237603b54c06",
+        "opponentFullName": "John Abbott College",
+        "opponentNickname": "Islanders",
+        "opponentRegistryId": "john-abbott",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -61833,10 +61881,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "0-2"
       },
       "source": "rseq-s1",
       "priority": 10,
