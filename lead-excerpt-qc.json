@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-19T06:22:59.912Z",
+  "updated": "2026-09-19T08:50:52.164Z",
   "total": 168,
   "pool": 53,
-  "incomplete": 6,
+  "incomplete": 7,
   "withLeadExcerpt": 82,
-  "candidates": 6,
-  "enriched": 0,
+  "candidates": 7,
+  "enriched": 1,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -17,6 +17,15 @@
       "chars": 400,
       "sample": "Montée des extrêmes telle que celle déjà observée et largement décrite ailleurs en Europe ? Ou réel ",
       "changed": false
+    },
+    {
+      "title": "Le retard et les bienfaits du temps long",
+      "link": "https://www.delitfrancais.com/2026/03/25/le-retard-et-les-bienfaits-du-temps-long/",
+      "ok": true,
+      "score": 96,
+      "chars": 331,
+      "sample": "Cet impératif absolu de performance est pourtant contre-productif. À vouloir à tout prix accroître l",
+      "changed": true
     },
     {
       "title": "Un débat des chef·fe·s pour la jeunesse",
