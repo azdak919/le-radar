@@ -13,8 +13,10 @@ concurrency:
 jobs:
   maintain:
     runs-on: ubuntu-latest
-    # Le pipeline complet prend ~27 min ; borne contre les exécutions zombies.
-    timeout-minutes: 50
+    # Mesuré 2026-07-27 : ~47 min. Face-detect + QC images poussaient à 50+
+    # → 6 lundis cancelled, bot-status figé. QC auteurs/photos = bots news
+    # quotidiens. Plafond 90 min = filet zombie, pas une cible de durée.
+    timeout-minutes: 90
     permissions:
       contents: write
       issues: write

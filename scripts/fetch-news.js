@@ -63,6 +63,7 @@ const {
   shouldDropSource,
   pruneToFreshWindow,
   getBotHints,
+  isFetchableNewsSource,
 } = require('./source-retention-lib');
 const { mergeHistoricalCatalog, serializeHistoricalCatalog } = require('./historical-catalog-lib');
 const { scheduledSlotFor } = require('./news-schedule-lib');
@@ -92,18 +93,24 @@ const ENRICH_HTML_CAP = IS_CI ? 180_000 : 280_000;
 const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|le collectif|tribune|link|daily|coordinating|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the concordian|the tribune|the mcgill daily|the campus|the plant|theplantnews)$/i;
 
 // Active feeds come from the registry (news-sources.json), maintained by
-// scripts/discover-news-sources.js. Feeds flagged "_status": "dead" are skipped.
+// scripts/discover-news-sources.js. `_status: dead` is still re-probed:
+// a challenge page must not hide a paper that still publishes (Tribune).
 // Institutional placeholders (« Média — UQAR ») are never student newspapers.
-const INSTITUTIONAL_PLACEHOLDER = /^m[eé]dia\s*[—–\-:]/i;
 
 function loadSources() {
   try {
     const registry = JSON.parse(fs.readFileSync(SOURCES_PATH, 'utf8'));
     return (registry.active || []).filter((s) => {
-      if (!s.url || s._status === 'dead') return false;
-      if (INSTITUTIONAL_PLACEHOLDER.test(String(s.name || ''))) {
-        console.warn(`fetch-news: skip non-student source « ${s.name} »`);
+      if (!isFetchableNewsSource(s)) {
+        if (s && s.name && !s.url) {
+          console.warn(`fetch-news: skip source without url « ${s.name} »`);
+        } else if (s && s.name) {
+          console.warn(`fetch-news: skip non-student source « ${s.name} »`);
+        }
         return false;
+      }
+      if (s._status === 'dead') {
+        console.log(`fetch-news: re-probe previously dead « ${s.name} »`);
       }
       return true;
     });

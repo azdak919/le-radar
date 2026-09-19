@@ -178,9 +178,9 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 
 ### Workflows GitHub Actions
 
-- `maintain.yml` — pipeline complet + `bot-status.json` + issue si besoin
+- `maintain.yml` — pipeline hebdo (découverte, sports catalogue, banques photo, `bot-status.json`) ; timeout **90 min**. Le QC auteurs/photos n’est plus dans ce job (déjà dans `update-news.yml`) — un plafond 50 min a cancelled six lundis d’affilée et figé `bot-status.json`.
 - `update-news.yml` — articles frais (10 passes/jour **affichées** : 6 h, midi, et toutes les 2 h de 7 h à 21 h Québec). Le cron part **35 min plus tôt** (retard GitHub 20–40 min + fetch ~10 min). Filet horaire **:20** *et* enchaînement `workflow_run` sur **Update Radio Now Playing** + **Update Student Sports (RSEQ)** si la dernière mise à jour a > 75 min — GitHub lâche souvent les crons fréquents de ce dépôt. Une passe qui a réellement fetché **publie toujours** le tampon « mis à jour » (dernière vérification des sources, pas seulement un article neuf). Manuel = groupe à part, heure réelle. Si le gate `bot-prepush-check` casse (test HTML figé), `news.json` est quand même poussé pour que le fil JS reste à jour. Timeouts durs par source (90 s) et par étape.
-- `update-sports.yml` — scores RSEQ/Spordle/voile : **matin · midi · fin de cours · 20 h · 22 h 30 · minuit+** (UTC mappé sur Amérique/Toronto ±1 h EST/EDT) + **week-end après-midi**. Après le fetch : `generate-seo.js --sports-only` pour que `/sports/` (HTML prérendu) suive `sports.json`. Abort si chute >50 % d’équipes ou majorité de ligues en panne ; sinon préserve le snapshot précédent par ligue. Push avec retry comme les autres bots. `sports.json` est en `paths-ignore` du Vérification (pas de Chromium à chaque refresh).
+- `update-sports.yml` — scores RSEQ/Spordle/voile : **matin · midi · fin de cours · 20 h · 22 h 30 · minuit+** (UTC mappé sur Amérique/Toronto ±1 h EST/EDT) + **week-end après-midi**. Après le fetch : `generate-seo.js --sports-only` pour que `/sports/` (HTML prérendu) suive `sports.json`. Abort si chute >50 % d’équipes ou majorité de ligues en panne ; sinon préserve le snapshot précédent par ligue. Hockey Spordle (`*.rseqhockey.com`) est derrière un challenge Cloudflare : en 403 le bot **conserve** le snapshot **et** relit les calendriers campus (UQO Torrents HTML + UQAC Inuk JSON) pour le D2 universitaire. Les hors-concours de septembre et la saison régulière (oct.–fév.) ne dépendent plus de Spordle. Push avec retry comme les autres bots. `sports.json` est en `paths-ignore` du Vérification (pas de Chromium à chaque refresh).
 - `guard-harvest-freshness.yml` — **gardien** horaire `:10` : relance sports / radio / news / catalogue ligues si le tampon publié dépasse le SLA (`scripts/harvest-freshness-lib.js`). Compense les crons GitHub lâchés. Un `--live` ne doit plus écraser `leaguesOk` / `sportsCatalog` du crawl complet.
 - `update-streams.yml` — validation des flux (quotidien)
 - **Bots SEO/HTML** (news, streams, institutions, schedules, discover, maintain, archives) : étape **`bot-prepush-check.sh`** (`npm run check`) **avant** le commit pour éviter un mail Vérification après coup.
@@ -188,7 +188,7 @@ institutions  →  scan-media  →  news-sources  →  streams  →  news  →  
 - `update-radio-nowplaying.yml` — titre en ondes via API station / ICY (aux 30 min) ; filet gardien 45 min
 - `update-radio-schedules.yml` — horaires colligés « à l'antenne » (quotidien 09:00 UTC ; CHOQ = épisodes datés)
 - `detect-schedule-drift.yml` — écart grille publiée ↔ page du jour (quotidien, en soirée QC)
-- `discover-news-sources.yml` — santé des flux RSS (hebdo)
+- `discover-news-sources.yml` — santé des flux RSS (hebdo). Un HTTP 200 non-RSS (challenge, page d’attente) ne marque plus le journal `dead` si `_lastItemDate` est dans la fenêtre de sessions. `fetch-news` **re-sonde** aussi les `dead` à chaque passe.
 - `update-institutions.yml` — catalogue établissements (3×/an)
 
 Les workflows quotidiens restent pour la fraîcheur ; `guard-harvest-freshness.yml`
