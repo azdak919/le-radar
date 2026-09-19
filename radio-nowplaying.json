@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-19T00:19:19.114Z",
+  "updatedAt": "2026-09-19T01:27:41.571Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-19T00:18:53.496Z"
+      "checkedAt": "2026-09-19T01:27:09.273Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rave de nuit",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "https://cism893.ca/emissions/rave-de-nuit"
-      },
-      "next": {
         "title": "Le 120e parallèle (reprise)",
         "source": "schedule",
         "start": "21:00",
         "end": "22:00",
         "url": "https://cism893.ca/emissions/le-120e-parallele"
       },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "Rave de nuit",
+      "showTitle": "Le 120e parallèle (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-19T00:18:54.782Z"
+      "checkedAt": "2026-09-19T01:27:10.636Z"
     },
     "ckut": {
       "id": "ckut",
@@ -80,59 +80,59 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-19T00:18:57.396Z"
+      "checkedAt": "2026-09-19T01:27:20.531Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "El Encuentro Latino",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/el-encuentro-latino"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
         "start": "21:00",
         "end": "22:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
+      "next": {
+        "title": "The Come Up",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/the-come-up"
+      },
       "track": "",
-      "showTitle": "El Encuentro Latino",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-19T00:19:12.037Z"
+      "checkedAt": "2026-09-19T01:27:35.055Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Enfin vendredi",
-        "source": "schedule-live",
-        "start": "19:00",
-        "end": "21:00"
-      },
-      "next": {
         "title": "Mangue, Goyave et Reggae",
         "source": "schedule-live",
         "start": "21:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Enfin vendredi",
+      "showTitle": "Mangue, Goyave et Reggae",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-19T00:19:13.223Z"
+      "checkedAt": "2026-09-19T01:27:35.835Z"
     },
     "choq": {
       "id": "choq",
@@ -145,7 +145,7 @@
         "end": "00:00",
         "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
       },
-      "track": "Arielle Soucy - Around the Corner",
+      "track": "Sara Sue Vallee - Sea Monsters x Coastline",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -157,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-19T00:19:18.763Z"
+      "checkedAt": "2026-09-19T01:27:41.221Z"
     }
   }
 }
