@@ -1,16 +1,16 @@
 {
-  "updated": "2026-09-19T08:57:22.296Z",
+  "updated": "2026-09-19T13:17:54.258Z",
   "total": 168,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 121,
+  "cited": 123,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 6,
-  "citedNew": 3,
-  "fallbackNew": 11,
+  "checked": 16,
+  "updatedCount": 8,
+  "citedNew": 7,
+  "fallbackNew": 9,
   "samples": [
     {
       "title": "La STS redresse la barre, les usagers en doutent",
@@ -20,25 +20,25 @@
       "method": "body-line"
     },
     {
-      "title": "Le retard et les bienfaits du temps long",
+      "title": "L’épidémie de la nonchalance",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "credit": "Photo : Elie Nguyen",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
       "title": "Unregulated but essential?",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Mira De Koven",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "Editorial: The importance of student journalism",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Graphic Halle Keays",
+      "cited": true,
+      "method": "figcaption-bare"
     },
     {
       "title": "Faire du sport sans se ruiner quand on est aux études",
@@ -53,6 +53,20 @@
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
