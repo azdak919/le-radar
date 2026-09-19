@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-19T13:17:37.689Z",
+  "updated": "2026-09-19T14:38:15.042Z",
   "total": 168,
   "withPhoto": 157,
   "withStock": 27,
   "withCampusBank": 18,
   "fullyCovered": 168,
-  "leadReadyPhotos": 139,
+  "leadReadyPhotos": 141,
   "pageScraped": 22,
   "photosRecovered": 19,
-  "imagesCleared": 4,
-  "stockSearches": 27,
-  "stockFound": 18,
-  "campusBankFound": 12,
+  "imagesCleared": 5,
+  "stockSearches": 28,
+  "stockFound": 19,
+  "campusBankFound": 13,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -43,6 +43,12 @@
       "link": "https://www.delitfrancais.com/2026/09/16/il-faut-le-voir-pour-le-croire/",
       "reason": "no-stock-match",
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/BanalisationViolence2-scaled.jpg"
+    },
+    {
+      "title": "Letters from the Editors May 2026",
+      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
     },
     {
       "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
@@ -79,12 +85,6 @@
       "link": "https://www.polyscope.qc.ca/blog/post/rSFKjw5RmyR9tkTNM9x4",
       "reason": "no-stock-match",
       "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Felephant_code_qr.png?alt=media&token=ced37e6b-12b1-4369-8289-3f2dacb19067"
-    },
-    {
-      "title": "Gothic Cinema Rises from the Grave",
-      "link": "https://theplantnews.com/2026/05/11/gothic-cinema-rises-from-the-grave/",
-      "reason": "no-stock-match",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.png"
     }
   ]
 }
