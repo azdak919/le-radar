@@ -1,31 +1,17 @@
 {
-  "updated": "2026-09-19T04:51:44.617Z",
+  "updated": "2026-09-19T06:29:36.070Z",
   "total": 168,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 123,
+  "cited": 121,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 10,
-  "citedNew": 9,
-  "fallbackNew": 9,
+  "checked": 13,
+  "updatedCount": 5,
+  "citedNew": 2,
+  "fallbackNew": 11,
   "samples": [
-    {
-      "title": "Hundreds protest AI expansion outside Montreal’s ALL IN summit",
-      "source": "The Link",
-      "credit": "Photo : Lana Koffler",
-      "cited": true,
-      "method": "figcaption"
-    },
-    {
-      "title": "Somaya takes LAYALI to the stage",
-      "source": "The Link",
-      "credit": "Photo: Lea Joy Sabbaghian",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
     {
       "title": "La STS redresse la barre, les usagers en doutent",
       "source": "La Pige",
@@ -34,25 +20,18 @@
       "method": "body-line"
     },
     {
-      "title": "L’épidémie de la nonchalance",
-      "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
       "title": "Unregulated but essential?",
       "source": "The Link",
-      "credit": "Illustration: Mira De Koven",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Editorial: The importance of student journalism",
       "source": "The Link",
-      "credit": "Photo : Graphic Halle Keays",
-      "cited": true,
-      "method": "figcaption-bare"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Faire du sport sans se ruiner quand on est aux études",
@@ -67,20 +46,6 @@
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
