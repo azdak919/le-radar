@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-19T13:29:52.881Z",
+  "updated": "2026-09-19T18:20:00.114Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2408,14 +2408,19 @@
       "at": "2026-09-19T08:24:09.000Z",
       "via": "existant",
       "source": "La Pige"
+    },
+    "https://www.delitfrancais.com/2026/09/16/victoire-de-lafd-en-saxe-anhalt/": {
+      "at": "2026-09-18T13:52:47.000Z",
+      "via": "existant",
+      "source": "Le Délit"
     }
   },
   "stats": {
-    "total": 425,
+    "total": 426,
     "lastRun": {
       "saved": 0,
-      "skipped": 5,
-      "failed": 15,
+      "skipped": 1,
+      "failed": 19,
       "stoppedEarly": false
     }
   },
