@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-20T00:43:07.619Z",
+  "updated": "2026-09-20T04:05:48.271Z",
   "total": 188,
   "pool": 53,
-  "incomplete": 5,
+  "incomplete": 6,
   "withLeadExcerpt": 82,
-  "candidates": 5,
-  "enriched": 0,
+  "candidates": 6,
+  "enriched": 1,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -17,6 +17,15 @@
       "chars": 400,
       "sample": "Montée des extrêmes telle que celle déjà observée et largement décrite ailleurs en Europe ? Ou réel ",
       "changed": false
+    },
+    {
+      "title": "La cassette commence à être usée",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
+      "ok": true,
+      "score": 96,
+      "chars": 390,
+      "sample": "Cette fois-ci, c’est la bonne. Je promets de quitter l’équipe éditoriale du Délit après cet article,",
+      "changed": true
     },
     {
       "title": "Un débat des chef·fe·s pour la jeunesse",
