@@ -1,17 +1,24 @@
 {
-  "updated": "2026-09-19T22:24:33.500Z",
+  "updated": "2026-09-20T00:18:28.223Z",
   "total": 168,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 123,
-  "pending": 9,
+  "cited": 122,
+  "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 6,
-  "citedNew": 6,
-  "fallbackNew": 9,
+  "checked": 13,
+  "updatedCount": 5,
+  "citedNew": 3,
+  "fallbackNew": 10,
   "samples": [
+    {
+      "title": "Les Sags tombent à leur match d’ouverture",
+      "source": "La Pige",
+      "credit": "Photo : Alexis Auclair",
+      "cited": true,
+      "method": "body-line"
+    },
     {
       "title": "La STS redresse la barre, les usagers en doutent",
       "source": "La Pige",
@@ -22,16 +29,16 @@
     {
       "title": "Unregulated but essential?",
       "source": "The Link",
-      "credit": "Illustration: Mira De Koven",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Editorial: The importance of student journalism",
       "source": "The Link",
-      "credit": "Photo : Graphic Halle Keays",
-      "cited": true,
-      "method": "figcaption-bare"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Faire du sport sans se ruiner quand on est aux études",
@@ -39,20 +46,6 @@
       "credit": "Photo : UdeS",
       "cited": true,
       "method": "body-tail"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
