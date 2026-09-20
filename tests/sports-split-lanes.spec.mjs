@@ -141,6 +141,58 @@ test('accueil 1280 : plus d’un sport si le snapshot en a plusieurs', async ({ 
   }
 });
 
+test('samedi 20 h 44 : matchs déjà joués → scores, pas 4× Aujourd’hui', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#masthead-sports-strip')).toBeVisible({ timeout: 8000 });
+
+  const evening = '2026-09-19T20:44:00-04:00';
+  const staleToday = ['rugby-am', 'soc-16', 'hock-16', 'soc-17'];
+  const pool = [
+    slide('rugby-am', 'next', '2026-09-19', '09:00', { sport: 'rugby' }),
+    slide('soc-16', 'next', '2026-09-19', '16:00', { sport: 'soccer' }),
+    slide('hock-16', 'next', '2026-09-19', '16:00', { sport: 'hockey' }),
+    slide('soc-17', 'next', '2026-09-19', '17:00', { sport: 'soccer' }),
+    slide('y-fb', 'result', '2026-09-18', '19:00', { sport: 'football' }),
+    slide('y-flag', 'result', '2026-09-18', '14:00', { sport: 'flag-football' }),
+  ];
+  const four = await splitKeys(page, 4, evening, pool);
+  expect(four.ok, four.reason || 'ok').toBe(true);
+  const modes = await page.evaluate(({ n, nowIso, pool }) => {
+    const now = new Date(nowIso).getTime();
+    return sportsSplitVisible(n, now, pool).map((s) => s.mode);
+  }, { n: 4, nowIso: evening, pool });
+  expect(modes.every((m) => m === 'result'), `modes=${modes.join(',')}`).toBe(true);
+  expect([...four.keys].sort(), `keys=${four.keys.join(',')}`).toEqual(['y-fb', 'y-flag'].sort());
+  expect(four.keys.filter((k) => staleToday.includes(k)), 'Aujourd’hui déjà joué resté à l’écran')
+    .toEqual([]);
+
+  const nextGate = await page.evaluate(() => {
+    const now = new Date('2026-09-19T20:44:00-04:00').getTime();
+    const team = { id: 'lav', name: 'Rouge et Or', code: 'LAV', sport: 'soccer' };
+    const past = { date: '2026-09-19', time: '16:00', opponent: 'Carabins' };
+    const scored = {
+      ...past,
+      scoreFor: 2,
+      scoreAgainst: 1,
+      final: true,
+      live: false,
+    };
+    return {
+      still: typeof sportsNextStillUpcoming === 'function'
+        ? sportsNextStillUpcoming(past, now)
+        : null,
+      upcoming: sportsNextSlideFromGame(team, past, now),
+      scoredNext: sportsNextSlideFromGame(team, scored, now),
+      scoredResult: sportsResultSlideFromGame(team, scored, now)?.mode || null,
+    };
+  });
+  expect(nextGate.still, '16 h n’est plus « à venir » à 20 h 44').toBe(false);
+  expect(nextGate.upcoming, 'next périmé sans score').toBeNull();
+  expect(nextGate.scoredNext, 'next périmé avec score').toBeNull();
+  expect(nextGate.scoredResult, 'score → résultat').toBe('result');
+});
+
 test('390 : une puce, pas de split visuel', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });

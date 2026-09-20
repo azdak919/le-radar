@@ -1775,6 +1775,7 @@ assert(
   appJs.includes('function sportsSlideDayKey')
     && /const SPORTS_CTA_MAX_POOL\s*=\s*80/.test(appJs)
     && appJs.includes('function sportsNextSlideFromGame')
+    && appJs.includes('function sportsNextStillUpcoming')
     && appJs.includes('team.nextGames')
     && !appJs.includes('SPORTS_CTA_NEXT_DAYS')
     && !appJs.includes('function sportsCtaNextWindowEndDay')

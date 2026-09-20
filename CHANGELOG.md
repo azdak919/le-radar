@@ -7,6 +7,9 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Corrigé
 
+- Bandeau sports du soir : un coup d’envoi déjà passé (plus de 3 h, pas en direct) n’occupe plus tout le ruban en « Aujourd’hui » sans score. Il sort du pool à-venir ; s’il a un score, il rejoint les résultats. Reliquat = scores (hier / journée), pas quatre puces « Aujourd’hui ».
+- Mât météo et sports : une carte à la fois, puis pause lecture. Plus de vague L→R à 440 ms qui faisait glisser toutes les cartes vers la droite.
+
 - JSON-LD du fil : manchettes **complètes** (plus de coupe à 110 car. dans `generate-seo.js`). Une manchette longue (ACFAS) faisait diverger `index.html` de `news.json` et faisait échouer `tests/news-representations.mjs` — donc tous les bots qui passent `bot-prepush`. Guard force aussi la régénération SEO après un catch-up news ; Update Student News retente SEO une fois avant « HTML gate deferred ».
 
 - Full HD (Philips 1920) : 2 unes + densité 1920 aussi sur **Edge / Chromium**. Le palier `min-width: 1920px` ratait dès qu’une barre de défilement classique retranchait ~15 px (Firefox overlay passait). Seuil **1880 px**, JS et CSS alignés.

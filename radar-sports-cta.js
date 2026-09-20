@@ -129,8 +129,8 @@ try {
  * (glyphe + équipes + date + heure), pas un flip nerveux type gare météo.
  *
  * Feedback prod 2026-08-11 : 4,8–8 s en rotation *parallèle* faisait « trop
- * vide » (3 slots qui tournent chacun de leur côté). La vague L→R puis pause
- * évite ça : le bandeau reste plein pendant le hold.
+ * vide » (3 slots qui tournent chacun de leur côté). Une carte à la fois
+ * puis pause : le bandeau reste plein pendant le hold.
  * Feedback prod 2026-08-29 : 9–14 s de pause après la vague = trop long.
  * Feedback prod 2026-09-01 : 7,5 s = trop nerveux ; ~9 s au repos.
  * Sans défilement : ~9–12 s selon le nombre de cartes.
@@ -154,11 +154,10 @@ const SPORTS_SCROLL_POST_PAUSE_MS = MARQUEE_REST_MS;
 /** Décalage initial entre slots pour éviter un flip simultané au 1er paint. */
 const SPORTS_SLOT_STAGGER_MS = 1100;
 /**
- * Vague de toutes les puces (scores + texte CTA), puis pause lecture.
+ * Une puce à la fois (scores + texte CTA), puis pause lecture.
  * Tous les écrans : même principe ; CTA en pause à l’appui sur tactile et
  * inchangée seulement en mouvement réduit.
- * Step assez lent pour suivre la cascade ; hold assez long pour relire le ruban
- * sans laisser les cartes figées ~12–16 s (prod 2026-08-29).
+ * 2026-09-19 : plus de vague L→R à 440 ms (les cartes glissaient une à une).
  * 2026-09-01 : +1,5 s au repos (7,5 → 9 s). Cap 12 s seulement SANS marquee :
  * un aller-retour L→R + retour à l’origine ne doit pas être coupé.
  */
@@ -624,8 +623,17 @@ function sportsResultSlide(team, now = Date.now()) {
   return sportsResultSlideFromGame(team, team.lastGame, now);
 }
 
+function sportsNextStillUpcoming(game, now = Date.now()) {
+  if (sportsGameIsLive(game, now)) return true;
+  const t = sportsGameMs(game);
+  if (!Number.isFinite(t)) return true;
+  return t >= now - SPORTS_LIVE_AFTER_MS;
+}
+
 function sportsNextSlideFromGame(team, game, now = Date.now()) {
   if (!team || !game) return null;
+  if (sportsGameHasScore(game) && !sportsGameIsLive(game, now)) return null;
+  if (!sportsNextStillUpcoming(game, now)) return null;
   const u = sportsUrgency('next', game, now);
   const gid = game.gameId != null ? String(game.gameId) : '';
   return {
@@ -1124,6 +1132,14 @@ function buildSportsSlides(data) {
       const stamp = sportsGameDedupeStamp(g);
       if (seenN.has(stamp)) continue;
       seenN.add(stamp);
+      if (sportsGameHasScore(g) && !sportsGameIsLive(g, now)) {
+        if (!seenR.has(stamp)) {
+          seenR.add(stamp);
+          const r = sportsResultSlideFromGame(team, g, now);
+          if (r) results.push(r);
+        }
+        continue;
+      }
       const n = sportsNextSlideFromGame(team, g, now);
       if (n) nexts.push(n);
     }
@@ -2819,6 +2835,7 @@ function sportsOpenOrderBucket(slide, now = Date.now()) {
   const tomorrow = sportsCivilDayShift(today, 1);
   const day = sportsGameDayKey(g, now) || sportsSlideDayKey(slide);
   if (slide.mode === 'next') {
+    if (!sportsNextStillUpcoming(g, now) && !sportsGameIsLive(g, now)) return 99;
     if (day === today || sportsCtaKickoffWithinHour(g, now)) return SPORTS_OPEN_TODAY_NEXT;
     if (day === tomorrow) return SPORTS_OPEN_TOMORROW_NEXT;
     const ahead = sportsCivilDaysBetween(today, day);
@@ -2915,7 +2932,8 @@ function sportsCompareOpenOrder(a, b, now = Date.now()) {
 
 function sportsSplitVisible(n, now = Date.now(), pool = null) {
   const source = (Array.isArray(pool) ? pool.slice() : sportsOpenOrderSlides(now))
-    .filter(Boolean);
+    .filter(Boolean)
+    .filter((s) => sportsOpenOrderBucket(s, now) <= SPORTS_OPEN_FAR_NEXT);
   source.sort((a, b) => sportsCompareOpenOrder(a, b, now));
   const count = Math.max(1, n | 0);
   if (!source.length) return [];
@@ -2981,10 +2999,9 @@ function sportsSplitVisible(n, now = Date.now(), pool = null) {
 
   {
     const free = freeIndices();
-    for (let r = free.length - 1; r >= 0; r -= 1) {
-      const s = pickMixed(todayNextMix);
-      if (!s) break;
-      occupy(free[r], s);
+    const rightEdge = free.length ? free[free.length - 1] : null;
+    if (rightEdge != null && rightEdge !== 0) {
+      occupy(rightEdge, pickMixed(todayNextMix));
     }
   }
   {
@@ -4340,8 +4357,9 @@ function sportsBoardHoldMs() {
 }
 
 /**
- * Vague L→R de toutes les cartes (y compris le texte CTA), puis pause,
- * puis une nouvelle vague. Tous les écrans.
+ * Une carte à la fois, puis pause lecture. Pas une vague L→R qui
+ * décale tout le ruban (les scores disparaissaient derrière des
+ * « Aujourd’hui » déjà joués).
  * CTA sautée si tactile, motion réduite, survol ou focus (WCAG 2.2.2).
  */
 function scheduleSportsWave({ fromSlot = 0, firstWait = true } = {}) {
@@ -4357,26 +4375,24 @@ function scheduleSportsWave({ fromSlot = 0, firstWait = true } = {}) {
   if (!canSpin) return;
   sportsWaveSlot = ((fromSlot % n) + n) % n;
 
-  const stepMs = sportsReducedMotion ? 80 : SPORTS_CASCADE_STEP_MS;
-  const step = (index) => {
+  const tick = () => {
     const liveN = sportsVisible.length;
     if (liveN < 1) return;
-    if (index >= liveN) {
+    let slot = ((sportsWaveSlot % liveN) + liveN) % liveN;
+    let tries = 0;
+    while (tries < liveN) {
+      const slide = sportsVisible[slot];
+      const skip = sportsCtaHoldOnLive(slide)
+        || (slide?.ctaIdle && (!sportsCtaMayRotate() || sportsCtaPaused));
+      if (!skip) break;
+      slot = (slot + 1) % liveN;
+      tries += 1;
+    }
+    if (tries >= liveN) {
       sportsWaveTimer = window.setTimeout(() => {
         sportsWaveTimer = 0;
-        scheduleSportsWave({ fromSlot: 0, firstWait: false });
+        scheduleSportsWave({ fromSlot: sportsWaveSlot, firstWait: false });
       }, sportsBoardHoldMs());
-      return;
-    }
-    const slot = index;
-    const slide = sportsVisible[slot];
-    // Direct unique : la carte En direct ne tourne pas. Plusieurs lives : cycle.
-    if (sportsCtaHoldOnLive(slide)) {
-      sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
-      return;
-    }
-    if (slide?.ctaIdle && (!sportsCtaMayRotate() || sportsCtaPaused)) {
-      sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
       return;
     }
     rotateSportsSlot(slot);
@@ -4384,20 +4400,24 @@ function scheduleSportsWave({ fromSlot = 0, firstWait = true } = {}) {
     if (chip) {
       window.requestAnimationFrame(() => refreshSportsChipScroll(chip));
     }
-    sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
+    sportsWaveSlot = (slot + 1) % liveN;
+    sportsWaveTimer = window.setTimeout(() => {
+      sportsWaveTimer = 0;
+      scheduleSportsWave({ fromSlot: sportsWaveSlot, firstWait: false });
+    }, sportsBoardHoldMs());
   };
   if (firstWait) {
     sportsWaveTimer = window.setTimeout(() => {
       sportsWaveTimer = 0;
-      step(sportsWaveSlot);
+      tick();
     }, sportsBoardHoldMs());
     return;
   }
-  step(sportsWaveSlot);
+  tick();
 }
 
 function scheduleSportsRotate() {
-  // Vague unique L→R, tous les écrans (CTA sautée si elle ne peut pas tourner).
+  // Une carte, pause lecture, carte suivante. CTA sautée si elle ne peut pas tourner.
   scheduleSportsWave({ fromSlot: 0, firstWait: true });
 }
 
