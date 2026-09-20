@@ -23,6 +23,12 @@ test('manifeste : portée, icônes et mode autonome', async ({ page }) => {
   expect(manifest.display).toBe('standalone');
 
   // Sans icône maskable, Android rogne l'icône dans un cercle blanc.
+  // Purpose combiné (« any maskable ») : Chromium ignore l'entrée — le test
+  // exige une entrée dédiée par rôle, pas un split d'une seule chaîne.
+  for (const icon of manifest.icons) {
+    if (!icon.purpose) continue;
+    expect(icon.purpose.trim().split(/\s+/).length, `${icon.src} : purpose combiné`).toBe(1);
+  }
   const purposes = manifest.icons.flatMap((i) => (i.purpose || 'any').split(/\s+/));
   expect(purposes).toContain('any');
   expect(purposes).toContain('maskable');
