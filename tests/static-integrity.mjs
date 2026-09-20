@@ -2212,32 +2212,56 @@ assert(
   'style : durée marquee sports alignée sur SPORTS_SCROLL_ONE_WAY_MS (5.5s)',
 );
 
+// ── PWA : manifeste installable (accueil + mini-apps) ────────────────────────
+//
+// Les mini-apps (Pomo, Solitaire, Sports) déclarent `any` et `maskable` en
+// entrées séparées. L'accueil collait les deux rôles (`purpose: "any maskable"`)
+// sur le même PNG — Chromium peut alors ignorer l'icône, et le bouton
+// « Installer » de la barre d'adresse disparaît sur le-radar.ca alors qu'il
+// reste visible sur /pomo/. Une entrée par rôle, 192 + 512 PNG, `id` stable.
+function assertInstallableManifest(relFile, { id }) {
+  const abs = join(root, relFile);
+  assert(existsSync(abs), `${relFile} requis (app installable)`);
+  const manifest = JSON.parse(readFileSync(abs, 'utf8'));
+  const dir = dirname(abs);
+  assert.equal(manifest.id, id, `${relFile} : id du manifeste`);
+  assert.equal(manifest.scope, './', `${relFile} : scope relatif`);
+  assert.equal(manifest.start_url, './', `${relFile} : start_url relatif`);
+  assert.equal(manifest.display, 'standalone', `${relFile} : display standalone`);
+  const icons = manifest.icons || [];
+  assert(icons.length > 0, `${relFile} : icônes requises`);
+  for (const icon of icons) {
+    assert(existsSync(join(dir, icon.src)), `${relFile} : icône introuvable — ${icon.src}`);
+    if (!icon.purpose) continue;
+    const purposes = String(icon.purpose).trim().split(/\s+/).filter(Boolean);
+    assert.equal(
+      purposes.length,
+      1,
+      `${relFile} : purpose combiné interdit (${icon.src} → « ${icon.purpose} »)`,
+    );
+  }
+  for (const purpose of ['any', 'maskable']) {
+    for (const size of ['192x192', '512x512']) {
+      assert(
+        icons.some((i) => i.type === 'image/png' && i.sizes === size && i.purpose === purpose),
+        `${relFile} : PNG ${size} « ${purpose} » requis (entrée dédiée)`,
+      );
+    }
+  }
+}
+
+assertInstallableManifest('manifest.json', { id: '/' });
+assertInstallableManifest('pomo/site.webmanifest', { id: '/pomo/' });
+assertInstallableManifest('solitaire/site.webmanifest', { id: '/solitaire/' });
+assertInstallableManifest('sports/site.webmanifest', { id: '/sports/' });
+
 // ── /sports/ : app installable à part entière ────────────────────────────────
 //
 // Le dossier est le seul dossier généré qui contient aussi des fichiers écrits
-// à la main. Ces contrôles verrouillent les trois façons de casser
-// l'installation sans que rien d'autre ne bronche : un manifeste incohérent,
-// une icône déclarée mais absente, ou le worker racine qui reprend la portée.
+// à la main. Ces contrôles verrouillent les façons de casser l'installation
+// hors manifeste (déjà couvert plus haut) : worker racine qui reprend la
+// portée, ou générateur SEO qui efface les fichiers écrits à la main.
 {
-  const manifestPath = join(root, 'sports', 'site.webmanifest');
-  assert(existsSync(manifestPath), 'sports/site.webmanifest requis (app installable)');
-  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
-
-  assert(manifest.id === '/sports/', 'sports : id du manifeste doit être « /sports/ »');
-  assert(manifest.scope === './', 'sports : scope du manifeste doit rester relatif');
-  assert(manifest.start_url === './', 'sports : start_url du manifeste doit rester relatif');
-  assert(manifest.display === 'standalone', 'sports : display « standalone » requis pour installer');
-
-  for (const icon of manifest.icons || []) {
-    const iconPath = join(root, 'sports', icon.src);
-    assert(existsSync(iconPath), `sports : icône déclarée introuvable — ${icon.src}`);
-  }
-  for (const purpose of ['any', 'maskable']) {
-    assert(
-      (manifest.icons || []).some((i) => (i.purpose || '').split(/\s+/).includes(purpose)),
-      `sports : icône « ${purpose} » requise`,
-    );
-  }
 
   assert(existsSync(join(root, 'sports', 'sw.js')), 'sports/sw.js requis (hors ligne)');
   assert(
