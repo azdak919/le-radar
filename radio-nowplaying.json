@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-20T00:14:45.454Z",
+  "updatedAt": "2026-09-20T01:06:35.006Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-20T00:14:16.797Z"
+      "checkedAt": "2026-09-20T01:06:08.402Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-20T00:14:18.527Z"
+      "checkedAt": "2026-09-20T01:06:09.800Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Masters At Work",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "21:00"
-      },
-      "next": {
         "title": "Howls From Hell/Too Loud For The Crowd",
         "source": "api-live",
         "start": "21:00",
         "end": "23:00"
       },
+      "next": {
+        "title": "SKEwInGTheWaBeS$$",
+        "source": "api-live",
+        "start": "23:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Masters At Work",
+      "showTitle": "Howls From Hell/Too Loud For The Crowd",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,35 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-20T00:14:21.750Z"
+      "checkedAt": "2026-09-20T01:06:13.350Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "The Spacious Astrology Playlist",
         "source": "schedule-live",
         "start": "21:00",
         "end": "22:00",
         "url": "http://www.cjlo.com/shows/the-spacious-astrology-playlist"
       },
+      "next": {
+        "title": "Brave New Jams",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/brave-new-jams"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "The Spacious Astrology Playlist",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-20T00:14:36.834Z"
+      "checkedAt": "2026-09-20T01:06:27.367Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +129,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-20T00:14:38.523Z"
+      "checkedAt": "2026-09-20T01:06:28.472Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +142,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Man/Woman/Chainsaw - Canyons",
+      "track": "Jamaz - EVERYDAY",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -152,7 +153,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-20T00:14:45.103Z"
+      "checkedAt": "2026-09-20T01:06:34.655Z"
     }
   }
 }
