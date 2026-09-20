@@ -16,6 +16,7 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const { spawnSync } = require('child_process');
 
 const ROOT = path.join(__dirname, '..');
 const LEAGUES_PATH = path.join(ROOT, 'sports-leagues.json');
@@ -265,6 +266,8 @@ const HOCKEY_SOURCES = [
     site: 'https://universitaire.rseqhockey.com/fr',
   },
 ];
+const HOCKEY_CACHE_URL = String(process.env.HOCKEY_CACHE_URL || 'https://le-radar-hockey.azdak.workers.dev').replace(/\/$/, '');
+const HOCKEY_PYTHON = path.join(__dirname, 'hockey-spordle.py');
 
 function fetchText(url) {
   return new Promise((resolve, reject) => {
@@ -314,13 +317,7 @@ function fetchText(url) {
   });
 }
 
-function parseHockeyScoreboard(html, { sector, site }) {
-  const m = html.match(
-    /<script id="__NEXT_DATA__" type="application\/json">([\s\S]*?)<\/script>/,
-  );
-  if (!m) throw new Error('__NEXT_DATA__ introuvable');
-  const data = JSON.parse(m[1]);
-  const games = data?.props?.pageProps?.scoreboardMatches || [];
+function parseHockeyMatches(games, { sector, site }) {
   const teams = {};
   const now = Date.now();
 
@@ -418,14 +415,53 @@ function parseHockeyScoreboard(html, { sector, site }) {
   return teams;
 }
 
-async function fetchHockeyTeams(reg) {
+function parseHockeyScoreboard(html, src) {
+  const m = String(html || '').match(
+    /<script id="__NEXT_DATA__" type="application\/json">([\s\S]*?)<\/script>/,
+  );
+  if (!m) throw new Error('__NEXT_DATA__ introuvable');
+  const data = JSON.parse(m[1]);
+  const games = data?.props?.pageProps?.scoreboardMatches || [];
+  return parseHockeyMatches(games, src);
+}
+
+async function loadSpordleTeams(src) {
+  try {
+    const payload = await getJson(`${HOCKEY_CACHE_URL}/v1/html?site=${encodeURIComponent(src.sector)}`);
+    if (payload && payload.ok && payload.html) {
+      process.stderr.write('(worker) ');
+      return parseHockeyScoreboard(payload.html, src);
+    }
+  } catch (err) {
+    process.stderr.write(`(worker: ${err.message}) `);
+  }
+  try {
+    const py = spawnSync('python3', [HOCKEY_PYTHON, '--sector', src.sector], {
+      encoding: 'utf8',
+      timeout: 35000,
+      env: { ...process.env, HOCKEY_CACHE_URL },
+    });
+    if (py.status === 0 && py.stdout) {
+      const payload = JSON.parse(py.stdout);
+      if (payload.ok && Array.isArray(payload.matches)) {
+        process.stderr.write(`(python/${payload.via || 'sidecar'}) `);
+        return parseHockeyMatches(payload.matches, src);
+      }
+    }
+  } catch (err) {
+    process.stderr.write(`(python: ${err.message}) `);
+  }
+  const html = await fetchText(src.url);
+  return parseHockeyScoreboard(html, src);
+}
+
+async function fetchHockeyTeams(reg, { skipCampus = false } = {}) {
   const out = {};
   const errors = [];
   for (const src of HOCKEY_SOURCES) {
     process.stderr.write(`sports: hockey ${src.sector} (Spordle)… `);
     try {
-      const html = await fetchText(src.url);
-      const batch = parseHockeyScoreboard(html, src);
+      const batch = await loadSpordleTeams(src);
       for (const team of Object.values(batch)) {
         applyRegistryToTeam(team, reg);
       }
@@ -444,7 +480,10 @@ async function fetchHockeyTeams(reg) {
   }
 
   let campusTeams = {};
-  process.stderr.write('sports: hockey calendriers campus (UQO+UQAC)… ');
+  if (skipCampus) {
+    return { teams: out, errors, campusTeams };
+  }
+  process.stderr.write('sports: hockey calendriers campus (M D2 + F D1)… ');
   try {
     const campus = await CampusHockey.fetchCampusHockey({ reg });
     campusTeams = campus.teams || {};
@@ -977,7 +1016,7 @@ async function main() {
   }
 
   // Hockey / voile : ignorés en --live (S1 seulement, pour rester sous la minute).
-  const hockey = liveOnly ? { teams: {}, errors: [], campusTeams: {} } : await fetchHockeyTeams(reg);
+  const hockey = await fetchHockeyTeams(reg, { skipCampus: liveOnly });
   if (Object.keys(hockey.teams).length) {
     for (const [key, team] of Object.entries(hockey.teams)) {
       if (Array.isArray(team.results)) {

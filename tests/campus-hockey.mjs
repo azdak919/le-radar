@@ -81,6 +81,40 @@ assert.ok(ov.attached >= 1);
 assert.ok(s1['universitaire:hockey:s1:uqac'].nextGames.length >= 1);
 assert.match(s1['universitaire:hockey:s1:uqac'].source, /campus-hockey/);
 
+const stingersHtml = `
+<title>Hockey (W) 2026-2027 Schedule</title>
+<ul>
+  <li>Oct. 16</li>
+  <li>7:30 PM</li>
+  <li>@ Bishop's</li>
+  <li>League</li>
+</ul>
+<ul>
+  <li>Oct. 25</li>
+  <li>2 PM</li>
+  <li>vs. Montréal</li>
+  <li>League</li>
+</ul>`;
+const stGames = lib.parseStingersResultsHtml(stingersHtml);
+assert.equal(stGames.length, 2);
+assert.equal(stGames[0].awayRegistryId, 'concordia');
+assert.equal(stGames[0].homeRegistryId, 'bishops');
+assert.equal(stGames[0].sex, 'F');
+assert.equal(stGames[1].homeRegistryId, 'concordia');
+assert.equal(stGames[1].awayRegistryId, 'udem');
+
+const sidearm = `<script type="application/ld+json">${JSON.stringify([{
+  '@type': 'SportsEvent',
+  name: "Bishop's University At McGill University",
+  startDate: '2026-10-18T15:00:00',
+  homeTeam: { name: "Bishop's University" },
+  awayTeam: { name: 'McGill University' },
+}])}</script>`;
+const sideGames = lib.parseSidearmJsonLd(sidearm, 'https://gaiters.ca/x', 'campus-gaiters-w');
+assert.equal(sideGames.length, 1);
+assert.equal(sideGames[0].homeRegistryId, 'mcgill', 'At X → X is home');
+assert.equal(sideGames[0].awayRegistryId, 'bishops');
+
 const src = readFileSync(join(ROOT, 'scripts/fetch-sports.js'), 'utf8');
 assert.match(src, /campus-hockey-lib/);
 assert.match(src, /calendriers campus/);

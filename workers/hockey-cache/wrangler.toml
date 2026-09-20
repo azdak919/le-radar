@@ -1,0 +1,17 @@
+name = "le-radar-hockey"
+main = "src/index.js"
+compatibility_date = "2026-07-23"
+workers_dev = true
+preview_urls = false
+
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+[observability.logs]
+enabled = true
+invocation_logs = true
+persist = true
+
+[observability.traces]
+enabled = false
