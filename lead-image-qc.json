@@ -1,19 +1,25 @@
 {
-  "updated": "2026-09-20T17:38:47.504Z",
+  "updated": "2026-09-20T21:03:28.758Z",
   "total": 188,
   "withPhoto": 176,
   "withStock": 28,
   "withCampusBank": 19,
   "fullyCovered": 188,
-  "leadReadyPhotos": 154,
+  "leadReadyPhotos": 151,
   "pageScraped": 31,
   "photosRecovered": 28,
   "imagesCleared": 13,
-  "stockSearches": 32,
-  "stockFound": 20,
-  "campusBankFound": 13,
+  "stockSearches": 33,
+  "stockFound": 21,
+  "campusBankFound": 14,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Somaya takes LAYALI to the stage",
+      "link": "https://thelinknewspaper.ca/article/16385",
+      "reason": "stock-too-small",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/01.fringe.somayalaunch.Lea_Joy_Sabbaghian.5491_900_1194.png"
+    },
     {
       "title": "Les priorités de la jeunesse, vues par Marie-Karlynn Laflamme",
       "link": "https://lapige.atmjonquiere.com/2026/09/18/les-priorites-de-la-jeunesse-vues-par-marie-karlynn-laflamme/?utm_source=rss&utm_medium=rss&utm_campaign=les-priorites-de-la-jeunesse-vues-par-marie-karlynn-laflamme",
@@ -21,7 +27,7 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_1462.jpeg"
     },
     {
-      "title": "Femme pays : retour sur la première à Chicoutimi",
+      "title": "Femme pays : retour sur la première du film à Chicoutimi",
       "link": "https://lapige.atmjonquiere.com/2026/09/18/femme-pays-retour-sur-la-premiere-a-chicoutimi/?utm_source=rss&utm_medium=rss&utm_campaign=femme-pays-retour-sur-la-premiere-a-chicoutimi",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/muyql3N8BF5mZTQKZqtnt0lI6QUcAX-metaMTAwNDdfYWZmLmpwZw-.jpg"
@@ -45,10 +51,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
     },
     {
+      "title": "Letters from the Editors May 2026",
+      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+    },
+    {
       "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
       "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
       "reason": "stock-too-small",
       "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
+    },
+    {
+      "title": "From the rink to the links",
+      "link": "https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
     },
     {
       "title": "Mars enters Aries",
@@ -67,24 +85,6 @@
       "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Le pays avant tout – esquisse",
-      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
-    },
-    {
-      "title": "Oui au budget, oui au programme FIL et non à la grève",
-      "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
-    },
-    {
-      "title": "Blackface at McGill",
-      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
-      "reason": "no-stock-match",
-      "image": "https://www.thetribune.ca/wp-content/uploads/2026/04/Design-sans-titre.png"
     }
   ]
 }
