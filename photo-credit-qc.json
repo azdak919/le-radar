@@ -1,24 +1,17 @@
 {
-  "updated": "2026-09-20T00:27:12.504Z",
-  "total": 168,
-  "withImage": 157,
-  "withCredit": 157,
+  "updated": "2026-09-20T00:47:43.263Z",
+  "total": 188,
+  "withImage": 176,
+  "withCredit": 176,
   "cited": 124,
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 7,
-  "citedNew": 7,
-  "fallbackNew": 8,
+  "checked": 33,
+  "updatedCount": 25,
+  "citedNew": 6,
+  "fallbackNew": 27,
   "samples": [
-    {
-      "title": "Les Sags tombent à leur match d’ouverture",
-      "source": "La Pige",
-      "credit": "Photo : Alexis Auclair",
-      "cited": true,
-      "method": "body-line"
-    },
     {
       "title": "La STS redresse la barre, les usagers en doutent",
       "source": "La Pige",
@@ -29,23 +22,79 @@
     {
       "title": "Unregulated but essential?",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
+      "credit": "Illustration: Mira De Koven",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Blackface at McGill",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
       "cited": false,
       "method": null
     },
     {
       "title": "Editorial: The importance of student journalism",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
+      "credit": "Photo : Graphic Halle Keays",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "McGill Wellness Hub reinstates GAC for trans American students under the age of 19",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
       "cited": false,
       "method": null
     },
     {
-      "title": "Faire du sport sans se ruiner quand on est aux études",
-      "source": "Le Collectif",
-      "credit": "Photo : UdeS",
-      "cited": true,
-      "method": "body-tail"
+      "title": "Reading the static and exploring long COVID’s impact on the brain’s electrical rhythm",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Tricky transitions: How Mc Gillians are adjusting to a new semester",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "After McGill Athletics cuts, teams navigate a new future under SSMU",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "AMNAS challenges McGill at the Tribunal administratif du travail",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "McGill security required to wear recognizable badges per new policy",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Know Your Artist: Stina Baudin",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "McGill science students: You don’t need to know where you’re going yet",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
     }
   ]
 }
