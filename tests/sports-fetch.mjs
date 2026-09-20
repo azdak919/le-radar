@@ -99,6 +99,9 @@ test('fetch-sports.js est du JS Node valide', () => {
   assert.match(src, /Cloudflare challenge/);
   assert.match(src, /hockey-spordle-failed/);
   assert.match(src, /campus-hockey-lib/);
+  assert.match(src, /hockey-spordle\.py/);
+  assert.match(src, /HOCKEY_CACHE_URL/);
+  assert.match(src, /loadSpordleTeams/);
 });
 
 test('update-sports.yml couvre les heures de consultation QC', () => {

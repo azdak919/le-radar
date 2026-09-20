@@ -7,6 +7,7 @@
  *   - UQO Torrents : tableau HTML saison régulière
  *
  * Ligue D2 M 2026-27 : UQAC, UQO, ÉTS, Sherbrooke.
+ * Féminin D1 : Stingers, Gaiters/McGill Sidearm, Carabins, Rouge et Or.
  */
 
 'use strict';
@@ -16,6 +17,11 @@ const { applyRegistryToTeam, codeFromName } = require('./sports-teams-lib');
 
 const UQO_SCHEDULE_URL = 'https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission';
 const UQAC_EVENTS_URL = 'https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50';
+const STINGERS_W_URL = 'https://stingers.ca/whockey/results.php';
+const GAITERS_W_URL = 'https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27';
+const MCGILL_W_URL = 'https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27';
+const CARABINS_W_URL = 'https://carabins.umontreal.ca/hockey-feminin/calendrier/';
+const LAVAL_W_URL = 'https://rougeetor.ulaval.ca/sports/hockey/calendrier/';
 
 const FR_MONTHS = {
   janvier: 1, fevrier: 2, février: 2, mars: 3, avril: 4, mai: 5, juin: 6,
@@ -29,6 +35,9 @@ const NICK_TO_REGISTRY = [
   [/vert[\s-]*et[\s-]*or|\buds\b|usherbrooke|\bsherbrooke\b/i, 'usherbrooke', 'Sherbrooke'],
   [/\bconcordia\b|\bstingers\b/i, 'concordia', 'Concordia'],
   [/\bmontr[eé]al\b|\bcarabins\b|\budem\b/i, 'udem', 'Montréal'],
+  [/\bbishop|\bgaiters\b/i, 'bishops', "Bishop's"],
+  [/\bmcgill\b|\bmartlets\b/i, 'mcgill', 'McGill'],
+  [/\blaval\b|\brouge et or\b|\bulaval\b/i, 'ulaval', 'Laval'],
 ];
 
 function stripTags(s) {
@@ -96,6 +105,8 @@ function parseUqoScheduleHtml(html) {
         url: UQO_SCHEDULE_URL,
         scoreHome: score ? score.home : null,
         scoreAway: score ? score.away : null,
+        sex: 'M',
+        division: 'D2',
         source: 'campus-uqo',
       });
     }
@@ -139,6 +150,8 @@ function parseUqacEventsJson(payload) {
       url: ev.url || UQAC_EVENTS_URL,
       scoreHome: null,
       scoreAway: null,
+      sex: 'M',
+      division: 'D2',
       source: 'campus-uqac',
     });
   }
@@ -174,21 +187,23 @@ function teamsFromGames(games, { now = Date.now(), reg = null } = {}) {
       const name = g[`${side}Name`];
       const oppId = g[side === 'home' ? 'awayRegistryId' : 'homeRegistryId'];
       const oppName = g[side === 'home' ? 'awayName' : 'homeName'];
-      const key = `hockey:universitaire:campus:${registryId}:M`;
+      const sex = g.sex === 'F' ? 'F' : 'M';
+      const division = g.division || (sex === 'F' ? 'D1' : 'D2');
+      const key = `hockey:universitaire:campus:${registryId}:${sex}`;
       if (!teams[key]) {
         const team = {
           id: key,
           rseqTeamId: registryId,
-          leagueId: 'campus-universitaire-m-d2',
+          leagueId: sex === 'F' ? 'campus-universitaire-f-d1' : 'campus-universitaire-m-d2',
           name,
           code: codeFromName(name),
           sector: 'universitaire',
           sport: 'hockey',
           sportLabel: 'Hockey',
-          sex: 'M',
-          division: 'D2',
+          sex,
+          division,
           usports: true,
-          leagueLabel: 'Hockey universitaire masculin D2',
+          leagueLabel: sex === 'F' ? 'Hockey universitaire féminin D1' : 'Hockey universitaire masculin D2',
           lastGame: null,
           nextGame: null,
           results: [],
@@ -217,6 +232,7 @@ function teamsFromGames(games, { now = Date.now(), reg = null } = {}) {
         url: g.url,
         opponentRegistryId: oppId,
         opponentSector: 'universitaire',
+        sex: g.sex || 'M',
       };
       if (scored) {
         entry.scoreFor = myScore;
@@ -241,6 +257,174 @@ function teamsFromGames(games, { now = Date.now(), reg = null } = {}) {
     if (!team.lastGame && team.results[0]) team.lastGame = team.results[0];
   }
   return teams;
+}
+
+const EN_MONTHS = {
+  jan: 1, january: 1, feb: 2, february: 2, mar: 3, march: 3,
+  apr: 4, april: 4, may: 5, jun: 6, june: 6, jul: 7, july: 7,
+  aug: 8, august: 8, sep: 9, sept: 9, september: 9,
+  oct: 10, october: 10, nov: 11, november: 11, dec: 12, december: 12,
+};
+
+function parseEnTime(raw) {
+  const t = String(raw || '').trim();
+  const m = t.match(/(\d{1,2})(?::(\d{2}))?\s*(AM|PM)?/i);
+  if (!m) return '';
+  let h = Number(m[1]);
+  const min = m[2] ? Number(m[2]) : 0;
+  const ap = (m[3] || '').toUpperCase();
+  if (ap === 'PM' && h < 12) h += 12;
+  if (ap === 'AM' && h === 12) h = 0;
+  return `${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
+}
+
+function womenGame(partial) {
+  return {
+    scoreHome: null,
+    scoreAway: null,
+    sex: 'F',
+    division: 'D1',
+    competition: partial.competition || 'Hockey universitaire féminin D1',
+    ...partial,
+  };
+}
+
+function parseStingersResultsHtml(html) {
+  const yearM = String(html || '').match(/20(\d{2})\s*[-–]\s*20(\d{2})/);
+  const startY = yearM ? 2000 + Number(yearM[1]) : 2026;
+  const games = [];
+  const blocks = String(html || '').split(/<ul>/i);
+  for (const block of blocks) {
+    const lis = [...block.matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)].map((x) => stripTags(x[1]));
+    if (lis.length < 3) continue;
+    const dateLi = lis.find((s) => /^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i.test(s));
+    const timeLi = lis.find((s) => /\d{1,2}(?::\d{2})?\s*(AM|PM)/i.test(s));
+    const oppLi = lis.find((s) => /^(@|vs\.?)/i.test(s));
+    if (!dateLi || !oppLi) continue;
+    const dm = dateLi.match(/([A-Za-z]+)\.?\s+(\d{1,2})/);
+    if (!dm) continue;
+    const month = EN_MONTHS[dm[1].toLowerCase()];
+    if (!month) continue;
+    const year = month >= 9 ? startY : startY + 1;
+    const date = `${year}-${String(month).padStart(2, '0')}-${String(Number(dm[2])).padStart(2, '0')}`;
+    const awayGame = /^@/.test(oppLi);
+    const opp = resolveNick(oppLi.replace(/^(@|vs\.?)\s*/i, ''));
+    const us = resolveNick('Concordia');
+    if (!opp || !us || opp.registryId === us.registryId) continue;
+    games.push(womenGame({
+      date,
+      time: parseEnTime(timeLi || ''),
+      homeRegistryId: awayGame ? opp.registryId : us.registryId,
+      homeName: awayGame ? opp.name : us.name,
+      awayRegistryId: awayGame ? us.registryId : opp.registryId,
+      awayName: awayGame ? us.name : opp.name,
+      url: STINGERS_W_URL,
+      source: 'campus-stingers-w',
+    }));
+  }
+  return games;
+}
+
+function parseSidearmJsonLd(html, pageUrl, sourceId) {
+  const games = [];
+  const blocks = String(html || '').match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi) || [];
+  for (const block of blocks) {
+    const inner = block.replace(/^[\s\S]*?<script[^>]*>/i, '').replace(/<\/script>\s*$/i, '');
+    let data;
+    try { data = JSON.parse(inner); } catch { continue; }
+    const events = Array.isArray(data) ? data : (data['@graph'] || [data]);
+    for (const ev of events) {
+      if (!ev || ev['@type'] !== 'SportsEvent') continue;
+      const start = String(ev.startDate || '');
+      if (!start) continue;
+      const name = String(ev.name || '');
+      const homeMeta = resolveNick((ev.homeTeam && ev.homeTeam.name) || '');
+      const awayMeta = resolveNick((ev.awayTeam && ev.awayTeam.name) || '');
+      if (!homeMeta || !awayMeta) continue;
+      let home = homeMeta;
+      let away = awayMeta;
+      if (/\bat\b/i.test(name) && homeMeta && awayMeta) {
+        home = awayMeta;
+        away = homeMeta;
+      }
+      games.push(womenGame({
+        date: start.slice(0, 10),
+        time: start.length >= 16 ? start.slice(11, 16) : '',
+        homeRegistryId: home.registryId,
+        homeName: home.name,
+        awayRegistryId: away.registryId,
+        awayName: away.name,
+        url: pageUrl,
+        source: sourceId,
+      }));
+    }
+  }
+  return games;
+}
+
+function parseCarabinsTable(html) {
+  const games = [];
+  const rows = String(html || '').match(/<tr[\s\S]*?<\/tr>/gi) || [];
+  const us = resolveNick('Carabins');
+  if (!us) return games;
+  for (const row of rows) {
+    if (!/calendar-table__col--date/i.test(row)) continue;
+    const dateCell = stripTags((row.match(/calendar-table__col--date[\s\S]*?<\/td>/i) || [''])[0]);
+    const when = parseFrDateTime(dateCell.replace('/', ' '));
+    if (!when) continue;
+    const alts = [...row.matchAll(/alt="([^"]+)"/gi)].map((m) => m[1]);
+    const oppAlt = alts.find((a) => !/carabins|udem/i.test(a));
+    const opp = resolveNick(oppAlt || '');
+    if (!opp || opp.registryId === us.registryId) continue;
+    const venue = stripTags(row);
+    const atHome = /cepsum/i.test(venue);
+    games.push(womenGame({
+      date: when.date,
+      time: when.time,
+      homeRegistryId: atHome ? us.registryId : opp.registryId,
+      homeName: atHome ? us.name : opp.name,
+      awayRegistryId: atHome ? opp.registryId : us.registryId,
+      awayName: atHome ? opp.name : us.name,
+      url: CARABINS_W_URL,
+      source: 'campus-carabins-w',
+    }));
+  }
+  return games;
+}
+
+function parseLavalCalendarHtml(html) {
+  const games = [];
+  const items = String(html || '').split(/<li>/i);
+  const us = resolveNick('Laval');
+  if (!us) return games;
+  for (const item of items) {
+    if (!/sport-tag/i.test(item) || !/hockey/i.test(item)) continue;
+    const dateM = stripTags(item).match(/(\d{1,2})\s+([A-Za-zéûô]+)\s+(\d{4})/);
+    const hourM = item.match(/class="hour">\s*(\d{1,2}):(\d{2})/i)
+      || stripTags(item).match(/(\d{1,2}):(\d{2})/);
+    if (!dateM) continue;
+    const when = parseFrDateTime(`${dateM[1]} ${dateM[2]} ${dateM[3]} ${hourM ? `${hourM[1]} h ${hourM[2]}` : ''}`);
+    if (!when) continue;
+    const titles = [...item.matchAll(/data-title="([^"]+)"/gi)].map((m) => m[1]);
+    if (titles.length < 2) continue;
+    const a = resolveNick(titles[0]);
+    const b = resolveNick(titles[1]);
+    if (!a || !b) continue;
+    const visits = /<span>\s*visite\s*<\/span>/i.test(item);
+    const home = visits ? b : a;
+    const away = visits ? a : b;
+    games.push(womenGame({
+      date: when.date,
+      time: when.time,
+      homeRegistryId: home.registryId,
+      homeName: home.name,
+      awayRegistryId: away.registryId,
+      awayName: away.name,
+      url: LAVAL_W_URL,
+      source: 'campus-laval-w',
+    }));
+  }
+  return games;
 }
 
 function overlayCampusHockey(existingTeams, campusTeams) {
@@ -322,23 +506,45 @@ function fetchHttps(url) {
   });
 }
 
+async function fetchOptional(url, label, leagueId) {
+  try {
+    return { body: await fetchHttps(url), error: null };
+  } catch (err) {
+    return {
+      body: '',
+      error: { leagueId, label, error: String(err.message || err) },
+    };
+  }
+}
+
 async function fetchCampusHockey({ reg = null, now = Date.now() } = {}) {
   const errors = [];
-  let uqoHtml = '';
-  let uqacJson = null;
-  try {
-    uqoHtml = await fetchHttps(UQO_SCHEDULE_URL);
-  } catch (err) {
-    errors.push({ leagueId: 'campus-uqo', label: 'UQO Torrents horaire', error: String(err.message || err) });
+  const [
+    uqo, uqac, stingers, gaiters, mcgill, carabins, laval,
+  ] = await Promise.all([
+    fetchOptional(UQO_SCHEDULE_URL, 'UQO Torrents horaire', 'campus-uqo'),
+    fetchOptional(UQAC_EVENTS_URL, 'UQAC Inuk events', 'campus-uqac'),
+    fetchOptional(STINGERS_W_URL, 'Concordia Stingers F', 'campus-stingers-w'),
+    fetchOptional(GAITERS_W_URL, "Bishop's Gaiters F", 'campus-gaiters-w'),
+    fetchOptional(MCGILL_W_URL, 'McGill Martlets F', 'campus-mcgill-w'),
+    fetchOptional(CARABINS_W_URL, 'Carabins F', 'campus-carabins-w'),
+    fetchOptional(LAVAL_W_URL, 'Rouge et Or F', 'campus-laval-w'),
+  ]);
+  for (const part of [uqo, uqac, stingers, gaiters, mcgill, carabins, laval]) {
+    if (part.error) errors.push(part.error);
   }
-  try {
-    uqacJson = JSON.parse(await fetchHttps(UQAC_EVENTS_URL));
-  } catch (err) {
-    errors.push({ leagueId: 'campus-uqac', label: 'UQAC Inuk events', error: String(err.message || err) });
+  let uqacJson = null;
+  if (uqac.body) {
+    try { uqacJson = JSON.parse(uqac.body); } catch { /* ignore */ }
   }
   const games = mergeGames([
-    uqoHtml ? parseUqoScheduleHtml(uqoHtml) : [],
+    uqo.body ? parseUqoScheduleHtml(uqo.body) : [],
     uqacJson ? parseUqacEventsJson(uqacJson) : [],
+    stingers.body ? parseStingersResultsHtml(stingers.body) : [],
+    gaiters.body ? parseSidearmJsonLd(gaiters.body, GAITERS_W_URL, 'campus-gaiters-w') : [],
+    mcgill.body ? parseSidearmJsonLd(mcgill.body, MCGILL_W_URL, 'campus-mcgill-w') : [],
+    carabins.body ? parseCarabinsTable(carabins.body) : [],
+    laval.body ? parseLavalCalendarHtml(laval.body) : [],
   ]);
   const teams = teamsFromGames(games, { now, reg });
   return { teams, games, errors };
@@ -351,6 +557,10 @@ module.exports = {
   parseFrDateTime,
   parseUqoScheduleHtml,
   parseUqacEventsJson,
+  parseStingersResultsHtml,
+  parseSidearmJsonLd,
+  parseCarabinsTable,
+  parseLavalCalendarHtml,
   mergeGames,
   teamsFromGames,
   overlayCampusHockey,
