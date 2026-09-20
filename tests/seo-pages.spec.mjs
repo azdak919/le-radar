@@ -114,20 +114,25 @@ test('une fiche de journal garde byline, bref et fraîcheur factuelle', async ({
   await expect(page.locator('.seo-source-actions')).toBeVisible();
   await expect(page.locator('.seo-source-actions .seo-cta--source').first()).toHaveCSS('text-align', 'left');
   const rulesAlign = await page.evaluate(() => {
-    const headline = document.querySelector('.seo-headlines > li:last-child');
+    const wire = document.querySelector('.seo-wire');
     const footer = document.querySelector('.site-foot');
     const inset = parseFloat(getComputedStyle(footer, '::before').left);
-    const headlineRect = headline.getBoundingClientRect();
+    const wireStyle = getComputedStyle(wire);
+    const padL = parseFloat(wireStyle.paddingLeft) || 0;
+    const padR = parseFloat(wireStyle.paddingRight) || 0;
+    const wireRect = wire.getBoundingClientRect();
     const footerRect = footer.getBoundingClientRect();
     return {
-      headlineLeft: headlineRect.left,
-      headlineRight: headlineRect.right,
+      contentLeft: wireRect.left + padL,
+      contentRight: wireRect.right - padR,
       footerRuleLeft: footerRect.left + inset,
       footerRuleRight: footerRect.right - inset,
     };
   });
-  expect(rulesAlign.footerRuleLeft).toBeCloseTo(rulesAlign.headlineLeft, 1);
-  expect(rulesAlign.footerRuleRight).toBeCloseTo(rulesAlign.headlineRight, 1);
+  // Filet du pied = gouttière de `.seo-wire`, pas la mesure de lecture 720 px
+  // que le shell large peut poser sur `.seo-headlines`.
+  expect(rulesAlign.footerRuleLeft).toBeCloseTo(rulesAlign.contentLeft, 1);
+  expect(rulesAlign.footerRuleRight).toBeCloseTo(rulesAlign.contentRight, 1);
 });
 
 test('un journal francophone garde son nom sans pseudo-slogan traduit', async ({ page }) => {

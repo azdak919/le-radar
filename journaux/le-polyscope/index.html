@@ -109,6 +109,9 @@
     <script src="../../quebec-backgrounds-data.js" defer></script>
     <script src="../../quebec-university-backgrounds-data.js" defer></script>
     <script src="../../scripts/campus-fallback-lib.js" defer></script>
+    <script src="../../scripts/media-channels-lib.js" defer></script>
+    <script src="../../scripts/media-follow-store.js" defer></script>
+    <script src="../../scripts/media-follow-ui.js" defer></script>
     <script src="../../quebec-nations-backgrounds-data.js" defer></script>
     <script src="../../quebec-favorites-backgrounds-data.js" defer></script>
     <script src="../../quebec-backgrounds.js" defer></script>
@@ -125,7 +128,7 @@
     <script src="../../radar-lifecycle.js" defer></script>
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Le Polyscope","url":"https://www.polyscope.qc.ca/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Polytechnique Montréal"},"inLanguage":"fr","subjectOf":{"@type":"ItemList","numberOfItems":12,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.polyscope.qc.ca/blog/post/0UULVhDNL8rXrjepo479","name":"Sur mon honneur!"},{"@type":"ListItem","position":2,"url":"https://www.polyscope.qc.ca/blog/post/gKYl5KTDrc4PqSK4XSDj","name":"Un campus en transformation : entre manque d’espace, nouvelles salles de cours et réinvention des lieux de vie à Polytechnique"},{"@type":"ListItem","position":3,"url":"https://www.polyscope.qc.ca/blog/post/rSFKjw5RmyR9tkTNM9x4","name":"L'éléphant dans ta salle de classe"},{"@type":"ListItem","position":4,"url":"https://www.polyscope.qc.ca/blog/post/2DJ12PrwK7u4Dq9D8fKu","name":"L'informatique quantique: Un terrain de jeu multidisciplinaire pour les ingénieur·e·s"},{"@type":"ListItem","position":5,"url":"https://www.polyscope.qc.ca/blog/post/L30XNFOBtLJVjpcgWrxo","name":"L’espérance d’un vendredi 13 février"},{"@type":"ListItem","position":6,"url":"https://www.polyscope.qc.ca/blog/post/xmXh4vV262nJ0NKMoEfE","name":"Feu vert pour le projet d’agrandissement du campus"},{"@type":"ListItem","position":7,"url":"https://www.polyscope.qc.ca/blog/post/lZU7aZPFn4T8eG8oO1hX","name":"La politique, c'est un sport extrême » : François Legault quitte le pouvoir"},{"@type":"ListItem","position":8,"url":"https://www.polyscope.qc.ca/blog/post/q5CBgkqpxlbL68S4J8YM","name":"14 bourses pour 14 avenirs volés"},{"@type":"ListItem","position":9,"url":"https://www.polyscope.qc.ca/blog/post/bpyPu7N2Pbm8nsfLwAEP","name":"Quand les arbres saignent : Ode À l’automne"},{"@type":"ListItem","position":10,"url":"https://www.polyscope.qc.ca/blog/post/t40zRmo7IRzZSS59CReY","name":"Guide sur la durabilité numérique: conseils et outils pratiques"},{"@type":"ListItem","position":11,"url":"https://www.polyscope.qc.ca/blog/post/u5Hy8Rq9hwdfzclCUhEz","name":"Polytechnique dans le rouge"},{"@type":"ListItem","position":12,"url":"https://www.polyscope.qc.ca/blog/post/PixQyrODB93J9OdXjCfE","name":"L’IA, le Rossignol et l’Empereur"}]}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Le Polyscope","url":"https://www.polyscope.qc.ca/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Polytechnique Montréal"},"inLanguage":"fr","sameAs":["https://www.polyscope.qc.ca/","https://www.instagram.com/polyscope_aep/","https://www.facebook.com/p/Polyscope-61550693026725/","https://twitter.com/Polyscope"],"subjectOf":{"@type":"ItemList","numberOfItems":12,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.polyscope.qc.ca/blog/post/0UULVhDNL8rXrjepo479","name":"Sur mon honneur!"},{"@type":"ListItem","position":2,"url":"https://www.polyscope.qc.ca/blog/post/gKYl5KTDrc4PqSK4XSDj","name":"Un campus en transformation : entre manque d’espace, nouvelles salles de cours et réinvention des lieux de vie à Polytechnique"},{"@type":"ListItem","position":3,"url":"https://www.polyscope.qc.ca/blog/post/rSFKjw5RmyR9tkTNM9x4","name":"L'éléphant dans ta salle de classe"},{"@type":"ListItem","position":4,"url":"https://www.polyscope.qc.ca/blog/post/2DJ12PrwK7u4Dq9D8fKu","name":"L'informatique quantique: Un terrain de jeu multidisciplinaire pour les ingénieur·e·s"},{"@type":"ListItem","position":5,"url":"https://www.polyscope.qc.ca/blog/post/L30XNFOBtLJVjpcgWrxo","name":"L’espérance d’un vendredi 13 février"},{"@type":"ListItem","position":6,"url":"https://www.polyscope.qc.ca/blog/post/xmXh4vV262nJ0NKMoEfE","name":"Feu vert pour le projet d’agrandissement du campus"},{"@type":"ListItem","position":7,"url":"https://www.polyscope.qc.ca/blog/post/lZU7aZPFn4T8eG8oO1hX","name":"La politique, c'est un sport extrême » : François Legault quitte le pouvoir"},{"@type":"ListItem","position":8,"url":"https://www.polyscope.qc.ca/blog/post/q5CBgkqpxlbL68S4J8YM","name":"14 bourses pour 14 avenirs volés"},{"@type":"ListItem","position":9,"url":"https://www.polyscope.qc.ca/blog/post/bpyPu7N2Pbm8nsfLwAEP","name":"Quand les arbres saignent : Ode À l’automne"},{"@type":"ListItem","position":10,"url":"https://www.polyscope.qc.ca/blog/post/t40zRmo7IRzZSS59CReY","name":"Guide sur la durabilité numérique: conseils et outils pratiques"},{"@type":"ListItem","position":11,"url":"https://www.polyscope.qc.ca/blog/post/u5Hy8Rq9hwdfzclCUhEz","name":"Polytechnique dans le rouge"},{"@type":"ListItem","position":12,"url":"https://www.polyscope.qc.ca/blog/post/PixQyrODB93J9OdXjCfE","name":"L’IA, le Rossignol et l’Empereur"}]}}</script>
   </head>
   <body>
     <header class="masthead">
@@ -305,12 +308,22 @@
       <p class="seo-eyebrow">Journaux étudiants</p>
       <h1 class="seo-title">Le Polyscope</h1>
       <p class="seo-lead">Le Polyscope est le journal étudiant de Polytechnique Montréal.</p>
+      <p class="media-follow-row"><button type="button" class="media-follow" data-media-follow data-media-id="le-polyscope" data-media-name="Le Polyscope" data-follow-lang="fr" data-label-follow="Suivre" data-label-following="Suivi" data-label-follow-named="Suivre {name} dans LE-RADAR" data-label-following-named="Ne plus suivre {name}" aria-pressed="false" aria-label="Suivre Le Polyscope dans LE-RADAR" title="Suivre Le Polyscope dans LE-RADAR"><span class="media-follow__mark" aria-hidden="true">☆</span><span class="media-follow__label">Suivre</span></button></p>
       <dl class="seo-facts">
           <div class="seo-fact"><dt>Établissement</dt><dd><a href="../../etablissements/polytechnique-montreal/">Polytechnique Montréal</a></dd></div>
           <div class="seo-fact"><dt>Région</dt><dd><a href="https://www.mtl.org/fr" target="_blank" rel="noopener noreferrer" aria-label="Tourisme Montréal — site officiel">Montréal</a></dd></div>
           <div class="seo-fact"><dt>Langue</dt><dd>Français</dd></div>
           <div class="seo-fact"><dt>Site officiel</dt><dd><a href="https://www.polyscope.qc.ca/" target="_blank" rel="noopener noreferrer">https://www.polyscope.qc.ca/</a></dd></div>
       </dl>
+      <section class="media-channels">
+        <h2 class="media-channels__title">Disponible sur</h2>
+        <ul class="media-channels__list">
+          <li class="media-channels__item media-channels__item--website"><a href="https://www.polyscope.qc.ca/" target="_blank" rel="noopener noreferrer">Site officiel</a></li>
+          <li class="media-channels__item media-channels__item--instagram"><a href="https://www.instagram.com/polyscope_aep/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li class="media-channels__item media-channels__item--facebook"><a href="https://www.facebook.com/p/Polyscope-61550693026725/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+          <li class="media-channels__item media-channels__item--x"><a href="https://twitter.com/Polyscope" target="_blank" rel="noopener noreferrer">X</a></li>
+        </ul>
+      </section>
       <section class="seo-section">
         <h2>Derniers articles</h2>
         <p class="seo-headlines__status">Dernier article : 8 septembre 2026 à 20 h 53</p>

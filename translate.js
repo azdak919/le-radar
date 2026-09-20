@@ -1376,6 +1376,41 @@
    * Clés = texte source affiché en FR dans le shell.
    */
   const UI_PHRASES = {
+    Suivre: {
+      en: 'Follow', es: 'Seguir', pt: 'Seguir', de: 'Folgen', it: 'Segui',
+      zh: '关注', ar: 'متابعة', ru: 'Подписаться',
+      iu: 'Suivre', 'iu-latn': 'Suivre',
+    },
+    Suivi: {
+      en: 'Following', es: 'Siguiendo', pt: 'A seguir', de: 'Gefolgt', it: 'Seguito',
+      zh: '已关注', ar: 'متابَع', ru: 'Вы подписаны',
+      iu: 'Suivi', 'iu-latn': 'Suivi',
+    },
+    Suivis: {
+      en: 'Following', es: 'Siguiendo', pt: 'A seguir', de: 'Gefolgt', it: 'Seguiti',
+      zh: '已关注', ar: 'المتابَعون', ru: 'Подписки',
+      iu: 'Suivis', 'iu-latn': 'Suivis',
+    },
+    'Médias suivis': {
+      en: 'Followed media', es: 'Medios seguidos', pt: 'Media seguidos',
+      de: 'Gefolgte Medien', it: 'Media seguiti',
+      iu: 'Médias suivis', 'iu-latn': 'Médias suivis',
+    },
+    'Fiche du média': {
+      en: 'Media profile', es: 'Ficha del medio', pt: 'Ficha do média',
+      de: 'Medienprofil', it: 'Scheda del media',
+      iu: 'Fiche du média', 'iu-latn': 'Fiche du média',
+    },
+    'Disponible sur': {
+      en: 'Available on', es: 'Disponible en', pt: 'Disponível em',
+      de: 'Verfügbar auf', it: 'Disponibile su',
+      iu: 'Disponible sur', 'iu-latn': 'Disponible sur',
+    },
+    'Google Actualités': {
+      en: 'Google News', es: 'Google News', pt: 'Google News',
+      de: 'Google News', it: 'Google News',
+      iu: 'Google Actualités', 'iu-latn': 'Google Actualités',
+    },
     'Toutes les sources': {
       en: 'All sources', es: 'Todas las fuentes', pt: 'Todas as fontes',
       de: 'Alle Quellen', it: 'Tutte le fonti', ht: 'Tout sous',

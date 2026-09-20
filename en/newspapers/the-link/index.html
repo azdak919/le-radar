@@ -109,6 +109,9 @@
     <script src="../../../quebec-backgrounds-data.js" defer></script>
     <script src="../../../quebec-university-backgrounds-data.js" defer></script>
     <script src="../../../scripts/campus-fallback-lib.js" defer></script>
+    <script src="../../../scripts/media-channels-lib.js" defer></script>
+    <script src="../../../scripts/media-follow-store.js" defer></script>
+    <script src="../../../scripts/media-follow-ui.js" defer></script>
     <script src="../../../quebec-nations-backgrounds-data.js" defer></script>
     <script src="../../../quebec-favorites-backgrounds-data.js" defer></script>
     <script src="../../../quebec-backgrounds.js" defer></script>
@@ -125,7 +128,7 @@
     <script src="../../../radar-lifecycle.js" defer></script>
     <script src="../../../app.js" defer></script>
     <script src="../../../engage-prompt.js" defer></script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"The Link","parentOrganization":{"@type":"CollegeOrUniversity","name":"Concordia University"},"inLanguage":"en","subjectOf":{"@type":"ItemList","numberOfItems":12,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://thelinknewspaper.ca/article/16384","name":"Hundreds protest AI expansion outside Montreal’s ALL IN summit"},{"@type":"ListItem","position":2,"url":"https://thelinknewspaper.ca/article/16385","name":"Somaya takes LAYALI to the stage"},{"@type":"ListItem","position":3,"url":"https://thelinknewspaper.ca/article/16383","name":"Hills of undergraduate memories"},{"@type":"ListItem","position":4,"url":"https://thelinknewspaper.ca/article/16381","name":"Gee-Gees 31, Stingers 10: Concordia falters in home opener"},{"@type":"ListItem","position":5,"url":"https://thelinknewspaper.ca/article/16380","name":"Gee-Gees 26, Stingers 21: Ottawa outlasts Concordia"},{"@type":"ListItem","position":6,"url":"https://thelinknewspaper.ca/article/16379","name":"Montrealers gather for the city’s first-ever Climate Week"},{"@type":"ListItem","position":7,"url":"https://thelinknewspaper.ca/article/16377","name":"Every pizza is a blessing at 5 Pizza"},{"@type":"ListItem","position":8,"url":"https://thelinknewspaper.ca/article/16376","name":"Do the police really protect us?"},{"@type":"ListItem","position":9,"url":"https://thelinknewspaper.ca/article/16375","name":"Unregulated but essential?"},{"@type":"ListItem","position":10,"url":"https://thelinknewspaper.ca/article/16372","name":"Third space recommendations near campus"},{"@type":"ListItem","position":11,"url":"https://thelinknewspaper.ca/article/16371","name":"Webster Library exhibitions bring some light onto the Concordia campus"},{"@type":"ListItem","position":12,"url":"https://thelinknewspaper.ca/article/16370","name":"Lo, how the Roses e’er blooming"}]}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"The Link","url":"https://thelinknewspaper.ca/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Concordia University"},"inLanguage":"en","sameAs":["https://thelinknewspaper.ca/","https://www.instagram.com/linknewspaper/","https://facebook.com/thelinknewspaper","https://twitter.com/linknewspaper","https://www.tiktok.com/@thelinknewspaper"],"subjectOf":{"@type":"ItemList","numberOfItems":12,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://thelinknewspaper.ca/article/16384","name":"Hundreds protest AI expansion outside Montreal’s ALL IN summit"},{"@type":"ListItem","position":2,"url":"https://thelinknewspaper.ca/article/16385","name":"Somaya takes LAYALI to the stage"},{"@type":"ListItem","position":3,"url":"https://thelinknewspaper.ca/article/16383","name":"Hills of undergraduate memories"},{"@type":"ListItem","position":4,"url":"https://thelinknewspaper.ca/article/16381","name":"Gee-Gees 31, Stingers 10: Concordia falters in home opener"},{"@type":"ListItem","position":5,"url":"https://thelinknewspaper.ca/article/16380","name":"Gee-Gees 26, Stingers 21: Ottawa outlasts Concordia"},{"@type":"ListItem","position":6,"url":"https://thelinknewspaper.ca/article/16379","name":"Montrealers gather for the city’s first-ever Climate Week"},{"@type":"ListItem","position":7,"url":"https://thelinknewspaper.ca/article/16377","name":"Every pizza is a blessing at 5 Pizza"},{"@type":"ListItem","position":8,"url":"https://thelinknewspaper.ca/article/16376","name":"Do the police really protect us?"},{"@type":"ListItem","position":9,"url":"https://thelinknewspaper.ca/article/16375","name":"Unregulated but essential?"},{"@type":"ListItem","position":10,"url":"https://thelinknewspaper.ca/article/16372","name":"Third space recommendations near campus"},{"@type":"ListItem","position":11,"url":"https://thelinknewspaper.ca/article/16371","name":"Webster Library exhibitions bring some light onto the Concordia campus"},{"@type":"ListItem","position":12,"url":"https://thelinknewspaper.ca/article/16370","name":"Lo, how the Roses e’er blooming"}]}}</script>
   </head>
   <body>
     <header class="masthead">
@@ -305,11 +308,24 @@
       <p class="seo-eyebrow">Student newspapers</p>
       <h1 class="seo-title">The Link</h1>
       <p class="seo-lead">The Link is the student newspaper of Concordia University.</p>
+      <p class="media-follow-row"><button type="button" class="media-follow" data-media-follow data-media-id="the-link" data-media-name="The Link" data-follow-lang="en" data-label-follow="Follow" data-label-following="Following" data-label-follow-named="Follow {name} in LE-RADAR" data-label-following-named="Unfollow {name}" aria-pressed="false" aria-label="Follow The Link in LE-RADAR" title="Follow The Link in LE-RADAR"><span class="media-follow__mark" aria-hidden="true">☆</span><span class="media-follow__label">Follow</span></button></p>
       <dl class="seo-facts">
           <div class="seo-fact"><dt>Institution</dt><dd><a href="../../../en/institutions/concordia-university/">Concordia University</a></dd></div>
           <div class="seo-fact"><dt>Region</dt><dd><a href="https://www.mtl.org/en" target="_blank" rel="noopener noreferrer" aria-label="Montréal tourism — official website">Montréal</a></dd></div>
           <div class="seo-fact"><dt>Language</dt><dd>English</dd></div>
+          <div class="seo-fact"><dt>Official website</dt><dd><a href="https://thelinknewspaper.ca/" target="_blank" rel="noopener noreferrer">https://thelinknewspaper.ca/</a></dd></div>
       </dl>
+      <section class="media-channels">
+        <h2 class="media-channels__title">Available on</h2>
+        <ul class="media-channels__list">
+          <li class="media-channels__item media-channels__item--website"><a href="https://thelinknewspaper.ca/" target="_blank" rel="noopener noreferrer">Official website</a></li>
+          <li class="media-channels__item media-channels__item--rss"><a href="https://thelinknewspaper.ca/feed/" target="_blank" rel="noopener noreferrer" title="Article feed — open it in a news reader" aria-label="RSS — Article feed — open it in a news reader">RSS</a></li>
+          <li class="media-channels__item media-channels__item--instagram"><a href="https://www.instagram.com/linknewspaper/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li class="media-channels__item media-channels__item--facebook"><a href="https://facebook.com/thelinknewspaper" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+          <li class="media-channels__item media-channels__item--x"><a href="https://twitter.com/linknewspaper" target="_blank" rel="noopener noreferrer">X</a></li>
+          <li class="media-channels__item media-channels__item--tiktok"><a href="https://www.tiktok.com/@thelinknewspaper" target="_blank" rel="noopener noreferrer">TikTok</a></li>
+        </ul>
+      </section>
       <section class="seo-section">
         <h2>Latest articles</h2>
         <p class="seo-headlines__status">Latest article: September 19, 2026 at 12:04 a.m.</p>

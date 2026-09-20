@@ -125,7 +125,8 @@ Comme **The Concordian** : `url` = flux WordPress officiel, `urlFallback` = repl
 | `urlFallback` | URL de repli si le principal échoue |
 | `fetchMode` | `rss` (défaut), `html-list` ou `firebase` |
 | `firebase` | Config Firestore si `fetchMode: firebase` |
-| `instagram`, `facebook`, `x` | Réseaux sociaux (preset si SPA sans liens HTML) |
+| `instagram`, `facebook`, `x`, `youtube`, `tiktok`, `podcast` | Canaux externes (preset si SPA sans liens HTML). Affichés sur la fiche. |
+| `googleNews` | `{ "url": "https://news.google.com/publications/…", "status": "verified" }`. Page de publication seulement — jamais une recherche, jamais une URL inventée. Voir `docs/media-channels.md`. |
 | `wpFeaturedCategories` | Catégories WordPress pour vedettes hors flux (ex. Le Délit → `slider`) |
 
 ### Champs bots (automatiques)

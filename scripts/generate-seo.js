@@ -50,6 +50,7 @@ const SCHEDULES_PATH = path.join(ROOT, 'radio-schedules.json');
 const SPORTS_PATH = path.join(ROOT, 'sports.json');
 const ARCHIVE_PATH = path.join(ROOT, 'news-archive.json');
 const ARCHIVE_CONFIG_PATH = path.join(ROOT, 'historical-catalog.config.json');
+const SOCIAL_PATH = path.join(ROOT, 'social-feed.json');
 
 /**
  * Dossiers entièrement reconstruits à chaque passe : on les efface d'abord
@@ -562,6 +563,7 @@ function main() {
     sports: readJson(SPORTS_PATH, {}),
     siteBase: SITE_BASE,
     archivePaths: archive.sourcePaths,
+    socialFeed: readJson(SOCIAL_PATH, { items: [] }),
   });
 
   const sportsPages = entityPages.filter((page) => isSportsHubPath(page.path));

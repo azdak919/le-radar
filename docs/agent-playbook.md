@@ -20,6 +20,7 @@ Pour ajouter un journal : [`adding-news-source.md`](adding-news-source.md).
 | **Mât** | Header photo + météo + slogan | `index.html`, `quebec-backgrounds.js`, banques `QUEBEC_*` |
 | **Tuner radio** | Un lecteur, grilles, nowplaying | `radar-tuner.js`, `mobile-playback.js`, `radios.json` |
 | **News** | Fil RSS agrégé | `news.json`, `news-sources.json`, `scripts/fetch-news.js` |
+| **Suivi / canaux** | Suivre un média + plateformes externes | `scripts/media-channels-lib.js`, `scripts/media-follow-store.js`, `docs/media-channels.md` |
 | **Pomo** | Mini-app isolée `/pomo/` | `pomo/`, `quebec-pomo-backgrounds-data.js`, `pomo/sw.js` |
 | **Solitaire** | Mini-app isolée `/solitaire/` | `solitaire/`, SW propre |
 | **Workers CF** | Edge (nowplaying cache, bg entropy) | `workers/` — **pas d’audio** |

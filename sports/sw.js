@@ -16,7 +16,7 @@
    mise à jour.
    ═══════════════════════════════════════════════════════ */
 
-const SHELL_CACHE  = 'sports-shell-v258';
+const SHELL_CACHE  = 'sports-shell-v260';
 const FONT_CACHE   = 'sports-fonts-v1';
 const CACHE_PREFIX = 'sports-';
 const KNOWN_CACHES = [SHELL_CACHE, FONT_CACHE];
@@ -77,6 +77,9 @@ const SHARED_ASSETS = [
   '../radar-weather.js',
   '../radar-sports-cta.js',
   '../radar-tuner.js',
+  '../scripts/media-channels-lib.js',
+  '../scripts/media-follow-store.js',
+  '../scripts/media-follow-ui.js',
   '../radar-news.js',
   '../radar-lifecycle.js',
   '../app.js',

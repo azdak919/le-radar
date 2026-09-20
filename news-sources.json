@@ -1,5 +1,5 @@
 {
-  "_comment": "Registre des sources. Champs éditables : name, institution, region, type, lang, url, site, popularity, fetchMode (rss|html-list|firebase), firebase {}, urlFallback, wpFeaturedCategories, botHints {}, instagram/facebook/x (SPA sans liens HTML), _note. Champs bots : _status, _lastItemDate, _lastChecked, _failCount, _lastFetchOk. botHints : instructions par bot (authors, images, excerpts, credits, fetch). Voir docs/adding-news-source.md.",
+  "_comment": "Registre des sources. Champs éditables : name, institution, region, type, lang, url, site, popularity, fetchMode (rss|html-list|firebase), firebase {}, urlFallback, wpFeaturedCategories, botHints {}, instagram/facebook/x/youtube/tiktok/podcast (canaux externes), googleNews { url, status }, _note. googleNews.url = page /publications/ vérifiée seulement — jamais une recherche, jamais une URL inventée. Champs bots : _status, _lastItemDate, _lastChecked, _failCount, _lastFetchOk. Voir docs/adding-news-source.md et docs/media-channels.md.",
   "active": [
     {
       "name": "Quartier Libre",
@@ -41,6 +41,7 @@
       "type": "universite",
       "lang": "fr",
       "url": "https://montrealcampus.ca/feed/",
+      "site": "https://montrealcampus.ca/",
       "_lastChecked": "2026-09-20T00:41:32.411Z",
       "_failCount": 0,
       "_status": "ok",
@@ -55,6 +56,7 @@
       "type": "universite",
       "lang": "fr",
       "url": "https://www.delitfrancais.com/feed/",
+      "site": "https://www.delitfrancais.com/",
       "wpFeaturedCategories": [
         "slider"
       ],
@@ -72,6 +74,7 @@
       "type": "universite",
       "lang": "en",
       "url": "https://www.mcgilldaily.com/feed/",
+      "site": "https://www.mcgilldaily.com/",
       "botHints": {
         "authors": {
           "forcePageAuthor": true,
@@ -107,6 +110,7 @@
       "type": "universite",
       "lang": "en",
       "url": "https://thelinknewspaper.ca/feed/",
+      "site": "https://thelinknewspaper.ca/",
       "botHints": {
         "authors": {
           "forcePageAuthor": true,
@@ -136,6 +140,7 @@
       "type": "universite",
       "lang": "fr",
       "url": "https://www.zonecampus.ca/feed/",
+      "site": "https://www.zonecampus.ca/",
       "_lastChecked": "2026-09-20T00:41:40.876Z",
       "_failCount": 0,
       "_status": "ok",
@@ -178,6 +183,7 @@
       "type": "universite",
       "lang": "fr",
       "url": "https://lecollectif.ca/feed/",
+      "site": "https://lecollectif.ca/",
       "_lastChecked": "2026-09-20T00:41:43.001Z",
       "_failCount": 0,
       "_status": "ok",
@@ -192,6 +198,7 @@
       "type": "cegep",
       "lang": "fr",
       "url": "https://exilecvm.ca/feed/",
+      "site": "https://exilecvm.ca/",
       "historyWordpressComSite": "exilecvm.wordpress.com",
       "_lastChecked": "2026-09-20T00:41:43.201Z",
       "_failCount": 0,
@@ -218,6 +225,7 @@
       "type": "cegep",
       "lang": "fr",
       "url": "https://lapige.atmjonquiere.com/feed/",
+      "site": "https://lapige.atmjonquiere.com/",
       "botHints": {
         "authors": {
           "selectors": [
@@ -290,6 +298,7 @@
       "type": "universite",
       "lang": "en",
       "url": "https://www.thetribune.ca/feed/",
+      "site": "https://www.thetribune.ca/",
       "botHints": {
         "authors": {
           "forcePageAuthor": true,

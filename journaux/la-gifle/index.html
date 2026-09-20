@@ -109,6 +109,9 @@
     <script src="../../quebec-backgrounds-data.js" defer></script>
     <script src="../../quebec-university-backgrounds-data.js" defer></script>
     <script src="../../scripts/campus-fallback-lib.js" defer></script>
+    <script src="../../scripts/media-channels-lib.js" defer></script>
+    <script src="../../scripts/media-follow-store.js" defer></script>
+    <script src="../../scripts/media-follow-ui.js" defer></script>
     <script src="../../quebec-nations-backgrounds-data.js" defer></script>
     <script src="../../quebec-favorites-backgrounds-data.js" defer></script>
     <script src="../../quebec-backgrounds.js" defer></script>
@@ -125,7 +128,7 @@
     <script src="../../radar-lifecycle.js" defer></script>
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"La Gifle","url":"https://lagifleblog.wordpress.com/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Collège Lionel-Groulx"},"inLanguage":"fr"}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"La Gifle","url":"https://lagifleblog.wordpress.com/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Collège Lionel-Groulx"},"inLanguage":"fr","sameAs":["https://lagifleblog.wordpress.com/"]}</script>
   </head>
   <body>
     <header class="masthead">
@@ -305,12 +308,20 @@
       <p class="seo-eyebrow">Journaux étudiants</p>
       <h1 class="seo-title">La Gifle</h1>
       <p class="seo-lead">La Gifle est le journal étudiant de Collège Lionel-Groulx.</p>
+      <p class="media-follow-row"><button type="button" class="media-follow" data-media-follow data-media-id="la-gifle" data-media-name="La Gifle" data-follow-lang="fr" data-label-follow="Suivre" data-label-following="Suivi" data-label-follow-named="Suivre {name} dans LE-RADAR" data-label-following-named="Ne plus suivre {name}" aria-pressed="false" aria-label="Suivre La Gifle dans LE-RADAR" title="Suivre La Gifle dans LE-RADAR"><span class="media-follow__mark" aria-hidden="true">☆</span><span class="media-follow__label">Suivre</span></button></p>
       <dl class="seo-facts">
           <div class="seo-fact"><dt>Établissement</dt><dd><a href="../../etablissements/college-lionel-groulx/">Collège Lionel-Groulx</a></dd></div>
           <div class="seo-fact"><dt>Région</dt><dd><a href="https://www.laurentides.com/" target="_blank" rel="noopener noreferrer" aria-label="Tourisme Laurentides — site officiel">Laurentides</a></dd></div>
           <div class="seo-fact"><dt>Langue</dt><dd>Français</dd></div>
           <div class="seo-fact"><dt>Site officiel</dt><dd><a href="https://lagifleblog.wordpress.com/" target="_blank" rel="noopener noreferrer">https://lagifleblog.wordpress.com/</a></dd></div>
       </dl>
+      <section class="media-channels">
+        <h2 class="media-channels__title">Disponible sur</h2>
+        <ul class="media-channels__list">
+          <li class="media-channels__item media-channels__item--website"><a href="https://lagifleblog.wordpress.com/" target="_blank" rel="noopener noreferrer">Site officiel</a></li>
+          <li class="media-channels__item media-channels__item--rss"><a href="https://lagifleblog.wordpress.com/feed/" target="_blank" rel="noopener noreferrer" title="Flux d’articles, à ouvrir dans un lecteur de nouvelles" aria-label="RSS — Flux d’articles, à ouvrir dans un lecteur de nouvelles">RSS</a></li>
+        </ul>
+      </section>
       <section class="seo-section">
         <h2>Derniers articles</h2>
         <p class="seo-empty">Aucun article publié dans la fenêtre de fraîcheur (session universitaire en cours et les deux précédentes).</p>

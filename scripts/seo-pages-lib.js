@@ -274,6 +274,14 @@ const T = {
     institutions: 'Établissements',
     browseSchedules: 'Choisir une autre radio',
     officialSite: 'Site officiel',
+    availableOn: 'Disponible sur',
+    follow: 'Suivre',
+    following: 'Suivi',
+    dirStatRss: '{n} avec un flux RSS',
+    dirStatGoogleNews: '{n} dans Google Actualités',
+    dirStatInstagram: '{n} sur Instagram',
+    dirStatYoutube: '{n} sur YouTube',
+    dirStatPodcast: '{n} avec un balado',
     frequency: 'Fréquence',
     institution: 'Établissement',
     city: 'Ville',
@@ -440,6 +448,14 @@ const T = {
     institutions: 'Institutions',
     browseSchedules: 'Choose another station',
     officialSite: 'Official website',
+    availableOn: 'Available on',
+    follow: 'Follow',
+    following: 'Following',
+    dirStatRss: '{n} with an RSS feed',
+    dirStatGoogleNews: '{n} in Google News',
+    dirStatInstagram: '{n} on Instagram',
+    dirStatYoutube: '{n} on YouTube',
+    dirStatPodcast: '{n} with a podcast',
     frequency: 'Frequency',
     institution: 'Institution',
     city: 'City',
@@ -1122,6 +1138,9 @@ ${renderWideLayoutAssets(up)}${renderTunerCriticalCss()}
     <script src="${up}quebec-backgrounds-data.js" defer></script>
     <script src="${up}quebec-university-backgrounds-data.js" defer></script>
     <script src="${up}scripts/campus-fallback-lib.js" defer></script>
+    <script src="${up}scripts/media-channels-lib.js" defer></script>
+    <script src="${up}scripts/media-follow-store.js" defer></script>
+    <script src="${up}scripts/media-follow-ui.js" defer></script>
     <script src="${up}quebec-nations-backgrounds-data.js" defer></script>
     <script src="${up}quebec-favorites-backgrounds-data.js" defer></script>
     <script src="${up}quebec-backgrounds.js" defer></script>
@@ -1509,6 +1528,7 @@ module.exports = {
   CHROME_T,
   INSTALL_APPS,
   renderNativeTuner,
+  EXTERNAL_LINK_ATTRS,
   factsList,
   headlineList,
   cardGrid,
