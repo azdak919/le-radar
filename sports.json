@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-20T00:41:58.928Z",
-  "fetchedAt": "2026-09-20T00:41:58.928Z",
+  "updated": "2026-09-20T04:03:56.009Z",
+  "fetchedAt": "2026-09-20T04:03:56.009Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-20T00:41:58.929Z"
+    "referenceDate": "2026-09-20T04:03:56.010Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 839,
@@ -72,7 +72,7 @@
     "ultimate",
     "volleyball"
   ],
-  "teamCount": 855,
+  "teamCount": 860,
   "errors": [
     {
       "leagueId": "spordle-collegial",
@@ -48714,6 +48714,23 @@
       "leagueLabel": "Football collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-19",
+          "time": "19:30",
+          "opponent": "Lévis",
+          "opponentCode": "LÉV",
+          "home": true,
+          "scoreFor": 13,
+          "scoreAgainst": 14,
+          "result": "L",
+          "sport": "football",
+          "competition": "Football collégial masculin D2",
+          "gameId": "79951198-121e-4fad-a9d3-371291d3ca64",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=79951198-121e-4fad-a9d3-371291d3ca64",
+          "opponentFullName": "Cégep de Lévis",
+          "opponentRegistryId": "levis",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-13",
           "time": "13:00",
           "opponent": "Lionel-Groulx",
@@ -48767,20 +48784,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-13",
-        "time": "13:00",
-        "opponent": "Lionel-Groulx",
-        "opponentCode": "CLG",
+        "date": "2026-09-19",
+        "time": "19:30",
+        "opponent": "Lévis",
+        "opponentCode": "LÉV",
         "home": true,
-        "scoreFor": 27,
-        "scoreAgainst": 24,
-        "result": "W",
+        "scoreFor": 13,
+        "scoreAgainst": 14,
+        "result": "L",
         "sport": "football",
         "competition": "Football collégial masculin D2",
-        "gameId": "bbb91a65-cf89-4299-b756-fd99fae288e5",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bbb91a65-cf89-4299-b756-fd99fae288e5",
-        "opponentFullName": "Collège Lionel-Groulx",
-        "opponentRegistryId": "lionel-groulx",
+        "gameId": "79951198-121e-4fad-a9d3-371291d3ca64",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=79951198-121e-4fad-a9d3-371291d3ca64",
+        "opponentFullName": "Cégep de Lévis",
+        "opponentRegistryId": "levis",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -48871,10 +48888,10 @@
       },
       "record": {
         "wins": 2,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 3,
-        "label": "2-1"
+        "played": 4,
+        "label": "2-2"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -49096,6 +49113,23 @@
       "leagueLabel": "Football collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-19",
+          "time": "19:30",
+          "opponent": "Saint-Hyacinthe",
+          "opponentCode": "STH",
+          "home": true,
+          "scoreFor": 31,
+          "scoreAgainst": 44,
+          "result": "L",
+          "sport": "football",
+          "competition": "Football collégial masculin D2",
+          "gameId": "34a2bbac-ed87-43b9-ac1e-7d575898db37",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=34a2bbac-ed87-43b9-ac1e-7d575898db37",
+          "opponentFullName": "Cégep de Saint-Hyacinthe",
+          "opponentRegistryId": "saint-hyacinthe",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-11",
           "time": "19:30",
           "opponent": "Édouard-Montpetit",
@@ -49150,21 +49184,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-11",
+        "date": "2026-09-19",
         "time": "19:30",
-        "opponent": "Édouard-Montpetit",
-        "opponentCode": "CEM",
-        "home": false,
-        "scoreFor": 33,
-        "scoreAgainst": 30,
-        "result": "W",
+        "opponent": "Saint-Hyacinthe",
+        "opponentCode": "STH",
+        "home": true,
+        "scoreFor": 31,
+        "scoreAgainst": 44,
+        "result": "L",
         "sport": "football",
         "competition": "Football collégial masculin D2",
-        "gameId": "4f04a5bb-4f94-420b-ae55-c71b9e037ea7",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4f04a5bb-4f94-420b-ae55-c71b9e037ea7",
-        "opponentFullName": "Cégep Édouard-Montpetit",
-        "opponentNickname": "Cougars",
-        "opponentRegistryId": "edouard-montpetit",
+        "gameId": "34a2bbac-ed87-43b9-ac1e-7d575898db37",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=34a2bbac-ed87-43b9-ac1e-7d575898db37",
+        "opponentFullName": "Cégep de Saint-Hyacinthe",
+        "opponentRegistryId": "saint-hyacinthe",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -49252,10 +49285,10 @@
       },
       "record": {
         "wins": 2,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 3,
-        "label": "2-1"
+        "played": 4,
+        "label": "2-2"
       },
       "source": "rseq-s1",
       "priority": 28,
@@ -49278,6 +49311,23 @@
       "usports": false,
       "leagueLabel": "Football collégial masculin D2",
       "results": [
+        {
+          "date": "2026-09-19",
+          "time": "19:30",
+          "opponent": "Beauce-Appalaches",
+          "opponentCode": "BAP",
+          "home": false,
+          "scoreFor": 14,
+          "scoreAgainst": 13,
+          "result": "W",
+          "sport": "football",
+          "competition": "Football collégial masculin D2",
+          "gameId": "79951198-121e-4fad-a9d3-371291d3ca64",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=79951198-121e-4fad-a9d3-371291d3ca64",
+          "opponentFullName": "Cégep de Beauce-Appalaches",
+          "opponentRegistryId": "beauce-appalaches",
+          "priorSeason": false
+        },
         {
           "date": "2026-09-12",
           "time": "19:30",
@@ -49332,20 +49382,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-12",
+        "date": "2026-09-19",
         "time": "19:30",
-        "opponent": "Cégep de Sherbrooke",
-        "opponentCode": "SHE",
-        "home": true,
-        "scoreFor": 26,
-        "scoreAgainst": 16,
+        "opponent": "Beauce-Appalaches",
+        "opponentCode": "BAP",
+        "home": false,
+        "scoreFor": 14,
+        "scoreAgainst": 13,
         "result": "W",
         "sport": "football",
         "competition": "Football collégial masculin D2",
-        "gameId": "18161027-ef41-49a1-9444-bf8cf3a4ac50",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=18161027-ef41-49a1-9444-bf8cf3a4ac50",
-        "opponentFullName": "Cégep de Sherbrooke",
-        "opponentRegistryId": "cegep-sherbrooke",
+        "gameId": "79951198-121e-4fad-a9d3-371291d3ca64",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=79951198-121e-4fad-a9d3-371291d3ca64",
+        "opponentFullName": "Cégep de Beauce-Appalaches",
+        "opponentRegistryId": "beauce-appalaches",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -49434,11 +49484,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 2,
+        "wins": 3,
         "losses": 1,
         "draws": 0,
-        "played": 3,
-        "label": "2-1"
+        "played": 4,
+        "label": "3-1"
       },
       "source": "rseq-s1",
       "priority": 50,
@@ -49661,6 +49711,23 @@
       "leagueLabel": "Football collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-19",
+          "time": "19:30",
+          "opponent": "Valleyfield",
+          "opponentCode": "VAL",
+          "home": true,
+          "scoreFor": 41,
+          "scoreAgainst": 12,
+          "result": "W",
+          "sport": "football",
+          "competition": "Football collégial masculin D2",
+          "gameId": "afe18fe7-8c3d-411c-9545-4e06b09b440f",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=afe18fe7-8c3d-411c-9545-4e06b09b440f",
+          "opponentFullName": "Cégep de Valleyfield",
+          "opponentRegistryId": "valleyfield",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-12",
           "time": "13:00",
           "opponent": "Saint-Hyacinthe",
@@ -49714,20 +49781,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-12",
-        "time": "13:00",
-        "opponent": "Saint-Hyacinthe",
-        "opponentCode": "STH",
-        "home": false,
-        "scoreFor": 7,
-        "scoreAgainst": 32,
-        "result": "L",
+        "date": "2026-09-19",
+        "time": "19:30",
+        "opponent": "Valleyfield",
+        "opponentCode": "VAL",
+        "home": true,
+        "scoreFor": 41,
+        "scoreAgainst": 12,
+        "result": "W",
         "sport": "football",
         "competition": "Football collégial masculin D2",
-        "gameId": "515c4239-b7ee-4b96-a602-f22541f34071",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=515c4239-b7ee-4b96-a602-f22541f34071",
-        "opponentFullName": "Cégep de Saint-Hyacinthe",
-        "opponentRegistryId": "saint-hyacinthe",
+        "gameId": "afe18fe7-8c3d-411c-9545-4e06b09b440f",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=afe18fe7-8c3d-411c-9545-4e06b09b440f",
+        "opponentFullName": "Cégep de Valleyfield",
+        "opponentRegistryId": "valleyfield",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -49815,11 +49882,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 2,
         "draws": 0,
-        "played": 3,
-        "label": "1-2"
+        "played": 4,
+        "label": "2-2"
       },
       "source": "rseq-s1",
       "priority": 31,
@@ -49842,6 +49909,24 @@
       "usports": false,
       "leagueLabel": "Football collégial masculin D2",
       "results": [
+        {
+          "date": "2026-09-19",
+          "time": "19:30",
+          "opponent": "John Abbott",
+          "opponentCode": "JAC",
+          "home": false,
+          "scoreFor": 44,
+          "scoreAgainst": 31,
+          "result": "W",
+          "sport": "football",
+          "competition": "Football collégial masculin D2",
+          "gameId": "34a2bbac-ed87-43b9-ac1e-7d575898db37",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=34a2bbac-ed87-43b9-ac1e-7d575898db37",
+          "opponentFullName": "John Abbott College",
+          "opponentNickname": "Islanders",
+          "opponentRegistryId": "john-abbott",
+          "priorSeason": false
+        },
         {
           "date": "2026-09-12",
           "time": "13:00",
@@ -49896,21 +49981,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-12",
-        "time": "13:00",
-        "opponent": "Montmorency",
-        "opponentCode": "MON",
-        "home": true,
-        "scoreFor": 32,
-        "scoreAgainst": 7,
+        "date": "2026-09-19",
+        "time": "19:30",
+        "opponent": "John Abbott",
+        "opponentCode": "JAC",
+        "home": false,
+        "scoreFor": 44,
+        "scoreAgainst": 31,
         "result": "W",
         "sport": "football",
         "competition": "Football collégial masculin D2",
-        "gameId": "515c4239-b7ee-4b96-a602-f22541f34071",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=515c4239-b7ee-4b96-a602-f22541f34071",
-        "opponentFullName": "Collège Montmorency",
-        "opponentNickname": "Nomades",
-        "opponentRegistryId": "montmorency",
+        "gameId": "34a2bbac-ed87-43b9-ac1e-7d575898db37",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=34a2bbac-ed87-43b9-ac1e-7d575898db37",
+        "opponentFullName": "John Abbott College",
+        "opponentNickname": "Islanders",
+        "opponentRegistryId": "john-abbott",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -49999,11 +50084,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 3,
+        "wins": 4,
         "losses": 0,
         "draws": 0,
-        "played": 3,
-        "label": "3-0"
+        "played": 4,
+        "label": "4-0"
       },
       "source": "rseq-s1",
       "priority": 34,
@@ -50426,6 +50511,24 @@
       "leagueLabel": "Football collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-19",
+          "time": "19:30",
+          "opponent": "Montmorency",
+          "opponentCode": "MON",
+          "home": false,
+          "scoreFor": 12,
+          "scoreAgainst": 41,
+          "result": "L",
+          "sport": "football",
+          "competition": "Football collégial masculin D2",
+          "gameId": "afe18fe7-8c3d-411c-9545-4e06b09b440f",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=afe18fe7-8c3d-411c-9545-4e06b09b440f",
+          "opponentFullName": "Collège Montmorency",
+          "opponentNickname": "Nomades",
+          "opponentRegistryId": "montmorency",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-12",
           "time": "13:00",
           "opponent": "Cégep de Trois-Rivières",
@@ -50480,21 +50583,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-12",
-        "time": "13:00",
-        "opponent": "Cégep de Trois-Rivières",
-        "opponentCode": "TRV",
+        "date": "2026-09-19",
+        "time": "19:30",
+        "opponent": "Montmorency",
+        "opponentCode": "MON",
         "home": false,
-        "scoreFor": 9,
-        "scoreAgainst": 15,
+        "scoreFor": 12,
+        "scoreAgainst": 41,
         "result": "L",
         "sport": "football",
         "competition": "Football collégial masculin D2",
-        "gameId": "b2f279c0-ed61-43f3-8e15-8428c19a92d6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b2f279c0-ed61-43f3-8e15-8428c19a92d6",
-        "opponentFullName": "Cégep de Trois-Rivières",
-        "opponentNickname": "Diablos",
-        "opponentRegistryId": "trois-rivieres",
+        "gameId": "afe18fe7-8c3d-411c-9545-4e06b09b440f",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=afe18fe7-8c3d-411c-9545-4e06b09b440f",
+        "opponentFullName": "Collège Montmorency",
+        "opponentNickname": "Nomades",
+        "opponentRegistryId": "montmorency",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -50583,10 +50686,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 3,
+        "losses": 4,
         "draws": 0,
-        "played": 3,
-        "label": "0-3"
+        "played": 4,
+        "label": "0-4"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -53316,6 +53419,24 @@
       "leagueLabel": "Football universitaire masculin",
       "results": [
         {
+          "date": "2026-09-19",
+          "time": "19:00",
+          "opponent": "Sherbrooke",
+          "opponentCode": "USHE",
+          "home": true,
+          "scoreFor": 55,
+          "scoreAgainst": 24,
+          "result": "W",
+          "sport": "football",
+          "competition": "Football universitaire masculin",
+          "gameId": "39cb9424-5edf-49e5-9040-cde1871e821c",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=39cb9424-5edf-49e5-9040-cde1871e821c",
+          "opponentFullName": "Université de Sherbrooke",
+          "opponentNickname": "Vert & Or",
+          "opponentRegistryId": "usherbrooke",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-11",
           "time": "19:00",
           "opponent": "McGill",
@@ -53353,21 +53474,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-11",
+        "date": "2026-09-19",
         "time": "19:00",
-        "opponent": "McGill",
-        "opponentCode": "MCG",
-        "home": false,
-        "scoreFor": 36,
-        "scoreAgainst": 13,
+        "opponent": "Sherbrooke",
+        "opponentCode": "USHE",
+        "home": true,
+        "scoreFor": 55,
+        "scoreAgainst": 24,
         "result": "W",
         "sport": "football",
         "competition": "Football universitaire masculin",
-        "gameId": "d0831d5c-cb71-4ce6-9a62-3bf31671d9db",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d0831d5c-cb71-4ce6-9a62-3bf31671d9db",
-        "opponentFullName": "Université McGill",
-        "opponentNickname": "Redbirds",
-        "opponentRegistryId": "mcgill",
+        "gameId": "39cb9424-5edf-49e5-9040-cde1871e821c",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=39cb9424-5edf-49e5-9040-cde1871e821c",
+        "opponentFullName": "Université de Sherbrooke",
+        "opponentNickname": "Vert & Or",
+        "opponentRegistryId": "usherbrooke",
         "priorSeason": false,
         "opponentSector": "universitaire"
       },
@@ -53459,11 +53580,11 @@
         "opponentSector": "universitaire"
       },
       "record": {
-        "wins": 2,
+        "wins": 3,
         "losses": 0,
         "draws": 0,
-        "played": 2,
-        "label": "2-0"
+        "played": 3,
+        "label": "3-0"
       },
       "source": "rseq-s1",
       "priority": 1,
@@ -53865,6 +53986,24 @@
       "leagueLabel": "Football universitaire masculin",
       "results": [
         {
+          "date": "2026-09-19",
+          "time": "19:00",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": false,
+          "scoreFor": 24,
+          "scoreAgainst": 55,
+          "result": "L",
+          "sport": "football",
+          "competition": "Football universitaire masculin",
+          "gameId": "39cb9424-5edf-49e5-9040-cde1871e821c",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=39cb9424-5edf-49e5-9040-cde1871e821c",
+          "opponentFullName": "Université Laval",
+          "opponentNickname": "Rouge et Or",
+          "opponentRegistryId": "ulaval",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-12",
           "time": "13:00",
           "opponent": "Bishop's",
@@ -53902,21 +54041,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-12",
-        "time": "13:00",
-        "opponent": "Bishop's",
-        "opponentCode": "BIS",
+        "date": "2026-09-19",
+        "time": "19:00",
+        "opponent": "Laval",
+        "opponentCode": "LAV",
         "home": false,
-        "scoreFor": 19,
-        "scoreAgainst": 20,
+        "scoreFor": 24,
+        "scoreAgainst": 55,
         "result": "L",
         "sport": "football",
         "competition": "Football universitaire masculin",
-        "gameId": "4ccbc202-3e28-4d03-af74-cd8dd716b256",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4ccbc202-3e28-4d03-af74-cd8dd716b256",
-        "opponentFullName": "Bishop's University",
-        "opponentNickname": "Gaiters",
-        "opponentRegistryId": "bishops",
+        "gameId": "39cb9424-5edf-49e5-9040-cde1871e821c",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=39cb9424-5edf-49e5-9040-cde1871e821c",
+        "opponentFullName": "Université Laval",
+        "opponentNickname": "Rouge et Or",
+        "opponentRegistryId": "ulaval",
         "priorSeason": false,
         "opponentSector": "universitaire"
       },
@@ -54009,10 +54148,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 2,
+        "losses": 3,
         "draws": 0,
-        "played": 2,
-        "label": "0-2"
+        "played": 3,
+        "label": "0-3"
       },
       "source": "rseq-s1",
       "priority": 6,
@@ -56896,6 +57035,7 @@
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
           "opponentSector": "universitaire",
+          "sex": "M",
           "opponentFullName": "Université du Québec en Outaouais"
         },
         {
@@ -56909,7 +57049,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-14",
@@ -56922,7 +57063,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-29",
@@ -56935,7 +57077,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-23",
@@ -56948,7 +57091,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-12",
@@ -56961,7 +57105,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-13",
@@ -56974,7 +57119,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-20",
@@ -56987,7 +57133,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         }
       ],
       "nextGame": {
@@ -57002,6 +57149,7 @@
         "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
         "opponentRegistryId": "uqo",
         "opponentSector": "universitaire",
+        "sex": "M",
         "opponentFullName": "Université du Québec en Outaouais"
       },
       "record": null,
@@ -57027,20 +57175,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-09-19",
-          "time": "16:00",
-          "opponent": "UQAC",
-          "opponentCode": "UQAC",
-          "home": false,
-          "sport": "hockey",
-          "competition": "Hockey universitaire masculin D2 (hors concours)",
-          "gameId": null,
-          "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-hors-concours-sherbrooke-vs-uqac-2/",
-          "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire",
-          "opponentFullName": "Université du Québec à Chicoutimi"
-        },
-        {
           "date": "2026-09-20",
           "time": "13:00",
           "opponent": "UQAC",
@@ -57051,7 +57185,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-hors-concours-sherbrooke-vs-uqac/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-10",
@@ -57064,7 +57199,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-23",
@@ -57077,7 +57213,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-24",
@@ -57090,7 +57227,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke-2/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-13",
@@ -57103,7 +57241,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-14",
@@ -57116,7 +57255,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac-2/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-20",
@@ -57129,7 +57269,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-12-04",
@@ -57142,7 +57283,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-12-05",
@@ -57155,7 +57297,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-15",
@@ -57168,7 +57311,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-16",
@@ -57181,7 +57325,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-22",
@@ -57194,7 +57339,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-13",
@@ -57207,7 +57353,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke-3/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-14",
@@ -57220,7 +57367,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke-4/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-19",
@@ -57233,7 +57381,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac-3/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-20",
@@ -57246,7 +57395,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac-4/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-27",
@@ -57259,23 +57409,11 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         }
       ],
-      "nextGame": {
-        "date": "2026-09-19",
-        "time": "16:00",
-        "opponent": "UQAC",
-        "opponentCode": "UQAC",
-        "home": false,
-        "sport": "hockey",
-        "competition": "Hockey universitaire masculin D2 (hors concours)",
-        "gameId": null,
-        "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-hors-concours-sherbrooke-vs-uqac-2/",
-        "opponentRegistryId": "uqac",
-        "opponentSector": "universitaire",
-        "opponentFullName": "Université du Québec à Chicoutimi"
-      },
+      "nextGame": null,
       "record": null,
       "source": "rseq-s1+campus-hockey",
       "priority": 6,
@@ -57300,21 +57438,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-09-19",
-          "time": "16:00",
-          "opponent": "Sherbrooke",
-          "opponentCode": "USHE",
-          "home": true,
-          "sport": "hockey",
-          "competition": "Hockey universitaire masculin D2 (hors concours)",
-          "gameId": null,
-          "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-hors-concours-sherbrooke-vs-uqac-2/",
-          "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire",
-          "opponentFullName": "Université de Sherbrooke",
-          "opponentNickname": "Vert & Or"
-        },
-        {
           "date": "2026-09-20",
           "time": "13:00",
           "opponent": "Sherbrooke",
@@ -57325,7 +57448,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-hors-concours-sherbrooke-vs-uqac/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-23",
@@ -57338,7 +57462,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-24",
@@ -57351,7 +57476,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke-2/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-30",
@@ -57364,7 +57490,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-31",
@@ -57377,7 +57504,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-07",
@@ -57390,7 +57518,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-08",
@@ -57403,7 +57532,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-13",
@@ -57416,7 +57546,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-14",
@@ -57429,7 +57560,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac-2/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-29",
@@ -57442,7 +57574,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-30",
@@ -57455,7 +57588,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-06",
@@ -57468,7 +57602,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-07",
@@ -57481,7 +57616,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-13",
@@ -57494,7 +57630,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke-3/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-14",
@@ -57507,7 +57644,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke-4/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-19",
@@ -57520,7 +57658,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac-3/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-20",
@@ -57533,24 +57672,11 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac-4/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         }
       ],
-      "nextGame": {
-        "date": "2026-09-19",
-        "time": "16:00",
-        "opponent": "Sherbrooke",
-        "opponentCode": "USHE",
-        "home": true,
-        "sport": "hockey",
-        "competition": "Hockey universitaire masculin D2 (hors concours)",
-        "gameId": null,
-        "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-hors-concours-sherbrooke-vs-uqac-2/",
-        "opponentRegistryId": "usherbrooke",
-        "opponentSector": "universitaire",
-        "opponentFullName": "Université de Sherbrooke",
-        "opponentNickname": "Vert & Or"
-      },
+      "nextGame": null,
       "record": null,
       "source": "rseq-s1+campus-hockey",
       "priority": 13,
@@ -57585,6 +57711,7 @@
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
           "opponentSector": "universitaire",
+          "sex": "M",
           "opponentFullName": "Université de Sherbrooke",
           "opponentNickname": "Vert & Or"
         },
@@ -57599,7 +57726,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-24",
@@ -57612,7 +57740,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-30",
@@ -57625,7 +57754,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-31",
@@ -57638,7 +57768,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-07",
@@ -57651,7 +57782,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-08",
@@ -57664,7 +57796,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-14",
@@ -57677,7 +57810,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-20",
@@ -57690,7 +57824,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-29",
@@ -57703,7 +57838,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-12-04",
@@ -57716,7 +57852,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-12-05",
@@ -57729,7 +57866,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-15",
@@ -57742,7 +57880,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-16",
@@ -57755,7 +57894,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-22",
@@ -57768,7 +57908,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-23",
@@ -57781,7 +57922,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-29",
@@ -57794,7 +57936,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-30",
@@ -57807,7 +57950,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-06",
@@ -57820,7 +57964,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-07",
@@ -57833,7 +57978,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-12",
@@ -57846,7 +57992,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-13",
@@ -57859,7 +58006,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-20",
@@ -57872,7 +58020,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-27",
@@ -57885,7 +58034,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         }
       ],
       "nextGame": {
@@ -57900,6 +58050,7 @@
         "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
         "opponentRegistryId": "usherbrooke",
         "opponentSector": "universitaire",
+        "sex": "M",
         "opponentFullName": "Université de Sherbrooke",
         "opponentNickname": "Vert & Or"
       },
@@ -60072,6 +60223,23 @@
       "leagueLabel": "Rugby collégial féminin",
       "results": [
         {
+          "date": "2026-09-19",
+          "time": "9:00",
+          "opponent": "Notre-Dame Bleu",
+          "opponentCode": "NDFB",
+          "home": true,
+          "scoreFor": 0,
+          "scoreAgainst": 132,
+          "result": "L",
+          "sport": "rugby",
+          "competition": "Rugby collégial féminin",
+          "gameId": "ab118be9-b761-4848-8bfb-2f97a6c48720",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ab118be9-b761-4848-8bfb-2f97a6c48720",
+          "opponentFullName": "Campus Notre-Dame-de-Foy",
+          "opponentRegistryId": "notre-dame-bleu",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-13",
           "time": "19:00",
           "opponent": "Beauce-Appalaches",
@@ -60108,37 +60276,24 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-13",
-        "time": "19:00",
-        "opponent": "Beauce-Appalaches",
-        "opponentCode": "BAP",
+        "date": "2026-09-19",
+        "time": "9:00",
+        "opponent": "Notre-Dame Bleu",
+        "opponentCode": "NDFB",
         "home": true,
         "scoreFor": 0,
-        "scoreAgainst": 21,
+        "scoreAgainst": 132,
         "result": "L",
         "sport": "rugby",
         "competition": "Rugby collégial féminin",
-        "gameId": "e8f166d3-7083-479a-a6a0-e700e2c89161",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e8f166d3-7083-479a-a6a0-e700e2c89161",
-        "opponentFullName": "Cégep de Beauce-Appalaches",
-        "opponentRegistryId": "beauce-appalaches",
+        "gameId": "ab118be9-b761-4848-8bfb-2f97a6c48720",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ab118be9-b761-4848-8bfb-2f97a6c48720",
+        "opponentFullName": "Campus Notre-Dame-de-Foy",
+        "opponentRegistryId": "notre-dame-bleu",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-09-19",
-          "time": "9:00",
-          "opponent": "Notre-Dame Bleu",
-          "opponentCode": "NDFB",
-          "home": true,
-          "sport": "rugby",
-          "competition": "Rugby collégial féminin",
-          "gameId": "ab118be9-b761-4848-8bfb-2f97a6c48720",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ab118be9-b761-4848-8bfb-2f97a6c48720",
-          "opponentFullName": "Campus Notre-Dame-de-Foy",
-          "opponentRegistryId": "notre-dame-bleu"
-        },
         {
           "date": "2026-10-03",
           "time": "14:30",
@@ -60182,25 +60337,25 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-19",
-        "time": "9:00",
-        "opponent": "Notre-Dame Bleu",
-        "opponentCode": "NDFB",
-        "home": true,
+        "date": "2026-10-03",
+        "time": "14:30",
+        "opponent": "Lévis",
+        "opponentCode": "LÉV",
+        "home": false,
         "sport": "rugby",
         "competition": "Rugby collégial féminin",
-        "gameId": "ab118be9-b761-4848-8bfb-2f97a6c48720",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ab118be9-b761-4848-8bfb-2f97a6c48720",
-        "opponentFullName": "Campus Notre-Dame-de-Foy",
-        "opponentRegistryId": "notre-dame-bleu",
+        "gameId": "ba360bb5-b9c0-437e-8aef-ade67890f36d",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ba360bb5-b9c0-437e-8aef-ade67890f36d",
+        "opponentFullName": "Cégep de Lévis",
+        "opponentRegistryId": "levis",
         "opponentSector": "collegial"
       },
       "record": {
         "wins": 0,
-        "losses": 2,
+        "losses": 3,
         "draws": 0,
-        "played": 2,
-        "label": "0-2"
+        "played": 3,
+        "label": "0-3"
       },
       "source": "rseq-s1",
       "priority": 9,
@@ -60223,6 +60378,24 @@
       "usports": false,
       "leagueLabel": "Rugby collégial féminin",
       "results": [
+        {
+          "date": "2026-09-19",
+          "time": "9:00",
+          "opponent": "Limoilou",
+          "opponentCode": "LIM",
+          "home": false,
+          "scoreFor": 132,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "rugby",
+          "competition": "Rugby collégial féminin",
+          "gameId": "ab118be9-b761-4848-8bfb-2f97a6c48720",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ab118be9-b761-4848-8bfb-2f97a6c48720",
+          "opponentFullName": "Cégep Limoilou",
+          "opponentNickname": "Titans",
+          "opponentRegistryId": "limoilou",
+          "priorSeason": false
+        },
         {
           "date": "2026-09-12",
           "time": "13:00",
@@ -60259,38 +60432,25 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-12",
-        "time": "13:00",
-        "opponent": "Lévis",
-        "opponentCode": "LÉV",
-        "home": true,
-        "scoreFor": 76,
+        "date": "2026-09-19",
+        "time": "9:00",
+        "opponent": "Limoilou",
+        "opponentCode": "LIM",
+        "home": false,
+        "scoreFor": 132,
         "scoreAgainst": 0,
         "result": "W",
         "sport": "rugby",
         "competition": "Rugby collégial féminin",
-        "gameId": "08c6cc95-232e-4569-90d8-017ef29d7c89",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=08c6cc95-232e-4569-90d8-017ef29d7c89",
-        "opponentFullName": "Cégep de Lévis",
-        "opponentRegistryId": "levis",
+        "gameId": "ab118be9-b761-4848-8bfb-2f97a6c48720",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ab118be9-b761-4848-8bfb-2f97a6c48720",
+        "opponentFullName": "Cégep Limoilou",
+        "opponentNickname": "Titans",
+        "opponentRegistryId": "limoilou",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-09-19",
-          "time": "9:00",
-          "opponent": "Limoilou",
-          "opponentCode": "LIM",
-          "home": false,
-          "sport": "rugby",
-          "competition": "Rugby collégial féminin",
-          "gameId": "ab118be9-b761-4848-8bfb-2f97a6c48720",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ab118be9-b761-4848-8bfb-2f97a6c48720",
-          "opponentFullName": "Cégep Limoilou",
-          "opponentNickname": "Titans",
-          "opponentRegistryId": "limoilou"
-        },
         {
           "date": "2026-10-03",
           "time": "13:00",
@@ -60334,26 +60494,26 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-19",
-        "time": "9:00",
-        "opponent": "Limoilou",
-        "opponentCode": "LIM",
+        "date": "2026-10-03",
+        "time": "13:00",
+        "opponent": "Garneau",
+        "opponentCode": "GAR",
         "home": false,
         "sport": "rugby",
         "competition": "Rugby collégial féminin",
-        "gameId": "ab118be9-b761-4848-8bfb-2f97a6c48720",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ab118be9-b761-4848-8bfb-2f97a6c48720",
-        "opponentFullName": "Cégep Limoilou",
-        "opponentNickname": "Titans",
-        "opponentRegistryId": "limoilou",
+        "gameId": "56c2e1d1-b9fd-4b25-bb6b-fd8142d65f25",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=56c2e1d1-b9fd-4b25-bb6b-fd8142d65f25",
+        "opponentFullName": "Cégep Garneau",
+        "opponentNickname": "Boomerang",
+        "opponentRegistryId": "garneau",
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 2,
+        "wins": 3,
         "losses": 0,
         "draws": 0,
-        "played": 2,
-        "label": "2-0"
+        "played": 3,
+        "label": "3-0"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -63155,20 +63315,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-19",
-          "time": "16:00",
-          "opponent": "Ottawa",
-          "opponentCode": "OTT",
-          "home": false,
-          "sport": "rugby",
-          "competition": "Rugby universitaire féminin",
-          "gameId": "b2aab1d2-0cbe-4274-9a0d-063fbc9ff015",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b2aab1d2-0cbe-4274-9a0d-063fbc9ff015",
-          "opponentFullName": "University of Ottawa",
-          "opponentNickname": "Gee-Gees",
-          "opponentRegistryId": "ottawa"
-        },
-        {
           "date": "2026-09-25",
           "time": "18:15",
           "opponent": "Sherbrooke",
@@ -63212,18 +63358,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-19",
-        "time": "16:00",
-        "opponent": "Ottawa",
-        "opponentCode": "OTT",
-        "home": false,
+        "date": "2026-09-25",
+        "time": "18:15",
+        "opponent": "Sherbrooke",
+        "opponentCode": "USHE",
+        "home": true,
         "sport": "rugby",
         "competition": "Rugby universitaire féminin",
-        "gameId": "b2aab1d2-0cbe-4274-9a0d-063fbc9ff015",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b2aab1d2-0cbe-4274-9a0d-063fbc9ff015",
-        "opponentFullName": "University of Ottawa",
-        "opponentNickname": "Gee-Gees",
-        "opponentRegistryId": "ottawa",
+        "gameId": "d58f3a46-43d3-4572-86b3-2cc5617bc1af",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d58f3a46-43d3-4572-86b3-2cc5617bc1af",
+        "opponentFullName": "Université de Sherbrooke",
+        "opponentNickname": "Vert & Or",
+        "opponentRegistryId": "usherbrooke",
         "opponentSector": "universitaire"
       },
       "record": {
@@ -63966,20 +64112,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-19",
-          "time": "16:00",
-          "opponent": "Bishop's",
-          "opponentCode": "BIS",
-          "home": true,
-          "sport": "rugby",
-          "competition": "Rugby universitaire féminin",
-          "gameId": "b2aab1d2-0cbe-4274-9a0d-063fbc9ff015",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b2aab1d2-0cbe-4274-9a0d-063fbc9ff015",
-          "opponentFullName": "Bishop's University",
-          "opponentNickname": "Gaiters",
-          "opponentRegistryId": "bishops"
-        },
-        {
           "date": "2026-09-26",
           "time": "16:00",
           "opponent": "Carleton",
@@ -64009,18 +64141,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-19",
+        "date": "2026-09-26",
         "time": "16:00",
-        "opponent": "Bishop's",
-        "opponentCode": "BIS",
+        "opponent": "Carleton",
+        "opponentCode": "CAR",
         "home": true,
         "sport": "rugby",
         "competition": "Rugby universitaire féminin",
-        "gameId": "b2aab1d2-0cbe-4274-9a0d-063fbc9ff015",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b2aab1d2-0cbe-4274-9a0d-063fbc9ff015",
-        "opponentFullName": "Bishop's University",
-        "opponentNickname": "Gaiters",
-        "opponentRegistryId": "bishops",
+        "gameId": "f8d2a596-662e-47b9-8222-7dd6e68bbd0b",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f8d2a596-662e-47b9-8222-7dd6e68bbd0b",
+        "opponentFullName": "Carleton University",
+        "opponentNickname": "Ravens",
+        "opponentRegistryId": "carleton",
         "opponentSector": "universitaire"
       },
       "record": {
@@ -67208,6 +67340,24 @@
       "leagueLabel": "Soccer collégial féminin D2",
       "results": [
         {
+          "date": "2026-09-19",
+          "time": "17:00",
+          "opponent": "Cégep de Trois-Rivières",
+          "opponentCode": "TRV",
+          "home": true,
+          "scoreFor": 1,
+          "scoreAgainst": 5,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D2",
+          "gameId": "eef1e2f1-606f-43b4-8b18-f4148aa0267c",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=eef1e2f1-606f-43b4-8b18-f4148aa0267c",
+          "opponentFullName": "Cégep de Trois-Rivières",
+          "opponentNickname": "Diablos",
+          "opponentRegistryId": "trois-rivieres",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-13",
           "time": "15:30",
           "opponent": "Champlain Lennoxville",
@@ -67260,38 +67410,25 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-13",
-        "time": "15:30",
-        "opponent": "Champlain Lennoxville",
-        "opponentCode": "LEN",
-        "home": false,
-        "scoreFor": 6,
-        "scoreAgainst": 2,
-        "result": "W",
+        "date": "2026-09-19",
+        "time": "17:00",
+        "opponent": "Cégep de Trois-Rivières",
+        "opponentCode": "TRV",
+        "home": true,
+        "scoreFor": 1,
+        "scoreAgainst": 5,
+        "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "24dcce59-b67f-4b99-a93f-e278c07b38ba",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=24dcce59-b67f-4b99-a93f-e278c07b38ba",
-        "opponentFullName": "Champlain College Lennoxville",
-        "opponentRegistryId": "champlain-lennoxville",
+        "gameId": "eef1e2f1-606f-43b4-8b18-f4148aa0267c",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=eef1e2f1-606f-43b4-8b18-f4148aa0267c",
+        "opponentFullName": "Cégep de Trois-Rivières",
+        "opponentNickname": "Diablos",
+        "opponentRegistryId": "trois-rivieres",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-09-19",
-          "time": "17:00",
-          "opponent": "Cégep de Trois-Rivières",
-          "opponentCode": "TRV",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "eef1e2f1-606f-43b4-8b18-f4148aa0267c",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=eef1e2f1-606f-43b4-8b18-f4148aa0267c",
-          "opponentFullName": "Cégep de Trois-Rivières",
-          "opponentNickname": "Diablos",
-          "opponentRegistryId": "trois-rivieres"
-        },
         {
           "date": "2026-09-26",
           "time": "17:00",
@@ -67347,26 +67484,25 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-19",
+        "date": "2026-09-26",
         "time": "17:00",
-        "opponent": "Cégep de Trois-Rivières",
-        "opponentCode": "TRV",
+        "opponent": "Victoriaville",
+        "opponentCode": "VIC",
         "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "eef1e2f1-606f-43b4-8b18-f4148aa0267c",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=eef1e2f1-606f-43b4-8b18-f4148aa0267c",
-        "opponentFullName": "Cégep de Trois-Rivières",
-        "opponentNickname": "Diablos",
-        "opponentRegistryId": "trois-rivieres",
+        "gameId": "887f756d-6a43-4ea4-92ac-39bc82bffd25",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=887f756d-6a43-4ea4-92ac-39bc82bffd25",
+        "opponentFullName": "Cégep de Victoriaville",
+        "opponentRegistryId": "victoriaville",
         "opponentSector": "collegial"
       },
       "record": {
         "wins": 1,
-        "losses": 2,
+        "losses": 3,
         "draws": 0,
-        "played": 3,
-        "label": "1-2"
+        "played": 4,
+        "label": "1-3"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -67756,6 +67892,23 @@
       "leagueLabel": "Soccer collégial féminin D2",
       "results": [
         {
+          "date": "2026-09-19",
+          "time": "17:00",
+          "opponent": "Granby",
+          "opponentCode": "GBY",
+          "home": false,
+          "scoreFor": 5,
+          "scoreAgainst": 1,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D2",
+          "gameId": "eef1e2f1-606f-43b4-8b18-f4148aa0267c",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=eef1e2f1-606f-43b4-8b18-f4148aa0267c",
+          "opponentFullName": "Cégep de Granby",
+          "opponentRegistryId": "granby",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-11",
           "time": "19:00",
           "opponent": "Cégep de Sherbrooke",
@@ -67808,37 +67961,24 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-11",
-        "time": "19:00",
-        "opponent": "Cégep de Sherbrooke",
-        "opponentCode": "SHE",
-        "home": true,
-        "scoreFor": 2,
-        "scoreAgainst": 3,
-        "result": "L",
+        "date": "2026-09-19",
+        "time": "17:00",
+        "opponent": "Granby",
+        "opponentCode": "GBY",
+        "home": false,
+        "scoreFor": 5,
+        "scoreAgainst": 1,
+        "result": "W",
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "e52374e5-8de6-4485-974a-e441c4d11dd4",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e52374e5-8de6-4485-974a-e441c4d11dd4",
-        "opponentFullName": "Cégep de Sherbrooke",
-        "opponentRegistryId": "cegep-sherbrooke",
+        "gameId": "eef1e2f1-606f-43b4-8b18-f4148aa0267c",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=eef1e2f1-606f-43b4-8b18-f4148aa0267c",
+        "opponentFullName": "Cégep de Granby",
+        "opponentRegistryId": "granby",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-09-19",
-          "time": "17:00",
-          "opponent": "Granby",
-          "opponentCode": "GBY",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial féminin D2",
-          "gameId": "eef1e2f1-606f-43b4-8b18-f4148aa0267c",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=eef1e2f1-606f-43b4-8b18-f4148aa0267c",
-          "opponentFullName": "Cégep de Granby",
-          "opponentRegistryId": "granby"
-        },
         {
           "date": "2026-09-27",
           "time": "15:00",
@@ -67893,25 +68033,25 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-19",
-        "time": "17:00",
-        "opponent": "Granby",
-        "opponentCode": "GBY",
+        "date": "2026-09-27",
+        "time": "15:00",
+        "opponent": "Saint-Hyacinthe",
+        "opponentCode": "STH",
         "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial féminin D2",
-        "gameId": "eef1e2f1-606f-43b4-8b18-f4148aa0267c",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=eef1e2f1-606f-43b4-8b18-f4148aa0267c",
-        "opponentFullName": "Cégep de Granby",
-        "opponentRegistryId": "granby",
+        "gameId": "7cb8125e-08cd-477c-ad53-fe55311a87b9",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7cb8125e-08cd-477c-ad53-fe55311a87b9",
+        "opponentFullName": "Cégep de Saint-Hyacinthe",
+        "opponentRegistryId": "saint-hyacinthe",
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 2,
+        "wins": 3,
         "losses": 1,
         "draws": 0,
-        "played": 3,
-        "label": "2-1"
+        "played": 4,
+        "label": "3-1"
       },
       "source": "rseq-s1",
       "priority": 40,
@@ -70651,6 +70791,24 @@
       "leagueLabel": "Soccer collégial féminin D3",
       "results": [
         {
+          "date": "2026-09-19",
+          "time": "19:00",
+          "opponent": "André-Laurendeau",
+          "opponentCode": "CAL",
+          "home": true,
+          "scoreFor": 6,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D3",
+          "gameId": "0ab2470c-2b33-41dc-befa-4771b4b525d1",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0ab2470c-2b33-41dc-befa-4771b4b525d1",
+          "opponentFullName": "Cégep André-Laurendeau",
+          "opponentNickname": "Cheetahs",
+          "opponentRegistryId": "andre-laurendeau",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-13",
           "time": "16:00",
           "opponent": "Saint-Jean",
@@ -70723,21 +70881,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-13",
-        "time": "16:00",
-        "opponent": "Saint-Jean",
-        "opponentCode": "SJR",
-        "home": false,
-        "scoreFor": 2,
-        "scoreAgainst": 1,
+        "date": "2026-09-19",
+        "time": "19:00",
+        "opponent": "André-Laurendeau",
+        "opponentCode": "CAL",
+        "home": true,
+        "scoreFor": 6,
+        "scoreAgainst": 0,
         "result": "W",
         "sport": "soccer",
         "competition": "Soccer collégial féminin D3",
-        "gameId": "aeb218c9-e77f-4a86-b389-05288bdfccda",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=aeb218c9-e77f-4a86-b389-05288bdfccda",
-        "opponentFullName": "Cégep Saint-Jean-sur-Richelieu",
-        "opponentNickname": "Dragons",
-        "opponentRegistryId": "saint-jean-sur-richelieu",
+        "gameId": "0ab2470c-2b33-41dc-befa-4771b4b525d1",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0ab2470c-2b33-41dc-befa-4771b4b525d1",
+        "opponentFullName": "Cégep André-Laurendeau",
+        "opponentNickname": "Cheetahs",
+        "opponentRegistryId": "andre-laurendeau",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -70797,11 +70955,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 3,
         "draws": 0,
-        "played": 4,
-        "label": "1-3"
+        "played": 5,
+        "label": "2-3"
       },
       "source": "rseq-s1",
       "priority": 21,
@@ -70824,6 +70982,23 @@
       "leagueLabel": "Soccer collégial féminin D3",
       "results": [
         {
+          "date": "2026-09-19",
+          "time": "19:00",
+          "opponent": "André-Grasset",
+          "opponentCode": "CAG",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 6,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial féminin D3",
+          "gameId": "0ab2470c-2b33-41dc-befa-4771b4b525d1",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0ab2470c-2b33-41dc-befa-4771b4b525d1",
+          "opponentFullName": "Collège André-Grasset",
+          "opponentRegistryId": "andre-grasset",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-05",
           "time": "13:00",
           "opponent": "Saint-Jean",
@@ -70843,21 +71018,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-05",
-        "time": "13:00",
-        "opponent": "Saint-Jean",
-        "opponentCode": "SJR",
-        "home": true,
+        "date": "2026-09-19",
+        "time": "19:00",
+        "opponent": "André-Grasset",
+        "opponentCode": "CAG",
+        "home": false,
         "scoreFor": 0,
-        "scoreAgainst": 8,
+        "scoreAgainst": 6,
         "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial féminin D3",
-        "gameId": "3d48fa42-4798-4a9f-b346-180a47f331f6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3d48fa42-4798-4a9f-b346-180a47f331f6",
-        "opponentFullName": "Cégep Saint-Jean-sur-Richelieu",
-        "opponentNickname": "Dragons",
-        "opponentRegistryId": "saint-jean-sur-richelieu",
+        "gameId": "0ab2470c-2b33-41dc-befa-4771b4b525d1",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0ab2470c-2b33-41dc-befa-4771b4b525d1",
+        "opponentFullName": "Collège André-Grasset",
+        "opponentRegistryId": "andre-grasset",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -70960,10 +71134,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "0-2"
       },
       "source": "rseq-s1",
       "priority": 22,
@@ -74387,6 +74561,24 @@
       "leagueLabel": "Soccer collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-19",
+          "time": "19:00",
+          "opponent": "Cégep de Trois-Rivières",
+          "opponentCode": "TRV",
+          "home": true,
+          "scoreFor": 2,
+          "scoreAgainst": 1,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "02ef973f-32c6-41d0-88fb-6524fc99e2b0",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=02ef973f-32c6-41d0-88fb-6524fc99e2b0",
+          "opponentFullName": "Cégep de Trois-Rivières",
+          "opponentNickname": "Diablos",
+          "opponentRegistryId": "trois-rivieres",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-12",
           "time": "13:00",
           "opponent": "Drummondville",
@@ -74422,20 +74614,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-12",
-        "time": "13:00",
-        "opponent": "Drummondville",
-        "opponentCode": "DRU",
-        "home": false,
+        "date": "2026-09-19",
+        "time": "19:00",
+        "opponent": "Cégep de Trois-Rivières",
+        "opponentCode": "TRV",
+        "home": true,
         "scoreFor": 2,
         "scoreAgainst": 1,
         "result": "W",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "99b80eda-fa1a-496e-809c-f98cad061e72",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=99b80eda-fa1a-496e-809c-f98cad061e72",
-        "opponentFullName": "Cégep de Drummondville",
-        "opponentRegistryId": "drummondville",
+        "gameId": "02ef973f-32c6-41d0-88fb-6524fc99e2b0",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=02ef973f-32c6-41d0-88fb-6524fc99e2b0",
+        "opponentFullName": "Cégep de Trois-Rivières",
+        "opponentNickname": "Diablos",
+        "opponentRegistryId": "trois-rivieres",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -74522,11 +74715,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 1,
         "draws": 0,
-        "played": 2,
-        "label": "1-1"
+        "played": 3,
+        "label": "2-1"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -74729,6 +74922,23 @@
       "leagueLabel": "Soccer collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-19",
+          "time": "19:00",
+          "opponent": "Granby",
+          "opponentCode": "GBY",
+          "home": false,
+          "scoreFor": 1,
+          "scoreAgainst": 2,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "02ef973f-32c6-41d0-88fb-6524fc99e2b0",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=02ef973f-32c6-41d0-88fb-6524fc99e2b0",
+          "opponentFullName": "Cégep de Granby",
+          "opponentRegistryId": "granby",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-11",
           "time": "21:00",
           "opponent": "Cégep de Sherbrooke",
@@ -74781,20 +74991,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-11",
-        "time": "21:00",
-        "opponent": "Cégep de Sherbrooke",
-        "opponentCode": "SHE",
-        "home": true,
-        "scoreFor": 0,
+        "date": "2026-09-19",
+        "time": "19:00",
+        "opponent": "Granby",
+        "opponentCode": "GBY",
+        "home": false,
+        "scoreFor": 1,
         "scoreAgainst": 2,
         "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "0d00fe55-443d-461f-835f-d350a275cdb5",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0d00fe55-443d-461f-835f-d350a275cdb5",
-        "opponentFullName": "Cégep de Sherbrooke",
-        "opponentRegistryId": "cegep-sherbrooke",
+        "gameId": "02ef973f-32c6-41d0-88fb-6524fc99e2b0",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=02ef973f-32c6-41d0-88fb-6524fc99e2b0",
+        "opponentFullName": "Cégep de Granby",
+        "opponentRegistryId": "granby",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -74868,10 +75078,10 @@
       },
       "record": {
         "wins": 2,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 3,
-        "label": "2-1"
+        "played": 4,
+        "label": "2-2"
       },
       "source": "rseq-s1",
       "priority": 40,
@@ -76159,6 +76369,23 @@
       "leagueLabel": "Soccer collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-19",
+          "time": "16:00",
+          "opponent": "Thetford",
+          "opponentCode": "THE",
+          "home": true,
+          "scoreFor": 0,
+          "scoreAgainst": 1,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "733d5d1f-0835-4cab-a240-17378168d241",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=733d5d1f-0835-4cab-a240-17378168d241",
+          "opponentFullName": "Cégep de Thetford",
+          "opponentRegistryId": "thetford",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-12",
           "time": "15:00",
           "opponent": "Jonquière",
@@ -76194,37 +76421,24 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-12",
-        "time": "15:00",
-        "opponent": "Jonquière",
-        "opponentCode": "JON",
+        "date": "2026-09-19",
+        "time": "16:00",
+        "opponent": "Thetford",
+        "opponentCode": "THE",
         "home": true,
         "scoreFor": 0,
-        "scoreAgainst": 3,
+        "scoreAgainst": 1,
         "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "6970e913-d5b3-4c37-be9b-eb8834c624a6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6970e913-d5b3-4c37-be9b-eb8834c624a6",
-        "opponentFullName": "Cégep de Jonquière",
-        "opponentRegistryId": "jonquiere",
+        "gameId": "733d5d1f-0835-4cab-a240-17378168d241",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=733d5d1f-0835-4cab-a240-17378168d241",
+        "opponentFullName": "Cégep de Thetford",
+        "opponentRegistryId": "thetford",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-09-19",
-          "time": "16:00",
-          "opponent": "Thetford",
-          "opponentCode": "THE",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "733d5d1f-0835-4cab-a240-17378168d241",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=733d5d1f-0835-4cab-a240-17378168d241",
-          "opponentFullName": "Cégep de Thetford",
-          "opponentRegistryId": "thetford"
-        },
         {
           "date": "2026-09-27",
           "time": "13:00",
@@ -76292,25 +76506,25 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-19",
-        "time": "16:00",
-        "opponent": "Thetford",
-        "opponentCode": "THE",
-        "home": true,
+        "date": "2026-09-27",
+        "time": "13:00",
+        "opponent": "Alma",
+        "opponentCode": "ALM",
+        "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "733d5d1f-0835-4cab-a240-17378168d241",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=733d5d1f-0835-4cab-a240-17378168d241",
-        "opponentFullName": "Cégep de Thetford",
-        "opponentRegistryId": "thetford",
+        "gameId": "34abcb5f-b41c-4cfd-8e7b-5eb513ad097d",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=34abcb5f-b41c-4cfd-8e7b-5eb513ad097d",
+        "opponentFullName": "Cégep d'Alma",
+        "opponentRegistryId": "alma",
         "opponentSector": "collegial"
       },
       "record": {
         "wins": 1,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 2,
-        "label": "1-1"
+        "played": 3,
+        "label": "1-2"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -77036,6 +77250,23 @@
       "leagueLabel": "Soccer collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-19",
+          "time": "16:00",
+          "opponent": "Beauce-Appalaches",
+          "opponentCode": "BAP",
+          "home": false,
+          "scoreFor": 1,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "733d5d1f-0835-4cab-a240-17378168d241",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=733d5d1f-0835-4cab-a240-17378168d241",
+          "opponentFullName": "Cégep de Beauce-Appalaches",
+          "opponentRegistryId": "beauce-appalaches",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-12",
           "time": "13:00",
           "opponent": "Saint-Félicien",
@@ -77105,37 +77336,24 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-12",
-        "time": "13:00",
-        "opponent": "Saint-Félicien",
-        "opponentCode": "FEL",
-        "home": true,
-        "scoreFor": 4,
-        "scoreAgainst": 1,
+        "date": "2026-09-19",
+        "time": "16:00",
+        "opponent": "Beauce-Appalaches",
+        "opponentCode": "BAP",
+        "home": false,
+        "scoreFor": 1,
+        "scoreAgainst": 0,
         "result": "W",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "25b1eec0-463e-46f9-8873-4fbcdd9baca2",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=25b1eec0-463e-46f9-8873-4fbcdd9baca2",
-        "opponentFullName": "Cégep de Saint-Félicien",
-        "opponentRegistryId": "saint-felicien",
+        "gameId": "733d5d1f-0835-4cab-a240-17378168d241",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=733d5d1f-0835-4cab-a240-17378168d241",
+        "opponentFullName": "Cégep de Beauce-Appalaches",
+        "opponentRegistryId": "beauce-appalaches",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-09-19",
-          "time": "16:00",
-          "opponent": "Beauce-Appalaches",
-          "opponentCode": "BAP",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "733d5d1f-0835-4cab-a240-17378168d241",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=733d5d1f-0835-4cab-a240-17378168d241",
-          "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches"
-        },
         {
           "date": "2026-09-27",
           "time": "12:00",
@@ -77177,25 +77395,25 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-19",
-        "time": "16:00",
-        "opponent": "Beauce-Appalaches",
-        "opponentCode": "BAP",
+        "date": "2026-09-27",
+        "time": "12:00",
+        "opponent": "Rivière-du-Loup",
+        "opponentCode": "RDL",
         "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "733d5d1f-0835-4cab-a240-17378168d241",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=733d5d1f-0835-4cab-a240-17378168d241",
-        "opponentFullName": "Cégep de Beauce-Appalaches",
-        "opponentRegistryId": "beauce-appalaches",
+        "gameId": "54a27e04-db87-4cf2-b755-6a0723a502fc",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=54a27e04-db87-4cf2-b755-6a0723a502fc",
+        "opponentFullName": "Cégep de Rivière-du-Loup",
+        "opponentRegistryId": "riviere-du-loup",
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 3,
         "draws": 0,
-        "played": 4,
-        "label": "1-3"
+        "played": 5,
+        "label": "2-3"
       },
       "source": "rseq-s1",
       "priority": 39,
@@ -117455,36 +117673,9 @@
       "usports": true,
       "leagueLabel": "Hockey universitaire masculin D2",
       "lastGame": null,
-      "nextGame": {
-        "date": "2026-09-19",
-        "time": "16:00",
-        "opponent": "UQAC",
-        "opponentCode": "UQAC",
-        "home": false,
-        "sport": "hockey",
-        "competition": "Hockey universitaire masculin D2 (hors concours)",
-        "gameId": null,
-        "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-hors-concours-sherbrooke-vs-uqac-2/",
-        "opponentRegistryId": "uqac",
-        "opponentSector": "universitaire",
-        "opponentFullName": "Université du Québec à Chicoutimi"
-      },
+      "nextGame": null,
       "results": [],
       "nextGames": [
-        {
-          "date": "2026-09-19",
-          "time": "16:00",
-          "opponent": "UQAC",
-          "opponentCode": "UQAC",
-          "home": false,
-          "sport": "hockey",
-          "competition": "Hockey universitaire masculin D2 (hors concours)",
-          "gameId": null,
-          "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-hors-concours-sherbrooke-vs-uqac-2/",
-          "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire",
-          "opponentFullName": "Université du Québec à Chicoutimi"
-        },
         {
           "date": "2026-09-20",
           "time": "13:00",
@@ -117496,7 +117687,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-hors-concours-sherbrooke-vs-uqac/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-10",
@@ -117509,7 +117701,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-23",
@@ -117522,7 +117715,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-24",
@@ -117535,7 +117729,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke-2/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-13",
@@ -117548,7 +117743,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-14",
@@ -117561,7 +117757,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac-2/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-20",
@@ -117574,7 +117771,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-12-04",
@@ -117587,7 +117785,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-12-05",
@@ -117600,7 +117799,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-15",
@@ -117613,7 +117813,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-16",
@@ -117626,7 +117827,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-22",
@@ -117639,7 +117841,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-13",
@@ -117652,7 +117855,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke-3/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-14",
@@ -117665,7 +117869,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke-4/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-19",
@@ -117678,7 +117883,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac-3/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-20",
@@ -117691,7 +117897,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac-4/",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-27",
@@ -117704,11 +117911,12 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         }
       ],
       "record": null,
-      "source": "campus-hockey",
+      "source": "campus-hockey+campus-hockey",
       "registryId": "usherbrooke",
       "fullName": "Université de Sherbrooke",
       "nickname": "Vert & Or",
@@ -117740,6 +117948,7 @@
         "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
         "opponentRegistryId": "usherbrooke",
         "opponentSector": "universitaire",
+        "sex": "M",
         "opponentFullName": "Université de Sherbrooke",
         "opponentNickname": "Vert & Or"
       },
@@ -117757,6 +117966,7 @@
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
           "opponentSector": "universitaire",
+          "sex": "M",
           "opponentFullName": "Université de Sherbrooke",
           "opponentNickname": "Vert & Or"
         },
@@ -117771,7 +117981,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-24",
@@ -117784,7 +117995,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-30",
@@ -117797,7 +118009,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-31",
@@ -117810,7 +118023,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-07",
@@ -117823,7 +118037,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-08",
@@ -117836,7 +118051,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-14",
@@ -117849,7 +118065,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-20",
@@ -117862,7 +118079,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-29",
@@ -117875,7 +118093,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-12-04",
@@ -117888,7 +118107,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-12-05",
@@ -117901,7 +118121,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-15",
@@ -117914,7 +118135,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-16",
@@ -117927,7 +118149,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-22",
@@ -117940,7 +118163,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-23",
@@ -117953,7 +118177,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-29",
@@ -117966,7 +118191,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-30",
@@ -117979,7 +118205,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-06",
@@ -117992,7 +118219,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-07",
@@ -118005,7 +118233,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqac",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-12",
@@ -118018,7 +118247,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-13",
@@ -118031,7 +118261,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-20",
@@ -118044,7 +118275,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "ets",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-27",
@@ -118057,7 +118289,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         }
       ],
       "record": null,
@@ -118092,6 +118325,7 @@
         "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
         "opponentRegistryId": "uqo",
         "opponentSector": "universitaire",
+        "sex": "M",
         "opponentFullName": "Université du Québec en Outaouais"
       },
       "results": [],
@@ -118108,6 +118342,7 @@
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
           "opponentSector": "universitaire",
+          "sex": "M",
           "opponentFullName": "Université du Québec en Outaouais"
         },
         {
@@ -118121,7 +118356,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-14",
@@ -118134,7 +118370,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-29",
@@ -118147,7 +118384,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-23",
@@ -118160,7 +118398,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-12",
@@ -118173,7 +118412,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-13",
@@ -118186,7 +118426,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-20",
@@ -118199,7 +118440,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         }
       ],
       "record": null,
@@ -118222,38 +118464,9 @@
       "usports": true,
       "leagueLabel": "Hockey universitaire masculin D2",
       "lastGame": null,
-      "nextGame": {
-        "date": "2026-09-19",
-        "time": "16:00",
-        "opponent": "Sherbrooke",
-        "opponentCode": "USHE",
-        "home": true,
-        "sport": "hockey",
-        "competition": "Hockey universitaire masculin D2 (hors concours)",
-        "gameId": null,
-        "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-hors-concours-sherbrooke-vs-uqac-2/",
-        "opponentRegistryId": "usherbrooke",
-        "opponentSector": "universitaire",
-        "opponentFullName": "Université de Sherbrooke",
-        "opponentNickname": "Vert & Or"
-      },
+      "nextGame": null,
       "results": [],
       "nextGames": [
-        {
-          "date": "2026-09-19",
-          "time": "16:00",
-          "opponent": "Sherbrooke",
-          "opponentCode": "USHE",
-          "home": true,
-          "sport": "hockey",
-          "competition": "Hockey universitaire masculin D2 (hors concours)",
-          "gameId": null,
-          "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-hors-concours-sherbrooke-vs-uqac-2/",
-          "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire",
-          "opponentFullName": "Université de Sherbrooke",
-          "opponentNickname": "Vert & Or"
-        },
         {
           "date": "2026-09-20",
           "time": "13:00",
@@ -118265,7 +118478,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-hors-concours-sherbrooke-vs-uqac/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-23",
@@ -118278,7 +118492,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-24",
@@ -118291,7 +118506,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke-2/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-30",
@@ -118304,7 +118520,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-10-31",
@@ -118317,7 +118534,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-07",
@@ -118330,7 +118548,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-08",
@@ -118343,7 +118562,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-13",
@@ -118356,7 +118576,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2026-11-14",
@@ -118369,7 +118590,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac-2/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-29",
@@ -118382,7 +118604,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-01-30",
@@ -118395,7 +118618,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-06",
@@ -118408,7 +118632,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-07",
@@ -118421,7 +118646,8 @@
           "gameId": null,
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-13",
@@ -118434,7 +118660,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke-3/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-14",
@@ -118447,7 +118674,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke-4/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-19",
@@ -118460,7 +118688,8 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac-3/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
         },
         {
           "date": "2027-02-20",
@@ -118473,14 +118702,1979 @@
           "gameId": null,
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-sherbrooke-vs-uqac-4/",
           "opponentRegistryId": "usherbrooke",
-          "opponentSector": "universitaire"
+          "opponentSector": "universitaire",
+          "sex": "M"
+        }
+      ],
+      "record": null,
+      "source": "campus-hockey+campus-hockey",
+      "registryId": "uqac",
+      "fullName": "Université du Québec à Chicoutimi",
+      "priority": 13
+    },
+    "hockey:universitaire:campus:bishops:F": {
+      "id": "hockey:universitaire:campus:bishops:F",
+      "rseqTeamId": "bishops",
+      "leagueId": "campus-universitaire-f-d1",
+      "name": "Bishop's",
+      "code": "BIS",
+      "sector": "universitaire",
+      "sport": "hockey",
+      "sportLabel": "Hockey",
+      "sex": "F",
+      "division": "D1",
+      "usports": true,
+      "leagueLabel": "Hockey universitaire féminin D1",
+      "lastGame": null,
+      "nextGame": {
+        "date": "2026-10-16",
+        "time": "19:30",
+        "opponent": "Concordia",
+        "opponentCode": "UCON",
+        "home": true,
+        "sport": "hockey",
+        "competition": "Hockey universitaire féminin D1",
+        "gameId": null,
+        "url": "https://stingers.ca/whockey/results.php",
+        "opponentRegistryId": "concordia",
+        "opponentSector": "universitaire",
+        "sex": "F",
+        "opponentFullName": "Université Concordia",
+        "opponentNickname": "Stingers"
+      },
+      "results": [],
+      "nextGames": [
+        {
+          "date": "2026-10-16",
+          "time": "19:30",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-18",
+          "time": "15:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-23",
+          "time": "19:30",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-30",
+          "time": "",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-30",
+          "time": "19:30",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-01",
+          "time": "",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-01",
+          "time": "14:00",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-06",
+          "time": "19:30",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-08",
+          "time": "13:30",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-13",
+          "time": "19:30",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-15",
+          "time": "15:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-20",
+          "time": "19:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-22",
+          "time": "12:30",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-08",
+          "time": "19:00",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-10",
+          "time": "12:30",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-15",
+          "time": "19:30",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-17",
+          "time": "12:30",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-22",
+          "time": "19:30",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-24",
+          "time": "13:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-24",
+          "time": "15:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-29",
+          "time": "19:30",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-31",
+          "time": "14:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-14",
+          "time": "14:00",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-19",
+          "time": "19:30",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-21",
+          "time": "14:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-26",
+          "time": "19:30",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-28",
+          "time": "12:30",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
         }
       ],
       "record": null,
       "source": "campus-hockey",
-      "registryId": "uqac",
-      "fullName": "Université du Québec à Chicoutimi",
-      "priority": 13
+      "registryId": "bishops",
+      "fullName": "Bishop's University",
+      "nickname": "Gaiters",
+      "priority": 7
+    },
+    "hockey:universitaire:campus:concordia:F": {
+      "id": "hockey:universitaire:campus:concordia:F",
+      "rseqTeamId": "concordia",
+      "leagueId": "campus-universitaire-f-d1",
+      "name": "Concordia",
+      "code": "UCON",
+      "sector": "universitaire",
+      "sport": "hockey",
+      "sportLabel": "Hockey",
+      "sex": "F",
+      "division": "D1",
+      "usports": true,
+      "leagueLabel": "Hockey universitaire féminin D1",
+      "lastGame": null,
+      "nextGame": {
+        "date": "2026-10-16",
+        "time": "19:30",
+        "opponent": "Bishop's",
+        "opponentCode": "BIS",
+        "home": false,
+        "sport": "hockey",
+        "competition": "Hockey universitaire féminin D1",
+        "gameId": null,
+        "url": "https://stingers.ca/whockey/results.php",
+        "opponentRegistryId": "bishops",
+        "opponentSector": "universitaire",
+        "sex": "F",
+        "opponentFullName": "Bishop's University",
+        "opponentNickname": "Gaiters"
+      },
+      "results": [],
+      "nextGames": [
+        {
+          "date": "2026-10-16",
+          "time": "19:30",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-25",
+          "time": "",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-25",
+          "time": "14:00",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-29",
+          "time": "19:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-30",
+          "time": "19:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-01",
+          "time": "14:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-13",
+          "time": "19:30",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-15",
+          "time": "14:00",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-20",
+          "time": "19:00",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-22",
+          "time": "12:30",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-27",
+          "time": "19:00",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-29",
+          "time": "14:00",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-12-05",
+          "time": "14:00",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-07",
+          "time": "19:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-10",
+          "time": "15:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-22",
+          "time": "19:30",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-24",
+          "time": "15:00",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-29",
+          "time": "19:30",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-31",
+          "time": "14:00",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-05",
+          "time": "19:00",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-07",
+          "time": "14:00",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-12",
+          "time": "19:30",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-14",
+          "time": "14:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-19",
+          "time": "19:00",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-21",
+          "time": "14:00",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-26",
+          "time": "19:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        }
+      ],
+      "record": null,
+      "source": "campus-hockey",
+      "registryId": "concordia",
+      "fullName": "Université Concordia",
+      "nickname": "Stingers",
+      "priority": 3
+    },
+    "hockey:universitaire:campus:udem:F": {
+      "id": "hockey:universitaire:campus:udem:F",
+      "rseqTeamId": "udem",
+      "leagueId": "campus-universitaire-f-d1",
+      "name": "Montréal",
+      "code": "MTL",
+      "sector": "universitaire",
+      "sport": "hockey",
+      "sportLabel": "Hockey",
+      "sex": "F",
+      "division": "D1",
+      "usports": true,
+      "leagueLabel": "Hockey universitaire féminin D1",
+      "lastGame": null,
+      "nextGame": {
+        "date": "2026-10-16",
+        "time": "",
+        "opponent": "Laval",
+        "opponentCode": "LAV",
+        "home": false,
+        "sport": "hockey",
+        "competition": "Hockey universitaire féminin D1",
+        "gameId": null,
+        "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+        "opponentRegistryId": "ulaval",
+        "opponentSector": "universitaire",
+        "sex": "F",
+        "opponentFullName": "Université Laval",
+        "opponentNickname": "Rouge et Or"
+      },
+      "results": [],
+      "nextGames": [
+        {
+          "date": "2026-10-16",
+          "time": "",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-23",
+          "time": "",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-23",
+          "time": "19:30",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-25",
+          "time": "",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-25",
+          "time": "14:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-30",
+          "time": "",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-30",
+          "time": "19:30",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-01",
+          "time": "",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-01",
+          "time": "14:00",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-05",
+          "time": "",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-05",
+          "time": "19:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-08",
+          "time": "",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-08",
+          "time": "14:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-27",
+          "time": "19:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-29",
+          "time": "14:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-08",
+          "time": "19:00",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-10",
+          "time": "12:30",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-15",
+          "time": "19:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-17",
+          "time": "15:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-05",
+          "time": "19:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-07",
+          "time": "14:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-12",
+          "time": "19:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-14",
+          "time": "14:00",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-19",
+          "time": "19:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-28",
+          "time": "12:30",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        }
+      ],
+      "record": null,
+      "source": "campus-hockey",
+      "registryId": "udem",
+      "fullName": "Université de Montréal",
+      "nickname": "Carabins",
+      "priority": 4
+    },
+    "hockey:universitaire:campus:mcgill:F": {
+      "id": "hockey:universitaire:campus:mcgill:F",
+      "rseqTeamId": "mcgill",
+      "leagueId": "campus-universitaire-f-d1",
+      "name": "McGill",
+      "code": "MCG",
+      "sector": "universitaire",
+      "sport": "hockey",
+      "sportLabel": "Hockey",
+      "sex": "F",
+      "division": "D1",
+      "usports": true,
+      "leagueLabel": "Hockey universitaire féminin D1",
+      "lastGame": null,
+      "nextGame": {
+        "date": "2026-10-18",
+        "time": "15:00",
+        "opponent": "Bishop's",
+        "opponentCode": "BIS",
+        "home": true,
+        "sport": "hockey",
+        "competition": "Hockey universitaire féminin D1",
+        "gameId": null,
+        "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+        "opponentRegistryId": "bishops",
+        "opponentSector": "universitaire",
+        "sex": "F",
+        "opponentFullName": "Bishop's University",
+        "opponentNickname": "Gaiters"
+      },
+      "results": [],
+      "nextGames": [
+        {
+          "date": "2026-10-18",
+          "time": "15:00",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-23",
+          "time": "",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-23",
+          "time": "19:30",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-25",
+          "time": "15:00",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-29",
+          "time": "19:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-30",
+          "time": "19:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-01",
+          "time": "14:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-05",
+          "time": "",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-05",
+          "time": "19:00",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-08",
+          "time": "",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-08",
+          "time": "14:00",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-13",
+          "time": "19:30",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-15",
+          "time": "15:00",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-27",
+          "time": "19:00",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-29",
+          "time": "13:30",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-07",
+          "time": "19:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-10",
+          "time": "15:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-15",
+          "time": "19:00",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-17",
+          "time": "15:00",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-22",
+          "time": "19:30",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-24",
+          "time": "13:00",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-24",
+          "time": "15:00",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-05",
+          "time": "19:30",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-07",
+          "time": "15:00",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-12",
+          "time": "19:00",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-14",
+          "time": "14:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-19",
+          "time": "19:30",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-26",
+          "time": "19:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-28",
+          "time": "13:30",
+          "opponent": "Laval",
+          "opponentCode": "LAV",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "ulaval",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        }
+      ],
+      "record": null,
+      "source": "campus-hockey",
+      "registryId": "mcgill",
+      "fullName": "Université McGill",
+      "nickname": "Redbirds",
+      "priority": 2
+    },
+    "hockey:universitaire:campus:ulaval:F": {
+      "id": "hockey:universitaire:campus:ulaval:F",
+      "rseqTeamId": "ulaval",
+      "leagueId": "campus-universitaire-f-d1",
+      "name": "Laval",
+      "code": "LAV",
+      "sector": "universitaire",
+      "sport": "hockey",
+      "sportLabel": "Hockey",
+      "sex": "F",
+      "division": "D1",
+      "usports": true,
+      "leagueLabel": "Hockey universitaire féminin D1",
+      "lastGame": null,
+      "nextGame": {
+        "date": "2026-10-16",
+        "time": "",
+        "opponent": "Montréal",
+        "opponentCode": "MTL",
+        "home": true,
+        "sport": "hockey",
+        "competition": "Hockey universitaire féminin D1",
+        "gameId": null,
+        "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+        "opponentRegistryId": "udem",
+        "opponentSector": "universitaire",
+        "sex": "F",
+        "opponentFullName": "Université de Montréal",
+        "opponentNickname": "Carabins"
+      },
+      "results": [],
+      "nextGames": [
+        {
+          "date": "2026-10-16",
+          "time": "",
+          "opponent": "Montréal",
+          "opponentCode": "MON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://carabins.umontreal.ca/hockey-feminin/calendrier/",
+          "opponentRegistryId": "udem",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-23",
+          "time": "19:30",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-10-25",
+          "time": "15:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-06",
+          "time": "19:30",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-08",
+          "time": "13:30",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-13",
+          "time": "19:30",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-15",
+          "time": "14:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-27",
+          "time": "19:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-11-29",
+          "time": "13:30",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2026-12-05",
+          "time": "14:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-15",
+          "time": "19:30",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-17",
+          "time": "12:30",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-22",
+          "time": "19:30",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-01-24",
+          "time": "15:00",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-05",
+          "time": "19:30",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-07",
+          "time": "15:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-12",
+          "time": "19:30",
+          "opponent": "Concordia",
+          "opponentCode": "CON",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://stingers.ca/whockey/results.php",
+          "opponentRegistryId": "concordia",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-26",
+          "time": "19:30",
+          "opponent": "Bishop's",
+          "opponentCode": "BIS",
+          "home": false,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://gaiters.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "bishops",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        },
+        {
+          "date": "2027-02-28",
+          "time": "13:30",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": true,
+          "sport": "hockey",
+          "competition": "Hockey universitaire féminin D1",
+          "gameId": null,
+          "url": "https://mcgillathletics.ca/sports/womens-ice-hockey/schedule/2026-27",
+          "opponentRegistryId": "mcgill",
+          "opponentSector": "universitaire",
+          "sex": "F"
+        }
+      ],
+      "record": null,
+      "source": "campus-hockey",
+      "registryId": "ulaval",
+      "fullName": "Université Laval",
+      "nickname": "Rouge et Or",
+      "priority": 1
     },
     "sailing:universitaire:mcgill": {
       "id": "sailing:universitaire:mcgill",
