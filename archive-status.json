@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-20T08:50:40.321Z",
+  "updated": "2026-09-20T13:47:25.572Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2443,15 +2443,45 @@
       "at": "2026-09-19T23:30:19.000Z",
       "via": "existant",
       "source": "Quartier Libre"
+    },
+    "https://www.delitfrancais.com/2026/09/16/le-plaisir-de-lire/": {
+      "at": "2026-09-19T08:21:39.000Z",
+      "via": "existant",
+      "source": "Le Délit"
+    },
+    "https://www.delitfrancais.com/2026/09/16/outil-demancipation-ou-vecteur-dexclusion/": {
+      "at": "2026-09-19T08:21:59.000Z",
+      "via": "existant",
+      "source": "Le Délit"
+    },
+    "https://www.delitfrancais.com/2026/09/16/limpact-potentiel-des-elections-quebecoises-sur-mcgill/": {
+      "at": "2026-09-19T23:33:33.000Z",
+      "via": "existant",
+      "source": "Le Délit"
+    },
+    "https://www.delitfrancais.com/2026/09/16/il-faut-le-voir-pour-le-croire/": {
+      "at": "2026-09-19T23:34:00.000Z",
+      "via": "existant",
+      "source": "Le Délit"
+    },
+    "https://www.mcgilldaily.com/2026/09/a-not-so-montreal-story/": {
+      "at": "2026-09-15T23:42:09.000Z",
+      "via": "existant",
+      "source": "The McGill Daily"
+    },
+    "https://www.mcgilldaily.com/2026/09/el-nino-back-and-stronger-than-ever/": {
+      "at": "2026-09-15T23:42:19.000Z",
+      "via": "existant",
+      "source": "The McGill Daily"
     }
   },
   "stats": {
-    "total": 432,
+    "total": 438,
     "lastRun": {
       "saved": 0,
-      "skipped": 4,
-      "failed": 6,
-      "stoppedEarly": true
+      "skipped": 6,
+      "failed": 14,
+      "stoppedEarly": false
     }
   },
   "sources": {
