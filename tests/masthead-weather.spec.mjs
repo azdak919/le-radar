@@ -364,16 +364,12 @@ function expectWeatherCascadeFlips(start, now, { dualPrimary = false } = {}) {
     expect(now[0]).toBe('montreal');
     expect(now[1]).toBe('quebec');
     const flipped = now.slice(2).filter((id, i) => id !== start[2 + i]).length;
-    expect(flipped, 'plusieurs secondaires changent pendant la vague').toBeGreaterThan(1);
+    expect(flipped, 'une seule secondaire change (pas une vague L→R)').toBe(1);
     return;
   }
   expect(['montreal', 'quebec']).toContain(now[0]);
   const flipped = now.filter((id, i) => id !== start[i]).length;
-  if (start.length >= 3) {
-    expect(flipped, 'plusieurs cartes changent pendant la vague').toBeGreaterThan(1);
-  } else {
-    expect(flipped, 'au moins une carte change pendant la vague').toBeGreaterThan(0);
-  }
+  expect(flipped, 'une seule carte change (pas une vague L→R)').toBe(1);
 }
 
 test('wide E : météo secondaire cascade puis pause', async ({ page }) => {
@@ -402,8 +398,7 @@ test('wide E : météo secondaire cascade puis pause', async ({ page }) => {
   });
   expect(armed, 'scheduleWeatherCascade disponible').toBe(true);
 
-  const secondary = start.length - 2;
-  await page.waitForTimeout(Math.min(2800, 480 * Math.max(2, secondary)));
+  await page.waitForTimeout(900);
   expectWeatherCascadeFlips(start, await weatherActiveIds(ribbon), { dualPrimary: true });
 });
 
@@ -445,7 +440,7 @@ async function assertWeatherCascadeAt(page, { width, height = 900, docked = fals
   });
   expect(armed, `scheduleWeatherCascade armée à ${width}`).toBe(true);
 
-  await page.waitForTimeout(Math.min(2800, 500 * Math.max(2, start.length)));
+  await page.waitForTimeout(900);
   const now = await weatherActiveIds(ribbon);
   expectWeatherCascadeFlips(start, now, { dualPrimary });
   if (docked) await expect(ribbon).toHaveClass(/masthead-weather--docked/);

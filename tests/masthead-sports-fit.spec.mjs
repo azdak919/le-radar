@@ -669,21 +669,21 @@ async function assertSportsCascadeAt(page, { width, height = 900, wide = false, 
   });
   expect(armed, `scheduleSportsWave armée à ${width}`).toBe(true);
 
-  await page.waitForTimeout(Math.min(2800, 560 * Math.max(2, start.length)));
+  await page.waitForTimeout(900);
   const now = await snapshot();
   expect(now.length).toBe(start.length);
   const flipped = now.filter((row, i) => row.text !== start[i]?.text).length;
-  const liveCta = await strip.locator('.sports-chip--cta[data-cta-state="live"]').count();
-  const onlyLiveCta = start.length === 1 && start[0].cta && liveCta > 0;
-  const matchN = start.filter((row) => !row.cta).length;
-  if (onlyLiveCta) {
-    expect(flipped, `direct unique : la CTA En cours reste à ${width}`).toBe(0);
-  } else if (matchN >= 3) {
-    expect(flipped, `plusieurs cartes sports changent à ${width}`).toBeGreaterThan(1);
+  const liveHeld = await page.evaluate(() => {
+    const vis = Array.isArray(sportsVisible) ? sportsVisible : [];
+    if (!vis.length || typeof sportsCtaHoldOnLive !== 'function') return false;
+    return vis.every((s) => sportsCtaHoldOnLive(s));
+  });
+  if (liveHeld) {
+    expect(flipped, `direct unique : la carte En cours reste à ${width}`).toBe(0);
   } else {
-    expect(flipped, `au moins une carte sports change à ${width}`).toBeGreaterThan(0);
+    expect(flipped, `une seule carte sports change à ${width} (pas une vague L→R)`).toBeGreaterThan(0);
+    expect(flipped, `pas une vague L→R à ${width}`).toBeLessThanOrEqual(2);
   }
-  expect(now.some((row) => row.cta), 'la vague conserve au moins une CTA').toBe(true);
 }
 
 test('pause sports : lecture ~9 s, marquee complète si overflow', async ({ page }) => {
