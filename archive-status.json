@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-19T23:35:42.998Z",
+  "updated": "2026-09-20T08:50:40.321Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2423,15 +2423,35 @@
       "at": "2026-09-19T18:17:29.000Z",
       "via": "existant",
       "source": "Le Délit"
+    },
+    "https://lapige.atmjonquiere.com/2026/09/18/saguenay-acquiert-officiellement-leglise-saint-edouard/": {
+      "at": "2026-09-19T23:35:15.000Z",
+      "via": "existant",
+      "source": "La Pige"
+    },
+    "https://lapige.atmjonquiere.com/2026/09/18/les-priorites-de-la-jeunesse-vues-par-marie-karlynn-laflamme/": {
+      "at": "2026-09-19T13:22:57.000Z",
+      "via": "existant",
+      "source": "La Pige"
+    },
+    "https://www.thetribune.ca/a-e/the-riffo-gomez-brothers-immerse-audiences-in-a-poignant-exploration-of-belonging-08092026/": {
+      "at": "2026-09-08T13:59:53.000Z",
+      "via": "existant",
+      "source": "The Tribune"
+    },
+    "https://quartierlibre.ca/elections-debat-des-cheffes-jeunesse/": {
+      "at": "2026-09-19T23:30:19.000Z",
+      "via": "existant",
+      "source": "Quartier Libre"
     }
   },
   "stats": {
-    "total": 428,
+    "total": 432,
     "lastRun": {
       "saved": 0,
-      "skipped": 2,
-      "failed": 18,
-      "stoppedEarly": false
+      "skipped": 4,
+      "failed": 6,
+      "stoppedEarly": true
     }
   },
   "sources": {
