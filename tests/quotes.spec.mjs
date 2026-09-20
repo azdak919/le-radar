@@ -36,6 +36,34 @@ test('Pomo expose les 200 citations et leurs sources', async ({ page }) => {
   await expect(author).toHaveAttribute('rel', 'noopener noreferrer');
 });
 
+test('Pomo n’étiquette pas comme proverbe africain une citation souvent présentée ainsi à tort', async ({ page }) => {
+  await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
+
+  const credit = await page.evaluate(() => {
+    const quote = QUOTES.find((entry) => entry.id.startsWith('ind-08-'));
+    const fr = QUOTE_I18N[quote.id]?.fr;
+    document.getElementById('quote-text').textContent = fr.text;
+    document.getElementById('quote-author').textContent = fr.author;
+    return {
+      author: quote?.author,
+      authorEn: quote?.authorEn,
+      fr: fr?.author,
+    };
+  });
+
+  expect(credit.author).toBe('Popular saying');
+  expect(credit.authorEn).toBe('Popular saying (often misattributed as an African proverb)');
+  expect(credit.fr).toBe('Dicton populaire (souvent présenté à tort comme un proverbe africain)');
+  expect(credit.authorEn).not.toMatch(/^African proverb/i);
+  expect(credit.fr).not.toMatch(/^Proverbe africain/i);
+
+  const visibleAuthor = (await page.locator('#quote-author').textContent()).trim();
+  expect(visibleAuthor).toBe(credit.fr);
+  expect(visibleAuthor).not.toMatch(/^Proverbe africain/i);
+  await expect(page.locator('#quote-author')).toHaveText(/Dicton populaire/i);
+  await expect(page.locator('#quote-text')).toHaveText(/Si tu veux aller vite, va seul/);
+});
+
 test('Pomo garantit la diversité et évite les 26 dernières citations', async ({ page }) => {
   await page.goto('/pomo/', { waitUntil: 'domcontentloaded' });
 
