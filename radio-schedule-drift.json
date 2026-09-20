@@ -1,13 +1,11 @@
 {
-  "checkedAt": "2026-09-19T01:08:11.785Z",
+  "checkedAt": "2026-09-20T01:02:11.167Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
-    "drift": [
-      "cjlo"
-    ],
+    "stable": 6,
+    "drift": [],
     "overhaul": [],
     "unreachable": []
   },
@@ -46,15 +44,11 @@
       "id": "cjlo",
       "published": 376,
       "fresh": 376,
-      "added": [
-        "mar 21:00–22:00 NSIDE!"
-      ],
-      "removed": [
-        "mar 21:00–22:00 NSIDE"
-      ],
-      "changed": 2,
-      "ratio": 0.005,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cfak",
