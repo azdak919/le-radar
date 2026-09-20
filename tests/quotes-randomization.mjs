@@ -76,6 +76,22 @@ for (const prefix of ['ind-08-', 'ind-09-']) {
   assert.equal(quote?.category, 'world-wisdom', `${prefix} ne doit plus être classé comme autochtone`);
 }
 
+const goTogether = quotes.find((entry) => entry.id.startsWith('ind-08-'));
+assert.equal(goTogether?.author, 'Popular saying', 'ind-08 ne doit pas se présenter comme un proverbe africain');
+assert.equal(
+  goTogether?.authorEn,
+  'Popular saying (often misattributed as an African proverb)',
+  'ind-08 : la méattribution « African proverb » va dans la parenthèse, pas en tête',
+);
+assert.match(goTogether?.authorEn ?? '', /often misattributed as an African proverb/i);
+assert.doesNotMatch(goTogether?.authorEn ?? '', /^African proverb/i);
+const goTogetherFr = translations[goTogether.id]?.fr?.author ?? '';
+assert.equal(
+  goTogetherFr,
+  'Dicton populaire (souvent présenté à tort comme un proverbe africain)',
+);
+assert.doesNotMatch(goTogetherFr, /^Proverbe africain/i);
+
 const recent = [];
 let indigenousCount = 0;
 let nonIndigenousRun = 0;
