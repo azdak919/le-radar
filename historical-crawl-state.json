@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-09-14T13:21:26.363Z",
+  "updated": "2026-09-20T11:48:11.853Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -52,10 +52,10 @@
     },
     "loisif": {
       "strategy": "unsupported",
-      "lastAttemptAt": "2026-07-30T09:17:38.312Z",
+      "lastAttemptAt": "2026-09-20T11:48:10.427Z",
       "error": "wordpress_http_401",
-      "retryAt": "2026-08-29T09:17:38.312Z",
-      "windowStart": "2023-07-30T15:17:38.284Z",
+      "retryAt": "2026-10-20T11:48:10.427Z",
+      "windowStart": "2023-09-20T17:48:10.376Z",
       "windowYears": 3
     },
     "la-gifle": {
