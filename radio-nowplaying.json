@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-20T05:11:00.033Z",
+  "updatedAt": "2026-09-20T06:14:29.790Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,74 +21,73 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-20T05:10:14.980Z"
+      "checkedAt": "2026-09-20T06:14:03.170Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences (reprise)",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "02:00",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Genre de bleu",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/genre-de-bleu"
+      },
       "track": "",
-      "showTitle": "Basses fréquences (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-20T05:10:16.383Z"
+      "checkedAt": "2026-09-20T06:14:04.811Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "stereOphobic",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Utopia's Paradise",
         "source": "api-live",
         "start": "02:00",
         "end": "06:00"
       },
-      "track": "",
-      "showTitle": "stereOphobic",
+      "next": {
+        "title": "Mind, Soul, & Spirit",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "09:00"
+      },
+      "track": "Utopia",
+      "showTitle": "Utopia's Paradise",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-20T05:10:18.564Z"
+      "checkedAt": "2026-09-20T06:14:07.549Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "01:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Sun Ra, Sun Rise",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
@@ -96,12 +95,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-20T05:10:53.083Z"
+      "checkedAt": "2026-09-20T06:14:22.693Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +125,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-20T05:10:54.223Z"
+      "checkedAt": "2026-09-20T06:14:23.966Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +138,7 @@
         "end": "16:00",
         "slug": "pole-hip-hop"
       },
-      "track": "Conifère - Faits d",
+      "track": "Cancer Bats - Ocean Crash",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +149,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-20T05:10:59.683Z"
+      "checkedAt": "2026-09-20T06:14:29.440Z"
     }
   }
 }
