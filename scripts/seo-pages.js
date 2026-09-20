@@ -17,13 +17,75 @@ const {
   T, escapeHtml, slugify, normKey, canonicalInstitution, localizedInstitutionName, isoDay,
   sportsUpdatedStamp,
   fill, frOf, frAt, plural, renderPage, factsList, headlineList, cardGrid, scheduleTable,
-  scheduleContext, scheduleTodayDay,
+  scheduleContext, scheduleTodayDay, EXTERNAL_LINK_ATTRS,
 } = require('./seo-pages-lib');
 const { pruneSportsTeam } = require('./sports-freshness-lib');
 const { resolveCurrentSlot, resolveNextSlot } = require('./radio-schedule-lib');
+const {
+  listVisibleChannels,
+  channelLabel,
+  channelHint,
+  sameAsUrls,
+  indexSocialFeed,
+  channelCoverage,
+  mediaIdFromName,
+} = require('./media-channels-lib');
+const { followButtonHtml } = require('./media-follow-ui');
 
 const HEADLINES_PER_PAPER = 12;
 const STALE_SOURCE_NOTICE_MS = 14 * 24 * 60 * 60 * 1000;
+
+function socialNetworksFor(source, ctx) {
+  if (!source?.name || !ctx?.socialByName) return [];
+  return ctx.socialByName.get(source.name) || [];
+}
+
+function followRowHtml(name, lang) {
+  const id = mediaIdFromName(name);
+  if (!id) return '';
+  return `      <p class="media-follow-row">${followButtonHtml({
+    id,
+    name,
+    lang,
+    escape: escapeHtml,
+  })}</p>\n`;
+}
+
+function channelsHtml(source, lang, ctx, kind) {
+  const t = T[lang];
+  const channels = listVisibleChannels(source, {
+    socialNetworks: socialNetworksFor(source, ctx),
+    kind,
+  });
+  if (!channels.length) return '';
+  const items = channels.map((channel) => {
+    const label = channelLabel(channel.type, lang);
+    const hint = channelHint(channel.type, lang);
+    const title = hint ? ` title="${escapeHtml(hint)}"` : '';
+    const aria = hint ? ` aria-label="${escapeHtml(`${label} — ${hint}`)}"` : '';
+    return `          <li class="media-channels__item media-channels__item--${escapeHtml(channel.type)}"><a href="${escapeHtml(channel.url)}"${EXTERNAL_LINK_ATTRS}${title}${aria}>${escapeHtml(label)}</a></li>`;
+  });
+  return `      <section class="media-channels">\n        <h2 class="media-channels__title">${escapeHtml(t.availableOn)}</h2>\n        <ul class="media-channels__list">\n${items.join('\n')}\n        </ul>\n      </section>\n`;
+}
+
+function sameAsJsonLd(source, ctx, kind) {
+  const urls = sameAsUrls(source, {
+    socialNetworks: socialNetworksFor(source, ctx),
+    kind,
+  });
+  return urls.length ? { sameAs: urls } : {};
+}
+
+function directoryCoverageLine(coverage, lang) {
+  const t = T[lang];
+  const parts = [];
+  if (coverage.rss) parts.push(fill(t.dirStatRss, { n: coverage.rss }));
+  if (coverage['google-news']) parts.push(fill(t.dirStatGoogleNews, { n: coverage['google-news'] }));
+  if (coverage.instagram) parts.push(fill(t.dirStatInstagram, { n: coverage.instagram }));
+  if (coverage.youtube) parts.push(fill(t.dirStatYoutube, { n: coverage.youtube }));
+  if (coverage.podcast) parts.push(fill(t.dirStatPodcast, { n: coverage.podcast }));
+  return parts.join(' · ');
+}
 
 /**
  * Date affichée en pied de page — propre à CHAQUE page.
@@ -385,6 +447,7 @@ function radioPage(radio, lang, ctx) {
     geoFact('region', radio.region, lang, t.region),
     { label: t.officialSite, value: radio.website, href: radio.website, external: true },
   ]);
+  body += channelsHtml(radio, lang, ctx, 'radio');
 
   body += `      <p class="seo-cta"><a href="${up}${ROUTES.schedules[lang]}">${escapeHtml(t.browseSchedules)}</a></p>\n`;
   body += scheduleTable(ctx.schedules?.[radio.id]?.grid, t, {
@@ -399,6 +462,7 @@ function radioPage(radio, lang, ctx) {
     name,
     ...(radio.description ? { description: radio.description } : {}),
     ...(radio.website ? { url: radio.website } : {}),
+    ...sameAsJsonLd(radio, ctx, 'radio'),
     ...(radio.frequency ? { broadcastFrequency: radio.frequency } : {}),
     ...(radio.city ? { areaServed: { '@type': 'City', name: radio.city } } : {}),
     ...(instName ? { parentOrganization: { '@type': 'CollegeOrUniversity', name: instName } } : {}),
@@ -450,12 +514,14 @@ function paperPage(paper, lang, ctx) {
       : `${paper.name} is the student newspaper of ${instName}.`,
   )}</p>\n`;
 
+  body += followRowHtml(paper.name, lang);
   body += factsList([
     { label: t.institution, value: instName, href: paper.group ? `${up}${ROUTES.institution[lang](paper.group.slug)}` : null },
     geoFact('region', paper.region, lang, t.region),
     { label: t.language, value: langLabel(paper.lang, t) },
     { label: t.officialSite, value: paper.site, href: paper.site, external: true },
   ]);
+  body += channelsHtml(paper, lang, ctx, 'journal');
 
   const latestLabel = localDateTime(paper.headlines?.[0]?.date, lang);
   const lastCheck = paperLastSuccessfulCheck(paper);
@@ -499,6 +565,7 @@ function paperPage(paper, lang, ctx) {
     ...(paper.site ? { url: paper.site } : {}),
     ...(instName ? { parentOrganization: { '@type': 'CollegeOrUniversity', name: instName } } : {}),
     ...(paper.lang ? { inLanguage: paper.lang } : {}),
+    ...sameAsJsonLd(paper, ctx, 'journal'),
     ...(paper.headlines.length
       ? {
         subjectOf: {
@@ -668,6 +735,13 @@ function directoryPage(model, lang, ctx) {
     .sort((a, b) => localizedInstitutionName(a, lang).localeCompare(localizedInstitutionName(b, lang), lang));
 
   let body = `      <p class="seo-lead">${escapeHtml(description)}</p>\n`;
+  const coverageLine = directoryCoverageLine(
+    channelCoverage(model.paperEntries, { socialByName: ctx.socialByName, kind: 'journal' }),
+    lang,
+  );
+  if (coverageLine) {
+    body += `      <p class="seo-dir-stats">${escapeHtml(coverageLine)}</p>\n`;
+  }
 
   body += `      <nav class="seo-toc" aria-label="${escapeHtml(t.directoryToc)}">\n`
     + `        <p class="seo-toc__label">${escapeHtml(t.directoryToc)}</p>\n`
@@ -1845,7 +1919,7 @@ function englishHomePage(model, ctx) {
 //  Entrée
 // ═══════════════════════════════════════════════════════════════════════════
 
-function buildEntityPages({ radios, sources, news, institutions, schedules, sports, siteBase, archivePaths }) {
+function buildEntityPages({ radios, sources, news, institutions, schedules, sports, siteBase, archivePaths, socialFeed }) {
   const model = buildModel({ radios, sources, news, institutions });
   assertGeoLinkCoverage(model, institutions);
   const ctx = {
@@ -1853,6 +1927,7 @@ function buildEntityPages({ radios, sources, news, institutions, schedules, spor
     schedules: schedules || {},
     sports: sports || {},
     archivePaths: archivePaths || new Map(),
+    socialByName: indexSocialFeed(socialFeed || { items: [] }),
   };
   const pages = [];
 

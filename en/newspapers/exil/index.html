@@ -109,6 +109,9 @@
     <script src="../../../quebec-backgrounds-data.js" defer></script>
     <script src="../../../quebec-university-backgrounds-data.js" defer></script>
     <script src="../../../scripts/campus-fallback-lib.js" defer></script>
+    <script src="../../../scripts/media-channels-lib.js" defer></script>
+    <script src="../../../scripts/media-follow-store.js" defer></script>
+    <script src="../../../scripts/media-follow-ui.js" defer></script>
     <script src="../../../quebec-nations-backgrounds-data.js" defer></script>
     <script src="../../../quebec-favorites-backgrounds-data.js" defer></script>
     <script src="../../../quebec-backgrounds.js" defer></script>
@@ -125,7 +128,7 @@
     <script src="../../../radar-lifecycle.js" defer></script>
     <script src="../../../app.js" defer></script>
     <script src="../../../engage-prompt.js" defer></script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Exil","parentOrganization":{"@type":"CollegeOrUniversity","name":"Cégep du Vieux Montréal"},"inLanguage":"fr","subjectOf":{"@type":"ItemList","numberOfItems":7,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/","name":"Opinion – L’hypocrisie qui rampe à l’Assemblée nationale"},{"@type":"ListItem","position":2,"url":"https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/","name":"Garda World au CVM (Éditorial)"},{"@type":"ListItem","position":3,"url":"https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/","name":"Le pays avant tout – esquisse"},{"@type":"ListItem","position":4,"url":"https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/","name":"Oui au budget, oui au programme FIL et non à la grève"},{"@type":"ListItem","position":5,"url":"https://exilecvm.wordpress.com/2025/11/15/un-retour-en-grande-pompe-la-note-nocture/","name":"Un retour en grande pompe: La Note nocture"},{"@type":"ListItem","position":6,"url":"https://exilecvm.wordpress.com/2025/10/24/place-aux-idees/","name":"Place aux idées"},{"@type":"ListItem","position":7,"url":"https://exilecvm.wordpress.com/2025/10/24/une-jeune-candidate-qui-na-pas-froid-aux-yeux/","name":"Une jeune candidate qui n’a pas froid aux yeux"}]}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Exil","url":"https://exilecvm.ca/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Cégep du Vieux Montréal"},"inLanguage":"fr","sameAs":["https://exilecvm.ca/","https://instagram.com/exilexcvm/"],"subjectOf":{"@type":"ItemList","numberOfItems":7,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/","name":"Opinion – L’hypocrisie qui rampe à l’Assemblée nationale"},{"@type":"ListItem","position":2,"url":"https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/","name":"Garda World au CVM (Éditorial)"},{"@type":"ListItem","position":3,"url":"https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/","name":"Le pays avant tout – esquisse"},{"@type":"ListItem","position":4,"url":"https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/","name":"Oui au budget, oui au programme FIL et non à la grève"},{"@type":"ListItem","position":5,"url":"https://exilecvm.wordpress.com/2025/11/15/un-retour-en-grande-pompe-la-note-nocture/","name":"Un retour en grande pompe: La Note nocture"},{"@type":"ListItem","position":6,"url":"https://exilecvm.wordpress.com/2025/10/24/place-aux-idees/","name":"Place aux idées"},{"@type":"ListItem","position":7,"url":"https://exilecvm.wordpress.com/2025/10/24/une-jeune-candidate-qui-na-pas-froid-aux-yeux/","name":"Une jeune candidate qui n’a pas froid aux yeux"}]}}</script>
   </head>
   <body>
     <header class="masthead">
@@ -305,11 +308,21 @@
       <p class="seo-eyebrow">Student newspapers</p>
       <h1 class="seo-title">Exil</h1>
       <p class="seo-lead">Exil is the student newspaper of Cégep du Vieux Montréal.</p>
+      <p class="media-follow-row"><button type="button" class="media-follow" data-media-follow data-media-id="exil" data-media-name="Exil" data-follow-lang="en" data-label-follow="Follow" data-label-following="Following" data-label-follow-named="Follow {name} in LE-RADAR" data-label-following-named="Unfollow {name}" aria-pressed="false" aria-label="Follow Exil in LE-RADAR" title="Follow Exil in LE-RADAR"><span class="media-follow__mark" aria-hidden="true">☆</span><span class="media-follow__label">Follow</span></button></p>
       <dl class="seo-facts">
           <div class="seo-fact"><dt>Institution</dt><dd><a href="../../../en/institutions/cegep-du-vieux-montreal/">Cégep du Vieux Montréal</a></dd></div>
           <div class="seo-fact"><dt>Region</dt><dd><a href="https://www.mtl.org/en" target="_blank" rel="noopener noreferrer" aria-label="Montréal tourism — official website">Montréal</a></dd></div>
           <div class="seo-fact"><dt>Language</dt><dd>French</dd></div>
+          <div class="seo-fact"><dt>Official website</dt><dd><a href="https://exilecvm.ca/" target="_blank" rel="noopener noreferrer">https://exilecvm.ca/</a></dd></div>
       </dl>
+      <section class="media-channels">
+        <h2 class="media-channels__title">Available on</h2>
+        <ul class="media-channels__list">
+          <li class="media-channels__item media-channels__item--website"><a href="https://exilecvm.ca/" target="_blank" rel="noopener noreferrer">Official website</a></li>
+          <li class="media-channels__item media-channels__item--rss"><a href="https://exilecvm.ca/feed/" target="_blank" rel="noopener noreferrer" title="Article feed — open it in a news reader" aria-label="RSS — Article feed — open it in a news reader">RSS</a></li>
+          <li class="media-channels__item media-channels__item--instagram"><a href="https://instagram.com/exilexcvm/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        </ul>
+      </section>
       <section class="seo-section">
         <h2>Latest articles</h2>
         <p class="seo-headlines__status">Latest article: April 18, 2026 at 06:22 p.m. · Checked September 19, 2026 at 08:41 p.m.</p>

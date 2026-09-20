@@ -2760,6 +2760,10 @@ function applyFilterInstMarquees() {
       applyMarquee(instEl, adaptRadarUiText('Toutes les sources'));
       return;
     }
+    if (src === NEWS_FOLLOWED_FILTER) {
+      applyMarquee(instEl, adaptRadarUiText('Médias suivis'));
+      return;
+    }
     const { institution, type } = sourceInfo(src);
     const instLabel = filterSourceInstitutionLabel(institution, type, src);
     // Établissement : localisable hors Original/FR/EN ; médias restent notranslate.

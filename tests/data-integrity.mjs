@@ -6,6 +6,7 @@ import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 const { resolveCurrentSlot, gridCoverage, fetchChoqGrid, COVERAGE_FLOOR } = require('../scripts/radio-schedule-lib.js');
+const { isGoogleNewsPublicationUrl } = require('../scripts/media-channels-lib.js');
 
 const root = new URL('../', import.meta.url);
 const readJson = (name) => JSON.parse(readFileSync(new URL(name, root), 'utf8'));
@@ -71,6 +72,18 @@ for (const source of sourceRegistry.active) {
   assert(source.name && !activeSourceNames.has(source.name), `source active unique requise: ${source.name}`);
   activeSourceNames.add(source.name);
   assert(isHttpUrl(source.url), `URL valide requise pour ${source.name}`);
+  if (source.site) {
+    assert(isHttpUrl(source.site), `site HTTP(S) requis pour ${source.name}`);
+  }
+  if (source.googleNews) {
+    const url = typeof source.googleNews === 'string' ? source.googleNews : source.googleNews.url;
+    if (url) {
+      assert(
+        isGoogleNewsPublicationUrl(url),
+        `${source.name} : googleNews.url doit être une page /publications/ (pas une recherche, pas une URL inventée)`,
+      );
+    }
+  }
 }
 for (const article of articles) {
   assert(activeSourceNames.has(article.source), `source active introuvable pour ${article.source}`);

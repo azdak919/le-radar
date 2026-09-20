@@ -109,6 +109,9 @@
     <script src="../../quebec-backgrounds-data.js" defer></script>
     <script src="../../quebec-university-backgrounds-data.js" defer></script>
     <script src="../../scripts/campus-fallback-lib.js" defer></script>
+    <script src="../../scripts/media-channels-lib.js" defer></script>
+    <script src="../../scripts/media-follow-store.js" defer></script>
+    <script src="../../scripts/media-follow-ui.js" defer></script>
     <script src="../../quebec-nations-backgrounds-data.js" defer></script>
     <script src="../../quebec-favorites-backgrounds-data.js" defer></script>
     <script src="../../quebec-backgrounds.js" defer></script>
@@ -125,7 +128,7 @@
     <script src="../../radar-lifecycle.js" defer></script>
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Le Collectif","parentOrganization":{"@type":"CollegeOrUniversity","name":"Université de Sherbrooke"},"inLanguage":"fr","subjectOf":{"@type":"ItemList","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://lecollectif.ca/a-la-une/trois-sieges-de-plus-pour-mark-carney/","name":"Trois sièges de plus pour Mark Carney"},{"@type":"ListItem","position":2,"url":"https://lecollectif.ca/a-la-une/comment-fonctionnent-les-elections-au-quebec/","name":"Comment fonctionnent les élections au Québec ?"},{"@type":"ListItem","position":3,"url":"https://lecollectif.ca/culture/presences-troubles-le-corps-en-metamorphose/","name":"Présences troubles : le corps en métamorphose"},{"@type":"ListItem","position":4,"url":"https://lecollectif.ca/sports-et-bien-etre/faire-du-sport-sans-se-ruiner-quand-on-est-aux-etudes/","name":"Faire du sport sans se ruiner quand on est aux études"},{"@type":"ListItem","position":5,"url":"https://lecollectif.ca/sports-et-bien-etre/un-important-coup-de-pouce-pour-le-futur-arena-du-vert-or/","name":"Un important coup de pouce pour le futur aréna du Vert & Or"},{"@type":"ListItem","position":6,"url":"https://lecollectif.ca/sports-et-bien-etre/le-role-de-lactivite-physique-sur-le-stress-etudiant/","name":"Le rôle de l’activité physique sur le stress étudiant"},{"@type":"ListItem","position":7,"url":"https://lecollectif.ca/societe/les-conditions-en-psychiatrie/","name":"Les conditions en psychiatrie"},{"@type":"ListItem","position":8,"url":"https://lecollectif.ca/societe/les-demandes-dadmission-au-cegep-depassent-loffre/","name":"Les demandes d’admission au cégep dépassent l’offre"},{"@type":"ListItem","position":9,"url":"https://lecollectif.ca/societe/le-bien-etre-du-personnel-soignant-au-coeur-de-la-qualite-des-soins/","name":"Le bien-être du personnel soignant au cœur de la qualité des soins"},{"@type":"ListItem","position":10,"url":"https://lecollectif.ca/edition-papier/les-enjeux-electoraux-de-2026/","name":"Les enjeux électoraux de 2026"}]}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Le Collectif","url":"https://lecollectif.ca/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Université de Sherbrooke"},"inLanguage":"fr","sameAs":["https://lecollectif.ca/","https://www.instagram.com/jlecollectif/","https://www.facebook.com/journallecollectif"],"subjectOf":{"@type":"ItemList","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://lecollectif.ca/a-la-une/trois-sieges-de-plus-pour-mark-carney/","name":"Trois sièges de plus pour Mark Carney"},{"@type":"ListItem","position":2,"url":"https://lecollectif.ca/a-la-une/comment-fonctionnent-les-elections-au-quebec/","name":"Comment fonctionnent les élections au Québec ?"},{"@type":"ListItem","position":3,"url":"https://lecollectif.ca/culture/presences-troubles-le-corps-en-metamorphose/","name":"Présences troubles : le corps en métamorphose"},{"@type":"ListItem","position":4,"url":"https://lecollectif.ca/sports-et-bien-etre/faire-du-sport-sans-se-ruiner-quand-on-est-aux-etudes/","name":"Faire du sport sans se ruiner quand on est aux études"},{"@type":"ListItem","position":5,"url":"https://lecollectif.ca/sports-et-bien-etre/un-important-coup-de-pouce-pour-le-futur-arena-du-vert-or/","name":"Un important coup de pouce pour le futur aréna du Vert & Or"},{"@type":"ListItem","position":6,"url":"https://lecollectif.ca/sports-et-bien-etre/le-role-de-lactivite-physique-sur-le-stress-etudiant/","name":"Le rôle de l’activité physique sur le stress étudiant"},{"@type":"ListItem","position":7,"url":"https://lecollectif.ca/societe/les-conditions-en-psychiatrie/","name":"Les conditions en psychiatrie"},{"@type":"ListItem","position":8,"url":"https://lecollectif.ca/societe/les-demandes-dadmission-au-cegep-depassent-loffre/","name":"Les demandes d’admission au cégep dépassent l’offre"},{"@type":"ListItem","position":9,"url":"https://lecollectif.ca/societe/le-bien-etre-du-personnel-soignant-au-coeur-de-la-qualite-des-soins/","name":"Le bien-être du personnel soignant au cœur de la qualité des soins"},{"@type":"ListItem","position":10,"url":"https://lecollectif.ca/edition-papier/les-enjeux-electoraux-de-2026/","name":"Les enjeux électoraux de 2026"}]}}</script>
   </head>
   <body>
     <header class="masthead">
@@ -305,11 +308,22 @@
       <p class="seo-eyebrow">Journaux étudiants</p>
       <h1 class="seo-title">Le Collectif</h1>
       <p class="seo-lead">Le Collectif est le journal étudiant de l’Université de Sherbrooke.</p>
+      <p class="media-follow-row"><button type="button" class="media-follow" data-media-follow data-media-id="le-collectif" data-media-name="Le Collectif" data-follow-lang="fr" data-label-follow="Suivre" data-label-following="Suivi" data-label-follow-named="Suivre {name} dans LE-RADAR" data-label-following-named="Ne plus suivre {name}" aria-pressed="false" aria-label="Suivre Le Collectif dans LE-RADAR" title="Suivre Le Collectif dans LE-RADAR"><span class="media-follow__mark" aria-hidden="true">☆</span><span class="media-follow__label">Suivre</span></button></p>
       <dl class="seo-facts">
           <div class="seo-fact"><dt>Établissement</dt><dd><a href="../../etablissements/universite-de-sherbrooke/">Université de Sherbrooke</a></dd></div>
           <div class="seo-fact"><dt>Région</dt><dd><a href="https://www.cantonsdelest.com/" target="_blank" rel="noopener noreferrer" aria-label="Tourisme Estrie — site officiel">Estrie</a></dd></div>
           <div class="seo-fact"><dt>Langue</dt><dd>Français</dd></div>
+          <div class="seo-fact"><dt>Site officiel</dt><dd><a href="https://lecollectif.ca/" target="_blank" rel="noopener noreferrer">https://lecollectif.ca/</a></dd></div>
       </dl>
+      <section class="media-channels">
+        <h2 class="media-channels__title">Disponible sur</h2>
+        <ul class="media-channels__list">
+          <li class="media-channels__item media-channels__item--website"><a href="https://lecollectif.ca/" target="_blank" rel="noopener noreferrer">Site officiel</a></li>
+          <li class="media-channels__item media-channels__item--rss"><a href="https://lecollectif.ca/feed/" target="_blank" rel="noopener noreferrer" title="Flux d’articles, à ouvrir dans un lecteur de nouvelles" aria-label="RSS — Flux d’articles, à ouvrir dans un lecteur de nouvelles">RSS</a></li>
+          <li class="media-channels__item media-channels__item--instagram"><a href="https://www.instagram.com/jlecollectif/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li class="media-channels__item media-channels__item--facebook"><a href="https://www.facebook.com/journallecollectif" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+        </ul>
+      </section>
       <section class="seo-section">
         <h2>Derniers articles</h2>
         <p class="seo-headlines__status">Dernier article : 8 septembre 2026 à 18 h 18</p>

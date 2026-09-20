@@ -31,6 +31,32 @@
   /* Titres longs (inuktitut, etc.) : le menu fixed ne doit pas être clipé ici */
   overflow: visible;
 }
+.media-follow-bar {
+  margin: 8px 0 14px;
+}
+.media-follow-bar[hidden] {
+  display: none !important;
+  margin: 0;
+}
+.media-follow-bar__cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+}
+.media-follow-bar__fiche {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+.media-follow-bar__fiche:hover { text-decoration: underline; }
+.media-follow-bar__fiche:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .wire-title {
   font-family: var(--serif);
   font-weight: 700;

@@ -28,7 +28,9 @@ async function loadNews({ silent = false } = {}) {
     // d'abord contre les données réellement chargées, plutôt que d'afficher
     // un filtre inexistant après une URL ancienne ou bricolée.
     const requestedSource = new URLSearchParams(window.location.search).get('source');
-    if (requestedSource && news.some((item) => item.source === requestedSource)) {
+    if (requestedSource === NEWS_FOLLOWED_FILTER) {
+      newsSourceFilter = NEWS_FOLLOWED_FILTER;
+    } else if (requestedSource && news.some((item) => item.source === requestedSource)) {
       newsSourceFilter = requestedSource;
     }
     if (data.updated) {
@@ -74,6 +76,19 @@ function institutionBrandColor(institution = '') {
     if (normInstitutionKey(key) === norm) return entry.color;
   }
   return null;
+}
+
+/** Couleur d'accent d'un article : marque de l'établissement (pastilles, « Lire la suite »). */
+function isFollowedNewsView() {
+  return newsSourceFilter === NEWS_FOLLOWED_FILTER;
+}
+
+function isSingleSourceNewsView() {
+  return newsSourceFilter !== 'all' && newsSourceFilter !== NEWS_FOLLOWED_FILTER;
+}
+
+function followedMediaStore() {
+  return window.MediaFollowStore || null;
 }
 
 /** Couleur d'accent d'un article : marque de l'établissement (pastilles, « Lire la suite »). */
@@ -519,7 +534,7 @@ function updateFiltersCompactBar() {
   if (!FILTERS_COMPACT) return;
   const dot = FILTERS_COMPACT.querySelector('.filters-compact__dot');
   const text = FILTERS_COMPACT.querySelector('.filters-compact__text');
-  if (newsSourceFilter === 'all') return;
+  if (newsSourceFilter === 'all' || isFollowedNewsView()) return;
 
   const { institution, type, color } = sourceInfo(newsSourceFilter);
   const instLabel = filterSourceInstitutionLabel(institution, type, newsSourceFilter);
@@ -549,7 +564,7 @@ function syncFiltersPanel() {
   if (!FILTERS_PANEL) return;
   syncFiltersColumns();
 
-  const isSourceView = newsSourceFilter !== 'all';
+  const isSourceView = isSingleSourceNewsView();
   const overflow = filtersOverflow();
 
   if (FILTERS_MOBILE.matches && isSourceView) {
@@ -1237,8 +1252,28 @@ function bindNewsSearch() {
 
 function renderNewsFilters() {
   if (!NEWS_FILTERS) return;
+  const followStore = followedMediaStore();
+  if (isFollowedNewsView() && (!followStore || !followStore.list().length)) {
+    newsSourceFilter = 'all';
+  }
   const sources = sortSourcesForFilters([...new Set(news.map(n => n.source))]);
   [...NEWS_FILTERS.querySelectorAll('[data-source]:not([data-source="all"])')].forEach(b => b.remove());
+
+  if (followStore && followStore.list().length) {
+    const followedBtn = document.createElement('button');
+    followedBtn.type = 'button';
+    followedBtn.className = 'filter-btn filter-btn--followed';
+    followedBtn.dataset.source = NEWS_FOLLOWED_FILTER;
+    followedBtn.title = adaptRadarUiText('Médias suivis');
+    followedBtn.innerHTML = `
+      <span class="filter-btn__row">
+        <span class="filter-btn__dot" aria-hidden="true"></span>
+        <span class="filter-btn__name">${escapeHtml(adaptRadarUiText('Suivis'))}</span>
+      </span>
+      <span class="filter-btn__inst"></span>
+    `;
+    NEWS_FILTERS.appendChild(followedBtn);
+  }
 
   sources.forEach(src => {
     const btn = document.createElement('button');
@@ -1275,13 +1310,20 @@ function renderNewsFilters() {
 
 function renderNews() {
   if (!NEWS_LIST) return;
-  const isSourceView = newsSourceFilter !== 'all';
+  const followStore = followedMediaStore();
+  if (isFollowedNewsView() && (!followStore || !followStore.list().length)) {
+    newsSourceFilter = 'all';
+  }
+  const isSourceView = isSingleSourceNewsView();
+  const isFollowedView = isFollowedNewsView();
   const tokens = searchTokens(newsSearchQuery);
   const isSearchView = tokens.length > 0;
 
-  let items = isSourceView
-    ? news.filter(n => n.source === newsSourceFilter)
-    : news;
+  let items = isFollowedView
+    ? (followStore ? followStore.filterItemsByFollowed(news) : [])
+    : isSourceView
+      ? news.filter(n => n.source === newsSourceFilter)
+      : news;
   if (isSearchView) {
     items = items.filter((n) => articleMatchesSearch(n, tokens));
   }
@@ -1292,6 +1334,8 @@ function renderNews() {
     if (emptyP) {
       if (isSearchView && !items.length) {
         emptyP.textContent = `Aucun résultat pour « ${newsSearchQuery} ».`;
+      } else if (isFollowedView && !items.length) {
+        emptyP.textContent = 'Aucun article des médias suivis pour le moment.';
       } else {
         emptyP.textContent = 'Aucun article pour le moment.';
       }
@@ -1303,11 +1347,22 @@ function renderNews() {
     : `${items.length} article${items.length !== 1 ? 's' : ''}`;
   NEWS_COUNT.textContent = countLabel;
 
+  if (MEDIA_FOLLOW_BAR && window.MediaFollowUI) {
+    if (isSourceView) {
+      MediaFollowUI.renderSourceFollowBar(MEDIA_FOLLOW_BAR, { name: newsSourceFilter });
+    } else {
+      MEDIA_FOLLOW_BAR.hidden = true;
+      MEDIA_FOLLOW_BAR.replaceChildren();
+    }
+  }
+
   NEWS_LIST.innerHTML = '';
   if (isSearchView) {
     NEWS_LIST.dataset.mode = 'search';
   } else if (isSourceView) {
     NEWS_LIST.dataset.mode = 'source';
+  } else if (isFollowedView) {
+    NEWS_LIST.dataset.mode = 'followed';
   } else {
     NEWS_LIST.removeAttribute('data-mode');
   }
@@ -4390,5 +4445,12 @@ function prepareBrief(raw = '', role = 'standard') {
   }
 
   return { text: cut, truncated: true };
+}
+
+if (typeof MediaFollowStore !== 'undefined' && MediaFollowStore.subscribe) {
+  MediaFollowStore.subscribe(() => {
+    if (NEWS_FILTERS) renderNewsFilters();
+    if (NEWS_LIST) renderNews();
+  });
 }
 

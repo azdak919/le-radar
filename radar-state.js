@@ -203,6 +203,8 @@ var radios = [];          // ordered list backing the tuner
 var news = [];
 var newsSourcesByName = {};
 var newsSourceFilter = 'all';
+var MEDIA_FOLLOW_BAR = document.getElementById('media-follow-bar');
+var NEWS_FOLLOWED_FILTER = 'followed';
 /** Recherche locale (titre / auteur / source / extrait / crédits) — jamais de fetch distant. */
 var newsSearchQuery = '';
 var newsSearchOpen = false;

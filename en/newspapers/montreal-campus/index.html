@@ -109,6 +109,9 @@
     <script src="../../../quebec-backgrounds-data.js" defer></script>
     <script src="../../../quebec-university-backgrounds-data.js" defer></script>
     <script src="../../../scripts/campus-fallback-lib.js" defer></script>
+    <script src="../../../scripts/media-channels-lib.js" defer></script>
+    <script src="../../../scripts/media-follow-store.js" defer></script>
+    <script src="../../../scripts/media-follow-ui.js" defer></script>
     <script src="../../../quebec-nations-backgrounds-data.js" defer></script>
     <script src="../../../quebec-favorites-backgrounds-data.js" defer></script>
     <script src="../../../quebec-backgrounds.js" defer></script>
@@ -125,7 +128,7 @@
     <script src="../../../radar-lifecycle.js" defer></script>
     <script src="../../../app.js" defer></script>
     <script src="../../../engage-prompt.js" defer></script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Montréal Campus","parentOrganization":{"@type":"CollegeOrUniversity","name":"Université du Québec à Montréal"},"inLanguage":"fr","subjectOf":{"@type":"ItemList","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://montrealcampus.ca/2026/05/08/iulian-ciobanu-decouvrir-un-autre-monde-grace-au-boccia/","name":"Photoreportage : Iulian Ciobanu : découvrir « un autre monde » grâce au boccia"},{"@type":"ListItem","position":2,"url":"https://montrealcampus.ca/2026/05/04/incursion-chez-un-bastion-montrealais-du-vintage/","name":"Marché aux puces : Incursion chez un bastion montréalais du vintage"},{"@type":"ListItem","position":3,"url":"https://montrealcampus.ca/2026/05/04/cellulaire-messages-vocaux-textos-reseaux-sociaux/","name":"Textos ou vocaux, un débat de la génération Z"},{"@type":"ListItem","position":4,"url":"https://montrealcampus.ca/2026/05/02/tricot-club-uqam-artisanat/","name":"Tisser des liens une maille à la fois"},{"@type":"ListItem","position":5,"url":"https://montrealcampus.ca/2026/05/01/gym-parents-bebes-sport-cobaye/","name":"Cobaye : S’entraîner avec un bébé, tout un sport!"},{"@type":"ListItem","position":6,"url":"https://montrealcampus.ca/2026/05/01/masculinite-mankind-project-therapie/","name":"Mankind Project au service des hommes"},{"@type":"ListItem","position":7,"url":"https://montrealcampus.ca/2026/04/30/publicites-wegovy-berri-uqam-minceur/","name":"Wegovy attire l’attention à Berri-UQAM"},{"@type":"ListItem","position":8,"url":"https://montrealcampus.ca/2026/04/30/cobaye-alimentation-vegetalisme/","name":"Cobaye : Je suis devenu végétalien du jour au lendemain"},{"@type":"ListItem","position":9,"url":"https://montrealcampus.ca/2026/04/30/il-reussit-a-etre-visible-hors-ligne/","name":"Il réussit à être visible hors ligne"},{"@type":"ListItem","position":10,"url":"https://montrealcampus.ca/2026/04/30/guider-au-feminin/","name":"Guider au féminin"}]}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Montréal Campus","url":"https://montrealcampus.ca/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Université du Québec à Montréal"},"inLanguage":"fr","sameAs":["https://montrealcampus.ca/","https://www.instagram.com/montrealcampus/","https://www.facebook.com/montrealcampus","https://twitter.com/montrealcampus"],"subjectOf":{"@type":"ItemList","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://montrealcampus.ca/2026/05/08/iulian-ciobanu-decouvrir-un-autre-monde-grace-au-boccia/","name":"Photoreportage : Iulian Ciobanu : découvrir « un autre monde » grâce au boccia"},{"@type":"ListItem","position":2,"url":"https://montrealcampus.ca/2026/05/04/incursion-chez-un-bastion-montrealais-du-vintage/","name":"Marché aux puces : Incursion chez un bastion montréalais du vintage"},{"@type":"ListItem","position":3,"url":"https://montrealcampus.ca/2026/05/04/cellulaire-messages-vocaux-textos-reseaux-sociaux/","name":"Textos ou vocaux, un débat de la génération Z"},{"@type":"ListItem","position":4,"url":"https://montrealcampus.ca/2026/05/02/tricot-club-uqam-artisanat/","name":"Tisser des liens une maille à la fois"},{"@type":"ListItem","position":5,"url":"https://montrealcampus.ca/2026/05/01/gym-parents-bebes-sport-cobaye/","name":"Cobaye : S’entraîner avec un bébé, tout un sport!"},{"@type":"ListItem","position":6,"url":"https://montrealcampus.ca/2026/05/01/masculinite-mankind-project-therapie/","name":"Mankind Project au service des hommes"},{"@type":"ListItem","position":7,"url":"https://montrealcampus.ca/2026/04/30/publicites-wegovy-berri-uqam-minceur/","name":"Wegovy attire l’attention à Berri-UQAM"},{"@type":"ListItem","position":8,"url":"https://montrealcampus.ca/2026/04/30/cobaye-alimentation-vegetalisme/","name":"Cobaye : Je suis devenu végétalien du jour au lendemain"},{"@type":"ListItem","position":9,"url":"https://montrealcampus.ca/2026/04/30/il-reussit-a-etre-visible-hors-ligne/","name":"Il réussit à être visible hors ligne"},{"@type":"ListItem","position":10,"url":"https://montrealcampus.ca/2026/04/30/guider-au-feminin/","name":"Guider au féminin"}]}}</script>
   </head>
   <body>
     <header class="masthead">
@@ -305,11 +308,23 @@
       <p class="seo-eyebrow">Student newspapers</p>
       <h1 class="seo-title">Montréal Campus</h1>
       <p class="seo-lead">Montréal Campus is the student newspaper of Université du Québec à Montréal.</p>
+      <p class="media-follow-row"><button type="button" class="media-follow" data-media-follow data-media-id="montreal-campus" data-media-name="Montréal Campus" data-follow-lang="en" data-label-follow="Follow" data-label-following="Following" data-label-follow-named="Follow {name} in LE-RADAR" data-label-following-named="Unfollow {name}" aria-pressed="false" aria-label="Follow Montréal Campus in LE-RADAR" title="Follow Montréal Campus in LE-RADAR"><span class="media-follow__mark" aria-hidden="true">☆</span><span class="media-follow__label">Follow</span></button></p>
       <dl class="seo-facts">
           <div class="seo-fact"><dt>Institution</dt><dd><a href="../../../en/institutions/universite-du-quebec-a-montreal/">Université du Québec à Montréal</a></dd></div>
           <div class="seo-fact"><dt>Region</dt><dd><a href="https://www.mtl.org/en" target="_blank" rel="noopener noreferrer" aria-label="Montréal tourism — official website">Montréal</a></dd></div>
           <div class="seo-fact"><dt>Language</dt><dd>French</dd></div>
+          <div class="seo-fact"><dt>Official website</dt><dd><a href="https://montrealcampus.ca/" target="_blank" rel="noopener noreferrer">https://montrealcampus.ca/</a></dd></div>
       </dl>
+      <section class="media-channels">
+        <h2 class="media-channels__title">Available on</h2>
+        <ul class="media-channels__list">
+          <li class="media-channels__item media-channels__item--website"><a href="https://montrealcampus.ca/" target="_blank" rel="noopener noreferrer">Official website</a></li>
+          <li class="media-channels__item media-channels__item--rss"><a href="https://montrealcampus.ca/feed/" target="_blank" rel="noopener noreferrer" title="Article feed — open it in a news reader" aria-label="RSS — Article feed — open it in a news reader">RSS</a></li>
+          <li class="media-channels__item media-channels__item--instagram"><a href="https://www.instagram.com/montrealcampus/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li class="media-channels__item media-channels__item--facebook"><a href="https://www.facebook.com/montrealcampus" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+          <li class="media-channels__item media-channels__item--x"><a href="https://twitter.com/montrealcampus" target="_blank" rel="noopener noreferrer">X</a></li>
+        </ul>
+      </section>
       <section class="seo-section">
         <h2>Latest articles</h2>
         <p class="seo-headlines__status">Latest article: May 8, 2026 at 11:14 p.m. · Checked September 19, 2026 at 08:41 p.m.</p>

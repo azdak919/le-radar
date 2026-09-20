@@ -109,6 +109,9 @@
     <script src="../../../quebec-backgrounds-data.js" defer></script>
     <script src="../../../quebec-university-backgrounds-data.js" defer></script>
     <script src="../../../scripts/campus-fallback-lib.js" defer></script>
+    <script src="../../../scripts/media-channels-lib.js" defer></script>
+    <script src="../../../scripts/media-follow-store.js" defer></script>
+    <script src="../../../scripts/media-follow-ui.js" defer></script>
     <script src="../../../quebec-nations-backgrounds-data.js" defer></script>
     <script src="../../../quebec-favorites-backgrounds-data.js" defer></script>
     <script src="../../../quebec-backgrounds.js" defer></script>
@@ -125,7 +128,7 @@
     <script src="../../../radar-lifecycle.js" defer></script>
     <script src="../../../app.js" defer></script>
     <script src="../../../engage-prompt.js" defer></script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"La Gifle","url":"https://lagifleblog.wordpress.com/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Collège Lionel-Groulx"},"inLanguage":"fr"}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"La Gifle","url":"https://lagifleblog.wordpress.com/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Collège Lionel-Groulx"},"inLanguage":"fr","sameAs":["https://lagifleblog.wordpress.com/"]}</script>
   </head>
   <body>
     <header class="masthead">
@@ -305,12 +308,20 @@
       <p class="seo-eyebrow">Student newspapers</p>
       <h1 class="seo-title">La Gifle</h1>
       <p class="seo-lead">La Gifle is the student newspaper of Collège Lionel-Groulx.</p>
+      <p class="media-follow-row"><button type="button" class="media-follow" data-media-follow data-media-id="la-gifle" data-media-name="La Gifle" data-follow-lang="en" data-label-follow="Follow" data-label-following="Following" data-label-follow-named="Follow {name} in LE-RADAR" data-label-following-named="Unfollow {name}" aria-pressed="false" aria-label="Follow La Gifle in LE-RADAR" title="Follow La Gifle in LE-RADAR"><span class="media-follow__mark" aria-hidden="true">☆</span><span class="media-follow__label">Follow</span></button></p>
       <dl class="seo-facts">
           <div class="seo-fact"><dt>Institution</dt><dd><a href="../../../en/institutions/college-lionel-groulx/">Collège Lionel-Groulx</a></dd></div>
           <div class="seo-fact"><dt>Region</dt><dd><a href="https://www.laurentides.com/en/" target="_blank" rel="noopener noreferrer" aria-label="Laurentides tourism — official website">Laurentides</a></dd></div>
           <div class="seo-fact"><dt>Language</dt><dd>French</dd></div>
           <div class="seo-fact"><dt>Official website</dt><dd><a href="https://lagifleblog.wordpress.com/" target="_blank" rel="noopener noreferrer">https://lagifleblog.wordpress.com/</a></dd></div>
       </dl>
+      <section class="media-channels">
+        <h2 class="media-channels__title">Available on</h2>
+        <ul class="media-channels__list">
+          <li class="media-channels__item media-channels__item--website"><a href="https://lagifleblog.wordpress.com/" target="_blank" rel="noopener noreferrer">Official website</a></li>
+          <li class="media-channels__item media-channels__item--rss"><a href="https://lagifleblog.wordpress.com/feed/" target="_blank" rel="noopener noreferrer" title="Article feed — open it in a news reader" aria-label="RSS — Article feed — open it in a news reader">RSS</a></li>
+        </ul>
+      </section>
       <section class="seo-section">
         <h2>Latest articles</h2>
         <p class="seo-empty">No articles published in the freshness window (current university term and the two before it).</p>

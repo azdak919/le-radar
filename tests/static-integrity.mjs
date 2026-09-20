@@ -1328,6 +1328,50 @@ if (existsSync(archiveHub)) {
   assert(archiveHtml.includes('"@type":"CollectionPage"'), 'archives : CollectionPage requis');
   assert(archiveHtml.includes('"@type":"CreativeWork"'), 'archives : attribution externe factuelle requise');
   assert(!archiveHtml.includes('"@type":"NewsArticle"'), 'archives : LE-RADAR.ca ne doit pas devenir l’éditeur d’un article externe');
+
+{
+  const home = readFileSync(join(root, 'index.html'), 'utf8');
+  const jsonLdBlock = home.match(/<!-- RADAR:SEO:JSONLD:START -->\s*<script[^>]*>([\s\S]*?)<\/script>/);
+  assert(jsonLdBlock, 'accueil : JSON-LD du fil requis');
+  const list = JSON.parse(jsonLdBlock[1]);
+  assert.equal(list['@type'], 'ItemList', 'accueil : ItemList agrégateur requis');
+  for (const entry of list.itemListElement || []) {
+    const article = entry.item;
+    if (!article || article['@type'] !== 'NewsArticle') continue;
+    const publisher = article.publisher?.name || '';
+    assert(
+      publisher && !/le-radar/i.test(publisher),
+      `accueil : NewsArticle.publisher doit être le média original, pas LE-RADAR (${article.headline})`,
+    );
+    assert(
+      /^https?:\/\//i.test(article.url || ''),
+      `accueil : NewsArticle.url doit pointer vers l’article original (${article.headline})`,
+    );
+  }
+  assert(home.includes('id="media-follow-bar"'), 'accueil : bandeau de suivi requis');
+  assert(home.includes('scripts/media-follow-store.js'), 'accueil : store de suivi requis');
+}
+
+{
+  const paper = join(root, 'journaux/lexemplaire/index.html');
+  if (existsSync(paper)) {
+    const html = readFileSync(paper, 'utf8');
+    assert(html.includes('data-media-follow'), 'fiche L\'Exemplaire : bouton Suivre requis');
+    assert(html.includes('data-media-id="lexemplaire"'), 'fiche L\'Exemplaire : id slug requis');
+    assert(html.includes('"@type":"NewsMediaOrganization"'), 'fiche : NewsMediaOrganization du média original');
+    assert(!html.includes('news.google.com/search'), 'fiche : pas de recherche Google News inventée');
+    assert(
+      html.includes('class="article') || html.includes('seo-headline__title') || html.includes('target="_blank"'),
+      'fiche : liens vers les articles originaux requis',
+    );
+  }
+  const poly = join(root, 'journaux/le-polyscope/index.html');
+  if (existsSync(poly)) {
+    const html = readFileSync(poly, 'utf8');
+    assert(html.includes('Instagram'), 'fiche Polyscope : canal Instagram du registre');
+    assert(!html.includes('Google Actualités') || !html.includes('news.google.com/search'), 'Polyscope : pas de Google News fictif');
+  }
+}
   assert(!archiveHtml.includes('<img class="seo-archive'), 'archives : image externe sans licence non republiée');
   assert(archiveHtml.includes('>Le Trait d\'Union</a>'), 'archives : Le Trait d’Union doit figurer dans l’annuaire');
   assert(!archiveHtml.includes('Catalogue expérimental'), 'archives : libellé interne superflu interdit');
