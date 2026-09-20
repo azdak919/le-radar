@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-20T20:24:29.846Z",
-  "fetchedAt": "2026-09-20T20:24:29.846Z",
+  "updated": "2026-09-20T20:57:52.957Z",
+  "fetchedAt": "2026-09-20T20:57:52.957Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-20T20:24:29.846Z"
+    "referenceDate": "2026-09-20T20:57:52.957Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 839,
@@ -40298,8 +40298,7 @@
           "gameId": "c3d3e3e1-4202-49b3-b27e-2bcb44404732",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c3d3e3e1-4202-49b3-b27e-2bcb44404732",
           "opponentFullName": "Cégep régional de Lanaudière à Joliette",
-          "opponentRegistryId": "joliette",
-          "live": true
+          "opponentRegistryId": "joliette"
         },
         {
           "date": "2026-09-25",
@@ -40407,7 +40406,6 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c3d3e3e1-4202-49b3-b27e-2bcb44404732",
         "opponentFullName": "Cégep régional de Lanaudière à Joliette",
         "opponentRegistryId": "joliette",
-        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -40538,8 +40536,7 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c3d3e3e1-4202-49b3-b27e-2bcb44404732",
           "opponentFullName": "John Abbott College",
           "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott",
-          "live": true
+          "opponentRegistryId": "john-abbott"
         },
         {
           "date": "2026-09-26",
@@ -71344,7 +71341,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2a7cd326-ea64-477c-a139-443b0e35456c",
           "opponentFullName": "John Abbott College",
           "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott"
+          "opponentRegistryId": "john-abbott",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -71428,6 +71426,7 @@
         "opponentFullName": "John Abbott College",
         "opponentNickname": "Islanders",
         "opponentRegistryId": "john-abbott",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -71905,7 +71904,8 @@
           "gameId": "2a7cd326-ea64-477c-a139-443b0e35456c",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2a7cd326-ea64-477c-a139-443b0e35456c",
           "opponentFullName": "Collège de Bois-de-Boulogne",
-          "opponentRegistryId": "bois-de-boulogne"
+          "opponentRegistryId": "bois-de-boulogne",
+          "live": true
         },
         {
           "date": "2026-09-26",
@@ -71975,6 +71975,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2a7cd326-ea64-477c-a139-443b0e35456c",
         "opponentFullName": "Collège de Bois-de-Boulogne",
         "opponentRegistryId": "bois-de-boulogne",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
