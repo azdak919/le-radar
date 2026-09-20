@@ -109,6 +109,12 @@ assert.match(fetchSports, /if \(liveOnly\) \{\s*\n\s*payload = preserveHarvestCa
 const maintain = readFileSync(join(ROOT, 'scripts/maintain.js'), 'utf8');
 assert.match(maintain, /discover-sports\.js/);
 assert.match(maintain, /fetch-sports\.js/);
+assert.doesNotMatch(maintain, /ensure-lead-images\.js/, 'hebdo : QC photos déjà dans update-news');
+assert.doesNotMatch(maintain, /verify-authors\.js/, 'hebdo : QC auteurs déjà dans update-news');
+
+const maintainYml = readFileSync(join(ROOT, '.github/workflows/maintain.yml'), 'utf8');
+assert.match(maintainYml, /timeout-minutes:\s*90/);
+assert.doesNotMatch(maintainYml, /timeout-minutes:\s*50/);
 
 const windowSrc = readFileSync(join(ROOT, 'scripts/maintenance-window.mjs'), 'utf8');
 assert.match(windowSrc, /guard-harvest-freshness\.yml/);
