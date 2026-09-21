@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-21T09:17:55.135Z",
+  "updated": "2026-09-21T16:01:56.563Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -258,7 +258,7 @@
       "source": "The Campus"
     },
     "https://thebucampus.ca/2026/03/23/national-golf-tournament/": {
-      "at": "2026-03-23T16:48:53.000Z",
+      "at": "2026-09-20T23:29:38.000Z",
       "via": "existant",
       "source": "The Campus"
     },
@@ -2473,13 +2473,18 @@
       "at": "2026-09-15T23:42:19.000Z",
       "via": "existant",
       "source": "The McGill Daily"
+    },
+    "https://lapige.atmjonquiere.com/2026/09/19/les-sags-tombent-a-leur-match-douverture/": {
+      "at": "2026-09-21T09:17:27.000Z",
+      "via": "existant",
+      "source": "La Pige"
     }
   },
   "stats": {
-    "total": 438,
+    "total": 439,
     "lastRun": {
       "saved": 0,
-      "skipped": 0,
+      "skipped": 2,
       "failed": 3,
       "stoppedEarly": true
     }
@@ -2513,8 +2518,7 @@
     "L'Exemplaire": {
       "host": "www.exemplaire.com.ulaval.ca",
       "pages": 9,
-      "checkedAt": "2026-09-14T09:14:42.538Z",
-      "stale": true
+      "checkedAt": "2026-09-21T16:00:33.917Z"
     },
     "Quartier Libre": {
       "host": "quartierlibre.ca",
