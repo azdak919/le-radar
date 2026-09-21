@@ -1495,7 +1495,7 @@ assert(
     && appJs.includes('function sportsCtaDateLinePair')
     && appJs.includes('function sportsCtaResultDateParts')
     && /function fillSportsCtaTagCopy[\s\S]*tag\.append\(document\.createTextNode/.test(appJs),
-  'app.js : kicker F 1 ligne sauf Dernière heure / Prochain+date / dates (2 lignes) ; score entre les noms',
+  'app.js : kicker F 1 ligne sauf Derniers résultats / Prochain+date / dates (2 lignes) ; score entre les noms',
 );
 // Pastille CTA : plus de voyant LED (ni span JS, ni ::before).
 assert(

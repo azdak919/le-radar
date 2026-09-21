@@ -197,8 +197,8 @@ const SPORTS_MERIDIEM_AM_LINE = 'cet AM';
 const SPORTS_MERIDIEM_PM_LINE = 'ce PM';
 /** Demain : mot Demain, même jaune que Prochain. */
 const SPORTS_CTA_TAG_TOMORROW = 'Demain';
-/** Résultat du jour : deux lignes DERNIÈRE / HEURE. Pas d’AM/PM. */
-const SPORTS_CTA_TAG_LATEST = 'Dernière heure';
+/** Résultat du jour : deux lignes DERNIERS / RÉSULTATS. Pas d’AM/PM. */
+const SPORTS_CTA_TAG_LATEST = 'Derniers résultats';
 /** Après demain : Prochain + date courte en 2ᵉ ligne. */
 const SPORTS_CTA_TAG_NEXT = 'Prochain';
 /** Repli idle (creux total, pas de match) ; sinon ton du sport via sportsCtaTone. Rouge = direct. */
@@ -2230,7 +2230,7 @@ function sportsCtaResultDateParts(iso) {
   return null;
 }
 
-/** Pastille d’un résultat : Dernière heure, Hier, sinon date (jour + mois). */
+/** Pastille d’un résultat : Derniers résultats, Hier, sinon date (jour + mois). */
 function sportsCtaResultTag(src) {
   const day = sportsSlideDayKey(src);
   if (!day) return SPORTS_CTA_TAG;
@@ -2257,7 +2257,7 @@ function sportsCtaGameIsTomorrow(slide) {
 
 /**
  * Pastille : Aujourd’hui (à venir du jour) / Demain / Prochain+date
- * / En direct / Dernière heure / Hier / date.
+ * / En direct / Derniers résultats / Hier / date.
  * Creux : LE-RADAR.ca (logo PWA), pas « Sports ».
  */
 function sportsCtaTagLabel(slide, state) {
@@ -2283,7 +2283,7 @@ function sportsCtaDateLinePair(raw) {
 }
 
 /**
- * Kicker F : 1 ligne, sauf « Dernière heure », « Prochain » + date, et les
+ * Kicker F : 1 ligne, sauf « Derniers résultats », « Prochain » + date, et les
  * dates plus vieilles que hier (2 lignes). Score entre les noms.
  */
 function sportsCtaTagLinePair(wanted, shown, extra = {}) {
@@ -2804,7 +2804,7 @@ function sportsCtaLiveSources(now = Date.now()) {
 
 /**
  * Chaleur du bandeau (plus bas = plus prioritaire), go E :
- * live → ce soir → dernière heure → hier → demain
+ * live → ce soir → derniers résultats → hier → demain
  * → à-venir dans 7 j civils (après-demain…J+7) → scores J−2…J−5
  * → à-venir au-delà de 7 j.
  * Une liste, DOM = visuel. Filet 7 j America/Toronto.
@@ -3123,7 +3123,7 @@ function sportsCtaHoldOnLive(slide) {
 }
 
 /**
- * Slide CTA — tête de liste (live / à-venir / aujourd’hui / dernière heure).
+ * Slide CTA — tête de liste (live / à-venir / aujourd’hui / derniers résultats).
  * Match du pool ou accroche idle.
  */
 function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
@@ -3902,7 +3902,7 @@ function paintSportsChip(slide, animate = false) {
 
 /**
  * Prochaine carte : même chaleur que le premier cran
- * (live / à-venir / aujourd’hui / dernière heure avant le reliquat).
+ * (live / à-venir / aujourd’hui / derniers résultats avant le reliquat).
  * Jamais de puce grise « Hors saison / Calendrier… » ici.
  */
 function nextSportsSlide(usedKeys, opts = {}) {
