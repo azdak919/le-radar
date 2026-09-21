@@ -1481,11 +1481,17 @@ html[data-wide-preview="e"] .news-hero-spacer {
     white-space: nowrap;
     max-width: 100%;
   }
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text {
-    animation: none !important;
-    transform: none !important;
+  /* Marquee dès le shell E (pas seulement ≥1440). max-width:100% !important
+   * au-dessus clippe le glyphe dans la boîte : translateX ne révèle rien. */
+  html[data-wide-preview="e"] .masthead-weather__city.is-overflowing .masthead-weather__name-text {
+    max-width: none !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    animation: weather-name-scroll 5.5s ease-in-out 0.8s var(--weather-scroll-trips, 2) alternate both !important;
   }
+  /* Ne pas poser transform:none !important sur line-inner / sub-text :
+   * l’animation sports-chip-scroll tourne, mais le texte reste figé,
+   * et la cascade part sur un nom coupé. */
 }
 
 
@@ -1637,7 +1643,8 @@ html[data-wide-preview="e"] .news-hero-spacer {
     display: inline-block !important;
     max-width: none !important;
     overflow: visible !important;
-    animation: weather-name-scroll 5.5s ease-in-out 0.8s 2 alternate both !important;
+    animation: weather-name-scroll 5.5s ease-in-out 0.8s var(--weather-scroll-trips, 2) alternate both !important;
+    text-overflow: clip !important;
     transform: unset;
   }
   html[data-wide-preview="e"] .masthead-weather__temp {

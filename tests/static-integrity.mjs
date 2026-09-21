@@ -1998,6 +1998,24 @@ assert(
     && !/Hors wide : une carte à la fois/.test(appJs),
   'app.js : cascade météo/sports tous écrans + marquee 1 cycle',
 );
+{
+  const holdStart = appJs.indexOf('function weatherBoardHoldMs()');
+  const holdFn = appJs.slice(holdStart, holdStart + 900);
+  const wideCss = readFileSync(join(root, 'dev/wide-desktop-preview.css'), 'utf8');
+  const wideMotion = wideCss.split('@media (prefers-reduced-motion: reduce)').slice(0, -1).join('\n');
+  assert(
+    holdFn.includes('weatherBoardDwellMs()')
+      && holdFn.includes('measureWeatherNameOverflows()')
+      && !holdFn.includes('!isWideNoMarqueeMode()'),
+    'météo : la pause de cascade couvre l’aller-retour du marquee, wide compris',
+  );
+  assert(
+    !/sports-chip__line-inner[\s\S]{0,180}transform:\s*none\s*!important/.test(wideMotion)
+      && !/sports-chip__sub-text[\s\S]{0,180}transform:\s*none\s*!important/.test(wideMotion)
+      && /is-overflowing \.masthead-weather__name-text[\s\S]{0,280}max-width:\s*none\s*!important/.test(wideCss),
+    'wide : le marquee sports n’est pas gelé par transform:none, le nom météo peut dépasser',
+  );
+}
 // Marquee site : alternate both + delay — jamais infinite. 2 = 1 aller-retour ;
 // CTA delay 0.7s ; strip / puces 1.6s.
 assert(

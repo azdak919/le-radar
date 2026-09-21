@@ -1,13 +1,13 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v886",
+    "cache": "radar-shell-v887",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
       "cast.js": "9ac30d507e71388d",
       "dev/midwidth-preview.css": "2bf07c9f5920ef77",
       "dev/midwidth-preview.js": "b7dc33f06cac70b9",
-      "dev/wide-desktop-preview.css": "788597e57537cd97",
+      "dev/wide-desktop-preview.css": "13925c143124ff27",
       "dev/wide-desktop-preview.js": "3879a96a2264f004",
       "embed.css": "fe79c136a3feda03",
       "embed.js": "a7cdd5601ec6c11d",
@@ -28,7 +28,7 @@
       "radar-state.js": "15e977a274b2b62a",
       "radar-tuner.js": "3f8f39af8869253c",
       "radar-utils.js": "4be00ce4c7faf134",
-      "radar-weather.js": "fbe63b00e4797e6f",
+      "radar-weather.js": "bb392ff5d45baed7",
       "scripts/campus-fallback-lib.js": "1782f0c434ee1d34",
       "scripts/media-channels-lib.js": "c34f4336ae2caa03",
       "scripts/media-follow-store.js": "fc24810268eb10d8",
@@ -99,14 +99,14 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v263",
+    "cache": "sports-shell-v264",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "0e0df2c60f5900e3",
       "cast.js": "9ac30d507e71388d",
       "dev/midwidth-preview.css": "2bf07c9f5920ef77",
       "dev/midwidth-preview.js": "b7dc33f06cac70b9",
-      "dev/wide-desktop-preview.css": "788597e57537cd97",
+      "dev/wide-desktop-preview.css": "13925c143124ff27",
       "dev/wide-desktop-preview.js": "3879a96a2264f004",
       "engage-prompt.js": "3d0c7986c1be1ced",
       "institution-acronyms-data.js": "0d9e4eaa631af54c",
@@ -119,7 +119,7 @@
       "radar-state.js": "15e977a274b2b62a",
       "radar-tuner.js": "3f8f39af8869253c",
       "radar-utils.js": "4be00ce4c7faf134",
-      "radar-weather.js": "fbe63b00e4797e6f",
+      "radar-weather.js": "bb392ff5d45baed7",
       "scripts/media-channels-lib.js": "c34f4336ae2caa03",
       "scripts/media-follow-store.js": "fc24810268eb10d8",
       "scripts/media-follow-ui.js": "dd5acb6d8596c6e6",
