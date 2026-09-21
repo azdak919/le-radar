@@ -21,7 +21,12 @@ function stripHtml(text = '') {
   return String(text).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
+const fs = require('fs');
+const path = require('path');
 const { decodeHtmlEntities } = require('./html-entities-lib');
+
+const BYLINE_LEDGER_PATH = path.join(__dirname, '..', 'data', 'byline-ledger.json');
+let bylineLedgerCache = null;
 
 function decodeBasicEntities(str = '') {
   return decodeHtmlEntities(str);
@@ -582,6 +587,35 @@ function tribuneAuthorRegion(html = '') {
   return meta ? meta[0] : html.slice(0, 100000);
 }
 
+const SIGNED_ROLE = '(?:Staff Writers?|Contributors?|Managing Editors?|News Editors?|Opinion Editors?|Sports Editors?|Copy Editors?|Photo Editors?|Features Editors?|Arts(?:\\s*&\\s*Culture)? Editors?|Science(?:\\s*(?:&|and)\\s*Technology)? Editors?|Editors?-in-Chief)';
+
+/**
+ * Signature dans le corps, quand le thème n'affiche que le compte WP
+ * (« Admin ») : « Dylan Hing, Staff Writer » ou « – Lia James, Contributor ».
+ * Borné au corps d'article pour ne pas prendre un rôle du chrome.
+ */
+function authorsFromRoleSignoffs(html = '', lang = 'en') {
+  if (!html) return [];
+  const body = html.match(
+    /class=["'][^"']*(?:entry-content|wp-block-post-content|post-content|article-content)[^"']*["'][^>]*>([\s\S]{0,30000})/i,
+  );
+  if (!body) return [];
+  const text = decodeBasicEntities(body[1].replace(/<[^>]+>/g, '\n')).replace(/\u00a0/g, ' ');
+  const re = new RegExp(
+    `(?:^|[\\n\\u2013\\u2014]|\\s[\\u2013\\u2014-]\\s)([\\p{Lu}][\\p{L}'’.-]+(?:\\s+[\\p{Lu}][\\p{L}'’.-]+){0,3})\\s*,\\s*${SIGNED_ROLE}\\b`,
+    'giu',
+  );
+  const names = [];
+  for (const match of text.matchAll(re)) {
+    const name = expandAuthorName(match[1], lang);
+    if (!name || isEditorialPlaceholder(name, lang)) continue;
+    if (/^(?:editorial|board|staff|tribune|admin)$/i.test(name)) continue;
+    names.push(name);
+    if (names.length >= 4) break;
+  }
+  return [...new Set(names)];
+}
+
 /** The Tribune — lien ?tribune_author=Nom+Prénom dans la byline entry-author. */
 function authorsFromTribuneAuthor(html = '') {
   const region = tribuneAuthorRegion(html);
@@ -893,6 +927,13 @@ function authorFromArticleHtml(html = '', lang = 'fr', hints = {}, sourceName = 
     candidates.push({ author: joinAuthorNames(tribuneAuthors, l), trust: 104 });
   }
 
+  // Compte WP générique : la signature « Nom, Staff Writer » dans le corps
+  // reste le seul nom publié (The Tribune depuis le thème WPZOOM).
+  const roleSignoffs = authorsFromRoleSignoffs(html, l);
+  if (roleSignoffs.length) {
+    candidates.push({ author: joinAuthorNames(roleSignoffs, l), trust: 102 });
+  }
+
   const contributor = html.match(CONTRIBUTOR_HTML_RE);
   if (contributor) {
     candidates.push({ author: contributor[1].replace(/\s+/g, ' ').trim(), trust: 96 });
@@ -1146,7 +1187,48 @@ function applyAuthorFallback(item = {}) {
   return { ...item, author: fallback };
 }
 
-function resolveAuthorCandidate(item, allItems, feedDefaults, pageAuthor) {
+function loadBylineLedger() {
+  if (bylineLedgerCache) return bylineLedgerCache;
+  try {
+    bylineLedgerCache = JSON.parse(fs.readFileSync(BYLINE_LEDGER_PATH, 'utf8'));
+  } catch {
+    bylineLedgerCache = {};
+  }
+  if (!bylineLedgerCache || typeof bylineLedgerCache !== 'object') bylineLedgerCache = {};
+  return bylineLedgerCache;
+}
+
+function bylineFromLedger(source = '', link = '', ledger = undefined) {
+  const book = ledger === undefined ? loadBylineLedger() : (ledger || {});
+  const bucket = book[source];
+  if (!bucket || typeof bucket !== 'object') return '';
+  const key = normalizeArticleUrl(link);
+  const name = normalizeAuthor(bucket[key] || '');
+  if (!name || isEditorialPlaceholder(name)) return '';
+  return name;
+}
+
+/** Mémorise une byline réelle. Un thème qui repasse à « Admin » ne l'efface pas. */
+function rememberResolvedByline(source = '', link = '', author = '') {
+  const name = normalizeAuthor(author);
+  const key = normalizeArticleUrl(link);
+  if (!source || !key || !name || isEditorialPlaceholder(name)) return false;
+  const ledger = loadBylineLedger();
+  if (!ledger[source] || typeof ledger[source] !== 'object') ledger[source] = {};
+  if (ledger[source][key] === name) return false;
+  ledger[source][key] = name;
+  const sorted = {};
+  for (const src of Object.keys(ledger).sort()) {
+    const bucket = ledger[src];
+    sorted[src] = {};
+    for (const url of Object.keys(bucket).sort()) sorted[src][url] = bucket[url];
+  }
+  bylineLedgerCache = sorted;
+  fs.writeFileSync(BYLINE_LEDGER_PATH, `${JSON.stringify(sorted, null, 2)}\n`);
+  return true;
+}
+
+function resolveAuthorCandidate(item, allItems, feedDefaults, pageAuthor, ledger) {
   const ex = String(item.excerpt || '').trim();
   const fromExcerpt = extractBylineFromText(ex);
   const excerptAuthor = excerptOpensWithByline(ex) && fromExcerpt.author
@@ -1164,11 +1246,15 @@ function resolveAuthorCandidate(item, allItems, feedDefaults, pageAuthor) {
   if (rssIsDefault) rss = '';
 
   const sibling = findSiblingAuthor(item, allItems);
-  const firstPerson = !excerptAuthor && !page && !rss ? extractFirstPersonAuthor(ex) : '';
+  const remembered = bylineFromLedger(item.source, item.link, ledger);
+  const firstPerson = !excerptAuthor && !page && !remembered && !rss
+    ? extractFirstPersonAuthor(ex)
+    : '';
 
   const sources = [
     excerptAuthor && { author: excerptAuthor, reason: 'excerpt-byline' },
     page && { author: page, reason: 'page-byline' },
+    remembered && { author: remembered, reason: 'byline-ledger' },
     sibling && { author: sibling, reason: 'sibling-agreement' },
     rss && { author: rss, reason: 'rss-field' },
     firstPerson && { author: firstPerson, reason: 'first-person-intro' },
@@ -1197,6 +1283,9 @@ function resolveAuthorCandidate(item, allItems, feedDefaults, pageAuthor) {
     }
     if (page) {
       return { author: page, reason: 'page-byline-wins-conflict', excerptBody: fromExcerpt.body };
+    }
+    if (remembered) {
+      return { author: remembered, reason: 'byline-ledger-wins-conflict', excerptBody: fromExcerpt.body };
     }
     return { author: '', reason: 'author-conflict', excerptBody: fromExcerpt.body };
   }
@@ -1306,6 +1395,9 @@ module.exports = {
   authorsFromStrongRoleByline,
   authorsFromElementorPar,
   authorsFromTribuneAuthor,
+  authorsFromRoleSignoffs,
+  bylineFromLedger,
+  rememberResolvedByline,
   authorsFromHintSelectors,
   authorFromLeTraitLeadCredit,
   focusHtmlForAuthorExtraction,

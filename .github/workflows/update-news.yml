@@ -209,7 +209,7 @@ jobs:
             news.json news-archive.json historical-catalog.config.json
             author-qc.json lead-excerpt-qc.json social-feed.json
             lead-image-qc.json photo-credit-qc.json feed.xml
-            news-sources.json assets/news-images
+            news-sources.json data/byline-ledger.json assets/news-images
           )
           SEO_FILES=(index.html sitemap.xml sitemap-archives.xml llms.txt)
           git add "${DATA_FILES[@]}" 2>/dev/null || true
