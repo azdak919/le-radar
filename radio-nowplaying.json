@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-21T14:06:20.599Z",
+  "updatedAt": "2026-09-21T16:49:49.161Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "K-C'EST ÇA ?",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://chyz.ca/emission/k-cest-ca/"
-      },
+      "current": null,
       "next": {
         "title": "Little Songs On The Prairie",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "https://chyz.ca/emission/little-songs-on-the-prairie/"
       },
       "track": "",
-      "showTitle": "K-C'EST ÇA ?",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-21T14:05:32.837Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Faits de société!",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/faits-de-societe"
-      },
-      "next": {
-        "title": "o'keb",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/okeb"
-      },
-      "track": "",
-      "showTitle": "Faits de société!",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T14:05:34.213Z"
+      "checkedAt": "2026-09-21T16:49:21.376Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "L'alter ego",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/lalter-ego"
+      },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
+      "track": "",
+      "showTitle": "L'alter ego",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-21T16:49:23.108Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Latin Music Mondays",
+        "title": "World Skip The Beat",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "All Things Campus",
+        "title": "Radio Is Dead",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "14:00",
+        "end": "15:00"
       },
       "track": "",
-      "showTitle": "Latin Music Mondays",
+      "showTitle": "World Skip The Beat",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T14:05:36.541Z"
+      "checkedAt": "2026-09-21T16:49:25.943Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "title": "Twang City",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/twang-city"
       },
       "next": {
-        "title": "I Think You Might Like This",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
+        "title": "The Tommy John Show",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-tommy-john-show"
       },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Twang City",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T14:06:10.736Z"
+      "checkedAt": "2026-09-21T16:49:40.947Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T14:06:12.008Z"
+      "checkedAt": "2026-09-21T16:49:41.880Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "14:00",
         "slug": "onde-de-choq"
       },
-      "track": "Nia Archives - Boys In Blue",
+      "track": "Coco GB - I Should Know",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-21T14:06:20.248Z"
+      "checkedAt": "2026-09-21T16:49:48.811Z"
     }
   }
 }
