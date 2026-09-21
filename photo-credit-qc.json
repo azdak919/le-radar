@@ -1,17 +1,66 @@
 {
-  "updated": "2026-09-21T16:03:57.360Z",
+  "updated": "2026-09-21T20:36:04.843Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
-  "cited": 125,
-  "pending": 8,
+  "cited": 122,
+  "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 23,
-  "updatedCount": 15,
-  "citedNew": 14,
-  "fallbackNew": 9,
+  "checked": 22,
+  "updatedCount": 14,
+  "citedNew": 9,
+  "fallbackNew": 13,
   "samples": [
+    {
+      "title": "Confirmé : de l’amiante dans le département d’inhalothérapie de Chicoutimi",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Vert et Or 3, Stingers 0: Concordia falls to Sherbrooke after difficult second half",
+      "source": "The Link",
+      "credit": "Photo: Andraé Lerone",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Stingers 2, Vert et Or 2: The Stingers surrender a late lead against Sherbrooke",
+      "source": "The Link",
+      "credit": "Photo: Andraé Lerone",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Bulletin La Pige radio 21 septembre 14 et 16h",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "La Marche du rein rassemble la communauté au parc Rivière-du-Moulin",
+      "source": "La Pige",
+      "credit": "Photo : Félix Parenteau",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Les Saguenéens s’inclinent devant leurs rivaux",
+      "source": "La Pige",
+      "credit": "Photo : Julianne Pilon",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Bulletin 21 septembre 11h30",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Le DSM-6 ?",
       "source": "Le Collectif",
@@ -27,13 +76,6 @@
       "method": "body-tail"
     },
     {
-      "title": "Débat économique de TVA",
-      "source": "Le Collectif",
-      "credit": "Photo : Publication de TVA",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
       "title": "Le Québec est-il polarisé ?",
       "source": "Le Collectif",
       "credit": "Photo : Source : Getty Images",
@@ -41,60 +83,18 @@
       "method": "body-line"
     },
     {
-      "title": "I Agree (But I Don’t Understand): The Legitimacy of Consent in Today’s Digital Ecosystem",
-      "source": "The McGill Daily",
-      "credit": "Photo : Eva Marriott-Fabre",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Can Montreal Still Afford the title of Student City?",
-      "source": "The McGill Daily",
-      "credit": "Photo : Annabelle Premont",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Two Decades After the Tragedy",
-      "source": "The McGill Daily",
-      "credit": "Photo : Nikhila Shanker",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "AI and the ‘Syllabus Effect’",
-      "source": "The McGill Daily",
-      "credit": "Photo : Nikhila Shanker",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
       "title": "L’extrême droite l’emporte en Allemagne",
       "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
+      "credit": "Photo : Omer Messinger/Getty Images",
+      "cited": true,
+      "method": "json-ld"
+    },
+    {
+      "title": "Somaya takes LAYALI to the stage",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "La STS redresse la barre, les usagers en doutent",
-      "source": "La Pige",
-      "credit": "Photo : Diego Pinto de Queiros",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "L’épidémie de la nonchalance",
-      "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Unregulated but essential?",
-      "source": "The Link",
-      "credit": "Illustration: Mira De Koven",
-      "cited": true,
-      "method": "figcaption-trailing"
     }
   ]
 }
