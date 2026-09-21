@@ -664,3 +664,99 @@ for (const viewport of [
     expect(metrics.insetR, 'glyphe vs bord droit').toBeGreaterThanOrEqual(14);
   });
 }
+
+function translateX(transform) {
+  const m = String(transform || '').match(/matrix\([^,]+,[^,]+,[^,]+,[^,]+,\s*([-0-9.]+)/);
+  return m ? parseFloat(m[1]) : 0;
+}
+
+async function mockWeather(page) {
+  await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => route.fulfill({
+    contentType: 'application/json',
+    headers: { 'access-control-allow-origin': '*' },
+    body: JSON.stringify(weather),
+  }));
+}
+
+test('wide : marquee sports et météo bougent avant la cascade', async ({ page }) => {
+  await mockWeather(page);
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#masthead-sports-strip .sports-chip--match').first()).toBeVisible({ timeout: 12_000 });
+  await expect(page.locator('.masthead-weather__city.is-active').nth(2)).toBeVisible({ timeout: 10_000 });
+
+  const armed = await page.evaluate(() => {
+    const chip = document.querySelector('#masthead-sports-strip .sports-chip--match');
+    const inner = chip.querySelector('.sports-chip__line-inner');
+    inner.textContent = 'Cougars (Édouard-Montpetit) 7-0 Cheetahs (André-Laurendeau)';
+    refreshSportsChipScroll(chip);
+    const city = [...document.querySelectorAll('.masthead-weather__city.is-active')]
+      .find((el) => el.dataset.weatherCity !== 'montreal' && el.dataset.weatherCity !== 'quebec');
+    city.querySelector('.masthead-weather__name-full').textContent = 'Sainte-Anne-des-Monts-et-encore';
+    measureWeatherNameOverflows();
+    scheduleWeatherCascade({ firstHold: true });
+    window.__wxCity = city.dataset.weatherCity;
+    const name = city.querySelector('.masthead-weather__name-text');
+    return {
+      sportsAnim: getComputedStyle(inner).animationName,
+      sportsScroll: parseFloat(chip.style.getPropertyValue('--sports-scroll')) || 0,
+      weatherHold: weatherBoardHoldMs(),
+      weatherOverflow: city.classList.contains('is-overflowing'),
+      weatherMax: getComputedStyle(name).maxWidth,
+      weatherAnim: getComputedStyle(name).animationName,
+    };
+  });
+  expect(armed.sportsAnim, 'marquee scores armé').toBe('sports-chip-scroll');
+  expect(armed.sportsScroll, 'décalage du texte long').toBeGreaterThan(8);
+  expect(armed.weatherOverflow, 'ville longue en défilement').toBe(true);
+  expect(armed.weatherAnim, 'marquee météo armé').toBe('weather-name-scroll');
+  expect(armed.weatherMax, 'le nom peut dépasser sa case').not.toBe('100%');
+  expect(armed.weatherHold, 'pause ≥ aller-retour + repos').toBeGreaterThanOrEqual(12000);
+
+  await page.waitForTimeout(4500);
+  const moved = await page.evaluate(() => {
+    const inner = [...document.querySelectorAll('#masthead-sports-strip .sports-chip__line-inner')]
+      .find((el) => /Laurendeau/.test(el.textContent || ''));
+    const city = document.querySelector(
+      `.masthead-weather__city.is-active[data-weather-city="${window.__wxCity}"]`,
+    );
+    const name = city?.querySelector('.masthead-weather__name-text');
+    return {
+      sportsTx: inner ? getComputedStyle(inner).transform : 'none',
+      weatherTx: name ? getComputedStyle(name).transform : 'none',
+      leaving: !!city?.classList.contains('is-leaving'),
+      id: city?.dataset.weatherCity || '',
+    };
+  });
+  expect(translateX(moved.sportsTx), `texte sports parti vers la fin (${moved.sportsTx})`).toBeLessThan(-4);
+  expect(moved.leaving, 'la ville ne part pas avant la fin du marquee').toBe(false);
+  expect(moved.id).toBeTruthy();
+  expect(translateX(moved.weatherTx), `nom météo en cours de défilement (${moved.weatherTx})`).toBeLessThan(-4);
+});
+
+test('shell 1280 : nom météo trop long défile au lieu d’une ellipse', async ({ page }) => {
+  await mockWeather(page);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.masthead-weather__city.is-active').nth(2)).toBeVisible({ timeout: 10_000 });
+  const style = await page.evaluate(() => {
+    const city = [...document.querySelectorAll('.masthead-weather__city.is-active')]
+      .find((el) => el.dataset.weatherCity !== 'montreal' && el.dataset.weatherCity !== 'quebec');
+    city.querySelector('.masthead-weather__name-full').textContent = 'Sainte-Anne-des-Monts-et-encore';
+    measureWeatherNameOverflows();
+    const name = city.querySelector('.masthead-weather__name-text');
+    const cs = getComputedStyle(name);
+    return {
+      overflow: city.classList.contains('is-overflowing'),
+      maxW: cs.maxWidth,
+      ellipsis: cs.textOverflow,
+      anim: cs.animationName,
+      hold: weatherBoardHoldMs(),
+    };
+  });
+  expect(style.overflow).toBe(true);
+  expect(style.maxW).toBe('none');
+  expect(style.ellipsis).not.toBe('ellipsis');
+  expect(style.anim).toBe('weather-name-scroll');
+  expect(style.hold).toBeGreaterThanOrEqual(12000);
+});
