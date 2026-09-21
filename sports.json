@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-21T17:08:10.660Z",
-  "fetchedAt": "2026-09-21T17:08:10.660Z",
+  "updated": "2026-09-21T19:26:18.309Z",
+  "fetchedAt": "2026-09-21T19:26:18.309Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-21T17:08:10.660Z"
+    "referenceDate": "2026-09-21T19:26:18.310Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 839,
@@ -16337,7 +16337,7 @@
         },
         {
           "date": "2027-02-06",
-          "time": "13:00",
+          "time": "15:15",
           "opponent": "Cégep de l'Outaouais",
           "opponentCode": "OUT",
           "home": false,
@@ -16538,7 +16538,7 @@
         },
         {
           "date": "2027-02-06",
-          "time": "13:00",
+          "time": "15:15",
           "opponent": "Marie-Victorin",
           "opponentCode": "CMV",
           "home": true,
@@ -27304,7 +27304,7 @@
         },
         {
           "date": "2027-02-06",
-          "time": "15:00",
+          "time": "17:15",
           "opponent": "Cégep de l'Outaouais",
           "opponentCode": "OUT",
           "home": false,
@@ -27519,7 +27519,7 @@
         },
         {
           "date": "2027-02-06",
-          "time": "15:00",
+          "time": "17:15",
           "opponent": "Montmorency",
           "opponentCode": "MON",
           "home": true,
