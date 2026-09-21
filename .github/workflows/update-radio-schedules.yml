@@ -33,24 +33,24 @@ jobs:
       - name: Collate station schedules
         run: node scripts/fetch-radio-schedules.js --update
 
+      # Toujours régénérer le SEO : le libellé « Semaine du … » est la semaine
+      # Québec courante (seo-pages-lib), pas un champ du JSON. Sans cette
+      # passe le lundi, les pages restent à la semaine précédente et
+      # static-integrity (via bot-prepush) fait échouer RSEQ / autres bots.
+      # continue-on-error : un échec du référencement ne doit jamais bloquer
+      # la publication des données de grille.
+      - name: Regenerate SEO artefacts
+        run: node scripts/generate-seo.js --update
+        continue-on-error: true
+
       - name: Check for changes
         id: check
         run: |
-          if git diff --quiet radio-schedules.json radio-schedules.seed.json; then
+          if git diff --quiet -- radio-schedules.json radio-schedules.seed.json index.html sitemap.xml llms.txt radios journaux etablissements medias horaires en; then
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
-
-      # Référencement : les pages d'entités, le sitemap et llms.txt dérivent
-      # de ce registre. Sans cette étape, une nouvelle entrée n'aurait sa page
-      # qu'à la passe hebdomadaire de maintain.yml.
-      # continue-on-error : un échec du référencement ne doit jamais bloquer
-      # la publication des données.
-      - name: Regenerate SEO artefacts
-        if: steps.check.outputs.changed == 'true'
-        run: node scripts/generate-seo.js --update
-        continue-on-error: true
 
       - name: Pre-push integrity (bot gate)
         if: steps.check.outputs.changed == 'true'
