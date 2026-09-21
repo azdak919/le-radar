@@ -1,35 +1,70 @@
 {
-  "updated": "2026-09-21T10:04:36.369Z",
+  "updated": "2026-09-21T16:03:57.360Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
-  "cited": 123,
+  "cited": 125,
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 8,
-  "citedNew": 6,
+  "checked": 23,
+  "updatedCount": 15,
+  "citedNew": 14,
   "fallbackNew": 9,
   "samples": [
     {
-      "title": "La STS redresse la barre, les usagers en doutent",
-      "source": "La Pige",
-      "credit": "Photo : Diego Pinto de Queiros",
+      "title": "Le DSM-6 ?",
+      "source": "Le Collectif",
+      "credit": "Photo : Jessica Weinkle",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Circonscriptions des personnes cheffes de parti",
+      "source": "Le Collectif",
+      "credit": "Photo : Getty images",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Débat économique de TVA",
+      "source": "Le Collectif",
+      "credit": "Photo : Publication de TVA",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Le Québec est-il polarisé ?",
+      "source": "Le Collectif",
+      "credit": "Photo : Source : Getty Images",
       "cited": true,
       "method": "body-line"
     },
     {
-      "title": "L’Odyssée mcgilloise",
-      "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
+      "title": "I Agree (But I Don’t Understand): The Legitimacy of Consent in Today’s Digital Ecosystem",
+      "source": "The McGill Daily",
+      "credit": "Photo : Eva Marriott-Fabre",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
-      "title": "La cassette commence à être usée",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "title": "Can Montreal Still Afford the title of Student City?",
+      "source": "The McGill Daily",
+      "credit": "Photo : Annabelle Premont",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Two Decades After the Tragedy",
+      "source": "The McGill Daily",
+      "credit": "Photo : Nikhila Shanker",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "AI and the ‘Syllabus Effect’",
+      "source": "The McGill Daily",
+      "credit": "Photo : Nikhila Shanker",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -41,32 +76,25 @@
       "method": null
     },
     {
+      "title": "La STS redresse la barre, les usagers en doutent",
+      "source": "La Pige",
+      "credit": "Photo : Diego Pinto de Queiros",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "L’épidémie de la nonchalance",
+      "source": "Le Délit",
+      "credit": "Photo : Elie Nguyen",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
       "title": "Unregulated but essential?",
       "source": "The Link",
       "credit": "Illustration: Mira De Koven",
       "cited": true,
       "method": "figcaption-trailing"
-    },
-    {
-      "title": "Editorial: The importance of student journalism",
-      "source": "The Link",
-      "credit": "Photo : Graphic Halle Keays",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
