@@ -309,7 +309,7 @@
           ]
         }
       },
-      "_note": "Flux RSS : dc:creator « Admin » — auteur réel dans entry-author / ?tribune_author= sur la page.",
+      "_note": "Flux RSS : dc:creator « Admin ». Byline réelle : ?tribune_author= (ancien thème), lien entry-author si ce n'est pas Admin, signature « Nom, Staff Writer » dans le corps, sinon data/byline-ledger.json (ne pas réécrire une byline déjà prouvée quand le thème redevient Admin).",
       "_status": "ok",
       "_lastItemDate": "2026-09-08T15:35:43.000Z",
       "_lastChecked": "2026-09-21T15:56:41.856Z",

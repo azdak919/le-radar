@@ -24,6 +24,7 @@ const {
   isEditorialPlaceholder,
   needsPageAuthorVerification,
   mergePriorAuthor,
+  rememberResolvedByline,
   normalizeArticleUrl,
   normalizeAuthor,
   expandAuthorName,
@@ -1113,11 +1114,13 @@ async function main() {
 
   for (let i = 0; i < all.length; i += 1) {
     const pageAuthor = pageAuthors.get(normalizeArticleUrl(all[i].link)) || '';
-    all[i] = reconcileAuthor(all[i], all, {
+    const reconciled = reconcileAuthor(all[i], all, {
       applyFallback: true,
       feedDefaults,
       pageAuthor,
-    }).item;
+    });
+    all[i] = reconciled.item;
+    rememberResolvedByline(all[i].source, all[i].link, reconciled.author);
     const imgHints = getBotHints(sourceByName.get(all[i].source), 'images');
     const imgReject = imageRejectPatternsFromHints(imgHints);
     const imgOpts = imageOptionsFromHints(imgHints);
