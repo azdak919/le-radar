@@ -1,11 +1,13 @@
 {
-  "checkedAt": "2026-09-20T01:02:11.167Z",
+  "checkedAt": "2026-09-21T01:02:08.252Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 6,
-    "drift": [],
+    "stable": 5,
+    "drift": [
+      "chyz"
+    ],
     "overhaul": [],
     "unreachable": []
   },
@@ -13,12 +15,23 @@
     {
       "id": "chyz",
       "published": 34,
-      "fresh": 34,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 39,
+      "added": [
+        "lun 18:30–19:30 Femmes de l'ombre",
+        "mar 19:00–20:00 CATHJO FAIT DE LA RADIO",
+        "mer 11:00–12:00 On en Parle",
+        "mer 18:30–19:30 3600 secondes d'histoire",
+        "mer 19:30–21:30 Funk Connection",
+        "mer 21:30–22:30 Blasphème",
+        "jeu 10:00–12:00 Sons de Cloches"
+      ],
+      "removed": [
+        "lun 20:30–21:30 La Voie des Droits",
+        "mar 18:30–20:00 Débat électoral Provicial 2026"
+      ],
+      "changed": 9,
+      "ratio": 0.265,
+      "status": "drift"
     },
     {
       "id": "cism",
