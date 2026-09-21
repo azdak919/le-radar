@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-21T20:46:52.259Z",
+  "updatedAt": "2026-09-21T23:17:13.150Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Femmes de l'ombre",
+        "source": "api-live",
+        "start": "18:30",
+        "end": "19:30",
+        "url": "https://chyz.ca/emission/femmes-de-lombre/"
+      },
       "next": {
-        "title": "Les Arshitechs du Son",
-        "source": "schedule",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        "title": "Mardi Champ Gauche",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Femmes de l'ombre",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T20:46:23.170Z"
+      "checkedAt": "2026-09-21T23:16:26.649Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les garçons pleurent aussi",
+        "title": "Les vinyles versatiles",
         "source": "schedule",
-        "start": "15:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
       },
       "next": {
-        "title": "Les criquets crinqués",
+        "title": "Mono Fred (en stéréo)",
         "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-criquets-crinques"
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/mono-fred-en-stereo"
       },
       "track": "",
-      "showTitle": "Les garçons pleurent aussi",
+      "showTitle": "Les vinyles versatiles",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T20:46:24.897Z"
+      "checkedAt": "2026-09-21T23:16:28.138Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Whose Vibe Is It Anyway",
+        "title": "Lesbo-sons",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "next": {
-        "title": "En Profondeur",
+        "title": "Underground Sounds",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "20:00",
+        "end": "22:00"
       },
       "track": "",
-      "showTitle": "Whose Vibe Is It Anyway",
+      "showTitle": "Lesbo-sons",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +81,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T20:46:27.818Z"
+      "checkedAt": "2026-09-21T23:16:30.584Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Dreamscapes",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/dreamscapes"
+        "title": "Monday Mass with Father Kate",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/monday-mass-with-father-kate"
       },
       "next": {
-        "title": "The Pressure Drop",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-pressure-drop"
+        "title": "In The Garage",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/in-the-garage"
       },
       "track": "",
-      "showTitle": "Dreamscapes",
+      "showTitle": "Monday Mass with Father Kate",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T20:46:43.601Z"
+      "checkedAt": "2026-09-21T23:17:05.686Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Solénoïde",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Ma radio Académia",
         "source": "schedule-live",
         "start": "18:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Le terrain sportif",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "00:01"
+      },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Ma radio Académia",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T20:46:44.948Z"
+      "checkedAt": "2026-09-21T23:17:06.659Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "21:00",
         "slug": "carte-blanche"
       },
-      "track": "Poison Ruin - Guts (Lay Your Self Aside)",
+      "track": "CFCF - Love Hotel",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +157,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-21T20:46:51.908Z"
+      "checkedAt": "2026-09-21T23:17:12.800Z"
     }
   }
 }
