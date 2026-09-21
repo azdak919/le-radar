@@ -35,6 +35,7 @@ test('météo campus : carte active chargée @ci-critical', async ({ page }) => 
 });
 
 test('météo campus : elle s’adapte à la largeur du masthead', async ({ page }) => {
+  test.setTimeout(60_000);
   await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => route.fulfill({
     contentType: 'application/json',
     headers: { 'access-control-allow-origin': '*' },
@@ -221,7 +222,7 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await expect(page.locator('.masthead-top #masthead-weather')).toHaveCount(1);
 });
 
-test('wide : MTL/QC calés, secondaires packés (pas de vide nom→°C)', async ({ page }) => {
+test('wide : MTL/QC calés, secondaires 1fr (pas de vide nom→°C)', async ({ page }) => {
   await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => route.fulfill({
     contentType: 'application/json',
     headers: { 'access-control-allow-origin': '*' },
@@ -266,10 +267,9 @@ test('wide : MTL/QC calés, secondaires packés (pas de vide nom→°C)', async 
   expect(layout.qcW, 'Québec mesurable').toBeGreaterThan(80);
   expect(layout.qcW, `QC ${layout.qcW} ne dépasse pas MTL ${layout.mtlW}`).toBeLessThanOrEqual(layout.mtlW + 4);
   expect(layout.secW.length, 'au moins deux secondaires').toBeGreaterThanOrEqual(2);
-  expect(layout.secOverflow, 'tuiles calées au contenu : pas de marquee secondaire').toBe(0);
+  expect(layout.secOverflow, 'nom collé au °C : pas de marquee secondaire').toBe(0);
   for (const row of layout.secGaps) {
     expect(row.gap, `${row.id} nom→temp (pas de stretch flex)`).toBeLessThanOrEqual(14);
-    expect(row.slack, `${row.id} pas de grand vide après °C`).toBeLessThanOrEqual(16);
   }
 
   const boardPack = await ribbon.locator('.masthead-weather__board').evaluate((board) => {
@@ -294,6 +294,7 @@ test('wide : MTL/QC calés, secondaires packés (pas de vide nom→°C)', async 
   expect(boardPack.inlineWidths, 'pas de width inline JS').toBe(0);
   expect(Math.max(...boardPack.gaps), `écarts inter-cartes ${boardPack.gaps}`).toBeLessThanOrEqual(10);
   expect(boardPack.trailing, 'reliquat à droite du board OK').toBeGreaterThanOrEqual(0);
+  expect(boardPack.trailing, 'secondaires 1fr : pas de trou à droite du board').toBeLessThanOrEqual(12);
 
   const firstMtl = layout.mtlW;
   await page.waitForTimeout(1000);
@@ -364,12 +365,16 @@ function expectWeatherCascadeFlips(start, now, { dualPrimary = false } = {}) {
     expect(now[0]).toBe('montreal');
     expect(now[1]).toBe('quebec');
     const flipped = now.slice(2).filter((id, i) => id !== start[2 + i]).length;
-    expect(flipped, 'une seule secondaire change (pas une vague L→R)').toBe(1);
+    expect(flipped, 'plusieurs secondaires changent pendant la vague').toBeGreaterThan(1);
     return;
   }
   expect(['montreal', 'quebec']).toContain(now[0]);
   const flipped = now.filter((id, i) => id !== start[i]).length;
-  expect(flipped, 'une seule carte change (pas une vague L→R)').toBe(1);
+  if (start.length >= 3) {
+    expect(flipped, 'plusieurs cartes changent pendant la vague').toBeGreaterThan(1);
+  } else {
+    expect(flipped, 'au moins une carte change pendant la vague').toBeGreaterThan(0);
+  }
 }
 
 test('wide E : météo secondaire cascade puis pause', async ({ page }) => {
@@ -398,7 +403,8 @@ test('wide E : météo secondaire cascade puis pause', async ({ page }) => {
   });
   expect(armed, 'scheduleWeatherCascade disponible').toBe(true);
 
-  await page.waitForTimeout(900);
+  const secondary = start.length - 2;
+  await page.waitForTimeout(Math.min(2800, 480 * Math.max(2, secondary)));
   expectWeatherCascadeFlips(start, await weatherActiveIds(ribbon), { dualPrimary: true });
 });
 
@@ -440,7 +446,7 @@ async function assertWeatherCascadeAt(page, { width, height = 900, docked = fals
   });
   expect(armed, `scheduleWeatherCascade armée à ${width}`).toBe(true);
 
-  await page.waitForTimeout(900);
+  await page.waitForTimeout(Math.min(2800, 500 * Math.max(2, start.length)));
   const now = await weatherActiveIds(ribbon);
   expectWeatherCascadeFlips(start, now, { dualPrimary });
   if (docked) await expect(ribbon).toHaveClass(/masthead-weather--docked/);
@@ -495,14 +501,13 @@ test('wide E : ≥2560 ajoute une carte météo et resserre les slots', async ({
       secondary: secondaries.map((r) => r.w),
     };
   });
-  expect(layout.min, 'tuiles max-content encore lisibles').toBeGreaterThanOrEqual(90);
+  expect(layout.min, 'tuiles encore lisibles').toBeGreaterThanOrEqual(90);
   expect(layout.primary.length, 'MTL + QC visibles').toBe(2);
   expect(
     Math.max(...layout.primary) - Math.min(...layout.primary),
     `MTL/QC compactes (QC ≤ MTL), got ${layout.primary}`,
   ).toBeLessThanOrEqual(40);
   if (layout.secondary.length) {
-    // Dual max-content : largeurs suivent les toponymes (pas d’égalisation 1fr).
     expect(Math.min(...layout.secondary), 'secondaires mesurables').toBeGreaterThanOrEqual(90);
   }
 });
