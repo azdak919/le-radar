@@ -1368,8 +1368,9 @@ function weatherBoardHoldMs() {
 }
 
 /**
- * Une ville à la fois, puis pause lecture. Pas une vague L→R qui
- * décale tout le ruban (Montréal/Québec restent les ancres).
+ * Cascade L→R des cartes rotatives, puis pause, puis une nouvelle vague.
+ * Particularités conservées dans rotateOneMastheadWeatherCard (ancres
+ * duales, MTL↔QC, index compact campus/nation).
  */
 function scheduleWeatherCascade({ firstHold = true } = {}) {
   clearMastheadWeatherTimer();
@@ -1377,29 +1378,41 @@ function scheduleWeatherCascade({ firstHold = true } = {}) {
   const slots = weatherCascadeSlots();
   if (!slots.length) return;
 
-  const tick = () => {
-    if (!weatherCascadeSlots().length) return;
-    rotateOneMastheadWeatherCard();
+  const stepMs = (sportsReducedMotion || PREFERS_REDUCED_MOTION?.matches)
+    ? 80
+    : WEATHER_CASCADE_STEP_MS;
+
+  const step = (index) => {
+    const live = weatherCascadeSlots();
+    if (!live.length) return;
+    if (index >= live.length) {
+      mastheadWeatherTimer = window.setTimeout(() => {
+        mastheadWeatherTimer = null;
+        scheduleWeatherCascade({ firstHold: false });
+      }, weatherBoardHoldMs());
+      return;
+    }
+    rotateOneMastheadWeatherCard(live[index]);
     mastheadWeatherTimer = window.setTimeout(() => {
       mastheadWeatherTimer = null;
-      scheduleWeatherCascade({ firstHold: false });
-    }, weatherBoardHoldMs());
+      step(index + 1);
+    }, stepMs);
   };
 
   if (firstHold) {
     mastheadWeatherTimer = window.setTimeout(() => {
       mastheadWeatherTimer = null;
-      tick();
+      step(0);
     }, weatherBoardHoldMs());
     return;
   }
-  tick();
+  step(0);
 }
 
 function scheduleMastheadWeatherRotate() {
   clearMastheadWeatherTimer();
   if (!MASTHEAD_WEATHER || MASTHEAD_WEATHER.classList.contains('hidden')) return;
-  // Tous les écrans : une ville, puis pause. Rien à faire si seules les ancres tiennent.
+  // Tous les écrans : vague + pause. Rien à faire si seules les ancres tiennent.
   if (!weatherCascadeSlots().length) return;
   scheduleWeatherCascade({ firstHold: true });
 }

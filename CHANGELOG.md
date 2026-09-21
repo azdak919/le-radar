@@ -8,7 +8,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 ### Corrigé
 
 - Bandeau sports du soir : un coup d’envoi déjà passé (plus de 3 h, pas en direct) n’occupe plus tout le ruban en « Aujourd’hui » sans score. Il sort du pool à-venir ; s’il a un score, il rejoint les résultats. Reliquat = scores (hier / journée), pas quatre puces « Aujourd’hui ».
-- Mât météo et sports : une carte à la fois, puis pause lecture. Plus de vague L→R à 440 ms qui faisait glisser toutes les cartes vers la droite.
+- Mât météo ≥1440 : le reliquat va aux villes secondaires (`1fr`), plus de trou à droite du board. Montréal/Québec restent calées au contenu ; le nom ne s’étire pas jusqu’au °C.
+- Mât météo et sports : vague L→R à 440 ms puis pause lecture (même cascade sur les deux bandeaux).
 
 - JSON-LD du fil : manchettes **complètes** (plus de coupe à 110 car. dans `generate-seo.js`). Une manchette longue (ACFAS) faisait diverger `index.html` de `news.json` et faisait échouer `tests/news-representations.mjs` — donc tous les bots qui passent `bot-prepush`. Guard force aussi la régénération SEO après un catch-up news ; Update Student News retente SEO une fois avant « HTML gate deferred ».
 

@@ -129,8 +129,8 @@ try {
  * (glyphe + équipes + date + heure), pas un flip nerveux type gare météo.
  *
  * Feedback prod 2026-08-11 : 4,8–8 s en rotation *parallèle* faisait « trop
- * vide » (3 slots qui tournent chacun de leur côté). Une carte à la fois
- * puis pause : le bandeau reste plein pendant le hold.
+ * vide » (3 slots qui tournent chacun de leur côté). La vague L→R puis pause
+ * évite ça : le bandeau reste plein pendant le hold.
  * Feedback prod 2026-08-29 : 9–14 s de pause après la vague = trop long.
  * Feedback prod 2026-09-01 : 7,5 s = trop nerveux ; ~9 s au repos.
  * Sans défilement : ~9–12 s selon le nombre de cartes.
@@ -154,10 +154,11 @@ const SPORTS_SCROLL_POST_PAUSE_MS = MARQUEE_REST_MS;
 /** Décalage initial entre slots pour éviter un flip simultané au 1er paint. */
 const SPORTS_SLOT_STAGGER_MS = 1100;
 /**
- * Une puce à la fois (scores + texte CTA), puis pause lecture.
+ * Vague de toutes les puces (scores + texte CTA), puis pause lecture.
  * Tous les écrans : même principe ; CTA en pause à l’appui sur tactile et
  * inchangée seulement en mouvement réduit.
- * 2026-09-19 : plus de vague L→R à 440 ms (les cartes glissaient une à une).
+ * Step assez lent pour suivre la cascade ; hold assez long pour relire le ruban
+ * sans laisser les cartes figées ~12–16 s (prod 2026-08-29).
  * 2026-09-01 : +1,5 s au repos (7,5 → 9 s). Cap 12 s seulement SANS marquee :
  * un aller-retour L→R + retour à l’origine ne doit pas être coupé.
  */
@@ -4357,9 +4358,8 @@ function sportsBoardHoldMs() {
 }
 
 /**
- * Une carte à la fois, puis pause lecture. Pas une vague L→R qui
- * décale tout le ruban (les scores disparaissaient derrière des
- * « Aujourd’hui » déjà joués).
+ * Vague L→R de toutes les cartes (y compris le texte CTA), puis pause,
+ * puis une nouvelle vague. Tous les écrans.
  * CTA sautée si tactile, motion réduite, survol ou focus (WCAG 2.2.2).
  */
 function scheduleSportsWave({ fromSlot = 0, firstWait = true } = {}) {
@@ -4375,24 +4375,26 @@ function scheduleSportsWave({ fromSlot = 0, firstWait = true } = {}) {
   if (!canSpin) return;
   sportsWaveSlot = ((fromSlot % n) + n) % n;
 
-  const tick = () => {
+  const stepMs = sportsReducedMotion ? 80 : SPORTS_CASCADE_STEP_MS;
+  const step = (index) => {
     const liveN = sportsVisible.length;
     if (liveN < 1) return;
-    let slot = ((sportsWaveSlot % liveN) + liveN) % liveN;
-    let tries = 0;
-    while (tries < liveN) {
-      const slide = sportsVisible[slot];
-      const skip = sportsCtaHoldOnLive(slide)
-        || (slide?.ctaIdle && (!sportsCtaMayRotate() || sportsCtaPaused));
-      if (!skip) break;
-      slot = (slot + 1) % liveN;
-      tries += 1;
-    }
-    if (tries >= liveN) {
+    if (index >= liveN) {
       sportsWaveTimer = window.setTimeout(() => {
         sportsWaveTimer = 0;
-        scheduleSportsWave({ fromSlot: sportsWaveSlot, firstWait: false });
+        scheduleSportsWave({ fromSlot: 0, firstWait: false });
       }, sportsBoardHoldMs());
+      return;
+    }
+    const slot = index;
+    const slide = sportsVisible[slot];
+    // Direct unique : la carte En direct ne tourne pas. Plusieurs lives : cycle.
+    if (sportsCtaHoldOnLive(slide)) {
+      sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
+      return;
+    }
+    if (slide?.ctaIdle && (!sportsCtaMayRotate() || sportsCtaPaused)) {
+      sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
       return;
     }
     rotateSportsSlot(slot);
@@ -4400,24 +4402,20 @@ function scheduleSportsWave({ fromSlot = 0, firstWait = true } = {}) {
     if (chip) {
       window.requestAnimationFrame(() => refreshSportsChipScroll(chip));
     }
-    sportsWaveSlot = (slot + 1) % liveN;
-    sportsWaveTimer = window.setTimeout(() => {
-      sportsWaveTimer = 0;
-      scheduleSportsWave({ fromSlot: sportsWaveSlot, firstWait: false });
-    }, sportsBoardHoldMs());
+    sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
   };
   if (firstWait) {
     sportsWaveTimer = window.setTimeout(() => {
       sportsWaveTimer = 0;
-      tick();
+      step(sportsWaveSlot);
     }, sportsBoardHoldMs());
     return;
   }
-  tick();
+  step(sportsWaveSlot);
 }
 
 function scheduleSportsRotate() {
-  // Une carte, pause lecture, carte suivante. CTA sautée si elle ne peut pas tourner.
+  // Vague unique L→R, tous les écrans (CTA sautée si elle ne peut pas tourner).
   scheduleSportsWave({ fromSlot: 0, firstWait: true });
 }
 
