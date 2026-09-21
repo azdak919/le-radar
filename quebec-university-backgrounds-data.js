@@ -1478,12 +1478,13 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://commons.wikimedia.org/wiki/File:%C3%89cole_Polytechnique_de_Montr%C3%A9al,_hall_d%27entr%C3%A9e_01.jpg",
     license: "CC BY-SA 4.0",
     title: "Hall d'entrée de Polytechnique Montréal",
+    focalY: 0.38,
     width: 4327,
     height: 5244,
     place: "Polytechnique Montréal",
     campus: true,
     season: "ete",
-    tags: ["campus"],
+    tags: ["campus", "mat"],
   },
   {
     url: "/assets/masthead/polytechnique-nuit-abdallahh.jpg",
@@ -1496,7 +1497,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     place: "Polytechnique Montréal",
     campus: true,
     season: "ete",
-    tags: ["campus"],
+    tags: ["campus", "mat"],
   },
   {
     url: "/assets/masthead/polytechnique-lassonde-abdallahh.jpg",
@@ -1504,12 +1505,13 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     link: "https://www.flickr.com/photos/abdallahh/4278366226",
     license: "CC BY 2.0",
     title: "Pavillon Claudette-MacKay-Lassonde, Polytechnique Montréal",
+    focalY: 0.78,
     width: 680,
     height: 1024,
     place: "Polytechnique Montréal",
     campus: true,
     season: "automne",
-    tags: ["campus"],
+    tags: ["campus", "mat"],
   },
   {
     url: "/assets/masthead/polytechnique-escalier-abdallahh.jpg",
@@ -1522,7 +1524,7 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     place: "Polytechnique Montréal",
     campus: true,
     season: "automne",
-    tags: ["campus"],
+    tags: ["campus", "mat"],
   },
   {
     url: "/assets/masthead/polytechnique-lassonde-nuit-abdallahh.jpg",
@@ -1535,6 +1537,6 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     place: "Polytechnique Montréal",
     campus: true,
     season: "hiver",
-    tags: ["campus"],
+    tags: ["campus", "mat"],
   }
 ];

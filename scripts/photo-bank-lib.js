@@ -99,11 +99,9 @@ function isMastAspectOk(p) {
   return w / h >= MAST_MIN_ASPECT;
 }
 
-/** Portrait campus → affiches seulement (11×17), pas le bandeau mât. */
+/** Un campus vertical (hall, façade) reste au mât : le cover recadre. */
 function destineCampusPhoto(p) {
-  if (!p || !isCampusTagged(p)) return p;
-  if (isMastAspectOk(p)) return p;
-  return stripMastTags(p);
+  return p;
 }
 
 function preferUrl(a, b) {

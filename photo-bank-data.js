@@ -4315,11 +4315,13 @@ const PHOTO_BANK = [
     license: "CC BY-SA 4.0",
     title: "Hall d'entrée de Polytechnique Montréal",
     place: "Polytechnique Montréal",
+    focalY: 0.38,
     width: 4327,
     height: 5244,
     season: "ete",
     campus: true,
-    tags: ["campus"],
+    tags: ["campus", "mat"],
+    surfaces: ["masthead"],
   },
   {
     url: "/assets/masthead/polytechnique-nuit-abdallahh.jpg",
@@ -4332,7 +4334,8 @@ const PHOTO_BANK = [
     height: 768,
     season: "ete",
     campus: true,
-    tags: ["campus"],
+    tags: ["campus", "mat"],
+    surfaces: ["masthead"],
   },
   {
     url: "/assets/masthead/polytechnique-lassonde-abdallahh.jpg",
@@ -4341,11 +4344,13 @@ const PHOTO_BANK = [
     license: "CC BY 2.0",
     title: "Pavillon Claudette-MacKay-Lassonde, Polytechnique Montréal",
     place: "Polytechnique Montréal",
+    focalY: 0.78,
     width: 680,
     height: 1024,
     season: "automne",
     campus: true,
-    tags: ["campus"],
+    tags: ["campus", "mat"],
+    surfaces: ["masthead"],
   },
   {
     url: "/assets/masthead/polytechnique-escalier-abdallahh.jpg",
@@ -4358,7 +4363,8 @@ const PHOTO_BANK = [
     height: 680,
     season: "automne",
     campus: true,
-    tags: ["campus"],
+    tags: ["campus", "mat"],
+    surfaces: ["masthead"],
   },
   {
     url: "/assets/masthead/polytechnique-lassonde-nuit-abdallahh.jpg",
@@ -4371,6 +4377,7 @@ const PHOTO_BANK = [
     height: 768,
     season: "hiver",
     campus: true,
-    tags: ["campus"],
+    tags: ["campus", "mat"],
+    surfaces: ["masthead"],
   }
 ];

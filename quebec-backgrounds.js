@@ -228,7 +228,7 @@
   }
 
   function isIndoorObjectSubject(bg) {
-    if (!bg) return false;
+    if (!bg || isCampusBackground(bg)) return false;
     const hay = [bg.title, bg.url, bg.link, bg.credit].filter(Boolean).join(" ");
     return INDOOR_OBJECT_RE.test(hay);
   }
@@ -256,7 +256,7 @@
   }
 
   function isNightSceneSubject(bg) {
-    if (!bg) return false;
+    if (!bg || isCampusBackground(bg)) return false;
     const hay = [bg.title, bg.url, bg.link].filter(Boolean).join(" ");
     return NIGHT_SCENE_RE.test(hay);
   }
@@ -1558,7 +1558,8 @@
       return { ok: false, reason: "too_small" };
     }
     const aspect = nw / nh;
-    if (aspect < MIN_ASPECT) {
+    const minAspect = isCampusBackground(bg) ? 0.6 : MIN_ASPECT;
+    if (aspect < minAspect) {
       return {
         ok: false,
         reason: "portrait_or_narrow",
@@ -1939,6 +1940,7 @@
       // Canot / musée : pas de ciel (bleu ni doré), bois chaud
       // Exempte heure dorée skyline (réf. Sunrise Over Montréal).
       if (
+        !isCampusBackground(bg) &&
         !goldenSilhouette &&
         skyFrac < 0.03 &&
         warmSkyFrac < 0.08 &&
@@ -1961,6 +1963,7 @@
       }
       // Nuit urbaine (lumières) ≠ lever de soleil : pas de bande de ciel chaude lumineuse
       if (
+        !isCampusBackground(bg) &&
         meanL < 0.15 &&
         sat > 0.32 &&
         !goldenSilhouette &&
@@ -1972,6 +1975,7 @@
       // Approximée par l’ensemble du crop cover (bandeau déjà centré).
       // Heure dorée : texture de skyline OK (pas des pixels de fenêtres).
       if (
+        !isCampusBackground(bg) &&
         !goldenSilhouette &&
         meanL < 0.18 &&
         sat > 0.28 &&
@@ -2003,6 +2007,7 @@
       metrics.logoBrightFrac = +logoM.brightFrac.toFixed(3);
       metrics.logoWmEdge = +logoM.wmEdge.toFixed(4);
       if (
+        !isCampusBackground(bg) &&
         !goldenSilhouette &&
         logoM.strokeFrac >= 0.75 &&
         logoM.hiLocalFrac >= 0.25 &&
@@ -2052,6 +2057,7 @@
       // Ciel bas gris + scène désaturée (aéroport / hangar / friche).
       // Ex. Les Cèdres Airport from railway track (topSat ~0.09, grey ~0.45).
       if (
+        !isCampusBackground(bg) &&
         !goldenSilhouette &&
         topSat < 0.11 &&
         topMean > 0.28 &&
@@ -2504,7 +2510,8 @@
         const nw = fallback.naturalWidth || 0;
         const nh = fallback.naturalHeight || 0;
         const aspect = nh ? nw / nh : 0;
-        if (aspect < MIN_ASPECT) {
+        const minAspect = isCampusBackground(bg) ? 0.6 : MIN_ASPECT;
+        if (aspect < minAspect) {
           _rejectAndRetry(bg, pool, {
             ok: false,
             reason: "portrait_or_narrow",

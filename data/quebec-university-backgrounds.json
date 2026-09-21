@@ -1,7 +1,7 @@
 {
   "version": 1,
   "profile": "universities",
-  "updated": "2026-09-21T19:13:03.941Z",
+  "updated": "2026-09-21T19:42:57.078Z",
   "photos": [
     {
       "id": "186769a5aeb5",
@@ -2815,13 +2815,15 @@
       "place": "Polytechnique Montréal",
       "campus": true,
       "tags": [
-        "campus"
+        "campus",
+        "mat"
       ],
       "season": "ete",
       "seasonSource": "manual",
       "seasonConfidence": 1,
       "mime": "image/jpeg",
-      "source": "commons-cat"
+      "source": "commons-cat",
+      "focalY": 0.38
     },
     {
       "id": "3ca1c6be9700",
@@ -2834,7 +2836,8 @@
       "height": 768,
       "place": "Polytechnique Montréal",
       "tags": [
-        "campus"
+        "campus",
+        "mat"
       ],
       "season": "ete",
       "mime": "image/jpeg",
@@ -2854,14 +2857,16 @@
       "height": 1024,
       "place": "Polytechnique Montréal",
       "tags": [
-        "campus"
+        "campus",
+        "mat"
       ],
       "season": "automne",
       "mime": "image/jpeg",
       "campus": true,
       "seasonSource": "manual",
       "seasonConfidence": 1,
-      "source": "flickr-cc"
+      "source": "flickr-cc",
+      "focalY": 0.78
     },
     {
       "id": "f7322ee7f041",
@@ -2874,7 +2879,8 @@
       "height": 680,
       "place": "Polytechnique Montréal",
       "tags": [
-        "campus"
+        "campus",
+        "mat"
       ],
       "season": "automne",
       "mime": "image/jpeg",
@@ -2894,7 +2900,8 @@
       "height": 768,
       "place": "Polytechnique Montréal",
       "tags": [
-        "campus"
+        "campus",
+        "mat"
       ],
       "season": "hiver",
       "mime": "image/jpeg",
