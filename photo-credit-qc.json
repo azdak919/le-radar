@@ -1,17 +1,80 @@
 {
-  "updated": "2026-09-21T05:17:40.469Z",
+  "updated": "2026-09-21T08:14:03.229Z",
   "total": 188,
-  "withImage": 174,
-  "withCredit": 174,
-  "cited": 123,
-  "pending": 7,
+  "withImage": 175,
+  "withCredit": 175,
+  "cited": 121,
+  "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 7,
-  "citedNew": 5,
-  "fallbackNew": 9,
+  "checked": 24,
+  "updatedCount": 17,
+  "citedNew": 12,
+  "fallbackNew": 12,
   "samples": [
+    {
+      "title": "Début de saison rocailleux pour le Vert & Or au football",
+      "source": "Le Collectif",
+      "credit": "Photo : Manuel Ezeta",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Les joueurs à surveiller au Phœnix de Sherbrooke pour la saison 2026-2027",
+      "source": "Le Collectif",
+      "credit": "Photo : Vincent Lévesque R",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "L’extrême droite l’emporte en Allemagne",
+      "source": "Le Collectif",
+      "credit": "Photo : Omer Messinger/Getty Images",
+      "cited": true,
+      "method": "json-ld"
+    },
+    {
+      "title": "Vos personnes candidates dans Richmond",
+      "source": "Le Collectif",
+      "credit": "Photo : compte Facebook de Bernard Sévigny",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Vos personnes candidates dans Saint-François (2/2)",
+      "source": "Le Collectif",
+      "credit": "Photo : Élections Québec",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Journée nationale de la vérité et de la réconciliation",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Vos bonnes nouvelles environnementales #39",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "À la découverte de notre assiette!",
+      "source": "Le Collectif",
+      "credit": "Photo : Fermes UPA",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Une rentrée sous le signe du plaisir de vivre",
+      "source": "Le Collectif",
+      "credit": "Photo : Centre Culturel de l’Université de Sherbrooke",
+      "cited": true,
+      "method": "body-tail"
+    },
     {
       "title": "17-year-old apprehended on Concordia’s Loyola campus",
       "source": "The Link",
@@ -32,41 +95,6 @@
       "credit": "Photo: Sean Richard",
       "cited": true,
       "method": "figcaption-trailing"
-    },
-    {
-      "title": "La STS redresse la barre, les usagers en doutent",
-      "source": "La Pige",
-      "credit": "Photo : Diego Pinto de Queiros",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "L’épidémie de la nonchalance",
-      "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Unregulated but essential?",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Editorial: The importance of student journalism",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Faire du sport sans se ruiner quand on est aux études",
-      "source": "Le Collectif",
-      "credit": "Photo : UdeS",
-      "cited": true,
-      "method": "body-tail"
     }
   ]
 }

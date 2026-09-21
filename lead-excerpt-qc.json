@@ -1,68 +1,14 @@
 {
-  "updated": "2026-09-21T05:11:01.740Z",
+  "updated": "2026-09-21T08:06:42.013Z",
   "total": 188,
-  "pool": 50,
-  "incomplete": 12,
-  "withLeadExcerpt": 83,
-  "candidates": 12,
-  "enriched": 7,
+  "pool": 53,
+  "incomplete": 15,
+  "withLeadExcerpt": 86,
+  "candidates": 15,
+  "enriched": 10,
   "failed": 1,
   "ok": true,
   "samples": [
-    {
-      "title": "17-year-old apprehended on Concordia’s Loyola campus",
-      "link": "https://thelinknewspaper.ca/article/16392",
-      "ok": true,
-      "score": 80,
-      "chars": 143,
-      "sample": "Montreal police (SPVM) say they were called around 2 p.m. to assist after the teenager had left a ho",
-      "changed": true
-    },
-    {
-      "title": "CSU votes to conduct formal review of enuf Canada contract",
-      "link": "https://thelinknewspaper.ca/article/16391",
-      "ok": true,
-      "score": 100,
-      "chars": 277,
-      "sample": "The organization began as “Waste Not, Want Not” in 2016, after its Concordia University PhD student ",
-      "changed": true
-    },
-    {
-      "title": "Happy Birthday CAEO!",
-      "link": "https://thelinknewspaper.ca/article/16389",
-      "ok": true,
-      "score": 96,
-      "chars": 256,
-      "sample": "The festivities included comedy, burlesque and drag performances, a silent auction for donated queer",
-      "changed": true
-    },
-    {
-      "title": "Mourning the mezzanine",
-      "link": "https://thelinknewspaper.ca/article/16388",
-      "ok": true,
-      "score": 100,
-      "chars": 304,
-      "sample": "The Concordia Student Union (CSU) group CSU Campaigns announced that the Concordia University admini",
-      "changed": true
-    },
-    {
-      "title": "Un débat des chef·fe·s pour la jeunesse",
-      "link": "https://quartierlibre.ca/elections-debat-des-cheffes-jeunesse/",
-      "ok": true,
-      "score": 86,
-      "chars": 400,
-      "sample": "Le grand débat des chef·fe·s de Noovo et de Crave a eu lieu le mercredi 16 septembre dernier. Quarti",
-      "changed": false
-    },
-    {
-      "title": "Antisémitisme : McGill, mauvaise élève?",
-      "link": "https://www.delitfrancais.com/2026/09/16/antisemitisme-mcgill-mauvaise-eleve/",
-      "ok": true,
-      "score": 87,
-      "chars": 400,
-      "sample": "Le 4 septembre dernier, B’nai Brith Canada publiait son Bulletin Canadien sur l’expérience étudiante",
-      "changed": false
-    },
     {
       "title": "Victoire de l’AFD en Saxe-Anhalt",
       "link": "https://www.delitfrancais.com/2026/09/16/victoire-de-lafd-en-saxe-anhalt/",
@@ -73,12 +19,66 @@
       "changed": false
     },
     {
-      "title": "Un hommage à la force de vivre",
-      "link": "https://www.delitfrancais.com/2026/09/16/un-hommage-a-la-force-de-vivre/",
+      "title": "Un divorce plus si surprenant entre le Canada et les États-Unis",
+      "link": "https://www.delitfrancais.com/2026/08/31/un-divorce-plus-si-surprenant-entre-le-canada-et-les-etats-unis/",
       "ok": true,
       "score": 100,
-      "chars": 323,
-      "sample": "Plus perturbant encore, le panneau à l’entrée indique que 2025 a été l’une des années les plus meurt",
+      "chars": 344,
+      "sample": "Son gouvernement s’est montré intransigeant face aux efforts américains qui cherchent à affaiblir le",
+      "changed": true
+    },
+    {
+      "title": "L’épidémie de la nonchalance",
+      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "ok": true,
+      "score": 96,
+      "chars": 391,
+      "sample": "À force de craindre d’être « trop » – trop sensible, trop sincère – on finit par se taire. Je me sui",
+      "changed": true
+    },
+    {
+      "title": "Isaac Del Toro remporte le Grand Prix cycliste de Montréal",
+      "link": "https://lecollectif.ca/sports-et-bien-etre/isaac-del-toro-remporte-le-grand-prix-cycliste-de-montreal/",
+      "ok": true,
+      "score": 100,
+      "chars": 274,
+      "sample": "La course, étant à sa 15 e édition cette année, était comme à l’habitude bâtie autour du circuit Mon",
+      "changed": true
+    },
+    {
+      "title": "Début de saison rocailleux pour le Vert & Or au football",
+      "link": "https://lecollectif.ca/sports-et-bien-etre/debut-de-saison-rocailleux-pour-le-vert-or-au-football/",
+      "ok": true,
+      "score": 100,
+      "chars": 339,
+      "sample": "Si le revers de 53-21 subi aux mains des puissants Carabins de l’Université de Montréal n’a pas caus",
+      "changed": true
+    },
+    {
+      "title": "Les joueurs à surveiller au Phœnix de Sherbrooke pour la saison 2026-2027",
+      "link": "https://lecollectif.ca/sports-et-bien-etre/les-joueurs-a-surveiller-au-phoenix-de-sherbrooke-pour-la-saison-2026-2027/",
+      "ok": true,
+      "score": 100,
+      "chars": 381,
+      "sample": "Lors de la parution de ce texte, la nouvelle saison de la Ligue de hockey junior Maritimes Québec (L",
+      "changed": true
+    },
+    {
+      "title": "Vos personnes candidates dans Richmond",
+      "link": "https://lecollectif.ca/societe/vos-personnes-candidates-dans-richmond/",
+      "ok": true,
+      "score": 100,
+      "chars": 274,
+      "sample": "Le changement à la tête de la CAQ se fait ressentir, principalement sur le plan de l’écoute. « Il y ",
+      "changed": true
+    },
+    {
+      "title": "Vos personnes candidates dans Saint-François (2/2)",
+      "link": "https://lecollectif.ca/edition-papier/vos-personnes-candidates-dans-saint-francois-2-2/",
+      "ok": true,
+      "score": 96,
+      "chars": 315,
+      "sample": "Avec les élections provinciales qui s’en viennent à grands pas, la majorité des candidatures sont dé",
       "changed": true
     }
   ]
