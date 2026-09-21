@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-09-21T23:17:13.150Z",
+  "updatedAt": "2026-09-21T23:48:45.267Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Femmes de l'ombre",
-        "source": "api-live",
-        "start": "18:30",
-        "end": "19:30",
-        "url": "https://chyz.ca/emission/femmes-de-lombre/"
-      },
+      "current": null,
       "next": {
         "title": "Mardi Champ Gauche",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "Femmes de l'ombre",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T23:16:26.649Z"
+      "checkedAt": "2026-09-21T23:48:20.227Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T23:16:28.138Z"
+      "checkedAt": "2026-09-21T23:48:21.708Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T23:16:30.584Z"
+      "checkedAt": "2026-09-21T23:48:23.919Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Monday Mass with Father Kate",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/monday-mass-with-father-kate"
       },
       "next": {
         "title": "In The Garage",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "20:00",
         "end": "21:00",
         "url": "http://www.cjlo.com/shows/in-the-garage"
@@ -103,12 +96,12 @@
       "track": "",
       "showTitle": "Monday Mass with Father Kate",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T23:17:05.686Z"
+      "checkedAt": "2026-09-21T23:48:38.457Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T23:17:06.659Z"
+      "checkedAt": "2026-09-21T23:48:39.464Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "21:00",
         "slug": "carte-blanche"
       },
-      "track": "CFCF - Love Hotel",
+      "track": "Birds of Prrrey - Moving Day",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-21T23:17:12.800Z"
+      "checkedAt": "2026-09-21T23:48:44.916Z"
     }
   }
 }
