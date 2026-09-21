@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-20T23:34:53.510Z",
+  "updated": "2026-09-21T09:17:55.135Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2480,15 +2480,15 @@
     "lastRun": {
       "saved": 0,
       "skipped": 0,
-      "failed": 14,
-      "stoppedEarly": false
+      "failed": 3,
+      "stoppedEarly": true
     }
   },
   "sources": {
     "Le Collectif": {
       "host": "lecollectif.ca",
       "pages": 25,
-      "checkedAt": "2026-09-14T09:14:36.128Z"
+      "checkedAt": "2026-09-21T09:16:56.930Z"
     },
     "The Tribune": {
       "host": "www.thetribune.ca",
@@ -2513,7 +2513,8 @@
     "L'Exemplaire": {
       "host": "www.exemplaire.com.ulaval.ca",
       "pages": 9,
-      "checkedAt": "2026-09-14T09:14:42.538Z"
+      "checkedAt": "2026-09-14T09:14:42.538Z",
+      "stale": true
     },
     "Quartier Libre": {
       "host": "quartierlibre.ca",
