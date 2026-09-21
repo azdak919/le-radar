@@ -1,32 +1,14 @@
 {
-  "updated": "2026-09-21T05:01:50.370Z",
+  "updated": "2026-09-21T05:11:01.740Z",
   "total": 188,
-  "pool": 53,
-  "incomplete": 10,
-  "withLeadExcerpt": 82,
-  "candidates": 10,
-  "enriched": 5,
+  "pool": 50,
+  "incomplete": 12,
+  "withLeadExcerpt": 83,
+  "candidates": 12,
+  "enriched": 7,
   "failed": 1,
   "ok": true,
   "samples": [
-    {
-      "title": "Victoire de l’AFD en Saxe-Anhalt",
-      "link": "https://www.delitfrancais.com/2026/09/16/victoire-de-lafd-en-saxe-anhalt/",
-      "ok": true,
-      "score": 96,
-      "chars": 400,
-      "sample": "Montée des extrêmes telle que celle déjà observée et largement décrite ailleurs en Europe ? Ou réel ",
-      "changed": false
-    },
-    {
-      "title": "L’épidémie de la nonchalance",
-      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
-      "ok": true,
-      "score": 96,
-      "chars": 391,
-      "sample": "À force de craindre d’être « trop » – trop sensible, trop sincère – on finit par se taire. Je me sui",
-      "changed": true
-    },
     {
       "title": "17-year-old apprehended on Concordia’s Loyola campus",
       "link": "https://thelinknewspaper.ca/article/16392",
@@ -80,6 +62,24 @@
       "chars": 400,
       "sample": "Le 4 septembre dernier, B’nai Brith Canada publiait son Bulletin Canadien sur l’expérience étudiante",
       "changed": false
+    },
+    {
+      "title": "Victoire de l’AFD en Saxe-Anhalt",
+      "link": "https://www.delitfrancais.com/2026/09/16/victoire-de-lafd-en-saxe-anhalt/",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "Montée des extrêmes telle que celle déjà observée et largement décrite ailleurs en Europe ? Ou réel ",
+      "changed": false
+    },
+    {
+      "title": "Un hommage à la force de vivre",
+      "link": "https://www.delitfrancais.com/2026/09/16/un-hommage-a-la-force-de-vivre/",
+      "ok": true,
+      "score": 100,
+      "chars": 323,
+      "sample": "Plus perturbant encore, le panneau à l’entrée indique que 2025 a été l’une des années les plus meurt",
+      "changed": true
     }
   ]
 }

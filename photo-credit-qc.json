@@ -1,16 +1,16 @@
 {
-  "updated": "2026-09-21T05:06:56.835Z",
+  "updated": "2026-09-21T05:17:40.469Z",
   "total": 188,
-  "withImage": 176,
-  "withCredit": 176,
-  "cited": 126,
-  "pending": 8,
+  "withImage": 174,
+  "withCredit": 174,
+  "cited": 123,
+  "pending": 7,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 10,
-  "citedNew": 10,
-  "fallbackNew": 8,
+  "checked": 14,
+  "updatedCount": 7,
+  "citedNew": 5,
+  "fallbackNew": 9,
   "samples": [
     {
       "title": "17-year-old apprehended on Concordia’s Loyola campus",
@@ -50,16 +50,16 @@
     {
       "title": "Unregulated but essential?",
       "source": "The Link",
-      "credit": "Illustration: Mira De Koven",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Editorial: The importance of student journalism",
       "source": "The Link",
-      "credit": "Photo : Graphic Halle Keays",
-      "cited": true,
-      "method": "figcaption-bare"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Faire du sport sans se ruiner quand on est aux études",
@@ -67,20 +67,6 @@
       "credit": "Photo : UdeS",
       "cited": true,
       "method": "body-tail"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
