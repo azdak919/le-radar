@@ -124,16 +124,16 @@
           equalBanks: true,
         })
       : null;
-  /** Ratio largeur/hauteur minimal (paysage). Sous ce seuil → rejet dur. */
+  /** Ratio largeur/hauteur minimal du bandeau (paysage). Sous ce seuil → rejet dur. */
   const MIN_ASPECT = 1.25;
   /**
-   * Résolution native mini — un mât ~1600–2560 CSS px (retina) doit rester net.
-   * Sous ces seuils le cover upscale → « grain » / pixels / JPEG blocks visibles
-   * (ex. L'Île-Perrot 982×566).
+   * Résolution native mini. 640×600 / 0,65 Mpx laisse un 1024×680.
+   * L’Île-Perrot 982×566 reste dehors. Les vignettes demandées restent à
+   * 1600 px pour la netteté, pas pour franchir ce seuil.
    */
-  const MIN_NATIVE_W = 1400;
-  const MIN_NATIVE_H = 700;
-  const MIN_NATIVE_PX = 1_200_000; // ~1.2 Mpx
+  const MIN_NATIVE_W = 640;
+  const MIN_NATIVE_H = 600;
+  const MIN_NATIVE_PX = 650_000;
   /** Ratio du bandeau mât (cover crop simulé pour l’échantillonnage). */
   const MASTHEAD_AR = 3.8;
   /** Luminance moyenne mini sur le crop (0–1, sRGB linéaire approx.). */
@@ -228,7 +228,7 @@
   }
 
   function isIndoorObjectSubject(bg) {
-    if (!bg) return false;
+    if (!bg || isCampusBackground(bg)) return false;
     const hay = [bg.title, bg.url, bg.link, bg.credit].filter(Boolean).join(" ");
     return INDOOR_OBJECT_RE.test(hay);
   }
@@ -256,7 +256,7 @@
   }
 
   function isNightSceneSubject(bg) {
-    if (!bg) return false;
+    if (!bg || isCampusBackground(bg)) return false;
     const hay = [bg.title, bg.url, bg.link].filter(Boolean).join(" ");
     return NIGHT_SCENE_RE.test(hay);
   }
@@ -398,8 +398,8 @@
   function _responsiveWidth() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const vw = (window.innerWidth || screen.width || 1280) * dpr;
-    // Mobile : 1600 (pas 1024) — assez net en retina, et évite le piège
-    // naturalWidth=1024 < MIN_NATIVE_W=1400 qui rejetait tout le pool.
+    // 1600 px : assez net en retina. Le seuil natif est plus bas (640) ;
+    // on ne demande pas une vignette de 1024 qui ramollirait le bandeau.
     if (vw <= 900) return 1600;
     if (vw <= 1600) return 1600;
     if (vw <= 2200) return 2000;
@@ -1558,7 +1558,8 @@
       return { ok: false, reason: "too_small" };
     }
     const aspect = nw / nh;
-    if (aspect < MIN_ASPECT) {
+    const minAspect = isCampusBackground(bg) ? 0.6 : MIN_ASPECT;
+    if (aspect < minAspect) {
       return {
         ok: false,
         reason: "portrait_or_narrow",
@@ -1939,6 +1940,7 @@
       // Canot / musée : pas de ciel (bleu ni doré), bois chaud
       // Exempte heure dorée skyline (réf. Sunrise Over Montréal).
       if (
+        !isCampusBackground(bg) &&
         !goldenSilhouette &&
         skyFrac < 0.03 &&
         warmSkyFrac < 0.08 &&
@@ -1961,6 +1963,7 @@
       }
       // Nuit urbaine (lumières) ≠ lever de soleil : pas de bande de ciel chaude lumineuse
       if (
+        !isCampusBackground(bg) &&
         meanL < 0.15 &&
         sat > 0.32 &&
         !goldenSilhouette &&
@@ -1972,6 +1975,7 @@
       // Approximée par l’ensemble du crop cover (bandeau déjà centré).
       // Heure dorée : texture de skyline OK (pas des pixels de fenêtres).
       if (
+        !isCampusBackground(bg) &&
         !goldenSilhouette &&
         meanL < 0.18 &&
         sat > 0.28 &&
@@ -2003,6 +2007,7 @@
       metrics.logoBrightFrac = +logoM.brightFrac.toFixed(3);
       metrics.logoWmEdge = +logoM.wmEdge.toFixed(4);
       if (
+        !isCampusBackground(bg) &&
         !goldenSilhouette &&
         logoM.strokeFrac >= 0.75 &&
         logoM.hiLocalFrac >= 0.25 &&
@@ -2052,6 +2057,7 @@
       // Ciel bas gris + scène désaturée (aéroport / hangar / friche).
       // Ex. Les Cèdres Airport from railway track (topSat ~0.09, grey ~0.45).
       if (
+        !isCampusBackground(bg) &&
         !goldenSilhouette &&
         topSat < 0.11 &&
         topMean > 0.28 &&
@@ -2504,7 +2510,8 @@
         const nw = fallback.naturalWidth || 0;
         const nh = fallback.naturalHeight || 0;
         const aspect = nh ? nw / nh : 0;
-        if (aspect < MIN_ASPECT) {
+        const minAspect = isCampusBackground(bg) ? 0.6 : MIN_ASPECT;
+        if (aspect < minAspect) {
           _rejectAndRetry(bg, pool, {
             ok: false,
             reason: "portrait_or_narrow",

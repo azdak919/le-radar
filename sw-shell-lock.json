@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v887",
+    "cache": "radar-shell-v890",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -15,21 +15,21 @@
       "feeds-page.js": "23103d49de90f8fc",
       "mobile-playback.js": "955026530d5993b0",
       "nav-shell.js": "97c086a5c1ef5bca",
-      "photo-bank-data.js": "73269d3f3412bf85",
+      "photo-bank-data.js": "610d1cb45288a823",
       "player-sync.js": "36e84f1afaff7fcb",
-      "quebec-backgrounds-data.js": "122c199cd4f1628e",
-      "quebec-backgrounds.js": "6e0d89e87fb66b33",
+      "quebec-backgrounds-data.js": "e923b809612d3423",
+      "quebec-backgrounds.js": "9a2b9c3be0fc49aa",
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
-      "quebec-nations-backgrounds-data.js": "11fbca15903973d4",
-      "quebec-university-backgrounds-data.js": "bcfb70bbfada42ba",
+      "quebec-nations-backgrounds-data.js": "4d9494a0abb84d04",
+      "quebec-university-backgrounds-data.js": "4ee2de6dbb6ede81",
       "radar-lifecycle.js": "e715a85b6cf07561",
-      "radar-news.js": "529e78ca53af5ff7",
+      "radar-news.js": "74248f3dbda9c9aa",
       "radar-sports-cta.js": "3ddfc0c55209aa25",
       "radar-state.js": "15e977a274b2b62a",
       "radar-tuner.js": "3f8f39af8869253c",
       "radar-utils.js": "4be00ce4c7faf134",
       "radar-weather.js": "bb392ff5d45baed7",
-      "scripts/campus-fallback-lib.js": "1782f0c434ee1d34",
+      "scripts/campus-fallback-lib.js": "894051fca9244711",
       "scripts/media-channels-lib.js": "c34f4336ae2caa03",
       "scripts/media-follow-store.js": "fc24810268eb10d8",
       "scripts/media-follow-ui.js": "dd5acb6d8596c6e6",
@@ -52,12 +52,12 @@
     }
   },
   "pomo/sw.js": {
-    "cache": "pomo-shell-v146",
+    "cache": "pomo-shell-v148",
     "assets": {
       "bg-rotation-lib.js": "264ab71f12434497",
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
       "install-chrome.css": "c7852ffafaa5d4b9",
-      "photo-bank-data.js": "73269d3f3412bf85",
+      "photo-bank-data.js": "610d1cb45288a823",
       "pomo/js/app.js": "a8138a1bc0e114d6",
       "pomo/js/backgrounds-data.js": "2d0226d859a86c4a",
       "pomo/js/backgrounds.js": "583851988a59e754",
@@ -77,8 +77,8 @@
       "pomo/styles/base.css": "b2d504bbe64c9141",
       "pomo/styles/layout.css": "6022df23e477bc37",
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
-      "quebec-nations-backgrounds-data.js": "11fbca15903973d4",
-      "quebec-pomo-backgrounds-data.js": "2db2dff13412f8e1",
+      "quebec-nations-backgrounds-data.js": "4d9494a0abb84d04",
+      "quebec-pomo-backgrounds-data.js": "c854b3e49177c285",
       "scripts/season-lib.js": "ff74cb33a15dc7ae",
       "translate-menu.css": "6bd5d163abf725e2",
       "translate-menu.js": "2f70f0aa5ff76db2",
@@ -86,11 +86,11 @@
     }
   },
   "solitaire/sw.js": {
-    "cache": "solitaire-shell-v84",
+    "cache": "solitaire-shell-v86",
     "assets": {
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
       "install-chrome.css": "c7852ffafaa5d4b9",
-      "photo-bank-data.js": "73269d3f3412bf85",
+      "photo-bank-data.js": "610d1cb45288a823",
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
       "solitaire/js/backgrounds-data.js": "df914f462e7db906",
       "solitaire/js/solitaire-rules.js": "c19bd4f9a851fda6",
@@ -99,7 +99,7 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v264",
+    "cache": "sports-shell-v265",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "0e0df2c60f5900e3",
@@ -114,7 +114,7 @@
       "nav-shell.js": "97c086a5c1ef5bca",
       "player-sync.js": "36e84f1afaff7fcb",
       "radar-lifecycle.js": "e715a85b6cf07561",
-      "radar-news.js": "529e78ca53af5ff7",
+      "radar-news.js": "74248f3dbda9c9aa",
       "radar-sports-cta.js": "3ddfc0c55209aa25",
       "radar-state.js": "15e977a274b2b62a",
       "radar-tuner.js": "3f8f39af8869253c",

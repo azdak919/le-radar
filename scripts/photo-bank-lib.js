@@ -99,11 +99,9 @@ function isMastAspectOk(p) {
   return w / h >= MAST_MIN_ASPECT;
 }
 
-/** Portrait campus → affiches seulement (11×17), pas le bandeau mât. */
+/** Un campus vertical (hall, façade) reste au mât : le cover recadre. */
 function destineCampusPhoto(p) {
-  if (!p || !isCampusTagged(p)) return p;
-  if (isMastAspectOk(p)) return p;
-  return stripMastTags(p);
+  return p;
 }
 
 function preferUrl(a, b) {
@@ -355,7 +353,9 @@ function materializeLegacySlices(root = DEFAULT_ROOT) {
     {
       rel: 'data/quebec-university-backgrounds.json',
       profile: 'universities',
-      pred: (p) => hasTag(p, 'campus') && hasTag(p, 'mat'),
+      // Tous les campus, y compris portraits et intérieurs sans tag mât.
+      // Le bandeau ne lit que le tag mat ; les cartes d’article lisent cette tranche.
+      pred: (p) => hasTag(p, 'campus'),
     },
     {
       rel: 'data/quebec-pomo-backgrounds.json',

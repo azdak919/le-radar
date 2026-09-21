@@ -27,11 +27,16 @@ const {
   looksFaceDetected,
 } = require('./wallpaper-subject-lib');
 
-const MIN_WIDTH = 1400;
-const MIN_HEIGHT = 700;
-const MIN_PIXELS = 1_200_000;
+const MIN_WIDTH = 640;
+const MIN_HEIGHT = 600;
+const MIN_PIXELS = 650_000;
 const MIN_ASPECT = 1.25;
+const CAMPUS_MIN_ASPECT = 0.6;
 const MIN_ASPECT_NATIONS = 1.15;
+
+/** Intérieur et nuit d’un campus : photo de lieu, pas un rejet de paysage. */
+const CAMPUS_LIFE_WORD_RE =
+  /\b(?:night|nuit|dark|interior|int[eé]rieur|interieur|indoor|cr[eé]puscule|crepuscule|twilight|after[\s-]?dark|dawn or dusk)\b/gi;
 
 const PEOPLE_RE =
   /(?:\bportrait\b|\bpeople\b|\bperson\b|\bpersons\b|\bman\b|\bwoman\b|\bmen\b|\bwomen\b|\bchild\b|\bchildren\b|\bfamily\b|\bfamille\b|\bhomme\b|\bfemme\b|\benfant\b|\bcrowd\b|\bfoule\b|\bselfie\b|\binscription on reverse\b|\bchef\b|\bchief\b|\bleder\b|\bleader\b|\bmaire\b|\bmayor\b|\bface\b|\bvisage\b|\bgroup\b|\bgroupe\b|\bmeeting\b|\br[eé]union\b)/i;
@@ -114,7 +119,11 @@ function auditPhotoHard(photo, profile = {}) {
   if (looksVernacularBuilding(photo)) reasons.push('vernacular_building');
   // bad_scene : titre/URL seulement — les descriptions Commons citent souvent
   // « museum » / « interior » pour des extérieurs (ex. Fort Listuguj).
-  if (BAD_SCENE_RE.test(short)) reasons.push('bad_scene_title');
+  // Campus : un hall ou une façade de nuit reste une photo de l’établissement.
+  const sceneHay = profile.id === 'universities'
+    ? short.replace(CAMPUS_LIFE_WORD_RE, ' ')
+    : short;
+  if (BAD_SCENE_RE.test(sceneHay)) reasons.push('bad_scene_title');
 
   const w = Number(photo.width) || 0;
   const h = Number(photo.height) || 0;
@@ -123,7 +132,8 @@ function auditPhotoHard(photo, profile = {}) {
     if (h < MIN_HEIGHT) reasons.push('low_resolution_height');
     if (w * h < MIN_PIXELS) reasons.push('low_resolution_pixels');
     const ar = w / h;
-    const minAr = profile.nations ? MIN_ASPECT_NATIONS : MIN_ASPECT;
+    const minAr = profile.nations ? MIN_ASPECT_NATIONS
+      : (profile.id === 'universities' ? CAMPUS_MIN_ASPECT : MIN_ASPECT);
     if (ar < minAr) reasons.push('portrait_or_narrow');
   }
 

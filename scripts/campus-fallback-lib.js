@@ -113,6 +113,10 @@ function campusPhotoHay(photo = {}) {
 
 function photoMatchesNeedles(photo, needles = []) {
   if (!needles.length) return false;
+  // Le lieu curaté prime. Une vue « UdeM et Polytechnique » dont le lieu est
+  // l’Université de Montréal ne sert pas de photo de Polytechnique.
+  const place = normalizeCampusKey(photo.place || '');
+  if (place) return needles.some((n) => place.includes(n));
   const hay = campusPhotoHay(photo);
   if (!hay) return false;
   return needles.some((n) => hay.includes(n));
