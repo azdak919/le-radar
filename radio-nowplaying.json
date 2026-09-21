@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21T06:18:41.970Z",
+  "updatedAt": "2026-09-21T10:57:26.900Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T06:18:16.594Z"
+      "checkedAt": "2026-09-21T10:56:59.303Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
+        "title": "Le terrain sportif",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "06:30",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/le-terrain-sportif"
       },
       "next": {
-        "title": "Le char de marge (reprise)",
+        "title": "Yallah! Lâcher prise avec Rhabibiii",
         "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/le-char-de-marge"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
       },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "Le terrain sportif",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T06:18:18.020Z"
+      "checkedAt": "2026-09-21T10:57:01.217Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Roots, Rock, Reggae",
-        "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "Adventures In Music",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Unmuted with Svetlana and Miss Trish",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Roots, Rock, Reggae",
+      "showTitle": "Adventures In Music",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T06:18:21.474Z"
+      "checkedAt": "2026-09-21T10:57:04.063Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Experiments",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/experiments"
       },
+      "next": {
+        "title": "Death of the Midrange",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/death-of-the-midrange"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Experiments",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T06:18:35.728Z"
+      "checkedAt": "2026-09-21T10:57:19.438Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T06:18:36.540Z"
+      "checkedAt": "2026-09-21T10:57:20.353Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "09:30",
         "url": "https://www.choq.ca/emissions/bitume"
       },
-      "track": "ID - lou-Adriane",
+      "track": "Denzel Curry & Kenneth Blume - DIFFERENCE",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -151,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-21T06:18:41.620Z"
+      "checkedAt": "2026-09-21T10:57:26.549Z"
     }
   }
 }
