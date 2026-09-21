@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21T00:24:10.916Z",
+  "updatedAt": "2026-09-21T05:15:47.008Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T00:23:45.714Z"
+      "checkedAt": "2026-09-21T05:15:21.525Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "London café (reprise)",
+        "title": "L'alter ego (reprise)",
         "source": "schedule",
-        "start": "20:00",
-        "end": "21:30",
-        "url": "https://cism893.ca/emissions/london-cafe"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/lalter-ego"
       },
       "next": {
-        "title": "Mix Anglo",
+        "title": "Mix franco",
         "source": "schedule",
-        "start": "21:30",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
       },
       "track": "",
-      "showTitle": "London café (reprise)",
+      "showTitle": "L'alter ego (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T00:23:47.070Z"
+      "checkedAt": "2026-09-21T05:15:23.055Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Country Classics",
+        "title": "Roots, Rock, Reggae",
         "source": "api-live",
-        "start": "20:00",
-        "end": "21:00"
+        "start": "01:00",
+        "end": "04:00"
       },
       "next": {
-        "title": "Cha Cha In Blue",
+        "title": "Adventures In Music",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "04:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Country Classics",
+      "showTitle": "Roots, Rock, Reggae",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T00:23:49.481Z"
+      "checkedAt": "2026-09-21T05:15:25.523Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Eastern Promises",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "20:30",
-        "url": "http://www.cjlo.com/shows/eastern-promises"
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "Afro Archives",
+        "title": "Experiments",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/afro-archives"
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/experiments"
       },
       "track": "",
-      "showTitle": "Eastern Promises",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T00:24:03.985Z"
+      "checkedAt": "2026-09-21T05:15:39.588Z"
     },
     "cfak": {
       "id": "cfak",
@@ -109,14 +109,14 @@
       "current": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "21:00"
+        "start": "00:01",
+        "end": "07:00"
       },
       "next": {
-        "title": "Solénoïde",
+        "title": "Folkswagen",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "00:00"
+        "start": "07:00",
+        "end": "08:00"
       },
       "track": "",
       "showTitle": "Les nuits CFAK",
@@ -126,31 +126,32 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T00:24:05.334Z"
+      "checkedAt": "2026-09-21T05:15:40.720Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Les rois de l'arène",
-        "source": "api-live",
-        "start": "05:00",
-        "end": "07:00",
-        "slug": "les-rois-de-larene"
+        "title": "Bitume",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "09:30",
+        "url": "https://www.choq.ca/emissions/bitume"
       },
-      "track": "ID - laraw",
+      "track": "ID - Velours-Velours",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-21T00:24:10.566Z"
+      "checkedAt": "2026-09-21T05:15:46.657Z"
     }
   }
 }
