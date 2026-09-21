@@ -289,7 +289,7 @@
       {
         title: 'CTA — aujourd’hui AM (victoire)',
         cta: {
-          state: 'result', tone: '#3d9a6a', tag: 'Dernière heure', glyph: '🏀',
+          state: 'result', tone: '#3d9a6a', tag: 'Derniers résultats', glyph: '🏀',
           badge: 'V', badgeMod: 'w',
           text: 'Carabins 78–71 Stingers',
           sub: '11 h 00 · Basketball universitaire',
@@ -298,7 +298,7 @@
       {
         title: 'CTA — aujourd’hui (victoire)',
         cta: {
-          state: 'result', tone: '#3d9a6a', tag: 'Dernière heure', glyph: '🏀',
+          state: 'result', tone: '#3d9a6a', tag: 'Derniers résultats', glyph: '🏀',
           badge: 'V', badgeMod: 'w',
           text: 'Carabins 78–71 Stingers',
           sub: '19 h 00 · Basketball universitaire',
@@ -307,7 +307,7 @@
       {
         title: 'CTA — aujourd’hui AM (défaite)',
         cta: {
-          state: 'result', tone: '#c45c5c', tag: 'Dernière heure', glyph: '🏒',
+          state: 'result', tone: '#c45c5c', tag: 'Derniers résultats', glyph: '🏒',
           badge: 'D', badgeMod: 'l',
           text: 'Gaiters 2–5 Redbirds',
           sub: '10 h 30 · Hockey universitaire',
@@ -316,7 +316,7 @@
       {
         title: 'CTA — aujourd’hui (défaite)',
         cta: {
-          state: 'result', tone: '#c45c5c', tag: 'Dernière heure', glyph: '🏒',
+          state: 'result', tone: '#c45c5c', tag: 'Derniers résultats', glyph: '🏒',
           badge: 'D', badgeMod: 'l',
           text: 'Gaiters 2–5 Redbirds',
           sub: '19 h 00 · Hockey universitaire',
@@ -325,7 +325,7 @@
       {
         title: 'CTA — aujourd’hui (match nul)',
         cta: {
-          state: 'result', tone: '#8fa3b0', tag: 'Dernière heure', glyph: '⚽',
+          state: 'result', tone: '#8fa3b0', tag: 'Derniers résultats', glyph: '⚽',
           badge: 'N', badgeMod: 'd',
           text: 'Rouge et Or 1–1 Carabins',
           sub: '11 h 00 · Soccer universitaire masculin',
@@ -334,7 +334,7 @@
       {
         title: 'CTA — aujourd’hui (place)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Dernière heure', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'Derniers résultats', glyph: '⛵',
           text: 'McGill 7e/12',
           sub: '14 h 00 · Voile universitaire',
         },
@@ -342,7 +342,7 @@
       {
         title: 'CTA — aujourd’hui (or)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Dernière heure', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'Derniers résultats', glyph: '⛵',
           badge: '🥇', badgeMod: 'place',
           text: 'McGill 1er/12',
           sub: '10 h 00 · Voile universitaire',
@@ -351,7 +351,7 @@
       {
         title: 'CTA — aujourd’hui (argent)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Dernière heure', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'Derniers résultats', glyph: '⛵',
           badge: '🥈', badgeMod: 'place',
           text: 'Concordia 2e/12',
           sub: '15 h 00 · Voile universitaire',
@@ -360,7 +360,7 @@
       {
         title: 'CTA — aujourd’hui (bronze)',
         cta: {
-          state: 'result', tone: '#3d6fa8', tag: 'Dernière heure', glyph: '⛵',
+          state: 'result', tone: '#3d6fa8', tag: 'Derniers résultats', glyph: '⛵',
           badge: '🥉', badgeMod: 'place',
           text: 'UdeM 3e/12',
           sub: '11 h 30 · Voile universitaire',
@@ -797,8 +797,8 @@
     ];
 
     function tagLinesHtml(tag, dateLine) {
-      if (tag === 'Dernière heure') {
-        return '<span class="sports-chip__cta-tag-lines"><span>Dernière</span><span>heure</span></span>';
+      if (tag === 'Derniers résultats') {
+        return '<span class="sports-chip__cta-tag-lines"><span>Derniers</span><span>résultats</span></span>';
       }
       if (tag === 'Prochain' && dateLine) {
         return `<span class="sports-chip__cta-tag-lines"><span>Prochain</span><span>${dateLine}</span></span>`;
@@ -871,7 +871,7 @@
       const tagLabel = tag || 'Sports';
       const lamp = state === 'live' ? 'live'
         : state === 'next' && (tagLabel === 'Aujourd’hui' || tagLabel === 'À venir') ? 'soon'
-        : tagLabel === 'Dernière heure' ? 'today'
+        : tagLabel === 'Derniers résultats' ? 'today'
         : (state === 'next' || tagLabel === 'Demain' || tagLabel === 'Prochain' || tagLabel === 'Prochain match') ? 'next'
         : state === 'result' ? 'past'
         : 'idle';
@@ -880,7 +880,7 @@
         || tagLabel === 'Prochain'
         || tagLabel === 'Prochain match'
         || tagLabel === 'Hier'
-        || tagLabel === 'Dernière heure'
+        || tagLabel === 'Derniers résultats'
         || /^\S+\s+\d{1,2}\s+\S/.test(tagLabel);
       const todayTag = tagLabel === 'Aujourd’hui' || tagLabel === 'À venir';
       const datedTag = todayTag || tagLabel === 'Demain';

@@ -165,8 +165,8 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(todayUpcoming.locator('.sports-chip__cta-sub-text')).toContainText(/Aujourd’hui/);
   await expect(page.locator('#cta-band .case').filter({ hasText: 'à venir (visiteur)' }).locator('.sports-chip__cta-sub-text')).toContainText(/Aujourd’hui/);
   await expect(page.locator('#cta-band .case').filter({ hasText: 'à venir (visiteur)' }).locator('.sports-chip__cta-tag')).toHaveText(/Aujourd[’']hui/i);
-  await expect(page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="Dernière heure"]').first()).toHaveText(/Derni[eè]re\s*heure/i);
-  await expect(page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="Dernière heure"] .sports-chip__cta-tag-lines').first().locator(':scope > span')).toHaveCount(2);
+  await expect(page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="Derniers résultats"]').first()).toHaveText(/Derniers\s*r[eé]sultats/i);
+  await expect(page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="Derniers résultats"] .sports-chip__cta-tag-lines').first().locator(':scope > span')).toHaveCount(2);
   await expect(page.locator('#cta-band .case').filter({ hasText: 'aujourd’hui AM (victoire)' }).locator('.sports-chip__cta-tag-meridiem')).toHaveCount(0);
   await expect(page.locator('#cta-band .case').filter({ hasText: 'CTA — aujourd’hui (victoire)' }).locator('.sports-chip__cta-tag-meridiem')).toHaveCount(0);
   await expect(page.locator('#cta-band .case').filter({ hasText: 'demain AM' }).locator('.sports-chip__cta-tag')).toHaveText(/^Demain$/i);
@@ -260,7 +260,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   await expect(page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="dimanche 30 août"]').first()).toBeVisible();
   await expect(page.locator('#cta-band .sports-chip__cta-tag[data-cta-tag="dimanche 30 août"] .sports-chip__cta-tag-lines').first().locator(':scope > span')).toHaveCount(2);
   await expect(page.locator('.sports-chip__cta-tag[data-cta-tag="Hier"]').first()).toBeVisible();
-  await expect(page.locator('.sports-chip__cta-tag[data-cta-tag="Dernière heure"]').first()).toBeVisible();
+  await expect(page.locator('.sports-chip__cta-tag[data-cta-tag="Derniers résultats"]').first()).toBeVisible();
   const noLed = async (sel) => page.locator(sel).first().evaluate((el) => {
     const before = getComputedStyle(el, '::before');
     return {
@@ -272,7 +272,7 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
   for (const [label, sel] of [
     ['Prochain', '.sports-chip__cta-tag[data-cta-tag="Prochain"]'],
     ['Hier', '.sports-chip__cta-tag[data-cta-tag="Hier"]'],
-    ['Dernière heure', '.sports-chip__cta-tag[data-cta-lamp="today"]'],
+    ['Derniers résultats', '.sports-chip__cta-tag[data-cta-lamp="today"]'],
     ['En direct', '.sports-chip__cta-tag[data-cta-tag="En direct"]'],
   ]) {
     const led = await noLed(sel);
@@ -304,16 +304,16 @@ test('labo cartes sports : colonne mobile, une carte, marquee L→R', async ({ p
     return { w: r.width, overflow: el.scrollWidth - el.clientWidth };
   });
   const [wProchain, wHier, wToday] = await Promise.all([
-    pillWidth('Prochain'), pillWidth('Hier'), pillWidth('Dernière heure'),
+    pillWidth('Prochain'), pillWidth('Hier'), pillWidth('Derniers résultats'),
   ]);
   const [fitHier, fitToday, fitNext] = await Promise.all([
-    pillFit('Hier'), pillFit('Dernière heure'), pillFit('Prochain'),
+    pillFit('Hier'), pillFit('Derniers résultats'), pillFit('Prochain'),
   ]);
   expect(wHier, 'Hier : pastille collée, plus de rail 8 rem').toBeLessThan(100);
-  expect(wToday, 'Dernière heure 2 lignes plus large que Hier').toBeGreaterThan(wHier);
+  expect(wToday, 'Derniers résultats 2 lignes plus large que Hier').toBeGreaterThan(wHier);
   expect(wProchain, 'Prochain + date : pastille collée').toBeLessThan(140);
   expect(fitHier.overflow, 'Hier : pas d’excédent').toBeLessThanOrEqual(1);
-  expect(fitToday.overflow, 'Dernière heure : pas d’excédent').toBeLessThanOrEqual(1);
+  expect(fitToday.overflow, 'Derniers résultats : pas d’excédent').toBeLessThanOrEqual(1);
   expect(fitNext.overflow, 'Prochain match : pas d’excédent').toBeLessThanOrEqual(1);
   await expect(page.locator('.sports-chip__cta-eyebrow--head', { hasText: /^Prochain$/ })).toHaveCount(0);
   await expect(page.locator('#cta-band .sports-chip__badge', { hasText: /^V$/ }).first()).toBeVisible();
