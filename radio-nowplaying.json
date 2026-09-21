@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-20T22:10:31.313Z",
+  "updatedAt": "2026-09-21T00:24:10.916Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Remparts de Québec",
-        "source": "api-live",
-        "start": "15:45",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Lundi Indie",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "Remparts de Québec",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-20T22:10:03.578Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Symbiose",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/symbiose"
-      },
-      "next": {
-        "title": "London café (reprise)",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "21:30",
-        "url": "https://cism893.ca/emissions/london-cafe"
-      },
-      "track": "",
-      "showTitle": "Symbiose",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-20T22:10:05.564Z"
+      "checkedAt": "2026-09-21T00:23:45.714Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "London café (reprise)",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:30",
+        "url": "https://cism893.ca/emissions/london-cafe"
+      },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "21:30",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
+      "track": "",
+      "showTitle": "London café (reprise)",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-21T00:23:47.070Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Desi Beats",
+        "title": "Country Classics",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "20:00",
+        "end": "21:00"
       },
       "next": {
-        "title": "Bluegrass Rambling",
+        "title": "Cha Cha In Blue",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "21:00",
+        "end": "23:00"
       },
       "track": "",
-      "showTitle": "Desi Beats",
+      "showTitle": "Country Classics",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-20T22:10:08.438Z"
+      "checkedAt": "2026-09-21T00:23:49.481Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Bills Country and Western Favourites",
+        "title": "Eastern Promises",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
+        "start": "20:00",
+        "end": "20:30",
+        "url": "http://www.cjlo.com/shows/eastern-promises"
       },
       "next": {
-        "title": "No Boundaries",
+        "title": "Afro Archives",
         "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/no-boundaries"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/afro-archives"
       },
       "track": "",
-      "showTitle": "Bills Country and Western Favourites",
+      "showTitle": "Eastern Promises",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-20T22:10:23.673Z"
+      "checkedAt": "2026-09-21T00:24:03.985Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-20T22:10:24.893Z"
+      "checkedAt": "2026-09-21T00:24:05.334Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "ID - Raccoon",
+      "track": "ID - laraw",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -157,7 +150,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-20T22:10:30.962Z"
+      "checkedAt": "2026-09-21T00:24:10.566Z"
     }
   }
 }
