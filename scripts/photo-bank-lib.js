@@ -355,7 +355,9 @@ function materializeLegacySlices(root = DEFAULT_ROOT) {
     {
       rel: 'data/quebec-university-backgrounds.json',
       profile: 'universities',
-      pred: (p) => hasTag(p, 'campus') && hasTag(p, 'mat'),
+      // Tous les campus, y compris portraits et intérieurs sans tag mât.
+      // Le bandeau ne lit que le tag mat ; les cartes d’article lisent cette tranche.
+      pred: (p) => hasTag(p, 'campus'),
     },
     {
       rel: 'data/quebec-pomo-backgrounds.json',

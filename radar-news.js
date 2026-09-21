@@ -3908,7 +3908,7 @@ function attachArticleImage(article, item, role) {
   loadImage(primary.src, primary.kind);
 }
 
-const LEAD_IMAGE_MIN = { width: 720, height: 405, pixels: 320000 };
+const LEAD_IMAGE_MIN = { width: 640, height: 360, pixels: 320000 };
 const FEATURE_IMAGE_MIN = { width: 640, height: 360, pixels: 240000 };
 /* Vignettes (vedettes + En bref) : affichées en ~100 px, on accepte des photos
    plus petites et des cadrages portrait — object-fit recadre de toute façon. */

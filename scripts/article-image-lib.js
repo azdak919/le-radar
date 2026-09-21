@@ -635,9 +635,9 @@ function isWeakImageUrl(raw = '', options = {}) {
   return /article-tile|size-article-tile/.test(path);
 }
 
-/** Seuils vedette : assez grands pour un hero ~800px sans pixelisation visible. */
-const LEAD_MIN_WIDTH = 720;
-const LEAD_MIN_HEIGHT = 405;
+/** Seuils vedette : une carte ~560 px. 640 px couvre un 1024 px Flickr encore net. */
+const LEAD_MIN_WIDTH = 640;
+const LEAD_MIN_HEIGHT = 360;
 const LEAD_MIN_PIXELS = 320000;
 const FEATURE_MIN_WIDTH = 640;
 const FEATURE_MIN_HEIGHT = 360;

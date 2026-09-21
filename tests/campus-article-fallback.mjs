@@ -94,9 +94,10 @@ const laval = pickCampusFallback(
   { universityPhotos },
 );
 assert.ok(laval?.url, 'Laval → photo campus');
-assert.match(laval.url, /wikimedia|upload/i, 'Laval : Commons');
+assert.match(laval.url, /wikimedia|upload|\/assets\/masthead\//i, 'Laval : photo hébergée');
+const lavalSrc = universityPhotos.find((p) => p.url === laval.url) || {};
 assert.match(
-  `${laval.title} ${laval.url} ${laval.link}`.toLowerCase(),
+  `${laval.title} ${laval.url} ${laval.link} ${lavalSrc.place || ''}`.toLowerCase(),
   /laval/,
   'Laval : la photo parle bien de Laval',
 );

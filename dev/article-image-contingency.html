@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fr-CA">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Photos Polytechnique — aperçu local</title>
+  <style>
+    html, body { margin: 0; height: 100%; }
+    body {
+      display: flex; flex-direction: column;
+      background: #141414; color: #f4f1ea;
+      font-family: Inter, system-ui, sans-serif;
+    }
+    header { display: flex; flex-direction: column; gap: 8px; padding: 10px 14px 12px; border-bottom: 1px solid rgba(255,255,255,0.12); }
+    header p { margin: 0; font-size: 13px; line-height: 1.4; color: #d9d3c7; max-width: 92rem; }
+    .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .row span { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #b7b1a6; margin-right: 4px; }
+    button {
+      appearance: none; border: 1px solid rgba(255,255,255,0.28); background: transparent;
+      color: inherit; border-radius: 999px; padding: 6px 11px; font: inherit; font-size: 13px; cursor: pointer;
+    }
+    button[aria-pressed="true"] { background: #f4f1ea; color: #141414; border-color: #f4f1ea; }
+    iframe { flex: 1; width: 100%; border: 0; background: #0e0f12; }
+  </style>
+</head>
+<body>
+  <header>
+    <p>Banque de campus après le plancher abaissé. Pour « Sur mon honneur! », le tirage retient le pavillon et son stationnement. Les autres boutons sont les photos de Polytechnique maintenant admissibles, y compris le hall.</p>
+    <div class="row">
+      <span>Article</span>
+      <button type="button" data-choice="current">Capture actuelle</button>
+      <button type="button" data-choice="parking" aria-pressed="true">Tirage : stationnement</button>
+    </div>
+    <div class="row">
+      <span>Polytechnique</span>
+      <button type="button" data-choice="entree">Entrée, hiver</button>
+      <button type="button" data-choice="montagne">Sur la montagne</button>
+      <button type="button" data-choice="hall">Hall et avion</button>
+      <button type="button" data-choice="nuit">Nuit</button>
+      <button type="button" data-choice="lassonde">Lassonde, enseigne</button>
+      <button type="button" data-choice="escalier">Escalier</button>
+      <button type="button" data-choice="lassonde-nuit">Lassonde la nuit</button>
+    </div>
+  </header>
+  <iframe id="frame" title="Fil Le Polyscope" src="/?source=Le%20Polyscope#news-list"></iframe>
+  <script>
+    const ARTICLE = '0UULVhDNL8rXrjepo479';
+    const filePath = (name) =>
+      'https://commons.wikimedia.org/wiki/Special:FilePath/' + encodeURIComponent(name) + '?width=1400';
+    const CHOICES = {
+      parking: {
+        src: filePath('École_Polytechnique_de_Montréal.jpg'),
+        creator: 'Chicoutimi', license: 'CC BY-SA 3.0',
+        href: 'https://commons.wikimedia.org/wiki/File:%C3%89cole_Polytechnique_de_Montr%C3%A9al.jpg',
+      },
+      entree: {
+        src: filePath('Exterior_of_Ecole_Polytechnique_de_Montreal.jpg'),
+        creator: 'MyName', license: 'CC BY-SA 3.0',
+        href: 'https://commons.wikimedia.org/wiki/File:Exterior_of_Ecole_Polytechnique_de_Montreal.jpg',
+      },
+      montagne: {
+        src: filePath('École_polytechnique_de_Montréal.JPG'),
+        creator: 'Laurent Bélanger', license: 'CC BY-SA 4.0',
+        href: 'https://commons.wikimedia.org/wiki/File:%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG',
+      },
+      hall: {
+        src: filePath("École_Polytechnique_de_Montréal,_hall_d'entrée_01.jpg").replace(/'/g, '%27'),
+        creator: 'Pierre5018', license: 'CC BY-SA 4.0',
+        href: 'https://commons.wikimedia.org/wiki/File:%C3%89cole_Polytechnique_de_Montr%C3%A9al,_hall_d%27entr%C3%A9e_01.jpg',
+        position: 'center 38%',
+      },
+      nuit: {
+        src: '/assets/masthead/polytechnique-nuit-abdallahh.jpg',
+        creator: 'abdallahh', license: 'CC BY 2.0',
+        href: 'https://www.flickr.com/photos/abdallahh/2080242992',
+      },
+      lassonde: {
+        src: '/assets/masthead/polytechnique-lassonde-abdallahh.jpg',
+        creator: 'abdallahh', license: 'CC BY 2.0',
+        href: 'https://www.flickr.com/photos/abdallahh/4278366226',
+        position: 'center 82%',
+      },
+      escalier: {
+        src: '/assets/masthead/polytechnique-escalier-abdallahh.jpg',
+        creator: 'abdallahh', license: 'CC BY 2.0',
+        href: 'https://www.flickr.com/photos/abdallahh/4277618293',
+        position: 'center top',
+      },
+      'lassonde-nuit': {
+        src: '/assets/masthead/polytechnique-lassonde-nuit-abdallahh.jpg',
+        creator: 'abdallahh', license: 'CC BY 2.0',
+        href: 'https://www.flickr.com/photos/abdallahh/2112955199',
+      },
+    };
+    let choice = 'parking';
+    function creditNode(doc, spec) {
+      const cap = doc.createElement('figcaption');
+      cap.className = 'article-media-credit notranslate';
+      cap.setAttribute('translate', 'no');
+      cap.appendChild(doc.createTextNode('Photo : '));
+      const a = doc.createElement('a');
+      a.className = 'article-media-credit__creator notranslate';
+      a.href = spec.href; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      a.textContent = spec.creator;
+      cap.appendChild(a);
+      cap.appendChild(doc.createTextNode(' / ' + spec.license));
+      return cap;
+    }
+    function articleIn(doc) {
+      return doc.querySelector('a.article[href*="' + ARTICLE + '"]');
+    }
+    function apply(doc) {
+      const article = articleIn(doc);
+      if (!article) return false;
+      const media = article.querySelector('.article-media');
+      const img = media && media.querySelector('img');
+      if (!img) return false;
+      if (!img.dataset.originalSrc) {
+        img.dataset.originalSrc = img.getAttribute('src') || '';
+        const cap = media.querySelector('.article-media-credit');
+        media.dataset.originalCredit = cap ? cap.outerHTML : '';
+      }
+      const spec = CHOICES[choice];
+      const wanted = spec ? spec.src : img.dataset.originalSrc;
+      const pos = spec && spec.position ? spec.position : '';
+      if (img.getAttribute('src') !== wanted || (img.dataset.appliedPos || '') !== pos) {
+        img.setAttribute('src', wanted);
+        img.alt = '';
+        img.style.objectPosition = pos;
+        img.dataset.appliedPos = pos;
+        if (!spec) {
+          article.classList.remove('article--stock-image');
+          const cap = media.querySelector('.article-media-credit');
+          if (cap) cap.remove();
+          if (media.dataset.originalCredit) media.insertAdjacentHTML('beforeend', media.dataset.originalCredit);
+        } else {
+          article.classList.add('article--stock-image', 'has-image');
+          const next = creditNode(doc, spec);
+          const cap = media.querySelector('.article-media-credit');
+          if (cap) cap.replaceWith(next); else media.appendChild(next);
+        }
+      }
+      if (!article.dataset.scrolled) {
+        article.dataset.scrolled = '1';
+        article.scrollIntoView({ block: 'center' });
+      }
+      return true;
+    }
+    document.querySelectorAll('header button').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        choice = btn.dataset.choice;
+        document.querySelectorAll('header button').forEach((b) => {
+          b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+        });
+        const doc = document.getElementById('frame').contentDocument;
+        const article = doc && articleIn(doc);
+        if (article) delete article.dataset.scrolled;
+        if (doc) apply(doc);
+      });
+    });
+    const frame = document.getElementById('frame');
+    frame.addEventListener('load', () => {
+      const doc = frame.contentDocument;
+      if (doc && doc.body && !doc.body.dataset.contingencyWatch) {
+        doc.body.dataset.contingencyWatch = '1';
+        new MutationObserver(() => apply(doc)).observe(doc.body, { childList: true, subtree: true });
+      }
+      const timer = setInterval(() => {
+        const d = frame.contentDocument;
+        if (d && apply(d) && articleIn(d)?.querySelector('img')) clearInterval(timer);
+      }, 300);
+    });
+  </script>
+</body>
+</html>

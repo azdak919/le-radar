@@ -124,16 +124,16 @@
           equalBanks: true,
         })
       : null;
-  /** Ratio largeur/hauteur minimal (paysage). Sous ce seuil → rejet dur. */
+  /** Ratio largeur/hauteur minimal du bandeau (paysage). Sous ce seuil → rejet dur. */
   const MIN_ASPECT = 1.25;
   /**
-   * Résolution native mini — un mât ~1600–2560 CSS px (retina) doit rester net.
-   * Sous ces seuils le cover upscale → « grain » / pixels / JPEG blocks visibles
-   * (ex. L'Île-Perrot 982×566).
+   * Résolution native mini. 640×600 / 0,65 Mpx laisse un 1024×680.
+   * L’Île-Perrot 982×566 reste dehors. Les vignettes demandées restent à
+   * 1600 px pour la netteté, pas pour franchir ce seuil.
    */
-  const MIN_NATIVE_W = 1400;
-  const MIN_NATIVE_H = 700;
-  const MIN_NATIVE_PX = 1_200_000; // ~1.2 Mpx
+  const MIN_NATIVE_W = 640;
+  const MIN_NATIVE_H = 600;
+  const MIN_NATIVE_PX = 650_000;
   /** Ratio du bandeau mât (cover crop simulé pour l’échantillonnage). */
   const MASTHEAD_AR = 3.8;
   /** Luminance moyenne mini sur le crop (0–1, sRGB linéaire approx.). */
@@ -398,8 +398,8 @@
   function _responsiveWidth() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const vw = (window.innerWidth || screen.width || 1280) * dpr;
-    // Mobile : 1600 (pas 1024) — assez net en retina, et évite le piège
-    // naturalWidth=1024 < MIN_NATIVE_W=1400 qui rejetait tout le pool.
+    // 1600 px : assez net en retina. Le seuil natif est plus bas (640) ;
+    // on ne demande pas une vignette de 1024 qui ramollirait le bandeau.
     if (vw <= 900) return 1600;
     if (vw <= 1600) return 1600;
     if (vw <= 2200) return 2000;

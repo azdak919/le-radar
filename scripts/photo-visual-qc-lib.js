@@ -20,8 +20,8 @@ const {
 } = require('./religious-facade-lib');
 
 /** Aligné sur article-image-lib (vedette). */
-const LEAD_MIN_WIDTH = 720;
-const LEAD_MIN_HEIGHT = 405;
+const LEAD_MIN_WIDTH = 640;
+const LEAD_MIN_HEIGHT = 360;
 const LEAD_MIN_PIXELS = 320_000;
 
 /**

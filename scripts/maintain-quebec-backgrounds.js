@@ -98,6 +98,8 @@ function readMaxBankArg() {
 }
 const MAX_BANK = readMaxBankArg();
 const MIN_ASPECT = 1.25;
+/** Campus : un hall ou une façade verticale reste une photo de lieu. */
+const CAMPUS_MIN_ASPECT = 0.6;
 /**
  * Inventaire multi-saisons **permanent** (JSON git + *-data.js shell = « serveur »).
  * Le runtime ne re-découvre jamais : il tire dans cette banque.
@@ -122,12 +124,14 @@ const SEASON6_MIN_NATIONS = {
 /** Banque favorites manuelle — URLs jamais purgées par ce bot. */
 const FAVORITES_JSON = path.join(ROOT, 'data', 'quebec-favorites-backgrounds.json');
 /**
- * Résolution native mini — mât / pomo plein écran retina.
- * Sous ~1.2 Mpx / 1400 px de large, le cover upscale montre du grain.
+ * Résolution native mini.
+ * 640×600 et 0,65 Mpx laissent entrer un 1024×680 (Flickr) ou un 680×1024.
+ * L’Île-Perrot 982×566 reste dehors (hauteur et pixels).
+ * Le bandeau refuse toujours un portrait (MIN_ASPECT). Les cartes d’article, non.
  */
-const MIN_WIDTH = 1400;
-const MIN_HEIGHT = 700;
-const MIN_PIXELS = 1_200_000;
+const MIN_WIDTH = 640;
+const MIN_HEIGHT = 600;
+const MIN_PIXELS = 650_000;
 const UA = 'LeRadar-bg-maintain/1.3 (https://le-radar.ca; multi-season permanent inventory)';
 
 function readProfileArg() {
@@ -258,29 +262,32 @@ function landscapeDiscoveryQueries(sessionId) {
 
 function universityDiscoveryQueries(sessionId) {
   const core = [
-    'McGill University campus exterior -interior -night -portrait -people',
+    'McGill University campus -portrait -people',
     'McGill University Arts Building exterior -winter',
     'Roddick Gates McGill',
-    'Université de Montréal campus exterior -interior -night',
+    'Université de Montréal campus -portrait -people',
     'Pavillon Roger-Gaudry Université de Montréal',
-    'Concordia University campus exterior Montreal -interior',
+    'Concordia University campus Montreal -portrait -people',
     'Henry F Hall Building Concordia exterior',
     'Loyola Campus Concordia University exterior',
-    'Université Laval campus Québec exterior -interior -night',
-    'Université de Sherbrooke campus exterior -interior',
-    "Bishop's University campus exterior -interior",
-    'UQAM campus exterior Montreal -interior',
+    'Université Laval campus Québec -portrait -people',
+    'Université de Sherbrooke campus -portrait -people',
+    "Bishop's University campus -portrait -people",
+    'UQAM campus Montreal -portrait -people',
     'Pavillon Judith-Jasmin UQAM',
-    'UQTR campus exterior Trois-Rivières',
-    'UQAC campus Chicoutimi exterior',
-    'UQAR campus Rimouski exterior',
-    'UQO campus Gatineau exterior',
-    'UQAT campus exterior',
-    'Polytechnique Montréal campus exterior',
-    'École de technologie supérieure campus exterior Montréal',
-    'HEC Montréal campus exterior',
-    'INRS campus Québec exterior',
-    'ENAP Québec campus exterior',
+    'UQTR campus Trois-Rivières',
+    'UQAC campus Chicoutimi',
+    'UQAR campus Rimouski',
+    'UQO campus Gatineau',
+    'UQAT campus',
+    'Polytechnique Montréal campus',
+    'Polytechnique Montréal hall intérieur -people -portrait',
+    'École de technologie supérieure campus Montréal',
+    'HEC Montréal campus',
+    'INRS campus Québec',
+    'ENAP Québec campus',
+    'bibliothèque universitaire Québec intérieur -people -portrait',
+    'campus universitaire Québec atrium intérieur -people -portrait',
   ];
   const bySession = {
     automne: [
@@ -543,11 +550,16 @@ function looksPeopleHeavy(entry) {
   return PEOPLE_RE.test(hay);
 }
 
-function looksBadSceneTitle(entry) {
+/** Intérieur et nuit d’un campus : photo de lieu, pas un rejet de paysage. */
+const CAMPUS_LIFE_WORD_RE =
+  /\b(?:night|nuit|dark|interior|int[eé]rieur|interieur|indoor|cr[eé]puscule|crepuscule|twilight|after[\s-]?dark|dawn or dusk)\b/gi;
+
+function looksBadSceneTitle(entry, { campus = false } = {}) {
   const hay = [entry.title, entry.url, entry.link, entry.description, entry.categories]
     .filter(Boolean)
     .join(' ');
-  return BAD_SCENE_RE.test(hay);
+  if (!campus) return BAD_SCENE_RE.test(hay);
+  return BAD_SCENE_RE.test(hay.replace(CAMPUS_LIFE_WORD_RE, ' '));
 }
 
 function looksNonImage(entry) {
@@ -627,7 +639,9 @@ function textGate(
   if (looksVernacularBuilding(entry)) {
     return { ok: false, reason: 'vernacular_building' };
   }
-  if (looksBadSceneTitle(entry)) return { ok: false, reason: 'bad_scene_title' };
+  if (looksBadSceneTitle(entry, { campus: PROFILE.id === 'universities' })) {
+    return { ok: false, reason: 'bad_scene_title' };
+  }
   if (!isAllowedLicense(entry.license || '')) return { ok: false, reason: 'license' };
   if (requireCampus && !looksCampusSubject(entry)) {
     return { ok: false, reason: 'not_campus_subject' };
@@ -650,8 +664,10 @@ function dimensionGate(entry) {
     if (h < MIN_HEIGHT) return { ok: false, reason: 'low_resolution_height' };
     if (w * h < MIN_PIXELS) return { ok: false, reason: 'low_resolution_pixels' };
     const ar = w / h;
-    // Nations : orthophotos aériennes parfois ~1.2:1 (ex. Oujé-Bougoumou)
-    const minAr = PROFILE.id === 'nations' ? 1.2 : MIN_ASPECT;
+    // Nations : orthophotos aériennes parfois ~1.2:1 (ex. Oujé-Bougoumou).
+    // Campus : hall et façade verticale admis. Le bandeau, lui, reste paysage.
+    const minAr = PROFILE.id === 'nations' ? 1.2
+      : (PROFILE.id === 'universities' ? CAMPUS_MIN_ASPECT : MIN_ASPECT);
     if (ar < minAr) return { ok: false, reason: 'portrait_or_narrow' };
     entry.aspect = Math.round(ar * 1000) / 1000;
   }
@@ -1178,7 +1194,7 @@ function writeJsExport(photos) {
  * Politique : pas de religieux institutionnel ; nations du Québec OK ;
  * pas de personnes reconnaissables ; plafond ${MAX_BANK} ; ménage 1×/session univ.
  * Inventaire multi-saisons permanent (planchers SEASON_MIN) — pas de re-discovery runtime.
- * Résolution mini ~1400×700 / 1.2 Mpx (anti-grain upscale).
+ * Résolution mini ~640×600 / 0,65 Mpx. Portrait réservé aux cartes campus.
  * focalY optionnel (0=haut, 1=bas) pour cover crop.
  * Hard-ban : scripts/quebec-backgrounds-blacklist.js
  */
