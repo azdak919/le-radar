@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-21T10:57:26.900Z",
+  "updatedAt": "2026-09-21T12:47:53.666Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Lundi Indie",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
       },
+      "next": {
+        "title": "K-C'EST ÇA ?",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://chyz.ca/emission/k-cest-ca/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Lundi Indie",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T10:56:59.303Z"
+      "checkedAt": "2026-09-21T12:47:25.606Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le terrain sportif",
-        "source": "schedule",
-        "start": "06:30",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/le-terrain-sportif"
-      },
-      "next": {
         "title": "Yallah! Lâcher prise avec Rhabibiii",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
       },
+      "next": {
+        "title": "La collation",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
+      },
       "track": "",
-      "showTitle": "Le terrain sportif",
+      "showTitle": "Yallah! Lâcher prise avec Rhabibiii",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T10:57:01.217Z"
+      "checkedAt": "2026-09-21T12:47:27.395Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Adventures In Music",
+        "title": "Le Lendemain de la veille",
         "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "Unmuted with Svetlana and Miss Trish",
+        "title": "Latin Music Mondays",
         "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "track": "",
-      "showTitle": "Adventures In Music",
+      "showTitle": "Le Lendemain de la veille",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T10:57:04.063Z"
+      "checkedAt": "2026-09-21T12:47:30.318Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,32 +108,32 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T10:57:19.438Z"
+      "checkedAt": "2026-09-21T12:47:45.503Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Palmarès CFAK",
         "source": "schedule-live",
-        "start": "00:01",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "Solénoïde",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "09:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T10:57:20.353Z"
+      "checkedAt": "2026-09-21T12:47:46.225Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "09:30",
         "url": "https://www.choq.ca/emissions/bitume"
       },
-      "track": "Denzel Curry & Kenneth Blume - DIFFERENCE",
+      "track": "Truck Violence - New Jesus",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -151,7 +158,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-21T10:57:26.549Z"
+      "checkedAt": "2026-09-21T12:47:53.315Z"
     }
   }
 }
