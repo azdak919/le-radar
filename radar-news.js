@@ -3121,7 +3121,17 @@ function ensureLeadTitleAboveMedia(article) {
 const WEAK_IMAGE_PATH = /article-tile|size-article-tile/;
 
 /** Aligné sur scripts/article-image-lib.js GLOBAL_IMAGE_REJECT_RE */
-const GLOBAL_IMAGE_REJECT_RE = /(?:logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic|article-tile|size-article-tile|thumbnail|thumb_|recent-posts|wp-block-query|widget|sponsor|banner|social-share|-150x\d+\.|cropped-logo|logoexile|121330814_121456603062023_8783413434532337259_n|(?:^|\/)daily\.png$|editorial[_-]|(?:^|\/)editorial(?:s)?(?:[_./-]|$)|画板|%e7%94%bb%e6%9d%bf|_optimized_optimized_optimized|00\.graphics\.csu\.naya_hachwa)/i;
+const GLOBAL_IMAGE_REJECT_RE = /(?:logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic|article-tile|size-article-tile|thumbnail|thumb_|recent-posts|wp-block-query|widget|sponsor|banner|social-share|-150x\d+\.|cropped-logo|logoexile|121330814_121456603062023_8783413434532337259_n|(?:^|\/)daily\.png$|editorial[_-]|(?:^|\/)editorial(?:s)?(?:[_./-]|$)|画板|%e7%94%bb%e6%9d%bf|_optimized_optimized_optimized|00\.graphics\.csu\.naya_hachwa|antidote|banni[eè]re|pub_agenda|jlc-ad)/i;
+
+function articleImagePathRejected(raw = '') {
+  const src = String(raw || '').trim();
+  if (!src) return false;
+  let path = src.toLowerCase();
+  try {
+    path = decodeURIComponent(new URL(src, 'https://le-radar.ca/').pathname).toLowerCase();
+  } catch { /* chaîne brute */ }
+  return GLOBAL_IMAGE_REJECT_RE.test(path);
+}
 
 function isFallbackImageUrl(raw = '') {
   const src = String(raw).trim();
@@ -3325,6 +3335,7 @@ function isThumbRoleName(role = '') {
 }
 
 function hasUsablePhoto(item, role = 'lead') {
+  if (articleImagePathRejected(item?.image)) return false;
   if (hasLocalPhoto(item)) return true;
   const forThumb = isThumbRoleName(role);
   return !!getCandidateImage(item?.image, { forThumb });
@@ -3440,7 +3451,7 @@ function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
   if (shouldPreferStockPhoto(item, role)) preferPhoto = false;
 
   // 1) Photo d’article : miroir local, puis URL source (hôte fragile inclus).
-  if (preferPhoto && hasLocalPhoto(item)) {
+  if (preferPhoto && hasLocalPhoto(item) && !articleImagePathRejected(item?.image)) {
     return { src: resolveLocalPhotoUrl(item), kind: 'photo' };
   }
   if (preferPhoto && getCandidateImage(item?.image, { forThumb })) {
@@ -3460,7 +3471,7 @@ function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
   }
   if (!preferPhoto) {
     const local = resolveLocalPhotoUrl(item);
-    if (local) return { src: local, kind: 'photo' };
+    if (local && !articleImagePathRejected(item?.image)) return { src: local, kind: 'photo' };
     if (getCandidateImage(item?.image, { forThumb })) {
       return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
     }
@@ -3487,7 +3498,7 @@ function photoDisplayRungs(item = {}, { forThumb = false } = {}) {
     rungs.push({ src: href, kind: 'photo', rung });
   };
   const local = resolveLocalPhotoUrl(item);
-  if (local) push(local, 'local');
+  if (local && !articleImagePathRejected(item?.image)) push(local, 'local');
   const remote = getCandidateImage(item?.image, { forThumb });
   if (remote) push(remote, 'origin');
   const photon = withPhotonImageUrl(item?.image || remote || '');
@@ -3742,7 +3753,89 @@ function buildMediaCreditElement(item = {}) {
   return cap;
 }
 
+/**
+ * Capture d’écran presque blanche (portail, formulaire) : le cover 3:2
+ * coupe le début des lignes et laisse le blanc du haut. On recadre sur
+ * l’encre et on ancre à gauche pour que le texte remplisse le cadre.
+ */
+function documentContentViewBox(img) {
+  const sampleW = 80;
+  const sampleH = 44;
+  const canvas = document.createElement('canvas');
+  canvas.width = sampleW;
+  canvas.height = sampleH;
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  if (!ctx) return null;
+  try {
+    ctx.drawImage(img, 0, 0, sampleW, sampleH);
+  } catch {
+    return null;
+  }
+  let pixels;
+  try {
+    pixels = ctx.getImageData(0, 0, sampleW, sampleH).data;
+  } catch {
+    return null;
+  }
+  const lumAt = (x, y) => {
+    const o = (y * sampleW + x) * 4;
+    return 0.2126 * pixels[o] + 0.7152 * pixels[o + 1] + 0.0722 * pixels[o + 2];
+  };
+  const corners = [
+    lumAt(1, 1),
+    lumAt(sampleW - 2, 1),
+    lumAt(1, sampleH - 2),
+    lumAt(sampleW - 2, sampleH - 2),
+  ];
+  const bg = corners.reduce((sum, value) => sum + value, 0) / corners.length;
+  if (bg < 228) return null;
+  const ink = (x, y) => Math.abs(lumAt(x, y) - bg) > 22;
+  let minX = sampleW;
+  let minY = sampleH;
+  let maxX = -1;
+  let maxY = -1;
+  let count = 0;
+  for (let y = 0; y < sampleH; y += 1) {
+    for (let x = 0; x < sampleW; x += 1) {
+      if (!ink(x, y)) continue;
+      count += 1;
+      if (x < minX) minX = x;
+      if (y < minY) minY = y;
+      if (x > maxX) maxX = x;
+      if (y > maxY) maxY = y;
+    }
+  }
+  if (count < sampleW * sampleH * 0.012 || maxX < 0) return null;
+  minX = Math.max(0, minX - 1);
+  minY = Math.max(0, minY - 1);
+  maxX = Math.min(sampleW - 1, maxX + 1);
+  maxY = Math.min(sampleH - 1, maxY + 1);
+  const x0 = minX / sampleW;
+  const y0 = minY / sampleH;
+  const x1 = (maxX + 1) / sampleW;
+  const y1 = (maxY + 1) / sampleH;
+  if (y0 < 0.14 && x0 < 0.06) return null;
+  return { x0, y0, x1, y1 };
+}
+
+function applyDocumentContentCrop(img) {
+  if (!img || img.dataset.docCrop === '1') return;
+  const box = documentContentViewBox(img);
+  if (!box) return;
+  img.dataset.docCrop = '1';
+  img.classList.add('is-doc-crop');
+  const top = (box.y0 * 100).toFixed(2);
+  const right = ((1 - box.x1) * 100).toFixed(2);
+  const bottom = ((1 - box.y1) * 100).toFixed(2);
+  const left = (box.x0 * 100).toFixed(2);
+  if (typeof CSS !== 'undefined' && CSS.supports('object-view-box', 'inset(0% 0% 0% 0%)')) {
+    img.style.objectViewBox = `inset(${top}% ${right}% ${bottom}% ${left}%)`;
+  }
+  img.style.objectPosition = 'left center';
+}
+
 function showArticleImage(article, media, img, kind, item) {
+  if (kind === 'photo') applyDocumentContentCrop(img);
   media.replaceChildren(img);
   let cap = null;
   if (kind === 'photo') {

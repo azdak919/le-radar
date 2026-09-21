@@ -25,6 +25,9 @@ const {
   imageRejectPatternsFromHints,
   isPathDemoted,
   isBannerLikeRatio,
+  isCandidateImageUrl,
+  listArticleImageCandidates,
+  meetsArticleKeepSize,
   cardFitBonus,
   captionLooksLikeCampaignGraphic,
   compareLeadCandidates,
@@ -398,6 +401,41 @@ assert(
   ) > 0,
   'score og élevé ne bat pas une photo mieux cadrée',
 );
+
+// ── Pub in-article (Le Collectif / Antidote) vs photo éditoriale courte ──
+const ANTIDOTE = 'https://lecollectif.ca/wp-content/uploads/2026/09/antidote-banniere-JLC-1920x1005_2026@2x-scaled.jpg';
+const AGENDA = 'https://lecollectif.ca/wp-content/uploads/2026/09/pub_agenda_lecollectif.png';
+const DSM = 'https://lecollectif.ca/wp-content/uploads/2026/09/SOCIETE_DSM_SourceJessicaWeinkle.jpg';
+const collectifAdHtml = `<!doctype html><html><head>
+  <meta property="og:image" content="${DSM}" />
+  <meta property="og:image:width" content="540" />
+  <meta property="og:image:height" content="438" />
+  </head><body><main><article><div class="entry-content">
+  <p>${'Les manuels du DSM servent à classer et décrire les troubles. '.repeat(4)}</p>
+  <figure class="wp-block-image"><img width="540" height="438" src="${DSM}" alt="Flacon" />
+  <figcaption>Photo : Jessica Weinkle</figcaption></figure>
+  <div id="jlc-ad-rotation">
+    <div class="jlc-ad"><a href="https://usherbrooke.coop/fr/boutique/categories/logiciels-7981">
+      <img src="${ANTIDOTE}" alt="Antidote"></a></div>
+    <div class="jlc-ad"><a href="https://www.facebook.com/Archives.LeCollectif">
+      <img src="${AGENDA}" alt="Le Collectif"></a></div>
+  </div>
+  </div></article></main></body></html>`;
+const adPick = imageFromArticleHtml(collectifAdHtml, [], {}, 'https://lecollectif.ca/societe/le-dsm-6/');
+assert(/JessicaWeinkle/i.test(adPick.url), `photo DSM retenue, pas la pub (got ${adPick.url})`);
+assert(
+  !listArticleImageCandidates(collectifAdHtml, [], {}, 'https://lecollectif.ca/societe/le-dsm-6/')
+    .some((c) => /antidote|pub_agenda/i.test(c.url)),
+  'les créas Antidote / agenda ne sont pas candidates',
+);
+assert(!isCandidateImageUrl(ANTIDOTE), 'URL Antidote rejetée');
+assert(!isCandidateImageUrl(AGENDA), 'URL pub_agenda rejetée');
+assert(
+  needsImageEnrichment({ link: 'https://lecollectif.ca/societe/le-dsm-6/', image: ANTIDOTE, leadImageReady: true }),
+  'une une déjà collée sur la pub est re-scrapée',
+);
+assert(meetsArticleKeepSize(540, 438), '540×438 (og Collectif) reste une photo d’article');
+assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé comme photo courte');
 
 if (failed) {
   console.error(`\n${failed} failure(s)`);
