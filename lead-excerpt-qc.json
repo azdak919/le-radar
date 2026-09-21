@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-21T00:27:21.228Z",
+  "updated": "2026-09-21T05:01:50.370Z",
   "total": 188,
   "pool": 53,
-  "incomplete": 5,
+  "incomplete": 10,
   "withLeadExcerpt": 82,
-  "candidates": 5,
-  "enriched": 0,
+  "candidates": 10,
+  "enriched": 5,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -19,12 +19,48 @@
       "changed": false
     },
     {
-      "title": "Rassembler pour mieux diviser",
-      "link": "https://www.delitfrancais.com/2026/03/25/rassembler-pour-mieux-diviser/",
+      "title": "L’épidémie de la nonchalance",
+      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "ok": true,
+      "score": 96,
+      "chars": 391,
+      "sample": "À force de craindre d’être « trop » – trop sensible, trop sincère – on finit par se taire. Je me sui",
+      "changed": true
+    },
+    {
+      "title": "17-year-old apprehended on Concordia’s Loyola campus",
+      "link": "https://thelinknewspaper.ca/article/16392",
+      "ok": true,
+      "score": 80,
+      "chars": 143,
+      "sample": "Montreal police (SPVM) say they were called around 2 p.m. to assist after the teenager had left a ho",
+      "changed": true
+    },
+    {
+      "title": "CSU votes to conduct formal review of enuf Canada contract",
+      "link": "https://thelinknewspaper.ca/article/16391",
       "ok": true,
       "score": 100,
-      "chars": 344,
-      "sample": "Cela fait maintenant presque six mois que notre cher ministre de la Justice, Simon Jolin-Barrette, a",
+      "chars": 277,
+      "sample": "The organization began as “Waste Not, Want Not” in 2016, after its Concordia University PhD student ",
+      "changed": true
+    },
+    {
+      "title": "Happy Birthday CAEO!",
+      "link": "https://thelinknewspaper.ca/article/16389",
+      "ok": true,
+      "score": 96,
+      "chars": 256,
+      "sample": "The festivities included comedy, burlesque and drag performances, a silent auction for donated queer",
+      "changed": true
+    },
+    {
+      "title": "Mourning the mezzanine",
+      "link": "https://thelinknewspaper.ca/article/16388",
+      "ok": true,
+      "score": 100,
+      "chars": 304,
+      "sample": "The Concordia Student Union (CSU) group CSU Campaigns announced that the Concordia University admini",
       "changed": true
     },
     {
@@ -43,15 +79,6 @@
       "score": 87,
       "chars": 400,
       "sample": "Le 4 septembre dernier, B’nai Brith Canada publiait son Bulletin Canadien sur l’expérience étudiante",
-      "changed": false
-    },
-    {
-      "title": "McGill Students Demand an Academic Boycott of Israeli Institution Partnership",
-      "link": "https://www.mcgilldaily.com/2026/09/mcgill-students-demand-an-academic-boycott-of-israeli-institution-partnership/",
-      "ok": true,
-      "score": 77,
-      "chars": 400,
-      "sample": "While the exchange program fact sheet for the 2026-2027 exchange year is available on the McGill Abr",
       "changed": false
     }
   ]

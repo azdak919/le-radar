@@ -1,23 +1,37 @@
 {
-  "updated": "2026-09-21T00:32:03.487Z",
+  "updated": "2026-09-21T05:06:56.835Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
-  "cited": 125,
+  "cited": 126,
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 7,
-  "citedNew": 7,
+  "checked": 18,
+  "updatedCount": 10,
+  "citedNew": 10,
   "fallbackNew": 8,
   "samples": [
     {
-      "title": "Rassembler pour mieux diviser",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "title": "17-year-old apprehended on Concordia’s Loyola campus",
+      "source": "The Link",
+      "credit": "Photo: Manoj Subramaniam",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Happy Birthday CAEO!",
+      "source": "The Link",
+      "credit": "Photo : Elliot Huneault",
+      "cited": true,
+      "method": "figcaption"
+    },
+    {
+      "title": "Mourning the mezzanine",
+      "source": "The Link",
+      "credit": "Photo: Sean Richard",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "La STS redresse la barre, les usagers en doutent",
@@ -25,6 +39,13 @@
       "credit": "Photo : Diego Pinto de Queiros",
       "cited": true,
       "method": "body-line"
+    },
+    {
+      "title": "L’épidémie de la nonchalance",
+      "source": "Le Délit",
+      "credit": "Photo : Elie Nguyen",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "Unregulated but essential?",
