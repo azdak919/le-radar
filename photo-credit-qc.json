@@ -1,16 +1,16 @@
 {
-  "updated": "2026-09-20T22:18:36.599Z",
+  "updated": "2026-09-21T00:24:06.327Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
-  "cited": 123,
+  "cited": 125,
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 5,
-  "citedNew": 3,
-  "fallbackNew": 10,
+  "checked": 14,
+  "updatedCount": 6,
+  "citedNew": 6,
+  "fallbackNew": 8,
   "samples": [
     {
       "title": "La STS redresse la barre, les usagers en doutent",
@@ -20,25 +20,18 @@
       "method": "body-line"
     },
     {
-      "title": "L’épidémie de la nonchalance",
-      "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
       "title": "Unregulated but essential?",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Illustration: Mira De Koven",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "Editorial: The importance of student journalism",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Graphic Halle Keays",
+      "cited": true,
+      "method": "figcaption-bare"
     },
     {
       "title": "Faire du sport sans se ruiner quand on est aux études",
@@ -46,6 +39,20 @@
       "credit": "Photo : UdeS",
       "cited": true,
       "method": "body-tail"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
