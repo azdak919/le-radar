@@ -20,9 +20,9 @@ La copie de la recette est [ca.leradar.app.yml](ca.leradar.app.yml). Dans le dé
 
 - dépôt `https://github.com/azdak919/le-radar`
 - `commit: 81774e4ab824c8c8a03afa106e81459c661c7d1a`
-- `subdir: android`
-- Node 20 officiel, puis `npm ci` et `npm run mobile:sync`
+- `subdir: android/app` (modèle F-Droid React Native, adapté à Capacitor : pas d’Expo ni de stub Firebase)
+- `npm` de Debian forky (Node 22 exigé par Capacitor ; trixie est en Node 20), puis `npm ci` et `npm run mobile:sync`
 - `gradle: yes`
-- APK : `app/build/outputs/apk/release/app-release-unsigned.apk`
+- APK : `build/outputs/apk/release/app-release-unsigned.apk`
 
 F-Droid signe lui-même. La clé d’envoi Play ne sert pas.
