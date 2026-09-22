@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-22T14:51:31.233Z",
+  "updatedAt": "2026-09-22T17:55:43.573Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T14:51:04.057Z"
+      "checkedAt": "2026-09-22T17:54:55.216Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Lentement mais sûrement",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/lentement-mais-surement"
-      },
-      "next": {
         "title": "Les sentinelles de l'art",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "Lentement mais sûrement",
+      "showTitle": "Les sentinelles de l'art",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T14:51:05.397Z"
+      "checkedAt": "2026-09-22T17:54:56.675Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Basa Basa",
+        "title": "Universal Break",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "Ecolibrium/Environment in Canada",
+        "title": "Voice of Korea",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "14:00",
+        "end": "15:00"
       },
-      "track": "",
-      "showTitle": "Basa Basa",
+      "track": "Blxck Cxsper -",
+      "showTitle": "Universal Break",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T14:51:07.809Z"
+      "checkedAt": "2026-09-22T17:54:58.965Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "title": "Shaking the Habitual",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/shaking-the-habitual"
       },
       "next": {
-        "title": "Mirror Journal",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/mirror-journal"
+        "title": "Something for the Mood",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/something-for-the-mood"
       },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Shaking the Habitual",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T14:51:21.738Z"
+      "checkedAt": "2026-09-22T17:55:33.168Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,20 +126,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T14:51:23.199Z"
+      "checkedAt": "2026-09-22T17:55:34.592Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "L'UQAM en info",
+        "title": "Passion Psy",
         "source": "api-live",
-        "start": "12:45",
-        "end": "13:30",
-        "slug": "uqam-en-info"
+        "start": "14:00",
+        "end": "15:30",
+        "slug": "passion-psy"
       },
-      "track": "Angel Olsen — Shut Up Kiss Me",
+      "track": "Jonny Boyle — Snake In The Grass",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T14:51:30.882Z"
+      "checkedAt": "2026-09-22T17:55:43.222Z"
     }
   }
 }
