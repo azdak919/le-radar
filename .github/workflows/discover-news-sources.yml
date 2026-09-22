@@ -35,10 +35,16 @@ jobs:
           CI: true
           FIREBASE_POLYSCOPE_API_KEY: ${{ secrets.FIREBASE_POLYSCOPE_API_KEY }}
 
+      # fetch-news réécrit news.json sans toucher feed.xml. Le gate compare
+      # les 10 premières manchettes : sans cette étape le lundi échoue et
+      # rien n'est publié.
+      - name: Rebuild RSS from news.json
+        run: node scripts/generate-feed.js --update
+
       - name: Check for changes
         id: check
         run: |
-          if git diff --quiet news-sources.json news.json news-archive.json; then
+          if git diff --quiet news-sources.json news.json news-archive.json feed.xml; then
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
@@ -64,7 +70,7 @@ jobs:
         run: |
           git config user.name "LE-RADAR News Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add news-sources.json news.json news-archive.json historical-catalog.config.json index.html sitemap.xml sitemap-archives.xml llms.txt
+          git add news-sources.json news.json news-archive.json historical-catalog.config.json feed.xml index.html sitemap.xml sitemap-archives.xml llms.txt
           git add -A radios journaux etablissements medias horaires en archives 2>/dev/null || true
           git commit -m "bot: maintain news sources + refresh feed (auto)"
           # Fichiers générés : en cas de conflit avec un commit concurrent,

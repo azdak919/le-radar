@@ -115,6 +115,29 @@ assert.doesNotMatch(maintain, /verify-authors\.js/, 'hebdo : QC auteurs déjà d
 const maintainYml = readFileSync(join(ROOT, '.github/workflows/maintain.yml'), 'utf8');
 assert.match(maintainYml, /timeout-minutes:\s*90/);
 assert.doesNotMatch(maintainYml, /timeout-minutes:\s*50/);
+const maintainPrepush = maintainYml.indexOf('bash scripts/bot-prepush-check.sh');
+const bankSyncAt = maintainYml.indexOf('npm run bank:sync');
+const swBumpAt = maintainYml.indexOf('npm run sw:bump');
+const maintainFeedAt = maintainYml.indexOf('node scripts/generate-feed.js --update');
+assert.ok(
+  bankSyncAt >= 0 && bankSyncAt < swBumpAt && swBumpAt < maintainPrepush,
+  'hebdo : bank:sync puis sw:bump avant le gate, sinon le miroir JS ou le shell divergent',
+);
+assert.ok(
+  maintainFeedAt >= 0 && maintainFeedAt < maintainPrepush,
+  'hebdo : feed.xml régénéré avant le gate',
+);
+assert.match(maintainYml, /quebec-university-backgrounds-data\.js/);
+assert.match(maintainYml, /sw-shell-lock\.json/);
+
+const discoverYml = readFileSync(join(ROOT, '.github/workflows/discover-news-sources.yml'), 'utf8');
+const discoverFeedAt = discoverYml.indexOf('node scripts/generate-feed.js --update');
+const discoverPrepush = discoverYml.indexOf('bash scripts/bot-prepush-check.sh');
+assert.ok(
+  discoverFeedAt >= 0 && discoverFeedAt < discoverPrepush,
+  'discovery : feed.xml régénéré avant le gate (news.json seul fait diverger les manchettes)',
+);
+assert.match(discoverYml, /git add news-sources\.json news\.json news-archive\.json historical-catalog\.config\.json feed\.xml /);
 
 const windowSrc = readFileSync(join(ROOT, 'scripts/maintenance-window.mjs'), 'utf8');
 assert.match(windowSrc, /guard-harvest-freshness\.yml/);
