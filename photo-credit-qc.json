@@ -1,44 +1,30 @@
 {
-  "updated": "2026-09-22T05:04:08.441Z",
+  "updated": "2026-09-22T07:58:58.492Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
-  "cited": 122,
+  "cited": 121,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 4,
-  "citedNew": 4,
-  "fallbackNew": 12,
+  "checked": 14,
+  "updatedCount": 2,
+  "citedNew": 1,
+  "fallbackNew": 13,
   "samples": [
     {
       "title": "Somaya takes LAYALI to the stage",
       "source": "The Link",
-      "credit": "Photo: Lea Joy Sabbaghian",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "La cassette commence à être usée",
+      "title": "Au revoir !",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "credit": "Photo : Matthieu Juge",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
