@@ -1,23 +1,51 @@
 {
-  "updated": "2026-09-22T21:34:25.411Z",
+  "updated": "2026-09-22T23:23:44.567Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
-  "cited": 119,
-  "pending": 11,
+  "cited": 120,
+  "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 12,
-  "updatedCount": 1,
-  "citedNew": 1,
-  "fallbackNew": 11,
+  "checked": 15,
+  "updatedCount": 5,
+  "citedNew": 5,
+  "fallbackNew": 10,
   "samples": [
     {
-      "title": "La performance de l’homosexualité : un privilège ?",
+      "title": "Pour les étudiant·e·s en travail social, le métier aura un coût",
+      "source": "Quartier Libre",
+      "credit": "Photo : Marguerite Phaneuf",
+      "cited": true,
+      "method": "figcaption"
+    },
+    {
+      "title": "Rassembler pour mieux diviser",
       "source": "Le Délit",
       "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
