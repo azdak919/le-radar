@@ -18,6 +18,7 @@
 const {
   RELIGIOUS_SUBJECT_RE,
 } = require('./religious-facade-lib');
+const { LEAD_MAX_RATIO } = require('./article-image-lib');
 
 /** Aligné sur article-image-lib (vedette). */
 const LEAD_MIN_WIDTH = 640;
@@ -106,11 +107,12 @@ function scoreVisualQuality(hit = {}, opts = {}) {
       reasons.push('low_resolution_comfort');
     }
 
-    // Ratio extrême : une/vedette ~ paysage ou carré large, pas panorama 5:1 ni portrait 2:3.
+    // Portrait serré : pénalité. Le panorama Cabana (≈ 4,36) reste acceptable.
+    // Au-delà de LEAD_MAX_RATIO le crop 3:2 ne garde plus la façade.
     if (aspect > 0 && aspect < 0.95) {
       softPenalty += 18;
       reasons.push('portrait_ratio');
-    } else if (aspect > 2.6) {
+    } else if (aspect > LEAD_MAX_RATIO) {
       softPenalty += 14;
       reasons.push('ultra_wide_ratio');
     } else if (aspect >= 1.1 && aspect <= 2.2) {
