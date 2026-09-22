@@ -1,17 +1,38 @@
 {
-  "updated": "2026-09-22T01:02:12.196Z",
+  "updated": "2026-09-22T03:19:52.259Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
-  "cited": 123,
-  "pending": 11,
+  "cited": 122,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 3,
-  "citedNew": 3,
-  "fallbackNew": 11,
+  "checked": 27,
+  "updatedCount": 16,
+  "citedNew": 14,
+  "fallbackNew": 13,
   "samples": [
+    {
+      "title": "Les enfants, invités des pompiers pour la journée",
+      "source": "La Pige",
+      "credit": "Photo : Emilie Frère-Lefèvre",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Des caméras pour lutter contre le vandalisme au centre-ville de Jonquière",
+      "source": "La Pige",
+      "credit": "Photo : Lucas Radoux",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Journée mondiale de la maladie d’Alzheimer : l’importance de s’outiller",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "McGill’s offence dominates in a bitter homecoming for the Concordia Stingers",
       "source": "The Link",
@@ -32,6 +53,48 @@
       "credit": "Photo : Elsa Pierre",
       "cited": true,
       "method": "body-line"
+    },
+    {
+      "title": "Le DSM-6 ?",
+      "source": "Le Collectif",
+      "credit": "Photo : Jessica Weinkle",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Circonscriptions des personnes cheffes de parti",
+      "source": "Le Collectif",
+      "credit": "Photo : Getty images",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Débat économique de TVA",
+      "source": "Le Collectif",
+      "credit": "Photo : Publication de TVA",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Le Québec est-il polarisé ?",
+      "source": "Le Collectif",
+      "credit": "Photo : Source : Getty Images",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "L’extrême droite l’emporte en Allemagne",
+      "source": "Le Collectif",
+      "credit": "Photo : Omer Messinger/Getty Images",
+      "cited": true,
+      "method": "json-ld"
+    },
+    {
+      "title": "Somaya takes LAYALI to the stage",
+      "source": "The Link",
+      "credit": "Photo: Lea Joy Sabbaghian",
+      "cited": true,
+      "method": "figcaption-trailing"
     }
   ]
 }
