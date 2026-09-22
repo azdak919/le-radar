@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21T15:23:23.679Z",
+  "updatedAt": "2026-09-22T13:43:56.369Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-09-21T15:23:23.679Z",
+      "checkedAt": "2026-09-22T13:43:56.369Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -292,7 +292,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-09-21T15:23:23.679Z",
+      "checkedAt": "2026-09-22T13:43:56.369Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -1066,7 +1066,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-09-21T15:23:23.679Z",
+      "checkedAt": "2026-09-22T13:43:56.369Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -1678,7 +1678,7 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-09-21T15:23:23.679Z",
+      "checkedAt": "2026-09-22T13:43:56.369Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -4321,7 +4321,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-09-21T15:23:23.679Z",
+      "checkedAt": "2026-09-22T13:43:56.369Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -4542,7 +4542,7 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-09-21T15:23:23.679Z",
+      "checkedAt": "2026-09-22T13:43:56.369Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -4572,6 +4572,13 @@
           "end": "16:00",
           "title": "Palmarès CHOQ.ca",
           "url": "https://www.choq.ca/emissions/palmareschoq"
+        },
+        {
+          "day": 1,
+          "start": "20:00",
+          "end": "21:00",
+          "title": "Carte blanche",
+          "url": "https://www.choq.ca/emissions/carte-blanche"
         },
         {
           "day": 2,
@@ -4611,7 +4618,7 @@
         {
           "day": 3,
           "start": "13:00",
-          "end": "14:00",
+          "end": "13:45",
           "title": "Onde de CHOQ",
           "url": "https://www.choq.ca/emissions/onde-de-choq"
         },
@@ -4625,7 +4632,7 @@
         {
           "day": 4,
           "start": "13:00",
-          "end": "14:00",
+          "end": "13:45",
           "title": "Onde de CHOQ",
           "url": "https://www.choq.ca/emissions/onde-de-choq"
         },
@@ -4660,7 +4667,7 @@
         {
           "day": 5,
           "start": "13:00",
-          "end": "14:00",
+          "end": "13:45",
           "title": "Onde de CHOQ",
           "url": "https://www.choq.ca/emissions/onde-de-choq"
         },
