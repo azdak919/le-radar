@@ -1,12 +1,12 @@
 {
-  "updated": "2026-09-22T09:21:34.929Z",
+  "updated": "2026-09-22T13:55:34.245Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 9,
-  "withLeadExcerpt": 86,
-  "candidates": 9,
-  "enriched": 1,
-  "failed": 1,
+  "incomplete": 16,
+  "withLeadExcerpt": 85,
+  "candidates": 16,
+  "enriched": 10,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
@@ -19,67 +19,67 @@
       "changed": false
     },
     {
-      "title": "L’épidémie de la nonchalance",
-      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "title": "Social media, passion and music",
+      "link": "https://thelinknewspaper.ca/article/16416",
       "ok": true,
       "score": 96,
-      "chars": 391,
-      "sample": "À force de craindre d’être « trop » – trop sensible, trop sincère – on finit par se taire. Je me sui",
+      "chars": 295,
+      "sample": "Luka Ferraro isn’t sure if he’ll stay in the same genre forever, but for now it excites him. As an i",
       "changed": true
     },
     {
-      "title": "I Agree (But I Don’t Understand): The Legitimacy of Consent in Today’s Digital Ecosystem",
-      "link": "https://www.mcgilldaily.com/2026/09/i-agree-but-i-dont-understand-the-legitimacy-of-consent-in-todays-digital-ecosystem/",
+      "title": "Federal government falls short on youth demands for good green jobs",
+      "link": "https://thelinknewspaper.ca/article/16410",
       "ok": true,
-      "score": 66,
+      "score": 90,
+      "chars": 339,
+      "sample": "The campaign, launched by the Climate Emergency Unit in 2023 and now housed under the Small Change F",
+      "changed": true
+    },
+    {
+      "title": "Building rockets in between classes",
+      "link": "https://thelinknewspaper.ca/article/16409",
+      "ok": true,
+      "score": 100,
+      "chars": 230,
+      "sample": "Space Concordia Solid Rocketry launched its newest creation at the Launch Canada competition last mo",
+      "changed": true
+    },
+    {
+      "title": "What the heck is professional attire anyway!?",
+      "link": "https://thelinknewspaper.ca/article/16408",
+      "ok": true,
+      "score": 96,
       "chars": 400,
-      "sample": "Be honest — have you ever read, I mean really, read, Apple’s Terms and Conditions before updating yo",
-      "changed": false
+      "sample": "The fashion trends are perpetually cyclical. In a society defined by a highly consumerist culture, c",
+      "changed": true
     },
     {
-      "title": "AI and the ‘Syllabus Effect’",
-      "link": "https://www.mcgilldaily.com/2026/09/ai-and-the-syllabus-effect/",
+      "title": "No CTRL over AI",
+      "link": "https://thelinknewspaper.ca/article/16406",
       "ok": true,
-      "score": 77,
-      "chars": 400,
-      "sample": "Jahn recently published an opinion piece in The Globe and Mail, entitled: “ Universities should stop",
-      "changed": false
+      "score": 96,
+      "chars": 355,
+      "sample": "The most recent CTRL + AI event , held on Sept. 15, aimed to discuss what AI could reveal about bein",
+      "changed": true
     },
     {
-      "title": "Un débat des chef·fe·s pour la jeunesse",
-      "link": "https://quartierlibre.ca/elections-debat-des-cheffes-jeunesse/",
+      "title": "Young Montreal job seekers struggle to hear back from employers",
+      "link": "https://thelinknewspaper.ca/article/16405",
       "ok": true,
-      "score": 86,
-      "chars": 400,
-      "sample": "Le grand débat des chef·fe·s de Noovo et de Crave a eu lieu le mercredi 16 septembre dernier. Quarti",
-      "changed": false
+      "score": 96,
+      "chars": 193,
+      "sample": "Samo said she has been unemployed for about four or five months. She lives alone and said being with",
+      "changed": true
     },
     {
-      "title": "Antisémitisme : McGill, mauvaise élève?",
-      "link": "https://www.delitfrancais.com/2026/09/16/antisemitisme-mcgill-mauvaise-eleve/",
+      "title": "Quebec election information distributed solely in French",
+      "link": "https://thelinknewspaper.ca/article/16402",
       "ok": true,
-      "score": 87,
-      "chars": 400,
-      "sample": "Le 4 septembre dernier, B’nai Brith Canada publiait son Bulletin Canadien sur l’expérience étudiante",
-      "changed": false
-    },
-    {
-      "title": "Bulletin 21 septembre 11h30",
-      "link": "https://lapige.atmjonquiere.com/2026/09/21/bulletin-21-septembre-11h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-21-septembre-11h30",
-      "ok": true,
-      "score": 66,
-      "chars": 142,
-      "sample": "Le PQ en tête dans les sondages, hausse d’achalandage aux activités du centre-ville d’Arvida et débu",
-      "changed": false
-    },
-    {
-      "title": "17-year-old apprehended on Concordia’s Loyola campus",
-      "link": "https://thelinknewspaper.ca/article/16392",
-      "ok": true,
-      "score": 80,
-      "chars": 143,
-      "sample": "Montreal police (SPVM) say they were called around 2 p.m. to assist after the teenager had left a ho",
-      "changed": false
+      "score": 100,
+      "chars": 267,
+      "sample": "Every election, Élections Québec mails the provincial election guide, the notice of entry and the re",
+      "changed": true
     }
   ]
 }

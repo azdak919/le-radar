@@ -1,21 +1,91 @@
 {
-  "updated": "2026-09-22T09:27:56.975Z",
+  "updated": "2026-09-22T14:02:14.220Z",
   "total": 188,
-  "withImage": 176,
-  "withCredit": 176,
-  "cited": 121,
+  "withImage": 173,
+  "withCredit": 173,
+  "cited": 117,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 1,
-  "citedNew": 1,
-  "fallbackNew": 12,
+  "checked": 23,
+  "updatedCount": 11,
+  "citedNew": 8,
+  "fallbackNew": 15,
   "samples": [
     {
-      "title": "L’épidémie de la nonchalance",
+      "title": "Social media, passion and music",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Meet the dance pioneer who wants to save hip-hop",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Scottie Ayrton Au Yeng Kong",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "A love letter to men and youth",
+      "source": "The Link",
+      "credit": "Illustration: Halle Keays",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Federal government falls short on youth demands for good green jobs",
+      "source": "The Link",
+      "credit": "Photo : Courtesy Hailey Asquin/Common Horizon",
+      "cited": true,
+      "method": "figcaption"
+    },
+    {
+      "title": "What the heck is professional attire anyway!?",
+      "source": "The Link",
+      "credit": "Illustration: Lauren McCarthy",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Young Montreal job seekers struggle to hear back from employers",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Nostalgia Nook: It isn’t raining women anymore",
+      "source": "The Link",
+      "credit": "Illustration: Yousra Ait",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Quebec election information distributed solely in French",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Free public transportation is worth investing in",
+      "source": "The Link",
+      "credit": "Photo: Santiago Sánchez",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Is a bachelor’s degree keeping its promise?",
+      "source": "The Link",
+      "credit": "Illustration: Aia Segal",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Au revoir !",
       "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
+      "credit": "Photo : Matthieu Juge",
       "cited": true,
       "method": "media-credit-featured"
     }
