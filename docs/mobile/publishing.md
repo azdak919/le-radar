@@ -1,5 +1,7 @@
 # Publication
 
+Décision du 2026-09-21 : le canal voulu est **F-Droid**. Voir [fdroid.md](fdroid.md). Play et l’App Store sont décrits plus bas pour plus tard. Ne pas demander à l’humain de créer ces comptes tant qu’il ne le dit pas.
+
 Rien n’est envoyé aux magasins depuis un commit. Deux workflows :
 
 | Workflow | Quand | Résultat |

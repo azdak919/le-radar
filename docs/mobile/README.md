@@ -9,6 +9,7 @@ Le site reste le produit web : mât, sports, syntoniseur complet, pages SEO, PWA
 | [architecture.md](architecture.md) | Pourquoi ce découpage, données partagées, liens, hors ligne, notifications |
 | [android.md](android.md) | SDK 36, build Linux, App Links |
 | [ios.md](ios.md) | Xcode, Universal Links, manifeste de confidentialité |
+| [fdroid.md](fdroid.md) | Canal voulu : F-Droid. Play et App Store plus tard |
 | [publishing.md](publishing.md) | Signatures, CI, TestFlight, Play, captures |
 | [app-store-review.md](app-store-review.md) | Risque 4.2 / 4.2.2 et notes pour la revue |
 | [privacy.md](privacy.md) | Ce que l’application fait vraiment |
