@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-22T00:16:58.816Z",
+  "updated": "2026-09-22T08:54:46.808Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2478,15 +2478,25 @@
       "at": "2026-09-21T09:17:27.000Z",
       "via": "existant",
       "source": "La Pige"
+    },
+    "https://lapige.atmjonquiere.com/2026/09/21/la-marche-du-rein-rassemble-la-communaute-au-parc-riviere-du-moulin/": {
+      "at": "2026-09-22T00:16:13.000Z",
+      "via": "existant",
+      "source": "La Pige"
+    },
+    "https://lapige.atmjonquiere.com/2026/09/21/bulletin-21-septembre-11h30/": {
+      "at": "2026-09-22T00:16:45.000Z",
+      "via": "existant",
+      "source": "La Pige"
     }
   },
   "stats": {
-    "total": 439,
+    "total": 441,
     "lastRun": {
       "saved": 0,
-      "skipped": 0,
-      "failed": 3,
-      "stoppedEarly": true
+      "skipped": 2,
+      "failed": 18,
+      "stoppedEarly": false
     }
   },
   "sources": {
@@ -2513,8 +2523,7 @@
     "La Pige": {
       "host": "lapige.atmjonquiere.com",
       "pages": 8,
-      "checkedAt": "2026-09-14T23:58:23.095Z",
-      "stale": true
+      "checkedAt": "2026-09-22T08:47:24.576Z"
     },
     "L'Exemplaire": {
       "host": "www.exemplaire.com.ulaval.ca",
@@ -2524,8 +2533,7 @@
     "Quartier Libre": {
       "host": "quartierlibre.ca",
       "pages": 38,
-      "checkedAt": "2026-09-14T23:58:34.525Z",
-      "stale": true
+      "checkedAt": "2026-09-22T08:47:31.387Z"
     },
     "The Plant": {
       "host": "theplantnews.com",
