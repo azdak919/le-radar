@@ -43,11 +43,12 @@ assert.match(
 // Les traces Playwright sont du HTML : sans cette exclusion, un run de tests
 // interrompu laisse des artefacts qui font échouer `npm run check` alors que
 // le site est intact (ces dossiers sont déjà dans .gitignore).
-const SKIP_DIRS = new Set(['.git', 'node_modules', 'test-results', 'playwright-report']);
+const SKIP_DIRS = new Set(['.git', 'node_modules', 'test-results', 'playwright-report', 'android', 'ios']);
 
 function collectHtml(directory) {
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
     if (SKIP_DIRS.has(entry.name)) continue;
+    if (entry.name === 'www' && directory.endsWith('/mobile')) continue;
     const fullPath = join(directory, entry.name);
     if (entry.isDirectory()) collectHtml(fullPath);
     else if (entry.name.endsWith('.html')) htmlFiles.push(fullPath);

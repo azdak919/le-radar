@@ -5,8 +5,16 @@
   "description": "PWA des médias étudiants du Québec",
   "scripts": {
     "check:syntax": "node tests/check-js-syntax.mjs",
-    "test:unit": "node solitaire/scripts/test-solitaire-rules.mjs && node tests/data-integrity.mjs && node tests/radio-nowplaying.mjs && node tests/schedule-drift.mjs && node tests/news-representations.mjs && node tests/author-lib.mjs && node tests/historical-catalog.mjs && node tests/historical-retro-crawl.mjs && node tests/archive-priority.mjs && node tests/maintenance-window.mjs && node tests/news-schedule.mjs && node tests/static-integrity.mjs && node tests/native-player-contract.mjs && node tests/college-places.mjs && node tests/translate-ui-phrases.mjs && node tests/quotes-randomization.mjs && node tests/translate-cache-worker.mjs && node tests/institution-labels-lib.mjs && node tests/photo-visual-qc.mjs && node tests/wallpaper-subject.mjs && node tests/lead-photo-fit.mjs && node tests/bg-rotation.mjs && node tests/season-permanent.mjs && node tests/season-certainty.mjs && node tests/season-calendar.mjs && node tests/bank-hard-audit.mjs && node tests/news-image-mirror.mjs && node tests/campus-article-fallback.mjs && node tests/focal-arch.mjs && node tests/sw-shell-freshness.mjs && node tests/photo-web-sources.mjs && node tests/photo-lab.mjs && node tests/sports-live.mjs && node tests/sports-fetch.mjs && node tests/harvest-freshness.mjs && node tests/source-retention.mjs && node tests/campus-hockey.mjs && node tests/sports-freshness.mjs && node tests/sports-cta-contract.mjs && node tests/sports-masthead.mjs && node tests/css-cascade.mjs && node tests/git-safety-docs.mjs && node tests/dom-sinks.mjs && node tests/artifact-budget.mjs && node tests/media-channels.mjs && node tests/media-follow-store.mjs && python3 scripts/detect-photo-seasons-visual.py --selftest && python3 scripts/hockey-spordle.py --selftest && node scripts/audit-sports-sectors.js",
+    "test:unit": "node solitaire/scripts/test-solitaire-rules.mjs && node tests/data-integrity.mjs && node tests/radio-nowplaying.mjs && node tests/schedule-drift.mjs && node tests/news-representations.mjs && node tests/author-lib.mjs && node tests/historical-catalog.mjs && node tests/historical-retro-crawl.mjs && node tests/archive-priority.mjs && node tests/maintenance-window.mjs && node tests/news-schedule.mjs && node tests/static-integrity.mjs && node tests/native-player-contract.mjs && node tests/college-places.mjs && node tests/translate-ui-phrases.mjs && node tests/quotes-randomization.mjs && node tests/translate-cache-worker.mjs && node tests/institution-labels-lib.mjs && node tests/photo-visual-qc.mjs && node tests/wallpaper-subject.mjs && node tests/lead-photo-fit.mjs && node tests/bg-rotation.mjs && node tests/season-permanent.mjs && node tests/season-certainty.mjs && node tests/season-calendar.mjs && node tests/bank-hard-audit.mjs && node tests/news-image-mirror.mjs && node tests/campus-article-fallback.mjs && node tests/focal-arch.mjs && node tests/sw-shell-freshness.mjs && node tests/photo-web-sources.mjs && node tests/photo-lab.mjs && node tests/sports-live.mjs && node tests/sports-fetch.mjs && node tests/harvest-freshness.mjs && node tests/source-retention.mjs && node tests/campus-hockey.mjs && node tests/sports-freshness.mjs && node tests/sports-cta-contract.mjs && node tests/sports-masthead.mjs && node tests/css-cascade.mjs && node tests/git-safety-docs.mjs && node tests/dom-sinks.mjs && node tests/artifact-budget.mjs && node tests/media-channels.mjs && node tests/media-follow-store.mjs && python3 scripts/detect-photo-seasons-visual.py --selftest && python3 scripts/hockey-spordle.py --selftest && node scripts/audit-sports-sectors.js && node tests/mobile-core.mjs",
     "check": "npm run check:syntax && npm run test:unit",
+    "mobile:prepare": "node mobile/scripts/prepare.mjs",
+    "mobile:sync": "node mobile/scripts/prepare.mjs && npx cap sync",
+    "mobile:android": "npm run mobile:sync && npx cap open android",
+    "mobile:ios": "npm run mobile:sync && npx cap open ios",
+    "android:open": "npx cap open android",
+    "ios:open": "npx cap open ios",
+    "android:debug": "npm run mobile:sync && cd android && ./gradlew assembleDebug",
+    "android:bundle": "npm run mobile:sync && cd android && ./gradlew bundleRelease",
     "sw:bump": "node scripts/sw-shell-lock.mjs --write",
     "kit:generic-posters": "node scripts/export-kit-generic-posters.mjs",
     "kit:example-posters": "node scripts/export-kit-example-posters.mjs",
@@ -19,7 +27,7 @@
     "seo:update": "node scripts/generate-seo.js --update",
     "audit:banks:hard": "node scripts/audit-banks-hard.js",
     "test:browser": "playwright test",
-    "test:browser:ci": "playwright test tests/browser-smoke.spec.mjs tests/masthead-weather.spec.mjs tests/shared-chrome.spec.mjs tests/masthead-card-counts-resize.spec.mjs --grep @ci-critical",
+    "test:browser:ci": "playwright test tests/browser-smoke.spec.mjs tests/masthead-weather.spec.mjs tests/shared-chrome.spec.mjs tests/masthead-card-counts-resize.spec.mjs tests/mobile-shell.spec.mjs --grep @ci-critical",
     "test": "npm run check && npm run test:browser",
     "bank:sync": "node scripts/sync-quebec-backgrounds.js",
     "bank:check": "node scripts/sync-quebec-backgrounds.js --check && node scripts/audit-banks-hard.js",
@@ -82,6 +90,20 @@
     "node": ">=20"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.2",
     "@playwright/test": "^1.61.1"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/app": "^8.1.1",
+    "@capacitor/browser": "^8.0.4",
+    "@capacitor/core": "^8.5.2",
+    "@capacitor/haptics": "^8.0.2",
+    "@capacitor/ios": "^8.5.2",
+    "@capacitor/keyboard": "^8.0.5",
+    "@capacitor/network": "^8.0.1",
+    "@capacitor/share": "^8.0.2",
+    "@capacitor/splash-screen": "^8.0.2",
+    "@capacitor/status-bar": "^8.0.3"
   }
 }

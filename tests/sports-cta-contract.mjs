@@ -110,7 +110,8 @@ for (const rel of ['en/index.html', 'sports/index.html', 'journaux/exil/index.ht
 const htmlFiles = [];
 function collectHtml(directory) {
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
-    if (['.git', 'node_modules', 'test-results', 'playwright-report'].includes(entry.name)) continue;
+    if (['.git', 'node_modules', 'test-results', 'playwright-report', 'android', 'ios'].includes(entry.name)) continue;
+    if (entry.name === 'www' && directory.endsWith('/mobile')) continue;
     const full = join(directory, entry.name);
     if (entry.isDirectory()) collectHtml(full);
     else if (entry.name.endsWith('.html')) htmlFiles.push(full);
