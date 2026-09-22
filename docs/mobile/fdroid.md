@@ -10,7 +10,7 @@ L’application est GPL-2.0, sans compte, sans publicité, sans Firebase et sans
 
 Les textes lus par le client F-Droid sont dans `fastlane/metadata/android/` (`en-US` obligatoire, `fr-CA` en plus). L’icône est `fastlane/metadata/android/en-US/images/icon.png`.
 
-Version publiée : `versionName` 1.0.0, `versionCode` 1, étiquette git `v1.0.0`.
+Version publiée : `versionName` 1.0.0, `versionCode` 1. L’étiquette `v1.0.0` existe déjà pour le site (juillet 2026). Le build F-Droid est donc épinglé au commit qui contient l’application, pas à cette étiquette. Une prochaine version de l’application devra avoir un numéro plus haut, par exemple `1.0.1`, et une étiquette `v1.0.1`.
 
 Le build de publication n’a pas de clé dans le dépôt. Sans `android/keystore.properties`, `assembleRelease` produit un APK non signé. F-Droid le signe.
 
@@ -19,7 +19,7 @@ Le build de publication n’a pas de clé dans le dépôt. Sans `android/keystor
 La copie de la recette est [ca.leradar.app.yml](ca.leradar.app.yml). Dans le dépôt F-Droid elle s’appelle `metadata/ca.leradar.app.yml`. Elle prévoit :
 
 - dépôt `https://github.com/azdak919/le-radar`
-- `commit: v1.0.0`
+- `commit: 81774e4ab824c8c8a03afa106e81459c661c7d1a`
 - `subdir: android`
 - Node 20 officiel, puis `npm ci` et `npm run mobile:sync`
 - `gradle: yes`
