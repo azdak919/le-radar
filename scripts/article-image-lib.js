@@ -8,7 +8,7 @@ const http = require('http');
 const DEFAULT_TIMEOUT = 12000;
 
 /** Motifs globaux de rejet (logos, placeholders, widgets, carrousels). */
-const GLOBAL_IMAGE_REJECT_RE = /(?:logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic|article-tile|size-article-tile|thumbnail|thumb_|recent-posts|wp-block-query|widget|sponsor|banner|social-share|-150x\d+\.|cropped-logo|logoexile|121330814_121456603062023_8783413434532337259_n|(?:^|\/)daily\.png$|editorial[_-]|(?:^|\/)editorial(?:s)?(?:[_./-]|$)|画板|%e7%94%bb%e6%9d%bf|_optimized_optimized_optimized|00\.graphics\.csu\.naya_hachwa)/i;
+const GLOBAL_IMAGE_REJECT_RE = /(?:logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic|article-tile|size-article-tile|thumbnail|thumb_|recent-posts|wp-block-query|widget|sponsor|banner|social-share|-150x\d+\.|cropped-logo|logoexile|121330814_121456603062023_8783413434532337259_n|(?:^|\/)daily\.png$|editorial[_-]|(?:^|\/)editorial(?:s)?(?:[_./-]|$)|画板|%e7%94%bb%e6%9d%bf|_optimized_optimized_optimized|00\.graphics\.csu\.naya_hachwa|antidote|banni[eè]re|pub_agenda|jlc-ad)/i;
 
 function imageRejectPatternsFromHints(hints = {}) {
   const extra = hints.rejectPathPatterns;
@@ -275,8 +275,15 @@ function stripStyleAndScript(html = '') {
     .replace(/<noscript\b[^>]*>[\s\S]*?<\/noscript>/gi, '');
 }
 
-function stripBoilerplateRegions(html = '') {
+/** Pubs insérées dans le corps (Le Collectif : rotation Antidote / agenda). */
+function stripAdSlots(html = '') {
   return String(html)
+    .replace(/<div\b[^>]*\bclass=["'][^"']*\bjlc-ad\b[^"']*["'][^>]*>[\s\S]*?<\/div>/gi, '')
+    .replace(/<div\b[^>]*\bid=["']jlc-ad-rotation["'][^>]*>[\s\S]*?<\/div>/gi, '');
+}
+
+function stripBoilerplateRegions(html = '') {
+  return stripAdSlots(String(html))
     .replace(/<div[^>]*\bwp-block-query\b[\s\S]*?<\/div>\s*(?=<div|<\/main|<\/body|$)/gi, '')
     .replace(/<ul[^>]*\bwp-block-post-template\b[\s\S]*?<\/ul>/gi, '')
     .replace(/<aside[\s\S]*?<\/aside>/gi, '')
@@ -492,6 +499,8 @@ function collectContentImages(content = '', extraRejectPatterns = [], options = 
     const tag = m[0];
     const rawSrc = imgTagSrc(tag);
     if (!rawSrc) continue;
+    const alt = decodeEntities((tag.match(/\balt=["']([^"']*)["']/i) || [])[1] || '');
+    if (/\b(?:antidote|publicit[eé]|annonceur|commandit[eé])\b/i.test(alt)) continue;
     let src = toAbsoluteImageUrl(rawSrc, baseUrl);
     if (!src || !isCandidateImageUrl(src, extraRejectPatterns)) continue;
     // WP -600x315 / -750x375 → version pleine avant rejet « weak »
@@ -668,6 +677,27 @@ function meetsFeatureDisplaySize(width = 0, height = 0) {
 }
 
 /**
+ * Photo d’article un peu sous le seuil vedette (ex. og:image 540×438).
+ * On la garde : une pub 1920 px ne doit pas la remplacer, ni le campus.
+ */
+const ARTICLE_KEEP_MIN_WIDTH = 480;
+const ARTICLE_KEEP_MIN_HEIGHT = 300;
+const ARTICLE_KEEP_MIN_PIXELS = 150000;
+
+function meetsArticleKeepSize(width = 0, height = 0) {
+  if (!width || !height) return false;
+  if (isBannerLikeRatio(width, height)) return false;
+  const ratio = width / height;
+  return (
+    width >= ARTICLE_KEEP_MIN_WIDTH
+    && height >= ARTICLE_KEEP_MIN_HEIGHT
+    && width * height >= ARTICLE_KEEP_MIN_PIXELS
+    && ratio >= 0.9
+    && ratio <= 2.6
+  );
+}
+
+/**
  * La une recadre en 3:2 (object-fit:cover). Un bandeau ~2.3:1 (campagne UdeS
  * 1139×500) perd le slogan à gauche → « OTRE ENÉROSITÉ HANGE AVENIR ».
  * Au-delà de 2.12 on préfère une autre photo du corps si elle existe.
@@ -732,7 +762,7 @@ function compareLeadCandidates(a = {}, b = {}) {
 }
 
 function listArticleImageCandidates(html = '', extraRejectPatterns = [], options = {}, baseUrl = '') {
-  html = stripStyleAndScript(html);
+  html = stripAdSlots(stripStyleAndScript(html));
   // Plafond après strip : le CSS inline ne cache plus <article>.
   if (html && html.length > HTML_PARSE_CAP) html = html.slice(0, HTML_PARSE_CAP);
   const preferFirstContentImage = !!options.preferFirstContentImage;
@@ -888,9 +918,15 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     if (metaW && metaH && meetsLeadDisplaySize(metaW, metaH)) {
       return { url, width: metaW, height: metaH, source: 'meta', leadReady: true };
     }
+    if (metaW && metaH && meetsArticleKeepSize(metaW, metaH)) {
+      return { url, width: metaW, height: metaH, source: 'meta-editorial', leadReady: true };
+    }
     const dims = await probeRemoteImageSize(url);
     if (dims && meetsLeadDisplaySize(dims.width, dims.height)) {
       return { url, width: dims.width, height: dims.height, source: 'probe', leadReady: true };
+    }
+    if (dims && meetsArticleKeepSize(dims.width, dims.height)) {
+      return { url, width: dims.width, height: dims.height, source: 'probe-editorial', leadReady: true };
     }
     // Feature / vignette OK mais pas hero (panorama trop large, etc.)
     if (dims && meetsFeatureDisplaySize(dims.width, dims.height)) {
@@ -1019,6 +1055,8 @@ module.exports = {
   leadFitTier,
   meetsLeadDisplaySize,
   meetsFeatureDisplaySize,
+  meetsArticleKeepSize,
+  stripAdSlots,
   listArticleImageCandidates,
   imageFromArticleHtml,
   needsImageEnrichment,

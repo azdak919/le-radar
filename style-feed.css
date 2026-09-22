@@ -1123,6 +1123,10 @@ html[data-translate-busy="1"] .translate-toggle {
   aspect-ratio: 3 / 2;
   object-fit: cover;
 }
+/* Capture d’écran : ancrer à gauche pour ne pas manger le début des lignes. */
+.article-media img.is-doc-crop {
+  object-position: left center;
+}
 .article--lead .article-byline {
   font-size: 0.92rem;
   margin: 0 0 6px;
