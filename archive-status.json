@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-21T16:01:56.563Z",
+  "updated": "2026-09-22T00:16:58.816Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2484,7 +2484,7 @@
     "total": 439,
     "lastRun": {
       "saved": 0,
-      "skipped": 2,
+      "skipped": 0,
       "failed": 3,
       "stoppedEarly": true
     }
@@ -2513,7 +2513,8 @@
     "La Pige": {
       "host": "lapige.atmjonquiere.com",
       "pages": 8,
-      "checkedAt": "2026-09-14T23:58:23.095Z"
+      "checkedAt": "2026-09-14T23:58:23.095Z",
+      "stale": true
     },
     "L'Exemplaire": {
       "host": "www.exemplaire.com.ulaval.ca",
@@ -2523,7 +2524,8 @@
     "Quartier Libre": {
       "host": "quartierlibre.ca",
       "pages": 38,
-      "checkedAt": "2026-09-14T23:58:34.525Z"
+      "checkedAt": "2026-09-14T23:58:34.525Z",
+      "stale": true
     },
     "The Plant": {
       "host": "theplantnews.com",
