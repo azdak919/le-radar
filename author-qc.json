@@ -1,8 +1,8 @@
 {
-  "updated": "2026-09-22T19:46:23.446Z",
+  "updated": "2026-09-22T21:27:39.242Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 7,
+  "mismatches": 8,
   "ok": true,
   "samples": [
     {
@@ -54,6 +54,14 @@
       "reason": "no-author-source"
     },
     {
+      "title": "La performance de l’homosexualité : un privilège ?",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-performance-de-lhomosexualite-un-privilege/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Joséphine Miton",
+      "reason": "page-byline"
+    },
+    {
       "title": "Garda World au CVM (Éditorial)",
       "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
       "source": "Exil",
@@ -62,5 +70,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 7
+  "fixed": 8
 }
