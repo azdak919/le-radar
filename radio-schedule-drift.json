@@ -1,12 +1,12 @@
 {
-  "checkedAt": "2026-09-21T01:02:08.252Z",
+  "checkedAt": "2026-09-22T01:35:08.887Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
     "stable": 5,
     "drift": [
-      "chyz"
+      "choq"
     ],
     "overhaul": [],
     "unreachable": []
@@ -14,29 +14,18 @@
   "stations": [
     {
       "id": "chyz",
-      "published": 34,
+      "published": 39,
       "fresh": 39,
-      "added": [
-        "lun 18:30–19:30 Femmes de l'ombre",
-        "mar 19:00–20:00 CATHJO FAIT DE LA RADIO",
-        "mer 11:00–12:00 On en Parle",
-        "mer 18:30–19:30 3600 secondes d'histoire",
-        "mer 19:30–21:30 Funk Connection",
-        "mer 21:30–22:30 Blasphème",
-        "jeu 10:00–12:00 Sons de Cloches"
-      ],
-      "removed": [
-        "lun 20:30–21:30 La Voie des Droits",
-        "mar 18:30–20:00 Débat électoral Provicial 2026"
-      ],
-      "changed": 9,
-      "ratio": 0.265,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cism",
-      "published": 110,
-      "fresh": 110,
+      "published": 109,
+      "fresh": 109,
       "added": [],
       "removed": [],
       "changed": 0,
@@ -45,8 +34,8 @@
     },
     {
       "id": "ckut",
-      "published": 101,
-      "fresh": 101,
+      "published": 100,
+      "fresh": 100,
       "added": [],
       "removed": [],
       "changed": 0,
@@ -75,13 +64,22 @@
     },
     {
       "id": "choq",
-      "published": 17,
-      "fresh": 17,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "published": 19,
+      "fresh": 20,
+      "added": [
+        "lun 20:00–21:00 Carte blanche",
+        "mer 13:00–13:45 Onde de CHOQ",
+        "jeu 13:00–13:45 Onde de CHOQ",
+        "ven 13:00–13:45 Onde de CHOQ"
+      ],
+      "removed": [
+        "mer 13:00–14:00 Onde de CHOQ",
+        "jeu 13:00–14:00 Onde de CHOQ",
+        "ven 13:00–14:00 Onde de CHOQ"
+      ],
+      "changed": 7,
+      "ratio": 0.368,
+      "status": "drift"
     }
   ]
 }
