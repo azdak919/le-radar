@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-22T08:43:55.171Z",
+  "updatedAt": "2026-09-22T09:56:25.400Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T08:43:28.376Z"
+      "checkedAt": "2026-09-22T09:55:40.016Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "À l'horizon",
-        "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/a-lhorizon"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "05:00",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Raconte ton quartier",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/raconte-ton-quartier"
+      },
       "track": "",
-      "showTitle": "À l'horizon",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T08:43:29.665Z"
+      "checkedAt": "2026-09-22T09:55:41.306Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Attik / Show For Children",
-        "source": "api-live",
-        "start": "03:00",
-        "end": "05:00"
-      },
-      "next": {
         "title": "The Beat Power Hour",
         "source": "api-live",
         "start": "05:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Tuesday Morning After Pt1",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Attik / Show For Children",
+      "showTitle": "The Beat Power Hour",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T08:43:32.017Z"
+      "checkedAt": "2026-09-22T09:55:43.467Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Hip's Time to Wake Hop",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T08:43:46.407Z"
+      "checkedAt": "2026-09-22T09:56:17.788Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,21 +126,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T08:43:47.328Z"
+      "checkedAt": "2026-09-22T09:56:19.135Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les rois de l'arène",
         "source": "api-live",
         "start": "05:00",
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "KALIKA - KO EMOTIONNEL",
-      "showTitle": "",
+      "next": {
+        "title": "L'UQAM en info",
+        "source": "api-live",
+        "start": "12:45",
+        "end": "13:30",
+        "slug": "uqam-en-info"
+      },
+      "track": "Iceage - The Weak",
+      "showTitle": "Les rois de l'arène",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -150,7 +156,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-22T08:43:54.820Z"
+      "checkedAt": "2026-09-22T09:56:25.050Z"
     }
   }
 }
