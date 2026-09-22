@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-22T03:13:18.123Z",
+  "updated": "2026-09-22T04:58:12.244Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 11,
+  "incomplete": 9,
   "withLeadExcerpt": 86,
-  "candidates": 11,
-  "enriched": 3,
+  "candidates": 9,
+  "enriched": 1,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -19,30 +19,12 @@
       "changed": false
     },
     {
-      "title": "Les enfants, invités des pompiers pour la journée",
-      "link": "https://lapige.atmjonquiere.com/2026/09/21/les-enfants-invites-des-pompiers-pour-la-journee/?utm_source=rss&utm_medium=rss&utm_campaign=les-enfants-invites-des-pompiers-pour-la-journee",
+      "title": "La cassette commence à être usée",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
       "ok": true,
-      "score": 100,
-      "chars": 296,
-      "sample": "Les costumes de pompiers étaient de sortie ce samedi. À l’occasion de la journée portes ouverte s de",
-      "changed": true
-    },
-    {
-      "title": "Des caméras pour lutter contre le vandalisme au centre-ville de Jonquière",
-      "link": "https://lapige.atmjonquiere.com/2026/09/21/des-cameras-pour-lutter-contre-le-vandalisme-au-centre-ville-de-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=des-cameras-pour-lutter-contre-le-vandalisme-au-centre-ville-de-jonquiere",
-      "ok": true,
-      "score": 100,
-      "chars": 258,
-      "sample": "L’idée d’installer des caméras de surveillance dans le centre-ville de Jonquière fait actuellement l",
-      "changed": true
-    },
-    {
-      "title": "Journée mondiale de la maladie d’Alzheimer : l’importance de s’outiller",
-      "link": "https://lapige.atmjonquiere.com/2026/09/21/journee-mondiale-de-la-maladie-dalzheimer-limportance-de-soutiller/?utm_source=rss&utm_medium=rss&utm_campaign=journee-mondiale-de-la-maladie-dalzheimer-limportance-de-soutiller",
-      "ok": true,
-      "score": 100,
-      "chars": 369,
-      "sample": "La Société Alzheimer du Saguenay-Lac-St-Jean profite de la Journée mondiale de la maladie d’Alzheime",
+      "score": 96,
+      "chars": 390,
+      "sample": "Cette fois-ci, c’est la bonne. Je promets de quitter l’équipe éditoriale du Délit après cet article,",
       "changed": true
     },
     {
@@ -79,6 +61,24 @@
       "score": 87,
       "chars": 400,
       "sample": "Le 4 septembre dernier, B’nai Brith Canada publiait son Bulletin Canadien sur l’expérience étudiante",
+      "changed": false
+    },
+    {
+      "title": "Bulletin 21 septembre 11h30",
+      "link": "https://lapige.atmjonquiere.com/2026/09/21/bulletin-21-septembre-11h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-21-septembre-11h30",
+      "ok": true,
+      "score": 66,
+      "chars": 142,
+      "sample": "Le PQ en tête dans les sondages, hausse d’achalandage aux activités du centre-ville d’Arvida et débu",
+      "changed": false
+    },
+    {
+      "title": "17-year-old apprehended on Concordia’s Loyola campus",
+      "link": "https://thelinknewspaper.ca/article/16392",
+      "ok": true,
+      "score": 80,
+      "chars": 143,
+      "sample": "Montreal police (SPVM) say they were called around 2 p.m. to assist after the teenager had left a ho",
       "changed": false
     }
   ]

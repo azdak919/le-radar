@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-22T03:19:52.259Z",
+  "updated": "2026-09-22T05:04:08.441Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
@@ -7,94 +7,38 @@
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 27,
-  "updatedCount": 16,
-  "citedNew": 14,
-  "fallbackNew": 13,
+  "checked": 16,
+  "updatedCount": 4,
+  "citedNew": 4,
+  "fallbackNew": 12,
   "samples": [
-    {
-      "title": "Les enfants, invités des pompiers pour la journée",
-      "source": "La Pige",
-      "credit": "Photo : Emilie Frère-Lefèvre",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Des caméras pour lutter contre le vandalisme au centre-ville de Jonquière",
-      "source": "La Pige",
-      "credit": "Photo : Lucas Radoux",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Journée mondiale de la maladie d’Alzheimer : l’importance de s’outiller",
-      "source": "La Pige",
-      "credit": "Crédit photo : La Pige",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "McGill’s offence dominates in a bitter homecoming for the Concordia Stingers",
-      "source": "The Link",
-      "credit": "Photo : Nicolas Tremblay",
-      "cited": true,
-      "method": "figcaption"
-    },
-    {
-      "title": "Activists urge party leaders to take clear actions",
-      "source": "The Link",
-      "credit": "Photo : Azel-Hana Brunet",
-      "cited": true,
-      "method": "figcaption"
-    },
-    {
-      "title": "L’industrie maritime : « un moteur économique »",
-      "source": "La Pige",
-      "credit": "Photo : Elsa Pierre",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Le DSM-6 ?",
-      "source": "Le Collectif",
-      "credit": "Photo : Jessica Weinkle",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Circonscriptions des personnes cheffes de parti",
-      "source": "Le Collectif",
-      "credit": "Photo : Getty images",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Débat économique de TVA",
-      "source": "Le Collectif",
-      "credit": "Photo : Publication de TVA",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Le Québec est-il polarisé ?",
-      "source": "Le Collectif",
-      "credit": "Photo : Source : Getty Images",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "L’extrême droite l’emporte en Allemagne",
-      "source": "Le Collectif",
-      "credit": "Photo : Omer Messinger/Getty Images",
-      "cited": true,
-      "method": "json-ld"
-    },
     {
       "title": "Somaya takes LAYALI to the stage",
       "source": "The Link",
       "credit": "Photo: Lea Joy Sabbaghian",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "La cassette commence à être usée",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }

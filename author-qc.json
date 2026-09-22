@@ -1,8 +1,8 @@
 {
-  "updated": "2026-09-22T03:13:07.457Z",
+  "updated": "2026-09-22T04:57:52.081Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 5,
+  "mismatches": 6,
   "ok": true,
   "samples": [
     {
@@ -38,6 +38,14 @@
       "reason": "no-author-source"
     },
     {
+      "title": "La cassette commence à être usée",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
+      "source": "Le Délit",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Antoine Proulx et Louis-Justin Sauvé",
+      "reason": "page-byline"
+    },
+    {
       "title": "Garda World au CVM (Éditorial)",
       "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
       "source": "Exil",
@@ -46,5 +54,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 5
+  "fixed": 6
 }
