@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-22T14:06:04.580Z",
+  "updated": "2026-09-22T15:36:36.309Z",
   "total": 188,
   "pool": 58,
-  "incomplete": 8,
+  "incomplete": 10,
   "withLeadExcerpt": 86,
-  "candidates": 8,
-  "enriched": 3,
+  "candidates": 10,
+  "enriched": 4,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -19,12 +19,30 @@
       "changed": false
     },
     {
-      "title": "L’épidémie de la nonchalance",
-      "link": "https://www.delitfrancais.com/2026/03/25/lepidemie-de-la-nonchalance/",
+      "title": "We’re in 2026—stop using women’s bodies to sell sports",
+      "link": "https://thelinknewspaper.ca/article/16420",
       "ok": true,
       "score": 96,
-      "chars": 391,
-      "sample": "À force de craindre d’être « trop » – trop sensible, trop sincère – on finit par se taire. Je me sui",
+      "chars": 303,
+      "sample": "“Think you know sports? Prove it,” said Sydney Sweeney, as she stared into the camera with her chest",
+      "changed": true
+    },
+    {
+      "title": "Bishop’s Gaiters football returns to the RSEQ",
+      "link": "https://thelinknewspaper.ca/article/16419",
+      "ok": true,
+      "score": 100,
+      "chars": 317,
+      "sample": "The Bishop’s University Gaiters have returned to the Réseau du sport étudiant du Québec (RSEQ) for t",
+      "changed": true
+    },
+    {
+      "title": "The rebirth of a league",
+      "link": "https://thelinknewspaper.ca/article/16418",
+      "ok": true,
+      "score": 100,
+      "chars": 313,
+      "sample": "Forty-one years after men’s Division 1 university hockey left Quebec, a new league will rise in its ",
       "changed": true
     },
     {
@@ -61,24 +79,6 @@
       "score": 86,
       "chars": 400,
       "sample": "Le grand débat des chef·fe·s de Noovo et de Crave a eu lieu le mercredi 16 septembre dernier. Quarti",
-      "changed": true
-    },
-    {
-      "title": "Bulletin 21 septembre 11h30",
-      "link": "https://lapige.atmjonquiere.com/2026/09/21/bulletin-21-septembre-11h30/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-21-septembre-11h30",
-      "ok": true,
-      "score": 66,
-      "chars": 142,
-      "sample": "Le PQ en tête dans les sondages, hausse d’achalandage aux activités du centre-ville d’Arvida et débu",
-      "changed": true
-    },
-    {
-      "title": "17-year-old apprehended on Concordia’s Loyola campus",
-      "link": "https://thelinknewspaper.ca/article/16392",
-      "ok": true,
-      "score": 80,
-      "chars": 143,
-      "sample": "Montreal police (SPVM) say they were called around 2 p.m. to assist after the teenager had left a ho",
       "changed": false
     }
   ]

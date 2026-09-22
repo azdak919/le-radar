@@ -1,25 +1,19 @@
 {
-  "updated": "2026-09-22T14:13:19.511Z",
+  "updated": "2026-09-22T15:42:45.717Z",
   "total": 188,
-  "withPhoto": 173,
-  "withStock": 27,
-  "withCampusBank": 20,
+  "withPhoto": 176,
+  "withStock": 24,
+  "withCampusBank": 17,
   "fullyCovered": 188,
-  "leadReadyPhotos": 142,
-  "pageScraped": 32,
-  "photosRecovered": 29,
+  "leadReadyPhotos": 146,
+  "pageScraped": 31,
+  "photosRecovered": 28,
   "imagesCleared": 11,
-  "stockSearches": 41,
-  "stockFound": 20,
-  "campusBankFound": 14,
+  "stockSearches": 40,
+  "stockFound": 19,
+  "campusBankFound": 13,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "No CTRL over AI",
-      "link": "https://thelinknewspaper.ca/article/16406",
-      "reason": "campus-bank",
-      "image": "/assets/masthead/polytechnique-lassonde-abdallahh.jpg"
-    },
     {
       "title": "The UCI Road World Championships: Where Excitement Meets Inconvenience",
       "link": "https://www.mcgilldaily.com/2026/09/the-uci-road-world-championships-where-excitement-meets-inconvenience/",
@@ -85,6 +79,12 @@
       "link": "https://www.thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Letters from the Editors May 2026",
+      "link": "https://theplantnews.com/2026/05/11/letters-from-the-editors-may-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
     }
   ]
 }

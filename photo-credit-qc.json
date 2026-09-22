@@ -1,17 +1,45 @@
 {
-  "updated": "2026-09-22T14:12:44.741Z",
+  "updated": "2026-09-22T15:43:18.960Z",
   "total": 188,
-  "withImage": 173,
-  "withCredit": 173,
-  "cited": 117,
+  "withImage": 176,
+  "withCredit": 176,
+  "cited": 118,
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 23,
-  "updatedCount": 11,
-  "citedNew": 8,
-  "fallbackNew": 15,
+  "checked": 32,
+  "updatedCount": 20,
+  "citedNew": 15,
+  "fallbackNew": 17,
   "samples": [
+    {
+      "title": "We’re in 2026—stop using women’s bodies to sell sports",
+      "source": "The Link",
+      "credit": "Photo: Halle Keays",
+      "cited": true,
+      "method": "filename-byline"
+    },
+    {
+      "title": "Bishop’s Gaiters football returns to the RSEQ",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "The rebirth of a league",
+      "source": "The Link",
+      "credit": "Photo : Nicolas Tremblay",
+      "cited": true,
+      "method": "figcaption"
+    },
+    {
+      "title": "Montreal’s lesbo-queer soccer league takes the field",
+      "source": "The Link",
+      "credit": "Photo : Cléo Clamen",
+      "cited": true,
+      "method": "figcaption"
+    },
     {
       "title": "Social media, passion and music",
       "source": "The Link",
@@ -41,9 +69,23 @@
       "method": "figcaption"
     },
     {
+      "title": "Building rockets in between classes",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
       "title": "What the heck is professional attire anyway!?",
       "source": "The Link",
       "credit": "Illustration: Lauren McCarthy",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "No CTRL over AI",
+      "source": "The Link",
+      "credit": "Illustration: Helena Reyes Teruel",
       "cited": true,
       "method": "figcaption-trailing"
     },
@@ -53,41 +95,6 @@
       "credit": "Photo credit: The Link",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Nostalgia Nook: It isn’t raining women anymore",
-      "source": "The Link",
-      "credit": "Illustration: Yousra Ait",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Quebec election information distributed solely in French",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Free public transportation is worth investing in",
-      "source": "The Link",
-      "credit": "Photo: Santiago Sánchez",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Is a bachelor’s degree keeping its promise?",
-      "source": "The Link",
-      "credit": "Illustration: Aia Segal",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "L’épidémie de la nonchalance",
-      "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
-      "cited": true,
-      "method": "media-credit-featured"
     }
   ]
 }
