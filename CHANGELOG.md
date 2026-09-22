@@ -32,6 +32,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Ajouté
 
+- Application iOS et Android (Capacitor 8) : fil personnel, suivis, favoris, hors ligne, partage natif et fiches. Le site le-radar.ca n’est pas encapsulé. Documentation : `docs/mobile/`.
+
 - Studio d’affiches **en local** : téléverser une JPEG/PNG/WebP (reste dans l’onglet, hors banque publique). Comme le 1200 dpi, masqué hors `127.0.0.1`.
 - Messages manuscrits d’affiches : point d’exclamation sur les vœux (Bonne rentrée !, Joyeuses Fêtes !, Tu vas y arriver !). Pas sur les mentions solennelles ni les phrases projet.
 - Banque d’affiches Université Laval : un cliché Commons de chaque pavillon d’enseignement du campus principal et des quatre résidences (dont Agathe-Lacerte et Ernest-Lemieux). Studio `/affiches/?campus=laval&photo=ernest-lemieux`.

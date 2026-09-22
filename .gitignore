@@ -1,6 +1,27 @@
 # Dependencies (scripts are plain Node — no package.json required)
 node_modules/
 
+# Application native — artefacts générés (npm run mobile:sync)
+mobile/www/
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/keystore.properties
+android/app/src/main/assets/public/
+android/app/src/main/assets/capacitor.config.json
+android/app/src/main/assets/capacitor.plugins.json
+android/capacitor-cordova-android-plugins/
+ios/App/Pods/
+ios/App/build/
+ios/App/output/
+ios/derivedData/
+ios/App/App/public/
+ios/App/App/capacitor.config.json
+*.xcuserstate
+*.keystore
+*.jks
+
 # Labo photo : thumbs locales (ne pas committer)
 dev/photo-lab/cache/
 
