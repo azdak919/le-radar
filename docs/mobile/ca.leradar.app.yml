@@ -1,0 +1,36 @@
+Categories:
+  - Internet
+  - Reading
+License: GPL-2.0-only
+AuthorName: Azdak
+AuthorEmail: azdak-qc@proton.me
+WebSite: https://le-radar.ca
+SourceCode: https://github.com/azdak919/le-radar
+IssueTracker: https://github.com/azdak919/le-radar/issues
+Changelog: https://github.com/azdak919/le-radar/blob/HEAD/CHANGELOG.md
+
+AutoName: LE-RADAR
+
+RepoType: git
+Repo: https://github.com/azdak919/le-radar
+
+Builds:
+  - versionName: '1.0.0'
+    versionCode: 1
+    commit: v1.0.0
+    subdir: android
+    sudo:
+      - apt-get update
+      - apt-get install -y curl xz-utils
+    gradle:
+      - yes
+    prebuild:
+      - curl -fsSL -o /tmp/node.tar.xz https://nodejs.org/dist/v20.19.5/node-v20.19.5-linux-x64.tar.xz && tar -xJf /tmp/node.tar.xz -C /tmp && export PATH="/tmp/node-v20.19.5-linux-x64/bin:$PATH" && cd .. && npm ci && npm run mobile:sync
+    scandelete:
+      - node_modules
+    output: app/build/outputs/apk/release/app-release-unsigned.apk
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+CurrentVersion: '1.0.0'
+CurrentVersionCode: 1

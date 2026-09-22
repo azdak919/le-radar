@@ -6,15 +6,23 @@ Décision du 2026-09-21 : **F-Droid est le canal de distribution voulu** pour l�
 
 L’application est GPL-2.0, sans compte, sans publicité, sans Firebase et sans les services Google Play. Elle se construit avec Gradle à partir de ce dépôt. C’est le magasin qui correspond au projet.
 
-## Ce qui n’est pas fait
+## Fiche
 
-F-Droid n’a pas encore la fiche. L’inclusion se fait par une demande dans le dépôt `fdroiddata`, après que cette branche est sur `main`. F-Droid signe lui-même l’application. La clé d’envoi Play ne sert pas.
+Les textes lus par le client F-Droid sont dans `fastlane/metadata/android/` (`en-US` obligatoire, `fr-CA` en plus). L’icône est `fastlane/metadata/android/en-US/images/icon.png`.
 
-La compile Android de la PR peut être rouge à cause de l’action `setup-android` (paquet `tools` retiré). Le binaire local, JDK 21 et SDK 36, se construit. Ce n’est pas un bloqueur F-Droid.
+Version publiée : `versionName` 1.0.0, `versionCode` 1, étiquette git `v1.0.0`.
 
-## Prochaine étape, quand on s’y met
+Le build de publication n’a pas de clé dans le dépôt. Sans `android/keystore.properties`, `assembleRelease` produit un APK non signé. F-Droid le signe.
 
-1. Merger cette branche.
-2. Taguer une version.
-3. Rédiger la recette `fdroiddata` : clone, `npm ci`, `npm run mobile:sync`, `./gradlew assembleRelease`, sans clé du dépôt.
-4. Textes déjà prêts : `store/google/short-description-fr-CA.txt` et `store/google/full-description-fr-CA.md`.
+## Recette
+
+La copie de la recette est [ca.leradar.app.yml](ca.leradar.app.yml). Dans le dépôt F-Droid elle s’appelle `metadata/ca.leradar.app.yml`. Elle prévoit :
+
+- dépôt `https://github.com/azdak919/le-radar`
+- `commit: v1.0.0`
+- `subdir: android`
+- Node 20 officiel, puis `npm ci` et `npm run mobile:sync`
+- `gradle: yes`
+- APK : `app/build/outputs/apk/release/app-release-unsigned.apk`
+
+F-Droid signe lui-même. La clé d’envoi Play ne sert pas.

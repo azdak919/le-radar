@@ -191,6 +191,8 @@ assert.match(gradle, /minSdkVersion = 24/);
 const manifest = read('android/app/src/main/AndroidManifest.xml');
 assert.match(manifest, /android\.permission\.INTERNET/);
 assert.doesNotMatch(manifest, /ACCESS_FINE_LOCATION|CAMERA|RECORD_AUDIO|POST_NOTIFICATIONS|AD_ID/);
+assert.doesNotMatch(read('android/build.gradle'), /google-services|com\.google\.gms/);
+assert.doesNotMatch(read('android/app/build.gradle'), /google-services|com\.google\.gms/);
 assert.match(manifest, /usesCleartextTraffic="false"/);
 assert.match(manifest, /pathPrefix="\/article"/);
 const plist = read('ios/App/App/Info.plist');
