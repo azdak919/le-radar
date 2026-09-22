@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21T23:48:45.267Z",
+  "updatedAt": "2026-09-22T03:11:29.741Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T23:48:20.227Z"
+      "checkedAt": "2026-09-22T03:11:01.412Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les vinyles versatiles",
+        "title": "Mix Anglo",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
       },
       "next": {
-        "title": "Mono Fred (en stéréo)",
+        "title": "Les sentinelles de l'art (reprise)",
         "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/mono-fred-en-stereo"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
       },
       "track": "",
-      "showTitle": "Les vinyles versatiles",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T23:48:21.708Z"
+      "checkedAt": "2026-09-22T03:11:03.343Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Lesbo-sons",
+        "title": "27th Hr.",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "23:00",
+        "end": "00:00"
       },
       "next": {
-        "title": "Underground Sounds",
+        "title": "Harmony Express",
         "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "track": "",
-      "showTitle": "Lesbo-sons",
+      "showTitle": "27th Hr.",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,83 +74,85 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T23:48:23.919Z"
+      "checkedAt": "2026-09-22T03:11:06.309Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Monday Mass with Father Kate",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/monday-mass-with-father-kate"
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "In The Garage",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/in-the-garage"
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "track": "",
-      "showTitle": "Monday Mass with Father Kate",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T23:48:38.457Z"
+      "checkedAt": "2026-09-22T03:11:21.406Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Ma radio Académia",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Le terrain sportif",
         "source": "schedule-live",
         "start": "20:00",
         "end": "00:01"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Ma radio Académia",
+      "showTitle": "Le terrain sportif",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-21T23:48:39.464Z"
+      "checkedAt": "2026-09-22T03:11:22.380Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Carte blanche",
-        "source": "api-live",
-        "start": "20:00",
-        "end": "21:00",
-        "slug": "carte-blanche"
+        "title": "Les rois de l'arène",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Birds of Prrrey - Moving Day",
+      "track": "Jamaz - SCORE",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": {
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-09-21T23:48:44.916Z"
+      "checkedAt": "2026-09-22T03:11:29.391Z"
     }
   }
 }
