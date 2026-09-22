@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-21T23:39:48.238Z",
-  "fetchedAt": "2026-09-21T23:39:48.238Z",
+  "updated": "2026-09-22T03:58:45.135Z",
+  "fetchedAt": "2026-09-22T03:58:45.135Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-21T23:39:48.238Z"
+    "referenceDate": "2026-09-22T03:58:45.136Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 839,
@@ -5841,6 +5841,23 @@
           "priorSeason": false
         },
         {
+          "date": "2026-09-20",
+          "time": "16:00",
+          "opponent": "Rivière-du-Loup",
+          "opponentCode": "RDL",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 7,
+          "result": "L",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "b0ae3745-6ad9-4de3-a145-b9909d741266",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b0ae3745-6ad9-4de3-a145-b9909d741266",
+          "opponentFullName": "Cégep de Rivière-du-Loup",
+          "opponentRegistryId": "riviere-du-loup",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-16",
           "time": "19:30",
           "opponent": "John Abbott",
@@ -6046,10 +6063,10 @@
       },
       "record": {
         "wins": 1,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 2,
-        "label": "1-1"
+        "played": 3,
+        "label": "1-2"
       },
       "source": "rseq-s1",
       "priority": 22,
@@ -7742,6 +7759,24 @@
           "priorSeason": false
         },
         {
+          "date": "2026-09-20",
+          "time": "16:00",
+          "opponent": "André-Laurendeau",
+          "opponentCode": "CAL",
+          "home": true,
+          "scoreFor": 7,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "b0ae3745-6ad9-4de3-a145-b9909d741266",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b0ae3745-6ad9-4de3-a145-b9909d741266",
+          "opponentFullName": "Cégep André-Laurendeau",
+          "opponentNickname": "Cheetahs",
+          "opponentRegistryId": "andre-laurendeau",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-19",
           "time": "13:00",
           "opponent": "Édouard-Montpetit",
@@ -7958,11 +7993,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 2,
+        "wins": 3,
         "losses": 3,
         "draws": 0,
-        "played": 5,
-        "label": "2-3"
+        "played": 6,
+        "label": "3-3"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -57288,7 +57323,8 @@
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
           "opponentSector": "universitaire",
-          "sex": "M"
+          "sex": "M",
+          "opponentFullName": "Université du Québec en Outaouais"
         },
         {
           "date": "2026-10-23",
@@ -57501,7 +57537,21 @@
           "sex": "M"
         }
       ],
-      "nextGame": null,
+      "nextGame": {
+        "date": "2026-10-10",
+        "time": "20:00",
+        "opponent": "UQO",
+        "opponentCode": "UQO",
+        "home": true,
+        "sport": "hockey",
+        "competition": "Hockey universitaire masculin D2",
+        "gameId": null,
+        "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
+        "opponentRegistryId": "uqo",
+        "opponentSector": "universitaire",
+        "sex": "M",
+        "opponentFullName": "Université du Québec en Outaouais"
+      },
       "record": null,
       "source": "rseq-s1+campus-hockey",
       "priority": 6,
@@ -57529,7 +57579,7 @@
           "date": "2026-10-23",
           "time": "20:00",
           "opponent": "Sherbrooke",
-          "opponentCode": "SHE",
+          "opponentCode": "USHE",
           "home": false,
           "sport": "hockey",
           "competition": "Hockey universitaire masculin D2",
@@ -57537,7 +57587,9 @@
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke/",
           "opponentRegistryId": "usherbrooke",
           "opponentSector": "universitaire",
-          "sex": "M"
+          "sex": "M",
+          "opponentFullName": "Université de Sherbrooke",
+          "opponentNickname": "Vert & Or"
         },
         {
           "date": "2026-10-24",
@@ -57750,7 +57802,22 @@
           "sex": "M"
         }
       ],
-      "nextGame": null,
+      "nextGame": {
+        "date": "2026-10-23",
+        "time": "20:00",
+        "opponent": "Sherbrooke",
+        "opponentCode": "USHE",
+        "home": false,
+        "sport": "hockey",
+        "competition": "Hockey universitaire masculin D2",
+        "gameId": null,
+        "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke/",
+        "opponentRegistryId": "usherbrooke",
+        "opponentSector": "universitaire",
+        "sex": "M",
+        "opponentFullName": "Université de Sherbrooke",
+        "opponentNickname": "Vert & Or"
+      },
       "record": null,
       "source": "rseq-s1+campus-hockey",
       "priority": 13,
@@ -118355,7 +118422,21 @@
       "usports": true,
       "leagueLabel": "Hockey universitaire masculin D2",
       "lastGame": null,
-      "nextGame": null,
+      "nextGame": {
+        "date": "2026-10-10",
+        "time": "20:00",
+        "opponent": "UQO",
+        "opponentCode": "UQO",
+        "home": true,
+        "sport": "hockey",
+        "competition": "Hockey universitaire masculin D2",
+        "gameId": null,
+        "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
+        "opponentRegistryId": "uqo",
+        "opponentSector": "universitaire",
+        "sex": "M",
+        "opponentFullName": "Université du Québec en Outaouais"
+      },
       "results": [],
       "nextGames": [
         {
@@ -118370,7 +118451,8 @@
           "url": "https://uqo.ca/les-torrents/hockey-masculin/horaire-et-admission",
           "opponentRegistryId": "uqo",
           "opponentSector": "universitaire",
-          "sex": "M"
+          "sex": "M",
+          "opponentFullName": "Université du Québec en Outaouais"
         },
         {
           "date": "2026-10-23",
@@ -118584,7 +118666,7 @@
         }
       ],
       "record": null,
-      "source": "campus-hockey+campus-hockey",
+      "source": "campus-hockey",
       "registryId": "usherbrooke",
       "fullName": "Université de Sherbrooke",
       "nickname": "Vert & Or",
@@ -119132,14 +119214,29 @@
       "usports": true,
       "leagueLabel": "Hockey universitaire masculin D2",
       "lastGame": null,
-      "nextGame": null,
+      "nextGame": {
+        "date": "2026-10-23",
+        "time": "20:00",
+        "opponent": "Sherbrooke",
+        "opponentCode": "USHE",
+        "home": false,
+        "sport": "hockey",
+        "competition": "Hockey universitaire masculin D2",
+        "gameId": null,
+        "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke/",
+        "opponentRegistryId": "usherbrooke",
+        "opponentSector": "universitaire",
+        "sex": "M",
+        "opponentFullName": "Université de Sherbrooke",
+        "opponentNickname": "Vert & Or"
+      },
       "results": [],
       "nextGames": [
         {
           "date": "2026-10-23",
           "time": "20:00",
           "opponent": "Sherbrooke",
-          "opponentCode": "SHE",
+          "opponentCode": "USHE",
           "home": false,
           "sport": "hockey",
           "competition": "Hockey universitaire masculin D2",
@@ -119147,7 +119244,9 @@
           "url": "https://www.uqac.ca/inuk/evenement/hockey-masculin-match-uqac-vs-sherbrooke/",
           "opponentRegistryId": "usherbrooke",
           "opponentSector": "universitaire",
-          "sex": "M"
+          "sex": "M",
+          "opponentFullName": "Université de Sherbrooke",
+          "opponentNickname": "Vert & Or"
         },
         {
           "date": "2026-10-24",
@@ -119361,7 +119460,7 @@
         }
       ],
       "record": null,
-      "source": "campus-hockey+campus-hockey",
+      "source": "campus-hockey",
       "registryId": "uqac",
       "fullName": "Université du Québec à Chicoutimi",
       "priority": 13
