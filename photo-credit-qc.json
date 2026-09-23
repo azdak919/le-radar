@@ -1,17 +1,31 @@
 {
-  "updated": "2026-09-23T18:34:07.482Z",
+  "updated": "2026-09-23T23:05:40.562Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
-  "cited": 121,
+  "cited": 120,
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 11,
-  "updatedCount": 3,
-  "citedNew": 3,
-  "fallbackNew": 8,
+  "checked": 17,
+  "updatedCount": 9,
+  "citedNew": 8,
+  "fallbackNew": 9,
   "samples": [
+    {
+      "title": "Plus de 40 000$ amassés pour le Parkinson",
+      "source": "La Pige",
+      "credit": "Photo : Charline Lachance",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "La sursaturation de l’imaginaire",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier l Le Délit",
+      "cited": true,
+      "method": "media-credit-near"
+    },
     {
       "title": "Remettre un classique au goût du jour",
       "source": "Le Délit",
@@ -27,11 +41,39 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Attention : virage à droite",
+      "title": "A love letter to men and youth",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Il faut le voir pour le croire",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
