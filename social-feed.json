@@ -1,7 +1,36 @@
 {
-  "updated": "2026-09-23T06:07:48.238Z",
-  "count": 17,
+  "updated": "2026-09-23T13:02:24.623Z",
+  "count": 21,
   "items": [
+    {
+      "name": "Quartier Libre",
+      "institution": "Université de Montréal",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/quartierlibre.ca/",
+          "handle": "@quartierlibre.ca",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/QuartierLibre.ca",
+          "handle": "QuartierLibre.ca",
+          "stats": "Quartier Libre, Montreal. 6,550 followers · 1 talking about this. Magazine indépendant des étudiant(e)s de l'UdeM, émission tous les vendredis à 12 h sur CISM",
+          "label": "Facebook"
+        },
+        {
+          "type": "x",
+          "url": "https://twitter.com/quartierlibre",
+          "handle": "@quartierlibre",
+          "stats": "",
+          "label": "X"
+        }
+      ]
+    },
     {
       "name": "Montréal Campus",
       "institution": "UQAM",
@@ -48,7 +77,7 @@
           "type": "facebook",
           "url": "https://facebook.com/ledelitfrancais",
           "handle": "ledelitfrancais",
-          "stats": "Le Délit. 4,688 followers · 1 talking about this. Le seul journal francophone de l'Université McGill. Chaque mardi sur le campus.",
+          "stats": "Le Délit. 4,688 followers. Le seul journal francophone de l'Université McGill. Chaque mardi sur le campus.",
           "label": "Facebook"
         },
         {
@@ -77,7 +106,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/themcgilldaily",
           "handle": "themcgilldaily",
-          "stats": "The McGill Daily. 7,215 followers. McGill's alternative journalism school since 1911",
+          "stats": "The McGill Daily. 7,215 followers · 1 talking about this. McGill's alternative journalism school since 1911",
           "label": "Facebook"
         },
         {
@@ -106,7 +135,7 @@
           "type": "facebook",
           "url": "https://facebook.com/thelinknewspaper",
           "handle": "thelinknewspaper",
-          "stats": "",
+          "stats": "The Link. 4,743 followers. The Link is an independent, student-run publication located at H-645 in Concordia’s Hall building",
           "label": "Facebook"
         },
         {
@@ -126,6 +155,28 @@
       ]
     },
     {
+      "name": "Zone Campus",
+      "institution": "Université du Québec à Trois-Rivières",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/zonecampus/",
+          "handle": "@zonecampus",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/zonecampus",
+          "handle": "zonecampus",
+          "stats": "Zone Campus. 2,039 followers. Zone Campus, le journal étudiant indépendant de l'UQTR. Retrouvez nos mots au zonecampus.ca.",
+          "label": "Facebook"
+        }
+      ]
+    },
+    {
       "name": "L'Exemplaire",
       "institution": "Université Laval",
       "type": "universite",
@@ -135,7 +186,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/lexemplaire",
           "handle": "lexemplaire",
-          "stats": "L'Exemplaire. 852 followers. Le média-école des étudiants en journalisme de l'Université Laval.",
+          "stats": "",
           "label": "Facebook"
         },
         {
@@ -144,6 +195,28 @@
           "handle": "@lexemplaire",
           "stats": "",
           "label": "X"
+        }
+      ]
+    },
+    {
+      "name": "Le Collectif",
+      "institution": "Université de Sherbrooke",
+      "type": "universite",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/jlecollectif/",
+          "handle": "@jlecollectif",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/journallecollectif",
+          "handle": "journallecollectif",
+          "stats": "",
+          "label": "Facebook"
         }
       ]
     },
@@ -164,8 +237,30 @@
           "type": "facebook",
           "url": "https://www.facebook.com/WordPresscom",
           "handle": "WordPresscom",
-          "stats": "WordPress.com. 749,074 followers · 303 talking about this. WordPress.com is the best place \nfor your personal blog or business site.",
+          "stats": "",
           "label": "Facebook"
+        }
+      ]
+    },
+    {
+      "name": "La Pige",
+      "institution": "Cégep de Jonquière (ATM – journalisme)",
+      "type": "cegep",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/2008",
+          "handle": "2008",
+          "stats": "",
+          "label": "Facebook"
+        },
+        {
+          "type": "youtube",
+          "url": "https://www.youtube.com/@atmlapige",
+          "handle": "@atmlapige",
+          "stats": "",
+          "label": "YouTube"
         }
       ]
     },
@@ -406,20 +501,6 @@
           "handle": "cjlo1690am",
           "stats": "",
           "label": "Facebook"
-        },
-        {
-          "type": "x",
-          "url": "https://twitter.com/CJLO1690AM",
-          "handle": "@CJLO1690AM",
-          "stats": "",
-          "label": "X"
-        },
-        {
-          "type": "youtube",
-          "url": "https://www.youtube.com/user/CJLO1690",
-          "handle": "@CJLO1690",
-          "stats": "",
-          "label": "YouTube"
         }
       ]
     },
