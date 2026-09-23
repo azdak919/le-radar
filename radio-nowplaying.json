@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-22T23:28:32.182Z",
+  "updatedAt": "2026-09-23T00:32:24.237Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "CATHJO FAIT DE LA RADIO",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://chyz.ca/emission/la-plug/"
-      },
+      "current": null,
       "next": {
         "title": "Mercredi Bonbon",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
       "track": "",
-      "showTitle": "CATHJO FAIT DE LA RADIO",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-22T23:28:04.465Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Catharmix",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/catharmix"
-      },
-      "next": {
-        "title": "Les garçons pleurent aussi (reprise)",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
-      },
-      "track": "",
-      "showTitle": "Catharmix",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T23:28:06.320Z"
+      "checkedAt": "2026-09-23T00:31:46.716Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Les garçons pleurent aussi (reprise)",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+      },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
+      "track": "",
+      "showTitle": "Les garçons pleurent aussi (reprise)",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-23T00:31:48.082Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Soul Perspectives",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:30"
-      },
-      "next": {
         "title": "Marca-RO",
         "source": "api-live",
         "start": "20:30",
         "end": "21:00"
       },
+      "next": {
+        "title": "Montreal Sound Ark",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "Soul Perspectives",
+      "showTitle": "Marca-RO",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T23:28:09.191Z"
+      "checkedAt": "2026-09-23T00:31:50.346Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Ashes to Ashes",
-        "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
-      },
-      "next": {
         "title": "Hittin' All The Bases",
         "source": "schedule-live",
         "start": "20:00",
         "end": "21:00",
         "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
       },
+      "next": {
+        "title": "NSIDE!",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/nside"
+      },
       "track": "",
-      "showTitle": "Ashes to Ashes",
+      "showTitle": "Hittin' All The Bases",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T23:28:24.755Z"
+      "checkedAt": "2026-09-23T00:32:05.156Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "L'Aut'Rock",
-        "source": "schedule-live",
-        "start": "18:30",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Dichotomie 88.3",
         "source": "schedule-live",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Mix Franco",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "L'Aut'Rock",
+      "showTitle": "Dichotomie 88.3",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T23:28:25.971Z"
+      "checkedAt": "2026-09-23T00:32:06.130Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/miroirs-dorient"
       },
-      "track": "Makthaverskan — Louie",
+      "track": "Cleo Sol — Thank You",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -155,7 +148,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-22T23:28:31.832Z"
+      "checkedAt": "2026-09-23T00:32:23.886Z"
     }
   }
 }
