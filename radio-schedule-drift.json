@@ -1,11 +1,12 @@
 {
-  "checkedAt": "2026-09-22T01:35:08.887Z",
+  "checkedAt": "2026-09-23T01:27:08.129Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
+    "stable": 4,
     "drift": [
+      "chyz",
       "choq"
     ],
     "overhaul": [],
@@ -15,12 +16,14 @@
     {
       "id": "chyz",
       "published": 39,
-      "fresh": 39,
-      "added": [],
+      "fresh": 40,
+      "added": [
+        "dim 19:00–21:00 Le Monde d'Erik Arsenault - 10 ans"
+      ],
       "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "changed": 1,
+      "ratio": 0.026,
+      "status": "drift"
     },
     {
       "id": "cism",
@@ -64,21 +67,17 @@
     },
     {
       "id": "choq",
-      "published": 19,
-      "fresh": 20,
+      "published": 20,
+      "fresh": 21,
       "added": [
-        "lun 20:00–21:00 Carte blanche",
-        "mer 13:00–13:45 Onde de CHOQ",
-        "jeu 13:00–13:45 Onde de CHOQ",
-        "ven 13:00–13:45 Onde de CHOQ"
+        "mar 14:00–14:45 Onde de CHOQ",
+        "mar 15:00–16:30 Passion Psy"
       ],
       "removed": [
-        "mer 13:00–14:00 Onde de CHOQ",
-        "jeu 13:00–14:00 Onde de CHOQ",
-        "ven 13:00–14:00 Onde de CHOQ"
+        "mar 14:00–15:30 Passion Psy"
       ],
-      "changed": 7,
-      "ratio": 0.368,
+      "changed": 3,
+      "ratio": 0.15,
       "status": "drift"
     }
   ]
