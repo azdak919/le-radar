@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-23T05:57:25.831Z",
+  "updatedAt": "2026-09-23T07:18:44.119Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T05:56:59.572Z"
+      "checkedAt": "2026-09-23T07:18:06.753Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La carte cadeau (reprise)",
+        "title": "Fréquence 440",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+        "start": "03:00",
+        "end": "04:00",
+        "url": "https://cism893.ca/emissions/frequence-440"
       },
       "next": {
-        "title": "Mix franco",
+        "title": "Ailleurs: escales en musique",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "04:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/ailleurs-en-musique"
       },
       "track": "",
-      "showTitle": "La carte cadeau (reprise)",
+      "showTitle": "Fréquence 440",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T05:57:01.092Z"
+      "checkedAt": "2026-09-23T07:18:08.028Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Space Plane",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "WarpCor / Out of the Void",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
-      "track": "",
-      "showTitle": "Space Plane",
+      "next": {
+        "title": "Full Circle",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
+      "track": "Airtime - offline",
+      "showTitle": "WarpCor / Out of the Void",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T05:57:03.629Z"
+      "checkedAt": "2026-09-23T07:18:10.477Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T05:57:17.879Z"
+      "checkedAt": "2026-09-23T07:18:24.615Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T05:57:18.945Z"
+      "checkedAt": "2026-09-23T07:18:25.554Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:00",
         "slug": "miroirs-dorient"
       },
-      "track": "Renard Blanc — Ma tete aussi",
+      "track": "Conifère — Faits d'Armes en Chants",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T05:57:25.481Z"
+      "checkedAt": "2026-09-23T07:18:43.768Z"
     }
   }
 }
