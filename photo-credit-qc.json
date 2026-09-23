@@ -1,100 +1,58 @@
 {
-  "updated": "2026-09-23T13:00:46.257Z",
+  "updated": "2026-09-23T14:23:07.016Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
-  "cited": 120,
-  "pending": 9,
+  "cited": 121,
+  "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 26,
-  "updatedCount": 17,
-  "citedNew": 14,
-  "fallbackNew": 12,
+  "checked": 14,
+  "updatedCount": 6,
+  "citedNew": 6,
+  "fallbackNew": 8,
   "samples": [
     {
-      "title": "Amour et magie 2 : nouvelle génération",
-      "source": "Le Délit",
-      "credit": "Photo : Photo tirée d'IMDB",
+      "title": "Après les violences sexuelles, le tatouage pour se réapproprier son corps",
+      "source": "La Pige",
+      "credit": "Photo : Victime anonyme",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "body-line"
     },
     {
-      "title": "Manifestation anti-IA à Montréal",
+      "title": "Outil d’émancipation ou vecteur d’exclusion",
       "source": "Le Délit",
-      "credit": "Photo : Héloïse Durning",
+      "credit": "Photo : Bebe Cutter",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "media-credit-near"
     },
     {
-      "title": "Quand la fiction banalise les traumatismes",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Faire compter sa voix",
-      "source": "Le Délit",
-      "credit": "Photo : Photo tirée d’Élections Québec",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Prochaine station: technosurveillance",
-      "source": "Le Délit",
-      "credit": "Photo : Felix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Un voyage dans le Nord",
-      "source": "Le Délit",
-      "credit": "Photo : Photo de Valérie Remise",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Célébrer la culture d’ici",
+      "title": "L’impact potentiel des élections québécoises sur McGill",
       "source": "Le Délit",
       "credit": "Photo : Félix Fournier",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "media-credit-near"
     },
     {
-      "title": "Le « self-care » : qui valide votre repos ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "S.O.S. Huîtres menacées",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "via-attribution"
     },
     {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
       "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Est-ce que je dois un bébé à l’État ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "No CTRL over AI",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "method": "body-line"
     }
   ]
 }
