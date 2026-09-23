@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-23T01:42:30.547Z",
+  "updatedAt": "2026-09-23T05:57:25.831Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T01:41:51.405Z"
+      "checkedAt": "2026-09-23T05:56:59.572Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les garçons pleurent aussi (reprise)",
+        "title": "La carte cadeau (reprise)",
         "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
       "next": {
-        "title": "Mix Anglo",
+        "title": "Mix franco",
         "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
       },
       "track": "",
-      "showTitle": "Les garçons pleurent aussi (reprise)",
+      "showTitle": "La carte cadeau (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T01:41:53.070Z"
+      "checkedAt": "2026-09-23T05:57:01.092Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Montreal Sound Ark",
+        "title": "Space Plane",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "next": {
-        "title": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever",
+        "title": "WarpCor / Out of the Void",
         "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "track": "",
-      "showTitle": "Montreal Sound Ark",
+      "showTitle": "Space Plane",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,60 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T01:41:55.903Z"
+      "checkedAt": "2026-09-23T05:57:03.629Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "NSIDE!",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/nside"
+        "title": "CJLO Late Night",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "Morning Electro-shock",
         "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/morning-electro-shock"
       },
       "track": "",
-      "showTitle": "NSIDE!",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule-live",
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-23T01:42:10.214Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Dichotomie 88.3",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "22:00"
-      },
-      "next": {
-        "title": "Mix Franco",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "00:00"
-      },
-      "track": "",
-      "showTitle": "Dichotomie 88.3",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T01:42:11.133Z"
+      "checkedAt": "2026-09-23T05:57:17.879Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
+      "track": "",
+      "showTitle": "Les nuits CFAK",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-23T05:57:18.945Z"
     },
     "choq": {
       "id": "choq",
@@ -135,21 +134,20 @@
       "current": null,
       "next": {
         "title": "Miroirs d’Orient",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:00",
         "end": "12:00",
-        "url": "https://www.choq.ca/emissions/miroirs-dorient"
+        "slug": "miroirs-dorient"
       },
-      "track": "Angela Autumn — My Alchemy",
+      "track": "Renard Blanc — Ma tete aussi",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T01:42:30.196Z"
+      "checkedAt": "2026-09-23T05:57:25.481Z"
     }
   }
 }
