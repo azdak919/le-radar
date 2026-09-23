@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-22T13:43:56.369Z",
+  "updatedAt": "2026-09-23T13:54:48.156Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-09-22T13:43:56.369Z",
+      "checkedAt": "2026-09-23T13:54:48.156Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -38,6 +38,13 @@
           "end": "18:30",
           "title": "Remparts de Québec",
           "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
+        },
+        {
+          "day": 0,
+          "start": "19:00",
+          "end": "21:00",
+          "title": "Le Monde d'Erik Arsenault - 10 ans",
+          "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
         },
         {
           "day": 1,
@@ -292,7 +299,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-09-22T13:43:56.369Z",
+      "checkedAt": "2026-09-23T13:54:48.156Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -1066,7 +1073,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-09-22T13:43:56.369Z",
+      "checkedAt": "2026-09-23T13:54:48.156Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -1678,7 +1685,7 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-09-22T13:43:56.369Z",
+      "checkedAt": "2026-09-23T13:54:48.156Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -4321,7 +4328,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-09-22T13:43:56.369Z",
+      "checkedAt": "2026-09-23T13:54:48.156Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -4542,7 +4549,7 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-09-22T13:43:56.369Z",
+      "checkedAt": "2026-09-23T13:54:48.156Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -4597,7 +4604,14 @@
         {
           "day": 2,
           "start": "14:00",
-          "end": "15:30",
+          "end": "14:45",
+          "title": "Onde de CHOQ",
+          "url": "https://www.choq.ca/emissions/onde-de-choq"
+        },
+        {
+          "day": 2,
+          "start": "15:00",
+          "end": "16:30",
           "title": "Passion Psy",
           "url": "https://www.choq.ca/emissions/passion-psy"
         },
