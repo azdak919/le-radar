@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-23T16:55:08.559Z",
+  "updatedAt": "2026-09-23T17:41:49.753Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T16:54:43.582Z"
+      "checkedAt": "2026-09-23T17:41:21.819Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T16:54:44.917Z"
+      "checkedAt": "2026-09-23T17:41:23.590Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T16:54:47.134Z"
+      "checkedAt": "2026-09-23T17:41:26.255Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "North-South Hockey",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/north-south-hockey"
-      },
-      "next": {
         "title": "Beatnik Boy: Mixtape",
         "source": "schedule-live",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/beatnik-boy-mixtape"
       },
+      "next": {
+        "title": "Cherry Vamp and the Sonic Coffin",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
+      },
       "track": "",
-      "showTitle": "North-South Hockey",
+      "showTitle": "Beatnik Boy: Mixtape",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T16:54:49.115Z"
+      "checkedAt": "2026-09-23T17:41:29.459Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,28 +126,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T16:54:50.170Z"
+      "checkedAt": "2026-09-23T17:41:30.473Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Onde de CHOQ",
         "source": "api-live",
         "start": "13:00",
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Wheobe — One Last Swim Before Tomorrow",
-      "showTitle": "",
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
+      },
+      "track": "Witch Prophet — Breathe",
+      "showTitle": "Onde de CHOQ",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T16:55:08.208Z"
+      "checkedAt": "2026-09-23T17:41:49.403Z"
     }
   }
 }
