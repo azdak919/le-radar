@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-22T23:52:49.771Z",
+  "updated": "2026-09-23T08:56:42.538Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2553,14 +2553,34 @@
       "at": "2026-09-20T18:23:20.000Z",
       "via": "existant",
       "source": "Quartier Libre"
+    },
+    "https://lapige.atmjonquiere.com/2026/09/22/les-monts-valin-une-montagne-devenue-destination-touristique/": {
+      "at": "2026-09-22T23:47:34.000Z",
+      "via": "existant",
+      "source": "La Pige"
+    },
+    "https://lecollectif.ca/sports-et-bien-etre/isaac-del-toro-remporte-le-grand-prix-cycliste-de-montreal/": {
+      "at": "2026-09-22T23:49:34.000Z",
+      "via": "existant",
+      "source": "Le Collectif"
+    },
+    "https://lecollectif.ca/societe/politique-internationale/lextreme-droite-lemporte-en-allemagne/": {
+      "at": "2026-09-22T23:49:35.000Z",
+      "via": "existant",
+      "source": "Le Collectif"
+    },
+    "https://lapige.atmjonquiere.com/2026/09/22/nommer-un-endroit-plus-complexe-quil-ny-parait/": {
+      "at": "2026-09-22T23:52:46.000Z",
+      "via": "existant",
+      "source": "La Pige"
     }
   },
   "stats": {
-    "total": 454,
+    "total": 458,
     "lastRun": {
       "saved": 0,
-      "skipped": 8,
-      "failed": 12,
+      "skipped": 4,
+      "failed": 16,
       "stoppedEarly": false
     }
   },
@@ -2623,7 +2643,7 @@
     "The Campus": {
       "host": "thebucampus.ca",
       "pages": 4,
-      "checkedAt": "2026-09-15T23:40:21.043Z"
+      "checkedAt": "2026-09-23T08:48:57.986Z"
     },
     "Le Délit": {
       "host": "www.delitfrancais.com",
