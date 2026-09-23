@@ -1,16 +1,16 @@
 {
-  "updated": "2026-09-23T06:00:02.113Z",
+  "updated": "2026-09-23T07:19:52.314Z",
   "updatedSlot": null,
   "count": 188,
   "freshnessSessions": 3,
   "sources": {
     "Quartier Libre": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-22T22:00:00.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-09-23T07:19:05.080Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-09T03:14:30.000Z",
-      "lastFetchOk": "2026-09-23T05:59:12.428Z"
+      "lastFetchOk": "2026-09-23T07:19:05.628Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-16T19:30:26.000Z",
-      "lastFetchOk": "2026-09-23T05:59:17.709Z"
+      "lastFetchOk": "2026-09-23T07:19:10.510Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-09-21T12:00:00.000Z",
-      "lastFetchOk": "2026-09-23T05:59:18.604Z"
+      "lastFetchOk": "2026-09-23T07:19:11.153Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,15 +42,15 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-22T14:32:00.000Z",
-      "lastFetchOk": "2026-09-23T05:59:19.840Z"
+      "lastFetchOk": "2026-09-23T07:19:11.670Z"
     },
     "Zone Campus": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-09-23T07:19:13.114Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,15 +58,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-15T16:31:24.000Z",
-      "lastFetchOk": "2026-09-23T05:59:22.534Z"
+      "lastFetchOk": "2026-09-23T07:19:15.702Z"
     },
     "Le Collectif": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-21T15:47:37.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-09-23T07:19:16.773Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,15 +74,15 @@
       "articleCount": 10,
       "freshArticleCount": 7,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-09-23T05:59:23.022Z"
+      "lastFetchOk": "2026-09-23T07:19:17.077Z"
     },
     "La Pige": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-22T18:53:41.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-09-23T07:19:17.829Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 16,
       "lastArticle": "2026-09-09T00:53:34.359Z",
-      "lastFetchOk": "2026-09-23T05:59:27.108Z"
+      "lastFetchOk": "2026-09-23T07:19:19.934Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-08T15:35:43.000Z",
-      "lastFetchOk": "2026-09-23T05:59:29.154Z"
+      "lastFetchOk": "2026-09-23T07:19:22.042Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-15T17:33:58.000Z",
-      "lastFetchOk": "2026-09-23T05:59:29.409Z"
+      "lastFetchOk": "2026-09-23T07:19:22.345Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-11T20:44:08.000Z",
-      "lastFetchOk": "2026-09-23T05:59:29.569Z"
+      "lastFetchOk": "2026-09-23T07:19:22.600Z"
     },
     "L'Oisif": {
       "fetchOk": true,
@@ -122,7 +122,7 @@
       "articleCount": 3,
       "freshArticleCount": 0,
       "lastArticle": "2019-08-23T18:43:43.000Z",
-      "lastFetchOk": "2026-09-23T05:59:31.060Z"
+      "lastFetchOk": "2026-09-23T07:19:23.831Z"
     },
     "La Gifle": {
       "fetchOk": true,
@@ -130,7 +130,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2018-05-19T20:19:20.000Z",
-      "lastFetchOk": "2026-09-23T05:59:31.303Z"
+      "lastFetchOk": "2026-09-23T07:19:24.034Z"
     },
     "Le Trait d'Union": {
       "fetchOk": true,
@@ -138,7 +138,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2024-11-14T14:41:41.000Z",
-      "lastFetchOk": "2026-09-23T05:59:32.271Z"
+      "lastFetchOk": "2026-09-23T07:19:24.884Z"
     }
   },
   "items": [
@@ -155,6 +155,7 @@
       "excerpt": "Au Québec, le milieu de la santé est confronté à de nombreux défis qui compliquent la vie des travailleur·euse·s sociaux·ales. Les étudiant·e·s du programme de travail social se demandent donc comment appréhender leur entrée sur un marché du travail en pleine crise. Pour",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/09/AETSUM_manifestation_remuneration_stages.jpg",
       "authorCheckedAt": "2026-09-22T23:18:45.193Z",
+      "_pageAuthor": "Bérénice Lemarié",
       "sourceImageCredit": "Photo : Marguerite Phaneuf",
       "sourceImageCreator": "Marguerite Phaneuf",
       "sourceImageCreditUrl": "https://quartierlibre.ca/etudiants-en-travail-social-defis/",
@@ -162,12 +163,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "aetsum_manifestation_remuneration_stages.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Au Québec, le milieu de la santé est confronté à de nombreux défis qui compliquent la vie des travailleur·euse·s sociaux·ales. Les étudiant·e·s du programme de travail social se demandent donc comment appréhender leur entrée sur un marché du travail en pleine crise. Pour comprendre leurs préoccupations, Quartier Libre est allé à leur rencontre.",
       "imageLocal": "assets/news-images/2dc7d77c0a09e98e.jpg",
       "imageLocalKey": "2dc7d77c0a09e98e",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -181,15 +181,15 @@
       "date": "2026-09-22T18:53:41.000Z",
       "excerpt": "À gauche, la directrice de Culture Saguenay–Lac-Saint-Jean, Shéril Gravel, qui est venue soutenir la propriétaire de la galerie L’art de vivre, Frédérique Girard, lors du vernissage de l’exposition. (Photo : Félix Parenteau) Un secteur se sent particulièrement négligé, dans la",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/2N0A0697.jpg",
+      "_pageAuthor": "Félix Parenteau",
       "sourceImageCredit": "Crédit photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/22/la-culture-le-laisse-pour-compte-des-tarifs-douaniers/?utm_source=rss&utm_medium=rss&utm_campaign=la-culture-le-laisse-pour-compte-des-tarifs-douaniers",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "2n0a0697.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
-      "leadExcerpt": "Un secteur se sent particulièrement négligé , dans la région , face aux aides attribuées pour contrer les nouveaux tarifs douaniers de 50% : la culture. Alors que les différents partis politiques multiplient les visites d e scieries et d’alumineries , les acteurs du milieu artistique se questionne nt sur la place de l’art au sein de cette campagne électoral e .",
-      "_retainedFromCache": true
+      "leadImageReady": true,
+      "leadExcerpt": "Un secteur se sent particulièrement négligé , dans la région , face aux aides attribuées pour contrer les nouveaux tarifs douaniers de 50% : la culture. Alors que les différents partis politiques multiplient les visites d e scieries et d’alumineries , les acteurs du milieu artistique se questionne nt sur la place de l’art au sein de cette campagne électoral e ."
     },
     {
       "source": "La Pige",
@@ -203,6 +203,7 @@
       "date": "2026-09-22T16:50:21.000Z",
       "excerpt": "Certains élèves de l’École polyvalente Arvida changent d’école pour faire leur pré-DEP. (Crédit : Laury-Ann Savard) Le Centre de services scolaire De La Jonquière offre depuis la rentrée l’accès au programme de pré-DEP à ses étudiants, un projet reconnu pour favoriser la",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Ecole-secondaire-des-Batisseurs-scaled-e1789755926399.jpg",
+      "_pageAuthor": "Laury-Ann Savard",
       "sourceImageCredit": "Photo : Laury-Ann Savard",
       "sourceImageCreator": "Laury-Ann Savard",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/22/le-pre-dep-maintenant-offert-a-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=le-pre-dep-maintenant-offert-a-jonquiere",
@@ -210,12 +211,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "ecole-secondaire-des-batisseurs-scaled-e1789755926399.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Le pré-DEP permet aux étudiants de faire leurs cours de mathématiques, de français et d’anglais nécessaires pour poursuivre leur cheminement scolaire, tout en suivant des cours d’exploration de la formation professionnelle. Il s’apparente au Projet 15 ans, qui est déjà présent dans d’autres écoles du Saguenay-Lac-Saint-Jean.",
       "imageLocal": "assets/news-images/a96b235dfa2b3a23.jpg",
       "imageLocalKey": "a96b235dfa2b3a23",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -229,6 +229,7 @@
       "date": "2026-09-22T16:39:05.000Z",
       "excerpt": "Jimmy Bouchard a été conseiller municipal pour la ville de Saguenay pendant six ans. (Crédit: Alex Loiselle) Quelques politiciens portent désormais leurs tatouages ouvertement. Reste à savoir si l’encre qui recouvre leur peau peut teinter, elle aussi, la perception que les",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Bouchard_Rencontre_Public.png",
+      "_pageAuthor": "Alex Loiselle",
       "sourceImageCredit": "Photo : Alex Loiselle",
       "sourceImageCreator": "Alex Loiselle",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/22/tatouages-et-politique-un-couteau-a-double-tranchant/?utm_source=rss&utm_medium=rss&utm_campaign=tatouages-et-politique-un-couteau-a-double-tranchant",
@@ -237,10 +238,10 @@
       "sourceImageCreditImageKey": "bouchard_rencontre_public.png",
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
+      "leadExcerpt": "Quelques politiciens portent désormais leurs tatouages ouvertement. Reste à savoir si l’encre qui recouvre leur peau peut teinter, elle aussi, la perception que les électeurs ont d’eux. « Ça montre que la politique se diversifie et que les profils élus reflètent mieux la société d’aujourd’hui. » Selon le professeur du département de communication sociale et publique à l’UQAM, Olivier Turbide, les",
       "imageLocal": "assets/news-images/347ff2656f7fc038.png",
       "imageLocalKey": "347ff2656f7fc038",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -254,6 +255,7 @@
       "date": "2026-09-22T16:31:52.000Z",
       "excerpt": "La toponymie, discipline qui consiste à nommer des espaces géographiques, nous entoure. Photo : Maxence Gibault-Renault Le lac en Cœur, le lac Rond ou le lac Saxophone sont autant de curiosités géographiques à la toponymie évocatrice. Cette discipline linguistique, méconnue,",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Selection-IMG_5099.jpg",
+      "_pageAuthor": "Maxence Gibault-Renault",
       "sourceImageCredit": "Photo : Maxence Gibault-Renault",
       "sourceImageCreator": "Maxence Gibault-Renault",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/22/nommer-un-endroit-plus-complexe-quil-ny-parait/?utm_source=rss&utm_medium=rss&utm_campaign=nommer-un-endroit-plus-complexe-quil-ny-parait",
@@ -261,12 +263,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "selection-img_5099.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Le lac en Cœur, le lac Rond ou le lac Saxophone sont autant de curiosités géographiques à la toponymie évocatrice. Cette discipline linguistique, méconnue, s’intéresse aux noms des lieux. Au Québec, la sélection s’inscrit dans un processus rigoureux. Les résultats s’annoncent aussi bien poétiques, chargés d’héritage, que parfois conflictuels.",
       "imageLocal": "assets/news-images/0102c2c8fd1dc63e.jpg",
       "imageLocalKey": "0102c2c8fd1dc63e",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -280,6 +281,7 @@
       "date": "2026-09-22T15:35:46.000Z",
       "excerpt": "Longtemps associé à l’hiver et à la célèbre Vallée des Fantômes les Monts-Valin sont devenus une destination quatre saisons. Crédit : Elsa Pierre En 30 ans, le parc national des Monts-Valin a vu sa fréquentation plus que tripler et son offre touristique se diversifier. De la",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/monts-valin.jpg",
+      "_pageAuthor": "elsapierre",
       "sourceImageCredit": "Photo : Elsa Pierre",
       "sourceImageCreator": "Elsa Pierre",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/22/les-monts-valin-une-montagne-devenue-destination-touristique/?utm_source=rss&utm_medium=rss&utm_campaign=les-monts-valin-une-montagne-devenue-destination-touristique",
@@ -287,16 +289,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "monts-valin.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
-      "leadExcerpt": "En 30 ans, le parc national des Monts-Valin a vu sa fréquentation plus que tripler et son offre touristique se diversifier. De la Vallée des Fantômes aux activités estivales, la montagne s’est imposée dans le paysage touristique du Saguenay – Lac-Saint-Jean.",
-      "stockImage": "https://live.staticflickr.com/5260/5437338177_254930d170_b.jpg",
-      "imageTitle": "La Vallée des fantômes Monts valins",
-      "imageCredit": "Photo : Melle plante / CC BY · Openverse",
-      "imageCreator": "Melle plante",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/10796463@N07/5437338177",
-      "_retainedFromCache": true
+      "leadImageReady": true,
+      "leadExcerpt": "En 30 ans, le parc national des Monts-Valin a vu sa fréquentation plus que tripler et son offre touristique se diversifier. De la Vallée des Fantômes aux activités estivales, la montagne s’est imposée dans le paysage touristique du Saguenay – Lac-Saint-Jean."
     },
     {
       "source": "The Link",
@@ -389,7 +383,7 @@
       "author": "Rahul Balasundaram",
       "date": "2026-09-22T14:16:00.000Z",
       "excerpt": "Established in 2022, the soccer league creates a space for lesbo-queer women, transgender folks and non-binary people to come together to play The Beautiful Game.",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/02.sports.jukesoccer.Cle%CC%81oClamen.1840_900_506_90.jpg",
+      "image": "https://thelinknewspaper.ca/images/articles/_resized/02.sports.jukesoccer.Cle%CC%81oClamen.1840.jpg",
       "authorCheckedAt": "2026-09-22T15:36:13.667Z",
       "_pageAuthor": "Rahul Balasundaram",
       "sourceImageCredit": "Photo : Cléo Clamen",
@@ -401,8 +395,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "Parc Saint-Michel in the Plateau is lively on a gloomy Sunday evening. This is where around 30 lesbo-queer women, transgender folks and non-binary people come to play pick-up soccer every week. While the turnout is a bit smaller this time around because of the pre-match rain, the energy is still electric, both on and off the field.",
-      "imageLocal": "assets/news-images/e0323ed1873671cb.jpg",
-      "imageLocalKey": "e0323ed1873671cb"
+      "imageLocal": "assets/news-images/7fbb5be2f6c600e3.jpg",
+      "imageLocalKey": "7fbb5be2f6c600e3"
     },
     {
       "source": "The Link",
@@ -756,6 +750,7 @@
       "date": "2026-09-22T02:58:06.000Z",
       "excerpt": "La journée portes ouvertes se déroule tous les deux ans et accueillent les enfants en nombre. (Photo : Emilie Frère-Lefèvre) Les costumes de pompiers étaient de sortie ce samedi. À l’occasion de la journée portes ouvertes de la caserne de pompiers de Chicoutimi, plusieurs",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/IMG_7779.jpg",
+      "_pageAuthor": "elsapierre",
       "sourceImageCredit": "Photo : Emilie Frère-Lefèvre",
       "sourceImageCreator": "Emilie Frère-Lefèvre",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/21/les-enfants-invites-des-pompiers-pour-la-journee/?utm_source=rss&utm_medium=rss&utm_campaign=les-enfants-invites-des-pompiers-pour-la-journee",
@@ -763,9 +758,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_7779.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
-      "leadExcerpt": "Les costumes de pompiers étaient de sortie ce samedi. À l’occasion de la journée portes ouverte s de la caserne de pompier s de Chicoutimi, plusieurs centaines de citoyens ont pu découvrir le quotidien de ces soldats du feu , un moyen de sensibiliser les plus jeunes à des situations dangereuses.",
-      "_retainedFromCache": true
+      "leadImageReady": true,
+      "leadExcerpt": "Les costumes de pompiers étaient de sortie ce samedi. À l’occasion de la journée portes ouverte s de la caserne de pompier s de Chicoutimi, plusieurs centaines de citoyens ont pu découvrir le quotidien de ces soldats du feu , un moyen de sensibiliser les plus jeunes à des situations dangereuses."
     },
     {
       "source": "La Pige",
@@ -779,6 +773,7 @@
       "date": "2026-09-22T02:57:40.000Z",
       "excerpt": "Alain Doré nous explique qu’il veut créer un sentiment de sécurité pour les citoyens du centre-ville de Jonquière (Photo : Lucas Radoux) L’idée d’installer des caméras de surveillance dans le centre-ville de Jonquière fait actuellement l’objet de discussions à la Ville de",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Capture-decran-2026-09-21-141838.png",
+      "_pageAuthor": "lucasradoux",
       "sourceImageCredit": "Photo : Lucas Radoux",
       "sourceImageCreator": "Lucas Radoux",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/21/des-cameras-pour-lutter-contre-le-vandalisme-au-centre-ville-de-jonquiere/?utm_source=rss&utm_medium=rss&utm_campaign=des-cameras-pour-lutter-contre-le-vandalisme-au-centre-ville-de-jonquiere",
@@ -786,9 +781,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "capture-decran-2026-09-21-141838.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
-      "leadExcerpt": "L’idée d’installer des caméras de surveillance dans le centre-ville de Jonquière fait actuellement l’objet de discussions à la Ville de Saguenay. Le projet est notamment envisagé dans le contexte d’une vague de vandalisme rapportée récemment dans le secteur.",
-      "_retainedFromCache": true
+      "leadImageReady": true,
+      "leadExcerpt": "L’idée d’installer des caméras de surveillance dans le centre-ville de Jonquière fait actuellement l’objet de discussions à la Ville de Saguenay. Le projet est notamment envisagé dans le contexte d’une vague de vandalisme rapportée récemment dans le secteur."
     },
     {
       "source": "La Pige",
@@ -802,18 +796,18 @@
       "date": "2026-09-22T02:56:52.000Z",
       "excerpt": "La Société Alzheimer du Saguenay-Lac-St-Jean profite de la Journée mondiale de la maladie d’Alzheimer pour rappeler à la population l’importance de demander de l’aide lorsqu’on est soi-même atteint de la maladie ou lorsqu’un proche reçoit un diagnostic. « Il faut que ça devienne",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/sabinevanerp-christmas-wallpaper-2906458_1920.jpg",
+      "_pageAuthor": "Maxim Fauteux",
       "sourceImageCredit": "Crédit photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/21/journee-mondiale-de-la-maladie-dalzheimer-limportance-de-soutiller/?utm_source=rss&utm_medium=rss&utm_campaign=journee-mondiale-de-la-maladie-dalzheimer-limportance-de-soutiller",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "sabinevanerp-christmas-wallpaper-2906458_1920.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "La Société Alzheimer du Saguenay-Lac-St-Jean profite de la Journée mondiale de la maladie d’Alzheimer pour rappeler à la population l’importance de demander de l’aide lorsqu’on est soi-même atteint de la maladie ou lorsqu’un proche reçoit un diagnostic. « Il faut que ça devienne un réflexe », explique Suzie Turcotte, intervenante psychosociale au sein de l’organisme.",
       "imageLocal": "assets/news-images/4d8984a397897e17.jpg",
       "imageLocalKey": "4d8984a397897e17",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -888,12 +882,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "0e8a9705.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "« Ce n’est pas seulement d’avoir des enveloppes budgétaires, quoiqu’elles soient très importantes. Il faut aussi une meilleure coordination entre les différents ministères, il faut que les projets soient adoptés plus rapidement », explique le PDG des Armateurs. Il déplore également l’absence d’un plan maritime financé au Québec.",
       "imageLocal": "assets/news-images/7e60e060303315b6.jpg",
       "imageLocalKey": "7e60e060303315b6",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -913,9 +906,8 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "dsc02918.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
-      "leadExcerpt": "Il y a bel et bien de l’amiante dans le département d’inhalothérapie de Chicoutimi. Le département sera fermé pour les prochaines semaines et les soins seront relocalisés. Un test de la qualité de l’air et une analyse par frottement ont été réalisés la semaine dernière. Les deux ont généré des résultats négatifs.",
-      "_retainedFromCache": true
+      "leadImageReady": true,
+      "leadExcerpt": "Il y a bel et bien de l’amiante dans le département d’inhalothérapie de Chicoutimi. Le département sera fermé pour les prochaines semaines et les soins seront relocalisés. Un test de la qualité de l’air et une analyse par frottement ont été réalisés la semaine dernière. Les deux ont généré des résultats négatifs."
     },
     {
       "source": "The Link",
@@ -928,7 +920,7 @@
       "author": "Hugo Conquet",
       "date": "2026-09-21T19:55:00.000Z",
       "excerpt": "Three goals and a late red card left the Stingers searching for answers after a tough loss to Sherbrooke Stingers looking distraught after a tough game against the Sherbrooke Vert et Or Photo Andraé Lerone Lewis",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/_U2A0648_690_460_90.jpg",
+      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/_U2A0648_900_600_90.jpg",
       "authorCheckedAt": "2026-09-22T21:27:36.236Z",
       "sourceImageCredit": "Photo: Andraé Lerone",
       "sourceImageCreator": "Andraé Lerone",
@@ -939,8 +931,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "The game started evenly, with both teams creating chances early on. Concordia enjoyed strong spells of possession and took some inquisitive shots, but their momentum slowed as the first half progressed.",
-      "imageLocal": "assets/news-images/5a03a5520f1726cb.jpg",
-      "imageLocalKey": "5a03a5520f1726cb"
+      "imageLocal": "assets/news-images/826f983aa5e0b11b.jpg",
+      "imageLocalKey": "826f983aa5e0b11b"
     },
     {
       "source": "Le Collectif",
@@ -966,8 +958,7 @@
       "leadExcerpt": "Les manuels du DSM (Diagnostic and Statistical Manual) sont une série d’ouvrages qui servent à classer et décrire les troubles de santé mentale. Ils ont été créés au début du 20 ᵉ siècle pour mettre un peu d’ordre dans les diagnostics très flous et contradictoires utilisés à l’époque dans les hôpitaux psychiatriques.",
       "imageLocal": "assets/news-images/323f6d3e77a29e2d.jpg",
       "imageLocalKey": "323f6d3e77a29e2d",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -992,8 +983,7 @@
       "leadImageReady": false,
       "imageLocal": "assets/news-images/3db3b7cda61f1734.jpg",
       "imageLocalKey": "3db3b7cda61f1734",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -1018,8 +1008,7 @@
       "leadImageReady": false,
       "imageLocal": "assets/news-images/61a98caee17fec15.png",
       "imageLocalKey": "61a98caee17fec15",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -1044,8 +1033,7 @@
       "leadImageReady": false,
       "imageLocal": "assets/news-images/e64de6886e596621.jpg",
       "imageLocalKey": "e64de6886e596621",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "The McGill Daily",
@@ -1061,14 +1049,14 @@
       "image": "",
       "authorCheckedAt": "2026-09-22T17:57:15.901Z",
       "leadImageReady": false,
+      "leadExcerpt": "Road closures began on September 5 in preparation for the Grand Prix Cycliste , which occurred on September 13. With the Road World Championships occurring from September 20 to 27, accessibility barriers and mobility challenges have become a topic of discussion.",
       "stockImage": "https://live.staticflickr.com/3628/3418387414_838287f106_b.jpg",
       "imageTitle": "Larry Black at the 2007 Ironman World Championship",
       "imageCredit": "Photo : Christian Reed / CC BY · Openverse",
       "imageCreator": "Christian Reed",
       "imageLicense": "by",
       "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/73352209@N00/3418387414",
-      "leadExcerpt": "Road closures began on September 5 in preparation for the Grand Prix Cycliste , which occurred on September 13. With the Road World Championships occurring from September 20 to 27, accessibility barriers and mobility challenges have become a topic of discussion."
+      "imageSourceUrl": "https://www.flickr.com/photos/73352209@N00/3418387414"
     },
     {
       "source": "The McGill Daily",
@@ -1081,18 +1069,19 @@
       "author": "Jad Morin",
       "date": "2026-09-21T12:00:00.000Z",
       "excerpt": "Since releasing their second album in late January, titled My Heart Is A Room With No Cameras In It , Brooklyn-based artist Julian McCamman’s new band Victoryland has been making waves in indie circles. Powered by McCamman’s captivating vocals, the alternative indie-pop/rock",
-      "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/09/IMG_7656-edited.png",
+      "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/09/IMG_7752-930x620.jpg",
       "authorCheckedAt": "2026-09-22T17:57:16.211Z",
-      "leadExcerpt": "The “perfect” song à la Victoryland can still be deeply authentic, especially in its lyrical content. Using a catchy, danceable pop beat to propose deeper or more psychological themes is something they share with LCD Soundsystem. While the New York band is firmly “alternative,” it’s hard not to dance to singles like the aptly titled “Dance Yrself Clean,” regardless of your musical background.",
-      "sourceImageCredit": "Photo : Radio TinTin",
-      "sourceImageCreator": "Radio TinTin",
+      "sourceImageCredit": "Photo : Meg Ha",
+      "sourceImageCreator": "Meg Ha",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/09/victoryland-the-selfish-pursuit-of-perfect-music/",
-      "sourceImageCreditFrom": "rss-content",
+      "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "img_7656-edited.png",
+      "sourceImageCreditImageKey": "img_7752.jpg",
       "sourceImageCreditRev": 10,
-      "imageLocal": "assets/news-images/d41c9d9db5d2865a.png",
-      "imageLocalKey": "d41c9d9db5d2865a"
+      "leadExcerpt": "The “perfect” song à la Victoryland can still be deeply authentic, especially in its lyrical content. Using a catchy, danceable pop beat to propose deeper or more psychological themes is something they share with LCD Soundsystem. While the New York band is firmly “alternative,” it’s hard not to dance to singles like the aptly titled “Dance Yrself Clean,” regardless of your musical background.",
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/25c6668fcf564149.jpg",
+      "imageLocalKey": "25c6668fcf564149"
     },
     {
       "source": "The McGill Daily",
@@ -1218,19 +1207,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sports-isaac_del_toro_remporte_le_gp_cycliste_de_montreal_en_vue_des_championnats_du_monde_de_cyclisme-charles_landry-credit_photo_dario_belingheri_eurosport.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "La course, étant à sa 15 e édition cette année, était comme à l’habitude bâtie autour du circuit Mont-Royal, que les coureurs se devaient de parcourir à 16 reprises. Cela représente environ 214 kilomètres et plus de 4 300 mètres de dénivelé dans un circuit urbain technique.",
-      "stockImage": "https://live.staticflickr.com/7261/7492245070_16b0e71b31_b.jpg",
-      "imageTitle": "Grand Canyon National Park Bicycle Rental 0399",
-      "imageCredit": "Photo : Grand Canyon NPS / CC BY · Openverse",
-      "imageCreator": "Grand Canyon NPS",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/50693818@N08/7492245070",
       "imageLocal": "assets/news-images/d6f539ad0503b270.png",
       "imageLocalKey": "d6f539ad0503b270",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -1251,12 +1232,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sports-football_universitaire_debut_de_saison_rocailleux_pour_le_vert__or-manuel_ezeta_jpg-1.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Si le revers de 53-21 subi aux mains des puissants Carabins de l’Université de Montréal n’a pas causé trop de surprise pour les partisans du Vert & Or, la défaite de 20-19 face aux Gaiters à Bishop’s, une semaine plus tard, a assurément laissé un goût amer. Voici un récapitulatif des deux premières semaines de football pour le Vert & Or.",
       "imageLocal": "assets/news-images/0dfb92794268f39e.jpg",
       "imageLocalKey": "0dfb92794268f39e",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -1278,8 +1258,7 @@
       "sourceImageCreditImageKey": "sports-debut_de_saison_2026_2027_pour_le_phoenix_de_sherbrooke_quels_joueurs_a_surveiller-vincent_levesque_roussea_phoenix_de_sherbrooke_jpeg.avif",
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
-      "leadExcerpt": "Lors de la parution de ce texte, la nouvelle saison de la Ligue de hockey junior Maritimes Québec (LHJMQ) aura déjà pris son envol depuis quelques jours. Nouvelle campagne amène aussi nouvelles attentes, qui se traduit souvent par un seul souhait commun partagé par des milliers de partisans, partout dans la province, peu importe l’équipe : l’obtention du trophée Gilles-Courteau.",
-      "_retainedFromCache": true
+      "leadExcerpt": "Lors de la parution de ce texte, la nouvelle saison de la Ligue de hockey junior Maritimes Québec (LHJMQ) aura déjà pris son envol depuis quelques jours. Nouvelle campagne amène aussi nouvelles attentes, qui se traduit souvent par un seul souhait commun partagé par des milliers de partisans, partout dans la province, peu importe l’équipe : l’obtention du trophée Gilles-Courteau."
     },
     {
       "source": "Le Collectif",
@@ -1304,8 +1283,7 @@
       "leadImageReady": false,
       "imageLocal": "assets/news-images/00398bad93ab9d63.jpg",
       "imageLocalKey": "00398bad93ab9d63",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -1326,16 +1304,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_les-candidats-dans-richmond_compte-facebook-de-bernard-sevigny.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Le changement à la tête de la CAQ se fait ressentir, principalement sur le plan de l’écoute. « Il y a une constante, qui est de prioriser l’économie Avec Christine Fréchette, on sent qu’il y a plus de consultation et plus de prise en compte de toute l’information », dit-il.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/7/71/Christine_Fr%C3%A9chette.jpg",
-      "imageTitle": "Christine Fréchette",
-      "imageCredit": "Photo : TVA Nouvelles / CC0 · Openverse",
-      "imageCreator": "TVA Nouvelles",
-      "imageLicense": "cc0",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=146469713",
-      "_retainedFromCache": true
+      "imageLocal": "assets/news-images/a09d504f06d214f6.jpg",
+      "imageLocalKey": "a09d504f06d214f6"
     },
     {
       "source": "Le Collectif",
@@ -1356,9 +1328,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_personnescandidatesdanssaintfrancois_sourceelectionsquebec.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
-      "leadExcerpt": "Avec les élections provinciales qui s’en viennent à grands pas, la majorité des candidatures sont désormais connues. Dans Saint-François, une gestionnaire impliquée dans sa communauté se présente comme candidate pour le Parti libéral, tandis que Sylvie Tanguay tente à nouveau sa chance sous les couleurs péquistes.",
-      "_retainedFromCache": true
+      "leadImageReady": true,
+      "leadExcerpt": "Avec les élections provinciales qui s’en viennent à grands pas, la majorité des candidatures sont désormais connues. Dans Saint-François, une gestionnaire impliquée dans sa communauté se présente comme candidate pour le Parti libéral, tandis que Sylvie Tanguay tente à nouveau sa chance sous les couleurs péquistes."
     },
     {
       "source": "Quartier Libre",
@@ -1372,26 +1343,18 @@
       "date": "2026-09-19T18:00:00.000Z",
       "excerpt": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de la semaine passée, cliquer ici.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990.png",
-      "authorCheckedAt": "2026-09-22T00:54:54.940Z",
+      "authorCheckedAt": "2026-09-23T07:20:01.772Z",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-8/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "5infos_ql-e1769792962990.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Mark Carney a invité le secteur privé à investir dans les quatre plus grands aéroports du Canada, dont celui de Montréal. Le premier ministre canadien estime que ces investissements permettront d’améliorer les services de transport aérien au pays, ainsi que de réinvestir « les dizaines de milliards de dollars de capitaux que nous mobiliserons dans les infrastructures dont le Canada a besoin ».",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/2/26/Mark_Carney_World_Economic_Forum_2013_%283%29.jpg",
-      "imageTitle": "Mark Carney World Economic Forum 2013 (3)",
-      "imageCredit": "Photo : World Economic Forum from Cologny, Switzerland / CC BY-SA · Openverse",
-      "imageCreator": "World Economic Forum from Cologny, Switzerland",
-      "imageLicense": "by-sa",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=24234760",
       "imageLocal": "assets/news-images/95d1c982cd32b09e.png",
       "imageLocalKey": "95d1c982cd32b09e",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -1405,7 +1368,7 @@
       "date": "2026-09-18T16:00:00.000Z",
       "excerpt": "Le grand débat des chef·fe·s de Noovo et de Crave a eu lieu le mercredi 16 septembre dernier. Quartier Libre s’est rendu sur place pour interroger les chef·fe·s de parti sur les questions qui concernent la jeunesse, telles que la santé mentale et la préservation de",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/09/157_Grand_Debat_des_Chefs_Noovo_2026.jpg",
-      "authorCheckedAt": "2026-09-22T00:54:55.218Z",
+      "authorCheckedAt": "2026-09-23T07:20:02.767Z",
       "sourceImageCredit": "Photo : Noovo et Crave / Paul Ducharme",
       "sourceImageCreator": "Noovo et Crave / Paul Ducharme",
       "sourceImageCreditUrl": "https://quartierlibre.ca/elections-debat-des-cheffes-jeunesse/",
@@ -1413,11 +1376,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "157_grand_debat_des_chefs_noovo_2026.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
+      "leadExcerpt": "Le grand débat des chef·fe·s de Noovo et de Crave a eu lieu le mercredi 16 septembre dernier. Quartier Libre s’ est rendu sur place pour interroger les chef·fe·s de parti sur les questions qui concernent la jeunesse, telles que la santé mentale et la préservation de l’environnement. Le débat a d’ailleurs particulièrement visé ce segment de l’électorat, puisque l’un des cinq thèmes portait sur « l’",
       "imageLocal": "assets/news-images/d6a2490d4d7abc7d.jpg",
       "imageLocalKey": "d6a2490d4d7abc7d",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -1443,8 +1406,7 @@
       "leadExcerpt": "« À l’époque, des plaintes concernant M. Rochefort avaient été portées à l’attention de l’Université de Montréal, mais le cadre alors en vigueur limitait les possibilités d’intervention de l’établissement , explique la porte-parole de l’Université de Montréal, Geneviève O’Meara. Ça a beaucoup changé depuis dix ans. »",
       "imageLocal": "assets/news-images/bf73b05bcfe9ffdc.jpg",
       "imageLocalKey": "bf73b05bcfe9ffdc",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -1466,12 +1428,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "cadrefinancierpq.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "C’est l’ancien ministre des Finances et de l’Économie du gouvernement de Pauline Marois et candidat dans Marie-Victorin, Nicolas Marceau, qui a présenté le cadre financier. Le chef du Parti québécois, Paul Saint-Pierre Plamondon, était absent lors du dévoilement pour se préparer aux débats télévisés de TVA et Noovo info.",
       "imageLocal": "assets/news-images/24f990b703a4c290.jpg",
       "imageLocalKey": "24f990b703a4c290",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Délit",
@@ -1797,7 +1758,7 @@
       "author": "Catvy Tran",
       "date": "2026-09-16T07:00:00.000Z",
       "excerpt": "Atteintes aux mesures antidiscriminatoires et déradicalisation de la gauche radicale.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/virage-a-droite-768x768.png",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/virage-a-droite.png",
       "featured": true,
       "sourceImageCredit": "Photo : Catvy Tran",
       "sourceImageCreator": "Catvy Tran",
@@ -1807,9 +1768,7 @@
       "sourceImageCreditImageKey": "virage-a-droite.png",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "leadExcerpt": "Tyler Austin Harper s’égare donc lorsqu’il démonise les mesures d’EDI et les définit comme des moyens de distraire des véritables enjeux économiques. Plutôt que de séparer ces deux combats, il gagne rait à percevoir ces luttes comme étant complémentaires et s’entre tenant mutuellement pour mener à bien des changements sociétaux.",
-      "imageLocal": "assets/news-images/e05f297389a3871b.png",
-      "imageLocalKey": "e05f297389a3871b"
+      "leadExcerpt": "Tyler Austin Harper s’égare donc lorsqu’il démonise les mesures d’EDI et les définit comme des moyens de distraire des véritables enjeux économiques. Plutôt que de séparer ces deux combats, il gagne rait à percevoir ces luttes comme étant complémentaires et s’entre tenant mutuellement pour mener à bien des changements sociétaux."
     },
     {
       "source": "Le Délit",
@@ -1875,7 +1834,7 @@
       "author": "Timotée Allouch-Chantepie",
       "date": "2026-09-16T07:00:00.000Z",
       "excerpt": "Avant le 5 octobre, QS, PLQ et PVQ courtisent les étudiants de McGill.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/DebatProvincial-3-768x512.png",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/DebatProvincial-3.png",
       "featured": true,
       "sourceImageCredit": "Photo : Félix Fournier l Le Délit",
       "sourceImageCreator": "Félix Fournier l Le Délit",
@@ -1885,9 +1844,7 @@
       "sourceImageCreditImageKey": "debatprovincial-3.png",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "leadExcerpt": "La salle de bal du Centre universitaire de McGill a ouvert ses portes le jeudi 10 septembre pour un débat entre candidats aux élections provinciales. Vingt-cinq jours avant le passage aux urnes, Québec solidaire (QS), le Parti libéral du Québec (PLQ) et le Parti vert du Québec (PVQ) ont chacun envoyé leurs émissaires pour rallier la centaine d’étudiants présents dans la salle.",
-      "imageLocal": "assets/news-images/2823e1b3ef963c2a.png",
-      "imageLocalKey": "2823e1b3ef963c2a"
+      "leadExcerpt": "La salle de bal du Centre universitaire de McGill a ouvert ses portes le jeudi 10 septembre pour un débat entre candidats aux élections provinciales. Vingt-cinq jours avant le passage aux urnes, Québec solidaire (QS), le Parti libéral du Québec (PLQ) et le Parti vert du Québec (PVQ) ont chacun envoyé leurs émissaires pour rallier la centaine d’étudiants présents dans la salle."
     },
     {
       "source": "The Campus",
@@ -1940,9 +1897,10 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "impact-de-la-nouvelle-table-dimposition-pour-une-eprsonne-seule.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Québec solidaire a dévoilé son cadre financier, intitulé Les moyens de nos ambitions , le vendredi 11 septembre dernier. Le parti y annonce un retour à l’équilibre budgétaire à la troisième année d’un mandat solidaire, de nombreux investissements financés notamment par l’imposition des grandes fortunes, et un portefeuille dédié à la transition écologique de 4,2 milliards de dollars sur quatre ans.",
-      "_retainedFromCache": true
+      "imageLocal": "assets/news-images/627cd35645f76ed4.jpg",
+      "imageLocalKey": "627cd35645f76ed4"
     },
     {
       "source": "The McGill Daily",
@@ -2089,12 +2047,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "802976486_2899205943805197_1798626515862610346_n.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Cette connaissance des dossiers s’est toutefois traduite par des engagements financiers inégaux. « J’ai l’impression que c’était un peu le débat du statu quo, nuance Mme Gignac . Ce qui a été le plus répété, c’est qu’il n’y aura pas de coupes, mais ne pas avoir de coupes ne veut pas dire d’investissements. ».",
       "imageLocal": "assets/news-images/f4cf5dccf794e9b9.jpg",
       "imageLocalKey": "f4cf5dccf794e9b9",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -2115,12 +2072,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "5infos_ql-e1769792962990.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Dans la région de Saxe-Anhalt, en Allemagne, le parti d’extrême droite Alternative für Deutschland (AfD) a remporté l’élection régionale avec environ 44 % des voix, un résultat sans précédent depuis la Deuxième Guerre mondiale. Cette victoire choquante rapproche le parti des portes du pouvoir, puisque trois sièges manquent à celui-ci pour avoir la majorité absolue au parlement régional.",
       "imageLocal": "assets/news-images/95d1c982cd32b09e.png",
       "imageLocalKey": "95d1c982cd32b09e",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -2142,12 +2098,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "photo_lab_ql.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "La directrice générale de l’ACFAS, Sophie Montreuil, s’est montrée catégorique auprès de Quartier Libre sur l’importance du lien entre la science et la politique. « On voulait rappeler qu’il n’y aura pas d’avenir pour le Québec s’il n’y a pas un intérêt à bien soutenir le système d’enseignement supérieur, l’écosystème de la recherche et les chercheurs », précise-t-elle.",
       "imageLocal": "assets/news-images/e67a135472444de3.jpg",
       "imageLocalKey": "e67a135472444de3",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Polyscope",
@@ -2240,7 +2195,8 @@
       "imageCreator": "Abdallahh",
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Arts_Building,_McGill_University.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Arts_Building,_McGill_University.jpg",
+      "_campusBank": true
     },
     {
       "source": "The Tribune",
@@ -2692,19 +2648,18 @@
       "date": "2026-09-04T21:00:00.000Z",
       "excerpt": "Quartier Libre est finalement de retour après un été mouvementé. Voici les nouvelles qui ont marqué l’actualité des derniers mois afin de commencer la session bien informés.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/09/5-infos-marquantes-de-lete.png",
-      "authorCheckedAt": "2026-09-22T00:55:07.536Z",
+      "authorCheckedAt": "2026-09-23T07:20:03.702Z",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/cinq-nouvelles-marquantes-de-lete/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "5-infos-marquantes-de-lete.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Quartier Libre est finalement de retour après un été mouvementé. Voici les nouvelles qui ont marqué l’actualité des derniers mois afin de commencer la session bien informés. Des feux de forêt ont sévi dans de nombreux pays cet été, parmi lesquels la France et la Belgique. Entre 96 000 et 115 000 hectares auraient brûlé cette année en France, bien plus que le record de 66 000 hectares de surface br",
       "imageLocal": "assets/news-images/55ee370802cc825c.png",
       "imageLocalKey": "55ee370802cc825c",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Délit",
@@ -2739,7 +2694,7 @@
       "author": "Timotée Allouch-Chantepie",
       "date": "2026-08-31T15:07:02.000Z",
       "excerpt": "Nouvelle guerre commerciale suite à l’échec des négociations.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/08/tarifs-768x768.png",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/08/tarifs.png",
       "featured": true,
       "authorCheckedAt": "2026-09-21T08:06:13.569Z",
       "sourceImageCredit": "Photo : Catvy Tran",
@@ -2750,9 +2705,7 @@
       "sourceImageCreditImageKey": "tarifs.png",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "leadExcerpt": "Son gouvernement s’est montré intransigeant face aux efforts américains qui cherchent à affaiblir le soutien d’Ottawa vis-à-vis de la préservation du français et de sa politique de bilinguisme. De son côté, la première ministre québécoise Christine Fréchette n’a pas tardé à réagir sur X avec le message « notre identité n’est pas à négocier ».",
-      "imageLocal": "assets/news-images/97fd8a15a802a9c0.png",
-      "imageLocalKey": "97fd8a15a802a9c0"
+      "leadExcerpt": "Son gouvernement s’est montré intransigeant face aux efforts américains qui cherchent à affaiblir le soutien d’Ottawa vis-à-vis de la préservation du français et de sa politique de bilinguisme. De son côté, la première ministre québécoise Christine Fréchette n’a pas tardé à réagir sur X avec le message « notre identité n’est pas à négocier »."
     },
     {
       "source": "The McGill Daily",
@@ -2965,14 +2918,14 @@
       "sourceImageCreditImageKey": "chatgpt-image-7-mai-2026-11-h-02-min-08-s.png",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
+      "leadExcerpt": "Illustration générée par ChatGPT à partir du prompt d’Olivier Verreault pour L’Exemplaire. Ce prompt vise à illustrer avec humour les différences entre les protestations québécoises et albertaines au sujet du rachat des armes à feu.",
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg",
       "imageTitle": "Pavillon Ferdinand-Vandry, Université Laval",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg",
-      "leadExcerpt": "Illustration générée par ChatGPT à partir du prompt d’Olivier Verreault pour L’Exemplaire. Ce prompt vise à illustrer avec humour les différences entre les protestations québécoises et albertaines au sujet du rachat des armes à feu."
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg"
     },
     {
       "source": "L'Exemplaire",
@@ -3069,7 +3022,7 @@
       "author": "Mano Le Bris",
       "date": "2026-05-12T18:48:26.000Z",
       "excerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus ont explosé, début 2026, sur les réseaux sociaux. Mais derrière ces visuels",
-      "image": "https://i0.wp.com/www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/05/SKIBIDI-MINIA-2.png?resize=696%2C392&ssl=1",
+      "image": "https://www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/05/SKIBIDI-MINIA-2.png",
       "sourceImageCredit": "Illustration : Mano Le Bris / L’Exemplaire",
       "sourceImageCreator": "Mano Le Bris",
       "sourceImageCreditUrl": "https://www.exemplaire.com.ulaval.ca/a-la-une/skibidi-tentafruit-ou-quand-lia-accentue-les-stereotypes/?utm_source=rss&utm_medium=rss&utm_campaign=skibidi-tentafruit-ou-quand-lia-accentue-les-stereotypes",
@@ -3078,16 +3031,14 @@
       "sourceImageCreditImageKey": "skibidi-minia-2.png",
       "sourceImageCreditRev": 9,
       "leadImageReady": true,
+      "leadExcerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus explosent sur les réseaux sociaux. Mais, derrière ces visuels enfantins générés par intelligence artificielle, se dessinent des discours moins légers qui dépassent le simple divertissement.",
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/de/Universit%C3%A9_Laval%2C_Quebec%2C_Canada_02.jpg",
       "imageTitle": "Université Laval, Quebec, Canada 02",
       "imageCredit": "Photo : Wilfredor / CC0 · Wikimedia Commons",
       "imageCreator": "Wilfredor",
       "imageLicense": "CC0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_Laval,_Quebec,_Canada_02.jpg",
-      "leadExcerpt": "Des fruits qui parlent, nouent des relations et suivent les codes de la téléréalité : c’est le concept derrière ces vidéos d’un nouveau genre. Entre humour, viralité et controverse, ces contenus explosent sur les réseaux sociaux. Mais, derrière ces visuels enfantins générés par intelligence artificielle, se dessinent des discours moins légers qui dépassent le simple divertissement.",
-      "imageLocal": "assets/news-images/44f01b932a4f2373.webp",
-      "imageLocalKey": "44f01b932a4f2373"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_Laval,_Quebec,_Canada_02.jpg"
     },
     {
       "source": "The Plant",
@@ -3110,7 +3061,8 @@
       "imageLicense": "CC BY-SA 3.0",
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Dawson_College_09.JPG",
-      "leadExcerpt": "Dear readers, Class of 2026 We did it! As May’s doting weather and perfumed flowers lull us into the promise of summer, I try to turn my tears to crystals that will decorate my legacy at The Plant. I knew I’d cry when I’d have to greet “Goodbye.” In my heart, I will forever hold 35 crystals for each member of the team that became my anchor. When hard nights of work kept me up until the moon came d"
+      "leadExcerpt": "Dear readers, Class of 2026 We did it! As May’s doting weather and perfumed flowers lull us into the promise of summer, I try to turn my tears to crystals that will decorate my legacy at The Plant. I knew I’d cry when I’d have to greet “Goodbye.” In my heart, I will forever hold 35 crystals for each member of the team that became my anchor. When hard nights of work kept me up until the moon came d",
+      "_campusBank": true
     },
     {
       "source": "The Plant",
@@ -3195,7 +3147,7 @@
       "author": "Joséphine Savard",
       "date": "2026-05-11T20:43:58.000Z",
       "excerpt": "A Correspondent’s Guide to Must-Attend Events this Summer in Montreal Joséphine Savard Arts & Culture Correspondent It is finally the month of May: birds are humming, terraces are open, ice cream coolers are buzzing, and summer is upon us. For some, this means escaping the city:",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-1-1.jpeg?w=1024",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-1-1.jpeg",
       "authorCheckedAt": "2026-09-23T03:58:48.713Z",
       "sourceImageCredit": "Photo credit: The Plant",
       "sourceImageCreditUrl": "https://theplantnews.com/2026/05/11/its-festival-summer/",
@@ -3293,17 +3245,18 @@
       "author": "Minola Grent",
       "date": "2026-05-11T20:43:48.000Z",
       "excerpt": "Via My Little Princess (2011) Minola GrentEditor-in-Chief Every story has the right to be told. Even difficult stories of abuse and manipulation do. So, with an asterisk: leave the children out of this. In the midst of the 1970s cultural confusion, Franco-Romanian photographer",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-4.jpeg?w=731",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/05/image-5.png",
       "authorCheckedAt": "2026-09-23T03:58:49.563Z",
       "sourceImageCredit": "Photo: My Little Princess (2011)",
       "sourceImageCreator": "My Little Princess (2011)",
       "sourceImageCreditUrl": "https://theplantnews.com/2026/05/11/leave-the-children-out-of-this/",
-      "sourceImageCreditFrom": "rss-content",
+      "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "image-4.jpeg",
+      "sourceImageCreditImageKey": "image-5.png",
       "sourceImageCreditRev": 10,
-      "imageLocal": "assets/news-images/a7f72017b9324103.webp",
-      "imageLocalKey": "a7f72017b9324103"
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/870cb1894ff8b3e6.png",
+      "imageLocalKey": "870cb1894ff8b3e6"
     },
     {
       "source": "The Plant",
@@ -3373,8 +3326,9 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "1.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/7aa5ab9dd7648781.jpg",
+      "imageLocalKey": "7aa5ab9dd7648781"
     },
     {
       "source": "L'Exemplaire",
@@ -3506,11 +3460,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3417.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "imageLocal": "assets/news-images/23af229881dbdeec.jpg",
       "imageLocalKey": "23af229881dbdeec",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -3603,8 +3556,9 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "17c4541a-839d-48b8-b5aa-2cc81e91e3c8.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/16a813216f7afeb2.jpg",
+      "imageLocalKey": "16a813216f7afeb2"
     },
     {
       "source": "Montréal Campus",
@@ -3717,8 +3671,9 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3939.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/debd9bf479305512.jpg",
+      "imageLocalKey": "debd9bf479305512"
     },
     {
       "source": "Zone Campus",
@@ -3739,15 +3694,7 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_9786.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": false,
-      "stockImage": "https://live.staticflickr.com/3505/3973947773_f685cd523c_b.jpg",
-      "imageTitle": "Installation (Detail) FASTFORWARDFOSSIL: Part 2 by Ellen Driscoll at Smack Mellon / Dumbo Arts Center: Art Under the Bridge Festival 2009 / 20090926.10D.54754.P1.L1.BW / SML",
-      "imageCredit": "Photo : See-ming Lee (SML) / CC BY-SA · Openverse",
-      "imageCreator": "See-ming Lee (SML)",
-      "imageLicense": "by-sa",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/48973657@N00/3973947773",
-      "_retainedFromCache": true
+      "leadImageReady": true
     },
     {
       "source": "Zone Campus",
@@ -3768,11 +3715,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3397-1.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "imageLocal": "assets/news-images/7428914d1b64d542.jpg",
       "imageLocalKey": "7428914d1b64d542",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3793,11 +3739,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3405.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "imageLocal": "assets/news-images/7f86c6d6d4e73d30.jpg",
       "imageLocalKey": "7f86c6d6d4e73d30",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -3817,8 +3762,9 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
-      "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/df8807d73a194404.jpg",
+      "imageLocalKey": "df8807d73a194404"
     },
     {
       "source": "Zone Campus",
@@ -3838,8 +3784,9 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
-      "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/4828a1e7cbf0e7ff.jpg",
+      "imageLocalKey": "4828a1e7cbf0e7ff"
     },
     {
       "source": "Zone Campus",
@@ -3859,8 +3806,9 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
-      "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/fcac91d58ef48893.jpg",
+      "imageLocalKey": "fcac91d58ef48893"
     },
     {
       "source": "Exil",
@@ -4220,7 +4168,8 @@
       "imageCreator": "Balcer",
       "imageLicense": "CC BY 3.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop%27s_University_McGreer_Hall.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop%27s_University_McGreer_Hall.jpg",
+      "_campusBank": true
     },
     {
       "source": "The Campus",
@@ -4233,7 +4182,7 @@
       "author": "Tallula Russell",
       "date": "2026-04-06T12:12:39.000Z",
       "excerpt": "Every person who entered Turner Studio’s theatre from Mar. 25 to 29 was given a necklace with a small locket on it and was welcomed to the world of “The Numbered.” A poster on the door to the theatre stated, “This is your locket. You’ve worn it since you were born. You cherish",
-      "image": "https://thebucampus.ca/wp-content/uploads/2026/04/numbered-crd-journey-bardati.jpg",
+      "image": "https://i0.wp.com/thebucampus.ca/wp-content/uploads/2026/04/numbered-crd-journey-bardati.jpg?fit=676%2C1200&ssl=1",
       "authorCheckedAt": "2026-09-23T03:58:53.331Z",
       "sourceImageCredit": "Photo: Journey Bardati",
       "sourceImageCreator": "Journey Bardati",
@@ -4243,8 +4192,8 @@
       "sourceImageCreditImageKey": "numbered-crd-journey-bardati.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
-      "imageLocal": "assets/news-images/81342b278c0d0e4c.jpg",
-      "imageLocalKey": "81342b278c0d0e4c"
+      "imageLocal": "assets/news-images/d60a94c260951f9c.webp",
+      "imageLocalKey": "d60a94c260951f9c"
     },
     {
       "source": "The Campus",
@@ -4277,22 +4226,23 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "Rassembler pour mieux diviser",
-      "link": "https://www.delitfrancais.com/2026/03/25/rassembler-pour-mieux-diviser/",
-      "author": "Catherine Brunet Rodriguez",
+      "title": "La cassette commence à être usée",
+      "link": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
+      "author": "Antoine Proulx et Louis-Justin Sauvé",
       "date": "2026-03-25T07:00:00.000Z",
-      "excerpt": "Analyse critique du projet de loi 1 sur la Constitution québécoise.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/QC-scaled.jpeg",
+      "excerpt": "Réponse au journal The Concordian et à l’économiste Moshe Lander.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/03/concordiareponseV2-scaled.jpeg",
       "featured": true,
-      "leadExcerpt": "Cela fait maintenant presque six mois que notre cher ministre de la Justice, Simon Jolin-Barrette, a présenté aux Québécois·e·s son fameux projet de loi 1, la Constitution québécoise. Six mois à discuter d’une constitution illégitime, issue d’un processus de non-consultation flagrant et d’un manque d’écoute évident de la part du gouvernement.",
-      "imageLocal": "assets/news-images/2f031fc49e60e66c.jpg",
-      "imageLocalKey": "2f031fc49e60e66c",
+      "leadExcerpt": "Cette fois-ci, c’est la bonne. Je promets de quitter l’équipe éditoriale du Délit après cet article, qui contrevient à toutes les conditions ayant permis mon retour. Dommage. Mais je ne pouvais pas, en bonne conscience, m’empêcher de répondre aux âneries véhiculées dans le Concordian par un prétendu économiste à l’endroit des conséquences économiques d’un éventuel processus référendaire.",
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/c4342ffde84293ec.jpg",
+      "imageLocalKey": "c4342ffde84293ec",
       "sourceImageCredit": "Photo : Félix Fournier",
       "sourceImageCreator": "Félix Fournier",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/rassembler-pour-mieux-diviser/",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/03/25/la-cassette-commence-a-etre-usee/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "qc.jpeg",
+      "sourceImageCreditImageKey": "concordiareponsev2.jpeg",
       "sourceImageCreditRev": 10
     },
     {
@@ -4337,7 +4287,8 @@
       "imageCreator": "Jason Paris",
       "imageLicense": "CC BY 2.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop's%20University%20campus%202011%2004.jpg"
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bishop's%20University%20campus%202011%2004.jpg",
+      "_campusBank": true
     },
     {
       "source": "The Campus",
@@ -4372,7 +4323,7 @@
       "author": "La rédaction",
       "date": "2026-03-13T19:42:16.000Z",
       "excerpt": "GardaWorld, la compagnie québécoise qui fournit les gardes de sécurité du Cégep du Vieux-Montréal, est au centre de la controverse. L’entreprise entretient des relations avec la police immigratoire américaine ICE – qui est reconnue par plusieurs organisations humanitaires comme",
-      "image": "https://exilecvm.wordpress.com/wp-content/uploads/2026/03/img_3527.jpg?w=1024",
+      "image": "https://exilecvm.wordpress.com/wp-content/uploads/2026/03/img_3527.jpg",
       "authorCheckedAt": "2026-09-23T03:58:54.419Z",
       "sourceImageCredit": "Crédit photo : Exil",
       "sourceImageCreditUrl": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
@@ -4637,16 +4588,15 @@
       "author": "Alexia Lehouillier-Berthiaume",
       "date": "2025-10-24T13:00:00.000Z",
       "excerpt": "Crédit photo: Alexia Lehouillier-Berthiaume Alors que l’âge moyen des élus municipaux était, au moment du déclenchement des élections, de 53 ans, la question de la représentativité de la jeunesse en politique demeure d’actualité. Candidate pour Transition Montréal au poste de",
-      "image": "https://exilecvm.wordpress.com/wp-content/uploads/2025/10/shirley-barnea-1.jpg?w=727",
+      "image": "https://exilecvm.wordpress.com/wp-content/uploads/2025/10/pancarte-shirley-barnea.jpg",
       "sourceImageCredit": "Photo : Alexia Lehouillier-Berthiaume",
       "sourceImageCreator": "Alexia Lehouillier-Berthiaume",
       "sourceImageCreditUrl": "https://exilecvm.wordpress.com/2025/10/24/une-jeune-candidate-qui-na-pas-froid-aux-yeux/",
-      "sourceImageCreditFrom": "rss-content",
+      "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "shirley-barnea-1.jpg",
+      "sourceImageCreditImageKey": "pancarte-shirley-barnea.jpg",
       "sourceImageCreditRev": 10,
-      "imageLocal": "assets/news-images/b3e61b02132170d1.webp",
-      "imageLocalKey": "b3e61b02132170d1"
+      "leadImageReady": false
     },
     {
       "source": "Le Polyscope",
@@ -4710,10 +4660,7 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditUrl": "https://www.polyscope.qc.ca/blog/post/HsJJnK7Dlj4QFpBVB3I1",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/9995daff792d6afc.png",
-      "imageLocalKey": "9995daff792d6afc",
-      "imageLocalVia": "origin"
+      "leadImageReady": true
     },
     {
       "source": "Le Polyscope",
@@ -4732,10 +4679,7 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditUrl": "https://www.polyscope.qc.ca/blog/post/MbL13AQ4Dy770QnlUAP7",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/d40a92002c072967.png",
-      "imageLocalKey": "d40a92002c072967",
-      "imageLocalVia": "origin"
+      "leadImageReady": true
     },
     {
       "source": "Le Polyscope",
