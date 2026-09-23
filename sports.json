@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-23T23:10:41.346Z",
-  "fetchedAt": "2026-09-23T23:10:41.346Z",
+  "updated": "2026-09-23T23:47:22.471Z",
+  "fetchedAt": "2026-09-23T23:47:22.471Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-23T23:10:41.346Z"
+    "referenceDate": "2026-09-23T23:47:22.471Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 839,
@@ -5896,20 +5896,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-23",
-          "time": "19:30",
-          "opponent": "Édouard-Montpetit",
-          "opponentCode": "CEM",
-          "home": false,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "2006b884-3fc4-4fa8-8e00-862430d2f558",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2006b884-3fc4-4fa8-8e00-862430d2f558",
-          "opponentFullName": "Cégep Édouard-Montpetit",
-          "opponentNickname": "Cougars",
-          "opponentRegistryId": "edouard-montpetit"
-        },
-        {
           "date": "2026-09-26",
           "time": "13:00",
           "opponent": "Limoilou",
@@ -6047,18 +6033,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-23",
-        "time": "19:30",
-        "opponent": "Édouard-Montpetit",
-        "opponentCode": "CEM",
-        "home": false,
+        "date": "2026-09-26",
+        "time": "13:00",
+        "opponent": "Limoilou",
+        "opponentCode": "LIM",
+        "home": true,
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "2006b884-3fc4-4fa8-8e00-862430d2f558",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2006b884-3fc4-4fa8-8e00-862430d2f558",
-        "opponentFullName": "Cégep Édouard-Montpetit",
-        "opponentNickname": "Cougars",
-        "opponentRegistryId": "edouard-montpetit",
+        "gameId": "a9e6dd87-21a2-4daf-ac29-34ed9e89b8c1",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a9e6dd87-21a2-4daf-ac29-34ed9e89b8c1",
+        "opponentFullName": "Cégep Limoilou",
+        "opponentNickname": "Titans",
+        "opponentRegistryId": "limoilou",
         "opponentSector": "collegial"
       },
       "record": {
@@ -7028,20 +7014,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-23",
-          "time": "19:30",
-          "opponent": "André-Laurendeau",
-          "opponentCode": "CAL",
-          "home": true,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "2006b884-3fc4-4fa8-8e00-862430d2f558",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2006b884-3fc4-4fa8-8e00-862430d2f558",
-          "opponentFullName": "Cégep André-Laurendeau",
-          "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "andre-laurendeau"
-        },
-        {
           "date": "2026-09-26",
           "time": "13:00",
           "opponent": "Dawson",
@@ -7153,18 +7125,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-23",
-        "time": "19:30",
-        "opponent": "André-Laurendeau",
-        "opponentCode": "CAL",
+        "date": "2026-09-26",
+        "time": "13:00",
+        "opponent": "Dawson",
+        "opponentCode": "DAW",
         "home": true,
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "2006b884-3fc4-4fa8-8e00-862430d2f558",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2006b884-3fc4-4fa8-8e00-862430d2f558",
-        "opponentFullName": "Cégep André-Laurendeau",
-        "opponentNickname": "Cheetahs",
-        "opponentRegistryId": "andre-laurendeau",
+        "gameId": "080cf5b7-7490-4e02-8d25-ee7d41a9ed39",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=080cf5b7-7490-4e02-8d25-ee7d41a9ed39",
+        "opponentFullName": "Dawson College",
+        "opponentNickname": "Blues",
+        "opponentRegistryId": "dawson",
         "opponentSector": "collegial"
       },
       "record": {
