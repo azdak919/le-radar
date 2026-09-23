@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-23T15:29:43.294Z",
-  "fetchedAt": "2026-09-23T15:29:43.294Z",
+  "updated": "2026-09-23T19:40:20.676Z",
+  "fetchedAt": "2026-09-23T19:40:20.676Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-23T15:29:43.295Z"
+    "referenceDate": "2026-09-23T19:40:20.676Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 839,
@@ -15052,7 +15052,7 @@
         },
         {
           "date": "2026-11-22",
-          "time": "14:00",
+          "time": "14:30",
           "opponent": "Sainte-Foy",
           "opponentCode": "CSF",
           "home": true,
@@ -16070,7 +16070,7 @@
         },
         {
           "date": "2026-11-22",
-          "time": "14:00",
+          "time": "14:30",
           "opponent": "Garneau",
           "opponentCode": "GAR",
           "home": false,
@@ -27904,8 +27904,8 @@
           "opponentRegistryId": "beauce-appalaches"
         },
         {
-          "date": "2026-11-15",
-          "time": "16:00",
+          "date": "2026-11-14",
+          "time": "14:00",
           "opponent": "Sainte-Foy",
           "opponentCode": "CSF",
           "home": false,
@@ -28095,8 +28095,8 @@
           "opponentRegistryId": "limoilou"
         },
         {
-          "date": "2026-11-15",
-          "time": "16:00",
+          "date": "2026-11-14",
+          "time": "14:00",
           "opponent": "Notre-Dame",
           "opponentCode": "NDF",
           "home": true,
@@ -84676,8 +84676,8 @@
           "opponentRegistryId": "ulaval"
         },
         {
-          "date": "2026-10-08",
-          "time": "18:00",
+          "date": "2026-10-07",
+          "time": "11:00",
           "opponent": "UQAM",
           "opponentCode": "UQAM",
           "home": true,
@@ -86089,8 +86089,8 @@
           "opponentRegistryId": "usherbrooke"
         },
         {
-          "date": "2026-10-08",
-          "time": "18:00",
+          "date": "2026-10-07",
+          "time": "11:00",
           "opponent": "Concordia",
           "opponentCode": "UCON",
           "home": false,
@@ -86619,8 +86619,8 @@
           "opponentRegistryId": "ulaval"
         },
         {
-          "date": "2026-10-08",
-          "time": "20:15",
+          "date": "2026-10-07",
+          "time": "19:00",
           "opponent": "UQAM",
           "opponentCode": "UQAM",
           "home": true,
@@ -87894,8 +87894,8 @@
           "opponentRegistryId": "usherbrooke"
         },
         {
-          "date": "2026-10-08",
-          "time": "20:15",
+          "date": "2026-10-07",
+          "time": "19:00",
           "opponent": "Concordia",
           "opponentCode": "UCON",
           "home": false,
