@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-23T12:54:20.360Z",
+  "updatedAt": "2026-09-23T16:55:08.559Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Mercredi Bonbon",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mercredi-bonbon/"
-      },
+      "current": null,
       "next": {
-        "title": "Conduite Antisportive",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://chyz.ca/emission/conduite-antisportive/"
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Mercredi Bonbon",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-23T12:53:23.678Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Club classique",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/club-classique"
-      },
-      "next": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "track": "",
-      "showTitle": "Club classique",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T12:53:25.049Z"
+      "checkedAt": "2026-09-23T16:54:43.582Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "La carte cadeau",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+      },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
+      "track": "",
+      "showTitle": "La carte cadeau",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-23T16:54:44.917Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Wednesday Morning After",
+        "title": "If You Got Ears",
         "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "The Sleepy King/Terminal 5",
+        "title": "Radyo Kapwa",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "14:00",
+        "end": "15:00"
       },
       "track": "",
-      "showTitle": "The Wednesday Morning After",
+      "showTitle": "If You Got Ears",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T12:53:27.191Z"
+      "checkedAt": "2026-09-23T16:54:47.134Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Trawling the Megahertz",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
+        "title": "North-South Hockey",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/north-south-hockey"
       },
       "next": {
-        "title": "Are We There Yet?",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/are-we-there-yet"
+        "title": "Beatnik Boy: Mixtape",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/beatnik-boy-mixtape"
       },
       "track": "",
-      "showTitle": "Trawling the Megahertz",
+      "showTitle": "North-South Hockey",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T12:54:01.215Z"
+      "checkedAt": "2026-09-23T16:54:49.115Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,20 +126,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T12:54:02.244Z"
+      "checkedAt": "2026-09-23T16:54:50.170Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Miroirs d’Orient",
+        "title": "Onde de CHOQ",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "slug": "miroirs-dorient"
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
       },
-      "track": "Gilla Band — Giraffe",
+      "track": "Wheobe — One Last Swim Before Tomorrow",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T12:54:20.009Z"
+      "checkedAt": "2026-09-23T16:55:08.208Z"
     }
   }
 }
