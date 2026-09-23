@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-23T00:50:34.725Z",
+  "updated": "2026-09-23T04:04:26.089Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
@@ -7,17 +7,38 @@
   "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 11,
-  "updatedCount": 1,
-  "citedNew": 1,
+  "checked": 14,
+  "updatedCount": 4,
+  "citedNew": 4,
   "fallbackNew": 10,
   "samples": [
     {
-      "title": "L’épidémie de la nonchalance",
+      "title": "La cassette commence à être usée",
       "source": "Le Délit",
-      "credit": "Photo : Elie Nguyen",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
