@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-24T18:23:42.525Z",
+  "updatedAt": "2026-09-24T21:40:52.984Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Les Arshitechs du Son",
+        "source": "api-live",
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "next": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "title": "Crooch Control",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://chyz.ca/emission/crooch-control/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T18:22:50.804Z"
+      "checkedAt": "2026-09-24T21:40:14.625Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
+        "title": "Rythmologie",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/rythmologie"
       },
       "next": {
-        "title": "La session live",
+        "title": "Entropie",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/session-live-a-cism"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/entropie"
       },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Rythmologie",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T18:22:52.463Z"
+      "checkedAt": "2026-09-24T21:40:16.307Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+        "title": "The Barricade",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "next": {
-        "title": "Positive Vibes",
+        "title": "Upstage",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "track": "",
-      "showTitle": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+      "showTitle": "The Barricade",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T18:22:55.339Z"
+      "checkedAt": "2026-09-24T21:40:18.738Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Secondhand Sounds",
+        "title": "Hooked On Sonics",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/secondhand-sounds"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
       },
       "next": {
-        "title": "Weirdo Rippers",
+        "title": "Unheard Of",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/weirdo-rippers"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/unheard-of"
       },
       "track": "",
-      "showTitle": "Secondhand Sounds",
+      "showTitle": "Hooked On Sonics",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T18:23:10.272Z"
+      "checkedAt": "2026-09-24T21:40:33.542Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,28 +133,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T18:23:11.684Z"
+      "checkedAt": "2026-09-24T21:40:34.327Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "La 3ème demie",
         "source": "api-live",
         "start": "17:15",
         "end": "18:00",
         "slug": "le-12-mtlsup"
       },
-      "track": "Witch Prophet — Forwards Backwards",
-      "showTitle": "",
+      "next": {
+        "title": "La nouvelle école des surdoués",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "21:00",
+        "slug": "la-nouvelle-ecole-des-surdoues"
+      },
+      "track": "ID — Alix-Fernz",
+      "showTitle": "La 3ème demie",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T18:23:42.175Z"
+      "checkedAt": "2026-09-24T21:40:52.633Z"
     }
   }
 }
