@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-24T21:50:50.938Z",
+  "updated": "2026-09-24T23:22:10.370Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
@@ -7,17 +7,38 @@
   "pending": 7,
   "missingHero": 0,
   "ok": false,
-  "checked": 8,
-  "updatedCount": 1,
-  "citedNew": 0,
-  "fallbackNew": 8,
+  "checked": 11,
+  "updatedCount": 4,
+  "citedNew": 4,
+  "fallbackNew": 7,
   "samples": [
     {
-      "title": "Le conflit entre Trump et les médias atteint un nouveau sommet",
-      "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
-      "cited": false,
-      "method": null
+      "title": "Un an du Club DD’s",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
