@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T04:45:54.219Z",
+  "updatedAt": "2026-09-24T08:39:18.016Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T04:45:38.187Z"
+      "checkedAt": "2026-09-24T08:38:48.893Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque (reprise)",
+        "title": "Les Charlottes",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/les-charlottes"
       },
       "next": {
-        "title": "Mix franco",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "track": "",
-      "showTitle": "La grande ludothèque (reprise)",
+      "showTitle": "Les Charlottes",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T04:45:39.753Z"
+      "checkedAt": "2026-09-24T08:38:50.599Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off The Hook",
+        "title": "William Shatner's Whiskey Tears",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "04:00",
+        "end": "06:00"
       },
       "next": {
-        "title": "Freeform Air",
+        "title": "Total €clipse of The ☾harts",
         "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
+        "start": "06:00",
+        "end": "07:00"
       },
-      "track": "",
-      "showTitle": "Off The Hook",
+      "track": "William Shatner",
+      "showTitle": "William Shatner's Whiskey Tears",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T04:45:42.528Z"
+      "checkedAt": "2026-09-24T08:38:53.383Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Night Watch",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "01:00",
-        "url": "http://www.cjlo.com/shows/the-night-watch"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "01:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Daydream Nation",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/daydream-nation"
+      },
       "track": "",
-      "showTitle": "The Night Watch",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T04:45:45.409Z"
+      "checkedAt": "2026-09-24T08:38:56.311Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T04:45:46.661Z"
+      "checkedAt": "2026-09-24T08:38:57.597Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "GOREWORM — The Enthralling Grave",
+      "track": "Muhoza, Carson — Moula",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T04:45:53.868Z"
+      "checkedAt": "2026-09-24T08:39:17.665Z"
     }
   }
 }
