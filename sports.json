@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-24T19:59:17.296Z",
-  "fetchedAt": "2026-09-24T19:59:17.296Z",
+  "updated": "2026-09-24T22:24:36.805Z",
+  "fetchedAt": "2026-09-24T22:24:36.805Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-24T19:59:17.296Z"
+    "referenceDate": "2026-09-24T22:24:36.805Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -87764,20 +87764,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-24",
-          "time": "18:00",
-          "opponent": "UQTR",
-          "opponentCode": "UQTR",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer universitaire féminin",
-          "gameId": "4b522443-a195-4c39-b5f5-b1bdcc83154e",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4b522443-a195-4c39-b5f5-b1bdcc83154e",
-          "opponentFullName": "Université du Québec à Trois-Rivières",
-          "opponentNickname": "Patriotes",
-          "opponentRegistryId": "uqtr"
-        },
-        {
           "date": "2026-09-27",
           "time": "13:00",
           "opponent": "Bishop's",
@@ -87891,18 +87877,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-24",
-        "time": "18:00",
-        "opponent": "UQTR",
-        "opponentCode": "UQTR",
+        "date": "2026-09-27",
+        "time": "13:00",
+        "opponent": "Bishop's",
+        "opponentCode": "BIS",
         "home": false,
         "sport": "soccer",
         "competition": "Soccer universitaire féminin",
-        "gameId": "4b522443-a195-4c39-b5f5-b1bdcc83154e",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4b522443-a195-4c39-b5f5-b1bdcc83154e",
-        "opponentFullName": "Université du Québec à Trois-Rivières",
-        "opponentNickname": "Patriotes",
-        "opponentRegistryId": "uqtr",
+        "gameId": "53728d31-6bd7-4433-aa8b-ea17b8882b86",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=53728d31-6bd7-4433-aa8b-ea17b8882b86",
+        "opponentFullName": "Bishop's University",
+        "opponentNickname": "Gaiters",
+        "opponentRegistryId": "bishops",
         "opponentSector": "universitaire"
       },
       "record": {
@@ -88326,20 +88312,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-24",
-          "time": "18:00",
-          "opponent": "Sherbrooke",
-          "opponentCode": "USHE",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer universitaire féminin",
-          "gameId": "4b522443-a195-4c39-b5f5-b1bdcc83154e",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4b522443-a195-4c39-b5f5-b1bdcc83154e",
-          "opponentFullName": "Université de Sherbrooke",
-          "opponentNickname": "Vert & Or",
-          "opponentRegistryId": "usherbrooke"
-        },
-        {
           "date": "2026-09-27",
           "time": "15:30",
           "opponent": "Concordia",
@@ -88453,18 +88425,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-24",
-        "time": "18:00",
-        "opponent": "Sherbrooke",
-        "opponentCode": "USHE",
-        "home": true,
+        "date": "2026-09-27",
+        "time": "15:30",
+        "opponent": "Concordia",
+        "opponentCode": "UCON",
+        "home": false,
         "sport": "soccer",
         "competition": "Soccer universitaire féminin",
-        "gameId": "4b522443-a195-4c39-b5f5-b1bdcc83154e",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4b522443-a195-4c39-b5f5-b1bdcc83154e",
-        "opponentFullName": "Université de Sherbrooke",
-        "opponentNickname": "Vert & Or",
-        "opponentRegistryId": "usherbrooke",
+        "gameId": "ffa5e05b-136e-4032-9526-4c0bf014d9e6",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ffa5e05b-136e-4032-9526-4c0bf014d9e6",
+        "opponentFullName": "Université Concordia",
+        "opponentNickname": "Stingers",
+        "opponentRegistryId": "concordia",
         "opponentSector": "universitaire"
       },
       "record": {
