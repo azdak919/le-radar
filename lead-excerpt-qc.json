@@ -1,21 +1,30 @@
 {
-  "updated": "2026-09-24T03:03:17.225Z",
+  "updated": "2026-09-24T04:53:23.420Z",
   "total": 188,
   "pool": 51,
-  "incomplete": 4,
+  "incomplete": 5,
   "withLeadExcerpt": 89,
-  "candidates": 4,
-  "enriched": 1,
+  "candidates": 5,
+  "enriched": 2,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Victoire de l’AFD en Saxe-Anhalt",
-      "link": "https://www.delitfrancais.com/2026/09/16/victoire-de-lafd-en-saxe-anhalt/",
+      "title": "Il faut le voir pour le croire",
+      "link": "https://www.delitfrancais.com/2026/09/16/il-faut-le-voir-pour-le-croire/",
+      "ok": true,
+      "score": 90,
+      "chars": 333,
+      "sample": "Or, la vidéo de la mort de Cisneros ne comportait aucun floutage et aucun avertissement. Pas une seu",
+      "changed": true
+    },
+    {
+      "title": "Montreal trans community dances against transphobia",
+      "link": "https://thelinknewspaper.ca/article/16425",
       "ok": true,
       "score": 96,
-      "chars": 400,
-      "sample": "Montée des extrêmes telle que celle déjà observée et largement décrite ailleurs en Europe ? Ou réel ",
+      "chars": 185,
+      "sample": "“For many years now, Sept. 20 has been the day on which Montreal’s trans community and allies united",
       "changed": true
     },
     {
