@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-24T08:46:59.881Z",
+  "updated": "2026-09-24T14:31:16.672Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2603,15 +2603,25 @@
       "at": "2026-09-23T23:56:05.000Z",
       "via": "existant",
       "source": "La Pige"
+    },
+    "https://lapige.atmjonquiere.com/2026/09/23/apres-les-violences-sexuelles-le-tatouage-pour-se-reapproprier-son-corps/": {
+      "at": "2026-09-24T08:44:13.000Z",
+      "via": "existant",
+      "source": "La Pige"
+    },
+    "https://www.delitfrancais.com/2026/09/23/la-sursaturation-de-limaginaire/": {
+      "at": "2026-09-24T00:02:27.000Z",
+      "via": "existant",
+      "source": "Le Délit"
     }
   },
   "stats": {
-    "total": 464,
+    "total": 466,
     "lastRun": {
       "saved": 0,
-      "skipped": 1,
-      "failed": 7,
-      "stoppedEarly": true
+      "skipped": 2,
+      "failed": 18,
+      "stoppedEarly": false
     }
   },
   "sources": {
