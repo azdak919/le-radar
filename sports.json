@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-24T22:24:36.805Z",
-  "fetchedAt": "2026-09-24T22:24:36.805Z",
+  "updated": "2026-09-24T23:29:33.484Z",
+  "fetchedAt": "2026-09-24T23:29:33.484Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-24T22:24:36.805Z"
+    "referenceDate": "2026-09-24T23:29:33.485Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -6493,7 +6493,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=18d5e546-06d5-4ec9-b5bf-4452ed796f9a",
           "opponentFullName": "John Abbott College",
           "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott"
+          "opponentRegistryId": "john-abbott",
+          "live": true
         },
         {
           "date": "2026-09-26",
@@ -6617,6 +6618,7 @@
         "opponentFullName": "John Abbott College",
         "opponentNickname": "Islanders",
         "opponentRegistryId": "john-abbott",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -7323,7 +7325,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=18d5e546-06d5-4ec9-b5bf-4452ed796f9a",
           "opponentFullName": "Dawson College",
           "opponentNickname": "Blues",
-          "opponentRegistryId": "dawson"
+          "opponentRegistryId": "dawson",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -7449,6 +7452,7 @@
         "opponentFullName": "Dawson College",
         "opponentNickname": "Blues",
         "opponentRegistryId": "dawson",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
