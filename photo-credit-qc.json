@@ -1,58 +1,30 @@
 {
-  "updated": "2026-09-24T14:21:07.064Z",
+  "updated": "2026-09-24T16:00:47.973Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
-  "cited": 121,
+  "cited": 122,
   "pending": 7,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 6,
-  "citedNew": 6,
+  "checked": 9,
+  "updatedCount": 2,
+  "citedNew": 2,
   "fallbackNew": 7,
   "samples": [
     {
-      "title": "La sécurité ferroviaire au cœur des rappels au Saguenay",
-      "source": "La Pige",
-      "credit": "Photo : Lucas Radoux",
+      "title": "Débat électoral à l’UQAMCe que les partis ont à offrir aux étudiants",
+      "source": "Montréal Campus",
+      "credit": "Photo : Charles-Antoine Bédard",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption"
     },
     {
-      "title": "Santé mentale des jeunes : le besoin de se sentir entouré à l’ère des écrans",
-      "source": "La Pige",
-      "credit": "Photo : Lucas Radoux",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Il faut le voir pour le croire",
+      "title": "Victoire de l’AFD en Saxe-Anhalt",
       "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
-      "source": "The McGill Daily",
-      "credit": "Photo : Meg Ha",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
