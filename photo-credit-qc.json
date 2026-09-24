@@ -1,26 +1,33 @@
 {
-  "updated": "2026-09-24T18:38:55.076Z",
+  "updated": "2026-09-24T20:06:08.608Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
-  "cited": 122,
+  "cited": 121,
   "pending": 7,
   "missingHero": 0,
   "ok": false,
-  "checked": 12,
-  "updatedCount": 5,
-  "citedNew": 5,
-  "fallbackNew": 7,
+  "checked": 13,
+  "updatedCount": 6,
+  "citedNew": 4,
+  "fallbackNew": 9,
   "samples": [
     {
-      "title": "Débat électoral à l’UQAMCe que les partis ont à offrir aux étudiants",
-      "source": "Montréal Campus",
-      "credit": "Photo : Charles-Antoine Bédard",
-      "cited": true,
-      "method": "figcaption"
+      "title": "Les mardis au centre-ville",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Un an du Club DD’s",
+      "title": "Bishop’s Gaiters football returns to the RSEQ",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Il faut le voir pour le croire",
       "source": "Le Délit",
       "credit": "Photo : Félix Fournier",
       "cited": true,
