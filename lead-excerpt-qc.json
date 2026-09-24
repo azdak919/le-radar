@@ -1,21 +1,30 @@
 {
-  "updated": "2026-09-24T14:02:04.797Z",
+  "updated": "2026-09-24T14:16:06.112Z",
   "total": 188,
   "pool": 51,
-  "incomplete": 4,
+  "incomplete": 6,
   "withLeadExcerpt": 89,
-  "candidates": 4,
-  "enriched": 1,
+  "candidates": 6,
+  "enriched": 3,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Victoire de l’AFD en Saxe-Anhalt",
-      "link": "https://www.delitfrancais.com/2026/09/16/victoire-de-lafd-en-saxe-anhalt/",
+      "title": "Il faut le voir pour le croire",
+      "link": "https://www.delitfrancais.com/2026/09/16/il-faut-le-voir-pour-le-croire/",
       "ok": true,
-      "score": 96,
-      "chars": 400,
-      "sample": "Montée des extrêmes telle que celle déjà observée et largement décrite ailleurs en Europe ? Ou réel ",
+      "score": 90,
+      "chars": 333,
+      "sample": "Or, la vidéo de la mort de Cisneros ne comportait aucun floutage et aucun avertissement. Pas une seu",
+      "changed": true
+    },
+    {
+      "title": "La sécurité ferroviaire au cœur des rappels au Saguenay",
+      "link": "https://lapige.atmjonquiere.com/2026/09/24/la-securite-ferroviaire-au-coeur-des-rappels-au-saguenay/?utm_source=rss&utm_medium=rss&utm_campaign=la-securite-ferroviaire-au-coeur-des-rappels-au-saguenay",
+      "ok": true,
+      "score": 100,
+      "chars": 383,
+      "sample": "Alors que se déroule la Semaine de la sécurité ferroviaire, du 21 au 27 septembre, le CN rappelle l’",
       "changed": true
     },
     {
@@ -26,6 +35,15 @@
       "chars": 400,
       "sample": "Dimanche , se déroulait la 21e édition du Parcours Parkinson à la Zone portuaire de Chicoutimi. C’es",
       "changed": false
+    },
+    {
+      "title": "Santé mentale des jeunes : le besoin de se sentir entouré à l’ère des écrans",
+      "link": "https://lapige.atmjonquiere.com/2026/09/23/sante-mentale-des-jeunes-le-besoin-de-se-sentir-entoure-a-lere-des-ecrans/?utm_source=rss&utm_medium=rss&utm_campaign=sante-mentale-des-jeunes-le-besoin-de-se-sentir-entoure-a-lere-des-ecrans",
+      "ok": true,
+      "score": 96,
+      "chars": 379,
+      "sample": "À l’heure où les écrans occupent une place grandissante dans le quotidien des jeunes, leur impact su",
+      "changed": true
     },
     {
       "title": "Tatouages et politique: un couteau à double tranchant",
