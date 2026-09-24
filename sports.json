@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-23T23:47:22.471Z",
-  "fetchedAt": "2026-09-23T23:47:22.471Z",
+  "updated": "2026-09-24T03:49:35.452Z",
+  "fetchedAt": "2026-09-24T03:49:35.452Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-23T23:47:22.471Z"
+    "referenceDate": "2026-09-24T03:49:35.452Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 839,
@@ -5824,6 +5824,24 @@
       "leagueLabel": "Baseball collégial masculin",
       "results": [
         {
+          "date": "2026-09-23",
+          "time": "19:30",
+          "opponent": "Édouard-Montpetit",
+          "opponentCode": "CEM",
+          "home": false,
+          "scoreFor": 1,
+          "scoreAgainst": 11,
+          "result": "L",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "2006b884-3fc4-4fa8-8e00-862430d2f558",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2006b884-3fc4-4fa8-8e00-862430d2f558",
+          "opponentFullName": "Cégep Édouard-Montpetit",
+          "opponentNickname": "Cougars",
+          "opponentRegistryId": "edouard-montpetit",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-20",
           "time": "13:00",
           "opponent": "Rivière-du-Loup",
@@ -5877,20 +5895,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-20",
-        "time": "13:00",
-        "opponent": "Rivière-du-Loup",
-        "opponentCode": "RDL",
-        "home": true,
+        "date": "2026-09-23",
+        "time": "19:30",
+        "opponent": "Édouard-Montpetit",
+        "opponentCode": "CEM",
+        "home": false,
         "scoreFor": 1,
-        "scoreAgainst": 8,
+        "scoreAgainst": 11,
         "result": "L",
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "5eb3d3d9-e54e-4e6e-907c-373f1adf95b3",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5eb3d3d9-e54e-4e6e-907c-373f1adf95b3",
-        "opponentFullName": "Cégep de Rivière-du-Loup",
-        "opponentRegistryId": "riviere-du-loup",
+        "gameId": "2006b884-3fc4-4fa8-8e00-862430d2f558",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2006b884-3fc4-4fa8-8e00-862430d2f558",
+        "opponentFullName": "Cégep Édouard-Montpetit",
+        "opponentNickname": "Cougars",
+        "opponentRegistryId": "edouard-montpetit",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -6049,10 +6068,10 @@
       },
       "record": {
         "wins": 1,
-        "losses": 2,
+        "losses": 3,
         "draws": 0,
-        "played": 3,
-        "label": "1-2"
+        "played": 4,
+        "label": "1-3"
       },
       "source": "rseq-s1",
       "priority": 22,
@@ -6908,6 +6927,24 @@
       "leagueLabel": "Baseball collégial masculin",
       "results": [
         {
+          "date": "2026-09-23",
+          "time": "19:30",
+          "opponent": "André-Laurendeau",
+          "opponentCode": "CAL",
+          "home": true,
+          "scoreFor": 11,
+          "scoreAgainst": 1,
+          "result": "W",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "2006b884-3fc4-4fa8-8e00-862430d2f558",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2006b884-3fc4-4fa8-8e00-862430d2f558",
+          "opponentFullName": "Cégep André-Laurendeau",
+          "opponentNickname": "Cheetahs",
+          "opponentRegistryId": "andre-laurendeau",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-19",
           "time": "13:00",
           "opponent": "Rivière-du-Loup",
@@ -6995,20 +7032,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-19",
-        "time": "13:00",
-        "opponent": "Rivière-du-Loup",
-        "opponentCode": "RDL",
-        "home": false,
-        "scoreFor": 0,
-        "scoreAgainst": 3,
-        "result": "L",
+        "date": "2026-09-23",
+        "time": "19:30",
+        "opponent": "André-Laurendeau",
+        "opponentCode": "CAL",
+        "home": true,
+        "scoreFor": 11,
+        "scoreAgainst": 1,
+        "result": "W",
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "df873bde-42c1-4f51-8955-b314f006087d",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=df873bde-42c1-4f51-8955-b314f006087d",
-        "opponentFullName": "Cégep de Rivière-du-Loup",
-        "opponentRegistryId": "riviere-du-loup",
+        "gameId": "2006b884-3fc4-4fa8-8e00-862430d2f558",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2006b884-3fc4-4fa8-8e00-862430d2f558",
+        "opponentFullName": "Cégep André-Laurendeau",
+        "opponentNickname": "Cheetahs",
+        "opponentRegistryId": "andre-laurendeau",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -7140,11 +7178,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 3,
+        "wins": 4,
         "losses": 2,
         "draws": 0,
-        "played": 5,
-        "label": "3-2"
+        "played": 6,
+        "label": "4-2"
       },
       "source": "rseq-s1",
       "priority": 42,
