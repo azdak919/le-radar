@@ -1,79 +1,80 @@
 {
-  "updatedAt": "2026-09-24T14:00:06.348Z",
+  "updatedAt": "2026-09-24T15:04:34.066Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Jeudi Révolte",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/jeudi-revolte/"
-      },
-      "next": {
         "title": "Sons de Cloches",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "10:00",
         "end": "12:00",
         "url": "https://chyz.ca/emission/sons-de-cloches/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "Jeudi Révolte",
+      "showTitle": "Sons de Cloches",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T13:59:40.700Z"
+      "checkedAt": "2026-09-24T15:03:31.517Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
+        "title": "Présentement à l'écoute",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/presentement-a-lecoute-2"
       },
       "next": {
-        "title": "Une fenêtre sur le monde",
+        "title": "La grande ludothèque",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
       },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "Présentement à l'écoute",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T13:59:42.094Z"
+      "checkedAt": "2026-09-24T15:03:32.992Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Folk Directions",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Under The Olive Tree",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00"
       },
+      "next": {
+        "title": "Venus Radio",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Folk Directions",
+      "showTitle": "Under The Olive Tree",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,59 +82,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T13:59:44.952Z"
+      "checkedAt": "2026-09-24T15:03:35.779Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Everything Everywhere",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/everything-everywhere"
+        "title": "The Fluid Mosaic",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
       },
       "next": {
-        "title": "Democracy Now",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "title": "The Power Hour",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/the-power-hour"
       },
       "track": "",
-      "showTitle": "Everything Everywhere",
+      "showTitle": "The Fluid Mosaic",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T13:59:47.134Z"
+      "checkedAt": "2026-09-24T15:04:10.318Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "À nous le futur",
         "source": "schedule-live",
         "start": "11:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "After 5@8",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "À nous le futur",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T13:59:48.309Z"
+      "checkedAt": "2026-09-24T15:04:11.631Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +147,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Thea May — Twenty Seven",
+      "track": "Rosario Caméléon — Amour Rose",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +155,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T14:00:05.997Z"
+      "checkedAt": "2026-09-24T15:04:33.716Z"
     }
   }
 }
