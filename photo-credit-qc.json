@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-24T09:27:58.973Z",
+  "updated": "2026-09-24T14:08:29.217Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
@@ -7,9 +7,17 @@
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 8,
-  "updatedCount": 0,
-  "citedNew": 0,
+  "checked": 9,
+  "updatedCount": 1,
+  "citedNew": 1,
   "fallbackNew": 8,
-  "samples": []
+  "samples": [
+    {
+      "title": "Victoire de l’AFD en Saxe-Anhalt",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    }
+  ]
 }
