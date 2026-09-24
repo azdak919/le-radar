@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-23T23:51:05.207Z",
+  "updatedAt": "2026-09-24T03:01:48.750Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Funk Connection",
-        "source": "api-live",
-        "start": "19:30",
-        "end": "21:30",
-        "url": "https://chyz.ca/emission/funk-connection/"
-      },
+      "current": null,
       "next": {
-        "title": "Blasphème",
-        "source": "schedule-live",
-        "start": "21:30",
-        "end": "22:30",
-        "url": "https://chyz.ca/emission/blaspheme/"
+        "title": "Jeudi Révolte",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
       "track": "",
-      "showTitle": "Funk Connection",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-23T23:50:38.751Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Effets sonores (reprise)",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/effets-sonores"
-      },
-      "next": {
-        "title": "Jeunesse cosmique",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/jeunesse-cosmique"
-      },
-      "track": "",
-      "showTitle": "Effets sonores (reprise)",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T23:50:40.187Z"
+      "checkedAt": "2026-09-24T03:01:34.450Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
+      "next": {
+        "title": "La grande ludothèque (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+      },
+      "track": "",
+      "showTitle": "Mix Anglo",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-24T03:01:35.886Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harbinger Showcase",
+        "title": "Meanwhile",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "22:00",
+        "end": "00:00"
       },
       "next": {
-        "title": "Jazz Euphorium",
+        "title": "Off The Hook",
         "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "track": "",
-      "showTitle": "Harbinger Showcase",
+      "showTitle": "Meanwhile",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,35 +74,28 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T23:50:42.782Z"
+      "checkedAt": "2026-09-24T03:01:38.535Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "BVST",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/bvst"
-      },
-      "next": {
-        "title": "There's a Synth in the House",
+        "title": "The Night Watch",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/the-night-watch"
       },
+      "next": null,
       "track": "",
-      "showTitle": "BVST",
+      "showTitle": "The Night Watch",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T23:50:45.283Z"
+      "checkedAt": "2026-09-24T03:01:40.780Z"
     },
     "cfak": {
       "id": "cfak",
@@ -134,7 +120,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T23:50:46.270Z"
+      "checkedAt": "2026-09-24T03:01:42.319Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +133,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Maze — IT'S NEVER WHAT IT SEEMS TO BE",
+      "track": "Phoebe Bridgers — Other Plans",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -155,7 +141,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-23T23:51:04.857Z"
+      "checkedAt": "2026-09-24T03:01:48.400Z"
     }
   }
 }
