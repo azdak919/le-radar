@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T08:39:18.016Z",
+  "updatedAt": "2026-09-24T10:00:39.469Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T08:38:48.893Z"
+      "checkedAt": "2026-09-24T10:00:09.108Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les Charlottes",
-        "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/les-charlottes"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "05:00",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "La lecture pis toi",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
+      },
       "track": "",
-      "showTitle": "Les Charlottes",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T08:38:50.599Z"
+      "checkedAt": "2026-09-24T10:00:11.018Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "William Shatner's Whiskey Tears",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
-      },
-      "next": {
         "title": "Total €clipse of The ☾harts",
         "source": "api-live",
         "start": "06:00",
         "end": "07:00"
       },
-      "track": "William Shatner",
-      "showTitle": "William Shatner's Whiskey Tears",
+      "next": {
+        "title": "OFC Podcast Radio",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "09:00"
+      },
+      "track": "",
+      "showTitle": "Total €clipse of The ☾harts",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,35 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T08:38:53.383Z"
+      "checkedAt": "2026-09-24T10:00:13.888Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Daydream Nation",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/daydream-nation"
       },
+      "next": {
+        "title": "Everything Everywhere",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/everything-everywhere"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Daydream Nation",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T08:38:56.311Z"
+      "checkedAt": "2026-09-24T10:00:17.331Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +127,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T08:38:57.597Z"
+      "checkedAt": "2026-09-24T10:00:18.560Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +140,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Muhoza, Carson — Moula",
+      "track": "Election — Qc-UQAM-3.09.2026",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +148,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T08:39:17.665Z"
+      "checkedAt": "2026-09-24T10:00:39.119Z"
     }
   }
 }
