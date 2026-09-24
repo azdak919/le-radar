@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T03:01:48.750Z",
+  "updatedAt": "2026-09-24T04:45:54.219Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T03:01:34.450Z"
+      "checkedAt": "2026-09-24T04:45:38.187Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "La grande ludothèque (reprise)",
         "source": "schedule",
         "start": "00:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/la-grande-ludotheque"
       },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "La grande ludothèque (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T03:01:35.886Z"
+      "checkedAt": "2026-09-24T04:45:39.753Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Meanwhile",
-        "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Off The Hook",
         "source": "api-live",
         "start": "00:00",
         "end": "02:00"
       },
+      "next": {
+        "title": "Freeform Air",
+        "source": "api-live",
+        "start": "02:00",
+        "end": "04:00"
+      },
       "track": "",
-      "showTitle": "Meanwhile",
+      "showTitle": "Off The Hook",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T03:01:38.535Z"
+      "checkedAt": "2026-09-24T04:45:42.528Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -82,11 +82,17 @@
       "current": {
         "title": "The Night Watch",
         "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
+        "start": "00:00",
+        "end": "01:00",
         "url": "http://www.cjlo.com/shows/the-night-watch"
       },
-      "next": null,
+      "next": {
+        "title": "CJLO Late Night",
+        "source": "schedule-live",
+        "start": "01:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
       "track": "",
       "showTitle": "The Night Watch",
       "host": "",
@@ -95,45 +101,45 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T03:01:40.780Z"
+      "checkedAt": "2026-09-24T04:45:45.409Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Le popcorn de l'infini",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Le popcorn de l'infini",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T03:01:42.319Z"
+      "checkedAt": "2026-09-24T04:45:46.661Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Opération beurre de cinoche",
+        "title": "Onde de CHOQ",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
       },
-      "track": "Phoebe Bridgers — Other Plans",
+      "track": "GOREWORM — The Enthralling Grave",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -141,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-24T03:01:48.400Z"
+      "checkedAt": "2026-09-24T04:45:53.868Z"
     }
   }
 }
