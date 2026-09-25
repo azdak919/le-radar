@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-25T19:45:04.552Z",
-  "fetchedAt": "2026-09-25T19:45:04.552Z",
+  "updated": "2026-09-25T20:01:20.703Z",
+  "fetchedAt": "2026-09-25T20:01:20.703Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-25T19:45:04.553Z"
+    "referenceDate": "2026-09-25T20:01:20.704Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -85,6 +85,11 @@
       "label": "Hockey universitaire",
       "error": "Cloudflare challenge HTTP 403 https://universitaire.rseqhockey.com/fr",
       "blocked": true
+    },
+    {
+      "leagueId": "campus-uqac",
+      "label": "UQAC Inuk events",
+      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -86170,21 +86175,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-25",
-          "time": "16:00",
-          "opponent": "UQAM",
-          "opponentCode": "UQAM",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer universitaire féminin",
-          "gameId": "b2fcacda-86f8-4b4a-9cad-e7d91c103f1e",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b2fcacda-86f8-4b4a-9cad-e7d91c103f1e",
-          "opponentFullName": "Université du Québec à Montréal",
-          "opponentNickname": "Citadins",
-          "opponentRegistryId": "uqam",
-          "live": true
-        },
-        {
           "date": "2026-09-27",
           "time": "13:00",
           "opponent": "Sherbrooke",
@@ -86298,19 +86288,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-25",
-        "time": "16:00",
-        "opponent": "UQAM",
-        "opponentCode": "UQAM",
+        "date": "2026-09-27",
+        "time": "13:00",
+        "opponent": "Sherbrooke",
+        "opponentCode": "USHE",
         "home": true,
         "sport": "soccer",
         "competition": "Soccer universitaire féminin",
-        "gameId": "b2fcacda-86f8-4b4a-9cad-e7d91c103f1e",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b2fcacda-86f8-4b4a-9cad-e7d91c103f1e",
-        "opponentFullName": "Université du Québec à Montréal",
-        "opponentNickname": "Citadins",
-        "opponentRegistryId": "uqam",
-        "live": true,
+        "gameId": "53728d31-6bd7-4433-aa8b-ea17b8882b86",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=53728d31-6bd7-4433-aa8b-ea17b8882b86",
+        "opponentFullName": "Université de Sherbrooke",
+        "opponentNickname": "Vert & Or",
+        "opponentRegistryId": "usherbrooke",
         "opponentSector": "universitaire"
       },
       "record": {
@@ -87870,21 +87859,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-25",
-          "time": "16:00",
-          "opponent": "Bishop's",
-          "opponentCode": "BIS",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer universitaire féminin",
-          "gameId": "b2fcacda-86f8-4b4a-9cad-e7d91c103f1e",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b2fcacda-86f8-4b4a-9cad-e7d91c103f1e",
-          "opponentFullName": "Bishop's University",
-          "opponentNickname": "Gaiters",
-          "opponentRegistryId": "bishops",
-          "live": true
-        },
-        {
           "date": "2026-09-27",
           "time": "17:00",
           "opponent": "Laval",
@@ -87998,19 +87972,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-25",
-        "time": "16:00",
-        "opponent": "Bishop's",
-        "opponentCode": "BIS",
-        "home": false,
+        "date": "2026-09-27",
+        "time": "17:00",
+        "opponent": "Laval",
+        "opponentCode": "LAV",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer universitaire féminin",
-        "gameId": "b2fcacda-86f8-4b4a-9cad-e7d91c103f1e",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b2fcacda-86f8-4b4a-9cad-e7d91c103f1e",
-        "opponentFullName": "Bishop's University",
-        "opponentNickname": "Gaiters",
-        "opponentRegistryId": "bishops",
-        "live": true,
+        "gameId": "a3f2764b-9f8e-4ef8-810b-1fc4baa83f2d",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a3f2764b-9f8e-4ef8-810b-1fc4baa83f2d",
+        "opponentFullName": "Université Laval",
+        "opponentNickname": "Rouge et Or",
+        "opponentRegistryId": "ulaval",
         "opponentSector": "universitaire"
       },
       "record": {
