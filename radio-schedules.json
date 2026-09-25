@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T13:52:18.877Z",
+  "updatedAt": "2026-09-25T14:14:13.104Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-09-24T13:52:18.877Z",
+      "checkedAt": "2026-09-25T14:14:13.104Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -174,13 +174,6 @@
         },
         {
           "day": 4,
-          "start": "11:30",
-          "end": "12:30",
-          "title": "Conduite Antisportive",
-          "url": "https://chyz.ca/emission/conduite-antisportive/"
-        },
-        {
-          "day": 4,
           "start": "16:00",
           "end": "17:30",
           "title": "Chéri.e, j’arrive!",
@@ -299,7 +292,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-09-24T13:52:18.877Z",
+      "checkedAt": "2026-09-25T14:14:13.104Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -1073,7 +1066,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-09-24T13:52:18.877Z",
+      "checkedAt": "2026-09-25T14:14:13.104Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -1685,7 +1678,7 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-09-24T13:52:18.877Z",
+      "checkedAt": "2026-09-25T14:14:13.104Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -3791,9 +3784,16 @@
         {
           "day": 2,
           "start": "17:00",
-          "end": "19:00",
+          "end": "18:00",
           "title": "CJLO's Alternative Mega Mix",
           "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        },
+        {
+          "day": 2,
+          "start": "18:00",
+          "end": "19:00",
+          "title": "feminemix",
+          "url": "http://www.cjlo.com/shows/feminemix"
         },
         {
           "day": 2,
@@ -4085,6 +4085,13 @@
         {
           "day": 4,
           "start": "22:00",
+          "end": "23:00",
+          "title": "How Did We Get Here?",
+          "url": "http://www.cjlo.com/shows/how-did-we-get-here"
+        },
+        {
+          "day": 4,
+          "start": "23:00",
           "end": "00:00",
           "title": "CJLO's Alternative Mega Mix",
           "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
@@ -4294,13 +4301,6 @@
         },
         {
           "day": 6,
-          "start": "20:00",
-          "end": "21:00",
-          "title": "feminemix",
-          "url": "http://www.cjlo.com/shows/feminemix"
-        },
-        {
-          "day": 6,
           "start": "21:00",
           "end": "22:00",
           "title": "The Spacious Astrology Playlist",
@@ -4328,7 +4328,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-09-24T13:52:18.877Z",
+      "checkedAt": "2026-09-25T14:14:13.104Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
@@ -4549,7 +4549,7 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-09-24T13:52:18.877Z",
+      "checkedAt": "2026-09-25T14:14:13.104Z",
       "verifiedWeekOf": "2026-09-21",
       "grid": [
         {
