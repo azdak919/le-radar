@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-25T07:45:46.728Z",
+  "updatedAt": "2026-09-25T10:23:55.340Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T07:45:07.761Z"
+      "checkedAt": "2026-09-25T10:23:18.222Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique (reprise)",
-        "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/club-classique"
-      },
-      "next": {
         "title": "Le Séismix",
         "source": "schedule",
         "start": "05:00",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/le-seismix"
       },
+      "next": {
+        "title": "Toute est dans toute",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/tout-est-dans-toute"
+      },
       "track": "",
-      "showTitle": "Club classique (reprise)",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T07:45:09.808Z"
+      "checkedAt": "2026-09-25T10:23:19.657Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Listen! You Smell Something?",
-        "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "G-Flex Survivor's Corner",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
-      "track": "",
-      "showTitle": "Listen! You Smell Something?",
+      "next": {
+        "title": "Morning Detour",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "09:00"
+      },
+      "track": "G-Flex Survivor",
+      "showTitle": "G-Flex Survivor's Corner",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T07:45:12.748Z"
+      "checkedAt": "2026-09-25T10:23:22.187Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "02:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Wake up Folks!",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/wake-up-folks"
       },
+      "next": {
+        "title": "CJLO News Hour",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/cjlo-news-hour"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Wake up Folks!",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T07:45:27.369Z"
+      "checkedAt": "2026-09-25T10:23:36.549Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T07:45:28.320Z"
+      "checkedAt": "2026-09-25T10:23:37.457Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Immolation — Adversary",
+      "track": "Edward Skeletrix — Ariana, Bella Hadid",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T07:45:46.378Z"
+      "checkedAt": "2026-09-25T10:23:54.989Z"
     }
   }
 }
