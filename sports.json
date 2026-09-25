@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-24T23:29:33.484Z",
-  "fetchedAt": "2026-09-24T23:29:33.484Z",
+  "updated": "2026-09-25T00:16:08.204Z",
+  "fetchedAt": "2026-09-25T00:16:08.204Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-24T23:29:33.485Z"
+    "referenceDate": "2026-09-25T00:16:08.204Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -6482,21 +6482,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-24",
-          "time": "19:30",
-          "opponent": "John Abbott",
-          "opponentCode": "JAC",
-          "home": false,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "18d5e546-06d5-4ec9-b5bf-4452ed796f9a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=18d5e546-06d5-4ec9-b5bf-4452ed796f9a",
-          "opponentFullName": "John Abbott College",
-          "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott",
-          "live": true
-        },
-        {
           "date": "2026-09-26",
           "time": "13:00",
           "opponent": "Édouard-Montpetit",
@@ -6606,19 +6591,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-24",
-        "time": "19:30",
-        "opponent": "John Abbott",
-        "opponentCode": "JAC",
+        "date": "2026-09-26",
+        "time": "13:00",
+        "opponent": "Édouard-Montpetit",
+        "opponentCode": "CEM",
         "home": false,
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "18d5e546-06d5-4ec9-b5bf-4452ed796f9a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=18d5e546-06d5-4ec9-b5bf-4452ed796f9a",
-        "opponentFullName": "John Abbott College",
-        "opponentNickname": "Islanders",
-        "opponentRegistryId": "john-abbott",
-        "live": true,
+        "gameId": "080cf5b7-7490-4e02-8d25-ee7d41a9ed39",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=080cf5b7-7490-4e02-8d25-ee7d41a9ed39",
+        "opponentFullName": "Cégep Édouard-Montpetit",
+        "opponentNickname": "Cougars",
+        "opponentRegistryId": "edouard-montpetit",
         "opponentSector": "collegial"
       },
       "record": {
@@ -7314,21 +7298,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-24",
-          "time": "19:30",
-          "opponent": "Dawson",
-          "opponentCode": "DAW",
-          "home": true,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "18d5e546-06d5-4ec9-b5bf-4452ed796f9a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=18d5e546-06d5-4ec9-b5bf-4452ed796f9a",
-          "opponentFullName": "Dawson College",
-          "opponentNickname": "Blues",
-          "opponentRegistryId": "dawson",
-          "live": true
-        },
-        {
           "date": "2026-09-27",
           "time": "12:00",
           "opponent": "Limoilou",
@@ -7440,19 +7409,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-24",
-        "time": "19:30",
-        "opponent": "Dawson",
-        "opponentCode": "DAW",
+        "date": "2026-09-27",
+        "time": "12:00",
+        "opponent": "Limoilou",
+        "opponentCode": "LIM",
         "home": true,
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "18d5e546-06d5-4ec9-b5bf-4452ed796f9a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=18d5e546-06d5-4ec9-b5bf-4452ed796f9a",
-        "opponentFullName": "Dawson College",
-        "opponentNickname": "Blues",
-        "opponentRegistryId": "dawson",
-        "live": true,
+        "gameId": "03f9615e-941b-4e58-8837-72664e3eb071",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=03f9615e-941b-4e58-8837-72664e3eb071",
+        "opponentFullName": "Cégep Limoilou",
+        "opponentNickname": "Titans",
+        "opponentRegistryId": "limoilou",
         "opponentSector": "collegial"
       },
       "record": {
@@ -89587,20 +89555,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-24",
-          "time": "20:15",
-          "opponent": "UQTR",
-          "opponentCode": "UQTR",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer universitaire masculin",
-          "gameId": "5a924fd8-a012-4aeb-b67c-22a95329da80",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5a924fd8-a012-4aeb-b67c-22a95329da80",
-          "opponentFullName": "Université du Québec à Trois-Rivières",
-          "opponentNickname": "Patriotes",
-          "opponentRegistryId": "uqtr"
-        },
-        {
           "date": "2026-10-02",
           "time": "20:15",
           "opponent": "Laval",
@@ -89686,18 +89640,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-24",
+        "date": "2026-10-02",
         "time": "20:15",
-        "opponent": "UQTR",
-        "opponentCode": "UQTR",
-        "home": false,
+        "opponent": "Laval",
+        "opponentCode": "LAV",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer universitaire masculin",
-        "gameId": "5a924fd8-a012-4aeb-b67c-22a95329da80",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5a924fd8-a012-4aeb-b67c-22a95329da80",
-        "opponentFullName": "Université du Québec à Trois-Rivières",
-        "opponentNickname": "Patriotes",
-        "opponentRegistryId": "uqtr",
+        "gameId": "509baeca-8611-48b3-b9b9-99a42ef839b5",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=509baeca-8611-48b3-b9b9-99a42ef839b5",
+        "opponentFullName": "Université Laval",
+        "opponentNickname": "Rouge et Or",
+        "opponentRegistryId": "ulaval",
         "opponentSector": "universitaire"
       },
       "record": {
@@ -90075,20 +90029,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-24",
-          "time": "20:15",
-          "opponent": "Sherbrooke",
-          "opponentCode": "USHE",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer universitaire masculin",
-          "gameId": "5a924fd8-a012-4aeb-b67c-22a95329da80",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5a924fd8-a012-4aeb-b67c-22a95329da80",
-          "opponentFullName": "Université de Sherbrooke",
-          "opponentNickname": "Vert & Or",
-          "opponentRegistryId": "usherbrooke"
-        },
-        {
           "date": "2026-09-27",
           "time": "13:00",
           "opponent": "Concordia",
@@ -90188,18 +90128,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-24",
-        "time": "20:15",
-        "opponent": "Sherbrooke",
-        "opponentCode": "USHE",
-        "home": true,
+        "date": "2026-09-27",
+        "time": "13:00",
+        "opponent": "Concordia",
+        "opponentCode": "UCON",
+        "home": false,
         "sport": "soccer",
         "competition": "Soccer universitaire masculin",
-        "gameId": "5a924fd8-a012-4aeb-b67c-22a95329da80",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5a924fd8-a012-4aeb-b67c-22a95329da80",
-        "opponentFullName": "Université de Sherbrooke",
-        "opponentNickname": "Vert & Or",
-        "opponentRegistryId": "usherbrooke",
+        "gameId": "46d0aaf2-ba6a-46c5-907f-fa3c89bf86db",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=46d0aaf2-ba6a-46c5-907f-fa3c89bf86db",
+        "opponentFullName": "Université Concordia",
+        "opponentNickname": "Stingers",
+        "opponentRegistryId": "concordia",
         "opponentSector": "universitaire"
       },
       "record": {
