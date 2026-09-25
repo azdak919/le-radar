@@ -1,14 +1,23 @@
 {
-  "updated": "2026-09-24T23:15:54.193Z",
+  "updated": "2026-09-25T04:06:24.235Z",
   "total": 188,
   "pool": 51,
-  "incomplete": 4,
-  "withLeadExcerpt": 88,
-  "candidates": 4,
-  "enriched": 2,
+  "incomplete": 5,
+  "withLeadExcerpt": 89,
+  "candidates": 5,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Il faut le voir pour le croire",
+      "link": "https://www.delitfrancais.com/2026/09/16/il-faut-le-voir-pour-le-croire/",
+      "ok": true,
+      "score": 90,
+      "chars": 333,
+      "sample": "Or, la vidéo de la mort de Cisneros ne comportait aucun floutage et aucun avertissement. Pas une seu",
+      "changed": true
+    },
     {
       "title": "Les mardis au centre-ville",
       "link": "https://lecollectif.ca/culture/les-mardis-au-centre-ville/",
@@ -25,7 +34,7 @@
       "score": 96,
       "chars": 400,
       "sample": "Dimanche , se déroulait la 21e édition du Parcours Parkinson à la Zone portuaire de Chicoutimi. C’es",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Tatouages et politique: un couteau à double tranchant",
@@ -34,7 +43,7 @@
       "score": 96,
       "chars": 399,
       "sample": "Quelques politiciens portent désormais leurs tatouages ouvertement. Reste à savoir si l’encre qui re",
-      "changed": true
+      "changed": false
     },
     {
       "title": "What the heck is professional attire anyway!?",
