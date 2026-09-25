@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-25T00:52:52.124Z",
-  "fetchedAt": "2026-09-25T00:52:52.124Z",
+  "updated": "2026-09-25T01:37:50.588Z",
+  "fetchedAt": "2026-09-25T01:37:50.588Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-25T00:52:52.124Z"
+    "referenceDate": "2026-09-25T01:37:50.588Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -85567,20 +85567,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-24",
-          "time": "21:00",
-          "opponent": "Rosemont",
-          "opponentCode": "ROS",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D3",
-          "gameId": "cbb12eac-f230-4bb1-b635-c2defd5c8128",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cbb12eac-f230-4bb1-b635-c2defd5c8128",
-          "opponentFullName": "Collège de Rosemont",
-          "opponentRegistryId": "rosemont",
-          "live": true
-        },
-        {
           "date": "2026-09-27",
           "time": "13:00",
           "opponent": "Marie-Victorin",
@@ -85634,18 +85620,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-24",
-        "time": "21:00",
-        "opponent": "Rosemont",
-        "opponentCode": "ROS",
-        "home": false,
+        "date": "2026-09-27",
+        "time": "13:00",
+        "opponent": "Marie-Victorin",
+        "opponentCode": "CMV",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D3",
-        "gameId": "cbb12eac-f230-4bb1-b635-c2defd5c8128",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cbb12eac-f230-4bb1-b635-c2defd5c8128",
-        "opponentFullName": "Collège de Rosemont",
-        "opponentRegistryId": "rosemont",
-        "live": true,
+        "gameId": "2bb736f4-8491-4438-9388-be6834aa48b7",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2bb736f4-8491-4438-9388-be6834aa48b7",
+        "opponentFullName": "Cégep de Marie-Victorin",
+        "opponentRegistryId": "marie-victorin",
         "opponentSector": "collegial"
       },
       "record": {
@@ -85929,20 +85914,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-24",
-          "time": "21:00",
-          "opponent": "Maisonneuve",
-          "opponentCode": "MAI",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D3",
-          "gameId": "cbb12eac-f230-4bb1-b635-c2defd5c8128",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cbb12eac-f230-4bb1-b635-c2defd5c8128",
-          "opponentFullName": "Collège de Maisonneuve",
-          "opponentRegistryId": "maisonneuve",
-          "live": true
-        },
-        {
           "date": "2026-10-01",
           "time": "19:30",
           "opponent": "Gérald-Godin",
@@ -85996,18 +85967,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-24",
-        "time": "21:00",
-        "opponent": "Maisonneuve",
-        "opponentCode": "MAI",
-        "home": true,
+        "date": "2026-10-01",
+        "time": "19:30",
+        "opponent": "Gérald-Godin",
+        "opponentCode": "CGG",
+        "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D3",
-        "gameId": "cbb12eac-f230-4bb1-b635-c2defd5c8128",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cbb12eac-f230-4bb1-b635-c2defd5c8128",
-        "opponentFullName": "Collège de Maisonneuve",
-        "opponentRegistryId": "maisonneuve",
-        "live": true,
+        "gameId": "1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
+        "opponentFullName": "Cégep Gérald-Godin",
+        "opponentRegistryId": "gerald-godin",
         "opponentSector": "collegial"
       },
       "record": {
