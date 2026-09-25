@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-09-25T19:25:19.841Z",
+  "updatedAt": "2026-09-25T22:19:40.784Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Conduite Antisportive",
+        "title": "Les Arshitechs du Son",
         "source": "api-live",
-        "start": "14:30",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/conduite-antisportive/"
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
       "next": {
-        "title": "Chéri.e, j’arrive!",
+        "title": "Remparts de Québec",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "start": "18:45",
+        "end": "21:30",
+        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
       "track": "",
-      "showTitle": "Conduite Antisportive",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,133 +28,133 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T19:24:52.680Z"
+      "checkedAt": "2026-09-25T22:19:01.441Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Salsa et Bembê",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/salsa-et-bembe"
-      },
-      "next": {
         "title": "Pop Montréal en direct - Plants and Animals et Katie Moore",
         "source": "schedule",
         "start": "16:00",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/pop-montreal-en-direct-plants-and-animal-et-katie-moore"
       },
+      "next": {
+        "title": "Mix électro",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/mix-electro"
+      },
       "track": "",
-      "showTitle": "Salsa et Bembê",
+      "showTitle": "Pop Montréal en direct - Plants and Animals et Katie Moore",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T19:24:54.501Z"
+      "checkedAt": "2026-09-25T22:19:03.349Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "New Shit",
+        "title": "Café",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
-        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "track": "Airtime - offline",
-      "showTitle": "New Shit",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "stream"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-25T19:24:57.513Z"
-    },
-    "cjlo": {
-      "id": "cjlo",
-      "name": "CJLO 1690AM",
-      "current": {
-        "title": "Dead Beats",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/dead-beats"
-      },
-      "next": {
-        "title": "Tapeworms",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/tapeworms"
-      },
-      "track": "",
-      "showTitle": "Dead Beats",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-25T19:25:12.052Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Nouveautés Franco",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "18:00"
-      },
-      "next": {
-        "title": "La récréation",
-        "source": "schedule-live",
         "start": "18:00",
         "end": "19:00"
       },
-      "track": "",
-      "showTitle": "Nouveautés Franco",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-25T19:25:12.935Z"
-    },
-    "choq": {
-      "id": "choq",
-      "name": "CHOQ.ca",
-      "current": null,
       "next": {
-        "title": "Histoire de passer le temps",
+        "title": "LLA/Macondo",
         "source": "api-live",
-        "start": "16:00",
-        "end": "17:00",
-        "slug": "histoire-de-passer-le-temps"
+        "start": "19:00",
+        "end": "22:00"
       },
-      "track": "Ginie — j'evite",
-      "showTitle": "",
+      "track": "",
+      "showTitle": "Café",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T19:25:19.490Z"
+      "checkedAt": "2026-09-25T22:19:06.200Z"
+    },
+    "cjlo": {
+      "id": "cjlo",
+      "name": "CJLO 1690AM",
+      "current": {
+        "title": "The Go-Go Radio Magic Show",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
+      },
+      "next": {
+        "title": "El Encuentro Latino",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/el-encuentro-latino"
+      },
+      "track": "",
+      "showTitle": "The Go-Go Radio Magic Show",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-25T22:19:21.162Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "La récréation",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
+      "next": {
+        "title": "Enfin vendredi",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "21:00"
+      },
+      "track": "",
+      "showTitle": "La récréation",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-25T22:19:22.100Z"
+    },
+    "choq": {
+      "id": "choq",
+      "name": "CHOQ.ca",
+      "current": null,
+      "next": {
+        "title": "D'amour et de sexe",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
+      },
+      "track": "ID — Velours-Velours",
+      "showTitle": "",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "api-live",
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-25T22:19:40.433Z"
     }
   }
 }
