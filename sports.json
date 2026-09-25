@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-25T18:34:28.994Z",
-  "fetchedAt": "2026-09-25T18:34:28.994Z",
+  "updated": "2026-09-25T19:45:04.552Z",
+  "fetchedAt": "2026-09-25T19:45:04.552Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-25T18:34:28.995Z"
+    "referenceDate": "2026-09-25T19:45:04.553Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -85,11 +85,6 @@
       "label": "Hockey universitaire",
       "error": "Cloudflare challenge HTTP 403 https://universitaire.rseqhockey.com/fr",
       "blocked": true
-    },
-    {
-      "leagueId": "campus-uqac",
-      "label": "UQAC Inuk events",
-      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -86186,7 +86181,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b2fcacda-86f8-4b4a-9cad-e7d91c103f1e",
           "opponentFullName": "Université du Québec à Montréal",
           "opponentNickname": "Citadins",
-          "opponentRegistryId": "uqam"
+          "opponentRegistryId": "uqam",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -86314,6 +86310,7 @@
         "opponentFullName": "Université du Québec à Montréal",
         "opponentNickname": "Citadins",
         "opponentRegistryId": "uqam",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -87884,7 +87881,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b2fcacda-86f8-4b4a-9cad-e7d91c103f1e",
           "opponentFullName": "Bishop's University",
           "opponentNickname": "Gaiters",
-          "opponentRegistryId": "bishops"
+          "opponentRegistryId": "bishops",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -88012,6 +88010,7 @@
         "opponentFullName": "Bishop's University",
         "opponentNickname": "Gaiters",
         "opponentRegistryId": "bishops",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
