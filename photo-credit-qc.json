@@ -1,37 +1,58 @@
 {
-  "updated": "2026-09-25T14:45:00.225Z",
+  "updated": "2026-09-25T19:27:12.636Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
   "cited": 120,
-  "pending": 7,
+  "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 10,
-  "updatedCount": 3,
-  "citedNew": 3,
-  "fallbackNew": 7,
+  "checked": 12,
+  "updatedCount": 6,
+  "citedNew": 4,
+  "fallbackNew": 8,
   "samples": [
     {
-      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
-      "source": "The McGill Daily",
-      "credit": "Photo : Meg Ha",
+      "title": "Le bilan mitigé de la chasse à la grue au Saguenay",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Le vintage condamné à mort ?",
+      "source": "La Pige",
+      "credit": "Photo : Émilie Frère-Lefèvre",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Les centres de données : maître chez nous ?",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Cadre financier : la CAQ se distance de son rapport préélectoral",
+      "source": "Quartier Libre",
+      "credit": "Photo : © Noovo et Crave / Paul Ducharme",
+      "cited": true,
+      "method": "figcaption"
+    },
+    {
+      "title": "Les mardis au centre-ville",
+      "source": "Le Collectif",
+      "credit": "Photo : Murales Sherbrooke",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Il faut le voir pour le croire",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }

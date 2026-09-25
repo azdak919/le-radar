@@ -1,15 +1,15 @@
 {
-  "updated": "2026-09-25T14:44:52.398Z",
+  "updated": "2026-09-25T19:27:01.663Z",
   "total": 188,
   "withPhoto": 176,
   "withStock": 24,
   "withCampusBank": 17,
   "fullyCovered": 188,
-  "leadReadyPhotos": 148,
-  "pageScraped": 37,
-  "photosRecovered": 33,
+  "leadReadyPhotos": 145,
+  "pageScraped": 38,
+  "photosRecovered": 34,
   "imagesCleared": 12,
-  "stockSearches": 40,
+  "stockSearches": 41,
   "stockFound": 19,
   "campusBankFound": 13,
   "mainPageLeadReady": true,
@@ -19,6 +19,12 @@
       "link": "https://lecollectif.ca/societe/le-conflit-entre-trump-et-les-medias-atteint-un-nouveau-sommet/",
       "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/09/SOCIETE_Le-conflit-entre-Trump-et-les-medias-atteint-un-nouveau-sommet_Getty-Images.jpg"
+    },
+    {
+      "title": "Les mardis au centre-ville",
+      "link": "https://lecollectif.ca/culture/les-mardis-au-centre-ville/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/09/Sherbylove-Murales-Sherbrooke.jpg"
     },
     {
       "title": "Tatouages et politique: un couteau à double tranchant",
@@ -66,7 +72,7 @@
       "title": "National Golf tournament",
       "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
       "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Masters_Tournament_-_2013_-_Dogwood_Cabin%2C_August_National_Golf_Club_%288688531487%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg"
     },
     {
       "title": "Gaiters wrap up hard-fought season with eyes on next year",
@@ -79,12 +85,6 @@
       "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
-    },
-    {
-      "title": "Oui au budget, oui au programme FIL et non à la grève",
-      "link": "https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg"
     }
   ]
 }

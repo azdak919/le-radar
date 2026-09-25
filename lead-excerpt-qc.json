@@ -1,14 +1,59 @@
 {
-  "updated": "2026-09-25T14:40:19.465Z",
+  "updated": "2026-09-25T19:20:47.313Z",
   "total": 188,
   "pool": 51,
-  "incomplete": 4,
-  "withLeadExcerpt": 89,
-  "candidates": 4,
-  "enriched": 0,
+  "incomplete": 9,
+  "withLeadExcerpt": 90,
+  "candidates": 9,
+  "enriched": 6,
   "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Il faut le voir pour le croire",
+      "link": "https://www.delitfrancais.com/2026/09/16/il-faut-le-voir-pour-le-croire/",
+      "ok": true,
+      "score": 90,
+      "chars": 333,
+      "sample": "Or, la vidéo de la mort de Cisneros ne comportait aucun floutage et aucun avertissement. Pas une seu",
+      "changed": true
+    },
+    {
+      "title": "Le bilan mitigé de la chasse à la grue au Saguenay",
+      "link": "https://lapige.atmjonquiere.com/2026/09/25/le-bilan-mitige-de-la-chasse-a-la-grue-au-saguenay/?utm_source=rss&utm_medium=rss&utm_campaign=le-bilan-mitige-de-la-chasse-a-la-grue-au-saguenay",
+      "ok": true,
+      "score": 100,
+      "chars": 327,
+      "sample": "Chaque automne, près de 5 000 grues du Canada s’arrêtent au Saguenay–Lac-Saint-Jean. Leur présence c",
+      "changed": true
+    },
+    {
+      "title": "Le vintage condamné à mort ?",
+      "link": "https://lapige.atmjonquiere.com/2026/09/25/le-vintage-condamne-a-mort/?utm_source=rss&utm_medium=rss&utm_campaign=le-vintage-condamne-a-mort",
+      "ok": true,
+      "score": 96,
+      "chars": 386,
+      "sample": "Submergé par des milliards de vêtements synthétiques conçus pour ne durer que quelques semaines, le ",
+      "changed": true
+    },
+    {
+      "title": "Les centres de données : maître chez nous ?",
+      "link": "https://lapige.atmjonquiere.com/2026/09/25/les-centres-de-donnees-maitre-chez-nous/?utm_source=rss&utm_medium=rss&utm_campaign=les-centres-de-donnees-maitre-chez-nous",
+      "ok": true,
+      "score": 100,
+      "chars": 290,
+      "sample": "« C’est clairement une production hydroélectrique qui bénéficie à des propriétaires étrangers ou amé",
+      "changed": true
+    },
+    {
+      "title": "Cadre financier : la CAQ se distance de son rapport préélectoral",
+      "link": "https://quartierlibre.ca/cadre-financier-caq/",
+      "ok": true,
+      "score": 100,
+      "chars": 289,
+      "sample": "Les chefs des autres partis ont été très critiques vis-à-vis du cadre financier du ministre de l’Éco",
+      "changed": true
+    },
     {
       "title": "Les mardis au centre-ville",
       "link": "https://lecollectif.ca/culture/les-mardis-au-centre-ville/",
@@ -16,7 +61,7 @@
       "score": 100,
       "chars": 400,
       "sample": "34,55 $ : le prix d’une entrée de poulet karaage et d’un ramen végan épicé, pourboire de 20 % compri",
-      "changed": false
+      "changed": true
     },
     {
       "title": "Plus de 40 000$ amassés pour le Parkinson",
@@ -34,15 +79,6 @@
       "score": 96,
       "chars": 399,
       "sample": "Quelques politiciens portent désormais leurs tatouages ouvertement. Reste à savoir si l’encre qui re",
-      "changed": false
-    },
-    {
-      "title": "What the heck is professional attire anyway!?",
-      "link": "https://thelinknewspaper.ca/article/16408",
-      "ok": true,
-      "score": 96,
-      "chars": 400,
-      "sample": "The fashion trends are perpetually cyclical. In a society defined by a highly consumerist culture, c",
       "changed": false
     }
   ]

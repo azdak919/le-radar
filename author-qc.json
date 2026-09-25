@@ -1,10 +1,18 @@
 {
-  "updated": "2026-09-25T14:40:01.906Z",
+  "updated": "2026-09-25T19:20:24.896Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 6,
+  "mismatches": 7,
   "ok": true,
   "samples": [
+    {
+      "title": "Cadre financier : la CAQ se distance de son rapport préélectoral",
+      "link": "https://quartierlibre.ca/cadre-financier-caq/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Frédéric Chouinard",
+      "reason": "page-byline"
+    },
     {
       "title": "Editorial: The Link wants you to go vote!",
       "link": "https://thelinknewspaper.ca/article/16412",
@@ -54,5 +62,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 6
+  "fixed": 7
 }
