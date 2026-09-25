@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-25T05:12:31.262Z",
+  "updatedAt": "2026-09-25T07:45:46.728Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T05:11:54.916Z"
+      "checkedAt": "2026-09-25T07:45:07.761Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques (reprise)",
+        "title": "Club classique (reprise)",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/rebelles-soniques"
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/club-classique"
       },
       "next": {
-        "title": "Mix franco",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "track": "",
-      "showTitle": "Rebelles soniques (reprise)",
+      "showTitle": "Club classique (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T05:11:56.374Z"
+      "checkedAt": "2026-09-25T07:45:09.808Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T05:11:58.457Z"
+      "checkedAt": "2026-09-25T07:45:12.748Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Finally Midnight",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/finally-midnight"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "02:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Wake up Folks!",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/wake-up-folks"
+      },
       "track": "",
-      "showTitle": "Finally Midnight",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T05:12:12.245Z"
+      "checkedAt": "2026-09-25T07:45:27.369Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T05:12:13.616Z"
+      "checkedAt": "2026-09-25T07:45:28.320Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Volubilis — Unukhalai Supernova",
+      "track": "Immolation — Adversary",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T05:12:30.912Z"
+      "checkedAt": "2026-09-25T07:45:46.378Z"
     }
   }
 }
