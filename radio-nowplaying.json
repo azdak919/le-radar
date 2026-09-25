@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-09-25T22:19:40.784Z",
+  "updatedAt": "2026-09-25T22:38:33.015Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
+      "current": null,
       "next": {
         "title": "Remparts de Québec",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "18:45",
         "end": "21:30",
         "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T22:19:01.441Z"
+      "checkedAt": "2026-09-25T22:37:53.743Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T22:19:03.349Z"
+      "checkedAt": "2026-09-25T22:37:55.689Z"
     },
     "ckut": {
       "id": "ckut",
@@ -80,7 +73,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T22:19:06.200Z"
+      "checkedAt": "2026-09-25T22:37:58.522Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -107,7 +100,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T22:19:21.162Z"
+      "checkedAt": "2026-09-25T22:38:13.395Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,7 +125,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T22:19:22.100Z"
+      "checkedAt": "2026-09-25T22:38:14.582Z"
     },
     "choq": {
       "id": "choq",
@@ -154,7 +147,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T22:19:40.433Z"
+      "checkedAt": "2026-09-25T22:38:32.664Z"
     }
   }
 }
