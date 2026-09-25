@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-25T05:13:15.101Z",
+  "updated": "2026-09-25T07:56:28.125Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
@@ -7,9 +7,31 @@
   "pending": 7,
   "missingHero": 0,
   "ok": false,
-  "checked": 7,
-  "updatedCount": 0,
-  "citedNew": 0,
+  "checked": 10,
+  "updatedCount": 3,
+  "citedNew": 3,
   "fallbackNew": 7,
-  "samples": []
+  "samples": [
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
+    }
+  ]
 }
