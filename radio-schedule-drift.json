@@ -1,12 +1,13 @@
 {
-  "checkedAt": "2026-09-24T01:19:53.033Z",
+  "checkedAt": "2026-09-25T01:26:02.998Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
+    "stable": 4,
     "drift": [
-      "chyz"
+      "chyz",
+      "cjlo"
     ],
     "overhaul": [],
     "unreachable": []
@@ -15,17 +16,13 @@
     {
       "id": "chyz",
       "published": 40,
-      "fresh": 40,
-      "added": [
-        "dim 14:45–17:30 Remparts de Québec",
-        "sam 12:00–13:00 Un Samedi d'Ici"
-      ],
+      "fresh": 39,
+      "added": [],
       "removed": [
-        "dim 13:00–16:00 Radio Futura",
-        "dim 15:45–18:30 Remparts de Québec"
+        "jeu 11:30–12:30 Conduite Antisportive"
       ],
-      "changed": 4,
-      "ratio": 0.1,
+      "changed": 1,
+      "ratio": 0.025,
       "status": "drift"
     },
     {
@@ -51,12 +48,21 @@
     {
       "id": "cjlo",
       "published": 376,
-      "fresh": 376,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 377,
+      "added": [
+        "mar 17:00–18:00 CJLO's Alternative Mega Mix",
+        "mar 18:00–19:00 feminemix",
+        "jeu 22:00–23:00 How Did We Get Here?",
+        "jeu 23:00–00:00 CJLO's Alternative Mega Mix"
+      ],
+      "removed": [
+        "mar 17:00–19:00 CJLO's Alternative Mega Mix",
+        "jeu 22:00–00:00 CJLO's Alternative Mega Mix",
+        "sam 20:00–21:00 feminemix"
+      ],
+      "changed": 7,
+      "ratio": 0.019,
+      "status": "drift"
     },
     {
       "id": "cfak",
