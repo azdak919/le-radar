@@ -1,19 +1,37 @@
 {
-  "updated": "2026-09-25T19:27:01.663Z",
+  "updated": "2026-09-25T22:26:57.838Z",
   "total": 188,
   "withPhoto": 176,
   "withStock": 24,
   "withCampusBank": 17,
   "fullyCovered": 188,
-  "leadReadyPhotos": 145,
-  "pageScraped": 38,
-  "photosRecovered": 34,
+  "leadReadyPhotos": 144,
+  "pageScraped": 40,
+  "photosRecovered": 36,
   "imagesCleared": 12,
-  "stockSearches": 41,
+  "stockSearches": 43,
   "stockFound": 19,
   "campusBankFound": 13,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Le vote à distance s’invite sur les campus",
+      "link": "https://lapige.atmjonquiere.com/2026/09/25/le-vote-a-distance-sinvite-sur-les-campus/?utm_source=rss&utm_medium=rss&utm_campaign=le-vote-a-distance-sinvite-sur-les-campus",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Image-2-4.jpg"
+    },
+    {
+      "title": "Des nuisances nocturnes entendus à Chicoutimi-Nord dénoncées sur Facebook",
+      "link": "https://lapige.atmjonquiere.com/2026/09/25/des-nuisances-nocturnes-entendus-a-chicoutimi-nord-denoncees-sur-facebook/?utm_source=rss&utm_medium=rss&utm_campaign=des-nuisances-nocturnes-entendus-a-chicoutimi-nord-denoncees-sur-facebook",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/20260925_145531.jpg"
+    },
+    {
+      "title": "La Corse résonne dans une église de Chicoutimi",
+      "link": "https://lapige.atmjonquiere.com/2026/09/25/la-corse-resonne-dans-une-eglise-de-chicoutimi/?utm_source=rss&utm_medium=rss&utm_campaign=la-corse-resonne-dans-une-eglise-de-chicoutimi",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/20260921_195016.jpg"
+    },
     {
       "title": "Le conflit entre Trump et les médias atteint un nouveau sommet",
       "link": "https://lecollectif.ca/societe/le-conflit-entre-trump-et-les-medias-atteint-un-nouveau-sommet/",
@@ -25,12 +43,6 @@
       "link": "https://lecollectif.ca/culture/les-mardis-au-centre-ville/",
       "reason": "no-stock-match",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/09/Sherbylove-Murales-Sherbrooke.jpg"
-    },
-    {
-      "title": "Tatouages et politique: un couteau à double tranchant",
-      "link": "https://lapige.atmjonquiere.com/2026/09/22/tatouages-et-politique-un-couteau-a-double-tranchant/?utm_source=rss&utm_medium=rss&utm_campaign=tatouages-et-politique-un-couteau-a-double-tranchant",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Bouchard_Rencontre_Public.png"
     },
     {
       "title": "Meet the dance pioneer who wants to save hip-hop",
@@ -73,18 +85,6 @@
       "link": "https://thebucampus.ca/2026/03/23/national-golf-tournament/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/24/99099986_4195128a59_b.jpg"
-    },
-    {
-      "title": "Gaiters wrap up hard-fought season with eyes on next year",
-      "link": "https://thebucampus.ca/2026/03/23/gaiters-wrap-up-hard-fought-season-with-eyes-on-next-year/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Le pays avant tout – esquisse",
-      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
     }
   ]
 }
