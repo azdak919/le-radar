@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-26T01:10:40.182Z",
+  "updatedAt": "2026-09-26T06:23:06.445Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Remparts de Québec",
-        "source": "api-live",
-        "start": "18:45",
-        "end": "21:30",
-        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHYZ",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
       "track": "",
-      "showTitle": "Remparts de Québec",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-26T01:10:01.134Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Le 120e parallèle (reprise)",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/le-120e-parallele"
-      },
-      "next": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "track": "",
-      "showTitle": "Le 120e parallèle (reprise)",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T01:10:02.882Z"
+      "checkedAt": "2026-09-26T06:22:38.440Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
+      "next": {
+        "title": "Voix tropicale",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/voix-tropicale"
+      },
+      "track": "",
+      "showTitle": "Mix franco",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-26T06:22:40.231Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "LLA/Macondo",
+        "title": "Soca Sessions",
         "source": "api-live",
-        "start": "19:00",
-        "end": "22:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "next": {
-        "title": "Weekend Groove",
+        "title": "The Mash Time Show",
         "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
+        "start": "04:00",
+        "end": "06:00"
       },
       "track": "",
-      "showTitle": "LLA/Macondo",
+      "showTitle": "Soca Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,59 +74,54 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T01:10:05.847Z"
+      "checkedAt": "2026-09-26T06:22:43.303Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "The Come Up",
+        "title": "World-Up'",
         "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/the-come-up"
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T01:10:20.114Z"
+      "checkedAt": "2026-09-26T06:22:58.173Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Mangue, Goyave et Reggae",
+        "title": "Les nuits CFAK",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00"
+        "start": "00:00",
+        "end": "07:00"
       },
-      "next": {
-        "title": "Mix Anglo",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "00:00"
-      },
+      "next": null,
       "track": "",
-      "showTitle": "Mangue, Goyave et Reggae",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T01:10:21.627Z"
+      "checkedAt": "2026-09-26T06:22:59.478Z"
     },
     "choq": {
       "id": "choq",
@@ -141,21 +129,20 @@
       "current": null,
       "next": {
         "title": "D'amour et de sexe",
-        "source": "schedule",
+        "source": "api-live",
         "start": "22:00",
         "end": "00:00",
-        "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
+        "slug": "damour-et-de-sexe"
       },
-      "track": "ID — Velours-Velours",
+      "track": "Blackwater Holylight — Heavy, Why?",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T01:10:39.831Z"
+      "checkedAt": "2026-09-26T06:23:06.095Z"
     }
   }
 }
