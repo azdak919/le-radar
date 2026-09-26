@@ -1,37 +1,44 @@
 {
-  "updatedAt": "2026-09-26T13:03:37.016Z",
+  "updatedAt": "2026-09-26T15:43:19.123Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Le Ré-Show : Deuxième Service",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+      },
       "next": {
-        "title": "Palmarès CHYZ",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
+        "title": "Un Samedi d'Ici",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "https://chyz.ca/emission/un-samedi-dici/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Le Ré-Show : Deuxième Service",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T13:03:03.816Z"
+      "checkedAt": "2026-09-26T15:42:54.561Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Voix tropicale",
-        "source": "api-live",
-        "start": "05:00",
-        "url": "https://stream.cism893.ca/",
-        "slug": "voix-tropicale"
+        "title": "Elkin Polo El Show",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/elkin-polo-el-show"
       },
       "next": {
         "title": "Change le beat",
@@ -41,36 +48,32 @@
         "url": "https://cism893.ca/emissions/change-le-beat"
       },
       "track": "",
-      "showTitle": "Voix tropicale",
+      "showTitle": "Elkin Polo El Show",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
         "schedule"
       ],
-      "clientPoll": {
-        "type": "cism-v1",
-        "url": "https://admin.cism893.ca/api/v1/live"
-      },
-      "checkedAt": "2026-09-26T13:03:05.857Z"
+      "clientPoll": null,
+      "checkedAt": "2026-09-26T15:42:55.990Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Quebec Acadie",
+        "title": "Samedi Midi",
         "source": "api-live",
-        "start": "06:00",
-        "end": "10:00"
+        "start": "10:30",
+        "end": "14:00"
       },
       "next": {
-        "title": "Making Contact/Anything Goes",
+        "title": "Funky Revolutions",
         "source": "api-live",
-        "start": "10:00",
-        "end": "10:30"
+        "start": "14:00",
+        "end": "16:00"
       },
-      "track": "",
-      "showTitle": "Quebec Acadie",
+      "track": "Airtime - offline",
+      "showTitle": "Samedi Midi",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -78,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T13:03:10.532Z"
+      "checkedAt": "2026-09-26T15:42:58.136Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Live Wire Show",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/the-live-wire-show"
-      },
-      "next": {
         "title": "Gospel Unlimited",
         "source": "schedule-live",
         "start": "10:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/gospel-unlimited"
       },
+      "next": {
+        "title": "Anatomy of Caribbean Music",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
+      },
       "track": "",
-      "showTitle": "The Live Wire Show",
+      "showTitle": "Gospel Unlimited",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T13:03:27.955Z"
+      "checkedAt": "2026-09-26T15:43:12.275Z"
     },
     "cfak": {
       "id": "cfak",
@@ -125,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T13:03:28.946Z"
+      "checkedAt": "2026-09-26T15:43:13.083Z"
     },
     "choq": {
       "id": "choq",
@@ -138,7 +141,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Blackwater Holylight — Heavy, Why?",
+      "track": "Arielle Soucy — Lumiere 1&2 (technique tintinnabuli)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -146,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T13:03:36.665Z"
+      "checkedAt": "2026-09-26T15:43:18.772Z"
     }
   }
 }
