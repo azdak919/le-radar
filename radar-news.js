@@ -3880,7 +3880,7 @@ function documentContentViewBox(img) {
   return { x0, y0, x1, y1 };
 }
 
-function applyDocumentContentCrop(img) {
+function applyDocumentContentCropNow(img) {
   if (!img || img.dataset.docCrop === '1') return;
   const box = documentContentViewBox(img);
   if (!box) return;
@@ -3896,9 +3896,79 @@ function applyDocumentContentCrop(img) {
   img.style.objectPosition = 'left center';
 }
 
+/*
+ * Le drawImage de documentContentViewBox décode et réduit la photo sur le
+ * fil principal (jusqu’à ~100 ms pour une photo 2560 px sur un poste lent).
+ * Fait pour ~180 photos à leur chargement, ça gelait la page plusieurs
+ * secondes (mât sports vide, clics et Playwright bloqués en CI).
+ * Donc : jamais les images d’une autre origine (canvas « tainted »,
+ * getImageData échoue toujours : travail perdu), seulement les photos
+ * proches de l’écran, et une seule par temps mort.
+ */
+const docCropQueue = [];
+let docCropObserver = null;
+let docCropScheduled = false;
+
+function docCropPixelsReadable(img) {
+  const src = img.currentSrc || img.src || '';
+  if (!src) return false;
+  try {
+    const url = new URL(src, window.location.href);
+    if (url.protocol === 'data:' || url.protocol === 'blob:') return true;
+    return url.origin === window.location.origin;
+  } catch {
+    return false;
+  }
+}
+
+function drainDocCropQueue() {
+  docCropScheduled = false;
+  const img = docCropQueue.shift();
+  if (img) {
+    delete img.dataset.docCropQueued;
+    if (img.isConnected) applyDocumentContentCropNow(img);
+  }
+  if (docCropQueue.length) scheduleDocCropDrain();
+}
+
+function scheduleDocCropDrain() {
+  if (docCropScheduled) return;
+  docCropScheduled = true;
+  if (typeof window.requestIdleCallback === 'function') {
+    window.requestIdleCallback(drainDocCropQueue, { timeout: 1500 });
+  } else {
+    window.setTimeout(drainDocCropQueue, 50);
+  }
+}
+
+function queueDocumentContentCrop(img) {
+  docCropQueue.push(img);
+  scheduleDocCropDrain();
+}
+
+function applyDocumentContentCrop(img) {
+  if (!img || img.dataset.docCrop === '1' || img.dataset.docCropQueued === '1') return;
+  if (!docCropPixelsReadable(img)) return;
+  img.dataset.docCropQueued = '1';
+  if (typeof IntersectionObserver !== 'function') {
+    queueDocumentContentCrop(img);
+    return;
+  }
+  if (!docCropObserver) {
+    docCropObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        docCropObserver.unobserve(entry.target);
+        queueDocumentContentCrop(entry.target);
+      }
+    }, { rootMargin: '600px 0px' });
+  }
+  docCropObserver.observe(img);
+}
+
 function showArticleImage(article, media, img, kind, item) {
-  if (kind === 'photo') applyDocumentContentCrop(img);
   media.replaceChildren(img);
+  if (kind === 'photo') applyDocumentContentCrop(img);
   let cap = null;
   if (kind === 'photo') {
     if (item?.sourceImageCredit) {
