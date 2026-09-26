@@ -49,7 +49,7 @@ et les mêmes chemins sur `www.le-radar.ca`. `android:autoVerify="true"`. Le sit
 
 Permission déclarée : `INTERNET`. `usesCleartextTraffic` est faux. Pas de localisation, caméra, micro, notifications, ni identifiant publicitaire.
 
-Le gabarit Capacitor cherche `google-services.json` et n’applique le plugin que si ce fichier existe. Ne pas l’ajouter : l’application n’utilise pas Firebase.
+Le plugin Google `google-services` n’est pas dans le build. L’application n’utilise pas Firebase, et F-Droid refuse ce plugin.
 
 ## Bord à bord
 
