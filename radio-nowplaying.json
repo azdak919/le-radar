@@ -1,131 +1,139 @@
 {
-  "updatedAt": "2026-09-25T22:38:33.015Z",
+  "updatedAt": "2026-09-26T01:10:40.182Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Remparts de Québec",
-        "source": "schedule",
+        "source": "api-live",
         "start": "18:45",
         "end": "21:30",
         "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
+      "next": {
+        "title": "Palmarès CHYZ",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "10:30",
+        "url": "https://chyz.ca/emission/palmares-chyz/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Remparts de Québec",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T22:37:53.743Z"
+      "checkedAt": "2026-09-26T01:10:01.134Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Pop Montréal en direct - Plants and Animals et Katie Moore",
+        "title": "Le 120e parallèle (reprise)",
         "source": "schedule",
-        "start": "16:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/pop-montreal-en-direct-plants-and-animal-et-katie-moore"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/le-120e-parallele"
       },
       "next": {
-        "title": "Mix électro",
+        "title": "Mix Anglo",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/mix-electro"
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
       },
       "track": "",
-      "showTitle": "Pop Montréal en direct - Plants and Animals et Katie Moore",
+      "showTitle": "Le 120e parallèle (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T22:37:55.689Z"
+      "checkedAt": "2026-09-26T01:10:02.882Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Café",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "LLA/Macondo",
         "source": "api-live",
         "start": "19:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Weekend Groove",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Café",
+      "showTitle": "LLA/Macondo",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T22:37:58.522Z"
+      "checkedAt": "2026-09-26T01:10:05.847Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Go-Go Radio Magic Show",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "El Encuentro Latino",
+        "title": "The Come Up",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/el-encuentro-latino"
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/the-come-up"
       },
       "track": "",
-      "showTitle": "The Go-Go Radio Magic Show",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T22:38:13.395Z"
+      "checkedAt": "2026-09-26T01:10:20.114Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "La récréation",
+        "title": "Mangue, Goyave et Reggae",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "21:00",
+        "end": "22:00"
       },
       "next": {
-        "title": "Enfin vendredi",
+        "title": "Mix Anglo",
         "source": "schedule-live",
-        "start": "19:00",
-        "end": "21:00"
+        "start": "22:00",
+        "end": "00:00"
       },
       "track": "",
-      "showTitle": "La récréation",
+      "showTitle": "Mangue, Goyave et Reggae",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T22:38:14.582Z"
+      "checkedAt": "2026-09-26T01:10:21.627Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +155,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-25T22:38:32.664Z"
+      "checkedAt": "2026-09-26T01:10:39.831Z"
     }
   }
 }
