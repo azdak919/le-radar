@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-09-26T15:43:19.123Z",
+  "updatedAt": "2026-09-26T17:08:57.960Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Le Ré-Show : Deuxième Service",
+        "title": "Radio Futura",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+        "start": "13:00",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/radio-futura/"
       },
       "next": {
-        "title": "Un Samedi d'Ici",
+        "title": "Football du Rouge et Or",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "https://chyz.ca/emission/un-samedi-dici/"
+        "start": "18:30",
+        "end": "22:30",
+        "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
       },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième Service",
+      "showTitle": "Radio Futura",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T15:42:54.561Z"
+      "checkedAt": "2026-09-26T17:08:12.627Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Elkin Polo El Show",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/elkin-polo-el-show"
-      },
-      "next": {
         "title": "Change le beat",
         "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/change-le-beat"
       },
+      "next": {
+        "title": "Basses fréquences",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/basses-frequences"
+      },
       "track": "",
-      "showTitle": "Elkin Polo El Show",
+      "showTitle": "Change le beat",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T15:42:55.990Z"
+      "checkedAt": "2026-09-26T17:08:13.968Z"
     },
     "ckut": {
       "id": "ckut",
@@ -72,7 +72,7 @@
         "start": "14:00",
         "end": "16:00"
       },
-      "track": "Airtime - offline",
+      "track": "",
       "showTitle": "Samedi Midi",
       "host": "",
       "source": "api-live",
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T15:42:58.136Z"
+      "checkedAt": "2026-09-26T17:08:16.457Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Gospel Unlimited",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/gospel-unlimited"
-      },
-      "next": {
         "title": "Anatomy of Caribbean Music",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
       },
+      "next": {
+        "title": "Caribbean Callaloo",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
+      },
       "track": "",
-      "showTitle": "Gospel Unlimited",
+      "showTitle": "Anatomy of Caribbean Music",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T15:43:12.275Z"
+      "checkedAt": "2026-09-26T17:08:50.663Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T15:43:13.083Z"
+      "checkedAt": "2026-09-26T17:08:51.677Z"
     },
     "choq": {
       "id": "choq",
@@ -141,7 +141,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Arielle Soucy — Lumiere 1&2 (technique tintinnabuli)",
+      "track": "FYORE",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T15:43:18.772Z"
+      "checkedAt": "2026-09-26T17:08:57.609Z"
     }
   }
 }
