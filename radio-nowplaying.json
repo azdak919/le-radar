@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-26T11:39:40.744Z",
+  "updatedAt": "2026-09-26T13:03:37.016Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,38 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T11:39:12.220Z"
+      "checkedAt": "2026-09-26T13:03:03.816Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
         "title": "Voix tropicale",
-        "source": "schedule",
+        "source": "api-live",
         "start": "05:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/voix-tropicale"
+        "url": "https://stream.cism893.ca/",
+        "slug": "voix-tropicale"
       },
       "next": {
-        "title": "Elkin Polo El Show",
+        "title": "Change le beat",
         "source": "schedule",
-        "start": "09:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/elkin-polo-el-show"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/change-le-beat"
       },
       "track": "",
       "showTitle": "Voix tropicale",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
+        "api-live",
         "schedule"
       ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-26T11:39:14.075Z"
+      "clientPoll": {
+        "type": "cism-v1",
+        "url": "https://admin.cism893.ca/api/v1/live"
+      },
+      "checkedAt": "2026-09-26T13:03:05.857Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +78,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T11:39:16.864Z"
+      "checkedAt": "2026-09-26T13:03:10.532Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "World-Up'",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/world-up"
-      },
-      "next": {
         "title": "The Live Wire Show",
         "source": "schedule-live",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/the-live-wire-show"
       },
+      "next": {
+        "title": "Gospel Unlimited",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/gospel-unlimited"
+      },
       "track": "",
-      "showTitle": "World-Up'",
+      "showTitle": "The Live Wire Show",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T11:39:31.931Z"
+      "checkedAt": "2026-09-26T13:03:27.955Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +125,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T11:39:33.049Z"
+      "checkedAt": "2026-09-26T13:03:28.946Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +146,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T11:39:40.393Z"
+      "checkedAt": "2026-09-26T13:03:36.665Z"
     }
   }
 }
