@@ -1310,6 +1310,7 @@ function renderNewsFilters() {
 
 function renderNews() {
   if (!NEWS_LIST) return;
+  resetBackupPhotoClaims();
   const followStore = followedMediaStore();
   if (isFollowedNewsView() && (!followStore || !followStore.list().length)) {
     newsSourceFilter = 'all';
@@ -3354,6 +3355,52 @@ function hasDisplayImage(item, role = 'lead') {
  * Repli campus côté client — scripts/campus-fallback-lib.js (CampusFallback).
  * Banque mât universities + cégeps curatés.
  */
+/** Photos de repli déjà posées dans ce rendu. owner = lien d’article. */
+let backupClaimByKey = new Map();
+
+function resetBackupPhotoClaims() {
+  backupClaimByKey = new Map();
+}
+
+function backupOwnerKey(item) {
+  return String(item?.link || item?.title || '');
+}
+
+function backupPhotoKey(url) {
+  const fn = typeof CampusFallback === 'object' ? CampusFallback.campusPhotoKey : null;
+  return typeof fn === 'function' ? fn(url) : String(url || '').trim();
+}
+
+function claimBackupPhoto(url, item) {
+  const key = backupPhotoKey(url);
+  if (!key) return false;
+  const prev = backupClaimByKey.get(key);
+  const me = backupOwnerKey(item);
+  if (prev && prev.owner !== me) return false;
+  backupClaimByKey.set(key, { owner: me, url: String(url).trim() });
+  return true;
+}
+
+function backupAvoidUrls(item) {
+  const me = backupOwnerKey(item);
+  const urls = [];
+  for (const entry of backupClaimByKey.values()) {
+    if (entry.owner !== me) urls.push(entry.url);
+  }
+  return urls;
+}
+
+function clearClientCampusStock(item) {
+  if (!item || item.imageProvider !== 'campus-bank') return;
+  delete item.stockImage;
+  delete item.imageTitle;
+  delete item.imageCredit;
+  delete item.imageCreator;
+  delete item.imageLicense;
+  delete item.imageProvider;
+  delete item.imageSourceUrl;
+}
+
 function pickClientCampusPhoto(item = {}) {
   const lib = typeof CampusFallback === 'object' ? CampusFallback : null;
   if (!lib || typeof lib.pickCampusFallback !== 'function') return null;
@@ -3361,7 +3408,10 @@ function pickClientCampusPhoto(item = {}) {
     && Array.isArray(QUEBEC_UNIVERSITY_BACKGROUNDS))
     ? QUEBEC_UNIVERSITY_BACKGROUNDS
     : [];
-  return lib.pickCampusFallback(item, { universityPhotos: uni });
+  return lib.pickCampusFallback(item, {
+    universityPhotos: uni,
+    avoidUrls: backupAvoidUrls(item),
+  });
 }
 
 function isThematicStock(item, role = 'lead') {
@@ -3370,12 +3420,24 @@ function isThematicStock(item, role = 'lead') {
 
 function ensureCampusStock(item, { replace = false } = {}) {
   if (!item || typeof item !== 'object') return null;
-  if (!replace && item.stockImage && getCandidateImage(item.stockImage, { forThumb: true })) {
+  const existing = String(item.stockImage || '').trim();
+  const existingOk = existing && getCandidateImage(existing, { forThumb: true });
+  const existingIsCampus = item.imageProvider === 'campus-bank';
+
+  // Photo thématique : pas un repli campus, on ne la déduplique pas ici.
+  if (!replace && existingOk && !existingIsCampus) return item;
+
+  // Repli déjà à cet article, et pas pris par une autre carte.
+  if (!replace && existingOk && existingIsCampus && claimBackupPhoto(existing, item)) {
     return item;
   }
+
   const pick = pickClientCampusPhoto(item);
-  if (!pick?.url && !pick?.stockImage) return null;
-  const url = pick.stockImage || pick.url;
+  const url = String(pick?.stockImage || pick?.url || '').trim();
+  if (!url || !claimBackupPhoto(url, item)) {
+    if (existingIsCampus) clearClientCampusStock(item);
+    return null;
+  }
   const credit = pick.credit || pick.imageCreator || '';
   const license = pick.license || pick.imageLicense || 'CC';
   const link = pick.link || pick.imageSourceUrl || url;
@@ -4016,7 +4078,8 @@ function isUsableArticleImage(img, role) {
   // Dimensions seulement : un dessin éditorial (fond blanc, peu de traits) reste
   // une image d’article. Pas de QC « wallpaper » ici.
   // Vignettes : très tolérant (object-fit). Stock/campus passent sans ce filtre.
-  const [ratioMin, ratioMax] = isThumb ? [0.4, 4.0] : [0.95, 2.6];
+  // Aligné sur article-image-lib LEAD_MAX_RATIO (Cabana ≈ 4,36 acceptable).
+  const [ratioMin, ratioMax] = isThumb ? [0.4, 4.8] : [0.95, 4.8];
   return (
     width >= min.width
     && height >= min.height

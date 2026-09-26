@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v891",
+    "cache": "radar-shell-v892",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -23,13 +23,13 @@
       "quebec-nations-backgrounds-data.js": "4d9494a0abb84d04",
       "quebec-university-backgrounds-data.js": "4ee2de6dbb6ede81",
       "radar-lifecycle.js": "e715a85b6cf07561",
-      "radar-news.js": "88bb965e26b889b1",
+      "radar-news.js": "4dd991b235ae4232",
       "radar-sports-cta.js": "3ddfc0c55209aa25",
       "radar-state.js": "15e977a274b2b62a",
       "radar-tuner.js": "3f8f39af8869253c",
       "radar-utils.js": "4be00ce4c7faf134",
       "radar-weather.js": "bb392ff5d45baed7",
-      "scripts/campus-fallback-lib.js": "894051fca9244711",
+      "scripts/campus-fallback-lib.js": "4d5b9b03dddbcc63",
       "scripts/media-channels-lib.js": "c34f4336ae2caa03",
       "scripts/media-follow-store.js": "fc24810268eb10d8",
       "scripts/media-follow-ui.js": "dd5acb6d8596c6e6",
@@ -99,7 +99,7 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v266",
+    "cache": "sports-shell-v267",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "0e0df2c60f5900e3",
@@ -114,7 +114,7 @@
       "nav-shell.js": "97c086a5c1ef5bca",
       "player-sync.js": "36e84f1afaff7fcb",
       "radar-lifecycle.js": "e715a85b6cf07561",
-      "radar-news.js": "88bb965e26b889b1",
+      "radar-news.js": "4dd991b235ae4232",
       "radar-sports-cta.js": "3ddfc0c55209aa25",
       "radar-state.js": "15e977a274b2b62a",
       "radar-tuner.js": "3f8f39af8869253c",

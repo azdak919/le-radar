@@ -28,6 +28,7 @@ const {
   isCandidateImageUrl,
   listArticleImageCandidates,
   meetsArticleKeepSize,
+  meetsLeadDisplaySize,
   cardFitBonus,
   captionLooksLikeCampaignGraphic,
   compareLeadCandidates,
@@ -255,6 +256,14 @@ assert(!rejected.url, 'motif reject (logo Daily.png) toujours disqualifiant');
 assert(isBannerLikeRatio(1139, 500), '1139×500 (campagne UdeS) = bandeau');
 assert(!isBannerLikeRatio(1280, 720), '1280×720 (16:9) n’est pas un bandeau');
 assert(!isBannerLikeRatio(1200, 630), '1200×630 (og:image classique) n’est pas un bandeau');
+assert(
+  meetsLeadDisplaySize(8064, 1850),
+  'Georges-Cabana 8064×1850 (crop 3:2) reste une photo de une',
+);
+assert(
+  !meetsLeadDisplaySize(9600, 1800),
+  'ratio ≈ 5,33 : le crop ne garde plus la façade',
+);
 assert(cardFitBonus(1280, 720) > cardFitBonus(1139, 500), '16:9 cadre mieux que 2.28:1');
 assert(
   captionLooksLikeCampaignGraphic(

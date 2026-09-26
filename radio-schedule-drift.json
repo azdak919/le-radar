@@ -1,15 +1,17 @@
 {
-  "checkedAt": "2026-09-22T01:35:08.887Z",
+  "checkedAt": "2026-09-26T01:29:39.959Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
+    "stable": 4,
     "drift": [
       "choq"
     ],
     "overhaul": [],
-    "unreachable": []
+    "unreachable": [
+      "cjlo"
+    ]
   },
   "stations": [
     {
@@ -44,13 +46,13 @@
     },
     {
       "id": "cjlo",
-      "published": 376,
-      "fresh": 376,
+      "published": 377,
+      "fresh": 0,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
-      "status": "stable"
+      "status": "unreachable"
     },
     {
       "id": "cfak",
@@ -64,21 +66,14 @@
     },
     {
       "id": "choq",
-      "published": 19,
-      "fresh": 20,
+      "published": 21,
+      "fresh": 22,
       "added": [
-        "lun 20:00–21:00 Carte blanche",
-        "mer 13:00–13:45 Onde de CHOQ",
-        "jeu 13:00–13:45 Onde de CHOQ",
-        "ven 13:00–13:45 Onde de CHOQ"
+        "ven 14:00–15:00 Bitume"
       ],
-      "removed": [
-        "mer 13:00–14:00 Onde de CHOQ",
-        "jeu 13:00–14:00 Onde de CHOQ",
-        "ven 13:00–14:00 Onde de CHOQ"
-      ],
-      "changed": 7,
-      "ratio": 0.368,
+      "removed": [],
+      "changed": 1,
+      "ratio": 0.048,
       "status": "drift"
     }
   ]

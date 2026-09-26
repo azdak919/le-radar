@@ -3,7 +3,7 @@
   "source": "https://s1.rseq.ca/api/LeagueApi/GetLeagueList/",
   "schoolYearId": "89114c9a-bf46-4726-9345-85d8d4786f61",
   "schoolYear": "2026 - 2027",
-  "generated": "2026-09-03T08:00:10.539Z",
+  "generated": "2026-09-24T09:59:08.703Z",
   "leagueCount": 112,
   "leagues": [
     {
@@ -645,6 +645,17 @@
       "s1SportId": 9
     },
     {
+      "id": "925f3f12-3eb4-49ef-8479-891af559b304",
+      "sector": "universitaire",
+      "sport": "hockey",
+      "sportLabel": "Hockey",
+      "division": null,
+      "sex": "F",
+      "label": "Hockey universitaire féminin",
+      "usports": true,
+      "s1SportId": 9
+    },
+    {
       "id": "cfe8425a-7d16-48a1-a14b-07583a698043",
       "sector": "universitaire",
       "sport": "hockey",
@@ -1074,17 +1085,6 @@
       "s1SportId": 16
     },
     {
-      "id": "51caab24-24ed-4115-ae38-1121b560d797",
-      "sector": "collegial",
-      "sport": "volleyball",
-      "sportLabel": "Volleyball",
-      "division": "D3",
-      "sex": "F",
-      "label": "Volleyball collégial féminin D3",
-      "usports": false,
-      "s1SportId": 16
-    },
-    {
       "id": "3ee75d69-3d70-44cd-9f75-f3847ba89dcf",
       "sector": "collegial",
       "sport": "volleyball",
@@ -1096,7 +1096,7 @@
       "s1SportId": 16
     },
     {
-      "id": "79f97534-4a42-494b-9bb0-ad38a902ee98",
+      "id": "51caab24-24ed-4115-ae38-1121b560d797",
       "sector": "collegial",
       "sport": "volleyball",
       "sportLabel": "Volleyball",

@@ -1,35 +1,49 @@
 {
-  "updated": "2026-09-22T01:02:12.196Z",
+  "updated": "2026-09-26T07:47:49.472Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
-  "cited": 123,
-  "pending": 11,
+  "cited": 120,
+  "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 3,
-  "citedNew": 3,
-  "fallbackNew": 11,
+  "checked": 12,
+  "updatedCount": 5,
+  "citedNew": 4,
+  "fallbackNew": 8,
   "samples": [
     {
-      "title": "McGill’s offence dominates in a bitter homecoming for the Concordia Stingers",
+      "title": "Kicking off the Montreal International Black Film Festival",
       "source": "The Link",
-      "credit": "Photo : Nicolas Tremblay",
+      "credit": "Illustration: Aia Segal",
       "cited": true,
-      "method": "figcaption"
+      "method": "figcaption-trailing"
     },
     {
-      "title": "Activists urge party leaders to take clear actions",
-      "source": "The Link",
-      "credit": "Photo : Azel-Hana Brunet",
-      "cited": true,
-      "method": "figcaption"
-    },
-    {
-      "title": "L’industrie maritime : « un moteur économique »",
+      "title": "Le bilan mitigé de la chasse à la grue au Saguenay",
       "source": "La Pige",
-      "credit": "Photo : Elsa Pierre",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
       "cited": true,
       "method": "body-line"
     }

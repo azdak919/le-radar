@@ -651,6 +651,13 @@ const LEAD_MIN_PIXELS = 320000;
 const FEATURE_MIN_WIDTH = 640;
 const FEATURE_MIN_HEIGHT = 360;
 const FEATURE_MIN_PIXELS = 240000;
+/**
+ * Plafond largeur/hauteur d’une photo de une (crop 3:2).
+ * Pavillon Georges-Cabana, Uncivil Fire, 8064×1850 ≈ 4,36 : le centre du
+ * panorama reste une façade lisible (unes Collectif, 21 sept. 2026).
+ * Au-delà, le crop ne garde plus le bâtiment.
+ */
+const LEAD_MAX_RATIO = 4.8;
 
 function meetsLeadDisplaySize(width = 0, height = 0) {
   const ratio = width / Math.max(height, 1);
@@ -660,7 +667,7 @@ function meetsLeadDisplaySize(width = 0, height = 0) {
     && height >= LEAD_MIN_HEIGHT
     && pixels >= LEAD_MIN_PIXELS
     && ratio >= 0.95
-    && ratio <= 2.6
+    && ratio <= LEAD_MAX_RATIO
   );
 }
 
@@ -672,7 +679,7 @@ function meetsFeatureDisplaySize(width = 0, height = 0) {
     && height >= FEATURE_MIN_HEIGHT
     && pixels >= FEATURE_MIN_PIXELS
     && ratio >= 0.95
-    && ratio <= 2.6
+    && ratio <= LEAD_MAX_RATIO
   );
 }
 
@@ -693,7 +700,7 @@ function meetsArticleKeepSize(width = 0, height = 0) {
     && height >= ARTICLE_KEEP_MIN_HEIGHT
     && width * height >= ARTICLE_KEEP_MIN_PIXELS
     && ratio >= 0.9
-    && ratio <= 2.6
+    && ratio <= LEAD_MAX_RATIO
   );
 }
 
@@ -928,7 +935,7 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     if (dims && meetsArticleKeepSize(dims.width, dims.height)) {
       return { url, width: dims.width, height: dims.height, source: 'probe-editorial', leadReady: true };
     }
-    // Feature / vignette OK mais pas hero (panorama trop large, etc.)
+    // Sous le plafond une (LEAD_MAX_RATIO) : feature seulement.
     if (dims && meetsFeatureDisplaySize(dims.width, dims.height)) {
       return { url, width: dims.width, height: dims.height, source: 'probe-feature', leadReady: false };
     }
@@ -1028,6 +1035,7 @@ module.exports = {
   LEAD_MIN_WIDTH,
   LEAD_MIN_HEIGHT,
   LEAD_MIN_PIXELS,
+  LEAD_MAX_RATIO,
   FEATURE_MIN_WIDTH,
   FEATURE_MIN_HEIGHT,
   FEATURE_MIN_PIXELS,
