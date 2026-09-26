@@ -193,6 +193,12 @@ assert.match(manifest, /android\.permission\.INTERNET/);
 assert.doesNotMatch(manifest, /ACCESS_FINE_LOCATION|CAMERA|RECORD_AUDIO|POST_NOTIFICATIONS|AD_ID/);
 assert.doesNotMatch(read('android/build.gradle'), /google-services|com\.google\.gms/);
 assert.doesNotMatch(read('android/app/build.gradle'), /google-services|com\.google\.gms/);
+// F-Droid : signature optionnelle. Sans keystore.properties, assembleRelease sort un APK non signé.
+const appGradle = read('android/app/build.gradle');
+assert.match(appGradle, /if \(keystorePropertiesFile\.exists\(\)\) \{\s*signingConfigs \{/);
+assert.match(appGradle, /if \(keystorePropertiesFile\.exists\(\)\) \{\s*signingConfig signingConfigs\.release/);
+assert.equal(existsSync(join(root, 'fastlane/metadata/android/en-US/short_description.txt')), true);
+assert.equal(existsSync(join(root, `fastlane/metadata/android/en-US/changelogs/${appGradle.match(/versionCode (\d+)/)[1]}.txt`)), true);
 assert.match(manifest, /usesCleartextTraffic="false"/);
 assert.match(manifest, /pathPrefix="\/article"/);
 const plist = read('ios/App/App/Info.plist');
