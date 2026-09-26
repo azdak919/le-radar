@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-26T20:51:34.615Z",
+  "updated": "2026-09-26T21:21:52.015Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
@@ -7,9 +7,9 @@
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 8,
-  "updatedCount": 1,
-  "citedNew": 0,
+  "checked": 12,
+  "updatedCount": 5,
+  "citedNew": 4,
   "fallbackNew": 8,
   "samples": [
     {
@@ -18,6 +18,34 @@
       "credit": "Crédit photo : La Pige",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Victoire de l’AFD en Saxe-Anhalt",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
