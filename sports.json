@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-26T15:02:26.897Z",
-  "fetchedAt": "2026-09-26T15:02:26.897Z",
+  "updated": "2026-09-26T15:43:54.453Z",
+  "fetchedAt": "2026-09-26T15:43:54.453Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-26T15:02:26.897Z"
+    "referenceDate": "2026-09-26T15:43:54.453Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -85,11 +85,6 @@
       "label": "Hockey universitaire",
       "error": "Cloudflare challenge HTTP 403 https://universitaire.rseqhockey.com/fr",
       "blocked": true
-    },
-    {
-      "leagueId": "campus-uqac",
-      "label": "UQAC Inuk events",
-      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -43678,7 +43673,8 @@
           "gameId": "aaecb6c3-d706-4c1e-8219-b63bb328c972",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=aaecb6c3-d706-4c1e-8219-b63bb328c972",
           "opponentFullName": "Cégep de Marie-Victorin",
-          "opponentRegistryId": "marie-victorin"
+          "opponentRegistryId": "marie-victorin",
+          "live": true
         },
         {
           "date": "2026-10-07",
@@ -43745,6 +43741,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=aaecb6c3-d706-4c1e-8219-b63bb328c972",
         "opponentFullName": "Cégep de Marie-Victorin",
         "opponentRegistryId": "marie-victorin",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -44071,7 +44068,8 @@
           "gameId": "aaecb6c3-d706-4c1e-8219-b63bb328c972",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=aaecb6c3-d706-4c1e-8219-b63bb328c972",
           "opponentFullName": "Cégep régional de Lanaudière à Joliette",
-          "opponentRegistryId": "joliette"
+          "opponentRegistryId": "joliette",
+          "live": true
         },
         {
           "date": "2026-10-03",
@@ -44166,6 +44164,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=aaecb6c3-d706-4c1e-8219-b63bb328c972",
         "opponentFullName": "Cégep régional de Lanaudière à Joliette",
         "opponentRegistryId": "joliette",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -66607,6 +66606,23 @@
           "priorSeason": false
         },
         {
+          "date": "2026-09-26",
+          "time": "11:00",
+          "opponent": "Victoriaville",
+          "opponentCode": "VIC",
+          "home": true,
+          "scoreFor": 0,
+          "scoreAgainst": 24,
+          "result": "L",
+          "sport": "rugby",
+          "competition": "Rugby collégial masculin",
+          "gameId": "890962b2-7166-43a3-b71c-522fd9d8c53b",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=890962b2-7166-43a3-b71c-522fd9d8c53b",
+          "opponentFullName": "Cégep de Victoriaville",
+          "opponentRegistryId": "victoriaville",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-13",
           "time": "10:00",
           "opponent": "Sainte-Foy",
@@ -66749,10 +66765,10 @@
       },
       "record": {
         "wins": 2,
-        "losses": 2,
+        "losses": 3,
         "draws": 0,
-        "played": 4,
-        "label": "2-2"
+        "played": 5,
+        "label": "2-3"
       },
       "source": "rseq-s1",
       "priority": 8,
@@ -66876,7 +66892,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=265d84d0-af05-4fed-ad37-9048b25653f2",
           "opponentFullName": "Cégep de Sainte-Foy",
           "opponentNickname": "Géants",
-          "opponentRegistryId": "sainte-foy"
+          "opponentRegistryId": "sainte-foy",
+          "live": true
         },
         {
           "date": "2026-09-26",
@@ -66945,6 +66962,7 @@
         "opponentFullName": "Cégep de Sainte-Foy",
         "opponentNickname": "Géants",
         "opponentRegistryId": "sainte-foy",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -67282,7 +67300,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=265d84d0-af05-4fed-ad37-9048b25653f2",
           "opponentFullName": "Cégep Limoilou",
           "opponentNickname": "Titans",
-          "opponentRegistryId": "limoilou"
+          "opponentRegistryId": "limoilou",
+          "live": true
         },
         {
           "date": "2026-09-26",
@@ -67352,6 +67371,7 @@
         "opponentFullName": "Cégep Limoilou",
         "opponentNickname": "Titans",
         "opponentRegistryId": "limoilou",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -67398,6 +67418,24 @@
           "opponentFullName": "Cégep Limoilou",
           "opponentNickname": "Titans",
           "opponentRegistryId": "limoilou",
+          "priorSeason": false
+        },
+        {
+          "date": "2026-09-26",
+          "time": "11:00",
+          "opponent": "Garneau",
+          "opponentCode": "GAR",
+          "home": false,
+          "scoreFor": 24,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "rugby",
+          "competition": "Rugby collégial masculin",
+          "gameId": "890962b2-7166-43a3-b71c-522fd9d8c53b",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=890962b2-7166-43a3-b71c-522fd9d8c53b",
+          "opponentFullName": "Cégep Garneau",
+          "opponentNickname": "Boomerang",
+          "opponentRegistryId": "garneau",
           "priorSeason": false
         },
         {
@@ -67545,11 +67583,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 4,
+        "wins": 5,
         "losses": 0,
         "draws": 0,
-        "played": 4,
-        "label": "4-0"
+        "played": 5,
+        "label": "5-0"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -104016,7 +104054,8 @@
           "gameId": "1d79a723-e524-4019-9abc-ffdd4ae3e9a2",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1d79a723-e524-4019-9abc-ffdd4ae3e9a2",
           "opponentFullName": "Cégep de Valleyfield",
-          "opponentRegistryId": "valleyfield"
+          "opponentRegistryId": "valleyfield",
+          "live": true
         },
         {
           "date": "2026-10-17",
@@ -104209,7 +104248,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=975992ba-14f6-4a27-8a9a-0479256c4f91",
           "opponentFullName": "Collège Montmorency",
           "opponentNickname": "Nomades",
-          "opponentRegistryId": "montmorency"
+          "opponentRegistryId": "montmorency",
+          "live": true
         },
         {
           "date": "2026-09-26",
@@ -104372,6 +104412,7 @@
         "opponentFullName": "Collège Montmorency",
         "opponentNickname": "Nomades",
         "opponentRegistryId": "montmorency",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -104826,7 +104867,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=975992ba-14f6-4a27-8a9a-0479256c4f91",
           "opponentFullName": "Cégep Édouard-Montpetit",
           "opponentNickname": "Cougars",
-          "opponentRegistryId": "edouard-montpetit"
+          "opponentRegistryId": "edouard-montpetit",
+          "live": true
         },
         {
           "date": "2026-10-16",
@@ -104988,6 +105030,7 @@
         "opponentFullName": "Cégep Édouard-Montpetit",
         "opponentNickname": "Cougars",
         "opponentRegistryId": "edouard-montpetit",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -105648,7 +105691,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1d79a723-e524-4019-9abc-ffdd4ae3e9a2",
           "opponentFullName": "Dawson College",
           "opponentNickname": "Blues",
-          "opponentRegistryId": "dawson"
+          "opponentRegistryId": "dawson",
+          "live": true
         },
         {
           "date": "2026-09-26",
@@ -105811,6 +105855,7 @@
         "opponentFullName": "Dawson College",
         "opponentNickname": "Blues",
         "opponentRegistryId": "dawson",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
