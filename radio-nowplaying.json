@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-09-26T21:55:02.384Z",
+  "updatedAt": "2026-09-26T22:48:13.025Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Football du Rouge et Or",
-        "source": "schedule",
+        "source": "api-live",
         "start": "18:30",
         "end": "22:30",
         "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
       },
+      "next": {
+        "title": "Palmarès CHYZ",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "10:30",
+        "url": "https://chyz.ca/emission/palmares-chyz/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Football du Rouge et Or",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T21:54:34.584Z"
+      "checkedAt": "2026-09-26T22:47:15.729Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T21:54:36.481Z"
+      "checkedAt": "2026-09-26T22:47:17.196Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T21:54:39.246Z"
+      "checkedAt": "2026-09-26T22:47:19.636Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mo' Ritmo Radio",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
-      },
-      "next": {
         "title": "The Limelight",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/the-limelight"
       },
+      "next": {
+        "title": "Screamers",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/screamers"
+      },
       "track": "",
-      "showTitle": "Mo' Ritmo Radio",
+      "showTitle": "The Limelight",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T21:54:54.519Z"
+      "checkedAt": "2026-09-26T22:47:54.231Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T21:54:56.130Z"
+      "checkedAt": "2026-09-26T22:47:55.054Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +141,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Mitski — The Only Heartbreaker",
+      "track": "Nissa Seych — On danse",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -142,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T21:55:02.033Z"
+      "checkedAt": "2026-09-26T22:48:12.675Z"
     }
   }
 }
