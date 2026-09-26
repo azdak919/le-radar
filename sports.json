@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-26T01:11:09.036Z",
-  "fetchedAt": "2026-09-26T01:11:09.036Z",
+  "updated": "2026-09-26T01:41:30.389Z",
+  "fetchedAt": "2026-09-26T01:41:30.389Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-26T01:11:09.037Z"
+    "referenceDate": "2026-09-26T01:41:30.390Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -102630,23 +102630,44 @@
       "division": "D2",
       "usports": false,
       "leagueLabel": "Volleyball collégial féminin D2",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
+      "results": [
         {
           "date": "2026-09-25",
           "time": "19:45",
           "opponent": "Bois-de-Boulogne",
           "opponentCode": "BDB",
           "home": false,
+          "scoreFor": 2,
+          "scoreAgainst": 1,
+          "result": "W",
           "sport": "volleyball",
           "competition": "Volleyball collégial féminin D2",
           "gameId": "2fea1ef4-a369-4694-ab06-eea9136eb584",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2fea1ef4-a369-4694-ab06-eea9136eb584",
           "opponentFullName": "Collège de Bois-de-Boulogne",
           "opponentRegistryId": "bois-de-boulogne",
-          "live": true
-        },
+          "priorSeason": false
+        }
+      ],
+      "lastGame": {
+        "date": "2026-09-25",
+        "time": "19:45",
+        "opponent": "Bois-de-Boulogne",
+        "opponentCode": "BDB",
+        "home": false,
+        "scoreFor": 2,
+        "scoreAgainst": 1,
+        "result": "W",
+        "sport": "volleyball",
+        "competition": "Volleyball collégial féminin D2",
+        "gameId": "2fea1ef4-a369-4694-ab06-eea9136eb584",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2fea1ef4-a369-4694-ab06-eea9136eb584",
+        "opponentFullName": "Collège de Bois-de-Boulogne",
+        "opponentRegistryId": "bois-de-boulogne",
+        "priorSeason": false,
+        "opponentSector": "collegial"
+      },
+      "nextGames": [
         {
           "date": "2026-10-17",
           "time": "14:15",
@@ -102794,34 +102815,49 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c64fa5d4-7bff-4f38-84a0-b42e59a91173",
           "opponentFullName": "Collège Lionel-Groulx",
           "opponentRegistryId": "lionel-groulx"
+        },
+        {
+          "date": "2027-01-23",
+          "time": "15:30",
+          "opponent": "Saint-Jean",
+          "opponentCode": "SJR",
+          "home": false,
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D2",
+          "gameId": "ca62183f-7b60-49f4-a2ac-99d837ba89b6",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ca62183f-7b60-49f4-a2ac-99d837ba89b6",
+          "opponentFullName": "Cégep Saint-Jean-sur-Richelieu",
+          "opponentNickname": "Dragons",
+          "opponentRegistryId": "saint-jean-sur-richelieu"
         }
       ],
       "nextGame": {
-        "date": "2026-09-25",
-        "time": "19:45",
-        "opponent": "Bois-de-Boulogne",
-        "opponentCode": "BDB",
-        "home": false,
+        "date": "2026-10-17",
+        "time": "14:15",
+        "opponent": "Saint-Jean",
+        "opponentCode": "SJR",
+        "home": true,
         "sport": "volleyball",
         "competition": "Volleyball collégial féminin D2",
-        "gameId": "2fea1ef4-a369-4694-ab06-eea9136eb584",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2fea1ef4-a369-4694-ab06-eea9136eb584",
-        "opponentFullName": "Collège de Bois-de-Boulogne",
-        "opponentRegistryId": "bois-de-boulogne",
-        "live": true,
+        "gameId": "6f8563db-df6f-40f9-a26d-4ee46ed43d63",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6f8563db-df6f-40f9-a26d-4ee46ed43d63",
+        "opponentFullName": "Cégep Saint-Jean-sur-Richelieu",
+        "opponentNickname": "Dragons",
+        "opponentRegistryId": "saint-jean-sur-richelieu",
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
         "draws": 0,
-        "played": 0,
-        "label": "0-0"
+        "played": 1,
+        "label": "1-0"
       },
       "source": "rseq-s1",
       "priority": 20,
       "fullName": "Collège Ahuntsic",
-      "registryId": "ahuntsic"
+      "registryId": "ahuntsic",
+      "lastGamePriorSeason": false
     },
     "collegial:volleyball:beb8b2c0-e453-4553-a003-62e120e6e9db:e720d48c-91c5-4e9f-bc7a-79fe3d0ce67f": {
       "id": "collegial:volleyball:beb8b2c0-e453-4553-a003-62e120e6e9db:e720d48c-91c5-4e9f-bc7a-79fe3d0ce67f",
@@ -102854,6 +102890,23 @@
           "opponentNickname": "Barons",
           "opponentRegistryId": "champlain-st-lambert",
           "priorSeason": false
+        },
+        {
+          "date": "2026-09-25",
+          "time": "19:45",
+          "opponent": "Ahuntsic",
+          "opponentCode": "AHU",
+          "home": true,
+          "scoreFor": 1,
+          "scoreAgainst": 2,
+          "result": "L",
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D2",
+          "gameId": "2fea1ef4-a369-4694-ab06-eea9136eb584",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2fea1ef4-a369-4694-ab06-eea9136eb584",
+          "opponentFullName": "Collège Ahuntsic",
+          "opponentRegistryId": "ahuntsic",
+          "priorSeason": false
         }
       ],
       "lastGame": {
@@ -102876,20 +102929,6 @@
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-09-25",
-          "time": "19:45",
-          "opponent": "Ahuntsic",
-          "opponentCode": "AHU",
-          "home": true,
-          "sport": "volleyball",
-          "competition": "Volleyball collégial féminin D2",
-          "gameId": "2fea1ef4-a369-4694-ab06-eea9136eb584",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2fea1ef4-a369-4694-ab06-eea9136eb584",
-          "opponentFullName": "Collège Ahuntsic",
-          "opponentRegistryId": "ahuntsic",
-          "live": true
-        },
         {
           "date": "2026-10-16",
           "time": "18:30",
@@ -103037,29 +103076,43 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ea01a1d4-20fe-45a3-ba4e-eee166e1acd4",
           "opponentFullName": "Cégep de l'Outaouais",
           "opponentRegistryId": "outaouais"
+        },
+        {
+          "date": "2027-01-31",
+          "time": "10:30",
+          "opponent": "Saint-Jean",
+          "opponentCode": "SJR",
+          "home": false,
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D2",
+          "gameId": "e75345d5-59dc-4de6-899a-39c1ce97a57c",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e75345d5-59dc-4de6-899a-39c1ce97a57c",
+          "opponentFullName": "Cégep Saint-Jean-sur-Richelieu",
+          "opponentNickname": "Dragons",
+          "opponentRegistryId": "saint-jean-sur-richelieu"
         }
       ],
       "nextGame": {
-        "date": "2026-09-25",
-        "time": "19:45",
-        "opponent": "Ahuntsic",
-        "opponentCode": "AHU",
+        "date": "2026-10-16",
+        "time": "18:30",
+        "opponent": "Montmorency",
+        "opponentCode": "MON",
         "home": true,
         "sport": "volleyball",
         "competition": "Volleyball collégial féminin D2",
-        "gameId": "2fea1ef4-a369-4694-ab06-eea9136eb584",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2fea1ef4-a369-4694-ab06-eea9136eb584",
-        "opponentFullName": "Collège Ahuntsic",
-        "opponentRegistryId": "ahuntsic",
-        "live": true,
+        "gameId": "0bfe4a34-bce3-4511-aecd-ea3749e08379",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0bfe4a34-bce3-4511-aecd-ea3749e08379",
+        "opponentFullName": "Collège Montmorency",
+        "opponentNickname": "Nomades",
+        "opponentRegistryId": "montmorency",
         "opponentSector": "collegial"
       },
       "record": {
         "wins": 0,
-        "losses": 1,
+        "losses": 2,
         "draws": 0,
-        "played": 1,
-        "label": "0-1"
+        "played": 2,
+        "label": "0-2"
       },
       "source": "rseq-s1",
       "priority": 23,
