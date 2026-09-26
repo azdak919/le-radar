@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-26T07:38:36.001Z",
+  "updatedAt": "2026-09-26T11:29:28.091Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T07:38:07.187Z"
+      "checkedAt": "2026-09-26T11:28:37.518Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "Voix tropicale",
         "source": "schedule",
         "start": "05:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/voix-tropicale"
       },
+      "next": {
+        "title": "Elkin Polo El Show",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/elkin-polo-el-show"
+      },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "Voix tropicale",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T07:38:09.184Z"
+      "checkedAt": "2026-09-26T11:28:39.253Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Soca Sessions",
+        "title": "Quebec Acadie",
         "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
+        "start": "06:00",
+        "end": "10:00"
       },
       "next": {
-        "title": "The Mash Time Show",
+        "title": "Making Contact/Anything Goes",
         "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
+        "start": "10:00",
+        "end": "10:30"
       },
       "track": "",
-      "showTitle": "Soca Sessions",
+      "showTitle": "Quebec Acadie",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,54 +74,54 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T07:38:12.192Z"
+      "checkedAt": "2026-09-26T11:28:42.783Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "World-Up'",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
       },
+      "next": {
+        "title": "The Live Wire Show",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/the-live-wire-show"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "World-Up'",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T07:38:27.535Z"
+      "checkedAt": "2026-09-26T11:29:17.640Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
+      "current": null,
+      "next": {
         "title": "Les nuits CFAK",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
-        "end": "07:00"
+        "end": "21:00"
       },
-      "next": null,
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T07:38:29.015Z"
+      "checkedAt": "2026-09-26T11:29:18.871Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-26T07:38:35.650Z"
+      "checkedAt": "2026-09-26T11:29:27.741Z"
     }
   }
 }
