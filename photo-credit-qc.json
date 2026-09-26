@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-26T11:47:36.937Z",
+  "updated": "2026-09-26T13:54:06.961Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
@@ -7,9 +7,9 @@
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 8,
-  "updatedCount": 1,
-  "citedNew": 0,
+  "checked": 9,
+  "updatedCount": 2,
+  "citedNew": 1,
   "fallbackNew": 8,
   "samples": [
     {
@@ -18,6 +18,13 @@
       "credit": "Crédit photo : La Pige",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Victoire de l’AFD en Saxe-Anhalt",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
     }
   ]
 }
