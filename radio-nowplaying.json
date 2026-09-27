@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-27T19:31:07.786Z",
+  "updatedAt": "2026-09-27T22:08:35.491Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Remparts de Québec",
-        "source": "api-live",
-        "start": "14:45",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Le Monde d'Erik Arsenault - 10 ans",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "19:00",
         "end": "21:00",
         "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
       },
       "track": "",
-      "showTitle": "Remparts de Québec",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-27T19:30:37.762Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Le char de marge",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/le-char-de-marge"
-      },
-      "next": {
-        "title": "La Grapevine",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/la-grapevine"
-      },
-      "track": "",
-      "showTitle": "Le char de marge",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T19:30:39.562Z"
+      "checkedAt": "2026-09-27T22:07:50.341Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Symbiose",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/symbiose"
+      },
+      "next": {
+        "title": "London café (reprise)",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:30",
+        "url": "https://cism893.ca/emissions/london-cafe"
+      },
+      "track": "",
+      "showTitle": "Symbiose",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-27T22:07:51.784Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Magic Roundabout",
+        "title": "Desi Beats",
         "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "next": {
-        "title": "Bhum Bhum Time",
+        "title": "Bluegrass Rambling",
         "source": "api-live",
-        "start": "16:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "The Magic Roundabout",
+      "showTitle": "Desi Beats",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T19:30:44.018Z"
+      "checkedAt": "2026-09-27T22:07:54.151Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Fukubukuro",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/fukubukuro"
+        "title": "Bills Country and Western Favourites",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
       },
       "next": {
-        "title": "Grade A Explosives",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/grade-a-explosives"
+        "title": "No Boundaries",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/no-boundaries"
       },
       "track": "",
-      "showTitle": "Fukubukuro",
+      "showTitle": "Bills Country and Western Favourites",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T19:30:47.481Z"
+      "checkedAt": "2026-09-27T22:08:16.452Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,20 +126,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T19:30:48.625Z"
+      "checkedAt": "2026-09-27T22:08:17.355Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Mutations",
+        "title": "Les rois de l'arène",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "mutations"
+        "start": "05:00",
+        "end": "07:00",
+        "slug": "les-rois-de-larene"
       },
-      "track": "Corridor — Topographe",
+      "track": "Régis Niquay — Nin Ka Totoman",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T19:31:07.435Z"
+      "checkedAt": "2026-09-27T22:08:35.140Z"
     }
   }
 }
