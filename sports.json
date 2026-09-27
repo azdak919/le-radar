@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-27T15:42:23.547Z",
-  "fetchedAt": "2026-09-27T15:42:23.547Z",
+  "updated": "2026-09-27T15:45:53.441Z",
+  "fetchedAt": "2026-09-27T15:45:53.441Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-27T15:42:23.548Z"
+    "referenceDate": "2026-09-27T15:45:53.441Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -85,11 +85,6 @@
       "label": "Hockey universitaire",
       "error": "Cloudflare challenge HTTP 403 https://universitaire.rseqhockey.com/fr",
       "blocked": true
-    },
-    {
-      "leagueId": "campus-uqac",
-      "label": "UQAC Inuk events",
-      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -7339,7 +7334,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=03f9615e-941b-4e58-8837-72664e3eb071",
           "opponentFullName": "Cégep Limoilou",
           "opponentNickname": "Titans",
-          "opponentRegistryId": "limoilou"
+          "opponentRegistryId": "limoilou",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -7451,6 +7447,7 @@
         "opponentFullName": "Cégep Limoilou",
         "opponentNickname": "Titans",
         "opponentRegistryId": "limoilou",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -7584,7 +7581,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=03f9615e-941b-4e58-8837-72664e3eb071",
           "opponentFullName": "John Abbott College",
           "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott"
+          "opponentRegistryId": "john-abbott",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -7694,6 +7692,7 @@
         "opponentFullName": "John Abbott College",
         "opponentNickname": "Islanders",
         "opponentRegistryId": "john-abbott",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -38354,7 +38353,8 @@
           "gameId": "5b510397-8177-42ed-82d5-962df4ccb9b1",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5b510397-8177-42ed-82d5-962df4ccb9b1",
           "opponentFullName": "Séminaire de Sherbrooke",
-          "opponentRegistryId": "seminaire-de-sherbrooke"
+          "opponentRegistryId": "seminaire-de-sherbrooke",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -38434,6 +38434,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5b510397-8177-42ed-82d5-962df4ccb9b1",
         "opponentFullName": "Séminaire de Sherbrooke",
         "opponentRegistryId": "seminaire-de-sherbrooke",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -38562,7 +38563,8 @@
           "gameId": "5b510397-8177-42ed-82d5-962df4ccb9b1",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5b510397-8177-42ed-82d5-962df4ccb9b1",
           "opponentFullName": "Campus Notre-Dame-de-Foy",
-          "opponentRegistryId": "notre-dame-foy"
+          "opponentRegistryId": "notre-dame-foy",
+          "live": true
         },
         {
           "date": "2026-09-27",
@@ -38642,6 +38644,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5b510397-8177-42ed-82d5-962df4ccb9b1",
         "opponentFullName": "Campus Notre-Dame-de-Foy",
         "opponentRegistryId": "notre-dame-foy",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -66203,7 +66206,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9e158e99-354e-43be-80e4-1583a5b538da",
           "opponentFullName": "Vanier College",
           "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "vanier"
+          "opponentRegistryId": "vanier",
+          "live": true
         },
         {
           "date": "2026-10-04",
@@ -66261,6 +66265,7 @@
         "opponentFullName": "Vanier College",
         "opponentNickname": "Cheetahs",
         "opponentRegistryId": "vanier",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -66503,7 +66508,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9e158e99-354e-43be-80e4-1583a5b538da",
           "opponentFullName": "Dawson College",
           "opponentNickname": "Blues",
-          "opponentRegistryId": "dawson"
+          "opponentRegistryId": "dawson",
+          "live": true
         },
         {
           "date": "2026-10-02",
@@ -66561,6 +66567,7 @@
         "opponentFullName": "Dawson College",
         "opponentNickname": "Blues",
         "opponentRegistryId": "dawson",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -75127,7 +75134,8 @@
           "gameId": "76ac9718-a7e7-44a6-8d97-24ac9f00a668",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=76ac9718-a7e7-44a6-8d97-24ac9f00a668",
           "opponentFullName": "Cégep de Thetford",
-          "opponentRegistryId": "thetford"
+          "opponentRegistryId": "thetford",
+          "live": true
         },
         {
           "date": "2026-10-03",
@@ -75194,6 +75202,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=76ac9718-a7e7-44a6-8d97-24ac9f00a668",
         "opponentFullName": "Cégep de Thetford",
         "opponentRegistryId": "thetford",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -75322,7 +75331,8 @@
           "gameId": "76ac9718-a7e7-44a6-8d97-24ac9f00a668",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=76ac9718-a7e7-44a6-8d97-24ac9f00a668",
           "opponentFullName": "Champlain College St. Lawrence",
-          "opponentRegistryId": "ch-st-lawrence"
+          "opponentRegistryId": "ch-st-lawrence",
+          "live": true
         },
         {
           "date": "2026-10-04",
@@ -75376,6 +75386,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=76ac9718-a7e7-44a6-8d97-24ac9f00a668",
         "opponentFullName": "Champlain College St. Lawrence",
         "opponentRegistryId": "ch-st-lawrence",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -76807,7 +76818,8 @@
           "gameId": "6a416973-dd31-4c13-9b5e-14eee5dbdbef",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6a416973-dd31-4c13-9b5e-14eee5dbdbef",
           "opponentFullName": "Cégep de Valleyfield",
-          "opponentRegistryId": "valleyfield"
+          "opponentRegistryId": "valleyfield",
+          "live": true
         },
         {
           "date": "2026-10-02",
@@ -76877,6 +76889,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6a416973-dd31-4c13-9b5e-14eee5dbdbef",
         "opponentFullName": "Cégep de Valleyfield",
         "opponentRegistryId": "valleyfield",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -77941,7 +77954,8 @@
           "gameId": "6a416973-dd31-4c13-9b5e-14eee5dbdbef",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6a416973-dd31-4c13-9b5e-14eee5dbdbef",
           "opponentFullName": "Collège de Bois-de-Boulogne",
-          "opponentRegistryId": "bois-de-boulogne"
+          "opponentRegistryId": "bois-de-boulogne",
+          "live": true
         },
         {
           "date": "2026-10-03",
@@ -77996,6 +78010,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6a416973-dd31-4c13-9b5e-14eee5dbdbef",
         "opponentFullName": "Collège de Bois-de-Boulogne",
         "opponentRegistryId": "bois-de-boulogne",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -82724,7 +82739,8 @@
           "gameId": "54a27e04-db87-4cf2-b755-6a0723a502fc",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=54a27e04-db87-4cf2-b755-6a0723a502fc",
           "opponentFullName": "Cégep de Thetford",
-          "opponentRegistryId": "thetford"
+          "opponentRegistryId": "thetford",
+          "live": true
         },
         {
           "date": "2026-10-04",
@@ -82778,6 +82794,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=54a27e04-db87-4cf2-b755-6a0723a502fc",
         "opponentFullName": "Cégep de Thetford",
         "opponentRegistryId": "thetford",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -83105,7 +83122,8 @@
           "gameId": "54a27e04-db87-4cf2-b755-6a0723a502fc",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=54a27e04-db87-4cf2-b755-6a0723a502fc",
           "opponentFullName": "Cégep de Rivière-du-Loup",
-          "opponentRegistryId": "riviere-du-loup"
+          "opponentRegistryId": "riviere-du-loup",
+          "live": true
         },
         {
           "date": "2026-10-10",
@@ -83146,6 +83164,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=54a27e04-db87-4cf2-b755-6a0723a502fc",
         "opponentFullName": "Cégep de Rivière-du-Loup",
         "opponentRegistryId": "riviere-du-loup",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
