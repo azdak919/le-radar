@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-27T08:07:07.188Z",
+  "updatedAt": "2026-09-27T11:21:23.195Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,86 +21,87 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T08:06:08.288Z"
+      "checkedAt": "2026-09-27T11:20:44.945Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "Genre de bleu",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/genre-de-bleu"
       },
+      "next": {
+        "title": "Par mots et par vaux",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
+      },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "Genre de bleu",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T08:06:09.739Z"
+      "checkedAt": "2026-09-27T11:20:46.454Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Utopia's Paradise",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "06:00"
-      },
-      "next": {
         "title": "Mind, Soul, & Spirit",
         "source": "api-live",
         "start": "06:00",
         "end": "09:00"
       },
-      "track": "Utopia",
-      "showTitle": "Utopia's Paradise",
+      "next": {
+        "title": "Latin Time",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "10:30"
+      },
+      "track": "",
+      "showTitle": "Mind, Soul, & Spirit",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T08:06:12.376Z"
+      "checkedAt": "2026-09-27T11:20:48.924Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Sun Ra, Sun Rise",
         "source": "schedule-live",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
       },
+      "next": {
+        "title": "The Gigi Brown Experience",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Sun Ra, Sun Rise",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T08:06:26.706Z"
+      "checkedAt": "2026-09-27T11:21:03.271Z"
     },
     "cfak": {
       "id": "cfak",
@@ -125,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T08:06:27.556Z"
+      "checkedAt": "2026-09-27T11:21:04.975Z"
     },
     "choq": {
       "id": "choq",
@@ -133,20 +134,20 @@
       "current": null,
       "next": {
         "title": "OPUS",
-        "source": "schedule",
+        "source": "api-live",
         "start": "12:00",
         "end": "13:00",
-        "url": "https://www.choq.ca/emissions/opus"
+        "slug": "opus"
       },
-      "track": "N NAO — Corps (feat. Lou-Adriane Cassidy)",
+      "track": "@ — Autosmile",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T08:07:06.838Z"
+      "checkedAt": "2026-09-27T11:21:22.844Z"
     }
   }
 }
