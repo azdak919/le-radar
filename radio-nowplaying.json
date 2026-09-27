@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-27T15:45:25.960Z",
+  "updatedAt": "2026-09-27T18:23:11.231Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Le Ré-Show : Deuxième Service",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
-      },
+      "current": null,
       "next": {
         "title": "Remparts de Québec",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "14:45",
         "end": "17:30",
         "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
       "track": "",
-      "showTitle": "Le Ré-Show : Deuxième Service",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-27T15:44:47.477Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Effets sonores",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/effets-sonores"
-      },
-      "next": {
-        "title": "Les sirènes",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/les-sirenes"
-      },
-      "track": "",
-      "showTitle": "Effets sonores",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T15:44:49.224Z"
+      "checkedAt": "2026-09-27T18:22:24.930Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Le char de marge",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
+      },
+      "next": {
+        "title": "La Grapevine",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/la-grapevine"
+      },
+      "track": "",
+      "showTitle": "Le char de marge",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-27T18:22:26.424Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Free Kick",
+        "title": "The Magic Roundabout",
         "source": "api-live",
-        "start": "11:00",
-        "end": "13:00"
+        "start": "14:00",
+        "end": "16:00"
       },
       "next": {
-        "title": "Modular Systems/Future Classics",
+        "title": "Bhum Bhum Time",
         "source": "api-live",
-        "start": "13:00",
-        "end": "14:00"
+        "start": "16:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Free Kick",
+      "showTitle": "The Magic Roundabout",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T15:44:51.903Z"
+      "checkedAt": "2026-09-27T18:22:29.147Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Rigged Sessions",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/rigged-sessions"
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "Brave Little Emo Girl",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
+        "title": "Fukubukuro",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/fukubukuro"
       },
       "track": "",
-      "showTitle": "Rigged Sessions",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T15:45:06.582Z"
+      "checkedAt": "2026-09-27T18:22:51.681Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,20 +126,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T15:45:07.573Z"
+      "checkedAt": "2026-09-27T18:22:53.229Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "OPUS",
+        "title": "Mutations",
         "source": "api-live",
-        "start": "12:00",
-        "end": "13:00",
-        "slug": "opus"
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "mutations"
       },
-      "track": "Daniel Isaiah — Long March to Your Grave",
+      "track": "Lydia Képinski — Harfang",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T15:45:25.609Z"
+      "checkedAt": "2026-09-27T18:23:10.880Z"
     }
   }
 }
