@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-09-27T18:23:11.231Z",
+  "updatedAt": "2026-09-27T19:31:07.786Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Remparts de Québec",
-        "source": "schedule",
+        "source": "api-live",
         "start": "14:45",
         "end": "17:30",
         "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
+      "next": {
+        "title": "Le Monde d'Erik Arsenault - 10 ans",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "21:00",
+        "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Remparts de Québec",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T18:22:24.930Z"
+      "checkedAt": "2026-09-27T19:30:37.762Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T18:22:26.424Z"
+      "checkedAt": "2026-09-27T19:30:39.562Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T18:22:29.147Z"
+      "checkedAt": "2026-09-27T19:30:44.018Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "Fukubukuro",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/fukubukuro"
       },
+      "next": {
+        "title": "Grade A Explosives",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/grade-a-explosives"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Fukubukuro",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T18:22:51.681Z"
+      "checkedAt": "2026-09-27T19:30:47.481Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T18:22:53.229Z"
+      "checkedAt": "2026-09-27T19:30:48.625Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Lydia Képinski — Harfang",
+      "track": "Corridor — Topographe",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T18:23:10.880Z"
+      "checkedAt": "2026-09-27T19:31:07.435Z"
     }
   }
 }
