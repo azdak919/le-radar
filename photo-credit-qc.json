@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-27T22:55:23.580Z",
+  "updated": "2026-09-27T23:13:26.867Z",
   "total": 188,
   "withImage": 176,
   "withCredit": 176,
@@ -7,9 +7,38 @@
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 8,
-  "updatedCount": 0,
-  "citedNew": 0,
+  "checked": 11,
+  "updatedCount": 4,
+  "citedNew": 3,
   "fallbackNew": 8,
-  "samples": []
+  "samples": [
+    {
+      "title": "Le bilan mitigé de la chasse à la grue au Saguenay",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
+    }
+  ]
 }
