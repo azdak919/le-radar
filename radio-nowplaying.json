@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-27T13:57:21.813Z",
+  "updatedAt": "2026-09-27T15:45:25.960Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Le Ré-Show : Deuxième Service",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+      },
       "next": {
-        "title": "Palmarès CHYZ",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
+        "title": "Remparts de Québec",
+        "source": "schedule-live",
+        "start": "14:45",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Le Ré-Show : Deuxième Service",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T13:56:41.226Z"
+      "checkedAt": "2026-09-27T15:44:47.477Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le 120e parallèle",
+        "title": "Effets sonores",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/le-120e-parallele"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/effets-sonores"
       },
       "next": {
-        "title": "Ya Raï",
+        "title": "Les sirènes",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/ya-rai"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/les-sirenes"
       },
       "track": "",
-      "showTitle": "Le 120e parallèle",
+      "showTitle": "Effets sonores",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T13:56:43.136Z"
+      "checkedAt": "2026-09-27T15:44:49.224Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Latin Time",
+        "title": "Free Kick",
         "source": "api-live",
-        "start": "09:00",
-        "end": "10:30"
+        "start": "11:00",
+        "end": "13:00"
       },
       "next": {
-        "title": "International Radio Report",
+        "title": "Modular Systems/Future Classics",
         "source": "api-live",
-        "start": "10:30",
-        "end": "11:00"
+        "start": "13:00",
+        "end": "14:00"
       },
       "track": "",
-      "showTitle": "Latin Time",
+      "showTitle": "Free Kick",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,35 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T13:56:46.119Z"
+      "checkedAt": "2026-09-27T15:44:51.903Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "REVC",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/revc"
-      },
-      "next": {
         "title": "Rigged Sessions",
         "source": "schedule-live",
         "start": "10:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/rigged-sessions"
       },
+      "next": {
+        "title": "Brave Little Emo Girl",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
+      },
       "track": "",
-      "showTitle": "REVC",
+      "showTitle": "Rigged Sessions",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T13:57:01.412Z"
+      "checkedAt": "2026-09-27T15:45:06.582Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T13:57:02.803Z"
+      "checkedAt": "2026-09-27T15:45:07.573Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +146,7 @@
         "end": "13:00",
         "slug": "opus"
       },
-      "track": "Siibii — Don't Wake Me Up",
+      "track": "Daniel Isaiah — Long March to Your Grave",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -148,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T13:57:21.463Z"
+      "checkedAt": "2026-09-27T15:45:25.609Z"
     }
   }
 }
