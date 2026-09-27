@@ -1,13 +1,11 @@
 {
-  "checkedAt": "2026-09-26T01:29:39.959Z",
+  "checkedAt": "2026-09-27T01:22:20.792Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 4,
-    "drift": [
-      "choq"
-    ],
+    "stable": 5,
+    "drift": [],
     "overhaul": [],
     "unreachable": [
       "cjlo"
@@ -66,15 +64,13 @@
     },
     {
       "id": "choq",
-      "published": 21,
+      "published": 22,
       "fresh": 22,
-      "added": [
-        "ven 14:00–15:00 Bitume"
-      ],
+      "added": [],
       "removed": [],
-      "changed": 1,
-      "ratio": 0.048,
-      "status": "drift"
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     }
   ]
 }
