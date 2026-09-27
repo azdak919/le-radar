@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-27T11:21:23.195Z",
+  "updatedAt": "2026-09-27T12:03:12.450Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T11:20:44.945Z"
+      "checkedAt": "2026-09-27T12:02:35.716Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Genre de bleu",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/genre-de-bleu"
-      },
-      "next": {
         "title": "Par mots et par vaux",
         "source": "schedule",
         "start": "08:00",
         "end": "09:00",
         "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
       },
+      "next": {
+        "title": "Le 120e parallèle",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/le-120e-parallele"
+      },
       "track": "",
-      "showTitle": "Genre de bleu",
+      "showTitle": "Par mots et par vaux",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T11:20:46.454Z"
+      "checkedAt": "2026-09-27T12:02:37.155Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T11:20:48.924Z"
+      "checkedAt": "2026-09-27T12:02:39.454Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Sun Ra, Sun Rise",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
-      },
-      "next": {
         "title": "The Gigi Brown Experience",
         "source": "schedule-live",
         "start": "08:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
       },
+      "next": {
+        "title": "REVC",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/revc"
+      },
       "track": "",
-      "showTitle": "Sun Ra, Sun Rise",
+      "showTitle": "The Gigi Brown Experience",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T11:21:03.271Z"
+      "checkedAt": "2026-09-27T12:02:53.589Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T11:21:04.975Z"
+      "checkedAt": "2026-09-27T12:02:54.430Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "13:00",
         "slug": "opus"
       },
-      "track": "@ — Autosmile",
+      "track": "Charlotte Adigéry & Bolis Pupul — Googoo Gaga",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T11:21:22.844Z"
+      "checkedAt": "2026-09-27T12:03:12.100Z"
     }
   }
 }
