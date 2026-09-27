@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-27T05:34:02.775Z",
+  "updatedAt": "2026-09-27T08:07:07.188Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,60 +21,59 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T05:33:23.339Z"
+      "checkedAt": "2026-09-27T08:06:08.288Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences (reprise)",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "02:00",
         "end": "07:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Genre de bleu",
+        "source": "schedule",
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/genre-de-bleu"
+      },
       "track": "",
-      "showTitle": "Basses fréquences (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T05:33:25.080Z"
+      "checkedAt": "2026-09-27T08:06:09.739Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "stereOphobic",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Utopia's Paradise",
         "source": "api-live",
         "start": "02:00",
         "end": "06:00"
       },
-      "track": "",
-      "showTitle": "stereOphobic",
+      "next": {
+        "title": "Mind, Soul, & Spirit",
+        "source": "api-live",
+        "start": "06:00",
+        "end": "09:00"
+      },
+      "track": "Utopia",
+      "showTitle": "Utopia's Paradise",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T05:33:28.298Z"
+      "checkedAt": "2026-09-27T08:06:12.376Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +100,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T05:33:43.562Z"
+      "checkedAt": "2026-09-27T08:06:26.706Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +125,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T05:33:44.357Z"
+      "checkedAt": "2026-09-27T08:06:27.556Z"
     },
     "choq": {
       "id": "choq",
@@ -134,20 +133,20 @@
       "current": null,
       "next": {
         "title": "OPUS",
-        "source": "api-live",
+        "source": "schedule",
         "start": "12:00",
         "end": "13:00",
-        "slug": "opus"
+        "url": "https://www.choq.ca/emissions/opus"
       },
-      "track": "FJORT — rott",
+      "track": "N NAO — Corps (feat. Lou-Adriane Cassidy)",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T05:34:02.424Z"
+      "checkedAt": "2026-09-27T08:07:06.838Z"
     }
   }
 }
