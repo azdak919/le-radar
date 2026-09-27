@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-27T22:08:35.491Z",
+  "updatedAt": "2026-09-27T22:47:38.597Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T22:07:50.341Z"
+      "checkedAt": "2026-09-27T22:47:11.181Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T22:07:51.784Z"
+      "checkedAt": "2026-09-27T22:47:12.745Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T22:07:54.151Z"
+      "checkedAt": "2026-09-27T22:47:15.888Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Bills Country and Western Favourites",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "18:00",
         "end": "19:00",
         "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
       },
       "next": {
         "title": "No Boundaries",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/no-boundaries"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "Bills Country and Western Favourites",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T22:08:16.452Z"
+      "checkedAt": "2026-09-27T22:47:18.636Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T22:08:17.355Z"
+      "checkedAt": "2026-09-27T22:47:20.256Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Régis Niquay — Nin Ka Totoman",
+      "track": "Olivia Ridgely — Lonely Planet",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-27T22:08:35.140Z"
+      "checkedAt": "2026-09-27T22:47:38.247Z"
     }
   }
 }
