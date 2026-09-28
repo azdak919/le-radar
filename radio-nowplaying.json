@@ -1,34 +1,27 @@
 {
-  "updatedAt": "2026-09-28T00:46:58.953Z",
+  "updatedAt": "2026-09-28T01:23:20.563Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Le Monde d'Erik Arsenault - 10 ans",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
-      },
+      "current": null,
       "next": {
         "title": "Lundi Indie",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "Le Monde d'Erik Arsenault - 10 ans",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T00:46:33.454Z"
+      "checkedAt": "2026-09-28T01:22:53.278Z"
     },
     "cism": {
       "id": "cism",
@@ -55,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T00:46:34.879Z"
+      "checkedAt": "2026-09-28T01:22:55.093Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Country Classics",
-        "source": "api-live",
-        "start": "20:00",
-        "end": "21:00"
-      },
-      "next": {
         "title": "Cha Cha In Blue",
         "source": "api-live",
         "start": "21:00",
         "end": "23:00"
       },
+      "next": {
+        "title": "Ill Groove Garden",
+        "source": "api-live",
+        "start": "23:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Country Classics",
+      "showTitle": "Cha Cha In Blue",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T00:46:37.339Z"
+      "checkedAt": "2026-09-28T01:22:58.201Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Towards A Common Horizon",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/towards-a-common-horizon"
-      },
-      "next": {
         "title": "Afro Archives",
         "source": "schedule-live",
         "start": "21:00",
         "end": "22:00",
         "url": "http://www.cjlo.com/shows/afro-archives"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "Towards A Common Horizon",
+      "showTitle": "Afro Archives",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T00:46:39.625Z"
+      "checkedAt": "2026-09-28T01:23:00.909Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "21:00"
-      },
-      "next": {
         "title": "Solénoïde",
         "source": "schedule-live",
         "start": "21:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:01",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Solénoïde",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T00:46:40.863Z"
+      "checkedAt": "2026-09-28T01:23:02.288Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Kaine Basquiat — Decolisse",
+      "track": "Allison Russell — Rainbows",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T00:46:58.603Z"
+      "checkedAt": "2026-09-28T01:23:20.213Z"
     }
   }
 }
