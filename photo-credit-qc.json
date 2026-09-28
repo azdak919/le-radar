@@ -1,51 +1,100 @@
 {
-  "updated": "2026-09-28T11:03:39.719Z",
+  "updated": "2026-09-28T17:50:16.998Z",
   "total": 188,
-  "withImage": 176,
-  "withCredit": 176,
-  "cited": 120,
+  "withImage": 177,
+  "withCredit": 177,
+  "cited": 123,
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 12,
-  "updatedCount": 5,
-  "citedNew": 4,
-  "fallbackNew": 8,
+  "checked": 26,
+  "updatedCount": 19,
+  "citedNew": 16,
+  "fallbackNew": 10,
   "samples": [
     {
-      "title": "Le bilan mitigé de la chasse à la grue au Saguenay",
+      "title": "Lee s’illustre, les Sags l’emportent",
       "source": "La Pige",
-      "credit": "Crédit photo : La Pige",
+      "credit": "Photo : Olivier Dubois",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Un candidat pas comme les autres",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Victor Marchand",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Les besoins de Taschereau",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Vincent Gosselin, Radio-Canada",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Les jeunes au cœur des élections provinciales",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Parti Québécois",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Ce qui se joue derrière les discours politiques",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Simone Mingelbier",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Le quotidien d’une chroniqueuse politique en pleine campagne électorale",
+      "source": "L'Exemplaire",
+      "credit": "Crédit photo : L'Exemplaire",
       "cited": false,
       "method": null
     },
     {
-      "title": "Il faut le voir pour le croire",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Les sondages au cœur de la campagne électorale",
+      "source": "L'Exemplaire",
+      "credit": "Crédit photo : L'Exemplaire",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "title": "The Road That Maybe Shouldn’t Have Been Travelled",
       "source": "The McGill Daily",
-      "credit": "Photo : Meg Ha",
+      "credit": "Photo : The McGill Daily archives, Volume 59",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
+      "title": "McGill Student Theatre: Beyond Backstage",
+      "source": "The McGill Daily",
+      "credit": "Photo : Harriet Faught",
       "cited": true,
-      "method": "via-attribution"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "title": "NIIVI: A Queer Indigenous Musician on Representation and Her Experience",
+      "source": "The McGill Daily",
+      "credit": "Photo : Ollie Cappello",
       "cited": true,
-      "method": "body-line"
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Repercussions of Birth Control",
+      "source": "The McGill Daily",
+      "credit": "Photo : Jane Goodman",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "The Art of Inuit Self Determination",
+      "source": "The McGill Daily",
+      "credit": "Photo : Image Courtesy of Mara Gibea",
+      "cited": true,
+      "method": "media-credit-featured"
     }
   ]
 }
