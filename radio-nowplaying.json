@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-28T16:45:06.757Z",
+  "updatedAt": "2026-09-28T21:34:23.470Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Les Arshitechs du Son",
+        "source": "api-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "next": {
-        "title": "Little Songs On The Prairie",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://chyz.ca/emission/little-songs-on-the-prairie/"
+        "title": "Femmes de l'ombre",
+        "source": "schedule-live",
+        "start": "18:30",
+        "end": "19:30",
+        "url": "https://chyz.ca/emission/femmes-de-lombre/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T16:44:42.323Z"
+      "checkedAt": "2026-09-28T21:33:55.533Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "L'alter ego",
+        "title": "Les criquets crinqués",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/lalter-ego"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/les-criquets-crinques"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "Les vinyles versatiles",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
       },
       "track": "",
-      "showTitle": "L'alter ego",
+      "showTitle": "Les criquets crinqués",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T16:44:43.706Z"
+      "checkedAt": "2026-09-28T21:33:57.164Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "World Skip The Beat",
+        "title": "En Profondeur",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "next": {
-        "title": "Radio Is Dead",
+        "title": "Queercorps",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "track": "",
-      "showTitle": "World Skip The Beat",
+      "showTitle": "En Profondeur",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T16:44:46.054Z"
+      "checkedAt": "2026-09-28T21:34:00.940Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Twang City",
+        "title": "The Pressure Drop",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/twang-city"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-pressure-drop"
       },
       "next": {
-        "title": "The Tommy John Show",
+        "title": "Voice of the Voiceless",
         "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/the-tommy-john-show"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
       },
       "track": "",
-      "showTitle": "Twang City",
+      "showTitle": "The Pressure Drop",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T16:44:48.388Z"
+      "checkedAt": "2026-09-28T21:34:04.143Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,28 +133,29 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T16:44:49.284Z"
+      "checkedAt": "2026-09-28T21:34:05.658Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Onde de CHOQ",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "title": "Les rois de l'arène",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Clément — this is how",
+      "track": "Julia Holter — My Twin",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T16:45:06.406Z"
+      "checkedAt": "2026-09-28T21:34:23.119Z"
     }
   }
 }
