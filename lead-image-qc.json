@@ -1,19 +1,25 @@
 {
-  "updated": "2026-09-28T17:49:57.011Z",
+  "updated": "2026-09-28T21:40:37.060Z",
   "total": 188,
   "withPhoto": 177,
   "withStock": 22,
   "withCampusBank": 15,
   "fullyCovered": 188,
-  "leadReadyPhotos": 140,
+  "leadReadyPhotos": 142,
   "pageScraped": 40,
   "photosRecovered": 36,
   "imagesCleared": 11,
-  "stockSearches": 45,
+  "stockSearches": 46,
   "stockFound": 17,
-  "campusBankFound": 12,
+  "campusBankFound": 11,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Bulletins La Pige radio 28 septembre 12h, 14h, 16h et 18h",
+      "link": "https://lapige.atmjonquiere.com/2026/09/28/bulletin-la-pige-radio-28-septembre-12h/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-28-septembre-12h",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
+    },
     {
       "title": "Les jeunes au cœur des élections provinciales",
       "link": "https://www.exemplaire.com.ulaval.ca/actualites/les-jeunes-au-coeur-des-elections-provinciales/",
@@ -79,12 +85,6 @@
       "link": "https://www.mcgilldaily.com/2026/09/the-uci-road-world-championships-where-excitement-meets-inconvenience/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/3628/3418387414_838287f106_b.jpg"
-    },
-    {
-      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
-      "link": "https://www.thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/5/54/McGill_University_downtown_campus_37.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }

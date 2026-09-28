@@ -1,30 +1,48 @@
 {
-  "updated": "2026-09-28T17:44:12.151Z",
+  "updated": "2026-09-28T21:36:26.323Z",
   "total": 188,
   "pool": 51,
-  "incomplete": 18,
+  "incomplete": 13,
   "withLeadExcerpt": 93,
-  "candidates": 18,
-  "enriched": 15,
+  "candidates": 13,
+  "enriched": 5,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Il faut le voir pour le croire",
-      "link": "https://www.delitfrancais.com/2026/09/16/il-faut-le-voir-pour-le-croire/",
+      "title": "Collision entre une moto et un autobus : un motocycliste décède près de Québec",
+      "link": "https://lapige.atmjonquiere.com/2026/09/28/collision-entre-une-moto-et-un-autobus-un-motocycliste-decede-pres-de-quebec/?utm_source=rss&utm_medium=rss&utm_campaign=collision-entre-une-moto-et-un-autobus-un-motocycliste-decede-pres-de-quebec",
       "ok": true,
-      "score": 90,
-      "chars": 333,
-      "sample": "Or, la vidéo de la mort de Cisneros ne comportait aucun floutage et aucun avertissement. Pas une seu",
+      "score": 100,
+      "chars": 320,
+      "sample": "Les étudiants du Cégep de Jonquière, Chicoutimi et Alma revenaient d’une compétition de cross-countr",
       "changed": true
     },
     {
-      "title": "Lee s’illustre, les Sags l’emportent",
-      "link": "https://lapige.atmjonquiere.com/2026/09/28/lee-sillustre-les-sags-lemportent/?utm_source=rss&utm_medium=rss&utm_campaign=lee-sillustre-les-sags-lemportent",
+      "title": "Moins de déchets grâce au compost à Saguenay",
+      "link": "https://lapige.atmjonquiere.com/2026/09/28/moins-de-dechets-grace-au-compost-a-saguenay/?utm_source=rss&utm_medium=rss&utm_campaign=moins-de-dechets-grace-au-compost-a-saguenay",
+      "ok": true,
+      "score": 100,
+      "chars": 400,
+      "sample": "Depuis quatre ans, le nombre de déchets envoyés au site d’enfouissement a nettement diminué à Saguen",
+      "changed": true
+    },
+    {
+      "title": "La fête des récoltes en plein essor",
+      "link": "https://lapige.atmjonquiere.com/2026/09/28/la-fete-des-recoltes-en-plein-essor/?utm_source=rss&utm_medium=rss&utm_campaign=la-fete-des-recoltes-en-plein-essor",
+      "ok": true,
+      "score": 100,
+      "chars": 247,
+      "sample": "La 5e édition de la fête des récoltes a attiré plus de 1 000 personnes à la Plateforme bioalimentair",
+      "changed": true
+    },
+    {
+      "title": "Bulletins La Pige radio 28 septembre 12h, 14h, 16h et 18h",
+      "link": "https://lapige.atmjonquiere.com/2026/09/28/bulletin-la-pige-radio-28-septembre-12h/?utm_source=rss&utm_medium=rss&utm_campaign=bulletin-la-pige-radio-28-septembre-12h",
       "ok": true,
       "score": 96,
-      "chars": 371,
-      "sample": "Peu sollicité en première période, Justin Lee a davantage été mis à l’épreuve durant le deuxième eng",
+      "chars": 203,
+      "sample": "Accident impliquant un motocycliste et un autobus transportant des athlètes du cégep de Jonquière di",
       "changed": true
     },
     {
@@ -34,7 +52,7 @@
       "score": 70,
       "chars": 368,
       "sample": "Style News Style News Se connecter Bienvenue ! Connectez-vous à votre compte : votre nom d'utilisate",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Les jeunes au cœur des élections provinciales",
@@ -43,7 +61,7 @@
       "score": 70,
       "chars": 368,
       "sample": "Style News Style News Se connecter Bienvenue ! Connectez-vous à votre compte : votre nom d'utilisate",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Ce qui se joue derrière les discours politiques",
@@ -52,16 +70,7 @@
       "score": 70,
       "chars": 368,
       "sample": "Style News Style News Se connecter Bienvenue ! Connectez-vous à votre compte : votre nom d'utilisate",
-      "changed": true
-    },
-    {
-      "title": "Le quotidien d’une chroniqueuse politique en pleine campagne électorale",
-      "link": "https://www.exemplaire.com.ulaval.ca/actualites/le-quotidien-dune-chroniqueuse-politique-en-pleine-campagne-electorale/",
-      "ok": true,
-      "score": 100,
-      "chars": 223,
-      "sample": "Depuis le 27 août dernier, le Québec tout entier est en campagne électorale. En partageant le quotid",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Les sondages au cœur de la campagne électorale",
@@ -70,16 +79,7 @@
       "score": 85,
       "chars": 400,
       "sample": "L’avenir du Québec est entre les mains des citoyens de la province qui iront bientôt aux urnes chois",
-      "changed": true
-    },
-    {
-      "title": "The Road That Maybe Shouldn’t Have Been Travelled",
-      "link": "https://www.mcgilldaily.com/2026/09/the-road-that-maybe-shouldnt-have-been-travelled/",
-      "ok": true,
-      "score": 77,
-      "chars": 400,
-      "sample": "The final report by the McGill Provost’s Task Force on Indigenous Studies and Indigenous Education o",
-      "changed": true
+      "changed": false
     }
   ]
 }
