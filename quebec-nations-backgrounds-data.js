@@ -590,5 +590,19 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     season: "ete",
     season6: "ukiaqsaaq",
     tags: ["mat", "pomo", "nations"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Corridor_des_Cheminots_%2899118%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    credit: "Wolfy13399",
+    link: "https://commons.wikimedia.org/wiki/File:Corridor%20des%20Cheminots%20(99118).jpg",
+    license: "CC BY-SA 4.0",
+    title: "Corridor des Cheminots (99118)",
+    width: 4080,
+    height: 3072,
+    nationId: "wendat",
+    nation: "Hurons-Wendat",
+    season: "ete",
+    season6: "ukiaqsaaq",
+    tags: ["mat", "pomo", "nations"],
   }
 ];

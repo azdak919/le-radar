@@ -1,7 +1,7 @@
 {
   "description": "Registre des formations sportives RSEQ (collégial + universitaire QC) pour LE-RADAR. shortName = libellé puce/tableau ; fullName = établissement ; nickname = surnom d'équipe si connu. aliases + rseqTeamIds servent à rattacher le flux S1.",
   "source": "curated + sports.json (rseq-s1)",
-  "updated": "2026-09-24T09:59:10.548Z",
+  "updated": "2026-09-28T16:45:10.187Z",
   "teamCount": 93,
   "teams": [
     {
@@ -60,7 +60,8 @@
         "70fa06db-d625-4c8c-b1d1-08d645bcfa2d",
         "1f15dcbb-6b6d-6a50-8317-06a08a8b9e2f",
         "LAV",
-        "ulaval"
+        "ulaval",
+        "44c673d9-491e-4bd4-adcb-170b0d4f399b"
       ]
     },
     {
@@ -109,7 +110,8 @@
         "86bf569b-acec-4087-a738-9355c68dc222",
         "1f15dcb8-8519-6290-9bd8-0293bf2c2559",
         "MCG",
-        "mcgill"
+        "mcgill",
+        "fc71063e-48d9-439e-8e2d-dfd104973312"
       ]
     },
     {
@@ -159,7 +161,8 @@
         "72deeba3-0450-433c-a32b-0310497addfc",
         "1f15dcb4-2202-6a5c-9208-06a08a8b9e2f",
         "1f15dcb4-21f4-6f7e-8115-06a08a8b9e2f",
-        "concordia"
+        "concordia",
+        "24fd589d-ae14-4403-a5a0-0089846a2c26"
       ]
     },
     {
@@ -216,7 +219,8 @@
         "ac731835-41f9-4cab-a830-31d1958977f0",
         "1f15dcb2-9f24-60aa-9f89-02bb122e4421",
         "MTL",
-        "udem"
+        "udem",
+        "d3675dc9-caaa-4503-920b-c955ccf5d9e0"
       ]
     },
     {
@@ -369,7 +373,8 @@
         "afd48cf0-d89e-43b2-89cf-0a5579bfaedb",
         "d55a3e3c-373d-4c6b-b0af-5014e320d1e5",
         "1f15dcb9-e055-6766-b01d-02bb122e4421",
-        "bishops"
+        "bishops",
+        "050a7c62-d2ea-4de5-af23-36a6fe63c47f"
       ]
     },
     {
