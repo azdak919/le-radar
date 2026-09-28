@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-27T23:57:26.926Z",
+  "updated": "2026-09-28T10:11:01.475Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -2947,12 +2947,24 @@
       "via": "save-page-now",
       "source": "Quartier Libre",
       "snapshot": "https://web.archive.org/web/20260927235711/https://quartierlibre.ca/world-press-photo/"
+    },
+    "https://thelinknewspaper.ca/article/16433": {
+      "at": "2026-09-28T10:10:04.285Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20260928100944/https://thelinknewspaper.ca/article/16433"
+    },
+    "https://thelinknewspaper.ca/article/16430": {
+      "at": "2026-09-28T10:11:01.475Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20260928101035/https://thelinknewspaper.ca/article/16430"
     }
   },
   "stats": {
-    "total": 522,
+    "total": 524,
     "lastRun": {
-      "saved": 1,
+      "saved": 2,
       "skipped": 0,
       "failed": 1,
       "stoppedEarly": false
@@ -2961,8 +2973,8 @@
   "sources": {
     "Le Collectif": {
       "host": "lecollectif.ca",
-      "pages": 25,
-      "checkedAt": "2026-09-21T09:16:56.930Z"
+      "pages": 27,
+      "checkedAt": "2026-09-28T10:08:32.711Z"
     },
     "The Tribune": {
       "host": "www.thetribune.ca",
