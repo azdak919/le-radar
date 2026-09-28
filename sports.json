@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-28T16:45:33.687Z",
-  "fetchedAt": "2026-09-28T16:45:33.687Z",
+  "updated": "2026-09-28T23:22:53.624Z",
+  "fetchedAt": "2026-09-28T23:22:53.624Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-28T16:45:33.687Z"
+    "referenceDate": "2026-09-28T23:22:53.624Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -85,11 +85,6 @@
       "label": "Hockey universitaire",
       "error": "Cloudflare challenge HTTP 403 https://universitaire.rseqhockey.com/fr",
       "blocked": true
-    },
-    {
-      "leagueId": "campus-uqac",
-      "label": "UQAC Inuk events",
-      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -6522,7 +6517,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a0ab765e-5867-415b-9929-70dd304c6bfc",
           "opponentFullName": "John Abbott College",
           "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott"
+          "opponentRegistryId": "john-abbott",
+          "live": true
         },
         {
           "date": "2026-10-03",
@@ -6618,6 +6614,7 @@
         "opponentFullName": "John Abbott College",
         "opponentNickname": "Islanders",
         "opponentRegistryId": "john-abbott",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -6813,20 +6810,6 @@
       "nextGames": [
         {
           "date": "2026-10-03",
-          "time": "16:00",
-          "opponent": "Limoilou",
-          "opponentCode": "LIM",
-          "home": false,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "e525eca6-0b6a-4d0e-b7a1-65262b41134a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e525eca6-0b6a-4d0e-b7a1-65262b41134a",
-          "opponentFullName": "Cégep Limoilou",
-          "opponentNickname": "Titans",
-          "opponentRegistryId": "limoilou"
-        },
-        {
-          "date": "2026-10-03",
           "time": "19:00",
           "opponent": "Limoilou",
           "opponentCode": "LIM",
@@ -6835,6 +6818,20 @@
           "competition": "Baseball collégial masculin",
           "gameId": "966fbaee-5cee-481d-a941-1b167cfbde99",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=966fbaee-5cee-481d-a941-1b167cfbde99",
+          "opponentFullName": "Cégep Limoilou",
+          "opponentNickname": "Titans",
+          "opponentRegistryId": "limoilou"
+        },
+        {
+          "date": "2026-10-06",
+          "time": "20:00",
+          "opponent": "Limoilou",
+          "opponentCode": "LIM",
+          "home": false,
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "e525eca6-0b6a-4d0e-b7a1-65262b41134a",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e525eca6-0b6a-4d0e-b7a1-65262b41134a",
           "opponentFullName": "Cégep Limoilou",
           "opponentNickname": "Titans",
           "opponentRegistryId": "limoilou"
@@ -6896,14 +6893,14 @@
       ],
       "nextGame": {
         "date": "2026-10-03",
-        "time": "16:00",
+        "time": "19:00",
         "opponent": "Limoilou",
         "opponentCode": "LIM",
-        "home": false,
+        "home": true,
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "e525eca6-0b6a-4d0e-b7a1-65262b41134a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e525eca6-0b6a-4d0e-b7a1-65262b41134a",
+        "gameId": "966fbaee-5cee-481d-a941-1b167cfbde99",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=966fbaee-5cee-481d-a941-1b167cfbde99",
         "opponentFullName": "Cégep Limoilou",
         "opponentNickname": "Titans",
         "opponentRegistryId": "limoilou",
@@ -7220,6 +7217,42 @@
       "leagueLabel": "Baseball collégial masculin",
       "results": [
         {
+          "date": "2026-09-27",
+          "time": "12:00",
+          "opponent": "Limoilou",
+          "opponentCode": "LIM",
+          "home": true,
+          "scoreFor": 4,
+          "scoreAgainst": 12,
+          "result": "L",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "03f9615e-941b-4e58-8837-72664e3eb071",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=03f9615e-941b-4e58-8837-72664e3eb071",
+          "opponentFullName": "Cégep Limoilou",
+          "opponentNickname": "Titans",
+          "opponentRegistryId": "limoilou",
+          "priorSeason": false
+        },
+        {
+          "date": "2026-09-27",
+          "time": "15:00",
+          "opponent": "Limoilou",
+          "opponentCode": "LIM",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 10,
+          "result": "L",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "6cfacb5c-1c5d-4f3c-82e9-3eafd7d83b04",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6cfacb5c-1c5d-4f3c-82e9-3eafd7d83b04",
+          "opponentFullName": "Cégep Limoilou",
+          "opponentNickname": "Titans",
+          "opponentRegistryId": "limoilou",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-24",
           "time": "19:30",
           "opponent": "Dawson",
@@ -7325,21 +7358,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-24",
-        "time": "19:30",
-        "opponent": "Dawson",
-        "opponentCode": "DAW",
+        "date": "2026-09-27",
+        "time": "12:00",
+        "opponent": "Limoilou",
+        "opponentCode": "LIM",
         "home": true,
-        "scoreFor": 2,
-        "scoreAgainst": 1,
-        "result": "W",
+        "scoreFor": 4,
+        "scoreAgainst": 12,
+        "result": "L",
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "18d5e546-06d5-4ec9-b5bf-4452ed796f9a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=18d5e546-06d5-4ec9-b5bf-4452ed796f9a",
-        "opponentFullName": "Dawson College",
-        "opponentNickname": "Blues",
-        "opponentRegistryId": "dawson",
+        "gameId": "03f9615e-941b-4e58-8837-72664e3eb071",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=03f9615e-941b-4e58-8837-72664e3eb071",
+        "opponentFullName": "Cégep Limoilou",
+        "opponentNickname": "Titans",
+        "opponentRegistryId": "limoilou",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -7356,7 +7389,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a0ab765e-5867-415b-9929-70dd304c6bfc",
           "opponentFullName": "Dawson College",
           "opponentNickname": "Blues",
-          "opponentRegistryId": "dawson"
+          "opponentRegistryId": "dawson",
+          "live": true
         },
         {
           "date": "2026-09-30",
@@ -7440,14 +7474,15 @@
         "opponentFullName": "Dawson College",
         "opponentNickname": "Blues",
         "opponentRegistryId": "dawson",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
         "wins": 2,
-        "losses": 4,
+        "losses": 6,
         "draws": 0,
-        "played": 6,
-        "label": "2-4"
+        "played": 8,
+        "label": "2-6"
       },
       "source": "rseq-s1",
       "priority": 28,
@@ -7470,6 +7505,42 @@
       "usports": false,
       "leagueLabel": "Baseball collégial masculin",
       "results": [
+        {
+          "date": "2026-09-27",
+          "time": "12:00",
+          "opponent": "John Abbott",
+          "opponentCode": "JAC",
+          "home": false,
+          "scoreFor": 12,
+          "scoreAgainst": 4,
+          "result": "W",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "03f9615e-941b-4e58-8837-72664e3eb071",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=03f9615e-941b-4e58-8837-72664e3eb071",
+          "opponentFullName": "John Abbott College",
+          "opponentNickname": "Islanders",
+          "opponentRegistryId": "john-abbott",
+          "priorSeason": false
+        },
+        {
+          "date": "2026-09-27",
+          "time": "15:00",
+          "opponent": "John Abbott",
+          "opponentCode": "JAC",
+          "home": true,
+          "scoreFor": 10,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "6cfacb5c-1c5d-4f3c-82e9-3eafd7d83b04",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6cfacb5c-1c5d-4f3c-82e9-3eafd7d83b04",
+          "opponentFullName": "John Abbott College",
+          "opponentNickname": "Islanders",
+          "opponentRegistryId": "john-abbott",
+          "priorSeason": false
+        },
         {
           "date": "2026-09-19",
           "time": "13:00",
@@ -7542,21 +7613,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-19",
-        "time": "13:00",
-        "opponent": "Dawson",
-        "opponentCode": "DAW",
-        "home": true,
-        "scoreFor": 6,
-        "scoreAgainst": 0,
+        "date": "2026-09-27",
+        "time": "12:00",
+        "opponent": "John Abbott",
+        "opponentCode": "JAC",
+        "home": false,
+        "scoreFor": 12,
+        "scoreAgainst": 4,
         "result": "W",
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "f44f6b61-9dad-4493-b354-13a290b1a871",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f44f6b61-9dad-4493-b354-13a290b1a871",
-        "opponentFullName": "Dawson College",
-        "opponentNickname": "Blues",
-        "opponentRegistryId": "dawson",
+        "gameId": "03f9615e-941b-4e58-8837-72664e3eb071",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=03f9615e-941b-4e58-8837-72664e3eb071",
+        "opponentFullName": "John Abbott College",
+        "opponentNickname": "Islanders",
+        "opponentRegistryId": "john-abbott",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -7576,19 +7647,6 @@
         },
         {
           "date": "2026-10-03",
-          "time": "16:00",
-          "opponent": "Drummondville",
-          "opponentCode": "DRU",
-          "home": true,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "e525eca6-0b6a-4d0e-b7a1-65262b41134a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e525eca6-0b6a-4d0e-b7a1-65262b41134a",
-          "opponentFullName": "Cégep de Drummondville",
-          "opponentRegistryId": "drummondville"
-        },
-        {
-          "date": "2026-10-03",
           "time": "19:00",
           "opponent": "Drummondville",
           "opponentCode": "DRU",
@@ -7597,6 +7655,19 @@
           "competition": "Baseball collégial masculin",
           "gameId": "966fbaee-5cee-481d-a941-1b167cfbde99",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=966fbaee-5cee-481d-a941-1b167cfbde99",
+          "opponentFullName": "Cégep de Drummondville",
+          "opponentRegistryId": "drummondville"
+        },
+        {
+          "date": "2026-10-06",
+          "time": "20:00",
+          "opponent": "Drummondville",
+          "opponentCode": "DRU",
+          "home": true,
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "e525eca6-0b6a-4d0e-b7a1-65262b41134a",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e525eca6-0b6a-4d0e-b7a1-65262b41134a",
           "opponentFullName": "Cégep de Drummondville",
           "opponentRegistryId": "drummondville"
         },
@@ -7657,11 +7728,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 4,
+        "wins": 6,
         "losses": 0,
         "draws": 0,
-        "played": 4,
-        "label": "4-0"
+        "played": 6,
+        "label": "6-0"
       },
       "source": "rseq-s1",
       "priority": 9,
