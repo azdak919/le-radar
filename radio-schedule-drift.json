@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-09-27T01:22:20.792Z",
+  "checkedAt": "2026-09-28T01:35:41.201Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
     "stable": 5,
-    "drift": [],
+    "drift": [
+      "cism"
+    ],
     "overhaul": [],
-    "unreachable": [
-      "cjlo"
-    ]
+    "unreachable": []
   },
   "stations": [
     {
@@ -25,12 +25,17 @@
     {
       "id": "cism",
       "published": 109,
-      "fresh": 109,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 110,
+      "added": [
+        "ven 16:00–17:00 Turbo Tannant",
+        "ven 17:00–19:00 OK Doomer"
+      ],
+      "removed": [
+        "ven 16:00–19:00 Pop Montréal en direct - Plants and Animals et Katie Moore"
+      ],
+      "changed": 3,
+      "ratio": 0.028,
+      "status": "drift"
     },
     {
       "id": "ckut",
@@ -45,12 +50,12 @@
     {
       "id": "cjlo",
       "published": 377,
-      "fresh": 0,
+      "fresh": 377,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
-      "status": "unreachable"
+      "status": "stable"
     },
     {
       "id": "cfak",
