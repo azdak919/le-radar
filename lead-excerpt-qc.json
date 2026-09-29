@@ -1,39 +1,21 @@
 {
-  "updated": "2026-09-29T20:54:05.630Z",
+  "updated": "2026-09-29T23:27:49.272Z",
   "total": 188,
   "pool": 55,
-  "incomplete": 11,
-  "withLeadExcerpt": 97,
-  "candidates": 11,
-  "enriched": 6,
-  "failed": 2,
+  "incomplete": 8,
+  "withLeadExcerpt": 94,
+  "candidates": 8,
+  "enriched": 2,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Le RADIS nourrit à petits prix",
-      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/le-radis-nourrit-a-petits-prix/",
-      "ok": true,
-      "score": 96,
-      "chars": 344,
-      "sample": "Face à une offre alimentaire jugée inadaptée aux besoins de la communauté étudiante, le RADIS cherch",
-      "changed": true
-    },
-    {
-      "title": "Sécurité routière à Marguerite-Bourgeoys : des défis persistent",
-      "link": "https://www.exemplaire.com.ulaval.ca/actualites/securite-routiere-a-marguerite-bourgeoys-des-defis-persistent/",
+      "title": "Moins de déchets grâce au compost à Saguenay",
+      "link": "https://lapige.atmjonquiere.com/2026/09/28/moins-de-dechets-grace-au-compost-a-saguenay/?utm_source=rss&utm_medium=rss&utm_campaign=moins-de-dechets-grace-au-compost-a-saguenay",
       "ok": true,
       "score": 100,
-      "chars": 301,
-      "sample": "Selon un des brigadiers rencontrés le 14 septembre dernier, étant donné que les enfants à la garderi",
-      "changed": true
-    },
-    {
-      "title": "Mobilisation étudiante massive à l’Université Laval pour le débat des candidats de Jean-Talon",
-      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/mobilisation-etudiante-massive-a-luniversite-laval-pour-le-debat-des-candidats-de-jean-talon/",
-      "ok": true,
-      "score": 100,
-      "chars": 359,
-      "sample": "Il n’y avait pas que TVA qui tenait un débat le 15 septembre dernier. L'Université Laval a accueilli",
+      "chars": 400,
+      "sample": "Depuis quatre ans, le nombre de déchets envoyés au site d’enfouissement a nettement diminué à Saguen",
       "changed": true
     },
     {
@@ -43,7 +25,7 @@
       "score": 70,
       "chars": 366,
       "sample": "Style News Style News Se connecter Bienvenue ! Connectez-vous à votre compte : votre nom d'utilisate",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Les jeunes au cœur des élections provinciales",
@@ -52,7 +34,7 @@
       "score": 70,
       "chars": 366,
       "sample": "Style News Style News Se connecter Bienvenue ! Connectez-vous à votre compte : votre nom d'utilisate",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Ce qui se joue derrière les discours politiques",
@@ -61,7 +43,7 @@
       "score": 70,
       "chars": 366,
       "sample": "Style News Style News Se connecter Bienvenue ! Connectez-vous à votre compte : votre nom d'utilisate",
-      "changed": true
+      "changed": false
     },
     {
       "title": "The Road That Maybe Shouldn’t Have Been Travelled",
@@ -80,6 +62,24 @@
       "chars": 399,
       "sample": "On one of the few precious warm days before the frigid fall chill sets in, my dear friend and fellow",
       "changed": false
+    },
+    {
+      "title": "A display of intersectionality through artistry",
+      "link": "https://thelinknewspaper.ca/article/16426",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "French-Senegalese soul and R&B artist anaiis brought her forthcoming album Devotion & The Black Divi",
+      "changed": false
+    },
+    {
+      "title": "Les mardis au centre-ville",
+      "link": "https://lecollectif.ca/culture/les-mardis-au-centre-ville/",
+      "ok": true,
+      "score": 100,
+      "chars": 400,
+      "sample": "34,55 $ : le prix d’une entrée de poulet karaage et d’un ramen végan épicé, pourboire de 20 % compri",
+      "changed": true
     }
   ]
 }

@@ -1,16 +1,16 @@
 {
-  "updated": "2026-09-29T21:00:33.596Z",
+  "updated": "2026-09-29T23:32:28.716Z",
   "total": 188,
   "withImage": 177,
   "withCredit": 177,
-  "cited": 122,
+  "cited": 121,
   "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 3,
-  "citedNew": 2,
-  "fallbackNew": 11,
+  "checked": 16,
+  "updatedCount": 6,
+  "citedNew": 4,
+  "fallbackNew": 12,
   "samples": [
     {
       "title": "Le RADIS nourrit à petits prix",
@@ -29,9 +29,30 @@
     {
       "title": "Le quotidien d’une chroniqueuse politique en pleine campagne électorale",
       "source": "L'Exemplaire",
-      "credit": "Photo : Raphaël Bédard",
+      "credit": "Crédit photo : L'Exemplaire",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
       "cited": true,
-      "method": "figcaption-paren-kind"
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
