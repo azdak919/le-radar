@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-29T20:45:17.022Z",
-  "fetchedAt": "2026-09-29T20:45:17.022Z",
+  "updated": "2026-09-29T23:26:20.355Z",
+  "fetchedAt": "2026-09-29T23:26:20.355Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-29T20:45:17.022Z"
+    "referenceDate": "2026-09-29T23:26:20.356Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -85,11 +85,6 @@
       "label": "Hockey universitaire",
       "error": "Cloudflare challenge HTTP 403 https://universitaire.rseqhockey.com/fr",
       "blocked": true
-    },
-    {
-      "leagueId": "campus-uqac",
-      "label": "UQAC Inuk events",
-      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -80770,7 +80765,8 @@
           "gameId": "5482bd55-c2b9-4182-893a-fdd2cc21386b",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5482bd55-c2b9-4182-893a-fdd2cc21386b",
           "opponentFullName": "Cégep de Granby",
-          "opponentRegistryId": "granby"
+          "opponentRegistryId": "granby",
+          "live": true
         },
         {
           "date": "2026-10-09",
@@ -80812,6 +80808,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5482bd55-c2b9-4182-893a-fdd2cc21386b",
         "opponentFullName": "Cégep de Granby",
         "opponentRegistryId": "granby",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -80941,7 +80938,8 @@
           "gameId": "5482bd55-c2b9-4182-893a-fdd2cc21386b",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5482bd55-c2b9-4182-893a-fdd2cc21386b",
           "opponentFullName": "Cégep de Drummondville",
-          "opponentRegistryId": "drummondville"
+          "opponentRegistryId": "drummondville",
+          "live": true
         },
         {
           "date": "2026-10-03",
@@ -80996,6 +80994,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5482bd55-c2b9-4182-893a-fdd2cc21386b",
         "opponentFullName": "Cégep de Drummondville",
         "opponentRegistryId": "drummondville",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
