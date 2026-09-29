@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-29T23:26:20.355Z",
-  "fetchedAt": "2026-09-29T23:26:20.355Z",
+  "updated": "2026-09-29T23:48:12.303Z",
+  "fetchedAt": "2026-09-29T23:48:12.303Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-29T23:26:20.356Z"
+    "referenceDate": "2026-09-29T23:48:12.303Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -80755,20 +80755,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-29",
-          "time": "19:30",
-          "opponent": "Granby",
-          "opponentCode": "GBY",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "5482bd55-c2b9-4182-893a-fdd2cc21386b",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5482bd55-c2b9-4182-893a-fdd2cc21386b",
-          "opponentFullName": "Cégep de Granby",
-          "opponentRegistryId": "granby",
-          "live": true
-        },
-        {
           "date": "2026-10-09",
           "time": "19:00",
           "opponent": "Cégep de Trois-Rivières",
@@ -80797,18 +80783,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-29",
-        "time": "19:30",
-        "opponent": "Granby",
-        "opponentCode": "GBY",
-        "home": false,
+        "date": "2026-10-09",
+        "time": "19:00",
+        "opponent": "Cégep de Trois-Rivières",
+        "opponentCode": "TRV",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "5482bd55-c2b9-4182-893a-fdd2cc21386b",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5482bd55-c2b9-4182-893a-fdd2cc21386b",
-        "opponentFullName": "Cégep de Granby",
-        "opponentRegistryId": "granby",
-        "live": true,
+        "gameId": "cad455b0-fb3a-41c3-9663-d2f081cd9c2c",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=cad455b0-fb3a-41c3-9663-d2f081cd9c2c",
+        "opponentFullName": "Cégep de Trois-Rivières",
+        "opponentNickname": "Diablos",
+        "opponentRegistryId": "trois-rivieres",
         "opponentSector": "collegial"
       },
       "record": {
@@ -80928,20 +80914,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-29",
-          "time": "19:30",
-          "opponent": "Drummondville",
-          "opponentCode": "DRU",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "5482bd55-c2b9-4182-893a-fdd2cc21386b",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5482bd55-c2b9-4182-893a-fdd2cc21386b",
-          "opponentFullName": "Cégep de Drummondville",
-          "opponentRegistryId": "drummondville",
-          "live": true
-        },
-        {
           "date": "2026-10-03",
           "time": "11:00",
           "opponent": "Cégep de Sherbrooke",
@@ -80983,18 +80955,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-29",
-        "time": "19:30",
-        "opponent": "Drummondville",
-        "opponentCode": "DRU",
+        "date": "2026-10-03",
+        "time": "11:00",
+        "opponent": "Cégep de Sherbrooke",
+        "opponentCode": "SHE",
         "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "5482bd55-c2b9-4182-893a-fdd2cc21386b",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5482bd55-c2b9-4182-893a-fdd2cc21386b",
-        "opponentFullName": "Cégep de Drummondville",
-        "opponentRegistryId": "drummondville",
-        "live": true,
+        "gameId": "7a5945db-337d-4326-a071-445aadddc20e",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7a5945db-337d-4326-a071-445aadddc20e",
+        "opponentFullName": "Cégep de Sherbrooke",
+        "opponentRegistryId": "cegep-sherbrooke",
         "opponentSector": "collegial"
       },
       "record": {
