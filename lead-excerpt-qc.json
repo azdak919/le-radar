@@ -1,14 +1,23 @@
 {
-  "updated": "2026-09-29T05:53:17.174Z",
+  "updated": "2026-09-29T07:21:17.295Z",
   "total": 188,
   "pool": 51,
-  "incomplete": 9,
+  "incomplete": 10,
   "withLeadExcerpt": 93,
-  "candidates": 9,
-  "enriched": 0,
+  "candidates": 10,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Victoire de l’AFD en Saxe-Anhalt",
+      "link": "https://www.delitfrancais.com/2026/09/16/victoire-de-lafd-en-saxe-anhalt/",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "Montée des extrêmes telle que celle déjà observée et largement décrite ailleurs en Europe ? Ou réel ",
+      "changed": true
+    },
     {
       "title": "Moins de déchets grâce au compost à Saguenay",
       "link": "https://lapige.atmjonquiere.com/2026/09/28/moins-de-dechets-grace-au-compost-a-saguenay/?utm_source=rss&utm_medium=rss&utm_campaign=moins-de-dechets-grace-au-compost-a-saguenay",
@@ -70,15 +79,6 @@
       "score": 66,
       "chars": 399,
       "sample": "On one of the few precious warm days before the frigid fall chill sets in, my dear friend and fellow",
-      "changed": false
-    },
-    {
-      "title": "A display of intersectionality through artistry",
-      "link": "https://thelinknewspaper.ca/article/16426",
-      "ok": true,
-      "score": 96,
-      "chars": 400,
-      "sample": "French-Senegalese soul and R&B artist anaiis brought her forthcoming album Devotion & The Black Divi",
       "changed": false
     }
   ]
