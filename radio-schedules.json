@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-28T17:06:24.941Z",
+  "updatedAt": "2026-09-29T15:11:23.520Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-09-28T17:06:24.941Z",
+      "checkedAt": "2026-09-29T15:11:23.520Z",
       "verifiedWeekOf": "2026-09-28",
       "grid": [
         {
@@ -103,6 +103,13 @@
           "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
         },
         {
+          "day": 2,
+          "start": "19:00",
+          "end": "20:00",
+          "title": "CATHJO FAIT DE LA RADIO",
+          "url": "https://chyz.ca/emission/la-plug/"
+        },
+        {
           "day": 3,
           "start": "08:00",
           "end": "10:00",
@@ -119,6 +126,13 @@
         {
           "day": 3,
           "start": "11:00",
+          "end": "11:30",
+          "title": "Question de savoir",
+          "url": "https://chyz.ca/emission/question-de-savoir/"
+        },
+        {
+          "day": 3,
+          "start": "11:30",
           "end": "12:00",
           "title": "On en Parle",
           "url": "https://chyz.ca/emission/on-en-parle/"
@@ -285,7 +299,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-09-28T17:06:24.941Z",
+      "checkedAt": "2026-09-29T15:11:23.520Z",
       "verifiedWeekOf": "2026-09-28",
       "grid": [
         {
@@ -1066,7 +1080,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-09-28T17:06:24.941Z",
+      "checkedAt": "2026-09-29T15:11:23.520Z",
       "verifiedWeekOf": "2026-09-28",
       "grid": [
         {
@@ -1684,7 +1698,7 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-09-28T17:06:24.941Z",
+      "checkedAt": "2026-09-29T15:11:23.520Z",
       "verifiedWeekOf": "2026-09-28",
       "grid": [
         {
@@ -1819,6 +1833,13 @@
           "end": "00:30",
           "title": "Cinema Smackdown",
           "url": "http://www.cjlo.com/shows/cinema-smackdown"
+        },
+        {
+          "day": 1,
+          "start": "00:00",
+          "end": "00:30",
+          "title": "Mo Ritmo Radio",
+          "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
         },
         {
           "day": 1,
@@ -3903,8 +3924,8 @@
           "day": 3,
           "start": "13:00",
           "end": "14:00",
-          "title": "Beatnik Boy: Mixtape",
-          "url": "http://www.cjlo.com/shows/beatnik-boy-mixtape"
+          "title": "The Fluid Mosaic",
+          "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
         },
         {
           "day": 3,
@@ -4015,8 +4036,8 @@
           "day": 4,
           "start": "11:00",
           "end": "12:00",
-          "title": "The Fluid Mosaic",
-          "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
+          "title": "Chi and Ri",
+          "url": "http://www.cjlo.com/shows/chi-and-ri"
         },
         {
           "day": 4,
@@ -4085,8 +4106,8 @@
           "day": 4,
           "start": "20:00",
           "end": "21:00",
-          "title": "Chi and Ri",
-          "url": "http://www.cjlo.com/shows/chi-and-ri"
+          "title": "Beatnik Boy: Mixtape",
+          "url": "http://www.cjlo.com/shows/beatnik-boy-mixtape"
         },
         {
           "day": 4,
@@ -4288,8 +4309,8 @@
           "day": 6,
           "start": "17:00",
           "end": "18:00",
-          "title": "Mo' Ritmo Radio",
-          "url": "http://www.cjlo.com/shows/mo-ritmo-radio"
+          "title": "CJLO's Alternative Mega Mix",
+          "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
         },
         {
           "day": 6,
@@ -4341,7 +4362,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-09-28T17:06:24.941Z",
+      "checkedAt": "2026-09-29T15:11:23.520Z",
       "verifiedWeekOf": "2026-09-28",
       "grid": [
         {
@@ -4562,7 +4583,7 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-09-28T17:06:24.941Z",
+      "checkedAt": "2026-09-29T15:11:23.520Z",
       "verifiedWeekOf": "2026-09-28",
       "grid": [
         {
