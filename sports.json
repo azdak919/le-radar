@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-29T01:11:51.154Z",
-  "fetchedAt": "2026-09-29T01:11:51.154Z",
+  "updated": "2026-09-29T04:55:31.787Z",
+  "fetchedAt": "2026-09-29T04:55:31.787Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-29T01:11:51.154Z"
+    "referenceDate": "2026-09-29T04:55:31.787Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -85,6 +85,11 @@
       "label": "Hockey universitaire",
       "error": "Cloudflare challenge HTTP 403 https://universitaire.rseqhockey.com/fr",
       "blocked": true
+    },
+    {
+      "leagueId": "campus-uqac",
+      "label": "UQAC Inuk events",
+      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -6361,6 +6366,24 @@
       "leagueLabel": "Baseball collégial masculin",
       "results": [
         {
+          "date": "2026-09-28",
+          "time": "19:30",
+          "opponent": "John Abbott",
+          "opponentCode": "JAC",
+          "home": true,
+          "scoreFor": 1,
+          "scoreAgainst": 17,
+          "result": "L",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "a0ab765e-5867-415b-9929-70dd304c6bfc",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a0ab765e-5867-415b-9929-70dd304c6bfc",
+          "opponentFullName": "John Abbott College",
+          "opponentNickname": "Islanders",
+          "opponentRegistryId": "john-abbott",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-26",
           "time": "13:00",
           "opponent": "Édouard-Montpetit",
@@ -6486,21 +6509,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-26",
-        "time": "13:00",
-        "opponent": "Édouard-Montpetit",
-        "opponentCode": "CEM",
-        "home": false,
-        "scoreFor": 0,
-        "scoreAgainst": 21,
+        "date": "2026-09-28",
+        "time": "19:30",
+        "opponent": "John Abbott",
+        "opponentCode": "JAC",
+        "home": true,
+        "scoreFor": 1,
+        "scoreAgainst": 17,
         "result": "L",
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "080cf5b7-7490-4e02-8d25-ee7d41a9ed39",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=080cf5b7-7490-4e02-8d25-ee7d41a9ed39",
-        "opponentFullName": "Cégep Édouard-Montpetit",
-        "opponentNickname": "Cougars",
-        "opponentRegistryId": "edouard-montpetit",
+        "gameId": "a0ab765e-5867-415b-9929-70dd304c6bfc",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a0ab765e-5867-415b-9929-70dd304c6bfc",
+        "opponentFullName": "John Abbott College",
+        "opponentNickname": "Islanders",
+        "opponentRegistryId": "john-abbott",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -6602,10 +6625,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 7,
+        "losses": 8,
         "draws": 0,
-        "played": 7,
-        "label": "0-7"
+        "played": 8,
+        "label": "0-8"
       },
       "source": "rseq-s1",
       "priority": 26,
@@ -7200,6 +7223,24 @@
       "leagueLabel": "Baseball collégial masculin",
       "results": [
         {
+          "date": "2026-09-28",
+          "time": "19:30",
+          "opponent": "Dawson",
+          "opponentCode": "DAW",
+          "home": false,
+          "scoreFor": 17,
+          "scoreAgainst": 1,
+          "result": "W",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "a0ab765e-5867-415b-9929-70dd304c6bfc",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a0ab765e-5867-415b-9929-70dd304c6bfc",
+          "opponentFullName": "Dawson College",
+          "opponentNickname": "Blues",
+          "opponentRegistryId": "dawson",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-27",
           "time": "12:00",
           "opponent": "Limoilou",
@@ -7341,21 +7382,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-27",
-        "time": "12:00",
-        "opponent": "Limoilou",
-        "opponentCode": "LIM",
-        "home": true,
-        "scoreFor": 4,
-        "scoreAgainst": 12,
-        "result": "L",
+        "date": "2026-09-28",
+        "time": "19:30",
+        "opponent": "Dawson",
+        "opponentCode": "DAW",
+        "home": false,
+        "scoreFor": 17,
+        "scoreAgainst": 1,
+        "result": "W",
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "03f9615e-941b-4e58-8837-72664e3eb071",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=03f9615e-941b-4e58-8837-72664e3eb071",
-        "opponentFullName": "Cégep Limoilou",
-        "opponentNickname": "Titans",
-        "opponentRegistryId": "limoilou",
+        "gameId": "a0ab765e-5867-415b-9929-70dd304c6bfc",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a0ab765e-5867-415b-9929-70dd304c6bfc",
+        "opponentFullName": "Dawson College",
+        "opponentNickname": "Blues",
+        "opponentRegistryId": "dawson",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -7445,11 +7486,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 2,
+        "wins": 3,
         "losses": 6,
         "draws": 0,
-        "played": 8,
-        "label": "2-6"
+        "played": 9,
+        "label": "3-6"
       },
       "source": "rseq-s1",
       "priority": 28,
@@ -29765,7 +29806,7 @@
           "opponentRegistryId": "saint-jerome"
         },
         {
-          "date": "2026-12-06",
+          "date": "2026-11-29",
           "time": "14:00",
           "opponent": "Universel",
           "opponentCode": "UNI",
@@ -31165,7 +31206,7 @@
           "opponentRegistryId": "saint-laurent"
         },
         {
-          "date": "2026-12-06",
+          "date": "2026-11-29",
           "time": "14:00",
           "opponent": "L'Assomption",
           "opponentCode": "LAS",
