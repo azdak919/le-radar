@@ -1,86 +1,37 @@
 {
-  "updated": "2026-09-29T19:41:07.665Z",
+  "updated": "2026-09-29T21:00:33.596Z",
   "total": 188,
   "withImage": 177,
   "withCredit": 177,
-  "cited": 120,
+  "cited": 122,
   "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 10,
-  "citedNew": 4,
-  "fallbackNew": 15,
+  "checked": 13,
+  "updatedCount": 3,
+  "citedNew": 2,
+  "fallbackNew": 11,
   "samples": [
     {
-      "title": "Semaine de la vérité et de la réconciliation : « parler des choses malaisantes »",
-      "source": "La Pige",
-      "credit": "Crédit photo : La Pige",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Une course et une préparation réussies pour Anthony Dionne",
+      "title": "Le RADIS nourrit à petits prix",
       "source": "L'Exemplaire",
       "credit": "Crédit photo : L'Exemplaire",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Mobilisation étudiante massive à l’Université Laval pour le débat des candidats de Jean-Talon",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Juliette Kot / L'Exemplaire",
+      "cited": true,
+      "method": "figcaption-paren-kind"
     },
     {
       "title": "Le quotidien d’une chroniqueuse politique en pleine campagne électorale",
       "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Les sondages au cœur de la campagne électorale",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Kicking off the Montreal International Black Film Festival",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Jarry or Laurier? Debating Montreal’s best outdoor pool",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Concordia vs. McGill, Montreal’s biggest and best rivalry",
-      "source": "The Link",
-      "credit": "Photo : Nicolas Tremblay",
+      "credit": "Photo : Raphaël Bédard",
       "cited": true,
-      "method": "figcaption"
-    },
-    {
-      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
-      "source": "The McGill Daily",
-      "credit": "Photo : Meg Ha",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
+      "method": "figcaption-paren-kind"
     }
   ]
 }

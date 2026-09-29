@@ -1,47 +1,47 @@
 {
-  "updated": "2026-09-29T19:35:27.485Z",
+  "updated": "2026-09-29T20:54:05.630Z",
   "total": 188,
-  "pool": 53,
+  "pool": 55,
   "incomplete": 11,
-  "withLeadExcerpt": 95,
+  "withLeadExcerpt": 97,
   "candidates": 11,
-  "enriched": 5,
-  "failed": 0,
+  "enriched": 6,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
-      "title": "Semaine de la vérité et de la réconciliation : « parler des choses malaisantes »",
-      "link": "https://lapige.atmjonquiere.com/2026/09/29/semaine-de-la-verite-et-de-la-reconciliation-parler-des-choses-malaisantes/?utm_source=rss&utm_medium=rss&utm_campaign=semaine-de-la-verite-et-de-la-reconciliation-parler-des-choses-malaisantes",
+      "title": "Le RADIS nourrit à petits prix",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/le-radis-nourrit-a-petits-prix/",
       "ok": true,
       "score": 96,
-      "chars": 384,
-      "sample": "C’est l’élément central dont il a été question lors du dialogue interculturel entre Autochtones et n",
+      "chars": 344,
+      "sample": "Face à une offre alimentaire jugée inadaptée aux besoins de la communauté étudiante, le RADIS cherch",
       "changed": true
     },
     {
-      "title": "Le patrimoine religieux de Québec : un financement inégal",
-      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/le-patrimoine-religieux-de-quebec-un-financement-inegal/",
+      "title": "Sécurité routière à Marguerite-Bourgeoys : des défis persistent",
+      "link": "https://www.exemplaire.com.ulaval.ca/actualites/securite-routiere-a-marguerite-bourgeoys-des-defis-persistent/",
       "ok": true,
       "score": 100,
-      "chars": 357,
-      "sample": "À l'occasion de la neuvième édition des Journées du Patrimoine religieux, plusieurs églises québécoi",
+      "chars": 301,
+      "sample": "Selon un des brigadiers rencontrés le 14 septembre dernier, étant donné que les enfants à la garderi",
       "changed": true
     },
     {
-      "title": "Moins de déchets grâce au compost à Saguenay",
-      "link": "https://lapige.atmjonquiere.com/2026/09/28/moins-de-dechets-grace-au-compost-a-saguenay/?utm_source=rss&utm_medium=rss&utm_campaign=moins-de-dechets-grace-au-compost-a-saguenay",
+      "title": "Mobilisation étudiante massive à l’Université Laval pour le débat des candidats de Jean-Talon",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/mobilisation-etudiante-massive-a-luniversite-laval-pour-le-debat-des-candidats-de-jean-talon/",
       "ok": true,
       "score": 100,
-      "chars": 400,
-      "sample": "Depuis quatre ans, le nombre de déchets envoyés au site d’enfouissement a nettement diminué à Saguen",
-      "changed": false
+      "chars": 359,
+      "sample": "Il n’y avait pas que TVA qui tenait un débat le 15 septembre dernier. L'Université Laval a accueilli",
+      "changed": true
     },
     {
       "title": "Un candidat pas comme les autres",
       "link": "https://www.exemplaire.com.ulaval.ca/actualites/un-candidat-pas-comme-les-autres/",
       "ok": true,
-      "score": 75,
-      "chars": 393,
+      "score": 70,
+      "chars": 366,
       "sample": "Style News Style News Se connecter Bienvenue ! Connectez-vous à votre compte : votre nom d'utilisate",
       "changed": true
     },
@@ -49,8 +49,8 @@
       "title": "Les jeunes au cœur des élections provinciales",
       "link": "https://www.exemplaire.com.ulaval.ca/actualites/les-jeunes-au-coeur-des-elections-provinciales/",
       "ok": true,
-      "score": 75,
-      "chars": 393,
+      "score": 70,
+      "chars": 366,
       "sample": "Style News Style News Se connecter Bienvenue ! Connectez-vous à votre compte : votre nom d'utilisate",
       "changed": true
     },
@@ -58,19 +58,10 @@
       "title": "Ce qui se joue derrière les discours politiques",
       "link": "https://www.exemplaire.com.ulaval.ca/actualites/ce-qui-se-joue-derriere-les-discours-politiques/",
       "ok": true,
-      "score": 75,
-      "chars": 393,
+      "score": 70,
+      "chars": 366,
       "sample": "Style News Style News Se connecter Bienvenue ! Connectez-vous à votre compte : votre nom d'utilisate",
       "changed": true
-    },
-    {
-      "title": "Les sondages au cœur de la campagne électorale",
-      "link": "https://www.exemplaire.com.ulaval.ca/actualites/les-sondages-au-coeur-de-la-campagne-electorale/",
-      "ok": true,
-      "score": 85,
-      "chars": 400,
-      "sample": "L’avenir du Québec est entre les mains des citoyens de la province qui iront bientôt aux urnes chois",
-      "changed": false
     },
     {
       "title": "The Road That Maybe Shouldn’t Have Been Travelled",
@@ -79,6 +70,15 @@
       "score": 77,
       "chars": 400,
       "sample": "The final report by the McGill Provost’s Task Force on Indigenous Studies and Indigenous Education o",
+      "changed": false
+    },
+    {
+      "title": "Roundhouse Kicks",
+      "link": "https://www.mcgilldaily.com/2026/09/roundhouse-kicks/",
+      "ok": true,
+      "score": 66,
+      "chars": 399,
+      "sample": "On one of the few precious warm days before the frigid fall chill sets in, my dear friend and fellow",
       "changed": false
     }
   ]
