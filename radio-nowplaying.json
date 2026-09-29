@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-09-29T20:46:10.346Z",
+  "updatedAt": "2026-09-29T23:25:54.502Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
+        "title": "CATHJO FAIT DE LA RADIO",
         "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://chyz.ca/emission/la-plug/"
       },
       "next": {
-        "title": "Les Arshitechs du Son",
+        "title": "Mercredi Bonbon",
         "source": "schedule-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "CATHJO FAIT DE LA RADIO",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T20:45:31.994Z"
+      "checkedAt": "2026-09-29T23:24:58.054Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "London café",
+        "title": "Catharmix",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://cism893.ca/emissions/london-cafe"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/catharmix"
       },
       "next": {
-        "title": "les pénibles",
+        "title": "Les garçons pleurent aussi (reprise)",
         "source": "schedule",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-penibles"
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
       },
       "track": "",
-      "showTitle": "London café",
+      "showTitle": "Catharmix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T20:45:33.729Z"
+      "checkedAt": "2026-09-29T23:24:59.506Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Montreal Sessions",
+        "title": "Soul Perspectives",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "19:00",
+        "end": "20:30"
       },
       "next": {
-        "title": "Off The Hour: Local Journalism Stories",
+        "title": "Marca-RO",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "20:30",
+        "end": "21:00"
       },
       "track": "",
-      "showTitle": "Montreal Sessions",
+      "showTitle": "Soul Perspectives",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,72 +81,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T20:45:36.416Z"
+      "checkedAt": "2026-09-29T23:25:01.777Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Bikini Brrroadcast",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
+        "title": "Ashes to Ashes",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "title": "Hittin' All The Bases",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
       },
       "track": "",
-      "showTitle": "Bikini Brrroadcast",
+      "showTitle": "Ashes to Ashes",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T20:45:51.058Z"
+      "checkedAt": "2026-09-29T23:25:35.993Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "18:30"
-      },
-      "next": {
         "title": "L'Aut'Rock",
         "source": "schedule-live",
         "start": "18:30",
         "end": "20:00"
       },
+      "next": {
+        "title": "Dichotomie 88.3",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "L'Aut'Rock",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T20:45:52.163Z"
+      "checkedAt": "2026-09-29T23:25:36.926Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Le Studio",
+        "title": "Onde de CHOQ",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00",
-        "slug": "live"
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
       },
-      "track": "Maddie Bay — reves en hd",
+      "track": "Shinichi Atobe — Phase 2",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T20:46:09.995Z"
+      "checkedAt": "2026-09-29T23:25:54.152Z"
     }
   }
 }
