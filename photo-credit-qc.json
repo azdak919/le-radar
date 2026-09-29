@@ -1,23 +1,30 @@
 {
-  "updated": "2026-09-29T16:05:27.531Z",
+  "updated": "2026-09-29T19:41:07.665Z",
   "total": 188,
   "withImage": 177,
   "withCredit": 177,
-  "cited": 122,
-  "pending": 9,
+  "cited": 120,
+  "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 5,
+  "checked": 19,
+  "updatedCount": 10,
   "citedNew": 4,
-  "fallbackNew": 10,
+  "fallbackNew": 15,
   "samples": [
     {
-      "title": "Il faut le voir pour le croire",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Semaine de la vérité et de la réconciliation : « parler des choses malaisantes »",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Une course et une préparation réussies pour Anthony Dionne",
+      "source": "L'Exemplaire",
+      "credit": "Crédit photo : L'Exemplaire",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Le quotidien d’une chroniqueuse politique en pleine campagne électorale",
@@ -25,6 +32,34 @@
       "credit": "Crédit photo : L'Exemplaire",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Les sondages au cœur de la campagne électorale",
+      "source": "L'Exemplaire",
+      "credit": "Crédit photo : L'Exemplaire",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Kicking off the Montreal International Black Film Festival",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Jarry or Laurier? Debating Montreal’s best outdoor pool",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Concordia vs. McGill, Montreal’s biggest and best rivalry",
+      "source": "The Link",
+      "credit": "Photo : Nicolas Tremblay",
+      "cited": true,
+      "method": "figcaption"
     },
     {
       "title": "Victoryland: The Selfish Pursuit of Perfect Music",

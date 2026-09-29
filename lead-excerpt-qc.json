@@ -1,21 +1,30 @@
 {
-  "updated": "2026-09-29T15:59:40.972Z",
+  "updated": "2026-09-29T19:35:27.485Z",
   "total": 188,
-  "pool": 51,
-  "incomplete": 10,
-  "withLeadExcerpt": 93,
-  "candidates": 10,
-  "enriched": 1,
+  "pool": 53,
+  "incomplete": 11,
+  "withLeadExcerpt": 95,
+  "candidates": 11,
+  "enriched": 5,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Il faut le voir pour le croire",
-      "link": "https://www.delitfrancais.com/2026/09/16/il-faut-le-voir-pour-le-croire/",
+      "title": "Semaine de la vérité et de la réconciliation : « parler des choses malaisantes »",
+      "link": "https://lapige.atmjonquiere.com/2026/09/29/semaine-de-la-verite-et-de-la-reconciliation-parler-des-choses-malaisantes/?utm_source=rss&utm_medium=rss&utm_campaign=semaine-de-la-verite-et-de-la-reconciliation-parler-des-choses-malaisantes",
       "ok": true,
-      "score": 90,
-      "chars": 333,
-      "sample": "Or, la vidéo de la mort de Cisneros ne comportait aucun floutage et aucun avertissement. Pas une seu",
+      "score": 96,
+      "chars": 384,
+      "sample": "C’est l’élément central dont il a été question lors du dialogue interculturel entre Autochtones et n",
+      "changed": true
+    },
+    {
+      "title": "Le patrimoine religieux de Québec : un financement inégal",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/le-patrimoine-religieux-de-quebec-un-financement-inegal/",
+      "ok": true,
+      "score": 100,
+      "chars": 357,
+      "sample": "À l'occasion de la neuvième édition des Journées du Patrimoine religieux, plusieurs églises québécoi",
       "changed": true
     },
     {
@@ -31,28 +40,28 @@
       "title": "Un candidat pas comme les autres",
       "link": "https://www.exemplaire.com.ulaval.ca/actualites/un-candidat-pas-comme-les-autres/",
       "ok": true,
-      "score": 70,
-      "chars": 368,
+      "score": 75,
+      "chars": 393,
       "sample": "Style News Style News Se connecter Bienvenue ! Connectez-vous à votre compte : votre nom d'utilisate",
-      "changed": false
+      "changed": true
     },
     {
       "title": "Les jeunes au cœur des élections provinciales",
       "link": "https://www.exemplaire.com.ulaval.ca/actualites/les-jeunes-au-coeur-des-elections-provinciales/",
       "ok": true,
-      "score": 70,
-      "chars": 368,
+      "score": 75,
+      "chars": 393,
       "sample": "Style News Style News Se connecter Bienvenue ! Connectez-vous à votre compte : votre nom d'utilisate",
-      "changed": false
+      "changed": true
     },
     {
       "title": "Ce qui se joue derrière les discours politiques",
       "link": "https://www.exemplaire.com.ulaval.ca/actualites/ce-qui-se-joue-derriere-les-discours-politiques/",
       "ok": true,
-      "score": 70,
-      "chars": 368,
+      "score": 75,
+      "chars": 393,
       "sample": "Style News Style News Se connecter Bienvenue ! Connectez-vous à votre compte : votre nom d'utilisate",
-      "changed": false
+      "changed": true
     },
     {
       "title": "Les sondages au cœur de la campagne électorale",
@@ -70,15 +79,6 @@
       "score": 77,
       "chars": 400,
       "sample": "The final report by the McGill Provost’s Task Force on Indigenous Studies and Indigenous Education o",
-      "changed": false
-    },
-    {
-      "title": "Roundhouse Kicks",
-      "link": "https://www.mcgilldaily.com/2026/09/roundhouse-kicks/",
-      "ok": true,
-      "score": 66,
-      "chars": 399,
-      "sample": "On one of the few precious warm days before the frigid fall chill sets in, my dear friend and fellow",
       "changed": false
     }
   ]

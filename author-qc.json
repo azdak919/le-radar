@@ -1,10 +1,26 @@
 {
-  "updated": "2026-09-29T15:59:30.937Z",
+  "updated": "2026-09-29T19:35:01.446Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 5,
+  "mismatches": 7,
   "ok": true,
   "samples": [
+    {
+      "title": "Jarry or Laurier? Debating Montreal’s best outdoor pool",
+      "link": "https://thelinknewspaper.ca/article/16424",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Eliza Lee",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Concordia vs. McGill, Montreal’s biggest and best rivalry",
+      "link": "https://thelinknewspaper.ca/article/16421",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Colin van den Ameele",
+      "reason": "page-byline"
+    },
     {
       "title": "Editorial: The Link wants you to go vote!",
       "link": "https://thelinknewspaper.ca/article/16412",
@@ -46,5 +62,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 5
+  "fixed": 7
 }
