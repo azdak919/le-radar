@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-28T21:34:23.470Z",
+  "updatedAt": "2026-09-29T01:27:40.455Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
+      "current": null,
       "next": {
-        "title": "Femmes de l'ombre",
-        "source": "schedule-live",
-        "start": "18:30",
-        "end": "19:30",
-        "url": "https://chyz.ca/emission/femmes-de-lombre/"
+        "title": "Mardi Champ Gauche",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-28T21:33:55.533Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Les criquets crinqués",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-criquets-crinques"
-      },
-      "next": {
-        "title": "Les vinyles versatiles",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
-      },
-      "track": "",
-      "showTitle": "Les criquets crinqués",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T21:33:57.164Z"
+      "checkedAt": "2026-09-29T01:27:12.380Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Mono Fred (en stéréo)",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/mono-fred-en-stereo"
+      },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
+      "track": "",
+      "showTitle": "Mono Fred (en stéréo)",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-29T01:27:14.227Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "En Profondeur",
+        "title": "Underground Sounds",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "20:00",
+        "end": "22:00"
       },
       "next": {
-        "title": "Queercorps",
+        "title": "Drastic Plastic",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "22:00",
+        "end": "23:00"
       },
       "track": "",
-      "showTitle": "En Profondeur",
+      "showTitle": "Underground Sounds",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,59 +74,60 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T21:34:00.940Z"
+      "checkedAt": "2026-09-29T01:27:17.125Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Pressure Drop",
+        "title": "LEKTOR DECODER",
         "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-pressure-drop"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/lektor-decoder"
       },
       "next": {
-        "title": "Voice of the Voiceless",
+        "title": "Past Tense",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/past-tense"
       },
       "track": "",
-      "showTitle": "The Pressure Drop",
+      "showTitle": "LEKTOR DECODER",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T21:34:04.143Z"
+      "checkedAt": "2026-09-29T01:27:20.472Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Solénoïde",
+        "title": "Le terrain sportif",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "18:00"
+        "start": "20:00",
+        "end": "00:01"
       },
       "next": {
-        "title": "Ma radio Académia",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "20:00"
+        "title": "Les nuits CFAK",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Le terrain sportif",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T21:34:05.658Z"
+      "checkedAt": "2026-09-29T01:27:21.533Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +140,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Julia Holter — My Twin",
+      "track": "Natanya — FINDERS KEEPERS",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -155,7 +149,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-28T21:34:23.119Z"
+      "checkedAt": "2026-09-29T01:27:40.105Z"
     }
   }
 }
