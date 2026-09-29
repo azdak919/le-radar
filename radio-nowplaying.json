@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-09-29T12:49:04.427Z",
+  "updatedAt": "2026-09-29T14:13:52.053Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Mardi Champ Gauche",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Mardi Champ Gauche",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-29T12:48:24.750Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "450DB",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/450db"
-      },
-      "next": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "track": "",
-      "showTitle": "450DB",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T12:48:26.576Z"
+      "checkedAt": "2026-09-29T14:12:54.764Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Lentement mais sûrement",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/lentement-mais-surement"
+      },
+      "next": {
+        "title": "Les sentinelles de l'art",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+      },
+      "track": "",
+      "showTitle": "Lentement mais sûrement",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-29T14:12:56.204Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Tuesday Morning After Pt2",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Basa Basa",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Ecolibrium/Environment in Canada",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "Tuesday Morning After Pt2",
+      "showTitle": "Basa Basa",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T12:48:29.425Z"
+      "checkedAt": "2026-09-29T14:12:58.430Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hip's Time to Wake Hop",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
+        "title": "Democracy Now",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "next": {
-        "title": "At The Movies",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/at-the-movies"
+        "title": "Mirror Journal",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/mirror-journal"
       },
       "track": "",
-      "showTitle": "Hip's Time to Wake Hop",
+      "showTitle": "Democracy Now",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T12:48:44.238Z"
+      "checkedAt": "2026-09-29T14:13:32.753Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T12:48:45.086Z"
+      "checkedAt": "2026-09-29T14:13:33.985Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "12:00",
         "slug": "le-monde-dans-mes-oreilles"
       },
-      "track": "Confidence Man — Young London",
+      "track": "Loud Lary Ajust — Gruau",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T12:49:04.076Z"
+      "checkedAt": "2026-09-29T14:13:51.702Z"
     }
   }
 }
