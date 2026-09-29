@@ -1,12 +1,13 @@
 {
-  "checkedAt": "2026-09-28T01:35:41.201Z",
+  "checkedAt": "2026-09-29T02:33:44.579Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
+    "stable": 4,
     "drift": [
-      "cism"
+      "chyz",
+      "cjlo"
     ],
     "overhaul": [],
     "unreachable": []
@@ -14,8 +15,23 @@
   "stations": [
     {
       "id": "chyz",
-      "published": 39,
+      "published": 38,
       "fresh": 39,
+      "added": [
+        "mer 11:00–11:30 Question de savoir",
+        "mer 11:30–12:00 On en Parle"
+      ],
+      "removed": [
+        "mer 11:00–12:00 On en Parle"
+      ],
+      "changed": 3,
+      "ratio": 0.079,
+      "status": "drift"
+    },
+    {
+      "id": "cism",
+      "published": 110,
+      "fresh": 110,
       "added": [],
       "removed": [],
       "changed": 0,
@@ -23,24 +39,9 @@
       "status": "stable"
     },
     {
-      "id": "cism",
-      "published": 109,
-      "fresh": 110,
-      "added": [
-        "ven 16:00–17:00 Turbo Tannant",
-        "ven 17:00–19:00 OK Doomer"
-      ],
-      "removed": [
-        "ven 16:00–19:00 Pop Montréal en direct - Plants and Animals et Katie Moore"
-      ],
-      "changed": 3,
-      "ratio": 0.028,
-      "status": "drift"
-    },
-    {
       "id": "ckut",
-      "published": 100,
-      "fresh": 100,
+      "published": 101,
+      "fresh": 101,
       "added": [],
       "removed": [],
       "changed": 0,
@@ -49,13 +50,24 @@
     },
     {
       "id": "cjlo",
-      "published": 377,
-      "fresh": 377,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "published": 378,
+      "fresh": 379,
+      "added": [
+        "lun 00:00–00:30 Mo Ritmo Radio",
+        "mer 13:00–14:00 The Fluid Mosaic",
+        "jeu 11:00–12:00 Chi and Ri",
+        "jeu 20:00–21:00 Beatnik Boy: Mixtape",
+        "sam 17:00–18:00 CJLO's Alternative Mega Mix"
+      ],
+      "removed": [
+        "mer 13:00–14:00 Beatnik Boy: Mixtape",
+        "jeu 11:00–12:00 The Fluid Mosaic",
+        "jeu 20:00–21:00 Chi and Ri",
+        "sam 17:00–18:00 Mo' Ritmo Radio"
+      ],
+      "changed": 9,
+      "ratio": 0.024,
+      "status": "drift"
     },
     {
       "id": "cfak",
@@ -69,8 +81,8 @@
     },
     {
       "id": "choq",
-      "published": 22,
-      "fresh": 22,
+      "published": 21,
+      "fresh": 21,
       "added": [],
       "removed": [],
       "changed": 0,
