@@ -129,6 +129,18 @@ assert.ok(
 );
 assert.match(maintainYml, /quebec-university-backgrounds-data\.js/);
 assert.match(maintainYml, /sw-shell-lock\.json/);
+// Le bump empreinte photo-bank-data.js. S'il manque au détecteur de
+// changement ou au git add, le verrou part seul et le gate suivant
+// (sports, fraîcheur) casse. La boucle « dirty » ne fait que décider
+// d'appeler bank:sync ; elle n'a pas le verrou.
+let bankCommitLists = 0;
+for (const list of maintainYml.matchAll(/for f in ([^;]+); do/g)) {
+  if (!list[1].includes('sw-shell-lock.json')) continue;
+  bankCommitLists += 1;
+  assert.match(list[1], /data\/photo-bank\.json/, 'hebdo : data/photo-bank.json suit le verrou SW');
+  assert.match(list[1], /(?:^|\s)photo-bank-data\.js(?:\s|$)/, 'hebdo : photo-bank-data.js suit le verrou SW');
+}
+assert.equal(bankCommitLists, 2, 'hebdo : détecteur de changement et git add listent le verrou');
 
 const discoverYml = readFileSync(join(ROOT, '.github/workflows/discover-news-sources.yml'), 'utf8');
 const discoverFeedAt = discoverYml.indexOf('node scripts/generate-feed.js --update');
