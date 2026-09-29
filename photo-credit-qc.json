@@ -1,23 +1,30 @@
 {
-  "updated": "2026-09-29T01:35:24.649Z",
+  "updated": "2026-09-29T05:01:30.670Z",
   "total": 188,
   "withImage": 177,
   "withCredit": 177,
-  "cited": 123,
+  "cited": 122,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 11,
-  "updatedCount": 2,
-  "citedNew": 2,
-  "fallbackNew": 9,
+  "checked": 14,
+  "updatedCount": 6,
+  "citedNew": 4,
+  "fallbackNew": 10,
   "samples": [
+    {
+      "title": "Journée mondiale du droit à l’avortement : toujours besoin de protection",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Le quotidien d’une chroniqueuse politique en pleine campagne électorale",
       "source": "L'Exemplaire",
-      "credit": "Photo : Raphaël Bédard",
-      "cited": true,
-      "method": "figcaption-paren-kind"
+      "credit": "Crédit photo : L'Exemplaire",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Il faut le voir pour le croire",
@@ -25,6 +32,27 @@
       "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }
