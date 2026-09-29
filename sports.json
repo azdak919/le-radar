@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-29T10:42:48.959Z",
-  "fetchedAt": "2026-09-29T10:42:48.959Z",
+  "updated": "2026-09-29T16:56:18.985Z",
+  "fetchedAt": "2026-09-29T16:56:18.985Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-29T10:42:48.959Z"
+    "referenceDate": "2026-09-29T16:56:18.985Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -89,7 +89,7 @@
     {
       "leagueId": "campus-uqac",
       "label": "UQAC Inuk events",
-      "error": "read ECONNRESET"
+      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -5863,6 +5863,42 @@
           "priorSeason": false
         },
         {
+          "date": "2026-09-26",
+          "time": "13:00",
+          "opponent": "Limoilou",
+          "opponentCode": "LIM",
+          "home": true,
+          "scoreFor": 3,
+          "scoreAgainst": 13,
+          "result": "L",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "a9e6dd87-21a2-4daf-ac29-34ed9e89b8c1",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a9e6dd87-21a2-4daf-ac29-34ed9e89b8c1",
+          "opponentFullName": "Cégep Limoilou",
+          "opponentNickname": "Titans",
+          "opponentRegistryId": "limoilou",
+          "priorSeason": false
+        },
+        {
+          "date": "2026-09-26",
+          "time": "16:00",
+          "opponent": "Limoilou",
+          "opponentCode": "LIM",
+          "home": false,
+          "scoreFor": 4,
+          "scoreAgainst": 16,
+          "result": "L",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "6f330b7d-219b-4f9c-8fc0-5114f717cf81",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6f330b7d-219b-4f9c-8fc0-5114f717cf81",
+          "opponentFullName": "Cégep Limoilou",
+          "opponentNickname": "Titans",
+          "opponentRegistryId": "limoilou",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-23",
           "time": "19:30",
           "opponent": "Édouard-Montpetit",
@@ -6052,10 +6088,10 @@
       },
       "record": {
         "wins": 1,
-        "losses": 5,
+        "losses": 7,
         "draws": 0,
-        "played": 6,
-        "label": "1-5"
+        "played": 8,
+        "label": "1-7"
       },
       "source": "rseq-s1",
       "priority": 22,
@@ -7550,6 +7586,42 @@
           "priorSeason": false
         },
         {
+          "date": "2026-09-26",
+          "time": "13:00",
+          "opponent": "André-Laurendeau",
+          "opponentCode": "CAL",
+          "home": false,
+          "scoreFor": 13,
+          "scoreAgainst": 3,
+          "result": "W",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "a9e6dd87-21a2-4daf-ac29-34ed9e89b8c1",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a9e6dd87-21a2-4daf-ac29-34ed9e89b8c1",
+          "opponentFullName": "Cégep André-Laurendeau",
+          "opponentNickname": "Cheetahs",
+          "opponentRegistryId": "andre-laurendeau",
+          "priorSeason": false
+        },
+        {
+          "date": "2026-09-26",
+          "time": "16:00",
+          "opponent": "André-Laurendeau",
+          "opponentCode": "CAL",
+          "home": true,
+          "scoreFor": 16,
+          "scoreAgainst": 4,
+          "result": "W",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "6f330b7d-219b-4f9c-8fc0-5114f717cf81",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=6f330b7d-219b-4f9c-8fc0-5114f717cf81",
+          "opponentFullName": "Cégep André-Laurendeau",
+          "opponentNickname": "Cheetahs",
+          "opponentRegistryId": "andre-laurendeau",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-19",
           "time": "13:00",
           "opponent": "Dawson",
@@ -7736,11 +7808,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 6,
+        "wins": 8,
         "losses": 0,
         "draws": 0,
-        "played": 6,
-        "label": "6-0"
+        "played": 8,
+        "label": "8-0"
       },
       "source": "rseq-s1",
       "priority": 9,
