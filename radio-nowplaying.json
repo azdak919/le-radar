@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-29T14:13:52.053Z",
+  "updatedAt": "2026-09-29T15:49:01.412Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T14:12:54.764Z"
+      "checkedAt": "2026-09-29T15:48:21.411Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +48,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T14:12:56.204Z"
+      "checkedAt": "2026-09-29T15:48:23.367Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Basa Basa",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Ecolibrium/Environment in Canada",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00"
       },
+      "next": {
+        "title": "Universal Break",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "Basa Basa",
+      "showTitle": "Ecolibrium/Environment in Canada",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T14:12:58.430Z"
+      "checkedAt": "2026-09-29T15:48:26.116Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Democracy Now",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
-      },
-      "next": {
         "title": "Mirror Journal",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "11:00",
         "end": "12:00",
         "url": "http://www.cjlo.com/shows/mirror-journal"
       },
+      "next": {
+        "title": "World Beat News",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/world-beat-news"
+      },
       "track": "",
-      "showTitle": "Democracy Now",
+      "showTitle": "Mirror Journal",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T14:13:32.753Z"
+      "checkedAt": "2026-09-29T15:48:41.019Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,28 +126,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T14:13:33.985Z"
+      "checkedAt": "2026-09-29T15:48:42.426Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le Monde Dans Mes Oreilles",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00",
         "slug": "le-monde-dans-mes-oreilles"
       },
-      "track": "Loud Lary Ajust — Gruau",
-      "showTitle": "",
+      "next": {
+        "title": "L'UQAM en info",
+        "source": "api-live",
+        "start": "12:45",
+        "end": "13:30",
+        "slug": "uqam-en-info"
+      },
+      "track": "MDMO — Viktor-lazarov",
+      "showTitle": "Le Monde Dans Mes Oreilles",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T14:13:51.702Z"
+      "checkedAt": "2026-09-29T15:49:01.061Z"
     }
   }
 }
