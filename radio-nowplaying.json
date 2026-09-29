@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-29T08:26:53.426Z",
+  "updatedAt": "2026-09-29T12:49:04.427Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mardi Champ Gauche",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Mardi Champ Gauche",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T08:26:21.874Z"
+      "checkedAt": "2026-09-29T12:48:24.750Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "À l'horizon",
+        "title": "450DB",
         "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/a-lhorizon"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/450db"
       },
       "next": {
-        "title": "Le Séismix",
+        "title": "La collation",
         "source": "schedule",
-        "start": "05:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "track": "",
-      "showTitle": "À l'horizon",
+      "showTitle": "450DB",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T08:26:23.632Z"
+      "checkedAt": "2026-09-29T12:48:26.576Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Attik / Show For Children",
+        "title": "Tuesday Morning After Pt2",
         "source": "api-live",
-        "start": "03:00",
-        "end": "05:00"
+        "start": "08:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "The Beat Power Hour",
+        "title": "Basa Basa",
         "source": "api-live",
-        "start": "05:00",
-        "end": "07:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "track": "",
-      "showTitle": "Attik / Show For Children",
+      "showTitle": "Tuesday Morning After Pt2",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,72 +81,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T08:26:26.315Z"
+      "checkedAt": "2026-09-29T12:48:29.425Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Hip's Time to Wake Hop",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
       },
+      "next": {
+        "title": "At The Movies",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/at-the-movies"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Hip's Time to Wake Hop",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T08:26:28.679Z"
+      "checkedAt": "2026-09-29T12:48:44.238Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Palmarès CFAK",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "18:30"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "L'Aut'Rock",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "18:30",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T08:26:29.576Z"
+      "checkedAt": "2026-09-29T12:48:45.086Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Les rois de l'arène",
+        "title": "Le Monde Dans Mes Oreilles",
         "source": "api-live",
-        "start": "05:00",
-        "end": "07:00",
-        "slug": "les-rois-de-larene"
+        "start": "11:00",
+        "end": "12:00",
+        "slug": "le-monde-dans-mes-oreilles"
       },
-      "track": "Protomartyr — Sounds We Cannot Hear",
+      "track": "Confidence Man — Young London",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-29T08:26:53.076Z"
+      "checkedAt": "2026-09-29T12:49:04.076Z"
     }
   }
 }
