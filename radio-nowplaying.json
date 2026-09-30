@@ -1,54 +1,61 @@
 {
-  "updatedAt": "2026-09-30T19:18:25.902Z",
+  "updatedAt": "2026-09-30T20:31:04.960Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
+        "source": "api-live",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T19:17:28.948Z"
+      "checkedAt": "2026-09-30T20:30:37.320Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Vibrance: voyage dance vers Montréal et ailleurs",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/vibrance"
-      },
-      "next": {
         "title": "Le cours de math",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "https://cism893.ca/emissions/le-cours-de-math"
       },
+      "next": {
+        "title": "Feu | Metal | Chaos",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/feu-metal-chaos"
+      },
       "track": "",
-      "showTitle": "Vibrance: voyage dance vers Montréal et ailleurs",
+      "showTitle": "Le cours de math",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T19:17:30.464Z"
+      "checkedAt": "2026-09-30T20:30:39.337Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T19:17:32.940Z"
+      "checkedAt": "2026-09-30T20:30:42.138Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Patch Notes",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/patch-notes"
-      },
-      "next": {
         "title": "Borderline",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/borderline"
       },
+      "next": {
+        "title": "Advice By The Fireplace",
+        "source": "schedule-live",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
+      },
       "track": "",
-      "showTitle": "Patch Notes",
+      "showTitle": "Borderline",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T19:18:07.262Z"
+      "checkedAt": "2026-09-30T20:30:45.376Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +133,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T19:18:08.336Z"
+      "checkedAt": "2026-09-30T20:30:46.753Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
-      },
+      "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
         "source": "api-live",
@@ -145,15 +146,15 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Générique Palmares",
-      "showTitle": "Palmarès CHOQ.ca",
+      "track": "Webster — Retour à LLand",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T19:18:25.551Z"
+      "checkedAt": "2026-09-30T20:31:04.610Z"
     }
   }
 }
