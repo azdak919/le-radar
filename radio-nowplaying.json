@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-09-30T08:51:43.181Z",
+  "updatedAt": "2026-09-30T12:34:03.067Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mercredi Bonbon",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
+      "next": {
+        "title": "Conduite Antisportive",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://chyz.ca/emission/conduite-antisportive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Mercredi Bonbon",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T08:51:04.244Z"
+      "checkedAt": "2026-09-30T12:33:26.219Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ailleurs: escales en musique",
+        "title": "Club classique",
         "source": "schedule",
-        "start": "04:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/ailleurs-en-musique"
+        "start": "07:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/club-classique"
       },
       "next": {
-        "title": "Le Séismix",
+        "title": "La collation",
         "source": "schedule",
-        "start": "05:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "track": "",
-      "showTitle": "Ailleurs: escales en musique",
+      "showTitle": "Club classique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T08:51:05.843Z"
+      "checkedAt": "2026-09-30T12:33:27.705Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Full Circle",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "The Wednesday Morning After",
         "source": "api-live",
         "start": "07:00",
         "end": "09:00"
       },
+      "next": {
+        "title": "The Sleepy King/Terminal 5",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Full Circle",
+      "showTitle": "The Wednesday Morning After",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +81,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T08:51:08.753Z"
+      "checkedAt": "2026-09-30T12:33:29.890Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "Morning Electro-shock",
+        "title": "Are We There Yet?",
         "source": "schedule-live",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/morning-electro-shock"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/are-we-there-yet"
       },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T08:51:23.754Z"
+      "checkedAt": "2026-09-30T12:33:43.912Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Palmarès CFAK",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "Le popcorn de l'infini",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "14:00",
+        "end": "00:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T08:51:24.682Z"
+      "checkedAt": "2026-09-30T12:33:44.963Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Moiré — Maree Haute",
+      "track": "Grace Carter — Bittersweet Escape",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T08:51:42.830Z"
+      "checkedAt": "2026-09-30T12:34:02.717Z"
     }
   }
 }
