@@ -1,10 +1,18 @@
 {
-  "updated": "2026-09-30T01:21:23.890Z",
+  "updated": "2026-09-30T04:44:07.785Z",
   "total": 188,
   "withAuthor": 188,
-  "mismatches": 5,
+  "mismatches": 6,
   "ok": true,
   "samples": [
+    {
+      "title": "Democracy Now: Upcoming Quebec Elections",
+      "link": "https://theplantnews.com/2026/09/29/democracy-now-upcoming-quebec-elections/",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Atika Ume Fazal",
+      "reason": "page-byline"
+    },
     {
       "title": "Editorial: The Link wants you to go vote!",
       "link": "https://thelinknewspaper.ca/article/16412",
@@ -46,5 +54,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 5
+  "fixed": 6
 }

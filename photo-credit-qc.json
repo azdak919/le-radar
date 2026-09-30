@@ -1,23 +1,30 @@
 {
-  "updated": "2026-09-30T01:28:05.628Z",
+  "updated": "2026-09-30T04:51:00.831Z",
   "total": 188,
   "withImage": 177,
   "withCredit": 177,
-  "cited": 122,
+  "cited": 121,
   "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 11,
-  "updatedCount": 1,
+  "checked": 12,
+  "updatedCount": 2,
   "citedNew": 1,
-  "fallbackNew": 10,
+  "fallbackNew": 11,
   "samples": [
     {
-      "title": "Le quotidien d’une chroniqueuse politique en pleine campagne électorale",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Raphaël Bédard",
+      "title": "Democracy Now: Upcoming Quebec Elections",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Victoire de l’AFD en Saxe-Anhalt",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
-      "method": "figcaption-paren-kind"
+      "method": "media-credit-featured"
     }
   ]
 }
