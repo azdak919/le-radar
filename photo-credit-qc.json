@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-30T15:44:45.686Z",
+  "updated": "2026-09-30T16:04:43.380Z",
   "total": 188,
   "withImage": 177,
   "withCredit": 177,
@@ -7,17 +7,17 @@
   "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 23,
-  "updatedCount": 14,
-  "citedNew": 12,
+  "checked": 16,
+  "updatedCount": 6,
+  "citedNew": 5,
   "fallbackNew": 11,
   "samples": [
     {
-      "title": "Huîtres, drogues et les tournants de la vie",
+      "title": "Manifestation anti-IA à Montréal",
       "source": "Le Délit",
-      "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Héloïse Durning",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "Aux urnes !",
@@ -27,74 +27,32 @@
       "method": null
     },
     {
-      "title": "Qui est l’artiste préféré de ton artiste préféré ?",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "title": "McGill’s 25th Annual Powwow",
+      "source": "The McGill Daily",
+      "credit": "Photo : Images courtesy of Parker Russell",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "The era of the i Pad baby",
-      "source": "The Link",
-      "credit": "Illustration: Lauren McCarthy",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Nooran Rezayi : un an plus tard",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Moitié moins cher, mais pour qui?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "title": "Leave the Children Out of This",
+      "source": "The Plant",
+      "credit": "Photo: My Little Princess (2011)",
       "cited": true,
-      "method": "media-credit-near"
+      "method": "via-attribution"
     },
     {
-      "title": "408 – 9 : Les étudiants ont parlé",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "title": "Une jeune candidate qui n’a pas froid aux yeux",
+      "source": "Exil",
+      "credit": "Photo : Alexia Lehouillier-Berthiaume",
       "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Votre argent dort peut-être chez Revenu",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Quand l’art fait frémir l’âme",
-      "source": "Le Délit",
-      "credit": "Photo : Photo fournie par le Musée d'art Mori, Sunhi Mang",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Parler ou se taire, lorsque le langage divise",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-near"
-    },
-    {
-      "title": "Quand utilisation devient appropriation",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Une épidémie de solitude masculine, vraiment ?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier l Le Délit",
-      "cited": true,
-      "method": "media-credit-featured"
+      "method": "body-line"
     }
   ]
 }

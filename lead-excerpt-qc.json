@@ -1,23 +1,14 @@
 {
-  "updated": "2026-09-30T15:38:11.681Z",
+  "updated": "2026-09-30T15:59:27.156Z",
   "total": 188,
   "pool": 55,
-  "incomplete": 19,
+  "incomplete": 13,
   "withLeadExcerpt": 95,
-  "candidates": 19,
-  "enriched": 12,
+  "candidates": 13,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Une épidémie de solitude masculine, vraiment ?",
-      "link": "https://www.delitfrancais.com/2026/09/30/une-epidemie-de-solitude-masculine-vraiment/",
-      "ok": true,
-      "score": 100,
-      "chars": 333,
-      "sample": "Ce phénomène purement médiatique a été popularisé en 2023, à la suite d’un rapport émis par le gouve",
-      "changed": true
-    },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "link": "https://www.delitfrancais.com/2026/09/30/rouge-dune-part-blanche-de-lautre/",
@@ -25,15 +16,15 @@
       "score": 82,
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
-      "changed": true
+      "changed": false
     },
     {
-      "title": "Affaire Thélyson Orélien : une chasse aux sorcières ?",
-      "link": "https://www.delitfrancais.com/2026/09/30/affaire-thelyson-orelien-une-chasse-aux-sorcieres/",
+      "title": "Manifestation anti-IA à Montréal",
+      "link": "https://www.delitfrancais.com/2026/09/23/manifestation-anti-ia-a-montreal/",
       "ok": true,
-      "score": 96,
-      "chars": 233,
-      "sample": "Thélyson Orélien. Aujourd’hui, même ceux qui ignorent tout de la littérature connaissent son nom. En",
+      "score": 94,
+      "chars": 249,
+      "sample": "La possibilité qui revient le plus est celle d’une extinction humaine après le développement d’une s",
       "changed": true
     },
     {
@@ -43,25 +34,7 @@
       "score": 72,
       "chars": 399,
       "sample": "Et si on pouvait tout d’un coup s’évader de notre vie actuelle et entamer un nouveau parcours ? C’es",
-      "changed": true
-    },
-    {
-      "title": "Aux urnes !",
-      "link": "https://www.delitfrancais.com/2026/09/30/aux-urnes/",
-      "ok": true,
-      "score": 100,
-      "chars": 400,
-      "sample": "Au Québec, en 2022, la participation électorale autochtone est enregistrée à 14,66 %, soit environ 4",
-      "changed": true
-    },
-    {
-      "title": "Qui est l’artiste préféré de ton artiste préféré ?",
-      "link": "https://www.delitfrancais.com/2026/09/30/qui-est-lartiste-prefere-de-ton-artiste-prefere/",
-      "ok": true,
-      "score": 96,
-      "chars": 398,
-      "sample": "De façon plus évidente qu’on ne le pense, les goûts musicaux de chacun se reflètent dans leurs créat",
-      "changed": true
+      "changed": false
     },
     {
       "title": "The era of the i Pad baby",
@@ -70,16 +43,43 @@
       "score": 96,
       "chars": 400,
       "sample": "\"Back when I was a kid, we used to play outside and discover the world. You know, live life. Kids no",
-      "changed": true
+      "changed": false
     },
     {
-      "title": "Moitié moins cher, mais pour qui?",
-      "link": "https://www.delitfrancais.com/2026/09/30/moitie-moins-cher-mais-pour-qui/",
+      "title": "Votre argent dort peut-être chez Revenu",
+      "link": "https://www.delitfrancais.com/2026/09/30/votre-argent-dort-peut-etre-chez-revenu/",
+      "ok": true,
+      "score": 87,
+      "chars": 400,
+      "sample": "Dans son budget 2021–2022 , Québec prévoyait rapatrier dans ses coffres un milliard de dollars en pr",
+      "changed": false
+    },
+    {
+      "title": "Quand utilisation devient appropriation",
+      "link": "https://www.delitfrancais.com/2026/09/30/quand-utilisation-devient-appropriation/",
+      "ok": true,
+      "score": 76,
+      "chars": 400,
+      "sample": "La plupart des termes qu’on pourrait qualifier d’argot queer, et qui sont utilisés aujourd’hui, prov",
+      "changed": false
+    },
+    {
+      "title": "Moins de déchets grâce au compost à Saguenay",
+      "link": "https://lapige.atmjonquiere.com/2026/09/28/moins-de-dechets-grace-au-compost-a-saguenay/?utm_source=rss&utm_medium=rss&utm_campaign=moins-de-dechets-grace-au-compost-a-saguenay",
       "ok": true,
       "score": 100,
-      "chars": 255,
-      "sample": "La distinction compte particulièrement à McGill. Si seul le tarif québécois de base était réduit, un",
-      "changed": true
+      "chars": 400,
+      "sample": "Depuis quatre ans, le nombre de déchets envoyés au site d’enfouissement a nettement diminué à Saguen",
+      "changed": false
+    },
+    {
+      "title": "Un candidat pas comme les autres",
+      "link": "https://www.exemplaire.com.ulaval.ca/actualites/un-candidat-pas-comme-les-autres/",
+      "ok": true,
+      "score": 70,
+      "chars": 366,
+      "sample": "Style News Style News Se connecter Bienvenue ! Connectez-vous à votre compte : votre nom d'utilisate",
+      "changed": false
     }
   ]
 }
