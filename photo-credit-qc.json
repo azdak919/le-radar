@@ -1,58 +1,23 @@
 {
-  "updated": "2026-09-29T23:32:28.716Z",
+  "updated": "2026-09-30T01:28:05.628Z",
   "total": 188,
   "withImage": 177,
   "withCredit": 177,
-  "cited": 121,
+  "cited": 122,
   "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 6,
-  "citedNew": 4,
-  "fallbackNew": 12,
+  "checked": 11,
+  "updatedCount": 1,
+  "citedNew": 1,
+  "fallbackNew": 10,
   "samples": [
-    {
-      "title": "Le RADIS nourrit à petits prix",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Mobilisation étudiante massive à l’Université Laval pour le débat des candidats de Jean-Talon",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Juliette Kot / L'Exemplaire",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
     {
       "title": "Le quotidien d’une chroniqueuse politique en pleine campagne électorale",
       "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
-      "source": "The McGill Daily",
-      "credit": "Photo : Meg Ha",
+      "credit": "Photo : Raphaël Bédard",
       "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
+      "method": "figcaption-paren-kind"
     }
   ]
 }

@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-29T23:27:49.272Z",
+  "updated": "2026-09-30T01:21:34.651Z",
   "total": 188,
   "pool": 55,
   "incomplete": 8,
   "withLeadExcerpt": 94,
   "candidates": 8,
-  "enriched": 2,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -16,7 +16,7 @@
       "score": 100,
       "chars": 400,
       "sample": "Depuis quatre ans, le nombre de déchets envoyés au site d’enfouissement a nettement diminué à Saguen",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Un candidat pas comme les autres",
@@ -79,7 +79,7 @@
       "score": 100,
       "chars": 400,
       "sample": "34,55 $ : le prix d’une entrée de poulet karaage et d’un ramen végan épicé, pourboire de 20 % compri",
-      "changed": true
+      "changed": false
     }
   ]
 }
