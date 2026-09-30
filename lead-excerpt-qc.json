@@ -1,30 +1,21 @@
 {
-  "updated": "2026-09-30T04:44:34.178Z",
+  "updated": "2026-09-30T06:45:37.226Z",
   "total": 188,
   "pool": 56,
-  "incomplete": 10,
+  "incomplete": 9,
   "withLeadExcerpt": 95,
-  "candidates": 10,
-  "enriched": 2,
+  "candidates": 9,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
     {
-      "title": "Victoire de l’AFD en Saxe-Anhalt",
-      "link": "https://www.delitfrancais.com/2026/09/16/victoire-de-lafd-en-saxe-anhalt/",
-      "ok": true,
-      "score": 96,
-      "chars": 400,
-      "sample": "Montée des extrêmes telle que celle déjà observée et largement décrite ailleurs en Europe ? Ou réel ",
-      "changed": true
-    },
-    {
-      "title": "Democracy Now: Upcoming Quebec Elections",
-      "link": "https://theplantnews.com/2026/09/29/democracy-now-upcoming-quebec-elections/",
+      "title": "Nouvelle étape dans le parcours électoral",
+      "link": "https://www.delitfrancais.com/2026/09/16/nouvelle-etape-dans-le-parcours-electoral/",
       "ok": true,
       "score": 100,
-      "chars": 322,
-      "sample": "For the past 8 years, the Coalition Avenir Quebec (CAQ) has been winning decisive victories. In 2018",
+      "chars": 379,
+      "sample": "La salle de bal du Centre universitaire de McGill a ouvert ses portes le jeudi 10 septembre pour un ",
       "changed": true
     },
     {
@@ -79,6 +70,15 @@
       "score": 66,
       "chars": 399,
       "sample": "On one of the few precious warm days before the frigid fall chill sets in, my dear friend and fellow",
+      "changed": false
+    },
+    {
+      "title": "A display of intersectionality through artistry",
+      "link": "https://thelinknewspaper.ca/article/16426",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "French-Senegalese soul and R&B artist anaiis brought her forthcoming album Devotion & The Black Divi",
       "changed": false
     }
   ]
