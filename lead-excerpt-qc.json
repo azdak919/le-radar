@@ -1,23 +1,14 @@
 {
-  "updated": "2026-09-30T08:55:55.968Z",
+  "updated": "2026-09-30T10:32:35.722Z",
   "total": 188,
   "pool": 56,
-  "incomplete": 9,
-  "withLeadExcerpt": 95,
-  "candidates": 9,
-  "enriched": 1,
+  "incomplete": 8,
+  "withLeadExcerpt": 94,
+  "candidates": 8,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Il faut le voir pour le croire",
-      "link": "https://www.delitfrancais.com/2026/09/16/il-faut-le-voir-pour-le-croire/",
-      "ok": true,
-      "score": 90,
-      "chars": 333,
-      "sample": "Or, la vidéo de la mort de Cisneros ne comportait aucun floutage et aucun avertissement. Pas une seu",
-      "changed": true
-    },
     {
       "title": "Moins de déchets grâce au compost à Saguenay",
       "link": "https://lapige.atmjonquiere.com/2026/09/28/moins-de-dechets-grace-au-compost-a-saguenay/?utm_source=rss&utm_medium=rss&utm_campaign=moins-de-dechets-grace-au-compost-a-saguenay",
@@ -79,6 +70,15 @@
       "score": 96,
       "chars": 400,
       "sample": "French-Senegalese soul and R&B artist anaiis brought her forthcoming album Devotion & The Black Divi",
+      "changed": false
+    },
+    {
+      "title": "Les mardis au centre-ville",
+      "link": "https://lecollectif.ca/culture/les-mardis-au-centre-ville/",
+      "ok": true,
+      "score": 100,
+      "chars": 400,
+      "sample": "34,55 $ : le prix d’une entrée de poulet karaage et d’un ramen végan épicé, pourboire de 20 % compri",
       "changed": false
     }
   ]

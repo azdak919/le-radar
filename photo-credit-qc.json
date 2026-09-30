@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-30T09:02:23.396Z",
+  "updated": "2026-09-30T10:36:55.809Z",
   "total": 188,
   "withImage": 177,
   "withCredit": 177,
@@ -7,22 +7,29 @@
   "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 12,
-  "updatedCount": 2,
+  "checked": 13,
+  "updatedCount": 3,
   "citedNew": 2,
-  "fallbackNew": 10,
+  "fallbackNew": 11,
   "samples": [
+    {
+      "title": "Un an du Club DD’s",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
     {
       "title": "Le quotidien d’une chroniqueuse politique en pleine campagne électorale",
       "source": "L'Exemplaire",
-      "credit": "Photo : Raphaël Bédard",
-      "cited": true,
-      "method": "figcaption-paren-kind"
+      "credit": "Crédit photo : L'Exemplaire",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Il faut le voir pour le croire",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
       "cited": true,
       "method": "media-credit-featured"
     }
