@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-29T20:17:46.956Z",
+  "updated": "2026-09-30T00:52:57.550Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -3049,12 +3049,24 @@
       "via": "save-page-now",
       "source": "La Pige",
       "snapshot": "https://web.archive.org/web/20260929201238/https://lapige.atmjonquiere.com/2026/09/28/journee-mondiale-du-droit-a-lavortement-toujours-besoin-de-protection/"
+    },
+    "https://lapige.atmjonquiere.com/2026/09/29/semaine-de-la-verite-et-de-la-reconciliation-parler-des-choses-malaisantes/": {
+      "at": "2026-09-30T00:45:57.344Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20260930004542/https://lapige.atmjonquiere.com/2026/09/29/semaine-de-la-verite-et-de-la-reconciliation-parler-des-choses-malaisantes/"
+    },
+    "https://thelinknewspaper.ca/article/16421": {
+      "at": "2026-09-30T00:51:41.807Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20260930005122/https://thelinknewspaper.ca/article/16421"
     }
   },
   "stats": {
-    "total": 539,
+    "total": 541,
     "lastRun": {
-      "saved": 1,
+      "saved": 2,
       "skipped": 0,
       "failed": 12,
       "stoppedEarly": false
@@ -3109,12 +3121,12 @@
     "Zone Campus": {
       "host": "zonecampus.ca",
       "pages": 18,
-      "checkedAt": "2026-09-22T23:47:09.913Z"
+      "checkedAt": "2026-09-30T00:45:00.069Z"
     },
     "Exil": {
       "host": "exilecvm.wordpress.com",
       "pages": 1,
-      "checkedAt": "2026-09-22T23:47:10.718Z"
+      "checkedAt": "2026-09-30T00:45:18.412Z"
     },
     "The Campus": {
       "host": "thebucampus.ca",
@@ -3124,7 +3136,8 @@
     "Le Délit": {
       "host": "www.delitfrancais.com",
       "pages": 136,
-      "checkedAt": "2026-09-22T23:47:09.166Z"
+      "checkedAt": "2026-09-22T23:47:09.166Z",
+      "stale": true
     },
     "Le Polyscope": {
       "host": "www.polyscope.qc.ca",
