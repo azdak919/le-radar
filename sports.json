@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-29T23:58:07.797Z",
-  "fetchedAt": "2026-09-29T23:58:07.797Z",
+  "updated": "2026-09-30T04:42:30.313Z",
+  "fetchedAt": "2026-09-30T04:42:30.313Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-29T23:58:07.798Z"
+    "referenceDate": "2026-09-30T04:42:30.313Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -80654,6 +80654,23 @@
       "leagueLabel": "Soccer collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-29",
+          "time": "19:30",
+          "opponent": "Granby",
+          "opponentCode": "GBY",
+          "home": false,
+          "scoreFor": 1,
+          "scoreAgainst": 3,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "5482bd55-c2b9-4182-893a-fdd2cc21386b",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5482bd55-c2b9-4182-893a-fdd2cc21386b",
+          "opponentFullName": "Cégep de Granby",
+          "opponentRegistryId": "granby",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-25",
           "time": "18:30",
           "opponent": "Cégep de Sherbrooke",
@@ -80741,20 +80758,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-25",
-        "time": "18:30",
-        "opponent": "Cégep de Sherbrooke",
-        "opponentCode": "SHE",
+        "date": "2026-09-29",
+        "time": "19:30",
+        "opponent": "Granby",
+        "opponentCode": "GBY",
         "home": false,
-        "scoreFor": 0,
-        "scoreAgainst": 8,
+        "scoreFor": 1,
+        "scoreAgainst": 3,
         "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "84fda874-8ac1-49bd-944c-82e50ee359f9",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=84fda874-8ac1-49bd-944c-82e50ee359f9",
-        "opponentFullName": "Cégep de Sherbrooke",
-        "opponentRegistryId": "cegep-sherbrooke",
+        "gameId": "5482bd55-c2b9-4182-893a-fdd2cc21386b",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5482bd55-c2b9-4182-893a-fdd2cc21386b",
+        "opponentFullName": "Cégep de Granby",
+        "opponentRegistryId": "granby",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -80804,10 +80821,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 5,
+        "losses": 6,
         "draws": 0,
-        "played": 5,
-        "label": "0-5"
+        "played": 6,
+        "label": "0-6"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -80829,6 +80846,23 @@
       "usports": false,
       "leagueLabel": "Soccer collégial masculin D2",
       "results": [
+        {
+          "date": "2026-09-29",
+          "time": "19:30",
+          "opponent": "Drummondville",
+          "opponentCode": "DRU",
+          "home": true,
+          "scoreFor": 3,
+          "scoreAgainst": 1,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "5482bd55-c2b9-4182-893a-fdd2cc21386b",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5482bd55-c2b9-4182-893a-fdd2cc21386b",
+          "opponentFullName": "Cégep de Drummondville",
+          "opponentRegistryId": "drummondville",
+          "priorSeason": false
+        },
         {
           "date": "2026-09-26",
           "time": "19:00",
@@ -80900,20 +80934,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-26",
-        "time": "19:00",
-        "opponent": "Victoriaville",
-        "opponentCode": "VIC",
+        "date": "2026-09-29",
+        "time": "19:30",
+        "opponent": "Drummondville",
+        "opponentCode": "DRU",
         "home": true,
-        "scoreFor": 1,
+        "scoreFor": 3,
         "scoreAgainst": 1,
-        "result": "D",
+        "result": "W",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "989bb80f-d2f5-4334-9072-98b704d72701",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=989bb80f-d2f5-4334-9072-98b704d72701",
-        "opponentFullName": "Cégep de Victoriaville",
-        "opponentRegistryId": "victoriaville",
+        "gameId": "5482bd55-c2b9-4182-893a-fdd2cc21386b",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5482bd55-c2b9-4182-893a-fdd2cc21386b",
+        "opponentFullName": "Cégep de Drummondville",
+        "opponentRegistryId": "drummondville",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -80974,11 +81008,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 2,
+        "wins": 3,
         "losses": 1,
         "draws": 1,
-        "played": 4,
-        "label": "2-1-1"
+        "played": 5,
+        "label": "3-1-1"
       },
       "source": "rseq-s1",
       "priority": 80,
