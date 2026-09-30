@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-30T00:52:57.550Z",
+  "updated": "2026-09-30T10:00:55.047Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -3066,10 +3066,10 @@
   "stats": {
     "total": 541,
     "lastRun": {
-      "saved": 2,
+      "saved": 0,
       "skipped": 0,
-      "failed": 12,
-      "stoppedEarly": false
+      "failed": 4,
+      "stoppedEarly": true
     }
   },
   "sources": {
@@ -3131,13 +3131,13 @@
     "The Campus": {
       "host": "thebucampus.ca",
       "pages": 4,
-      "checkedAt": "2026-09-23T08:48:57.986Z"
+      "checkedAt": "2026-09-23T08:48:57.986Z",
+      "stale": true
     },
     "Le Délit": {
       "host": "www.delitfrancais.com",
       "pages": 136,
-      "checkedAt": "2026-09-22T23:47:09.166Z",
-      "stale": true
+      "checkedAt": "2026-09-30T09:59:09.093Z"
     },
     "Le Polyscope": {
       "host": "www.polyscope.qc.ca",
