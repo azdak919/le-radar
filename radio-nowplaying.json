@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-30T12:34:03.067Z",
+  "updatedAt": "2026-09-30T13:40:56.552Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T12:33:26.219Z"
+      "checkedAt": "2026-09-30T13:39:58.958Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique",
-        "source": "schedule",
-        "start": "07:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/club-classique"
-      },
-      "next": {
         "title": "La collation",
         "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "https://cism893.ca/emissions/mix-collation"
       },
+      "next": {
+        "title": "La 13",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/la-13e"
+      },
       "track": "",
-      "showTitle": "Club classique",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T12:33:27.705Z"
+      "checkedAt": "2026-09-30T13:40:00.507Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Wednesday Morning After",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "The Sleepy King/Terminal 5",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Free City Radio",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "11:30"
+      },
       "track": "",
-      "showTitle": "The Wednesday Morning After",
+      "showTitle": "The Sleepy King/Terminal 5",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T12:33:29.890Z"
+      "checkedAt": "2026-09-30T13:40:02.931Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
         "title": "Are We There Yet?",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/are-we-there-yet"
       },
+      "next": {
+        "title": "Democracy Now",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
+      },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Are We There Yet?",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T12:33:43.912Z"
+      "checkedAt": "2026-09-30T13:40:37.583Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T12:33:44.963Z"
+      "checkedAt": "2026-09-30T13:40:38.826Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Grace Carter — Bittersweet Escape",
+      "track": "BADBADNOTGOOD — Can't Leave the Night",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T12:34:02.717Z"
+      "checkedAt": "2026-09-30T13:40:56.202Z"
     }
   }
 }
