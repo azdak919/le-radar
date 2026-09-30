@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-09-30T13:40:56.552Z",
+  "updatedAt": "2026-09-30T15:35:58.468Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Mercredi Bonbon",
+        "title": "On en Parle",
         "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mercredi-bonbon/"
+        "start": "11:30",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/on-en-parle/"
       },
       "next": {
-        "title": "Conduite Antisportive",
+        "title": "ON EST OÙ LÀ?",
         "source": "schedule-live",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://chyz.ca/emission/conduite-antisportive/"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://chyz.ca/emission/entre-nous/"
       },
       "track": "",
-      "showTitle": "Mercredi Bonbon",
+      "showTitle": "On en Parle",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,87 +28,81 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T13:39:58.958Z"
+      "checkedAt": "2026-09-30T15:35:16.906Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La collation",
+        "title": "À la loupe du droit",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/a-la-loupe-du-droit"
       },
       "next": {
-        "title": "La 13",
+        "title": "La carte cadeau",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/la-13e"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
       "track": "",
-      "showTitle": "La collation",
+      "showTitle": "À la loupe du droit",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T13:40:00.507Z"
+      "checkedAt": "2026-09-30T15:35:19.625Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
-      "current": {
-        "title": "The Sleepy King/Terminal 5",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
+      "current": null,
       "next": {
-        "title": "Free City Radio",
+        "title": "If You Got Ears",
         "source": "api-live",
-        "start": "11:00",
-        "end": "11:30"
+        "start": "12:00",
+        "end": "14:00"
       },
-      "track": "",
-      "showTitle": "The Sleepy King/Terminal 5",
+      "track": "ffiles",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T13:40:02.931Z"
+      "checkedAt": "2026-09-30T15:35:22.761Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Are We There Yet?",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/are-we-there-yet"
+        "title": "Code Switch",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/code-switch"
       },
       "next": {
-        "title": "Democracy Now",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "title": "North-South Hockey",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/north-south-hockey"
       },
       "track": "",
-      "showTitle": "Are We There Yet?",
+      "showTitle": "Code Switch",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T13:40:37.583Z"
+      "checkedAt": "2026-09-30T15:35:38.265Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +127,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T13:40:38.826Z"
+      "checkedAt": "2026-09-30T15:35:40.186Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +140,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "BADBADNOTGOOD — Can't Leave the Night",
+      "track": "Kelsey Lu — Running To Pain",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +148,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T13:40:56.202Z"
+      "checkedAt": "2026-09-30T15:35:58.117Z"
     }
   }
 }
