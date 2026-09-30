@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-30T08:52:59.751Z",
+  "updated": "2026-09-30T09:02:23.396Z",
   "total": 188,
   "withImage": 177,
   "withCredit": 177,
@@ -7,17 +7,17 @@
   "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 5,
-  "citedNew": 4,
-  "fallbackNew": 11,
+  "checked": 12,
+  "updatedCount": 2,
+  "citedNew": 2,
+  "fallbackNew": 10,
   "samples": [
     {
       "title": "Le quotidien d’une chroniqueuse politique en pleine campagne électorale",
       "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Raphaël Bédard",
+      "cited": true,
+      "method": "figcaption-paren-kind"
     },
     {
       "title": "Il faut le voir pour le croire",
@@ -25,27 +25,6 @@
       "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
-      "source": "The McGill Daily",
-      "credit": "Photo : Meg Ha",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Leave the Children Out of This",
-      "source": "The Plant",
-      "credit": "Photo: My Little Princess (2011)",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Une jeune candidate qui n’a pas froid aux yeux",
-      "source": "Exil",
-      "credit": "Photo : Alexia Lehouillier-Berthiaume",
-      "cited": true,
-      "method": "body-line"
     }
   ]
 }
