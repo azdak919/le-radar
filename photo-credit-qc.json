@@ -1,35 +1,98 @@
 {
-  "updated": "2026-09-30T10:36:55.809Z",
+  "updated": "2026-09-30T15:44:45.686Z",
   "total": 188,
   "withImage": 177,
   "withCredit": 177,
   "cited": 120,
-  "pending": 10,
+  "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 3,
-  "citedNew": 2,
+  "checked": 23,
+  "updatedCount": 14,
+  "citedNew": 12,
   "fallbackNew": 11,
   "samples": [
     {
-      "title": "Un an du Club DD’s",
+      "title": "Huîtres, drogues et les tournants de la vie",
+      "source": "Le Délit",
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Aux urnes !",
+      "source": "Le Délit",
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Qui est l’artiste préféré de ton artiste préféré ?",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "The era of the i Pad baby",
+      "source": "The Link",
+      "credit": "Illustration: Lauren McCarthy",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Nooran Rezayi : un an plus tard",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Moitié moins cher, mais pour qui?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-near"
+    },
+    {
+      "title": "408 – 9 : Les étudiants ont parlé",
       "source": "Le Délit",
       "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Le quotidien d’une chroniqueuse politique en pleine campagne électorale",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
+      "title": "Votre argent dort peut-être chez Revenu",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
-      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
-      "source": "The McGill Daily",
-      "credit": "Photo : Meg Ha",
+      "title": "Quand l’art fait frémir l’âme",
+      "source": "Le Délit",
+      "credit": "Photo : Photo fournie par le Musée d'art Mori, Sunhi Mang",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Parler ou se taire, lorsque le langage divise",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-near"
+    },
+    {
+      "title": "Quand utilisation devient appropriation",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Une épidémie de solitude masculine, vraiment ?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier l Le Délit",
       "cited": true,
       "method": "media-credit-featured"
     }
