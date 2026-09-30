@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-30T10:30:54.146Z",
-  "fetchedAt": "2026-09-30T10:30:54.146Z",
+  "updated": "2026-09-30T19:17:13.017Z",
+  "fetchedAt": "2026-09-30T19:17:13.017Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-30T10:30:54.147Z"
+    "referenceDate": "2026-09-30T19:17:13.018Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -66815,20 +66815,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-10-02",
-          "time": "19:00",
-          "opponent": "Vanier",
-          "opponentCode": "VAN",
-          "home": false,
-          "sport": "rugby",
-          "competition": "Rugby collégial féminin",
-          "gameId": "d2b51086-97a1-4533-bcca-b7727120cd8a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d2b51086-97a1-4533-bcca-b7727120cd8a",
-          "opponentFullName": "Vanier College",
-          "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "vanier"
-        },
-        {
           "date": "2026-10-16",
           "time": "19:30",
           "opponent": "André-Laurendeau",
@@ -66858,18 +66844,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-10-02",
-        "time": "19:00",
-        "opponent": "Vanier",
-        "opponentCode": "VAN",
-        "home": false,
+        "date": "2026-10-16",
+        "time": "19:30",
+        "opponent": "André-Laurendeau",
+        "opponentCode": "CAL",
+        "home": true,
         "sport": "rugby",
         "competition": "Rugby collégial féminin",
-        "gameId": "d2b51086-97a1-4533-bcca-b7727120cd8a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d2b51086-97a1-4533-bcca-b7727120cd8a",
-        "opponentFullName": "Vanier College",
+        "gameId": "1fdb075c-4834-4a7f-832e-bd6cb114a426",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1fdb075c-4834-4a7f-832e-bd6cb114a426",
+        "opponentFullName": "Cégep André-Laurendeau",
         "opponentNickname": "Cheetahs",
-        "opponentRegistryId": "vanier",
+        "opponentRegistryId": "andre-laurendeau",
         "opponentSector": "collegial"
       },
       "record": {
@@ -66976,20 +66962,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-10-02",
-          "time": "19:00",
-          "opponent": "John Abbott",
-          "opponentCode": "JAC",
-          "home": true,
-          "sport": "rugby",
-          "competition": "Rugby collégial féminin",
-          "gameId": "d2b51086-97a1-4533-bcca-b7727120cd8a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d2b51086-97a1-4533-bcca-b7727120cd8a",
-          "opponentFullName": "John Abbott College",
-          "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott"
-        },
-        {
           "date": "2026-10-18",
           "time": "12:00",
           "opponent": "Dawson",
@@ -67019,18 +66991,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-10-02",
-        "time": "19:00",
-        "opponent": "John Abbott",
-        "opponentCode": "JAC",
-        "home": true,
+        "date": "2026-10-18",
+        "time": "12:00",
+        "opponent": "Dawson",
+        "opponentCode": "DAW",
+        "home": false,
         "sport": "rugby",
         "competition": "Rugby collégial féminin",
-        "gameId": "d2b51086-97a1-4533-bcca-b7727120cd8a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d2b51086-97a1-4533-bcca-b7727120cd8a",
-        "opponentFullName": "John Abbott College",
-        "opponentNickname": "Islanders",
-        "opponentRegistryId": "john-abbott",
+        "gameId": "0219bdbe-9789-4bf2-8bed-8546c6e9b998",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0219bdbe-9789-4bf2-8bed-8546c6e9b998",
+        "opponentFullName": "Dawson College",
+        "opponentNickname": "Blues",
+        "opponentRegistryId": "dawson",
         "opponentSector": "collegial"
       },
       "record": {
@@ -107991,29 +107963,6 @@
       "fullName": "Cégep de Rivière-du-Loup",
       "registryId": "riviere-du-loup"
     },
-    "collegial:volleyball:e3685a9f-3213-4e86-9463-a3813b164ebe:5512ae57-9b60-4dc0-b549-ddc2ab2a264b": {
-      "id": "collegial:volleyball:e3685a9f-3213-4e86-9463-a3813b164ebe:5512ae57-9b60-4dc0-b549-ddc2ab2a264b",
-      "rseqTeamId": "5512ae57-9b60-4dc0-b549-ddc2ab2a264b",
-      "leagueId": "e3685a9f-3213-4e86-9463-a3813b164ebe",
-      "name": "Alma",
-      "code": "ALM",
-      "sector": "collegial",
-      "sport": "volleyball",
-      "sportLabel": "Volleyball",
-      "sex": "F",
-      "division": "D3",
-      "usports": false,
-      "leagueLabel": "Volleyball collégial féminin D3",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [],
-      "nextGame": null,
-      "record": null,
-      "source": "rseq-s1",
-      "priority": 80,
-      "fullName": "Cégep d'Alma",
-      "registryId": "alma"
-    },
     "collegial:volleyball:e3685a9f-3213-4e86-9463-a3813b164ebe:f5b6d654-bdee-4194-a904-14b14c841af7": {
       "id": "collegial:volleyball:e3685a9f-3213-4e86-9463-a3813b164ebe:f5b6d654-bdee-4194-a904-14b14c841af7",
       "rseqTeamId": "f5b6d654-bdee-4194-a904-14b14c841af7",
@@ -108036,6 +107985,29 @@
       "priority": 80,
       "fullName": "Cégep de Alma 2",
       "registryId": "alma-2"
+    },
+    "collegial:volleyball:e3685a9f-3213-4e86-9463-a3813b164ebe:5512ae57-9b60-4dc0-b549-ddc2ab2a264b": {
+      "id": "collegial:volleyball:e3685a9f-3213-4e86-9463-a3813b164ebe:5512ae57-9b60-4dc0-b549-ddc2ab2a264b",
+      "rseqTeamId": "5512ae57-9b60-4dc0-b549-ddc2ab2a264b",
+      "leagueId": "e3685a9f-3213-4e86-9463-a3813b164ebe",
+      "name": "Alma",
+      "code": "ALM",
+      "sector": "collegial",
+      "sport": "volleyball",
+      "sportLabel": "Volleyball",
+      "sex": "F",
+      "division": "D3",
+      "usports": false,
+      "leagueLabel": "Volleyball collégial féminin D3",
+      "results": [],
+      "lastGame": null,
+      "nextGames": [],
+      "nextGame": null,
+      "record": null,
+      "source": "rseq-s1",
+      "priority": 80,
+      "fullName": "Cégep d'Alma",
+      "registryId": "alma"
     },
     "collegial:volleyball:e3685a9f-3213-4e86-9463-a3813b164ebe:4c8defb1-b745-4cce-b597-a1a60456b4f7": {
       "id": "collegial:volleyball:e3685a9f-3213-4e86-9463-a3813b164ebe:4c8defb1-b745-4cce-b597-a1a60456b4f7",

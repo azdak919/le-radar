@@ -1,154 +1,159 @@
 {
-  "updatedAt": "2026-09-30T15:35:58.468Z",
+  "updatedAt": "2026-09-30T19:18:25.902Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "On en Parle",
-        "source": "api-live",
-        "start": "11:30",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/on-en-parle/"
-      },
+      "current": null,
       "next": {
-        "title": "ON EST OÙ LÀ?",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://chyz.ca/emission/entre-nous/"
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "On en Parle",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-09-30T15:35:16.906Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "À la loupe du droit",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/a-la-loupe-du-droit"
-      },
-      "next": {
-        "title": "La carte cadeau",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
-      },
-      "track": "",
-      "showTitle": "À la loupe du droit",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T15:35:19.625Z"
+      "checkedAt": "2026-09-30T19:17:28.948Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Vibrance: voyage dance vers Montréal et ailleurs",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/vibrance"
+      },
+      "next": {
+        "title": "Le cours de math",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/le-cours-de-math"
+      },
+      "track": "",
+      "showTitle": "Vibrance: voyage dance vers Montréal et ailleurs",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-09-30T19:17:30.464Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
-      "current": null,
-      "next": {
-        "title": "If You Got Ears",
+      "current": {
+        "title": "All Da Way Live",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "15:00",
+        "end": "17:00"
       },
-      "track": "ffiles",
-      "showTitle": "",
+      "next": {
+        "title": "Off the Hour/Sounds of Resistance",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
+      "track": "",
+      "showTitle": "All Da Way Live",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T15:35:22.761Z"
+      "checkedAt": "2026-09-30T19:17:32.940Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Code Switch",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/code-switch"
+        "title": "Patch Notes",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/patch-notes"
       },
       "next": {
-        "title": "North-South Hockey",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/north-south-hockey"
+        "title": "Borderline",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/borderline"
       },
       "track": "",
-      "showTitle": "Code Switch",
+      "showTitle": "Patch Notes",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T15:35:38.265Z"
+      "checkedAt": "2026-09-30T19:18:07.262Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Le popcorn de l'infini",
         "source": "schedule-live",
         "start": "14:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Le popcorn de l'infini",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T15:35:40.186Z"
+      "checkedAt": "2026-09-30T19:18:08.336Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
-        "title": "Onde de CHOQ",
+      "current": {
+        "title": "Palmarès CHOQ.ca",
         "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
       },
-      "track": "Kelsey Lu — Running To Pain",
-      "showTitle": "",
+      "next": {
+        "title": "Opération beurre de cinoche",
+        "source": "api-live",
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
+      },
+      "track": "Générique Palmares",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T15:35:58.117Z"
+      "checkedAt": "2026-09-30T19:18:25.551Z"
     }
   }
 }
