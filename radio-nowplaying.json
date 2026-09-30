@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-09-30T20:31:04.960Z",
+  "updatedAt": "2026-09-30T23:47:50.261Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
+        "title": "Funk Connection",
         "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "start": "19:30",
+        "end": "21:30",
+        "url": "https://chyz.ca/emission/funk-connection/"
       },
       "next": {
-        "title": "Les Arshitechs du Son",
+        "title": "Blasphème",
         "source": "schedule-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        "start": "21:30",
+        "end": "22:30",
+        "url": "https://chyz.ca/emission/blaspheme/"
       },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Funk Connection",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T20:30:37.320Z"
+      "checkedAt": "2026-09-30T23:47:22.406Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le cours de math",
+        "title": "Effets sonores (reprise)",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/le-cours-de-math"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/effets-sonores"
       },
       "next": {
-        "title": "Feu | Metal | Chaos",
+        "title": "Jeunesse cosmique",
         "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/feu-metal-chaos"
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/jeunesse-cosmique"
       },
       "track": "",
-      "showTitle": "Le cours de math",
+      "showTitle": "Effets sonores (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T20:30:39.337Z"
+      "checkedAt": "2026-09-30T23:47:24.320Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "All Da Way Live",
+        "title": "Harbinger Showcase",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "next": {
-        "title": "Off the Hour/Sounds of Resistance",
+        "title": "Jazz Euphorium",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "20:00",
+        "end": "22:00"
       },
       "track": "",
-      "showTitle": "All Da Way Live",
+      "showTitle": "Harbinger Showcase",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,35 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T20:30:42.138Z"
+      "checkedAt": "2026-09-30T23:47:27.066Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Borderline",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/borderline"
+        "title": "BVST",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/bvst"
       },
       "next": {
-        "title": "Advice By The Fireplace",
+        "title": "There's a Synth in the House",
         "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
       },
       "track": "",
-      "showTitle": "Borderline",
+      "showTitle": "BVST",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T20:30:45.376Z"
+      "checkedAt": "2026-09-30T23:47:30.182Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +134,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T20:30:46.753Z"
+      "checkedAt": "2026-09-30T23:47:31.701Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +147,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Webster — Retour à LLand",
+      "track": "Jump Source — Endlessly ft. BEA1991",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +155,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T20:31:04.610Z"
+      "checkedAt": "2026-09-30T23:47:49.910Z"
     }
   }
 }
