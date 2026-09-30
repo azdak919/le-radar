@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-30T00:25:30.261Z",
+  "updatedAt": "2026-09-30T02:17:15.002Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T00:24:51.928Z"
+      "checkedAt": "2026-09-30T02:16:14.104Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les garçons pleurent aussi (reprise)",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule",
         "start": "22:00",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "La carte cadeau (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+      },
       "track": "",
-      "showTitle": "Les garçons pleurent aussi (reprise)",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T00:24:53.436Z"
+      "checkedAt": "2026-09-30T02:16:15.709Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Soul Perspectives",
+        "title": "Montreal Sound Ark",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:30"
+        "start": "21:00",
+        "end": "23:00"
       },
       "next": {
-        "title": "Marca-RO",
+        "title": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever",
         "source": "api-live",
-        "start": "20:30",
-        "end": "21:00"
+        "start": "23:00",
+        "end": "00:00"
       },
       "track": "",
-      "showTitle": "Soul Perspectives",
+      "showTitle": "Montreal Sound Ark",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T00:24:56.029Z"
+      "checkedAt": "2026-09-30T02:16:20.819Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hittin' All The Bases",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "NSIDE!",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/nside"
+        "title": "Turn Off The Lights",
+        "source": "schedule",
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/turn-off-the-lights"
       },
       "track": "",
-      "showTitle": "Hittin' All The Bases",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T00:25:10.397Z"
+      "checkedAt": "2026-09-30T02:16:55.515Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Dichotomie 88.3",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Mix Franco",
         "source": "schedule-live",
         "start": "22:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Dichotomie 88.3",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T00:25:11.492Z"
+      "checkedAt": "2026-09-30T02:16:56.669Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Dolphin Hyperspace — Kyoto feat. Louis Cole & Bad Snacks",
+      "track": "Lennie Rayen — Give It Up",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T00:25:29.910Z"
+      "checkedAt": "2026-09-30T02:17:14.651Z"
     }
   }
 }
