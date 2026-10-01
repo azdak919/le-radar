@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-01T06:27:45.131Z",
+  "updated": "2026-10-01T09:15:03.914Z",
   "total": 176,
   "withImage": 163,
   "withCredit": 163,
@@ -7,15 +7,29 @@
   "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 12,
-  "updatedCount": 1,
-  "citedNew": 1,
+  "checked": 14,
+  "updatedCount": 3,
+  "citedNew": 3,
   "fallbackNew": 11,
   "samples": [
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "McGill’s 25th Annual Powwow",
+      "source": "The McGill Daily",
+      "credit": "Photo : Images courtesy of Parker Russell",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
       "cited": true,
       "method": "media-credit-featured"
     }
