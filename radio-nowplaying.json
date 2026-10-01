@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-01T19:15:20.614Z",
+  "updatedAt": "2026-10-01T23:11:50.504Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Chéri.e, j’arrive!",
+        "title": "Crooch Control",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://chyz.ca/emission/crooch-control/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T19:15:07.010Z"
+      "checkedAt": "2026-10-01T23:11:09.945Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La session live",
+        "title": "La rumba latina",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/session-live-a-cism"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/la-rumba"
       },
       "next": {
-        "title": "Rythmologie",
+        "title": "La courbe 2.0",
         "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/la-courbe-2-0"
       },
       "track": "",
-      "showTitle": "La session live",
+      "showTitle": "La rumba latina",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T19:15:08.538Z"
+      "checkedAt": "2026-10-01T23:11:11.702Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Positive Vibes",
+        "title": "Grey Matters",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "next": {
-        "title": "Off the Hour: Trib Talks",
+        "title": "Other Worlds on Earth/Dromostexte",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "20:00",
+        "end": "21:00"
       },
       "track": "",
-      "showTitle": "Positive Vibes",
+      "showTitle": "Grey Matters",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T19:15:10.958Z"
+      "checkedAt": "2026-10-01T23:11:14.702Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Weirdo Rippers",
+        "title": "Electric Messiah",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/weirdo-rippers"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/electric-messiah"
       },
       "next": {
-        "title": "Hooked On Sonics",
+        "title": "Maiden Voyage",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/maiden-voyage"
       },
       "track": "",
-      "showTitle": "Weirdo Rippers",
+      "showTitle": "Electric Messiah",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T19:15:13.272Z"
+      "checkedAt": "2026-10-01T23:11:29.954Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,28 +126,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T19:15:14.628Z"
+      "checkedAt": "2026-10-01T23:11:31.351Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
-        "title": "La 3ème demie",
+      "current": {
+        "title": "Les Apatrides Anonymes",
         "source": "api-live",
-        "start": "17:15",
-        "end": "18:00",
-        "slug": "le-12-mtlsup"
+        "start": "18:30",
+        "end": "19:45",
+        "slug": "apatrides-anonymes"
       },
-      "track": "Starcleaner Reunion — Eating the Alphabet",
-      "showTitle": "",
+      "next": {
+        "title": "Le grand maître des jeux",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "22:30",
+        "slug": "le-maitre-des-jeux"
+      },
+      "track": "03 — Piste 08",
+      "showTitle": "Les Apatrides Anonymes",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T19:15:20.264Z"
+      "checkedAt": "2026-10-01T23:11:50.154Z"
     }
   }
 }
