@@ -1,14 +1,14 @@
 {
-  "updated": "2026-10-01T10:58:45.440Z",
-  "fetchedAt": "2026-10-01T10:58:45.440Z",
+  "updated": "2026-10-01T17:25:59.515Z",
+  "fetchedAt": "2026-10-01T17:25:59.515Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-10-01T10:58:45.440Z"
+    "referenceDate": "2026-10-01T17:25:59.515Z"
   },
   "registry": "sports-teams.json",
-  "registryMatched": 853,
+  "registryMatched": 852,
   "leagueCatalog": 112,
   "leaguesWithTeams": 109,
   "leaguesOk": 112,
@@ -72,7 +72,7 @@
     "ultimate",
     "volleyball"
   ],
-  "teamCount": 865,
+  "teamCount": 864,
   "errors": [
     {
       "leagueId": "spordle-collegial",
@@ -6115,6 +6115,24 @@
       "leagueLabel": "Baseball collégial masculin",
       "results": [
         {
+          "date": "2026-09-30",
+          "time": "20:00",
+          "opponent": "Limoilou",
+          "opponentCode": "LIM",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 6,
+          "result": "L",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "47285e24-b4f1-4afe-bc8d-93565fc28ebc",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=47285e24-b4f1-4afe-bc8d-93565fc28ebc",
+          "opponentFullName": "Cégep Limoilou",
+          "opponentNickname": "Titans",
+          "opponentRegistryId": "limoilou",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-26",
           "time": "13:00",
           "opponent": "Rivière-du-Loup",
@@ -6256,20 +6274,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-26",
-        "time": "13:00",
-        "opponent": "Rivière-du-Loup",
-        "opponentCode": "RDL",
-        "home": true,
-        "scoreFor": 6,
-        "scoreAgainst": 2,
-        "result": "W",
+        "date": "2026-09-30",
+        "time": "20:00",
+        "opponent": "Limoilou",
+        "opponentCode": "LIM",
+        "home": false,
+        "scoreFor": 0,
+        "scoreAgainst": 6,
+        "result": "L",
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "887c3493-9a42-41b1-b829-945e327c2293",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=887c3493-9a42-41b1-b829-945e327c2293",
-        "opponentFullName": "Cégep de Rivière-du-Loup",
-        "opponentRegistryId": "riviere-du-loup",
+        "gameId": "47285e24-b4f1-4afe-bc8d-93565fc28ebc",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=47285e24-b4f1-4afe-bc8d-93565fc28ebc",
+        "opponentFullName": "Cégep Limoilou",
+        "opponentNickname": "Titans",
+        "opponentRegistryId": "limoilou",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -6362,10 +6381,10 @@
       },
       "record": {
         "wins": 4,
-        "losses": 4,
+        "losses": 5,
         "draws": 0,
-        "played": 8,
-        "label": "4-4"
+        "played": 9,
+        "label": "4-5"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -7544,6 +7563,23 @@
       "leagueLabel": "Baseball collégial masculin",
       "results": [
         {
+          "date": "2026-09-30",
+          "time": "20:00",
+          "opponent": "Beauce-Appalaches",
+          "opponentCode": "BAP",
+          "home": true,
+          "scoreFor": 6,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "baseball",
+          "competition": "Baseball collégial masculin",
+          "gameId": "47285e24-b4f1-4afe-bc8d-93565fc28ebc",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=47285e24-b4f1-4afe-bc8d-93565fc28ebc",
+          "opponentFullName": "Cégep de Beauce-Appalaches",
+          "opponentRegistryId": "beauce-appalaches",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-27",
           "time": "12:00",
           "opponent": "John Abbott",
@@ -7687,21 +7723,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-27",
-        "time": "12:00",
-        "opponent": "John Abbott",
-        "opponentCode": "JAC",
-        "home": false,
-        "scoreFor": 12,
-        "scoreAgainst": 4,
+        "date": "2026-09-30",
+        "time": "20:00",
+        "opponent": "Beauce-Appalaches",
+        "opponentCode": "BAP",
+        "home": true,
+        "scoreFor": 6,
+        "scoreAgainst": 0,
         "result": "W",
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "03f9615e-941b-4e58-8837-72664e3eb071",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=03f9615e-941b-4e58-8837-72664e3eb071",
-        "opponentFullName": "John Abbott College",
-        "opponentNickname": "Islanders",
-        "opponentRegistryId": "john-abbott",
+        "gameId": "47285e24-b4f1-4afe-bc8d-93565fc28ebc",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=47285e24-b4f1-4afe-bc8d-93565fc28ebc",
+        "opponentFullName": "Cégep de Beauce-Appalaches",
+        "opponentRegistryId": "beauce-appalaches",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -7789,11 +7824,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 8,
+        "wins": 9,
         "losses": 0,
         "draws": 0,
-        "played": 8,
-        "label": "8-0"
+        "played": 9,
+        "label": "9-0"
       },
       "source": "rseq-s1",
       "priority": 9,
@@ -14795,19 +14830,6 @@
           "opponentRegistryId": "sainte-foy"
         },
         {
-          "date": "2027-02-06",
-          "time": "12:00",
-          "opponent": "Sept-Îles",
-          "opponentCode": "CSI",
-          "home": true,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "64f75435-56d1-417c-a89c-a723db15e6eb",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=64f75435-56d1-417c-a89c-a723db15e6eb",
-          "opponentFullName": "Cégep de Sept-Îles",
-          "opponentRegistryId": "sept-iles"
-        },
-        {
           "date": "2027-02-20",
           "time": "17:30",
           "opponent": "Garneau",
@@ -14833,19 +14855,6 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2436c9b8-e301-405d-9f6c-d23c90f3dea6",
           "opponentFullName": "Campus Notre-Dame-de-Foy",
           "opponentRegistryId": "notre-dame-foy"
-        },
-        {
-          "date": "2027-03-07",
-          "time": "13:00",
-          "opponent": "Sept-Îles",
-          "opponentCode": "CSI",
-          "home": false,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "0d0df3df-9c3c-45b1-a784-5649087606a8",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0d0df3df-9c3c-45b1-a784-5649087606a8",
-          "opponentFullName": "Cégep de Sept-Îles",
-          "opponentRegistryId": "sept-iles"
         }
       ],
       "nextGame": {
@@ -14903,19 +14912,6 @@
           "opponentFullName": "Cégep de Sainte-Foy",
           "opponentNickname": "Géants",
           "opponentRegistryId": "sainte-foy"
-        },
-        {
-          "date": "2026-10-31",
-          "time": "13:00",
-          "opponent": "Sept-Îles",
-          "opponentCode": "CSI",
-          "home": true,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "87e31a00-815c-4368-8a39-11bc0c2fd822",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=87e31a00-815c-4368-8a39-11bc0c2fd822",
-          "opponentFullName": "Cégep de Sept-Îles",
-          "opponentRegistryId": "sept-iles"
         },
         {
           "date": "2026-11-06",
@@ -15038,17 +15034,17 @@
           "opponentRegistryId": "sainte-foy"
         },
         {
-          "date": "2027-02-28",
-          "time": "10:00",
-          "opponent": "Sept-Îles",
-          "opponentCode": "CSI",
+          "date": "2027-03-06",
+          "time": "13:00",
+          "opponent": "Lévis",
+          "opponentCode": "LÉV",
           "home": false,
           "sport": "basketball",
           "competition": "Basketball collégial féminin D3",
-          "gameId": "ee8a2210-7fd6-4874-996c-24e884c31188",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ee8a2210-7fd6-4874-996c-24e884c31188",
-          "opponentFullName": "Cégep de Sept-Îles",
-          "opponentRegistryId": "sept-iles"
+          "gameId": "30d7e363-cc79-46ba-9b7b-319caabf4c05",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=30d7e363-cc79-46ba-9b7b-319caabf4c05",
+          "opponentFullName": "Cégep de Lévis",
+          "opponentRegistryId": "levis"
         }
       ],
       "nextGame": {
@@ -15160,19 +15156,6 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c0675199-436b-4cba-9147-c7f81859d9a7",
           "opponentFullName": "Cégep de Lévis",
           "opponentRegistryId": "levis"
-        },
-        {
-          "date": "2027-01-23",
-          "time": "17:00",
-          "opponent": "Sept-Îles",
-          "opponentCode": "CSI",
-          "home": false,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "84b9bef9-b035-4eae-83a1-6d56257fdef8",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=84b9bef9-b035-4eae-83a1-6d56257fdef8",
-          "opponentFullName": "Cégep de Sept-Îles",
-          "opponentRegistryId": "sept-iles"
         },
         {
           "date": "2027-01-30",
@@ -15419,19 +15402,6 @@
           "opponentRegistryId": "baie-comeau"
         },
         {
-          "date": "2027-02-13",
-          "time": "13:00",
-          "opponent": "Sept-Îles",
-          "opponentCode": "CSI",
-          "home": true,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "2f9381a1-da3b-4ed7-8d5f-901272a6e208",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2f9381a1-da3b-4ed7-8d5f-901272a6e208",
-          "opponentFullName": "Cégep de Sept-Îles",
-          "opponentRegistryId": "sept-iles"
-        },
-        {
           "date": "2027-02-21",
           "time": "13:00",
           "opponent": "Mérici",
@@ -15457,6 +15427,19 @@
           "opponentFullName": "Cégep Limoilou",
           "opponentNickname": "Titans",
           "opponentRegistryId": "limoilou"
+        },
+        {
+          "date": "2027-03-06",
+          "time": "13:00",
+          "opponent": "Champlain St-Lawrence",
+          "opponentCode": "SLC",
+          "home": true,
+          "sport": "basketball",
+          "competition": "Basketball collégial féminin D3",
+          "gameId": "30d7e363-cc79-46ba-9b7b-319caabf4c05",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=30d7e363-cc79-46ba-9b7b-319caabf4c05",
+          "opponentFullName": "Champlain College St. Lawrence",
+          "opponentRegistryId": "ch-st-lawrence"
         }
       ],
       "nextGame": {
@@ -15582,19 +15565,6 @@
           "opponentRegistryId": "sainte-foy"
         },
         {
-          "date": "2027-01-24",
-          "time": "10:00",
-          "opponent": "Sept-Îles",
-          "opponentCode": "CSI",
-          "home": true,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "ddbf4542-95f2-4666-90e3-4488b11b94df",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ddbf4542-95f2-4666-90e3-4488b11b94df",
-          "opponentFullName": "Cégep de Sept-Îles",
-          "opponentRegistryId": "sept-iles"
-        },
-        {
           "date": "2027-01-29",
           "time": "19:00",
           "opponent": "Notre-Dame",
@@ -15620,19 +15590,6 @@
           "opponentFullName": "Cégep Garneau",
           "opponentNickname": "Boomerang",
           "opponentRegistryId": "garneau"
-        },
-        {
-          "date": "2027-02-14",
-          "time": "10:00",
-          "opponent": "Sept-Îles",
-          "opponentCode": "CSI",
-          "home": false,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "f745861e-e7ad-438d-b621-caa742917db9",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f745861e-e7ad-438d-b621-caa742917db9",
-          "opponentFullName": "Cégep de Sept-Îles",
-          "opponentRegistryId": "sept-iles"
         },
         {
           "date": "2027-02-19",
@@ -15729,19 +15686,6 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f9865732-069b-487b-a0f3-62bc1b1eb828",
           "opponentFullName": "Champlain College St. Lawrence",
           "opponentRegistryId": "ch-st-lawrence"
-        },
-        {
-          "date": "2026-11-29",
-          "time": "9:00",
-          "opponent": "Sept-Îles",
-          "opponentCode": "CSI",
-          "home": false,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "590c4a71-b715-4985-849e-c505f6fd787a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=590c4a71-b715-4985-849e-c505f6fd787a",
-          "opponentFullName": "Cégep de Sept-Îles",
-          "opponentRegistryId": "sept-iles"
         },
         {
           "date": "2026-11-29",
@@ -15976,19 +15920,6 @@
           "opponentRegistryId": "levis"
         },
         {
-          "date": "2026-11-28",
-          "time": "15:00",
-          "opponent": "Sept-Îles",
-          "opponentCode": "CSI",
-          "home": true,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "1e170cc4-4c3f-4df5-8f55-59daa565d047",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1e170cc4-4c3f-4df5-8f55-59daa565d047",
-          "opponentFullName": "Cégep de Sept-Îles",
-          "opponentRegistryId": "sept-iles"
-        },
-        {
           "date": "2027-01-24",
           "time": "13:00",
           "opponent": "Mérici",
@@ -16127,19 +16058,6 @@
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
-          "date": "2026-11-01",
-          "time": "10:00",
-          "opponent": "Sept-Îles",
-          "opponentCode": "CSI",
-          "home": false,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "e5b9e1de-97ff-4fe8-a769-938c0767f5d9",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e5b9e1de-97ff-4fe8-a769-938c0767f5d9",
-          "opponentFullName": "Cégep de Sept-Îles",
-          "opponentRegistryId": "sept-iles"
-        },
-        {
           "date": "2026-11-15",
           "time": "12:00",
           "opponent": "Lévis",
@@ -16246,19 +16164,6 @@
           "opponentRegistryId": "ch-st-lawrence"
         },
         {
-          "date": "2027-02-27",
-          "time": "13:00",
-          "opponent": "Sept-Îles",
-          "opponentCode": "CSI",
-          "home": true,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "084f8fe9-31bb-4a13-82a0-6de77107cf2a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=084f8fe9-31bb-4a13-82a0-6de77107cf2a",
-          "opponentFullName": "Cégep de Sept-Îles",
-          "opponentRegistryId": "sept-iles"
-        },
-        {
           "date": "2027-03-05",
           "time": "19:00",
           "opponent": "Mérici",
@@ -16298,210 +16203,6 @@
       "fullName": "Cégep de Sainte-Foy",
       "nickname": "Géants",
       "registryId": "sainte-foy"
-    },
-    "collegial:basketball:b54a8411-0eed-4ec4-853d-68f7451e6691:5955141e-64bb-47fe-bed7-6b2166fc6787": {
-      "id": "collegial:basketball:b54a8411-0eed-4ec4-853d-68f7451e6691:5955141e-64bb-47fe-bed7-6b2166fc6787",
-      "rseqTeamId": "5955141e-64bb-47fe-bed7-6b2166fc6787",
-      "leagueId": "b54a8411-0eed-4ec4-853d-68f7451e6691",
-      "name": "Sept-Îles",
-      "code": "CSI",
-      "sector": "collegial",
-      "sport": "basketball",
-      "sportLabel": "Basketball",
-      "sex": "F",
-      "division": "D3",
-      "usports": false,
-      "leagueLabel": "Basketball collégial féminin D3",
-      "results": [],
-      "lastGame": null,
-      "nextGames": [
-        {
-          "date": "2026-10-31",
-          "time": "13:00",
-          "opponent": "Champlain St-Lawrence",
-          "opponentCode": "SLC",
-          "home": false,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "87e31a00-815c-4368-8a39-11bc0c2fd822",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=87e31a00-815c-4368-8a39-11bc0c2fd822",
-          "opponentFullName": "Champlain College St. Lawrence",
-          "opponentRegistryId": "ch-st-lawrence"
-        },
-        {
-          "date": "2026-11-01",
-          "time": "10:00",
-          "opponent": "Sainte-Foy",
-          "opponentCode": "CSF",
-          "home": true,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "e5b9e1de-97ff-4fe8-a769-938c0767f5d9",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e5b9e1de-97ff-4fe8-a769-938c0767f5d9",
-          "opponentFullName": "Cégep de Sainte-Foy",
-          "opponentNickname": "Géants",
-          "opponentRegistryId": "sainte-foy"
-        },
-        {
-          "date": "2026-11-28",
-          "time": "15:00",
-          "opponent": "Notre-Dame",
-          "opponentCode": "NDF",
-          "home": false,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "1e170cc4-4c3f-4df5-8f55-59daa565d047",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1e170cc4-4c3f-4df5-8f55-59daa565d047",
-          "opponentFullName": "Campus Notre-Dame-de-Foy",
-          "opponentRegistryId": "notre-dame-foy"
-        },
-        {
-          "date": "2026-11-29",
-          "time": "9:00",
-          "opponent": "Mérici",
-          "opponentCode": "MER",
-          "home": true,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "590c4a71-b715-4985-849e-c505f6fd787a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=590c4a71-b715-4985-849e-c505f6fd787a",
-          "opponentFullName": "Cégep de Mérici",
-          "opponentRegistryId": "merici"
-        },
-        {
-          "date": "2027-01-23",
-          "time": "17:00",
-          "opponent": "Garneau",
-          "opponentCode": "GAR",
-          "home": true,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "84b9bef9-b035-4eae-83a1-6d56257fdef8",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=84b9bef9-b035-4eae-83a1-6d56257fdef8",
-          "opponentFullName": "Cégep Garneau",
-          "opponentNickname": "Boomerang",
-          "opponentRegistryId": "garneau"
-        },
-        {
-          "date": "2027-01-24",
-          "time": "10:00",
-          "opponent": "Limoilou",
-          "opponentCode": "LIM",
-          "home": false,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "ddbf4542-95f2-4666-90e3-4488b11b94df",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ddbf4542-95f2-4666-90e3-4488b11b94df",
-          "opponentFullName": "Cégep Limoilou",
-          "opponentNickname": "Titans",
-          "opponentRegistryId": "limoilou"
-        },
-        {
-          "date": "2027-02-06",
-          "time": "12:00",
-          "opponent": "Baie-Comeau",
-          "opponentCode": "BCO",
-          "home": false,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "64f75435-56d1-417c-a89c-a723db15e6eb",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=64f75435-56d1-417c-a89c-a723db15e6eb",
-          "opponentFullName": "Cégep de Baie-Comeau",
-          "opponentRegistryId": "baie-comeau"
-        },
-        {
-          "date": "2027-02-13",
-          "time": "13:00",
-          "opponent": "Lévis",
-          "opponentCode": "LÉV",
-          "home": false,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "2f9381a1-da3b-4ed7-8d5f-901272a6e208",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2f9381a1-da3b-4ed7-8d5f-901272a6e208",
-          "opponentFullName": "Cégep de Lévis",
-          "opponentRegistryId": "levis"
-        },
-        {
-          "date": "2027-02-14",
-          "time": "10:00",
-          "opponent": "Limoilou",
-          "opponentCode": "LIM",
-          "home": true,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "f745861e-e7ad-438d-b621-caa742917db9",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f745861e-e7ad-438d-b621-caa742917db9",
-          "opponentFullName": "Cégep Limoilou",
-          "opponentNickname": "Titans",
-          "opponentRegistryId": "limoilou"
-        },
-        {
-          "date": "2027-02-27",
-          "time": "13:00",
-          "opponent": "Sainte-Foy",
-          "opponentCode": "CSF",
-          "home": false,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "084f8fe9-31bb-4a13-82a0-6de77107cf2a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=084f8fe9-31bb-4a13-82a0-6de77107cf2a",
-          "opponentFullName": "Cégep de Sainte-Foy",
-          "opponentNickname": "Géants",
-          "opponentRegistryId": "sainte-foy"
-        },
-        {
-          "date": "2027-02-28",
-          "time": "10:00",
-          "opponent": "Champlain St-Lawrence",
-          "opponentCode": "SLC",
-          "home": true,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "ee8a2210-7fd6-4874-996c-24e884c31188",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ee8a2210-7fd6-4874-996c-24e884c31188",
-          "opponentFullName": "Champlain College St. Lawrence",
-          "opponentRegistryId": "ch-st-lawrence"
-        },
-        {
-          "date": "2027-03-07",
-          "time": "13:00",
-          "opponent": "Baie-Comeau",
-          "opponentCode": "BCO",
-          "home": true,
-          "sport": "basketball",
-          "competition": "Basketball collégial féminin D3",
-          "gameId": "0d0df3df-9c3c-45b1-a784-5649087606a8",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0d0df3df-9c3c-45b1-a784-5649087606a8",
-          "opponentFullName": "Cégep de Baie-Comeau",
-          "opponentRegistryId": "baie-comeau"
-        }
-      ],
-      "nextGame": {
-        "date": "2026-10-31",
-        "time": "13:00",
-        "opponent": "Champlain St-Lawrence",
-        "opponentCode": "SLC",
-        "home": false,
-        "sport": "basketball",
-        "competition": "Basketball collégial féminin D3",
-        "gameId": "87e31a00-815c-4368-8a39-11bc0c2fd822",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=87e31a00-815c-4368-8a39-11bc0c2fd822",
-        "opponentFullName": "Champlain College St. Lawrence",
-        "opponentRegistryId": "ch-st-lawrence",
-        "opponentSector": "collegial"
-      },
-      "record": {
-        "wins": 0,
-        "losses": 0,
-        "draws": 0,
-        "played": 0,
-        "label": "0-0"
-      },
-      "source": "rseq-s1",
-      "priority": 80,
-      "fullName": "Cégep de Sept-Îles",
-      "registryId": "sept-iles"
     },
     "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:f46280e1-cf49-4e5a-abeb-9509da162db2": {
       "id": "collegial:basketball:fa4cdca6-cd02-4808-96b3-2ff546cb4ac5:f46280e1-cf49-4e5a-abeb-9509da162db2",
@@ -81941,6 +81642,24 @@
       "leagueLabel": "Soccer collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-30",
+          "time": "21:00",
+          "opponent": "Sainte-Foy",
+          "opponentCode": "CSF",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 1,
+          "result": "L",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "de1fc2fc-f4af-40a3-bdca-e00972b715e3",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=de1fc2fc-f4af-40a3-bdca-e00972b715e3",
+          "opponentFullName": "Cégep de Sainte-Foy",
+          "opponentNickname": "Géants",
+          "opponentRegistryId": "sainte-foy",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-26",
           "time": "15:00",
           "opponent": "Cégep de Rimouski",
@@ -82030,20 +81749,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-26",
-        "time": "15:00",
-        "opponent": "Cégep de Rimouski",
-        "opponentCode": "RIM",
-        "home": true,
+        "date": "2026-09-30",
+        "time": "21:00",
+        "opponent": "Sainte-Foy",
+        "opponentCode": "CSF",
+        "home": false,
         "scoreFor": 0,
         "scoreAgainst": 1,
         "result": "L",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "3b0bf1da-c06c-480f-b806-6c6fa0df8579",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3b0bf1da-c06c-480f-b806-6c6fa0df8579",
-        "opponentFullName": "Cégep de Rimouski",
-        "opponentRegistryId": "rimouski",
+        "gameId": "de1fc2fc-f4af-40a3-bdca-e00972b715e3",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=de1fc2fc-f4af-40a3-bdca-e00972b715e3",
+        "opponentFullName": "Cégep de Sainte-Foy",
+        "opponentNickname": "Géants",
+        "opponentRegistryId": "sainte-foy",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -82091,10 +81811,10 @@
       },
       "record": {
         "wins": 1,
-        "losses": 3,
+        "losses": 4,
         "draws": 1,
-        "played": 5,
-        "label": "1-3-1"
+        "played": 6,
+        "label": "1-4-1"
       },
       "source": "rseq-s1",
       "priority": 9,
@@ -82308,6 +82028,24 @@
       "leagueLabel": "Soccer collégial masculin D2",
       "results": [
         {
+          "date": "2026-09-30",
+          "time": "21:00",
+          "opponent": "Limoilou",
+          "opponentCode": "LIM",
+          "home": true,
+          "scoreFor": 1,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "soccer",
+          "competition": "Soccer collégial masculin D2",
+          "gameId": "de1fc2fc-f4af-40a3-bdca-e00972b715e3",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=de1fc2fc-f4af-40a3-bdca-e00972b715e3",
+          "opponentFullName": "Cégep Limoilou",
+          "opponentNickname": "Titans",
+          "opponentRegistryId": "limoilou",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-26",
           "time": "12:00",
           "opponent": "Lévis",
@@ -82379,20 +82117,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-26",
-        "time": "12:00",
-        "opponent": "Lévis",
-        "opponentCode": "LÉV",
+        "date": "2026-09-30",
+        "time": "21:00",
+        "opponent": "Limoilou",
+        "opponentCode": "LIM",
         "home": true,
-        "scoreFor": 3,
-        "scoreAgainst": 1,
+        "scoreFor": 1,
+        "scoreAgainst": 0,
         "result": "W",
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "63cf49ea-07e0-4bcd-92bd-8e40016b5b22",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63cf49ea-07e0-4bcd-92bd-8e40016b5b22",
-        "opponentFullName": "Cégep de Lévis",
-        "opponentRegistryId": "levis",
+        "gameId": "de1fc2fc-f4af-40a3-bdca-e00972b715e3",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=de1fc2fc-f4af-40a3-bdca-e00972b715e3",
+        "opponentFullName": "Cégep Limoilou",
+        "opponentNickname": "Titans",
+        "opponentRegistryId": "limoilou",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -82453,11 +82192,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 3,
+        "wins": 4,
         "losses": 1,
         "draws": 0,
-        "played": 4,
-        "label": "3-1"
+        "played": 5,
+        "label": "4-1"
       },
       "source": "rseq-s1",
       "priority": 37,
