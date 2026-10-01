@@ -1,11 +1,11 @@
 {
-  "updated": "2026-09-30T23:47:07.123Z",
-  "fetchedAt": "2026-09-30T23:47:07.123Z",
+  "updated": "2026-10-01T00:02:10.555Z",
+  "fetchedAt": "2026-10-01T00:02:10.555Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-09-30T23:47:07.123Z"
+    "referenceDate": "2026-10-01T00:02:10.556Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 853,
@@ -85,11 +85,6 @@
       "label": "Hockey universitaire",
       "error": "Cloudflare challenge HTTP 403 https://universitaire.rseqhockey.com/fr",
       "blocked": true
-    },
-    {
-      "leagueId": "campus-uqac",
-      "label": "UQAC Inuk events",
-      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -6275,21 +6270,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-30",
-          "time": "20:00",
-          "opponent": "Limoilou",
-          "opponentCode": "LIM",
-          "home": false,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "47285e24-b4f1-4afe-bc8d-93565fc28ebc",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=47285e24-b4f1-4afe-bc8d-93565fc28ebc",
-          "opponentFullName": "Cégep Limoilou",
-          "opponentNickname": "Titans",
-          "opponentRegistryId": "limoilou",
-          "live": true
-        },
-        {
           "date": "2026-10-03",
           "time": "13:00",
           "opponent": "André-Laurendeau",
@@ -6361,19 +6341,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-30",
-        "time": "20:00",
-        "opponent": "Limoilou",
-        "opponentCode": "LIM",
-        "home": false,
+        "date": "2026-10-03",
+        "time": "13:00",
+        "opponent": "André-Laurendeau",
+        "opponentCode": "CAL",
+        "home": true,
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "47285e24-b4f1-4afe-bc8d-93565fc28ebc",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=47285e24-b4f1-4afe-bc8d-93565fc28ebc",
-        "opponentFullName": "Cégep Limoilou",
-        "opponentNickname": "Titans",
-        "opponentRegistryId": "limoilou",
-        "live": true,
+        "gameId": "272b6e19-f177-4361-aa10-7ba4ce3a6165",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=272b6e19-f177-4361-aa10-7ba4ce3a6165",
+        "opponentFullName": "Cégep André-Laurendeau",
+        "opponentNickname": "Cheetahs",
+        "opponentRegistryId": "andre-laurendeau",
         "opponentSector": "collegial"
       },
       "record": {
@@ -7687,20 +7666,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-09-30",
-          "time": "20:00",
-          "opponent": "Beauce-Appalaches",
-          "opponentCode": "BAP",
-          "home": true,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "47285e24-b4f1-4afe-bc8d-93565fc28ebc",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=47285e24-b4f1-4afe-bc8d-93565fc28ebc",
-          "opponentFullName": "Cégep de Beauce-Appalaches",
-          "opponentRegistryId": "beauce-appalaches",
-          "live": true
-        },
-        {
           "date": "2026-10-03",
           "time": "19:00",
           "opponent": "Drummondville",
@@ -7769,18 +7734,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-09-30",
-        "time": "20:00",
-        "opponent": "Beauce-Appalaches",
-        "opponentCode": "BAP",
-        "home": true,
+        "date": "2026-10-03",
+        "time": "19:00",
+        "opponent": "Drummondville",
+        "opponentCode": "DRU",
+        "home": false,
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "47285e24-b4f1-4afe-bc8d-93565fc28ebc",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=47285e24-b4f1-4afe-bc8d-93565fc28ebc",
-        "opponentFullName": "Cégep de Beauce-Appalaches",
-        "opponentRegistryId": "beauce-appalaches",
-        "live": true,
+        "gameId": "966fbaee-5cee-481d-a941-1b167cfbde99",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=966fbaee-5cee-481d-a941-1b167cfbde99",
+        "opponentFullName": "Cégep de Drummondville",
+        "opponentRegistryId": "drummondville",
         "opponentSector": "collegial"
       },
       "record": {
