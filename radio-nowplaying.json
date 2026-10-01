@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-30T23:47:50.261Z",
+  "updatedAt": "2026-10-01T00:20:09.922Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T23:47:22.406Z"
+      "checkedAt": "2026-10-01T00:19:45.078Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Effets sonores (reprise)",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/effets-sonores"
-      },
-      "next": {
         "title": "Jeunesse cosmique",
         "source": "schedule",
         "start": "20:00",
         "end": "22:00",
         "url": "https://cism893.ca/emissions/jeunesse-cosmique"
       },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "Effets sonores (reprise)",
+      "showTitle": "Jeunesse cosmique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T23:47:24.320Z"
+      "checkedAt": "2026-10-01T00:19:46.497Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harbinger Showcase",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Jazz Euphorium",
         "source": "api-live",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "LoSignal 5th",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Harbinger Showcase",
+      "showTitle": "Jazz Euphorium",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T23:47:27.066Z"
+      "checkedAt": "2026-10-01T00:19:48.964Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -109,7 +109,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T23:47:30.182Z"
+      "checkedAt": "2026-10-01T00:19:50.849Z"
     },
     "cfak": {
       "id": "cfak",
@@ -134,7 +134,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T23:47:31.701Z"
+      "checkedAt": "2026-10-01T00:19:52.152Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +147,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Jump Source — Endlessly ft. BEA1991",
+      "track": "Glass Dolls — Hesitation",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -155,7 +155,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-09-30T23:47:49.910Z"
+      "checkedAt": "2026-10-01T00:20:09.571Z"
     }
   }
 }
