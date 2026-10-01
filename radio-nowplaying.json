@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-01T18:54:03.233Z",
+  "updatedAt": "2026-10-01T19:15:20.614Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T18:53:48.211Z"
+      "checkedAt": "2026-10-01T19:15:07.010Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "next": {
         "title": "La session live",
         "source": "schedule",
         "start": "15:00",
         "end": "16:00",
         "url": "https://cism893.ca/emissions/session-live-a-cism"
       },
+      "next": {
+        "title": "Rythmologie",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/rythmologie"
+      },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "La session live",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T18:53:49.691Z"
+      "checkedAt": "2026-10-01T19:15:08.538Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Positive Vibes",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Off the Hour: Trib Talks",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+      "showTitle": "Positive Vibes",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T18:53:52.092Z"
+      "checkedAt": "2026-10-01T19:15:10.958Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Secondhand Sounds",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/secondhand-sounds"
-      },
-      "next": {
         "title": "Weirdo Rippers",
         "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/weirdo-rippers"
       },
+      "next": {
+        "title": "Hooked On Sonics",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
+      },
       "track": "",
-      "showTitle": "Secondhand Sounds",
+      "showTitle": "Weirdo Rippers",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T18:53:53.867Z"
+      "checkedAt": "2026-10-01T19:15:13.272Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T18:53:54.949Z"
+      "checkedAt": "2026-10-01T19:15:14.628Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "18:00",
         "slug": "le-12-mtlsup"
       },
-      "track": "Baby Rose — Let Me Go",
+      "track": "Starcleaner Reunion — Eating the Alphabet",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T18:54:02.882Z"
+      "checkedAt": "2026-10-01T19:15:20.264Z"
     }
   }
 }
