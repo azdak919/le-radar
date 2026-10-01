@@ -1,8 +1,8 @@
 {
-  "updated": "2026-10-01T21:02:52.082Z",
+  "updated": "2026-10-01T22:47:14.995Z",
   "total": 176,
   "withAuthor": 176,
-  "mismatches": 8,
+  "mismatches": 7,
   "ok": true,
   "samples": [
     {
@@ -12,14 +12,6 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
-    },
-    {
-      "title": "From Scripts to Stage: BU New Plays 2026",
-      "link": "https://thebucampus.ca/2026/09/30/from-scripts-to-stage-bu-new-plays-2026/",
-      "source": "The Campus",
-      "fieldAuthor": "Zachary Jaimes",
-      "canonicalAuthor": "Zachary Jaimes Saint Cyr",
-      "reason": "page-byline-overrides-rss"
     },
     {
       "title": "What is Tony Actually Guilty of?",
@@ -70,5 +62,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 8
+  "fixed": 7
 }
