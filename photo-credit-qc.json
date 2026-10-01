@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-01T11:05:32.938Z",
+  "updated": "2026-10-01T16:37:03.663Z",
   "total": 176,
   "withImage": 163,
   "withCredit": 163,
@@ -7,17 +7,31 @@
   "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 3,
-  "citedNew": 3,
+  "checked": 15,
+  "updatedCount": 5,
+  "citedNew": 4,
   "fallbackNew": 11,
   "samples": [
+    {
+      "title": "La Chambrée interpelle les partis",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
       "credit": "Photo : Tan YiYang",
       "cited": true,
       "method": "figcaption-bare"
+    },
+    {
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "McGill’s 25th Annual Powwow",

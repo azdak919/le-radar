@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-01T11:00:09.525Z",
+  "updated": "2026-10-01T16:32:33.804Z",
   "total": 176,
   "pool": 55,
-  "incomplete": 8,
+  "incomplete": 10,
   "withLeadExcerpt": 115,
-  "candidates": 8,
-  "enriched": 0,
+  "candidates": 10,
+  "enriched": 2,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -17,6 +17,24 @@
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
       "changed": false
+    },
+    {
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "link": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
+      "ok": true,
+      "score": 96,
+      "chars": 288,
+      "sample": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est ",
+      "changed": true
+    },
+    {
+      "title": "La Chambrée interpelle les partis",
+      "link": "https://lapige.atmjonquiere.com/2026/10/01/la-chambree-interpelle-les-partis/?utm_source=rss&utm_medium=rss&utm_campaign=la-chambree-interpelle-les-partis",
+      "ok": true,
+      "score": 100,
+      "chars": 252,
+      "sample": "Des candidats de Jonquière à l’élection du 5 octobre répondent à l’appel de la maison d’hébergement ",
+      "changed": true
     },
     {
       "title": "From Student Entrepreneur to Sponsoring Bishop’s Rugby: Jonathan Scott-Lewis Builds Business While Giving Back",
@@ -61,24 +79,6 @@
       "score": 96,
       "chars": 400,
       "sample": "\"Back when I was a kid, we used to play outside and discover the world. You know, live life. Kids no",
-      "changed": false
-    },
-    {
-      "title": "Votre argent dort peut-être chez Revenu",
-      "link": "https://www.delitfrancais.com/2026/09/30/votre-argent-dort-peut-etre-chez-revenu/",
-      "ok": true,
-      "score": 87,
-      "chars": 400,
-      "sample": "Dans son budget 2021–2022 , Québec prévoyait rapatrier dans ses coffres un milliard de dollars en pr",
-      "changed": false
-    },
-    {
-      "title": "Quand utilisation devient appropriation",
-      "link": "https://www.delitfrancais.com/2026/09/30/quand-utilisation-devient-appropriation/",
-      "ok": true,
-      "score": 76,
-      "chars": 400,
-      "sample": "La plupart des termes qu’on pourrait qualifier d’argot queer, et qui sont utilisés aujourd’hui, prov",
       "changed": false
     }
   ]
