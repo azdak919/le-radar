@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-10-01T13:43:35.399Z",
+  "updatedAt": "2026-10-01T18:54:03.233Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Jeudi Révolte",
-        "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/jeudi-revolte/"
-      },
+      "current": null,
       "next": {
-        "title": "Sons de Cloches",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/sons-de-cloches/"
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Jeudi Révolte",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-01T13:42:35.651Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "La collation",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
-      },
-      "next": {
-        "title": "Une fenêtre sur le monde",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
-      },
-      "track": "",
-      "showTitle": "La collation",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T13:42:37.299Z"
+      "checkedAt": "2026-10-01T18:53:48.211Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
+      "next": {
+        "title": "La session live",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/session-live-a-cism"
+      },
+      "track": "",
+      "showTitle": "Le palmarès",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-01T18:53:49.691Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Folk Directions",
+        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "14:00",
+        "end": "15:00"
       },
       "next": {
-        "title": "Under The Olive Tree",
+        "title": "Positive Vibes",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "track": "",
-      "showTitle": "Folk Directions",
+      "showTitle": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,72 +74,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T13:42:40.158Z"
+      "checkedAt": "2026-10-01T18:53:52.092Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Everything Everywhere",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/everything-everywhere"
+        "title": "Secondhand Sounds",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/secondhand-sounds"
       },
       "next": {
-        "title": "Democracy Now",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "http://www.cjlo.com/shows/democracy-now"
+        "title": "Weirdo Rippers",
+        "source": "schedule-live",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/weirdo-rippers"
       },
       "track": "",
-      "showTitle": "Everything Everywhere",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-01T13:43:14.761Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "11:00"
-      },
-      "next": {
-        "title": "À nous le futur",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "20:00"
-      },
-      "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Secondhand Sounds",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T13:43:16.141Z"
+      "checkedAt": "2026-10-01T18:53:53.867Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "À nous le futur",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "20:00"
+      },
+      "next": {
+        "title": "After 5@8",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "00:00"
+      },
+      "track": "",
+      "showTitle": "À nous le futur",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-01T18:53:54.949Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Onde de CHOQ",
+        "title": "La 3ème demie",
         "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "start": "17:15",
+        "end": "18:00",
+        "slug": "le-12-mtlsup"
       },
-      "track": "Thea May — Head Transplant",
+      "track": "Baby Rose — Let Me Go",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T13:43:35.049Z"
+      "checkedAt": "2026-10-01T18:54:02.882Z"
     }
   }
 }
