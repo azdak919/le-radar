@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-01T06:20:08.049Z",
+  "updatedAt": "2026-10-01T13:08:46.920Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Jeudi Révolte",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
+      "next": {
+        "title": "Sons de Cloches",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/sons-de-cloches/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Jeudi Révolte",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T06:19:30.905Z"
+      "checkedAt": "2026-10-01T13:08:08.786Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
+        "title": "La collation",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "next": {
-        "title": "Les Charlottes",
+        "title": "Une fenêtre sur le monde",
         "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/les-charlottes"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
       },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T06:19:32.337Z"
+      "checkedAt": "2026-10-01T13:08:10.446Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Freeform Air",
+        "title": "Folk Directions",
         "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "next": {
-        "title": "William Shatner's Whiskey Tears",
+        "title": "Under The Olive Tree",
         "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "track": "",
-      "showTitle": "Freeform Air",
+      "showTitle": "Folk Directions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +81,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T06:19:34.733Z"
+      "checkedAt": "2026-10-01T13:08:12.863Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
+        "title": "Everything Everywhere",
         "source": "schedule-live",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/everything-everywhere"
       },
       "next": {
-        "title": "Daydream Nation",
+        "title": "Democracy Now",
         "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/daydream-nation"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Everything Everywhere",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T06:19:48.620Z"
+      "checkedAt": "2026-10-01T13:08:27.420Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Palmarès CFAK",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "11:00"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "À nous le futur",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "11:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T06:19:49.397Z"
+      "checkedAt": "2026-10-01T13:08:28.347Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +146,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Wheobe — Me And The Tide",
+      "track": "cris derksen — Lyre Birds",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-01T06:20:07.698Z"
+      "checkedAt": "2026-10-01T13:08:46.570Z"
     }
   }
 }
