@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-01T19:01:33.690Z",
+  "updated": "2026-10-01T21:09:45.287Z",
   "total": 176,
   "withImage": 163,
   "withCredit": 163,
@@ -7,9 +7,9 @@
   "pending": 12,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 2,
-  "citedNew": 1,
+  "checked": 14,
+  "updatedCount": 3,
+  "citedNew": 2,
   "fallbackNew": 12,
   "samples": [
     {
@@ -23,6 +23,13 @@
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
       "credit": "Photo : Scott Tan",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Faire compter sa voix",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée d’Élections Québec",
       "cited": true,
       "method": "media-credit-featured"
     }
