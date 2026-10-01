@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-01T23:10:54.263Z",
-  "fetchedAt": "2026-10-01T23:10:54.263Z",
+  "updated": "2026-10-01T23:20:44.533Z",
+  "fetchedAt": "2026-10-01T23:20:44.533Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-10-01T23:10:54.263Z"
+    "referenceDate": "2026-10-01T23:20:44.533Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 852,
@@ -85,11 +85,6 @@
       "label": "Hockey universitaire",
       "error": "Cloudflare challenge HTTP 403 https://universitaire.rseqhockey.com/fr",
       "blocked": true
-    },
-    {
-      "leagueId": "campus-uqac",
-      "label": "UQAC Inuk events",
-      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -6000,7 +5995,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=188baa03-7a48-4ec5-8e94-f6e558db0ea7",
           "opponentFullName": "John Abbott College",
           "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott"
+          "opponentRegistryId": "john-abbott",
+          "live": true
         },
         {
           "date": "2026-10-03",
@@ -6084,6 +6080,7 @@
         "opponentFullName": "John Abbott College",
         "opponentNickname": "Islanders",
         "opponentRegistryId": "john-abbott",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -7476,7 +7473,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=188baa03-7a48-4ec5-8e94-f6e558db0ea7",
           "opponentFullName": "Cégep André-Laurendeau",
           "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "andre-laurendeau"
+          "opponentRegistryId": "andre-laurendeau",
+          "live": true
         },
         {
           "date": "2026-10-04",
@@ -7532,6 +7530,7 @@
         "opponentFullName": "Cégep André-Laurendeau",
         "opponentNickname": "Cheetahs",
         "opponentRegistryId": "andre-laurendeau",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -85737,7 +85736,8 @@
           "gameId": "1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
           "opponentFullName": "Collège de Rosemont",
-          "opponentRegistryId": "rosemont"
+          "opponentRegistryId": "rosemont",
+          "live": true
         },
         {
           "date": "2026-10-04",
@@ -85791,6 +85791,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
         "opponentFullName": "Collège de Rosemont",
         "opponentRegistryId": "rosemont",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -86655,7 +86656,8 @@
           "gameId": "1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
           "opponentFullName": "Cégep Gérald-Godin",
-          "opponentRegistryId": "gerald-godin"
+          "opponentRegistryId": "gerald-godin",
+          "live": true
         },
         {
           "date": "2026-10-04",
@@ -86709,6 +86711,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
         "opponentFullName": "Cégep Gérald-Godin",
         "opponentRegistryId": "gerald-godin",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -96784,19 +96787,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-10-01",
-          "time": "19:30",
-          "opponent": "Cégep de Sherbrooke",
-          "opponentCode": "SHE",
-          "home": true,
-          "sport": "volleyball",
-          "competition": "Volleyball collégial féminin D1",
-          "gameId": "3cbff9df-f811-4fc8-b5a2-800b94374d9d",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3cbff9df-f811-4fc8-b5a2-800b94374d9d",
-          "opponentFullName": "Cégep de Sherbrooke",
-          "opponentRegistryId": "cegep-sherbrooke"
-        },
-        {
           "date": "2026-10-07",
           "time": "19:30",
           "opponent": "Bois-de-Boulogne",
@@ -96942,20 +96932,34 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=eb6da184-1a55-4727-a16d-9a21ecc9f2a0",
           "opponentFullName": "Collège Lionel-Groulx",
           "opponentRegistryId": "lionel-groulx"
+        },
+        {
+          "date": "2027-02-06",
+          "time": "13:00",
+          "opponent": "Garneau",
+          "opponentCode": "GAR",
+          "home": true,
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D1",
+          "gameId": "90292433-b2c2-4833-a736-4392bbae38f3",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=90292433-b2c2-4833-a736-4392bbae38f3",
+          "opponentFullName": "Cégep Garneau",
+          "opponentNickname": "Boomerang",
+          "opponentRegistryId": "garneau"
         }
       ],
       "nextGame": {
-        "date": "2026-10-01",
+        "date": "2026-10-07",
         "time": "19:30",
-        "opponent": "Cégep de Sherbrooke",
-        "opponentCode": "SHE",
+        "opponent": "Bois-de-Boulogne",
+        "opponentCode": "BDB",
         "home": true,
         "sport": "volleyball",
         "competition": "Volleyball collégial féminin D1",
-        "gameId": "3cbff9df-f811-4fc8-b5a2-800b94374d9d",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3cbff9df-f811-4fc8-b5a2-800b94374d9d",
-        "opponentFullName": "Cégep de Sherbrooke",
-        "opponentRegistryId": "cegep-sherbrooke",
+        "gameId": "af946b82-35ab-4648-87fe-aa0ec9ed4120",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=af946b82-35ab-4648-87fe-aa0ec9ed4120",
+        "opponentFullName": "Collège de Bois-de-Boulogne",
+        "opponentRegistryId": "bois-de-boulogne",
         "opponentSector": "collegial"
       },
       "record": {
@@ -98217,20 +98221,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-10-01",
-          "time": "19:30",
-          "opponent": "André-Laurendeau",
-          "opponentCode": "CAL",
-          "home": false,
-          "sport": "volleyball",
-          "competition": "Volleyball collégial féminin D1",
-          "gameId": "3cbff9df-f811-4fc8-b5a2-800b94374d9d",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3cbff9df-f811-4fc8-b5a2-800b94374d9d",
-          "opponentFullName": "Cégep André-Laurendeau",
-          "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "andre-laurendeau"
-        },
-        {
           "date": "2026-10-16",
           "time": "19:00",
           "opponent": "Bois-de-Boulogne",
@@ -98376,21 +98366,34 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=98ee74c7-f6ad-47dd-88ba-4f264091f189",
           "opponentFullName": "Collège de Bois-de-Boulogne",
           "opponentRegistryId": "bois-de-boulogne"
+        },
+        {
+          "date": "2027-02-05",
+          "time": "18:00",
+          "opponent": "Cégep de Trois-Rivières",
+          "opponentCode": "TRV",
+          "home": true,
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D1",
+          "gameId": "d7271f19-7719-4eb4-93f8-b66da90616e1",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=d7271f19-7719-4eb4-93f8-b66da90616e1",
+          "opponentFullName": "Cégep de Trois-Rivières",
+          "opponentNickname": "Diablos",
+          "opponentRegistryId": "trois-rivieres"
         }
       ],
       "nextGame": {
-        "date": "2026-10-01",
-        "time": "19:30",
-        "opponent": "André-Laurendeau",
-        "opponentCode": "CAL",
-        "home": false,
+        "date": "2026-10-16",
+        "time": "19:00",
+        "opponent": "Bois-de-Boulogne",
+        "opponentCode": "BDB",
+        "home": true,
         "sport": "volleyball",
         "competition": "Volleyball collégial féminin D1",
-        "gameId": "3cbff9df-f811-4fc8-b5a2-800b94374d9d",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3cbff9df-f811-4fc8-b5a2-800b94374d9d",
-        "opponentFullName": "Cégep André-Laurendeau",
-        "opponentNickname": "Cheetahs",
-        "opponentRegistryId": "andre-laurendeau",
+        "gameId": "7e8f3280-28fc-4628-9b19-29509d7bea79",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7e8f3280-28fc-4628-9b19-29509d7bea79",
+        "opponentFullName": "Collège de Bois-de-Boulogne",
+        "opponentRegistryId": "bois-de-boulogne",
         "opponentSector": "collegial"
       },
       "record": {
