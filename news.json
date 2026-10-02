@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-02T04:45:43.871Z",
+  "updated": "2026-10-02T05:51:00.704Z",
   "updatedSlot": null,
   "count": 176,
   "freshnessSessions": 3,
   "sources": {
     "Quartier Libre": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-01T18:30:00.000Z",
-      "lastFetchOk": "2026-10-02T04:45:09.555Z"
+      "lastFetchOk": null
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-24T14:54:24.000Z",
-      "lastFetchOk": "2026-10-02T04:45:10.150Z"
+      "lastFetchOk": "2026-10-02T05:50:33.401Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-30T15:13:58.000Z",
-      "lastFetchOk": "2026-10-02T04:45:14.339Z"
+      "lastFetchOk": "2026-10-02T05:50:37.171Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-09-28T16:18:17.000Z",
-      "lastFetchOk": "2026-10-02T04:45:15.124Z"
+      "lastFetchOk": "2026-10-02T05:50:37.706Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,15 +42,15 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-30T23:11:00.000Z",
-      "lastFetchOk": "2026-10-02T04:45:16.320Z"
+      "lastFetchOk": "2026-10-02T05:50:39.057Z"
     },
     "Zone Campus": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-10-02T04:45:17.769Z"
+      "lastFetchOk": null
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-29T20:42:32.000Z",
-      "lastFetchOk": "2026-10-02T04:45:18.658Z"
+      "lastFetchOk": "2026-10-02T05:50:40.316Z"
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-09-30T16:07:07.000Z",
-      "lastFetchOk": "2026-10-02T04:45:19.504Z"
+      "lastFetchOk": "2026-10-02T05:50:42.624Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,15 +74,15 @@
       "articleCount": 10,
       "freshArticleCount": 4,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-10-02T04:45:19.895Z"
+      "lastFetchOk": "2026-10-02T05:50:42.761Z"
     },
     "La Pige": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-01T14:32:27.000Z",
-      "lastFetchOk": "2026-10-02T04:45:20.713Z"
+      "lastFetchOk": null
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 7,
       "lastArticle": "2026-09-09T00:53:34.359Z",
-      "lastFetchOk": "2026-10-02T04:45:23.838Z"
+      "lastFetchOk": "2026-10-02T05:50:44.737Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-08T15:35:43.000Z",
-      "lastFetchOk": "2026-10-02T04:45:24.084Z"
+      "lastFetchOk": "2026-10-02T05:50:44.870Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-30T20:28:36.000Z",
-      "lastFetchOk": "2026-10-02T04:45:24.387Z"
+      "lastFetchOk": "2026-10-02T05:50:45.025Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-02T02:12:35.000Z",
-      "lastFetchOk": "2026-10-02T04:45:24.657Z"
+      "lastFetchOk": "2026-10-02T05:50:45.209Z"
     },
     "L'Oisif": {
       "fetchOk": true,
@@ -122,7 +122,7 @@
       "articleCount": 3,
       "freshArticleCount": 0,
       "lastArticle": "2019-08-23T18:43:43.000Z",
-      "lastFetchOk": "2026-10-02T04:45:25.941Z"
+      "lastFetchOk": "2026-10-02T05:50:46.421Z"
     },
     "La Gifle": {
       "fetchOk": true,
@@ -130,7 +130,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2018-05-19T20:19:20.000Z",
-      "lastFetchOk": "2026-10-02T04:45:26.369Z"
+      "lastFetchOk": "2026-10-02T05:50:46.539Z"
     },
     "Le Trait d'Union": {
       "fetchOk": true,
@@ -138,7 +138,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2024-11-14T14:41:41.000Z",
-      "lastFetchOk": "2026-10-02T04:45:27.340Z"
+      "lastFetchOk": "2026-10-02T05:50:47.400Z"
     }
   },
   "items": [
@@ -313,18 +313,18 @@
       "excerpt": "« Un déficit record », « le déficit recule », « revenir à l’équilibre » Les chefs des cinq partis en lice pour les élections provinciales discutent largement de la question du déficit budgétaire du Québec. D’ailleurs, 86 % des Québécois considèrent l’équilibre budgétaire comme",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/Illustration-deficit-budgetaire-et-dette.png",
       "authorCheckedAt": "2026-10-01T18:54:41.269Z",
-      "_pageAuthor": "Anouchka Debionne",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/deficit-budgetaire-quebec/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "illustration-deficit-budgetaire-et-dette.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Tous les partis en lice proposent un budget et promettent de revenir à l’équilibre budgétaire d’ici 2029-2030, et pour cause : la Loi sur l’équilibre budgétaire, votée en 1996, les y oblige. D’ici la fin du mandat du parti au pouvoir, les recettes du gouvernement doivent être au moins égales à ses dépenses.",
       "imageLocal": "assets/news-images/9878401d5930d42d.png",
       "imageLocalKey": "9878401d5930d42d",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -338,7 +338,6 @@
       "date": "2026-10-01T14:32:27.000Z",
       "excerpt": "« Ce qu’on demande, c’est qu’on puisse aider toutes les femmes qui ont besoin au moment où elles en ont besoin. » – Fanny Guérin, responsable des communications au Regroupement des maisons pour femmes victimes de violence conjugale. (Photo : André Query/ Courtoisie Regroupement",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Feminicides.jpg",
-      "_pageAuthor": "Laury-Ann Savard",
       "sourceImageCredit": "Crédit photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/10/01/la-chambree-interpelle-les-partis/?utm_source=rss&utm_medium=rss&utm_campaign=la-chambree-interpelle-les-partis",
       "sourceImageCreditFrom": "media",
@@ -346,7 +345,8 @@
       "sourceImageCreditImageKey": "feminicides.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
-      "leadExcerpt": "Des candidats de Jonquière à l’élection du 5 octobre répondent à l’appel de la maison d’hébergement pour femmes La Chambrée. L’organisme souhaitait connaître les engagements des différents partis pour l’aider dans sa lutte contre la violence conjugale."
+      "leadExcerpt": "Des candidats de Jonquière à l’élection du 5 octobre répondent à l’appel de la maison d’hébergement pour femmes La Chambrée. L’organisme souhaitait connaître les engagements des différents partis pour l’aider dans sa lutte contre la violence conjugale.",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -372,7 +372,8 @@
       "leadImageReady": true,
       "leadExcerpt": "After Stingers forward Rosalie Parent won the opening faceoff, the Carabins dominated the first period, with much more time spent in Concordia’s zone than their own. Then, 12 minutes in, Richard took an illegal body-checking penalty.",
       "imageLocal": "assets/news-images/3b9708a29c0a4c3a.jpg",
-      "imageLocalKey": "3b9708a29c0a4c3a"
+      "imageLocalKey": "3b9708a29c0a4c3a",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -398,7 +399,8 @@
       "leadImageReady": true,
       "leadExcerpt": "The Concordia University Stingers’ women’s hockey team played its second game in the Theresa Humes Cup on Sept. 26 against Queen's University Gaels and won 4-1. The Stingers beat the University of Guelph Gryphons 3-1 in its previous game, keeping Concordia undefeated in preseason tournaments.",
       "imageLocal": "assets/news-images/6cd958ca18d5720c.jpg",
-      "imageLocalKey": "6cd958ca18d5720c"
+      "imageLocalKey": "6cd958ca18d5720c",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -638,7 +640,6 @@
       "date": "2026-09-30T18:32:54.000Z",
       "excerpt": "Une doctorante en psychologie qui a essuyé un refus lors de sa première demande d’admission au doctorat à l’UQAC et qui fait maintenant son internat dans le secteur public. (Photo: Charline Lachance) C’est un psychologue sur quatre qui a quitté le secteur public de 2011 à 2023",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Capture-decran-2026-09-28-172148-e1790630661870.png",
-      "_pageAuthor": "Charline Lachance",
       "sourceImageCredit": "Photo : Charline Lachance",
       "sourceImageCreator": "Charline Lachance",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/09/30/de-plus-en-plus-de-psychologues-migrent-vers-le-prive/?utm_source=rss&utm_medium=rss&utm_campaign=de-plus-en-plus-de-psychologues-migrent-vers-le-prive",
@@ -650,7 +651,8 @@
       "leadExcerpt": "C’est un psychologue sur quatre qui a quitté le secteur public de 2011 à 2023 selon l’Ordre des psychologues du Québec. Cette baisse reflète les conditions de travail de la fonction publique selon l’Association des psychologues du Québec.",
       "imageLocal": "assets/news-images/f1172ebcd7d8a155.png",
       "imageLocalKey": "f1172ebcd7d8a155",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Campus",
@@ -933,6 +935,7 @@
       "leadImageReady": false,
       "imageLocal": "assets/news-images/f27eed88a0baf313.webp",
       "imageLocalKey": "f27eed88a0baf313",
+      "imageLocalVia": "origin",
       "sourceImageCredit": "Photo credit: The Plant",
       "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://theplantnews.com/2026/09/30/culture-paints-time-a-different-colour/",
@@ -1427,7 +1430,8 @@
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2010.jpg",
       "imageLocal": "assets/news-images/154c6fcbb151eb6d.jpg",
-      "imageLocalKey": "154c6fcbb151eb6d"
+      "imageLocalKey": "154c6fcbb151eb6d",
+      "imageLocalVia": "origin"
     },
     {
       "source": "L'Exemplaire",
@@ -1458,7 +1462,8 @@
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2007.jpg",
       "imageLocal": "assets/news-images/b334f7cd3ffc3ba9.jpg",
-      "imageLocalKey": "b334f7cd3ffc3ba9"
+      "imageLocalKey": "b334f7cd3ffc3ba9",
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -1478,11 +1483,12 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "img_9817.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "C’est l’élément central dont il a été question lors du dialogue interculturel entre Autochtones et non Autochtones organisé par l’UQAC, ce lundi. L’activité s’est déroulée dans le cadre de la Semaine de la vérité et de la réconciliation, en partenariat avec le Cégep de Jonquière, avec pour objectif de tisser des liens plus forts entre deux groupes souvent incompris l’un de l’autre.",
       "imageLocal": "assets/news-images/a96e8480b56ddd3c.jpg",
       "imageLocalKey": "a96e8480b56ddd3c",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -1513,7 +1519,8 @@
       "imageProvider": "campus-bank",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2003.jpg",
       "imageLocal": "assets/news-images/60fcb408c3a18888.jpg",
-      "imageLocalKey": "60fcb408c3a18888"
+      "imageLocalKey": "60fcb408c3a18888",
+      "imageLocalVia": "origin"
     },
     {
       "source": "L'Exemplaire",
@@ -1567,7 +1574,8 @@
       "leadExcerpt": "Annoncé en novembre 2024, ce plan prévoit notamment d’améliorer l’accès aux soins et à de l’information fiable sur la santé reproductive. Il a contribué à la création de services régionaux, au financement d’organismes communautaires et au développement de l’avortement médicamenteux par télésanté.",
       "imageLocal": "assets/news-images/1c83f88a53f7aafa.jpg",
       "imageLocalKey": "1c83f88a53f7aafa",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -1588,11 +1596,12 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "5infos_ql-e1769792962990.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Un article de La Presse a révélé mardi qu’un étudiant a été hospitalisé lors des intégrations étudiantes de Polytechnique en raison d’une surconsommation d’alcool. Polytechnique s’est dissociée de l’incident en condamnant celui-ci, et l’association étudiante de Polytechnique (AÉP), qui a organisé l’événement, l’a caractérisé de « potentielle situation malheureuse ».",
       "imageLocal": "assets/news-images/95d1c982cd32b09e.png",
       "imageLocalKey": "95d1c982cd32b09e",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -1613,11 +1622,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "shared-image-1.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Les étudiants du Cégep de Jonquière, Chicoutimi et Alma revenaient d’une compétition de cross-country au moment de la collision. Aucun des passagers de l’autobus n’a été blessé. Les étudiants ont toutefois été contactés individuellement et peuvent bénéficier du soutien de travailleurs sociaux à la suite de l’événement.",
       "imageLocal": "assets/news-images/c605aa1ba939b9b5.jpg",
       "imageLocalKey": "c605aa1ba939b9b5",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -1637,8 +1647,9 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "dsc03137-2.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Depuis quatre ans, le nombre de déchets envoyés au site d’enfouissement a nettement diminué à Saguenay. Une réduction attribuable à l’apparition des bacs bruns. En 2022, année de mise en place du bac brun, la Ville envoyait plus de 46 000 tonnes de déchets au site d’enfouissement de la Régie des matières résiduelles du Lac-Saint-Jean. L’an dernier, ce sont 38 000 tonnes de matières résiduelles éli"
+      "leadImageReady": false,
+      "leadExcerpt": "Depuis quatre ans, le nombre de déchets envoyés au site d’enfouissement a nettement diminué à Saguenay. Une réduction attribuable à l’apparition des bacs bruns. En 2022, année de mise en place du bac brun, la Ville envoyait plus de 46 000 tonnes de déchets au site d’enfouissement de la Régie des matières résiduelles du Lac-Saint-Jean. L’an dernier, ce sont 38 000 tonnes de matières résiduelles éli",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -1659,8 +1670,9 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "image-11.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "La 5e édition de la fête des récoltes a attiré plus de 1 000 personnes à la Plateforme bioalimentaire boréale Solidar en fin de semaine. L’achalandage a plus que doublé par rapport à l’année dernière sur cette ferme du rang St-Joseph à Chicoutimi."
+      "leadImageReady": false,
+      "leadExcerpt": "La 5e édition de la fête des récoltes a attiré plus de 1 000 personnes à la Plateforme bioalimentaire boréale Solidar en fin de semaine. L’achalandage a plus que doublé par rapport à l’année dernière sur cette ferme du rang St-Joseph à Chicoutimi.",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -1681,7 +1693,8 @@
       "sourceImageCreditImageKey": "dsc0108.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
-      "leadExcerpt": "Accident impliquant un motocycliste et un autobus transportant des athlètes du cégep de Jonquière dimanche soir. Inquiétude chez les acteurs de l’industrie de la forêt et la souveraineté perd du terrain."
+      "leadExcerpt": "Accident impliquant un motocycliste et un autobus transportant des athlètes du cégep de Jonquière dimanche soir. Inquiétude chez les acteurs de l’industrie de la forêt et la souveraineté perd du terrain.",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -1702,11 +1715,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "creation-sans-titre-3.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Peu sollicité en première période, Justin Lee a davantage été mis à l’épreuve durant le deuxième engagement. Le gardien de 17 ans s’est notamment signalé avec un bel arrêt de la mitaine devant Liam Armit, qui s’était retrouvé seul dans l’enclave. Malgré quelques occasions du Drakkar, Lee est demeuré solide devant son filet et a permis aux Sags de conserver leur avance.",
       "imageLocal": "assets/news-images/60d2432f4718a9ee.jpg",
       "imageLocalKey": "60d2432f4718a9ee",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -2049,7 +2063,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
       "imageLocal": "assets/news-images/d195715e22ba464d.png",
-      "imageLocalKey": "d195715e22ba464d"
+      "imageLocalKey": "d195715e22ba464d",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2121,10 +2136,19 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "urgence-humanitaire-a-gaza_saber_nuraldin.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Toutefois, c’est une autre image qui a remporté le prix de la Photo de l’année : Séparés par l’ICE , de Carol Guzy. La photographie montre deux adolescentes en larmes, qui s’agrippent au chandail de leur père, arrêté par les services de l’immigration états-unienne (ICE).",
       "imageLocal": "assets/news-images/e0cc3b5f48366098.jpg",
-      "imageLocalKey": "e0cc3b5f48366098"
+      "imageLocalKey": "e0cc3b5f48366098",
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/2825/11053498355_c889681da9_b.jpg",
+      "imageTitle": "Ben Heine Solo Exhibition at Hyehwa Art Center in Seoul, South Korea",
+      "imageCredit": "Photo : Ben Heine / CC BY-SA · Openverse",
+      "imageCreator": "Ben Heine",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/43335486@N00/11053498355",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2149,7 +2173,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Inspired by Marianne Hirsch’s concept of familial gaze , Paglione explores how family shapes memory through specific social and cultural constructs. In her current filmmaking and curatorial practices, she investigates how experimental films create their own type of memory.",
       "imageLocal": "assets/news-images/30d178496c0e07f0.jpg",
-      "imageLocalKey": "30d178496c0e07f0"
+      "imageLocalKey": "30d178496c0e07f0",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2199,7 +2224,8 @@
       "leadImageReady": true,
       "leadExcerpt": "French-Senegalese soul and R&B artist anaiis brought her forthcoming album Devotion & The Black Divine to Le Ministère's stage on Sept. 23 as a stop on her first-ever North American headlining tour. This album explores embracing one’s own divinity and engaging in conversation with the natural world and all of creation as creatives. It is a genre-fluid meditative exploration of spirituality, new mo",
       "imageLocal": "assets/news-images/5aa80a033185be99.jpg",
-      "imageLocalKey": "5aa80a033185be99"
+      "imageLocalKey": "5aa80a033185be99",
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -2224,7 +2250,8 @@
       "leadExcerpt": "À l’approche des élections provinciales du 5 octobre 2026, Élections Québec ramène les urnes au cœur des cégeps et des universités. Du 25 septembre au 1er octobre, les étudiants pourront voter directement dans leur établissement, sans devoir se déplacer jusqu’à leur bureau de vote habituel.",
       "imageLocal": "assets/news-images/3d122616cade271c.jpg",
       "imageLocalKey": "3d122616cade271c",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -2246,11 +2273,19 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "frechette-photo-bus.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Les chefs des autres partis ont été très critiques vis-à-vis du cadre financier du ministre de l’Économie. La cheffe de Québec solidaire , Ruba Ghazal, le juge « irresponsable », notamment à cause de la croissance de 1 % des dépenses, qu’elle dénonce comme une preuve d’austérité caquiste.",
       "imageLocal": "assets/news-images/8fc133050972502e.jpg",
       "imageLocalKey": "8fc133050972502e",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/7/71/Christine_Fr%C3%A9chette.jpg",
+      "imageTitle": "Christine Fréchette",
+      "imageCredit": "Photo : TVA Nouvelles / CC0 · Openverse",
+      "imageCreator": "TVA Nouvelles",
+      "imageLicense": "cc0",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=146469713"
     },
     {
       "source": "Le Collectif",
@@ -2349,7 +2384,8 @@
       "leadImageReady": true,
       "leadExcerpt": "“For many years now, Sept. 20 has been the day on which Montreal’s trans community and allies united against the pervasive hatred and transphobia that poisons our society,” Lavoie said.",
       "imageLocal": "assets/news-images/f387fd541aef49f8.jpg",
-      "imageLocalKey": "f387fd541aef49f8"
+      "imageLocalKey": "f387fd541aef49f8",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Délit",
@@ -2518,7 +2554,8 @@
       "leadImageReady": true,
       "leadExcerpt": "La possibilité qui revient le plus est celle d’une extinction humaine après le développement d’une superintelligence dont on perdrait le contrôle et qui serait capable de prendre des décisions stratégiques par elle-même en vue d’un certain objectif.",
       "imageLocal": "assets/news-images/272f4fed0d635b4f.png",
-      "imageLocalKey": "272f4fed0d635b4f"
+      "imageLocalKey": "272f4fed0d635b4f",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -2540,11 +2577,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "aetsum_manifestation_remuneration_stages.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Au Québec, le milieu de la santé est confronté à de nombreux défis qui compliquent la vie des travailleur·euse·s sociaux·ales. Les étudiant·e·s du programme de travail social se demandent donc comment appréhender leur entrée sur un marché du travail en pleine crise. Pour comprendre leurs préoccupations, Quartier Libre est allé à leur rencontre.",
       "imageLocal": "assets/news-images/2dc7d77c0a09e98e.jpg",
       "imageLocalKey": "2dc7d77c0a09e98e",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -2567,7 +2605,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
       "imageLocal": "assets/news-images/ffb7711caf065ee5.jpg",
-      "imageLocalKey": "ffb7711caf065ee5"
+      "imageLocalKey": "ffb7711caf065ee5",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2591,7 +2630,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/90c13dfb1c258465.jpg",
-      "imageLocalKey": "90c13dfb1c258465"
+      "imageLocalKey": "90c13dfb1c258465",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2667,7 +2707,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Forty-one years after men’s Division 1 university hockey left Quebec, a new league will rise in its place. The Réseau du sport étudiant du Québec (RSEQ) has announced the return of the Division 1 men’s hockey league, aiming to create an upward pathway for Quebec players through high school, CEGEP and university.",
       "imageLocal": "assets/news-images/19f3e39060cb535b.jpg",
-      "imageLocalKey": "19f3e39060cb535b"
+      "imageLocalKey": "19f3e39060cb535b",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2692,7 +2733,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Parc Saint-Michel in the Plateau is lively on a gloomy Sunday evening. This is where around 30 lesbo-queer women, transgender folks and non-binary people come to play pick-up soccer every week. While the turnout is a bit smaller this time around because of the pre-match rain, the energy is still electric, both on and off the field.",
       "imageLocal": "assets/news-images/7fbb5be2f6c600e3.jpg",
-      "imageLocalKey": "7fbb5be2f6c600e3"
+      "imageLocalKey": "7fbb5be2f6c600e3",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2716,7 +2758,8 @@
       "leadImageReady": true,
       "leadExcerpt": "Luka Ferraro isn’t sure if he’ll stay in the same genre forever, but for now it excites him. As an indie pop-rock musician who studies film production at Concordia University and has a prominent social media presence, he makes music that he likes, which for now involves making energetic tracks.",
       "imageLocal": "assets/news-images/0ee42da3bf063b50.jpg",
-      "imageLocalKey": "0ee42da3bf063b50"
+      "imageLocalKey": "0ee42da3bf063b50",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -2740,7 +2783,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
       "imageLocal": "assets/news-images/47de45d7c4bf756c.jpg",
-      "imageLocalKey": "47de45d7c4bf756c"
+      "imageLocalKey": "47de45d7c4bf756c",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -2889,7 +2933,8 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "imageLocal": "assets/news-images/25c6668fcf564149.jpg",
-      "imageLocalKey": "25c6668fcf564149"
+      "imageLocalKey": "25c6668fcf564149",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The McGill Daily",
@@ -3087,11 +3132,19 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "5infos_ql-e1769792962990.png",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Mark Carney a invité le secteur privé à investir dans les quatre plus grands aéroports du Canada, dont celui de Montréal. Le premier ministre canadien estime que ces investissements permettront d’améliorer les services de transport aérien au pays, ainsi que de réinvestir « les dizaines de milliards de dollars de capitaux que nous mobiliserons dans les infrastructures dont le Canada a besoin ».",
       "imageLocal": "assets/news-images/95d1c982cd32b09e.png",
       "imageLocalKey": "95d1c982cd32b09e",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true,
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/2/26/Mark_Carney_World_Economic_Forum_2013_%283%29.jpg",
+      "imageTitle": "Mark Carney World Economic Forum 2013 (3)",
+      "imageCredit": "Photo : World Economic Forum from Cologny, Switzerland / CC BY-SA · Openverse",
+      "imageCreator": "World Economic Forum from Cologny, Switzerland",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://commons.wikimedia.org/w/index.php?curid=24234760"
     },
     {
       "source": "Quartier Libre",
@@ -3113,11 +3166,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "157_grand_debat_des_chefs_noovo_2026.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Le grand débat des chef·fe·s de Noovo et de Crave a eu lieu le mercredi 16 septembre dernier. Quartier Libre s’ est rendu sur place pour interroger les chef·fe·s de parti sur les questions qui concernent la jeunesse, telles que la santé mentale et la préservation de l’environnement. Le débat a d’ailleurs particulièrement visé ce segment de l’électorat, puisque l’un des cinq thèmes portait sur « l’",
       "imageLocal": "assets/news-images/d6a2490d4d7abc7d.jpg",
       "imageLocalKey": "d6a2490d4d7abc7d",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -3143,7 +3197,8 @@
       "leadExcerpt": "« À l’époque, des plaintes concernant M. Rochefort avaient été portées à l’attention de l’Université de Montréal, mais le cadre alors en vigueur limitait les possibilités d’intervention de l’établissement , explique la porte-parole de l’Université de Montréal, Geneviève O’Meara. Ça a beaucoup changé depuis dix ans. »",
       "imageLocal": "assets/news-images/bf73b05bcfe9ffdc.jpg",
       "imageLocalKey": "bf73b05bcfe9ffdc",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -3165,11 +3220,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "cadrefinancierpq.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "C’est l’ancien ministre des Finances et de l’Économie du gouvernement de Pauline Marois et candidat dans Marie-Victorin, Nicolas Marceau, qui a présenté le cadre financier. Le chef du Parti québécois, Paul Saint-Pierre Plamondon, était absent lors du dévoilement pour se préparer aux débats télévisés de TVA et Noovo info.",
       "imageLocal": "assets/news-images/24f990b703a4c290.jpg",
       "imageLocalKey": "24f990b703a4c290",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Campus",
@@ -3215,10 +3271,12 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "impact-de-la-nouvelle-table-dimposition-pour-une-eprsonne-seule.jpeg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "leadExcerpt": "Québec solidaire a dévoilé son cadre financier, intitulé Les moyens de nos ambitions , le vendredi 11 septembre dernier. Le parti y annonce un retour à l’équilibre budgétaire à la troisième année d’un mandat solidaire, de nombreux investissements financés notamment par l’imposition des grandes fortunes, et un portefeuille dédié à la transition écologique de 4,2 milliards de dollars sur quatre ans.",
       "imageLocal": "assets/news-images/627cd35645f76ed4.jpg",
-      "imageLocalKey": "627cd35645f76ed4"
+      "imageLocalKey": "627cd35645f76ed4",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "The McGill Daily",
@@ -3635,13 +3693,6 @@
       "sourceImageCreditImageKey": "ae4-sophie-schuyler.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": false,
-      "stockImage": "https://live.staticflickr.com/2705/5788880205_09ec6b0dd6_b.jpg",
-      "imageTitle": "Lady in Yellow",
-      "imageCredit": "Photo : John-Morgan / CC BY · Openverse",
-      "imageCreator": "John-Morgan",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/24742305@N00/5788880205",
       "imageLocal": "assets/news-images/f535e2b616bd26d8.jpg",
       "imageLocalKey": "f535e2b616bd26d8",
       "imageLocalVia": "origin"
@@ -3824,9 +3875,11 @@
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "1.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/7aa5ab9dd7648781.jpg",
-      "imageLocalKey": "7aa5ab9dd7648781"
+      "imageLocalKey": "7aa5ab9dd7648781",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -3896,10 +3949,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3417.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/23af229881dbdeec.jpg",
       "imageLocalKey": "23af229881dbdeec",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -3992,9 +4046,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "17c4541a-839d-48b8-b5aa-2cc81e91e3c8.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/16a813216f7afeb2.jpg",
-      "imageLocalKey": "16a813216f7afeb2"
+      "imageLocalKey": "16a813216f7afeb2",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -4083,9 +4139,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3939.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/debd9bf479305512.jpg",
-      "imageLocalKey": "debd9bf479305512"
+      "imageLocalKey": "debd9bf479305512",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -4106,7 +4164,15 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_9786.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true
+      "leadImageReady": false,
+      "_retainedFromCache": true,
+      "stockImage": "https://live.staticflickr.com/3505/3973947773_f685cd523c_b.jpg",
+      "imageTitle": "Installation (Detail) FASTFORWARDFOSSIL: Part 2 by Ellen Driscoll at Smack Mellon / Dumbo Arts Center: Art Under the Bridge Festival 2009 / 20090926.10D.54754.P1.L1.BW / SML",
+      "imageCredit": "Photo : See-ming Lee (SML) / CC BY-SA · Openverse",
+      "imageCreator": "See-ming Lee (SML)",
+      "imageLicense": "by-sa",
+      "imageProvider": "openverse",
+      "imageSourceUrl": "https://www.flickr.com/photos/48973657@N00/3973947773"
     },
     {
       "source": "Zone Campus",
@@ -4127,10 +4193,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3397-1.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/7428914d1b64d542.jpg",
       "imageLocalKey": "7428914d1b64d542",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -4151,10 +4218,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3405.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/7f86c6d6d4e73d30.jpg",
       "imageLocalKey": "7f86c6d6d4e73d30",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Zone Campus",
@@ -4174,9 +4242,11 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/df8807d73a194404.jpg",
-      "imageLocalKey": "df8807d73a194404"
+      "imageLocalKey": "df8807d73a194404",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -4196,9 +4266,11 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/4828a1e7cbf0e7ff.jpg",
-      "imageLocalKey": "4828a1e7cbf0e7ff"
+      "imageLocalKey": "4828a1e7cbf0e7ff",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -4218,9 +4290,11 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
-      "leadImageReady": true,
+      "leadImageReady": false,
       "imageLocal": "assets/news-images/fcac91d58ef48893.jpg",
-      "imageLocalKey": "fcac91d58ef48893"
+      "imageLocalKey": "fcac91d58ef48893",
+      "_retainedFromCache": true,
+      "imageLocalVia": "origin"
     },
     {
       "source": "Exil",
