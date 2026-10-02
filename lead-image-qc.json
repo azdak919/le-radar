@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-02T00:23:02.048Z",
+  "updated": "2026-10-02T02:24:28.827Z",
   "total": 176,
-  "withPhoto": 163,
-  "withStock": 24,
-  "withCampusBank": 17,
+  "withPhoto": 164,
+  "withStock": 23,
+  "withCampusBank": 16,
   "fullyCovered": 176,
-  "leadReadyPhotos": 132,
-  "pageScraped": 40,
-  "photosRecovered": 37,
+  "leadReadyPhotos": 131,
+  "pageScraped": 43,
+  "photosRecovered": 39,
   "imagesCleared": 13,
-  "stockSearches": 44,
-  "stockFound": 20,
-  "campusBankFound": 13,
+  "stockSearches": 45,
+  "stockFound": 19,
+  "campusBankFound": 12,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -25,6 +25,18 @@
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
+    },
+    {
+      "title": "Immigrante de souche",
+      "link": "https://theplantnews.com/2026/10/01/immigrante-de-souche/",
+      "reason": "no-stock-match",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/10/immigrants-de-souche-alaa-1.jpg"
+    },
+    {
+      "title": "Spinoza, God, and Brahman",
+      "link": "https://theplantnews.com/2026/10/01/spinoza-god-and-brahman/",
+      "reason": "no-stock-match",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/10/koolaid-man-new-2.png"
     },
     {
       "title": "La Chambrée interpelle les partis",
@@ -57,12 +69,6 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Capture-decran-2026-09-28-172148-e1790630661870.png"
     },
     {
-      "title": "Women and Sports Advertisements",
-      "link": "https://thebucampus.ca/2026/09/30/women-and-sports-advertisements/",
-      "reason": "stock-too-small",
-      "image": "https://thebucampus.ca/wp-content/uploads/2026/09/capture-decran-le-2026-09-30-a-14.05.02.png"
-    },
-    {
       "title": "Culture Paints Time a Different Colour",
       "link": "https://theplantnews.com/2026/09/30/culture-paints-time-a-different-colour/",
       "reason": "no-stock-match",
@@ -79,12 +85,6 @@
       "link": "https://www.mcgilldaily.com/2026/09/the-uci-road-world-championships-where-excitement-meets-inconvenience/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/3628/3418387414_838287f106_b.jpg"
-    },
-    {
-      "title": "Blackface at McGill",
-      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
     }
   ]
 }
