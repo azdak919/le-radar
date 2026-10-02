@@ -1,23 +1,51 @@
 {
-  "updated": "2026-10-02T15:57:48.853Z",
+  "updated": "2026-10-02T20:12:55.171Z",
   "total": 176,
   "withImage": 164,
   "withCredit": 164,
-  "cited": 103,
-  "pending": 13,
+  "cited": 104,
+  "pending": 12,
   "missingHero": 0,
   "ok": false,
   "checked": 19,
-  "updatedCount": 7,
-  "citedNew": 5,
-  "fallbackNew": 14,
+  "updatedCount": 11,
+  "citedNew": 6,
+  "fallbackNew": 13,
   "samples": [
     {
-      "title": "Entrée en matière réussie pour les Canadiens à Toronto",
-      "source": "Le Collectif",
-      "credit": "Photo : Steve Russell/Getty Images",
+      "title": "Québec solidaire souhaite réduire de moitié les frais de scolarité pour les cégeps et les universités dans un premier mandat",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Discussion sur la liberté d’expression : comment parler de Trump ?",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Une rencontre de la STS productive",
+      "source": "La Pige",
+      "credit": "Photo : Julianne Pilon",
       "cited": true,
-      "method": "body-tail"
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Autobus : le secteur en crise face aux prix du carburant",
+      "source": "La Pige",
+      "credit": "Photo : Julianne Landry",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Will the unhoused crisis be properly addressed after the Quebec provincial elections?",
+      "source": "The Link",
+      "credit": "Photo : Nicolas Tremblay",
+      "cited": true,
+      "method": "figcaption"
     },
     {
       "title": "Sandra Rossignol passe de la Chambre de commerce à First Phosphate",
@@ -25,6 +53,20 @@
       "credit": "Crédit photo : La Pige",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "La Chambrée interpelle les partis",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Une cinquième édition réussie pour Cap sur ma santé mentale",
+      "source": "La Pige",
+      "credit": "Photo : Alex Loiselle",
+      "cited": true,
+      "method": "body-line"
     },
     {
       "title": "Culture Paints Time a Different Colour",
@@ -36,28 +78,14 @@
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
+      "credit": "Photo : Scott Tan",
       "cited": true,
-      "method": "figcaption-bare"
+      "method": "media-credit-featured"
     },
     {
       "title": "Manifestation anti-IA à Montréal",
       "source": "Le Délit",
       "credit": "Photo : Héloïse Durning",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "McGill’s 25th Annual Powwow",
-      "source": "The McGill Daily",
-      "credit": "Photo : Images courtesy of Parker Russell",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
-      "source": "The McGill Daily",
-      "credit": "Photo : Meg Ha",
       "cited": true,
       "method": "media-credit-featured"
     }
