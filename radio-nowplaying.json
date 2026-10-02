@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-02T02:26:29.148Z",
+  "updatedAt": "2026-10-02T05:33:15.032Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T02:25:51.500Z"
+      "checkedAt": "2026-10-02T05:32:37.541Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "next": {
         "title": "Rebelles soniques (reprise)",
         "source": "schedule",
         "start": "00:00",
         "end": "02:00",
         "url": "https://cism893.ca/emissions/rebelles-soniques"
       },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Rebelles soniques (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T02:25:52.967Z"
+      "checkedAt": "2026-10-02T05:32:39.014Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Chaud Pour/Francis",
+        "title": "Listen! You Smell Something?",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "01:00",
+        "end": "04:00"
       },
       "next": {
-        "title": "You Need A Heart To Live 2",
+        "title": "G-Flex Survivor's Corner",
         "source": "api-live",
-        "start": "23:00",
-        "end": "01:00"
+        "start": "04:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Chaud Pour/Francis",
+      "showTitle": "Listen! You Smell Something?",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,87 +74,80 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T02:25:55.613Z"
+      "checkedAt": "2026-10-02T05:32:41.553Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "How Did We Get Here?",
+        "title": "Finally Midnight",
         "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/how-did-we-get-here"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/finally-midnight"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "02:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "track": "",
-      "showTitle": "How Did We Get Here?",
+      "showTitle": "Finally Midnight",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T02:26:09.746Z"
+      "checkedAt": "2026-10-02T05:32:55.867Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "After 5@8",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "After 5@8",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T02:26:11.011Z"
+      "checkedAt": "2026-10-02T05:32:56.799Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Le grand maître des jeux",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "22:30",
-        "slug": "le-maitre-des-jeux"
-      },
+      "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:30",
         "end": "12:30",
-        "url": "https://www.choq.ca/emissions/box-sophisme"
+        "slug": "box-sophisme"
       },
-      "track": "N NAO — Corps (feat. Lou-Adriane Cassidy)",
-      "showTitle": "Le grand maître des jeux",
+      "track": "Oktoplut — Ocean 4-5",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T02:26:28.797Z"
+      "checkedAt": "2026-10-02T05:33:14.681Z"
     }
   }
 }
