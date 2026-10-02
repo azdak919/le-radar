@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-10-02T12:36:44.326Z",
+  "updatedAt": "2026-10-02T15:20:50.655Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Vendredi Nostalgie",
+        "title": "Punk-o-rama",
         "source": "api-live",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/punk-o-rama/"
       },
       "next": {
-        "title": "Palmarès CHYZ",
+        "title": "Le Détour",
         "source": "schedule-live",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://chyz.ca/emission/detour/"
       },
       "track": "",
-      "showTitle": "Vendredi Nostalgie",
+      "showTitle": "Punk-o-rama",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T12:35:46.823Z"
+      "checkedAt": "2026-10-02T15:20:26.047Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Quartier libre",
+        "title": "Accents ouverts",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/quartier-libre"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/accents-ouverts"
       },
       "next": {
-        "title": "La collation",
+        "title": "Rebelles soniques",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/rebelles-soniques"
       },
       "track": "",
-      "showTitle": "Quartier libre",
+      "showTitle": "Accents ouverts",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T12:35:48.304Z"
+      "checkedAt": "2026-10-02T15:20:27.637Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Morning Detour",
+        "title": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
         "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "next": {
-        "title": "Jazz Amuck",
+        "title": "Butcher T's Noontime Cuts",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "14:00"
       },
-      "track": "Airtime - offline",
-      "showTitle": "Morning Detour",
+      "track": "",
+      "showTitle": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,59 +81,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T12:35:50.824Z"
+      "checkedAt": "2026-10-02T15:20:29.964Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Wake up Folks!",
-        "source": "schedule",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/wake-up-folks"
+        "title": "The Alley",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/the-alley"
       },
       "next": {
-        "title": "CJLO News Hour",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/cjlo-news-hour"
+        "title": "Charts & Crafts",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/charts-and-crafts"
       },
       "track": "",
-      "showTitle": "Wake up Folks!",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-02T12:36:25.155Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00"
-      },
-      "next": {
-        "title": "La Souterraine",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "11:00"
-      },
-      "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "The Alley",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T12:36:26.279Z"
+      "checkedAt": "2026-10-02T15:20:31.935Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Le Ré-Show : Deuxième service",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
+      "next": {
+        "title": "Ciné-Histoire",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "15:00"
+      },
+      "track": "",
+      "showTitle": "Le Ré-Show : Deuxième service",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-02T15:20:32.995Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Quicksand — Get To It",
+      "track": "Wilco — I Am Trying to Break Your Heart",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T12:36:43.975Z"
+      "checkedAt": "2026-10-02T15:20:50.304Z"
     }
   }
 }
