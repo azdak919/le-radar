@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-02T15:28:30.359Z",
+  "updated": "2026-10-02T15:57:48.853Z",
   "total": 176,
   "withImage": 164,
   "withCredit": 164,
@@ -7,9 +7,9 @@
   "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 17,
-  "updatedCount": 5,
-  "citedNew": 3,
+  "checked": 19,
+  "updatedCount": 7,
+  "citedNew": 5,
   "fallbackNew": 14,
   "samples": [
     {
@@ -36,14 +36,28 @@
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "source": "Le Délit",
+      "credit": "Photo : Héloïse Durning",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Faire compter sa voix",
-      "source": "Le Délit",
-      "credit": "Photo : Photo tirée d’Élections Québec",
+      "title": "McGill’s 25th Annual Powwow",
+      "source": "The McGill Daily",
+      "credit": "Photo : Images courtesy of Parker Russell",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
       "cited": true,
       "method": "media-credit-featured"
     }
