@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-01T23:20:44.533Z",
-  "fetchedAt": "2026-10-01T23:20:44.533Z",
+  "updated": "2026-10-02T00:15:03.591Z",
+  "fetchedAt": "2026-10-02T00:15:03.591Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-10-01T23:20:44.533Z"
+    "referenceDate": "2026-10-02T00:15:03.592Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 852,
@@ -5984,21 +5984,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-10-01",
-          "time": "19:30",
-          "opponent": "John Abbott",
-          "opponentCode": "JAC",
-          "home": false,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "188baa03-7a48-4ec5-8e94-f6e558db0ea7",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=188baa03-7a48-4ec5-8e94-f6e558db0ea7",
-          "opponentFullName": "John Abbott College",
-          "opponentNickname": "Islanders",
-          "opponentRegistryId": "john-abbott",
-          "live": true
-        },
-        {
           "date": "2026-10-03",
           "time": "13:00",
           "opponent": "Beauce-Appalaches",
@@ -6068,19 +6053,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-10-01",
-        "time": "19:30",
-        "opponent": "John Abbott",
-        "opponentCode": "JAC",
+        "date": "2026-10-03",
+        "time": "13:00",
+        "opponent": "Beauce-Appalaches",
+        "opponentCode": "BAP",
         "home": false,
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "188baa03-7a48-4ec5-8e94-f6e558db0ea7",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=188baa03-7a48-4ec5-8e94-f6e558db0ea7",
-        "opponentFullName": "John Abbott College",
-        "opponentNickname": "Islanders",
-        "opponentRegistryId": "john-abbott",
-        "live": true,
+        "gameId": "272b6e19-f177-4361-aa10-7ba4ce3a6165",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=272b6e19-f177-4361-aa10-7ba4ce3a6165",
+        "opponentFullName": "Cégep de Beauce-Appalaches",
+        "opponentRegistryId": "beauce-appalaches",
         "opponentSector": "collegial"
       },
       "record": {
@@ -7462,21 +7445,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-10-01",
-          "time": "19:30",
-          "opponent": "André-Laurendeau",
-          "opponentCode": "CAL",
-          "home": true,
-          "sport": "baseball",
-          "competition": "Baseball collégial masculin",
-          "gameId": "188baa03-7a48-4ec5-8e94-f6e558db0ea7",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=188baa03-7a48-4ec5-8e94-f6e558db0ea7",
-          "opponentFullName": "Cégep André-Laurendeau",
-          "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "andre-laurendeau",
-          "live": true
-        },
-        {
           "date": "2026-10-04",
           "time": "13:00",
           "opponent": "Édouard-Montpetit",
@@ -7518,19 +7486,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-10-01",
-        "time": "19:30",
-        "opponent": "André-Laurendeau",
-        "opponentCode": "CAL",
+        "date": "2026-10-04",
+        "time": "13:00",
+        "opponent": "Édouard-Montpetit",
+        "opponentCode": "CEM",
         "home": true,
         "sport": "baseball",
         "competition": "Baseball collégial masculin",
-        "gameId": "188baa03-7a48-4ec5-8e94-f6e558db0ea7",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=188baa03-7a48-4ec5-8e94-f6e558db0ea7",
-        "opponentFullName": "Cégep André-Laurendeau",
-        "opponentNickname": "Cheetahs",
-        "opponentRegistryId": "andre-laurendeau",
-        "live": true,
+        "gameId": "576eec73-2f75-43d0-85c1-64ab8c080d05",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=576eec73-2f75-43d0-85c1-64ab8c080d05",
+        "opponentFullName": "Cégep Édouard-Montpetit",
+        "opponentNickname": "Cougars",
+        "opponentRegistryId": "edouard-montpetit",
         "opponentSector": "collegial"
       },
       "record": {
@@ -85726,20 +85693,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-10-01",
-          "time": "19:30",
-          "opponent": "Rosemont",
-          "opponentCode": "ROS",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D3",
-          "gameId": "1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
-          "opponentFullName": "Collège de Rosemont",
-          "opponentRegistryId": "rosemont",
-          "live": true
-        },
-        {
           "date": "2026-10-04",
           "time": "17:00",
           "opponent": "Marie-Victorin",
@@ -85780,18 +85733,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-10-01",
-        "time": "19:30",
-        "opponent": "Rosemont",
-        "opponentCode": "ROS",
-        "home": true,
+        "date": "2026-10-04",
+        "time": "17:00",
+        "opponent": "Marie-Victorin",
+        "opponentCode": "CMV",
+        "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D3",
-        "gameId": "1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
-        "opponentFullName": "Collège de Rosemont",
-        "opponentRegistryId": "rosemont",
-        "live": true,
+        "gameId": "12aae1f5-e9b6-4bbe-8c83-79a67f29d50e",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=12aae1f5-e9b6-4bbe-8c83-79a67f29d50e",
+        "opponentFullName": "Cégep de Marie-Victorin",
+        "opponentRegistryId": "marie-victorin",
         "opponentSector": "collegial"
       },
       "record": {
@@ -86646,20 +86598,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-10-01",
-          "time": "19:30",
-          "opponent": "Gérald-Godin",
-          "opponentCode": "CGG",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D3",
-          "gameId": "1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
-          "opponentFullName": "Cégep Gérald-Godin",
-          "opponentRegistryId": "gerald-godin",
-          "live": true
-        },
-        {
           "date": "2026-10-04",
           "time": "10:00",
           "opponent": "Valleyfield",
@@ -86700,18 +86638,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-10-01",
-        "time": "19:30",
-        "opponent": "Gérald-Godin",
-        "opponentCode": "CGG",
+        "date": "2026-10-04",
+        "time": "10:00",
+        "opponent": "Valleyfield",
+        "opponentCode": "VAL",
         "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D3",
-        "gameId": "1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1e321ce5-ad84-40ec-a30a-7d4b4c593d6a",
-        "opponentFullName": "Cégep Gérald-Godin",
-        "opponentRegistryId": "gerald-godin",
-        "live": true,
+        "gameId": "0edfa7dd-6ef6-41dd-b7fe-ef218f25cbf3",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=0edfa7dd-6ef6-41dd-b7fe-ef218f25cbf3",
+        "opponentFullName": "Cégep de Valleyfield",
+        "opponentRegistryId": "valleyfield",
         "opponentSector": "collegial"
       },
       "record": {
@@ -89862,7 +89799,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7a91cd01-ea8f-45f8-8c50-237e0a9704cb",
           "opponentFullName": "Université du Québec à Trois-Rivières",
           "opponentNickname": "Patriotes",
-          "opponentRegistryId": "uqtr"
+          "opponentRegistryId": "uqtr",
+          "live": true
         },
         {
           "date": "2026-10-09",
@@ -89948,6 +89886,7 @@
         "opponentFullName": "Université du Québec à Trois-Rivières",
         "opponentNickname": "Patriotes",
         "opponentRegistryId": "uqtr",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -90890,7 +90829,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7a91cd01-ea8f-45f8-8c50-237e0a9704cb",
           "opponentFullName": "Université McGill",
           "opponentNickname": "Redbirds",
-          "opponentRegistryId": "mcgill"
+          "opponentRegistryId": "mcgill",
+          "live": true
         },
         {
           "date": "2026-10-04",
@@ -90976,6 +90916,7 @@
         "opponentFullName": "Université McGill",
         "opponentNickname": "Redbirds",
         "opponentRegistryId": "mcgill",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
