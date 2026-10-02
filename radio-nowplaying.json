@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-02T22:58:27.772Z",
+  "updatedAt": "2026-10-02T23:56:20.430Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -27,59 +27,60 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T22:58:01.006Z"
+      "checkedAt": "2026-10-02T23:55:55.028Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "OK Doomer",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/ok-doomer"
-      },
-      "next": {
         "title": "Mix électro",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/mix-electro"
       },
+      "next": {
+        "title": "Rave de nuit",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "https://cism893.ca/emissions/rave-de-nuit"
+      },
       "track": "",
-      "showTitle": "OK Doomer",
+      "showTitle": "Mix électro",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T22:58:03.043Z"
+      "checkedAt": "2026-10-02T23:55:56.573Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Café",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Listening to Latin America: Blanca-Victoria",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Macondo",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Café",
+      "showTitle": "Listening to Latin America: Blanca-Victoria",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T22:58:05.835Z"
+      "checkedAt": "2026-10-02T23:55:58.918Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -106,32 +107,32 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T22:58:08.572Z"
+      "checkedAt": "2026-10-02T23:56:01.404Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "La récréation",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Enfin vendredi",
         "source": "schedule-live",
         "start": "19:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Mangue, Goyave et Reggae",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "La récréation",
+      "showTitle": "Enfin vendredi",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T22:58:09.580Z"
+      "checkedAt": "2026-10-02T23:56:02.725Z"
     },
     "choq": {
       "id": "choq",
@@ -144,7 +145,7 @@
         "end": "00:00",
         "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
       },
-      "track": "Alewya — Selah",
+      "track": "BLAMM — To-Do List",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -153,7 +154,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-02T22:58:27.422Z"
+      "checkedAt": "2026-10-02T23:56:20.079Z"
     }
   }
 }
