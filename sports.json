@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-02T16:44:09.763Z",
-  "fetchedAt": "2026-10-02T16:44:09.763Z",
+  "updated": "2026-10-02T18:24:17.854Z",
+  "fetchedAt": "2026-10-02T18:24:17.854Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-10-02T16:44:09.763Z"
+    "referenceDate": "2026-10-02T18:24:17.854Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 851,
@@ -37660,19 +37660,6 @@
         {
           "date": "2026-10-16",
           "time": "17:30",
-          "opponent": "Séminaire de Sherbrooke",
-          "opponentCode": "SSH",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D2",
-          "gameId": "89ca0902-3728-4036-973b-6f697a615ee4",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=89ca0902-3728-4036-973b-6f697a615ee4",
-          "opponentFullName": "Séminaire de Sherbrooke",
-          "opponentRegistryId": "seminaire-de-sherbrooke"
-        },
-        {
-          "date": "2026-10-16",
-          "time": "20:30",
           "opponent": "Granby",
           "opponentCode": "GBY",
           "home": false,
@@ -37682,6 +37669,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e5eba510-b08c-4c31-9ecd-a91bb0cfb119",
           "opponentFullName": "Cégep de Granby",
           "opponentRegistryId": "granby"
+        },
+        {
+          "date": "2026-10-16",
+          "time": "20:30",
+          "opponent": "Séminaire de Sherbrooke",
+          "opponentCode": "SSH",
+          "home": false,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "89ca0902-3728-4036-973b-6f697a615ee4",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=89ca0902-3728-4036-973b-6f697a615ee4",
+          "opponentFullName": "Séminaire de Sherbrooke",
+          "opponentRegistryId": "seminaire-de-sherbrooke"
         }
       ],
       "nextGame": {
@@ -37875,6 +37875,19 @@
         },
         {
           "date": "2026-10-16",
+          "time": "17:30",
+          "opponent": "Champlain Lennoxville",
+          "opponentCode": "LEN",
+          "home": true,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "e5eba510-b08c-4c31-9ecd-a91bb0cfb119",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e5eba510-b08c-4c31-9ecd-a91bb0cfb119",
+          "opponentFullName": "Champlain College Lennoxville",
+          "opponentRegistryId": "champlain-lennoxville"
+        },
+        {
+          "date": "2026-10-16",
           "time": "19:00",
           "opponent": "Séminaire de Sherbrooke",
           "opponentCode": "SSH",
@@ -37885,19 +37898,6 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1546aa38-b3bc-4b87-980f-6cf1e14aec87",
           "opponentFullName": "Séminaire de Sherbrooke",
           "opponentRegistryId": "seminaire-de-sherbrooke"
-        },
-        {
-          "date": "2026-10-16",
-          "time": "20:30",
-          "opponent": "Champlain Lennoxville",
-          "opponentCode": "LEN",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D2",
-          "gameId": "e5eba510-b08c-4c31-9ecd-a91bb0cfb119",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e5eba510-b08c-4c31-9ecd-a91bb0cfb119",
-          "opponentFullName": "Champlain College Lennoxville",
-          "opponentRegistryId": "champlain-lennoxville"
         }
       ],
       "nextGame": {
@@ -38523,19 +38523,6 @@
         },
         {
           "date": "2026-10-16",
-          "time": "17:30",
-          "opponent": "Champlain Lennoxville",
-          "opponentCode": "LEN",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D2",
-          "gameId": "89ca0902-3728-4036-973b-6f697a615ee4",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=89ca0902-3728-4036-973b-6f697a615ee4",
-          "opponentFullName": "Champlain College Lennoxville",
-          "opponentRegistryId": "champlain-lennoxville"
-        },
-        {
-          "date": "2026-10-16",
           "time": "19:00",
           "opponent": "Granby",
           "opponentCode": "GBY",
@@ -38546,6 +38533,19 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1546aa38-b3bc-4b87-980f-6cf1e14aec87",
           "opponentFullName": "Cégep de Granby",
           "opponentRegistryId": "granby"
+        },
+        {
+          "date": "2026-10-16",
+          "time": "20:30",
+          "opponent": "Champlain Lennoxville",
+          "opponentCode": "LEN",
+          "home": true,
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "89ca0902-3728-4036-973b-6f697a615ee4",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=89ca0902-3728-4036-973b-6f697a615ee4",
+          "opponentFullName": "Champlain College Lennoxville",
+          "opponentRegistryId": "champlain-lennoxville"
         }
       ],
       "nextGame": {
