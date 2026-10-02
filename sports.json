@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-02T00:15:03.591Z",
-  "fetchedAt": "2026-10-02T00:15:03.591Z",
+  "updated": "2026-10-02T00:15:24.508Z",
+  "fetchedAt": "2026-10-02T00:15:24.508Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-10-02T00:15:03.592Z"
+    "referenceDate": "2026-10-02T00:15:24.508Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 852,
@@ -85,6 +85,11 @@
       "label": "Hockey universitaire",
       "error": "Cloudflare challenge HTTP 403 https://universitaire.rseqhockey.com/fr",
       "blocked": true
+    },
+    {
+      "leagueId": "campus-uqac",
+      "label": "UQAC Inuk events",
+      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -87728,6 +87733,24 @@
       "leagueLabel": "Soccer universitaire féminin",
       "results": [
         {
+          "date": "2026-10-01",
+          "time": "18:00",
+          "opponent": "UQTR",
+          "opponentCode": "UQTR",
+          "home": true,
+          "scoreFor": 2,
+          "scoreAgainst": 2,
+          "result": "D",
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "4b6a5491-f8da-43f9-9d7a-080ab082daac",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4b6a5491-f8da-43f9-9d7a-080ab082daac",
+          "opponentFullName": "Université du Québec à Trois-Rivières",
+          "opponentNickname": "Patriotes",
+          "opponentRegistryId": "uqtr",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-25",
           "time": "18:00",
           "opponent": "Concordia",
@@ -87855,21 +87878,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-25",
+        "date": "2026-10-01",
         "time": "18:00",
-        "opponent": "Concordia",
-        "opponentCode": "UCON",
+        "opponent": "UQTR",
+        "opponentCode": "UQTR",
         "home": true,
         "scoreFor": 2,
-        "scoreAgainst": 1,
-        "result": "W",
+        "scoreAgainst": 2,
+        "result": "D",
         "sport": "soccer",
         "competition": "Soccer universitaire féminin",
-        "gameId": "8297a86c-444c-40a6-a5e9-56dadae13b62",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=8297a86c-444c-40a6-a5e9-56dadae13b62",
-        "opponentFullName": "Université Concordia",
-        "opponentNickname": "Stingers",
-        "opponentRegistryId": "concordia",
+        "gameId": "4b6a5491-f8da-43f9-9d7a-080ab082daac",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4b6a5491-f8da-43f9-9d7a-080ab082daac",
+        "opponentFullName": "Université du Québec à Trois-Rivières",
+        "opponentNickname": "Patriotes",
+        "opponentRegistryId": "uqtr",
         "priorSeason": false,
         "opponentSector": "universitaire"
       },
@@ -87977,9 +88000,9 @@
       "record": {
         "wins": 4,
         "losses": 2,
-        "draws": 1,
-        "played": 7,
-        "label": "4-2-1"
+        "draws": 2,
+        "played": 8,
+        "label": "4-2-2"
       },
       "source": "rseq-s1",
       "priority": 2,
@@ -88870,6 +88893,24 @@
       "leagueLabel": "Soccer universitaire féminin",
       "results": [
         {
+          "date": "2026-10-01",
+          "time": "18:00",
+          "opponent": "McGill",
+          "opponentCode": "MCG",
+          "home": false,
+          "scoreFor": 2,
+          "scoreAgainst": 2,
+          "result": "D",
+          "sport": "soccer",
+          "competition": "Soccer universitaire féminin",
+          "gameId": "4b6a5491-f8da-43f9-9d7a-080ab082daac",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4b6a5491-f8da-43f9-9d7a-080ab082daac",
+          "opponentFullName": "Université McGill",
+          "opponentNickname": "Redbirds",
+          "opponentRegistryId": "mcgill",
+          "priorSeason": false
+        },
+        {
           "date": "2026-09-27",
           "time": "15:30",
           "opponent": "Concordia",
@@ -88997,21 +89038,21 @@
         }
       ],
       "lastGame": {
-        "date": "2026-09-27",
-        "time": "15:30",
-        "opponent": "Concordia",
-        "opponentCode": "UCON",
+        "date": "2026-10-01",
+        "time": "18:00",
+        "opponent": "McGill",
+        "opponentCode": "MCG",
         "home": false,
-        "scoreFor": 1,
+        "scoreFor": 2,
         "scoreAgainst": 2,
-        "result": "L",
+        "result": "D",
         "sport": "soccer",
         "competition": "Soccer universitaire féminin",
-        "gameId": "ffa5e05b-136e-4032-9526-4c0bf014d9e6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ffa5e05b-136e-4032-9526-4c0bf014d9e6",
-        "opponentFullName": "Université Concordia",
-        "opponentNickname": "Stingers",
-        "opponentRegistryId": "concordia",
+        "gameId": "4b6a5491-f8da-43f9-9d7a-080ab082daac",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=4b6a5491-f8da-43f9-9d7a-080ab082daac",
+        "opponentFullName": "Université McGill",
+        "opponentNickname": "Redbirds",
+        "opponentRegistryId": "mcgill",
         "priorSeason": false,
         "opponentSector": "universitaire"
       },
@@ -89119,9 +89160,9 @@
       "record": {
         "wins": 2,
         "losses": 5,
-        "draws": 0,
-        "played": 7,
-        "label": "2-5"
+        "draws": 1,
+        "played": 8,
+        "label": "2-5-1"
       },
       "source": "rseq-s1",
       "priority": 11,
@@ -89788,21 +89829,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-10-01",
-          "time": "20:15",
-          "opponent": "UQTR",
-          "opponentCode": "UQTR",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer universitaire masculin",
-          "gameId": "7a91cd01-ea8f-45f8-8c50-237e0a9704cb",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7a91cd01-ea8f-45f8-8c50-237e0a9704cb",
-          "opponentFullName": "Université du Québec à Trois-Rivières",
-          "opponentNickname": "Patriotes",
-          "opponentRegistryId": "uqtr",
-          "live": true
-        },
-        {
           "date": "2026-10-09",
           "time": "20:15",
           "opponent": "Laval",
@@ -89874,19 +89900,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-10-01",
+        "date": "2026-10-09",
         "time": "20:15",
-        "opponent": "UQTR",
-        "opponentCode": "UQTR",
+        "opponent": "Laval",
+        "opponentCode": "LAV",
         "home": true,
         "sport": "soccer",
         "competition": "Soccer universitaire masculin",
-        "gameId": "7a91cd01-ea8f-45f8-8c50-237e0a9704cb",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7a91cd01-ea8f-45f8-8c50-237e0a9704cb",
-        "opponentFullName": "Université du Québec à Trois-Rivières",
-        "opponentNickname": "Patriotes",
-        "opponentRegistryId": "uqtr",
-        "live": true,
+        "gameId": "9d2dd00c-4b8f-46c9-8dcb-6f72b1c1ef56",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=9d2dd00c-4b8f-46c9-8dcb-6f72b1c1ef56",
+        "opponentFullName": "Université Laval",
+        "opponentNickname": "Rouge et Or",
+        "opponentRegistryId": "ulaval",
         "opponentSector": "universitaire"
       },
       "record": {
@@ -90818,21 +90843,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-10-01",
-          "time": "20:15",
-          "opponent": "McGill",
-          "opponentCode": "MCG",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer universitaire masculin",
-          "gameId": "7a91cd01-ea8f-45f8-8c50-237e0a9704cb",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7a91cd01-ea8f-45f8-8c50-237e0a9704cb",
-          "opponentFullName": "Université McGill",
-          "opponentNickname": "Redbirds",
-          "opponentRegistryId": "mcgill",
-          "live": true
-        },
-        {
           "date": "2026-10-04",
           "time": "13:00",
           "opponent": "Montréal",
@@ -90904,19 +90914,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-10-01",
-        "time": "20:15",
-        "opponent": "McGill",
-        "opponentCode": "MCG",
-        "home": false,
+        "date": "2026-10-04",
+        "time": "13:00",
+        "opponent": "Montréal",
+        "opponentCode": "MTL",
+        "home": true,
         "sport": "soccer",
         "competition": "Soccer universitaire masculin",
-        "gameId": "7a91cd01-ea8f-45f8-8c50-237e0a9704cb",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7a91cd01-ea8f-45f8-8c50-237e0a9704cb",
-        "opponentFullName": "Université McGill",
-        "opponentNickname": "Redbirds",
-        "opponentRegistryId": "mcgill",
-        "live": true,
+        "gameId": "bcb48633-aa87-4738-83c8-f859d77e085a",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bcb48633-aa87-4738-83c8-f859d77e085a",
+        "opponentFullName": "Université de Montréal",
+        "opponentNickname": "Carabins",
+        "opponentRegistryId": "udem",
         "opponentSector": "universitaire"
       },
       "record": {
