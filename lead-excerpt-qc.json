@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-02T10:33:19.826Z",
+  "updated": "2026-10-02T15:22:05.562Z",
   "total": 176,
-  "pool": 55,
-  "incomplete": 10,
-  "withLeadExcerpt": 116,
-  "candidates": 10,
-  "enriched": 1,
+  "pool": 57,
+  "incomplete": 11,
+  "withLeadExcerpt": 115,
+  "candidates": 11,
+  "enriched": 2,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -19,12 +19,21 @@
       "changed": false
     },
     {
-      "title": "Manifestation anti-IA à Montréal",
-      "link": "https://www.delitfrancais.com/2026/09/23/manifestation-anti-ia-a-montreal/",
+      "title": "Faire compter sa voix",
+      "link": "https://www.delitfrancais.com/2026/09/23/faire-compter-sa-voix/",
       "ok": true,
-      "score": 94,
-      "chars": 249,
-      "sample": "La possibilité qui revient le plus est celle d’une extinction humaine après le développement d’une s",
+      "score": 100,
+      "chars": 282,
+      "sample": "En quinze ans, les Indigenous Awareness Weeks (IAW) sont devenues un espace de « dialogue, de rappro",
+      "changed": true
+    },
+    {
+      "title": "Sandra Rossignol passe de la Chambre de commerce à First Phosphate",
+      "link": "https://lapige.atmjonquiere.com/2026/10/02/sandra-rossignol-passe-de-la-chambre-de-commerce-a-first-phosphate/?utm_source=rss&utm_medium=rss&utm_campaign=sandra-rossignol-passe-de-la-chambre-de-commerce-a-first-phosphate",
+      "ok": true,
+      "score": 96,
+      "chars": 361,
+      "sample": "« On avait déjà fait un plan de relève et on était prêt, comme par hasard [à mon départ]. On pensait",
       "changed": true
     },
     {
@@ -70,15 +79,6 @@
       "score": 72,
       "chars": 399,
       "sample": "Et si on pouvait tout d’un coup s’évader de notre vie actuelle et entamer un nouveau parcours ? C’es",
-      "changed": false
-    },
-    {
-      "title": "The era of the i Pad baby",
-      "link": "https://thelinknewspaper.ca/article/16431",
-      "ok": true,
-      "score": 96,
-      "chars": 400,
-      "sample": "\"Back when I was a kid, we used to play outside and discover the world. You know, live life. Kids no",
       "changed": false
     }
   ]

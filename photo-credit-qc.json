@@ -1,21 +1,49 @@
 {
-  "updated": "2026-10-02T10:39:45.806Z",
+  "updated": "2026-10-02T15:28:30.359Z",
   "total": 176,
   "withImage": 164,
   "withCredit": 164,
-  "cited": 104,
-  "pending": 12,
+  "cited": 103,
+  "pending": 13,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 1,
-  "citedNew": 1,
-  "fallbackNew": 12,
+  "checked": 17,
+  "updatedCount": 5,
+  "citedNew": 3,
+  "fallbackNew": 14,
   "samples": [
     {
-      "title": "Manifestation anti-IA à Montréal",
+      "title": "Entrée en matière réussie pour les Canadiens à Toronto",
+      "source": "Le Collectif",
+      "credit": "Photo : Steve Russell/Getty Images",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Sandra Rossignol passe de la Chambre de commerce à First Phosphate",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Culture Paints Time a Different Colour",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Héloïse Durning",
+      "credit": "Photo : Scott Tan",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Faire compter sa voix",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée d’Élections Québec",
       "cited": true,
       "method": "media-credit-featured"
     }
