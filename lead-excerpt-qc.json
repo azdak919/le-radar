@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-01T22:47:22.072Z",
+  "updated": "2026-10-02T00:16:51.400Z",
   "total": 176,
   "pool": 55,
-  "incomplete": 8,
+  "incomplete": 9,
   "withLeadExcerpt": 113,
-  "candidates": 8,
-  "enriched": 0,
+  "candidates": 9,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -17,6 +17,15 @@
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
       "changed": false
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "link": "https://www.delitfrancais.com/2026/09/23/manifestation-anti-ia-a-montreal/",
+      "ok": true,
+      "score": 94,
+      "chars": 249,
+      "sample": "La possibilité qui revient le plus est celle d’une extinction humaine après le développement d’une s",
+      "changed": true
     },
     {
       "title": "From Student Entrepreneur to Sponsoring Bishop’s Rugby: Jonathan Scott-Lewis Builds Business While Giving Back",
@@ -70,15 +79,6 @@
       "score": 87,
       "chars": 400,
       "sample": "Dans son budget 2021–2022 , Québec prévoyait rapatrier dans ses coffres un milliard de dollars en pr",
-      "changed": false
-    },
-    {
-      "title": "Quand utilisation devient appropriation",
-      "link": "https://www.delitfrancais.com/2026/09/30/quand-utilisation-devient-appropriation/",
-      "ok": true,
-      "score": 76,
-      "chars": 400,
-      "sample": "La plupart des termes qu’on pourrait qualifier d’argot queer, et qui sont utilisés aujourd’hui, prov",
       "changed": false
     }
   ]
