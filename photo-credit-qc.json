@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-03T21:34:10.009Z",
+  "updated": "2026-10-03T23:11:18.159Z",
   "total": 176,
   "withImage": 164,
   "withCredit": 164,
@@ -8,17 +8,10 @@
   "missingHero": 0,
   "ok": false,
   "checked": 16,
-  "updatedCount": 6,
+  "updatedCount": 5,
   "citedNew": 3,
   "fallbackNew": 13,
   "samples": [
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "Summer in Paradise (Lennoxville Edition)",
       "source": "The Campus",
@@ -29,23 +22,9 @@
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
+      "credit": "Photo : Tan YiYang",
       "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Quand la fiction banalise les traumatismes",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Faire compter sa voix",
-      "source": "Le Délit",
-      "credit": "Photo : Photo tirée d’Élections Québec",
-      "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-bare"
     },
     {
       "title": "Culture Paints Time a Different Colour",
@@ -53,6 +32,20 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "McGill’s 25th Annual Powwow",
+      "source": "The McGill Daily",
+      "credit": "Photo : Images courtesy of Parker Russell",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
+      "cited": true,
+      "method": "media-credit-featured"
     }
   ]
 }
