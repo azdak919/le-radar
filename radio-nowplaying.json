@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-03T01:56:45.439Z",
+  "updatedAt": "2026-10-03T03:50:00.416Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,59 +21,60 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T01:56:18.046Z"
+      "checkedAt": "2026-10-03T03:49:33.269Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le 120e parallèle (reprise)",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/le-120e-parallele"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule",
         "start": "22:00",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "Rythmologie (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/rythmologie"
+      },
       "track": "",
-      "showTitle": "Le 120e parallèle (reprise)",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T01:56:19.859Z"
+      "checkedAt": "2026-10-03T03:49:34.909Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Macondo",
-        "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Weekend Groove",
         "source": "api-live",
         "start": "22:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "WEFUNK",
+        "source": "api-live",
+        "start": "00:00",
+        "end": "02:00"
+      },
       "track": "",
-      "showTitle": "Macondo",
+      "showTitle": "Weekend Groove",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T01:56:22.728Z"
+      "checkedAt": "2026-10-03T03:49:37.551Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -81,16 +82,16 @@
       "current": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
+        "start": "23:00",
+        "end": "00:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "The Come Up",
+        "title": "Jazz Boulevard",
         "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/the-come-up"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/jazz-boulevard"
       },
       "track": "",
       "showTitle": "CJLO's Alternative Mega Mix",
@@ -100,54 +101,53 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T01:56:25.794Z"
+      "checkedAt": "2026-10-03T03:49:40.235Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Mangue, Goyave et Reggae",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule-live",
         "start": "22:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Mangue, Goyave et Reggae",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T01:56:26.874Z"
+      "checkedAt": "2026-10-03T03:49:41.633Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "D'amour et de sexe",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
+        "title": "OPUS",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "13:00",
+        "slug": "opus"
       },
-      "track": "Empress Of — Dream House",
+      "track": "Shreez — MINUS",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T01:56:45.089Z"
+      "checkedAt": "2026-10-03T03:50:00.065Z"
     }
   }
 }
