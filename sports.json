@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-02T23:56:48.353Z",
-  "fetchedAt": "2026-10-02T23:56:48.353Z",
+  "updated": "2026-10-03T00:00:21.166Z",
+  "fetchedAt": "2026-10-03T00:00:21.166Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-10-02T23:56:48.353Z"
+    "referenceDate": "2026-10-03T00:00:21.166Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 851,
@@ -85,6 +85,11 @@
       "label": "Hockey universitaire",
       "error": "Cloudflare challenge HTTP 403 https://universitaire.rseqhockey.com/fr",
       "blocked": true
+    },
+    {
+      "leagueId": "campus-uqac",
+      "label": "UQAC Inuk events",
+      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -89287,7 +89292,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=509baeca-8611-48b3-b9b9-99a42ef839b5",
           "opponentFullName": "Université de Sherbrooke",
           "opponentNickname": "Vert & Or",
-          "opponentRegistryId": "usherbrooke"
+          "opponentRegistryId": "usherbrooke",
+          "live": true
         },
         {
           "date": "2026-10-04",
@@ -89373,6 +89379,7 @@
         "opponentFullName": "Université de Sherbrooke",
         "opponentNickname": "Vert & Or",
         "opponentRegistryId": "usherbrooke",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -89805,7 +89812,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=66ac1326-f9f5-4448-b841-5a406cfaf4df",
           "opponentFullName": "Université du Québec à Montréal",
           "opponentNickname": "Citadins",
-          "opponentRegistryId": "uqam"
+          "opponentRegistryId": "uqam",
+          "live": true
         },
         {
           "date": "2026-10-04",
@@ -89891,6 +89899,7 @@
         "opponentFullName": "Université du Québec à Montréal",
         "opponentNickname": "Citadins",
         "opponentRegistryId": "uqam",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -90062,7 +90071,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=509baeca-8611-48b3-b9b9-99a42ef839b5",
           "opponentFullName": "Université Laval",
           "opponentNickname": "Rouge et Or",
-          "opponentRegistryId": "ulaval"
+          "opponentRegistryId": "ulaval",
+          "live": true
         },
         {
           "date": "2026-10-04",
@@ -90148,6 +90158,7 @@
         "opponentFullName": "Université Laval",
         "opponentNickname": "Rouge et Or",
         "opponentRegistryId": "ulaval",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -90319,7 +90330,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=66ac1326-f9f5-4448-b841-5a406cfaf4df",
           "opponentFullName": "Université de Montréal",
           "opponentNickname": "Carabins",
-          "opponentRegistryId": "udem"
+          "opponentRegistryId": "udem",
+          "live": true
         },
         {
           "date": "2026-10-04",
@@ -90405,6 +90417,7 @@
         "opponentFullName": "Université de Montréal",
         "opponentNickname": "Carabins",
         "opponentRegistryId": "udem",
+        "live": true,
         "opponentSector": "universitaire"
       },
       "record": {
@@ -96718,21 +96731,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-10-02",
-          "time": "20:00",
-          "opponent": "Garneau",
-          "opponentCode": "GAR",
-          "home": false,
-          "sport": "volleyball",
-          "competition": "Volleyball collégial féminin D1",
-          "gameId": "f05aee2b-5057-4661-9c9d-443afa0670a1",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f05aee2b-5057-4661-9c9d-443afa0670a1",
-          "opponentFullName": "Cégep Garneau",
-          "opponentNickname": "Boomerang",
-          "opponentRegistryId": "garneau",
-          "live": true
-        },
-        {
           "date": "2026-10-03",
           "time": "13:30",
           "opponent": "Jonquière",
@@ -96879,22 +96877,34 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5de987c8-c8db-4701-a577-986dfd3396bc",
           "opponentFullName": "Collège Lionel-Groulx",
           "opponentRegistryId": "lionel-groulx"
+        },
+        {
+          "date": "2027-01-29",
+          "time": "18:00",
+          "opponent": "Édouard-Montpetit",
+          "opponentCode": "CEM",
+          "home": false,
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D1",
+          "gameId": "3df40ab1-314f-4c11-8c43-3cadd5de119c",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=3df40ab1-314f-4c11-8c43-3cadd5de119c",
+          "opponentFullName": "Cégep Édouard-Montpetit",
+          "opponentNickname": "Cougars",
+          "opponentRegistryId": "edouard-montpetit"
         }
       ],
       "nextGame": {
-        "date": "2026-10-02",
-        "time": "20:00",
-        "opponent": "Garneau",
-        "opponentCode": "GAR",
+        "date": "2026-10-03",
+        "time": "13:30",
+        "opponent": "Jonquière",
+        "opponentCode": "JON",
         "home": false,
         "sport": "volleyball",
         "competition": "Volleyball collégial féminin D1",
-        "gameId": "f05aee2b-5057-4661-9c9d-443afa0670a1",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f05aee2b-5057-4661-9c9d-443afa0670a1",
-        "opponentFullName": "Cégep Garneau",
-        "opponentNickname": "Boomerang",
-        "opponentRegistryId": "garneau",
-        "live": true,
+        "gameId": "fb006a88-4fea-4240-ae56-539fa5291a95",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=fb006a88-4fea-4240-ae56-539fa5291a95",
+        "opponentFullName": "Cégep de Jonquière",
+        "opponentRegistryId": "jonquiere",
         "opponentSector": "collegial"
       },
       "record": {
@@ -97130,20 +97140,6 @@
       "lastGame": null,
       "nextGames": [
         {
-          "date": "2026-10-02",
-          "time": "20:00",
-          "opponent": "Bois-de-Boulogne",
-          "opponentCode": "BDB",
-          "home": true,
-          "sport": "volleyball",
-          "competition": "Volleyball collégial féminin D1",
-          "gameId": "f05aee2b-5057-4661-9c9d-443afa0670a1",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f05aee2b-5057-4661-9c9d-443afa0670a1",
-          "opponentFullName": "Collège de Bois-de-Boulogne",
-          "opponentRegistryId": "bois-de-boulogne",
-          "live": true
-        },
-        {
           "date": "2026-10-09",
           "time": "19:00",
           "opponent": "Cégep de Trois-Rivières",
@@ -97290,21 +97286,34 @@
           "opponentFullName": "Cégep Édouard-Montpetit",
           "opponentNickname": "Cougars",
           "opponentRegistryId": "edouard-montpetit"
+        },
+        {
+          "date": "2027-01-30",
+          "time": "14:00",
+          "opponent": "Lionel-Groulx",
+          "opponentCode": "CLG",
+          "home": false,
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D1",
+          "gameId": "2faf45e5-f76e-4de5-bcc8-bc35a3e93155",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2faf45e5-f76e-4de5-bcc8-bc35a3e93155",
+          "opponentFullName": "Collège Lionel-Groulx",
+          "opponentRegistryId": "lionel-groulx"
         }
       ],
       "nextGame": {
-        "date": "2026-10-02",
-        "time": "20:00",
-        "opponent": "Bois-de-Boulogne",
-        "opponentCode": "BDB",
-        "home": true,
+        "date": "2026-10-09",
+        "time": "19:00",
+        "opponent": "Cégep de Trois-Rivières",
+        "opponentCode": "TRV",
+        "home": false,
         "sport": "volleyball",
         "competition": "Volleyball collégial féminin D1",
-        "gameId": "f05aee2b-5057-4661-9c9d-443afa0670a1",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f05aee2b-5057-4661-9c9d-443afa0670a1",
-        "opponentFullName": "Collège de Bois-de-Boulogne",
-        "opponentRegistryId": "bois-de-boulogne",
-        "live": true,
+        "gameId": "1980aa39-e51d-40ef-8487-aba6359aba1e",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1980aa39-e51d-40ef-8487-aba6359aba1e",
+        "opponentFullName": "Cégep de Trois-Rivières",
+        "opponentNickname": "Diablos",
+        "opponentRegistryId": "trois-rivieres",
         "opponentSector": "collegial"
       },
       "record": {
