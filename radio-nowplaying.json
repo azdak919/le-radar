@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-03T21:12:22.032Z",
+  "updatedAt": "2026-10-03T21:58:30.143Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T21:11:54.676Z"
+      "checkedAt": "2026-10-03T21:58:01.616Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le radar",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "17:30",
-        "url": "https://cism893.ca/emissions/le-radar-2"
-      },
-      "next": {
         "title": "Disconomique",
         "source": "schedule",
         "start": "17:30",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/disconomique"
       },
+      "next": {
+        "title": "Solénoïde",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/solenoide"
+      },
       "track": "",
-      "showTitle": "Le radar",
+      "showTitle": "Disconomique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T21:11:56.344Z"
+      "checkedAt": "2026-10-03T21:58:03.630Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T21:11:59.314Z"
+      "checkedAt": "2026-10-03T21:58:06.664Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T21:12:01.793Z"
+      "checkedAt": "2026-10-03T21:58:10.170Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T21:12:02.971Z"
+      "checkedAt": "2026-10-03T21:58:11.627Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "VioleTT Pi — Fleur de Londres",
+      "track": "Deerhunter — Desire Lines",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -142,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T21:12:21.682Z"
+      "checkedAt": "2026-10-03T21:58:29.793Z"
     }
   }
 }
