@@ -1,10 +1,26 @@
 {
-  "updated": "2026-10-02T20:49:29.230Z",
+  "updated": "2026-10-03T00:31:57.974Z",
   "total": 176,
   "withAuthor": 176,
-  "mismatches": 8,
+  "mismatches": 11,
   "ok": true,
   "samples": [
+    {
+      "title": "Élections provinciales et équité intergénérationnelle",
+      "link": "https://quartierlibre.ca/elections-et-equite-intergenerationnelle/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Anouchka Debionne",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Concordia University says no to open bargaining",
+      "link": "https://thelinknewspaper.ca/article/16441",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Helena Reyes Teruel",
+      "reason": "page-byline"
+    },
     {
       "title": "Not Enough People Are Mad”: Reporting Bill 9 in Conversation",
       "link": "https://theplantnews.com/2026/10/01/not-enough-people-are-mad-reporting-bill-9-in-conversation/",
@@ -28,6 +44,14 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "From Scripts to Stage: BU New Plays 2026",
+      "link": "https://thebucampus.ca/2026/09/30/from-scripts-to-stage-bu-new-plays-2026/",
+      "source": "The Campus",
+      "fieldAuthor": "Zachary Jaimes",
+      "canonicalAuthor": "Zachary Jaimes Saint Cyr",
+      "reason": "page-byline-overrides-rss"
     },
     {
       "title": "What is Tony Actually Guilty of?",
@@ -70,5 +94,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 8
+  "fixed": 11
 }

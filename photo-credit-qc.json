@@ -1,37 +1,37 @@
 {
-  "updated": "2026-10-02T20:53:48.918Z",
+  "updated": "2026-10-03T00:38:50.249Z",
   "total": 176,
   "withImage": 164,
   "withCredit": 164,
-  "cited": 105,
-  "pending": 11,
+  "cited": 107,
+  "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
+  "checked": 17,
   "updatedCount": 7,
   "citedNew": 6,
-  "fallbackNew": 12,
+  "fallbackNew": 11,
   "samples": [
     {
-      "title": "Éduquer les aînés pour mieux prévenir la fraude",
+      "title": "La musique d’ici bénéficie de la voix des jeunes",
       "source": "La Pige",
-      "credit": "Photo : Elsa Pierre",
+      "credit": "Photo : ADISQ",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-paren-kind"
     },
     {
-      "title": "Quand la fiction banalise les traumatismes",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "title": "Élections provinciales et équité intergénérationnelle",
+      "source": "Quartier Libre",
+      "credit": "Photo : Guillaume Villeneuve",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-trailing-fr"
     },
     {
-      "title": "Faire compter sa voix",
-      "source": "Le Délit",
-      "credit": "Photo : Photo tirée d’Élections Québec",
+      "title": "Concordia University says no to open bargaining",
+      "source": "The Link",
+      "credit": "Photo: Eric Klempan",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-trailing"
     },
     {
       "title": "Culture Paints Time a Different Colour",
@@ -43,21 +43,21 @@
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "McGill’s 25th Annual Powwow",
-      "source": "The McGill Daily",
-      "credit": "Photo : Images courtesy of Parker Russell",
+      "credit": "Photo : Scott Tan",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
-      "source": "The McGill Daily",
-      "credit": "Photo : Meg Ha",
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Le « self-care » : qui valide votre repos ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     }
