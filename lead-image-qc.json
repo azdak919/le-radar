@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-03T03:56:25.152Z",
+  "updated": "2026-10-03T06:38:16.984Z",
   "total": 176,
   "withPhoto": 164,
-  "withStock": 23,
+  "withStock": 24,
   "withCampusBank": 16,
   "fullyCovered": 176,
   "leadReadyPhotos": 137,
   "pageScraped": 36,
   "photosRecovered": 33,
   "imagesCleared": 13,
-  "stockSearches": 39,
-  "stockFound": 18,
+  "stockSearches": 40,
+  "stockFound": 20,
   "campusBankFound": 12,
   "mainPageLeadReady": true,
   "gaps": [
@@ -69,12 +69,6 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/09/Capture-decran-2026-09-28-172148-e1790630661870.png"
     },
     {
-      "title": "Women and Sports Advertisements",
-      "link": "https://thebucampus.ca/2026/09/30/women-and-sports-advertisements/",
-      "reason": "stock-too-small",
-      "image": "https://thebucampus.ca/wp-content/uploads/2026/09/capture-decran-le-2026-09-30-a-14.05.02.png"
-    },
-    {
       "title": "Culture Paints Time a Different Colour",
       "link": "https://theplantnews.com/2026/09/30/culture-paints-time-a-different-colour/",
       "reason": "no-stock-match",
@@ -85,6 +79,12 @@
       "link": "https://www.mcgilldaily.com/2026/09/the-uci-road-world-championships-where-excitement-meets-inconvenience/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/3628/3418387414_838287f106_b.jpg"
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
     }
   ]
 }
