@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-03T03:50:00.416Z",
+  "updatedAt": "2026-10-03T08:04:16.318Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T03:49:33.269Z"
+      "checkedAt": "2026-10-03T08:03:46.354Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
+        "title": "Mix franco",
         "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "02:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
       },
       "next": {
-        "title": "Rythmologie (reprise)",
+        "title": "Voix tropicale",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
+        "start": "05:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/voix-tropicale"
       },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T03:49:34.909Z"
+      "checkedAt": "2026-10-03T08:03:48.243Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Weekend Groove",
+        "title": "The Mash Time Show",
         "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
+        "start": "04:00",
+        "end": "06:00"
       },
       "next": {
-        "title": "WEFUNK",
+        "title": "Quebec Acadie",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "06:00",
+        "end": "10:00"
       },
       "track": "",
-      "showTitle": "Weekend Groove",
+      "showTitle": "The Mash Time Show",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,72 +74,67 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T03:49:37.551Z"
+      "checkedAt": "2026-10-03T08:03:51.640Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
-        "title": "Jazz Boulevard",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/jazz-boulevard"
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
+      "next": {
+        "title": "World-Up'",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T03:49:40.235Z"
+      "checkedAt": "2026-10-03T08:03:55.235Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Mix Anglo",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": null,
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T03:49:41.633Z"
+      "checkedAt": "2026-10-03T08:03:56.512Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "OPUS",
+        "title": "D'amour et de sexe",
         "source": "api-live",
-        "start": "12:00",
-        "end": "13:00",
-        "slug": "opus"
+        "start": "22:00",
+        "end": "00:00",
+        "slug": "damour-et-de-sexe"
       },
-      "track": "Shreez — MINUS",
+      "track": "A Girl Named Sue — April",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T03:50:00.065Z"
+      "checkedAt": "2026-10-03T08:04:15.968Z"
     }
   }
 }
