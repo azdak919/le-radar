@@ -1,10 +1,18 @@
 {
-  "updated": "2026-10-03T19:58:42.376Z",
+  "updated": "2026-10-03T21:27:19.028Z",
   "total": 176,
   "withAuthor": 176,
-  "mismatches": 8,
+  "mismatches": 9,
   "ok": true,
   "samples": [
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-10/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Samuel Girard",
+      "reason": "page-byline"
+    },
     {
       "title": "Not Enough People Are Mad”: Reporting Bill 9 in Conversation",
       "link": "https://theplantnews.com/2026/10/01/not-enough-people-are-mad-reporting-bill-9-in-conversation/",
@@ -70,5 +78,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 8
+  "fixed": 9
 }

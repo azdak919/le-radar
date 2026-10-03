@@ -1,44 +1,58 @@
 {
-  "updated": "2026-10-03T20:03:10.462Z",
+  "updated": "2026-10-03T21:34:10.009Z",
   "total": 176,
   "withImage": 164,
   "withCredit": 164,
-  "cited": 107,
-  "pending": 10,
+  "cited": 106,
+  "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 4,
+  "checked": 16,
+  "updatedCount": 6,
   "citedNew": 3,
-  "fallbackNew": 11,
+  "fallbackNew": 13,
   "samples": [
     {
-      "title": "Culture Paints Time a Different Colour",
-      "source": "The Plant",
-      "credit": "Photo credit: The Plant",
+      "title": "Cinq nouvelles de la semaine",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Summer in Paradise (Lennoxville Edition)",
+      "source": "The Campus",
+      "credit": "Photo credit: The Campus",
       "cited": false,
       "method": null
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "McGill’s 25th Annual Powwow",
-      "source": "The McGill Daily",
-      "credit": "Photo : Images courtesy of Parker Russell",
+      "credit": "Photo : Scott Tan",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
-      "source": "The McGill Daily",
-      "credit": "Photo : Meg Ha",
+      "title": "Quand la fiction banalise les traumatismes",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Faire compter sa voix",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée d’Élections Québec",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Culture Paints Time a Different Colour",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
     }
   ]
 }
