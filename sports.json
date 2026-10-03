@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-03T21:58:56.891Z",
-  "fetchedAt": "2026-10-03T21:58:56.891Z",
+  "updated": "2026-10-03T23:11:01.912Z",
+  "fetchedAt": "2026-10-03T23:11:01.912Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-10-03T21:58:56.891Z"
+    "referenceDate": "2026-10-03T23:11:01.912Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 851,
@@ -39571,20 +39571,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-10-03",
-          "time": "18:00",
-          "opponent": "Cégep de l'Outaouais",
-          "opponentCode": "OUT",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D2",
-          "gameId": "b97695a4-5ddf-44d0-a9e6-e32591e711b6",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b97695a4-5ddf-44d0-a9e6-e32591e711b6",
-          "opponentFullName": "Cégep de l'Outaouais",
-          "opponentRegistryId": "outaouais",
-          "live": true
-        },
-        {
           "date": "2026-10-10",
           "time": "11:30",
           "opponent": "Saint-Laurent",
@@ -39614,18 +39600,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-10-03",
-        "time": "18:00",
-        "opponent": "Cégep de l'Outaouais",
-        "opponentCode": "OUT",
+        "date": "2026-10-10",
+        "time": "11:30",
+        "opponent": "Saint-Laurent",
+        "opponentCode": "SL",
         "home": false,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D2",
-        "gameId": "b97695a4-5ddf-44d0-a9e6-e32591e711b6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b97695a4-5ddf-44d0-a9e6-e32591e711b6",
-        "opponentFullName": "Cégep de l'Outaouais",
-        "opponentRegistryId": "outaouais",
-        "live": true,
+        "gameId": "2b965bc3-da15-4aaf-ab14-ef2aa9ba95ca",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=2b965bc3-da15-4aaf-ab14-ef2aa9ba95ca",
+        "opponentFullName": "Cégep de Saint-Laurent",
+        "opponentNickname": "Cavaliers",
+        "opponentRegistryId": "saint-laurent",
         "opponentSector": "collegial"
       },
       "record": {
@@ -40821,20 +40807,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-10-03",
-          "time": "18:00",
-          "opponent": "Ahuntsic",
-          "opponentCode": "AHU",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D2",
-          "gameId": "b97695a4-5ddf-44d0-a9e6-e32591e711b6",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b97695a4-5ddf-44d0-a9e6-e32591e711b6",
-          "opponentFullName": "Collège Ahuntsic",
-          "opponentRegistryId": "ahuntsic",
-          "live": true
-        },
-        {
           "date": "2026-10-09",
           "time": "20:30",
           "opponent": "André-Grasset",
@@ -40863,18 +40835,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-10-03",
-        "time": "18:00",
-        "opponent": "Ahuntsic",
-        "opponentCode": "AHU",
-        "home": true,
+        "date": "2026-10-09",
+        "time": "20:30",
+        "opponent": "André-Grasset",
+        "opponentCode": "CAG",
+        "home": false,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D2",
-        "gameId": "b97695a4-5ddf-44d0-a9e6-e32591e711b6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b97695a4-5ddf-44d0-a9e6-e32591e711b6",
-        "opponentFullName": "Collège Ahuntsic",
-        "opponentRegistryId": "ahuntsic",
-        "live": true,
+        "gameId": "c907fb11-c449-48ed-8526-3d2a0290acb8",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c907fb11-c449-48ed-8526-3d2a0290acb8",
+        "opponentFullName": "Collège André-Grasset",
+        "opponentRegistryId": "andre-grasset",
         "opponentSector": "collegial"
       },
       "record": {
