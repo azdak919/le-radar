@@ -1,24 +1,30 @@
 {
-  "checkedAt": "2026-10-02T02:10:11.337Z",
+  "checkedAt": "2026-10-03T01:53:32.117Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 6,
-    "drift": [],
+    "stable": 4,
+    "drift": [
+      "chyz"
+    ],
     "overhaul": [],
-    "unreachable": []
+    "unreachable": [
+      "cjlo"
+    ]
   },
   "stations": [
     {
       "id": "chyz",
       "published": 40,
-      "fresh": 40,
+      "fresh": 39,
       "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "removed": [
+        "ven 16:00–17:30 Chéri.e, j’arrive!"
+      ],
+      "changed": 1,
+      "ratio": 0.025,
+      "status": "drift"
     },
     {
       "id": "cism",
@@ -43,12 +49,12 @@
     {
       "id": "cjlo",
       "published": 379,
-      "fresh": 379,
+      "fresh": 0,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
-      "status": "stable"
+      "status": "unreachable"
     },
     {
       "id": "cfak",
