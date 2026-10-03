@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-03T08:29:39.771Z",
+  "updated": "2026-10-03T09:45:12.406Z",
   "total": 176,
   "withImage": 164,
   "withCredit": 164,
@@ -7,9 +7,9 @@
   "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 12,
-  "updatedCount": 2,
-  "citedNew": 1,
+  "checked": 15,
+  "updatedCount": 5,
+  "citedNew": 4,
   "fallbackNew": 11,
   "samples": [
     {
@@ -22,7 +22,28 @@
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Faire compter sa voix",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée d’Élections Québec",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "McGill’s 25th Annual Powwow",
+      "source": "The McGill Daily",
+      "credit": "Photo : Images courtesy of Parker Russell",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
       "cited": true,
       "method": "media-credit-featured"
     }
