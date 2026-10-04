@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-04T06:10:40.873Z",
+  "updatedAt": "2026-10-04T12:22:41.083Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,86 +21,87 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T06:10:15.644Z"
+      "checkedAt": "2026-10-04T12:22:14.035Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
+        "title": "Par mots et par vaux",
         "source": "schedule",
-        "start": "02:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
       },
       "next": {
-        "title": "Genre de bleu",
+        "title": "Le 120e parallèle",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/genre-de-bleu"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/le-120e-parallele"
       },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "Par mots et par vaux",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T06:10:17.081Z"
+      "checkedAt": "2026-10-04T12:22:15.919Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Utopia's Paradise",
-        "source": "api-live",
-        "start": "02:00",
-        "end": "06:00"
-      },
-      "next": {
         "title": "Mind, Soul, & Spirit",
         "source": "api-live",
         "start": "06:00",
         "end": "09:00"
       },
-      "track": "Utopia",
-      "showTitle": "Utopia's Paradise",
+      "next": {
+        "title": "Latin Time",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "10:30"
+      },
+      "track": "",
+      "showTitle": "Mind, Soul, & Spirit",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T06:10:19.412Z"
+      "checkedAt": "2026-10-04T12:22:18.605Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
+        "title": "The Gigi Brown Experience",
         "source": "schedule-live",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
       },
       "next": {
-        "title": "Sun Ra, Sun Rise",
+        "title": "REVC",
         "source": "schedule-live",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/revc"
       },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "The Gigi Brown Experience",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T06:10:21.822Z"
+      "checkedAt": "2026-10-04T12:22:21.250Z"
     },
     "cfak": {
       "id": "cfak",
@@ -125,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T06:10:22.719Z"
+      "checkedAt": "2026-10-04T12:22:22.411Z"
     },
     "choq": {
       "id": "choq",
@@ -138,7 +139,7 @@
         "end": "13:00",
         "slug": "opus"
       },
-      "track": "Immolation — Attrition",
+      "track": "Fyore — SWITCH",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -146,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T06:10:40.523Z"
+      "checkedAt": "2026-10-04T12:22:40.733Z"
     }
   }
 }
