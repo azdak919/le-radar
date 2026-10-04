@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-04T17:18:38.647Z",
+  "updated": "2026-10-04T18:40:54.617Z",
   "total": 176,
   "pool": 58,
-  "incomplete": 7,
+  "incomplete": 5,
   "withLeadExcerpt": 115,
-  "candidates": 7,
-  "enriched": 2,
+  "candidates": 5,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -17,15 +17,6 @@
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
       "changed": false
-    },
-    {
-      "title": "Which Quebec political party put a price tag on maintaining Montreal public transit?",
-      "link": "https://thelinknewspaper.ca/article/16442",
-      "ok": true,
-      "score": 96,
-      "chars": 237,
-      "sample": "Quebec political parties have suggested different ideas to improve maintenance and service quality i",
-      "changed": true
     },
     {
       "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
@@ -62,15 +53,6 @@
       "chars": 400,
       "sample": "Time beats a drum heard by all: the blood rushing in your ears, your back hurting a little more each",
       "changed": false
-    },
-    {
-      "title": "Every Child Matters march highlights National Day of Truth and Reconciliation",
-      "link": "https://thelinknewspaper.ca/article/16443",
-      "ok": true,
-      "score": 100,
-      "chars": 276,
-      "sample": "“It's important to have this march because Indigenous people were forced to go to residential school",
-      "changed": true
     }
   ]
 }
