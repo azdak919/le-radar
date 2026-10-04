@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-04T19:35:29.249Z",
-  "fetchedAt": "2026-10-04T19:35:29.249Z",
+  "updated": "2026-10-04T19:42:51.880Z",
+  "fetchedAt": "2026-10-04T19:42:51.880Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-10-04T19:35:29.250Z"
+    "referenceDate": "2026-10-04T19:42:51.881Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 851,
@@ -85,11 +85,6 @@
       "label": "Hockey universitaire",
       "error": "Cloudflare challenge HTTP 403 https://universitaire.rseqhockey.com/fr",
       "blocked": true
-    },
-    {
-      "leagueId": "campus-uqac",
-      "label": "UQAC Inuk events",
-      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -110090,6 +110085,23 @@
           "opponentFullName": "Cégep de Marie-Victorin",
           "opponentRegistryId": "marie-victorin",
           "priorSeason": false
+        },
+        {
+          "date": "2026-10-04",
+          "time": "14:00",
+          "opponent": "L'Assomption",
+          "opponentCode": "LAS",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 2,
+          "result": "L",
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D3",
+          "gameId": "63ec7d50-ab81-4cb5-b905-e7d46828f38a",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63ec7d50-ab81-4cb5-b905-e7d46828f38a",
+          "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
+          "opponentRegistryId": "lassomption",
+          "priorSeason": false
         }
       ],
       "lastGame": {
@@ -110112,20 +110124,6 @@
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-10-04",
-          "time": "14:00",
-          "opponent": "L'Assomption",
-          "opponentCode": "LAS",
-          "home": false,
-          "sport": "volleyball",
-          "competition": "Volleyball collégial féminin D3",
-          "gameId": "63ec7d50-ab81-4cb5-b905-e7d46828f38a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63ec7d50-ab81-4cb5-b905-e7d46828f38a",
-          "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
-          "opponentRegistryId": "lassomption",
-          "live": true
-        },
         {
           "date": "2026-11-08",
           "time": "10:00",
@@ -110269,29 +110267,42 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=f6d21c39-6e4a-42b7-88ea-207b8411fced",
           "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
           "opponentRegistryId": "abitibi-temisc"
+        },
+        {
+          "date": "2027-02-14",
+          "time": "9:00",
+          "opponent": "John Abbott",
+          "opponentCode": "JAC",
+          "home": false,
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D3",
+          "gameId": "e2114407-2df0-4bb2-9776-567a40094aff",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e2114407-2df0-4bb2-9776-567a40094aff",
+          "opponentFullName": "John Abbott College",
+          "opponentNickname": "Islanders",
+          "opponentRegistryId": "john-abbott"
         }
       ],
       "nextGame": {
-        "date": "2026-10-04",
-        "time": "14:00",
-        "opponent": "L'Assomption",
-        "opponentCode": "LAS",
-        "home": false,
+        "date": "2026-11-08",
+        "time": "10:00",
+        "opponent": "Valleyfield",
+        "opponentCode": "VAL",
+        "home": true,
         "sport": "volleyball",
         "competition": "Volleyball collégial féminin D3",
-        "gameId": "63ec7d50-ab81-4cb5-b905-e7d46828f38a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63ec7d50-ab81-4cb5-b905-e7d46828f38a",
-        "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
-        "opponentRegistryId": "lassomption",
-        "live": true,
+        "gameId": "698a6184-fb29-470f-84ba-aeb9f5c3ce58",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=698a6184-fb29-470f-84ba-aeb9f5c3ce58",
+        "opponentFullName": "Cégep de Valleyfield",
+        "opponentRegistryId": "valleyfield",
         "opponentSector": "collegial"
       },
       "record": {
         "wins": 0,
-        "losses": 2,
+        "losses": 3,
         "draws": 0,
-        "played": 2,
-        "label": "0-2"
+        "played": 3,
+        "label": "0-3"
       },
       "source": "rseq-s1",
       "priority": 27,
@@ -110617,6 +110628,23 @@
           "opponentFullName": "Cégep de Valleyfield",
           "opponentRegistryId": "valleyfield",
           "priorSeason": false
+        },
+        {
+          "date": "2026-10-04",
+          "time": "14:00",
+          "opponent": "Jean-de-Brébeuf",
+          "opponentCode": "BRÉ",
+          "home": true,
+          "scoreFor": 2,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D3",
+          "gameId": "63ec7d50-ab81-4cb5-b905-e7d46828f38a",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63ec7d50-ab81-4cb5-b905-e7d46828f38a",
+          "opponentFullName": "Collège Jean-de-Brébeuf",
+          "opponentRegistryId": "brebeuf",
+          "priorSeason": false
         }
       ],
       "lastGame": {
@@ -110638,20 +110666,6 @@
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-10-04",
-          "time": "14:00",
-          "opponent": "Jean-de-Brébeuf",
-          "opponentCode": "BRÉ",
-          "home": true,
-          "sport": "volleyball",
-          "competition": "Volleyball collégial féminin D3",
-          "gameId": "63ec7d50-ab81-4cb5-b905-e7d46828f38a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63ec7d50-ab81-4cb5-b905-e7d46828f38a",
-          "opponentFullName": "Collège Jean-de-Brébeuf",
-          "opponentRegistryId": "brebeuf",
-          "live": true
-        },
         {
           "date": "2026-11-01",
           "time": "10:00",
@@ -110797,29 +110811,41 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ef1d21a2-e66c-49bc-924b-2efcbcd5005d",
           "opponentFullName": "Collège André-Grasset",
           "opponentRegistryId": "andre-grasset"
+        },
+        {
+          "date": "2027-02-21",
+          "time": "10:00",
+          "opponent": "Terrebonne",
+          "opponentCode": "TER",
+          "home": true,
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D3",
+          "gameId": "15134404-7dc6-481c-843c-33ba6b61f847",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=15134404-7dc6-481c-843c-33ba6b61f847",
+          "opponentFullName": "Cégep régional de Lanaudière à Terrebonne",
+          "opponentRegistryId": "terrebonne"
         }
       ],
       "nextGame": {
-        "date": "2026-10-04",
-        "time": "14:00",
-        "opponent": "Jean-de-Brébeuf",
-        "opponentCode": "BRÉ",
+        "date": "2026-11-01",
+        "time": "10:00",
+        "opponent": "Abitibi-Témiscamingue",
+        "opponentCode": "CAT",
         "home": true,
         "sport": "volleyball",
         "competition": "Volleyball collégial féminin D3",
-        "gameId": "63ec7d50-ab81-4cb5-b905-e7d46828f38a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=63ec7d50-ab81-4cb5-b905-e7d46828f38a",
-        "opponentFullName": "Collège Jean-de-Brébeuf",
-        "opponentRegistryId": "brebeuf",
-        "live": true,
+        "gameId": "7aae9635-cd22-4e38-a593-3d04e6665b6e",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7aae9635-cd22-4e38-a593-3d04e6665b6e",
+        "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
+        "opponentRegistryId": "abitibi-temisc",
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 1,
         "draws": 0,
-        "played": 2,
-        "label": "1-1"
+        "played": 3,
+        "label": "2-1"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -110874,6 +110900,24 @@
           "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
           "opponentRegistryId": "lassomption",
           "priorSeason": false
+        },
+        {
+          "date": "2026-10-04",
+          "time": "12:45",
+          "opponent": "Vanier",
+          "opponentCode": "VAN",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 2,
+          "result": "L",
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D3",
+          "gameId": "ea908721-2013-4f03-8d54-bdb8de7433fb",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ea908721-2013-4f03-8d54-bdb8de7433fb",
+          "opponentFullName": "Vanier College",
+          "opponentNickname": "Cheetahs",
+          "opponentRegistryId": "vanier",
+          "priorSeason": false
         }
       ],
       "lastGame": {
@@ -110895,21 +110939,6 @@
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-10-04",
-          "time": "12:45",
-          "opponent": "Vanier",
-          "opponentCode": "VAN",
-          "home": false,
-          "sport": "volleyball",
-          "competition": "Volleyball collégial féminin D3",
-          "gameId": "ea908721-2013-4f03-8d54-bdb8de7433fb",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ea908721-2013-4f03-8d54-bdb8de7433fb",
-          "opponentFullName": "Vanier College",
-          "opponentNickname": "Cheetahs",
-          "opponentRegistryId": "vanier",
-          "live": true
-        },
         {
           "date": "2026-11-08",
           "time": "10:00",
@@ -111055,30 +111084,41 @@
           "opponentFullName": "John Abbott College",
           "opponentNickname": "Islanders",
           "opponentRegistryId": "john-abbott"
+        },
+        {
+          "date": "2027-02-21",
+          "time": "10:00",
+          "opponent": "André-Grasset",
+          "opponentCode": "CAG",
+          "home": true,
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D3",
+          "gameId": "20fad827-ca72-487e-82b0-feacda190934",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=20fad827-ca72-487e-82b0-feacda190934",
+          "opponentFullName": "Collège André-Grasset",
+          "opponentRegistryId": "andre-grasset"
         }
       ],
       "nextGame": {
-        "date": "2026-10-04",
-        "time": "12:45",
-        "opponent": "Vanier",
-        "opponentCode": "VAN",
+        "date": "2026-11-08",
+        "time": "10:00",
+        "opponent": "Terrebonne",
+        "opponentCode": "TER",
         "home": false,
         "sport": "volleyball",
         "competition": "Volleyball collégial féminin D3",
-        "gameId": "ea908721-2013-4f03-8d54-bdb8de7433fb",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ea908721-2013-4f03-8d54-bdb8de7433fb",
-        "opponentFullName": "Vanier College",
-        "opponentNickname": "Cheetahs",
-        "opponentRegistryId": "vanier",
-        "live": true,
+        "gameId": "1b7ee922-ae6c-4694-9dce-091c68dbeb5f",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1b7ee922-ae6c-4694-9dce-091c68dbeb5f",
+        "opponentFullName": "Cégep régional de Lanaudière à Terrebonne",
+        "opponentRegistryId": "terrebonne",
         "opponentSector": "collegial"
       },
       "record": {
         "wins": 2,
-        "losses": 0,
+        "losses": 1,
         "draws": 0,
-        "played": 2,
-        "label": "2-0"
+        "played": 3,
+        "label": "2-1"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -111132,6 +111172,23 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=753bb04d-5763-4d9e-ad6b-254df543e270",
           "opponentFullName": "Collège Jean-de-Brébeuf",
           "opponentRegistryId": "brebeuf",
+          "priorSeason": false
+        },
+        {
+          "date": "2026-10-04",
+          "time": "12:45",
+          "opponent": "Valleyfield",
+          "opponentCode": "VAL",
+          "home": true,
+          "scoreFor": 2,
+          "scoreAgainst": 1,
+          "result": "W",
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D3",
+          "gameId": "00a3420b-35a0-468d-8433-7cbc25227134",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=00a3420b-35a0-468d-8433-7cbc25227134",
+          "opponentFullName": "Cégep de Valleyfield",
+          "opponentRegistryId": "valleyfield",
           "priorSeason": false
         }
       ],
@@ -111330,11 +111387,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 1,
+        "wins": 2,
         "losses": 1,
         "draws": 0,
-        "played": 2,
-        "label": "1-1"
+        "played": 3,
+        "label": "2-1"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -111663,6 +111720,23 @@
           "opponentFullName": "Cégep régional de Lanaudière à L'Assomption",
           "opponentRegistryId": "lassomption",
           "priorSeason": false
+        },
+        {
+          "date": "2026-10-04",
+          "time": "12:45",
+          "opponent": "Marie-Victorin",
+          "opponentCode": "CMV",
+          "home": false,
+          "scoreFor": 1,
+          "scoreAgainst": 2,
+          "result": "L",
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D3",
+          "gameId": "00a3420b-35a0-468d-8433-7cbc25227134",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=00a3420b-35a0-468d-8433-7cbc25227134",
+          "opponentFullName": "Cégep de Marie-Victorin",
+          "opponentRegistryId": "marie-victorin",
+          "priorSeason": false
         }
       ],
       "lastGame": {
@@ -111861,10 +111935,10 @@
       },
       "record": {
         "wins": 0,
-        "losses": 2,
+        "losses": 3,
         "draws": 0,
-        "played": 2,
-        "label": "0-2"
+        "played": 3,
+        "label": "0-3"
       },
       "source": "rseq-s1",
       "priority": 80,
@@ -111919,6 +111993,23 @@
           "opponentFullName": "Collège Jean-de-Brébeuf",
           "opponentRegistryId": "brebeuf",
           "priorSeason": false
+        },
+        {
+          "date": "2026-10-04",
+          "time": "12:45",
+          "opponent": "Maisonneuve",
+          "opponentCode": "MAI",
+          "home": true,
+          "scoreFor": 2,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D3",
+          "gameId": "ea908721-2013-4f03-8d54-bdb8de7433fb",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ea908721-2013-4f03-8d54-bdb8de7433fb",
+          "opponentFullName": "Collège de Maisonneuve",
+          "opponentRegistryId": "maisonneuve",
+          "priorSeason": false
         }
       ],
       "lastGame": {
@@ -111940,20 +112031,6 @@
         "opponentSector": "collegial"
       },
       "nextGames": [
-        {
-          "date": "2026-10-04",
-          "time": "12:45",
-          "opponent": "Maisonneuve",
-          "opponentCode": "MAI",
-          "home": true,
-          "sport": "volleyball",
-          "competition": "Volleyball collégial féminin D3",
-          "gameId": "ea908721-2013-4f03-8d54-bdb8de7433fb",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ea908721-2013-4f03-8d54-bdb8de7433fb",
-          "opponentFullName": "Collège de Maisonneuve",
-          "opponentRegistryId": "maisonneuve",
-          "live": true
-        },
         {
           "date": "2026-11-01",
           "time": "10:00",
@@ -112097,29 +112174,41 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=8d89c802-4762-4c2d-a200-9d56f986ad11",
           "opponentFullName": "Cégep de Valleyfield",
           "opponentRegistryId": "valleyfield"
+        },
+        {
+          "date": "2027-02-14",
+          "time": "9:00",
+          "opponent": "Abitibi-Témiscamingue",
+          "opponentCode": "CAT",
+          "home": true,
+          "sport": "volleyball",
+          "competition": "Volleyball collégial féminin D3",
+          "gameId": "7268f10f-972c-4f64-93de-88c98604fcdd",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=7268f10f-972c-4f64-93de-88c98604fcdd",
+          "opponentFullName": "Cégep de l'Abitibi-Témiscamingue",
+          "opponentRegistryId": "abitibi-temisc"
         }
       ],
       "nextGame": {
-        "date": "2026-10-04",
-        "time": "12:45",
-        "opponent": "Maisonneuve",
-        "opponentCode": "MAI",
+        "date": "2026-11-01",
+        "time": "10:00",
+        "opponent": "André-Grasset",
+        "opponentCode": "CAG",
         "home": true,
         "sport": "volleyball",
         "competition": "Volleyball collégial féminin D3",
-        "gameId": "ea908721-2013-4f03-8d54-bdb8de7433fb",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=ea908721-2013-4f03-8d54-bdb8de7433fb",
-        "opponentFullName": "Collège de Maisonneuve",
-        "opponentRegistryId": "maisonneuve",
-        "live": true,
+        "gameId": "a997dce3-e3e8-4d5b-b270-e255880b4577",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=a997dce3-e3e8-4d5b-b270-e255880b4577",
+        "opponentFullName": "Collège André-Grasset",
+        "opponentRegistryId": "andre-grasset",
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 2,
+        "wins": 3,
         "losses": 0,
         "draws": 0,
-        "played": 2,
-        "label": "2-0"
+        "played": 3,
+        "label": "3-0"
       },
       "source": "rseq-s1",
       "priority": 10,
