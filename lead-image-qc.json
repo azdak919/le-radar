@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-04T08:43:03.311Z",
+  "updated": "2026-10-04T10:44:00.587Z",
   "total": 176,
   "withPhoto": 164,
   "withStock": 23,
   "withCampusBank": 16,
   "fullyCovered": 176,
-  "leadReadyPhotos": 139,
+  "leadReadyPhotos": 140,
   "pageScraped": 36,
   "photosRecovered": 33,
   "imagesCleared": 12,
-  "stockSearches": 39,
-  "stockFound": 19,
-  "campusBankFound": 12,
+  "stockSearches": 37,
+  "stockFound": 17,
+  "campusBankFound": 10,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -75,16 +75,16 @@
       "image": "https://live.staticflickr.com/3628/3418387414_838287f106_b.jpg"
     },
     {
-      "title": "Blackface at McGill",
-      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
+      "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
+      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
     },
     {
-      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
-      "link": "https://www.thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+      "title": "Le pays avant tout – esquisse",
+      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
     }
   ]
 }
