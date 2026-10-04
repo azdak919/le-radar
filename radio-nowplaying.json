@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-04T20:19:59.354Z",
+  "updatedAt": "2026-10-04T21:27:36.859Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T20:19:31.725Z"
+      "checkedAt": "2026-10-04T21:27:10.868Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La Grapevine",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/la-grapevine"
-      },
-      "next": {
         "title": "Le grand repos",
         "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "https://cism893.ca/emissions/le-grand-repos"
       },
+      "next": {
+        "title": "Symbiose",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/symbiose"
+      },
       "track": "",
-      "showTitle": "La Grapevine",
+      "showTitle": "Le grand repos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T20:19:33.692Z"
+      "checkedAt": "2026-10-04T21:27:12.340Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T20:19:36.369Z"
+      "checkedAt": "2026-10-04T21:27:14.642Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T20:19:39.281Z"
+      "checkedAt": "2026-10-04T21:27:17.113Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,28 +133,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T20:19:40.516Z"
+      "checkedAt": "2026-10-04T21:27:18.030Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mutations",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "ÿþS — Lesotho Mobile",
-      "showTitle": "",
+      "next": {
+        "title": "Les rois de l'arène",
+        "source": "api-live",
+        "start": "05:00",
+        "end": "07:00",
+        "slug": "les-rois-de-larene"
+      },
+      "track": "Mon Doux Saigneur — Temperance",
+      "showTitle": "Mutations",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T20:19:59.003Z"
+      "checkedAt": "2026-10-04T21:27:36.508Z"
     }
   }
 }
