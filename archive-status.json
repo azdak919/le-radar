@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-04T10:07:51.013Z",
+  "updated": "2026-10-04T18:52:21.747Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -3451,15 +3451,32 @@
       "via": "save-page-now",
       "source": "La Pige",
       "snapshot": "https://web.archive.org/web/20261003092952/https://lapige.atmjonquiere.com/2026/10/01/une-cinquieme-edition-reussie-pour-cap-sur-ma-sante-mentale/"
+    },
+    "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-10/": {
+      "at": "2026-10-03T20:11:30.000Z",
+      "via": "existant",
+      "source": "Quartier Libre"
+    },
+    "https://thelinknewspaper.ca/article/16443": {
+      "at": "2026-10-04T18:51:35.114Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20261004185114/https://thelinknewspaper.ca/article/16443"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/04/une-exposition-doeuvres-industrielles-au-cegep-de-jonquiere/": {
+      "at": "2026-10-04T18:52:21.747Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261004185206/https://lapige.atmjonquiere.com/2026/10/04/une-exposition-doeuvres-industrielles-au-cegep-de-jonquiere/"
     }
   },
   "stats": {
-    "total": 606,
+    "total": 609,
     "lastRun": {
-      "saved": 0,
-      "skipped": 0,
-      "failed": 8,
-      "stoppedEarly": true
+      "saved": 2,
+      "skipped": 1,
+      "failed": 12,
+      "stoppedEarly": false
     }
   },
   "sources": {
