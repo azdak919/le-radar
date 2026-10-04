@@ -1,17 +1,24 @@
 {
-  "updated": "2026-10-04T18:45:48.444Z",
+  "updated": "2026-10-04T20:28:05.277Z",
   "total": 176,
   "withImage": 164,
   "withCredit": 164,
-  "cited": 106,
+  "cited": 107,
   "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 5,
-  "citedNew": 3,
+  "checked": 15,
+  "updatedCount": 4,
+  "citedNew": 2,
   "fallbackNew": 13,
   "samples": [
+    {
+      "title": "Students rallied under the slogan “Elections are a trap for fools”",
+      "source": "The Link",
+      "credit": "Photo: Moon Jinseok",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
     {
       "title": "Summer in Paradise (Lennoxville Edition)",
       "source": "The Campus",
@@ -22,9 +29,9 @@
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
+      "credit": "Photo : Scott Tan",
       "cited": true,
-      "method": "figcaption-bare"
+      "method": "media-credit-featured"
     },
     {
       "title": "Culture Paints Time a Different Colour",
@@ -32,20 +39,6 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "McGill’s 25th Annual Powwow",
-      "source": "The McGill Daily",
-      "credit": "Photo : Images courtesy of Parker Russell",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
-      "source": "The McGill Daily",
-      "credit": "Photo : Meg Ha",
-      "cited": true,
-      "method": "media-credit-featured"
     }
   ]
 }

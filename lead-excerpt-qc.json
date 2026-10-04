@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-04T18:40:54.617Z",
+  "updated": "2026-10-04T20:21:33.964Z",
   "total": 176,
   "pool": 58,
-  "incomplete": 5,
+  "incomplete": 6,
   "withLeadExcerpt": 115,
-  "candidates": 5,
-  "enriched": 0,
+  "candidates": 6,
+  "enriched": 1,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -17,6 +17,15 @@
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
       "changed": false
+    },
+    {
+      "title": "Students rallied under the slogan “Elections are a trap for fools”",
+      "link": "https://thelinknewspaper.ca/article/16444",
+      "ok": true,
+      "score": 96,
+      "chars": 293,
+      "sample": "Hundreds of students and activists gathered in La Fontaine Park on Oct. 3, under the slogan “Électio",
+      "changed": true
     },
     {
       "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
