@@ -1,23 +1,37 @@
 {
-  "updated": "2026-10-04T14:57:14.179Z",
+  "updated": "2026-10-04T17:23:05.856Z",
   "total": 176,
   "withImage": 164,
   "withCredit": 164,
-  "cited": 105,
-  "pending": 12,
+  "cited": 106,
+  "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 4,
-  "citedNew": 1,
-  "fallbackNew": 14,
+  "checked": 19,
+  "updatedCount": 8,
+  "citedNew": 6,
+  "fallbackNew": 13,
   "samples": [
+    {
+      "title": "Every Child Matters march highlights National Day of Truth and Reconciliation",
+      "source": "The Link",
+      "credit": "Photo: Andraé Lerone Lewis",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Which Quebec political party put a price tag on maintaining Montreal public transit?",
+      "source": "The Link",
+      "credit": "Photo: Moon Jinseok",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
     {
       "title": "Une exposition d’oeuvres industrielles au cegep de jonquiere",
       "source": "La Pige",
-      "credit": "Crédit photo : La Pige",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Juliette Pain",
+      "cited": true,
+      "method": "body-line"
     },
     {
       "title": "Summer in Paradise (Lennoxville Edition)",
@@ -29,9 +43,9 @@
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
+      "credit": "Photo : Tan YiYang",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-bare"
     },
     {
       "title": "Culture Paints Time a Different Colour",
@@ -39,6 +53,20 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "McGill’s 25th Annual Powwow",
+      "source": "The McGill Daily",
+      "credit": "Photo : Images courtesy of Parker Russell",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
+      "cited": true,
+      "method": "media-credit-featured"
     }
   ]
 }
