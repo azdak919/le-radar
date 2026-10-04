@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-04T23:18:55.975Z",
+  "updated": "2026-10-04T23:26:23.423Z",
   "total": 176,
   "withImage": 164,
   "withCredit": 164,
@@ -7,9 +7,9 @@
   "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 5,
-  "citedNew": 3,
+  "checked": 20,
+  "updatedCount": 9,
+  "citedNew": 7,
   "fallbackNew": 13,
   "samples": [
     {
@@ -36,7 +36,21 @@
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Quand la fiction banalise les traumatismes",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Faire compter sa voix",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée d’Élections Québec",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -46,6 +60,20 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "McGill’s 25th Annual Powwow",
+      "source": "The McGill Daily",
+      "credit": "Photo : Images courtesy of Parker Russell",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
+      "cited": true,
+      "method": "media-credit-featured"
     }
   ]
 }
