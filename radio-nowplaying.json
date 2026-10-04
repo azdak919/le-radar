@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-03T21:58:30.143Z",
+  "updatedAt": "2026-10-04T00:24:39.356Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T21:58:01.616Z"
+      "checkedAt": "2026-10-04T00:24:13.504Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Disconomique",
+        "title": "InfiniBIT!",
         "source": "schedule",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/disconomique"
+        "start": "20:00",
+        "end": "21:30",
+        "url": "https://cism893.ca/emissions/infinibit"
       },
       "next": {
-        "title": "Solénoïde",
+        "title": "Mix Anglo",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/solenoide"
+        "start": "21:30",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
       },
       "track": "",
-      "showTitle": "Disconomique",
+      "showTitle": "InfiniBIT!",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T21:58:03.630Z"
+      "checkedAt": "2026-10-04T00:24:15.093Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "West Indian Rhythms",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Masters At Work",
         "source": "api-live",
         "start": "19:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Howls From Hell/Too Loud For The Crowd",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "West Indian Rhythms",
+      "showTitle": "Masters At Work",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T21:58:06.664Z"
+      "checkedAt": "2026-10-04T00:24:17.829Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -82,16 +82,16 @@
       "current": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
+        "start": "20:00",
+        "end": "21:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "The Limelight",
+        "title": "The Spacious Astrology Playlist",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/the-limelight"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/the-spacious-astrology-playlist"
       },
       "track": "",
       "showTitle": "CJLO's Alternative Mega Mix",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T21:58:10.170Z"
+      "checkedAt": "2026-10-04T00:24:20.359Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +121,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T21:58:11.627Z"
+      "checkedAt": "2026-10-04T00:24:21.480Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Deerhunter — Desire Lines",
+      "track": "Thundercat — No More Lies (feat. Tame Impala)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -142,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-03T21:58:29.793Z"
+      "checkedAt": "2026-10-04T00:24:39.005Z"
     }
   }
 }
