@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-04T12:43:03.777Z",
+  "updatedAt": "2026-10-04T17:17:08.025Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Radio Futura",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "15:30",
+        "url": "https://chyz.ca/emission/radio-futura/"
+      },
       "next": {
-        "title": "Palmarès CHYZ",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
+        "title": "Remparts de Québec",
+        "source": "schedule-live",
+        "start": "15:45",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Radio Futura",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T12:42:38.449Z"
+      "checkedAt": "2026-10-04T17:16:18.743Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Par mots et par vaux",
+        "title": "Les sirènes",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/les-sirenes"
       },
       "next": {
-        "title": "Le 120e parallèle",
+        "title": "Le char de marge",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/le-120e-parallele"
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
       },
       "track": "",
-      "showTitle": "Par mots et par vaux",
+      "showTitle": "Les sirènes",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T12:42:39.950Z"
+      "checkedAt": "2026-10-04T17:16:21.126Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Mind, Soul, & Spirit",
+        "title": "Modular Systems/Future Classics",
         "source": "api-live",
-        "start": "06:00",
-        "end": "09:00"
+        "start": "13:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "Latin Time",
+        "title": "The Magic Roundabout",
         "source": "api-live",
-        "start": "09:00",
-        "end": "10:30"
+        "start": "14:00",
+        "end": "16:00"
       },
       "track": "",
-      "showTitle": "Mind, Soul, & Spirit",
+      "showTitle": "Modular Systems/Future Classics",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T12:42:42.455Z"
+      "checkedAt": "2026-10-04T17:16:24.311Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Gigi Brown Experience",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
+        "title": "Northern Stagelights",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/northern-stagelights"
       },
       "next": {
-        "title": "REVC",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/revc"
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "The Gigi Brown Experience",
+      "showTitle": "Northern Stagelights",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T12:42:44.876Z"
+      "checkedAt": "2026-10-04T17:16:47.365Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,20 +133,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T12:42:45.874Z"
+      "checkedAt": "2026-10-04T17:16:48.858Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "OPUS",
+        "title": "Mutations",
         "source": "api-live",
-        "start": "12:00",
-        "end": "13:00",
-        "slug": "opus"
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "mutations"
       },
-      "track": "Laura Niquay — Kekwan Tca Ni",
+      "track": "Eartheater — Glowing Guts",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T12:43:03.426Z"
+      "checkedAt": "2026-10-04T17:17:07.674Z"
     }
   }
 }
