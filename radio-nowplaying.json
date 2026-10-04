@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-10-04T18:09:21.608Z",
+  "updatedAt": "2026-10-04T20:19:59.354Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Radio Futura",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "15:30",
-        "url": "https://chyz.ca/emission/radio-futura/"
-      },
-      "next": {
         "title": "Remparts de Québec",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "15:45",
         "end": "18:30",
         "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
+      "next": {
+        "title": "Lundi Indie",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
+      },
       "track": "",
-      "showTitle": "Radio Futura",
+      "showTitle": "Remparts de Québec",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T18:08:57.365Z"
+      "checkedAt": "2026-10-04T20:19:31.725Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le char de marge",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/le-char-de-marge"
-      },
-      "next": {
         "title": "La Grapevine",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "https://cism893.ca/emissions/la-grapevine"
       },
+      "next": {
+        "title": "Le grand repos",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/le-grand-repos"
+      },
       "track": "",
-      "showTitle": "Le char de marge",
+      "showTitle": "La Grapevine",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T18:08:58.992Z"
+      "checkedAt": "2026-10-04T20:19:33.692Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Magic Roundabout",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
-      },
-      "next": {
         "title": "Bhum Bhum Time",
         "source": "api-live",
         "start": "16:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Desi Beats",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "The Magic Roundabout",
+      "showTitle": "Bhum Bhum Time",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T18:09:00.941Z"
+      "checkedAt": "2026-10-04T20:19:36.369Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "Grade A Explosives",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/grade-a-explosives"
       },
       "next": {
-        "title": "Fukubukuro",
+        "title": "Bills Country and Western Favourites",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/fukubukuro"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Grade A Explosives",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T18:09:02.969Z"
+      "checkedAt": "2026-10-04T20:19:39.281Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T18:09:03.967Z"
+      "checkedAt": "2026-10-04T20:19:40.516Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Truck Violence — My dog would fuck the air",
+      "track": "ÿþS — Lesotho Mobile",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T18:09:21.257Z"
+      "checkedAt": "2026-10-04T20:19:59.003Z"
     }
   }
 }
