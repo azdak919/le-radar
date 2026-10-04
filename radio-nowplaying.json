@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-04T00:24:39.356Z",
+  "updatedAt": "2026-10-04T06:10:40.873Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,120 +21,124 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T00:24:13.504Z"
+      "checkedAt": "2026-10-04T06:10:15.644Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "InfiniBIT!",
+        "title": "Mix franco",
         "source": "schedule",
-        "start": "20:00",
-        "end": "21:30",
-        "url": "https://cism893.ca/emissions/infinibit"
+        "start": "02:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
       },
       "next": {
-        "title": "Mix Anglo",
+        "title": "Genre de bleu",
         "source": "schedule",
-        "start": "21:30",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "07:00",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/genre-de-bleu"
       },
       "track": "",
-      "showTitle": "InfiniBIT!",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T00:24:15.093Z"
+      "checkedAt": "2026-10-04T06:10:17.081Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Masters At Work",
+        "title": "Utopia's Paradise",
         "source": "api-live",
-        "start": "19:00",
-        "end": "21:00"
+        "start": "02:00",
+        "end": "06:00"
       },
       "next": {
-        "title": "Howls From Hell/Too Loud For The Crowd",
+        "title": "Mind, Soul, & Spirit",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "06:00",
+        "end": "09:00"
       },
-      "track": "",
-      "showTitle": "Masters At Work",
+      "track": "Utopia",
+      "showTitle": "Utopia's Paradise",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T00:24:17.829Z"
+      "checkedAt": "2026-10-04T06:10:19.412Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "01:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "The Spacious Astrology Playlist",
+        "title": "Sun Ra, Sun Rise",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-spacious-astrology-playlist"
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T00:24:20.359Z"
+      "checkedAt": "2026-10-04T06:10:21.822Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Solénoïde",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les nuits CFAK",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T00:24:21.480Z"
+      "checkedAt": "2026-10-04T06:10:22.719Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "D'amour et de sexe",
+        "title": "OPUS",
         "source": "api-live",
-        "start": "22:00",
-        "end": "00:00",
-        "slug": "damour-et-de-sexe"
+        "start": "12:00",
+        "end": "13:00",
+        "slug": "opus"
       },
-      "track": "Thundercat — No More Lies (feat. Tame Impala)",
+      "track": "Immolation — Attrition",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -142,7 +146,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T00:24:39.005Z"
+      "checkedAt": "2026-10-04T06:10:40.523Z"
     }
   }
 }
