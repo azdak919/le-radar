@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-04T14:28:52.978Z",
+  "updatedAt": "2026-10-05T04:08:09.125Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,8 +8,8 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-10-04T14:28:52.978Z",
-      "verifiedWeekOf": "2026-09-28",
+      "checkedAt": "2026-10-05T04:08:09.125Z",
+      "verifiedWeekOf": "2026-10-05",
       "grid": [
         {
           "day": 0,
@@ -292,8 +292,8 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-10-04T14:28:52.978Z",
-      "verifiedWeekOf": "2026-09-28",
+      "checkedAt": "2026-10-05T04:08:09.125Z",
+      "verifiedWeekOf": "2026-10-05",
       "grid": [
         {
           "day": 0,
@@ -1073,8 +1073,8 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-10-04T14:28:52.978Z",
-      "verifiedWeekOf": "2026-09-28",
+      "checkedAt": "2026-10-05T04:08:09.125Z",
+      "verifiedWeekOf": "2026-10-05",
       "grid": [
         {
           "day": 0,
@@ -1332,7 +1332,7 @@
           "day": 2,
           "start": "18:00",
           "end": "19:00",
-          "title": "Rez Rock Radio"
+          "title": "Prison Radio"
         },
         {
           "day": 2,
@@ -1440,7 +1440,7 @@
           "day": 3,
           "start": "22:00",
           "end": "00:00",
-          "title": "LoSignal 5th"
+          "title": "Lo Signal _First of the Month"
         },
         {
           "day": 4,
@@ -1506,7 +1506,7 @@
           "day": 4,
           "start": "17:00",
           "end": "18:00",
-          "title": "Off the Hour: Trib Talks"
+          "title": "Off The Hour: La Voix des Immigrants"
         },
         {
           "day": 4,
@@ -1536,7 +1536,7 @@
           "day": 4,
           "start": "23:00",
           "end": "01:00",
-          "title": "You Need A Heart To Live 2"
+          "title": "L'aire du Diable"
         },
         {
           "day": 5,
@@ -1601,14 +1601,8 @@
         {
           "day": 5,
           "start": "19:00",
-          "end": "20:00",
-          "title": "Listening to Latin America: Blanca-Victoria"
-        },
-        {
-          "day": 5,
-          "start": "20:00",
           "end": "22:00",
-          "title": "Macondo"
+          "title": "LLA/Macondo"
         },
         {
           "day": 5,
@@ -1691,8 +1685,8 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-10-04T14:28:52.978Z",
-      "verifiedWeekOf": "2026-09-28",
+      "checkedAt": "2026-10-05T04:08:09.125Z",
+      "verifiedWeekOf": "2026-10-05",
       "grid": [
         {
           "day": 0,
@@ -4355,8 +4349,8 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-10-04T14:28:52.978Z",
-      "verifiedWeekOf": "2026-09-28",
+      "checkedAt": "2026-10-05T04:08:09.125Z",
+      "verifiedWeekOf": "2026-10-05",
       "grid": [
         {
           "day": 0,
@@ -4576,8 +4570,8 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-10-04T14:28:52.978Z",
-      "verifiedWeekOf": "2026-09-28",
+      "checkedAt": "2026-10-05T04:08:09.125Z",
+      "verifiedWeekOf": "2026-10-05",
       "grid": [
         {
           "day": 0,
@@ -4595,6 +4589,13 @@
         },
         {
           "day": 1,
+          "start": "10:00",
+          "end": "11:00",
+          "title": "Kongossa na UQAM",
+          "url": "https://www.choq.ca/emissions/kongossa-na-uqam"
+        },
+        {
+          "day": 1,
           "start": "13:00",
           "end": "13:45",
           "title": "Onde de CHOQ",
@@ -4608,18 +4609,18 @@
           "url": "https://www.choq.ca/emissions/palmareschoq"
         },
         {
-          "day": 2,
-          "start": "05:00",
-          "end": "07:00",
+          "day": 1,
+          "start": "19:00",
+          "end": "21:00",
           "title": "Les rois de l'arène",
           "url": "https://www.choq.ca/emissions/les-rois-de-larene"
         },
         {
           "day": 2,
-          "start": "11:00",
-          "end": "12:00",
-          "title": "Le Monde Dans Mes Oreilles",
-          "url": "https://www.choq.ca/emissions/le-monde-dans-mes-oreilles"
+          "start": "05:00",
+          "end": "07:00",
+          "title": "Les rois de l'arène",
+          "url": "https://www.choq.ca/emissions/les-rois-de-larene"
         },
         {
           "day": 2,
@@ -4637,10 +4638,31 @@
         },
         {
           "day": 2,
+          "start": "15:00",
+          "end": "16:00",
+          "title": "Palmarès CHOQ.ca",
+          "url": "https://www.choq.ca/emissions/palmareschoq"
+        },
+        {
+          "day": 2,
+          "start": "16:00",
+          "end": "17:30",
+          "title": "Passion Psy",
+          "url": "https://www.choq.ca/emissions/passion-psy"
+        },
+        {
+          "day": 2,
           "start": "18:00",
           "end": "19:00",
           "title": "Le Studio",
           "url": "https://www.choq.ca/emissions/live"
+        },
+        {
+          "day": 3,
+          "start": "11:00",
+          "end": "12:00",
+          "title": "Miroirs d’Orient",
+          "url": "https://www.choq.ca/emissions/miroirs-dorient"
         },
         {
           "day": 3,
@@ -4665,17 +4687,17 @@
         },
         {
           "day": 4,
+          "start": "15:00",
+          "end": "16:00",
+          "title": "Palmarès CHOQ.ca",
+          "url": "https://www.choq.ca/emissions/palmareschoq"
+        },
+        {
+          "day": 4,
           "start": "17:15",
           "end": "18:00",
           "title": "La 3ème demie",
           "url": "https://www.choq.ca/emissions/le-12-mtlsup"
-        },
-        {
-          "day": 4,
-          "start": "18:30",
-          "end": "19:45",
-          "title": "Les Apatrides Anonymes",
-          "url": "https://www.choq.ca/emissions/apatrides-anonymes"
         },
         {
           "day": 4,
@@ -4700,24 +4722,10 @@
         },
         {
           "day": 5,
-          "start": "14:00",
-          "end": "14:30",
-          "title": "Les fleurs du tapis",
-          "url": "https://www.choq.ca/emissions/les-fleurs-du-tapis"
-        },
-        {
-          "day": 5,
           "start": "16:00",
           "end": "17:00",
           "title": "Histoire de passer le temps",
           "url": "https://www.choq.ca/emissions/histoire-de-passer-le-temps"
-        },
-        {
-          "day": 5,
-          "start": "17:00",
-          "end": "18:00",
-          "title": "La Niche",
-          "url": "https://www.choq.ca/emissions/la-niche"
         },
         {
           "day": 6,
