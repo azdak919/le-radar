@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-05T04:08:09.125Z",
+  "updatedAt": "2026-10-05T17:33:31.609Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-10-05T04:08:09.125Z",
+      "checkedAt": "2026-10-05T17:33:31.609Z",
       "verifiedWeekOf": "2026-10-05",
       "grid": [
         {
@@ -292,7 +292,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-10-05T04:08:09.125Z",
+      "checkedAt": "2026-10-05T17:33:31.609Z",
       "verifiedWeekOf": "2026-10-05",
       "grid": [
         {
@@ -1073,7 +1073,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-10-05T04:08:09.125Z",
+      "checkedAt": "2026-10-05T17:33:31.609Z",
       "verifiedWeekOf": "2026-10-05",
       "grid": [
         {
@@ -4349,7 +4349,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-10-05T04:08:09.125Z",
+      "checkedAt": "2026-10-05T17:33:31.609Z",
       "verifiedWeekOf": "2026-10-05",
       "grid": [
         {
@@ -4570,7 +4570,7 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-10-05T04:08:09.125Z",
+      "checkedAt": "2026-10-05T17:33:31.609Z",
       "verifiedWeekOf": "2026-10-05",
       "grid": [
         {
@@ -4614,6 +4614,13 @@
           "end": "21:00",
           "title": "Les rois de l'arène",
           "url": "https://www.choq.ca/emissions/les-rois-de-larene"
+        },
+        {
+          "day": 1,
+          "start": "21:00",
+          "end": "22:00",
+          "title": "Bitume",
+          "url": "https://www.choq.ca/emissions/bitume"
         },
         {
           "day": 2,
