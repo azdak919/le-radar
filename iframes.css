@@ -1,6 +1,6 @@
 /* Page iFrames — aperçus, snippets, galerie formats pub */
 
-.iframe-block { margin: 0 0 28px; }
+.iframe-block { margin: 0 0 28px; max-width: 100%; min-width: 0; }
 .iframe-block h3 {
   font-family: var(--serif);
   font-size: 1.15rem;
@@ -83,6 +83,12 @@
   display: grid;
   gap: 28px;
   margin: 8px 0 12px;
+  max-width: 100%;
+  min-width: 0;
+}
+.ad-unit {
+  max-width: 100%;
+  min-width: 0;
 }
 .ad-unit h3 {
   font-family: var(--serif);
@@ -101,6 +107,9 @@
   padding: 22px 16px;
   border: 1px solid var(--rule);
   border-radius: 14px;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   overflow: auto;
   background-image:
     linear-gradient(45deg, color-mix(in srgb, var(--ink) 8%, transparent) 25%, transparent 25%),

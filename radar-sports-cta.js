@@ -1254,14 +1254,24 @@ function radarHomeHref() {
   const home = document.querySelector('a.masthead-home, a[data-home-nav]');
   const href = home?.getAttribute('href');
   if (href) return href;
-  return new URL('.', window.location.href).pathname;
+  try {
+    if (typeof APP_BASE_URL !== 'undefined' && APP_BASE_URL) {
+      return new URL('.', APP_BASE_URL).pathname;
+    }
+  } catch (_) { /* ignore */ }
+  return '/';
 }
 
 function radarIconSrc() {
   const img = document.querySelector('.wordmark-logo, .site-foot__logo');
   const src = img?.getAttribute('src');
   if (src) return src;
-  return new URL('assets/icon.svg', window.location.href).pathname;
+  try {
+    if (typeof APP_BASE_URL !== 'undefined' && APP_BASE_URL) {
+      return new URL('assets/icon.svg', APP_BASE_URL).pathname;
+    }
+  } catch (_) { /* ignore */ }
+  return '/assets/icon.svg';
 }
 
 function radarBrandLogoEl() {
@@ -1283,8 +1293,19 @@ function markNoTranslate(el) {
   return el;
 }
 
+/** Chemin site-root de /sports/ — pas relatif à la page courante
+ *  (/iframes/, /kit-media/… sinon → /iframes/sports/ 404). */
+function sportsBoardPath() {
+  try {
+    if (typeof APP_BASE_URL !== 'undefined' && APP_BASE_URL) {
+      return new URL('sports/', APP_BASE_URL).pathname;
+    }
+  } catch (_) { /* ignore */ }
+  return '/sports/';
+}
+
 function sportsBoardHref(slide) {
-  const base = new URL('sports/', window.location.href).pathname;
+  const base = sportsBoardPath();
   // CTA avec match en accroche : deep-link vers ce match / sport.
   if (slide?.mode === 'cta') {
     const from = slide.ctaFrom;
@@ -3705,7 +3726,7 @@ function paintSportsChip(slide, animate = false) {
   if (slide.mode === 'info') {
     const a = document.createElement('a');
     a.className = 'sports-chip sports-chip--info';
-    a.href = new URL('sports/', window.location.href).pathname;
+    a.href = sportsBoardPath();
     markSportsBoardLink(a);
     if (animate && !sportsReducedMotion) a.classList.add('is-arriving');
     a.dataset.sportsKey = slide.key || 'info';

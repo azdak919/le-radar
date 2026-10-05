@@ -95,4 +95,46 @@ test.describe('Embed sports IAB @ci-critical', () => {
     const clip = await page.evaluate(() => navigator.clipboard.readText());
     expect(clip).toMatch(/tuner-embed\.html/);
   });
+
+  test('page /iframes/ : charge sans erreur, contenu visible, pas de débordement mobile, liens sports racine', async ({ page }) => {
+    test.setTimeout(60_000);
+    const pageErrors = [];
+    page.on('pageerror', (error) => pageErrors.push(error.message));
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/iframes/', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('h1')).toHaveText(/iFrames/i, { timeout: 15_000 });
+    await expect(page.locator('iframe[data-embed-kind="radio"]')).toBeAttached({ timeout: 15_000 });
+    await expect(page.locator('iframe[data-embed-kind="sports-ad"]').first()).toBeAttached({ timeout: 15_000 });
+    await expect(page.locator('#snippet-radio')).toContainText('tuner-embed.html');
+    await expect(page.locator('.iframe-block').first()).toBeVisible();
+
+    // Strip masthead : chemins site-root, jamais /iframes/sports/
+    await page.waitForFunction(() => {
+      const links = [...document.querySelectorAll('#masthead-sports-strip a[href]')];
+      return links.length > 0;
+    }, { timeout: 20_000 });
+    const hrefs = await page.$$eval('#masthead-sports-strip a[href]', (as) =>
+      as.map((a) => a.getAttribute('href') || ''));
+    expect(hrefs.length).toBeGreaterThan(0);
+    for (const href of hrefs) {
+      expect(href, `lien sports invalide: ${href}`).toMatch(/^\/sports\//);
+      expect(href).not.toMatch(/\/iframes\/sports/);
+    }
+
+    const overflow = await page.evaluate(() => {
+      const doc = document.documentElement;
+      const body = document.body;
+      return {
+        clientW: doc.clientWidth,
+        scrollW: Math.max(doc.scrollWidth, body.scrollWidth),
+      };
+    });
+    expect(overflow.scrollW, `débordement horizontal: scrollW=${overflow.scrollW} clientW=${overflow.clientW}`)
+      .toBeLessThanOrEqual(overflow.clientW + 1);
+
+    const serious = pageErrors.filter((m) =>
+      !/ResizeObserver|Loading CSS|favicon|net::ERR_/i.test(m));
+    expect(serious, `pageerrors: ${serious.join(' | ')}`).toEqual([]);
+  });
 });
