@@ -137,4 +137,64 @@ test.describe('Embed sports IAB @ci-critical', () => {
       !/ResizeObserver|Loading CSS|favicon|net::ERR_/i.test(m));
     expect(serious, `pageerrors: ${serious.join(' | ')}`).toEqual([]);
   });
+
+  test('page /iframes/ : feuilles chrome présentes, pas de 404, icônes SVG bornées', async ({ page }) => {
+    test.setTimeout(60_000);
+    const failed = [];
+    page.on('response', (res) => {
+      if (res.status() >= 400) failed.push(`${res.status()} ${res.url()}`);
+    });
+
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/iframes/', { waitUntil: 'networkidle' });
+
+    const sheets = await page.evaluate(() =>
+      [...document.querySelectorAll('link[rel="stylesheet"]')].map((l) => l.href));
+    for (const need of [
+      'style-chrome.css',
+      'style-masthead-chrome.css',
+      'style-sports-strip.css',
+      'style-tuner.css',
+      'style-feed.css',
+    ]) {
+      expect(sheets.some((h) => h.includes(need)), `manque ${need}`).toBe(true);
+    }
+
+    // Laisser peindre chrome + footer
+    await page.waitForSelector('.site-foot__contact svg', { timeout: 15_000 });
+    await page.waitForTimeout(500);
+
+    const oversized = await page.evaluate(() => {
+      const sel = [
+        'header svg',
+        '.masthead svg',
+        '.masthead-icon svg',
+        '.site-foot svg',
+        'footer svg',
+        '.site-foot__contact svg',
+      ].join(', ');
+      return [...document.querySelectorAll(sel)]
+        .map((svg) => {
+          const r = svg.getBoundingClientRect();
+          return {
+            w: Math.round(r.width),
+            h: Math.round(r.height),
+            parent: svg.closest('a,button,p')?.className || svg.parentElement?.className || '',
+          };
+        })
+        .filter((x) => x.w > 64 || x.h > 64);
+    });
+    expect(oversized, `SVG trop grands: ${JSON.stringify(oversized)}`).toEqual([]);
+
+    // Ignorer bruit CDN tiers ; échouer sur sous-ressources du site
+    const siteFail = failed.filter((line) => {
+      try {
+        const u = line.replace(/^\d+\s+/, '');
+        const path = new URL(u).pathname;
+        return !/^https?:\/\/(fonts\.|cloud\.umami|www\.gstatic)/i.test(u)
+          && !path.includes('favicon');
+      } catch { return true; }
+    });
+    expect(siteFail, `sous-ressources en erreur: ${siteFail.join(' | ')}`).toEqual([]);
+  });
 });

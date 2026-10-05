@@ -150,3 +150,14 @@
 .iframe-params code {
   font: 12.5px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
+
+/* Garde-fou : sans style-chrome / masthead-chrome, les SVG viewBox seuls
+   s’étirent à la largeur du conteneur (enveloppe géante, home/RSS 80px+). */
+.masthead-icon svg,
+.theme-toggle svg,
+.site-foot__contact svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  display: block;
+}

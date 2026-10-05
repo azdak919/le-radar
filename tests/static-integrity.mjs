@@ -1098,6 +1098,17 @@ for (const rel of ['index.html', 'tuner-embed.html', 'feeds.html']) {
   assert(iframes.includes('fmt=728x90'), 'iframes : format leaderboard requis');
   assert(iframes.includes('fmt=320x50'), 'iframes : format mobile requis');
   assert(iframes.includes('fmt=300x600'), 'iframes : format half-page requis');
+  for (const sheet of [
+    'style-sports-strip.css',
+    'style-masthead-chrome.css',
+    'style-tuner.css',
+    'style-feed.css',
+    'style-chrome.css',
+  ]) {
+    assert(iframes.includes(sheet), `iframes : feuille chrome ${sheet} requise (sinon icônes SVG géantes)`);
+  }
+  assert(/site-foot__contact[\s\S]*?<svg[^>]*\bwidth=["']15["']/.test(iframes),
+    'iframes : SVG contact avec width=15');
 }
 {
   const ad = readFileSync(join(root, 'sports-ad-embed.html'), 'utf8');
