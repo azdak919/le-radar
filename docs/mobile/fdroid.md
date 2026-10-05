@@ -36,7 +36,7 @@ La copie de la recette est [ca.leradar.app.yml](ca.leradar.app.yml). Dans le dé
 - dépôt `https://github.com/azdak919/le-radar`
 - `commit: 81774e4ab824c8c8a03afa106e81459c661c7d1a`
 - `subdir: android/app` (modèle F-Droid React Native, adapté à Capacitor : pas d’Expo ni de stub Firebase)
-- `npm` de Debian forky (Node 22 exigé par Capacitor ; trixie est en Node 20), puis `npm ci` et `npm run mobile:sync`
+- `nodejs` et `npm` de Debian forky, installés ensemble (Node 24). `@capacitor/cli` 8.5.2 exige Node >= 22, trixie livre Node 20, et le paquet `npm` de forky dépend de `nodejs:any` : l’installer seul peut laisser Node 20. Ensuite `npm ci` et `npm run mobile:sync`
 - `gradle: yes`
 - APK : `build/outputs/apk/release/app-release-unsigned.apk`
 - mises à jour : `AutoUpdateMode: Version` et `UpdateCheckMode: Tags ^android-v`
