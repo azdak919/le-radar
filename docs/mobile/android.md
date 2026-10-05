@@ -47,7 +47,9 @@ Le workflow `Mobile` construit un AAB avec une clé jetable, pour prouver que Gr
 
 et les mêmes chemins sur `www.le-radar.ca`. `android:autoVerify="true"`. Le site entier n’est pas intercepté.
 
-Permission déclarée : `INTERNET`. `usesCleartextTraffic` est faux. Pas de localisation, caméra, micro, notifications, ni identifiant publicitaire.
+Permissions déclarées : `INTERNET`, `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_MEDIA_PLAYBACK`, `POST_NOTIFICATIONS` (demandée à l’écoute sur Android 13+ ; le refus n’empêche pas la lecture), `WAKE_LOCK` (ExoPlayer / réseau). `usesCleartextTraffic` est faux. Pas de localisation, caméra, micro, ni identifiant publicitaire.
+
+Lecture radio en arrière-plan : service `ca.leradar.app.radio.RadioPlaybackService` (type `mediaPlayback`) + AndroidX Media3 ExoPlayer / MediaSession (Apache-2.0). Plugin Capacitor local `RadioPlayback` enregistré dans `MainActivity`. R8 (`minifyEnabled true`) : règles keep dans `proguard-rules.pro` pour le plugin et Media3.
 
 Le plugin Google `google-services` n’est pas dans le build. L’application n’utilise pas Firebase, et F-Droid refuse ce plugin.
 

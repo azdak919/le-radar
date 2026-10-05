@@ -13,12 +13,12 @@ L’application ne crée pas de compte, n’affiche pas de publicité, ne charge
 
 L’historique est plafonné à 80 fiches, les favoris à 200. Aucun champ `content` ou `body` n’est conservé.
 
-Les cases de notification ne déclenchent aucun envoi et aucune permission. Voir [architecture.md](architecture.md).
+Les cases de notification dans Réglages ne déclenchent aucun envoi. La seule permission de notification demandée sert aux contrôles de la radio en cours (Android 13+). Voir [architecture.md](architecture.md).
 
 ## Ce qui quitte l’appareil
 
 - Le chargement du fil, des sources, des radios et des couleurs contacte `https://le-radar.ca/`. L’hébergeur (GitHub Pages) peut journaliser l’adresse IP comme pour une visite du site. L’application n’ajoute pas d’identifiant.
-- Pendant l’écoute d’une radio, l’application lit `https://le-radar.ca/radio-nowplaying.json` (émission en ondes) et le flux audio est demandé directement au serveur de la station, qui voit une écoute ordinaire.
+- Pendant l’écoute d’une radio, l’application lit `https://le-radar.ca/radio-nowplaying.json` (émission en ondes) et le flux audio est demandé directement au serveur de la station, qui voit une écoute ordinaire. Sur Android, la lecture passe par un service de premier plan Media3 (notification média / écran verrouillé) ; sur iOS, par le mode audio d’arrière-plan. La permission `POST_NOTIFICATIONS` (Android 13+) est demandée au moment d’écouter, peut être refusée, et ne sert qu’à afficher les contrôles de lecture — ce n’est pas un canal d’envoi de messages.
 - « Lire chez {publication} » ouvre le site du média dans le navigateur du système. Ce site voit une visite normale.
 - Les images vedette sont demandées à leur URL HTTPS d’origine. Elles ne sont pas réenregistrées par LE-RADAR.
 - Le partage remet l’URL à l’application choisie par la personne.

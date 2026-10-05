@@ -1,4 +1,5 @@
 import UIKit
+import AVFoundation
 import Capacitor
 
 @UIApplicationMain
@@ -7,7 +8,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // Background / lock-screen radio via the WebView <audio> element.
+        let session = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(.playback, mode: .default, options: [])
+            try session.setActive(true)
+        } catch {
+            // Non-fatal: listening still works in the foreground.
+        }
         return true
     }
 

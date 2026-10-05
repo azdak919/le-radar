@@ -39,7 +39,7 @@ Apple, environnement `app-store` : voir [ios.md](ios.md). Remplacer aussi `TEAMI
 3. Test interne : téléverser l’AAB de l’artefact `le-radar-release-aab`.
 4. Questionnaire contenu, classification IARC, politique de confidentialité : [privacy.md](privacy.md) et `store/google/privacy.md`.
 5. Captures téléphone : au moins deux, montrant l’accueil, une fiche et Enregistrés. Pas le seul écran de démarrage.
-6. Déclaration des autorisations : Internet seulement. Pas d’identifiant publicitaire.
+6. Déclaration des autorisations : Internet ; service de premier plan type **Lecture multimédia** (`FOREGROUND_SERVICE_MEDIA_PLAYBACK`) pour la radio ; notifications pour les contrôles de lecture (pas de messages push). Pas d’identifiant publicitaire. Dans Play Console, déclarer le service de premier plan « Media playback » si le questionnaire le demande.
 
 Cible API : 36. Voir [android.md](android.md).
 

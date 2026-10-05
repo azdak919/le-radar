@@ -31,7 +31,7 @@ Le suivi des journaux réutilise `scripts/media-follow-store.js` et la clé `rad
 - Dernière copie du fil sur l’appareil si le réseau manque.
 - Partage natif (feuille iOS / Android) avec repli Web Share ou presse-papiers.
 - Ouverture de l’original dans le navigateur système (Custom Tabs / SFSafariViewController), pas dans la WebView.
-- Radio : barre persistante en bas de l’écran (au-dessus des onglets), comme la barre du site. Un seul `<audio>`, dans la coquille. Voir « Radio » plus bas.
+- Radio : barre persistante en bas de l’écran (au-dessus des onglets), comme la barre du site. Web/iOS : un `<audio>` dans la coquille ; Android : Media3 via plugin local. Voir « Radio » plus bas.
 - Retour Android, zone sûre, thème clair/sombre/système, haptique légère sur suivre / enregistrer.
 
 Pomodoro, Solitaire, le mât météo et le bandeau sports restent sur le site. Réglages contient un lien « Ouvrir le-radar.ca ».
@@ -56,11 +56,19 @@ Le site garde l’écoute entre les pages avec `nav-shell.js` (iframe plein écr
 
 - « Écouter » sur la fiche radio ou dans Explorer → Radios lance le flux dans la barre. La barre montre la station, l’émission en ondes (`radio-nowplaying.json` de le-radar.ca, ignoré au-delà de 3 h) et lecture/pause/arrêt. Toucher le nom ouvre la fiche.
 - Pause = la connexion au flux est coupée (`src` retiré) : pas de données en pause, et la reprise repart du direct.
-- Media Session renseignée quand la WebView l’expose. Sur Android, la WebView n’en fait pas une notification système.
 - Retour Android sur l’accueil pendant l’écoute : l’app passe en arrière-plan (`App.minimizeApp`) au lieu de quitter.
 - Avant 2026-10 (1.0.1), le seul `<audio>` était dans la fiche : quitter la fiche le détruisait. Ce n’était pas une contrainte de magasin, seulement le périmètre de la première version.
 
-Arrière-plan et écran verrouillé : non garantis. Capacitor ne met pas la WebView en pause, donc le son continue quand l’app passe derrière, mais sans service de premier plan Android peut geler le processus. Pour une vraie écoute écran verrouillé avec contrôles système, il faudrait du natif : un service `mediaPlayback` (permissions `FOREGROUND_SERVICE` et `FOREGROUND_SERVICE_MEDIA_PLAYBACK`, notification média) et une session média native (AndroidX Media3, Apache-2.0, acceptable pour F-Droid) ; sur iOS, `UIBackgroundModes` `audio`. C’est un ticket séparé : nouvelles permissions, déclarations magasin et `privacy.md` à refaire.
+### Arrière-plan et écran verrouillé (1.1.0)
+
+**Choix : Media3 ExoPlayer natif dans un service de premier plan**, bridgé à la barre JS par un petit plugin Capacitor local (`RadioPlayback`, classes sous `android/.../radio/`). Pourquoi pas « WebView audio + service vide » : Android peut geler la WebView hors premier plan ; le flux mourrait malgré la notification. ExoPlayer vit dans le service, indépendamment de la WebView. AndroidX Media3 est Apache-2.0, sans Play Services — acceptable pour F-Droid.
+
+| Plateforme | Mécanisme |
+|---|---|
+| Android | `RadioPlaybackService` (`foregroundServiceType=mediaPlayback`) + ExoPlayer + `MediaSession` (notification et écran verrouillé : lecture / pause / arrêt, nom de station, émission). Focus audio et `becoming-noisy` (casque débranché → pause). `WAKE_LOCK` via `WAKE_MODE_NETWORK`. |
+| iOS | `UIBackgroundModes` = `audio` + `AVAudioSession` catégorie `playback` ; le `<audio>` de la barre continue en arrière-plan. |
+
+La barre JS reste la source de vérité UI : un événement `state` du plugin met à jour play/pause/arrêt (y compris depuis la notification). Permissions Android : `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_MEDIA_PLAYBACK`, `POST_NOTIFICATIONS` (runtime, Android 13+, refus gracieux), `WAKE_LOCK`, plus `INTERNET`.
 
 ## Hors ligne
 
@@ -70,7 +78,7 @@ Au lancement, l’application tente `https://le-radar.ca/news.json` (HTTP natif 
 
 ## Notifications
 
-Il n’y a pas de serveur d’envoi, pas de Firebase, pas de permission de notification.
+Il n’y a pas de serveur d’envoi, pas de Firebase. La permission de notification Android (13+) ne sert qu’à la notification média de la radio, pas à des messages push.
 
 Aujourd’hui, l’accueil peut afficher combien d’articles des médias suivis sont plus récents que la dernière visite. Ce compte est local.
 
