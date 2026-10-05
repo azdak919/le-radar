@@ -336,14 +336,15 @@
         sex: (q.get('sex') || 'all').toLowerCase(),
         period: (q.get('period') || 'all').toLowerCase(),
         team: (q.get('team') || '').trim(),
+        game: (q.get('game') || '').trim(),
         q: (q.get('q') || '').trim(),
       };
     } catch {
-      return { sport: 'all', sector: 'all', sex: 'all', period: 'all', team: '', q: '' };
+      return { sport: 'all', sector: 'all', sex: 'all', period: 'all', team: '', game: '', q: '' };
     }
   }
 
-  function writeQuery(sport, sector, sex, period, team, q) {
+  function writeQuery(sport, sector, sex, period, team, q, game) {
     try {
       const url = new URL(window.location.href);
       if (!sport || sport === 'all') url.searchParams.delete('sport');
@@ -356,6 +357,8 @@
       else url.searchParams.set('period', period);
       if (!team) url.searchParams.delete('team');
       else url.searchParams.set('team', team);
+      if (!game) url.searchParams.delete('game');
+      else url.searchParams.set('game', game);
       if (!q) url.searchParams.delete('q');
       else url.searchParams.set('q', q);
       window.history.replaceState({}, '', url.pathname + url.search + url.hash);
@@ -373,6 +376,42 @@
 
   function clearTeamSpotlight() {
     panels.forEach((p) => p.classList.remove('is-spotlight'));
+  }
+
+  function clearGameSpotlight() {
+    root.querySelectorAll('.sports-result.is-spotlight').forEach((el) => {
+      el.classList.remove('is-spotlight');
+    });
+  }
+
+  /**
+   * Deep-link ?game=… : la ligne de résultat / prochain cliquée dans l’iframe.
+   * data-game-id si présent (pages régénérées) ; sinon href RSEQ GameId=.
+   */
+  function focusGame(gameId) {
+    clearGameSpotlight();
+    const id = String(gameId || '').trim();
+    if (!id) return null;
+    let row = null;
+    try {
+      row = root.querySelector(`.sports-result[data-game-id="${CSS.escape(id)}"]`);
+    } catch { /* ignore */ }
+    if (!row) {
+      try {
+        const link = root.querySelector(`a[href*="GameId=${CSS.escape(id)}"]`);
+        row = link?.closest('.sports-result') || null;
+      } catch { /* ignore */ }
+    }
+    if (!row) return null;
+    row.classList.add('is-spotlight');
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        try {
+          row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } catch { /* ignore */ }
+      });
+    });
+    return row;
   }
 
   /**
@@ -421,7 +460,9 @@
     } catch { /* ignore */ }
   }
 
-  function apply(sport, sector, sex, period, team, query) {
+  let gameFocus = '';
+
+  function apply(sport, sector, sex, period, team, query, game) {
     syncLivePresentation();
     const sportKey = sport || 'all';
     const sectorKey = sector || 'all';
@@ -432,6 +473,8 @@
     const teamId = (team || '').trim();
     const qRaw = query !== undefined ? String(query || '') : searchQuery;
     searchQuery = qRaw;
+    if (arguments.length >= 7) gameFocus = String(game || '').trim();
+    else if (team === '') gameFocus = '';
     const tokens = searchTokens(qRaw);
     let visible = 0;
 
@@ -545,6 +588,7 @@
       periodKey,
       teamId,
       qRaw.trim(),
+      tokens.length ? '' : gameFocus,
     );
 
     if (searchRoot) {
@@ -559,11 +603,14 @@
 
     if (teamId && !tokens.length) {
       focusTeam(teamId);
+      if (gameFocus) focusGame(gameFocus);
+      else clearGameSpotlight();
     } else if (tokens.length && visible) {
       // Ne pas auto-scroller à chaque frappe — seulement si un seul match.
       if (visible === 1) focusFirstVisible();
     } else {
       clearTeamSpotlight();
+      clearGameSpotlight();
     }
   }
 
@@ -795,7 +842,7 @@
     });
   }
 
-  apply(sport, sector, sex, period, team, initial.q || '');
+  apply(sport, sector, sex, period, team, initial.q || '', initial.game || '');
   relabelCivilDays();
   if (initial.q) setSearchOpen(true);
   if (!team && !initial.q) openHashSport();

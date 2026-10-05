@@ -123,7 +123,7 @@ async function init() {
     fetch(appAsset('radios.json')).then((r) => r.json()),
     fetch(appAsset('radio-nowplaying.json')).then((r) => r.json()),
     fetch(appAsset('radio-schedules.json')).then((r) => r.json()),
-    ...(IS_TUNER_EMBED ? [] : [loadNews()]),
+    ...(IS_EMBED ? [] : [loadNews()]),
   ]);
 
   radios = radiosData.status === 'fulfilled'
@@ -146,7 +146,7 @@ async function init() {
   // appliquée seulement après le chargement de radios.json. Auparavant le
   // paramètre était présent dans l'URL mais ignoré, donc chaque journal
   // affichait le sélecteur vide.
-  if (IS_TUNER_EMBED) {
+  if (IS_EMBED) {
     const requestedStation = new URLSearchParams(window.location.search).get('station');
     if (requestedStation && radios.some((radio) => radio.id === requestedStation)) {
       TUNER_SELECT.value = requestedStation;
@@ -456,7 +456,7 @@ function setBuffering(next) {
 }
 
 function registerServiceWorker() {
-  if (IS_TUNER_EMBED || !('serviceWorker' in navigator)) return;
+  if (IS_EMBED || !('serviceWorker' in navigator)) return;
   // Recharge uniquement après une *mise à jour* (pas la 1ʳᵉ prise de contrôle SW),
   // sinon la page charge → SW claim → controllerchange → reload = double flash.
   // Ne jamais recharger pendant une écoute (déploiement coupait la radio).
@@ -503,7 +503,7 @@ function registerServiceWorker() {
  * jamais une écoute en cours.
  */
 function checkForAppUpdate() {
-  if (IS_TUNER_EMBED || !('serviceWorker' in navigator)) return;
+  if (IS_EMBED || !('serviceWorker' in navigator)) return;
   navigator.serviceWorker.getRegistrations?.().then((regs) => {
     regs.forEach((reg) => reg.update());
   }).catch(() => {});

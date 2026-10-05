@@ -24,7 +24,8 @@
 (function () {
   'use strict';
 
-  if (document.documentElement.dataset.embed === 'tuner') return;
+  if (document.documentElement.dataset.embed === 'tuner'
+      || document.documentElement.dataset.embed === 'sports') return;
 
   const STORAGE_KEY = 'radar-engage-v2';
   const LEGACY_KEY = 'radar-engage-v1';
