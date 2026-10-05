@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test.describe('Embed sports IAB', () => {
+test.describe('Embed sports IAB @ci-critical', () => {
   test('300×250 montre une carte LE-RADAR (match ou marque)', async ({ page }) => {
     const messages = [];
     page.on('pageerror', (error) => messages.push(error.message));
