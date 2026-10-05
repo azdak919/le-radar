@@ -68,6 +68,12 @@ const {
 } = require('./source-retention-lib');
 const { mergeHistoricalCatalog, serializeHistoricalCatalog } = require('./historical-catalog-lib');
 const { scheduledSlotFor } = require('./news-schedule-lib');
+const {
+  articleLinkKey,
+  readLedger,
+  confirmedMissingUrlSet,
+  omitMissingItems,
+} = require('./live-link-health-lib');
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
 const ARCHIVE_PATH = path.join(__dirname, '..', 'news-archive.json');
@@ -1162,9 +1168,14 @@ async function main() {
   // n’est pas une nouvelle découverte et ne doit pas rafraîchir son état.
   const archiveObserved = new Date().toISOString();
   const histConfig = JSON.parse(fs.readFileSync(HIST_CONFIG_PATH, 'utf8'));
+  const missingLinks = confirmedMissingUrlSet(readLedger(), referenceDate.getTime());
+  const stillPublic = (item) => {
+    const key = articleLinkKey(item?.link);
+    return !key || !missingLinks.has(key);
+  };
   const archiveResult = mergeHistoricalCatalog(
     priorArchive,
-    [...historicalItems, ...all.filter((item) => !item._retainedFromCache)],
+    [...historicalItems, ...all.filter((item) => !item._retainedFromCache)].filter(stillPublic),
     archiveObserved,
     { firstDiscoveredAt: archiveObserved, ingestedAt: archiveObserved },
     { maxRecords: histConfig.storage?.maxRecords },
@@ -1176,6 +1187,17 @@ async function main() {
   if (prunedCount > 0) {
     console.log(`\nFraîcheur: ${prunedCount} article(s) hors fenêtre de sessions (A/H/É + grâce sept.) retiré(s)`);
   }
+
+  // Le flux RSS peut encore lister une page déjà retirée (404). Le registre
+  // des contrôles live empêche de la remettre à la une.
+  const withdrawn = omitMissingItems(prunedAll, readLedger(), referenceDate.getTime());
+  if (withdrawn.removed.length) {
+    console.log(`Pages disparues: ${withdrawn.removed.length} article(s) retiré(s) du fil`);
+    for (const item of withdrawn.removed) {
+      console.log(`  ✗ ${item.source}: ${item.title}`);
+    }
+  }
+  const visibleItems = withdrawn.items;
 
   const staleSources = Object.entries(sourceRuns)
     .filter(([, meta]) => meta.stale)
@@ -1192,10 +1214,10 @@ async function main() {
     // Hors fenêtre, filet radio/sports, :20 ou passe manuelle : null →
     // l'UI montre l'heure réelle de la vérification.
     updatedSlot: (isManual || isCatchUp) ? null : scheduledSlotFor(runDate),
-    count: prunedAll.length,
+    count: visibleItems.length,
     freshnessSessions: 3,
     sources: sourceRuns,
-    items: prunedAll,
+    items: visibleItems,
   };
 
   const withAuthor = news.items.filter((i) => i.author && !isGenericAuthor(i.author)).length;

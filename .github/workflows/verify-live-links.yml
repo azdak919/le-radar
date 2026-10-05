@@ -1,0 +1,54 @@
+name: Verify Live Article Links
+
+on:
+  schedule:
+    # Quatre fois par jour, décalé des récoltes (:25) et du filet (:20).
+    # Le flux RSS peut garder un article dont la page publique est déjà 404.
+    - cron: '40 */6 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: verify-live-links-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+      - name: Check live article pages
+        id: links
+        run: node scripts/verify-live-links.js --update
+        # Une URL en panne devient un statut. Seul un crash du script échoue.
+      - name: Pre-push integrity (bot gate)
+        if: steps.links.outcome == 'success'
+        timeout-minutes: 8
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No diff — skip prepush."
+            exit 0
+          fi
+          bash scripts/bot-prepush-check.sh
+      - name: Commit withdrawn articles when the ledger changes
+        if: steps.links.outcome == 'success'
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No live-link change."
+            exit 0
+          fi
+          git config user.name "LE-RADAR Link Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/live-link-health.json news.json feed.xml
+          git add index.html sitemap.xml sitemap-archives.xml llms.txt
+          git add -A radios journaux etablissements medias horaires en archives
+          git commit -m "bot: drop articles whose source page is gone (auto)" || exit 0
+          git pull --rebase --autostash origin main
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
