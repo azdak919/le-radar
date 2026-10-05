@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Focus-group iFrames sports — LE-RADAR (local)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: dark; --paper:#f1f2f4; --muted:#9aa0ab; --gold:#e1b95e; --line:#2c3038; --panel:#16181f; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #0c0d10; color: var(--paper); font: 15px/1.45 Inter, system-ui, sans-serif; }
+    header { max-width: 920px; margin: 0 auto; padding: 28px 20px 8px; }
+    h1 { margin: 0; font: 700 1.8rem/1.15 "Source Serif 4", Georgia, serif; }
+    .lede { color: var(--muted); margin: 10px 0 0; max-width: 46rem; }
+    .hub { color: var(--gold); }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .toolbar button {
+      font: 600 12.5px/1 Inter, sans-serif; color: var(--paper);
+      background: var(--panel); border: 1px solid var(--line); border-radius: 999px;
+      padding: 6px 12px; cursor: pointer;
+    }
+    .toolbar button[aria-pressed="true"] { border-color: #6c2163; color: #cf7ec1; }
+    .opt { max-width: 920px; margin: 0 auto; padding: 20px 20px 8px; border-top: 1px solid var(--line); }
+    .opt.pick { background: #141018; }
+    .opt h2 { margin: 0 0 6px; font: 700 1.2rem/1.2 "Source Serif 4", Georgia, serif; }
+    .opt .votes { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--gold); margin: 0 0 8px; }
+    .opt p { margin: 0 0 14px; color: #c3c6ce; max-width: 40rem; }
+    .row { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+    .unit { display: flex; flex-direction: column; gap: 6px; }
+    .unit span { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .stage {
+      display: flex; justify-content: center; align-items: center;
+      padding: 14px; border-radius: 12px; border: 1px solid var(--line);
+      background-image:
+        linear-gradient(45deg, rgba(255,255,255,.06) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,.06) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255,255,255,.06) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,.06) 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+      background-color: #12141a;
+    }
+    iframe { display: block; border: 0; }
+    .note { font-size: 13px; color: var(--muted); font-style: italic; }
+  </style>
+</head>
+<body>
+  <header>
+    <p class="hub"><a href="./">← Labo</a> · local, pas en prod</p>
+    <h1>Focus-group — cartes sports iframe</h1>
+    <p class="lede">Cinq options du panel synthétique (5 personas). <strong>B</strong> : 5/5. Les cartes sont figées (pas de rotation). Le bouton soleil/lune change clair et sombre.</p>
+    <div class="toolbar" role="group" aria-label="Thème">
+      <button type="button" data-theme="dark" aria-pressed="true">Sombre</button>
+      <button type="button" data-theme="light" aria-pressed="false">Clair</button>
+    </div>
+  </header>
+
+  <article class="opt" id="A">
+    <p class="votes">A · 0 voix</p>
+    <h2>Status quo (rejeté)</h2>
+    <p>2e logo dans la pastille, LE-RADAR.ca orphelin dans le corps, slogan répété, carte marque même s’il n’y a qu’un match.</p>
+    <div class="row">
+      <div class="unit"><span>Match</span><div class="stage"><iframe data-fg="A" data-face="match" width="300" height="250" title="A match"></iframe></div></div>
+      <div class="unit"><span>Carte marque</span><div class="stage"><iframe data-fg="A" data-face="brand" width="300" height="250" title="A marque"></iframe></div></div>
+    </div>
+  </article>
+
+  <article class="opt pick" id="B">
+    <p class="votes">B · 5/5 — recommandé</p>
+    <h2>Lockup unique, matchs d’abord</h2>
+    <p>Logo PWA collé à LE-RADAR.ca. Pastille = état. Corps = le match. Marque après ≥4 scores, jamais en tête. Ici : nom complet sur la marque (demande mainteneur ; le panel disait slogan seul).</p>
+    <div class="row">
+      <div class="unit"><span>Match</span><div class="stage"><iframe data-fg="B" data-face="match" width="300" height="250" title="B match"></iframe></div></div>
+      <div class="unit"><span>Carte marque</span><div class="stage"><iframe data-fg="B" data-face="brand" width="300" height="250" title="B marque"></iframe></div></div>
+      <div class="unit"><span>Bandeau 728×90</span><div class="stage"><iframe data-fg="B" data-face="match" data-fmt="728x90" width="728" height="90" title="B 728"></iframe></div></div>
+    </div>
+  </article>
+
+  <article class="opt" id="C">
+    <p class="votes">C · 0 voix</p>
+    <h2>CTA mât recadrée</h2>
+    <p>Une ligne « équipe reçoit adversaire ». Lockup seulement en pied. Pas de carte marque séparée.</p>
+    <div class="row">
+      <div class="unit"><span>Match</span><div class="stage"><iframe data-fg="C" data-face="match" width="300" height="250" title="C match"></iframe></div></div>
+      <div class="unit"><span>Bandeau 728×90</span><div class="stage"><iframe data-fg="C" data-face="match" data-fmt="728x90" width="728" height="90" title="C 728"></iframe></div></div>
+    </div>
+  </article>
+
+  <article class="opt" id="D">
+    <p class="votes">D · 0 voix</p>
+    <h2>Poster match</h2>
+    <p>Toute la carte = le score, gros. Lockup uniquement sur la carte marque, en fin de cycle.</p>
+    <div class="row">
+      <div class="unit"><span>Match</span><div class="stage"><iframe data-fg="D" data-face="match" width="300" height="250" title="D match"></iframe></div></div>
+      <div class="unit"><span>Carte marque</span><div class="stage"><iframe data-fg="D" data-face="brand" width="300" height="250" title="D marque"></iframe></div></div>
+    </div>
+  </article>
+
+  <article class="opt" id="E">
+    <p class="votes">E · 0 voix</p>
+    <h2>Live exclusif</h2>
+    <p>Pendant un match en cours : uniquement ce(s) direct(s), pas de carte marque. Hors live, comme B. Risque : un seul soccer = une seule carte, pas de promo.</p>
+    <div class="row">
+      <div class="unit"><span>Direct (s’il y en a)</span><div class="stage"><iframe data-fg="E" data-face="match" width="300" height="250" title="E match"></iframe></div></div>
+      <p class="note">Pas de face marque pendant le live — c’est le point de l’option.</p>
+    </div>
+  </article>
+
+  <script>
+    const themeBtns = document.querySelectorAll('[data-theme]');
+    function srcFor(iframe, theme) {
+      const fg = iframe.getAttribute('data-fg');
+      const face = iframe.getAttribute('data-face');
+      const fmt = iframe.getAttribute('data-fmt') || '300x250';
+      return `../sports-ad-embed.html?fmt=${fmt}&theme=${theme}&fg=${fg}&face=${face}&still=1`;
+    }
+    function apply(theme) {
+      document.documentElement.style.colorScheme = theme;
+      themeBtns.forEach((b) => b.setAttribute('aria-pressed', b.getAttribute('data-theme') === theme ? 'true' : 'false'));
+      document.querySelectorAll('iframe[data-fg]').forEach((iframe) => {
+        iframe.src = srcFor(iframe, theme);
+      });
+    }
+    themeBtns.forEach((b) => b.addEventListener('click', () => apply(b.getAttribute('data-theme'))));
+    apply('dark');
+  </script>
+</body>
+</html>
