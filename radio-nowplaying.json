@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-04T23:26:45.015Z",
+  "updatedAt": "2026-10-05T00:55:14.742Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T23:26:20.042Z"
+      "checkedAt": "2026-10-05T00:54:16.621Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Symbiose",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/symbiose"
-      },
-      "next": {
         "title": "London café (reprise)",
         "source": "schedule",
         "start": "20:00",
         "end": "21:30",
         "url": "https://cism893.ca/emissions/london-cafe"
       },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "21:30",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "Symbiose",
+      "showTitle": "London café (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T23:26:21.532Z"
+      "checkedAt": "2026-10-05T00:54:18.179Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Bluegrass Rambling",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Country Classics",
         "source": "api-live",
         "start": "20:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Cha Cha In Blue",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "Bluegrass Rambling",
+      "showTitle": "Country Classics",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T23:26:23.742Z"
+      "checkedAt": "2026-10-05T00:54:20.399Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "No Boundaries",
-        "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/no-boundaries"
+        "title": "Towards A Common Horizon",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/towards-a-common-horizon"
       },
       "next": {
-        "title": "Eastern Promises",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "20:30",
-        "url": "http://www.cjlo.com/shows/eastern-promises"
+        "title": "Afro Archives",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/afro-archives"
       },
       "track": "",
-      "showTitle": "No Boundaries",
+      "showTitle": "Towards A Common Horizon",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T23:26:25.965Z"
+      "checkedAt": "2026-10-05T00:54:54.765Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T23:26:27.262Z"
+      "checkedAt": "2026-10-05T00:54:55.837Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Boards of Canada — Prophecy At 1420 MHz",
+      "track": "Noëm — SANS TOi",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-04T23:26:44.664Z"
+      "checkedAt": "2026-10-05T00:55:14.392Z"
     }
   }
 }
