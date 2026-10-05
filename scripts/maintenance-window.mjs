@@ -32,6 +32,7 @@ export const WRITER_WORKFLOWS = [
   '.github/workflows/update-sports.yml',
   '.github/workflows/update-streams.yml',
   '.github/workflows/verify-historical-links.yml',
+  '.github/workflows/verify-live-links.yml',
 ];
 
 const PROTECTED_WORKFLOWS = [
