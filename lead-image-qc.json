@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-05T05:59:52.419Z",
-  "total": 175,
-  "withPhoto": 163,
+  "updated": "2026-10-05T09:10:55.794Z",
+  "total": 174,
+  "withPhoto": 162,
   "withStock": 23,
-  "withCampusBank": 17,
-  "fullyCovered": 175,
-  "leadReadyPhotos": 138,
-  "pageScraped": 34,
-  "photosRecovered": 32,
-  "imagesCleared": 12,
-  "stockSearches": 36,
-  "stockFound": 18,
+  "withCampusBank": 16,
+  "fullyCovered": 174,
+  "leadReadyPhotos": 136,
+  "pageScraped": 35,
+  "photosRecovered": 33,
+  "imagesCleared": 13,
+  "stockSearches": 37,
+  "stockFound": 19,
   "campusBankFound": 12,
   "mainPageLeadReady": true,
   "gaps": [
@@ -19,6 +19,12 @@
       "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chichester%2C_Bishop_Otter_Campus_-_geograph.org.uk_-_3003126.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Gaiters Hockey Season Preview: A Team Full of Potential",
+      "link": "https://thebucampus.ca/2026/09/30/gaiters-hockey-season-preview-a-team-full-of-potential/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
     },
     {
       "title": "Entrée en matière réussie pour les Canadiens à Toronto",
@@ -57,12 +63,6 @@
       "image": "https://thebucampus.ca/wp-content/uploads/2026/09/capture-decran-le-2026-09-30-a-15.52.25.png"
     },
     {
-      "title": "Women and Sports Advertisements",
-      "link": "https://thebucampus.ca/2026/09/30/women-and-sports-advertisements/",
-      "reason": "stock-too-small",
-      "image": "https://thebucampus.ca/wp-content/uploads/2026/09/capture-decran-le-2026-09-30-a-14.05.02.png"
-    },
-    {
       "title": "Battling Adversity",
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
       "reason": "campus-bank",
@@ -71,20 +71,20 @@
     {
       "title": "The UCI Road World Championships: Where Excitement Meets Inconvenience",
       "link": "https://www.mcgilldaily.com/2026/09/the-uci-road-world-championships-where-excitement-meets-inconvenience/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/3628/3418387414_838287f106_b.jpg"
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://www.thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
-      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
     }
   ]
 }
