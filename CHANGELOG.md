@@ -5,6 +5,10 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
+### Ajouté
+
+- Application Android 1.1.0 (`versionCode` 3) : écoute radio en arrière-plan et sur l’écran verrouillé via AndroidX Media3 ExoPlayer (service `mediaPlayback`, notification et session média, plugin Capacitor local `RadioPlayback`). La barre JS reste la source de vérité et suit pause/lecture depuis la notification. Permissions : `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_MEDIA_PLAYBACK`, `POST_NOTIFICATIONS` (runtime Android 13+), `WAKE_LOCK`. Focus audio et casque débranché → pause. iOS : `UIBackgroundModes` audio + `AVAudioSession` playback. FOSS uniquement (pas de Play Services). Docs mobile / confidentialité / déclarations magasin mises à jour. Pas de tag `android-v1.1.0` tant que Charles n’a pas décidé la sortie (revue F-Droid 1.0.1 en cours).
+
 ### Corrigé
 
 - Application mobile : la radio a maintenant la même barre persistante que le site. Elle reste en bas de l’écran (au-dessus des onglets, zones sûres respectées) et l’écoute continue d’un onglet à l’autre ; avant, le seul `<audio>` vivait dans la fiche radio et quittait avec elle. « Écouter » aussi dans Explorer → Radios, émission en ondes, retour Android = arrière-plan pendant l’écoute. Écran verrouillé non garanti (service natif requis, voir `docs/mobile/architecture.md`).

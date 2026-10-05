@@ -57,7 +57,7 @@ Open Accueil to read the current feed. Open an article card to see the
 discovery sheet: source, excerpt, and “Lire chez {publication}”, which opens
 the original article in the system browser. Enregistrés stores favorites.
 Explorer follows or hides a publication. Réglages explains that system
-notifications are not sent.
+push notifications are not sent. Android may show a media-playback notification while radio is playing.
 
 Sample links once the app is installed:
 https://le-radar.ca/journaux/la-pige/

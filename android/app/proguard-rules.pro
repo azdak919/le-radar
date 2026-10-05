@@ -39,3 +39,8 @@
 
 # App entry (BridgeActivity subclass)
 -keep class ca.leradar.app.MainActivity { *; }
+
+# Local RadioPlayback Capacitor plugin + Media3 (release minifyEnabled true)
+-keep class ca.leradar.app.radio.** { *; }
+-keep class androidx.media3.** { *; }
+-dontwarn androidx.media3.**

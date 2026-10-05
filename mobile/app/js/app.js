@@ -3,11 +3,11 @@
  * Le site le-radar.ca reste une autre surface : ici, fil personnel,
  * fiches, enregistrements et radios — pas le mât du site.
  *
- * Radio : un seul <audio>, dans la barre #player de la coquille, hors de
- * #screen. Les écrans sont re-rendus par innerHTML ; la barre ne l’est
- * jamais, donc l’écoute continue d’un onglet à l’autre (même contrat que
- * la barre persistante du site, sans iframe ni BroadcastChannel : une
- * seule page, routage par hash).
+ * Radio : barre #player dans la coquille, hors de #screen (jamais
+ * re-rendue). Sur le web / iOS : un seul <audio>. Sur Android natif :
+ * Media3 ExoPlayer via le plugin RadioPlayback (service de premier plan,
+ * notification et session média) ; la barre JS reste la source de vérité
+ * UI et se synchronise sur les événements natifs.
  */
 'use strict';
 
@@ -38,6 +38,8 @@
     nowFetchedAt: 0,
     nowPending: null,
     sessionKey: '',
+    nativeBound: false,
+    nativeSync: false,
   };
   const NOW_PLAYING_TTL_MS = 90 * 1000;
 
@@ -128,6 +130,24 @@
       try { return cap.registerPlugin(name); } catch { return null; }
     }
     return null;
+  }
+
+  function nativePlatform() {
+    try {
+      const cap = window.Capacitor;
+      return cap && typeof cap.getPlatform === 'function' ? cap.getPlatform() : '';
+    } catch {
+      return '';
+    }
+  }
+
+  /** Android : lecture native Media3. iOS / web : <audio> dans la barre. */
+  function useNativeRadio() {
+    return isNative() && nativePlatform() === 'android' && Boolean(plugin('RadioPlayback'));
+  }
+
+  function radioNative() {
+    return useNativeRadio() ? plugin('RadioPlayback') : null;
   }
 
   function haptic() {
@@ -562,12 +582,36 @@
       line.hidden = !text;
     }
     syncMediaSession(radio);
+    if (radio && useNativeRadio() && !player.nativeSync) pushNativeMetadata(radio);
   }
 
   function playRadio(id) {
     const radio = radioById(id);
+    if (!radio || !radio.stream) return;
+    const native = radioNative();
+    if (native) {
+      // Couper tout <audio> résiduel : une seule source de son.
+      releaseStream();
+      player.id = id;
+      player.status = 'loading';
+      syncPlayer();
+      ensureNowPlaying();
+      const artist = player.now || radio.institution || '';
+      Promise.resolve(native.play({
+        url: radio.stream,
+        title: radio.name,
+        artist,
+        stationId: id,
+      })).catch((error) => {
+        if (player.id !== id || player.status !== 'loading') return;
+        player.status = 'error';
+        syncPlayer();
+        console.warn('RadioPlayback.play', error);
+      });
+      return;
+    }
     const audio = playerAudio();
-    if (!radio || !radio.stream || !audio) return;
+    if (!audio) return;
     // Flux en direct : on (re)branche la source à chaque lecture pour
     // repartir du direct, pas d’un tampon vieux de plusieurs minutes.
     if (player.id !== id || !audio.getAttribute('src')) audio.src = radio.stream;
@@ -605,6 +649,12 @@
   function pauseRadio() {
     if (!player.id) return;
     player.status = 'paused';
+    const native = radioNative();
+    if (native) {
+      Promise.resolve(native.pause()).catch(() => {});
+      syncPlayer();
+      return;
+    }
     releaseStream();
     syncPlayer();
   }
@@ -612,6 +662,13 @@
   function stopRadio() {
     player.status = 'idle';
     player.id = '';
+    const native = radioNative();
+    if (native) {
+      Promise.resolve(native.stop()).catch(() => {});
+      releaseStream();
+      syncPlayer();
+      return;
+    }
     releaseStream();
     syncPlayer();
   }
@@ -623,22 +680,68 @@
     else playRadio(target);
   }
 
+  function applyNativeState(payload) {
+    if (!payload || typeof payload !== 'object') return;
+    const status = payload.status || 'idle';
+    const stationId = payload.stationId || '';
+    player.nativeSync = true;
+    try {
+      if (status === 'idle') {
+        player.status = 'idle';
+        player.id = '';
+      } else {
+        if (stationId) player.id = stationId;
+        if (status === 'playing' || status === 'loading' || status === 'paused' || status === 'error') {
+          player.status = status;
+        }
+      }
+      syncPlayer();
+    } finally {
+      player.nativeSync = false;
+    }
+  }
+
+  function bindNativeRadio() {
+    const native = radioNative();
+    if (!native || player.nativeBound) return;
+    player.nativeBound = true;
+    try {
+      if (typeof native.addListener === 'function') {
+        native.addListener('state', (payload) => applyNativeState(payload));
+      }
+    } catch { /* plugin sans événements */ }
+  }
+
+  function pushNativeMetadata(radio) {
+    const native = radioNative();
+    if (!native || !radio || !playerBusy()) return;
+    const artist = player.now || radio.institution || '';
+    Promise.resolve(native.updateMetadata({
+      title: radio.name,
+      artist,
+    })).catch(() => {});
+  }
+
   function bindPlayer() {
+    bindNativeRadio();
     const audio = playerAudio();
     if (!audio) return;
     audio.addEventListener('playing', () => {
+      if (useNativeRadio()) return;
       if (!player.id || !audio.getAttribute('src')) return;
       player.status = 'playing';
       syncPlayer();
     });
     for (const type of ['waiting', 'stalled']) {
       audio.addEventListener(type, () => {
+        if (useNativeRadio()) return;
         if (player.status !== 'playing') return;
         player.status = 'loading';
         syncPlayer();
       });
     }
     audio.addEventListener('pause', () => {
+      if (useNativeRadio()) return;
       // Pause imposée par le système (focus audio, casque débranché).
       // Changer de station relance play() aussitôt : ignorer cette pause-là.
       if (!player.id || !playerBusy() || !audio.getAttribute('src') || !audio.paused) return;
@@ -647,6 +750,7 @@
     });
     for (const type of ['error', 'ended']) {
       audio.addEventListener(type, () => {
+        if (useNativeRadio()) return;
         if (!player.id || !audio.getAttribute('src')) return;
         player.status = 'error';
         releaseStream();
@@ -666,8 +770,8 @@
     }
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState !== 'visible' || !player.id) return;
-      // Retour au premier plan : si le système a gelé l’écoute, l’afficher.
-      if (playerBusy() && audio.paused) player.status = 'paused';
+      // Retour au premier plan : si le système a gelé l’écoute HTML, l’afficher.
+      if (!useNativeRadio() && playerBusy() && audio.paused) player.status = 'paused';
       if (playerBusy()) ensureNowPlaying();
       syncPlayer();
     });

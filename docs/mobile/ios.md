@@ -31,6 +31,10 @@ L’archive de publication est le workflow `Mobile release`, environnement GitHu
 
 La clé API sert à `-allowProvisioningUpdates`. Il faut aussi qu’un certificat de distribution et un profil existent pour `ca.leradar.app`, ou que la clé ait le droit de les créer. Le workflow ne contient pas de certificat.
 
+## Audio en arrière-plan
+
+`Info.plist` déclare `UIBackgroundModes` → `audio`. `AppDelegate` active une `AVAudioSession` en catégorie `playback` pour que le `<audio>` de la barre radio continue écran verrouillé / app en arrière-plan. Pas de lecteur AVPlayer natif distinct (la fiabilité WebView iOS suffit ici ; Android utilise Media3).
+
 ## Universal Links
 
 `ios/App/App/App.entitlements` déclare `applinks:le-radar.ca` et `applinks:www.le-radar.ca`.
