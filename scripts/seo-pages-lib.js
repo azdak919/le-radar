@@ -1153,6 +1153,7 @@ ${renderWideLayoutAssets(up)}${renderTunerCriticalCss()}
     <script src="${up}radar-state.js" defer></script>
     <script src="${up}radar-weather.js" defer></script>
     <script src="${up}scripts/session-freshness-lib.js" defer></script>
+    <script src="${up}scripts/news-housekeeping-lib.js" defer></script>
     <script src="${up}scripts/sports-freshness-lib.js" defer></script>
     <script src="${up}radar-sports-cta.js" defer></script>
     <script src="${up}radar-tuner.js" defer></script>

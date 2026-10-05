@@ -1806,6 +1806,7 @@ const magazineMeta = {
  * (même règle bots + UI — automne/hiver/été + grâce septembre).
  */
 const _SF = (typeof RadarSessionFreshness !== 'undefined') ? RadarSessionFreshness : null;
+const _HK = (typeof RadarNewsHousekeeping !== 'undefined') ? RadarNewsHousekeeping : null;
 const FRESHNESS_SESSION_COUNT = _SF?.FRESHNESS_SESSION_COUNT ?? 3;
 const CONTINGENCY_MAX_SESSIONS_BACK = _SF?.CONTINGENCY_MAX_SESSIONS_BACK
   ?? (FRESHNESS_SESSION_COUNT - 1);
@@ -1960,6 +1961,33 @@ function filterFreshItems(items, referenceDate = new Date()) {
       (item) => isPublishedOnOrBefore(item, referenceDate) && isWithinFreshnessWindow(item, referenceDate),
     );
 }
+
+/* --- Avis de ménage (fermeture estivale) : scripts/news-housekeeping-lib.js --- */
+function housekeepingDisposition(item, referenceDate = new Date()) {
+  return _HK
+    ? _HK.housekeepingDisposition(item, referenceDate)
+    : 'pass';
+}
+
+function filterHousekeepingForDisplay(items, referenceDate = new Date()) {
+  return _HK
+    ? _HK.filterHousekeepingForDisplay(items, referenceDate)
+    : items;
+}
+
+function splitHousekeepingPools(items, referenceDate = new Date()) {
+  const kept = filterHousekeepingForDisplay(items, referenceDate);
+  if (!_HK) return { kept, forcedBrief: [], normal: kept };
+  const forcedBrief = [];
+  const normal = [];
+  for (const item of kept) {
+    if (_HK.housekeepingDisposition(item, referenceDate) === 'brief') forcedBrief.push(item);
+    else normal.push(item);
+  }
+  return { kept, forcedBrief, normal };
+}
+
+
 
 function itemHasThumbPhoto(item) {
   return hasUsablePhoto(item, 'feature') || hasStockPhoto(item, 'feature');
@@ -2133,28 +2161,37 @@ function resetMagazineMeta(heroItems = [], briefItems = []) {
 
 function partitionNewsFeed(items, referenceDate = new Date()) {
   // Pool unique, date desc — seule source de vérité pour l'ordre de fraîcheur.
-  const sorted = sortByDateDesc(filterFreshItems(items, referenceDate));
-  const { items: rawHero, contingencyBand: heroBand } = pickHeroSpotlight(sorted, referenceDate);
-  // Filet : une + vedettes = toujours les |n| plus frais du pool.
+  // Avis de fermeture/pause : exclus hors été ; en été → En bref seulement.
+  const fresh = filterFreshItems(items, referenceDate);
+  const { forcedBrief, normal } = splitHousekeepingPools(fresh, referenceDate);
+  const sortedNormal = sortByDateDesc(normal);
+  const sortedAll = sortByDateDesc([...normal, ...forcedBrief]);
+  const { items: rawHero, contingencyBand: heroBand } = pickHeroSpotlight(sortedNormal, referenceDate);
+  // Filet : une + vedettes = toujours les |n| plus frais du pool normal.
   const heroItems = enforceHeroDateOrder(
-    ensureHeroLeadHasImage(rawHero, sorted),
-    sorted,
+    ensureHeroLeadHasImage(rawHero, sortedNormal),
+    sortedNormal,
   );
-  // Graine En bref ≈ hauteur estimée du hero ; le fill ne touche qu'à En bref.
   const briefSeed = briefSeedCountForHero(heroItems.length);
-  const { items: briefItems, contingencyBand: briefBand } = pickBriefSidebar(
-    sorted,
+  const { items: briefPicked, contingencyBand: briefBand } = pickBriefSidebar(
+    sortedNormal,
     heroItems,
     referenceDate,
     briefSeed,
   );
   const heroKeys = new Set(heroItems.map(articleKey));
-  const briefClean = briefItems.filter((i) => !heroKeys.has(articleKey(i)));
+  // Forcer les avis de ménage en tête d’En bref (hors une), puis compléter.
+  const forcedClean = sortByDateDesc(forcedBrief).filter((i) => !heroKeys.has(articleKey(i)));
+  const forcedKeys = new Set(forcedClean.map(articleKey));
+  const briefRest = briefPicked.filter(
+    (i) => !heroKeys.has(articleKey(i)) && !forcedKeys.has(articleKey(i)),
+  );
+  const briefClean = [...forcedClean, ...briefRest].slice(0, Math.max(briefSeed, forcedClean.length));
   const briefKeysClean = new Set(briefClean.map(articleKey));
-  const tailItems = sorted.filter(
+  // Suite du fil : pool normal seulement (jamais les avis de ménage).
+  const tailItems = sortedNormal.filter(
     (i) => !heroKeys.has(articleKey(i)) && !briefKeysClean.has(articleKey(i)),
   );
-  // Réserve pour le fill magazine (phase B)
   magazineReserve = tailItems.slice();
   resetMagazineMeta(heroItems, briefClean);
   const contingencyBand = Math.max(heroBand, briefBand);
@@ -2929,22 +2966,23 @@ function pickSourceLead(pool) {
  *  - Suite du fil = le reste
  */
 function partitionSourceFeed(items, referenceDate = new Date()) {
-  const sorted = sortByDateDesc(items);
-  const { items: pool, contingencyBand } = collectSourcePool(sorted, referenceDate);
-  // Tranche contiguë des plus frais → une(s) = pool[0..leads), vedettes = suite
+  const sorted = sortByDateDesc(filterHousekeepingForDisplay(items, referenceDate));
+  const { items: poolRaw, contingencyBand } = collectSourcePool(sorted, referenceDate);
+  const { forcedBrief, normal } = splitHousekeepingPools(poolRaw, referenceDate);
+  const pool = sortByDateDesc(normal);
   const heroN = Math.min(sourceHeroSpotlightMax(), pool.length);
   const heroItems = pool.slice(0, heroN);
   const heroKeys = new Set(heroItems.map(articleKey));
   const rest = pool.filter((item) => !heroKeys.has(articleKey(item)));
-  // Graine En bref calée sur la hauteur hero (une+vedettes), un peu plus
-  // généreuse en vue source pour coller dès le snapshot.
   const briefSeed = briefSeedCountForHero(Math.max(1, heroItems.length), {
     sourceMode: true,
   });
-  const briefItems = rest.slice(0, briefSeed);
+  const forcedClean = sortByDateDesc(forcedBrief).filter((i) => !heroKeys.has(articleKey(i)));
+  const forcedKeys = new Set(forcedClean.map(articleKey));
+  const briefRest = rest.filter((item) => !forcedKeys.has(articleKey(item)));
+  const briefItems = [...forcedClean, ...briefRest].slice(0, Math.max(briefSeed, forcedClean.length));
   const briefKeys = new Set(briefItems.map(articleKey));
   const tailItems = rest.filter((item) => !briefKeys.has(articleKey(item)));
-  // Réserve + meta pour le fill/trim En bref (balanceMagazineColumns).
   magazineReserve = tailItems.slice();
   resetMagazineMeta(heroItems, briefItems);
   const lead = heroItems[0] || null;

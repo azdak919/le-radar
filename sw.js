@@ -1,4 +1,4 @@
-const CACHE_NAME = "radar-shell-v896";
+const CACHE_NAME = "radar-shell-v898";
 const CACHE_PREFIX = "radar-";
 /** Cache permanent : page maintenance / hors-ligne (ne se purge pas au bump shell). */
 const OFFLINE_CACHE = "radar-offline-v22";
@@ -75,6 +75,7 @@ const APP_SHELL = [
   "./indigenous-mt.json",
   "./engage-prompt.js",
   "./scripts/session-freshness-lib.js",
+  "./scripts/news-housekeeping-lib.js",
   "./scripts/sports-freshness-lib.js",
   "./scripts/season-lib.js",
   "./brand-colors.json",

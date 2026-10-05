@@ -311,6 +311,11 @@ function truncateExcerpt(text = '', max = 280) {
 const {
   sanitizeTitle,
 } = require('./news-title-lib');
+const {
+  filterHousekeepingForDisplay,
+  housekeepingDisposition,
+} = require('./news-housekeeping-lib');
+
 
 function tag(block, name) {
   const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -1150,7 +1155,17 @@ async function main() {
       console.log(`  ✗ ${item.source}: ${item.title}`);
     }
   }
-  const visibleItems = withdrawn.items;
+  const afterWithdrawn = withdrawn.items;
+  const visibleItems = filterHousekeepingForDisplay(afterWithdrawn, referenceDate);
+  const hkRemoved = afterWithdrawn.length - visibleItems.length;
+  if (hkRemoved > 0) {
+    console.log(`Ménage médias: ${hkRemoved} avis de fermeture/pause hors saison retiré(s) du fil`);
+    for (const item of afterWithdrawn) {
+      if (housekeepingDisposition(item, referenceDate) === 'exclude') {
+        console.log(`  ✗ ${item.source}: ${item.title}`);
+      }
+    }
+  }
 
   const staleSources = Object.entries(sourceRuns)
     .filter(([, meta]) => meta.stale)
