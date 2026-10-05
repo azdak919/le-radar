@@ -162,6 +162,21 @@ const radios = core.radioCatalog([
 ]);
 assert.equal(radios[0].stream, 'https://example.test/stream');
 assert.equal(radios[0].website, '');
+const nowPayload = {
+  updatedAt: '2026-10-05T18:43:51.460Z',
+  stations: {
+    chyz: { current: { title: 'Little Songs On The Prairie' }, track: '', checkedAt: '2026-10-05T18:43:22.786Z' },
+    cism: { showTitle: 'Le palmarès', track: 'Artiste – Titre', checkedAt: '2026-10-05T18:43:25.017Z' },
+    ckut: { current: { title: 'Même' }, track: 'même', checkedAt: '2026-10-05T18:43:25.017Z' },
+  },
+};
+const nowMs = Date.parse('2026-10-05T19:00:00Z');
+assert.equal(core.nowPlayingLabel(nowPayload, 'chyz', nowMs), 'Little Songs On The Prairie');
+assert.equal(core.nowPlayingLabel(nowPayload, 'cism', nowMs), 'Le palmarès · Artiste – Titre');
+assert.equal(core.nowPlayingLabel(nowPayload, 'ckut', nowMs), 'Même');
+assert.equal(core.nowPlayingLabel(nowPayload, 'absente', nowMs), '');
+assert.equal(core.nowPlayingLabel(nowPayload, 'chyz', Date.parse('2026-10-06T03:00:00Z')), '', 'grille périmée ignorée');
+assert.equal(core.nowPlayingLabel(null, 'chyz', nowMs), '');
 assert.equal(core.institutionColor({ institutions: { UQAM: { color: '#0079BE' } } }, 'UQAM'), '#0079BE');
 assert.equal(core.institutionColor({ institutions: { X: { color: 'red' } } }, 'X'), '');
 assert.equal(core.homeMode('', ['la-pige']), 'suivis');
@@ -172,6 +187,11 @@ const shell = read('mobile/app/index.html');
 const appJs = read('mobile/app/js/app.js');
 const prepare = read('mobile/scripts/prepare.mjs');
 const article = read('article/index.html');
+// Barre radio persistante : l’unique <audio> vit dans la coquille, hors de
+// #screen (re-rendu par innerHTML à chaque route), sinon l’écoute meurt.
+assert.ok(shell.indexOf('id="player-audio"') > shell.indexOf('</main>'), 'audio radio hors de #screen');
+assert.equal((shell.match(/<audio\b/g) || []).length, 1, 'un seul <audio> dans la coquille');
+assert.equal(/<audio\s/.test(appJs), false, 'aucun <audio> rendu dans un écran');
 assert.equal(shell.includes('umami'), false);
 assert.equal(shell.includes('news-archive'), false);
 assert.equal(shell.includes('radar-news.js'), false);

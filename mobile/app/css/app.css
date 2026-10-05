@@ -14,6 +14,8 @@
   --serif: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
   --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
   --tab: calc(56px + env(safe-area-inset-bottom));
+  /* Hauteur réservée à la barre radio (0 tant qu’elle est cachée). */
+  --player: 0px;
   color-scheme: light;
 }
 
@@ -73,8 +75,10 @@ body.fiche { padding: calc(16px + env(safe-area-inset-top)) 16px calc(24px + env
 .shell {
   width: min(40rem, 100%);
   margin: 0 auto;
-  padding: calc(12px + env(safe-area-inset-top)) 16px var(--tab);
+  padding: calc(12px + env(safe-area-inset-top)) 16px calc(var(--tab) + var(--player));
 }
+
+body.has-player { --player: 72px; }
 
 .top {
   display: flex;
@@ -259,6 +263,112 @@ input[type="search"], input[type="text"] {
 
 audio { width: 100%; margin: 8px 0; }
 
+.now-line { margin: 0 0 4px; color: var(--ink-soft); font-size: 0.95rem; }
+
+.now-line span { color: var(--ink); font-weight: 600; }
+
+/* Barre radio persistante : posée sur les onglets, hors de #screen. */
+.player {
+  position: fixed;
+  left: max(8px, env(safe-area-inset-left));
+  right: max(8px, env(safe-area-inset-right));
+  bottom: calc(var(--tab) + 6px);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 60px;
+  padding: 6px 6px 6px 4px;
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: var(--bg-soft);
+  color: var(--ink);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.22);
+}
+
+.player[hidden] { display: none; }
+
+.player audio { display: none; }
+
+.player-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.player-text { display: flex; flex-direction: column; min-width: 0; }
+
+.player-name, .player-now {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.player-name { font-weight: 700; font-size: 0.95rem; }
+
+.player-now { color: var(--muted); font-size: 0.82rem; }
+
+.player-live {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 99px;
+  background: var(--muted);
+}
+
+.player[data-state="playing"] .player-live {
+  background: var(--live);
+  box-shadow: 0 0 0 0 rgb(200 16 46 / 0.55);
+  animation: player-pulse 1.8s ease-out infinite;
+}
+
+.player[data-state="loading"] .player-live { background: var(--live); opacity: 0.55; }
+
+.player[data-state="error"] .player-live { background: transparent; border: 2px solid var(--live); }
+
+@keyframes player-pulse {
+  70% { box-shadow: 0 0 0 7px rgb(200 16 46 / 0); }
+  100% { box-shadow: 0 0 0 0 rgb(200 16 46 / 0); }
+}
+
+.player-btn {
+  flex: none;
+  width: 48px;
+  min-height: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 999px;
+}
+
+.player-btn svg { width: 22px; height: 22px; }
+
+.player-toggle {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.player-stop { border-color: transparent; background: transparent; color: var(--muted); }
+
+.player-toggle .icon-pause { display: none; }
+
+.player[data-state="playing"] .player-toggle .icon-play,
+.player[data-state="loading"] .player-toggle .icon-play { display: none; }
+
+.player[data-state="playing"] .player-toggle .icon-pause,
+.player[data-state="loading"] .player-toggle .icon-pause { display: block; }
+
+.player[data-state="loading"] .player-toggle { opacity: 0.8; }
+
+.source-row > button { flex: none; margin: 6px 0; }
+
 .back { margin: 0 0 4px; }
 
 .back a { color: var(--accent); }
@@ -313,7 +423,7 @@ audio { width: 100%; margin: 8px 0; }
   outline-offset: 2px;
 }
 
-button, a.wide, .card-actions { scroll-margin-bottom: var(--tab); }
+button, a.wide, .card-actions { scroll-margin-bottom: calc(var(--tab) + var(--player)); }
 
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
@@ -321,4 +431,5 @@ button, a.wide, .card-actions { scroll-margin-bottom: var(--tab); }
 
 @media (min-width: 800px) {
   .tabs { width: min(40rem, 100%); margin: 0 auto; border-left: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+  .player { left: 50%; right: auto; width: calc(min(40rem, 100%) - 16px); transform: translateX(-50%); }
 }

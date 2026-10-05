@@ -2,6 +2,12 @@
  * Interface téléphone de LE-RADAR.
  * Le site le-radar.ca reste une autre surface : ici, fil personnel,
  * fiches, enregistrements et radios — pas le mât du site.
+ *
+ * Radio : un seul <audio>, dans la barre #player de la coquille, hors de
+ * #screen. Les écrans sont re-rendus par innerHTML ; la barre ne l’est
+ * jamais, donc l’écoute continue d’un onglet à l’autre (même contrat que
+ * la barre persistante du site, sans iframe ni BroadcastChannel : une
+ * seule page, routage par hash).
  */
 'use strict';
 
@@ -22,6 +28,18 @@
     recorded: '',
     routeKey: '',
   };
+
+  // status : idle (barre cachée) · loading · playing · paused · error
+  const player = {
+    id: '',
+    status: 'idle',
+    now: '',
+    nowPayload: null,
+    nowFetchedAt: 0,
+    nowPending: null,
+    sessionKey: '',
+  };
+  const NOW_PLAYING_TTL_MS = 90 * 1000;
 
   function esc(value) {
     return core().escapeHtml(value == null ? '' : value);
@@ -359,6 +377,7 @@
     } else if (section === 'radios') {
       body = `<ul class="plain">${state.radios.map((radio) => `<li class="source-row">
         <a href="#/radio/${esc(radio.id)}"><span class="source-name">${esc(radio.name)}</span><span class="source-meta">${esc(radio.institution)}</span></a>
+        ${radio.stream ? radioToggleHtml(radio, 'Écouter', 'Pause') : ''}
       </li>`).join('')}</ul>`;
     } else {
       const rows = state.sources.filter((source) => {
@@ -418,9 +437,12 @@
     if (!radio) {
       return `<p class="back"><a href="#/explorer?section=radios">Retour aux radios</a></p><h1>Radio introuvable</h1>`;
     }
+    ensureNowPlaying();
+    const now = core().nowPlayingLabel(player.nowPayload, radio.id);
     const audio = radio.stream
-      ? `<audio controls preload="none" src="${esc(radio.stream)}">Lecture audio non disponible.</audio>
-         <p class="note">La lecture s’arrête quand vous quittez cette fiche. Ce n’est pas une écoute en arrière-plan.</p>`
+      ? `<p class="now-line" data-now-for="${esc(radio.id)}"${now ? '' : ' hidden'}>En ondes : <span>${esc(now)}</span></p>
+         ${radioToggleHtml(radio, 'Écouter en direct', 'Mettre en pause', 'wide primary')}
+         <p class="note">La radio reste dans la barre du bas pendant que vous parcourez l’application. L’écoute écran verrouillé n’est pas garantie.</p>`
       : '<p class="note">Pas de flux HTTPS validé. La station s’écoute sur son site.</p>';
     const site = radio.website
       ? `<a class="wide link" data-action="external" href="${esc(radio.website)}" target="_blank" rel="noopener noreferrer">Ouvrir le site de ${esc(radio.name)}</a>`
@@ -430,6 +452,228 @@
       <p class="lede">${esc(radio.slogan || radio.institution)}${radio.frequency ? ` · ${esc(radio.frequency)}` : ''}</p>
       ${audio}
       ${site}`;
+  }
+
+  function radioById(id) {
+    return state.radios.find((item) => item.id === id) || null;
+  }
+
+  function playerBusy() {
+    return player.status === 'playing' || player.status === 'loading';
+  }
+
+  function radioToggleHtml(radio, offLabel, onLabel, extraClass) {
+    const on = player.id === radio.id && playerBusy();
+    return `<button type="button"${extraClass ? ` class="${extraClass}"` : ''} data-action="radio-toggle" data-id="${esc(radio.id)}" data-label-off="${esc(offLabel)}" data-label-on="${esc(onLabel)}" aria-pressed="${on ? 'true' : 'false'}">${esc(on ? onLabel : offLabel)}</button>`;
+  }
+
+  function playerAudio() {
+    return document.getElementById('player-audio');
+  }
+
+  function nowPlayingUrls() {
+    if (isNative()) return ['https://le-radar.ca/radio-nowplaying.json'];
+    return ['../../radio-nowplaying.json'];
+  }
+
+  function ensureNowPlaying(force) {
+    if (player.nowPending) return player.nowPending;
+    if (!force && Date.now() - player.nowFetchedAt < NOW_PLAYING_TTL_MS) return Promise.resolve();
+    player.nowFetchedAt = Date.now();
+    player.nowPending = fetchJson(nowPlayingUrls()).then((result) => {
+      if (result && result.data && typeof result.data === 'object') player.nowPayload = result.data;
+    }).catch(() => {}).then(() => {
+      player.nowPending = null;
+      syncPlayer();
+    });
+    return player.nowPending;
+  }
+
+  function syncMediaSession(radio) {
+    const session = navigator.mediaSession;
+    if (!session) return;
+    try {
+      if (!radio) {
+        session.metadata = null;
+        session.playbackState = 'none';
+        player.sessionKey = '';
+        return;
+      }
+      const artist = player.now || radio.institution || 'Radio étudiante';
+      const key = `${radio.id}|${artist}`;
+      if (key !== player.sessionKey && typeof window.MediaMetadata === 'function') {
+        session.metadata = new window.MediaMetadata({
+          title: radio.name,
+          artist,
+          album: 'LE-RADAR',
+          artwork: [
+            { src: new URL('./icons/icon-192.png', location.href).href, sizes: '192x192', type: 'image/png' },
+            { src: new URL('./icons/icon-512.png', location.href).href, sizes: '512x512', type: 'image/png' },
+          ],
+        });
+        player.sessionKey = key;
+      }
+      session.playbackState = playerBusy() ? 'playing' : 'paused';
+    } catch { /* Media Session partielle dans certaines WebView */ }
+  }
+
+  function syncPlayer() {
+    const root = document.getElementById('player');
+    const radio = player.id ? radioById(player.id) : null;
+    const visible = Boolean(radio);
+    document.body.classList.toggle('has-player', visible);
+    if (root) {
+      root.hidden = !visible;
+      root.dataset.state = visible ? player.status : 'idle';
+    }
+    player.now = radio ? core().nowPlayingLabel(player.nowPayload, radio.id) : '';
+    if (radio) {
+      const name = document.getElementById('player-name');
+      const now = document.getElementById('player-now');
+      const info = document.getElementById('player-info');
+      const toggle = document.getElementById('player-toggle');
+      if (name) name.textContent = radio.name;
+      if (now) {
+        let line = player.now || radio.institution || '';
+        if (player.status === 'loading') line = 'Connexion au direct…';
+        else if (player.status === 'error') line = 'Flux indisponible. Touchez lecture pour réessayer.';
+        now.textContent = line;
+      }
+      if (info) {
+        info.setAttribute('href', `#/radio/${radio.id}`);
+        info.setAttribute('aria-label', `${radio.name} : ouvrir la fiche`);
+      }
+      if (toggle) {
+        toggle.setAttribute('aria-label', playerBusy() ? `Mettre ${radio.name} en pause` : `Écouter ${radio.name}`);
+        if (player.status === 'loading') toggle.setAttribute('aria-busy', 'true');
+        else toggle.removeAttribute('aria-busy');
+      }
+    }
+    for (const button of document.querySelectorAll('[data-action="radio-toggle"]')) {
+      const on = button.dataset.id === player.id && playerBusy();
+      button.setAttribute('aria-pressed', on ? 'true' : 'false');
+      const label = on ? button.dataset.labelOn : button.dataset.labelOff;
+      if (label && button.textContent !== label) button.textContent = label;
+    }
+    for (const line of document.querySelectorAll('[data-now-for]')) {
+      const text = core().nowPlayingLabel(player.nowPayload, line.dataset.nowFor);
+      const span = line.querySelector('span');
+      if (span) span.textContent = text;
+      line.hidden = !text;
+    }
+    syncMediaSession(radio);
+  }
+
+  function playRadio(id) {
+    const radio = radioById(id);
+    const audio = playerAudio();
+    if (!radio || !radio.stream || !audio) return;
+    // Flux en direct : on (re)branche la source à chaque lecture pour
+    // repartir du direct, pas d’un tampon vieux de plusieurs minutes.
+    if (player.id !== id || !audio.getAttribute('src')) audio.src = radio.stream;
+    player.id = id;
+    player.status = 'loading';
+    syncPlayer();
+    ensureNowPlaying();
+    let attempt;
+    try {
+      attempt = audio.play();
+    } catch (error) {
+      attempt = Promise.reject(error);
+    }
+    if (attempt && typeof attempt.catch === 'function') {
+      attempt.catch((error) => {
+        if (player.id !== id || player.status !== 'loading') return;
+        player.status = error && error.name === 'NotAllowedError' ? 'paused' : 'error';
+        syncPlayer();
+      });
+    }
+  }
+
+  function releaseStream() {
+    const audio = playerAudio();
+    if (!audio) return;
+    audio.pause();
+    // Couper la connexion : pas de données consommées en pause, et la
+    // reprise retombe sur le direct.
+    if (audio.getAttribute('src')) {
+      audio.removeAttribute('src');
+      try { audio.load(); } catch { /* élément déjà vide */ }
+    }
+  }
+
+  function pauseRadio() {
+    if (!player.id) return;
+    player.status = 'paused';
+    releaseStream();
+    syncPlayer();
+  }
+
+  function stopRadio() {
+    player.status = 'idle';
+    player.id = '';
+    releaseStream();
+    syncPlayer();
+  }
+
+  function toggleRadio(id) {
+    const target = id || player.id;
+    if (!target) return;
+    if (target === player.id && playerBusy()) pauseRadio();
+    else playRadio(target);
+  }
+
+  function bindPlayer() {
+    const audio = playerAudio();
+    if (!audio) return;
+    audio.addEventListener('playing', () => {
+      if (!player.id || !audio.getAttribute('src')) return;
+      player.status = 'playing';
+      syncPlayer();
+    });
+    for (const type of ['waiting', 'stalled']) {
+      audio.addEventListener(type, () => {
+        if (player.status !== 'playing') return;
+        player.status = 'loading';
+        syncPlayer();
+      });
+    }
+    audio.addEventListener('pause', () => {
+      // Pause imposée par le système (focus audio, casque débranché).
+      // Changer de station relance play() aussitôt : ignorer cette pause-là.
+      if (!player.id || !playerBusy() || !audio.getAttribute('src') || !audio.paused) return;
+      player.status = 'paused';
+      syncPlayer();
+    });
+    for (const type of ['error', 'ended']) {
+      audio.addEventListener(type, () => {
+        if (!player.id || !audio.getAttribute('src')) return;
+        player.status = 'error';
+        releaseStream();
+        syncPlayer();
+      });
+    }
+    const session = navigator.mediaSession;
+    if (session && typeof session.setActionHandler === 'function') {
+      const handlers = {
+        play: () => toggleRadio(player.id),
+        pause: () => pauseRadio(),
+        stop: () => stopRadio(),
+      };
+      for (const [name, handler] of Object.entries(handlers)) {
+        try { session.setActionHandler(name, handler); } catch { /* action non prise en charge */ }
+      }
+    }
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState !== 'visible' || !player.id) return;
+      // Retour au premier plan : si le système a gelé l’écoute, l’afficher.
+      if (playerBusy() && audio.paused) player.status = 'paused';
+      if (playerBusy()) ensureNowPlaying();
+      syncPlayer();
+    });
+    setInterval(() => {
+      if (player.id && playerBusy() && document.visibilityState === 'visible') ensureNowPlaying();
+    }, NOW_PLAYING_TTL_MS);
   }
 
   function viewSearch(route) {
@@ -631,6 +875,7 @@
     else if (route.kind === 'article') html = viewArticle(route);
     else html = viewHome(route);
     if (screen) screen.innerHTML = html;
+    syncPlayer();
     if (net) {
       const offline = !state.online || state.feedOrigin === 'snapshot' || state.feedOrigin === 'bundle' || state.feedOrigin === 'empty';
       net.textContent = offline
@@ -668,6 +913,18 @@
           return;
         }
         await openExternal(el.getAttribute('href'));
+        return;
+      }
+      if (action === 'radio-toggle' || action === 'player-toggle') {
+        event.preventDefault();
+        toggleRadio(action === 'radio-toggle' ? el.dataset.id : player.id);
+        haptic();
+        return;
+      }
+      if (action === 'player-stop') {
+        event.preventDefault();
+        stopRadio();
+        announce('Radio arrêtée.');
         return;
       }
       if (action === 'save') {
@@ -843,6 +1100,12 @@
       app.addListener('backButton', () => {
         const route = core().parseDeepLink(location.href);
         if (route.kind === 'home' && !route.filter) {
+          // Comme une app de musique : quitter l’accueil pendant l’écoute
+          // met l’app en arrière-plan au lieu de couper la radio.
+          if (playerBusy() && app.minimizeApp) {
+            app.minimizeApp().catch(() => {});
+            return;
+          }
           if (app.exitApp) app.exitApp();
           return;
         }
@@ -866,6 +1129,7 @@
     const screen = document.getElementById('screen');
     if (screen) screen.innerHTML = '<p class="loading">Chargement du fil…</p>';
     bindEvents();
+    bindPlayer();
     await loadData();
     window.addEventListener('hashchange', render);
     window.addEventListener('online', () => { state.online = true; loadData().then(render); });

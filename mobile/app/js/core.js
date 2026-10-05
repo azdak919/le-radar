@@ -574,6 +574,24 @@
     }).filter(Boolean);
   }
 
+  /**
+   * Ligne « en ondes » de la barre radio, depuis radio-nowplaying.json.
+   * Vide si la station manque ou si la donnée a plus de `maxAgeMs`
+   * (le robot du site tourne toutes les ~15 min ; une vieille grille ment).
+   */
+  function nowPlayingLabel(payload, id, nowMs = Date.now(), maxAgeMs = 3 * 60 * 60 * 1000) {
+    const stations = payload && payload.stations;
+    const station = stations && typeof stations === 'object' ? stations[id] : null;
+    if (!station || typeof station !== 'object') return '';
+    const stamp = Date.parse(station.checkedAt || payload.updatedAt || '');
+    if (Number.isNaN(stamp) || nowMs - stamp > maxAgeMs) return '';
+    const clean = (value) => String(value || '').replace(/\s+/g, ' ').trim().slice(0, 120);
+    const show = clean((station.current && station.current.title) || station.showTitle);
+    const track = clean(station.track);
+    if (show && track && fold(track) !== fold(show)) return `${show} · ${track}`;
+    return show || track;
+  }
+
   function institutionColor(brand, institution) {
     const table = brand && brand.institutions;
     if (!table || !institution) return '';
@@ -638,6 +656,7 @@
     sourceRecord,
     sourceCatalog,
     radioCatalog,
+    nowPlayingLabel,
     institutionColor,
     homeMode,
   };
