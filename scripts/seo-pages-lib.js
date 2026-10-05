@@ -421,6 +421,9 @@ const T = {
     contactAria: 'Nous joindre par courriel',
     legalNote: 'Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.',
     botNote: 'Agrégateur automatisé de contenus.',
+    kaoLabel: 'Garder Android ouvert',
+    kaoHint: 'Campagne contre la vérification obligatoire des développeurs Google.',
+    kaoUrl: 'https://keepandroidopen.org/fr/',
     noRadio: 'Aucune radio de campus recensée pour cet établissement.',
     noPaper: 'Aucun journal étudiant recensé pour cet établissement.',
     days: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
@@ -595,6 +598,9 @@ const T = {
     contactAria: 'Contact us by email',
     legalNote: 'Open-source code used in accordance with the applicable licences; content and media credited to their respective authors.',
     botNote: 'Automated content aggregator.',
+    kaoLabel: 'Keep Android Open',
+    kaoHint: 'Campaign against Google’s mandatory developer verification.',
+    kaoUrl: 'https://keepandroidopen.org/',
     noRadio: 'No campus radio station listed for this institution.',
     noPaper: 'No student newspaper listed for this institution.',
     days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -982,7 +988,7 @@ ${p}  <div class="site-foot__brand">
 ${p}    <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="${up}assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">${BRAND_NAME}</p>
 ${p}    <p class="site-foot__signature notranslate" translate="no" lang="fr">${escapeHtml(BRAND_SIGNATURE)}</p>
 ${p}  </div>
-${p}  <p class="site-foot__contact"><a href="${CONTACT_URL}" data-contact-channel="email" aria-label="${escapeHtml(t.contactAria)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>${escapeHtml(t.contactLabel)}</a></p>
+${p}  <p class="site-foot__contact"><a href="${CONTACT_URL}" data-contact-channel="email" aria-label="${escapeHtml(t.contactAria)}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>${escapeHtml(t.contactLabel)}</a></p>
 ${p}  <details class="site-foot__details">
 ${p}    <summary>${escapeHtml(t.footerDetails)}</summary>
 ${p}    <div class="site-foot__details-body">
@@ -991,6 +997,7 @@ ${p}      <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">
 ${p}        ${detailsNav}
 ${p}      </nav>
 ${p}      <p>${escapeHtml(t.licenseIntro)} <a href="${LICENSE_URL}" target="_blank" rel="noopener noreferrer license">${escapeHtml(t.licenseName)}</a>.</p>
+${p}      <p class="site-foot__kao"><a href="${escapeHtml(t.kaoUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t.kaoLabel)}</a> <span class="site-foot__kao-hint">${escapeHtml(t.kaoHint)}</span></p>
 ${p}      <div class="site-foot__credit">
 ${p}        <p class="site-foot__author">
 ${p}          ${escapeHtml(t.creditMade)} <a href="${href('easter-egg.html')}" class="site-foot__heart" aria-label="${escapeHtml(t.creditHeart)}">♡</a>
@@ -1015,13 +1022,14 @@ ${p}  <nav class="site-foot__links" aria-label="${escapeHtml(t.footerNav)}">
 ${p}    ${nav}
 ${p}  </nav>
 ${p}  <p>${escapeHtml(t.licenseIntro)} <a href="${LICENSE_URL}" target="_blank" rel="noopener noreferrer license">${escapeHtml(t.licenseName)}</a>.</p>
+${p}  <p class="site-foot__kao"><a href="${escapeHtml(t.kaoUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t.kaoLabel)}</a> <span class="site-foot__kao-hint">${escapeHtml(t.kaoHint)}</span></p>
 ${p}  <div class="site-foot__credit">
 ${p}    <p class="site-foot__author">
 ${p}      ${escapeHtml(t.creditMade)} <a href="${href('easter-egg.html')}" class="site-foot__heart" aria-label="${escapeHtml(t.creditHeart)}">♡</a>
 ${p}      ${escapeHtml(t.creditBy)} <a href="${COFFEE_URL}" class="site-foot__author-link" target="_blank" rel="noopener noreferrer" title="${escapeHtml(t.creditCoffee)}">Azdak</a>
 ${p}      ${escapeHtml(t.creditYear)}
 ${p}    </p>
-${p}    <p class="site-foot__contact"><a href="${CONTACT_URL}" data-contact-channel="email" aria-label="${escapeHtml(t.contactAria)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>${escapeHtml(t.contactLabel)}</a></p>
+${p}    <p class="site-foot__contact"><a href="${CONTACT_URL}" data-contact-channel="email" aria-label="${escapeHtml(t.contactAria)}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>${escapeHtml(t.contactLabel)}</a></p>
 ${p}    <p class="site-foot__legal">${escapeHtml(t.legalNote)}</p>
 ${p}    <p class="site-foot__bot"><span class="site-foot__bot-ico" aria-hidden="true">🤖</span> ${escapeHtml(t.botNote)}</p>
 ${p}  </div>${meta}

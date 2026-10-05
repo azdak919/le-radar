@@ -32,6 +32,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ### Ajouté
 
+- Pied de page et Réglages (app) : lien discret **Garder Android ouvert** → [keepandroidopen.org/fr](https://keepandroidopen.org/fr/) (campagne F-Droid / Keep Android Open). HTML/CSS locaux, pas de `banner.js` distant.
+
 - Cartes sports IAB : bandeau **Sports étudiants collégiaux et universitaires du Québec** sur tous les formats ; horaire, domicile/extérieur, compétition, secteur. Le 728×90 n’est plus une seule ligne de noms.
 - Page `/iframes/` : barre radio campus (`tuner-embed.html?surface=bar`, clair/sombre opaque — Pomo et Solitaire restent sans `surface=`) et **cartes sports** aux formats pub IAB (300×250, 728×90, 320×50, 336×280, 300×600, 160×600), même identité que le site (pourpre, Inter, Source Serif, pastilles Prochain / Aujourd’hui / Hier). Lockup **logo PWA + LE-RADAR.ca**. Les matchs ouvrent le cycle ; la carte marque n’apparaît qu’après au moins 4 scores, avec le nom complet. Clic d’un match → `/sports/?sport=&team=&game=` : formation et ligne du résultat en surbrillance.
 - Application iOS et Android (Capacitor 8) : fil personnel, suivis, favoris, hors ligne, partage natif et fiches. Le site le-radar.ca n’est pas encapsulé. Documentation : `docs/mobile/`.

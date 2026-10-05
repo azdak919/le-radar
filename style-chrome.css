@@ -120,6 +120,21 @@
 
 
 
+/* Soutien Keep Android Open (F-Droid) : une ligne discrète, pas un bandeau. */
+.site-foot__kao {
+  margin: 0 0 8px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.site-foot__kao a {
+  font-weight: 600;
+}
+.site-foot__kao-hint {
+  font-weight: 400;
+  color: var(--muted);
+}
+
 /* ── Installer l’app (menu masthead + pied de page) ── */
 .install-menu {
   position: relative;

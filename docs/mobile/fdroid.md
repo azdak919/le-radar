@@ -44,3 +44,8 @@ La copie de la recette est [ca.leradar.app.yml](ca.leradar.app.yml). Dans le dé
 - mises à jour : `AutoUpdateMode: Version` et `UpdateCheckMode: Tags ^android-v`
 
 F-Droid signe lui-même. La clé d’envoi Play ne sert pas.
+
+## Keep Android Open
+
+F-Droid (site et clients) affiche un bandeau pour la campagne [Keep Android Open](https://keepandroidopen.org/fr/) contre la vérification obligatoire des développeurs Google (2027). LE-RADAR n’embarque pas le script distant `banner.js` (réseau tiers / NonFreeNet) : une ligne discrète dans le pied de page du site et dans Réglages de l’application pointe vers la page française. Aucun compte à rebours, aucun script tiers.
+

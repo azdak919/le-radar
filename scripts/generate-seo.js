@@ -106,6 +106,8 @@ const FOOTER_PAGES = [
   { file: 'kit-media/index.html', lang: 'fr', up: '../', altPath: 'en/media-kit/', indent: '      ' },
   { file: 'en/media-kit/index.html', lang: 'en', up: '../../', altPath: 'kit-media/', indent: '      ' },
   { file: 'offline.html', lang: 'fr', up: './', altPath: 'en/', indent: '    ', variant: 'maintenance' },
+  { file: 'iframes/index.html', lang: 'fr', up: '../', altPath: 'en/iframes/', indent: '      ' },
+  { file: 'en/iframes/index.html', lang: 'en', up: '../../', altPath: 'iframes/', indent: '      ' },
 ];
 
 /**

@@ -520,6 +520,8 @@
         <p class="note">Pas de compte, pas de publicité, pas de mesure d’audience dans l’application. Favoris, suivis, historique et mots-clés restent dans ce navigateur ou cette application. Charger le fil contacte le-radar.ca. Les images et les articles originaux sont demandés aux publications, qui voient alors une requête HTTPS ordinaire.</p>
         <a class="wide link" data-action="external" href="https://le-radar.ca/" target="_blank" rel="noopener noreferrer">Ouvrir le-radar.ca</a>
         <a class="wide link" data-action="external" href="https://github.com/azdak919/le-radar" target="_blank" rel="noopener noreferrer">Code source</a>
+        <a class="wide link" data-action="external" href="https://keepandroidopen.org/fr/" target="_blank" rel="noopener noreferrer">Garder Android ouvert</a>
+        <p class="note">Campagne contre la vérification obligatoire des développeurs Google, soutenue par F-Droid.</p>
       </section>
       <section>
         <h2 class="section">Données locales</h2>
