@@ -253,7 +253,7 @@ public class RadioPlaybackService extends MediaSessionService {
   }
 
   @Override
-  protected void onUpdateNotification(MediaSession session, boolean startInForegroundRequired) {
+  public void onUpdateNotification(MediaSession session, boolean startInForegroundRequired) {
     // startForegroundService from the plugin requires a prompt foreground
     // promotion; keep the media notification while a station is selected.
     super.onUpdateNotification(session, startInForegroundRequired || !stationId.isEmpty());
