@@ -1,25 +1,19 @@
 {
-  "updated": "2026-10-05T04:54:01.090Z",
-  "total": 176,
+  "updated": "2026-10-05T05:59:52.419Z",
+  "total": 175,
   "withPhoto": 163,
-  "withStock": 24,
-  "withCampusBank": 18,
-  "fullyCovered": 176,
-  "leadReadyPhotos": 139,
-  "pageScraped": 35,
-  "photosRecovered": 33,
-  "imagesCleared": 13,
-  "stockSearches": 37,
-  "stockFound": 19,
-  "campusBankFound": 13,
+  "withStock": 23,
+  "withCampusBank": 17,
+  "fullyCovered": 175,
+  "leadReadyPhotos": 138,
+  "pageScraped": 34,
+  "photosRecovered": 32,
+  "imagesCleared": 12,
+  "stockSearches": 36,
+  "stockFound": 18,
+  "campusBankFound": 12,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Language Laws Meet the Ballot Box",
-      "link": "https://www.mcgilldaily.com/2026/10/language-laws-meet-the-ballot-box/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
     {
       "title": "A Tradition on the Edge: The Future of Homecoming",
       "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
@@ -85,6 +79,12 @@
       "link": "https://www.thetribune.ca/opinion/editorial-opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
+      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
     }
   ]
 }

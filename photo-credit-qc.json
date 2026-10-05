@@ -1,21 +1,70 @@
 {
-  "updated": "2026-10-05T04:53:48.944Z",
-  "total": 176,
+  "updated": "2026-10-05T06:00:11.741Z",
+  "total": 175,
   "withImage": 163,
   "withCredit": 163,
   "cited": 107,
   "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 12,
-  "updatedCount": 1,
-  "citedNew": 1,
-  "fallbackNew": 11,
+  "checked": 19,
+  "updatedCount": 8,
+  "citedNew": 6,
+  "fallbackNew": 13,
   "samples": [
+    {
+      "title": "Summer in Paradise (Lennoxville Edition)",
+      "source": "The Campus",
+      "credit": "Photo credit: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Rouge d’une part, blanche de l’autre",
+      "source": "Le Délit",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Le « self-care » : qui valide votre repos ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "S.O.S. Huîtres menacées",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
     {
       "title": "Arrestations visant les LGBTQ+ en Turquie",
       "source": "Le Délit",
       "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Culture Paints Time a Different Colour",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "McGill’s 25th Annual Powwow",
+      "source": "The McGill Daily",
+      "credit": "Photo : Images courtesy of Parker Russell",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "source": "The McGill Daily",
+      "credit": "Photo : Meg Ha",
       "cited": true,
       "method": "media-credit-featured"
     }
