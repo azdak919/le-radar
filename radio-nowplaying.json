@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-05T15:59:03.910Z",
+  "updatedAt": "2026-10-05T17:06:56.326Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T15:58:37.214Z"
+      "checkedAt": "2026-10-05T17:06:41.521Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "o'keb",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/okeb"
-      },
-      "next": {
         "title": "L'alter ego",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/lalter-ego"
       },
+      "next": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
       "track": "",
-      "showTitle": "o'keb",
+      "showTitle": "L'alter ego",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T15:58:39.342Z"
+      "checkedAt": "2026-10-05T17:06:43.229Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "All Things Campus",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
-      },
-      "next": {
         "title": "World Skip The Beat",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Radio Is Dead",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00"
+      },
       "track": "",
-      "showTitle": "All Things Campus",
+      "showTitle": "World Skip The Beat",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T15:58:41.957Z"
+      "checkedAt": "2026-10-05T17:06:46.099Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "I Think You Might Like This",
+        "title": "The Tommy John Show",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-tommy-john-show"
       },
       "next": {
-        "title": "Twang City",
+        "title": "L'Organe à la radio",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/twang-city"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/lorgane-a-la-radio"
       },
       "track": "",
-      "showTitle": "I Think You Might Like This",
+      "showTitle": "The Tommy John Show",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T15:58:44.369Z"
+      "checkedAt": "2026-10-05T17:06:48.194Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,28 +126,37 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T15:58:45.829Z"
+      "checkedAt": "2026-10-05T17:06:49.420Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Onde de CHOQ",
         "source": "api-live",
         "start": "13:00",
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Laura Niquay — Kekwan Tca Ni",
-      "showTitle": "",
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
+      },
+      "track": "Lydia Képinski - Vivant•e",
+      "showTitle": "Onde de CHOQ",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-05T15:59:03.560Z"
+      "clientPoll": {
+        "type": "triton-np",
+        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
+      },
+      "checkedAt": "2026-10-05T17:06:55.976Z"
     }
   }
 }
