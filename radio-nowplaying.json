@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-05T09:26:19.905Z",
+  "updatedAt": "2026-10-05T14:32:08.388Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "K-C'EST ÇA ?",
+        "source": "api-live",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://chyz.ca/emission/k-cest-ca/"
+      },
       "next": {
-        "title": "Lundi Indie",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
+        "title": "Little Songs On The Prairie",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://chyz.ca/emission/little-songs-on-the-prairie/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "K-C'EST ÇA ?",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T09:25:50.831Z"
+      "checkedAt": "2026-10-05T14:31:08.813Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
+        "title": "Faits de société!",
         "source": "schedule",
-        "start": "05:00",
-        "end": "06:30",
-        "url": "https://cism893.ca/emissions/le-seismix"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/faits-de-societe"
       },
       "next": {
-        "title": "Le terrain sportif",
+        "title": "o'keb",
         "source": "schedule",
-        "start": "06:30",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/le-terrain-sportif"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/okeb"
       },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Faits de société!",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T09:25:52.429Z"
+      "checkedAt": "2026-10-05T14:31:10.471Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Adventures In Music",
+        "title": "Latin Music Mondays",
         "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "next": {
-        "title": "Unmuted with Svetlana and Miss Trish",
+        "title": "All Things Campus",
         "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "track": "",
-      "showTitle": "Adventures In Music",
+      "showTitle": "Latin Music Mondays",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,80 +81,86 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T09:25:55.698Z"
+      "checkedAt": "2026-10-05T14:31:34.359Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
+        "title": "Democracy Now",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "next": {
-        "title": "Experiments",
+        "title": "I Think You Might Like This",
         "source": "schedule-live",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/experiments"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
       },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T09:25:58.319Z"
+      "checkedAt": "2026-10-05T14:31:49.096Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Solénoïde",
         "source": "schedule-live",
-        "start": "00:01",
-        "end": "07:00"
+        "start": "09:00",
+        "end": "18:00"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "Ma radio Académia",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "18:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Solénoïde",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T09:25:59.090Z"
+      "checkedAt": "2026-10-05T14:31:50.087Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Kongossa na UQAM",
         "source": "api-live",
         "start": "10:00",
         "end": "11:00",
         "slug": "kongossa-na-uqam"
       },
-      "track": "cherry pick — aster",
-      "showTitle": "",
+      "next": {
+        "title": "Onde de CHOQ",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
+      },
+      "track": "Axaven — an ending",
+      "showTitle": "Kongossa na UQAM",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T09:26:19.554Z"
+      "checkedAt": "2026-10-05T14:32:08.038Z"
     }
   }
 }
