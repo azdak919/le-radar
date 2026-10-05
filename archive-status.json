@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-04T18:52:21.747Z",
+  "updated": "2026-10-05T00:16:27.399Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -3468,14 +3468,26 @@
       "via": "save-page-now",
       "source": "La Pige",
       "snapshot": "https://web.archive.org/web/20261004185206/https://lapige.atmjonquiere.com/2026/10/04/une-exposition-doeuvres-industrielles-au-cegep-de-jonquiere/"
+    },
+    "https://thelinknewspaper.ca/article/16444": {
+      "at": "2026-10-05T00:15:45.104Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20261005001519/https://thelinknewspaper.ca/article/16444"
+    },
+    "https://thelinknewspaper.ca/article/16442": {
+      "at": "2026-10-05T00:16:27.399Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20261005001614/https://thelinknewspaper.ca/article/16442"
     }
   },
   "stats": {
-    "total": 609,
+    "total": 611,
     "lastRun": {
       "saved": 2,
-      "skipped": 1,
-      "failed": 12,
+      "skipped": 0,
+      "failed": 11,
       "stoppedEarly": false
     }
   },
@@ -3488,12 +3500,14 @@
     "The Tribune": {
       "host": "www.thetribune.ca",
       "pages": 37,
-      "checkedAt": "2026-09-27T23:56:31.026Z"
+      "checkedAt": "2026-09-27T23:56:31.026Z",
+      "stale": true
     },
     "The Link": {
       "host": "thelinknewspaper.ca",
       "pages": 138,
-      "checkedAt": "2026-09-27T23:56:33.837Z"
+      "checkedAt": "2026-09-27T23:56:33.837Z",
+      "stale": true
     },
     "The McGill Daily": {
       "host": "www.mcgilldaily.com",
