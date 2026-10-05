@@ -1,21 +1,41 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
+# LE-RADAR — R8 / ProGuard (release minifyEnabled true)
 #
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# Capacitor already ships consumer ProGuard rules via capacitor-android
+# (node_modules/@capacitor/android/capacitor/proguard-rules.pro). The keeps
+# below mirror those and cover WebView / reflection used by the bridge so a
+# local or F-Droid R8 pass cannot strip PluginMethod entry points.
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+-keepattributes *Annotation*
+-keepattributes Signature
+-keepattributes InnerClasses
+-keepattributes EnclosingMethod
+-keepattributes SourceFile,LineNumberTable
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Capacitor v3+ plugins
+-keep @com.getcapacitor.annotation.CapacitorPlugin public class * {
+    @com.getcapacitor.annotation.PermissionCallback <methods>;
+    @com.getcapacitor.annotation.ActivityCallback <methods>;
+    @com.getcapacitor.annotation.Permission <methods>;
+    @com.getcapacitor.PluginMethod public <methods>;
+}
+-keep public class * extends com.getcapacitor.Plugin { *; }
+-keep class com.getcapacitor.** { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Capacitor v2 legacy annotations (still referenced by some plugins)
+-keep @com.getcapacitor.NativePlugin public class * {
+    @com.getcapacitor.PluginMethod public <methods>;
+}
+
+# Cordova plugin bridge (capacitor-cordova-android-plugins)
+-keep public class * extends org.apache.cordova.* {
+    public <methods>;
+    public <fields>;
+}
+
+# WebView JS bridges (@JavascriptInterface) — keep public members
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
+
+# App entry (BridgeActivity subclass)
+-keep class ca.leradar.app.MainActivity { *; }

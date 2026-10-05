@@ -10,7 +10,8 @@ L’application est GPL-2.0, sans compte, sans publicité, sans Firebase et sans
 
 Les textes lus par le client F-Droid sont dans `fastlane/metadata/android/` (`en-US` obligatoire, `fr-CA` en plus). L’icône est `fastlane/metadata/android/en-US/images/icon.png`.
 
-Version publiée : `versionName` 1.0.0, `versionCode` 1, étiquette `android-v1.0.0` (commit `81774e4a`).
+Version courante dans le dépôt : `versionName` 1.0.1, `versionCode` 2 (R8 / `minifyEnabled true`).
+Première candidature F-Droid (MR) : `versionName` 1.0.0, `versionCode` 1, étiquette `android-v1.0.0` (commit `81774e4a`) — à remplacer par le commit / étiquette `android-v1.0.1` une fois poussée.
 
 ## Étiquettes
 
