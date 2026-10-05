@@ -1,32 +1,24 @@
 {
-  "checkedAt": "2026-09-29T02:33:44.579Z",
+  "checkedAt": "2026-10-05T01:54:24.918Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 4,
-    "drift": [
-      "chyz",
-      "cjlo"
-    ],
+    "stable": 6,
+    "drift": [],
     "overhaul": [],
     "unreachable": []
   },
   "stations": [
     {
       "id": "chyz",
-      "published": 38,
+      "published": 39,
       "fresh": 39,
-      "added": [
-        "mer 11:00–11:30 Question de savoir",
-        "mer 11:30–12:00 On en Parle"
-      ],
-      "removed": [
-        "mer 11:00–12:00 On en Parle"
-      ],
-      "changed": 3,
-      "ratio": 0.079,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cism",
@@ -50,24 +42,13 @@
     },
     {
       "id": "cjlo",
-      "published": 378,
+      "published": 379,
       "fresh": 379,
-      "added": [
-        "lun 00:00–00:30 Mo Ritmo Radio",
-        "mer 13:00–14:00 The Fluid Mosaic",
-        "jeu 11:00–12:00 Chi and Ri",
-        "jeu 20:00–21:00 Beatnik Boy: Mixtape",
-        "sam 17:00–18:00 CJLO's Alternative Mega Mix"
-      ],
-      "removed": [
-        "mer 13:00–14:00 Beatnik Boy: Mixtape",
-        "jeu 11:00–12:00 The Fluid Mosaic",
-        "jeu 20:00–21:00 Chi and Ri",
-        "sam 17:00–18:00 Mo' Ritmo Radio"
-      ],
-      "changed": 9,
-      "ratio": 0.024,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cfak",
