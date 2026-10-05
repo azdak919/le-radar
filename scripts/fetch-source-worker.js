@@ -75,15 +75,7 @@ function tagFast(block, name, maxLen = 8_000) {
   return decodeEntities(raw.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/gi, '$1').trim());
 }
 
-function sanitizeTitle(title = '') {
-  let t = stripHtml(String(title)).replace(/\s+/g, ' ').trim();
-  t = t.replace(/\s*[–—|-]\s*Le\s+D[eé]lit\s*$/i, '').trim();
-  t = t.replace(/\s*[–—|-]\s*Quartier\s+Libre\s*$/i, '').trim();
-  t = t.replace(/\s*[–—|-]\s*Montréal\s+Campus\s*$/i, '').trim();
-  // Éviter « Mc Gill » (séparation erronée de McGill)
-  t = t.replace(/\bMc\s+Gill\b/g, 'McGill');
-  return t;
-}
+const { sanitizeTitle } = require('./news-title-lib');
 
 function truncateExcerpt(text = '', max = 280) {
   let s = stripHtml(text).replace(/\s+/g, ' ').trim();

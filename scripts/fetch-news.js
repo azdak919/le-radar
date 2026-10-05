@@ -308,60 +308,9 @@ function truncateExcerpt(text = '', max = 280) {
   return cut.replace(/[,;:\s]+$/u, '').trimEnd();
 }
 
-/**
- * Rubriques Montréal Campus collées au titre (souvent après une fuite CSS).
- * On les GARDE sous la forme « Rubrique : titre », on ne les jette plus
- * (ex. « Marché aux puces : Incursion chez un bastion… »).
- */
-const MC_SERIES_LABEL = /^(Photoreportage|Marché aux puces|Cobaye|Reportage photo)(?:\s*[:：–—-]\s*|\s+)(.+)$/iu;
-
-function stripEmbeddedCss(title = '') {
-  let t = String(title).trim();
-  if (!/^\.[\w-]+\s*\{/.test(t) && !/@media/i.test(t)) return t;
-  const start = t.indexOf('{');
-  if (start === -1) return t;
-  let depth = 0;
-  for (let i = start; i < t.length; i += 1) {
-    if (t[i] === '{') depth += 1;
-    else if (t[i] === '}') {
-      depth -= 1;
-      if (depth === 0) return t.slice(i + 1).trim();
-    }
-  }
-  return t;
-}
-
-/** Retire puces / symboles en tête, mais garde chiffres et lettres (« 14 bourses… »). */
-function stripLeadingNonLetters(title = '') {
-  return String(title).replace(/^[^\p{L}\p{N}]+/u, '').trim();
-}
-
-/** « pucesIncursion » / « pucesIncursion » après CSS → espace avant majuscule. */
-function fixCamelGlue(title = '') {
-  return String(title).replace(
-    /([\p{Ll}éèêëàâäùûüôöîïç])([\p{Lu}ÀÂÄÉÈÊËÎÏÔÖÙÛÜ])/gu,
-    '$1 $2',
-  );
-}
-
-function sanitizeTitle(title = '') {
-  let t = stripHtml(stripEmbeddedCss(title));
-  t = fixCamelGlue(t).replace(/\s+/g, ' ').trim();
-  // fixCamelGlue coupe « UdeM » → « Ude M » (e minuscule + M majuscule).
-  t = t.replace(/\bUde\s+M\b/g, 'UdeM').replace(/\bUde\s+S\b/g, 'UdeS');
-  t = t.replace(/\bMc\s+Gill\b/g, 'McGill');
-  // Retirer les suffixes SEO Rank Math / Yoast des og:title
-  t = t.replace(/\s*[–—|-]\s*Montréal\s+Campus\s*$/i, '').trim();
-  t = t.replace(/\s*[–—|-]\s*Quartier\s+Libre\s*$/i, '').trim();
-  t = t.replace(/\s*[–—|-]\s*Le\s+D[eé]lit\s*$/i, '').trim();
-  const series = t.match(MC_SERIES_LABEL);
-  if (series) {
-    const label = series[1].trim();
-    const rest = series[2].trim();
-    if (rest) return stripLeadingNonLetters(`${label} : ${rest}`);
-  }
-  return stripLeadingNonLetters(t);
-}
+const {
+  sanitizeTitle,
+} = require('./news-title-lib');
 
 function tag(block, name) {
   const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -783,20 +732,24 @@ async function enrichItem(item, sourceByName = new Map()) {
     if (fromBody.author) next._pageAuthor = fromBody.author;
   }
 
-  // Titre page : préférer h1 nettoyé (séries MC + fuite CSS) puis og:title.
-  const h1Raw = (() => {
+  // Titre page : préférer h1 (HTML conservé pour kicker span.t2) puis og:title.
+  const h1Inner = (() => {
     const m = slim.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
-    return m ? stripHtml(m[1]) : '';
+    return m ? m[1] : '';
   })();
-  const pageTitle = sanitizeTitle(h1Raw)
+  const pageTitle = sanitizeTitle(h1Inner)
     || sanitizeTitle(metaContent(slim, 'og:title') || metaContent(slim, 'twitter:title'));
+  const current = String(next.title || '').trim();
+  const repaired = current ? sanitizeTitle(current) : '';
+  if (repaired && repaired !== current) next.title = repaired;
   if (pageTitle) {
-    const current = String(next.title || '').trim();
-    const needsUpgrade = !current
-      || current.length < 12
-      || /\.[a-z][\w-]*\s*\{/.test(current)
-      || pageTitle.length > current.length + 8
-      || (/^Marché aux puces\b/i.test(pageTitle) && !/^Marché aux puces\b/i.test(current));
+    const cur = String(next.title || '').trim();
+    const needsUpgrade = !cur
+      || cur.length < 12
+      || /\.[a-z][\w-]*\s*\{/.test(cur)
+      || pageTitle.length > cur.length + 8
+      || (/^Marché aux puces\b/i.test(pageTitle) && !/^Marché aux puces\b/i.test(cur))
+      || (/\s:\s/.test(pageTitle) && !/\s:\s/.test(cur));
     if (needsUpgrade) next.title = pageTitle;
   }
 
