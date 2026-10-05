@@ -1,63 +1,98 @@
 {
-  "updated": "2026-10-05T11:37:43.813Z",
-  "total": 174,
-  "withImage": 162,
-  "withCredit": 162,
-  "cited": 107,
+  "updated": "2026-10-05T18:35:42.065Z",
+  "total": 175,
+  "withImage": 159,
+  "withCredit": 159,
+  "cited": 101,
   "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 17,
-  "updatedCount": 7,
-  "citedNew": 5,
-  "fallbackNew": 12,
+  "checked": 34,
+  "updatedCount": 25,
+  "citedNew": 17,
+  "fallbackNew": 17,
   "samples": [
     {
-      "title": "Summer in Paradise (Lennoxville Edition)",
-      "source": "The Campus",
-      "credit": "Photo credit: The Campus",
+      "title": "Dernier droit des élections : regard sur les circonscriptions avoisinantes",
+      "source": "Le Collectif",
+      "credit": "Photo : Graham Hughes/NurPhoto via Getty Images",
+      "cited": true,
+      "method": "json-ld"
+    },
+    {
+      "title": "Salon du livre de l’Estrie, une édition qui promet",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
       "cited": false,
       "method": null
     },
     {
-      "title": "Rouge d’une part, blanche de l’autre",
-      "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
+      "title": "Ismène, un nouveau regard sur la tragédie grecque",
+      "source": "Le Collectif",
+      "credit": "Photo : Annick Sauvé",
       "cited": true,
-      "method": "figcaption-bare"
+      "method": "body-tail"
     },
     {
-      "title": "S.O.S. Huîtres menacées",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "title": "Studio 13 souffle ses deux bougies et élargit son angle",
+      "source": "Le Collectif",
+      "credit": "Photo : Simon Bouchard",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "body-tail"
     },
     {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "title": "Les Comptonales, une virée gourmande au cœur des couleurs de l’automne",
+      "source": "Le Collectif",
+      "credit": "Photo : Les Comptonales",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "body-tail"
     },
     {
-      "title": "Culture Paints Time a Different Colour",
-      "source": "The Plant",
-      "credit": "Photo credit: The Plant",
+      "title": "Conférence sur l’IA en communication : un choc des générations remarqué",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
       "cited": false,
       "method": null
     },
     {
-      "title": "McGill’s 25th Annual Powwow",
+      "title": "Collation des grades 2026 : une boucle bouclée",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Accusation de viol collectif à l’université de Cornell",
+      "source": "Le Collectif",
+      "credit": "Photo : Source : Getty Images",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "The Madonna-Whore Dichotomy: The Impossible Woman",
       "source": "The McGill Daily",
-      "credit": "Photo : Images courtesy of Parker Russell",
+      "credit": "Photo : Annabelle Premont",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
+      "title": "I Couldn’t Wait for the Summer and the Warped Tour",
       "source": "The McGill Daily",
-      "credit": "Photo : Meg Ha",
+      "credit": "Photo : Matthew Tussman",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Theatre Sainte-Catherine: Improv, Workshops, and Comedy as Medicine",
+      "source": "The McGill Daily",
+      "credit": "Photo : Amihan del Rosario-Tapan",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "McGill is a Gravesite”: Kanien’kehá:ka Kahnistensera Hold Vigil for Indigenous Children",
+      "source": "The McGill Daily",
+      "credit": "Photo : Adair Nelson",
       "cited": true,
       "method": "media-credit-featured"
     }

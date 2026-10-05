@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-05T11:32:53.250Z",
-  "total": 174,
+  "updated": "2026-10-05T18:30:04.326Z",
+  "total": 175,
   "pool": 58,
-  "incomplete": 7,
-  "withLeadExcerpt": 115,
-  "candidates": 7,
-  "enriched": 2,
+  "incomplete": 24,
+  "withLeadExcerpt": 116,
+  "candidates": 24,
+  "enriched": 22,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -19,58 +19,67 @@
       "changed": false
     },
     {
-      "title": "S.O.S. Huîtres menacées",
-      "link": "https://www.delitfrancais.com/2026/09/23/s-o-s-huitres-menacees/",
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "link": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
+      "ok": true,
+      "score": 96,
+      "chars": 288,
+      "sample": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est ",
+      "changed": true
+    },
+    {
+      "title": "Le « self-care » : qui valide votre repos ?",
+      "link": "https://www.delitfrancais.com/2026/09/23/le-self-care-qui-valide-votre-repos/",
+      "ok": true,
+      "score": 96,
+      "chars": 347,
+      "sample": "Ce n’était pas une dérive isolée, mais une règle, que Talcott Parsons nommera en 1951 : le « rôle de",
+      "changed": true
+    },
+    {
+      "title": "MUNACA’s Campaign Exposes the McGill Administration’s Greed",
+      "link": "https://www.mcgilldaily.com/2026/10/munacas-campaign-exposes-the-mcgill-administrations-greed/",
       "ok": true,
       "score": 100,
-      "chars": 318,
-      "sample": "Cependant, depuis 2024, les récoltes d’huîtres de l’Île-du-Prince-Édouard ont chuté subitement. En e",
+      "chars": 365,
+      "sample": "According to the campaign website , salaries of MUNACA staff have increased by 6.1 per cent since th",
       "changed": true
     },
     {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
-      "link": "https://www.delitfrancais.com/2026/09/23/arrestations-visant-les-lgbtq-en-turquie/",
+      "title": "Dernier droit des élections : regard sur les circonscriptions avoisinantes",
+      "link": "https://lecollectif.ca/a-la-une/dernier-droit-des-elections-regard-sur-les-circonscriptions-avoisinantes/",
       "ok": true,
-      "score": 96,
-      "chars": 217,
-      "sample": "Au total, plus de 80 personnes ont été placées en détention provisoire. Le ministère de la Justice t",
+      "score": 100,
+      "chars": 311,
+      "sample": "Les élections anticipées sont désormais terminées, place au dernier sprint électoral. Sherbrooke et ",
       "changed": true
     },
     {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "link": "https://theplantnews.com/2026/10/01/pops-patriarchy-how-we-hold-women-to-a-higher-standard/",
+      "title": "Salon du livre de l’Estrie, une édition qui promet",
+      "link": "https://lecollectif.ca/culture/salon-du-livre-de-lestrie-une-edition-qui-promet/",
       "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "It’s no secret that life as an artist is not all sunshine and rainbows. While success in music can b",
-      "changed": false
+      "score": 100,
+      "chars": 359,
+      "sample": "Sous la thématique du courage, la 48 e édition du Salon du livre de l’Estrie a dévoilé, le 23 septem",
+      "changed": true
     },
     {
-      "title": "From Student Entrepreneur to Sponsoring Bishop’s Rugby: Jonathan Scott-Lewis Builds Business While Giving Back",
-      "link": "https://thebucampus.ca/2026/09/30/from-student-entrepreneur-to-sponsoring-bishops-rugby-jonathan-scott-lewis-builds-business-while-giving-back/",
+      "title": "Decolonization”",
+      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
       "ok": true,
       "score": 96,
-      "chars": 400,
-      "sample": "For Scott-Lewis, however, starting the company was never simply about becoming an entrepreneur. He w",
-      "changed": false
+      "chars": 262,
+      "sample": "However, the continued oversimplification of the term “decolonization” has watered down its meaning.",
+      "changed": true
     },
     {
-      "title": "Gaiters Football: Two Weeks to Remember",
-      "link": "https://thebucampus.ca/2026/09/30/gaiters-football-two-weeks-to-remember/",
+      "title": "Ismène, un nouveau regard sur la tragédie grecque",
+      "link": "https://lecollectif.ca/culture/ismene-un-nouveau-regard-sur-la-tragedie-grecque/",
       "ok": true,
-      "score": 71,
-      "chars": 400,
-      "sample": "Coming off a disappointing result in Week 1, the Gaiters football team immediately turned the page i",
-      "changed": false
-    },
-    {
-      "title": "Culture Paints Time a Different Colour",
-      "link": "https://theplantnews.com/2026/09/30/culture-paints-time-a-different-colour/",
-      "ok": true,
-      "score": 66,
-      "chars": 400,
-      "sample": "Time beats a drum heard by all: the blood rushing in your ears, your back hurting a little more each",
-      "changed": false
+      "score": 100,
+      "chars": 300,
+      "sample": "La pièce Ismène prendra vie pour la première fois au Québec à Sherbrooke, du 7 au 17 octobre en fran",
+      "changed": true
     }
   ]
 }
