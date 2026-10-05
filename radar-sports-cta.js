@@ -197,8 +197,8 @@ const SPORTS_MERIDIEM_AM_LINE = 'cet AM';
 const SPORTS_MERIDIEM_PM_LINE = 'ce PM';
 /** Demain : mot Demain, même jaune que Prochain. */
 const SPORTS_CTA_TAG_TOMORROW = 'Demain';
-/** Résultat du jour : deux lignes DERNIÈRE / HEURE. Pas d’AM/PM. */
-const SPORTS_CTA_TAG_LATEST = 'Dernière heure';
+/** Résultat du jour : deux lignes DERNIERS / RÉSULTATS. Pas d’AM/PM. */
+const SPORTS_CTA_TAG_LATEST = 'Derniers résultats';
 /** Après demain : Prochain + date courte en 2ᵉ ligne. */
 const SPORTS_CTA_TAG_NEXT = 'Prochain';
 /** Repli idle (creux total, pas de match) ; sinon ton du sport via sportsCtaTone. Rouge = direct. */
@@ -413,6 +413,21 @@ function torontoDayKey(msOrDate = Date.now()) {
   }
 }
 
+/** Heure civile 0–23 America/Toronto. */
+function torontoHour(msOrDate = Date.now()) {
+  try {
+    const raw = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'America/Toronto',
+      hour: '2-digit',
+      hour12: false,
+    }).format(new Date(msOrDate));
+    const n = Number.parseInt(String(raw).replace(/[^\d]/g, ''), 10);
+    return Number.isFinite(n) ? n : new Date(msOrDate).getHours();
+  } catch {
+    return new Date(msOrDate).getHours();
+  }
+}
+
 /** true si le match est le jour civil d’aujourd’hui (QC). */
 function sportsGameIsToday(game) {
   const ms = sportsGameMs(game);
@@ -434,7 +449,8 @@ function sportsCivilDayShift(yyyyMmDd, deltaDays) {
 
 /** Jour civil Toronto d’un match (YYYY-MM-DD) — champ `date`, pas l’heure locale. */
 function sportsGameDayKey(game, now = Date.now()) {
-  if (typeof RadarSportsFreshness?.gameCivilDayKey === 'function') {
+  if (typeof RadarSportsFreshness !== 'undefined'
+      && typeof RadarSportsFreshness.gameCivilDayKey === 'function') {
     const key = RadarSportsFreshness.gameCivilDayKey(game);
     if (key) return key;
   }
@@ -450,7 +466,8 @@ function sportsGameDayKey(game, now = Date.now()) {
  * Négatif si le match est à venir. Infini si la date est illisible.
  */
 function sportsCivilDaysAgo(game, now = Date.now()) {
-  if (typeof RadarSportsFreshness?.civilDaysAgo === 'function') {
+  if (typeof RadarSportsFreshness !== 'undefined'
+      && typeof RadarSportsFreshness.civilDaysAgo === 'function') {
     return RadarSportsFreshness.civilDaysAgo(game, new Date(now));
   }
   const day = sportsGameDayKey(game, now);
@@ -464,7 +481,8 @@ function sportsCivilDaysAgo(game, now = Date.now()) {
 
 /** Résultat dans la fenêtre des puces (5 jours civils, saison courante). */
 function sportsResultIsRecent(game, now = Date.now()) {
-  if (typeof RadarSportsFreshness?.isMastheadChipResult === 'function') {
+  if (typeof RadarSportsFreshness !== 'undefined'
+      && typeof RadarSportsFreshness.isMastheadChipResult === 'function') {
     return RadarSportsFreshness.isMastheadChipResult(game, new Date(now));
   }
   const days = sportsCivilDaysAgo(game, now);
@@ -475,7 +493,8 @@ function sportsResultIsRecent(game, now = Date.now()) {
  * Résultat admissible sur la CTA : jour civil Toronto = aujourd’hui **ou** hier.
  */
 function sportsCtaResultIsTodayOrYesterday(game, now = Date.now()) {
-  if (typeof RadarSportsFreshness?.isMastheadCtaResult === 'function') {
+  if (typeof RadarSportsFreshness !== 'undefined'
+      && typeof RadarSportsFreshness.isMastheadCtaResult === 'function') {
     return RadarSportsFreshness.isMastheadCtaResult(game, new Date(now));
   }
   const days = sportsCivilDaysAgo(game, now);
@@ -605,8 +624,17 @@ function sportsResultSlide(team, now = Date.now()) {
   return sportsResultSlideFromGame(team, team.lastGame, now);
 }
 
+function sportsNextStillUpcoming(game, now = Date.now()) {
+  if (sportsGameIsLive(game, now)) return true;
+  const t = sportsGameMs(game);
+  if (!Number.isFinite(t)) return true;
+  return t >= now - SPORTS_LIVE_AFTER_MS;
+}
+
 function sportsNextSlideFromGame(team, game, now = Date.now()) {
   if (!team || !game) return null;
+  if (sportsGameHasScore(game) && !sportsGameIsLive(game, now)) return null;
+  if (!sportsNextStillUpcoming(game, now)) return null;
   const u = sportsUrgency('next', game, now);
   const gid = game.gameId != null ? String(game.gameId) : '';
   return {
@@ -682,7 +710,7 @@ function isWide1600SportsBand() {
   try {
     return isWideDesktopComfort()
       && window.matchMedia('(min-width: 1600px)').matches
-      && !window.matchMedia('(min-width: 1920px)').matches;
+      && !isRadarHdViewport();
   } catch {
     return false;
   }
@@ -1105,6 +1133,14 @@ function buildSportsSlides(data) {
       const stamp = sportsGameDedupeStamp(g);
       if (seenN.has(stamp)) continue;
       seenN.add(stamp);
+      if (sportsGameHasScore(g) && !sportsGameIsLive(g, now)) {
+        if (!seenR.has(stamp)) {
+          seenR.add(stamp);
+          const r = sportsResultSlideFromGame(team, g, now);
+          if (r) results.push(r);
+        }
+        continue;
+      }
       const n = sportsNextSlideFromGame(team, g, now);
       if (n) nexts.push(n);
     }
@@ -2194,7 +2230,7 @@ function sportsCtaResultDateParts(iso) {
   return null;
 }
 
-/** Pastille d’un résultat : Dernière heure, Hier, sinon date (jour + mois). */
+/** Pastille d’un résultat : Derniers résultats, Hier, sinon date (jour + mois). */
 function sportsCtaResultTag(src) {
   const day = sportsSlideDayKey(src);
   if (!day) return SPORTS_CTA_TAG;
@@ -2221,7 +2257,7 @@ function sportsCtaGameIsTomorrow(slide) {
 
 /**
  * Pastille : Aujourd’hui (à venir du jour) / Demain / Prochain+date
- * / En direct / Dernière heure / Hier / date.
+ * / En direct / Derniers résultats / Hier / date.
  * Creux : LE-RADAR.ca (logo PWA), pas « Sports ».
  */
 function sportsCtaTagLabel(slide, state) {
@@ -2247,7 +2283,7 @@ function sportsCtaDateLinePair(raw) {
 }
 
 /**
- * Kicker F : 1 ligne, sauf « Dernière heure », « Prochain » + date, et les
+ * Kicker F : 1 ligne, sauf « Derniers résultats », « Prochain » + date, et les
  * dates plus vieilles que hier (2 lignes). Score entre les noms.
  */
 function sportsCtaTagLinePair(wanted, shown, extra = {}) {
@@ -2604,21 +2640,86 @@ function sportsVisibleOccupyKeys(exceptSlot = null) {
   return used;
 }
 
+function sportsSlideSport(slide) {
+  return String(slide?.team?.sport || slide?.game?.sport || '').toLowerCase();
+}
+
+function sportsOccupiedSports(slots) {
+  const set = new Set();
+  for (const s of slots || []) {
+    const sp = sportsSlideSport(s);
+    if (sp && sp !== 'board') set.add(sp);
+  }
+  return set;
+}
+
 /**
- * Diversité sport souple après ordre chrono : évite 2× le même sport d’affilée
- * si une alternative existe dans les ~4 prochains slots — sans enterrer le
- * match le plus proche (verdict D, soft vs pure round-robin).
+ * Alterne les sports sans changer l’ordre interne de chaque sport.
+ * Le plus proche reste premier ; on tire ensuite un autre sport s’il y en a.
  */
-function sportsSoftSportDiversity(slides) {
+function sportsInterleaveBySport(slides) {
+  if (!Array.isArray(slides) || slides.length < 2) return slides ? slides.slice() : [];
+  const remaining = slides.filter(Boolean);
+  const out = [];
+  while (remaining.length) {
+    const last = out.length ? sportsSlideSport(out[out.length - 1]) : '';
+    let idx = 0;
+    if (last) {
+      const alt = remaining.findIndex((s) => {
+        const sp = sportsSlideSport(s);
+        return sp && sp !== last;
+      });
+      if (alt >= 0) idx = alt;
+    }
+    out.push(remaining.splice(idx, 1)[0]);
+  }
+  return out;
+}
+
+/**
+ * Mélange à l’intérieur d’un même seau de chaleur et d’un même jour civil.
+ * Un samedi football ne passe pas devant un jeudi soccer.
+ */
+function sportsMixSportsPreservingHeat(slides, now = Date.now()) {
+  if (!Array.isArray(slides) || slides.length < 2) return slides ? slides.slice() : [];
+  const groups = [];
+  let currentKey = null;
+  let current = [];
+  for (const s of slides) {
+    if (!s) continue;
+    const b = sportsOpenOrderBucket(s, now);
+    const day = sportsGameDayKey(s.game, now) || sportsSlideDayKey(s) || '';
+    const key = `${b}|${day}`;
+    if (currentKey === null || key !== currentKey) {
+      if (current.length) groups.push(current);
+      current = [s];
+      currentKey = key;
+      continue;
+    }
+    current.push(s);
+  }
+  if (current.length) groups.push(current);
+  return groups.flatMap((g) => sportsInterleaveBySport(g));
+}
+
+/**
+ * Filet de jointure : évite 2× le même sport d’affilée sans traverser le
+ * bucket de chaleur ni le jour civil Toronto déjà établis par le tri.
+ */
+function sportsSoftSportDiversity(slides, now = Date.now()) {
   if (!Array.isArray(slides) || slides.length < 3) return slides || [];
   const arr = slides.slice();
-  const sportOf = (s) => String(s?.team?.sport || s?.game?.sport || '').toLowerCase();
   for (let i = 0; i < arr.length - 1; i += 1) {
-    if (sportOf(arr[i]) !== sportOf(arr[i + 1])) continue;
-    const same = sportOf(arr[i]);
+    if (sportsSlideSport(arr[i]) !== sportsSlideSport(arr[i + 1])) continue;
+    const same = sportsSlideSport(arr[i]);
+    const bucket = sportsOpenOrderBucket(arr[i], now);
+    const day = sportsGameDayKey(arr[i]?.game, now) || sportsSlideDayKey(arr[i]) || '';
     let swapAt = -1;
-    for (let j = i + 2; j < Math.min(arr.length, i + 5); j += 1) {
-      if (sportOf(arr[j]) && sportOf(arr[j]) !== same) {
+    for (let j = i + 2; j < Math.min(arr.length, i + 8); j += 1) {
+      const sp = sportsSlideSport(arr[j]);
+      const candidateBucket = sportsOpenOrderBucket(arr[j], now);
+      const candidateDay = sportsGameDayKey(arr[j]?.game, now) || sportsSlideDayKey(arr[j]) || '';
+      if (sp && sp !== same && candidateBucket === bucket && candidateDay === day) {
         swapAt = j;
         break;
       }
@@ -2703,7 +2804,7 @@ function sportsCtaLiveSources(now = Date.now()) {
 
 /**
  * Chaleur du bandeau (plus bas = plus prioritaire), go E :
- * live → ce soir → dernière heure → hier → demain
+ * live → ce soir → derniers résultats → hier → demain
  * → à-venir dans 7 j civils (après-demain…J+7) → scores J−2…J−5
  * → à-venir au-delà de 7 j.
  * Une liste, DOM = visuel. Filet 7 j America/Toronto.
@@ -2735,6 +2836,7 @@ function sportsOpenOrderBucket(slide, now = Date.now()) {
   const tomorrow = sportsCivilDayShift(today, 1);
   const day = sportsGameDayKey(g, now) || sportsSlideDayKey(slide);
   if (slide.mode === 'next') {
+    if (!sportsNextStillUpcoming(g, now) && !sportsGameIsLive(g, now)) return 99;
     if (day === today || sportsCtaKickoffWithinHour(g, now)) return SPORTS_OPEN_TODAY_NEXT;
     if (day === tomorrow) return SPORTS_OPEN_TOMORROW_NEXT;
     const ahead = sportsCivilDaysBetween(today, day);
@@ -2757,7 +2859,8 @@ function sportsOpenOrderBucket(slide, now = Date.now()) {
 
 /**
  * Liste unique. DOM = cet ordre. Pas de cycle éditorial à part,
- * pas de codes phares, pas de skip football.
+ * pas de codes phares, pas de skip football. Mix sport par jour
+ * (un mercredi soccer ne noie pas le football du même soir).
  */
 function sportsOpenOrderSlides(now = Date.now()) {
   const nexts = [];
@@ -2778,21 +2881,213 @@ function sportsOpenOrderSlides(now = Date.now()) {
     }
   }
   const list = sportsDedupeMatchSlides(nexts).concat(sportsDedupeHomepageResults(results));
-  list.sort((a, b) => {
-    const ba = sportsOpenOrderBucket(a, now);
-    const bb = sportsOpenOrderBucket(b, now);
-    if (ba !== bb) return ba - bb;
-    const ma = sportsGameMs(a.game) || 0;
-    const mb = sportsGameMs(b.game) || 0;
-    const soonest = ba === SPORTS_OPEN_LIVE
-      || ba === SPORTS_OPEN_TODAY_NEXT
-      || ba === SPORTS_OPEN_TOMORROW_NEXT
-      || ba === SPORTS_OPEN_WEEK_NEXT
-      || ba === SPORTS_OPEN_FAR_NEXT;
-    if (soonest) return ma - mb;
-    return mb - ma;
+  list.sort((a, b) => sportsCompareOpenOrder(a, b, now));
+  return sportsSoftSportDiversity(sportsMixSportsPreservingHeat(list, now), now)
+    .slice(0, SPORTS_CTA_MAX_POOL);
+}
+
+function sportsTakeUnusedPrefix(pool, n, usedKeys) {
+  const picked = [];
+  const used = usedKeys instanceof Set ? usedKeys : new Set(usedKeys || []);
+  const limit = Math.max(0, n | 0);
+  for (const slide of pool || []) {
+    if (picked.length >= limit) break;
+    if (!slide || sportsSlideIsUsed(slide, used)) continue;
+    picked.push(slide);
+    for (const k of sportsSlideOccupyKeys(slide)) used.add(k);
+  }
+  return picked;
+}
+
+function sportsSplitNextUnused(list, usedKeys, opts = {}) {
+  const avoidSports = opts.avoidSports instanceof Set ? opts.avoidSports : null;
+  let fallback = null;
+  for (const slide of list || []) {
+    if (!slide || sportsSlideIsUsed(slide, usedKeys)) continue;
+    if (!fallback) fallback = slide;
+    const sp = sportsSlideSport(slide);
+    if (avoidSports && avoidSports.size && avoidSports.has(sp)) continue;
+    return slide;
+  }
+  return fallback;
+}
+
+/**
+ * go D : n=1 → préfixe E. n≥2 → lives L→R, aujourd’hui vole les bords,
+ * reliquat 50/50 scores | à-venir. DOM = visuel. Une liste, pas deux timers.
+ */
+function sportsCompareOpenOrder(a, b, now = Date.now()) {
+  const ba = sportsOpenOrderBucket(a, now);
+  const bb = sportsOpenOrderBucket(b, now);
+  if (ba !== bb) return ba - bb;
+  const ma = sportsGameMs(a.game) || 0;
+  const mb = sportsGameMs(b.game) || 0;
+  const soonest = ba === SPORTS_OPEN_LIVE
+    || ba === SPORTS_OPEN_TODAY_NEXT
+    || ba === SPORTS_OPEN_TOMORROW_NEXT
+    || ba === SPORTS_OPEN_WEEK_NEXT
+    || ba === SPORTS_OPEN_FAR_NEXT;
+  if (soonest) return ma - mb;
+  return mb - ma;
+}
+
+function sportsSplitVisible(n, now = Date.now(), pool = null) {
+  const source = (Array.isArray(pool) ? pool.slice() : sportsOpenOrderSlides(now))
+    .filter(Boolean)
+    .filter((s) => sportsOpenOrderBucket(s, now) <= SPORTS_OPEN_FAR_NEXT);
+  source.sort((a, b) => sportsCompareOpenOrder(a, b, now));
+  const count = Math.max(1, n | 0);
+  if (!source.length) return [];
+  if (count < 2) return sportsTakeUnusedPrefix(source, count);
+
+  const lives = [];
+  const todayNext = [];
+  const todayResult = [];
+  const resultsRest = [];
+  const upcomingRest = [];
+  for (const s of source) {
+    if (!s) continue;
+    const b = sportsOpenOrderBucket(s, now);
+    if (b === SPORTS_OPEN_LIVE) lives.push(s);
+    else if (b === SPORTS_OPEN_TODAY_NEXT) todayNext.push(s);
+    else if (b === SPORTS_OPEN_TODAY_RESULT) todayResult.push(s);
+    else if (b === SPORTS_OPEN_YESTERDAY || b === SPORTS_OPEN_OLDER_RESULT) {
+      resultsRest.push(s);
+    } else if (
+      b === SPORTS_OPEN_TOMORROW_NEXT
+      || b === SPORTS_OPEN_WEEK_NEXT
+      || b === SPORTS_OPEN_FAR_NEXT
+    ) {
+      upcomingRest.push(s);
+    }
+  }
+
+  const livesMix = sportsInterleaveBySport(lives);
+  const todayNextMix = sportsInterleaveBySport(todayNext);
+  const todayResultMix = sportsInterleaveBySport(todayResult);
+  const resultsRestMix = sportsMixSportsPreservingHeat(resultsRest, now);
+  const upcomingRestMix = sportsMixSportsPreservingHeat(upcomingRest, now);
+  const sourceMix = sportsMixSportsPreservingHeat(source, now);
+
+  const slots = new Array(count).fill(null);
+  const used = new Set();
+  const occupy = (index, slide) => {
+    if (index < 0 || index >= count || slots[index] || !slide) return false;
+    if (sportsSlideIsUsed(slide, used)) return false;
+    slots[index] = slide;
+    for (const k of sportsSlideOccupyKeys(slide)) used.add(k);
+    return true;
+  };
+  const freeIndices = () => {
+    const out = [];
+    for (let i = 0; i < count; i += 1) {
+      if (!slots[i]) out.push(i);
+    }
+    return out;
+  };
+  const pickMixed = (list) => sportsSplitNextUnused(list, used, {
+    avoidSports: sportsOccupiedSports(slots),
   });
-  return list.slice(0, SPORTS_CTA_MAX_POOL);
+
+  for (const s of livesMix) {
+    const idx = freeIndices()[0];
+    if (idx == null) break;
+    occupy(idx, s);
+  }
+
+  const tonightLead = lives.length === 0 && sportsSplitNextUnused(todayNextMix, used);
+  if (tonightLead) occupy(0, tonightLead);
+
+  {
+    const free = freeIndices();
+    const rightEdge = free.length ? free[free.length - 1] : null;
+    if (rightEdge != null && rightEdge !== 0) {
+      occupy(rightEdge, pickMixed(todayNextMix));
+    }
+  }
+  {
+    const free = freeIndices();
+    for (const idx of free) {
+      const s = pickMixed(todayResultMix);
+      if (!s) break;
+      occupy(idx, s);
+    }
+  }
+
+  const leftover = freeIndices();
+  if (leftover.length) {
+    const hour = torontoHour(now);
+    const beforeNoon = hour < 12;
+    const hotIn = slots.some((s) => {
+      if (!s) return false;
+      const b = sportsOpenOrderBucket(s, now);
+      return b === SPORTS_OPEN_LIVE || b === SPORTS_OPEN_TODAY_NEXT;
+    });
+    const k = leftover.length;
+    let nResults;
+    if (k % 2 === 0) nResults = k / 2;
+    else if (beforeNoon) nResults = Math.floor(k / 2);
+    else nResults = hotIn ? Math.ceil(k / 2) : Math.floor(k / 2);
+    const resultSlots = leftover.slice(0, nResults);
+    const upcomingSlots = leftover.slice(nResults);
+    const resultFill = todayResultMix.concat(resultsRestMix);
+    const upcomingFill = todayNextMix.concat(upcomingRestMix);
+    for (const idx of resultSlots) {
+      occupy(
+        idx,
+        pickMixed(resultFill)
+          || pickMixed(upcomingFill)
+          || pickMixed(sourceMix),
+      );
+    }
+    for (const idx of upcomingSlots) {
+      occupy(
+        idx,
+        pickMixed(upcomingFill)
+          || pickMixed(resultFill)
+          || pickMixed(sourceMix),
+      );
+    }
+  }
+
+  for (let i = 0; i < count; i += 1) {
+    if (slots[i]) continue;
+    occupy(i, pickMixed(sourceMix));
+  }
+  return slots.filter(Boolean);
+}
+
+function sportsSplitPreferBuckets(outgoing, boardN, now = Date.now()) {
+  if ((boardN | 0) < 2 || !outgoing) return null;
+  const b = sportsOpenOrderBucket(outgoing, now);
+  if (
+    b === SPORTS_OPEN_TODAY_NEXT
+    || b === SPORTS_OPEN_TOMORROW_NEXT
+    || b === SPORTS_OPEN_WEEK_NEXT
+    || b === SPORTS_OPEN_FAR_NEXT
+  ) {
+    return [
+      SPORTS_OPEN_TODAY_NEXT,
+      SPORTS_OPEN_TOMORROW_NEXT,
+      SPORTS_OPEN_WEEK_NEXT,
+      SPORTS_OPEN_FAR_NEXT,
+    ];
+  }
+  if (
+    b === SPORTS_OPEN_TODAY_RESULT
+    || b === SPORTS_OPEN_YESTERDAY
+    || b === SPORTS_OPEN_OLDER_RESULT
+  ) {
+    return [
+      SPORTS_OPEN_TODAY_RESULT,
+      SPORTS_OPEN_YESTERDAY,
+      SPORTS_OPEN_OLDER_RESULT,
+    ];
+  }
+  if (b === SPORTS_OPEN_LIVE) {
+    return [SPORTS_OPEN_LIVE, SPORTS_OPEN_TODAY_NEXT];
+  }
+  return null;
 }
 
 function sportsCtaCandidateSlides() {
@@ -2828,7 +3123,7 @@ function sportsCtaHoldOnLive(slide) {
 }
 
 /**
- * Slide CTA — tête de liste (live / à-venir / aujourd’hui / dernière heure).
+ * Slide CTA — tête de liste (live / à-venir / aujourd’hui / derniers résultats).
  * Match du pool ou accroche idle.
  */
 function sportsCtaSlide(labelIndex = sportsCtaLabelIndex) {
@@ -3607,7 +3902,7 @@ function paintSportsChip(slide, animate = false) {
 
 /**
  * Prochaine carte : même chaleur que le premier cran
- * (live / à-venir / aujourd’hui / dernière heure avant le reliquat).
+ * (live / à-venir / aujourd’hui / derniers résultats avant le reliquat).
  * Jamais de puce grise « Hors saison / Calendrier… » ici.
  */
 function nextSportsSlide(usedKeys, opts = {}) {
@@ -3620,16 +3915,24 @@ function nextSportsSlide(usedKeys, opts = {}) {
   const avoidMatchKeys = opts.avoidMatchKeys instanceof Set
     ? opts.avoidMatchKeys
     : new Set(opts.avoidMatchKeys || []);
+  const prefer = sportsSplitPreferBuckets(opts.outgoing, opts.boardN);
+  const ranked = prefer
+    ? pool.filter((s) => prefer.includes(sportsOpenOrderBucket(s))).concat(pool)
+    : pool;
   const isAvailable = (slide) => {
     if (sportsSlideIsUsed(slide, used)) return false;
     const matchKey = sportsResultMatchKey(slide);
     return !(matchKey && avoidMatchKeys.has(matchKey));
   };
-  if (!pool.length) return null;
-  for (let i = 0; i < pool.length; i += 1) {
-    const s = pool[(sportsLeftCursor + i) % pool.length];
+  if (!ranked.length) return null;
+  const seen = new Set();
+  const start = prefer ? 0 : sportsLeftCursor;
+  for (let i = 0; i < ranked.length; i += 1) {
+    const s = ranked[(start + i) % ranked.length];
+    if (!s || seen.has(s.key || i)) continue;
+    seen.add(s.key || i);
     if (!isAvailable(s)) continue;
-    sportsLeftCursor = (sportsLeftCursor + i + 1) % pool.length;
+    if (!prefer) sportsLeftCursor = (start + i + 1) % Math.max(1, pool.length);
     return s;
   }
   return null;
@@ -3700,9 +4003,8 @@ function sportsCtaSlotIndices(visible = sportsVisible) {
 }
 
 /**
- * Première peinture : préfixe de sportsOpenOrderSlides.
- * Une seule famille visuelle (puce sport). Pas de chrome CTA.
- * Overflow = coupe la queue, pas de re-tri. Creux = marque.
+ * Première peinture : go D. n=1 préfixe E ; n≥2 split gauche scores /
+ * droite à-venir (live + aujourd’hui volent les bords). Pas de chrome CTA.
  */
 function pickInitialSportsVisible(count) {
   sportsCtaLabelIndex = 0;
@@ -3710,14 +4012,7 @@ function pickInitialSportsVisible(count) {
   const pool = sportsOpenOrderSlides();
   const n = Math.max(1, count | 0);
   if (!pool.length) return [sportsCtaSlide(0)];
-  const picked = [];
-  const usedKeys = new Set();
-  for (const slide of pool) {
-    if (picked.length >= n) break;
-    if (!slide || sportsSlideIsUsed(slide, usedKeys)) continue;
-    picked.push(slide);
-    for (const k of sportsSlideOccupyKeys(slide)) usedKeys.add(k);
-  }
+  const picked = sportsSplitVisible(n, Date.now(), pool);
   if (!picked.length) return [sportsCtaSlide(0)];
   return sportsSeparateAdjacentResults(picked);
 }
@@ -3896,7 +4191,12 @@ function rotateSportsSlot(slot) {
       .filter(Boolean),
   );
 
-  let replacement = nextSportsSlide(used, { usedSports, avoidMatchKeys });
+  let replacement = nextSportsSlide(used, {
+    usedSports,
+    avoidMatchKeys,
+    outgoing: sportsVisible[slot],
+    boardN: n,
+  });
   if (!replacement && sportsVisible[slot]?.mode === 'cta') {
     const poolLen = Math.max(1, sportsCtaCandidateSlides().length || 1);
     const curIdx = Number(sportsVisible[slot]?.labelIndex) || 0;
@@ -3912,7 +4212,13 @@ function rotateSportsSlot(slot) {
   ) {
     const avoid = String(sportsVisible[slot]?.team?.sport || '').toLowerCase();
     sportsLeftCursor = (sportsLeftCursor + 1) % Math.max(1, sportsLeftLaneState().pool.length || 1);
-    replacement = nextSportsSlide(used, { usedSports, avoidSport: avoid, avoidMatchKeys });
+    replacement = nextSportsSlide(used, {
+      usedSports,
+      avoidSport: avoid,
+      avoidMatchKeys,
+      outgoing: sportsVisible[slot],
+      boardN: n,
+    });
     if (!replacement || sportsSlideIsUsed(replacement, used)) return;
   }
 
@@ -4270,4 +4576,3 @@ async function initMastheadSports() {
 }
 
 window.addEventListener('radar:translate-mode', refreshSportsChromeLanguage);
-

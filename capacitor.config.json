@@ -1,0 +1,29 @@
+{
+  "appId": "ca.leradar.app",
+  "appName": "LE-RADAR",
+  "webDir": "mobile/www",
+  "backgroundColor": "#0e0f12",
+  "appendUserAgent": " LE-RADAR-App",
+  "android": {
+    "adjustMarginsForEdgeToEdge": "auto"
+  },
+  "server": {
+    "androidScheme": "https",
+    "hostname": "localhost"
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    },
+    "SplashScreen": {
+      "launchAutoHide": true,
+      "backgroundColor": "#0e0f12",
+      "androidScaleType": "CENTER_INSIDE",
+      "showSpinner": false
+    },
+    "Keyboard": {
+      "resize": "body",
+      "resizeOnFullScreen": true
+    }
+  }
+}

@@ -40,6 +40,7 @@ Version courante du dépôt : **1.0.0** — voir le [journal des modifications](
 - **Bots automatisés** — agrégation des articles, images vedette, crédits photo, découverte de flux radio, horaires
 - **Mode clair / sombre** persistant
 - **PWA** — installation mobile, service worker, offline shell
+- **Applications iOS et Android** — shell Capacitor distinct du site, même fil JSON. Voir [`docs/mobile/README.md`](docs/mobile/README.md).
 - **Pomodoro & Solitaire** — mini-apps isolées (`/pomo/`, `/solitaire/`), chacune installable en PWA avec son propre logo
 - **Statique et hors ligne** — le site et les données éditoriales restent sur GitHub Pages; les statistiques de Solitaire restent sur l’appareil
 
@@ -80,6 +81,16 @@ La suite vérifie la syntaxe JavaScript, les données générées, les liens et
 assets PWA, l'isolation des service workers, les iframes du syntoniseur ainsi
 que les quatre pages principales en formats bureau et mobile. Le workflow
 `Vérification` exécute les mêmes contrôles sur les changements de code.
+
+L’application iOS / Android se prépare à côté, sans remplacer le site :
+
+```bash
+npm run mobile:sync
+npm run android:debug    # Linux, Android SDK 36
+npm run mobile:ios       # ouvre Xcode, macOS seulement
+```
+
+Détail : [`docs/mobile/README.md`](docs/mobile/README.md).
 
 ---
 

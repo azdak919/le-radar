@@ -118,7 +118,7 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
         credit: { left: c.left, right: c.right, top: c.top, bottom: c.bottom },
         bar: { left: b.left, right: b.right, top: b.top, bottom: b.bottom, width: b.width },
         dial: { left: d.left, right: d.right },
-        now: { left: n.left },
+        now: { left: n.left, top: n.top, bottom: n.bottom },
         inLabel: label.contains(creditEl),
         onairHidden: onair ? getComputedStyle(onair).display === 'none' : true,
         labelPosition: getComputedStyle(label).position,
@@ -133,6 +133,8 @@ test.describe('LE-KIOSQUE démo × tuner-embed LE-RADAR', () => {
     // Bas de l’iframe
     expect(geometry.credit.bottom).toBeLessThanOrEqual(geometry.bar.bottom + 2);
     expect(geometry.credit.bottom).toBeGreaterThan(geometry.bar.bottom - 22);
+    // Sous le panneau poste — pas dessiné par-dessus « À l’antenne ».
+    expect(geometry.credit.top, 'crédit sous le panneau poste').toBeGreaterThanOrEqual(geometry.now.bottom - 1);
     // Aligné à gauche du panneau poste
     expect(geometry.leftDelta).toBeLessThanOrEqual(16);
     expect(geometry.credit.left).toBeGreaterThanOrEqual(geometry.dial.left - 4);

@@ -961,7 +961,9 @@ a { color: inherit; }
 .masthead-weather__board[data-weather-count="11"] { --weather-sec: 9; }
 .masthead-weather__board[data-weather-count="12"] { --weather-sec: 10; }
 /*
- * ≥1440 dual : une rangée. MTL + QC = contenu ; le reliquat va aux autres.
+ * ≥1440 dual : une rangée. MTL + QC = max-content. Le reliquat va aux
+ * secondaires en 1fr (pas un trou à droite du board). Le nom reste
+ * flex-grow 0 : Chromium ne pousse plus °C au bout de la tuile.
  */
 @media (min-width: 1440px) {
   .masthead-weather__board[data-weather-dual-primary] {
@@ -1017,7 +1019,7 @@ a { color: inherit; }
 /* Nom : ne pas s’étirer (évite le grand vide avant la température). */
 .masthead-weather__name {
   display: block;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-width: 0;
   max-width: 100%;
   overflow: hidden;

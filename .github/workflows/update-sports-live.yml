@@ -44,8 +44,19 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Setup Python (sidecar Spordle TLS)
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      - name: Install curl_cffi
+        run: pip install --quiet 'curl_cffi>=0.7'
+        continue-on-error: true
+
       - name: Fetch live RSEQ scores (ligues en fenêtre seulement)
         run: node scripts/fetch-sports.js --update --live
+        env:
+          HOCKEY_CACHE_URL: https://le-radar-hockey.azdak.workers.dev
 
       - name: Commit sports.json
         run: |

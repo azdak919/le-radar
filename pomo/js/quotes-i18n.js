@@ -73,7 +73,7 @@ const QUOTE_I18N = {
     fr: { text: "On ne connaît la vraie valeur d'un instant que lorsqu'il devient un souvenir.", author: "Proverbe inuit" },
   },
   "ind-08-if-you-want-to-go-fast-go-alone-if-you-w": {
-    fr: { text: "Si tu veux aller vite, vas seul. Si tu veux aller loin, allons ensemble.", author: "Proverbe africain (souvent attribué à tort)" },
+    fr: { text: "Si tu veux aller vite, va seul. Si tu veux aller loin, allons ensemble.", author: "Dicton populaire (souvent présenté à tort comme un proverbe africain)" },
   },
   "ind-09-tell-me-and-i-ll-forget-teach-me-and-i-l": {
     fr: { text: "Dis-moi et j'oublierai. Enseigne-moi et je me souviendrai. Implique-moi et j'apprendrai.", author: "Proverbe pédagogique (origine incertaine)" },

@@ -1,11 +1,11 @@
 # Labo — viewport local
 
 Outil **local** pour voir le site aux largeurs téléphone / tablette / bureau.
-Ce n’est pas « labo E » : E est juste le layout prod (≥1281 px). Ici on dit **le Labo**.
+Ce n’est pas « labo E » : E est juste le layout prod (≥1280 px). Ici on dit **le Labo**.
 
-**Prod / main :** le layout large s’active tout seul dès **1281 px**. Aucun `?wide=e`.
+**Prod / main :** le layout large s’active tout seul dès **1280 px**. Aucun `?wide=e`.
 Les densités 1440 / 1600 / 1920 / 2560 / 3440 / 3840 suivent le viewport.
-Téléphone, mid et bureau compact (≤1280) restent les layouts existants.
+Téléphone, mid et fenêtres <1280 restent les layouts étroits existants.
 
 Barre Format (Base + Grand) : **localhost seulement**.
 
@@ -24,7 +24,7 @@ Affiches à imprimer (11×17, lettre, légal) : `/affiches/`.
 ```bash
 cd VisualCode/le-radar
 python3 -m http.server 8766 --bind 127.0.0.1
-# → http://127.0.0.1:8766/          (Auto = E dès 1281)
+# → http://127.0.0.1:8766/          (Auto = E dès 1280)
 # → http://127.0.0.1:8766/?wide=off (ancien shell ~1180)
 ```
 
@@ -52,7 +52,7 @@ Sur **localhost**, la barre flottante en bas propose :
 | Shell | ~1760 | ~1840 |
 | Sources | Rail gauche sticky, pastilles pleine largeur, **Le Radar** en tête | idem, rail un peu plus large |
 | En-tête fil | **Le fil étudiant** + traduction + compteur / MAJ au-dessus du magazine | idem |
-| À la une | Magazine (inchangé dans l’esprit) | 2 unes dès 1920 ; 3 à 3840 |
+| À la une | Magazine (inchangé dans l’esprit) | 2 unes dès 1880 (Full HD, y compris scrollbar Chromium) ; 3 à 3840 |
 | En bref | **1 colonne** jusqu’à 3439 (même rapport une/bref qu’à 1920) | **2 col dès 3440** |
 | Suite du fil | **3 colonnes** | **4 colonnes** |
 | Footer / crédits | Pleine largeur sous le rail (plus de clipping) | idem |

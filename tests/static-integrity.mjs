@@ -31,16 +31,24 @@ const CLIENT_CSS_FILES = [
 ];
 const appJs = CLIENT_JS_FILES.map((file) => readFileSync(join(root, file), 'utf8')).join('\n');
 const styleCss = CLIENT_CSS_FILES.map((file) => readFileSync(join(root, file), 'utf8')).join('\n');
+const playwrightConfig = readFileSync(join(root, 'playwright.config.mjs'), 'utf8');
 const htmlFiles = [];
+
+assert.match(
+  playwrightConfig,
+  /retries:\s*process\.env\.CI\s*\?\s*2\s*:\s*0/,
+  'Playwright : 2 retries en CI et 0 en local',
+);
 
 // Les traces Playwright sont du HTML : sans cette exclusion, un run de tests
 // interrompu laisse des artefacts qui font échouer `npm run check` alors que
 // le site est intact (ces dossiers sont déjà dans .gitignore).
-const SKIP_DIRS = new Set(['.git', 'node_modules', 'test-results', 'playwright-report']);
+const SKIP_DIRS = new Set(['.git', 'node_modules', 'test-results', 'playwright-report', 'android', 'ios']);
 
 function collectHtml(directory) {
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
     if (SKIP_DIRS.has(entry.name)) continue;
+    if (entry.name === 'www' && directory.endsWith('/mobile')) continue;
     const fullPath = join(directory, entry.name);
     if (entry.isDirectory()) collectHtml(fullPath);
     else if (entry.name.endsWith('.html')) htmlFiles.push(fullPath);
@@ -854,7 +862,7 @@ assert(feedsHtml.includes('src="seo-page-theme.js"'), 'feeds.html : amorçage de
       && /return 'e'/.test(midJs)
       && /return 'e'/.test(wideJs)
       && /if \(id === 'off' \|\| id === 'a'\) return false/.test(appJs),
-    'layout : E auto dès 1281 px sans ?wide= (prod / main)',
+    'layout : E auto dès 1280 px sans ?wide= (prod / main)',
   );
   assert(
     !midJs.includes("searchParams.get(WIDE_PARAM) || 'off'")
@@ -1353,6 +1361,50 @@ if (existsSync(archiveHub)) {
   assert(archiveHtml.includes('"@type":"CollectionPage"'), 'archives : CollectionPage requis');
   assert(archiveHtml.includes('"@type":"CreativeWork"'), 'archives : attribution externe factuelle requise');
   assert(!archiveHtml.includes('"@type":"NewsArticle"'), 'archives : LE-RADAR.ca ne doit pas devenir l’éditeur d’un article externe');
+
+{
+  const home = readFileSync(join(root, 'index.html'), 'utf8');
+  const jsonLdBlock = home.match(/<!-- RADAR:SEO:JSONLD:START -->\s*<script[^>]*>([\s\S]*?)<\/script>/);
+  assert(jsonLdBlock, 'accueil : JSON-LD du fil requis');
+  const list = JSON.parse(jsonLdBlock[1]);
+  assert.equal(list['@type'], 'ItemList', 'accueil : ItemList agrégateur requis');
+  for (const entry of list.itemListElement || []) {
+    const article = entry.item;
+    if (!article || article['@type'] !== 'NewsArticle') continue;
+    const publisher = article.publisher?.name || '';
+    assert(
+      publisher && !/le-radar/i.test(publisher),
+      `accueil : NewsArticle.publisher doit être le média original, pas LE-RADAR (${article.headline})`,
+    );
+    assert(
+      /^https?:\/\//i.test(article.url || ''),
+      `accueil : NewsArticle.url doit pointer vers l’article original (${article.headline})`,
+    );
+  }
+  assert(home.includes('id="media-follow-bar"'), 'accueil : bandeau de suivi requis');
+  assert(home.includes('scripts/media-follow-store.js'), 'accueil : store de suivi requis');
+}
+
+{
+  const paper = join(root, 'journaux/lexemplaire/index.html');
+  if (existsSync(paper)) {
+    const html = readFileSync(paper, 'utf8');
+    assert(html.includes('data-media-follow'), 'fiche L\'Exemplaire : bouton Suivre requis');
+    assert(html.includes('data-media-id="lexemplaire"'), 'fiche L\'Exemplaire : id slug requis');
+    assert(html.includes('"@type":"NewsMediaOrganization"'), 'fiche : NewsMediaOrganization du média original');
+    assert(!html.includes('news.google.com/search'), 'fiche : pas de recherche Google News inventée');
+    assert(
+      html.includes('class="article') || html.includes('seo-headline__title') || html.includes('target="_blank"'),
+      'fiche : liens vers les articles originaux requis',
+    );
+  }
+  const poly = join(root, 'journaux/le-polyscope/index.html');
+  if (existsSync(poly)) {
+    const html = readFileSync(poly, 'utf8');
+    assert(html.includes('Instagram'), 'fiche Polyscope : canal Instagram du registre');
+    assert(!html.includes('Google Actualités') || !html.includes('news.google.com/search'), 'Polyscope : pas de Google News fictif');
+  }
+}
   assert(!archiveHtml.includes('<img class="seo-archive'), 'archives : image externe sans licence non republiée');
   assert(archiveHtml.includes('>Le Trait d\'Union</a>'), 'archives : Le Trait d’Union doit figurer dans l’annuaire');
   assert(!archiveHtml.includes('Catalogue expérimental'), 'archives : libellé interne superflu interdit');
@@ -1476,7 +1528,7 @@ assert(
     && appJs.includes('function sportsCtaDateLinePair')
     && appJs.includes('function sportsCtaResultDateParts')
     && /function fillSportsCtaTagCopy[\s\S]*tag\.append\(document\.createTextNode/.test(appJs),
-  'app.js : kicker F 1 ligne sauf Dernière heure / Prochain+date / dates (2 lignes) ; score entre les noms',
+  'app.js : kicker F 1 ligne sauf Derniers résultats / Prochain+date / dates (2 lignes) ; score entre les noms',
 );
 // Pastille CTA : plus de voyant LED (ni span JS, ni ::before).
 assert(
@@ -1697,8 +1749,12 @@ assert(
     && appJs.includes('SPORTS_OPEN_WEEK_NEXT')
     && appJs.includes('SPORTS_OPEN_FAR_NEXT')
     && appJs.includes('SPORTS_OPEN_WEEK_HORIZON_DAYS')
-    && appJs.includes('function sportsCivilDaysBetween'),
-  'app.js : liste chaleur E live → ce soir → jour → hier → demain → 7 j → musée → loin',
+    && appJs.includes('function sportsCivilDaysBetween')
+    && appJs.includes('function sportsCompareOpenOrder')
+    && appJs.includes('function sportsSplitVisible')
+    && appJs.includes('function sportsSplitPreferBuckets')
+    && appJs.includes('function torontoHour'),
+  'app.js : liste chaleur E + split D (n=1 E ; n≥2 gauche scores / droite à-venir)',
 );
 assert(
   /function sportsCtaEyebrow/.test(appJs)
@@ -1752,14 +1808,17 @@ assert(
   appJs.includes('function sportsSlideDayKey')
     && /const SPORTS_CTA_MAX_POOL\s*=\s*80/.test(appJs)
     && appJs.includes('function sportsNextSlideFromGame')
+    && appJs.includes('function sportsNextStillUpcoming')
     && appJs.includes('team.nextGames')
     && !appJs.includes('SPORTS_CTA_NEXT_DAYS')
     && !appJs.includes('function sportsCtaNextWindowEndDay')
     && appJs.includes('function sportsOpenOrderSlides')
+    && appJs.includes('function sportsInterleaveBySport')
+    && appJs.includes('function sportsMixSportsPreservingHeat')
     && appJs.includes('SPORTS_OPEN_OLDER_RESULT')
     && appJs.includes('SPORTS_OPEN_FAR_NEXT')
     && appJs.includes('SPORTS_PLACEHOLDER_OPPONENT_RE'),
-  'app.js : liste chaleur E ; ADV exclu',
+  'app.js : liste chaleur E ; mix sport par jour ; ADV exclu',
 );
 assert(
   appJs.includes('function sportsCtaKickoffWithinHour')
@@ -1972,6 +2031,24 @@ assert(
     && !/Hors wide : une carte à la fois/.test(appJs),
   'app.js : cascade météo/sports tous écrans + marquee 1 cycle',
 );
+{
+  const holdStart = appJs.indexOf('function weatherBoardHoldMs()');
+  const holdFn = appJs.slice(holdStart, holdStart + 900);
+  const wideCss = readFileSync(join(root, 'dev/wide-desktop-preview.css'), 'utf8');
+  const wideMotion = wideCss.split('@media (prefers-reduced-motion: reduce)').slice(0, -1).join('\n');
+  assert(
+    holdFn.includes('weatherBoardDwellMs()')
+      && holdFn.includes('measureWeatherNameOverflows()')
+      && !holdFn.includes('!isWideNoMarqueeMode()'),
+    'météo : la pause de cascade couvre l’aller-retour du marquee, wide compris',
+  );
+  assert(
+    !/sports-chip__line-inner[\s\S]{0,180}transform:\s*none\s*!important/.test(wideMotion)
+      && !/sports-chip__sub-text[\s\S]{0,180}transform:\s*none\s*!important/.test(wideMotion)
+      && /is-overflowing \.masthead-weather__name-text[\s\S]{0,280}max-width:\s*none\s*!important/.test(wideCss),
+    'wide : le marquee sports n’est pas gelé par transform:none, le nom météo peut dépasser',
+  );
+}
 // Marquee site : alternate both + delay — jamais infinite. 2 = 1 aller-retour ;
 // CTA delay 0.7s ; strip / puces 1.6s.
 assert(
@@ -2187,32 +2264,56 @@ assert(
   'style : durée marquee sports alignée sur SPORTS_SCROLL_ONE_WAY_MS (5.5s)',
 );
 
+// ── PWA : manifeste installable (accueil + mini-apps) ────────────────────────
+//
+// Les mini-apps (Pomo, Solitaire, Sports) déclarent `any` et `maskable` en
+// entrées séparées. L'accueil collait les deux rôles (`purpose: "any maskable"`)
+// sur le même PNG — Chromium peut alors ignorer l'icône, et le bouton
+// « Installer » de la barre d'adresse disparaît sur le-radar.ca alors qu'il
+// reste visible sur /pomo/. Une entrée par rôle, 192 + 512 PNG, `id` stable.
+function assertInstallableManifest(relFile, { id }) {
+  const abs = join(root, relFile);
+  assert(existsSync(abs), `${relFile} requis (app installable)`);
+  const manifest = JSON.parse(readFileSync(abs, 'utf8'));
+  const dir = dirname(abs);
+  assert.equal(manifest.id, id, `${relFile} : id du manifeste`);
+  assert.equal(manifest.scope, './', `${relFile} : scope relatif`);
+  assert.equal(manifest.start_url, './', `${relFile} : start_url relatif`);
+  assert.equal(manifest.display, 'standalone', `${relFile} : display standalone`);
+  const icons = manifest.icons || [];
+  assert(icons.length > 0, `${relFile} : icônes requises`);
+  for (const icon of icons) {
+    assert(existsSync(join(dir, icon.src)), `${relFile} : icône introuvable — ${icon.src}`);
+    if (!icon.purpose) continue;
+    const purposes = String(icon.purpose).trim().split(/\s+/).filter(Boolean);
+    assert.equal(
+      purposes.length,
+      1,
+      `${relFile} : purpose combiné interdit (${icon.src} → « ${icon.purpose} »)`,
+    );
+  }
+  for (const purpose of ['any', 'maskable']) {
+    for (const size of ['192x192', '512x512']) {
+      assert(
+        icons.some((i) => i.type === 'image/png' && i.sizes === size && i.purpose === purpose),
+        `${relFile} : PNG ${size} « ${purpose} » requis (entrée dédiée)`,
+      );
+    }
+  }
+}
+
+assertInstallableManifest('manifest.json', { id: '/' });
+assertInstallableManifest('pomo/site.webmanifest', { id: '/pomo/' });
+assertInstallableManifest('solitaire/site.webmanifest', { id: '/solitaire/' });
+assertInstallableManifest('sports/site.webmanifest', { id: '/sports/' });
+
 // ── /sports/ : app installable à part entière ────────────────────────────────
 //
 // Le dossier est le seul dossier généré qui contient aussi des fichiers écrits
-// à la main. Ces contrôles verrouillent les trois façons de casser
-// l'installation sans que rien d'autre ne bronche : un manifeste incohérent,
-// une icône déclarée mais absente, ou le worker racine qui reprend la portée.
+// à la main. Ces contrôles verrouillent les façons de casser l'installation
+// hors manifeste (déjà couvert plus haut) : worker racine qui reprend la
+// portée, ou générateur SEO qui efface les fichiers écrits à la main.
 {
-  const manifestPath = join(root, 'sports', 'site.webmanifest');
-  assert(existsSync(manifestPath), 'sports/site.webmanifest requis (app installable)');
-  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
-
-  assert(manifest.id === '/sports/', 'sports : id du manifeste doit être « /sports/ »');
-  assert(manifest.scope === './', 'sports : scope du manifeste doit rester relatif');
-  assert(manifest.start_url === './', 'sports : start_url du manifeste doit rester relatif');
-  assert(manifest.display === 'standalone', 'sports : display « standalone » requis pour installer');
-
-  for (const icon of manifest.icons || []) {
-    const iconPath = join(root, 'sports', icon.src);
-    assert(existsSync(iconPath), `sports : icône déclarée introuvable — ${icon.src}`);
-  }
-  for (const purpose of ['any', 'maskable']) {
-    assert(
-      (manifest.icons || []).some((i) => (i.purpose || '').split(/\s+/).includes(purpose)),
-      `sports : icône « ${purpose} » requise`,
-    );
-  }
 
   assert(existsSync(join(root, 'sports', 'sw.js')), 'sports/sw.js requis (hors ligne)');
   assert(

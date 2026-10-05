@@ -122,7 +122,10 @@ marque (radar) et la fusion des couleurs nationales (le pourpre).
 
 ## 5. PWA
 
-- `manifest.json` : `name` = « LE-RADAR.ca », `short_name` = « LE-RADAR.ca ».
+- `manifest.json` : `name` = « LE-RADAR.ca », `short_name` = « LE-RADAR.ca », `id` = `/`.
+- Icônes PNG 192 et 512 : **deux entrées** (`purpose: "any"` et `purpose: "maskable"`),
+  jamais `"any maskable"` sur la même ligne — Chromium / Brave ignorent alors
+  l’icône et le bouton « Installer » disparaît de l’accueil.
 - Splash de LE-RADAR : `theme_color` / `background_color` : `#0E0F12`.
   Ce fond sombre est volontairement fixe avant le chargement; l'interface
   respecte ensuite le thème clair ou sombre déjà choisi.

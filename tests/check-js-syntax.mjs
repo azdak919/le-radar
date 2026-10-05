@@ -5,12 +5,13 @@ import { extname, join, relative } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 const root = new URL('../', import.meta.url).pathname;
-const ignoredDirectories = new Set(['.git', 'node_modules']);
+const ignoredDirectories = new Set(['.git', 'node_modules', 'android', 'ios']);
 const files = [];
 
 function collect(directory) {
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
     if (entry.isDirectory() && ignoredDirectories.has(entry.name)) continue;
+    if (entry.isDirectory() && entry.name === 'www' && directory.endsWith('/mobile')) continue;
     const fullPath = join(directory, entry.name);
     if (entry.isDirectory()) collect(fullPath);
     else if (['.js', '.mjs', '.cjs'].includes(extname(entry.name))) files.push(fullPath);

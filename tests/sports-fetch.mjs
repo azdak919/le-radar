@@ -93,6 +93,15 @@ test('fetch-sports.js est du JS Node valide', () => {
   assert.match(src, /preserveByLeagueId|preservePreviousTeams/);
   assert.match(src, /ABORT/);
   assert.match(src, /teamsPreservedOnError/);
+  assert.match(src, /preserveHarvestCatalogStats/);
+  assert.match(src, /loadPreviousPayload/);
+  assert.match(src, /isChallengeOrInterstitialPage/);
+  assert.match(src, /Cloudflare challenge/);
+  assert.match(src, /hockey-spordle-failed/);
+  assert.match(src, /campus-hockey-lib/);
+  assert.match(src, /hockey-spordle\.py/);
+  assert.match(src, /HOCKEY_CACHE_URL/);
+  assert.match(src, /loadSpordleTeams/);
 });
 
 test('update-sports.yml couvre les heures de consultation QC', () => {
@@ -108,6 +117,16 @@ test('update-sports.yml couvre les heures de consultation QC', () => {
   assert.match(yml, /could not push sports update after retries/);
   assert.match(yml, /generate-seo\.js --update --sports-only/);
   assert.match(yml, /sports\/index\.html/);
+  const refreshStep = yml.match(
+    /- name: Refresh \/sports\/ HTML from sports\.json[\s\S]*?(?=\n      - name:)/,
+  )?.[0] || '';
+  assert.match(refreshStep, /generate-seo\.js --update --sports-only/);
+  assert.doesNotMatch(refreshStep, /continue-on-error:\s*true/);
+  const validateAt = yml.indexOf('bash scripts/bot-prepush-check.sh');
+  const commitAt = yml.indexOf('- name: Commit sports.json');
+  assert.ok(validateAt >= 0 && validateAt < commitAt, 'sports : prepush HTML avant commit');
+  assert.match(yml.slice(0, commitAt), /git add sports\/index\.html en\/sports\/index\.html/);
+  assert.doesNotMatch(yml.slice(commitAt), /if:\s*always\(\)/);
 });
 
 test('update-sports-live.yml sonde les fenêtres de match', () => {

@@ -37,10 +37,10 @@
     <link rel="stylesheet" href="../../style-feed.css" />
     <link rel="stylesheet" href="../../style-chrome.css" />
     <link rel="stylesheet" href="../../seo-pages.css" />
-    <link rel="stylesheet" href="../../dev/midwidth-preview.css?v=wide-auto-e99" />
-    <link rel="stylesheet" href="../../dev/wide-desktop-preview.css?v=wide-auto-e99" />
-    <script src="../../dev/midwidth-preview.js?v=wide-auto-e99"></script>
-    <script src="../../dev/wide-desktop-preview.js?v=wide-auto-e99"></script>
+    <link rel="stylesheet" href="../../dev/midwidth-preview.css?v=wide-auto-e102" />
+    <link rel="stylesheet" href="../../dev/wide-desktop-preview.css?v=wide-auto-e102" />
+    <script src="../../dev/midwidth-preview.js?v=wide-auto-e102"></script>
+    <script src="../../dev/wide-desktop-preview.js?v=wide-auto-e102"></script>
     <!--
       CSS critique du synthé bureau : réserve « À l'antenne » + volume compact
       dès le premier paint (avant le CSS mis en cache / le JS async).
@@ -106,6 +106,9 @@
     <script src="../../quebec-backgrounds-data.js" defer></script>
     <script src="../../quebec-university-backgrounds-data.js" defer></script>
     <script src="../../scripts/campus-fallback-lib.js" defer></script>
+    <script src="../../scripts/media-channels-lib.js" defer></script>
+    <script src="../../scripts/media-follow-store.js" defer></script>
+    <script src="../../scripts/media-follow-ui.js" defer></script>
     <script src="../../quebec-nations-backgrounds-data.js" defer></script>
     <script src="../../quebec-favorites-backgrounds-data.js" defer></script>
     <script src="../../quebec-backgrounds.js" defer></script>
@@ -114,13 +117,15 @@
     <script src="../../radar-utils.js" defer></script>
     <script src="../../radar-state.js" defer></script>
     <script src="../../radar-weather.js" defer></script>
+    <script src="../../scripts/session-freshness-lib.js" defer></script>
+    <script src="../../scripts/sports-freshness-lib.js" defer></script>
     <script src="../../radar-sports-cta.js" defer></script>
     <script src="../../radar-tuner.js" defer></script>
     <script src="../../radar-news.js" defer></script>
     <script src="../../radar-lifecycle.js" defer></script>
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Archives — L'Exemplaire | LE-RADAR.ca","url":"https://le-radar.ca/archives/lexemplaire/","description":"Archives de L'Exemplaire, journal étudiant de l’Université Laval (Français). Articles avec date, auteur et lien vers la publication originale.","isPartOf":{"@type":"WebSite","name":"LE-RADAR.ca","url":"https://le-radar.ca/"},"provider":{"@type":"Organization","name":"LE-RADAR.ca"},"mainEntity":{"@type":"ItemList","numberOfItems":1,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.exemplaire.com.ulaval.ca/a-la-une/sans-fins-au-coeur-des-troubles-du-comportement-alimentaire","item":{"@type":"CreativeWork","name":"Sans fin(s): au cœur des troubles du comportement alimentaire","url":"https://www.exemplaire.com.ulaval.ca/a-la-une/sans-fins-au-coeur-des-troubles-du-comportement-alimentaire","author":{"@type":"Person","name":"Nathan Brisbois et Elora Veyron-Churlet"},"datePublished":"2026-05-15T16:31:24.000Z","publisher":{"@type":"Organization","name":"L'Exemplaire"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"Université Laval"}}}]}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Archives — L'Exemplaire | LE-RADAR.ca","url":"https://le-radar.ca/archives/lexemplaire/","description":"Archives de L'Exemplaire, journal étudiant de l’Université Laval (Français). Articles avec date, auteur et lien vers la publication originale.","isPartOf":{"@type":"WebSite","name":"LE-RADAR.ca","url":"https://le-radar.ca/"},"provider":{"@type":"Organization","name":"LE-RADAR.ca"},"mainEntity":{"@type":"ItemList","numberOfItems":7,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.exemplaire.com.ulaval.ca/a-la-une/le-radis-nourrit-a-petits-prix","item":{"@type":"CreativeWork","name":"Le RADIS nourrit à petits prix","url":"https://www.exemplaire.com.ulaval.ca/a-la-une/le-radis-nourrit-a-petits-prix","author":{"@type":"Person","name":"Benjamin Lessard et Arianne Dion"},"datePublished":"2026-09-29T20:42:32.000Z","publisher":{"@type":"Organization","name":"L'Exemplaire"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"Université Laval"}}},{"@type":"ListItem","position":2,"url":"https://www.exemplaire.com.ulaval.ca/actualites/securite-routiere-a-marguerite-bourgeoys-des-defis-persistent","item":{"@type":"CreativeWork","name":"Sécurité routière à Marguerite-Bourgeoys : des défis persistent","url":"https://www.exemplaire.com.ulaval.ca/actualites/securite-routiere-a-marguerite-bourgeoys-des-defis-persistent","author":{"@type":"Person","name":"Émie Lanteigne et Héléna Pleau"},"datePublished":"2026-09-29T20:29:11.000Z","publisher":{"@type":"Organization","name":"L'Exemplaire"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"Université Laval"}}},{"@type":"ListItem","position":3,"url":"https://www.exemplaire.com.ulaval.ca/a-la-une/mobilisation-etudiante-massive-a-luniversite-laval-pour-le-debat-des-candidats-de-jean-talon","item":{"@type":"CreativeWork","name":"Mobilisation étudiante massive à l’Université Laval pour le débat des candidats de Jean-Talon","url":"https://www.exemplaire.com.ulaval.ca/a-la-une/mobilisation-etudiante-massive-a-luniversite-laval-pour-le-debat-des-candidats-de-jean-talon","author":{"@type":"Person","name":"Raphaël Bédard, Juliette Kot et Élise Paré"},"datePublished":"2026-09-29T20:14:37.000Z","publisher":{"@type":"Organization","name":"L'Exemplaire"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"Université Laval"}}},{"@type":"ListItem","position":4,"url":"https://www.exemplaire.com.ulaval.ca/a-la-une/le-patrimoine-religieux-de-quebec-un-financement-inegal","item":{"@type":"CreativeWork","name":"Le patrimoine religieux de Québec : un financement inégal","url":"https://www.exemplaire.com.ulaval.ca/a-la-une/le-patrimoine-religieux-de-quebec-un-financement-inegal","author":{"@type":"Person","name":"Phoebé Bahlou, Hermione Durocher et Imelda Njiki"},"datePublished":"2026-09-29T17:58:40.000Z","publisher":{"@type":"Organization","name":"L'Exemplaire"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"Université Laval"}}},{"@type":"ListItem","position":5,"url":"https://www.exemplaire.com.ulaval.ca/a-la-une/emm-01-une-course-menee-de-bout-en-bout-pour-emm-01-une-course-menee-de-bout-en-bout-pour","item":{"@type":"CreativeWork","name":"Une course et une préparation réussies pour Anthony Dionne","url":"https://www.exemplaire.com.ulaval.ca/a-la-une/emm-01-une-course-menee-de-bout-en-bout-pour-emm-01-une-course-menee-de-bout-en-bout-pour","author":{"@type":"Person","name":"Julia Audet, Étienne Dumas et Victor Marchand"},"datePublished":"2026-09-29T16:11:30.000Z","publisher":{"@type":"Organization","name":"L'Exemplaire"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"Université Laval"}}},{"@type":"ListItem","position":6,"url":"https://www.exemplaire.com.ulaval.ca/actualites/un-candidat-pas-comme-les-autres","item":{"@type":"CreativeWork","name":"Un candidat pas comme les autres","url":"https://www.exemplaire.com.ulaval.ca/actualites/un-candidat-pas-comme-les-autres","author":{"@type":"Person","name":"Victor Marchand"},"datePublished":"2026-09-28T16:37:06.000Z","publisher":{"@type":"Organization","name":"L'Exemplaire"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"Université Laval"}}},{"@type":"ListItem","position":7,"url":"https://www.exemplaire.com.ulaval.ca/actualites/les-besoins-de-taschereau","item":{"@type":"CreativeWork","name":"Les besoins de Taschereau","url":"https://www.exemplaire.com.ulaval.ca/actualites/les-besoins-de-taschereau","author":{"@type":"Person","name":"Rita Kherchi"},"datePublished":"2026-09-28T16:36:51.000Z","publisher":{"@type":"Organization","name":"L'Exemplaire"},"inLanguage":"fr","about":{"@type":"CollegeOrUniversity","name":"Université Laval"}}}]}}</script>
   </head>
   <body>
     <header class="masthead">
@@ -307,10 +312,46 @@
       </dl>
 
 <section class="seo-archive-year"><h2>2026</h2>      <article class="seo-archive-record">
-        <h2><a href="https://www.exemplaire.com.ulaval.ca/a-la-une/sans-fins-au-coeur-des-troubles-du-comportement-alimentaire" target="_blank" rel="noopener noreferrer">Sans fin(s): au cœur des troubles du comportement alimentaire</a></h2>
-        <p class="seo-archive-record__meta">Par Nathan Brisbois et Elora Veyron-Churlet · 15 mai 2026 à 12 h 31</p>
-        <p>Salut, moi c’est Elora. Je suis étudiante en journalisme, passionnée de voyages, de cinéma et de récits humains. Mais aujourd’hui, si je me présente, c’est surtout pour te parler d’une relation toxique qui a occupé toute mon adolescence. Au début, ça ressemblait presque à un</p>
-        <p class="seo-archive-record__origin"><a href="https://www.exemplaire.com.ulaval.ca/a-la-une/sans-fins-au-coeur-des-troubles-du-comportement-alimentaire" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
+        <h2><a href="https://www.exemplaire.com.ulaval.ca/a-la-une/le-radis-nourrit-a-petits-prix" target="_blank" rel="noopener noreferrer">Le RADIS nourrit à petits prix</a></h2>
+        <p class="seo-archive-record__meta">Par Benjamin Lessard et Arianne Dion · 29 septembre 2026 à 16 h 42</p>
+        <p>Chaque midi, du lundi au vendredi, plus de 400 repas à 5 $ sont servis aux étudiants de l’Université Laval. Vers 11 h 30, une file d’attente se forme au cœur du pavillon Alphonse-Desjardins. Mathieu Gauthier, directeur général du RADIS, se déclare victi me de leur succès, comme</p>
+        <p class="seo-archive-record__origin"><a href="https://www.exemplaire.com.ulaval.ca/a-la-une/le-radis-nourrit-a-petits-prix" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
+      </article>
+      <article class="seo-archive-record">
+        <h2><a href="https://www.exemplaire.com.ulaval.ca/actualites/securite-routiere-a-marguerite-bourgeoys-des-defis-persistent" target="_blank" rel="noopener noreferrer">Sécurité routière à Marguerite-Bourgeoys : des défis persistent</a></h2>
+        <p class="seo-archive-record__meta">Par Émie Lanteigne et Héléna Pleau · 29 septembre 2026 à 16 h 29</p>
+        <p>#tdi_1 .td-doubleSlider-2 .td-item1 { background: url(https://i0.wp.com/www.exemplaire.com.ulaval.ca/wp-content/uploads/2026/09/IMG_0051_OUI-scaled.jpeg?resize=80%2C60&amp;ssl=1) 0 0 no-repeat; } #tdi_1 .td-doubleSlider-2 .td-item2 { background:</p>
+        <p class="seo-archive-record__origin"><a href="https://www.exemplaire.com.ulaval.ca/actualites/securite-routiere-a-marguerite-bourgeoys-des-defis-persistent" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
+      </article>
+      <article class="seo-archive-record">
+        <h2><a href="https://www.exemplaire.com.ulaval.ca/a-la-une/mobilisation-etudiante-massive-a-luniversite-laval-pour-le-debat-des-candidats-de-jean-talon" target="_blank" rel="noopener noreferrer">Mobilisation étudiante massive à l’Université Laval pour le débat des candidats de Jean-Talon</a></h2>
+        <p class="seo-archive-record__meta">Par Raphaël Bédard, Juliette Kot et Élise Paré · 29 septembre 2026 à 16 h 14</p>
+        <p>C’est sur le coup de 18 h 30 que les quatre candidats ont pris le micro pour entamer une période de discussion de près d’une heure et demie. Formule mêlant présentations individuelles et débats, la soirée a permis à chacun d’exposer la vision de sa formation politique devant le</p>
+        <p class="seo-archive-record__origin"><a href="https://www.exemplaire.com.ulaval.ca/a-la-une/mobilisation-etudiante-massive-a-luniversite-laval-pour-le-debat-des-candidats-de-jean-talon" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
+      </article>
+      <article class="seo-archive-record">
+        <h2><a href="https://www.exemplaire.com.ulaval.ca/a-la-une/le-patrimoine-religieux-de-quebec-un-financement-inegal" target="_blank" rel="noopener noreferrer">Le patrimoine religieux de Québec : un financement inégal</a></h2>
+        <p class="seo-archive-record__meta">Par Phoebé Bahlou, Hermione Durocher et Imelda Njiki · 29 septembre 2026 à 13 h 58</p>
+        <p>Les Journées du patrimoine religieux permettent de mettre de l’avant les églises québécoises et leur patrimoine comme pour l’église Saint-Dominique. Cependant, le Conseil du patrimoine religieux du Québec , en charge de l’aide financière pour la restauration du patrimoine</p>
+        <p class="seo-archive-record__origin"><a href="https://www.exemplaire.com.ulaval.ca/a-la-une/le-patrimoine-religieux-de-quebec-un-financement-inegal" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
+      </article>
+      <article class="seo-archive-record">
+        <h2><a href="https://www.exemplaire.com.ulaval.ca/a-la-une/emm-01-une-course-menee-de-bout-en-bout-pour-emm-01-une-course-menee-de-bout-en-bout-pour" target="_blank" rel="noopener noreferrer">Une course et une préparation réussies pour Anthony Dionne</a></h2>
+        <p class="seo-archive-record__meta">Par Julia Audet, Étienne Dumas et Victor Marchand · 29 septembre 2026 à 12 h 11</p>
+        <p>Par une fraîche matinée d’automne, plusieurs centaines de coureurs se sont regroupés au PEPS de l’Université Laval pour participer au 10 km. Anthony Dionne, qui a remporté la précédente édition avec un chrono de 32 minutes et 10 secondes, faisait partie des participants.</p>
+        <p class="seo-archive-record__origin"><a href="https://www.exemplaire.com.ulaval.ca/a-la-une/emm-01-une-course-menee-de-bout-en-bout-pour-emm-01-une-course-menee-de-bout-en-bout-pour" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
+      </article>
+      <article class="seo-archive-record">
+        <h2><a href="https://www.exemplaire.com.ulaval.ca/actualites/un-candidat-pas-comme-les-autres" target="_blank" rel="noopener noreferrer">Un candidat pas comme les autres</a></h2>
+        <p class="seo-archive-record__meta">Par Victor Marchand · 28 septembre 2026 à 12 h 37</p>
+        <p>Farnell Morisset n’est pas un candidat comme les autres. Il est l’un des premiers à passer du monde des médias sociaux à celui de la politique. Fort de l’expérience qu’il a acquise dans ce milieu, il croit pouvoir s’adresser directement aux citoyens de sa circonscription sans</p>
+        <p class="seo-archive-record__origin"><a href="https://www.exemplaire.com.ulaval.ca/actualites/un-candidat-pas-comme-les-autres" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
+      </article>
+      <article class="seo-archive-record">
+        <h2><a href="https://www.exemplaire.com.ulaval.ca/actualites/les-besoins-de-taschereau" target="_blank" rel="noopener noreferrer">Les besoins de Taschereau</a></h2>
+        <p class="seo-archive-record__meta">Par Rita Kherchi · 28 septembre 2026 à 12 h 36</p>
+        <p>Les élections de 2026 approchent à grands pas. En attendant le jour J, les différents députés élus dans chaque circonscription électorale doivent défendre légitimement les préoccupations et intérêts locaux dans le but de faire élire leur parti le lundi 5 octobre prochain.</p>
+        <p class="seo-archive-record__origin"><a href="https://www.exemplaire.com.ulaval.ca/actualites/les-besoins-de-taschereau" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
       </article></section>
     </main>
     <footer class="site-foot">

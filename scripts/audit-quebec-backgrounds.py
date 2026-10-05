@@ -15,7 +15,7 @@ Hard rejects (runtime + curation)
                             Spiritualité autochtone / lieux des nations OK.
   HARD:religious_architecture  croix + clocher blanc détectés dans le crop
                             (titre lieu seul, ex. Wôlinak chapelle)
-  HARD:portrait_or_narrow   aspect < 1.25
+  HARD:portrait_or_narrow   aspect < 1.25 (campus : < 0.60)
   HARD:near_black           luminance moyenne cover < 0.07
   HARD:night_flat           sombre + désaturé + peu de structure
   HARD:dead_sky_monochrome  ciel/haut plat gris + image quasi monochrome +
@@ -42,8 +42,8 @@ Hard rejects (runtime + curation)
                             quasi pas de ciel) — ex. Île-aux-Tourtes_02
   HARD:drab_industrial_sky  ciel bas gris + scène désaturée (aéroport /
                             hangar / friche) — ex. Les Cèdres Airport
-  HARD:low_resolution       native < ~1400×700 ou < 1.2 Mpx — upscale
-                            grainy / blocky sur mât retina
+  HARD:low_resolution       native < ~640×600 ou < 0,65 Mpx
+                            (982×566 Île-Perrot reste dehors)
   HARD:excessive_grain      bruit haute fréquence dans zones plates (ciel)
 
 Sweet-spot (marqueur positif, pas un rejet)
@@ -87,10 +87,11 @@ DATA_DIR = ROOT / "data"
 
 MASTHEAD_AR = 3.8
 MIN_ASPECT = 1.25
+CAMPUS_MIN_ASPECT = 0.6
 MIN_MEAN_L = 0.09  # bannières quasi noires (ex. chute Montmorency hiver)
-MIN_NATIVE_W = 1400
-MIN_NATIVE_H = 700
-MIN_NATIVE_PX = 1_200_000
+MIN_NATIVE_W = 640
+MIN_NATIVE_H = 600
+MIN_NATIVE_PX = 650_000
 MAX_FLAT_GRAIN = 0.028
 NIGHT_FLAT = {"mean_l": 0.14, "sat": 0.10, "edge": 0.012}
 # Quasi toute la surface sous L=0.12 (falaise/hiver) — skylines sombres ~0.75 OK
@@ -732,7 +733,10 @@ def score(metrics: dict, entry: dict | None = None) -> dict:
     if entry and looks_town_hall_facade(entry):
         hard = True
         reasons.append("HARD:town_hall_facade")
-    if metrics["portrait"] or metrics["aspect"] < MIN_ASPECT:
+    tags = (entry or {}).get("tags") or []
+    campus_entry = bool((entry or {}).get("campus")) or "campus" in tags
+    min_aspect = CAMPUS_MIN_ASPECT if campus_entry else MIN_ASPECT
+    if metrics["aspect"] < min_aspect:
         hard = True
         reasons.append("HARD:portrait_or_narrow")
     # Résolution native (anti-grain upscale mât / pomo).

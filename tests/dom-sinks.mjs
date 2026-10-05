@@ -5,12 +5,13 @@ import { extname, join, relative } from 'node:path';
 import vm from 'node:vm';
 
 const root = new URL('../', import.meta.url).pathname;
-const SKIP = new Set(['.git', 'node_modules', 'test-results', 'playwright-report', 'dev']);
+const SKIP = new Set(['.git', 'node_modules', 'test-results', 'playwright-report', 'dev', 'android', 'ios']);
 const files = [];
 
 function collect(directory) {
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
     if (SKIP.has(entry.name)) continue;
+    if (entry.name === 'www' && directory.endsWith('/mobile')) continue;
     const full = join(directory, entry.name);
     if (entry.isDirectory()) collect(full);
     else if (['.js', '.mjs'].includes(extname(entry.name)) && !full.endsWith('.spec.mjs')) {

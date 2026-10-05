@@ -28,7 +28,9 @@ async function loadNews({ silent = false } = {}) {
     // d'abord contre les données réellement chargées, plutôt que d'afficher
     // un filtre inexistant après une URL ancienne ou bricolée.
     const requestedSource = new URLSearchParams(window.location.search).get('source');
-    if (requestedSource && news.some((item) => item.source === requestedSource)) {
+    if (requestedSource === NEWS_FOLLOWED_FILTER) {
+      newsSourceFilter = NEWS_FOLLOWED_FILTER;
+    } else if (requestedSource && news.some((item) => item.source === requestedSource)) {
       newsSourceFilter = requestedSource;
     }
     if (data.updated) {
@@ -74,6 +76,19 @@ function institutionBrandColor(institution = '') {
     if (normInstitutionKey(key) === norm) return entry.color;
   }
   return null;
+}
+
+/** Couleur d'accent d'un article : marque de l'établissement (pastilles, « Lire la suite »). */
+function isFollowedNewsView() {
+  return newsSourceFilter === NEWS_FOLLOWED_FILTER;
+}
+
+function isSingleSourceNewsView() {
+  return newsSourceFilter !== 'all' && newsSourceFilter !== NEWS_FOLLOWED_FILTER;
+}
+
+function followedMediaStore() {
+  return window.MediaFollowStore || null;
 }
 
 /** Couleur d'accent d'un article : marque de l'établissement (pastilles, « Lire la suite »). */
@@ -519,7 +534,7 @@ function updateFiltersCompactBar() {
   if (!FILTERS_COMPACT) return;
   const dot = FILTERS_COMPACT.querySelector('.filters-compact__dot');
   const text = FILTERS_COMPACT.querySelector('.filters-compact__text');
-  if (newsSourceFilter === 'all') return;
+  if (newsSourceFilter === 'all' || isFollowedNewsView()) return;
 
   const { institution, type, color } = sourceInfo(newsSourceFilter);
   const instLabel = filterSourceInstitutionLabel(institution, type, newsSourceFilter);
@@ -549,7 +564,7 @@ function syncFiltersPanel() {
   if (!FILTERS_PANEL) return;
   syncFiltersColumns();
 
-  const isSourceView = newsSourceFilter !== 'all';
+  const isSourceView = isSingleSourceNewsView();
   const overflow = filtersOverflow();
 
   if (FILTERS_MOBILE.matches && isSourceView) {
@@ -691,8 +706,8 @@ function bindMagazineViewportRelayout() {
   for (const q of [
     '(min-width: 768px)',
     '(min-width: 1100px)',
-    '(min-width: 1281px)',
-    '(min-width: 1920px)',
+    '(min-width: 1280px)',
+    (typeof RADAR_HD_MQ === 'string' ? RADAR_HD_MQ : '(min-width: 1880px)'),
     '(min-width: 3440px)',
     '(min-width: 3840px)',
   ]) {
@@ -1237,8 +1252,28 @@ function bindNewsSearch() {
 
 function renderNewsFilters() {
   if (!NEWS_FILTERS) return;
+  const followStore = followedMediaStore();
+  if (isFollowedNewsView() && (!followStore || !followStore.list().length)) {
+    newsSourceFilter = 'all';
+  }
   const sources = sortSourcesForFilters([...new Set(news.map(n => n.source))]);
   [...NEWS_FILTERS.querySelectorAll('[data-source]:not([data-source="all"])')].forEach(b => b.remove());
+
+  if (followStore && followStore.list().length) {
+    const followedBtn = document.createElement('button');
+    followedBtn.type = 'button';
+    followedBtn.className = 'filter-btn filter-btn--followed';
+    followedBtn.dataset.source = NEWS_FOLLOWED_FILTER;
+    followedBtn.title = adaptRadarUiText('Médias suivis');
+    followedBtn.innerHTML = `
+      <span class="filter-btn__row">
+        <span class="filter-btn__dot" aria-hidden="true"></span>
+        <span class="filter-btn__name">${escapeHtml(adaptRadarUiText('Suivis'))}</span>
+      </span>
+      <span class="filter-btn__inst"></span>
+    `;
+    NEWS_FILTERS.appendChild(followedBtn);
+  }
 
   sources.forEach(src => {
     const btn = document.createElement('button');
@@ -1275,13 +1310,21 @@ function renderNewsFilters() {
 
 function renderNews() {
   if (!NEWS_LIST) return;
-  const isSourceView = newsSourceFilter !== 'all';
+  resetBackupPhotoClaims();
+  const followStore = followedMediaStore();
+  if (isFollowedNewsView() && (!followStore || !followStore.list().length)) {
+    newsSourceFilter = 'all';
+  }
+  const isSourceView = isSingleSourceNewsView();
+  const isFollowedView = isFollowedNewsView();
   const tokens = searchTokens(newsSearchQuery);
   const isSearchView = tokens.length > 0;
 
-  let items = isSourceView
-    ? news.filter(n => n.source === newsSourceFilter)
-    : news;
+  let items = isFollowedView
+    ? (followStore ? followStore.filterItemsByFollowed(news) : [])
+    : isSourceView
+      ? news.filter(n => n.source === newsSourceFilter)
+      : news;
   if (isSearchView) {
     items = items.filter((n) => articleMatchesSearch(n, tokens));
   }
@@ -1292,6 +1335,8 @@ function renderNews() {
     if (emptyP) {
       if (isSearchView && !items.length) {
         emptyP.textContent = `Aucun résultat pour « ${newsSearchQuery} ».`;
+      } else if (isFollowedView && !items.length) {
+        emptyP.textContent = 'Aucun article des médias suivis pour le moment.';
       } else {
         emptyP.textContent = 'Aucun article pour le moment.';
       }
@@ -1303,11 +1348,22 @@ function renderNews() {
     : `${items.length} article${items.length !== 1 ? 's' : ''}`;
   NEWS_COUNT.textContent = countLabel;
 
+  if (MEDIA_FOLLOW_BAR && window.MediaFollowUI) {
+    if (isSourceView) {
+      MediaFollowUI.renderSourceFollowBar(MEDIA_FOLLOW_BAR, { name: newsSourceFilter });
+    } else {
+      MEDIA_FOLLOW_BAR.hidden = true;
+      MEDIA_FOLLOW_BAR.replaceChildren();
+    }
+  }
+
   NEWS_LIST.innerHTML = '';
   if (isSearchView) {
     NEWS_LIST.dataset.mode = 'search';
   } else if (isSourceView) {
     NEWS_LIST.dataset.mode = 'source';
+  } else if (isFollowedView) {
+    NEWS_LIST.dataset.mode = 'followed';
   } else {
     NEWS_LIST.removeAttribute('data-mode');
   }
@@ -1357,7 +1413,7 @@ function renderNews() {
     NEWS_LIST.removeAttribute('data-autumn-grace');
   }
 
-  // Wide E : 2 unes dès 1920, 3 à 3840 — même gabarit fil général et vue source.
+  // Wide E : 2 unes dès Full HD (1880, voir RADAR_HD_MIN_PX), 3 à 3840.
   const wideDualLead = isWideDualLeadViewport();
   const leadCount = wideDualLead ? Math.min(wideHeroLeadCount(), heroItems.length) : 1;
   if (wideDualLead) hero.dataset.leads = String(leadCount);
@@ -1601,7 +1657,7 @@ function updateNewsLayout() {
 const HERO_FEATURE_MIN = 4; /* 4 vedettes + 1 une = 5 (prod) */
 const HERO_FEATURE_MAX = 4;
 const HERO_SPOTLIGHT_MAX = 1 + HERO_FEATURE_MIN; /* 5 au total prod */
-/* Wide E : 2 unes dès 1920 ; 3 unes + 6 vedettes (3 col) à 3840. */
+/* Wide E : 2 unes dès Full HD (1880) ; 3 unes + 6 vedettes (3 col) à 3840. */
 const HERO_WIDE_LEAD_COUNT = 2;
 const HERO_WIDE_FEATURE_MIN = 4;
 const HERO_UHD_LEAD_COUNT = 3;
@@ -1611,7 +1667,7 @@ function isWideDualLeadViewport() {
   try {
     return typeof isWideNoMarqueeMode === 'function'
       && isWideNoMarqueeMode()
-      && window.matchMedia('(min-width: 1920px)').matches;
+      && isRadarHdViewport();
   } catch {
     return false;
   }
@@ -1660,7 +1716,7 @@ const AVG_BRIEF_TITLE_H = 42;
  */
 const COLUMN_HEIGHT_TOL = 40;
 /* Vue source hors wide dual : 1 une + jusqu’à 2 vedettes (fraîcheur).
- * Wide E (≥1920) : même N que le fil général (2 unes + vedettes, 3 à 3840). */
+ * Wide E (Full HD / 1880) : même N que le fil général (2 unes + vedettes, 3 à 3840). */
 const SOURCE_FEATURE_MAX = 2;
 const SOURCE_HERO_SPOTLIGHT_MAX = 1 + SOURCE_FEATURE_MAX;
 
@@ -2868,7 +2924,7 @@ function pickSourceLead(pool) {
  *  - Une + vedettes = tranche contiguë des plus frais
  *    · hors wide dual : 1 une + ≤2 vedettes (évite le « double look » vs En bref
  *      sur mobile)
- *    · wide E (≥1920) : même N que le fil général (2 unes + vedettes)
+ *    · wide E (Full HD / 1880) : même N que le fil général (2 unes + vedettes)
  *  - En bref = suite chronologique (graine ≈ hauteur hero)
  *  - Suite du fil = le reste
  */
@@ -3066,7 +3122,17 @@ function ensureLeadTitleAboveMedia(article) {
 const WEAK_IMAGE_PATH = /article-tile|size-article-tile/;
 
 /** Aligné sur scripts/article-image-lib.js GLOBAL_IMAGE_REJECT_RE */
-const GLOBAL_IMAGE_REJECT_RE = /(?:logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic|article-tile|size-article-tile|thumbnail|thumb_|recent-posts|wp-block-query|widget|sponsor|banner|social-share|-150x\d+\.|cropped-logo|logoexile|121330814_121456603062023_8783413434532337259_n|(?:^|\/)daily\.png$|editorial[_-]|(?:^|\/)editorial(?:s)?(?:[_./-]|$)|画板|%e7%94%bb%e6%9d%bf|_optimized_optimized_optimized|00\.graphics\.csu\.naya_hachwa)/i;
+const GLOBAL_IMAGE_REJECT_RE = /(?:logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic|article-tile|size-article-tile|thumbnail|thumb_|recent-posts|wp-block-query|widget|sponsor|banner|social-share|-150x\d+\.|cropped-logo|logoexile|121330814_121456603062023_8783413434532337259_n|(?:^|\/)daily\.png$|editorial[_-]|(?:^|\/)editorial(?:s)?(?:[_./-]|$)|画板|%e7%94%bb%e6%9d%bf|_optimized_optimized_optimized|00\.graphics\.csu\.naya_hachwa|antidote|banni[eè]re|pub_agenda|jlc-ad)/i;
+
+function articleImagePathRejected(raw = '') {
+  const src = String(raw || '').trim();
+  if (!src) return false;
+  let path = src.toLowerCase();
+  try {
+    path = decodeURIComponent(new URL(src, 'https://le-radar.ca/').pathname).toLowerCase();
+  } catch { /* chaîne brute */ }
+  return GLOBAL_IMAGE_REJECT_RE.test(path);
+}
 
 function isFallbackImageUrl(raw = '') {
   const src = String(raw).trim();
@@ -3270,6 +3336,7 @@ function isThumbRoleName(role = '') {
 }
 
 function hasUsablePhoto(item, role = 'lead') {
+  if (articleImagePathRejected(item?.image)) return false;
   if (hasLocalPhoto(item)) return true;
   const forThumb = isThumbRoleName(role);
   return !!getCandidateImage(item?.image, { forThumb });
@@ -3288,6 +3355,52 @@ function hasDisplayImage(item, role = 'lead') {
  * Repli campus côté client — scripts/campus-fallback-lib.js (CampusFallback).
  * Banque mât universities + cégeps curatés.
  */
+/** Photos de repli déjà posées dans ce rendu. owner = lien d’article. */
+let backupClaimByKey = new Map();
+
+function resetBackupPhotoClaims() {
+  backupClaimByKey = new Map();
+}
+
+function backupOwnerKey(item) {
+  return String(item?.link || item?.title || '');
+}
+
+function backupPhotoKey(url) {
+  const fn = typeof CampusFallback === 'object' ? CampusFallback.campusPhotoKey : null;
+  return typeof fn === 'function' ? fn(url) : String(url || '').trim();
+}
+
+function claimBackupPhoto(url, item) {
+  const key = backupPhotoKey(url);
+  if (!key) return false;
+  const prev = backupClaimByKey.get(key);
+  const me = backupOwnerKey(item);
+  if (prev && prev.owner !== me) return false;
+  backupClaimByKey.set(key, { owner: me, url: String(url).trim() });
+  return true;
+}
+
+function backupAvoidUrls(item) {
+  const me = backupOwnerKey(item);
+  const urls = [];
+  for (const entry of backupClaimByKey.values()) {
+    if (entry.owner !== me) urls.push(entry.url);
+  }
+  return urls;
+}
+
+function clearClientCampusStock(item) {
+  if (!item || item.imageProvider !== 'campus-bank') return;
+  delete item.stockImage;
+  delete item.imageTitle;
+  delete item.imageCredit;
+  delete item.imageCreator;
+  delete item.imageLicense;
+  delete item.imageProvider;
+  delete item.imageSourceUrl;
+}
+
 function pickClientCampusPhoto(item = {}) {
   const lib = typeof CampusFallback === 'object' ? CampusFallback : null;
   if (!lib || typeof lib.pickCampusFallback !== 'function') return null;
@@ -3295,7 +3408,10 @@ function pickClientCampusPhoto(item = {}) {
     && Array.isArray(QUEBEC_UNIVERSITY_BACKGROUNDS))
     ? QUEBEC_UNIVERSITY_BACKGROUNDS
     : [];
-  return lib.pickCampusFallback(item, { universityPhotos: uni });
+  return lib.pickCampusFallback(item, {
+    universityPhotos: uni,
+    avoidUrls: backupAvoidUrls(item),
+  });
 }
 
 function isThematicStock(item, role = 'lead') {
@@ -3304,12 +3420,24 @@ function isThematicStock(item, role = 'lead') {
 
 function ensureCampusStock(item, { replace = false } = {}) {
   if (!item || typeof item !== 'object') return null;
-  if (!replace && item.stockImage && getCandidateImage(item.stockImage, { forThumb: true })) {
+  const existing = String(item.stockImage || '').trim();
+  const existingOk = existing && getCandidateImage(existing, { forThumb: true });
+  const existingIsCampus = item.imageProvider === 'campus-bank';
+
+  // Photo thématique : pas un repli campus, on ne la déduplique pas ici.
+  if (!replace && existingOk && !existingIsCampus) return item;
+
+  // Repli déjà à cet article, et pas pris par une autre carte.
+  if (!replace && existingOk && existingIsCampus && claimBackupPhoto(existing, item)) {
     return item;
   }
+
   const pick = pickClientCampusPhoto(item);
-  if (!pick?.url && !pick?.stockImage) return null;
-  const url = pick.stockImage || pick.url;
+  const url = String(pick?.stockImage || pick?.url || '').trim();
+  if (!url || !claimBackupPhoto(url, item)) {
+    if (existingIsCampus) clearClientCampusStock(item);
+    return null;
+  }
   const credit = pick.credit || pick.imageCreator || '';
   const license = pick.license || pick.imageLicense || 'CC';
   const link = pick.link || pick.imageSourceUrl || url;
@@ -3385,7 +3513,7 @@ function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
   if (shouldPreferStockPhoto(item, role)) preferPhoto = false;
 
   // 1) Photo d’article : miroir local, puis URL source (hôte fragile inclus).
-  if (preferPhoto && hasLocalPhoto(item)) {
+  if (preferPhoto && hasLocalPhoto(item) && !articleImagePathRejected(item?.image)) {
     return { src: resolveLocalPhotoUrl(item), kind: 'photo' };
   }
   if (preferPhoto && getCandidateImage(item?.image, { forThumb })) {
@@ -3405,7 +3533,7 @@ function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
   }
   if (!preferPhoto) {
     const local = resolveLocalPhotoUrl(item);
-    if (local) return { src: local, kind: 'photo' };
+    if (local && !articleImagePathRejected(item?.image)) return { src: local, kind: 'photo' };
     if (getCandidateImage(item?.image, { forThumb })) {
       return { src: getCandidateImage(item.image, { forThumb }), kind: 'photo' };
     }
@@ -3432,7 +3560,7 @@ function photoDisplayRungs(item = {}, { forThumb = false } = {}) {
     rungs.push({ src: href, kind: 'photo', rung });
   };
   const local = resolveLocalPhotoUrl(item);
-  if (local) push(local, 'local');
+  if (local && !articleImagePathRejected(item?.image)) push(local, 'local');
   const remote = getCandidateImage(item?.image, { forThumb });
   if (remote) push(remote, 'origin');
   const photon = withPhotonImageUrl(item?.image || remote || '');
@@ -3687,8 +3815,160 @@ function buildMediaCreditElement(item = {}) {
   return cap;
 }
 
+/**
+ * Capture d’écran presque blanche (portail, formulaire) : le cover 3:2
+ * coupe le début des lignes et laisse le blanc du haut. On recadre sur
+ * l’encre et on ancre à gauche pour que le texte remplisse le cadre.
+ */
+function documentContentViewBox(img) {
+  const sampleW = 80;
+  const sampleH = 44;
+  const canvas = document.createElement('canvas');
+  canvas.width = sampleW;
+  canvas.height = sampleH;
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  if (!ctx) return null;
+  try {
+    ctx.drawImage(img, 0, 0, sampleW, sampleH);
+  } catch {
+    return null;
+  }
+  let pixels;
+  try {
+    pixels = ctx.getImageData(0, 0, sampleW, sampleH).data;
+  } catch {
+    return null;
+  }
+  const lumAt = (x, y) => {
+    const o = (y * sampleW + x) * 4;
+    return 0.2126 * pixels[o] + 0.7152 * pixels[o + 1] + 0.0722 * pixels[o + 2];
+  };
+  const corners = [
+    lumAt(1, 1),
+    lumAt(sampleW - 2, 1),
+    lumAt(1, sampleH - 2),
+    lumAt(sampleW - 2, sampleH - 2),
+  ];
+  const bg = corners.reduce((sum, value) => sum + value, 0) / corners.length;
+  if (bg < 228) return null;
+  const ink = (x, y) => Math.abs(lumAt(x, y) - bg) > 22;
+  let minX = sampleW;
+  let minY = sampleH;
+  let maxX = -1;
+  let maxY = -1;
+  let count = 0;
+  for (let y = 0; y < sampleH; y += 1) {
+    for (let x = 0; x < sampleW; x += 1) {
+      if (!ink(x, y)) continue;
+      count += 1;
+      if (x < minX) minX = x;
+      if (y < minY) minY = y;
+      if (x > maxX) maxX = x;
+      if (y > maxY) maxY = y;
+    }
+  }
+  if (count < sampleW * sampleH * 0.012 || maxX < 0) return null;
+  minX = Math.max(0, minX - 1);
+  minY = Math.max(0, minY - 1);
+  maxX = Math.min(sampleW - 1, maxX + 1);
+  maxY = Math.min(sampleH - 1, maxY + 1);
+  const x0 = minX / sampleW;
+  const y0 = minY / sampleH;
+  const x1 = (maxX + 1) / sampleW;
+  const y1 = (maxY + 1) / sampleH;
+  if (y0 < 0.14 && x0 < 0.06) return null;
+  return { x0, y0, x1, y1 };
+}
+
+function applyDocumentContentCropNow(img) {
+  if (!img || img.dataset.docCrop === '1') return;
+  const box = documentContentViewBox(img);
+  if (!box) return;
+  img.dataset.docCrop = '1';
+  img.classList.add('is-doc-crop');
+  const top = (box.y0 * 100).toFixed(2);
+  const right = ((1 - box.x1) * 100).toFixed(2);
+  const bottom = ((1 - box.y1) * 100).toFixed(2);
+  const left = (box.x0 * 100).toFixed(2);
+  if (typeof CSS !== 'undefined' && CSS.supports('object-view-box', 'inset(0% 0% 0% 0%)')) {
+    img.style.objectViewBox = `inset(${top}% ${right}% ${bottom}% ${left}%)`;
+  }
+  img.style.objectPosition = 'left center';
+}
+
+/*
+ * Le drawImage de documentContentViewBox décode et réduit la photo sur le
+ * fil principal (jusqu’à ~100 ms pour une photo 2560 px sur un poste lent).
+ * Fait pour ~180 photos à leur chargement, ça gelait la page plusieurs
+ * secondes (mât sports vide, clics et Playwright bloqués en CI).
+ * Donc : jamais les images d’une autre origine (canvas « tainted »,
+ * getImageData échoue toujours : travail perdu), seulement les photos
+ * proches de l’écran, et une seule par temps mort.
+ */
+const docCropQueue = [];
+let docCropObserver = null;
+let docCropScheduled = false;
+
+function docCropPixelsReadable(img) {
+  const src = img.currentSrc || img.src || '';
+  if (!src) return false;
+  try {
+    const url = new URL(src, window.location.href);
+    if (url.protocol === 'data:' || url.protocol === 'blob:') return true;
+    return url.origin === window.location.origin;
+  } catch {
+    return false;
+  }
+}
+
+function drainDocCropQueue() {
+  docCropScheduled = false;
+  const img = docCropQueue.shift();
+  if (img) {
+    delete img.dataset.docCropQueued;
+    if (img.isConnected) applyDocumentContentCropNow(img);
+  }
+  if (docCropQueue.length) scheduleDocCropDrain();
+}
+
+function scheduleDocCropDrain() {
+  if (docCropScheduled) return;
+  docCropScheduled = true;
+  if (typeof window.requestIdleCallback === 'function') {
+    window.requestIdleCallback(drainDocCropQueue, { timeout: 1500 });
+  } else {
+    window.setTimeout(drainDocCropQueue, 50);
+  }
+}
+
+function queueDocumentContentCrop(img) {
+  docCropQueue.push(img);
+  scheduleDocCropDrain();
+}
+
+function applyDocumentContentCrop(img) {
+  if (!img || img.dataset.docCrop === '1' || img.dataset.docCropQueued === '1') return;
+  if (!docCropPixelsReadable(img)) return;
+  img.dataset.docCropQueued = '1';
+  if (typeof IntersectionObserver !== 'function') {
+    queueDocumentContentCrop(img);
+    return;
+  }
+  if (!docCropObserver) {
+    docCropObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        docCropObserver.unobserve(entry.target);
+        queueDocumentContentCrop(entry.target);
+      }
+    }, { rootMargin: '600px 0px' });
+  }
+  docCropObserver.observe(img);
+}
+
 function showArticleImage(article, media, img, kind, item) {
   media.replaceChildren(img);
+  if (kind === 'photo') applyDocumentContentCrop(img);
   let cap = null;
   if (kind === 'photo') {
     if (item?.sourceImageCredit) {
@@ -3853,7 +4133,7 @@ function attachArticleImage(article, item, role) {
   loadImage(primary.src, primary.kind);
 }
 
-const LEAD_IMAGE_MIN = { width: 720, height: 405, pixels: 320000 };
+const LEAD_IMAGE_MIN = { width: 640, height: 360, pixels: 320000 };
 const FEATURE_IMAGE_MIN = { width: 640, height: 360, pixels: 240000 };
 /* Vignettes (vedettes + En bref) : affichées en ~100 px, on accepte des photos
    plus petites et des cadrages portrait — object-fit recadre de toute façon. */
@@ -3868,7 +4148,8 @@ function isUsableArticleImage(img, role) {
   // Dimensions seulement : un dessin éditorial (fond blanc, peu de traits) reste
   // une image d’article. Pas de QC « wallpaper » ici.
   // Vignettes : très tolérant (object-fit). Stock/campus passent sans ce filtre.
-  const [ratioMin, ratioMax] = isThumb ? [0.4, 4.0] : [0.95, 2.6];
+  // Aligné sur article-image-lib LEAD_MAX_RATIO (Cabana ≈ 4,36 acceptable).
+  const [ratioMin, ratioMax] = isThumb ? [0.4, 4.8] : [0.95, 4.8];
   return (
     width >= min.width
     && height >= min.height
@@ -4390,5 +4671,12 @@ function prepareBrief(raw = '', role = 'standard') {
   }
 
   return { text: cut, truncated: true };
+}
+
+if (typeof MediaFollowStore !== 'undefined' && MediaFollowStore.subscribe) {
+  MediaFollowStore.subscribe(() => {
+    if (NEWS_FILTERS) renderNewsFilters();
+    if (NEWS_LIST) renderNews();
+  });
 }
 

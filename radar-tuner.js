@@ -1819,7 +1819,7 @@ function renderTunerNowAir() {
     paintWideDial(radio);
     // La voie wide return avant les markTunerDialReady() du chemin compact :
     // sans cet appel le carré reste opacity: 0 (rectangle vide) sur tout
-    // écran ≥ 1281 px — accueil, kit média, fiches.
+    // écran ≥ 1280 px — accueil, kit média, fiches.
     markTunerDialReady();
     syncWideStickyTop();
     if (previewing) {
@@ -2758,6 +2758,10 @@ function applyFilterInstMarquees() {
     if (src === 'all') {
       // UI — se traduit avec la langue active (ne pas figer le FR)
       applyMarquee(instEl, adaptRadarUiText('Toutes les sources'));
+      return;
+    }
+    if (src === NEWS_FOLLOWED_FILTER) {
+      applyMarquee(instEl, adaptRadarUiText('Médias suivis'));
       return;
     }
     const { institution, type } = sourceInfo(src);

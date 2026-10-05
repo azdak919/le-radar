@@ -8,7 +8,7 @@ const http = require('http');
 const DEFAULT_TIMEOUT = 12000;
 
 /** Motifs globaux de rejet (logos, placeholders, widgets, carrousels). */
-const GLOBAL_IMAGE_REJECT_RE = /(?:logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic|article-tile|size-article-tile|thumbnail|thumb_|recent-posts|wp-block-query|widget|sponsor|banner|social-share|-150x\d+\.|cropped-logo|logoexile|121330814_121456603062023_8783413434532337259_n|(?:^|\/)daily\.png$|editorial[_-]|(?:^|\/)editorial(?:s)?(?:[_./-]|$)|画板|%e7%94%bb%e6%9d%bf|_optimized_optimized_optimized|00\.graphics\.csu\.naya_hachwa)/i;
+const GLOBAL_IMAGE_REJECT_RE = /(?:logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic|article-tile|size-article-tile|thumbnail|thumb_|recent-posts|wp-block-query|widget|sponsor|banner|social-share|-150x\d+\.|cropped-logo|logoexile|121330814_121456603062023_8783413434532337259_n|(?:^|\/)daily\.png$|editorial[_-]|(?:^|\/)editorial(?:s)?(?:[_./-]|$)|画板|%e7%94%bb%e6%9d%bf|_optimized_optimized_optimized|00\.graphics\.csu\.naya_hachwa|antidote|banni[eè]re|pub_agenda|jlc-ad)/i;
 
 function imageRejectPatternsFromHints(hints = {}) {
   const extra = hints.rejectPathPatterns;
@@ -275,8 +275,15 @@ function stripStyleAndScript(html = '') {
     .replace(/<noscript\b[^>]*>[\s\S]*?<\/noscript>/gi, '');
 }
 
-function stripBoilerplateRegions(html = '') {
+/** Pubs insérées dans le corps (Le Collectif : rotation Antidote / agenda). */
+function stripAdSlots(html = '') {
   return String(html)
+    .replace(/<div\b[^>]*\bclass=["'][^"']*\bjlc-ad\b[^"']*["'][^>]*>[\s\S]*?<\/div>/gi, '')
+    .replace(/<div\b[^>]*\bid=["']jlc-ad-rotation["'][^>]*>[\s\S]*?<\/div>/gi, '');
+}
+
+function stripBoilerplateRegions(html = '') {
+  return stripAdSlots(String(html))
     .replace(/<div[^>]*\bwp-block-query\b[\s\S]*?<\/div>\s*(?=<div|<\/main|<\/body|$)/gi, '')
     .replace(/<ul[^>]*\bwp-block-post-template\b[\s\S]*?<\/ul>/gi, '')
     .replace(/<aside[\s\S]*?<\/aside>/gi, '')
@@ -492,6 +499,8 @@ function collectContentImages(content = '', extraRejectPatterns = [], options = 
     const tag = m[0];
     const rawSrc = imgTagSrc(tag);
     if (!rawSrc) continue;
+    const alt = decodeEntities((tag.match(/\balt=["']([^"']*)["']/i) || [])[1] || '');
+    if (/\b(?:antidote|publicit[eé]|annonceur|commandit[eé])\b/i.test(alt)) continue;
     let src = toAbsoluteImageUrl(rawSrc, baseUrl);
     if (!src || !isCandidateImageUrl(src, extraRejectPatterns)) continue;
     // WP -600x315 / -750x375 → version pleine avant rejet « weak »
@@ -635,13 +644,20 @@ function isWeakImageUrl(raw = '', options = {}) {
   return /article-tile|size-article-tile/.test(path);
 }
 
-/** Seuils vedette : assez grands pour un hero ~800px sans pixelisation visible. */
-const LEAD_MIN_WIDTH = 720;
-const LEAD_MIN_HEIGHT = 405;
+/** Seuils vedette : une carte ~560 px. 640 px couvre un 1024 px Flickr encore net. */
+const LEAD_MIN_WIDTH = 640;
+const LEAD_MIN_HEIGHT = 360;
 const LEAD_MIN_PIXELS = 320000;
 const FEATURE_MIN_WIDTH = 640;
 const FEATURE_MIN_HEIGHT = 360;
 const FEATURE_MIN_PIXELS = 240000;
+/**
+ * Plafond largeur/hauteur d’une photo de une (crop 3:2).
+ * Pavillon Georges-Cabana, Uncivil Fire, 8064×1850 ≈ 4,36 : le centre du
+ * panorama reste une façade lisible (unes Collectif, 21 sept. 2026).
+ * Au-delà, le crop ne garde plus le bâtiment.
+ */
+const LEAD_MAX_RATIO = 4.8;
 
 function meetsLeadDisplaySize(width = 0, height = 0) {
   const ratio = width / Math.max(height, 1);
@@ -651,7 +667,7 @@ function meetsLeadDisplaySize(width = 0, height = 0) {
     && height >= LEAD_MIN_HEIGHT
     && pixels >= LEAD_MIN_PIXELS
     && ratio >= 0.95
-    && ratio <= 2.6
+    && ratio <= LEAD_MAX_RATIO
   );
 }
 
@@ -663,7 +679,28 @@ function meetsFeatureDisplaySize(width = 0, height = 0) {
     && height >= FEATURE_MIN_HEIGHT
     && pixels >= FEATURE_MIN_PIXELS
     && ratio >= 0.95
-    && ratio <= 2.6
+    && ratio <= LEAD_MAX_RATIO
+  );
+}
+
+/**
+ * Photo d’article un peu sous le seuil vedette (ex. og:image 540×438).
+ * On la garde : une pub 1920 px ne doit pas la remplacer, ni le campus.
+ */
+const ARTICLE_KEEP_MIN_WIDTH = 480;
+const ARTICLE_KEEP_MIN_HEIGHT = 300;
+const ARTICLE_KEEP_MIN_PIXELS = 150000;
+
+function meetsArticleKeepSize(width = 0, height = 0) {
+  if (!width || !height) return false;
+  if (isBannerLikeRatio(width, height)) return false;
+  const ratio = width / height;
+  return (
+    width >= ARTICLE_KEEP_MIN_WIDTH
+    && height >= ARTICLE_KEEP_MIN_HEIGHT
+    && width * height >= ARTICLE_KEEP_MIN_PIXELS
+    && ratio >= 0.9
+    && ratio <= LEAD_MAX_RATIO
   );
 }
 
@@ -732,7 +769,7 @@ function compareLeadCandidates(a = {}, b = {}) {
 }
 
 function listArticleImageCandidates(html = '', extraRejectPatterns = [], options = {}, baseUrl = '') {
-  html = stripStyleAndScript(html);
+  html = stripAdSlots(stripStyleAndScript(html));
   // Plafond après strip : le CSS inline ne cache plus <article>.
   if (html && html.length > HTML_PARSE_CAP) html = html.slice(0, HTML_PARSE_CAP);
   const preferFirstContentImage = !!options.preferFirstContentImage;
@@ -888,11 +925,17 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     if (metaW && metaH && meetsLeadDisplaySize(metaW, metaH)) {
       return { url, width: metaW, height: metaH, source: 'meta', leadReady: true };
     }
+    if (metaW && metaH && meetsArticleKeepSize(metaW, metaH)) {
+      return { url, width: metaW, height: metaH, source: 'meta-editorial', leadReady: true };
+    }
     const dims = await probeRemoteImageSize(url);
     if (dims && meetsLeadDisplaySize(dims.width, dims.height)) {
       return { url, width: dims.width, height: dims.height, source: 'probe', leadReady: true };
     }
-    // Feature / vignette OK mais pas hero (panorama trop large, etc.)
+    if (dims && meetsArticleKeepSize(dims.width, dims.height)) {
+      return { url, width: dims.width, height: dims.height, source: 'probe-editorial', leadReady: true };
+    }
+    // Sous le plafond une (LEAD_MAX_RATIO) : feature seulement.
     if (dims && meetsFeatureDisplaySize(dims.width, dims.height)) {
       return { url, width: dims.width, height: dims.height, source: 'probe-feature', leadReady: false };
     }
@@ -992,6 +1035,7 @@ module.exports = {
   LEAD_MIN_WIDTH,
   LEAD_MIN_HEIGHT,
   LEAD_MIN_PIXELS,
+  LEAD_MAX_RATIO,
   FEATURE_MIN_WIDTH,
   FEATURE_MIN_HEIGHT,
   FEATURE_MIN_PIXELS,
@@ -1019,6 +1063,8 @@ module.exports = {
   leadFitTier,
   meetsLeadDisplaySize,
   meetsFeatureDisplaySize,
+  meetsArticleKeepSize,
+  stripAdSlots,
   listArticleImageCandidates,
   imageFromArticleHtml,
   needsImageEnrichment,

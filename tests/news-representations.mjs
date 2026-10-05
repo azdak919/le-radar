@@ -5,6 +5,12 @@
  * news.json, le RSS, le prérendu HTML et l'ItemList JSON-LD. Les bots les
  * régénèrent à des moments différents; cette vérification empêche qu'ils
  * affichent des têtes de fil différentes sans alerte.
+ *
+ * Invariant : les manchettes JSON-LD sont les titres *complets* (pas un
+ * slice type 110 car.). Une coupe dans generate-seo.js faisait échouer
+ * tous les bots qui passent bot-prepush dès qu'une manchette longue
+ * entrait dans le top 10 — même si news.json et index.html avaient été
+ * commités ensemble (integrity gate deferred).
  */
 
 import assert from 'node:assert/strict';

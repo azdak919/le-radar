@@ -8,6 +8,7 @@ Ils ne constituent pas une garantie de service.
 | Domaine | Objectif | Signal d'alerte |
 |---|---:|---:|
 | Fil d'actualités | dernière passe réussie depuis moins de 90 min | plus de 3 h |
+| Scores sports (récolte) | dernière passe S1 depuis moins de 90 min dès midi QC (6 h le matin) ; tampon `/sports/` = `sports.json` | JSON plus vieux que le SLA, ou HTML `/sports/` en retard sur JSON |
 | Métadonnées radio | dernière collecte depuis moins de 90 min | plus de 3 h |
 | Sources actives | au moins 90 % joignables sur 24 h | moins de 80 % |
 | Radios listées | 100 % avec une méthode d'écoute valide | une radio inutilisable |

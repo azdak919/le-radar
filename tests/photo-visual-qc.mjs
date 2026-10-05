@@ -57,6 +57,19 @@ assert(barren.softPenalty >= 15, 'barren soft penalty');
 const tiny = scoreVisualQuality({ width: 200, height: 100, title: 'x' });
 assert(tiny.hardReject, 'tiny image hard reject');
 
+const cabana = scoreVisualQuality({
+  width: 8064,
+  height: 1850,
+  title: 'Université de Sherbrooke - Pavillon Georges-Cabana (panorama)',
+  creator: 'Uncivil Fire',
+});
+assert(cabana.ok && !cabana.hardReject, 'Cabana 4,36 acceptable');
+assert(!cabana.reasons.includes('ultra_wide_ratio'), 'Cabana n’est pas ultra-large');
+assert(cabana.softPenalty === 0, `Cabana sans pénalité (got ${cabana.softPenalty})`);
+
+const strip = scoreVisualQuality({ width: 9600, height: 1800, title: 'façade trop longue' });
+assert(strip.reasons.includes('ultra_wide_ratio'), 'ratio ≈ 5,33 pénalisé');
+
 const scored = applyVisualQcToScore(150, {
   width: 1600,
   height: 900,

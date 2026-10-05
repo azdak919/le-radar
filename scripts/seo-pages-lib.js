@@ -42,7 +42,7 @@ const CONTACT_URL = `mailto:${CONTACT_MAIL}`;
  * CSS critique du synthé (copie de index.html) — FOUC sur pages SEO sans ce bloc.
  * Sans lui, la colonne « À l'antenne » peut rester figée / mal calée avant style.css.
  */
-const WIDE_LAYOUT_ASSET_V = 'wide-auto-e100';
+const WIDE_LAYOUT_ASSET_V = 'wide-auto-e102';
 
 function renderWideLayoutAssets(up) {
   return `    <link rel="stylesheet" href="${up}dev/midwidth-preview.css?v=${WIDE_LAYOUT_ASSET_V}" />
@@ -274,6 +274,14 @@ const T = {
     institutions: 'Établissements',
     browseSchedules: 'Choisir une autre radio',
     officialSite: 'Site officiel',
+    availableOn: 'Disponible sur',
+    follow: 'Suivre',
+    following: 'Suivi',
+    dirStatRss: '{n} avec un flux RSS',
+    dirStatGoogleNews: '{n} dans Google Actualités',
+    dirStatInstagram: '{n} sur Instagram',
+    dirStatYoutube: '{n} sur YouTube',
+    dirStatPodcast: '{n} avec un balado',
     frequency: 'Fréquence',
     institution: 'Établissement',
     city: 'Ville',
@@ -441,6 +449,14 @@ const T = {
     institutions: 'Institutions',
     browseSchedules: 'Choose another station',
     officialSite: 'Official website',
+    availableOn: 'Available on',
+    follow: 'Follow',
+    following: 'Following',
+    dirStatRss: '{n} with an RSS feed',
+    dirStatGoogleNews: '{n} in Google News',
+    dirStatInstagram: '{n} on Instagram',
+    dirStatYoutube: '{n} on YouTube',
+    dirStatPodcast: '{n} with a podcast',
     frequency: 'Frequency',
     institution: 'Institution',
     city: 'City',
@@ -1125,6 +1141,9 @@ ${renderWideLayoutAssets(up)}${renderTunerCriticalCss()}
     <script src="${up}quebec-backgrounds-data.js" defer></script>
     <script src="${up}quebec-university-backgrounds-data.js" defer></script>
     <script src="${up}scripts/campus-fallback-lib.js" defer></script>
+    <script src="${up}scripts/media-channels-lib.js" defer></script>
+    <script src="${up}scripts/media-follow-store.js" defer></script>
+    <script src="${up}scripts/media-follow-ui.js" defer></script>
     <script src="${up}quebec-nations-backgrounds-data.js" defer></script>
     <script src="${up}quebec-favorites-backgrounds-data.js" defer></script>
     <script src="${up}quebec-backgrounds.js" defer></script>
@@ -1133,6 +1152,8 @@ ${renderWideLayoutAssets(up)}${renderTunerCriticalCss()}
     <script src="${up}radar-utils.js" defer></script>
     <script src="${up}radar-state.js" defer></script>
     <script src="${up}radar-weather.js" defer></script>
+    <script src="${up}scripts/session-freshness-lib.js" defer></script>
+    <script src="${up}scripts/sports-freshness-lib.js" defer></script>
     <script src="${up}radar-sports-cta.js" defer></script>
     <script src="${up}radar-tuner.js" defer></script>
     <script src="${up}radar-news.js" defer></script>
@@ -1510,6 +1531,7 @@ module.exports = {
   CHROME_T,
   INSTALL_APPS,
   renderNativeTuner,
+  EXTERNAL_LINK_ATTRS,
   factsList,
   headlineList,
   cardGrid,

@@ -53,13 +53,13 @@
 <body>
   <header>
     <h1>F — cartes normales</h1>
-    <p class="lede">Un seul modèle : la puce. Noms d’équipe (Vert & Or, Cheetahs…), pas la ville. Voile : club. Kicker 1 ligne, sauf Dernière heure / Prochain+date / dates plus vieilles que hier. Issues : V, D, N, 7e, or, argent, bronze. Accueil : une face par match.</p>
+    <p class="lede">Un seul modèle : la puce. Noms d’équipe (Vert & Or, Cheetahs…), pas la ville. Voile : club. Kicker 1 ligne, sauf Derniers résultats / Prochain+date / dates plus vieilles que hier. Issues : V, D, N, 7e, or, argent, bronze. Accueil : une face par match.</p>
     <nav>
       <a href="#live">En cours</a>
       <a href="#soon">Aujourd’hui</a>
       <a href="#tomorrow">Demain</a>
       <a href="#later">Prochain</a>
-      <a href="#today">Dernière heure</a>
+      <a href="#today">Derniers résultats</a>
       <a href="#hier">Hier</a>
       <a href="#avant">Date (2 j)</a>
       <a href="#date">Date</a>
@@ -69,8 +69,8 @@
   <main id="main"></main>
   <script>
     function tagLinesHtml(tag, dateLine) {
-      if (tag === 'Dernière heure') {
-        return '<span class="sports-chip__cta-tag-lines"><span>Dernière</span><span>heure</span></span>';
+      if (tag === 'Derniers résultats') {
+        return '<span class="sports-chip__cta-tag-lines"><span>Derniers</span><span>résultats</span></span>';
       }
       if (tag === 'Prochain' && dateLine) {
         return `<span class="sports-chip__cta-tag-lines"><span>Prochain</span><span>${dateLine}</span></span>`;
@@ -96,7 +96,7 @@
     }) {
       const lampA = lamp || (state === 'live' ? 'live' : state === 'next' && (tag === 'Aujourd’hui' || tag === 'À venir') ? 'soon'
         : tag === 'Demain' || tag === 'Prochain' ? 'next'
-        : tag === 'Dernière heure' ? 'today'
+        : tag === 'Derniers résultats' ? 'today'
         : state === 'result' ? 'past' : 'idle');
       const liveA = state === 'live' ? ' data-sports-live="1"' : '';
       const g = glyph ? `<span class="sports-chip__glyph" aria-hidden="true">${glyph}</span>` : '';
@@ -139,7 +139,7 @@
       { key: 'br', label: 'Bronze', glyph: '⛵', tone: '#3d6fa8', badge: '🥉', badgeMod: 'place', home: 'UdeM', place: '3e/12' },
     ];
     const TIMES = [
-      { id: 'today', title: 'Résultat du jour', tag: 'Dernière heure', lead: '19 h 00 · ' },
+      { id: 'today', title: 'Résultat du jour', tag: 'Derniers résultats', lead: '19 h 00 · ' },
       { id: 'hier', title: 'Hier', tag: 'Hier', lead: '' },
       { id: 'avant', title: 'Il y a 2 jours', tag: 'dimanche 30 août', lead: '' },
       { id: 'date', title: 'Date plus vieille', tag: 'mercredi 19 août', lead: '' },

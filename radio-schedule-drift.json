@@ -1,60 +1,34 @@
 {
-  "checkedAt": "2026-09-02T01:00:08.446Z",
+  "checkedAt": "2026-10-05T01:54:24.918Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 2,
-    "drift": [
-      "chyz",
-      "cism",
-      "cjlo"
-    ],
-    "overhaul": [
-      "choq"
-    ],
+    "stable": 6,
+    "drift": [],
+    "overhaul": [],
     "unreachable": []
   },
   "stations": [
     {
       "id": "chyz",
-      "published": 26,
-      "fresh": 27,
-      "added": [
-        "ven 16:00–17:30 L'Artiste du mois CHYZ"
-      ],
+      "published": 39,
+      "fresh": 39,
+      "added": [],
       "removed": [],
-      "changed": 1,
-      "ratio": 0.038,
-      "status": "drift"
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cism",
-      "published": 109,
-      "fresh": 95,
-      "added": [
-        "jeu 07:00–08:00 La case à combler"
-      ],
-      "removed": [
-        "dim 02:00–06:30 Mix Franco",
-        "dim 06:30–07:00 Les mignardises littéraires",
-        "dim 07:00–08:00 Genre de bleu",
-        "dim 08:00–09:00 Par mots et par vaux",
-        "dim 09:00–10:00 Le 120e parallèle",
-        "dim 10:00–11:00 Ya Raï",
-        "dim 11:00–12:00 Yallah lâcher prise",
-        "dim 12:00–14:00 Basses fréquences",
-        "dim 14:00–16:00 Le char de marge",
-        "dim 16:00–17:00 Vibrance",
-        "dim 17:00–18:00 L'Avenue des concerts",
-        "dim 18:00–20:00 Symbiose",
-        "jeu 07:00–08:00 Plus de guit présente: un retour sur le Warped tour 2026",
-        "sam 00:00–02:00 Rythmologie (reprise)",
-        "sam 22:00–00:00 Mix anglo"
-      ],
-      "changed": 16,
-      "ratio": 0.147,
-      "status": "drift"
+      "published": 110,
+      "fresh": 110,
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "ckut",
@@ -68,44 +42,13 @@
     },
     {
       "id": "cjlo",
-      "published": 371,
-      "fresh": 374,
-      "added": [
-        "dim 22:00–00:00 CJLO's Alternative Mega Mix",
-        "lun 00:00–00:30 On the Right Track",
-        "lun 00:00–00:30 2 Days and a Night",
-        "lun 00:00–00:30 Eldest Daughter",
-        "lun 00:00–00:30 The Waxing Gibbous",
-        "lun 11:00–12:00 I Think You Might Like This",
-        "lun 14:00–15:00 L'Organe à la radio",
-        "mar 14:00–15:00 Something for the Mood",
-        "mer 11:00–12:00 Code Switch",
-        "mer 14:00–15:00 CJLO's Alternative Mega Mix",
-        "jeu 11:00–12:00 CJLO's Alternative Mega Mix",
-        "jeu 14:00–15:00 Secondhand Sounds",
-        "jeu 15:00–16:00 Weirdo Rippers",
-        "jeu 18:00–19:00 Unheard Of",
-        "jeu 19:00–20:00 Electric Messiah",
-        "ven 23:00–00:00 CJLO's Alternative Mega Mix"
-      ],
-      "removed": [
-        "dim 22:00–23:00 On The Right Track",
-        "dim 23:00–00:00 CJLO's Alternative Mega Mix",
-        "lun 11:00–12:00 2 Days and a Night",
-        "lun 14:00–15:00 Eldest Daughter",
-        "mar 14:00–15:00 Code Switch",
-        "mer 11:00–12:00 Unheard Of",
-        "mer 14:00–15:00 Something for the Mood",
-        "jeu 11:00–12:00 Weirdo Rippers",
-        "jeu 14:00–15:00 CJLO's Alternative Mega Mix",
-        "jeu 15:00–16:00 Secondhand Sounds",
-        "jeu 18:00–19:00 Electric Messiah",
-        "jeu 19:00–20:00 I Think You Might Like This",
-        "ven 23:00–00:00 The Waxing Gibbous"
-      ],
-      "changed": 29,
-      "ratio": 0.078,
-      "status": "drift"
+      "published": 379,
+      "fresh": 379,
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cfak",
@@ -119,27 +62,13 @@
     },
     {
       "id": "choq",
-      "published": 18,
-      "fresh": 12,
-      "added": [
-        "dim 14:00–16:00 Pôle hip-hop",
-        "jeu 18:30–19:30 Les Apatrides Anonymes",
-        "ven 13:00–14:00 CUCH CAST"
-      ],
-      "removed": [
-        "lun 17:00–18:00 Faire avec",
-        "mar 15:00–16:00 Palmarès CHOQ.ca",
-        "mar 19:30–20:30 Les Amazones",
-        "mar 20:30–22:30 10 sur 10 : un podcast 100% rap",
-        "mer 11:00–12:00 In Vélo Veritas",
-        "mer 15:00–16:00 Palmarès CHOQ.ca",
-        "mer 19:00–20:00 Le CHOC des Générations",
-        "jeu 18:30–19:40 Les Apatrides Anonymes",
-        "jeu 21:00–22:30 Le grand maître des jeux"
-      ],
-      "changed": 12,
-      "ratio": 0.667,
-      "status": "overhaul"
+      "published": 21,
+      "fresh": 21,
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     }
   ]
 }

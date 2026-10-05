@@ -8,7 +8,14 @@
 
 const https = require('https');
 const http = require('http');
-const { meetsLeadDisplaySize, probeRemoteImageSize, sleep } = require('./article-image-lib');
+const {
+  meetsLeadDisplaySize,
+  probeRemoteImageSize,
+  sleep,
+  LEAD_MIN_WIDTH,
+  LEAD_MIN_HEIGHT,
+  LEAD_MIN_PIXELS,
+} = require('./article-image-lib');
 const {
   applyVisualQcToScore,
   scoreVisualQuality,
@@ -1215,7 +1222,7 @@ async function validateCandidate(hit) {
   if (meetsLeadDisplaySize(hit.width, hit.height)) return hit;
   const dims = await probeRemoteImageSize(hit.url);
   if (!dims) {
-    if (hit.width >= 720 && hit.height >= 405 && hit.width * hit.height >= 320000) return hit;
+    if (hit.width >= LEAD_MIN_WIDTH && hit.height >= LEAD_MIN_HEIGHT && hit.width * hit.height >= LEAD_MIN_PIXELS) return hit;
     return null;
   }
   const enriched = { ...hit, width: dims.width, height: dims.height };

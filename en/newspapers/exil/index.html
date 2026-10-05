@@ -40,10 +40,10 @@
     <link rel="stylesheet" href="../../../style-feed.css" />
     <link rel="stylesheet" href="../../../style-chrome.css" />
     <link rel="stylesheet" href="../../../seo-pages.css" />
-    <link rel="stylesheet" href="../../../dev/midwidth-preview.css?v=wide-auto-e99" />
-    <link rel="stylesheet" href="../../../dev/wide-desktop-preview.css?v=wide-auto-e99" />
-    <script src="../../../dev/midwidth-preview.js?v=wide-auto-e99"></script>
-    <script src="../../../dev/wide-desktop-preview.js?v=wide-auto-e99"></script>
+    <link rel="stylesheet" href="../../../dev/midwidth-preview.css?v=wide-auto-e102" />
+    <link rel="stylesheet" href="../../../dev/wide-desktop-preview.css?v=wide-auto-e102" />
+    <script src="../../../dev/midwidth-preview.js?v=wide-auto-e102"></script>
+    <script src="../../../dev/wide-desktop-preview.js?v=wide-auto-e102"></script>
     <!--
       CSS critique du synthé bureau : réserve « À l'antenne » + volume compact
       dès le premier paint (avant le CSS mis en cache / le JS async).
@@ -109,6 +109,9 @@
     <script src="../../../quebec-backgrounds-data.js" defer></script>
     <script src="../../../quebec-university-backgrounds-data.js" defer></script>
     <script src="../../../scripts/campus-fallback-lib.js" defer></script>
+    <script src="../../../scripts/media-channels-lib.js" defer></script>
+    <script src="../../../scripts/media-follow-store.js" defer></script>
+    <script src="../../../scripts/media-follow-ui.js" defer></script>
     <script src="../../../quebec-nations-backgrounds-data.js" defer></script>
     <script src="../../../quebec-favorites-backgrounds-data.js" defer></script>
     <script src="../../../quebec-backgrounds.js" defer></script>
@@ -117,13 +120,15 @@
     <script src="../../../radar-utils.js" defer></script>
     <script src="../../../radar-state.js" defer></script>
     <script src="../../../radar-weather.js" defer></script>
+    <script src="../../../scripts/session-freshness-lib.js" defer></script>
+    <script src="../../../scripts/sports-freshness-lib.js" defer></script>
     <script src="../../../radar-sports-cta.js" defer></script>
     <script src="../../../radar-tuner.js" defer></script>
     <script src="../../../radar-news.js" defer></script>
     <script src="../../../radar-lifecycle.js" defer></script>
     <script src="../../../app.js" defer></script>
     <script src="../../../engage-prompt.js" defer></script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Exil","parentOrganization":{"@type":"CollegeOrUniversity","name":"Cégep du Vieux Montréal"},"inLanguage":"fr","subjectOf":{"@type":"ItemList","numberOfItems":7,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/","name":"Opinion – L’hypocrisie qui rampe à l’Assemblée nationale"},{"@type":"ListItem","position":2,"url":"https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/","name":"Garda World au CVM (Éditorial)"},{"@type":"ListItem","position":3,"url":"https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/","name":"Le pays avant tout – esquisse"},{"@type":"ListItem","position":4,"url":"https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/","name":"Oui au budget, oui au programme FIL et non à la grève"},{"@type":"ListItem","position":5,"url":"https://exilecvm.wordpress.com/2025/11/15/un-retour-en-grande-pompe-la-note-nocture/","name":"Un retour en grande pompe: La Note nocture"},{"@type":"ListItem","position":6,"url":"https://exilecvm.wordpress.com/2025/10/24/place-aux-idees/","name":"Place aux idées"},{"@type":"ListItem","position":7,"url":"https://exilecvm.wordpress.com/2025/10/24/une-jeune-candidate-qui-na-pas-froid-aux-yeux/","name":"Une jeune candidate qui n’a pas froid aux yeux"}]}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Exil","url":"https://exilecvm.ca/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Cégep du Vieux Montréal"},"inLanguage":"fr","sameAs":["https://exilecvm.ca/","https://instagram.com/exilexcvm/"],"subjectOf":{"@type":"ItemList","numberOfItems":4,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/","name":"Opinion – L’hypocrisie qui rampe à l’Assemblée nationale"},{"@type":"ListItem","position":2,"url":"https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/","name":"Garda World au CVM (Éditorial)"},{"@type":"ListItem","position":3,"url":"https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/","name":"Le pays avant tout – esquisse"},{"@type":"ListItem","position":4,"url":"https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/","name":"Oui au budget, oui au programme FIL et non à la grève"}]}}</script>
   </head>
   <body>
     <header class="masthead">
@@ -303,22 +308,29 @@
       <p class="seo-eyebrow">Student newspapers</p>
       <h1 class="seo-title">Exil</h1>
       <p class="seo-lead">Exil is the student newspaper of Cégep du Vieux Montréal.</p>
+      <p class="media-follow-row"><button type="button" class="media-follow" data-media-follow data-media-id="exil" data-media-name="Exil" data-follow-lang="en" data-label-follow="Follow" data-label-following="Following" data-label-follow-named="Follow {name} in LE-RADAR" data-label-following-named="Unfollow {name}" aria-pressed="false" aria-label="Follow Exil in LE-RADAR" title="Follow Exil in LE-RADAR"><span class="media-follow__mark" aria-hidden="true">☆</span><span class="media-follow__label">Follow</span></button></p>
       <dl class="seo-facts">
           <div class="seo-fact"><dt>Institution</dt><dd><a href="../../../en/institutions/cegep-du-vieux-montreal/">Cégep du Vieux Montréal</a></dd></div>
           <div class="seo-fact"><dt>Region</dt><dd><a href="https://www.mtl.org/en" target="_blank" rel="noopener noreferrer" aria-label="Montréal tourism — official website">Montréal</a></dd></div>
           <div class="seo-fact"><dt>Language</dt><dd>French</dd></div>
+          <div class="seo-fact"><dt>Official website</dt><dd><a href="https://exilecvm.ca/" target="_blank" rel="noopener noreferrer">https://exilecvm.ca/</a></dd></div>
       </dl>
+      <section class="media-channels">
+        <h2 class="media-channels__title">Available on</h2>
+        <ul class="media-channels__list">
+          <li class="media-channels__item media-channels__item--website"><a href="https://exilecvm.ca/" target="_blank" rel="noopener noreferrer">Official website</a></li>
+          <li class="media-channels__item media-channels__item--rss"><a href="https://exilecvm.ca/feed/" target="_blank" rel="noopener noreferrer" title="Article feed — open it in a news reader" aria-label="RSS — Article feed — open it in a news reader">RSS</a></li>
+          <li class="media-channels__item media-channels__item--instagram"><a href="https://instagram.com/exilexcvm/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        </ul>
+      </section>
       <section class="seo-section">
         <h2>Latest articles</h2>
-        <p class="seo-headlines__status">Latest article: April 18, 2026 at 06:22 p.m. · Checked September 1, 2026 at 10:45 p.m.</p>
+        <p class="seo-headlines__status">Latest article: April 18, 2026 at 06:22 p.m. · Checked October 5, 2026 at 12:46 a.m.</p>
       <ul class="seo-headlines">
           <li class="seo-headline"><a class="seo-headline__title" href="https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/" target="_blank" rel="noopener noreferrer">Opinion – L’hypocrisie qui rampe à l’Assemblée nationale</a><p class="seo-headline__meta"><time datetime="2026-04-18T22:22:07.000Z">2026-04-18 · 06:22 p.m.</time><span class="seo-headline__by">By Maxime Ilan Dugas</span></p><p class="seo-headline__brief">À quelques mois d’une élection provinciale qui promet (si on se fie aux sondages d’intentions de vote) un changement de parti au pouvoir, le monde politique québécois se remet en haute vitesse. Plus les intentions des candidats sont définies, plus les langues se décorent de fleurs populistes et réactionnaires; telle est la nature de la politique, on cherche les votes. … <a class="seo-headline__more" href="https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/" target="_blank" rel="noopener noreferrer">Read more →</a></p></li>
           <li class="seo-headline"><a class="seo-headline__title" href="https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/" target="_blank" rel="noopener noreferrer">Garda World au CVM (Éditorial)</a><p class="seo-headline__meta"><time datetime="2026-03-13T19:42:16.000Z">2026-03-13 · 03:42 p.m.</time><span class="seo-headline__by">By La rédaction</span></p><p class="seo-headline__brief">GardaWorld, la compagnie québécoise qui fournit les gardes de sécurité du Cégep du Vieux-Montréal, est au centre de la controverse. L’entreprise entretient des relations avec la police immigratoire américaine ICE – qui est reconnue par plusieurs organisations humanitaires comme … <a class="seo-headline__more" href="https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/" target="_blank" rel="noopener noreferrer">Read more →</a></p></li>
           <li class="seo-headline"><a class="seo-headline__title" href="https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/" target="_blank" rel="noopener noreferrer">Le pays avant tout – esquisse</a><p class="seo-headline__meta"><time datetime="2026-02-28T23:42:43.000Z">2026-02-28 · 06:42 p.m.</time><span class="seo-headline__by">By Odile Trudel</span></p><p class="seo-headline__brief">On fera pas un pays avec un CD de Leloup et une couple de bières de micro ! Je me suis surprise à dire ça à un ami, fervent défenseur du FLQ (Front de libération du Québec) et grand nostalgique des années Lévesque. C’est sorti tout seul, ça m’a étonnée. Je m’étais toujours … <a class="seo-headline__more" href="https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/" target="_blank" rel="noopener noreferrer">Read more →</a></p></li>
           <li class="seo-headline"><a class="seo-headline__title" href="https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/" target="_blank" rel="noopener noreferrer">Oui au budget, oui au programme FIL et non à la grève</a><p class="seo-headline__meta"><time datetime="2026-02-07T22:21:15.000Z">2026-02-07 · 05:21 p.m.</time><span class="seo-headline__by">By Noah Thibodeau-Holbein</span></p><p class="seo-headline__brief">Compte rendu de l’assemblée générale étudiante H26 L’assemblée générale (AG) de l’association étudiante du Cégep du Vieux-Montréal s’est déroulée dans l’après-midi du 4 février dernier à l’Exode. Le refus d’une grève cet hiver, l’intronisation du programme FIL, les nouveautés du … <a class="seo-headline__more" href="https://exilecvm.wordpress.com/2026/02/07/oui-au-budget-oui-au-programme-fil-et-non-a-la-greve/" target="_blank" rel="noopener noreferrer">Read more →</a></p></li>
-          <li class="seo-headline"><a class="seo-headline__title" href="https://exilecvm.wordpress.com/2025/11/15/un-retour-en-grande-pompe-la-note-nocture/" target="_blank" rel="noopener noreferrer">Un retour en grande pompe: La Note nocture</a><p class="seo-headline__meta"><time datetime="2025-11-15T19:32:28.000Z">2025-11-15 · 02:32 p.m.</time><span class="seo-headline__by">By Dave Josias</span></p><p class="seo-headline__brief">Non, vous ne rêvez pas, la deuxième édition de La Note Nocturne aura bel et bien lieu et est déjà en cours de préparation. Comme annoncé par le comité Individus (comité organisateur de l’événement), celui-ci se tiendra pour la deuxième fois le 21 novembre 2025. Le concept La … <a class="seo-headline__more" href="https://exilecvm.wordpress.com/2025/11/15/un-retour-en-grande-pompe-la-note-nocture/" target="_blank" rel="noopener noreferrer">Read more →</a></p></li>
-          <li class="seo-headline"><a class="seo-headline__title" href="https://exilecvm.wordpress.com/2025/10/24/place-aux-idees/" target="_blank" rel="noopener noreferrer">Place aux idées</a><p class="seo-headline__meta"><time datetime="2025-10-24T13:00:00.000Z">2025-10-24 · 09:00 a.m.</time><span class="seo-headline__by">By Alexia Lehouillier-Berthiaume</span></p><p class="seo-headline__brief">Dialogue citoyen sur la démocratie municipale Avec le départ prochain de Valérie Plante, mairesse de la métropole depuis 2017, une … <a class="seo-headline__more" href="https://exilecvm.wordpress.com/2025/10/24/place-aux-idees/" target="_blank" rel="noopener noreferrer">Read more →</a></p></li>
-          <li class="seo-headline"><a class="seo-headline__title" href="https://exilecvm.wordpress.com/2025/10/24/une-jeune-candidate-qui-na-pas-froid-aux-yeux/" target="_blank" rel="noopener noreferrer">Une jeune candidate qui n’a pas froid aux yeux</a><p class="seo-headline__meta"><time datetime="2025-10-24T13:00:00.000Z">2025-10-24 · 09:00 a.m.</time><span class="seo-headline__by">By Alexia Lehouillier-Berthiaume</span></p><p class="seo-headline__brief">Crédit photo: Alexia Lehouillier-Berthiaume Alors que l’âge moyen des élus municipaux était, au moment du déclenchement des élections, de 53 ans, la question de la représentativité de la jeunesse en politique demeure d’actualité. Candidate pour Transition Montréal au poste de … <a class="seo-headline__more" href="https://exilecvm.wordpress.com/2025/10/24/une-jeune-candidate-qui-na-pas-froid-aux-yeux/" target="_blank" rel="noopener noreferrer">Read more →</a></p></li>
       </ul>
         <div class="seo-source-actions">
           <p class="seo-cta seo-cta--source"><a href="../../../en/?source=Exil#news-list" data-news-source="Exil">View the most recent articles</a></p>

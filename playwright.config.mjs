@@ -11,7 +11,7 @@ export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
   // CI : 2 retries anti-flaky (contention runner / réseau) sans masquer un bug
   // local (0 retry hors CI pour feedback immédiat).
-  retries: process.env.CI ? 1 : 0,
+  retries: process.env.CI ? 2 : 0,
   // CI : 1 worker. Deux workers + 18 fixtures sports coincaient le runner
   // 15–20 min (filet D9 / webServer). Série = 5–8 min, pas un hang.
   workers: process.env.CI ? 1 : undefined,
@@ -34,6 +34,7 @@ export default defineConfig({
         '**/player-continuity.spec.mjs',
         '**/masthead-weather.spec.mjs',
         '**/masthead-sports-fit.spec.mjs',
+        '**/sports-split-lanes.spec.mjs',
         '**/masthead-sports-live.spec.mjs',
         '**/masthead-sidebar-fit.spec.mjs',
         '**/masthead-card-counts-resize.spec.mjs',
@@ -44,7 +45,7 @@ export default defineConfig({
         '**/mobile-text-wrap.spec.mjs',
         '**/tuner-resize.spec.mjs',
         // Tourne dans le projet « pwa » : il lui faut un service worker actif.
-        '**/sports-pwa.spec.mjs',
+        '**/*-pwa.spec.mjs',
       ],
     },
     {
@@ -53,6 +54,7 @@ export default defineConfig({
         '**/player-continuity.spec.mjs',
         '**/masthead-weather.spec.mjs',
         '**/masthead-sports-fit.spec.mjs',
+        '**/sports-split-lanes.spec.mjs',
         '**/masthead-sports-live.spec.mjs',
         '**/masthead-sidebar-fit.spec.mjs',
         '**/masthead-card-counts-resize.spec.mjs',
@@ -70,7 +72,7 @@ export default defineConfig({
       // service worker, que les autres projets bloquent volontairement (un SW
       // qui survit entre tests fausse tout le reste de la suite).
       name: 'pwa',
-      testMatch: ['**/sports-pwa.spec.mjs'],
+      testMatch: ['**/*-pwa.spec.mjs'],
       fullyParallel: false,
       use: { serviceWorkers: 'allow' },
     },

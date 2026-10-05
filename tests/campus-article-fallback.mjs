@@ -21,6 +21,7 @@ const {
   imageHostIsFragile,
   sourceNeedsCampusBackup,
   pickCampusFallback,
+  campusPhotoKey,
   campusNeedlesFor,
   filterUniversityPhotos,
   planDisplayImage,
@@ -94,9 +95,10 @@ const laval = pickCampusFallback(
   { universityPhotos },
 );
 assert.ok(laval?.url, 'Laval → photo campus');
-assert.match(laval.url, /wikimedia|upload/i, 'Laval : Commons');
+assert.match(laval.url, /wikimedia|upload|\/assets\/masthead\//i, 'Laval : photo hébergée');
+const lavalSrc = universityPhotos.find((p) => p.url === laval.url) || {};
 assert.match(
-  `${laval.title} ${laval.url} ${laval.link}`.toLowerCase(),
+  `${laval.title} ${laval.url} ${laval.link} ${lavalSrc.place || ''}`.toLowerCase(),
   /laval/,
   'Laval : la photo parle bien de Laval',
 );
@@ -300,5 +302,42 @@ const ensure = readFileSync(join(root, 'scripts/ensure-lead-images.js'), 'utf8')
 assert.match(ensure, /itemNeedsCampusBackup/, 'bot : backup campus même si URL source');
 assert.match(ensure, /imageHostIsFragile/, 'bot : hôtes fragiles');
 assert.match(ensure, /hasThematic/, 'bot : 2e chance Openverse même si campus déjà posé');
+
+const udsLinks = [
+  'https://lecollectif.ca/societe/le-dsm-6/',
+  'https://lecollectif.ca/societe/circonscriptions-des-personnes-cheffes-de-parti/',
+  'https://lecollectif.ca/societe/debat-economique-de-tva/',
+];
+const usedBackup = [];
+const backupPicks = [];
+for (const link of udsLinks) {
+  const pick = pickCampusFallback(
+    { institution: 'Université de Sherbrooke', link },
+    { universityPhotos, avoidUrls: usedBackup },
+  );
+  assert.ok(pick?.url, `backup UdeS pour ${link}`);
+  const key = campusPhotoKey(pick.url);
+  assert.ok(!usedBackup.some((u) => campusPhotoKey(u) === key), `backup répété : ${pick.title}`);
+  usedBackup.push(pick.url);
+  backupPicks.push(pick);
+}
+assert.equal(new Set(backupPicks.map((p) => campusPhotoKey(p.url))).size, udsLinks.length, '3 backups UdeS distincts');
+assert.equal(
+  campusPhotoKey(`${backupPicks[0].url}?utm_source=commons`),
+  campusPhotoKey(backupPicks[0].url),
+  'query utm = même photo',
+);
+const udsPool = filterUniversityPhotos(universityPhotos, 'Université de Sherbrooke');
+const exhausted = pickCampusFallback(
+  { institution: 'Université de Sherbrooke', link: 'https://lecollectif.ca/societe/le-dsm-6/' },
+  { universityPhotos, avoidUrls: udsPool.map((p) => p.url) },
+);
+assert.equal(exhausted, null, 'banque UdeS épuisée : pas de répétition');
+assert.match(
+  radarNews,
+  /avoidUrls: backupAvoidUrls\(item\)/,
+  'fil : le repli évite les photos déjà posées',
+);
+assert.match(radarNews, /resetBackupPhotoClaims\(\)/, 'fil : les claims repartent à chaque rendu');
 
 console.log(`OK campus-article-fallback (${covered.length} sources couvertes, 0 trou)`);

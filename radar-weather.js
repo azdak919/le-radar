@@ -31,6 +31,8 @@ function weatherTone(code) {
 }
 
 let mastheadWeatherTimer = null;
+/** Vrai seulement pendant la pause entre deux vagues (pas pendant le pas 440 ms). */
+let mastheadWeatherHolding = false;
 const mastheadWeatherDecks = { campus: [], nation: [] };
 let mastheadWeatherSlots = [];
 let mastheadWeatherNextSlot = 0;
@@ -305,7 +307,7 @@ function dropWeatherCardForFit() {
 }
 
 /**
- * Grand écran (wide / super-wide) — défaut prod dès 1281 px :
+ * Grand écran (wide / super-wide) — défaut prod dès 1280 px :
  * - pas de marquee
  * - pas de clip / nom compact : les conteneurs s’ajustent ; si ça ne rentre
  *   pas, on retire une carte (fit), on n’ampute pas le texte.
@@ -317,7 +319,7 @@ function isWideNoMarqueeMode() {
   try {
     const id = document.documentElement.dataset.widePreview;
     if (id === 'off' || id === 'a') return false;
-    return window.matchMedia('(min-width: 1281px)').matches;
+    return window.matchMedia('(min-width: 1280px)').matches;
   } catch {
     return false;
   }
@@ -1331,6 +1333,7 @@ function weatherCardDwellMs(el) {
 }
 
 function clearMastheadWeatherTimer() {
+  mastheadWeatherHolding = false;
   if (!mastheadWeatherTimer) return;
   clearTimeout(mastheadWeatherTimer);
   clearInterval(mastheadWeatherTimer);
@@ -1356,13 +1359,23 @@ function weatherCascadeSlots() {
   return slots;
 }
 
-/** Pause lecture après une vague : assez pour balayer toute la rangée. */
+/**
+ * Pause lecture après une vague.
+ * Un nom qui déborde finit son aller L→R et son retour à l’origine
+ * avant la vague suivante — wide compris (sinon la carte part à ~10 s,
+ * le texte encore décalé).
+ */
 function weatherBoardHoldMs() {
+  measureWeatherNameOverflows();
   const n = Math.max(1, weatherCascadeSlots().length);
-  let hold = Math.min(14000, Math.max(WEATHER_BOARD_HOLD_MS, 1200 * n));
-  // Hors wide : un nom qui défile doit finir son cycle pendant le hold.
-  if (!isWideNoMarqueeMode()) {
+  let hold = Math.max(WEATHER_BOARD_HOLD_MS, 1200 * n);
+  const anyOverflow = !!MASTHEAD_WEATHER?.querySelector(
+    '.masthead-weather__city.is-active.is-overflowing',
+  );
+  if (anyOverflow && weatherMotionOk()) {
     hold = Math.max(hold, weatherBoardDwellMs());
+  } else {
+    hold = Math.min(14000, hold);
   }
   return hold;
 }
@@ -1386,8 +1399,10 @@ function scheduleWeatherCascade({ firstHold = true } = {}) {
     const live = weatherCascadeSlots();
     if (!live.length) return;
     if (index >= live.length) {
+      mastheadWeatherHolding = true;
       mastheadWeatherTimer = window.setTimeout(() => {
         mastheadWeatherTimer = null;
+        mastheadWeatherHolding = false;
         scheduleWeatherCascade({ firstHold: false });
       }, weatherBoardHoldMs());
       return;
@@ -1400,8 +1415,10 @@ function scheduleWeatherCascade({ firstHold = true } = {}) {
   };
 
   if (firstHold) {
+    mastheadWeatherHolding = true;
     mastheadWeatherTimer = window.setTimeout(() => {
       mastheadWeatherTimer = null;
+      mastheadWeatherHolding = false;
       step(0);
     }, weatherBoardHoldMs());
     return;
@@ -1551,9 +1568,9 @@ function bindMastheadWeatherLayoutWatchers() {
   } catch { /* ignore */ }
   [
     MASTHEAD_WEATHER_PHONE_MQ,
-    window.matchMedia('(min-width: 1281px)'),
+    window.matchMedia('(min-width: 1280px)'),
     window.matchMedia('(min-width: 1440px)'),
-    window.matchMedia('(min-width: 1920px)'),
+    window.matchMedia(typeof RADAR_HD_MQ === 'string' ? RADAR_HD_MQ : '(min-width: 1880px)'),
     window.matchMedia('(min-width: 2560px)'),
     window.matchMedia('(min-width: 3440px)'),
   ].forEach((mq) => onMediaQueryChange(mq, () => scheduleMastheadWeatherLayout('mq')));
@@ -1582,7 +1599,16 @@ function startMastheadWeatherBoard() {
   if (fonts?.ready && typeof fonts.ready.then === 'function') {
     fonts.ready.then(() => {
       if (!MASTHEAD_WEATHER?.isConnected) return;
+      const before = !!MASTHEAD_WEATHER.querySelector(
+        '.masthead-weather__city.is-active.is-overflowing',
+      );
       measureWeatherNameOverflows();
+      const after = !!MASTHEAD_WEATHER.querySelector(
+        '.masthead-weather__city.is-active.is-overflowing',
+      );
+      // Le premier hold a pu être calculé avant les fontes. On ne relance
+      // que si un débordement apparaît pendant la pause, pas au milieu d’une vague.
+      if (after && !before && mastheadWeatherHolding) scheduleMastheadWeatherRotate();
     }).catch(() => { /* ignore */ });
   }
   // Chaîne setTimeout (pas interval fixe) : le dwell suit le marquee réel.

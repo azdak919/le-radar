@@ -44,7 +44,7 @@ var TUNER_DIAL_MID_MQ = window.matchMedia?.('(min-width: 768px) and (max-width: 
 /** Embed : panneau latéral « À l'antenne » masqué (voir embed.css @media max-width 639.98px). */
 var TUNER_EMBED_NOWAIR_HIDDEN_MQ = window.matchMedia?.('(max-width: 639.98px)');
 /** Même seuil que seo-page-theme / data-wide-preview (shell E). */
-var WIDE_TUNER_MQ = window.matchMedia?.('(min-width: 1281px)');
+var WIDE_TUNER_MQ = window.matchMedia?.('(min-width: 1280px)');
 var TUNER_VOLUME   = document.getElementById('tuner-volume');
 var TUNER_VOL      = document.getElementById('tuner-vol');
 var TUNER_VOL_TOGGLE = document.getElementById('tuner-vol-toggle');
@@ -205,6 +205,8 @@ var radios = [];          // ordered list backing the tuner
 var news = [];
 var newsSourcesByName = {};
 var newsSourceFilter = 'all';
+var MEDIA_FOLLOW_BAR = document.getElementById('media-follow-bar');
+var NEWS_FOLLOWED_FILTER = 'followed';
 /** Recherche locale (titre / auteur / source / extrait / crédits) — jamais de fetch distant. */
 var newsSearchQuery = '';
 var newsSearchOpen = false;

@@ -2,8 +2,8 @@
  * Lab local — options grand écran (pré-focus-group)
  * ─────────────────────────────────────────────────
  * ?wide=e → data-wide-preview sur <html>
- * ⛔ Actif seulement si viewport > 1280 (min-width: 1281px).
- *    Format lab ≤1280 / fenêtre ≤1280 = prod inchangée.
+ * ⛔ Actif dès viewport ≥ 1280 (min-width: 1280px).
+ *    Format lab <1280 / fenêtre <1280 = layout étroit prod.
  *
  * Verdict mainteneur en cours : **E** (rail sources) + refinements.
  * Super-wide = même E, densités + dès ~1680 px (media query).
@@ -14,9 +14,9 @@
 
 /* ═══════════════════════════════════════════════════
    Tokens communs wide / super-wide
-   ⛔ Jamais ≤1280 : E (et B–D) ne s’appliquent qu’au-delà de la ref. bureau 1280.
+   ⛔ Jamais <1280 : E (et B–D) s’appliquent dès la ref. bureau 1280 (inclus).
    ═══════════════════════════════════════════════════ */
-@media (min-width: 1281px) {
+@media (min-width: 1280px) {
 html[data-wide-preview="b"],
 html[data-wide-preview="c"],
 html[data-wide-preview="d"],
@@ -50,7 +50,7 @@ html[data-wide-preview="e"] {
     --maxw: min(1560px, calc(100vw - 40px));
   }
 }
-@media (min-width: 1920px) {
+@media (min-width: 1880px) {
   html[data-wide-preview="e"] {
     --maxw: min(1860px, calc(100vw - 48px));
     --wide-rail: 280px;
@@ -79,7 +79,7 @@ html[data-wide-preview="e"] {
 }
 
 /* ── Radio : B–D 1180 ; E élargi EN LARGEUR seulement (épaisseur = prod) ── */
-@media (min-width: 1281px) {
+@media (min-width: 1280px) {
   html[data-wide-preview="b"] .tuner-inner,
   html[data-wide-preview="c"] .tuner-inner,
   html[data-wide-preview="d"] .tuner-inner {
@@ -389,7 +389,7 @@ html[data-wide-preview="e"] {
 
 
 /* ── Shell générique (accueil + pages SEO / hub) ─── */
-@media (min-width: 1281px) {
+@media (min-width: 1280px) {
   html[data-wide-preview="b"] {
     --maxw: 1480px;
   }
@@ -436,14 +436,14 @@ html[data-wide-preview="e"] {
 }
 
 /* ── B ───────────────────────────────────────────── */
-@media (min-width: 1281px) {
+@media (min-width: 1280px) {
   html[data-wide-preview="b"] .masthead-inner {
     max-width: 1480px;
   }
 }
 
 /* ── C ───────────────────────────────────────────── */
-@media (min-width: 1281px) {
+@media (min-width: 1280px) {
   html[data-wide-preview="c"] .filters {
     justify-content: flex-start;
   }
@@ -861,7 +861,7 @@ html[data-wide-preview="e"] {
   html[data-wide-preview="e"] .news-hero {
     min-width: 0;
     padding-right: 20px;
-    /* stack prod par défaut ; 2 col vedettes dès 1920 (ci-dessous) */
+    /* stack prod par défaut ; 2 col vedettes dès Full HD / 1880 (ci-dessous) */
     display: flex;
     flex-direction: column;
     height: auto;
@@ -968,13 +968,13 @@ html[data-wide-preview="e"] {
 /*
  * À la une en 2 col (wide) :
  *  - 1 une à 1600 (comme prod)
- *  - 2 unes côte à côte dès ≥1920 ; En bref 1 col jusqu’à 3439
+ *  - 2 unes côte à côte dès ≥1880 (Full HD ; 1920 Chromium − scrollbar) ; En bref 1 col jusqu’à 3439
  *  - Dès 3440 : En bref 2 col, piste plus large (unes moins étirées)
  *  - 2560 / 3840 : même esprit, plus doux (En bref un peu plus large)
  *  - 3 unes + vedettes 3 col à 3840
  *  - spacer pleine largeur pour l’équilibre magazine
  */
-@media (min-width: 1281px) {
+@media (min-width: 1280px) {
 html[data-wide-preview="e"] .news-hero-spacer {
   grid-column: 1 / -1;
 }
@@ -1000,8 +1000,8 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
 }
 
-/* ── E ≥1920 : 2 unes + vedettes 2 col ; En bref reste 1 col ── */
-@media (min-width: 1920px) {
+/* ── E ≥1880 (Full HD, y compris Edge/Chromium + scrollbar) : 2 unes + vedettes 2 col ; En bref 1 col ── */
+@media (min-width: 1880px) {
   html[data-wide-preview="e"] .news-list:has(> .news-hero) {
     /* 2 unes lisibles ; En bref 1 col un cran plus large qu’au premier essai. */
     grid-template-columns: minmax(540px, 1.58fr) minmax(300px, 0.72fr);
@@ -1198,7 +1198,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
 /* ═══════════════════════════════════════════════════
    Fiches SEO / hub — faits packés + footer en 3 colonnes
    ═══════════════════════════════════════════════════ */
-@media (min-width: 1281px) {
+@media (min-width: 1280px) {
   html[data-wide-preview="e"] .seo-facts {
     display: flex;
     flex-wrap: wrap;
@@ -1294,7 +1294,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
  * Une journée lisible ≈ 320–360 px (heure 92 + titre sans wrap forcé).
  * 1440 → 4 · 1920 → 5 · 2560+ → 7 (la semaine tient).
  */
-@media (min-width: 1281px) {
+@media (min-width: 1280px) {
   html[data-wide-preview="e"] .seo-schedule {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 16px;
@@ -1305,7 +1305,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
-@media (min-width: 1920px) {
+@media (min-width: 1880px) {
   html[data-wide-preview="e"] .seo-schedule {
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 18px;
@@ -1327,7 +1327,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
  * Sports : même plancher que les horaires — pas 6–7 cartes maigres à 1920.
  * auto-fill + min 360–400 px selon la largeur.
  */
-@media (min-width: 1281px) {
+@media (min-width: 1280px) {
   html[data-wide-preview="e"] .sports-board {
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 16px;
@@ -1338,7 +1338,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   }
 }
-@media (min-width: 1920px) {
+@media (min-width: 1880px) {
   html[data-wide-preview="e"] .sports-board {
     grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
     gap: 18px;
@@ -1360,7 +1360,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
    Wide E — sports : look prod (pas densifié)
    Fit JS d’abord ; overflow restant → marquee L→R + retour, jamais « … ».
    ═══════════════════════════════════════════════════ */
-@media (min-width: 1281px) {
+@media (min-width: 1280px) {
   html[data-wide-preview="e"] .masthead-sports-strip {
     max-width: var(--maxw);
     gap: 6px;
@@ -1391,7 +1391,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
    Look prod, plus de cartes quand la largeur le permet.
    Contenu qui change (rotation) ne reflow pas les voisins.
    ═══════════════════════════════════════════════════ */
-@media (min-width: 1281px) {
+@media (min-width: 1280px) {
   /* Météo : grille à parts égales selon data-weather-count — largeur fixe par slot */
   html[data-wide-preview="e"] .masthead-weather {
     min-width: 0;
@@ -1481,11 +1481,17 @@ html[data-wide-preview="e"] .news-hero-spacer {
     white-space: nowrap;
     max-width: 100%;
   }
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line-inner,
-  html[data-wide-preview="e"] .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub-text {
-    animation: none !important;
-    transform: none !important;
+  /* Marquee dès le shell E (pas seulement ≥1440). max-width:100% !important
+   * au-dessus clippe le glyphe dans la boîte : translateX ne révèle rien. */
+  html[data-wide-preview="e"] .masthead-weather__city.is-overflowing .masthead-weather__name-text {
+    max-width: none !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    animation: weather-name-scroll 5.5s ease-in-out 0.8s var(--weather-scroll-trips, 2) alternate both !important;
   }
+  /* Ne pas poser transform:none !important sur line-inner / sub-text :
+   * l’animation sports-chip-scroll tourne, mais le texte reste figé,
+   * et la cascade part sur un nom coupé. */
 }
 
 
@@ -1493,7 +1499,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
    Wide / super-wide — AUCUN marquee texte
    (radio, météo, sports CTA, filtres sources)
    ═══════════════════════════════════════════════════ */
-@media (min-width: 1281px) {
+@media (min-width: 1280px) {
   html[data-wide-preview="b"] .is-marquee > .tuner-now-sub-text,
   html[data-wide-preview="c"] .is-marquee > .tuner-now-sub-text,
   html[data-wide-preview="d"] .is-marquee > .tuner-now-sub-text,
@@ -1582,7 +1588,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
 
 /* ═══════════════════════════════════════════════════
    ≥1440 : noms complets (météo + sports). Pas d’ellipsis.
-   Météo D : jumeau MTL/QC iso-largeur + secondaires 1fr.
+   Météo D : jumeau MTL/QC max-content ; secondaires 1fr (reliquat, pas de trou).
    CTA sports = gabarit 900/1280 ; scores égaux, −1 carte si trop long.
    ═══════════════════════════════════════════════════ */
 @media (min-width: 1440px) {
@@ -1592,7 +1598,6 @@ html[data-wide-preview="e"] .news-hero-spacer {
   html[data-wide-preview="e"] .masthead-weather__board[data-weather-dual-primary] {
     display: grid !important;
     flex-wrap: unset;
-    justify-content: stretch;
     align-items: stretch;
     width: 100% !important;
     max-width: 100%;
@@ -1622,7 +1627,7 @@ html[data-wide-preview="e"] .news-hero-spacer {
   }
   /* Nom (gauche, peut défiler) + température toujours visible à droite. */
   html[data-wide-preview="e"] .masthead-weather__name {
-    flex: 1 1 auto !important;
+    flex: 0 1 auto !important;
     min-width: 0 !important;
     overflow: hidden !important;
     max-width: none !important;
@@ -1638,7 +1643,8 @@ html[data-wide-preview="e"] .news-hero-spacer {
     display: inline-block !important;
     max-width: none !important;
     overflow: visible !important;
-    animation: weather-name-scroll 5.5s ease-in-out 0.8s 2 alternate both !important;
+    animation: weather-name-scroll 5.5s ease-in-out 0.8s var(--weather-scroll-trips, 2) alternate both !important;
+    text-overflow: clip !important;
     transform: unset;
   }
   html[data-wide-preview="e"] .masthead-weather__temp {

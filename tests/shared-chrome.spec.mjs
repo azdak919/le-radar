@@ -12,6 +12,21 @@ const ROUTES = [
   { path: '/offline.html', name: 'maintenance', maintenance: true },
 ];
 
+for (const path of ['/en/', '/sports/', '/journaux/exil/']) {
+  test(`barre sportive sans ReferenceError — ${path}`, async ({ page }) => {
+    const freshnessErrors = [];
+    page.on('pageerror', (error) => {
+      if (/RadarSportsFreshness/.test(String(error))) freshnessErrors.push(String(error));
+    });
+    await page.goto(path, { waitUntil: 'domcontentloaded' });
+    const strip = page.locator('#masthead-sports-strip');
+    await expect(strip).toBeVisible({ timeout: 12_000 });
+    await expect(strip).not.toHaveAttribute('hidden', '');
+    await expect(strip.locator('.sports-chip').first()).toBeVisible({ timeout: 12_000 });
+    expect(freshnessErrors).toEqual([]);
+  });
+}
+
 for (const route of ROUTES) {
   const critical = route.path === '/' ? ' @ci-critical' : '';
   test(`chrome partagé — ${route.name} (clair)${critical}`, async ({ page }) => {

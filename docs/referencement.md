@@ -63,6 +63,11 @@ Chacune est lisible **sans JavaScript**, porte ses données structurées
 `CollectionPage`) et renvoie vers le média d'origine — aucun article n'est
 republié.
 
+Les `NewsArticle` du fil d’accueil ont toujours `publisher` = le **média
+étudiant** (`NewsMediaOrganization`), jamais LE-RADAR. LE-RADAR se décrit
+comme `WebSite` / `Organization` agrégateur. Les fiches de journaux sont
+des `NewsMediaOrganization` pointant vers le site d’origine (`url`, `sameAs`).
+
 Deux pièges traités, à ne pas réintroduire :
 
 - **Noms d'établissements incohérents** entre registres (« UQAM » / « Université

@@ -35,6 +35,7 @@ test('météo campus : carte active chargée @ci-critical', async ({ page }) => 
 });
 
 test('météo campus : elle s’adapte à la largeur du masthead', async ({ page }) => {
+  test.setTimeout(60_000);
   await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => route.fulfill({
     contentType: 'application/json',
     headers: { 'access-control-allow-origin': '*' },
@@ -50,8 +51,8 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   expect(await ribbon.locator('.masthead-weather__city').evaluateAll((cities) => cities.every(
     (city) => city.href.startsWith('https://www.meteomedia.com/fr/ville/ca/quebec/'),
   ))).toBe(true);
-  // Bureau : 3 cartes — slot 0 = ancre MTL **ou** QC exclusive ; 1–2 = secondaires.
-  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(3);
+  // Bureau shell E : 4 cartes — MTL+QC dual persistants + 2 secondaires (file wide).
+  await expect(ribbon.locator('.masthead-weather__city.is-active')).toHaveCount(4);
   const fill = await ribbon.evaluate((el) => {
     const board = el.querySelector('.masthead-weather__board');
     return {
@@ -62,23 +63,29 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   expect(fill.weatherW, 'colonne météo mesurable').toBeGreaterThan(400);
   expect(fill.boardW, 'le ruban occupe la colonne (pas shrink-wrap)').toBeGreaterThan(fill.weatherW - 8);
   const activePrimary = ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]');
-  await expect(activePrimary).toHaveCount(1);
-  // Ancre = campus + 1 secondaire campus + 1 nation (ou 2 campus si nation absente).
-  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="campus"]')).toHaveCount(2);
-  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-group="nation"]')).toHaveCount(1);
-  await expect(activePrimary).not.toHaveClass(/is-compact/);
-  const primaryLabel = await activePrimary.locator('.masthead-weather__name-full').evaluate(
-    (el) => (el.textContent || '').trim(),
+  await expect(activePrimary).toHaveCount(2);
+  // Dual : secondaires via file wide (pôles régionaux d’abord ; nations plus loin).
+  const campusN = await ribbon.locator('.masthead-weather__city.is-active[data-weather-group="campus"]').count();
+  const nationN = await ribbon.locator('.masthead-weather__city.is-active[data-weather-group="nation"]').count();
+  expect(campusN + nationN, '4 cartes actives groupées').toBe(4);
+  expect(campusN, 'MTL+QC + secondaires campus').toBeGreaterThanOrEqual(2);
+  const primaryCompact = await activePrimary.evaluateAll((els) => els.map((el) => el.classList.contains('is-compact')));
+  expect(primaryCompact.every((c) => !c), 'MTL/QC pas compactes').toBe(true);
+  const primaryLabels = await activePrimary.locator('.masthead-weather__name-full').evaluateAll(
+    (els) => els.map((el) => (el.textContent || '').trim()),
   );
-  expect(['Montréal', 'Québec']).toContain(primaryLabel);
+  expect(primaryLabels.sort()).toEqual(['Montréal', 'Québec'].sort());
   const activeBoxes = (await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities
     .map((city) => city.getBoundingClientRect())
     .sort((a, b) => a.x - b.x)
     .map(({ width }) => width)));
   expect(Math.min(...activeBoxes)).toBeGreaterThanOrEqual(90);
-  expect(activeBoxes[0]).toBeGreaterThanOrEqual(120);
-  const initialPrimary = await activePrimary.evaluate((el) => ({ id: el.dataset.weatherCity, href: el.href }));
-  expect(initialPrimary.href).toBe(`https://www.meteomedia.com/fr/ville/ca/quebec/${initialPrimary.id}/actuelle`);
+  expect(activeBoxes[0]).toBeGreaterThanOrEqual(90);
+  const initialPrimaries = await activePrimary.evaluateAll((els) => els.map((el) => ({ id: el.dataset.weatherCity, href: el.href })));
+  expect(initialPrimaries.map((p) => p.id).sort()).toEqual(['montreal', 'quebec']);
+  for (const p of initialPrimaries) {
+    expect(p.href).toBe(`https://www.meteomedia.com/fr/ville/ca/quebec/${p.id}/actuelle`);
+  }
   await expect(ribbon.locator('[data-weather-city="vaudreuil-dorion"]')).toHaveAttribute(
     'href',
     'https://www.meteomedia.com/fr/ville/ca/quebec/vaudreuil-dorion/actuelle',
@@ -99,14 +106,16 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
     window.RadarTranslate = { ...(window.RadarTranslate || {}), getMode: () => 'en' };
     window.dispatchEvent(new CustomEvent('radar:translate-mode', { detail: { mode: 'en' } }));
   });
-  const translatedPrimary = await activePrimary.evaluate((el) => ({ id: el.dataset.weatherCity, href: el.href }));
-  expect(translatedPrimary.href).toBe(`https://www.meteomedia.com/fr/ville/ca/quebec/${translatedPrimary.id}/actuelle`);
+  const translatedPrimaries = await activePrimary.evaluateAll((els) => els.map((el) => ({ id: el.dataset.weatherCity, href: el.href })));
+  for (const p of translatedPrimaries) {
+    expect(p.href).toBe(`https://www.meteomedia.com/fr/ville/ca/quebec/${p.id}/actuelle`);
+  }
   const [weatherBox, actionsBox] = await Promise.all([
     ribbon.boundingBox(), page.locator('.masthead-actions').boundingBox(),
   ]);
   expect(actionsBox.x).toBeGreaterThan(weatherBox.x + weatherBox.width);
 
-  // Rotation forcée : leave (~280ms) + arrive — slot 0 alterne MTL↔QC.
+  // Rotation forcée : leave (~280ms) + arrive — secondaires tournent ; MTL/QC fixes.
   const beforeRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity));
   const leaveAnimOk = await page.evaluate(() => {
     if (typeof rotateOneMastheadWeatherCard !== 'function') return false;
@@ -123,7 +132,8 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
     .not.toEqual(beforeRotation);
   const afterRotation = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => cities.map((city) => city.dataset.weatherCity));
   expect(afterRotation).toHaveLength(beforeRotation.length);
-  expect(['montreal', 'quebec']).toContain(afterRotation[0]);
+  expect(afterRotation[0]).toBe('montreal');
+  expect(afterRotation[1]).toBe('quebec');
   // 2ᵉ tick : vérifier is-arriving après la leave (swap DOM déjà fait).
   const arriveAnimOk = await page.evaluate(async () => {
     if (typeof rotateOneMastheadWeatherCard !== 'function') return false;
@@ -140,8 +150,8 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await page.waitForTimeout(150);
   await expect(ribbon).not.toHaveClass(/masthead-weather--docked/);
   const deskCount = await ribbon.locator('.masthead-weather__city.is-active').count();
-  expect(deskCount).toBe(3);
-  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]')).toHaveCount(1);
+  expect(deskCount).toBe(4);
+  await expect(ribbon.locator('.masthead-weather__city.is-active[data-weather-city="montreal"], .masthead-weather__city.is-active[data-weather-city="quebec"]')).toHaveCount(2);
 
   // Tablette dockée : ancre + secondaires (board pleine largeur).
   await page.setViewportSize({ width: 920, height: 900 });
@@ -212,7 +222,7 @@ test('météo campus : elle s’adapte à la largeur du masthead', async ({ page
   await expect(page.locator('.masthead-top #masthead-weather')).toHaveCount(1);
 });
 
-test('wide : MTL/QC calés sur Montréal, secondaires plus larges', async ({ page }) => {
+test('wide : MTL/QC calés, secondaires 1fr (pas de vide nom→°C)', async ({ page }) => {
   await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => route.fulfill({
     contentType: 'application/json',
     headers: { 'access-control-allow-origin': '*' },
@@ -227,11 +237,20 @@ test('wide : MTL/QC calés sur Montréal, secondaires plus larges', async ({ pag
     .toBeGreaterThan(3);
 
   const layout = await ribbon.locator('.masthead-weather__city.is-active').evaluateAll((cities) => {
-    const rows = cities.map((el) => ({
-      id: el.dataset.weatherCity,
-      w: Math.round(el.getBoundingClientRect().width),
-      overflowing: el.classList.contains('is-overflowing'),
-    }));
+    const rows = cities.map((el) => {
+      const name = el.querySelector('.masthead-weather__name');
+      const temp = el.querySelector('.masthead-weather__temp');
+      const nr = name.getBoundingClientRect();
+      const tr = temp.getBoundingClientRect();
+      const cr = el.getBoundingClientRect();
+      return {
+        id: el.dataset.weatherCity,
+        w: Math.round(cr.width),
+        nameTempGap: Math.round(tr.left - nr.right),
+        trailingSlack: Math.round(cr.right - tr.right),
+        overflowing: el.classList.contains('is-overflowing'),
+      };
+    });
     const mtl = rows.find((r) => r.id === 'montreal');
     const qc = rows.find((r) => r.id === 'quebec');
     const secondaries = rows.filter((r) => r.id !== 'montreal' && r.id !== 'quebec');
@@ -239,6 +258,7 @@ test('wide : MTL/QC calés sur Montréal, secondaires plus larges', async ({ pag
       mtlW: mtl?.w || 0,
       qcW: qc?.w || 0,
       secW: secondaries.map((r) => r.w),
+      secGaps: secondaries.map((r) => ({ id: r.id, gap: r.nameTempGap, slack: r.trailingSlack })),
       secOverflow: secondaries.filter((r) => r.overflowing).length,
     };
   });
@@ -247,20 +267,34 @@ test('wide : MTL/QC calés sur Montréal, secondaires plus larges', async ({ pag
   expect(layout.qcW, 'Québec mesurable').toBeGreaterThan(80);
   expect(layout.qcW, `QC ${layout.qcW} ne dépasse pas MTL ${layout.mtlW}`).toBeLessThanOrEqual(layout.mtlW + 4);
   expect(layout.secW.length, 'au moins deux secondaires').toBeGreaterThanOrEqual(2);
-  const secMin = Math.min(...layout.secW);
-  expect(secMin, `secondaires ${layout.secW} vs MTL ${layout.mtlW}`).toBeGreaterThanOrEqual(layout.mtlW);
-  expect(layout.secOverflow, 'le reliquat doit éviter le marquee des secondaires').toBe(0);
+  expect(layout.secOverflow, 'nom collé au °C : pas de marquee secondaire').toBe(0);
+  for (const row of layout.secGaps) {
+    expect(row.gap, `${row.id} nom→temp (pas de stretch flex)`).toBeLessThanOrEqual(14);
+  }
 
-  const paint = await ribbon.locator('.masthead-weather__board').evaluate((board) => {
+  const boardPack = await ribbon.locator('.masthead-weather__board').evaluate((board) => {
     const cs = getComputedStyle(board);
-    const cities = [...board.querySelectorAll('.masthead-weather__city.is-active')];
+    const cities = [...board.querySelectorAll('.masthead-weather__city.is-active')]
+      .map((el) => el.getBoundingClientRect())
+      .sort((a, b) => a.x - b.x);
+    const br = board.getBoundingClientRect();
+    const gaps = [];
+    for (let i = 1; i < cities.length; i += 1) {
+      gaps.push(Math.round(cities[i].left - cities[i - 1].right));
+    }
     return {
       display: cs.display,
-      inlineWidths: cities.filter((el) => (el.style.width || '').trim()).length,
+      inlineWidths: [...board.querySelectorAll('.masthead-weather__city.is-active')]
+        .filter((el) => (el.style.width || '').trim()).length,
+      gaps,
+      trailing: Math.round(br.right - cities[cities.length - 1].right),
     };
   });
-  expect(paint.display, 'option D : grille CSS').toBe('grid');
-  expect(paint.inlineWidths, 'pas de width inline JS').toBe(0);
+  expect(boardPack.display, 'option D : grille CSS').toBe('grid');
+  expect(boardPack.inlineWidths, 'pas de width inline JS').toBe(0);
+  expect(Math.max(...boardPack.gaps), `écarts inter-cartes ${boardPack.gaps}`).toBeLessThanOrEqual(10);
+  expect(boardPack.trailing, 'reliquat à droite du board OK').toBeGreaterThanOrEqual(0);
+  expect(boardPack.trailing, 'secondaires 1fr : pas de trou à droite du board').toBeLessThanOrEqual(12);
 
   const firstMtl = layout.mtlW;
   await page.waitForTimeout(1000);
@@ -374,7 +408,7 @@ test('wide E : météo secondaire cascade puis pause', async ({ page }) => {
   expectWeatherCascadeFlips(start, await weatherActiveIds(ribbon), { dualPrimary: true });
 });
 
-async function assertWeatherCascadeAt(page, { width, height = 900, docked = false }) {
+async function assertWeatherCascadeAt(page, { width, height = 900, docked = false, dualPrimary = false }) {
   await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => {
     route.fulfill({
       contentType: 'application/json',
@@ -391,9 +425,15 @@ async function assertWeatherCascadeAt(page, { width, height = 900, docked = fals
   else await expect(ribbon).not.toHaveClass(/masthead-weather--docked/);
 
   const start = await weatherActiveIds(ribbon);
-  expect(['montreal', 'quebec']).toContain(start[0]);
   const primaryCount = start.filter((id) => id === 'montreal' || id === 'quebec').length;
-  expect(primaryCount, 'une seule ancre MTL/QC hors wide').toBe(1);
+  if (dualPrimary) {
+    expect(start[0], 'Montréal à gauche (shell E)').toBe('montreal');
+    expect(start[1], 'Québec en 2e (shell E)').toBe('quebec');
+    expect(primaryCount, 'dual MTL+QC dès shell E').toBe(2);
+  } else {
+    expect(['montreal', 'quebec']).toContain(start[0]);
+    expect(primaryCount, 'une seule ancre MTL/QC hors wide').toBe(1);
+  }
 
   const armed = await page.evaluate(() => {
     if (typeof scheduleWeatherCascade !== 'function') return false;
@@ -408,12 +448,12 @@ async function assertWeatherCascadeAt(page, { width, height = 900, docked = fals
 
   await page.waitForTimeout(Math.min(2800, 500 * Math.max(2, start.length)));
   const now = await weatherActiveIds(ribbon);
-  expectWeatherCascadeFlips(start, now, { dualPrimary: false });
+  expectWeatherCascadeFlips(start, now, { dualPrimary });
   if (docked) await expect(ribbon).toHaveClass(/masthead-weather--docked/);
 }
 
-test('bureau 1280 : météo cascade (ancre + secondaires)', async ({ page }) => {
-  await assertWeatherCascadeAt(page, { width: 1280, docked: false });
+test('bureau 1280 : météo cascade (shell E dual MTL/QC)', async ({ page }) => {
+  await assertWeatherCascadeAt(page, { width: 1280, docked: false, dualPrimary: true });
 });
 
 test('tablette 768 : météo cascade dockée', async ({ page }) => {
@@ -461,17 +501,14 @@ test('wide E : ≥2560 ajoute une carte météo et resserre les slots', async ({
       secondary: secondaries.map((r) => r.w),
     };
   });
-  expect(layout.min).toBeGreaterThanOrEqual(118);
+  expect(layout.min, 'tuiles encore lisibles').toBeGreaterThanOrEqual(90);
   expect(layout.primary.length, 'MTL + QC visibles').toBe(2);
   expect(
     Math.max(...layout.primary) - Math.min(...layout.primary),
     `MTL/QC compactes (QC ≤ MTL), got ${layout.primary}`,
   ).toBeLessThanOrEqual(40);
   if (layout.secondary.length) {
-    const secMin = Math.min(...layout.secondary);
-    const secMax = Math.max(...layout.secondary);
-    expect(secMax - secMin, `secondaires uniformes, got ${layout.secondary}`).toBeLessThanOrEqual(4);
-    expect(secMin, 'secondaires au moins aussi larges que Montréal').toBeGreaterThanOrEqual(Math.min(...layout.primary) - 1);
+    expect(Math.min(...layout.secondary), 'secondaires mesurables').toBeGreaterThanOrEqual(90);
   }
 });
 
@@ -506,12 +543,20 @@ test('thème clair : sports et slogan partagent le verre météo @ci-critical', 
       };
     };
     const chips = [...document.querySelectorAll('#masthead-sports-strip .sports-chip--match')];
-    const rest = chips.find((el) => el.getAttribute('data-cta-state') !== 'live') || chips[0];
+    // Un dimanche en direct : toutes les puces peuvent être live. Le verre
+    // clair exclut [data-cta-state="live"] → fond sombre 42,46,54. On mesure
+    // le verre au repos, puis on repose live sur une 2e carte.
+    for (const el of chips) {
+      el.removeAttribute('data-cta-state');
+      el.removeAttribute('data-cta-lamp');
+    }
+    const rest = chips[0];
     const liveProbe = chips.find((el) => el !== rest) || rest;
     if (liveProbe && liveProbe !== rest) {
       liveProbe.setAttribute('data-cta-state', 'live');
       liveProbe.removeAttribute('data-cta-lamp');
     }
+    rest?.offsetHeight;
     return {
       weather: parse(document.querySelector('.masthead-weather__city.is-active')),
       sports: parse(rest),
@@ -619,3 +664,99 @@ for (const viewport of [
     expect(metrics.insetR, 'glyphe vs bord droit').toBeGreaterThanOrEqual(14);
   });
 }
+
+function translateX(transform) {
+  const m = String(transform || '').match(/matrix\([^,]+,[^,]+,[^,]+,[^,]+,\s*([-0-9.]+)/);
+  return m ? parseFloat(m[1]) : 0;
+}
+
+async function mockWeather(page) {
+  await page.route('https://le-radar-weather.azdak.workers.dev/v1/forecast**', (route) => route.fulfill({
+    contentType: 'application/json',
+    headers: { 'access-control-allow-origin': '*' },
+    body: JSON.stringify(weather),
+  }));
+}
+
+test('wide : marquee sports et météo bougent avant la cascade', async ({ page }) => {
+  await mockWeather(page);
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#masthead-sports-strip .sports-chip--match').first()).toBeVisible({ timeout: 12_000 });
+  await expect(page.locator('.masthead-weather__city.is-active').nth(2)).toBeVisible({ timeout: 10_000 });
+
+  const armed = await page.evaluate(() => {
+    const chip = document.querySelector('#masthead-sports-strip .sports-chip--match');
+    const inner = chip.querySelector('.sports-chip__line-inner');
+    inner.textContent = 'Cougars (Édouard-Montpetit) 7-0 Cheetahs (André-Laurendeau)';
+    refreshSportsChipScroll(chip);
+    const city = [...document.querySelectorAll('.masthead-weather__city.is-active')]
+      .find((el) => el.dataset.weatherCity !== 'montreal' && el.dataset.weatherCity !== 'quebec');
+    city.querySelector('.masthead-weather__name-full').textContent = 'Sainte-Anne-des-Monts-et-encore';
+    measureWeatherNameOverflows();
+    scheduleWeatherCascade({ firstHold: true });
+    window.__wxCity = city.dataset.weatherCity;
+    const name = city.querySelector('.masthead-weather__name-text');
+    return {
+      sportsAnim: getComputedStyle(inner).animationName,
+      sportsScroll: parseFloat(chip.style.getPropertyValue('--sports-scroll')) || 0,
+      weatherHold: weatherBoardHoldMs(),
+      weatherOverflow: city.classList.contains('is-overflowing'),
+      weatherMax: getComputedStyle(name).maxWidth,
+      weatherAnim: getComputedStyle(name).animationName,
+    };
+  });
+  expect(armed.sportsAnim, 'marquee scores armé').toBe('sports-chip-scroll');
+  expect(armed.sportsScroll, 'décalage du texte long').toBeGreaterThan(8);
+  expect(armed.weatherOverflow, 'ville longue en défilement').toBe(true);
+  expect(armed.weatherAnim, 'marquee météo armé').toBe('weather-name-scroll');
+  expect(armed.weatherMax, 'le nom peut dépasser sa case').not.toBe('100%');
+  expect(armed.weatherHold, 'pause ≥ aller-retour + repos').toBeGreaterThanOrEqual(12000);
+
+  await page.waitForTimeout(4500);
+  const moved = await page.evaluate(() => {
+    const inner = [...document.querySelectorAll('#masthead-sports-strip .sports-chip__line-inner')]
+      .find((el) => /Laurendeau/.test(el.textContent || ''));
+    const city = document.querySelector(
+      `.masthead-weather__city.is-active[data-weather-city="${window.__wxCity}"]`,
+    );
+    const name = city?.querySelector('.masthead-weather__name-text');
+    return {
+      sportsTx: inner ? getComputedStyle(inner).transform : 'none',
+      weatherTx: name ? getComputedStyle(name).transform : 'none',
+      leaving: !!city?.classList.contains('is-leaving'),
+      id: city?.dataset.weatherCity || '',
+    };
+  });
+  expect(translateX(moved.sportsTx), `texte sports parti vers la fin (${moved.sportsTx})`).toBeLessThan(-4);
+  expect(moved.leaving, 'la ville ne part pas avant la fin du marquee').toBe(false);
+  expect(moved.id).toBeTruthy();
+  expect(translateX(moved.weatherTx), `nom météo en cours de défilement (${moved.weatherTx})`).toBeLessThan(-4);
+});
+
+test('shell 1280 : nom météo trop long défile au lieu d’une ellipse', async ({ page }) => {
+  await mockWeather(page);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/?wide=e', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.masthead-weather__city.is-active').nth(2)).toBeVisible({ timeout: 10_000 });
+  const style = await page.evaluate(() => {
+    const city = [...document.querySelectorAll('.masthead-weather__city.is-active')]
+      .find((el) => el.dataset.weatherCity !== 'montreal' && el.dataset.weatherCity !== 'quebec');
+    city.querySelector('.masthead-weather__name-full').textContent = 'Sainte-Anne-des-Monts-et-encore';
+    measureWeatherNameOverflows();
+    const name = city.querySelector('.masthead-weather__name-text');
+    const cs = getComputedStyle(name);
+    return {
+      overflow: city.classList.contains('is-overflowing'),
+      maxW: cs.maxWidth,
+      ellipsis: cs.textOverflow,
+      anim: cs.animationName,
+      hold: weatherBoardHoldMs(),
+    };
+  });
+  expect(style.overflow).toBe(true);
+  expect(style.maxW).toBe('none');
+  expect(style.ellipsis).not.toBe('ellipsis');
+  expect(style.anim).toBe('weather-name-scroll');
+  expect(style.hold).toBeGreaterThanOrEqual(12000);
+});

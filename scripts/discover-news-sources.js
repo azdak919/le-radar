@@ -10,8 +10,8 @@
  *  2. Probes every CANDIDATE site for a working RSS feed and, when it finds
  *     a fresh one, PROMOTES it into the active list automatically.
  *
- * A dead active feed is skipped by scripts/fetch-news.js but kept in the
- * registry (it might come back to life — students return in September).
+ * A dead active feed stays in the registry and is re-probed (fetch-news +
+ * this health check). A Cloudflare interstitial must not freeze it as dead.
  *
  * No external dependencies.
  *
@@ -33,9 +33,11 @@ const { isFirebaseSource, classifyFirebaseSource } = require('./firebase-list-fe
 const {
   groupItemsBySource,
   sourceHasFreshContent,
-  freshnessWindowStart,
   latestItemDate: latestCachedItemDate,
   classifyFeedFreshness,
+  looksLikeRssOrAtom,
+  isChallengeOrInterstitialPage,
+  applyUnreachableRegistryUpdate,
 } = require('./source-retention-lib');
 
 const SOURCES_PATH = path.join(__dirname, '..', 'news-sources.json');
@@ -119,7 +121,7 @@ function fetchText(url, redirects = 4) {
 
 // === Feed inspection =========================================================
 function isFeed(xml) {
-  return /<rss[\s>]|<feed[\s>]/i.test(xml.slice(0, 600));
+  return looksLikeRssOrAtom(xml);
 }
 
 function latestItemDate(xml) {
@@ -178,26 +180,24 @@ async function checkActive(src, cachedBySource) {
   }
 
   const { ok, body } = await fetchText(src.url);
+  const freshCache = hasFreshCachedArticles(src, cachedBySource, referenceDate);
+  const lastCached = latestCachedItemDate(cachedBySource.get(src.name) || []);
+  const interstitial = isChallengeOrInterstitialPage(body);
+  const htmlList = isHtmlListSource(src);
+  const notAFeed = !htmlList && ok && body && !isFeed(body);
 
-  if (!ok) {
-    src._failCount = (src._failCount || 0) + 1;
-    const freshCache = hasFreshCachedArticles(src, cachedBySource, referenceDate);
-    const lastFreshMs = Math.max(
-      Date.parse(src._lastItemDate || '') || 0,
-      Date.parse(latestCachedItemDate(cachedBySource.get(src.name) || []) || '') || 0,
-    );
-    const insideWindow = lastFreshMs >= freshnessWindowStart(referenceDate).getTime();
-    if (freshCache || insideWindow) {
-      src._status = 'stale';
-    } else if (src._failCount >= MAX_FAILS) {
-      src._status = 'dead';
-    } else if (src._status !== 'dead') {
-      src._status = src._status || 'ok';
-    }
+  if (!ok || interstitial || notAFeed) {
+    applyUnreachableRegistryUpdate(src, {
+      cachedFresh: freshCache,
+      lastItemDate: lastCached,
+      referenceDate,
+      maxFails: MAX_FAILS,
+    });
+    const why = !ok ? 'unreachable' : (interstitial ? 'challenge-page' : 'non-feed-body');
     const note = freshCache ? ', cache frais conservé' : '';
     return {
       name: src.name,
-      result: `unreachable (${src._failCount}/${MAX_FAILS})${note}`,
+      result: `${why} (${src._failCount}/${MAX_FAILS})${note}`,
       before,
       after: src._status,
     };

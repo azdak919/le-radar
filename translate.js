@@ -1376,6 +1376,41 @@
    * Clés = texte source affiché en FR dans le shell.
    */
   const UI_PHRASES = {
+    Suivre: {
+      en: 'Follow', es: 'Seguir', pt: 'Seguir', de: 'Folgen', it: 'Segui',
+      zh: '关注', ar: 'متابعة', ru: 'Подписаться',
+      iu: 'Suivre', 'iu-latn': 'Suivre',
+    },
+    Suivi: {
+      en: 'Following', es: 'Siguiendo', pt: 'A seguir', de: 'Gefolgt', it: 'Seguito',
+      zh: '已关注', ar: 'متابَع', ru: 'Вы подписаны',
+      iu: 'Suivi', 'iu-latn': 'Suivi',
+    },
+    Suivis: {
+      en: 'Following', es: 'Siguiendo', pt: 'A seguir', de: 'Gefolgt', it: 'Seguiti',
+      zh: '已关注', ar: 'المتابَعون', ru: 'Подписки',
+      iu: 'Suivis', 'iu-latn': 'Suivis',
+    },
+    'Médias suivis': {
+      en: 'Followed media', es: 'Medios seguidos', pt: 'Media seguidos',
+      de: 'Gefolgte Medien', it: 'Media seguiti',
+      iu: 'Médias suivis', 'iu-latn': 'Médias suivis',
+    },
+    'Fiche du média': {
+      en: 'Media profile', es: 'Ficha del medio', pt: 'Ficha do média',
+      de: 'Medienprofil', it: 'Scheda del media',
+      iu: 'Fiche du média', 'iu-latn': 'Fiche du média',
+    },
+    'Disponible sur': {
+      en: 'Available on', es: 'Disponible en', pt: 'Disponível em',
+      de: 'Verfügbar auf', it: 'Disponibile su',
+      iu: 'Disponible sur', 'iu-latn': 'Disponible sur',
+    },
+    'Google Actualités': {
+      en: 'Google News', es: 'Google News', pt: 'Google News',
+      de: 'Google News', it: 'Google News',
+      iu: 'Google Actualités', 'iu-latn': 'Google Actualités',
+    },
     'Toutes les sources': {
       en: 'All sources', es: 'Todas las fuentes', pt: 'Todas as fontes',
       de: 'Alle Quellen', it: 'Tutte le fonti', ht: 'Tout sous',
@@ -1556,10 +1591,10 @@
       zh: '明天', ar: 'غدًا', ko: '내일', ja: '明日', hi: 'कल', vi: 'Ngày mai',
       ht: 'Demen', fr: 'Demain',
     },
-    'Dernière heure': {
-      en: 'Breaking news', es: 'Última hora', pt: 'Última hora',
-      de: 'Eilmeldung', it: 'Ultima ora', nl: 'Laatste uur',
-      fr: 'Dernière heure',
+    'Derniers résultats': {
+      en: 'Latest results', es: 'Últimos resultados', pt: 'Últimos resultados',
+      de: 'Letzte Ergebnisse', it: 'Ultimi risultati', nl: 'Laatste uitslagen',
+      fr: 'Derniers résultats',
     },
     Hier: {
       en: 'Yesterday', es: 'Ayer', pt: 'Ontem', de: 'Gestern', it: 'Ieri',
@@ -1822,7 +1857,7 @@
   /** Ne jamais envoyer ces libellés au MT, même en IU/ar (cas « correspondre »). */
   const UI_LOCK_NO_MT = new Set([
     'match', 'Match', 'Prochains match', 'Prochain match',
-    'En direct', 'En cours', 'Dernière heure', 'AM', 'PM', 'reçoit', 'reçoivent', 'chez', 'v.',
+    'En direct', 'En cours', 'Derniers résultats', 'AM', 'PM', 'reçoit', 'reçoivent', 'chez', 'v.',
   ]);
 
   function uiPhraseLookup(core = '', targetLang = '') {

@@ -16,6 +16,7 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const { spawnSync } = require('child_process');
 
 const ROOT = path.join(__dirname, '..');
 const LEAGUES_PATH = path.join(ROOT, 'sports-leagues.json');
@@ -33,6 +34,9 @@ const {
 const SportsFreshness = require('./sports-freshness-lib');
 const SportsLive = require('./sports-live-lib');
 const { buildSportsMastheadPayload } = require('./sports-masthead-lib');
+const { preserveHarvestCatalogStats } = require('./harvest-freshness-lib');
+const { isChallengeOrInterstitialPage } = require('./source-retention-lib');
+const CampusHockey = require('./campus-hockey-lib');
 
 const update = process.argv.includes('--update');
 const liveOnly = process.argv.includes('--live');
@@ -262,6 +266,8 @@ const HOCKEY_SOURCES = [
     site: 'https://universitaire.rseqhockey.com/fr',
   },
 ];
+const HOCKEY_CACHE_URL = String(process.env.HOCKEY_CACHE_URL || 'https://le-radar-hockey.azdak.workers.dev').replace(/\/$/, '');
+const HOCKEY_PYTHON = path.join(__dirname, 'hockey-spordle.py');
 
 function fetchText(url) {
   return new Promise((resolve, reject) => {
@@ -285,14 +291,22 @@ function fetchText(url) {
           fetchText(next).then(resolve, reject);
           return;
         }
-        if (res.statusCode !== 200) {
-          reject(new Error(`HTTP ${res.statusCode} ${url}`));
-          res.resume();
-          return;
-        }
         const chunks = [];
         res.on('data', (c) => chunks.push(c));
-        res.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
+        res.on('end', () => {
+          const body = Buffer.concat(chunks).toString('utf8');
+          const challenged = isChallengeOrInterstitialPage(body)
+            || res.statusCode === 403;
+          if (challenged) {
+            reject(new Error(`Cloudflare challenge HTTP ${res.statusCode} ${url}`));
+            return;
+          }
+          if (res.statusCode !== 200) {
+            reject(new Error(`HTTP ${res.statusCode} ${url}`));
+            return;
+          }
+          resolve(body);
+        });
       },
     );
     req.on('error', reject);
@@ -303,13 +317,7 @@ function fetchText(url) {
   });
 }
 
-function parseHockeyScoreboard(html, { sector, site }) {
-  const m = html.match(
-    /<script id="__NEXT_DATA__" type="application\/json">([\s\S]*?)<\/script>/,
-  );
-  if (!m) throw new Error('__NEXT_DATA__ introuvable');
-  const data = JSON.parse(m[1]);
-  const games = data?.props?.pageProps?.scoreboardMatches || [];
+function parseHockeyMatches(games, { sector, site }) {
   const teams = {};
   const now = Date.now();
 
@@ -407,14 +415,53 @@ function parseHockeyScoreboard(html, { sector, site }) {
   return teams;
 }
 
-async function fetchHockeyTeams(reg) {
+function parseHockeyScoreboard(html, src) {
+  const m = String(html || '').match(
+    /<script id="__NEXT_DATA__" type="application\/json">([\s\S]*?)<\/script>/,
+  );
+  if (!m) throw new Error('__NEXT_DATA__ introuvable');
+  const data = JSON.parse(m[1]);
+  const games = data?.props?.pageProps?.scoreboardMatches || [];
+  return parseHockeyMatches(games, src);
+}
+
+async function loadSpordleTeams(src) {
+  try {
+    const payload = await getJson(`${HOCKEY_CACHE_URL}/v1/html?site=${encodeURIComponent(src.sector)}`);
+    if (payload && payload.ok && payload.html) {
+      process.stderr.write('(worker) ');
+      return parseHockeyScoreboard(payload.html, src);
+    }
+  } catch (err) {
+    process.stderr.write(`(worker: ${err.message}) `);
+  }
+  try {
+    const py = spawnSync('python3', [HOCKEY_PYTHON, '--sector', src.sector], {
+      encoding: 'utf8',
+      timeout: 35000,
+      env: { ...process.env, HOCKEY_CACHE_URL },
+    });
+    if (py.status === 0 && py.stdout) {
+      const payload = JSON.parse(py.stdout);
+      if (payload.ok && Array.isArray(payload.matches)) {
+        process.stderr.write(`(python/${payload.via || 'sidecar'}) `);
+        return parseHockeyMatches(payload.matches, src);
+      }
+    }
+  } catch (err) {
+    process.stderr.write(`(python: ${err.message}) `);
+  }
+  const html = await fetchText(src.url);
+  return parseHockeyScoreboard(html, src);
+}
+
+async function fetchHockeyTeams(reg, { skipCampus = false } = {}) {
   const out = {};
   const errors = [];
   for (const src of HOCKEY_SOURCES) {
     process.stderr.write(`sports: hockey ${src.sector} (Spordle)… `);
     try {
-      const html = await fetchText(src.url);
-      const batch = parseHockeyScoreboard(html, src);
+      const batch = await loadSpordleTeams(src);
       for (const team of Object.values(batch)) {
         applyRegistryToTeam(team, reg);
       }
@@ -422,14 +469,39 @@ async function fetchHockeyTeams(reg) {
       process.stderr.write(`${Object.keys(batch).length} équipes\n`);
     } catch (err) {
       process.stderr.write(`ERREUR ${err.message}\n`);
+      const msg = String(err.message || err);
       errors.push({
         leagueId: `spordle-${src.sector}`,
         label: `Hockey ${src.sector}`,
-        error: String(err.message || err),
+        error: msg,
+        blocked: /cloudflare challenge/i.test(msg),
       });
     }
   }
-  return { teams: out, errors };
+
+  let campusTeams = {};
+  if (skipCampus) {
+    return { teams: out, errors, campusTeams };
+  }
+  process.stderr.write('sports: hockey calendriers campus (M D2 + F D1)… ');
+  try {
+    const campus = await CampusHockey.fetchCampusHockey({ reg });
+    campusTeams = campus.teams || {};
+    errors.push(...(campus.errors || []));
+    process.stderr.write(`${Object.keys(campusTeams).length} équipes, ${(campus.games || []).length} matchs\n`);
+    const ontoSpordle = CampusHockey.overlayCampusHockey(out, campusTeams);
+    if (ontoSpordle.attached || ontoSpordle.added) {
+      process.stderr.write(`sports: hockey campus → Spordle ${ontoSpordle.attached} attachés, ${ontoSpordle.added} ajoutés\n`);
+    }
+  } catch (err) {
+    process.stderr.write(`ERREUR ${err.message}\n`);
+    errors.push({
+      leagueId: 'campus-hockey',
+      label: 'Calendriers campus hockey',
+      error: String(err.message || err),
+    });
+  }
+  return { teams: out, errors, campusTeams };
 }
 
 /**
@@ -748,14 +820,19 @@ function mergePreservedPast(entry, previousTeams) {
   return out;
 }
 
-function loadPreviousTeams() {
+function loadPreviousPayload() {
   try {
-    if (!fs.existsSync(OUT_PATH)) return {};
+    if (!fs.existsSync(OUT_PATH)) return null;
     const prev = JSON.parse(fs.readFileSync(OUT_PATH, 'utf8'));
-    return prev.teams && typeof prev.teams === 'object' ? prev.teams : {};
+    return prev && typeof prev === 'object' ? prev : null;
   } catch {
-    return {};
+    return null;
   }
+}
+
+function loadPreviousTeams() {
+  const prev = loadPreviousPayload();
+  return prev && prev.teams && typeof prev.teams === 'object' ? prev.teams : {};
 }
 
 /**
@@ -804,7 +881,10 @@ function preserveBySource(previousTeams, source, reason) {
 
 async function main() {
   const catalog = JSON.parse(fs.readFileSync(LEAGUES_PATH, 'utf8'));
-  const previousTeams = loadPreviousTeams();
+  const previousPayload = loadPreviousPayload();
+  const previousTeams = previousPayload && previousPayload.teams && typeof previousPayload.teams === 'object'
+    ? previousPayload.teams
+    : {};
   let leagues = catalog.leagues || [];
   if (liveOnly) {
     const ids = new Set(SportsLive.findLiveLeagueIds(previousTeams));
@@ -936,7 +1016,7 @@ async function main() {
   }
 
   // Hockey / voile : ignorés en --live (S1 seulement, pour rester sous la minute).
-  const hockey = liveOnly ? { teams: {}, errors: [] } : await fetchHockeyTeams(reg);
+  const hockey = await fetchHockeyTeams(reg, { skipCampus: liveOnly });
   if (Object.keys(hockey.teams).length) {
     for (const [key, team] of Object.entries(hockey.teams)) {
       if (Array.isArray(team.results)) {
@@ -962,6 +1042,12 @@ async function main() {
     }
   }
   errors.push(...hockey.errors);
+  if (!liveOnly && hockey.campusTeams && Object.keys(hockey.campusTeams).length) {
+    const ontoS1 = CampusHockey.overlayCampusHockey(teams, hockey.campusTeams);
+    if (ontoS1.attached || ontoS1.added) {
+      process.stderr.write(`sports: hockey campus → S1 ${ontoS1.attached} attachés, ${ontoS1.added} ajoutés\n`);
+    }
+  }
   sportsFetched.add('hockey');
 
   // Voile campus QC (ICSA + watchlist) — sport hors S1.
@@ -1034,7 +1120,7 @@ async function main() {
     }
   }
 
-  const payload = SportsFreshness.pruneSportsPayload({
+  let payload = SportsFreshness.pruneSportsPayload({
     updated: fetchedAt,
     fetchedAt,
     source: 'rseq-s1-all+spordle-hockey+sailing-qc',
@@ -1055,6 +1141,9 @@ async function main() {
     errors: errors.length ? errors : undefined,
     teams: prunedTeams,
   });
+  if (liveOnly) {
+    payload = preserveHarvestCatalogStats(payload, previousPayload);
+  }
 
   console.log(
     JSON.stringify(
@@ -1082,9 +1171,11 @@ async function main() {
   if (update) {
     fs.writeFileSync(OUT_PATH, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
     const mastheadPath = path.join(ROOT, 'sports-masthead.json');
+    // Snapshot d’accueil : JSON compact (sans indent) pour rester largement
+    // sous le plafond 15 % du payload complet (tests/sports-masthead.mjs).
     fs.writeFileSync(
       mastheadPath,
-      `${JSON.stringify(buildSportsMastheadPayload(payload), null, 2)}\n`,
+      `${JSON.stringify(buildSportsMastheadPayload(payload))}\n`,
       'utf8',
     );
     console.error(`sports: écrit ${path.relative(ROOT, OUT_PATH)} (${teamCount} équipes, ${leaguesFailed} erreurs ligue)`);

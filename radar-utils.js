@@ -30,6 +30,22 @@ function safeHttpUrl(url, { allowHttp = false } = {}) {
   }
 }
 
+/**
+ * Densité Full HD (2 unes, --maxw 1860, horaires 5 col…).
+ * 1920 px pile rate : Chromium/Edge retranchent la barre de défilement
+ * classique (~15–17 px) du `min-width`, Firefox overlay non. 1880 = Philips
+ * 1920 maximisé y compris scrollbar + un peu de chrome.
+ */
+var RADAR_HD_MIN_PX = 1880;
+var RADAR_HD_MQ = '(min-width: 1880px)';
+function isRadarHdViewport() {
+  try {
+    return window.matchMedia(RADAR_HD_MQ).matches;
+  } catch {
+    return false;
+  }
+}
+
 /** Écoute 'change' d'une MediaQueryList avec repli addListener (Safari ≤ 13). */
 function onMediaQueryChange(mq, handler) {
   if (!mq) return;

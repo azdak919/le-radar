@@ -9,7 +9,7 @@
  *
  * Politique : pas de religieux institutionnel ; nations du Québec OK ;
  * pas de personnes reconnaissables ; plafond large ; ménage 1×/session univ.
- * Résolution mini ~1400×700 / 1.2 Mpx (anti-grain upscale).
+ * Résolution mini ~640×600 / 0,65 Mpx. Portrait réservé aux cartes campus.
  * focalY optionnel (0=haut, 1=bas) pour cover crop.
  * Hard-ban : scripts/quebec-backgrounds-blacklist.js
  */
@@ -1212,5 +1212,16 @@ const QUEBEC_POMO_BACKGROUNDS = [
     season: "automne",
     surfaces: ["masthead", "pomo"],
     tags: ["campus", "mat", "pomo"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Parc_de_la_Chute_Montmorency_23.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    credit: "Cactus0625",
+    link: "https://commons.wikimedia.org/wiki/File:Parc%20de%20la%20Chute%20Montmorency%2023.jpg",
+    license: "CC BY-SA 4.0",
+    title: "Parc de la Chute Montmorency 23",
+    width: 4032,
+    height: 3024,
+    place: "Chute Montmorency",
+    tags: ["pomo"],
   }
 ];

@@ -1,158 +1,153 @@
 {
-  "updated": "2026-07-27T12:16:05.085Z",
+  "updated": "2026-09-28T17:07:31.440Z",
   "healthy": true,
   "needsHuman": false,
   "pipeline": [
     {
       "step": "Institutions catalogue",
       "ok": true,
-      "ms": 488
+      "ms": 980
     },
     {
       "step": "Media scanner (gaps)",
       "ok": true,
-      "ms": 3437
+      "ms": 9374
     },
     {
       "step": "News source maintainer",
       "ok": true,
-      "ms": 144109
+      "ms": 117286
     },
     {
       "step": "Stream tracker + radio promotion",
       "ok": true,
-      "ms": 613818
+      "ms": 696640
     },
     {
       "step": "Radio now-playing metadata",
       "ok": true,
-      "ms": 48384
+      "ms": 37327
+    },
+    {
+      "step": "RSEQ sports league catalog",
+      "ok": true,
+      "ms": 3434
+    },
+    {
+      "step": "RSEQ sports results",
+      "ok": true,
+      "ms": 24092
+    },
+    {
+      "step": "Radio schedule drift",
+      "ok": true,
+      "ms": 16915
     },
     {
       "step": "News sources verify",
       "ok": true,
-      "ms": 28752
+      "ms": 23679
     },
     {
       "step": "News aggregator",
       "ok": true,
-      "ms": 60502
-    },
-    {
-      "step": "Author QC",
-      "ok": true,
-      "ms": 519323
-    },
-    {
-      "step": "Lead excerpt enrichment",
-      "ok": true,
-      "ms": 13069
-    },
-    {
-      "step": "Lead image QC",
-      "ok": true,
-      "ms": 1161606
-    },
-    {
-      "step": "Photo credit QC",
-      "ok": true,
-      "ms": 16688
+      "ms": 47440
     },
     {
       "step": "Quebec masthead landscape bank",
       "ok": true,
-      "ms": 42
+      "ms": 215830
     },
     {
       "step": "Quebec masthead university bank",
       "ok": true,
-      "ms": 34
+      "ms": 99256
     },
     {
       "step": "Quebec pomo landscape bank",
       "ok": true,
-      "ms": 36
+      "ms": 168597
     },
     {
       "step": "Quebec nations/Inuit bank (shared)",
       "ok": true,
-      "ms": 115383
+      "ms": 275839
     },
     {
       "step": "Quebec photo bank pixel audit (report)",
       "ok": true,
-      "ms": 57
+      "ms": 430345
     },
     {
       "step": "Social feed",
       "ok": true,
-      "ms": 67470
+      "ms": 39157
     },
     {
       "step": "RSS export",
       "ok": true,
-      "ms": 56
+      "ms": 77
     }
   ],
   "summary": {
     "institutions": 79,
     "news": {
-      "active": 14,
+      "active": 17,
       "dead": 0,
-      "stale": 1,
-      "candidates": 6,
-      "articles": 185,
-      "withAuthor": 185,
-      "withExcerpt": 184,
+      "stale": 3,
+      "candidates": 3,
+      "articles": 188,
+      "withAuthor": 188,
+      "withExcerpt": 187,
       "authorQc": {
         "ok": true,
-        "mismatches": 4
+        "mismatches": 6
       },
       "leadImageQc": {
-        "fullyCovered": 185,
-        "withPhoto": 168,
-        "withStock": 41,
-        "leadReadyPhotos": 138,
-        "pageScraped": 14,
+        "fullyCovered": 188,
+        "withPhoto": 176,
+        "withStock": 24,
+        "leadReadyPhotos": 145,
+        "pageScraped": 37,
         "mainPageLeadReady": true
       },
       "photoCreditQc": {
-        "ok": true,
-        "withCredit": 168,
-        "cited": 128,
-        "pending": 0,
+        "ok": false,
+        "withCredit": 176,
+        "cited": 120,
+        "pending": 8,
         "missingHero": 0
       }
     },
     "backgrounds": {
       "masthead": {
-        "count": 49,
+        "count": 115,
         "maxBank": 50,
-        "lastSessionCleanup": "2026-05-01",
-        "lastSessionId": "ete"
+        "lastSessionCleanup": null,
+        "lastSessionId": null
       },
       "universities": {
-        "count": 25,
+        "count": 148,
         "maxBank": 50,
-        "lastSessionCleanup": "2026-05-01",
-        "lastSessionId": "ete"
+        "lastSessionCleanup": null,
+        "lastSessionId": null
       },
       "pomo": {
-        "count": 41,
+        "count": 86,
         "maxBank": 50,
-        "lastSessionCleanup": "2026-05-01",
-        "lastSessionId": "ete"
+        "lastSessionCleanup": null,
+        "lastSessionId": null
       },
       "nations": {
-        "count": 20,
+        "count": 37,
         "maxBank": 50,
-        "lastSessionCleanup": "2026-05-01",
-        "lastSessionId": "ete"
+        "lastSessionCleanup": null,
+        "lastSessionId": null
       },
-      "count": 49,
+      "count": 115,
       "maxBank": 50,
-      "lastSessionCleanup": "2026-05-01",
-      "lastSessionId": "ete"
+      "lastSessionCleanup": null,
+      "lastSessionId": null
     },
     "radios": {
       "listed": 6,
@@ -184,12 +179,17 @@
     {
       "level": "info",
       "code": "stale_news_feed",
-      "message": "Flux inactif : The Tribune — dernier article 2026-07-21"
+      "message": "Flux inactif : L'Oisif — dernier article 2019-08-23"
     },
     {
-      "level": "warn",
-      "code": "stale_news_cache",
-      "message": "Cache conservé : The Tribune — flux indisponible, articles frais du run précédent"
+      "level": "info",
+      "code": "stale_news_feed",
+      "message": "Flux inactif : La Gifle — dernier article 2018-05-19"
+    },
+    {
+      "level": "info",
+      "code": "stale_news_feed",
+      "message": "Flux inactif : Le Trait d'Union — dernier article 2024-11-14"
     },
     {
       "level": "info",
@@ -200,6 +200,16 @@
       "level": "info",
       "code": "lead_stock_gap",
       "message": "12+ articles sans photo vedette (banques libres consultées)"
+    },
+    {
+      "level": "info",
+      "code": "schedule_drift",
+      "message": "Hors programmation : chyz (+6 −7), cism (+2 −1), ckut (+7 −6), cjlo (+3 −2)"
+    },
+    {
+      "level": "warn",
+      "code": "schedule_overhaul",
+      "message": "Grille refaite : choq (+5 −6) — relancer fetch-radio-schedules.js --update"
     }
   ]
 }

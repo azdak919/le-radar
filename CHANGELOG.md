@@ -5,11 +5,23 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
+### Corrigé
+
+- Bandeau sports du soir : un coup d’envoi déjà passé (plus de 3 h, pas en direct) n’occupe plus tout le ruban en « Aujourd’hui » sans score. Il sort du pool à-venir ; s’il a un score, il rejoint les résultats. Reliquat = scores (hier / journée), pas quatre puces « Aujourd’hui ».
+- Mât météo ≥1440 : le reliquat va aux villes secondaires (`1fr`), plus de trou à droite du board. Montréal/Québec restent calées au contenu ; le nom ne s’étire pas jusqu’au °C.
+- Mât météo et sports : vague L→R à 440 ms puis pause lecture (même cascade sur les deux bandeaux).
+
+- JSON-LD du fil : manchettes **complètes** (plus de coupe à 110 car. dans `generate-seo.js`). Une manchette longue (ACFAS) faisait diverger `index.html` de `news.json` et faisait échouer `tests/news-representations.mjs` — donc tous les bots qui passent `bot-prepush`. Guard force aussi la régénération SEO après un catch-up news ; Update Student News retente SEO une fois avant « HTML gate deferred ».
+
+- Full HD (Philips 1920) : 2 unes + densité 1920 aussi sur **Edge / Chromium**. Le palier `min-width: 1920px` ratait dès qu’une barre de défilement classique retranchait ~15 px (Firefox overlay passait). Seuil **1880 px**, JS et CSS alignés.
+
 ### Modifié
 
+- Pastille d’un **résultat du jour** sur les cartes sports : **Derniers résultats** (2 lignes ; EN Latest results). Plus de Dernière heure / Breaking news.
+- Bandeau sports accueil (**go D**) : une puce = ordre E (live / ce soir / jour / hier). Dès **2 puces** entièrement visibles : gauche = derniers résultats, droite = à-venir ; directs et matchs du jour d’abord. Une liste, un mouvement.
 - Barre radio bureau : fond d’été `#101816` **toute l’année** (plus de teinte automne bordeaux / hiver bleutée). Mobile inchangé (`--tuner-bg`).
-- Cartes sports du mât (**go E**) : live → ce soir → Dernière heure → **hier → demain** → à-venir dans **7 j civils** → scores J−2…J−5 → à-venir plus loin. Mercredi passe devant le 28–14 ; un football dans 12 j ne le chasse pas.
-- Scores bandeau **F compact** : même épaisseur 2 lignes, glyphe sport. Kicker 1 ligne sauf Dernière heure / Avant-hier / dates (jour de la semaine, puis jour + mois). Noms d’équipe d’abord (Vert & Or, Carabins, Cheetahs). Match sans chiffre : **0–0**. Voile : club + place, pas de 0–0.
+- Cartes sports du mât (**go E**) : live → ce soir → Derniers résultats → **hier → demain** → à-venir dans **7 j civils** → scores J−2…J−5 → à-venir plus loin. Mercredi passe devant le 28–14 ; un football dans 12 j ne le chasse pas.
+- Scores bandeau **F compact** : même épaisseur 2 lignes, glyphe sport. Kicker 1 ligne sauf Derniers résultats / Avant-hier / dates (jour de la semaine, puis jour + mois). Noms d’équipe d’abord (Vert & Or, Carabins, Cheetahs). Match sans chiffre : **0–0**. Voile : club + place, pas de 0–0.
 - Ouverture **B** : une liste gauche→droite (directs → aujourd’hui → à-venir → hier → reliquat 5 j). Cascade leave/arrive inchangée. Poll 15 s sur place.
 
 - Traduction plus rapide sans nouveau moteur ni hausse des quotas gtx : le chrome (mât, tuner, CTA, nav, tête du fil) passe **avant** le fil ; cache LRU plus large ; requêtes identiques partagées ; mutations pendant un passage sont rejouées au lieu d’être perdues.
@@ -22,6 +34,8 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 - Cartes sports IAB : bandeau **Sports étudiants collégiaux et universitaires du Québec** sur tous les formats ; horaire, domicile/extérieur, compétition, secteur. Le 728×90 n’est plus une seule ligne de noms.
 - Page `/iframes/` : barre radio campus (`tuner-embed.html?surface=bar`, clair/sombre opaque — Pomo et Solitaire restent sans `surface=`) et **cartes sports** aux formats pub IAB (300×250, 728×90, 320×50, 336×280, 300×600, 160×600), même identité que le site (pourpre, Inter, Source Serif, pastilles Prochain / Aujourd’hui / Hier). Lockup **logo PWA + LE-RADAR.ca**. Les matchs ouvrent le cycle ; la carte marque n’apparaît qu’après au moins 4 scores, avec le nom complet. Clic d’un match → `/sports/?sport=&team=&game=` : formation et ligne du résultat en surbrillance.
+- Application iOS et Android (Capacitor 8) : fil personnel, suivis, favoris, hors ligne, partage natif et fiches. Le site le-radar.ca n’est pas encapsulé. Documentation : `docs/mobile/`.
+
 - Studio d’affiches **en local** : téléverser une JPEG/PNG/WebP (reste dans l’onglet, hors banque publique). Comme le 1200 dpi, masqué hors `127.0.0.1`.
 - Messages manuscrits d’affiches : point d’exclamation sur les vœux (Bonne rentrée !, Joyeuses Fêtes !, Tu vas y arriver !). Pas sur les mentions solennelles ni les phrases projet.
 - Banque d’affiches Université Laval : un cliché Commons de chaque pavillon d’enseignement du campus principal et des quatre résidences (dont Agathe-Lacerte et Ernest-Lemieux). Studio `/affiches/?campus=laval&photo=ernest-lemieux`.
@@ -55,7 +69,7 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 - Overlay de traduction mobile : le filet de « Le fil étudiant » ne traverse plus le logo (`.wire-head` z 70 > overlay 60). Titre **et** puce langue sous le voile ; carte centrée dans le fil ; toast masqué tant que la carte est là.
 
-- Pastille CTA d’un **résultat du jour** : **Dernière heure** (2 lignes ; EN Breaking news). Pas d’AM/PM. À venir du jour garde **cet AM / ce PM**.
+- Pastille CTA d’un **résultat du jour** : **Derniers résultats** (2 lignes ; EN Latest results). Pas d’AM/PM. À venir du jour garde **cet AM / ce PM**.
 
 - Puces scores : pastille **Aujourd’hui / cet AM|ce PM** et **Demain / AM|PM** (pas Hier).
 

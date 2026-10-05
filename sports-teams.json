@@ -1,8 +1,8 @@
 {
   "description": "Registre des formations sportives RSEQ (collégial + universitaire QC) pour LE-RADAR. shortName = libellé puce/tableau ; fullName = établissement ; nickname = surnom d'équipe si connu. aliases + rseqTeamIds servent à rattacher le flux S1.",
   "source": "curated + sports.json (rseq-s1)",
-  "updated": "2026-08-31T05:37:23.059Z",
-  "teamCount": 85,
+  "updated": "2026-09-28T16:45:10.187Z",
+  "teamCount": 93,
   "teams": [
     {
       "id": "ulaval",
@@ -59,7 +59,9 @@
         "6d34e3ee-1fb1-4a60-91ef-235241bd79df",
         "70fa06db-d625-4c8c-b1d1-08d645bcfa2d",
         "1f15dcbb-6b6d-6a50-8317-06a08a8b9e2f",
-        "LAV"
+        "LAV",
+        "ulaval",
+        "44c673d9-491e-4bd4-adcb-170b0d4f399b"
       ]
     },
     {
@@ -107,7 +109,9 @@
         "f5829bd6-4406-41d4-b1f0-babd05fdb1cb",
         "86bf569b-acec-4087-a738-9355c68dc222",
         "1f15dcb8-8519-6290-9bd8-0293bf2c2559",
-        "MCG"
+        "MCG",
+        "mcgill",
+        "fc71063e-48d9-439e-8e2d-dfd104973312"
       ]
     },
     {
@@ -155,7 +159,10 @@
         "3470444a-361e-470d-aba5-1f2ac64d670a",
         "d20c4f76-6b0a-42fb-babb-2fcc6411612f",
         "72deeba3-0450-433c-a32b-0310497addfc",
-        "1f15dcb4-2202-6a5c-9208-06a08a8b9e2f"
+        "1f15dcb4-2202-6a5c-9208-06a08a8b9e2f",
+        "1f15dcb4-21f4-6f7e-8115-06a08a8b9e2f",
+        "concordia",
+        "24fd589d-ae14-4403-a5a0-0089846a2c26"
       ]
     },
     {
@@ -211,7 +218,9 @@
         "3889fe85-e149-4e71-b2e0-2c87f101d5f5",
         "ac731835-41f9-4cab-a830-31d1958977f0",
         "1f15dcb2-9f24-60aa-9f89-02bb122e4421",
-        "MTL"
+        "MTL",
+        "udem",
+        "d3675dc9-caaa-4503-920b-c955ccf5d9e0"
       ]
     },
     {
@@ -231,7 +240,9 @@
       "sports": [
         "sailing"
       ],
-      "rseqTeamIds": []
+      "rseqTeamIds": [
+        "POLY"
+      ]
     },
     {
       "id": "uqam",
@@ -323,7 +334,9 @@
         "3ded2920-fe0b-438e-aa29-4f0657dd3ea6",
         "560e08e2-dae6-494c-b4a3-feb9b50de0fa",
         "1f15dcc2-cd97-686e-8fe1-0293bf2c2559",
-        "USHE"
+        "USHE",
+        "67f55ddb-5d15-4ef2-86fc-d36b41ffdbd8",
+        "usherbrooke"
       ]
     },
     {
@@ -359,7 +372,9 @@
         "5465ba69-4861-4924-a678-5ac0899b408f",
         "afd48cf0-d89e-43b2-89cf-0a5579bfaedb",
         "d55a3e3c-373d-4c6b-b0af-5014e320d1e5",
-        "1f15dcb9-e055-6766-b01d-02bb122e4421"
+        "1f15dcb9-e055-6766-b01d-02bb122e4421",
+        "bishops",
+        "050a7c62-d2ea-4de5-af23-36a6fe63c47f"
       ]
     },
     {
@@ -404,7 +419,11 @@
         "82c18d4a-1399-4985-982e-c98674f4a30c",
         "e547fecb-e449-49ea-ad55-7ed63604b812",
         "7bafe947-da99-4c1e-be95-75d1d3e4cd0c",
-        "98c522d0-2f3d-4e29-953f-b1b1250eb5eb"
+        "98c522d0-2f3d-4e29-953f-b1b1250eb5eb",
+        "507b9449-50fa-447a-83d3-daaea453823f",
+        "56c73753-8949-47ec-88a9-8c4c471299d8",
+        "bc6ab59c-ebbc-4363-9f21-17779e03b94e",
+        "d18db455-1c3b-4fb9-9a8e-c7ef65df490d"
       ]
     },
     {
@@ -423,6 +442,7 @@
         "baseball",
         "basketball",
         "football",
+        "hockey",
         "rugby",
         "soccer",
         "volleyball"
@@ -437,7 +457,14 @@
         "92729c91-96dd-471c-80ae-3186cd1f7b03",
         "773cb01b-430c-4050-8453-7b2ce112a3c3",
         "84df2a26-c411-4dd5-a458-4301dc9a261e",
-        "54b40d75-1969-4a64-8d73-ba0204fc9b3f"
+        "54b40d75-1969-4a64-8d73-ba0204fc9b3f",
+        "df0e27c8-c5f0-4248-ae92-176e33b1f95f",
+        "240e6887-d284-4f91-ba2a-54419edf5e2c",
+        "bff44987-e6b2-4828-9b33-d71be3550ac0",
+        "c73a02fc-b491-49f1-8982-e9cababed363",
+        "fb665473-1f5a-4875-9b32-35c332ffa8d4",
+        "54e98b08-a6c2-42cc-b6b2-80a0b4c1f0dc",
+        "8ec38051-3a83-422b-8660-92441c1c51fa"
       ]
     },
     {
@@ -552,7 +579,9 @@
         "11946282-ae57-4a0a-a927-320618638c0c",
         "9dd61618-f121-4dc9-8b24-f775000dc895",
         "a820fb66-c73e-4ee8-97c2-5fba3e08aafe",
-        "1f15dcbb-18bd-61de-9791-02bb122e4421"
+        "1f15dcbb-18bd-61de-9791-02bb122e4421",
+        "545357cd-1767-49b4-a2c2-71237bf73ad5",
+        "ets"
       ]
     },
     {
@@ -580,7 +609,9 @@
         "a92ee273-92a5-49e1-882e-b5d5c180d577",
         "02811e91-3664-42cb-8a59-bb3c832e49b4",
         "9e1a409f-d54b-4c26-8353-702662852538",
-        "1f15dcb4-2ae9-6288-996a-02bb122e4421"
+        "1f15dcb4-2ae9-6288-996a-02bb122e4421",
+        "490dc7c1-ed27-42a7-abb9-214e07796c05",
+        "uqac"
       ]
     },
     {
@@ -602,7 +633,9 @@
       "rseqTeamIds": [
         "acc7aed5-4d3a-4285-b4c7-566c4b45a62a",
         "fd4b635b-5133-4a33-97e0-22dcf952ffb8",
-        "1f15dcb8-a493-63a0-8193-06a08a8b9e2f"
+        "1f15dcb8-a493-63a0-8193-06a08a8b9e2f",
+        "ddc5b24e-6d7a-4330-b970-517f6b6db433",
+        "uqo"
       ]
     },
     {
@@ -663,6 +696,7 @@
         "cross-country",
         "flag-football",
         "football",
+        "hockey",
         "soccer",
         "soccer-interieur",
         "ultimate",
@@ -679,7 +713,8 @@
         "2c30cbf4-5246-4a03-920b-a7248ab9bc9b",
         "8830f738-16f1-4dc9-aecb-337401f0e29e",
         "e0573c05-91d2-47b5-bb3c-42ec5622812a",
-        "28e6258b-f96c-4eb5-ad32-6fbf830060bf"
+        "28e6258b-f96c-4eb5-ad32-6fbf830060bf",
+        "26279b5e-ca6e-4273-834f-86989d80e815"
       ]
     },
     {
@@ -716,7 +751,10 @@
         "40c3a10e-75e4-4e8c-8f88-a09f48cab5c5",
         "bafd3546-845d-46d1-917f-a205e86fb022",
         "e0183435-6ddc-43a0-9311-7789bcd63fa0",
-        "1f15de39-617a-68ca-9eb7-024cdcc06dcd"
+        "1f15de39-617a-68ca-9eb7-024cdcc06dcd",
+        "378831a1-69ca-4fb1-b2b9-9ef97673728d",
+        "77922cd2-dd44-4250-9a73-6e18e1fc346b",
+        "c83812f4-a0b1-4e3b-bee5-8271968dbe31"
       ]
     },
     {
@@ -777,6 +815,7 @@
         "cross-country",
         "flag-football",
         "football",
+        "hockey",
         "soccer"
       ],
       "rseqTeamIds": [
@@ -785,7 +824,9 @@
         "73e3a35a-e00a-41d9-828a-ac7ef5ac7214",
         "28867f3b-a0c7-457e-87fc-745bb879a634",
         "449c7245-ec36-43cb-ac6b-134e8b6809ec",
-        "4f4983e8-5e8b-48b0-a3ff-491bbda96b03"
+        "4f4983e8-5e8b-48b0-a3ff-491bbda96b03",
+        "fbb1c43a-bfb3-4551-8b16-996fd92605b8",
+        "b617b816-682a-4eb7-b659-d2782750c4bb"
       ]
     },
     {
@@ -845,6 +886,7 @@
         "baseball",
         "basketball",
         "cross-country",
+        "hockey",
         "rugby",
         "soccer",
         "volleyball"
@@ -862,7 +904,8 @@
         "e63440e1-568f-4a09-b623-cef874ee0cd9",
         "c67b6294-b434-4f14-a4c4-24386f91b3b8",
         "bdfb6400-6eb0-4764-897c-f4137f5326bc",
-        "6bdf3fd0-d399-4d3d-8209-fb47b4302f9c"
+        "6bdf3fd0-d399-4d3d-8209-fb47b4302f9c",
+        "44c2e295-0287-460d-abcb-202f688336f3"
       ]
     },
     {
@@ -885,6 +928,7 @@
         "basketball",
         "cross-country",
         "flag-football",
+        "hockey",
         "rugby",
         "soccer",
         "soccer-interieur",
@@ -905,7 +949,8 @@
         "9d7433d9-7950-421e-a2a4-9e9aa44f6dce",
         "8956ca5e-bb0f-46cb-9a7b-b1673b13dba5",
         "f9fa4636-1384-47bb-a672-e640fddd0d43",
-        "569335e7-5b04-4366-8f3b-75cfce9bd0a6"
+        "569335e7-5b04-4366-8f3b-75cfce9bd0a6",
+        "d6ea8363-49c6-427c-9b90-77c6f7118433"
       ]
     },
     {
@@ -927,6 +972,7 @@
         "flag-football",
         "football",
         "golf",
+        "hockey",
         "rugby",
         "soccer",
         "volleyball"
@@ -944,7 +990,8 @@
         "b6710080-ffb4-4400-a0c4-48cfdd668107",
         "01d5436d-5897-43bc-afa8-c0104c1f4f89",
         "de213693-59bf-4472-b19f-d550b447029f",
-        "0cc63b84-4df0-4a22-ac78-ad47e886c10b"
+        "0cc63b84-4df0-4a22-ac78-ad47e886c10b",
+        "5482cb5f-a2fd-4f0f-99d6-c2a2628bfee0"
       ]
     },
     {
@@ -983,7 +1030,8 @@
         "ad6b3368-7dbf-4163-a90e-8fb7d2026546",
         "d6c4f103-21a2-4b35-9973-a3399892b994",
         "67652c52-66af-47e2-9f5f-d771db1ec0ea",
-        "378bfde7-7599-4044-89ae-4cd7fa82f574"
+        "378bfde7-7599-4044-89ae-4cd7fa82f574",
+        "78714ac5-ace8-4fa5-a92f-70045489a58b"
       ]
     },
     {
@@ -1025,7 +1073,8 @@
         "2beca87a-b6d8-4c5a-a40a-3f08333c3aad",
         "04df76e4-56d7-4ccf-906d-360298ae7f4f",
         "21b58f0d-8cc7-4858-842c-9b0d24579ea0",
-        "1f15de3d-ae62-6242-90b4-06ea9bff85b5"
+        "1f15de3d-ae62-6242-90b4-06ea9bff85b5",
+        "701e8882-bf36-4096-9fbd-797e8f3d8697"
       ]
     },
     {
@@ -1083,11 +1132,14 @@
       ],
       "priority": 32,
       "sports": [
+        "basketball",
         "cheerleading",
         "cross-country",
         "flag-football",
         "football",
-        "natation"
+        "natation",
+        "rugby",
+        "volleyball"
       ],
       "rseqTeamIds": [
         "d387591f-12eb-4afb-9011-a6c7a18291ef",
@@ -1095,7 +1147,11 @@
         "5f16a48d-9336-4e64-ac54-603557975561",
         "efc24406-7fef-4f8b-8642-3981d0d9722c",
         "0b77da64-53a6-4042-a774-6257737f489f",
-        "3556c283-8c99-414f-947a-b1416f42de9e"
+        "3556c283-8c99-414f-947a-b1416f42de9e",
+        "4f406f20-9f10-427c-8bba-5d7df4eb6808",
+        "9d861da0-ac92-4eae-af71-6343385fbd9d",
+        "6be2958a-4d63-40b0-a9b4-4066f084a19f",
+        "14804db5-24a0-455d-a7d3-15b471884e4f"
       ]
     },
     {
@@ -1136,7 +1192,8 @@
         "2f14ba85-4803-4843-ba17-4d83f24e81f3",
         "11bcf373-46a7-4191-9202-3bbd01586887",
         "6582ca1a-9db7-4948-a308-1976c8c1faf2",
-        "1f15de41-1320-662c-9001-024cdcc06dcd"
+        "1f15de41-1320-662c-9001-024cdcc06dcd",
+        "0e84b5eb-9d97-4a33-9940-de8caacc2d0a"
       ]
     },
     {
@@ -1173,7 +1230,9 @@
         "725dcd50-001d-436b-baad-6a8573b8ddad",
         "f885eead-6861-4ba7-a2d6-9c3ec201d476",
         "174f7b18-6cc1-4f95-bc65-b500b8f23828",
-        "1f15de3b-af0e-6bac-a022-024cdcc06dcd"
+        "1f15de3b-af0e-6bac-a022-024cdcc06dcd",
+        "300b9364-3091-4628-b29d-29bb88f690bd",
+        "28b5f6e2-d5ee-4d98-a6fd-8db2beadfadd"
       ]
     },
     {
@@ -1234,6 +1293,7 @@
         "basketball",
         "cheerleading",
         "cross-country",
+        "hockey",
         "natation",
         "soccer",
         "soccer-interieur",
@@ -1250,7 +1310,8 @@
         "9780f49e-38ad-44ca-9397-33c64f5796fe",
         "68f303d4-e2a0-40cb-ac14-d05ece7bf1db",
         "a1e2442c-258b-4ed8-b4ed-1cd964027e3b",
-        "d17d8093-3525-4771-a4be-67dccac780cb"
+        "d17d8093-3525-4771-a4be-67dccac780cb",
+        "9f2a7ea7-1142-4436-89bc-cbd45d0b07ef"
       ]
     },
     {
@@ -1291,7 +1352,12 @@
         "99d16594-3736-4db2-8307-9747a990a04c",
         "4130e12e-1e70-4f46-aa46-4aa94906c020",
         "35041059-eb8b-45f4-9932-7c7777814758",
-        "1f15de35-5c4b-6dd0-8a20-06ea9bff85b5"
+        "1f15de35-5c4b-6dd0-8a20-06ea9bff85b5",
+        "e1ad79b3-422d-41fb-9ef9-0a56720223e0",
+        "c4c5378d-b951-4723-9ca5-f141f4a453fa",
+        "75dfcdbc-65bd-4c8a-8172-ac9c69774ecc",
+        "912c82da-1671-4f88-9ca5-8f4e1e5a3397",
+        "24c9c6bd-69da-424a-b310-a9019f4fe011"
       ]
     },
     {
@@ -1375,7 +1441,11 @@
         "b9fe0b8d-d527-4e5e-94b9-f747a054861e",
         "c88deccb-eade-4833-9135-5fe63d520a4c",
         "fb2fd271-efc5-4eb8-9899-5b09f32126d9",
-        "1f15de30-b8c6-6b1e-83bd-0602a60cf5a7"
+        "1f15de30-b8c6-6b1e-83bd-0602a60cf5a7",
+        "2db31fa4-c7bc-4095-9f8e-6b444d159d62",
+        "38d1a1c4-2f3c-4070-b329-aded42fab6f4",
+        "f271c0e3-3475-4e1f-8477-cd77ba832479",
+        "8cc9d8a2-ba3f-49f6-a5b2-ae655d7d3302"
       ]
     },
     {
@@ -1399,6 +1469,7 @@
         "flag-football",
         "football",
         "golf",
+        "hockey",
         "natation",
         "rugby",
         "soccer",
@@ -1421,7 +1492,9 @@
         "8c00b4cc-c53b-490d-8b85-6a40462d1aec",
         "f182dddb-5a8c-489d-a124-99f70415fae3",
         "b49a8b8d-50f9-4bdf-a377-d512cfec0319",
-        "5689503a-d3bb-4e9e-bacb-18b5bf8ff184"
+        "5689503a-d3bb-4e9e-bacb-18b5bf8ff184",
+        "c879eea5-1992-44dd-b354-6585dceeb972",
+        "79faf204-2cad-42d2-8425-0851dcfcc639"
       ]
     },
     {
@@ -1441,6 +1514,7 @@
         "basketball",
         "flag-football",
         "football",
+        "hockey",
         "natation",
         "soccer",
         "volleyball"
@@ -1451,7 +1525,8 @@
         "65edf9cc-e1a6-4a0c-b020-8a0e44831166",
         "d6e8d094-fe6f-4d79-a7a2-aa67d88be8b2",
         "a1a25c06-5bad-4844-ac10-0b0cc8dddfc9",
-        "34cbb3c7-43b2-4020-9fc6-44b0c68d34cc"
+        "34cbb3c7-43b2-4020-9fc6-44b0c68d34cc",
+        "0b3411ee-b9d1-444a-a22b-fd68e5669cf7"
       ]
     },
     {
@@ -1476,6 +1551,7 @@
         "cross-country",
         "flag-football",
         "football",
+        "hockey",
         "soccer",
         "volleyball"
       ],
@@ -1493,7 +1569,8 @@
         "4b148d3a-40c4-4276-b3b5-79c860804861",
         "e4a5aa0c-efb5-4164-a523-ad4e9d7da987",
         "36dc01ed-fcb3-4d47-a5ad-4fcae71e48cd",
-        "052881db-5c66-4129-9dc1-fce9abb1f522"
+        "052881db-5c66-4129-9dc1-fce9abb1f522",
+        "74d6da99-868a-491b-ba01-a05ce52c61a3"
       ]
     },
     {
@@ -1512,6 +1589,7 @@
       "priority": 50,
       "sports": [
         "badminton",
+        "basketball",
         "cheerleading",
         "cross-country",
         "football",
@@ -1534,7 +1612,11 @@
         "7f95c248-09ff-485c-9242-355cd6048c7c",
         "0d92ddf2-14f4-4703-9833-efb22a7212d3",
         "258e7c3b-455e-461b-9f9b-4213b40b9f56",
-        "1f15de3a-f13c-6e30-9ff6-024cdcc06dcd"
+        "1f15de3a-f13c-6e30-9ff6-024cdcc06dcd",
+        "d63519bf-5806-4637-bfa9-e46aa8292d71",
+        "182e0e5e-7d8a-4e71-a415-ff4bc692ae2a",
+        "7bdf8b29-6fbe-411f-a439-190689e42197",
+        "a97c8c83-f934-4549-9b89-9127ba9a4842"
       ]
     },
     {
@@ -1564,7 +1646,10 @@
         "918a9c08-a040-4bd5-9dd4-152d326387ae",
         "92a8a2a2-f2e0-4ca2-97c6-3ba88af9e992",
         "1f15de39-c3c5-67f0-adfa-024cdcc06dcd",
-        "1f15de39-c3bc-620e-9793-024cdcc06dcd"
+        "1f15de39-c3bc-620e-9793-024cdcc06dcd",
+        "01f8b8b1-dfac-4538-ab76-304a4f68c3e2",
+        "287ba071-881b-4abd-a11f-838ee8020b1f",
+        "9b7c992f-e1ab-4c24-9cf7-06d085f49df0"
       ]
     },
     {
@@ -1598,7 +1683,8 @@
         "c99abc71-8f07-4900-9a9b-d31bca49da1a",
         "d28da799-a7b3-4cac-8d79-f0bcaed4f8bf",
         "ffc9e367-b7e0-402b-b797-458e09550192",
-        "1f15de3f-76ad-698a-91ba-024cdcc06dcd"
+        "1f15de3f-76ad-698a-91ba-024cdcc06dcd",
+        "d6f03342-dda6-498c-b237-29f31682e3d6"
       ]
     },
     {
@@ -1618,6 +1704,7 @@
         "basketball",
         "flag-football",
         "hockey",
+        "natation",
         "volleyball"
       ],
       "rseqTeamIds": [
@@ -1626,7 +1713,11 @@
         "4d2bd2e5-6e3e-4d0b-82f0-c49c5dfc7dec",
         "c178e8bb-7dbf-4e4d-bd21-ebc18dcd700a",
         "1f15de2f-025f-63ea-b66c-06ea9bff85b5",
-        "1f15de2f-0251-6e34-9f09-06ea9bff85b5"
+        "1f15de2f-0251-6e34-9f09-06ea9bff85b5",
+        "7dde742e-b315-4ee5-97ff-53acfdab716a",
+        "c7f11280-c4f7-4150-b9c5-b6a7592cd946",
+        "021f83b0-58c1-42e0-b1d0-e0bd6b101b1c",
+        "08a8458c-6004-488e-9f94-f42b2a343a67"
       ]
     },
     {
@@ -1647,6 +1738,7 @@
         "badminton",
         "basketball",
         "cross-country",
+        "hockey",
         "natation",
         "soccer",
         "soccer-interieur",
@@ -1662,7 +1754,8 @@
         "2c022f86-04be-4e29-906a-b58a742223c4",
         "e533ce93-b10f-4690-b1ff-a648a2b91538",
         "ce37611a-5f49-4359-be79-06e420470d8a",
-        "53ea6a90-6977-4450-999c-fc8b9d36244d"
+        "53ea6a90-6977-4450-999c-fc8b9d36244d",
+        "d3272a87-4c21-4926-9ffa-caf0b5f2ca0f"
       ]
     },
     {
@@ -1681,6 +1774,7 @@
         "basketball",
         "cheerleading",
         "cross-country",
+        "hockey",
         "natation",
         "soccer",
         "volleyball"
@@ -1693,7 +1787,29 @@
         "ead40133-6e36-4f46-8e22-0e2939fcb7ce",
         "be25934f-cff3-40f8-8161-4b6fb4a6f4a1",
         "84f7a832-eb0f-4ce0-a475-4efe42ba066b",
-        "3ca40f35-c42d-4f46-ae34-99f1842a073e"
+        "3ca40f35-c42d-4f46-ae34-99f1842a073e",
+        "3747289e-8b0d-412d-84e1-7ccf77309c1c",
+        "2006ab31-133f-499a-8d01-98ecf044071a",
+        "5512ae57-9b60-4dc0-b549-ddc2ab2a264b"
+      ]
+    },
+    {
+      "id": "alma-2",
+      "code": "ALM2",
+      "sector": "collegial",
+      "shortName": "Alma 2",
+      "fullName": "Cégep de Alma 2",
+      "nickname": null,
+      "aliases": [
+        "Alma 2",
+        "ALM2"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "f5b6d654-bdee-4194-a904-14b14c841af7"
       ]
     },
     {
@@ -1712,13 +1828,17 @@
         "basketball",
         "cross-country",
         "natation",
+        "rugby",
         "volleyball"
       ],
       "rseqTeamIds": [
         "46427217-e1a3-418d-bda2-ea000a25e647",
         "95ff29ee-5766-4a32-813c-08da3e0ab29e",
         "e1b1b2a1-5cca-41c3-bc3f-d9426ee4c67b",
-        "3c8467fd-93a3-4fa1-8028-f6d36b6e97bc"
+        "3c8467fd-93a3-4fa1-8028-f6d36b6e97bc",
+        "3bfc3c88-442b-490c-ad4d-2f210d0e3418",
+        "40b4ae81-74a9-4330-b792-f86dcce4541c",
+        "4c8defb1-b745-4cce-b597-a1a60456b4f7"
       ]
     },
     {
@@ -1736,6 +1856,7 @@
       "sports": [
         "badminton",
         "baseball",
+        "basketball",
         "cross-country",
         "flag-football",
         "football",
@@ -1756,7 +1877,28 @@
         "a289a69e-9e21-47c0-9aa6-d517d0e47d20",
         "70d24eae-d2a6-4e4e-9102-a8b9898cc2d8",
         "f9c504bf-b8c9-4b35-930a-ac7cb08e84fe",
-        "175bdf5a-e02d-45fe-80fb-00b64c2ce6e4"
+        "175bdf5a-e02d-45fe-80fb-00b64c2ce6e4",
+        "b575bd03-5678-4112-8bfa-ea21516e4092"
+      ]
+    },
+    {
+      "id": "beauce-appalaches-sm",
+      "code": "BAPS",
+      "sector": "collegial",
+      "shortName": "Beauce-Appalaches SM",
+      "fullName": "Cégep de Beauce-Appalaches SM",
+      "nickname": null,
+      "aliases": [
+        "Beauce-Appalaches SM",
+        "BAPS"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "1c5b3580-ffcf-48e5-8e22-813514e767ea",
+        "0f79a19a-5f25-4c93-b92b-771c052d5299"
       ]
     },
     {
@@ -1783,59 +1925,6 @@
         "7cecfaaf-8b37-423a-8233-2787b570ad3e",
         "1a5ddfd4-c119-4f66-b996-6aa3c4257657",
         "e3a776b9-561f-47ff-ad80-8c415d6402dd"
-      ]
-    },
-    {
-      "id": "ch-st-lawrence",
-      "code": "SLC",
-      "sector": "collegial",
-      "shortName": "Champlain St-Lawrence",
-      "fullName": "Champlain College St. Lawrence",
-      "nickname": null,
-      "aliases": [
-        "Champlain St-Lawrence",
-        "Ch.-St-Lawrence",
-        "SLC",
-        "St. Lawrence",
-        "Saint-Lawrence",
-        "Champlain St. Lawrence"
-      ],
-      "priority": 80,
-      "sports": [
-        "basketball",
-        "cross-country",
-        "golf",
-        "soccer",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "c2cdf3d0-3232-4038-9ac1-fc039a6c7f4e",
-        "be8463de-e00e-4c62-a64c-153ba9720ba7",
-        "05cf481a-7441-444d-98b1-17a13d59c1a0",
-        "ed70b88e-aef4-48ba-a97d-7fc454312bae",
-        "04a285f6-2cf0-4724-a1af-23ebb3595127",
-        "a0467cbb-70d3-46cc-8faf-fdaded90c77c"
-      ]
-    },
-    {
-      "id": "charlevoix",
-      "code": "CHX",
-      "sector": "collegial",
-      "shortName": "Charlevoix",
-      "fullName": "Cégep de Charlevoix",
-      "nickname": null,
-      "aliases": [
-        "Charlevoix",
-        "CHX"
-      ],
-      "priority": 80,
-      "sports": [
-        "cross-country",
-        "flag-football"
-      ],
-      "rseqTeamIds": [
-        "0a9c9922-e0fb-4561-a4a7-e1d8f2603798",
-        "f687d3ca-5d4f-4e11-915a-0ba069134055"
       ]
     },
     {
@@ -1867,7 +1956,141 @@
         "1a77a6f5-244a-4681-8f11-e0fa576cb42d",
         "ab2aa041-5c5c-4d6d-8c17-794c9f08fd22",
         "ced14a5e-25d8-4566-917e-5fcae50e98a4",
-        "52ddf56a-ada6-4e95-8615-ec6325c9497a"
+        "52ddf56a-ada6-4e95-8615-ec6325c9497a",
+        "a0f89416-0269-4a5b-a28f-4b438873dd2c"
+      ]
+    },
+    {
+      "id": "rimouski",
+      "code": "RIM",
+      "sector": "collegial",
+      "shortName": "Cégep de Rimouski",
+      "fullName": "Cégep de Rimouski",
+      "nickname": null,
+      "aliases": [
+        "Rimouski",
+        "RIM"
+      ],
+      "priority": 80,
+      "sports": [
+        "badminton",
+        "basketball",
+        "cross-country",
+        "football",
+        "hockey",
+        "natation",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "3db6b273-09ae-4f73-a010-79afe1397cdb",
+        "15bff569-b580-4b7a-b941-ab4ebd3d4867",
+        "09583df5-92fc-4acc-89a1-63c1e45265b4",
+        "222f7996-13bd-4a80-9091-ceea8344c417",
+        "ab13aa51-05dc-4924-b284-dde60def23b2",
+        "f2ddee0f-7f61-4c75-900b-f2b54628e768",
+        "311f654d-298d-4ed4-bcba-87db544ec53d",
+        "8bbf8276-c8f3-4ace-b954-16036ecbc8c8",
+        "f3b2da3b-fb71-4318-a09a-d23121321370",
+        "a4f21ee5-48d5-4200-bad8-eef1237970a1",
+        "fa7bbaba-f813-45c0-b211-c6323b8ca66e"
+      ]
+    },
+    {
+      "id": "ch-st-lawrence",
+      "code": "SLC",
+      "sector": "collegial",
+      "shortName": "Champlain St-Lawrence",
+      "fullName": "Champlain College St. Lawrence",
+      "nickname": null,
+      "aliases": [
+        "Champlain St-Lawrence",
+        "Ch.-St-Lawrence",
+        "SLC",
+        "St. Lawrence",
+        "Saint-Lawrence",
+        "Champlain St. Lawrence"
+      ],
+      "priority": 80,
+      "sports": [
+        "basketball",
+        "cross-country",
+        "golf",
+        "hockey",
+        "soccer",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "c2cdf3d0-3232-4038-9ac1-fc039a6c7f4e",
+        "be8463de-e00e-4c62-a64c-153ba9720ba7",
+        "05cf481a-7441-444d-98b1-17a13d59c1a0",
+        "ed70b88e-aef4-48ba-a97d-7fc454312bae",
+        "04a285f6-2cf0-4724-a1af-23ebb3595127",
+        "a0467cbb-70d3-46cc-8faf-fdaded90c77c",
+        "3a5c51cc-d0cd-4759-83cc-53587729a3bd",
+        "4055809d-7cea-4f87-9bb7-63350b1cb670"
+      ]
+    },
+    {
+      "id": "charlevoix",
+      "code": "CHX",
+      "sector": "collegial",
+      "shortName": "Charlevoix",
+      "fullName": "Cégep de Charlevoix",
+      "nickname": null,
+      "aliases": [
+        "Charlevoix",
+        "CHX"
+      ],
+      "priority": 80,
+      "sports": [
+        "cross-country",
+        "flag-football",
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "0a9c9922-e0fb-4561-a4a7-e1d8f2603798",
+        "f687d3ca-5d4f-4e11-915a-0ba069134055",
+        "5aef2da3-96f7-4d33-bb2e-0ba6c722c069",
+        "e310b227-3aa5-46ed-873a-5d8901f8a9bb"
+      ]
+    },
+    {
+      "id": "chibougamau",
+      "code": "BOU",
+      "sector": "collegial",
+      "shortName": "Chibougamau",
+      "fullName": "Cégep de Chibougamau",
+      "nickname": null,
+      "aliases": [
+        "Chibougamau",
+        "BOU"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "d79a19c0-7670-4eda-9fa2-9e12c5691173"
+      ]
+    },
+    {
+      "id": "chicoutimi-vert",
+      "code": "CHI2",
+      "sector": "collegial",
+      "shortName": "Chicoutimi Vert",
+      "fullName": "Cégep de Chicoutimi Vert",
+      "nickname": null,
+      "aliases": [
+        "Chicoutimi Vert",
+        "CHI2"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "2a6230c8-3755-4ceb-bc19-61a79f07c7ac"
       ]
     },
     {
@@ -1927,6 +2150,7 @@
         "basketball",
         "flag-football",
         "football",
+        "hockey",
         "natation",
         "soccer",
         "volleyball"
@@ -1941,7 +2165,9 @@
         "a63c4f45-8485-4774-91e4-1e7268e7b0a3",
         "910fc45a-571f-46e5-8c46-95e6ec71f0b0",
         "eb63ff68-5f89-4dc9-89dd-34d95c53d8ab",
-        "628105a9-01b9-4be7-bab4-9b34f8bc3f35"
+        "628105a9-01b9-4be7-bab4-9b34f8bc3f35",
+        "88f56d22-5da1-47ab-829e-709a225eff6c",
+        "f23ea4f2-7bbe-4321-86e5-a800c1029da2"
       ]
     },
     {
@@ -1978,10 +2204,50 @@
       ],
       "priority": 80,
       "sports": [
+        "cross-country",
         "volleyball"
       ],
       "rseqTeamIds": [
-        "26f8bc61-daa7-453a-a49f-51d2d60b29f4"
+        "26f8bc61-daa7-453a-a49f-51d2d60b29f4",
+        "17273c69-9a31-4258-a1b7-caa780f41b5f"
+      ]
+    },
+    {
+      "id": "gaspesie-et-iles-idlm",
+      "code": "GAS2",
+      "sector": "collegial",
+      "shortName": "Gaspésie et Îles (ÎdlM)",
+      "fullName": "Cégep de Gaspésie et Îles (ÎdlM)",
+      "nickname": null,
+      "aliases": [
+        "Gaspésie et Îles (ÎdlM)",
+        "GAS2"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "23818296-1aaa-4e60-be74-6097c62481a4"
+      ]
+    },
+    {
+      "id": "gaspesie-et-iles-carleton",
+      "code": "GASC",
+      "sector": "collegial",
+      "shortName": "Gaspésie et Îles-Carleton",
+      "fullName": "Cégep de Gaspésie et Îles-Carleton",
+      "nickname": null,
+      "aliases": [
+        "Gaspésie et Îles-Carleton",
+        "GASC"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "ea2f15af-c66e-4d9c-8df3-94f38cd1894d"
       ]
     },
     {
@@ -2065,6 +2331,7 @@
       "sports": [
         "basketball",
         "flag-football",
+        "hockey",
         "ultimate",
         "volleyball"
       ],
@@ -2074,7 +2341,8 @@
         "2f2b6a0b-aacd-4d81-b6aa-7ab77f17fb0f",
         "f1d44e8c-0786-4ef5-bf46-f3a3b46afb60",
         "7f634f47-f77b-4084-912c-8ac282960202",
-        "3fdef215-033c-47d9-811e-09dd2831b992"
+        "3fdef215-033c-47d9-811e-09dd2831b992",
+        "592e3059-a4f9-4524-885a-d0bf6cd29c96"
       ]
     },
     {
@@ -2103,6 +2371,25 @@
         "23a657c1-7232-4758-9ecf-c030f3a907fc",
         "91725f85-5790-4d8f-a3f1-19264b07791c",
         "656a9dff-3510-45ce-a32e-5c80d1933548"
+      ]
+    },
+    {
+      "id": "jonquiere-2",
+      "code": "JON2",
+      "sector": "collegial",
+      "shortName": "Jonquière 2",
+      "fullName": "Cégep de Jonquière 2",
+      "nickname": null,
+      "aliases": [
+        "Jonquière 2",
+        "JON2"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "a9cf4318-04af-44ff-bc7b-ccb715d7e50e"
       ]
     },
     {
@@ -2150,6 +2437,7 @@
       "priority": 80,
       "sports": [
         "badminton",
+        "basketball",
         "cheerleading",
         "cross-country",
         "flag-football",
@@ -2167,7 +2455,8 @@
         "563b8c7b-dd12-4c1e-a57d-956544846a56",
         "f177d451-bc69-4598-9a3b-8915a2637d00",
         "b8655fd6-dac7-476f-8565-4669672b141d",
-        "db30e05a-454b-4070-8283-c9c442b96c48"
+        "db30e05a-454b-4070-8283-c9c442b96c48",
+        "cb283ac0-1042-44aa-885f-8edaa57fe413"
       ]
     },
     {
@@ -2183,10 +2472,12 @@
       ],
       "priority": 80,
       "sports": [
-        "football"
+        "football",
+        "hockey"
       ],
       "rseqTeamIds": [
-        "852aec9b-114f-4665-95b9-b0544b3f6029"
+        "852aec9b-114f-4665-95b9-b0544b3f6029",
+        "14c2e565-de63-4982-b4e7-fdf966abd6ba"
       ]
     },
     {
@@ -2309,7 +2600,8 @@
       "rseqTeamIds": [
         "16742cae-1883-4c4d-93dd-df4735c4741c",
         "fffd082b-f4bd-4477-85f0-77285090f2a9",
-        "1fdbedff-c2b6-4e3e-9fa1-c3a179bfe5a8"
+        "1fdbedff-c2b6-4e3e-9fa1-c3a179bfe5a8",
+        "8f887d2a-9c16-4715-ae80-270a00769844"
       ]
     },
     {
@@ -2346,6 +2638,7 @@
       ],
       "priority": 80,
       "sports": [
+        "basketball",
         "cross-country",
         "flag-football",
         "football",
@@ -2355,7 +2648,10 @@
         "86b1f879-7a25-4e14-b744-5df3fbba61bc",
         "0f1a06e4-391b-46c3-adb3-90928824bc00",
         "abbb8d0e-36b2-49fd-8a1d-9bb359e473b8",
-        "d00882ff-e70e-40a4-a4c1-3f55b4cb1d89"
+        "d00882ff-e70e-40a4-a4c1-3f55b4cb1d89",
+        "4f03810c-2e7d-4079-99e0-92979bbfff34",
+        "94670618-7830-4756-a411-69801454df57",
+        "2e1e1f27-8db3-484c-beee-790cf8a027d8"
       ]
     },
     {
@@ -2426,39 +2722,6 @@
       ]
     },
     {
-      "id": "rimouski",
-      "code": "RIM",
-      "sector": "collegial",
-      "shortName": "Cégep de Rimouski",
-      "fullName": "Cégep de Rimouski",
-      "nickname": null,
-      "aliases": [
-        "Rimouski",
-        "RIM"
-      ],
-      "priority": 80,
-      "sports": [
-        "badminton",
-        "basketball",
-        "cross-country",
-        "football",
-        "natation",
-        "soccer",
-        "volleyball"
-      ],
-      "rseqTeamIds": [
-        "3db6b273-09ae-4f73-a010-79afe1397cdb",
-        "15bff569-b580-4b7a-b941-ab4ebd3d4867",
-        "09583df5-92fc-4acc-89a1-63c1e45265b4",
-        "222f7996-13bd-4a80-9091-ceea8344c417",
-        "ab13aa51-05dc-4924-b284-dde60def23b2",
-        "f2ddee0f-7f61-4c75-900b-f2b54628e768",
-        "311f654d-298d-4ed4-bcba-87db544ec53d",
-        "8bbf8276-c8f3-4ace-b954-16036ecbc8c8",
-        "f3b2da3b-fb71-4318-a09a-d23121321370"
-      ]
-    },
-    {
       "id": "riviere-du-loup",
       "code": "RDL",
       "sector": "collegial",
@@ -2487,7 +2750,8 @@
         "da5f47ec-7e28-4537-bc6a-08381ca04e0b",
         "62c27c37-fb06-418d-9fae-8ffa7f24cf30",
         "3ef76380-dc43-4cb8-af11-a1eb2206c5f3",
-        "afec2087-d252-4e2d-bb29-b8c47ce24b80"
+        "afec2087-d252-4e2d-bb29-b8c47ce24b80",
+        "b177ba29-11aa-4458-a3b3-5e6a43f6ae75"
       ]
     },
     {
@@ -2543,7 +2807,8 @@
         "a2067e2b-6606-4dba-b49e-d4a0773cb31b",
         "07a40f81-0d8a-46dd-9a28-bcc64fb32660",
         "db46fc1c-32c3-4860-a610-2367c1e34051",
-        "2001cd84-dae9-4d5f-829a-cc290bfa97ba"
+        "2001cd84-dae9-4d5f-829a-cc290bfa97ba",
+        "21fdf732-865e-419d-b640-664e1f9e22a4"
       ]
     },
     {
@@ -2601,7 +2866,8 @@
         "f91d0a36-7e00-41dc-bbd4-1c1e34615b36",
         "dafcd2b2-a145-4ca9-997d-9c5070bd6fed",
         "e2fbc9c8-663d-4f20-947e-f8e20df3e3c6",
-        "0e4d7a10-f890-4636-a874-f6c07f62d09e"
+        "0e4d7a10-f890-4636-a874-f6c07f62d09e",
+        "65cbfd38-2ba8-46ad-bdeb-e7f407562e6a"
       ]
     },
     {
@@ -2627,7 +2893,9 @@
         "5a3b64c6-2639-4675-8868-572202ea2c90",
         "821aa878-0d70-4618-bb9a-542020c7bd93",
         "ec3a1b8d-0d64-428e-af60-337d8ec22b54",
-        "3ab574e0-ee0e-47ee-b5c9-c955c9074db4"
+        "3ab574e0-ee0e-47ee-b5c9-c955c9074db4",
+        "5955141e-64bb-47fe-bed7-6b2166fc6787",
+        "0dee606d-0960-4763-adca-e09541bd4a07"
       ]
     },
     {
@@ -2659,7 +2927,27 @@
         "05e0f5c8-7ee9-494c-a115-4c4e000d3054",
         "1bb48aad-d7b9-484d-8f49-1dbe927f8f57",
         "894e4990-41fa-4467-8f13-f919192de926",
-        "44c4bb05-e7f8-4821-b410-055634d1ba59"
+        "44c4bb05-e7f8-4821-b410-055634d1ba59",
+        "375c54c7-5e21-419e-9513-c9cd57eb1c26"
+      ]
+    },
+    {
+      "id": "shawinigan-noir",
+      "code": "SHA2",
+      "sector": "collegial",
+      "shortName": "Shawinigan Noir",
+      "fullName": "Cégep de Shawinigan Noir",
+      "nickname": null,
+      "aliases": [
+        "Shawinigan Noir",
+        "SHA2"
+      ],
+      "priority": 80,
+      "sports": [
+        "volleyball"
+      ],
+      "rseqTeamIds": [
+        "b0b96fc8-04b3-4228-a642-33a87c953e03"
       ]
     },
     {
@@ -2749,11 +3037,14 @@
       ],
       "priority": 80,
       "sports": [
+        "cross-country",
         "natation"
       ],
       "rseqTeamIds": [
         "c0ce3dc9-b80d-41bc-92be-75e922d14f79",
-        "3c7859e7-8051-42a9-8f7f-8a322ced92db"
+        "3c7859e7-8051-42a9-8f7f-8a322ced92db",
+        "b4add6fc-e2b9-467a-8302-0d9e0e182ec3",
+        "baca51a1-496a-4979-8e90-6c2bb631f46d"
       ]
     },
     {
@@ -2812,6 +3103,7 @@
         "cross-country",
         "flag-football",
         "football",
+        "hockey",
         "natation",
         "rugby",
         "soccer",
@@ -2829,7 +3121,10 @@
         "5130a735-0804-40e9-be98-9ca5940f494c",
         "610832dd-eb86-4681-849f-8a67cec1971b",
         "55fbcd37-d4ef-43c7-b0ba-3d50a92b7640",
-        "41d897b8-3126-4088-92b9-93d8a571e836"
+        "41d897b8-3126-4088-92b9-93d8a571e836",
+        "f755c8d5-6dd8-4b19-93c0-de50ed9e876c",
+        "4b467cce-2989-4ffb-9ae4-f310598fdb2b",
+        "dcfc051a-014c-4f07-ad40-d551d4910313"
       ]
     }
   ]

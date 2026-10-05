@@ -20,6 +20,7 @@ Pour ajouter un journal : [`adding-news-source.md`](adding-news-source.md).
 | **Mât** | Header photo + météo + slogan | `index.html`, `quebec-backgrounds.js`, banques `QUEBEC_*` |
 | **Tuner radio** | Un lecteur, grilles, nowplaying | `radar-tuner.js`, `mobile-playback.js`, `radios.json` |
 | **News** | Fil RSS agrégé | `news.json`, `news-sources.json`, `scripts/fetch-news.js` |
+| **Suivi / canaux** | Suivre un média + plateformes externes | `scripts/media-channels-lib.js`, `scripts/media-follow-store.js`, `docs/media-channels.md` |
 | **Pomo** | Mini-app isolée `/pomo/` | `pomo/`, `quebec-pomo-backgrounds-data.js`, `pomo/sw.js` |
 | **Solitaire** | Mini-app isolée `/solitaire/` | `solitaire/`, SW propre |
 | **Workers CF** | Edge (nowplaying cache, bg entropy) | `workers/` — **pas d’audio** |
@@ -58,8 +59,9 @@ blacklist    →  scripts/quebec-backgrounds-blacklist.js  (ne revient jamais)
 - **Panneau toponyme** (titre = seul le lieu, image = enseigne) : hard-ban **fichier Commons exact** — ne pas bannir le lieu entier (ex. `Gesgapegiag.jpg` ban, `Gesgapegiag4` tipi OK).
 - Nations : spiritualité autochtone **OK** (hors filtre religieux institutionnel).
 - **Saisons** (`scripts/season-lib.js` + bot `detect-photo-seasons`)
-  - mât / pomo / campus → **4 saisons** météo (`season`: printemps|ete|automne|hiver)
-  - nations / Inuit → **6 saisons** Nunavik éducatif (`season6`: ukiuq…ukiaq)
+  - mât / pomo / campus → **4 saisons** astronomiques pour le **filtre** (été jusqu’au 21 sept. inclus ; automne dès le 22). Tags `season` = contenu visuel (printemps|ete|automne|hiver), mois de fichier encore météo.
+  - nations / Inuit → **6 saisons** Nunavik éducatif (`season6`: ukiuq…ukiaq) ; horloge live bascule au 21 comme les 4 saisons.
+  - Sessions univ. (fil news, 1er sept. = automne) : **autre** calendrier — ne pas les fusionner.
   - **Bot** (source de vérité tags) :
     ```bash
     npm run detect:seasons              # dry-run
@@ -173,7 +175,7 @@ Alias historiques : `maintain:backgrounds` = masthead ; `…:pomo` etc. inchang�
 3. `npm run test:unit` si possible (data-integrity inclut les banques)
 4. SW bump **seulement** si shell réellement impacté (mât et/ou pomo)
 5. Diff final : chaque hunk = pipeline / purge / blacklist / doc / scripts — pas d’UX gratuite
-6. Commit message orienté résultat ; branche → PR (jamais `git push origin main`). Merger seulement sur **merge and delete**.
+6. Commit message orienté résultat ; branche → PR (jamais `git push origin main`). Merger seulement sur **merge and delete** : merge **local** Azdak/proton, **pas** `gh pr merge`.
 
 ### Message type
 

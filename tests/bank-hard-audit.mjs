@@ -175,10 +175,68 @@ assert.equal(
 );
 
 const tiny = auditPhotoHard(
-  { title: 'x', url: 'https://example.com/t.jpg', width: 800, height: 400 },
+  { title: 'x', url: 'https://example.com/t.jpg', width: 500, height: 400 },
   { id: 'masthead', landscape: true },
 );
 assert(tiny.reasons.includes('low_resolution_width'), 'low res HARD');
+
+const ilePerrot = auditPhotoHard(
+  { title: 'Île-Perrot', url: 'https://example.com/ip.jpg', width: 982, height: 566 },
+  { id: 'masthead', landscape: true },
+);
+assert(ilePerrot.reasons.includes('low_resolution_height'), '982×566 reste dehors');
+assert(ilePerrot.reasons.includes('low_resolution_pixels'), '982×566 sous 0,65 Mpx');
+
+const flickrCampus = auditPhotoHard(
+  { title: 'Polytechnique Montréal', url: 'https://example.com/p.jpg', width: 1024, height: 680 },
+  { id: 'universities' },
+);
+assert.equal(flickrCampus.ok, true, `1024×680 campus admis (${flickrCampus.reasons.join(', ')})`);
+
+const hall = auditPhotoHard(
+  {
+    title: 'École Polytechnique hall intérieur',
+    url: 'https://example.com/hall.jpg',
+    width: 680,
+    height: 1024,
+  },
+  { id: 'universities' },
+);
+assert.equal(hall.ok, true, `hall portrait campus admis (${hall.reasons.join(', ')})`);
+
+const hallOnMast = auditPhotoHard(
+  {
+    title: 'École Polytechnique hall intérieur',
+    url: 'https://example.com/hall.jpg',
+    width: 680,
+    height: 1024,
+  },
+  { id: 'masthead', landscape: true },
+);
+assert(hallOnMast.reasons.includes('portrait_or_narrow'), 'portrait hors bandeau');
+assert(hallOnMast.reasons.includes('bad_scene_title'), 'intérieur hors paysage');
+
+const nightCampus = auditPhotoHard(
+  {
+    title: 'Polytechnique Montréal la nuit',
+    url: 'https://example.com/nuit.jpg',
+    width: 1024,
+    height: 768,
+  },
+  { id: 'universities' },
+);
+assert.equal(nightCampus.ok, true, `nuit campus admise (${nightCampus.reasons.join(', ')})`);
+
+const nightMast = auditPhotoHard(
+  {
+    title: 'Polytechnique Montréal la nuit',
+    url: 'https://example.com/nuit.jpg',
+    width: 1024,
+    height: 768,
+  },
+  { id: 'masthead', landscape: true },
+);
+assert(nightMast.reasons.includes('bad_scene_title'), 'nuit hors paysage');
 
 // ── Intégration : banques live ───────────────────────────────
 let total = 0;

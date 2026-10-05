@@ -50,6 +50,7 @@ const SCHEDULES_PATH = path.join(ROOT, 'radio-schedules.json');
 const SPORTS_PATH = path.join(ROOT, 'sports.json');
 const ARCHIVE_PATH = path.join(ROOT, 'news-archive.json');
 const ARCHIVE_CONFIG_PATH = path.join(ROOT, 'historical-catalog.config.json');
+const SOCIAL_PATH = path.join(ROOT, 'social-feed.json');
 
 /**
  * Dossiers entièrement reconstruits à chaque passe : on les efface d'abord
@@ -490,7 +491,9 @@ function buildItemListJsonLd(items) {
       url: item.link,
       item: {
         '@type': 'NewsArticle',
-        headline: cleanText(item.title).slice(0, 110),
+        // Titre complet : news-representations exige l'égalité stricte avec news.json + HTML.
+        // Ne pas tronquer (plafond 110 car.) — une coupe casse bot-prepush dès qu'une manchette longue entre au top 10.
+        headline: cleanText(item.title),
         url: item.link,
         ...(item.date ? { datePublished: item.date } : {}),
         ...(item.excerpt ? { description: cleanText(item.excerpt).slice(0, 300) } : {}),
@@ -562,6 +565,7 @@ function main() {
     sports: readJson(SPORTS_PATH, {}),
     siteBase: SITE_BASE,
     archivePaths: archive.sourcePaths,
+    socialFeed: readJson(SOCIAL_PATH, { items: [] }),
   });
 
   const sportsPages = entityPages.filter((page) => isSportsHubPath(page.path));

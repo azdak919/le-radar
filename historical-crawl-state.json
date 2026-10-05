@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-09-01T12:00:55.668Z",
+  "updated": "2026-10-01T13:54:05.411Z",
   "sources": {
     "la-pige": {
       "strategy": "wordpress-rest",
@@ -28,14 +28,15 @@
     },
     "le-collectif": {
       "strategy": "unsupported",
-      "nextPage": 21,
+      "nextPage": null,
       "totalPages": 34,
-      "lastAttemptAt": "2026-08-11T07:53:54.467Z",
-      "lastSuccessAt": "2026-08-10T08:16:23.253Z",
-      "retryAt": "2026-09-10T07:53:54.467Z",
-      "error": "wordpress_http_403",
-      "windowStart": "2023-08-11T13:53:46.195Z",
-      "windowYears": 3
+      "lastAttemptAt": "2026-09-14T13:21:25.420Z",
+      "lastSuccessAt": "2026-09-14T13:21:25.420Z",
+      "retryAt": null,
+      "error": null,
+      "windowStart": "2023-09-14T19:21:22.826Z",
+      "windowYears": 3,
+      "completedAt": "2026-09-14T13:21:25.420Z"
     },
     "exil": {
       "strategy": "wordpress-com-rest",
@@ -51,10 +52,10 @@
     },
     "loisif": {
       "strategy": "unsupported",
-      "lastAttemptAt": "2026-07-30T09:17:38.312Z",
+      "lastAttemptAt": "2026-09-20T11:48:10.427Z",
       "error": "wordpress_http_401",
-      "retryAt": "2026-08-29T09:17:38.312Z",
-      "windowStart": "2023-07-30T15:17:38.284Z",
+      "retryAt": "2026-10-20T11:48:10.427Z",
+      "windowStart": "2023-09-20T17:48:10.376Z",
       "windowYears": 3
     },
     "la-gifle": {
@@ -119,29 +120,30 @@
     },
     "quartier-libre": {
       "strategy": "unsupported",
-      "nextPage": 9,
+      "nextPage": null,
       "totalPages": 13,
-      "lastAttemptAt": "2026-08-07T07:58:42.959Z",
-      "lastSuccessAt": "2026-08-05T09:23:57.087Z",
-      "retryAt": "2026-09-06T07:58:42.959Z",
-      "error": "wordpress_http_403",
-      "windowStart": "2023-08-07T13:58:35.632Z",
-      "windowYears": 3
+      "lastAttemptAt": "2026-09-08T17:34:10.257Z",
+      "lastSuccessAt": "2026-09-08T17:34:10.257Z",
+      "retryAt": null,
+      "error": null,
+      "windowStart": "2023-09-08T23:34:10.198Z",
+      "windowYears": 3,
+      "completedAt": "2026-09-08T17:34:10.257Z"
     },
     "the-campus": {
       "strategy": "unsupported",
-      "lastAttemptAt": "2026-08-31T14:24:55.237Z",
+      "lastAttemptAt": "2026-10-01T13:54:03.863Z",
       "error": "wordpress_http_404",
-      "retryAt": "2026-09-30T14:24:55.237Z",
-      "windowStart": "2023-08-31T20:24:55.161Z",
+      "retryAt": "2026-10-31T13:54:03.863Z",
+      "windowStart": "2023-10-01T19:54:03.790Z",
       "windowYears": 3
     },
     "the-link": {
       "strategy": "unsupported",
-      "lastAttemptAt": "2026-08-31T14:24:55.935Z",
+      "lastAttemptAt": "2026-10-01T13:54:04.192Z",
       "error": "wordpress_http_404",
-      "retryAt": "2026-09-30T14:24:55.935Z",
-      "windowStart": "2023-08-31T20:24:55.161Z",
+      "retryAt": "2026-10-31T13:54:04.192Z",
+      "windowStart": "2023-10-01T19:54:03.790Z",
       "windowYears": 3
     },
     "the-mcgill-daily": {
@@ -158,10 +160,10 @@
     },
     "the-plant": {
       "strategy": "unsupported",
-      "lastAttemptAt": "2026-09-01T12:00:55.098Z",
+      "lastAttemptAt": "2026-10-01T13:54:05.104Z",
       "error": "wordpress_http_404",
-      "retryAt": "2026-10-01T12:00:55.098Z",
-      "windowStart": "2023-09-01T18:00:55.038Z",
+      "retryAt": "2026-10-31T13:54:05.104Z",
+      "windowStart": "2023-10-01T19:54:03.790Z",
       "windowYears": 3
     },
     "the-tribune": {

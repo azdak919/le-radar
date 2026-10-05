@@ -1,0 +1,19 @@
+# GitHub Pages (Jekyll) ignore les dossiers qui commencent par un point.
+# Sans cette inclusion, les liens universels ne sont pas publiés.
+# exclude remplace la liste par défaut : les entrées d’origine sont répétées.
+include:
+  - .well-known
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - android/
+  - ios/
+  - mobile/www/

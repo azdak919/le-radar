@@ -37,10 +37,10 @@
     <link rel="stylesheet" href="../../style-feed.css" />
     <link rel="stylesheet" href="../../style-chrome.css" />
     <link rel="stylesheet" href="../../seo-pages.css" />
-    <link rel="stylesheet" href="../../dev/midwidth-preview.css?v=wide-auto-e99" />
-    <link rel="stylesheet" href="../../dev/wide-desktop-preview.css?v=wide-auto-e99" />
-    <script src="../../dev/midwidth-preview.js?v=wide-auto-e99"></script>
-    <script src="../../dev/wide-desktop-preview.js?v=wide-auto-e99"></script>
+    <link rel="stylesheet" href="../../dev/midwidth-preview.css?v=wide-auto-e102" />
+    <link rel="stylesheet" href="../../dev/wide-desktop-preview.css?v=wide-auto-e102" />
+    <script src="../../dev/midwidth-preview.js?v=wide-auto-e102"></script>
+    <script src="../../dev/wide-desktop-preview.js?v=wide-auto-e102"></script>
     <!--
       CSS critique du synthé bureau : réserve « À l'antenne » + volume compact
       dès le premier paint (avant le CSS mis en cache / le JS async).
@@ -106,6 +106,9 @@
     <script src="../../quebec-backgrounds-data.js" defer></script>
     <script src="../../quebec-university-backgrounds-data.js" defer></script>
     <script src="../../scripts/campus-fallback-lib.js" defer></script>
+    <script src="../../scripts/media-channels-lib.js" defer></script>
+    <script src="../../scripts/media-follow-store.js" defer></script>
+    <script src="../../scripts/media-follow-ui.js" defer></script>
     <script src="../../quebec-nations-backgrounds-data.js" defer></script>
     <script src="../../quebec-favorites-backgrounds-data.js" defer></script>
     <script src="../../quebec-backgrounds.js" defer></script>
@@ -114,13 +117,15 @@
     <script src="../../radar-utils.js" defer></script>
     <script src="../../radar-state.js" defer></script>
     <script src="../../radar-weather.js" defer></script>
+    <script src="../../scripts/session-freshness-lib.js" defer></script>
+    <script src="../../scripts/sports-freshness-lib.js" defer></script>
     <script src="../../radar-sports-cta.js" defer></script>
     <script src="../../radar-tuner.js" defer></script>
     <script src="../../radar-news.js" defer></script>
     <script src="../../radar-lifecycle.js" defer></script>
     <script src="../../app.js" defer></script>
     <script src="../../engage-prompt.js" defer></script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Archives — The Campus | LE-RADAR.ca","url":"https://le-radar.ca/archives/the-campus/","description":"Archives de The Campus, journal étudiant de Bishop's University (Anglais). Articles avec date, auteur et lien vers la publication originale.","isPartOf":{"@type":"WebSite","name":"LE-RADAR.ca","url":"https://le-radar.ca/"},"provider":{"@type":"Organization","name":"LE-RADAR.ca"},"mainEntity":{"@type":"ItemList","numberOfItems":1,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links","item":{"@type":"CreativeWork","name":"From the rink to the links","url":"https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links","author":{"@type":"Person","name":"Henri Dessureaux"},"datePublished":"2026-04-06T12:49:08.000Z","publisher":{"@type":"Organization","name":"The Campus"},"inLanguage":"en","about":{"@type":"CollegeOrUniversity","name":"Bishop's University"}}}]}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Archives — The Campus | LE-RADAR.ca","url":"https://le-radar.ca/archives/the-campus/","description":"Archives de The Campus, journal étudiant de Bishop's University (Anglais). Articles avec date, auteur et lien vers la publication originale.","isPartOf":{"@type":"WebSite","name":"LE-RADAR.ca","url":"https://le-radar.ca/"},"provider":{"@type":"Organization","name":"LE-RADAR.ca"},"mainEntity":{"@type":"ItemList","numberOfItems":5,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://thebucampus.ca/2026/09/30/harm-reduction-is-a-green-flag","item":{"@type":"CreativeWork","name":"Harm Reduction is a Green Flag","url":"https://thebucampus.ca/2026/09/30/harm-reduction-is-a-green-flag","author":{"@type":"Person","name":"Florence Robert"},"datePublished":"2026-09-30T20:28:36.000Z","publisher":{"@type":"Organization","name":"The Campus"},"inLanguage":"en","about":{"@type":"CollegeOrUniversity","name":"Bishop's University"}}},{"@type":"ListItem","position":2,"url":"https://thebucampus.ca/2026/09/30/summer-in-paradise-lennoxville-edition","item":{"@type":"CreativeWork","name":"Summer in Paradise (Lennoxville Edition)","url":"https://thebucampus.ca/2026/09/30/summer-in-paradise-lennoxville-edition","author":{"@type":"Person","name":"Leighton Geraghty"},"datePublished":"2026-09-30T20:22:35.000Z","publisher":{"@type":"Organization","name":"The Campus"},"inLanguage":"en","about":{"@type":"CollegeOrUniversity","name":"Bishop's University"}}},{"@type":"ListItem","position":3,"url":"https://thebucampus.ca/2026/09/30/gods-heroes-men-and-pigs-classics-department-brings-reflections-on-nolans-the-odyssey-to-the-agora","item":{"@type":"CreativeWork","name":"Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora","url":"https://thebucampus.ca/2026/09/30/gods-heroes-men-and-pigs-classics-department-brings-reflections-on-nolans-the-odyssey-to-the-agora","author":{"@type":"Person","name":"Marjorie Heroux"},"datePublished":"2026-09-30T20:15:48.000Z","publisher":{"@type":"Organization","name":"The Campus"},"inLanguage":"en","about":{"@type":"CollegeOrUniversity","name":"Bishop's University"}}},{"@type":"ListItem","position":4,"url":"https://thebucampus.ca/2026/09/30/namaste-a-while-with-the-bishops-yoga-and-pilates-club","item":{"@type":"CreativeWork","name":"NAMASTE a While with the Bishop’s Yoga and Pilates Club","url":"https://thebucampus.ca/2026/09/30/namaste-a-while-with-the-bishops-yoga-and-pilates-club","author":{"@type":"Person","name":"Reagan Russell"},"datePublished":"2026-09-30T20:09:36.000Z","publisher":{"@type":"Organization","name":"The Campus"},"inLanguage":"en","about":{"@type":"CollegeOrUniversity","name":"Bishop's University"}}},{"@type":"ListItem","position":5,"url":"https://thebucampus.ca/2026/09/30/bishops-university-history-association-buha","item":{"@type":"CreativeWork","name":"Bishop’s University History Association: BUHA","url":"https://thebucampus.ca/2026/09/30/bishops-university-history-association-buha","author":{"@type":"Person","name":"Sarah Gairaud"},"datePublished":"2026-09-30T20:05:06.000Z","publisher":{"@type":"Organization","name":"The Campus"},"inLanguage":"en","about":{"@type":"CollegeOrUniversity","name":"Bishop's University"}}}]}}</script>
   </head>
   <body>
     <header class="masthead">
@@ -307,10 +312,34 @@
       </dl>
 
 <section class="seo-archive-year"><h2>2026</h2>      <article class="seo-archive-record">
-        <h2><a href="https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links" target="_blank" rel="noopener noreferrer">From the rink to the links</a></h2>
-        <p class="seo-archive-record__meta">Par Henri Dessureaux · 6 avril 2026 à 08 h 49</p>
-        <p>Henri Dessureaux – Contributor Recently Gabrielle Santerre won her third straight female athlete of the year award, to add to her U-Sports MVP, playoff MVP and U-Sports championship amongst other awards. Her accolades on the ice are outstanding, having notched 99 points in 67</p>
-        <p class="seo-archive-record__origin"><a href="https://thebucampus.ca/2026/04/06/from-the-rink-to-the-links" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
+        <h2><a href="https://thebucampus.ca/2026/09/30/harm-reduction-is-a-green-flag" target="_blank" rel="noopener noreferrer">Harm Reduction is a Green Flag</a></h2>
+        <p class="seo-archive-record__meta">Par Florence Robert · 30 septembre 2026 à 16 h 28</p>
+        <p>Bishop’s University has introduced a new harm reduction campaign aimed at helping students look out for one another and themselves on and off campus. Named the “We Owe Each Other Better” campaign, this initiative covers four major areas of student life:</p>
+        <p class="seo-archive-record__origin"><a href="https://thebucampus.ca/2026/09/30/harm-reduction-is-a-green-flag" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
+      </article>
+      <article class="seo-archive-record">
+        <h2><a href="https://thebucampus.ca/2026/09/30/summer-in-paradise-lennoxville-edition" target="_blank" rel="noopener noreferrer">Summer in Paradise (Lennoxville Edition)</a></h2>
+        <p class="seo-archive-record__meta">Par Leighton Geraghty · 30 septembre 2026 à 16 h 22</p>
+        <p>If you’re thinking about staying in Lenn throughout the summer, you totally should! I’ve spent the past two summers here in Lennoxville working at the Bishop’s Daycamp. From 8 a.m.- 4 p.m., our campus that is usually flooded by a stream of purple was taken over by children from</p>
+        <p class="seo-archive-record__origin"><a href="https://thebucampus.ca/2026/09/30/summer-in-paradise-lennoxville-edition" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
+      </article>
+      <article class="seo-archive-record">
+        <h2><a href="https://thebucampus.ca/2026/09/30/gods-heroes-men-and-pigs-classics-department-brings-reflections-on-nolans-the-odyssey-to-the-agora" target="_blank" rel="noopener noreferrer">Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora</a></h2>
+        <p class="seo-archive-record__meta">Par Marjorie Heroux · 30 septembre 2026 à 16 h 15</p>
+        <p>On Wednesday, Sept. 16, 2026, Department presented a panel on Christopher Nolan’s Odyssey in the LLC Agora. Released in theatres on Jul. 17, 2026, Nolan’s Odyssey has been the subject of both high praise and bitter critiques. During her refl ection, Cianca carefully observed</p>
+        <p class="seo-archive-record__origin"><a href="https://thebucampus.ca/2026/09/30/gods-heroes-men-and-pigs-classics-department-brings-reflections-on-nolans-the-odyssey-to-the-agora" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
+      </article>
+      <article class="seo-archive-record">
+        <h2><a href="https://thebucampus.ca/2026/09/30/namaste-a-while-with-the-bishops-yoga-and-pilates-club" target="_blank" rel="noopener noreferrer">NAMASTE a While with the Bishop’s Yoga and Pilates Club</a></h2>
+        <p class="seo-archive-record__meta">Par Reagan Russell · 30 septembre 2026 à 16 h 09</p>
+        <p>In my first year at Bishop’s, I was on the women’s rugby team. Clearly a superstar of the season, I was concussed in my first and last varsity game and left the team at the end of the academic year due to health reasons. While recovering and feeling trapped in my own body, and</p>
+        <p class="seo-archive-record__origin"><a href="https://thebucampus.ca/2026/09/30/namaste-a-while-with-the-bishops-yoga-and-pilates-club" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
+      </article>
+      <article class="seo-archive-record">
+        <h2><a href="https://thebucampus.ca/2026/09/30/bishops-university-history-association-buha" target="_blank" rel="noopener noreferrer">Bishop’s University History Association: BUHA</a></h2>
+        <p class="seo-archive-record__meta">Par Sarah Gairaud · 30 septembre 2026 à 16 h 05</p>
+        <p>Looking for a leadership position? Have an interest in history and want to get involved? Look no further than the Bishop’s University History Association. While you probably haven’t heard of it, that’s ok! This article is here to tell you all about what BUHA is</p>
+        <p class="seo-archive-record__origin"><a href="https://thebucampus.ca/2026/09/30/bishops-university-history-association-buha" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p>
       </article></section>
     </main>
     <footer class="site-foot">

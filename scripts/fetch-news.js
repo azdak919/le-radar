@@ -24,6 +24,7 @@ const {
   isEditorialPlaceholder,
   needsPageAuthorVerification,
   mergePriorAuthor,
+  rememberResolvedByline,
   normalizeArticleUrl,
   normalizeAuthor,
   expandAuthorName,
@@ -63,9 +64,16 @@ const {
   shouldDropSource,
   pruneToFreshWindow,
   getBotHints,
+  isFetchableNewsSource,
 } = require('./source-retention-lib');
 const { mergeHistoricalCatalog, serializeHistoricalCatalog } = require('./historical-catalog-lib');
 const { scheduledSlotFor } = require('./news-schedule-lib');
+const {
+  articleLinkKey,
+  readLedger,
+  confirmedMissingUrlSet,
+  omitMissingItems,
+} = require('./live-link-health-lib');
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
 const ARCHIVE_PATH = path.join(__dirname, '..', 'news-archive.json');
@@ -92,18 +100,24 @@ const ENRICH_HTML_CAP = IS_CI ? 180_000 : 280_000;
 const GENERIC_AUTHORS = /^(admin|administrator|administrateur|editor|éditeur|editeur|rédaction|redaction|staff|wordpress|webmaster|collectif|le collectif|tribune|link|daily|coordinating|exemplaire|quartier libre|zone campus|la pige|le délit|le delit|the link|the concordian|the tribune|the mcgill daily|the campus|the plant|theplantnews)$/i;
 
 // Active feeds come from the registry (news-sources.json), maintained by
-// scripts/discover-news-sources.js. Feeds flagged "_status": "dead" are skipped.
+// scripts/discover-news-sources.js. `_status: dead` is still re-probed:
+// a challenge page must not hide a paper that still publishes (Tribune).
 // Institutional placeholders (« Média — UQAR ») are never student newspapers.
-const INSTITUTIONAL_PLACEHOLDER = /^m[eé]dia\s*[—–\-:]/i;
 
 function loadSources() {
   try {
     const registry = JSON.parse(fs.readFileSync(SOURCES_PATH, 'utf8'));
     return (registry.active || []).filter((s) => {
-      if (!s.url || s._status === 'dead') return false;
-      if (INSTITUTIONAL_PLACEHOLDER.test(String(s.name || ''))) {
-        console.warn(`fetch-news: skip non-student source « ${s.name} »`);
+      if (!isFetchableNewsSource(s)) {
+        if (s && s.name && !s.url) {
+          console.warn(`fetch-news: skip source without url « ${s.name} »`);
+        } else if (s && s.name) {
+          console.warn(`fetch-news: skip non-student source « ${s.name} »`);
+        }
         return false;
+      }
+      if (s._status === 'dead') {
+        console.log(`fetch-news: re-probe previously dead « ${s.name} »`);
       }
       return true;
     });
@@ -1106,11 +1120,13 @@ async function main() {
 
   for (let i = 0; i < all.length; i += 1) {
     const pageAuthor = pageAuthors.get(normalizeArticleUrl(all[i].link)) || '';
-    all[i] = reconcileAuthor(all[i], all, {
+    const reconciled = reconcileAuthor(all[i], all, {
       applyFallback: true,
       feedDefaults,
       pageAuthor,
-    }).item;
+    });
+    all[i] = reconciled.item;
+    rememberResolvedByline(all[i].source, all[i].link, reconciled.author);
     const imgHints = getBotHints(sourceByName.get(all[i].source), 'images');
     const imgReject = imageRejectPatternsFromHints(imgHints);
     const imgOpts = imageOptionsFromHints(imgHints);
@@ -1152,9 +1168,14 @@ async function main() {
   // n’est pas une nouvelle découverte et ne doit pas rafraîchir son état.
   const archiveObserved = new Date().toISOString();
   const histConfig = JSON.parse(fs.readFileSync(HIST_CONFIG_PATH, 'utf8'));
+  const missingLinks = confirmedMissingUrlSet(readLedger(), referenceDate.getTime());
+  const stillPublic = (item) => {
+    const key = articleLinkKey(item?.link);
+    return !key || !missingLinks.has(key);
+  };
   const archiveResult = mergeHistoricalCatalog(
     priorArchive,
-    [...historicalItems, ...all.filter((item) => !item._retainedFromCache)],
+    [...historicalItems, ...all.filter((item) => !item._retainedFromCache)].filter(stillPublic),
     archiveObserved,
     { firstDiscoveredAt: archiveObserved, ingestedAt: archiveObserved },
     { maxRecords: histConfig.storage?.maxRecords },
@@ -1166,6 +1187,17 @@ async function main() {
   if (prunedCount > 0) {
     console.log(`\nFraîcheur: ${prunedCount} article(s) hors fenêtre de sessions (A/H/É + grâce sept.) retiré(s)`);
   }
+
+  // Le flux RSS peut encore lister une page déjà retirée (404). Le registre
+  // des contrôles live empêche de la remettre à la une.
+  const withdrawn = omitMissingItems(prunedAll, readLedger(), referenceDate.getTime());
+  if (withdrawn.removed.length) {
+    console.log(`Pages disparues: ${withdrawn.removed.length} article(s) retiré(s) du fil`);
+    for (const item of withdrawn.removed) {
+      console.log(`  ✗ ${item.source}: ${item.title}`);
+    }
+  }
+  const visibleItems = withdrawn.items;
 
   const staleSources = Object.entries(sourceRuns)
     .filter(([, meta]) => meta.stale)
@@ -1182,10 +1214,10 @@ async function main() {
     // Hors fenêtre, filet radio/sports, :20 ou passe manuelle : null →
     // l'UI montre l'heure réelle de la vérification.
     updatedSlot: (isManual || isCatchUp) ? null : scheduledSlotFor(runDate),
-    count: prunedAll.length,
+    count: visibleItems.length,
     freshnessSessions: 3,
     sources: sourceRuns,
-    items: prunedAll,
+    items: visibleItems,
   };
 
   const withAuthor = news.items.filter((i) => i.author && !isGenericAuthor(i.author)).length;

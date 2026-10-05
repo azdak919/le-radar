@@ -14,8 +14,12 @@
 const SpF = require('./sports-freshness-lib');
 
 const MASTHEAD_NEXT_GAME_LIMIT = 48;
-/** Tous les matchs uniques de la fenêtre 5 j (plus de 32 → des scores tombaient). */
-const MASTHEAD_RESULT_LIMIT = 80;
+/**
+ * Plancher de capacité documenté pour la fenêtre puces (5 j civils).
+ * Les matchs récents ne sont jamais tronqués : le volume RSEQ de week-end
+ * a déjà dépassé 80 puis 128 (7 sept. / 14 sept. 2026).
+ */
+const MASTHEAD_RESULT_LIMIT = 128;
 
 function gameKey(game, team) {
   if (game?.gameId != null && String(game.gameId).trim()) return `id:${game.gameId}`;
@@ -35,7 +39,12 @@ function compactTeam(team, { results = [], nextGames = [] } = {}) {
   const out = { ...team, results, nextGames };
   out.lastGame = results[0] || null;
   out.nextGame = nextGames[0] || null;
+  // Champs utiles seulement au tableau complet / au crawl — pas au mât.
   delete out.record;
+  delete out.schedule;
+  delete out.standings;
+  delete out.raw;
+  delete out.events;
   return out;
 }
 
@@ -43,7 +52,9 @@ function pickMastheadResultFaces(resultByMatch, { resultLimit, referenceDate }) 
   const ranked = [...resultByMatch.values()]
     .sort((a, b) => gameStamp(b[0]?.game).localeCompare(gameStamp(a[0]?.game)));
   const recent = ranked.filter((faces) => SpF.isMastheadChipResult(faces[0]?.game, referenceDate));
-  if (recent.length) return recent.slice(0, resultLimit);
+  // Produit : tous les scores de la fenêtre 5 j doivent partir dans le mât.
+  // resultLimit n’est qu’un plancher — ne jamais laisser tomber un match récent.
+  if (recent.length) return recent;
   return ranked.slice(0, 1);
 }
 
@@ -75,12 +86,14 @@ function buildSportsMastheadPayload(payload, {
     }
   }
 
+  const selectedResults = pickMastheadResultFaces(resultByMatch, { resultLimit, referenceDate });
   const selected = [
-    ...pickMastheadResultFaces(resultByMatch, { resultLimit, referenceDate }),
+    ...selectedResults,
     ...[...nextByMatch.values()]
       .sort((a, b) => gameStamp(a[0]?.game).localeCompare(gameStamp(b[0]?.game)))
       .slice(0, nextGameLimit),
   ];
+  const effectiveResultLimit = Math.max(resultLimit, selectedResults.length);
 
   const selectedTeams = new Map();
   for (const faces of selected) {
@@ -107,7 +120,7 @@ function buildSportsMastheadPayload(payload, {
     sportsFreshness: payload?.sportsFreshness,
     masthead: {
       nextGameLimit,
-      resultLimit,
+      resultLimit: effectiveResultLimit,
       chipResultMaxDaysAgo: SpF.MASTHEAD_CHIP_RESULT_MAX_DAYS_AGO,
       ctaResultMaxDaysAgo: SpF.MASTHEAD_CTA_RESULT_MAX_DAYS_AGO,
     },

@@ -18,7 +18,8 @@ const root = join(fileURLToPath(new URL('.', import.meta.url)), '..');
 
 function walkHtml(dir, out = []) {
   for (const name of readdirSync(dir)) {
-    if (name === 'node_modules' || name === 'test-results' || name === 'playwright-report') continue;
+    if (name === 'node_modules' || name === 'test-results' || name === 'playwright-report' || name === 'android' || name === 'ios') continue;
+    if (name === 'www' && dir.endsWith('/mobile')) continue;
     const p = join(dir, name);
     const st = statSync(p);
     if (st.isDirectory()) walkHtml(p, out);

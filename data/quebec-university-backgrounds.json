@@ -1,7 +1,7 @@
 {
   "version": 1,
   "profile": "universities",
-  "updated": "2026-08-28T06:27:22.575Z",
+  "updated": "2026-09-28T17:07:31.949Z",
   "photos": [
     {
       "id": "186769a5aeb5",
@@ -1717,7 +1717,11 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.5,
+      "description": "Pavillon Alphonse-Marie-Parent de l'Université Laval, Québec.",
+      "categories": "Pavillon Alphonse-Marie-Parent|Self-published work|Files with coordinates missing SDC location of creation",
+      "mime": "image/jpeg"
     },
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/4/46/Pavillon_H.-Biermans-L.-Moraud_01.jpg",
@@ -1741,7 +1745,11 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.5,
+      "description": "Pavillon H.-Biermans-L.-Moraud de l'Université Laval, Québec.",
+      "categories": "Pavillon H.-Biermans-L.-Moraud|Self-published work|Files with coordinates missing SDC location of creation",
+      "mime": "image/jpeg"
     },
     {
       "url": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Pavillon_Ernest-Lemieux_06.jpg",
@@ -1758,7 +1766,11 @@
         "mat",
         "campus"
       ],
-      "id": "0c9e04d1a3c8"
+      "id": "0c9e04d1a3c8",
+      "aspect": 1.5,
+      "description": "Pavillon Ernest-Lemieux de l'Université Laval, Québec.",
+      "categories": "Pavillon Ernest-Lemieux|Self-published work|Files with coordinates missing SDC location of creation",
+      "mime": "image/jpeg"
     },
     {
       "id": "d68ab398358c",
@@ -1776,7 +1788,10 @@
         "campus"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "aspect": 1.778,
+      "description": "Pavillon Ringuet de l'Université du Québec à Trois-Rivières, au Québec (Canada).",
+      "categories": "GFDL|Taken with Sony DSC-H10|Pavillon Ringuet|CC-BY-SA-3.0,2.5,2.0,1.0|License migration redundant|Self-published work"
     },
     {
       "id": "753aa855a8df",
@@ -1802,7 +1817,13 @@
       "permanent": false,
       "season": "automne",
       "seasonSource": "manual",
-      "seasonConfidence": 1
+      "seasonConfidence": 1,
+      "description": "Photo du campus de l'Université du Québec à Trois-Rivières qui est situé à Drummondville.",
+      "categories": "UQTR - Campus de Drummondville|Self-published work",
+      "aspect": 1.5,
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities"
     },
     {
       "id": "792cafdb106b",
@@ -1827,7 +1848,8 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.778
     },
     {
       "id": "9ef6ccf25172",
@@ -1845,7 +1867,10 @@
         "campus"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "aspect": 1.778,
+      "description": "Pavillon du Centre universitaire de recherche sur l'aluminium (CURAL) sur le campus de l'Université du Québec à Chicoutimi (UQAC), au Saguenay (Québec).",
+      "categories": "GFDL|Taken with Sony DSC-H10|CC-BY-SA-3.0,2.5,2.0,1.0|Université du Québec à Chicoutimi|License migration redundant|Self-published work|Photographs of the national flag of Canada in Chicoutimi"
     },
     {
       "id": "06b5429ee7cc",
@@ -1871,7 +1896,8 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.333
     },
     {
       "id": "e96720eba8a2",
@@ -1897,7 +1923,8 @@
       "permanent": false,
       "seasonSource": "manual",
       "seasonConfidence": 1,
-      "season": "automne"
+      "season": "automne",
+      "aspect": 1.511
     },
     {
       "id": "71b923438c29",
@@ -1922,7 +1949,8 @@
       ],
       "permanent": false,
       "seasonSource": "manual",
-      "seasonConfidence": 1
+      "seasonConfidence": 1,
+      "aspect": 1.554
     },
     {
       "id": "5f13c104f37e",
@@ -1948,7 +1976,8 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.5
     },
     {
       "id": "e1c9baf7b9d5",
@@ -1971,7 +2000,10 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.333,
+      "description": "Bâtiment principal du campus de Rouyn de l'UQAT.",
+      "categories": "Schools in Quebec|Université du Québec|Self-published work"
     },
     {
       "id": "d312d5ae6c42",
@@ -1997,7 +2029,10 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.333,
+      "description": "Le campus de l’UQAT à Val-d’Or ouvre ses portes aux étudiants autochtones et non autochtones qui désirent réaliser des études de 1er ou de 2e et 3e cycles, à temps complet ou à temps partiel.",
+      "categories": "Université du Québec en Abitibi-Témiscamingue|Self-published work|Files with coordinates missing SDC location of creation|Buildings in Val-d'Or"
     },
     {
       "id": "a2d0fe697235",
@@ -2020,7 +2055,10 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.333,
+      "description": "Rouyn-Noranda, pavillon du campus de l'UQAT inauguré en 1996. Entrée principale, boulevard de l'Université",
+      "categories": "Université du Québec en Abitibi-Témiscamingue|Self-published work|Buildings in Rouyn-Noranda"
     },
     {
       "id": "663f7c276a8a",
@@ -2045,7 +2083,10 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 2.541,
+      "description": "École de technologie supérieure, 1100, rue Notre-Dame Ouest, Montréal",
+      "categories": "École de technologie supérieure|Self-published work|ETS Pavillon B"
     },
     {
       "id": "70a4f2e558db",
@@ -2070,7 +2111,8 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.5
     },
     {
       "id": "611cd94ab5b2",
@@ -2095,7 +2137,10 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.333,
+      "description": "École de technologie supérieure, 1100, rue Notre-Dame Ouest, Montréal",
+      "categories": "École de technologie supérieure|Self-published work"
     },
     {
       "id": "f7611ef3807b",
@@ -2120,7 +2165,33 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.482
+    },
+    {
+      "id": "11c79bfd0d6c",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Teluq_headquarters_in_Quebec_City.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Teluq_headquarters_in_Quebec_City.jpg",
+      "title": "Teluq headquarters in Quebec City",
+      "credit": "Matti Blume",
+      "license": "CC BY-SA 4.0",
+      "width": 1619,
+      "height": 2483,
+      "place": "TÉLUQ",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "mime": "image/jpeg",
+      "focalY": 0.404,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "permanent": false,
+      "aspect": 0.652,
+      "description": "Teluq headquarters in Quebec City",
+      "categories": "GFDL|Buildings in Quebec City|License migration redundant|Taken with Canon EOS 600D and Canon EF-S 18-55mm f/3.5-5.6 IS II|TÉLUQ|Self-published work|Extracted images|CC-BY-SA-2.0+|Uploaded with LrMediaWiki|User MB-one supported by Wikimedia Deutschland/Lightroom|Files with coordinates missing SDC location of creation|Pictures by MB-one rejected|Photographs by MB-one|Lower Town, Quebec City"
     },
     {
       "id": "062e80d031a6",
@@ -2138,7 +2209,36 @@
         "campus"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "aspect": 1.5,
+      "description": "ENAP, Teluq and UdQ buildings in Quebec City",
+      "categories": "Buildings in Quebec City|Taken with Canon EOS 600D and Canon EF-S 18-55mm f/3.5-5.6 IS II|École nationale d'administration publique|TÉLUQ|Uploaded with LrMediaWiki|User MB-one supported by Wikimedia Deutschland/Lightroom|Canada photographs taken on 2014-09-13|Lower Town, Quebec City",
+      "season": "automne"
+    },
+    {
+      "id": "4da9c24b6c86",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/45/ENAP_headquarters_in_Quebec_City.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:ENAP_headquarters_in_Quebec_City.jpg",
+      "title": "ENAP headquarters in Quebec City",
+      "credit": "Matti Blume",
+      "license": "CC BY-SA 4.0",
+      "width": 1776,
+      "height": 2865,
+      "place": "ENAP",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "mime": "image/jpeg",
+      "focalY": 0.388,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "permanent": false,
+      "aspect": 0.62,
+      "description": "ENAP, Teluq and UdQ buildings in Quebec City",
+      "categories": "GFDL|Buildings in Quebec City|License migration redundant|Taken with Canon EOS 600D and Canon EF-S 18-55mm f/3.5-5.6 IS II|École nationale d'administration publique|Self-published work|Extracted images|CC-BY-SA-2.0+|Files with coordinates missing SDC location of creation|Pictures by MB-one rejected|Photographs by MB-one|Lower Town, Quebec City|Own files uploaded by MB-one"
     },
     {
       "id": "ab7a36ad3833",
@@ -2163,7 +2263,53 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.333,
+      "description": "École nationale d'administration publique, 555 blvd Charest Est",
+      "categories": "Taken with Canon PowerShot SX210 IS|Schools in Quebec City|École nationale d'administration publique|June 2012 in Quebec City|Self-published work|Image provenant de Wikipédia prend Québec|Wikipédia prend Québec - Participant 012|Files with coordinates missing SDC location of creation"
+    },
+    {
+      "id": "3592bc36fdc8",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/b6/INRS-Building.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:INRS-Building.jpg",
+      "title": "INRS-Building",
+      "credit": "Seeris",
+      "license": "CC BY-SA 4.0",
+      "width": 3072,
+      "height": 3574,
+      "place": "INRS",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "mime": "image/jpeg",
+      "aspect": 0.86,
+      "description": "Bâtiment du Centre Urbanisation Culture Société de l'INRS (Montréal)",
+      "categories": "Self-published work|Inrs"
+    },
+    {
+      "id": "d321dd65ee99",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Edifice_quebec_INRS.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Edifice_quebec_INRS.jpg",
+      "title": "Edifice quebec INRS",
+      "credit": "Hélène Simard",
+      "license": "CC BY-SA 3.0",
+      "width": 4992,
+      "height": 4220,
+      "place": "INRS",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "mime": "image/jpeg",
+      "aspect": 1.183,
+      "description": "Photo de l'édifice de l'Institut national de la recherche scientifique (INRS) situé au 490, rue de la Couronne, Québec (Québec) G1K 9A9 CANADA. L'édifice abrite le siège social de l'INRS ainsi que le Centre Eau Terre Environnement.",
+      "categories": "Taken with Canon EOS-1Ds Mark II|INRS|Self-published work|2005 in Quebec City|September 2005 in Canada|490, rue de la Couronne",
+      "season": "automne"
     },
     {
       "id": "304086aaf953",
@@ -2181,7 +2327,34 @@
         "campus"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "aspect": 1.409
+    },
+    {
+      "id": "67c1caf2ac71",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/56/HEC_Montreal_CSC_Side.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:HEC_Montreal_CSC_Side.jpg",
+      "title": "HEC Montreal CSC Side",
+      "credit": "abdallahh",
+      "license": "CC BY 2.0",
+      "width": 2304,
+      "height": 3072,
+      "place": "HEC Montréal",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "mime": "image/jpeg",
+      "focalY": 0.355,
+      "permanent": false,
+      "season": "hiver",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "aspect": 0.75,
+      "description": "Side of CSC Campus of HEC Montreal",
+      "categories": "Taken with Fujifilm FinePix S5700|Flickr images reviewed by FlickreviewR|Flickr images missing SDC creator|Flickr images missing SDC source of file|Photographs by abdallahh|Édifice Côte-Sainte-Catherine|Flickr images missing SDC Flickr photo ID|Flickr images missing SDC published in"
     },
     {
       "id": "ff3231bc807a",
@@ -2199,7 +2372,10 @@
         "campus"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "aspect": 1.333,
+      "description": "Decelles Building @ HEC Montreal",
+      "categories": "Taken with Fujifilm FinePix S5700|Pavillon Decelles|Flickr images reviewed by FlickreviewR|Flickr images missing SDC source of file|Photographs by abdallahh|Flickr images missing SDC Flickr photo ID|Flickr images missing SDC published in"
     },
     {
       "id": "e582eb1059b4",
@@ -2217,7 +2393,8 @@
         "campus"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "aspect": 1.328
     },
     {
       "id": "c053bd661573",
@@ -2242,7 +2419,10 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.332,
+      "description": "Photo de l'édifice du siège social de l'Université du Québec, ainsi que de la Télé-Université (TÉLUQ) et de l'École nationale d'administration publique (ÉNAP), prise du Jardin Saint-Roch, à Québec.",
+      "categories": "GFDL|CC-BY-SA-3.0,2.5,2.0,1.0|License migration redundant|École nationale d'administration publique|Self-published work"
     },
     {
       "id": "638f8d74ce92",
@@ -2260,7 +2440,10 @@
         "campus"
       ],
       "source": "commons-cat",
-      "mime": "image/jpeg"
+      "mime": "image/jpeg",
+      "aspect": 1.5,
+      "description": "Grand Axe, Université Laval, Québec.",
+      "categories": "Self-published work|Files with coordinates missing SDC location of creation|Nature on Université Laval campus"
     },
     {
       "id": "afa99a753be4",
@@ -2286,7 +2469,10 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.5,
+      "description": "Pavillon Palasis-Prince de l'Université Laval (Québec, Québec, Canada).",
+      "categories": "Pavillon Palasis-Prince|Self-published work|Files with coordinates missing SDC location of creation"
     },
     {
       "id": "aa5df3626551",
@@ -2312,7 +2498,10 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.5,
+      "description": "Pavillon Jean-Charles-Bonenfant où se trouve la Bibliothèque des sciences humaines et sociales de l' Université Laval .",
+      "categories": "Pavillon Jean-Charles-Bonenfant|Self-published work|Files with coordinates missing SDC location of creation"
     },
     {
       "id": "06fbe98e6eda",
@@ -2338,7 +2527,1362 @@
       "surfaces": [
         "masthead"
       ],
-      "permanent": false
+      "permanent": false,
+      "aspect": 1.58,
+      "description": "Pavillon Louis-Jacques-Casault",
+      "categories": "Pavillon Louis-Jacques-Casault|Self-published work|July 2018 in Quebec"
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Pavillon_Abitibi-Price_02.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_Abitibi-Price_02.jpg",
+      "title": "Pavillon Abitibi-Price",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5565,
+      "height": 3710,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "407561b39acb",
+      "aspect": 1.5,
+      "description": "Pavillon Abitibi-Price de l'Université Laval, Québec",
+      "categories": "Pavillon Abitibi-Price|Self-published work|Files with coordinates missing SDC location of creation"
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/68/Pavillon_Agathe-Lacerte_03.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_Agathe-Lacerte_03.jpg",
+      "title": "Pavillon Agathe-Lacerte",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5565,
+      "height": 3710,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "85b4eff16b7f",
+      "aspect": 1.5,
+      "description": "Pavillon Agathe-Lacerte de l'Université Laval, Québec.",
+      "categories": "Pavillon Agathe-Lacerte|Self-published work|Files with coordinates missing SDC location of creation"
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/70/Pavillon_Alexandre-Vachon_01.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_Alexandre-Vachon_01.jpg",
+      "title": "Pavillon Alexandre-Vachon",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5565,
+      "height": 3710,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "12253475a05c",
+      "aspect": 1.5,
+      "description": "Pavillon Alexandre-Vachon de l'Université Laval, Québec.",
+      "categories": "Pavillon Alexandre-Vachon|Self-published work|Files with coordinates missing SDC location of creation"
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/08/Charles-Eug%C3%A8ne-Marchand_05.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Charles-Eug%C3%A8ne-Marchand_05.jpg",
+      "title": "Pavillon Charles-Eugène-Marchand",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5508,
+      "height": 3672,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "9312d68b533a",
+      "aspect": 1.5
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/79/Pavillon_d%27optique_photonique_laser_02.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_d%27optique_photonique_laser_02.jpg",
+      "title": "Pavillon d’optique-photonique",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5472,
+      "height": 3648,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "539b5adacc45",
+      "aspect": 1.5
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Pavillon_de_l%27Est_01.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_de_l%27Est_01.jpg",
+      "title": "Pavillon de l’Est",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5478,
+      "height": 3652,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "2c14dc92c5b3",
+      "aspect": 1.5
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Peps_Universit%C3%A9_Laval.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Peps_Universit%C3%A9_Laval.jpg",
+      "title": "PEPS",
+      "credit": "Wilfredor",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 6000,
+      "height": 3386,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "e058b3e1e628",
+      "aspect": 1.772
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Pavillon_de_M%C3%A9decine_dentaire_01.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_de_M%C3%A9decine_dentaire_01.jpg",
+      "title": "Pavillon de médecine dentaire",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5541,
+      "height": 3694,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "a7235a00dd79",
+      "aspect": 1.5
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/93/Pavillon_des_Services_UL_03.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_des_Services_UL_03.jpg",
+      "title": "Pavillon des Services",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5565,
+      "height": 3710,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "ce75b7ccff99",
+      "aspect": 1.5,
+      "description": "Pavillon des Services sur le campus de Université Laval, Québec",
+      "categories": "Pavillon des services (Université Laval)|Self-published work|Files with coordinates missing SDC location of creation"
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Pavillon_Envirotron_UL_01.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_Envirotron_UL_01.jpg",
+      "title": "Pavillon Envirotron",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5529,
+      "height": 3686,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "801a58f94552",
+      "aspect": 1.5,
+      "description": "Pavillon Envirotron, Université Laval, Québec",
+      "categories": "Pavillon Envirotron|Self-published work|Files with coordinates missing SDC location of creation"
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Pavillon_F%C3%A9lix-Antoine-Savard_02.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_F%C3%A9lix-Antoine-Savard_02.jpg",
+      "title": "Pavillon Félix-Antoine-Savard",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5493,
+      "height": 3662,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "b967cbb33996",
+      "aspect": 1.5
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Pavillon_Gene-H.-Kruger_02.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_Gene-H.-Kruger_02.jpg",
+      "title": "Pavillon Gene-H.-Kruger",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5565,
+      "height": 3710,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "04f676d202be",
+      "aspect": 1.5,
+      "description": "Pavillon Gene-H.-Kruge, Université Laval, Québec",
+      "categories": "Pavillon Gene-H.-Kruger|Self-published work|Files with coordinates missing SDC location of creation"
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Pavillon_J.-A.-De_S%C3%A8ve_02.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_J.-A.-De_S%C3%A8ve_02.jpg",
+      "title": "Pavillon J.-A.-DeSève",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5541,
+      "height": 3694,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "fb0d3ac3bc0c",
+      "aspect": 1.5
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Pavillon_des_sciences_de_l%27%C3%A9ducation_UL_01.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_des_sciences_de_l%27%C3%A9ducation_UL_01.jpg",
+      "title": "Pavillon Jeanne-Lapointe",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5442,
+      "height": 3628,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "1919db416500",
+      "aspect": 1.5
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Pavillon_Maurice-Pollack.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_Maurice-Pollack.jpg",
+      "title": "Pavillon Maurice-Pollack",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5457,
+      "height": 3638,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "66b237d2dd75",
+      "aspect": 1.5,
+      "description": "Pavillon Maurice-Pollack de l'Université Laval, Québec.",
+      "categories": "Pavillon Maurice-Pollack|Self-published work|Files with coordinates missing SDC location of creation"
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/1/10/Pavillon_Paul-Comtois_03.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_Paul-Comtois_03.jpg",
+      "title": "Pavillon Paul-Comtois",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 5556,
+      "height": 3704,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "897c6b961cd6",
+      "aspect": 1.5,
+      "description": "Pavillon Paul-Comtois de l'Université Laval.",
+      "categories": "Pavillon Paul-Comtois|Self-published work|Files with coordinates missing SDC location of creation"
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Pavillon_La_Laurentienne_ULaval.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon_La_Laurentienne_ULaval.jpg",
+      "title": "Pavillon La Laurentienne",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 4160,
+      "height": 3120,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "69ebe6da771d",
+      "aspect": 1.333,
+      "description": "Pavillon La Laurentienne de l'Université Laval",
+      "categories": "Taken with Huawei H1621|Self-published work|Files with coordinates missing SDC location of creation|Winter on Université Laval campus",
+      "season": "hiver"
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/bb/Institut_nordique_du_Qu%C3%A9bec_02.jpg",
+      "link": "https://commons.wikimedia.org/wiki/File:Institut_nordique_du_Qu%C3%A9bec_02.jpg",
+      "title": "Institut nordique du Québec",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "place": "Université Laval",
+      "width": 4096,
+      "height": 3072,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "57532a14e13f",
+      "aspect": 1.333
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/91/Pav_DesjardinsUL.JPG",
+      "link": "https://commons.wikimedia.org/wiki/File:Pav_DesjardinsUL.JPG",
+      "title": "Pavillon Alphonse-Desjardins",
+      "credit": "Silk666",
+      "license": "CC BY-SA 3.0",
+      "place": "Université Laval",
+      "width": 3320,
+      "height": 1875,
+      "mime": "image/jpeg",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "source": "commons-cat",
+      "id": "a1e23eb180b0",
+      "aspect": 1.771,
+      "description": "Les pavillons Maurice-Pollack et Alphonse Desjardins de l'Université Laval, à Québec.",
+      "categories": "Taken with Canon EOS 450D|Pavillon Alphonse-Desjardins (Université Laval)|Self-published work|On OSM|Files with coordinates missing SDC location of creation|April 2012 in Quebec City",
+      "season": "printemps"
+    },
+    {
+      "id": "de65e89bfde2",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/52/Exterior_of_Ecole_Polytechnique_de_Montreal.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Exterior_of_Ecole_Polytechnique_de_Montreal.jpg",
+      "title": "Entrée de Polytechnique Montréal",
+      "credit": "MyName",
+      "license": "CC BY-SA 3.0",
+      "width": 2048,
+      "height": 1536,
+      "place": "Polytechnique Montréal",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "season": "hiver",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "mime": "image/jpeg",
+      "source": "commons-cat",
+      "aspect": 1.333,
+      "description": "Exterior of the Ecole Polytechnique de Montreal",
+      "categories": "GFDL|CC-BY-SA-2.5,2.0,1.0|License migration redundant|Polytechnique Montréal|Self-published work|April 2007 in Montreal"
+    },
+    {
+      "id": "4119bacb0ad6",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/6c/%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG",
+      "title": "Polytechnique Montréal sur la montagne",
+      "credit": "Laurent Bélanger",
+      "license": "CC BY-SA 4.0",
+      "width": 1893,
+      "height": 1186,
+      "place": "Polytechnique Montréal",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "season": "automne",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "mime": "image/jpeg",
+      "source": "commons-cat",
+      "aspect": 1.596
+    },
+    {
+      "id": "421514a73f00",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f7/%C3%89cole_Polytechnique_de_Montr%C3%A9al%2C_hall_d%27entr%C3%A9e_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:%C3%89cole_Polytechnique_de_Montr%C3%A9al,_hall_d%27entr%C3%A9e_01.jpg",
+      "title": "Hall d'entrée de Polytechnique Montréal",
+      "credit": "Pierre5018",
+      "license": "CC BY-SA 4.0",
+      "width": 4327,
+      "height": 5244,
+      "place": "Polytechnique Montréal",
+      "campus": true,
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "season": "ete",
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "mime": "image/jpeg",
+      "source": "commons-cat",
+      "focalY": 0.38,
+      "aspect": 0.825
+    },
+    {
+      "id": "3ca1c6be9700",
+      "url": "/assets/masthead/polytechnique-nuit-abdallahh.jpg",
+      "link": "https://www.flickr.com/photos/abdallahh/2080242992",
+      "title": "Polytechnique Montréal la nuit",
+      "credit": "abdallahh",
+      "license": "CC BY 2.0",
+      "width": 1024,
+      "height": 768,
+      "place": "Polytechnique Montréal",
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "season": "ete",
+      "mime": "image/jpeg",
+      "campus": true,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "source": "flickr-cc",
+      "aspect": 1.333
+    },
+    {
+      "id": "28c20fac11c9",
+      "url": "/assets/masthead/polytechnique-lassonde-abdallahh.jpg",
+      "link": "https://www.flickr.com/photos/abdallahh/4278366226",
+      "title": "Pavillon Claudette-MacKay-Lassonde, Polytechnique Montréal",
+      "credit": "abdallahh",
+      "license": "CC BY 2.0",
+      "width": 680,
+      "height": 1024,
+      "place": "Polytechnique Montréal",
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "season": "automne",
+      "mime": "image/jpeg",
+      "campus": true,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "source": "flickr-cc",
+      "focalY": 0.78,
+      "aspect": 0.664
+    },
+    {
+      "id": "f7322ee7f041",
+      "url": "/assets/masthead/polytechnique-escalier-abdallahh.jpg",
+      "link": "https://www.flickr.com/photos/abdallahh/4277618293",
+      "title": "Escalier vers Polytechnique Montréal",
+      "credit": "abdallahh",
+      "license": "CC BY 2.0",
+      "width": 1024,
+      "height": 680,
+      "place": "Polytechnique Montréal",
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "season": "automne",
+      "mime": "image/jpeg",
+      "campus": true,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "source": "flickr-cc",
+      "aspect": 1.506
+    },
+    {
+      "id": "d83fe1e1b5eb",
+      "url": "/assets/masthead/polytechnique-lassonde-nuit-abdallahh.jpg",
+      "link": "https://www.flickr.com/photos/abdallahh/2112955199",
+      "title": "Pavillon Lassonde la nuit, Polytechnique Montréal",
+      "credit": "abdallahh",
+      "license": "CC BY 2.0",
+      "width": 1024,
+      "height": 768,
+      "place": "Polytechnique Montréal",
+      "tags": [
+        "campus",
+        "mat"
+      ],
+      "season": "hiver",
+      "mime": "image/jpeg",
+      "campus": true,
+      "seasonSource": "manual",
+      "seasonConfidence": 1,
+      "source": "flickr-cc",
+      "aspect": 1.333
+    },
+    {
+      "id": "8b7f25c462c2",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/1/15/McGill_University_downtown_campus_14.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:McGill%20University%20downtown%20campus%2014.JPG",
+      "title": "McGill University downtown campus 14",
+      "credit": "Jean Gagnon",
+      "license": "CC BY-SA 3.0",
+      "description": "McGill University downtown campus",
+      "categories": "Self-published work|McGill University downtown campus",
+      "width": 4000,
+      "height": 3000,
+      "aspect": 1.333,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "a177e6ee168a",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a8/McGill_University_downtown_campus_13.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:McGill%20University%20downtown%20campus%2013.JPG",
+      "title": "McGill University downtown campus 13",
+      "credit": "Jean Gagnon",
+      "license": "CC BY-SA 3.0",
+      "description": "McGill University downtown campus",
+      "categories": "Self-published work|McGill University downtown campus",
+      "width": 4000,
+      "height": 3000,
+      "aspect": 1.333,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "3da5edaa89e6",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/da/McGill_University_downtown_campus_16.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:McGill%20University%20downtown%20campus%2016.JPG",
+      "title": "McGill University downtown campus 16",
+      "credit": "Jean Gagnon",
+      "license": "CC BY-SA 3.0",
+      "description": "McGill University downtown campus",
+      "categories": "Self-published work|McGill University downtown campus",
+      "width": 4000,
+      "height": 3000,
+      "aspect": 1.333,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "9f721aabc811",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:McGill%20University%20downtown%20campus%2018.JPG",
+      "title": "McGill University downtown campus 18",
+      "credit": "Jean Gagnon",
+      "license": "CC BY-SA 3.0",
+      "description": "McGill University downtown campus",
+      "categories": "Peel Street, Montreal|Self-published work|McGill University libraries|McGill University downtown campus",
+      "width": 4000,
+      "height": 3000,
+      "aspect": 1.333,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "e5cbec7ef2b4",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/de/McGill_University_downtown_campus_23.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:McGill%20University%20downtown%20campus%2023.JPG",
+      "title": "McGill University downtown campus 23",
+      "credit": "Jean Gagnon",
+      "license": "CC BY-SA 3.0",
+      "description": "McGill University downtown campus",
+      "categories": "Self-published work|McGill University downtown campus",
+      "width": 3000,
+      "height": 4000,
+      "aspect": 0.75,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "977541b0079a",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f4/McGill_University_downtown_campus_29.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:McGill%20University%20downtown%20campus%2029.JPG",
+      "title": "McGill University downtown campus 29",
+      "credit": "Jean Gagnon",
+      "license": "CC BY-SA 3.0",
+      "description": "McGill University downtown campus",
+      "categories": "Self-published work|McGill University downtown campus",
+      "width": 4000,
+      "height": 3000,
+      "aspect": 1.333,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "23f64f9a62e9",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/54/McGill_University_downtown_campus_37.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:McGill%20University%20downtown%20campus%2037.JPG",
+      "title": "McGill University downtown campus 37",
+      "credit": "Jean Gagnon",
+      "license": "CC BY-SA 3.0",
+      "description": "McGill University downtown campus",
+      "categories": "Self-published work|McGill University downtown campus",
+      "width": 4000,
+      "height": 3000,
+      "aspect": 1.333,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "d0d1fe488fcd",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/59/Campus_UdeM_sous_la_neige%2C_Montr%C3%A9al_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Campus%20UdeM%20sous%20la%20neige%2C%20Montr%C3%A9al%2001.jpg",
+      "title": "Campus UdeM sous la neige, Montréal 01",
+      "credit": "Thomas1313",
+      "license": "CC BY-SA 3.0",
+      "description": "The University of Montreal's Campus under snow, Montreal, Quebec, Canada.",
+      "categories": "Taken with Fujifilm FinePix J100|Université de Montréal|Self-published work|Snow in Montreal|Files with coordinates missing SDC location of creation|February 2013 in Montreal",
+      "width": 3648,
+      "height": 2736,
+      "aspect": 1.333,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "hiver",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "248d822b3ff4",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a3/Campus_UdeM_sous_la_neige%2C_Montr%C3%A9al_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Campus%20UdeM%20sous%20la%20neige%2C%20Montr%C3%A9al%2002.jpg",
+      "title": "Campus UdeM sous la neige, Montréal 02",
+      "credit": "Thomas1313",
+      "license": "CC BY-SA 3.0",
+      "description": "The University of Montreal's Campus under snow, Montreal, Quebec, Canada.",
+      "categories": "Taken with Fujifilm FinePix J100|Université de Montréal|Self-published work|Snow in Montreal|Files with coordinates missing SDC location of creation|February 2013 in Montreal",
+      "width": 3648,
+      "height": 2736,
+      "aspect": 1.333,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "hiver",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "0779a7980a07",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Campus_de_l%27Universit%C3%A9_de_Montr%C3%A9al.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Campus%20de%20l'Universit%C3%A9%20de%20Montr%C3%A9al.JPG",
+      "title": "Campus de l'Université de Montréal",
+      "credit": "Laurent Bélanger",
+      "license": "CC BY-SA 4.0",
+      "description": "Campus of the Université de Montréal , located on the northern side of the Mount Royal, Montréal, Québec, Canada.",
+      "categories": "Université de Montréal|Self-published work",
+      "width": 5079,
+      "height": 2940,
+      "aspect": 1.728,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "7f49744a794d",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/e/ed/UdeM_Laval.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:UdeM%20Laval.jpg",
+      "title": "UdeM Laval",
+      "credit": "Comm2021sles",
+      "license": "CC BY-SA 4.0",
+      "description": "Vue nord-ouest du campus Laval (UdeM)",
+      "categories": "Université de Montréal|Buildings of Université de Montréal|Self-published work|Buildings in Laval, Quebec|Campus of the Université de Montréal in Laval",
+      "width": 3126,
+      "height": 2166,
+      "aspect": 1.443,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "2d002b5e2d18",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Universit%C3%A9_Montr%C3%A9al_Roger-Gaudry.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9%20Montr%C3%A9al%20Roger-Gaudry.jpg",
+      "title": "Université Montréal Roger-Gaudry",
+      "credit": "abdallahh",
+      "license": "CC BY 2.0",
+      "description": "Le pavillon Roger-Gaudry, Université de Montréal",
+      "categories": "Roger Gaudry Building|Flickr images reviewed by trusted users|October 2007 in Montreal",
+      "width": 1274,
+      "height": 849,
+      "aspect": 1.501,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "automne",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "bb17ad9a823c",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/84/Concordia_campus_map-2.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Concordia%20campus%20map-2.png",
+      "title": "Concordia campus map-2",
+      "credit": "Concordia_campus_map.svg : Adqproductions",
+      "license": "Public domain",
+      "description": "This map illustrates the location of Concordia University's two campus in Montreal.",
+      "categories": "Retouched pictures|Concordia University, Montreal|Self-published work|PD-self|Uploaded with derivativeFX|Campus maps of Canada|2009 maps of Montreal",
+      "width": 855,
+      "height": 1158,
+      "aspect": 0.738,
+      "mime": "image/png",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "28fca3cd36ca",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:CJ%20Building%2C%20Loyola%20Campus%2C%20Communication%20Studies%2C%20Concordia%20University.jpg",
+      "title": "CJ Building, Loyola Campus, Communication Studies, Concordia University",
+      "credit": "Justinhandgregory",
+      "license": "CC BY-SA 4.0",
+      "description": "The CJ building houses the Communication Studies Department at Concordia University, Montreal, Quebec, Canada.",
+      "categories": "Self-published work|Files with coordinates missing SDC location of creation|Buildings of Concordia University, Montreal",
+      "width": 3024,
+      "height": 4032,
+      "aspect": 0.75,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "c30cf6afc78e",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/54/Internal_street_in_the_Universit%C3%A9_Laval%2C_Quebec_Canada.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Internal%20street%20in%20the%20Universit%C3%A9%20Laval%2C%20Quebec%20Canada.jpg",
+      "title": "Internal street in the Université Laval, Quebec Canada",
+      "credit": "Wilfredor",
+      "license": "CC0",
+      "description": "Asphalted bikeway (on the right) and concrete sidewalk (on the left, visible under patches of snow) passing through the vacant easternmost part of the grounds of the Université Laval, in Québec, Quebec, Canada. They connect rue Liénard and avenue du Séminaire. They replaced what used to be a more simple path. To the left is the snow dump of the university. View looking west.",
+      "categories": "CC-Zero|Self-published work|Files with coordinates missing SDC location of creation|Winter 2020-2021 in Canada|February 2021 in Quebec|Media created with Nikon Z7ii provided by the Quebec WikiClub in 2021|Media created with Nikon Z7ii provided by the Quebec WikiClub|Sidewalks in Quebec City|Winter on Université Laval campus|Images of Canada by User:Wilfredor|Winter by Wilfredor|Bikeways in Quebec ",
+      "width": 8256,
+      "height": 5504,
+      "aspect": 1.5,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "hiver",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "8529e07b37f6",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/78/University_building_at_Universite_Laval.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:University%20building%20at%20Universite%20Laval.jpg",
+      "title": "University building at Universite Laval",
+      "credit": "Wilfredor",
+      "license": "CC0",
+      "description": "A university building at Université Laval.",
+      "categories": "CC-Zero|Winter in Quebec|Pavillon Alphonse-Desjardins (Université Laval)|Self-published work|Unassessed QI candidates|Snow in Quebec|Winter 2020-2021 in Canada|Media created with Nikon Z7ii provided by the Quebec WikiClub in 2021|Media created with Nikon Z7ii provided by the Quebec WikiClub|Winter on Université Laval campus|Images of Canada by User:Wilfredor|Photographs of Quebec City by Wilfredor",
+      "width": 8256,
+      "height": 5504,
+      "aspect": 1.5,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "hiver",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "22de02778199",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Bus_stop_in_winter_near_Universite_Laval.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Bus%20stop%20in%20winter%20near%20Universite%20Laval.jpg",
+      "title": "Bus stop in winter near Universite Laval",
+      "credit": "Wilfredor",
+      "license": "CC0",
+      "description": "A bus shelter under a road overpass near Université Laval, in March. Quebec City, Quebec, Canada.",
+      "categories": "CC-Zero|Boulevard René-Lévesque, Quebec City|Self-published work|Media created with Nikon Z7ii provided by the Quebec WikiClub in 2021|Bus stops in Quebec|Media created with Nikon Z7ii provided by the Quebec WikiClub|Buildings of Université Laval|Winter on Université Laval campus|Bus shelters in Quebec City|Images of Canada by User:Wilfredor|Photographs of Quebec City by Wilfredor",
+      "width": 8256,
+      "height": 5504,
+      "aspect": 1.5,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "hiver",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "6f704709b0f7",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Universite_Laval_building_in_snow.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Universite%20Laval%20building%20in%20snow.jpg",
+      "title": "Universite Laval building in snow",
+      "credit": "Wilfredor",
+      "license": "CC0",
+      "description": "A Université Laval building in snow. Photographed at Winter on Université Laval campus.",
+      "categories": "CC-Zero|Pavillon Charles-De Koninck|Self-published work|FoP-Canada|Incorrect Exif date|February 2021 in Quebec|Media created with Nikon Z7ii provided by the Quebec WikiClub in 2021|Media created with Nikon Z7ii provided by the Quebec WikiClub|Winter on Université Laval campus|Images of Canada by User:Wilfredor|Photographs of Quebec City by Wilfredor",
+      "width": 9820,
+      "height": 4990,
+      "aspect": 1.968,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "hiver",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "a6912b63a539",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/8f/UNIVERSIT%C3%89_DE_SHERBROOKE%2C_CAMPUS_LONGUEUIL%2C_QC_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:UNIVERSIT%C3%89%20DE%20SHERBROOKE%2C%20CAMPUS%20LONGUEUIL%2C%20QC%20-%20panoramio.jpg",
+      "title": "UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC - panoramio",
+      "credit": "busand2003",
+      "license": "CC BY 3.0",
+      "description": "UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC",
+      "categories": "Campus de Longueuil de l'Université de Sherbrooke|Panoramio files uploaded by Panoramio upload bot|Panoramio images reviewed by trusted users|Photos from Panoramio|Media needing category review as of 8 December 2016|Files with coordinates missing SDC location of creation|Canada photographs taken on 2009-11-29",
+      "width": 3456,
+      "height": 2304,
+      "aspect": 1.5,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "hiver",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "ce9b3cc10973",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/94/UNIVERSIT%C3%89_DE_SHERBROOKE%2C_CAMPUS_LONGUEUIL%2C_QC_-_panoramio_%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:UNIVERSIT%C3%89%20DE%20SHERBROOKE%2C%20CAMPUS%20LONGUEUIL%2C%20QC%20-%20panoramio%20(1).jpg",
+      "title": "UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC - panoramio (1)",
+      "credit": "busand2003",
+      "license": "CC BY 3.0",
+      "description": "UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC",
+      "categories": "Campus de Longueuil de l'Université de Sherbrooke|Panoramio files uploaded by Panoramio upload bot|Panoramio images reviewed by trusted users|Photos from Panoramio|Media needing category review as of 8 December 2016|Files with coordinates missing SDC location of creation|Canada photographs taken on 2009-11-29",
+      "width": 3456,
+      "height": 2304,
+      "aspect": 1.5,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "hiver",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "3bf58bbe1d71",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/49/UNIVERSIT%C3%89_DE_SHERBROOKE%2C_CAMPUS_LONGUEUIL%2C_QC_-_panoramio_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:UNIVERSIT%C3%89%20DE%20SHERBROOKE%2C%20CAMPUS%20LONGUEUIL%2C%20QC%20-%20panoramio%20(2).jpg",
+      "title": "UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC - panoramio (2)",
+      "credit": "busand2003",
+      "license": "CC BY 3.0",
+      "description": "UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC",
+      "categories": "Campus de Longueuil de l'Université de Sherbrooke|Panoramio files uploaded by Panoramio upload bot|Panoramio images reviewed by trusted users|Photos from Panoramio|Files with coordinates missing SDC location of creation|Canada photographs taken on 2009-11-29",
+      "width": 3456,
+      "height": 2304,
+      "aspect": 1.5,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "automne",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "10e449723dab",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a5/UNIVERSIT%C3%89_DE_SHERBROOKE%2C_CAMPUS_LONGUEUIL%2C_QC_-_panoramio_%283%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:UNIVERSIT%C3%89%20DE%20SHERBROOKE%2C%20CAMPUS%20LONGUEUIL%2C%20QC%20-%20panoramio%20(3).jpg",
+      "title": "UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC - panoramio (3)",
+      "credit": "busand2003",
+      "license": "CC BY 3.0",
+      "description": "UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC",
+      "categories": "Campus de Longueuil de l'Université de Sherbrooke|Panoramio files uploaded by Panoramio upload bot|Panoramio images reviewed by trusted users|Photos from Panoramio|Media needing category review as of 8 December 2016|Files with coordinates missing SDC location of creation|Canada photographs taken on 2009-11-29",
+      "width": 2304,
+      "height": 3456,
+      "aspect": 0.667,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "hiver",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "4dd2da64a207",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/1/1e/UNIVERSIT%C3%89_DE_SHERBROOKE%2C_CAMPUS_LONGUEUIL%2C_QC_-_panoramio_%284%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:UNIVERSIT%C3%89%20DE%20SHERBROOKE%2C%20CAMPUS%20LONGUEUIL%2C%20QC%20-%20panoramio%20(4).jpg",
+      "title": "UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC - panoramio (4)",
+      "credit": "busand2003",
+      "license": "CC BY 3.0",
+      "description": "UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC",
+      "categories": "Campus de Longueuil de l'Université de Sherbrooke|Panoramio files uploaded by Panoramio upload bot|Panoramio images reviewed by trusted users|Photos from Panoramio|Files with coordinates missing SDC location of creation|Canada photographs taken on 2009-11-29",
+      "width": 3456,
+      "height": 2304,
+      "aspect": 1.5,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "automne",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "dd017af05727",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/2a/UNIVERSIT%C3%89_DE_SHERBROOKE%2C_CAMPUS_LONGUEUIL%2C_QC_-_panoramio_%285%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:UNIVERSIT%C3%89%20DE%20SHERBROOKE%2C%20CAMPUS%20LONGUEUIL%2C%20QC%20-%20panoramio%20(5).jpg",
+      "title": "UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC - panoramio (5)",
+      "credit": "busand2003",
+      "license": "CC BY 3.0",
+      "description": "UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC",
+      "categories": "Campus de Longueuil de l'Université de Sherbrooke|Panoramio files uploaded by Panoramio upload bot|Panoramio images reviewed by trusted users|Photos from Panoramio|Media needing category review as of 8 December 2016|Files with coordinates missing SDC location of creation|Canada photographs taken on 2009-11-29",
+      "width": 2304,
+      "height": 3456,
+      "aspect": 0.667,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "hiver",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "2567e6e5f6b7",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/08/UNIVERSIT%C3%89_DE_SHERBROOKE%2C_CAMPUS_LONGUEUIL%2C_QC_-_panoramio_%286%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:UNIVERSIT%C3%89%20DE%20SHERBROOKE%2C%20CAMPUS%20LONGUEUIL%2C%20QC%20-%20panoramio%20(6).jpg",
+      "title": "UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC - panoramio (6)",
+      "credit": "busand2003",
+      "license": "CC BY 3.0",
+      "description": "UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC",
+      "categories": "Campus de Longueuil de l'Université de Sherbrooke|Panoramio files uploaded by Panoramio upload bot|Panoramio images reviewed by trusted users|Photos from Panoramio|Media needing category review as of 8 December 2016|Files with coordinates missing SDC location of creation|Canada photographs taken on 2009-11-29",
+      "width": 3456,
+      "height": 2304,
+      "aspect": 1.5,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "hiver",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "25477336484a",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Bishop_Otter_Campus%2C_University_of_Chichester_-_geograph.org.uk_-_2726552.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Bishop%20Otter%20Campus%2C%20University%20of%20Chichester%20-%20geograph.org.uk%20-%202726552.jpg",
+      "title": "Bishop Otter Campus, University of Chichester - geograph.org.uk - 2726552",
+      "credit": "Paul Gillett",
+      "license": "CC BY-SA 2.0",
+      "description": "Bishop Otter Campus, University of Chichester",
+      "categories": "Images from Geograph Britain and Ireland|University of Chichester (Bishop Otter campus)",
+      "width": 1600,
+      "height": 1200,
+      "aspect": 1.333,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "1d79da5830dd",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chichester%2C_Bishop_Otter_Campus_-_geograph.org.uk_-_3003126.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:University%20of%20Chichester%2C%20Bishop%20Otter%20Campus%20-%20geograph.org.uk%20-%203003126.jpg",
+      "title": "University of Chichester, Bishop Otter Campus - geograph.org.uk - 3003126",
+      "credit": "Chris Holifield",
+      "license": "CC BY-SA 2.0",
+      "description": "University of Chichester, Bishop Otter Campus",
+      "categories": "Images from Geograph Britain and Ireland|University of Chichester (Bishop Otter campus)",
+      "width": 3648,
+      "height": 2736,
+      "aspect": 1.333,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "printemps",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "e72f68e1454e",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/88/Formation_Wikip%C3%A9dia_-_Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Montr%C3%A9al_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Formation%20Wikip%C3%A9dia%20-%20Universit%C3%A9%20du%20Qu%C3%A9bec%20%C3%A0%20Montr%C3%A9al%2002.jpg",
+      "title": "Formation Wikipédia - Université du Québec à Montréal 02",
+      "credit": "Benoit Rochon",
+      "license": "CC BY-SA 3.0",
+      "description": "Jean-Michel Lapointe ( Utilisateur:Benjamenta ) donne une formation aux professeurs de l' UQAM .",
+      "categories": "Journées contributives|Self-published work|Files with coordinates missing SDC location of creation|WikiPermanence à Montréal",
+      "width": 3264,
+      "height": 2448,
+      "aspect": 1.333,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "095ee355a83e",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/48/Formation_Wikip%C3%A9dia_-_Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Montr%C3%A9al_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Formation%20Wikip%C3%A9dia%20-%20Universit%C3%A9%20du%20Qu%C3%A9bec%20%C3%A0%20Montr%C3%A9al%2003.jpg",
+      "title": "Formation Wikipédia - Université du Québec à Montréal 03",
+      "credit": "Benoit Rochon",
+      "license": "CC BY-SA 3.0",
+      "description": "Jean-Michel Lapointe ( Utilisateur:Benjamenta ) donne une formation aux professeurs de l' UQAM .",
+      "categories": "Journées contributives|Self-published work|Files with coordinates missing SDC location of creation|WikiPermanence à Montréal|Wikipedia roll-up banners",
+      "width": 3264,
+      "height": 2448,
+      "aspect": 1.333,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "8aa6f6493e56",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/93/Formation_Wikip%C3%A9dia_-_Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Montr%C3%A9al_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Formation%20Wikip%C3%A9dia%20-%20Universit%C3%A9%20du%20Qu%C3%A9bec%20%C3%A0%20Montr%C3%A9al%2001.jpg",
+      "title": "Formation Wikipédia - Université du Québec à Montréal 01",
+      "credit": "Benoit Rochon",
+      "license": "CC BY-SA 3.0",
+      "description": "Jean-Michel Lapointe ( Utilisateur:Benjamenta ) donne une formation aux professeurs de l' UQAM .",
+      "categories": "Journées contributives|Self-published work|Files with coordinates missing SDC location of creation|WikiPermanence à Montréal",
+      "width": 3264,
+      "height": 2448,
+      "aspect": 1.333,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "8b76a9e00a6c",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Ville_saguenay_montage.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Ville%20saguenay%20montage.jpg",
+      "title": "Ville saguenay montage",
+      "credit": "Chicoutimi CampusUQAC07_282.JPG : service des communications…",
+      "license": "CC BY-SA 3.0",
+      "description": "Montage photo de la ville de Saguenay . De gauche à droite et de haut en bas : Le centre-ville de Chicoutimi , le campus de l' Université du Québec à Chicoutimi , la Pyramide des Ha! Ha! à La Baie , l'entrée du pavillon Gérard-Arguin du Cégep de Jonquière et les installations de l'usine de Rio-Tinto-Alcan à Arvida .",
+      "categories": "Retouched pictures|Arvida|Jonquière|Université du Québec à Chicoutimi|Chicoutimi|Cégep de Jonquière|La Baie|Uploaded with derivativeFX|Winter in Saguenay|Rio Tinto Alcan buildings in Quebec",
+      "width": 1207,
+      "height": 1227,
+      "aspect": 0.984,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "hiver",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "65edf386d6bd",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Varennes_%28Qu%C3%A9bec%29-Campus_de_l%27INRS-2023-09-23.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Varennes%20(Qu%C3%A9bec)-Campus%20de%20l'INRS-2023-09-23.jpg",
+      "title": "Varennes (Québec)-Campus de l'INRS-2023-09-23",
+      "credit": "Gaétan Veillette",
+      "license": "CC BY-SA 4.0",
+      "description": "INRS (National Institute for Scientific Research) campus, on boul. Lionel-Boulet, in Varennes (Quebec).",
+      "categories": "Varennes, Quebec|INRS|Self-published work|Files with coordinates missing SDC location of creation",
+      "width": 11764,
+      "height": 3479,
+      "aspect": 3.381,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "automne",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "8c129c4b3b23",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/0b/McGillCampusMap.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:McGillCampusMap.png",
+      "title": "McGillCampusMap",
+      "credit": "OpenStreetMap contributors",
+      "license": "CC BY-SA 3.0",
+      "description": "This map was created from OpenStreetMap project data, collected by the community. This map may be incomplete, and may contain errors. Don't rely solely on it for navigation.",
+      "categories": "GFDL|McGill University|License migration redundant|Self-published work|Maps of universities and colleges in Canada|OpenStreetMap maps of Montreal",
+      "width": 845,
+      "height": 895,
+      "aspect": 0.944,
+      "mime": "image/png",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "printemps",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "f92f8c3ca32c",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Pavillon_Louis-Jacques-Casault_-_Universit%C3%A9_-Laval_-_Quebec_City_-_October_2007.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon%20Louis-Jacques-Casault%20-%20Universit%C3%A9%20-Laval%20-%20Quebec%20City%20-%20October%202007.jpg",
+      "title": "Pavillon Louis-Jacques-Casault - Université -Laval - Quebec City - October 2007",
+      "credit": "Colin Rose",
+      "license": "CC BY-SA 2.0",
+      "description": "Louis-Jacques-Casault Pavillion, Laval University (Quebec City, Quebec, Canada)",
+      "categories": "Taken with Olympus E-500|Pavillon Louis-Jacques-Casault|Flickr images reviewed by FlickreviewR|On OSM|Files with coordinates missing SDC location of creation|November 2007 in Quebec City|October 2007 in Quebec City|Files from Sandra Cohen-Rose and Colin Rose Flickr stream",
+      "width": 3019,
+      "height": 2395,
+      "aspect": 1.261,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "season": "automne",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "b8db6b91eb5e",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Pavillon_DKN%2C_Universit%C3%A9_Laval_10.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2010.jpg",
+      "title": "Pavillon DKN, Université Laval 10",
+      "credit": "Cephas",
+      "license": "CC BY-SA 4.0",
+      "description": "Pavillon Charles-De Koninck, Université Laval, Québec.",
+      "categories": "Pavillon Charles-De Koninck|Self-published work|Files with coordinates missing SDC location of creation",
+      "width": 5376,
+      "height": 3584,
+      "aspect": 1.5,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
+    },
+    {
+      "id": "fe03a5d0af2f",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Entrance_of_the_Pavillon_Alphonse-Desjardins_at_Universite_Laval.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "link": "https://commons.wikimedia.org/wiki/File:Entrance%20of%20the%20Pavillon%20Alphonse-Desjardins%20at%20Universite%20Laval.jpg",
+      "title": "Entrance of the Pavillon Alphonse-Desjardins at Universite Laval",
+      "credit": "Wilfredor",
+      "license": "CC0",
+      "description": "The entrance of the Pavillon Alphonse-Desjardins at Université Laval, the building that holds the student services of the Sainte-Foy campus. Quebec City, Quebec, Canada.",
+      "categories": "CC-Zero|Pavillon Alphonse-Desjardins (Université Laval)|Self-published work|Media created with Nikon Z7ii provided by the Quebec WikiClub in 2021|Media created with Nikon Z7ii provided by the Quebec WikiClub|Doors in Quebec City|Doors by Wilfredor|Images of Canada by User:Wilfredor|Photographs of Quebec City by Wilfredor",
+      "width": 8173,
+      "height": 5166,
+      "aspect": 1.582,
+      "mime": "image/jpeg",
+      "addedAt": "2026-09-28T16:51:26.472Z",
+      "sessionId": "automne",
+      "bank": "universities",
+      "tags": [
+        "mat",
+        "campus"
+      ],
+      "campus": true
     }
   ]
 }

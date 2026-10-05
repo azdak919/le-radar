@@ -9,7 +9,7 @@
  *
  * Politique : pas de religieux institutionnel ; nations du Québec OK ;
  * pas de personnes reconnaissables ; plafond large ; ménage 1×/session univ.
- * Résolution mini ~1400×700 / 1.2 Mpx (anti-grain upscale).
+ * Résolution mini ~640×600 / 0,65 Mpx. Portrait réservé aux cartes campus.
  * focalY optionnel (0=haut, 1=bas) pour cover crop.
  * Hard-ban : scripts/quebec-backgrounds-blacklist.js
  */
@@ -587,6 +587,20 @@ const QUEBEC_NATIONS_BACKGROUNDS = [
     place: "Montréal",
     nationId: "mohawk",
     nation: "Mohawks (Kanien'kehá:ka)",
+    season: "ete",
+    season6: "ukiaqsaaq",
+    tags: ["mat", "pomo", "nations"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Corridor_des_Cheminots_%2899118%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    credit: "Wolfy13399",
+    link: "https://commons.wikimedia.org/wiki/File:Corridor%20des%20Cheminots%20(99118).jpg",
+    license: "CC BY-SA 4.0",
+    title: "Corridor des Cheminots (99118)",
+    width: 4080,
+    height: 3072,
+    nationId: "wendat",
+    nation: "Hurons-Wendat",
     season: "ete",
     season6: "ukiaqsaaq",
     tags: ["mat", "pomo", "nations"],

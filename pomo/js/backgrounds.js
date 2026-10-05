@@ -616,7 +616,7 @@ function getRandomBgIndex(culture = null) {
   let pool = Array.from({ length: BACKGROUNDS.length }, (_, i) => i)
     .filter(i => !_failedBg.has(i));
 
-  // Saison courante : 4 saisons QC / 6 saisons nations–Inuit
+  // Saison courante : 4 saisons astronomiques QC / 6 saisons nations–Inuit
   if (typeof RadarSeason !== 'undefined' && RadarSeason.filterPoolByCurrentSeason) {
     const items = pool.map((i) => ({ ...BACKGROUNDS[i], _idx: i }));
     // minStrict élevé : sinon en été le pool se réduit à ~5 photos taguées

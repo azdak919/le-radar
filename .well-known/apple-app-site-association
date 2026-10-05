@@ -1,0 +1,16 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["TEAMID.ca.leradar.app"],
+        "components": [
+          { "/": "/article/*", "comment": "Fiche de découverte. Remplacer TEAMID avant soumission." },
+          { "/": "/journaux/*", "comment": "Page d’un journal étudiant." },
+          { "/": "/radios/*", "comment": "Page d’une radio étudiante." },
+          { "/": "/etablissements/*", "comment": "Page d’un établissement." }
+        ]
+      }
+    ]
+  }
+}

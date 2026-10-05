@@ -299,8 +299,8 @@ const portrait = retainUnifiedPhoto({
   width: 1619,
   height: 2483,
 });
-assert.ok(portrait, 'portrait campus reste pour les affiches');
-assert.ok(!portrait.tags.includes('mat'), 'portrait campus : hors mât');
+assert.ok(portrait, 'portrait campus reste dans la banque');
+assert.ok(portrait.tags.includes('mat'), 'portrait campus : admis au mât');
 assert.ok(portrait.tags.includes('campus'), 'portrait campus : tag campus');
 
 console.log('OK photo-lab (crop + mutations + undo)');

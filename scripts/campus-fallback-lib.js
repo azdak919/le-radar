@@ -113,6 +113,10 @@ function campusPhotoHay(photo = {}) {
 
 function photoMatchesNeedles(photo, needles = []) {
   if (!needles.length) return false;
+  // Le lieu curaté prime. Une vue « UdeM et Polytechnique » dont le lieu est
+  // l’Université de Montréal ne sert pas de photo de Polytechnique.
+  const place = normalizeCampusKey(photo.place || '');
+  if (place) return needles.some((n) => place.includes(n));
   const hay = campusPhotoHay(photo);
   if (!hay) return false;
   return needles.some((n) => hay.includes(n));
@@ -131,6 +135,29 @@ function hashIndex(seed, modulo) {
   const s = String(seed || '');
   for (let i = 0; i < s.length; i += 1) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
   return (h >>> 0) % n;
+}
+
+/** Même fichier Wikimedia, avec ou sans query utm. */
+function campusPhotoKey(url = '') {
+  const raw = String(url || '').trim();
+  if (!raw) return '';
+  try {
+    const u = new URL(raw);
+    let path = u.pathname;
+    try { path = decodeURIComponent(path); } catch { /* keep */ }
+    return `${u.hostname.toLowerCase()}${path}`.toLowerCase();
+  } catch {
+    return raw.split('#')[0].split('?')[0].toLowerCase();
+  }
+}
+
+function avoidKeySet(avoidUrls) {
+  const set = new Set();
+  for (const u of avoidUrls || []) {
+    const key = campusPhotoKey(u);
+    if (key) set.add(key);
+  }
+  return set;
 }
 
 /** Cégeps absents de la banque mât universities — mêmes URL que campus-photo-bank. */
@@ -338,7 +365,9 @@ function toFallbackFields(pick = {}) {
 
 /**
  * @param {{ institution?: string, link?: string, title?: string }} item
- * @param {{ universityPhotos?: object[] }} [opts]
+ * @param {{ universityPhotos?: object[], avoidUrls?: string[] }} [opts]
+ * avoidUrls : photos de repli déjà affichées. Banque épuisée → null
+ * (pas la même photo une deuxième fois).
  */
 function pickCampusFallback(item = {}, opts = {}) {
   const inst = item.institution || '';
@@ -349,7 +378,9 @@ function pickCampusFallback(item = {}, opts = {}) {
     license: p.license || '',
     link: p.link || p.sourceUrl || p.url,
   }));
-  const pool = [...uni, ...extrasForInstitution(inst)];
+  const avoid = avoidKeySet(opts.avoidUrls);
+  const pool = [...uni, ...extrasForInstitution(inst)]
+    .filter((p) => p && p.url && !avoid.has(campusPhotoKey(p.url)));
   if (!pool.length) return null;
   const pick = pool[hashIndex(item.link || item.title || inst, pool.length)];
   return toFallbackFields(pick);
@@ -397,6 +428,7 @@ const api = {
   filterUniversityPhotos,
   extrasForInstitution,
   pickCampusFallback,
+  campusPhotoKey,
   sourceNeedsCampusBackup,
   isThematicStockItem,
   planDisplayImage,

@@ -18,6 +18,7 @@ const {
   detectFeedDefaultAuthors,
   needsPageAuthorVerification,
   normalizeArticleUrl,
+  rememberResolvedByline,
 } = require('./author-lib');
 const { pruneToFreshWindow, loadSourceRegistryMap, getBotHints } = require('./source-retention-lib');
 
@@ -157,11 +158,13 @@ async function main() {
     const nextItems = allItems.map((item) => {
       if (!freshKeys.has(normalizeArticleUrl(item.link))) return item;
       const pageAuthor = pageAuthors.get(normalizeArticleUrl(item.link)) || '';
-      return reconcileAuthor(item, items, {
+      const reconciled = reconcileAuthor(item, items, {
         applyFallback: true,
         feedDefaults,
         pageAuthor,
-      }).item;
+      });
+      rememberResolvedByline(item.source, item.link, reconciled.author);
+      return reconciled.item;
     });
     fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: nextItems, count: nextItems.length }, null, 2) + '\n');
     if (fixable > 0) {
