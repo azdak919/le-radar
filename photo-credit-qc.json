@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-05T18:43:56.415Z",
+  "updated": "2026-10-05T22:23:49.482Z",
   "total": 175,
   "withImage": 159,
   "withCredit": 159,
@@ -7,94 +7,73 @@
   "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 34,
-  "updatedCount": 25,
-  "citedNew": 17,
-  "fallbackNew": 17,
+  "checked": 18,
+  "updatedCount": 9,
+  "citedNew": 6,
+  "fallbackNew": 12,
   "samples": [
     {
-      "title": "Dernier droit des élections : regard sur les circonscriptions avoisinantes",
-      "source": "Le Collectif",
-      "credit": "Photo : Graham Hughes/NurPhoto via Getty Images",
+      "title": "Political occupation of vacant Montreal apartment building ended by police eviction",
+      "source": "The Link",
+      "credit": "Photo: Cléo Clamen",
       "cited": true,
-      "method": "json-ld"
+      "method": "figcaption-trailing"
     },
     {
-      "title": "Salon du livre de l’Estrie, une édition qui promet",
-      "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
+      "title": "Rouge d’une part, blanche de l’autre",
+      "source": "Le Délit",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Quand la fiction banalise les traumatismes",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Faire compter sa voix",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée d’Élections Québec",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
     },
     {
-      "title": "Ismène, un nouveau regard sur la tragédie grecque",
-      "source": "Le Collectif",
-      "credit": "Photo : Annick Sauvé",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Studio 13 souffle ses deux bougies et élargit son angle",
-      "source": "Le Collectif",
-      "credit": "Photo : Simon Bouchard",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Les Comptonales, une virée gourmande au cœur des couleurs de l’automne",
-      "source": "Le Collectif",
-      "credit": "Photo : Les Comptonales",
-      "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Conférence sur l’IA en communication : un choc des générations remarqué",
-      "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
+      "title": "Summer in Paradise (Lennoxville Edition)",
+      "source": "The Campus",
+      "credit": "Photo credit: The Campus",
       "cited": false,
       "method": null
     },
     {
-      "title": "Collation des grades 2026 : une boucle bouclée",
-      "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
+      "title": "Culture Paints Time a Different Colour",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
     },
     {
-      "title": "Accusation de viol collectif à l’université de Cornell",
-      "source": "Le Collectif",
-      "credit": "Photo : Source : Getty Images",
+      "title": "La littérature québécoise : encore intéressante pour les jeunes",
+      "source": "La Pige",
+      "credit": "Photo : Julianne Pilon",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-paren-kind"
     },
     {
-      "title": "The Madonna-Whore Dichotomy: The Impossible Woman",
-      "source": "The McGill Daily",
-      "credit": "Photo : Annabelle Premont",
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
       "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "I Couldn’t Wait for the Summer and the Warped Tour",
-      "source": "The McGill Daily",
-      "credit": "Photo : Matthew Tussman",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Theatre Sainte-Catherine: Improv, Workshops, and Comedy as Medicine",
-      "source": "The McGill Daily",
-      "credit": "Photo : Amihan del Rosario-Tapan",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "McGill is a Gravesite”: Kanien’kehá:ka Kahnistensera Hold Vigil for Indigenous Children",
-      "source": "The McGill Daily",
-      "credit": "Photo : Adair Nelson",
-      "cited": true,
-      "method": "media-credit-featured"
+      "method": "via-attribution"
     }
   ]
 }
