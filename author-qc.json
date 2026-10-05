@@ -1,10 +1,18 @@
 {
-  "updated": "2026-10-04T23:21:33.651Z",
+  "updated": "2026-10-05T02:18:07.560Z",
   "total": 176,
   "withAuthor": 176,
-  "mismatches": 8,
+  "mismatches": 10,
   "ok": true,
   "samples": [
+    {
+      "title": "Language Laws Meet the Ballot Box",
+      "link": "https://www.mcgilldaily.com/2026/10/language-laws-meet-the-ballot-box/",
+      "source": "The McGill Daily",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
     {
       "title": "Not Enough People Are Mad”: Reporting Bill 9 in Conversation",
       "link": "https://theplantnews.com/2026/10/01/not-enough-people-are-mad-reporting-bill-9-in-conversation/",
@@ -28,6 +36,14 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "From Scripts to Stage: BU New Plays 2026",
+      "link": "https://thebucampus.ca/2026/09/30/from-scripts-to-stage-bu-new-plays-2026/",
+      "source": "The Campus",
+      "fieldAuthor": "Zachary Jaimes",
+      "canonicalAuthor": "Zachary Jaimes Saint Cyr",
+      "reason": "page-byline-overrides-rss"
     },
     {
       "title": "What is Tony Actually Guilty of?",
@@ -70,5 +86,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 8
+  "fixed": 10
 }

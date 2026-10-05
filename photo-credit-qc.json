@@ -1,31 +1,17 @@
 {
-  "updated": "2026-10-04T23:26:23.423Z",
+  "updated": "2026-10-05T02:24:57.423Z",
   "total": 176,
-  "withImage": 164,
-  "withCredit": 164,
-  "cited": 108,
+  "withImage": 163,
+  "withCredit": 163,
+  "cited": 107,
   "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 20,
-  "updatedCount": 9,
-  "citedNew": 7,
-  "fallbackNew": 13,
+  "checked": 19,
+  "updatedCount": 8,
+  "citedNew": 5,
+  "fallbackNew": 14,
   "samples": [
-    {
-      "title": "Les chroniqueurs polémistes : un mal nécessaire ?",
-      "source": "L'Exemplaire",
-      "credit": "Photo : alexas fotos • utilisation gratuite autorisée via Pixabay",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Students rallied under the slogan “Elections are a trap for fools”",
-      "source": "The Link",
-      "credit": "Photo: Moon Jinseok",
-      "cited": true,
-      "method": "figcaption-trailing"
-    },
     {
       "title": "Summer in Paradise (Lennoxville Edition)",
       "source": "The Campus",
@@ -36,9 +22,16 @@
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
+      "credit": "Photo : Scott Tan",
       "cited": true,
-      "method": "figcaption-bare"
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "source": "Le Délit",
+      "credit": "Photo : Héloïse Durning",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "Quand la fiction banalise les traumatismes",
@@ -62,18 +55,18 @@
       "method": null
     },
     {
-      "title": "McGill’s 25th Annual Powwow",
-      "source": "The McGill Daily",
-      "credit": "Photo : Images courtesy of Parker Russell",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Bishop’s Gaiters football returns to the RSEQ",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Victoryland: The Selfish Pursuit of Perfect Music",
-      "source": "The McGill Daily",
-      "credit": "Photo : Meg Ha",
+      "title": "The rebirth of a league",
+      "source": "The Link",
+      "credit": "Photo : Nicolas Tremblay",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption"
     }
   ]
 }
