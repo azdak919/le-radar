@@ -1,80 +1,79 @@
 {
-  "updatedAt": "2026-10-05T18:43:51.460Z",
+  "updatedAt": "2026-10-05T22:37:13.826Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Little Songs On The Prairie",
+        "title": "Femmes de l'ombre",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://chyz.ca/emission/little-songs-on-the-prairie/"
+        "start": "18:30",
+        "end": "19:30",
+        "url": "https://chyz.ca/emission/femmes-de-lombre/"
       },
       "next": {
-        "title": "Chéri.e, Jme Mobilise!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://chyz.ca/emission/cheri-e-jmorganise/"
+        "title": "Mardi Champ Gauche",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "Little Songs On The Prairie",
+      "showTitle": "Femmes de l'ombre",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T18:43:22.786Z"
+      "checkedAt": "2026-10-05T22:36:28.133Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
+        "title": "Les criquets crinqués",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/les-criquets-crinques"
       },
       "next": {
-        "title": "Les garçons pleurent aussi",
+        "title": "Les vinyles versatiles",
         "source": "schedule",
-        "start": "15:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
       },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "Les criquets crinqués",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T18:43:25.017Z"
+      "checkedAt": "2026-10-05T22:36:29.635Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Radio Is Dead",
+        "title": "Queercorps",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "next": {
-        "title": "Whose Vibe Is It Anyway",
+        "title": "Dykes on Mykes",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "Radio Is Dead",
+      "showTitle": "Queercorps",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,72 +81,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T18:43:27.887Z"
+      "checkedAt": "2026-10-05T22:36:32.345Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "L'Organe à la radio",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/lorgane-a-la-radio"
+        "title": "Voice of the Voiceless",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/voice-of-the-voiceless"
       },
       "next": {
-        "title": "Whip Appeal",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/whip-appeal"
+        "title": "Monday Mass with Father Kate",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/monday-mass-with-father-kate"
       },
       "track": "",
-      "showTitle": "L'Organe à la radio",
+      "showTitle": "Voice of the Voiceless",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T18:43:31.510Z"
+      "checkedAt": "2026-10-05T22:36:54.762Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Solénoïde",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Ma radio Académia",
         "source": "schedule-live",
         "start": "18:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Le terrain sportif",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "00:01"
+      },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Ma radio Académia",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T18:43:32.743Z"
+      "checkedAt": "2026-10-05T22:36:55.712Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Palmarès CHOQ.ca",
+        "title": "Les rois de l'arène",
         "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
+        "start": "19:00",
+        "end": "21:00",
+        "slug": "les-rois-de-larene"
       },
-      "track": "Eartheater — Don't Look Back",
+      "track": "Arielle Soucy — How To Be Me",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -155,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-05T18:43:51.109Z"
+      "checkedAt": "2026-10-05T22:37:13.475Z"
     }
   }
 }
