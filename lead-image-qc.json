@@ -1,19 +1,31 @@
 {
-  "updated": "2026-10-05T18:35:20.076Z",
+  "updated": "2026-10-05T18:43:16.464Z",
   "total": 175,
   "withPhoto": 159,
   "withStock": 27,
   "withCampusBank": 20,
   "fullyCovered": 175,
-  "leadReadyPhotos": 143,
+  "leadReadyPhotos": 144,
   "pageScraped": 33,
   "photosRecovered": 30,
   "imagesCleared": 12,
-  "stockSearches": 30,
-  "stockFound": 20,
-  "campusBankFound": 13,
+  "stockSearches": 32,
+  "stockFound": 22,
+  "campusBankFound": 15,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "MUNACA’s Campaign Exposes the McGill Administration’s Greed",
+      "link": "https://www.mcgilldaily.com/2026/10/munacas-campaign-exposes-the-mcgill-administrations-greed/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/McGill_University_downtown_campus_14.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Decolonization”",
+      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
     {
       "title": "Health First!",
       "link": "https://www.mcgilldaily.com/2026/10/health-first/",
@@ -24,7 +36,7 @@
       "title": "Searching For a Third Space",
       "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
       "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/8365/8489345587_dd0a832f29_b.jpg"
+      "image": "https://live.staticflickr.com/72/172898013_80d53c9edc_b.jpg"
     },
     {
       "title": "Shawarm-off!",
@@ -63,10 +75,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chichester%2C_Bishop_Otter_Campus_-_geograph.org.uk_-_3003126.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Gaiters Hockey Season Preview: A Team Full of Potential",
-      "link": "https://thebucampus.ca/2026/09/30/gaiters-hockey-season-preview-a-team-full-of-potential/",
-      "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chichester%2C_Bishop_Otter_Campus_-_geograph.org.uk_-_3003126.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
