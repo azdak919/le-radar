@@ -31,7 +31,7 @@ Le suivi des journaux réutilise `scripts/media-follow-store.js` et la clé `rad
 - Dernière copie du fil sur l’appareil si le réseau manque.
 - Partage natif (feuille iOS / Android) avec repli Web Share ou presse-papiers.
 - Ouverture de l’original dans le navigateur système (Custom Tabs / SFSafariViewController), pas dans la WebView.
-- Radio : un seul `<audio>` sur la fiche, qui s’arrête en quittant la fiche. Pas d’écoute en arrière-plan.
+- Radio : barre persistante en bas de l’écran (au-dessus des onglets), comme la barre du site. Un seul `<audio>`, dans la coquille. Voir « Radio » plus bas.
 - Retour Android, zone sûre, thème clair/sombre/système, haptique légère sur suivre / enregistrer.
 
 Pomodoro, Solitaire, le mât météo et le bandeau sports restent sur le site. Réglages contient un lien « Ouvrir le-radar.ca ».
@@ -49,6 +49,18 @@ Pomodoro, Solitaire, le mât météo et le bandeau sports restent sur le site. R
 L’identifiant est un FNV-1a 64 bits de l’URL canonique (paramètres `utm_*` retirés). Il n’existe pas de page par article : GitHub Pages ne réécrit pas les chemins.
 
 Les fichiers d’association sont `.well-known/apple-app-site-association` et `.well-known/assetlinks.json`. Ils contiennent des emplacements `TEAMID` et `REPLACE_WITH_PLAY_APP_SIGNING_SHA256`. Tant qu’ils ne sont pas remplacés, le système ne vérifie pas l’association. `_config.yml` demande à Jekyll de publier `.well-known` et de ne pas publier `android/` ni `ios/`.
+
+## Radio
+
+Le site garde l’écoute entre les pages avec `nav-shell.js` (iframe plein écran pendant la lecture) et `player-sync.js` (BroadcastChannel + `localStorage`). L’application n’en a pas besoin : c’est une seule page routée par hash. Les écrans sont re-rendus dans `#screen` par `innerHTML` ; la barre `#player` et son `<audio id="player-audio">` sont hors de `#screen`, dans `index.html`, et ne sont jamais re-rendus.
+
+- « Écouter » sur la fiche radio ou dans Explorer → Radios lance le flux dans la barre. La barre montre la station, l’émission en ondes (`radio-nowplaying.json` de le-radar.ca, ignoré au-delà de 3 h) et lecture/pause/arrêt. Toucher le nom ouvre la fiche.
+- Pause = la connexion au flux est coupée (`src` retiré) : pas de données en pause, et la reprise repart du direct.
+- Media Session renseignée quand la WebView l’expose. Sur Android, la WebView n’en fait pas une notification système.
+- Retour Android sur l’accueil pendant l’écoute : l’app passe en arrière-plan (`App.minimizeApp`) au lieu de quitter.
+- Avant 2026-10 (1.0.1), le seul `<audio>` était dans la fiche : quitter la fiche le détruisait. Ce n’était pas une contrainte de magasin, seulement le périmètre de la première version.
+
+Arrière-plan et écran verrouillé : non garantis. Capacitor ne met pas la WebView en pause, donc le son continue quand l’app passe derrière, mais sans service de premier plan Android peut geler le processus. Pour une vraie écoute écran verrouillé avec contrôles système, il faudrait du natif : un service `mediaPlayback` (permissions `FOREGROUND_SERVICE` et `FOREGROUND_SERVICE_MEDIA_PLAYBACK`, notification média) et une session média native (AndroidX Media3, Apache-2.0, acceptable pour F-Droid) ; sur iOS, `UIBackgroundModes` `audio`. C’est un ticket séparé : nouvelles permissions, déclarations magasin et `privacy.md` à refaire.
 
 ## Hors ligne
 

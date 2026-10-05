@@ -18,6 +18,7 @@ Les cases de notification ne déclenchent aucun envoi et aucune permission. Voir
 ## Ce qui quitte l’appareil
 
 - Le chargement du fil, des sources, des radios et des couleurs contacte `https://le-radar.ca/`. L’hébergeur (GitHub Pages) peut journaliser l’adresse IP comme pour une visite du site. L’application n’ajoute pas d’identifiant.
+- Pendant l’écoute d’une radio, l’application lit `https://le-radar.ca/radio-nowplaying.json` (émission en ondes) et le flux audio est demandé directement au serveur de la station, qui voit une écoute ordinaire.
 - « Lire chez {publication} » ouvre le site du média dans le navigateur du système. Ce site voit une visite normale.
 - Les images vedette sont demandées à leur URL HTTPS d’origine. Elles ne sont pas réenregistrées par LE-RADAR.
 - Le partage remet l’URL à l’application choisie par la personne.

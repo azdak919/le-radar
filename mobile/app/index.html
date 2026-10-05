@@ -25,6 +25,23 @@
       <p class="loading">Chargement du fil…</p>
     </main>
   </div>
+  <section class="player" id="player" aria-label="Radio en cours" data-state="idle" hidden>
+    <audio id="player-audio" preload="none"></audio>
+    <a class="player-info" id="player-info" href="#/explorer?section=radios">
+      <span class="player-live" aria-hidden="true"></span>
+      <span class="player-text">
+        <span class="player-name" id="player-name"></span>
+        <span class="player-now" id="player-now"></span>
+      </span>
+    </a>
+    <button type="button" class="player-btn player-toggle" id="player-toggle" data-action="player-toggle" aria-label="Écouter">
+      <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M8 5.5v13a.6.6 0 0 0 .9.5l10.2-6.5a.6.6 0 0 0 0-1L8.9 5a.6.6 0 0 0-.9.5z"/></svg>
+      <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><rect x="6.5" y="5" width="4" height="14" rx="1"/><rect x="13.5" y="5" width="4" height="14" rx="1"/></svg>
+    </button>
+    <button type="button" class="player-btn player-stop" data-action="player-stop" aria-label="Arrêter la radio">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m7 7 10 10M17 7 7 17"/></svg>
+    </button>
+  </section>
   <nav class="tabs" id="tabs" aria-label="Sections de l’application">
     <a href="#/accueil" data-tab="accueil">
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg>
