@@ -1,30 +1,93 @@
 {
-  "updated": "2026-10-06T16:09:14.906Z",
+  "updated": "2026-10-06T17:25:57.569Z",
   "total": 175,
-  "withImage": 155,
-  "withCredit": 155,
-  "cited": 102,
+  "withImage": 159,
+  "withCredit": 159,
+  "cited": 106,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 11,
-  "updatedCount": 2,
-  "citedNew": 2,
-  "fallbackNew": 9,
+  "checked": 19,
+  "updatedCount": 11,
+  "citedNew": 8,
+  "fallbackNew": 11,
   "samples": [
     {
-      "title": "The Montreal Sumo Club wants you!",
+      "title": "Parti Québécois projected to form new minority government of Quebec",
       "source": "The Link",
-      "credit": "Photo: Justin Lakatosh",
+      "credit": "Photo: Nicolas Tremblay",
       "cited": true,
       "method": "figcaption-trailing"
     },
     {
-      "title": "Malgré quelques sueurs, Jimmy Bouchard est le nouveau député de Jonquière.",
-      "source": "La Pige",
-      "credit": "Photo : Colin Boucher",
+      "title": "Rouge d’une part, blanche de l’autre",
+      "source": "Le Délit",
+      "credit": "Photo : Tan YiYang",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Le « self-care » : qui valide votre repos ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "source": "Le Délit",
+      "credit": "Photo : Héloïse Durning",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Summer in Paradise (Lennoxville Edition)",
+      "source": "The Campus",
+      "credit": "Photo credit: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Culture Paints Time a Different Colour",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
     }
   ]
 }

@@ -1,14 +1,59 @@
 {
-  "updated": "2026-10-06T16:02:53.176Z",
+  "updated": "2026-10-06T17:20:59.914Z",
   "total": 175,
-  "pool": 50,
-  "incomplete": 5,
-  "withLeadExcerpt": 112,
-  "candidates": 5,
-  "enriched": 0,
+  "pool": 58,
+  "incomplete": 10,
+  "withLeadExcerpt": 116,
+  "candidates": 10,
+  "enriched": 4,
   "failed": 0,
   "ok": true,
   "samples": [
+    {
+      "title": "Rouge d’une part, blanche de l’autre",
+      "link": "https://www.delitfrancais.com/2026/09/30/rouge-dune-part-blanche-de-lautre/",
+      "ok": true,
+      "score": 82,
+      "chars": 400,
+      "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
+      "changed": false
+    },
+    {
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "link": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
+      "ok": true,
+      "score": 96,
+      "chars": 288,
+      "sample": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est ",
+      "changed": true
+    },
+    {
+      "title": "Le « self-care » : qui valide votre repos ?",
+      "link": "https://www.delitfrancais.com/2026/09/23/le-self-care-qui-valide-votre-repos/",
+      "ok": true,
+      "score": 96,
+      "chars": 347,
+      "sample": "Ce n’était pas une dérive isolée, mais une règle, que Talcott Parsons nommera en 1951 : le « rôle de",
+      "changed": true
+    },
+    {
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "link": "https://www.delitfrancais.com/2026/09/23/arrestations-visant-les-lgbtq-en-turquie/",
+      "ok": true,
+      "score": 96,
+      "chars": 217,
+      "sample": "Au total, plus de 80 personnes ont été placées en détention provisoire. Le ministère de la Justice t",
+      "changed": true
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "link": "https://www.delitfrancais.com/2026/09/23/manifestation-anti-ia-a-montreal/",
+      "ok": true,
+      "score": 94,
+      "chars": 249,
+      "sample": "La possibilité qui revient le plus est celle d’une extinction humaine après le développement d’une s",
+      "changed": true
+    },
     {
       "title": "Ce soir, Dubuc, nous y sommes ! » : Émile Simard remporte la circonscription",
       "link": "https://lapige.atmjonquiere.com/2026/10/06/ce-soir-dubuc-nous-y-sommes-emile-simard-remporte-la-circonscription-2/?utm_source=rss&utm_medium=rss&utm_campaign=ce-soir-dubuc-nous-y-sommes-emile-simard-remporte-la-circonscription-2",
@@ -34,24 +79,6 @@
       "score": 96,
       "chars": 400,
       "sample": "Under the bylaw, which took effect on Oct. 1, people who insult city staff could face fines between ",
-      "changed": false
-    },
-    {
-      "title": "Concordia does not care about its disabled students",
-      "link": "https://thelinknewspaper.ca/article/16455",
-      "ok": true,
-      "score": 96,
-      "chars": 400,
-      "sample": "As a human relations student at Concordia University, I have had a plethora of opportunities to exam",
-      "changed": false
-    },
-    {
-      "title": "Sandra Larouche satisfaite de sa campagne",
-      "link": "https://lapige.atmjonquiere.com/2026/10/05/sandra-larouche-satisfaite-de-sa-campagne/?utm_source=rss&utm_medium=rss&utm_campaign=sandra-larouche-satisfaite-de-sa-campagne",
-      "ok": true,
-      "score": 100,
-      "chars": 400,
-      "sample": "La candidate caquiste dans Chicoutimi, Sandra Larouche, a connu la défaite lors de sa première campa",
       "changed": false
     }
   ]
