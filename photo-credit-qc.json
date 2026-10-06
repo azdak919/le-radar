@@ -1,72 +1,100 @@
 {
-  "updated": "2026-10-06T11:24:23.720Z",
+  "updated": "2026-10-06T14:32:05.050Z",
   "total": 175,
   "withImage": 159,
   "withCredit": 159,
-  "cited": 105,
+  "cited": 104,
   "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 17,
-  "updatedCount": 8,
-  "citedNew": 5,
-  "fallbackNew": 12,
+  "checked": 36,
+  "updatedCount": 27,
+  "citedNew": 20,
+  "fallbackNew": 16,
   "samples": [
     {
-      "title": "Rouge d’une part, blanche de l’autre",
-      "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
+      "title": "Ce soir, Dubuc, nous y sommes ! » : Émile Simard remporte la circonscription",
+      "source": "La Pige",
+      "credit": "Photo : Alexis Auclair",
       "cited": true,
-      "method": "figcaption-bare"
+      "method": "body-line"
     },
     {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Manifestation anti-IA à Montréal",
-      "source": "Le Délit",
-      "credit": "Photo : Héloïse Durning",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
+      "title": "Élections provinciales : les résultats en Estrie",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
       "cited": false,
       "method": null
     },
     {
-      "title": "Summer in Paradise (Lennoxville Edition)",
-      "source": "The Campus",
-      "credit": "Photo credit: The Campus",
+      "title": "Élections provinciales : les résultats généraux",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
       "cited": false,
       "method": null
     },
     {
-      "title": "Culture Paints Time a Different Colour",
-      "source": "The Plant",
-      "credit": "Photo credit: The Plant",
+      "title": "Concordia vs. McGill, Montreal’s biggest and best rivalry",
+      "source": "The Link",
+      "credit": "Photo: Nicolas Tremblay",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Parti Québécois projected to form new minority government of Quebec",
+      "source": "The Link",
+      "credit": "Photo: Nicolas Tremblay",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Voices of the world championships",
+      "source": "The Link",
+      "credit": "Photo: Jade-S. Vachon-Côté",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Three years of genocide, decades of occupation",
+      "source": "The Link",
+      "credit": "Photo: Nicolas Tremblay",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Concordia men’s basketball prepares for battle",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Mikhail Jerbic",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "The Theresa Humes Cup wraps up as the Stingers look strong ahead of the season",
+      "source": "The Link",
+      "credit": "Photo: Courtesy of Concordia Athletics",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "The games Montreal remembers",
+      "source": "The Link",
+      "credit": "Illustration: Harrison Campbell",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "The Montreal Sumo Club wants you!",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
       "cited": false,
       "method": null
     },
     {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
+      "title": "Montreal thrash metal band Postluven gets signed",
+      "source": "The Link",
+      "credit": "Photo: Nicolas Tremblay",
       "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
-      "cited": true,
-      "method": "via-attribution"
+      "method": "figcaption-trailing"
     }
   ]
 }
