@@ -20,9 +20,15 @@ for (const file of ['news.json', 'news-sources.json', 'radios.json', 'brand-colo
   cpSync(join(root, file), join(www, 'data', file));
 }
 
-// Même module que le site. La copie explicite suit le lien du dossier source.
-cpSync(join(root, 'translate.js'), join(www, 'js', 'translate.js'));
-cpSync(join(root, 'translate-menu.css'), join(www, 'css', 'translate-menu.css'));
+// Même module que le site. L’aperçu navigateur passe par un lien dans
+// mobile/app. Recopié dans www, ce lien vise le fichier source : cpSync
+// refuse alors (source et destination identiques). On retire le lien d’abord.
+function copyRealFile(src, dest) {
+  rmSync(dest, { force: true });
+  cpSync(src, dest);
+}
+copyRealFile(join(root, 'translate.js'), join(www, 'js', 'translate.js'));
+copyRealFile(join(root, 'translate-menu.css'), join(www, 'css', 'translate-menu.css'));
 
 cpSync(join(root, 'scripts/media-follow-store.js'), join(www, 'vendor/media-follow-store.js'));
 console.log('mobile/www prêt');
