@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06T19:41:11.607Z",
+  "updatedAt": "2026-10-06T22:39:17.852Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Chéri.e, j’arrive!",
+        "title": "Mercredi Bonbon",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T19:40:41.379Z"
+      "checkedAt": "2026-10-06T22:38:51.417Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "À la bonne heure",
+        "title": "les pénibles",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/a-la-bonne-heure"
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/les-penibles"
       },
       "next": {
-        "title": "London café",
+        "title": "Catharmix",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://cism893.ca/emissions/london-cafe"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/catharmix"
       },
       "track": "",
-      "showTitle": "À la bonne heure",
+      "showTitle": "les pénibles",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T19:40:43.437Z"
+      "checkedAt": "2026-10-06T22:38:53.381Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Montreal Sessions",
+        "title": "Prison Radio",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "next": {
-        "title": "Off The Hour: Local Journalism Stories",
+        "title": "Soul Perspectives",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:30"
       },
       "track": "",
-      "showTitle": "Montreal Sessions",
+      "showTitle": "Prison Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,86 +74,87 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T19:40:46.434Z"
+      "checkedAt": "2026-10-06T22:38:56.123Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Sonic Lit: A SpokenWeb Radio Show",
+        "title": "feminemix",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/feminemix"
       },
       "next": {
-        "title": "Bikini Brrroadcast",
+        "title": "Ashes to Ashes",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
       },
       "track": "",
-      "showTitle": "Sonic Lit: A SpokenWeb Radio Show",
+      "showTitle": "feminemix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T19:40:50.417Z"
+      "checkedAt": "2026-10-06T22:38:58.776Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "18:30"
-      },
-      "next": {
         "title": "L'Aut'Rock",
         "source": "schedule-live",
         "start": "18:30",
         "end": "20:00"
       },
+      "next": {
+        "title": "Dichotomie 88.3",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "L'Aut'Rock",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T19:40:52.084Z"
+      "checkedAt": "2026-10-06T22:38:59.881Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Palmarès CHOQ.ca",
+        "title": "Le Studio",
         "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
+        "start": "18:00",
+        "end": "19:00",
+        "slug": "live"
       },
       "next": {
-        "title": "Passion Psy",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "slug": "passion-psy"
+        "title": "Miroirs d’Orient",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://www.choq.ca/emissions/miroirs-dorient"
       },
-      "track": "Truck Violence — Kindly, wash yourself",
-      "showTitle": "Palmarès CHOQ.ca",
+      "track": "Le Studio Ouverture",
+      "showTitle": "Le Studio",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T19:41:11.256Z"
+      "checkedAt": "2026-10-06T22:39:17.501Z"
     }
   }
 }
