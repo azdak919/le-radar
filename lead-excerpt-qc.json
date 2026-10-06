@@ -1,23 +1,14 @@
 {
-  "updated": "2026-10-06T14:25:06.814Z",
+  "updated": "2026-10-06T16:02:53.176Z",
   "total": 175,
-  "pool": 58,
-  "incomplete": 20,
-  "withLeadExcerpt": 116,
-  "candidates": 20,
-  "enriched": 18,
+  "pool": 50,
+  "incomplete": 5,
+  "withLeadExcerpt": 112,
+  "candidates": 5,
+  "enriched": 0,
   "failed": 0,
   "ok": true,
   "samples": [
-    {
-      "title": "Rouge d’une part, blanche de l’autre",
-      "link": "https://www.delitfrancais.com/2026/09/30/rouge-dune-part-blanche-de-lautre/",
-      "ok": true,
-      "score": 82,
-      "chars": 400,
-      "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
-      "changed": false
-    },
     {
       "title": "Ce soir, Dubuc, nous y sommes ! » : Émile Simard remporte la circonscription",
       "link": "https://lapige.atmjonquiere.com/2026/10/06/ce-soir-dubuc-nous-y-sommes-emile-simard-remporte-la-circonscription-2/?utm_source=rss&utm_medium=rss&utm_campaign=ce-soir-dubuc-nous-y-sommes-emile-simard-remporte-la-circonscription-2",
@@ -25,61 +16,43 @@
       "score": 96,
       "chars": 399,
       "sample": "Émile Simard, candidat du Parti québécois dans Dubuc, est devenu le premier député de la région à êt",
-      "changed": true
+      "changed": false
     },
     {
-      "title": "Élections provinciales : les résultats en Estrie",
-      "link": "https://lecollectif.ca/societe/elections-provinciales-les-resultats-en-estrie/",
+      "title": "The Theresa Humes Cup wraps up as the Stingers look strong ahead of the season",
+      "link": "https://thelinknewspaper.ca/article/16464",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "The opening game of the tournament was against the Guelph Gryphons and was very penalty-heavy. Despi",
+      "changed": false
+    },
+    {
+      "title": "Montreal adopts bylaw to ban insults against police, inciting criticism",
+      "link": "https://thelinknewspaper.ca/article/16457",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "Under the bylaw, which took effect on Oct. 1, people who insult city staff could face fines between ",
+      "changed": false
+    },
+    {
+      "title": "Concordia does not care about its disabled students",
+      "link": "https://thelinknewspaper.ca/article/16455",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "As a human relations student at Concordia University, I have had a plethora of opportunities to exam",
+      "changed": false
+    },
+    {
+      "title": "Sandra Larouche satisfaite de sa campagne",
+      "link": "https://lapige.atmjonquiere.com/2026/10/05/sandra-larouche-satisfaite-de-sa-campagne/?utm_source=rss&utm_medium=rss&utm_campaign=sandra-larouche-satisfaite-de-sa-campagne",
       "ok": true,
       "score": 100,
-      "chars": 347,
-      "sample": "Luttes serrées à Sherbrooke, entrée en scène des conservateurs dans Mégantic et victoire du chef lib",
-      "changed": true
-    },
-    {
-      "title": "Élections provinciales : les résultats généraux",
-      "link": "https://lecollectif.ca/societe/elections-provinciales-les-resultats-generaux/",
-      "ok": true,
-      "score": 96,
-      "chars": 299,
-      "sample": "Dès le début des dépouillements, le PQ gardait une avance solide face aux quatre autres parties, alo",
-      "changed": true
-    },
-    {
-      "title": "Concordia vs. McGill, Montreal’s biggest and best rivalry",
-      "link": "https://thelinknewspaper.ca/article/16470",
-      "ok": true,
-      "score": 96,
-      "chars": 259,
-      "sample": "Concordia University vs. McGill University has always been an enthralling sporting experience for an",
-      "changed": true
-    },
-    {
-      "title": "Parti Québécois projected to form new minority government of Quebec",
-      "link": "https://thelinknewspaper.ca/article/16469",
-      "ok": true,
-      "score": 96,
-      "chars": 212,
-      "sample": "He has promised to hold a referendum on Quebec sovereignty after the United States President Donald ",
-      "changed": true
-    },
-    {
-      "title": "Voices of the world championships",
-      "link": "https://thelinknewspaper.ca/article/16468",
-      "ok": true,
-      "score": 96,
-      "chars": 228,
-      "sample": "Kim Metcalf and his wife travelled from Oakland, California, to attend the event. They decided to co",
-      "changed": true
-    },
-    {
-      "title": "Three years of genocide, decades of occupation",
-      "link": "https://thelinknewspaper.ca/article/16467",
-      "ok": true,
-      "score": 100,
-      "chars": 361,
-      "sample": "Since Oct. 7, 2023, 73,470 Palestinians have been killed, including 21,283 children, and this only a",
-      "changed": true
+      "chars": 400,
+      "sample": "La candidate caquiste dans Chicoutimi, Sandra Larouche, a connu la défaite lors de sa première campa",
+      "changed": false
     }
   ]
 }
