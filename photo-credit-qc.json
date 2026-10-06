@@ -1,17 +1,24 @@
 {
-  "updated": "2026-10-06T00:43:00.366Z",
+  "updated": "2026-10-06T01:27:25.436Z",
   "total": 175,
   "withImage": 159,
   "withCredit": 159,
-  "cited": 100,
+  "cited": 99,
   "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 7,
-  "citedNew": 3,
-  "fallbackNew": 13,
+  "checked": 18,
+  "updatedCount": 9,
+  "citedNew": 4,
+  "fallbackNew": 14,
   "samples": [
+    {
+      "title": "Vos bonnes nouvelles environnementales #40",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Élections provinciales : La Pige sur le terrain au Saguenay—Lac-Saint-Jean",
       "source": "La Pige",
@@ -37,6 +44,13 @@
       "title": "Le « self-care » : qui valide votre repos ?",
       "source": "Le Délit",
       "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "source": "Le Délit",
+      "credit": "Photo : Héloïse Durning",
       "cited": true,
       "method": "media-credit-featured"
     },
