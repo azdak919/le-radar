@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-06T07:17:30.787Z",
+  "updated": "2026-10-06T09:15:02.937Z",
   "total": 175,
   "withImage": 159,
   "withCredit": 159,
@@ -7,94 +7,66 @@
   "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 34,
-  "updatedCount": 28,
-  "citedNew": 22,
+  "checked": 17,
+  "updatedCount": 8,
+  "citedNew": 5,
   "fallbackNew": 12,
   "samples": [
     {
-      "title": "Malgré quelques sueurs, Jimmy Bouchard est le nouveau député de Jonquière.",
-      "source": "La Pige",
-      "credit": "Crédit photo : La Pige",
+      "title": "Rouge d’une part, blanche de l’autre",
+      "source": "Le Délit",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Quand la fiction banalise les traumatismes",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Faire compter sa voix",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée d’Élections Québec",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
     },
     {
-      "title": "Ce soir, Dubuc, nous y sommes ! » : Émile Simard remporte la circonscription",
-      "source": "La Pige",
-      "credit": "Photo : Alexis Leclerc",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Yannick Gagnon défait dans Jonquière",
-      "source": "La Pige",
-      "credit": "Photo : Zachary Rivard",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Le PQ l’emporte dans Chicoutimi",
-      "source": "La Pige",
-      "credit": "Crédit photo : La Pige",
+      "title": "Summer in Paradise (Lennoxville Edition)",
+      "source": "The Campus",
+      "credit": "Photo credit: The Campus",
       "cited": false,
       "method": null
     },
     {
-      "title": "William Fradette l’emporte avec 45% des voix",
-      "source": "La Pige",
-      "credit": "Photo : Elsa Pierre",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Une troisième place pour Marc Grandbois dans Dubuc",
-      "source": "La Pige",
-      "credit": "Photo : Zachary Rivard",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "La CAQ détrônée dans Lac-Saint-Jean",
-      "source": "La Pige",
-      "credit": "Photo : Zachary Rivard",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Sandra Larouche satisfaite de sa campagne",
-      "source": "La Pige",
-      "credit": "Photo : Zachary Rivard",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Le solidaire Serge Bergeron veut retenir le positif",
-      "source": "La Pige",
-      "credit": "Photo : Augustin Spièce",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Catherine Morissette s’incline avec fierté dans Dubuc",
-      "source": "La Pige",
-      "credit": "Crédit photo : La Pige",
+      "title": "Culture Paints Time a Different Colour",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
     },
     {
-      "title": "Les bienfaits du yoga : un ancrage pour le corps et l’esprit",
-      "source": "Le Collectif",
-      "credit": "Photo : Sophie C. Davignon",
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
       "cited": true,
-      "method": "body-tail"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Ouverture locale réussie pour le Phœnix",
-      "source": "Le Collectif",
-      "credit": "Photo : Facebook Phoenix de Sherbrooke",
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
       "cited": true,
-      "method": "body-tail"
+      "method": "via-attribution"
     }
   ]
 }
