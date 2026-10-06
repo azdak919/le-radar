@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06T00:34:51.705Z",
+  "updatedAt": "2026-10-06T02:57:15.464Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T00:34:26.668Z"
+      "checkedAt": "2026-10-06T02:56:59.221Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mono Fred (en stéréo)",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/mono-fred-en-stereo"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule",
         "start": "22:00",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "Les sentinelles de l'art (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+      },
       "track": "",
-      "showTitle": "Mono Fred (en stéréo)",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T00:34:28.235Z"
+      "checkedAt": "2026-10-06T02:57:01.272Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Underground Sounds",
-        "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Drastic Plastic",
         "source": "api-live",
         "start": "22:00",
         "end": "23:00"
       },
+      "next": {
+        "title": "27th Hr.",
+        "source": "api-live",
+        "start": "23:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Underground Sounds",
+      "showTitle": "Drastic Plastic",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T00:34:30.711Z"
+      "checkedAt": "2026-10-06T02:57:04.315Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "In The Garage",
+        "title": "Past Tense",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/in-the-garage"
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/past-tense"
       },
       "next": {
-        "title": "LEKTOR DECODER",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/lektor-decoder"
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "In The Garage",
+      "showTitle": "Past Tense",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T00:34:32.802Z"
+      "checkedAt": "2026-10-06T02:57:07.232Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,34 +127,29 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T00:34:33.754Z"
+      "checkedAt": "2026-10-06T02:57:08.607Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Les rois de l'arène",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "21:00",
-        "slug": "les-rois-de-larene"
-      },
+      "current": null,
       "next": {
-        "title": "Bitume",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "22:00",
-        "slug": "bitume"
+        "title": "Les rois de l'arène",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Julia Mae Stone — Struggle",
-      "showTitle": "Les rois de l'arène",
+      "track": "Namasenda — Cola",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T00:34:51.354Z"
+      "checkedAt": "2026-10-06T02:57:15.113Z"
     }
   }
 }
