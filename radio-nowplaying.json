@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-06T10:13:45.443Z",
+  "updatedAt": "2026-10-06T13:27:08.474Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mardi Champ Gauche",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
+      "next": {
+        "title": "L'art des Histoires",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "11:30",
+        "url": "https://chyz.ca/emission/lart-des-histoires/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Mardi Champ Gauche",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T10:13:16.725Z"
+      "checkedAt": "2026-10-06T13:26:23.724Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
+        "title": "La collation",
         "source": "schedule",
-        "start": "05:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "next": {
-        "title": "Raconte ton quartier",
+        "title": "Lentement mais sûrement",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/raconte-ton-quartier"
+        "start": "10:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/lentement-mais-surement"
       },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T10:13:18.804Z"
+      "checkedAt": "2026-10-06T13:26:25.317Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Beat Power Hour",
+        "title": "Basa Basa",
         "source": "api-live",
-        "start": "05:00",
-        "end": "07:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "next": {
-        "title": "Tuesday Morning After Pt1",
+        "title": "Ecolibrium/Environment in Canada",
         "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "track": "",
-      "showTitle": "The Beat Power Hour",
+      "showTitle": "Basa Basa",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,70 +81,64 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T10:13:21.842Z"
+      "checkedAt": "2026-10-06T13:26:27.751Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hip's Time to Wake Hop",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
-      },
-      "next": {
         "title": "At The Movies",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/at-the-movies"
       },
+      "next": {
+        "title": "Democracy Now",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
+      },
       "track": "",
-      "showTitle": "Hip's Time to Wake Hop",
+      "showTitle": "At The Movies",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T10:13:25.081Z"
+      "checkedAt": "2026-10-06T13:26:50.144Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Palmarès CFAK",
         "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
+        "start": "08:00",
+        "end": "18:30"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "L'Aut'Rock",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "18:30",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T10:13:26.646Z"
+      "checkedAt": "2026-10-06T13:26:51.109Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Les rois de l'arène",
-        "source": "api-live",
-        "start": "05:00",
-        "end": "07:00",
-        "slug": "les-rois-de-larene"
-      },
+      "current": null,
       "next": {
         "title": "L'UQAM en info",
         "source": "api-live",
@@ -145,15 +146,15 @@
         "end": "13:30",
         "slug": "uqam-en-info"
       },
-      "track": "beabadoobee — Sun Has Set",
-      "showTitle": "Les rois de l'arène",
+      "track": "Beatrice Deer — She's in the Abyss",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T10:13:45.093Z"
+      "checkedAt": "2026-10-06T13:27:08.124Z"
     }
   }
 }
