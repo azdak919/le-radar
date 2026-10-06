@@ -1,79 +1,100 @@
 {
-  "updated": "2026-10-06T01:27:25.436Z",
+  "updated": "2026-10-06T05:40:48.027Z",
   "total": 175,
   "withImage": 159,
   "withCredit": 159,
-  "cited": 99,
-  "pending": 11,
+  "cited": 105,
+  "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 9,
-  "citedNew": 4,
-  "fallbackNew": 14,
+  "checked": 29,
+  "updatedCount": 22,
+  "citedNew": 19,
+  "fallbackNew": 10,
   "samples": [
     {
-      "title": "Vos bonnes nouvelles environnementales #40",
-      "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Élections provinciales : La Pige sur le terrain au Saguenay—Lac-Saint-Jean",
+      "title": "Malgré quelques sueurs, Jimmy Bouchard est le nouveau député de Jonquière.",
       "source": "La Pige",
       "credit": "Crédit photo : La Pige",
       "cited": false,
       "method": null
     },
     {
-      "title": "Rouge d’une part, blanche de l’autre",
-      "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
+      "title": "Ce soir, Dubuc, nous y sommes ! » : Émile Simard remporte la circonscription",
+      "source": "La Pige",
+      "credit": "Photo : Alexis Leclerc",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-paren-kind"
     },
     {
-      "title": "Est-ce que je dois un bébé à l’État ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "title": "Yannick Gagnon défait dans Jonquière",
+      "source": "La Pige",
+      "credit": "Photo : Zachary Rivard",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "body-line"
     },
     {
-      "title": "Le « self-care » : qui valide votre repos ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Manifestation anti-IA à Montréal",
-      "source": "Le Délit",
-      "credit": "Photo : Héloïse Durning",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
+      "title": "Le PQ l’emporte dans Chicoutimi",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
       "cited": false,
       "method": null
     },
     {
-      "title": "Summer in Paradise (Lennoxville Edition)",
-      "source": "The Campus",
-      "credit": "Photo credit: The Campus",
+      "title": "William Fradette l’emporte avec 45% des voix",
+      "source": "La Pige",
+      "credit": "Photo : Elsa Pierre",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Une troisième place pour Marc Grandbois dans Dubuc",
+      "source": "La Pige",
+      "credit": "Photo : Zachary Rivard",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "La CAQ détrônée dans Lac-Saint-Jean",
+      "source": "La Pige",
+      "credit": "Photo : Zachary Rivard",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Sandra Larouche satisfaite de sa campagne",
+      "source": "La Pige",
+      "credit": "Photo : Zachary Rivard",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Le solidaire Serge Bergeron veut retenir le positif",
+      "source": "La Pige",
+      "credit": "Photo : Augustin Spièce",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Catherine Morissette s’incline avec fierté dans Dubuc",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
       "cited": false,
       "method": null
     },
     {
-      "title": "Culture Paints Time a Different Colour",
-      "source": "The Plant",
-      "credit": "Photo credit: The Plant",
-      "cited": false,
-      "method": null
+      "title": "Les bienfaits du yoga : un ancrage pour le corps et l’esprit",
+      "source": "Le Collectif",
+      "credit": "Photo : Sophie C. Davignon",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Ouverture locale réussie pour le Phœnix",
+      "source": "Le Collectif",
+      "credit": "Photo : Facebook Phoenix de Sherbrooke",
+      "cited": true,
+      "method": "body-tail"
     }
   ]
 }

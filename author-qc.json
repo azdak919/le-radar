@@ -1,10 +1,58 @@
 {
-  "updated": "2026-10-06T01:20:54.168Z",
+  "updated": "2026-10-06T05:33:37.136Z",
   "total": 175,
   "withAuthor": 175,
-  "mismatches": 12,
+  "mismatches": 17,
   "ok": true,
   "samples": [
+    {
+      "title": "Figure Skating With a Stick",
+      "link": "https://theplantnews.com/2026/10/05/figure-skating-with-a-stick/",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "Strava Or It Didn’t Happen”: On Our Obsession With Tracking",
+      "link": "https://theplantnews.com/2026/10/05/strava-or-it-didnt-happen-on-our-obsession-with-tracking/",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Lara Judah",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Needs and Spaces: How Often They Should Work Together",
+      "link": "https://theplantnews.com/2026/10/05/needs-and-spaces-how-often-they-should-work-together/",
+      "source": "The Plant",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Leo Baron",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Ouverture locale réussie pour le Phœnix",
+      "link": "https://lecollectif.ca/sports-et-bien-etre/ouverture-locale-reussie-pour-le-phoenix/",
+      "source": "Le Collectif",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Olivier Boivin",
+      "reason": "page-byline"
+    },
+    {
+      "title": "C’est l’heure des élections municipales à Toronto",
+      "link": "https://lecollectif.ca/societe/cest-lheure-des-elections-municipales-a-toronto/",
+      "source": "Le Collectif",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Fabrice Lamarre",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Élections israéliennes : quel avenir pour le Moyen-Orient ?",
+      "link": "https://lecollectif.ca/societe/elections-israeliennes-quel-avenir-pour-le-moyen-orient/",
+      "source": "Le Collectif",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Fabrice Lamarre",
+      "reason": "page-byline"
+    },
     {
       "title": "MUNACA’s Campaign Exposes the McGill Administration’s Greed",
       "link": "https://www.mcgilldaily.com/2026/10/munacas-campaign-exposes-the-mcgill-administrations-greed/",
@@ -62,20 +110,12 @@
       "reason": "no-author-source"
     },
     {
-      "title": "What is Tony Actually Guilty of?",
-      "link": "https://theplantnews.com/2026/09/30/what-is-tony-actually-guilty-of/",
-      "source": "The Plant",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "Letters from the Editors September 2026",
-      "link": "https://theplantnews.com/2026/09/30/letter-from-the-editors/",
-      "source": "The Plant",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
+      "title": "From Scripts to Stage: BU New Plays 2026",
+      "link": "https://thebucampus.ca/2026/09/30/from-scripts-to-stage-bu-new-plays-2026/",
+      "source": "The Campus",
+      "fieldAuthor": "Zachary Jaimes",
+      "canonicalAuthor": "Zachary Jaimes Saint Cyr",
+      "reason": "page-byline-overrides-rss"
     },
     {
       "title": "The Riffo Gómez brothers immerse audiences in a poignant exploration of belonging",
@@ -102,5 +142,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 12
+  "fixed": 17
 }
