@@ -9,60 +9,158 @@
   <title>LE-RADAR</title>
   <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./css/app.css">
+  <link rel="stylesheet" href="./css/style-masthead.css">
+  <link rel="stylesheet" href="./css/style-sports-strip.css">
+  <link rel="stylesheet" href="./css/style-masthead-chrome.css">
+  <link rel="stylesheet" href="./css/style-tuner.css">
+  <link rel="stylesheet" href="./css/style-feed.css">
+  <link rel="stylesheet" href="./css/style-chrome.css">
   <link rel="stylesheet" href="./css/translate-menu.css">
+  <link rel="stylesheet" href="./css/app-site.css">
 </head>
 <body class="is-home">
   <a class="skip" href="#screen">Aller au contenu</a>
   <div class="shell">
-    <header class="top masthead">
-      <img class="masthead-photo" src="./img/masthead.jpg" alt="" width="1200" height="675">
-      <div class="top-bar">
-        <a class="brand" href="#/accueil">
-          <img src="./icons/icon.svg" alt="" width="36" height="36">
-          <span class="notranslate" translate="no">LE-RADAR.ca</span>
-        </a>
-        <div class="mast-tools">
-          <button type="button" id="theme-toggle" class="theme-toggle" data-action="theme-cycle" aria-label="Thème : système" title="Thème : système">
-            <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-            <svg class="ico-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            <span class="theme-toggle__label notranslate" translate="no">Système</span>
+    <header class="masthead">
+      <div id="bg-photo-layer" aria-hidden="true"></div>
+      <div class="bg-photo-scrim" aria-hidden="true"></div>
+      <div class="bg-photo-credit" id="bg-photo-credit"></div>
+      <div id="masthead-shuffle-slot" class="masthead-shuffle-slot">
+        <button id="masthead-bg-shuffle" class="masthead-icon masthead-bg-shuffle" type="button" aria-label="Changer la photo du mât" title="Changer la photo du mât">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H9a5 5 0 0 0-5 5v1"/><path d="m8 21-4-4 4-4"/><path d="M4 17h11a5 5 0 0 0 5-5v-1"/></svg>
+        </button>
+      </div>
+      <div class="masthead-inner">
+        <div class="masthead-top">
+          <span class="masthead-date notranslate" translate="no">
+            <span id="today-date"></span>
+            <time id="today-time" class="masthead-time" aria-label="Heure actuelle"></time>
+          </span>
+          <div id="masthead-weather" class="masthead-weather hidden" aria-label="Météo du Québec" aria-live="polite">
+            <span class="masthead-weather__board" aria-label="Conditions actuelles"></span>
+          </div>
+          <div class="masthead-actions">
+            <a href="#/accueil" class="masthead-icon masthead-home" title="Accueil" aria-label="Accueil — LE-RADAR.ca" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
+            <a href="https://le-radar.ca/feeds.html" class="masthead-icon masthead-rss" data-action="external" target="_blank" rel="noopener noreferrer" title="Flux RSS" aria-label="S’abonner au flux RSS de LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
+            <a href="https://le-radar.ca/pomo/" class="masthead-icon masthead-pomo" data-action="external" target="_blank" rel="noopener noreferrer" title="Pomodoro — minuteur focus" aria-label="Pomodoro — minuteur focus"><img class="app-emoji" src="./assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async"></a>
+            <a href="https://le-radar.ca/solitaire/" class="masthead-icon masthead-solitaire" data-action="external" target="_blank" rel="noopener noreferrer" title="Solitaire" aria-label="Solitaire"><img class="app-emoji" src="./assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async"></a>
+            <a href="https://le-radar.ca/sports/" class="masthead-icon masthead-sports" data-action="external" target="_blank" rel="noopener noreferrer" title="Sports — scores collégiaux et universitaires" aria-label="Sports — scores collégiaux et universitaires"><img class="app-emoji" src="./assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async"></a>
+            <a href="https://www.buymeacoffee.com/azdak" class="masthead-icon masthead-coffee" data-action="external" target="_blank" rel="noopener noreferrer" title="Offrir un café" aria-label="Offrir un café — Buy me a coffee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></a>
+            <div class="install-menu" data-install-menu>
+              <button type="button" class="masthead-icon install-menu__toggle" data-install-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="install-menu-panel" title="Installer une app" aria-label="Installer une app — LE-RADAR, Pomodoro, Solitaire, Sports Étudiants"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></button>
+              <div id="install-menu-panel" class="install-menu__panel" data-install-panel role="menu" aria-labelledby="install-menu-panel-title" hidden>
+                <div class="install-menu__title" id="install-menu-panel-title">Installer une app</div>
+                <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="radar">
+                  <img class="app-emoji" src="./assets/emoji/satellite.png" width="16" height="16" alt="" decoding="async">
+                  <span>LE-RADAR.ca</span>
+                </button>
+                <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="pomo">
+                  <img class="app-emoji" src="./assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async">
+                  <span>Pomodoro</span>
+                </button>
+                <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="solitaire">
+                  <img class="app-emoji" src="./assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async">
+                  <span>Solitaire</span>
+                </button>
+                <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="sports">
+                  <img class="app-emoji" src="./assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async">
+                  <span>Sports Étudiants</span>
+                </button>
+              </div>
+            </div>
+            <button id="theme-toggle" class="masthead-icon theme-toggle" type="button" data-action="theme-cycle" aria-label="Thème : système" title="Thème : système">
+              <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+              <svg class="ico-moon hidden" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="masthead-brand">
+          <a class="brand wordmark" href="#/accueil">
+            <span class="wordmark-mark"><img class="wordmark-logo" src="./icons/icon.svg" width="48" height="48" alt="" aria-hidden="true"><span class="wordmark-brand notranslate" translate="no">LE-RADAR.ca</span></span>
+            <span class="wordmark-full"><span class="wordmark-full__lead tagline-lead">Journaux, radios et sports étudiants du Québec,</span> <span class="wordmark-full__tag tagline-tag">réunis au même endroit</span></span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div id="tuner" class="tuner">
+      <div class="tuner-inner">
+        <div class="tuner-controls">
+          <button id="tuner-prev" class="tuner-step" type="button" data-action="tuner-step" data-dir="prev" title="Poste précédent" aria-label="Poste précédent">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
           </button>
-          <div class="translate-control notranslate" id="translate-control" translate="no">
-          <button
-            type="button"
-            id="translate-toggle"
-            class="translate-toggle"
-            aria-haspopup="dialog"
-            aria-expanded="false"
-            aria-controls="translate-menu"
-            data-mode="original"
-            title="Ne pas traduire — articles dans leur langue d’origine"
-          >
-            <span class="translate-toggle__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
-                <path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7 1.62-4.33L19.12 17h-3.24z"/>
-              </svg>
-            </span>
-            <span id="translate-label" class="translate-toggle__label">Original</span>
-            <svg class="translate-toggle__chev" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          <div class="tuner-dial">
+            <label for="tuner-select" class="sr-only">Choisir un poste</label>
+            <select id="tuner-select" class="tuner-select" aria-label="Choisir un poste">
+              <option value="">Syntoniser un poste</option>
+            </select>
+            <div class="tuner-now">
+              <span id="tuner-now-name" class="tuner-now-name notranslate" translate="no">Syntoniser un poste</span>
+              <div class="tuner-now-sub-rotate">
+                <span id="tuner-now-sub" class="tuner-now-sub is-active">Radios étudiantes en direct</span>
+              </div>
+            </div>
+          </div>
+          <button id="tuner-next" class="tuner-step" type="button" data-action="tuner-step" data-dir="next" title="Poste suivant" aria-label="Poste suivant">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
           </button>
-          <div id="translate-menu" class="translate-menu" role="dialog" aria-modal="false" aria-label="Langue d'affichage" hidden></div>
+          <div class="tuner-actions">
+            <button id="tuner-play" class="tuner-play" type="button" data-action="tuner-play" title="Écouter" aria-label="Lecture du syntoniseur">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="ico-play" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" class="ico-pause hidden" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" class="ico-external hidden" aria-hidden="true"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+            </button>
           </div>
         </div>
       </div>
-      <p class="tagline">
-        <span class="tagline-lead">Journaux, radios et sports étudiants du Québec,</span>
-        <span class="tagline-tag">réunis au même endroit</span>
-      </p>
-      <a class="masthead-credit notranslate" translate="no" data-action="external" href="https://www.flickr.com/photos/abdallahh/4278366226" target="_blank" rel="noopener noreferrer">abdallahh</a>
-      <a class="tune-in" href="#/explorer?section=radios">
-        <span class="tune-live" aria-hidden="true"></span>
-        <span class="tune-text">
-          <span class="tune-name">Radios étudiantes</span>
-          <span class="tune-sub">Écouter en direct</span>
-        </span>
-      </a>
-    </header>
+    </div>
+
+    <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+    <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Résultats sportifs étudiants du Québec" aria-live="polite"></div>
+
+    <nav class="site-sections" aria-label="Sections du site">
+      <a href="#/accueil" aria-current="page">Accueil</a>
+      <span class="site-sections__sep" aria-hidden="true">·</span>
+      <a href="#/explorer">Médias</a>
+      <span class="site-sections__sep" aria-hidden="true">·</span>
+      <a href="#/explorer?section=sources">Journaux</a>
+      <span class="site-sections__sep" aria-hidden="true">·</span>
+      <a href="#/explorer?section=radios">Radios</a>
+      <span class="site-sections__sep" aria-hidden="true">·</span>
+      <a href="https://le-radar.ca/sports/" data-action="external" target="_blank" rel="noopener noreferrer">Sports</a>
+    </nav>
+
+    <div id="home-wire">
+      <div class="wire-head">
+        <div class="wire-title-group">
+          <h1 class="wire-title" id="wire-title" tabindex="-1">Le fil étudiant</h1>
+          <div class="translate-control notranslate" id="translate-control" translate="no">
+            <button
+              type="button"
+              id="translate-toggle"
+              class="translate-toggle"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              aria-controls="translate-menu"
+              data-mode="original"
+              title="Ne pas traduire — articles dans leur langue d’origine"
+            >
+              <span class="translate-toggle__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+                  <path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7 1.62-4.33L19.12 17h-3.24z"/>
+                </svg>
+              </span>
+              <span id="translate-label" class="translate-toggle__label">Original</span>
+              <svg class="translate-toggle__chev" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div id="translate-menu" class="translate-menu" role="dialog" aria-modal="false" aria-label="Langue d'affichage" hidden></div>
+          </div>
+        </div>
+        <div class="wire-status">
+          <span id="home-count">— articles</span>
+        </div>
+      </div>
+    </div>
     <div id="net" role="status"></div>
     <main id="screen" tabindex="-1">
       <p class="loading">Chargement du fil…</p>
@@ -122,5 +220,6 @@
   <script defer src="./js/boot.js"></script>
   <script defer src="./js/app.js"></script>
   <script defer src="./js/translate.js"></script>
+  <script defer src="./js/site-home.js"></script>
 </body>
 </html>

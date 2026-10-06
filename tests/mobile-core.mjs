@@ -209,7 +209,8 @@ for (const rel of ['mobile/www/js/translate.js', 'mobile/www/css/translate-menu.
   assert.equal(st.isFile(), true, rel);
 }
 assert.equal(read('mobile/www/js/translate.js'), read('translate.js'));
-assert.match(appJs, /Le fil étudiant/);
+assert.match(shell, /id="wire-title"/);
+assert.match(shell, /Le fil étudiant/);
 assert.match(appJs, /theme-cycle/);
 assert.match(shell, /id="theme-toggle"/);
 assert.match(prepare, /masthead\.jpg/);

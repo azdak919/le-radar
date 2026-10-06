@@ -126,7 +126,7 @@ test.describe('application mobile', () => {
     await page.getByRole('option', { name: /English/ }).click();
     await expect(page.locator('.tagline-lead')).toHaveText('Québec student newspapers, campus radio and sports,');
     await expect(page.locator('.tagline-tag')).toHaveText('all in one place');
-    await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
+    await expect(page.locator('#tabs').getByRole('link', { name: 'Home' })).toBeVisible();
     await expect(page.getByRole('heading', { level: 1, name: 'Student wire' })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Theme: system' })).toBeVisible();
   });
