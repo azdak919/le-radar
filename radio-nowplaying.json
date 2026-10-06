@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06T02:57:15.464Z",
+  "updatedAt": "2026-10-06T07:09:50.885Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T02:56:59.221Z"
+      "checkedAt": "2026-10-06T07:09:21.749Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
+        "title": "À l'horizon",
         "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/a-lhorizon"
       },
       "next": {
-        "title": "Les sentinelles de l'art (reprise)",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "À l'horizon",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T02:57:01.272Z"
+      "checkedAt": "2026-10-06T07:09:23.652Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Drastic Plastic",
+        "title": "Attik / Show For Children",
         "source": "api-live",
-        "start": "22:00",
-        "end": "23:00"
+        "start": "03:00",
+        "end": "05:00"
       },
       "next": {
-        "title": "27th Hr.",
+        "title": "The Beat Power Hour",
         "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
+        "start": "05:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Drastic Plastic",
+      "showTitle": "Attik / Show For Children",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,60 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T02:57:04.315Z"
+      "checkedAt": "2026-10-06T07:09:26.535Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Past Tense",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/past-tense"
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "Hip's Time to Wake Hop",
         "source": "schedule-live",
-        "start": "23:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
       },
       "track": "",
-      "showTitle": "Past Tense",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T02:57:07.232Z"
+      "checkedAt": "2026-10-06T07:09:29.525Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Le terrain sportif",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "00:01"
-      },
-      "next": {
         "title": "Les nuits CFAK",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Le terrain sportif",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T02:57:08.607Z"
+      "checkedAt": "2026-10-06T07:09:30.795Z"
     },
     "choq": {
       "id": "choq",
@@ -135,21 +134,20 @@
       "current": null,
       "next": {
         "title": "Les rois de l'arène",
-        "source": "schedule",
+        "source": "api-live",
         "start": "05:00",
         "end": "07:00",
-        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
+        "slug": "les-rois-de-larene"
       },
-      "track": "Namasenda — Cola",
+      "track": "Cancer Bats — Positive Grid",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T02:57:15.113Z"
+      "checkedAt": "2026-10-06T07:09:50.534Z"
     }
   }
 }
