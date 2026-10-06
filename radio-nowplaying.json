@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06T22:39:17.852Z",
+  "updatedAt": "2026-10-06T23:33:11.249Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T22:38:51.417Z"
+      "checkedAt": "2026-10-06T23:32:45.374Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "les pénibles",
-        "source": "schedule",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-penibles"
-      },
-      "next": {
         "title": "Catharmix",
         "source": "schedule",
         "start": "19:00",
         "end": "20:00",
         "url": "https://cism893.ca/emissions/catharmix"
       },
+      "next": {
+        "title": "Les garçons pleurent aussi (reprise)",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+      },
       "track": "",
-      "showTitle": "les pénibles",
+      "showTitle": "Catharmix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T22:38:53.381Z"
+      "checkedAt": "2026-10-06T23:32:46.906Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Prison Radio",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Soul Perspectives",
         "source": "api-live",
         "start": "19:00",
         "end": "20:30"
       },
+      "next": {
+        "title": "Marca-RO",
+        "source": "api-live",
+        "start": "20:30",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Prison Radio",
+      "showTitle": "Soul Perspectives",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T22:38:56.123Z"
+      "checkedAt": "2026-10-06T23:32:49.209Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "feminemix",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/feminemix"
-      },
-      "next": {
         "title": "Ashes to Ashes",
         "source": "schedule-live",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/ashes-to-ashes"
       },
+      "next": {
+        "title": "Hittin' All The Bases",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
+      },
       "track": "",
-      "showTitle": "feminemix",
+      "showTitle": "Ashes to Ashes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T22:38:58.776Z"
+      "checkedAt": "2026-10-06T23:32:51.471Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +126,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T22:38:59.881Z"
+      "checkedAt": "2026-10-06T23:32:52.817Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Le Studio",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00",
-        "slug": "live"
-      },
+      "current": null,
       "next": {
         "title": "Miroirs d’Orient",
         "source": "schedule",
@@ -145,16 +139,16 @@
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/miroirs-dorient"
       },
-      "track": "Le Studio Ouverture",
-      "showTitle": "Le Studio",
+      "track": "sueter7 — Todo Salió Bien (Carta para un amigo)",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
         "api-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T22:39:17.501Z"
+      "checkedAt": "2026-10-06T23:33:10.898Z"
     }
   }
 }
