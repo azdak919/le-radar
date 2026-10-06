@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-06T22:38:37.175Z",
-  "fetchedAt": "2026-10-06T22:38:37.175Z",
+  "updated": "2026-10-06T23:33:33.391Z",
+  "fetchedAt": "2026-10-06T23:33:33.391Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-10-06T22:38:37.175Z"
+    "referenceDate": "2026-10-06T23:33:33.391Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 851,
@@ -85,11 +85,6 @@
       "label": "Hockey universitaire",
       "error": "Cloudflare challenge HTTP 403 https://universitaire.rseqhockey.com/fr",
       "blocked": true
-    },
-    {
-      "leagueId": "campus-uqac",
-      "label": "UQAC Inuk events",
-      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -40176,19 +40171,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-10-06",
-          "time": "19:30",
-          "opponent": "Maisonneuve",
-          "opponentCode": "MAI",
-          "home": true,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D2",
-          "gameId": "bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
-          "opponentFullName": "Collège de Maisonneuve",
-          "opponentRegistryId": "maisonneuve"
-        },
-        {
           "date": "2026-10-09",
           "time": "20:30",
           "opponent": "Cégep de l'Outaouais",
@@ -40216,17 +40198,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-10-06",
-        "time": "19:30",
-        "opponent": "Maisonneuve",
-        "opponentCode": "MAI",
+        "date": "2026-10-09",
+        "time": "20:30",
+        "opponent": "Cégep de l'Outaouais",
+        "opponentCode": "OUT",
         "home": true,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D2",
-        "gameId": "bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
-        "opponentFullName": "Collège de Maisonneuve",
-        "opponentRegistryId": "maisonneuve",
+        "gameId": "c907fb11-c449-48ed-8526-3d2a0290acb8",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=c907fb11-c449-48ed-8526-3d2a0290acb8",
+        "opponentFullName": "Cégep de l'Outaouais",
+        "opponentRegistryId": "outaouais",
         "opponentSector": "collegial"
       },
       "record": {
@@ -40801,19 +40783,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-10-06",
-          "time": "19:30",
-          "opponent": "André-Grasset",
-          "opponentCode": "CAG",
-          "home": false,
-          "sport": "flag-football",
-          "competition": "Flag football collégial féminin D2",
-          "gameId": "bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
-          "opponentFullName": "Collège André-Grasset",
-          "opponentRegistryId": "andre-grasset"
-        },
-        {
           "date": "2026-10-10",
           "time": "13:00",
           "opponent": "Édouard-Montpetit",
@@ -40842,17 +40811,18 @@
         }
       ],
       "nextGame": {
-        "date": "2026-10-06",
-        "time": "19:30",
-        "opponent": "André-Grasset",
-        "opponentCode": "CAG",
-        "home": false,
+        "date": "2026-10-10",
+        "time": "13:00",
+        "opponent": "Édouard-Montpetit",
+        "opponentCode": "CEM",
+        "home": true,
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D2",
-        "gameId": "bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
-        "opponentFullName": "Collège André-Grasset",
-        "opponentRegistryId": "andre-grasset",
+        "gameId": "5654685c-6cef-48a8-a209-318e060e6f2f",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=5654685c-6cef-48a8-a209-318e060e6f2f",
+        "opponentFullName": "Cégep Édouard-Montpetit",
+        "opponentNickname": "Cougars",
+        "opponentRegistryId": "edouard-montpetit",
         "opponentSector": "collegial"
       },
       "record": {
