@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06T17:12:05.632Z",
+  "updatedAt": "2026-10-06T19:41:11.607Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T17:11:36.659Z"
+      "checkedAt": "2026-10-06T19:40:41.379Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les sentinelles de l'art",
+        "title": "À la bonne heure",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/a-la-bonne-heure"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "London café",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://cism893.ca/emissions/london-cafe"
       },
       "track": "",
-      "showTitle": "Les sentinelles de l'art",
+      "showTitle": "À la bonne heure",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T17:11:38.705Z"
+      "checkedAt": "2026-10-06T19:40:43.437Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Universal Break",
+        "title": "Montreal Sessions",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "Voice of Korea",
+        "title": "Off The Hour: Local Journalism Stories",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Universal Break",
+      "showTitle": "Montreal Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T17:11:41.482Z"
+      "checkedAt": "2026-10-06T19:40:46.434Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Shaking the Habitual",
+        "title": "Sonic Lit: A SpokenWeb Radio Show",
         "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/shaking-the-habitual"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
       },
       "next": {
-        "title": "Something for the Mood",
+        "title": "Bikini Brrroadcast",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/something-for-the-mood"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
       },
       "track": "",
-      "showTitle": "Shaking the Habitual",
+      "showTitle": "Sonic Lit: A SpokenWeb Radio Show",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T17:11:44.664Z"
+      "checkedAt": "2026-10-06T19:40:50.417Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,34 +126,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T17:11:46.025Z"
+      "checkedAt": "2026-10-06T19:40:52.084Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "L'UQAM en info",
+        "title": "Palmarès CHOQ.ca",
         "source": "api-live",
-        "start": "12:45",
-        "end": "13:30",
-        "slug": "uqam-en-info"
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
       },
       "next": {
-        "title": "Onde de CHOQ",
+        "title": "Passion Psy",
         "source": "api-live",
-        "start": "14:00",
-        "end": "14:45",
-        "slug": "onde-de-choq"
+        "start": "16:00",
+        "end": "17:30",
+        "slug": "passion-psy"
       },
-      "track": "BAIE — Awaille",
-      "showTitle": "L'UQAM en info",
+      "track": "Truck Violence — Kindly, wash yourself",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T17:12:05.281Z"
+      "checkedAt": "2026-10-06T19:41:11.256Z"
     }
   }
 }
