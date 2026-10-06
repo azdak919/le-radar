@@ -1,42 +1,42 @@
 {
-  "updated": "2026-10-05T22:23:49.482Z",
+  "updated": "2026-10-06T00:43:00.366Z",
   "total": 175,
   "withImage": 159,
   "withCredit": 159,
-  "cited": 101,
-  "pending": 10,
+  "cited": 100,
+  "pending": 11,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 9,
-  "citedNew": 6,
-  "fallbackNew": 12,
+  "checked": 16,
+  "updatedCount": 7,
+  "citedNew": 3,
+  "fallbackNew": 13,
   "samples": [
     {
-      "title": "Political occupation of vacant Montreal apartment building ended by police eviction",
-      "source": "The Link",
-      "credit": "Photo: Cléo Clamen",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "title": "Élections provinciales : La Pige sur le terrain au Saguenay—Lac-Saint-Jean",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "Quand la fiction banalise les traumatismes",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "credit": "Photo : Scott Tan",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Faire compter sa voix",
+      "title": "Est-ce que je dois un bébé à l’État ?",
       "source": "Le Délit",
-      "credit": "Photo : Photo tirée d’Élections Québec",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Le « self-care » : qui valide votre repos ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -60,20 +60,6 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "La littérature québécoise : encore intéressante pour les jeunes",
-      "source": "La Pige",
-      "credit": "Photo : Julianne Pilon",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
-      "cited": true,
-      "method": "via-attribution"
     }
   ]
 }
