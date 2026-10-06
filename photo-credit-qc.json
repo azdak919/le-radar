@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-06T19:48:57.888Z",
+  "updated": "2026-10-06T21:06:52.703Z",
   "total": 175,
   "withImage": 159,
   "withCredit": 159,
@@ -7,29 +7,29 @@
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 8,
-  "citedNew": 5,
+  "checked": 14,
+  "updatedCount": 6,
+  "citedNew": 3,
   "fallbackNew": 11,
   "samples": [
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
+      "credit": "Photo : Scott Tan",
       "cited": true,
-      "method": "figcaption-bare"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Quand la fiction banalise les traumatismes",
+      "title": "S.O.S. Huîtres menacées",
       "source": "Le Délit",
       "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Faire compter sa voix",
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
       "source": "Le Délit",
-      "credit": "Photo : Photo tirée d’Élections Québec",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -53,20 +53,6 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
-      "cited": true,
-      "method": "via-attribution"
     }
   ]
 }
