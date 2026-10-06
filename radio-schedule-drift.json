@@ -1,24 +1,45 @@
 {
-  "checkedAt": "2026-10-05T01:54:24.918Z",
+  "checkedAt": "2026-10-06T02:55:27.930Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 6,
-    "drift": [],
+    "stable": 4,
+    "drift": [
+      "chyz"
+    ],
     "overhaul": [],
-    "unreachable": []
+    "unreachable": [
+      "cjlo"
+    ]
   },
   "stations": [
     {
       "id": "chyz",
       "published": 39,
-      "fresh": 39,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 32,
+      "added": [
+        "dim 14:45–17:30 Remparts de Québec",
+        "mar 10:00–11:30 L'art des Histoires",
+        "sam 13:00–15:30 Radio Futura",
+        "sam 15:45–18:30 Remparts de Québec"
+      ],
+      "removed": [
+        "dim 13:00–15:30 Radio Futura",
+        "dim 15:45–18:30 Remparts de Québec",
+        "lun 16:00–17:00 Chéri.e, Jme Mobilise!",
+        "mar 19:00–20:00 CATHJO FAIT DE LA RADIO",
+        "mer 11:00–11:30 Question de savoir",
+        "mer 11:30–12:00 On en Parle",
+        "mer 13:00–14:00 ON EST OÙ LÀ?",
+        "mer 21:30–22:30 Blasphème",
+        "ven 18:45–21:30 Remparts de Québec",
+        "sam 12:00–12:30 Un Monde de Couleurs et de Son",
+        "sam 12:30–16:30 Football du Rouge et Or"
+      ],
+      "changed": 15,
+      "ratio": 0.385,
+      "status": "drift"
     },
     {
       "id": "cism",
@@ -32,8 +53,8 @@
     },
     {
       "id": "ckut",
-      "published": 101,
-      "fresh": 101,
+      "published": 100,
+      "fresh": 100,
       "added": [],
       "removed": [],
       "changed": 0,
@@ -43,12 +64,12 @@
     {
       "id": "cjlo",
       "published": 379,
-      "fresh": 379,
+      "fresh": 0,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
-      "status": "stable"
+      "status": "unreachable"
     },
     {
       "id": "cfak",
@@ -62,8 +83,8 @@
     },
     {
       "id": "choq",
-      "published": 21,
-      "fresh": 21,
+      "published": 24,
+      "fresh": 24,
       "added": [],
       "removed": [],
       "changed": 0,
