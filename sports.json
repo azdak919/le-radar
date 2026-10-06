@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-06T17:11:20.741Z",
-  "fetchedAt": "2026-10-06T17:11:20.741Z",
+  "updated": "2026-10-06T17:18:58.164Z",
+  "fetchedAt": "2026-10-06T17:18:58.164Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-10-06T17:11:20.741Z"
+    "referenceDate": "2026-10-06T17:18:58.165Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 851,
@@ -90,11 +90,6 @@
       "leagueId": "campus-uqac",
       "label": "UQAC Inuk events",
       "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
-    },
-    {
-      "leagueId": "campus-laval-w",
-      "label": "Rouge et Or F",
-      "error": "timeout https://rougeetor.ulaval.ca/sports/hockey/calendrier/"
     }
   ],
   "teams": {
