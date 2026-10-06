@@ -29,6 +29,11 @@ function copyRealFile(src, dest) {
 }
 copyRealFile(join(root, 'translate.js'), join(www, 'js', 'translate.js'));
 copyRealFile(join(root, 'translate-menu.css'), join(www, 'css', 'translate-menu.css'));
+mkdirSync(join(www, 'img'), { recursive: true });
+copyRealFile(
+  join(root, 'assets/masthead/polytechnique-lassonde-abdallahh.jpg'),
+  join(www, 'img/masthead.jpg'),
+);
 
 cpSync(join(root, 'scripts/media-follow-store.js'), join(www, 'vendor/media-follow-store.js'));
 console.log('mobile/www prêt');

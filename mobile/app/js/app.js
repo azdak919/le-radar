@@ -313,20 +313,25 @@
     return `<img class="card-photo" src="${esc(meta.image)}" alt="${esc(alt)}" loading="lazy" decoding="async" width="640" height="427">`;
   }
 
-  function cardHtml(item) {
+  function cardHtml(item, lead) {
     const meta = core().articleMeta(item);
     if (!meta) return '';
     const saved = core().isFavorite(loadLibrary(), meta.id);
     const lang = meta.lang === 'en' ? '<span class="lang notranslate" translate="no">EN</span>' : '';
-    const author = meta.author ? ` · <span class="article-author">${esc(meta.author)}</span>` : '';
+    const author = meta.author
+      ? `<p class="card-by"><span>Par </span><span class="article-author">${esc(meta.author)}</span></p>`
+      : '';
     const sourceClass = meta.source ? 'article-source' : '';
-    return `<article class="card">
+    return `<article class="card${lead ? ' card-lead' : ''}">
       <a class="card-open" href="#/article/${meta.id}">
-        ${imageHtml(meta)}
-        <p class="card-source">${swatch(meta.institution)}<span class="${sourceClass}">${esc(meta.source || 'Source')}</span>${lang}</p>
+        <div class="card-top">
+          <p class="card-source">${swatch(meta.institution)}<span class="${sourceClass}">${esc(meta.source || 'Source')}</span>${lang}</p>
+          <time class="notranslate" datetime="${esc(meta.date)}">${esc(formatDate(meta.date))}</time>
+        </div>
         <h2 class="card-title">${esc(meta.title)}</h2>
+        ${author}
+        ${imageHtml(meta)}
         ${meta.excerpt ? `<p class="card-excerpt">${esc(meta.excerpt)}</p>` : ''}
-        <p class="card-meta"><time class="notranslate" datetime="${esc(meta.date)}">${esc(formatDate(meta.date))}</time>${author}</p>
       </a>
       <div class="card-actions">
         <button type="button" data-action="save" data-id="${meta.id}" aria-pressed="${saved ? 'true' : 'false'}">${saved ? 'Enregistré' : 'Enregistrer'}</button>
@@ -335,9 +340,10 @@
     </article>`;
   }
 
-  function cardsHtml(items, empty) {
+  function cardsHtml(items, empty, leadLabel) {
     if (!items.length) return `<p class="empty">${empty}</p>`;
-    return `<div class="cards">${items.map(cardHtml).join('')}</div>`;
+    const kicker = leadLabel ? '<p class="wire-kicker">À la une</p>' : '';
+    return `${kicker}<div class="cards">${items.map((item, index) => cardHtml(item, leadLabel && index === 0)).join('')}</div>`;
   }
 
   function chip(href, label, current) {
@@ -371,15 +377,17 @@
     const more = shown.length < filtered.length
       ? `<button type="button" class="wide" data-action="more">Afficher la suite (${filtered.length - shown.length})</button>`
       : '';
-    return `<h1>Accueil</h1>
+    const countLabel = `${filtered.length} ${filtered.length === 1 ? 'article' : 'articles'}`;
+    return `<h1>Le fil étudiant</h1>
       ${freshHtml}
+      <p class="wire-status">${countLabel}</p>
       <nav class="chips" aria-label="Filtre du fil">
         ${chip('#/accueil?filtre=tout', 'Tout', mode === 'tout')}
         ${chip('#/accueil?filtre=suivis', 'Suivis', mode === 'suivis')}
         ${chip('#/accueil?filtre=regions', 'Régions', mode === 'regions')}
         ${chip('#/accueil?filtre=mots', 'Mots-clés', mode === 'mots')}
       </nav>
-      ${cardsHtml(shown, empty)}
+      ${cardsHtml(shown, empty, mode === 'tout')}
       ${more}`;
   }
 
@@ -957,6 +965,17 @@
     if (tabs) tabs.setAttribute('aria-label', uiText('Sections de l’application'));
     const skip = document.querySelector('a.skip');
     if (skip) skip.textContent = uiText('Aller au contenu');
+    const theme = loadPrefs().theme;
+    const themeButton = document.getElementById('theme-toggle');
+    if (themeButton) {
+      const full = { system: 'Thème : système', light: 'Thème : clair', dark: 'Thème : sombre' }[theme] || 'Thème : système';
+      const short = { system: 'Système', light: 'Clair', dark: 'Sombre' }[theme] || 'Système';
+      const label = uiText(full);
+      themeButton.setAttribute('aria-label', label);
+      themeButton.setAttribute('title', label);
+      const text = themeButton.querySelector('.theme-toggle__label');
+      if (text) text.textContent = uiText(short);
+    }
   }
 
   function applyTheme() {
@@ -1021,6 +1040,7 @@
           : 'Copie locale du fil. Les articles originaux demandent une connexion.')
         : '';
     }
+    document.body.classList.toggle('is-home', route.kind === 'home');
     syncTabs(route);
     syncChromeAria();
     applyTheme();
@@ -1119,8 +1139,13 @@
         render();
         return;
       }
-      if (action === 'theme') {
-        savePrefs(core().setTheme(loadPrefs(), el.dataset.value));
+      if (action === 'theme' || action === 'theme-cycle') {
+        const order = ['system', 'light', 'dark'];
+        const current = loadPrefs().theme;
+        const next = action === 'theme'
+          ? el.dataset.value
+          : order[(Math.max(0, order.indexOf(current)) + 1) % order.length];
+        savePrefs(core().setTheme(loadPrefs(), next));
         render();
         return;
       }

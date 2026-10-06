@@ -203,12 +203,16 @@ assert.match(prepare, /translate\.js/);
 assert.match(prepare, /indigenous-mt\.json/);
 const prepared = spawnSync(process.execPath, ['mobile/scripts/prepare.mjs'], { cwd: root, encoding: 'utf8' });
 assert.equal(prepared.status, 0, prepared.stderr);
-for (const rel of ['mobile/www/js/translate.js', 'mobile/www/css/translate-menu.css']) {
+for (const rel of ['mobile/www/js/translate.js', 'mobile/www/css/translate-menu.css', 'mobile/www/img/masthead.jpg']) {
   const st = lstatSync(join(root, rel));
   assert.equal(st.isSymbolicLink(), false, `${rel} doit être un fichier, pas le lien d’aperçu`);
   assert.equal(st.isFile(), true, rel);
 }
 assert.equal(read('mobile/www/js/translate.js'), read('translate.js'));
+assert.match(appJs, /Le fil étudiant/);
+assert.match(appJs, /theme-cycle/);
+assert.match(shell, /id="theme-toggle"/);
+assert.match(prepare, /masthead\.jpg/);
 const translate = read('translate.js');
 assert.match(translate, /Québec student newspapers, campus radio and sports,/);
 assert.match(translate, /all in one place/);

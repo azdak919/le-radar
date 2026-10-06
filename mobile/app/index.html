@@ -11,16 +11,23 @@
   <link rel="stylesheet" href="./css/app.css">
   <link rel="stylesheet" href="./css/translate-menu.css">
 </head>
-<body>
+<body class="is-home">
   <a class="skip" href="#screen">Aller au contenu</a>
   <div class="shell">
-    <header class="top">
+    <header class="top masthead">
+      <img class="masthead-photo" src="./img/masthead.jpg" alt="" width="1200" height="675">
       <div class="top-bar">
         <a class="brand" href="#/accueil">
-          <img src="./icons/icon.svg" alt="" width="28" height="28">
+          <img src="./icons/icon.svg" alt="" width="36" height="36">
           <span class="notranslate" translate="no">LE-RADAR.ca</span>
         </a>
-        <div class="translate-control notranslate" id="translate-control" translate="no">
+        <div class="mast-tools">
+          <button type="button" id="theme-toggle" class="theme-toggle" data-action="theme-cycle" aria-label="Thème : système" title="Thème : système">
+            <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+            <svg class="ico-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <span class="theme-toggle__label notranslate" translate="no">Système</span>
+          </button>
+          <div class="translate-control notranslate" id="translate-control" translate="no">
           <button
             type="button"
             id="translate-toggle"
@@ -40,12 +47,21 @@
             <svg class="translate-toggle__chev" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
           </button>
           <div id="translate-menu" class="translate-menu" role="dialog" aria-modal="false" aria-label="Langue d'affichage" hidden></div>
+          </div>
         </div>
       </div>
       <p class="tagline">
         <span class="tagline-lead">Journaux, radios et sports étudiants du Québec,</span>
         <span class="tagline-tag">réunis au même endroit</span>
       </p>
+      <a class="masthead-credit notranslate" translate="no" data-action="external" href="https://www.flickr.com/photos/abdallahh/4278366226" target="_blank" rel="noopener noreferrer">abdallahh</a>
+      <a class="tune-in" href="#/explorer?section=radios">
+        <span class="tune-live" aria-hidden="true"></span>
+        <span class="tune-text">
+          <span class="tune-name">Radios étudiantes</span>
+          <span class="tune-sub">Écouter en direct</span>
+        </span>
+      </a>
     </header>
     <div id="net" role="status"></div>
     <main id="screen" tabindex="-1">

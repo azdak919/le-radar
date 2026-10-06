@@ -1472,7 +1472,11 @@
     'Aucun article consulté récemment.': { en: 'No recently opened articles.' },
     'Aucun favori pour le moment.': { en: 'No favorites yet.' },
     Thème: { en: 'Theme' },
+    'Thème : système': { en: 'Theme: system' },
+    'Thème : clair': { en: 'Theme: light' },
+    'Thème : sombre': { en: 'Theme: dark' },
     Système: { en: 'System' },
+    'Radios étudiantes': { en: 'Campus radio' },
     Clair: { en: 'Light' },
     Sombre: { en: 'Dark' },
     'Un mot-clé filtre le fil « Mots-clés ». Il reste sur l’appareil.': {

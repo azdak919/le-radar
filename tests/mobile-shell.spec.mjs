@@ -5,7 +5,7 @@ test.describe('application mobile', () => {
     for (const size of [{ width: 390, height: 844 }, { width: 320, height: 700 }, { width: 1280, height: 800 }]) {
       await page.setViewportSize(size);
       await page.goto('/mobile/app/#/accueil', { waitUntil: 'domcontentloaded' });
-      await expect(page.getByRole('heading', { level: 1, name: 'Accueil' })).toBeVisible();
+      await expect(page.getByRole('heading', { level: 1, name: 'Le fil étudiant' })).toBeVisible();
       await expect(page.locator('.card-title').first()).toBeVisible();
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
       expect(overflow).toBe(false);
@@ -75,7 +75,8 @@ test.describe('application mobile', () => {
 
     for (const tab of ['Accueil', 'Recherche', 'Réglages']) {
       await page.locator('#tabs').getByRole('link', { name: tab }).click();
-      await expect(page.getByRole('heading', { level: 1, name: tab })).toBeVisible();
+      const heading = tab === 'Accueil' ? 'Le fil étudiant' : tab;
+      await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible();
       await expect(bar).toBeVisible();
       const audio = await page.evaluate(() => {
         const node = document.getElementById('player-audio');
@@ -126,6 +127,7 @@ test.describe('application mobile', () => {
     await expect(page.locator('.tagline-lead')).toHaveText('Québec student newspapers, campus radio and sports,');
     await expect(page.locator('.tagline-tag')).toHaveText('all in one place');
     await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
-    await expect(page.getByRole('heading', { level: 1, name: 'Home' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'Student wire' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Theme: system' })).toBeVisible();
   });
 });
