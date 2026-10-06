@@ -66,4 +66,4 @@ Le dépôt ne contient pas de fausses captures. À produire :
 | iPad si la fiche l’exige | 2064 × 2752 |
 | Play | téléphone, 9:16, au moins 2 |
 
-Montrer : fil, fiche avec « Lire chez », Explorer, Enregistrés. Le slogan affiché est celui du site : « Journaux, radios et sports étudiants du Québec, réunis au même endroit. »
+Montrer : fil, fiche avec « Lire chez », Explorer, Enregistrés. Le slogan affiché est celui du site : « Journaux, radios et sports étudiants du Québec, réunis au même endroit ».

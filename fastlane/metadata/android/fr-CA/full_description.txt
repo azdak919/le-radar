@@ -11,4 +11,8 @@ L’application aide à les découvrir et à garder une liste sur l’appareil. 
 
 Pas de compte. Pas de publicité. Les suivis et les favoris restent sur l’appareil et s’effacent dans Réglages.
 
+Le menu de langue est le même que sur https://le-radar.ca/ : français, anglais et les autres langues qui y sont offertes. Original laisse chaque article dans la langue où il a été écrit. Les phrases connues de l’interface sont traduites sur l’appareil. Les autres passent par le cache de traduction LE-RADAR et les mêmes services publics de traduction que le site.
+
+Au démarrage, l’application télécharge le fil depuis https://le-radar.ca/ (news.json, news-sources.json, radios.json et brand-colors.json). Si ça échoue, elle utilise la copie embarquée, puis la dernière copie gardée sur l’appareil. Les images d’articles viennent des adresses publiées dans le fil. Écouter une station diffuse le flux de cette station.
+
 LE-RADAR signifie Le Réseau Académique de Découverte et d’Agrégation de Ressources. Le site https://le-radar.ca/ continue d’exister à part.

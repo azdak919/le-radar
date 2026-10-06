@@ -157,9 +157,18 @@
     } catch { /* appareil sans retour haptique */ }
   }
 
+  function uiText(fr) {
+    const raw = String(fr ?? '');
+    try {
+      const api = window.RadarTranslate;
+      if (api && typeof api.displayUiText === 'function') return api.displayUiText(raw);
+    } catch { /* module pas prêt */ }
+    return raw;
+  }
+
   function announce(message) {
     const node = document.getElementById('status');
-    if (node) node.textContent = message || '';
+    if (node) node.textContent = uiText(message || '');
   }
 
   async function openExternal(url) {
@@ -280,7 +289,7 @@
     const time = Date.parse(iso || '');
     if (Number.isNaN(time)) return '';
     try {
-      return new Intl.DateTimeFormat('fr-CA', {
+      return new Intl.DateTimeFormat(document.documentElement.lang || 'fr-CA', {
         dateStyle: 'medium',
         timeStyle: 'short',
         timeZone: 'America/Toronto',
@@ -298,7 +307,9 @@
 
   function imageHtml(meta) {
     if (!meta.image) return '';
-    const alt = meta.source ? `Illustration publiée par ${meta.source}` : 'Illustration de l’article original';
+    const alt = meta.source
+      ? uiText(`Illustration publiée par ${meta.source}`)
+      : uiText('Illustration de l’article original');
     return `<img class="card-photo" src="${esc(meta.image)}" alt="${esc(alt)}" loading="lazy" decoding="async" width="640" height="427">`;
   }
 
@@ -306,15 +317,16 @@
     const meta = core().articleMeta(item);
     if (!meta) return '';
     const saved = core().isFavorite(loadLibrary(), meta.id);
-    const lang = meta.lang === 'en' ? '<span class="lang">EN</span>' : '';
-    const author = meta.author ? ` · ${esc(meta.author)}` : '';
+    const lang = meta.lang === 'en' ? '<span class="lang notranslate" translate="no">EN</span>' : '';
+    const author = meta.author ? ` · <span class="article-author">${esc(meta.author)}</span>` : '';
+    const sourceClass = meta.source ? 'article-source' : '';
     return `<article class="card">
       <a class="card-open" href="#/article/${meta.id}">
         ${imageHtml(meta)}
-        <p class="card-source">${swatch(meta.institution)}<span>${esc(meta.source || 'Source')}</span>${lang}</p>
+        <p class="card-source">${swatch(meta.institution)}<span class="${sourceClass}">${esc(meta.source || 'Source')}</span>${lang}</p>
         <h2 class="card-title">${esc(meta.title)}</h2>
         ${meta.excerpt ? `<p class="card-excerpt">${esc(meta.excerpt)}</p>` : ''}
-        <p class="card-meta"><time datetime="${esc(meta.date)}">${esc(formatDate(meta.date))}</time>${author}</p>
+        <p class="card-meta"><time class="notranslate" datetime="${esc(meta.date)}">${esc(formatDate(meta.date))}</time>${author}</p>
       </a>
       <div class="card-actions">
         <button type="button" data-action="save" data-id="${meta.id}" aria-pressed="${saved ? 'true' : 'false'}">${saved ? 'Enregistré' : 'Enregistrer'}</button>
@@ -360,7 +372,6 @@
       ? `<button type="button" class="wide" data-action="more">Afficher la suite (${filtered.length - shown.length})</button>`
       : '';
     return `<h1>Accueil</h1>
-      <p class="lede">Journaux, radios et sports étudiants du Québec, réunis au même endroit.</p>
       ${freshHtml}
       <nav class="chips" aria-label="Filtre du fil">
         ${chip('#/accueil?filtre=tout', 'Tout', mode === 'tout')}
@@ -390,13 +401,13 @@
       body = `<ul class="plain">${regions.map((source) => {
         const on = prefs.regions.includes(source.regionId);
         return `<li class="source-row">
-          <span><span class="source-name">${esc(source.region)}</span></span>
+          <span><span class="source-name notranslate">${esc(source.region)}</span></span>
           <button type="button" data-action="region" data-id="${esc(source.regionId)}" aria-pressed="${on ? 'true' : 'false'}">${on ? 'Suivie' : 'Suivre'}</button>
         </li>`;
       }).join('')}</ul>`;
     } else if (section === 'radios') {
       body = `<ul class="plain">${state.radios.map((radio) => `<li class="source-row">
-        <a href="#/radio/${esc(radio.id)}"><span class="source-name">${esc(radio.name)}</span><span class="source-meta">${esc(radio.institution)}</span></a>
+        <a href="#/radio/${esc(radio.id)}"><span class="source-name notranslate">${esc(radio.name)}</span><span class="source-meta article-inst">${esc(radio.institution)}</span></a>
         ${radio.stream ? radioToggleHtml(radio, 'Écouter', 'Pause') : ''}
       </li>`).join('')}</ul>`;
     } else {
@@ -412,8 +423,8 @@
           const hidden = prefs.hidden.includes(source.id);
           return `<li class="source-row${hidden ? ' is-hidden' : ''}">
             <a href="#/explorer/source/${esc(source.id)}">
-              <span class="source-name">${swatch(source.institution)}${esc(source.name)}</span>
-              <span class="source-meta">${esc(source.institution)}${source.region ? ` · ${esc(source.region)}` : ''}${hidden ? ' · masqué' : ''}</span>
+              <span class="source-name">${swatch(source.institution)}<span class="article-source">${esc(source.name)}</span></span>
+              <span class="source-meta"><span class="article-inst">${esc(source.institution)}</span>${source.region ? ` · <span class="notranslate">${esc(source.region)}</span>` : ''}${hidden ? ' · <span>masqué</span>' : ''}</span>
             </a>
             <button type="button" data-action="follow" data-name="${esc(source.name)}" aria-pressed="${on ? 'true' : 'false'}">${on ? 'Suivi' : 'Suivre'}</button>
           </li>`;
@@ -436,12 +447,18 @@
     const followed = followIds().includes(route.slug);
     const hidden = core().isHidden(loadPrefs(), route.slug);
     const site = source && source.site
-      ? `<a class="wide link" data-action="external" href="${esc(source.site)}" target="_blank" rel="noopener noreferrer">Site de ${esc(name)}</a>`
+      ? `<a class="wide link" data-action="external" href="${esc(source.site)}" target="_blank" rel="noopener noreferrer">Site de <span class="article-source">${esc(name)}</span></a>`
       : '';
     const fiche = `<a class="wide link" data-action="external" href="https://le-radar.ca/journaux/${esc(route.slug)}/" target="_blank" rel="noopener noreferrer">Fiche sur le-radar.ca</a>`;
+    const title = source
+      ? `<h1><span class="notranslate">${esc(source.name)}</span></h1>`
+      : '<h1>Média</h1>';
+    const lede = source
+      ? `<p class="lede"><span class="article-inst">${esc(source.institution)}</span>${source.region ? ` · <span class="notranslate">${esc(source.region)}</span>` : ''}</p>`
+      : '<p class="lede">Ce média n’est pas dans le registre chargé.</p>';
     return `<p class="back"><a href="#/explorer">Retour à Explorer</a></p>
-      <h1>${esc(source ? source.name : 'Média')}</h1>
-      <p class="lede">${esc(source ? source.institution : 'Ce média n’est pas dans le registre chargé.')}${source && source.region ? ` · ${esc(source.region)}` : ''}</p>
+      ${title}
+      ${lede}
       <div class="row-actions">
         <button type="button" data-action="follow" data-name="${esc(name)}" aria-pressed="${followed ? 'true' : 'false'}">${followed ? 'Suivi' : 'Suivre'}</button>
         <button type="button" data-action="hide" data-id="${esc(route.slug)}" aria-pressed="${hidden ? 'true' : 'false'}">${hidden ? 'Réafficher' : 'Masquer'}</button>
@@ -460,16 +477,19 @@
     ensureNowPlaying();
     const now = core().nowPlayingLabel(player.nowPayload, radio.id);
     const audio = radio.stream
-      ? `<p class="now-line" data-now-for="${esc(radio.id)}"${now ? '' : ' hidden'}>En ondes : <span>${esc(now)}</span></p>
+      ? `<p class="now-line" data-now-for="${esc(radio.id)}"${now ? '' : ' hidden'}>En ondes : <span class="notranslate">${esc(now)}</span></p>
          ${radioToggleHtml(radio, 'Écouter en direct', 'Mettre en pause', 'wide primary')}
          <p class="note">La radio reste dans la barre du bas pendant que vous parcourez l’application. L’écoute écran verrouillé n’est pas garantie.</p>`
       : '<p class="note">Pas de flux HTTPS validé. La station s’écoute sur son site.</p>';
     const site = radio.website
-      ? `<a class="wide link" data-action="external" href="${esc(radio.website)}" target="_blank" rel="noopener noreferrer">Ouvrir le site de ${esc(radio.name)}</a>`
+      ? `<a class="wide link" data-action="external" href="${esc(radio.website)}" target="_blank" rel="noopener noreferrer">Ouvrir le site de <span class="notranslate">${esc(radio.name)}</span></a>`
       : '';
+    const ledeMain = radio.slogan
+      ? esc(radio.slogan)
+      : `<span class="article-inst">${esc(radio.institution)}</span>`;
     return `<p class="back"><a href="#/explorer?section=radios">Retour aux radios</a></p>
-      <h1>${esc(radio.name)}</h1>
-      <p class="lede">${esc(radio.slogan || radio.institution)}${radio.frequency ? ` · ${esc(radio.frequency)}` : ''}</p>
+      <h1 class="notranslate">${esc(radio.name)}</h1>
+      <p class="lede">${ledeMain}${radio.frequency ? ` · <span class="notranslate">${esc(radio.frequency)}</span>` : ''}</p>
       ${audio}
       ${site}`;
   }
@@ -484,7 +504,8 @@
 
   function radioToggleHtml(radio, offLabel, onLabel, extraClass) {
     const on = player.id === radio.id && playerBusy();
-    return `<button type="button"${extraClass ? ` class="${extraClass}"` : ''} data-action="radio-toggle" data-id="${esc(radio.id)}" data-label-off="${esc(offLabel)}" data-label-on="${esc(onLabel)}" aria-pressed="${on ? 'true' : 'false'}">${esc(on ? onLabel : offLabel)}</button>`;
+    const classes = ['notranslate', extraClass].filter(Boolean).join(' ');
+    return `<button type="button" class="${classes}" data-action="radio-toggle" data-id="${esc(radio.id)}" data-label-off="${esc(offLabel)}" data-label-on="${esc(onLabel)}" aria-pressed="${on ? 'true' : 'false'}">${esc(uiText(on ? onLabel : offLabel))}</button>`;
   }
 
   function playerAudio() {
@@ -555,16 +576,16 @@
       if (name) name.textContent = radio.name;
       if (now) {
         let line = player.now || radio.institution || '';
-        if (player.status === 'loading') line = 'Connexion au direct…';
-        else if (player.status === 'error') line = 'Flux indisponible. Touchez lecture pour réessayer.';
+        if (player.status === 'loading') line = uiText('Connexion au direct…');
+        else if (player.status === 'error') line = uiText('Flux indisponible. Touchez lecture pour réessayer.');
         now.textContent = line;
       }
       if (info) {
         info.setAttribute('href', `#/radio/${radio.id}`);
-        info.setAttribute('aria-label', `${radio.name} : ouvrir la fiche`);
+        info.setAttribute('aria-label', uiText(`${radio.name} : ouvrir la fiche`));
       }
       if (toggle) {
-        toggle.setAttribute('aria-label', playerBusy() ? `Mettre ${radio.name} en pause` : `Écouter ${radio.name}`);
+        toggle.setAttribute('aria-label', uiText(playerBusy() ? `Mettre ${radio.name} en pause` : `Écouter ${radio.name}`));
         if (player.status === 'loading') toggle.setAttribute('aria-busy', 'true');
         else toggle.removeAttribute('aria-busy');
       }
@@ -573,7 +594,8 @@
       const on = button.dataset.id === player.id && playerBusy();
       button.setAttribute('aria-pressed', on ? 'true' : 'false');
       const label = on ? button.dataset.labelOn : button.dataset.labelOff;
-      if (label && button.textContent !== label) button.textContent = label;
+      const shown = uiText(label);
+      if (label && button.textContent !== shown) button.textContent = shown;
     }
     for (const line of document.querySelectorAll('[data-now-for]')) {
       const text = core().nowPlayingLabel(player.nowPayload, line.dataset.nowFor);
@@ -844,11 +866,11 @@
             <button type="submit">Ajouter</button>
           </div>
         </form>
-        <ul class="plain">${prefs.keywords.map((word) => `<li class="source-row"><span>${esc(word)}</span><button type="button" data-action="unkeyword" data-word="${esc(word)}">Retirer</button></li>`).join('')}</ul>
+        <ul class="plain">${prefs.keywords.map((word) => `<li class="source-row"><span class="notranslate">${esc(word)}</span><button type="button" data-action="unkeyword" data-word="${esc(word)}">Retirer</button></li>`).join('')}</ul>
       </section>
       <section>
         <h2 class="section">Sources masquées</h2>
-        ${hidden.length ? `<ul class="plain">${hidden.map((source) => `<li class="source-row"><span>${esc(source.name)}</span><button type="button" data-action="hide" data-id="${esc(source.id)}">Réafficher</button></li>`).join('')}</ul>` : '<p class="note">Aucune source masquée.</p>'}
+        ${hidden.length ? `<ul class="plain">${hidden.map((source) => `<li class="source-row"><span class="article-source">${esc(source.name)}</span><button type="button" data-action="hide" data-id="${esc(source.id)}">Réafficher</button></li>`).join('')}</ul>` : '<p class="note">Aucune source masquée.</p>'}
       </section>
       <section>
         <h2 class="section">Notifications</h2>
@@ -875,7 +897,7 @@
         <h2 class="section">Données locales</h2>
         ${confirmAll}
       </section>
-      <p class="note">Version ${esc(core().APP_VERSION)} · application de découverte, distincte du site.</p>`;
+      <p class="note"><span>Version </span><span class="notranslate">${esc(core().APP_VERSION)}</span><span> · application de découverte, distincte du site.</span></p>`;
   }
 
   function viewArticle(route) {
@@ -890,12 +912,12 @@
     const followed = meta.source ? followIds().includes(core().slugify(meta.source)) : false;
     return `<p class="back"><a href="#/accueil">Retour au fil</a></p>
       <article class="fiche">
-        <p class="card-source">${swatch(meta.institution)}<span>${esc(meta.source || 'Publication')}</span></p>
+        <p class="card-source">${swatch(meta.institution)}<span class="${meta.source ? 'article-source' : ''}">${esc(meta.source || 'Publication')}</span></p>
         <h1>${esc(meta.title)}</h1>
-        <p class="card-meta"><time datetime="${esc(meta.date)}">${esc(formatDate(meta.date))}</time>${meta.author ? ` · ${esc(meta.author)}` : ''}</p>
+        <p class="card-meta"><time class="notranslate" datetime="${esc(meta.date)}">${esc(formatDate(meta.date))}</time>${meta.author ? ` · <span class="article-author">${esc(meta.author)}</span>` : ''}</p>
         ${imageHtml(meta)}
         ${meta.excerpt ? `<p class="excerpt">${esc(meta.excerpt)}</p>` : ''}
-        <p class="attribution">Cet article est publié par ${esc(meta.source || 'la publication d’origine')}. LE-RADAR ne le reproduit pas et n’en est pas l’auteur.</p>
+        <p class="attribution"><span>Cet article est publié par </span><span class="${meta.source ? 'article-source' : ''}">${esc(meta.source || 'la publication d’origine')}</span><span>. </span><span>LE-RADAR ne le reproduit pas et n’en est pas l’auteur.</span></p>
         <a class="wide primary" data-action="read" data-id="${meta.id}" href="${esc(action.url)}" target="_blank" rel="noopener noreferrer">${esc(action.label)}</a>
         <div class="row-actions">
           <button type="button" data-action="save" data-id="${meta.id}" aria-pressed="${saved ? 'true' : 'false'}">${saved ? 'Enregistré' : 'Enregistrer'}</button>
@@ -924,6 +946,17 @@
       if (link.dataset.tab === current) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
     }
+  }
+
+  function syncChromeAria() {
+    const stop = document.querySelector('[data-action="player-stop"]');
+    if (stop) stop.setAttribute('aria-label', uiText('Arrêter la radio'));
+    const bar = document.getElementById('player');
+    if (bar) bar.setAttribute('aria-label', uiText('Radio en cours'));
+    const tabs = document.getElementById('tabs');
+    if (tabs) tabs.setAttribute('aria-label', uiText('Sections de l’application'));
+    const skip = document.querySelector('a.skip');
+    if (skip) skip.textContent = uiText('Aller au contenu');
   }
 
   function applyTheme() {
@@ -989,6 +1022,7 @@
         : '';
     }
     syncTabs(route);
+    syncChromeAria();
     applyTheme();
     if (!same) {
       state.routeKey = key;
@@ -1248,6 +1282,15 @@
     else render();
     bindNative();
   }
+
+  let translateRefresh = 0;
+  window.addEventListener('radar:translate-mode', () => {
+    if (!window.__radarMobileStarted) return;
+    window.clearTimeout(translateRefresh);
+    translateRefresh = window.setTimeout(() => {
+      render();
+    }, 80);
+  });
 
   window.__radarBoot.then(start).catch((error) => {
     console.error(error);

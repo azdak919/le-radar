@@ -11,4 +11,8 @@ The app is for discovery and for a list kept on the device. It does not replace 
 
 No account. No ads. Follows and favorites stay on the device and can be erased in Settings.
 
+The interface language menu is the same as on https://le-radar.ca/ : French, English, and the other languages offered there. Original keeps each article in the language it was written in. Known interface phrases are translated on the device. Other phrases use the LE-RADAR translation cache and the same public translation services as the website.
+
+On startup the app downloads the feed from https://le-radar.ca/ (news.json, news-sources.json, radios.json and brand-colors.json). If that fails, it uses the copy bundled in the app, then the last copy saved on the device. Article images load from the addresses published in the feed. Playing a station streams audio from that station.
+
 LE-RADAR means Le Réseau Académique de Découverte et d’Agrégation de Ressources. The website https://le-radar.ca/ stays available on its own.

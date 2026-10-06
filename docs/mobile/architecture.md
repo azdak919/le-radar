@@ -33,6 +33,7 @@ Le suivi des journaux réutilise `scripts/media-follow-store.js` et la clé `rad
 - Ouverture de l’original dans le navigateur système (Custom Tabs / SFSafariViewController), pas dans la WebView.
 - Radio : barre persistante en bas de l’écran (au-dessus des onglets), comme la barre du site. Web/iOS : un `<audio>` dans la coquille ; Android : Media3 via plugin local. Voir « Radio » plus bas.
 - Retour Android, zone sûre, thème clair/sombre/système, haptique légère sur suivre / enregistrer.
+- Sélecteur de langue : le module du site (`translate.js`). Le slogan d’en-tête est celui du site. Les noms de médias et d’auteurices ne sont pas traduits.
 
 Pomodoro, Solitaire, le mât météo et le bandeau sports restent sur le site. Réglages contient un lien « Ouvrir le-radar.ca ».
 
