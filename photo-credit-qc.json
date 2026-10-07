@@ -1,72 +1,100 @@
 {
-  "updated": "2026-10-07T09:04:48.890Z",
+  "updated": "2026-10-07T11:15:16.488Z",
   "total": 175,
   "withImage": 159,
   "withCredit": 159,
-  "cited": 106,
-  "pending": 9,
+  "cited": 102,
+  "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 8,
-  "citedNew": 5,
-  "fallbackNew": 11,
+  "checked": 26,
+  "updatedCount": 18,
+  "citedNew": 11,
+  "fallbackNew": 15,
   "samples": [
     {
-      "title": "Rouge d’une part, blanche de l’autre",
+      "title": "Récapitulatif du cas de Lindsay Clancy",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
+      "credit": "Photo : Ana Camila Torchia l Le Délit",
       "cited": true,
-      "method": "figcaption-bare"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Est-ce que je dois un bébé à l’État ?",
+      "title": "Une rentrée sauvée, et après?",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Cornell : Les fraternités au centre du débat",
       "source": "Le Délit",
       "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Le « self-care » : qui valide votre repos ?",
+      "title": "PSPP (presque) tout-puissant",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-near"
+    },
+    {
+      "title": "Tous les chemins mènent à Rome »",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Summer in Paradise (Lennoxville Edition)",
-      "source": "The Campus",
-      "credit": "Photo credit: The Campus",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Culture Paints Time a Different Colour",
-      "source": "The Plant",
-      "credit": "Photo credit: The Plant",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
+      "title": "Les équipes à suivre cette saison",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
+      "title": "Poésie, ateliers et conversations",
+      "source": "Le Délit",
+      "credit": "Photo : Catherine Brunet Rodriguez",
       "cited": true,
-      "method": "via-attribution"
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "La laïcité dans les programmes aux élections",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Georges : un baume sur le coeur",
+      "source": "Le Délit",
+      "credit": "Photo : Suzane O'Neill",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Un classique revisité",
+      "source": "Le Délit",
+      "credit": "Photo : Danny Tallo",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "La femme parfaite est un objet",
+      "source": "Le Délit",
+      "credit": "Crédit photo : Le Délit",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "US-Canada tensions and their effects on Academia",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     }
   ]
 }
