@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-07T04:10:39.035Z",
+  "updatedAt": "2026-10-07T10:12:39.970Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T04:10:09.374Z"
+      "checkedAt": "2026-10-07T10:12:11.837Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La carte cadeau (reprise)",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "next": {
-        "title": "Mix franco",
+        "title": "Club classique",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "07:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/club-classique"
       },
       "track": "",
-      "showTitle": "La carte cadeau (reprise)",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T04:10:10.986Z"
+      "checkedAt": "2026-10-07T10:12:13.946Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Space Plane",
+        "title": "Full Circle",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "04:00",
+        "end": "07:00"
       },
       "next": {
-        "title": "WarpCor / Out of the Void",
+        "title": "The Wednesday Morning After",
         "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
+        "start": "07:00",
+        "end": "09:00"
       },
       "track": "",
-      "showTitle": "Space Plane",
+      "showTitle": "Full Circle",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,35 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T04:10:13.353Z"
+      "checkedAt": "2026-10-07T10:12:16.866Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Morning Electro-shock",
         "source": "schedule-live",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/morning-electro-shock"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Morning Electro-shock",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T04:10:16.090Z"
+      "checkedAt": "2026-10-07T10:12:19.449Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +127,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T04:10:17.060Z"
+      "checkedAt": "2026-10-07T10:12:20.914Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +140,7 @@
         "end": "12:00",
         "slug": "miroirs-dorient"
       },
-      "track": "coffret de bijoux — i look for you everywhere",
+      "track": "Marci — Liquid Heartbeat",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +148,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T04:10:38.684Z"
+      "checkedAt": "2026-10-07T10:12:39.620Z"
     }
   }
 }
