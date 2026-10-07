@@ -1,35 +1,63 @@
 {
-  "updated": "2026-10-07T16:44:09.582Z",
+  "updated": "2026-10-07T18:02:47.170Z",
   "total": 177,
-  "withImage": 161,
-  "withCredit": 161,
+  "withImage": 157,
+  "withCredit": 157,
   "cited": 104,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 8,
-  "citedNew": 4,
-  "fallbackNew": 12,
+  "checked": 18,
+  "updatedCount": 10,
+  "citedNew": 7,
+  "fallbackNew": 11,
   "samples": [
     {
-      "title": "Montreal adopts bylaw to ban insults against police, inciting criticism",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "title": "Le bijou, accessoire de mode pour hommes",
+      "source": "La Pige",
+      "credit": "Photo : Émile Barthe",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Spectacles de drones: raconter l’histoire dans le ciel",
+      "source": "La Pige",
+      "credit": "Photo : Dominic Delude",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Quand les sociétés définissent l’âge adulte",
+      "source": "La Pige",
+      "credit": "Photo : Zachary Rivard",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "De l’aide 100% pour les hommes au Lac-Saint-Jean",
+      "source": "La Pige",
+      "credit": "Photo : Aglaé Delisle",
+      "cited": true,
+      "method": "body-line"
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
+      "credit": "Photo : Scott Tan",
       "cited": true,
-      "method": "figcaption-bare"
+      "method": "media-credit-featured"
     },
     {
-      "title": "S.O.S. Huîtres menacées",
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
       "source": "Le Délit",
       "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "source": "Le Délit",
+      "credit": "Photo : Héloïse Durning",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -53,20 +81,6 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
-      "cited": true,
-      "method": "via-attribution"
     }
   ]
 }
