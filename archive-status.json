@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-07T10:46:25.636Z",
+  "updated": "2026-10-07T20:57:21.291Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -3708,14 +3708,56 @@
       "via": "save-page-now",
       "source": "The Link",
       "snapshot": "https://web.archive.org/web/20261007104606/https://thelinknewspaper.ca/article/16461"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/07/festivals-quebec-envoie-des-millions-de-dollars-aux-etats-unis/": {
+      "at": "2026-10-07T20:46:19.787Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261007204604/https://lapige.atmjonquiere.com/2026/10/07/festivals-quebec-envoie-des-millions-de-dollars-aux-etats-unis/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/07/concilier-handicap-visuel-et-etudes-superieures/": {
+      "at": "2026-10-07T20:46:59.901Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261007204644/https://lapige.atmjonquiere.com/2026/10/07/concilier-handicap-visuel-et-etudes-superieures/"
+    },
+    "https://www.polyscope.qc.ca/blog/post/wj4AQm1wt2PECO6Gitx1": {
+      "at": "2026-10-07T20:51:46.154Z",
+      "via": "save-page-now",
+      "source": "Le Polyscope",
+      "snapshot": "https://web.archive.org/web/20261007205131/https://www.polyscope.qc.ca/blog/post/wj4AQm1wt2PECO6Gitx1"
+    },
+    "https://www.thetribune.ca/opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/": {
+      "at": "2026-10-07T20:53:18.598Z",
+      "via": "save-page-now",
+      "source": "The Tribune",
+      "snapshot": "https://web.archive.org/web/20261007205302/https://www.thetribune.ca/opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/07/quand-les-societes-definissent-lage-adulte/": {
+      "at": "2026-10-07T20:55:14.528Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261007205459/https://lapige.atmjonquiere.com/2026/10/07/quand-les-societes-definissent-lage-adulte/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/07/de-laide-100-pour-les-hommes-au-lac-saint-jean/": {
+      "at": "2026-10-07T20:56:46.039Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261007205624/https://lapige.atmjonquiere.com/2026/10/07/de-laide-100-pour-les-hommes-au-lac-saint-jean/"
+    },
+    "https://www.polyscope.qc.ca/blog/post/QPEKa1YZQ6rHD8StJeGU": {
+      "at": "2026-10-07T20:57:21.290Z",
+      "via": "save-page-now",
+      "source": "Le Polyscope",
+      "snapshot": "https://web.archive.org/web/20261007205706/https://www.polyscope.qc.ca/blog/post/QPEKa1YZQ6rHD8StJeGU"
     }
   },
   "stats": {
-    "total": 649,
+    "total": 656,
     "lastRun": {
-      "saved": 6,
+      "saved": 7,
       "skipped": 0,
-      "failed": 14,
+      "failed": 13,
       "stoppedEarly": false
     }
   },
@@ -3778,7 +3820,8 @@
     "The Campus": {
       "host": "thebucampus.ca",
       "pages": 4,
-      "checkedAt": "2026-09-30T20:17:11.411Z"
+      "checkedAt": "2026-09-30T20:17:11.411Z",
+      "stale": true
     },
     "Le Délit": {
       "host": "www.delitfrancais.com",
@@ -3788,7 +3831,7 @@
     "Le Polyscope": {
       "host": "www.polyscope.qc.ca",
       "pages": 36,
-      "checkedAt": "2026-09-30T20:17:14.668Z"
+      "checkedAt": "2026-10-07T20:45:55.929Z"
     }
   }
 }
