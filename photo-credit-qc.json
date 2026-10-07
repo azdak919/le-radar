@@ -1,86 +1,37 @@
 {
-  "updated": "2026-10-07T18:02:47.170Z",
+  "updated": "2026-10-07T20:45:48.503Z",
   "total": 177,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 104,
-  "pending": 9,
+  "cited": 105,
+  "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 10,
-  "citedNew": 7,
-  "fallbackNew": 11,
+  "checked": 11,
+  "updatedCount": 3,
+  "citedNew": 3,
+  "fallbackNew": 8,
   "samples": [
     {
-      "title": "Le bijou, accessoire de mode pour hommes",
+      "title": "Gardes du corps des politiciens : les « gardiens de la démocratie »",
       "source": "La Pige",
-      "credit": "Photo : Émile Barthe",
+      "credit": "Photo : Fournie par Victor Landry",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-paren-kind"
     },
     {
-      "title": "Spectacles de drones: raconter l’histoire dans le ciel",
+      "title": "On a fait du pouce entre Jonquière et Chicoutimi",
       "source": "La Pige",
-      "credit": "Photo : Dominic Delude",
+      "credit": "Illustration : Merlin Restoux-Pinglot",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-paren-kind"
     },
     {
-      "title": "Quand les sociétés définissent l’âge adulte",
-      "source": "La Pige",
-      "credit": "Photo : Zachary Rivard",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "De l’aide 100% pour les hommes au Lac-Saint-Jean",
-      "source": "La Pige",
-      "credit": "Photo : Aglaé Delisle",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Rouge d’une part, blanche de l’autre",
+      "title": "Le « self-care » : qui valide votre repos ?",
       "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Manifestation anti-IA à Montréal",
-      "source": "Le Délit",
-      "credit": "Photo : Héloïse Durning",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Summer in Paradise (Lennoxville Edition)",
-      "source": "The Campus",
-      "credit": "Photo credit: The Campus",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Culture Paints Time a Different Colour",
-      "source": "The Plant",
-      "credit": "Photo credit: The Plant",
-      "cited": false,
-      "method": null
     }
   ]
 }
