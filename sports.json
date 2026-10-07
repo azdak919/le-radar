@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-07T17:52:20.695Z",
-  "fetchedAt": "2026-10-07T17:52:20.695Z",
+  "updated": "2026-10-07T21:17:24.723Z",
+  "fetchedAt": "2026-10-07T21:17:24.723Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-10-07T17:52:20.695Z"
+    "referenceDate": "2026-10-07T21:17:24.723Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 851,
@@ -32180,7 +32180,7 @@
           "opponentRegistryId": "bois-de-boulogne"
         },
         {
-          "date": "2027-01-22",
+          "date": "2027-01-21",
           "time": "19:00",
           "opponent": "Rosemont",
           "opponentCode": "ROS",
@@ -32976,7 +32976,7 @@
           "opponentRegistryId": "marie-victorin"
         },
         {
-          "date": "2027-01-22",
+          "date": "2027-01-21",
           "time": "19:00",
           "opponent": "André-Grasset",
           "opponentCode": "CAG",
@@ -42964,7 +42964,7 @@
           "opponent": "Thetford",
           "opponentCode": "THE",
           "home": false,
-          "scoreFor": 27,
+          "scoreFor": 33,
           "scoreAgainst": 0,
           "result": "W",
           "sport": "flag-football",
@@ -43691,7 +43691,7 @@
           "opponentCode": "POC",
           "home": true,
           "scoreFor": 0,
-          "scoreAgainst": 27,
+          "scoreAgainst": 33,
           "result": "L",
           "sport": "flag-football",
           "competition": "Flag football collégial féminin D3",
