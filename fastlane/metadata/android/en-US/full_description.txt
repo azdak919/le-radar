@@ -9,6 +9,10 @@ The app is for discovery and for a list kept on the device. It does not replace 
 • Share the original article or the LE-RADAR card
 • Listen to a campus station when an HTTPS stream is available
 
+The app interface is in French only. Some feed items are in English and are marked EN.
+
+Network use: on each start the app downloads the current feed, the source list and the radio list from https://le-radar.ca/. If that fails, it uses the copy bundled in the app. Card images load from each outlet’s own website, and radio audio streams directly from the station.
+
 No account. No ads. Follows and favorites stay on the device and can be erased in Settings.
 
 LE-RADAR means Le Réseau Académique de Découverte et d’Agrégation de Ressources. The website https://le-radar.ca/ stays available on its own.
