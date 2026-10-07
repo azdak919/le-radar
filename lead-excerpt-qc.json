@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-07T20:39:18.915Z",
+  "updated": "2026-10-07T22:41:39.682Z",
   "total": 177,
   "pool": 56,
-  "incomplete": 12,
+  "incomplete": 10,
   "withLeadExcerpt": 116,
-  "candidates": 12,
-  "enriched": 3,
+  "candidates": 10,
+  "enriched": 1,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -19,30 +19,12 @@
       "changed": false
     },
     {
-      "title": "Le « self-care » : qui valide votre repos ?",
-      "link": "https://www.delitfrancais.com/2026/09/23/le-self-care-qui-valide-votre-repos/",
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "link": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
       "ok": true,
       "score": 96,
-      "chars": 347,
-      "sample": "Ce n’était pas une dérive isolée, mais une règle, que Talcott Parsons nommera en 1951 : le « rôle de",
-      "changed": true
-    },
-    {
-      "title": "Gardes du corps des politiciens : les « gardiens de la démocratie »",
-      "link": "https://lapige.atmjonquiere.com/2026/10/07/gardes-du-corps-des-politiciens-les-gardiens-de-la-democratie/?utm_source=rss&utm_medium=rss&utm_campaign=gardes-du-corps-des-politiciens-les-gardiens-de-la-democratie",
-      "ok": true,
-      "score": 95,
-      "chars": 371,
-      "sample": "Pendant un événement, les policiers locaux assurent également la sécurité d’un périmètre extérieur. ",
-      "changed": true
-    },
-    {
-      "title": "On a fait du pouce entre Jonquière et Chicoutimi",
-      "link": "https://lapige.atmjonquiere.com/2026/10/07/on-a-fait-du-pouce-entre-jonquiere-et-chicoutimi/?utm_source=rss&utm_medium=rss&utm_campaign=on-a-fait-du-pouce-entre-jonquiere-et-chicoutimi",
-      "ok": true,
-      "score": 100,
-      "chars": 342,
-      "sample": "L’expérience débute en face du centre Place Centre-Ville de Jonquière, à 13h38, un vendredi après-mi",
+      "chars": 288,
+      "sample": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est ",
       "changed": true
     },
     {
@@ -79,6 +61,24 @@
       "score": 96,
       "chars": 400,
       "sample": "Under the bylaw, which took effect on Oct. 1, people who insult city staff could face fines between ",
+      "changed": false
+    },
+    {
+      "title": "Concordia does not care about its disabled students",
+      "link": "https://thelinknewspaper.ca/article/16455",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "As a human relations student at Concordia University, I have had a plethora of opportunities to exam",
+      "changed": false
+    },
+    {
+      "title": "Les équipes à suivre cette saison",
+      "link": "https://www.delitfrancais.com/2026/10/07/les-equipes-a-suivre-cette-saison/",
+      "ok": true,
+      "score": 96,
+      "chars": 165,
+      "sample": "Pour la première fois, McGill entame une saison avec 25 équipes de moins. Alors, comment se porte le",
       "changed": false
     }
   ]
