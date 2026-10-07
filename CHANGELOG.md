@@ -5,9 +5,13 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Non publié]
 
+## [1.1.0] — 2026-10-07
+
+Application Android 1.1.0 (`versionCode` 3, tag `android-v1.1.0`). Le site est déployé en continu depuis `main` ; ses changements depuis 1.0.0 sont regroupés ici.
+
 ### Ajouté
 
-- Application Android 1.1.0 (`versionCode` 3) : écoute radio en arrière-plan et sur l’écran verrouillé via AndroidX Media3 ExoPlayer (service `mediaPlayback`, notification et session média, plugin Capacitor local `RadioPlayback`). La barre JS reste la source de vérité et suit pause/lecture depuis la notification. Permissions : `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_MEDIA_PLAYBACK`, `POST_NOTIFICATIONS` (runtime Android 13+), `WAKE_LOCK`. Focus audio et casque débranché → pause. iOS : `UIBackgroundModes` audio + `AVAudioSession` playback. FOSS uniquement (pas de Play Services). Docs mobile / confidentialité / déclarations magasin mises à jour. Pas de tag `android-v1.1.0` tant que Charles n’a pas décidé la sortie (revue F-Droid 1.0.1 en cours).
+- Application Android 1.1.0 (`versionCode` 3) : écoute radio en arrière-plan et sur l’écran verrouillé via AndroidX Media3 ExoPlayer (service `mediaPlayback`, notification et session média, plugin Capacitor local `RadioPlayback`). La barre JS reste la source de vérité et suit pause/lecture depuis la notification. Permissions : `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_MEDIA_PLAYBACK`, `POST_NOTIFICATIONS` (runtime Android 13+), `WAKE_LOCK`. Focus audio et casque débranché → pause. iOS : `UIBackgroundModes` audio + `AVAudioSession` playback. FOSS uniquement (pas de Play Services). Docs mobile / confidentialité / déclarations magasin mises à jour.
 
 ### Corrigé
 
@@ -157,4 +161,5 @@ et respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 - Worker Cloudflare facultatif pour le classement partagé de Solitaire.
 - Mini-applications Pomodoro et Solitaire, chacune disponible comme PWA isolée.
 
+[1.1.0]: https://github.com/azdak919/le-radar/releases/tag/android-v1.1.0
 [1.0.0]: https://github.com/azdak919/le-radar/releases/tag/v1.0.0
