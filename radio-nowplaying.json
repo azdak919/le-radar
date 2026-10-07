@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-07T17:49:38.549Z",
+  "updatedAt": "2026-10-07T17:54:40.049Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T17:49:09.990Z"
+      "checkedAt": "2026-10-07T17:53:52.814Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T17:49:12.160Z"
+      "checkedAt": "2026-10-07T17:53:54.776Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T17:49:14.910Z"
+      "checkedAt": "2026-10-07T17:53:58.528Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "The Fluid Mosaic",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
       },
       "next": {
         "title": "Cherry Vamp and the Sonic Coffin",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "The Fluid Mosaic",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T17:49:18.457Z"
+      "checkedAt": "2026-10-07T17:54:21.011Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T17:49:19.710Z"
+      "checkedAt": "2026-10-07T17:54:22.096Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "16:00",
         "slug": "palmareschoq"
       },
-      "track": "Chanel Beads — Spirit Showing",
+      "track": "The Lemon Twigs — Bring You Down",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T17:49:38.199Z"
+      "checkedAt": "2026-10-07T17:54:39.699Z"
     }
   }
 }
