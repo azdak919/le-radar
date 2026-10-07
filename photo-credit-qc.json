@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-07T11:15:16.488Z",
+  "updated": "2026-10-07T11:24:22.496Z",
   "total": 175,
   "withImage": 159,
   "withCredit": 159,
@@ -7,11 +7,18 @@
   "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 26,
-  "updatedCount": 18,
-  "citedNew": 11,
+  "checked": 31,
+  "updatedCount": 23,
+  "citedNew": 16,
   "fallbackNew": 15,
   "samples": [
+    {
+      "title": "Le syndrôme du héros : Primetime (2026)",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée de Primetime",
+      "cited": true,
+      "method": "media-credit-near"
+    },
     {
       "title": "Récapitulatif du cas de Lindsay Clancy",
       "source": "Le Délit",
@@ -86,13 +93,6 @@
       "title": "La femme parfaite est un objet",
       "source": "Le Délit",
       "credit": "Crédit photo : Le Délit",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "US-Canada tensions and their effects on Academia",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
       "cited": false,
       "method": null
     }
