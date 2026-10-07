@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-06T23:33:33.391Z",
-  "fetchedAt": "2026-10-06T23:33:33.391Z",
+  "updated": "2026-10-07T00:09:42.961Z",
+  "fetchedAt": "2026-10-07T00:09:42.961Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-10-06T23:33:33.391Z"
+    "referenceDate": "2026-10-07T00:09:42.962Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 851,
@@ -7778,7 +7778,8 @@
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e525eca6-0b6a-4d0e-b7a1-65262b41134a",
           "opponentFullName": "Cégep Limoilou",
           "opponentNickname": "Titans",
-          "opponentRegistryId": "limoilou"
+          "opponentRegistryId": "limoilou",
+          "live": true
         },
         {
           "date": "2026-10-10",
@@ -7848,6 +7849,7 @@
         "opponentFullName": "Cégep Limoilou",
         "opponentNickname": "Titans",
         "opponentRegistryId": "limoilou",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -8676,7 +8678,8 @@
           "gameId": "e525eca6-0b6a-4d0e-b7a1-65262b41134a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e525eca6-0b6a-4d0e-b7a1-65262b41134a",
           "opponentFullName": "Cégep de Drummondville",
-          "opponentRegistryId": "drummondville"
+          "opponentRegistryId": "drummondville",
+          "live": true
         },
         {
           "date": "2026-10-07",
@@ -8732,6 +8735,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=e525eca6-0b6a-4d0e-b7a1-65262b41134a",
         "opponentFullName": "Cégep de Drummondville",
         "opponentRegistryId": "drummondville",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -84077,7 +84081,8 @@
           "gameId": "b9e616c5-0c35-44b4-9c90-b72f22908e6a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b9e616c5-0c35-44b4-9c90-b72f22908e6a",
           "opponentFullName": "Cégep de Jonquière",
-          "opponentRegistryId": "jonquiere"
+          "opponentRegistryId": "jonquiere",
+          "live": true
         },
         {
           "date": "2026-10-11",
@@ -84118,6 +84123,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b9e616c5-0c35-44b4-9c90-b72f22908e6a",
         "opponentFullName": "Cégep de Jonquière",
         "opponentRegistryId": "jonquiere",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
@@ -84643,7 +84649,8 @@
           "gameId": "b9e616c5-0c35-44b4-9c90-b72f22908e6a",
           "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b9e616c5-0c35-44b4-9c90-b72f22908e6a",
           "opponentFullName": "Cégep d'Alma",
-          "opponentRegistryId": "alma"
+          "opponentRegistryId": "alma",
+          "live": true
         },
         {
           "date": "2026-10-10",
@@ -84684,6 +84691,7 @@
         "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b9e616c5-0c35-44b4-9c90-b72f22908e6a",
         "opponentFullName": "Cégep d'Alma",
         "opponentRegistryId": "alma",
+        "live": true,
         "opponentSector": "collegial"
       },
       "record": {
