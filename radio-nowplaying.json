@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06T23:33:11.249Z",
+  "updatedAt": "2026-10-07T02:22:50.097Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T23:32:45.374Z"
+      "checkedAt": "2026-10-07T02:22:19.263Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Catharmix",
+        "title": "Mix Anglo",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/catharmix"
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
       },
       "next": {
-        "title": "Les garçons pleurent aussi (reprise)",
+        "title": "La carte cadeau (reprise)",
         "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
       "track": "",
-      "showTitle": "Catharmix",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T23:32:46.906Z"
+      "checkedAt": "2026-10-07T02:22:21.429Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Soul Perspectives",
+        "title": "Montreal Sound Ark",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:30"
+        "start": "21:00",
+        "end": "23:00"
       },
       "next": {
-        "title": "Marca-RO",
+        "title": "Easy Sonic Living/Zoe's Hour/Dreams And Tales/Internet Lunch Forever",
         "source": "api-live",
-        "start": "20:30",
-        "end": "21:00"
+        "start": "23:00",
+        "end": "00:00"
       },
       "track": "",
-      "showTitle": "Soul Perspectives",
+      "showTitle": "Montreal Sound Ark",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T23:32:49.209Z"
+      "checkedAt": "2026-10-07T02:22:26.181Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Ashes to Ashes",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "Hittin' All The Bases",
+        "title": "Turn Off The Lights",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/turn-off-the-lights"
       },
       "track": "",
-      "showTitle": "Ashes to Ashes",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T23:32:51.471Z"
+      "checkedAt": "2026-10-07T02:22:29.876Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "L'Aut'Rock",
+        "title": "Mix Franco",
         "source": "schedule-live",
-        "start": "18:30",
-        "end": "20:00"
+        "start": "22:00",
+        "end": "00:00"
       },
       "next": {
-        "title": "Dichotomie 88.3",
+        "title": "Les nuits CFAK",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "00:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "L'Aut'Rock",
+      "showTitle": "Mix Franco",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T23:32:52.817Z"
+      "checkedAt": "2026-10-07T02:22:31.193Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/miroirs-dorient"
       },
-      "track": "sueter7 — Todo Salió Bien (Carta para un amigo)",
+      "track": "Alex LeBlanc — La treve",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -148,7 +148,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T23:33:10.898Z"
+      "checkedAt": "2026-10-07T02:22:49.746Z"
     }
   }
 }

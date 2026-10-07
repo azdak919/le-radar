@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-07T00:49:29.757Z",
-  "fetchedAt": "2026-10-07T00:49:29.757Z",
+  "updated": "2026-10-07T02:22:03.299Z",
+  "fetchedAt": "2026-10-07T02:22:03.299Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-10-07T00:49:29.757Z"
+    "referenceDate": "2026-10-07T02:22:03.299Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 851,
@@ -85,6 +85,11 @@
       "label": "Hockey universitaire",
       "error": "Cloudflare challenge HTTP 403 https://universitaire.rseqhockey.com/fr",
       "blocked": true
+    },
+    {
+      "leagueId": "campus-uqac",
+      "label": "UQAC Inuk events",
+      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -40048,6 +40053,23 @@
       "leagueLabel": "Flag football collégial féminin D2",
       "results": [
         {
+          "date": "2026-10-06",
+          "time": "19:30",
+          "opponent": "Maisonneuve",
+          "opponentCode": "MAI",
+          "home": true,
+          "scoreFor": 46,
+          "scoreAgainst": 0,
+          "result": "W",
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
+          "opponentFullName": "Collège de Maisonneuve",
+          "opponentRegistryId": "maisonneuve",
+          "priorSeason": false
+        },
+        {
           "date": "2026-10-02",
           "time": "19:00",
           "opponent": "Saint-Jean",
@@ -40155,21 +40177,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-10-02",
-        "time": "19:00",
-        "opponent": "Saint-Jean",
-        "opponentCode": "SJR",
-        "home": false,
-        "scoreFor": 29,
-        "scoreAgainst": 36,
-        "result": "L",
+        "date": "2026-10-06",
+        "time": "19:30",
+        "opponent": "Maisonneuve",
+        "opponentCode": "MAI",
+        "home": true,
+        "scoreFor": 46,
+        "scoreAgainst": 0,
+        "result": "W",
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D2",
-        "gameId": "199b7731-ae6a-414a-a1da-8dce4d0785a6",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=199b7731-ae6a-414a-a1da-8dce4d0785a6",
-        "opponentFullName": "Cégep Saint-Jean-sur-Richelieu",
-        "opponentNickname": "Dragons",
-        "opponentRegistryId": "saint-jean-sur-richelieu",
+        "gameId": "bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
+        "opponentFullName": "Collège de Maisonneuve",
+        "opponentRegistryId": "maisonneuve",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -40216,11 +40237,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 3,
+        "wins": 4,
         "losses": 3,
         "draws": 0,
-        "played": 6,
-        "label": "3-3"
+        "played": 7,
+        "label": "4-3"
       },
       "source": "rseq-s1",
       "priority": 21,
@@ -40662,6 +40683,23 @@
       "leagueLabel": "Flag football collégial féminin D2",
       "results": [
         {
+          "date": "2026-10-06",
+          "time": "19:30",
+          "opponent": "André-Grasset",
+          "opponentCode": "CAG",
+          "home": false,
+          "scoreFor": 0,
+          "scoreAgainst": 46,
+          "result": "L",
+          "sport": "flag-football",
+          "competition": "Flag football collégial féminin D2",
+          "gameId": "bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
+          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
+          "opponentFullName": "Collège André-Grasset",
+          "opponentRegistryId": "andre-grasset",
+          "priorSeason": false
+        },
+        {
           "date": "2026-10-02",
           "time": "19:00",
           "opponent": "Ahuntsic",
@@ -40768,20 +40806,20 @@
         }
       ],
       "lastGame": {
-        "date": "2026-10-02",
-        "time": "19:00",
-        "opponent": "Ahuntsic",
-        "opponentCode": "AHU",
+        "date": "2026-10-06",
+        "time": "19:30",
+        "opponent": "André-Grasset",
+        "opponentCode": "CAG",
         "home": false,
-        "scoreFor": 33,
-        "scoreAgainst": 19,
-        "result": "W",
+        "scoreFor": 0,
+        "scoreAgainst": 46,
+        "result": "L",
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D2",
-        "gameId": "be10eea8-952a-4eae-a9f8-b90ef7a9fedf",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=be10eea8-952a-4eae-a9f8-b90ef7a9fedf",
-        "opponentFullName": "Collège Ahuntsic",
-        "opponentRegistryId": "ahuntsic",
+        "gameId": "bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=bf5d7eff-d570-4b0b-ab49-87d44f82e54d",
+        "opponentFullName": "Collège André-Grasset",
+        "opponentRegistryId": "andre-grasset",
         "priorSeason": false,
         "opponentSector": "collegial"
       },
@@ -40831,10 +40869,10 @@
       },
       "record": {
         "wins": 2,
-        "losses": 4,
+        "losses": 5,
         "draws": 0,
-        "played": 6,
-        "label": "2-4"
+        "played": 7,
+        "label": "2-5"
       },
       "source": "rseq-s1",
       "priority": 80,
