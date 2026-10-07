@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-07T17:54:40.049Z",
+  "updatedAt": "2026-10-07T22:39:18.889Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "3600 secondes d'histoire",
+        "source": "api-live",
+        "start": "18:30",
+        "end": "19:30",
+        "url": "https://chyz.ca/emission/3600-secondes-dhistoire/"
+      },
       "next": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "title": "Funk Connection",
+        "source": "schedule-live",
+        "start": "19:30",
+        "end": "21:30",
+        "url": "https://chyz.ca/emission/funk-connection/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "3600 secondes d'histoire",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T17:53:52.814Z"
+      "checkedAt": "2026-10-07T22:39:05.103Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La carte cadeau",
+        "title": "Feu | Metal | Chaos",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/feu-metal-chaos"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "Effets sonores (reprise)",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/effets-sonores"
       },
       "track": "",
-      "showTitle": "La carte cadeau",
+      "showTitle": "Feu | Metal | Chaos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T17:53:54.776Z"
+      "checkedAt": "2026-10-07T22:39:06.868Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "If You Got Ears",
+        "title": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "next": {
-        "title": "Radyo Kapwa",
+        "title": "Harbinger Showcase",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "If You Got Ears",
+      "showTitle": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,72 +81,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T17:53:58.528Z"
+      "checkedAt": "2026-10-07T22:39:09.256Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Fluid Mosaic",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
+        "title": "The New Consonance",
+        "source": "schedule-live",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-new-consonance"
       },
       "next": {
-        "title": "Cherry Vamp and the Sonic Coffin",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/cherry-vamp-and-the-sonic-coffin"
+        "title": "BVST",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/bvst"
       },
       "track": "",
-      "showTitle": "The Fluid Mosaic",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-07T17:54:21.011Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "14:00"
-      },
-      "next": {
-        "title": "Le popcorn de l'infini",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "00:00"
-      },
-      "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "The New Consonance",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T17:54:22.096Z"
+      "checkedAt": "2026-10-07T22:39:11.432Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Le popcorn de l'infini",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "00:00"
+      },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
+      "track": "",
+      "showTitle": "Le popcorn de l'infini",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-07T22:39:12.509Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Palmarès CHOQ.ca",
+        "title": "Opération beurre de cinoche",
         "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
       },
-      "track": "The Lemon Twigs — Bring You Down",
+      "track": "Starcleaner Reunion — Weather Instrument",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-07T17:54:39.699Z"
+      "checkedAt": "2026-10-07T22:39:18.539Z"
     }
   }
 }
