@@ -1,51 +1,23 @@
 {
-  "updated": "2026-10-07T14:38:27.064Z",
-  "total": 175,
-  "withImage": 159,
-  "withCredit": 159,
-  "cited": 103,
+  "updated": "2026-10-07T16:44:09.582Z",
+  "total": 177,
+  "withImage": 161,
+  "withCredit": 161,
+  "cited": 104,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 11,
-  "citedNew": 8,
-  "fallbackNew": 11,
+  "checked": 16,
+  "updatedCount": 8,
+  "citedNew": 4,
+  "fallbackNew": 12,
   "samples": [
     {
-      "title": "Concilier handicap visuel et études supérieures",
-      "source": "La Pige",
-      "credit": "Photo : Charles Pinel",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Affaire Thélyson Orélien : une chasse aux sorcières ?",
-      "source": "Le Délit",
-      "credit": "Photo : Félix Fournier",
-      "cited": true,
-      "method": "media-credit-near"
-    },
-    {
-      "title": "Faire compter sa voix",
-      "source": "Le Délit",
-      "credit": "Photo : Photo tirée d’Élections Québec",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Est-ce que je dois un bébé à l’État ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Le « self-care » : qui valide votre repos ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Montreal adopts bylaw to ban insults against police, inciting criticism",
+      "source": "The Link",
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
@@ -55,18 +27,11 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
+      "title": "S.O.S. Huîtres menacées",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
-      "cited": true,
-      "method": "via-attribution"
     },
     {
       "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
@@ -88,6 +53,20 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }

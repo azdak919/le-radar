@@ -1,12 +1,12 @@
 {
-  "updated": "2026-10-07T14:32:41.431Z",
-  "total": 175,
+  "updated": "2026-10-07T16:38:53.360Z",
+  "total": 177,
   "pool": 56,
-  "incomplete": 13,
+  "incomplete": 12,
   "withLeadExcerpt": 116,
-  "candidates": 13,
-  "enriched": 5,
-  "failed": 0,
+  "candidates": 12,
+  "enriched": 2,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
@@ -19,48 +19,21 @@
       "changed": false
     },
     {
-      "title": "Affaire Thélyson Orélien : une chasse aux sorcières ?",
-      "link": "https://www.delitfrancais.com/2026/09/30/affaire-thelyson-orelien-une-chasse-aux-sorcieres/",
-      "ok": true,
-      "score": 96,
-      "chars": 233,
-      "sample": "Thélyson Orélien. Aujourd’hui, même ceux qui ignorent tout de la littérature connaissent son nom. En",
-      "changed": true
-    },
-    {
-      "title": "Faire compter sa voix",
-      "link": "https://www.delitfrancais.com/2026/09/23/faire-compter-sa-voix/",
+      "title": "S.O.S. Huîtres menacées",
+      "link": "https://www.delitfrancais.com/2026/09/23/s-o-s-huitres-menacees/",
       "ok": true,
       "score": 100,
-      "chars": 282,
-      "sample": "En quinze ans, les Indigenous Awareness Weeks (IAW) sont devenues un espace de « dialogue, de rappro",
+      "chars": 318,
+      "sample": "Cependant, depuis 2024, les récoltes d’huîtres de l’Île-du-Prince-Édouard ont chuté subitement. En e",
       "changed": true
     },
     {
-      "title": "Est-ce que je dois un bébé à l’État ?",
-      "link": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
+      "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
+      "link": "https://lapige.atmjonquiere.com/2026/10/07/festivals-quebec-envoie-des-millions-de-dollars-aux-etats-unis/?utm_source=rss&utm_medium=rss&utm_campaign=festivals-quebec-envoie-des-millions-de-dollars-aux-etats-unis",
       "ok": true,
-      "score": 96,
-      "chars": 288,
-      "sample": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est ",
-      "changed": true
-    },
-    {
-      "title": "Le « self-care » : qui valide votre repos ?",
-      "link": "https://www.delitfrancais.com/2026/09/23/le-self-care-qui-valide-votre-repos/",
-      "ok": true,
-      "score": 96,
-      "chars": 347,
-      "sample": "Ce n’était pas une dérive isolée, mais une règle, que Talcott Parsons nommera en 1951 : le « rôle de",
-      "changed": true
-    },
-    {
-      "title": "Concilier handicap visuel et études supérieures",
-      "link": "https://lapige.atmjonquiere.com/2026/10/07/concilier-handicap-visuel-et-etudes-superieures/?utm_source=rss&utm_medium=rss&utm_campaign=concilier-handicap-visuel-et-etudes-superieures",
-      "ok": true,
-      "score": 96,
-      "chars": 228,
-      "sample": "Pour les personnes aveugles aux études supérieures, la rentrée s’accompagne souvent d’importants déf",
+      "score": 100,
+      "chars": 313,
+      "sample": "Depuis 2019, Live Nation détient 49% du promoteur québécois Evenko, connu par le grand public pour s",
       "changed": true
     },
     {
@@ -79,6 +52,33 @@
       "score": 96,
       "chars": 399,
       "sample": "Émile Simard, candidat du Parti québécois dans Dubuc, est devenu le premier député de la région à êt",
+      "changed": false
+    },
+    {
+      "title": "The Theresa Humes Cup wraps up as the Stingers look strong ahead of the season",
+      "link": "https://thelinknewspaper.ca/article/16464",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "The opening game of the tournament was against the Guelph Gryphons and was very penalty-heavy. Despi",
+      "changed": false
+    },
+    {
+      "title": "Montreal adopts bylaw to ban insults against police, inciting criticism",
+      "link": "https://thelinknewspaper.ca/article/16457",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "Under the bylaw, which took effect on Oct. 1, people who insult city staff could face fines between ",
+      "changed": false
+    },
+    {
+      "title": "Concordia does not care about its disabled students",
+      "link": "https://thelinknewspaper.ca/article/16455",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "As a human relations student at Concordia University, I have had a plethora of opportunities to exam",
       "changed": false
     }
   ]
