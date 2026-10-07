@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-07T00:10:02.338Z",
-  "fetchedAt": "2026-10-07T00:10:02.338Z",
+  "updated": "2026-10-07T00:49:29.757Z",
+  "fetchedAt": "2026-10-07T00:49:29.757Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-10-07T00:10:02.338Z"
+    "referenceDate": "2026-10-07T00:49:29.757Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 851,
@@ -85,11 +85,6 @@
       "label": "Hockey universitaire",
       "error": "Cloudflare challenge HTTP 403 https://universitaire.rseqhockey.com/fr",
       "blocked": true
-    },
-    {
-      "leagueId": "campus-uqac",
-      "label": "UQAC Inuk events",
-      "error": "HTTP 404 https://www.uqac.ca/inuk/wp-json/tribe/events/v1/events?categories=hockey-masculin&per_page=50"
     }
   ],
   "teams": {
@@ -84076,20 +84071,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-10-06",
-          "time": "20:15",
-          "opponent": "Jonquière",
-          "opponentCode": "JON",
-          "home": false,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "b9e616c5-0c35-44b4-9c90-b72f22908e6a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b9e616c5-0c35-44b4-9c90-b72f22908e6a",
-          "opponentFullName": "Cégep de Jonquière",
-          "opponentRegistryId": "jonquiere",
-          "live": true
-        },
-        {
           "date": "2026-10-11",
           "time": "13:00",
           "opponent": "Saint-Félicien",
@@ -84117,18 +84098,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-10-06",
-        "time": "20:15",
-        "opponent": "Jonquière",
-        "opponentCode": "JON",
+        "date": "2026-10-11",
+        "time": "13:00",
+        "opponent": "Saint-Félicien",
+        "opponentCode": "FEL",
         "home": false,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "b9e616c5-0c35-44b4-9c90-b72f22908e6a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b9e616c5-0c35-44b4-9c90-b72f22908e6a",
-        "opponentFullName": "Cégep de Jonquière",
-        "opponentRegistryId": "jonquiere",
-        "live": true,
+        "gameId": "1c7c41c4-9572-4069-a01a-719d0daf1f7a",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=1c7c41c4-9572-4069-a01a-719d0daf1f7a",
+        "opponentFullName": "Cégep de Saint-Félicien",
+        "opponentRegistryId": "saint-felicien",
         "opponentSector": "collegial"
       },
       "record": {
@@ -84644,20 +84624,6 @@
       },
       "nextGames": [
         {
-          "date": "2026-10-06",
-          "time": "20:15",
-          "opponent": "Alma",
-          "opponentCode": "ALM",
-          "home": true,
-          "sport": "soccer",
-          "competition": "Soccer collégial masculin D2",
-          "gameId": "b9e616c5-0c35-44b4-9c90-b72f22908e6a",
-          "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b9e616c5-0c35-44b4-9c90-b72f22908e6a",
-          "opponentFullName": "Cégep d'Alma",
-          "opponentRegistryId": "alma",
-          "live": true
-        },
-        {
           "date": "2026-10-10",
           "time": "13:00",
           "opponent": "Cégep de Chicoutimi",
@@ -84685,18 +84651,17 @@
         }
       ],
       "nextGame": {
-        "date": "2026-10-06",
-        "time": "20:15",
-        "opponent": "Alma",
-        "opponentCode": "ALM",
+        "date": "2026-10-10",
+        "time": "13:00",
+        "opponent": "Cégep de Chicoutimi",
+        "opponentCode": "CHI",
         "home": true,
         "sport": "soccer",
         "competition": "Soccer collégial masculin D2",
-        "gameId": "b9e616c5-0c35-44b4-9c90-b72f22908e6a",
-        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b9e616c5-0c35-44b4-9c90-b72f22908e6a",
-        "opponentFullName": "Cégep d'Alma",
-        "opponentRegistryId": "alma",
-        "live": true,
+        "gameId": "732cc3cd-e60e-45c0-b08d-ef3dea397b05",
+        "url": "https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=732cc3cd-e60e-45c0-b08d-ef3dea397b05",
+        "opponentFullName": "Cégep de Chicoutimi",
+        "opponentRegistryId": "chicoutimi",
         "opponentSector": "collegial"
       },
       "record": {
