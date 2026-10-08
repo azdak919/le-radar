@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-08T17:59:59.955Z",
+  "updatedAt": "2026-10-08T21:49:04.102Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Les Arshitechs du Son",
+        "source": "api-live",
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "next": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "title": "Crooch Control",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://chyz.ca/emission/crooch-control/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-08T17:59:36.839Z"
+      "checkedAt": "2026-10-08T21:48:17.586Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque",
+        "title": "Rythmologie",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/rythmologie"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "Entropie",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/entropie"
       },
       "track": "",
-      "showTitle": "La grande ludothèque",
+      "showTitle": "Rythmologie",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-08T17:59:38.594Z"
+      "checkedAt": "2026-10-08T21:48:19.437Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Venus Radio",
+        "title": "Off The Hour: La Voix des Immigrants",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "next": {
-        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
+        "title": "Upstage",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "track": "",
-      "showTitle": "Venus Radio",
+      "showTitle": "Off The Hour: La Voix des Immigrants",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-08T17:59:41.148Z"
+      "checkedAt": "2026-10-08T21:48:22.144Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Give Me Shelter",
-        "source": "schedule-live",
-        "start": "13:30",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/give-me-shelter"
+        "title": "Hooked On Sonics",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
       },
       "next": {
-        "title": "Secondhand Sounds",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/secondhand-sounds"
+        "title": "Unheard Of",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/unheard-of"
       },
       "track": "",
-      "showTitle": "Give Me Shelter",
+      "showTitle": "Hooked On Sonics",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-08T17:59:43.424Z"
+      "checkedAt": "2026-10-08T21:48:44.729Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,28 +133,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-08T17:59:44.678Z"
+      "checkedAt": "2026-10-08T21:48:46.325Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
-        "title": "Palmarès CHOQ.ca",
+      "current": {
+        "title": "La 3ème demie",
         "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
+        "start": "17:15",
+        "end": "18:00",
+        "slug": "le-12-mtlsup"
       },
-      "track": "Angela Autumn — Heavy Tobacco",
-      "showTitle": "",
+      "next": {
+        "title": "Le grand maître des jeux",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "22:30",
+        "slug": "le-maitre-des-jeux"
+      },
+      "track": "ID — Alix-Fernz",
+      "showTitle": "La 3ème demie",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-08T17:59:59.604Z"
+      "checkedAt": "2026-10-08T21:49:03.751Z"
     }
   }
 }
