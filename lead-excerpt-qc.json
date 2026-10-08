@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-08T15:39:37.146Z",
+  "updated": "2026-10-08T16:37:56.924Z",
   "total": 177,
   "pool": 56,
-  "incomplete": 12,
+  "incomplete": 10,
   "withLeadExcerpt": 116,
-  "candidates": 12,
-  "enriched": 4,
+  "candidates": 10,
+  "enriched": 1,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -19,39 +19,12 @@
       "changed": false
     },
     {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
-      "link": "https://www.delitfrancais.com/2026/09/23/arrestations-visant-les-lgbtq-en-turquie/",
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "link": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
       "ok": true,
       "score": 96,
-      "chars": 217,
-      "sample": "Au total, plus de 80 personnes ont été placées en détention provisoire. Le ministère de la Justice t",
-      "changed": true
-    },
-    {
-      "title": "De la rue aux égouts : le parcours de l’eau",
-      "link": "https://lapige.atmjonquiere.com/2026/10/08/de-la-rue-aux-egouts-le-parcours-de-leau/?utm_source=rss&utm_medium=rss&utm_campaign=de-la-rue-aux-egouts-le-parcours-de-leau",
-      "ok": true,
-      "score": 96,
-      "chars": 164,
-      "sample": "Lorsqu’une forte pluie s’abat sur une ville, une grande partie du travail se déroule sous nos pieds.",
-      "changed": true
-    },
-    {
-      "title": "Beauté sur mesure, à quel prix?",
-      "link": "https://lapige.atmjonquiere.com/2026/10/08/beaute-sur-mesure-a-quel-prix/?utm_source=rss&utm_medium=rss&utm_campaign=beaute-sur-mesure-a-quel-prix",
-      "ok": true,
-      "score": 96,
-      "chars": 220,
-      "sample": "Elles ne sont pas toutes tentées pour autant. Clémence et Marilou, 17 ans, n’y ont « jamais » pensé.",
-      "changed": true
-    },
-    {
-      "title": "La Ligue Frontière à Saguenay: un dossier fermé",
-      "link": "https://lapige.atmjonquiere.com/2026/10/08/la-ligue-frontiere-a-saguenay-un-dossier-ferme/?utm_source=rss&utm_medium=rss&utm_campaign=la-ligue-frontiere-a-saguenay-un-dossier-ferme",
-      "ok": true,
-      "score": 100,
-      "chars": 307,
-      "sample": "La possibilité d’accueillir une équipe de la Ligue Frontière a déjà été évoquée à Saguenay, mais le ",
+      "chars": 288,
+      "sample": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est ",
       "changed": true
     },
     {
@@ -79,6 +52,33 @@
       "score": 96,
       "chars": 400,
       "sample": "Under the bylaw, which took effect on Oct. 1, people who insult city staff could face fines between ",
+      "changed": false
+    },
+    {
+      "title": "Concordia does not care about its disabled students",
+      "link": "https://thelinknewspaper.ca/article/16455",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "As a human relations student at Concordia University, I have had a plethora of opportunities to exam",
+      "changed": false
+    },
+    {
+      "title": "De la rue aux égouts : le parcours de l’eau",
+      "link": "https://lapige.atmjonquiere.com/2026/10/08/de-la-rue-aux-egouts-le-parcours-de-leau/?utm_source=rss&utm_medium=rss&utm_campaign=de-la-rue-aux-egouts-le-parcours-de-leau",
+      "ok": true,
+      "score": 96,
+      "chars": 164,
+      "sample": "Lorsqu’une forte pluie s’abat sur une ville, une grande partie du travail se déroule sous nos pieds.",
+      "changed": false
+    },
+    {
+      "title": "Les équipes à suivre cette saison",
+      "link": "https://www.delitfrancais.com/2026/10/07/les-equipes-a-suivre-cette-saison/",
+      "ok": true,
+      "score": 96,
+      "chars": 165,
+      "sample": "Pour la première fois, McGill entame une saison avec 25 équipes de moins. Alors, comment se porte le",
       "changed": false
     }
   ]
