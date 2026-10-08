@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-07T23:18:37.630Z",
+  "updated": "2026-10-08T01:08:34.855Z",
   "total": 177,
   "withImage": 157,
   "withCredit": 157,
@@ -7,9 +7,52 @@
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 8,
-  "updatedCount": 0,
-  "citedNew": 0,
-  "fallbackNew": 8,
-  "samples": []
+  "checked": 13,
+  "updatedCount": 6,
+  "citedNew": 3,
+  "fallbackNew": 10,
+  "samples": [
+    {
+      "title": "Rouge d’une part, blanche de l’autre",
+      "source": "Le Délit",
+      "credit": "Photo : Scott Tan",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "source": "Le Délit",
+      "credit": "Photo : Héloïse Durning",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Summer in Paradise (Lennoxville Edition)",
+      "source": "The Campus",
+      "credit": "Photo credit: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Culture Paints Time a Different Colour",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
+    }
+  ]
 }
