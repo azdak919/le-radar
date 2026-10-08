@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-08T02:41:44.048Z",
-  "fetchedAt": "2026-10-08T02:41:44.048Z",
+  "updated": "2026-10-08T05:11:59.345Z",
+  "fetchedAt": "2026-10-08T05:11:59.345Z",
   "source": "rseq-s1-all+spordle-hockey+sailing-qc",
   "note": "Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.",
   "sportsFreshness": {
     "rule": "B",
-    "referenceDate": "2026-10-08T02:41:44.048Z"
+    "referenceDate": "2026-10-08T05:11:59.346Z"
   },
   "registry": "sports-teams.json",
   "registryMatched": 851,
@@ -43908,9 +43908,9 @@
           "opponent": "Joliette",
           "opponentCode": "JOL",
           "home": false,
-          "scoreFor": 12,
-          "scoreAgainst": 14,
-          "result": "L",
+          "scoreFor": 14,
+          "scoreAgainst": 12,
+          "result": "W",
           "sport": "flag-football",
           "competition": "Flag football collégial féminin D3",
           "gameId": "bc2f40bd-a3cc-418c-9a1c-8bff87c6f36c",
@@ -44031,9 +44031,9 @@
         "opponent": "Joliette",
         "opponentCode": "JOL",
         "home": false,
-        "scoreFor": 12,
-        "scoreAgainst": 14,
-        "result": "L",
+        "scoreFor": 14,
+        "scoreAgainst": 12,
+        "result": "W",
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
         "gameId": "bc2f40bd-a3cc-418c-9a1c-8bff87c6f36c",
@@ -44101,11 +44101,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 2,
-        "losses": 4,
+        "wins": 3,
+        "losses": 3,
         "draws": 1,
         "played": 7,
-        "label": "2-4-1"
+        "label": "3-3-1"
       },
       "source": "rseq-s1",
       "priority": 20,
@@ -44804,9 +44804,9 @@
           "opponent": "Ahuntsic",
           "opponentCode": "AHU",
           "home": true,
-          "scoreFor": 14,
-          "scoreAgainst": 12,
-          "result": "W",
+          "scoreFor": 12,
+          "scoreAgainst": 14,
+          "result": "L",
           "sport": "flag-football",
           "competition": "Flag football collégial féminin D3",
           "gameId": "bc2f40bd-a3cc-418c-9a1c-8bff87c6f36c",
@@ -44928,9 +44928,9 @@
         "opponent": "Ahuntsic",
         "opponentCode": "AHU",
         "home": true,
-        "scoreFor": 14,
-        "scoreAgainst": 12,
-        "result": "W",
+        "scoreFor": 12,
+        "scoreAgainst": 14,
+        "result": "L",
         "sport": "flag-football",
         "competition": "Flag football collégial féminin D3",
         "gameId": "bc2f40bd-a3cc-418c-9a1c-8bff87c6f36c",
@@ -44996,11 +44996,11 @@
         "opponentSector": "collegial"
       },
       "record": {
-        "wins": 6,
-        "losses": 1,
+        "wins": 5,
+        "losses": 2,
         "draws": 0,
         "played": 7,
-        "label": "6-1"
+        "label": "5-2"
       },
       "source": "rseq-s1",
       "priority": 80,
