@@ -51,7 +51,11 @@ try {
 }
 
 assert(archive <= 16 * MB, `news-archive.json ${archive} > 16 Mo`);
-assert(sports <= 5 * MB, `sports.json ${sports} > 5 Mo`);
+// sports.json est « packed » (scripts/sports-payload-lib.js) : ~1,9 Mo début
+// octobre, ~3 Mo projeté au pire en fin de saison RSEQ (avril). Le plafond
+// 8 Mio laisse de la marge sans masquer un retour au format verbeux
+// (déplié, il dépasserait 8 Mio vers la fin de la saison d’hiver).
+assert(sports <= 8 * MB, `sports.json ${sports} > 8 Mio`);
 assert(images <= 50 * MB, `assets/news-images ${images} > 50 Mo`);
 assert(kit <= 100 * MB, `assets/kit ${kit} > 100 Mo (impressions 600 dpi, 7 campus)`);
 

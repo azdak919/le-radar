@@ -57,7 +57,8 @@ test('sports-freshness : jour civil = champ date, pas l’heure locale du runner
 });
 
 test('sports-freshness : payload sports.json prune sans casser', () => {
-  const data = require(join(ROOT, 'sports.json'));
+  const { unpackSportsPayload } = require(join(ROOT, 'scripts/sports-payload-lib.js'));
+  const data = unpackSportsPayload(require(join(ROOT, 'sports.json')));
   const pruned = SpF.pruneSportsPayload(data, REF);
   assert.ok(pruned.teams);
   const n = Object.keys(pruned.teams).length;

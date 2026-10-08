@@ -418,7 +418,7 @@ ${historicalSample ? `- ${SITE_BASE}/archives/ : catalogue historique expérimen
 - ${SITE_BASE}/radios.json : registre des radios étudiantes (fréquence, établissement, ville, flux)
 - ${SITE_BASE}/news-sources.json : registre des journaux étudiants suivis
 - ${SITE_BASE}/institutions.json : catalogue des établissements d'enseignement supérieur du Québec
-- ${SITE_BASE}/sports.json : formations et matchs RSEQ (collégial + universitaire)
+- ${SITE_BASE}/sports.json : formations et matchs RSEQ (collégial + universitaire) — format compact « sports-packed-v1 », dépliage : ${SITE_BASE}/scripts/sports-payload-lib.js
 - ${SITE_BASE}/feed.xml : flux RSS du fil étudiant
 - ${SITE_BASE}/sitemap.xml : plan du site
 ${historicalSample ? `- ${SITE_BASE}/sitemap-archives.xml : sitemap séparé du catalogue historique expérimental` : ''}
@@ -564,7 +564,7 @@ function main() {
     news: items,
     institutions: readJson(INSTITUTIONS_PATH, {}).institutions || [],
     schedules: readJson(SCHEDULES_PATH, {}).stations || {},
-    sports: readJson(SPORTS_PATH, {}),
+    sports: require('./sports-payload-lib').unpackSportsPayload(readJson(SPORTS_PATH, {})),
     siteBase: SITE_BASE,
     archivePaths: archive.sourcePaths,
     socialFeed: readJson(SOCIAL_PATH, { items: [] }),

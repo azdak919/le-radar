@@ -27,7 +27,10 @@ test('sports-leagues.json liste des ligues RSEQ avec UUID', () => {
 test('sports.json a des équipes normalisées', () => {
   const path = join(ROOT, 'sports.json');
   assert.ok(existsSync(path), 'sports.json absent — lancer node scripts/fetch-sports.js --update');
-  const data = JSON.parse(readFileSync(path, 'utf8'));
+  const { unpackSportsPayload, isPacked } = require(join(ROOT, 'scripts/sports-payload-lib.js'));
+  const raw = JSON.parse(readFileSync(path, 'utf8'));
+  assert.ok(isPacked(raw), 'sports.json doit être écrit au format packed (sports-payload-lib)');
+  const data = unpackSportsPayload(raw);
   assert.ok(data.updated);
   assert.match(String(data.source || ''), /rseq-s1/);
   const teams = Object.values(data.teams || {});

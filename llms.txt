@@ -86,7 +86,7 @@ traduction facultatif est offert dans l'interface.
 - https://le-radar.ca/radios.json : registre des radios étudiantes (fréquence, établissement, ville, flux)
 - https://le-radar.ca/news-sources.json : registre des journaux étudiants suivis
 - https://le-radar.ca/institutions.json : catalogue des établissements d'enseignement supérieur du Québec
-- https://le-radar.ca/sports.json : formations et matchs RSEQ (collégial + universitaire)
+- https://le-radar.ca/sports.json : formations et matchs RSEQ (collégial + universitaire) — format compact « sports-packed-v1 », dépliage : https://le-radar.ca/scripts/sports-payload-lib.js
 - https://le-radar.ca/feed.xml : flux RSS du fil étudiant
 - https://le-radar.ca/sitemap.xml : plan du site
 - https://le-radar.ca/sitemap-archives.xml : sitemap séparé du catalogue historique expérimental

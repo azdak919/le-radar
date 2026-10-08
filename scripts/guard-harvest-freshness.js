@@ -36,6 +36,7 @@ function readText(rel) {
 
 function main() {
   const news = readJson('news.json');
+  // Champs de premier niveau (fetchedAt / updated) : identiques packed ou non.
   const sports = readJson('sports.json');
   const radio = readJson('radio-nowplaying.json');
   const leagues = readJson('sports-leagues.json');

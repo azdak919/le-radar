@@ -32,6 +32,7 @@ const {
 } = require('./sports-teams-lib');
 
 const SportsFreshness = require('./sports-freshness-lib');
+const SportsPayload = require('./sports-payload-lib');
 const SportsLive = require('./sports-live-lib');
 const { buildSportsMastheadPayload } = require('./sports-masthead-lib');
 const { preserveHarvestCatalogStats } = require('./harvest-freshness-lib');
@@ -823,7 +824,7 @@ function mergePreservedPast(entry, previousTeams) {
 function loadPreviousPayload() {
   try {
     if (!fs.existsSync(OUT_PATH)) return null;
-    const prev = JSON.parse(fs.readFileSync(OUT_PATH, 'utf8'));
+    const prev = SportsPayload.unpackSportsPayload(JSON.parse(fs.readFileSync(OUT_PATH, 'utf8')));
     return prev && typeof prev === 'object' ? prev : null;
   } catch {
     return null;
@@ -1169,9 +1170,14 @@ async function main() {
   );
 
   if (update) {
-    // JSON compact : ~27 % plus léger qu’indenté (budget 5 Mo de
-    // tests/artifact-budget.mjs, sondage client aux 15 s en direct).
-    fs.writeFileSync(OUT_PATH, `${JSON.stringify(payload)}\n`, 'utf8');
+    // Format « packed » compact (scripts/sports-payload-lib.js) : chaque match
+    // une seule fois, adversaires et URL RSEQ factorisés. Les lecteurs
+    // déplient avec unpackSportsPayload (budget tests/artifact-budget.mjs).
+    fs.writeFileSync(
+      OUT_PATH,
+      `${JSON.stringify(SportsPayload.packSportsPayload(payload))}\n`,
+      'utf8',
+    );
     const mastheadPath = path.join(ROOT, 'sports-masthead.json');
     // Snapshot d’accueil : JSON compact (sans indent) pour rester largement
     // sous le plafond 15 % du payload complet (tests/sports-masthead.mjs).

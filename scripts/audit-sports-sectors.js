@@ -30,7 +30,9 @@ const fail = (kind, msg, extra = {}) => {
 };
 
 const reg = loadSportsTeamsRegistry();
-const data = JSON.parse(fs.readFileSync(path.join(ROOT, 'sports.json'), 'utf8'));
+const data = require('./sports-payload-lib').unpackSportsPayload(
+  JSON.parse(fs.readFileSync(path.join(ROOT, 'sports.json'), 'utf8')),
+);
 const teams = Object.values(data.teams || {});
 
 // ── Resolve smoke ─────────────────────────────────────────────────

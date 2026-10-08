@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 const require = createRequire(import.meta.url);
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const { buildSportsMastheadPayload } = require(join(ROOT, 'scripts/sports-masthead-lib.js'));
+const { unpackSportsPayload } = require(join(ROOT, 'scripts/sports-payload-lib.js'));
 
 function team(id, code, nextGames = [], results = []) {
   return {
@@ -65,7 +66,7 @@ test('sports masthead : résultats hors 5 j civils exclus, filet 1 si vide', () 
 
 test('sports masthead : tous les matchs uniques de la fenêtre 5 j', () => {
   const SpF = require(join(ROOT, 'scripts/sports-freshness-lib.js'));
-  const full = require(join(ROOT, 'sports.json'));
+  const full = unpackSportsPayload(require(join(ROOT, 'sports.json')));
   const ref = new Date();
   function keyOf(game, team) {
     if (game?.gameId != null && String(game.gameId).trim()) return `id:${game.gameId}`;
@@ -92,15 +93,15 @@ test('sports masthead : tous les matchs uniques de la fenêtre 5 j', () => {
 });
 
 test('sports masthead : snapshot commité léger et exploitable', () => {
-  const full = require(join(ROOT, 'sports.json'));
+  const full = unpackSportsPayload(require(join(ROOT, 'sports.json')));
   const compact = require(join(ROOT, 'sports-masthead.json'));
   assert.ok(compact.updated);
   assert.ok(compact.teamCount > 0);
   assert.equal(compact.teamCount, Object.keys(compact.teams).length);
   assert.ok(compact.teamCount < Object.keys(full.teams).length);
   assert.ok(compact.masthead?.nextGameLimit >= 16);
-  // Référence : payload complet indenté (2 espaces), comme à l’origine du
-  // plafond — sports.json est désormais écrit compact sur disque.
+  // Référence : payload complet déplié et indenté (2 espaces), comme à
+  // l’origine du plafond — sports.json est désormais packed sur disque.
   const fullIndentedBytes = Buffer.byteLength(`${JSON.stringify(full, null, 2)}\n`);
   assert.ok(
     statSync(join(ROOT, 'sports-masthead.json')).size < fullIndentedBytes * 0.15,
