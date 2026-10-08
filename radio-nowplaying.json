@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06T17:12:05.632Z",
+  "updatedAt": "2026-10-08T17:59:59.955Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,17 +21,17 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T17:11:36.659Z"
+      "checkedAt": "2026-10-08T17:59:36.839Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les sentinelles de l'art",
+        "title": "La grande ludothèque",
         "source": "schedule",
         "start": "12:00",
         "end": "14:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
       },
       "next": {
         "title": "Le palmarès",
@@ -41,32 +41,32 @@
         "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
       "track": "",
-      "showTitle": "Les sentinelles de l'art",
+      "showTitle": "La grande ludothèque",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T17:11:38.705Z"
+      "checkedAt": "2026-10-08T17:59:38.594Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Universal Break",
+        "title": "Venus Radio",
         "source": "api-live",
         "start": "12:00",
         "end": "14:00"
       },
       "next": {
-        "title": "Voice of Korea",
+        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
       "track": "",
-      "showTitle": "Universal Break",
+      "showTitle": "Venus Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,86 +74,80 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T17:11:41.482Z"
+      "checkedAt": "2026-10-08T17:59:41.148Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Shaking the Habitual",
+        "title": "Give Me Shelter",
         "source": "schedule-live",
-        "start": "13:00",
+        "start": "13:30",
         "end": "14:00",
-        "url": "http://www.cjlo.com/shows/shaking-the-habitual"
+        "url": "http://www.cjlo.com/shows/give-me-shelter"
       },
       "next": {
-        "title": "Something for the Mood",
+        "title": "Secondhand Sounds",
         "source": "schedule-live",
         "start": "14:00",
         "end": "15:00",
-        "url": "http://www.cjlo.com/shows/something-for-the-mood"
+        "url": "http://www.cjlo.com/shows/secondhand-sounds"
       },
       "track": "",
-      "showTitle": "Shaking the Habitual",
+      "showTitle": "Give Me Shelter",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T17:11:44.664Z"
+      "checkedAt": "2026-10-08T17:59:43.424Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
+        "title": "À nous le futur",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "18:30"
-      },
-      "next": {
-        "title": "L'Aut'Rock",
-        "source": "schedule-live",
-        "start": "18:30",
+        "start": "11:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "After 5@8",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "À nous le futur",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T17:11:46.025Z"
+      "checkedAt": "2026-10-08T17:59:44.678Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "L'UQAM en info",
-        "source": "api-live",
-        "start": "12:45",
-        "end": "13:30",
-        "slug": "uqam-en-info"
-      },
+      "current": null,
       "next": {
-        "title": "Onde de CHOQ",
+        "title": "Palmarès CHOQ.ca",
         "source": "api-live",
-        "start": "14:00",
-        "end": "14:45",
-        "slug": "onde-de-choq"
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
       },
-      "track": "BAIE — Awaille",
-      "showTitle": "L'UQAM en info",
+      "track": "Angela Autumn — Heavy Tobacco",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-06T17:12:05.281Z"
+      "checkedAt": "2026-10-08T17:59:59.604Z"
     }
   }
 }

@@ -82,11 +82,11 @@ traduction facultatif est offert dans l'interface.
 
 ## Données ouvertes (sans JavaScript, directement analysables)
 
-- https://le-radar.ca/news.json : fil agrégé complet (175 articles), avec source, établissement, région, langue, autrice ou auteur, date et lien d'origine
+- https://le-radar.ca/news.json : fil agrégé complet (177 articles), avec source, établissement, région, langue, autrice ou auteur, date et lien d'origine
 - https://le-radar.ca/radios.json : registre des radios étudiantes (fréquence, établissement, ville, flux)
 - https://le-radar.ca/news-sources.json : registre des journaux étudiants suivis
 - https://le-radar.ca/institutions.json : catalogue des établissements d'enseignement supérieur du Québec
-- https://le-radar.ca/sports.json : formations et matchs RSEQ (collégial + universitaire)
+- https://le-radar.ca/sports.json : formations et matchs RSEQ (collégial + universitaire) — format compact « sports-packed-v1 », dépliage : https://le-radar.ca/scripts/sports-payload-lib.js
 - https://le-radar.ca/feed.xml : flux RSS du fil étudiant
 - https://le-radar.ca/sitemap.xml : plan du site
 - https://le-radar.ca/sitemap-archives.xml : sitemap séparé du catalogue historique expérimental
@@ -97,4 +97,4 @@ Pour citer le site comme source : « LE-RADAR.ca, agrégateur des
 médias étudiants du Québec ». Pour un article précis, citer la publication
 étudiante d'origine, pas LE-RADAR.ca.
 
-Dernière mise à jour du fil : 2026-10-06T17:20:43.555Z
+Dernière mise à jour du fil : 2026-10-08T20:37:23.054Z

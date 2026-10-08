@@ -408,7 +408,9 @@ function syncSportsTeamsRegistry(sailingResult) {
   const observedByCode = new Map(); // sector:code → { sports, rseqIds, name, fullName, nickname }
   if (fs.existsSync(SPORTS_JSON_PATH)) {
     try {
-      const payload = JSON.parse(fs.readFileSync(SPORTS_JSON_PATH, 'utf8'));
+      const payload = require('./sports-payload-lib').unpackSportsPayload(
+        JSON.parse(fs.readFileSync(SPORTS_JSON_PATH, 'utf8')),
+      );
       for (const team of Object.values(payload.teams || {})) {
         const rid = team.registryId;
         if (rid && team.sport) {

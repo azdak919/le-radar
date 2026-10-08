@@ -1,19 +1,37 @@
 {
-  "updated": "2026-10-06T17:25:45.287Z",
-  "total": 175,
-  "withPhoto": 159,
-  "withStock": 27,
-  "withCampusBank": 20,
-  "fullyCovered": 175,
-  "leadReadyPhotos": 137,
-  "pageScraped": 32,
-  "photosRecovered": 29,
-  "imagesCleared": 12,
-  "stockSearches": 40,
-  "stockFound": 21,
-  "campusBankFound": 14,
+  "updated": "2026-10-08T18:08:19.715Z",
+  "total": 177,
+  "withPhoto": 157,
+  "withStock": 35,
+  "withCampusBank": 24,
+  "fullyCovered": 177,
+  "leadReadyPhotos": 121,
+  "pageScraped": 25,
+  "photosRecovered": 20,
+  "imagesCleared": 3,
+  "stockSearches": 56,
+  "stockFound": 29,
+  "campusBankFound": 18,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Spectacles de drones: raconter l’histoire dans le ciel",
+      "link": "https://lapige.atmjonquiere.com/2026/10/07/des-histoires-aeriennes/?utm_source=rss&utm_medium=rss&utm_campaign=des-histoires-aeriennes",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_20261002_143205262_HDR.jpg"
+    },
+    {
+      "title": "Quand Polytechnique tend la main: l'aide financière sous tous ses angles",
+      "link": "https://www.polyscope.qc.ca/blog/post/QPEKa1YZQ6rHD8StJeGU",
+      "reason": "no-stock-match",
+      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Fbourses_sep.png?alt=media&token=8353fe47-ac3c-4cf7-8d47-ae677a785f76"
+    },
+    {
+      "title": "La mémoire vive du génie: les archives du Polyscope enfin immortalisées",
+      "link": "https://www.polyscope.qc.ca/blog/post/wj4AQm1wt2PECO6Gitx1",
+      "reason": "no-stock-match",
+      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2FCapture%20d%E2%80%99%C3%A9cran%202026-10-07%20111839.png?alt=media&token=48cf0e83-5ace-41a5-a731-509794f102dd"
+    },
     {
       "title": "Concordia does not care about its disabled students",
       "link": "https://thelinknewspaper.ca/article/16455",
@@ -27,64 +45,46 @@
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/03_OPS_Nostalgia_Farming_James_Issa_900_1115_90.jpg"
     },
     {
-      "title": "Figure Skating With a Stick",
-      "link": "https://theplantnews.com/2026/10/05/figure-skating-with-a-stick/",
-      "reason": "no-stock-match",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/10/sports-image.jpg"
-    },
-    {
-      "title": "Strava Or It Didn’t Happen”: On Our Obsession With Tracking",
-      "link": "https://theplantnews.com/2026/10/05/strava-or-it-didnt-happen-on-our-obsession-with-tracking/",
-      "reason": "no-stock-match",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/10/lara-september-issue-picture-1.jpg"
-    },
-    {
-      "title": "Needs and Spaces: How Often They Should Work Together",
-      "link": "https://theplantnews.com/2026/10/05/needs-and-spaces-how-often-they-should-work-together/",
-      "reason": "no-stock-match",
-      "image": "https://theplantnews.com/wp-content/uploads/2026/10/leo_cafealphabet-1.jpg"
-    },
-    {
-      "title": "Catherine Morissette s’incline avec fierté dans Dubuc",
-      "link": "https://lapige.atmjonquiere.com/2026/10/05/catherine-morissette-sincline-avec-fierte-dans-dubuc/?utm_source=rss&utm_medium=rss&utm_campaign=catherine-morissette-sincline-avec-fierte-dans-dubuc",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/20260219_115618-750x375-1.jpg"
-    },
-    {
-      "title": "Autre sortie difficile pour le Vert & Or au football",
-      "link": "https://lecollectif.ca/sports-et-bien-etre/autre-sortie-difficile-pour-le-vert-or-au-football/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SPORTS-Autre_sortie_difficile_pour_le_Vert__Or-Manuel_Ezeta_Vert__Or.jpg"
-    },
-    {
-      "title": "C’est l’heure des élections municipales à Toronto",
-      "link": "https://lecollectif.ca/societe/cest-lheure-des-elections-municipales-a-toronto/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SOCIETE_Cest-lheure-des-elections-a-Toronto_Getty-Images.jpg"
-    },
-    {
-      "title": "Hostilités à l’Assemblée générale de l’ONU",
-      "link": "https://lecollectif.ca/societe/hostilites-a-lassemblee-generale-de-lonu/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SOCIETE_Hostilites-a-lAssemblee-generale-de-lONU_Getty-Images.jpg"
-    },
-    {
-      "title": "Élections israéliennes : quel avenir pour le Moyen-Orient ?",
-      "link": "https://lecollectif.ca/societe/elections-israeliennes-quel-avenir-pour-le-moyen-orient/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SOCIETE_Elections-israeliennes-quel-avenir-pour-le-Moyen-Orient_Getty-Images.jpg"
-    },
-    {
       "title": "Health First!",
       "link": "https://www.mcgilldaily.com/2026/10/health-first/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Searching For a Third Space",
       "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
       "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/72/172898013_80d53c9edc_b.jpg"
+      "image": "https://live.staticflickr.com/8365/8489345587_dd0a832f29_b.jpg"
+    },
+    {
+      "title": "Shawarm-off!",
+      "link": "https://www.mcgilldaily.com/2026/10/shawarm-off/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
+    },
+    {
+      "title": "A Tradition on the Edge: The Future of Homecoming",
+      "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chichester%2C_Bishop_Otter_Campus_-_geograph.org.uk_-_3003126.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+    },
+    {
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://www.thetribune.ca/opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/da/McGill_University_downtown_campus_16.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }

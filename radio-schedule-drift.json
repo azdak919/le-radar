@@ -1,45 +1,42 @@
 {
-  "checkedAt": "2026-10-06T02:55:27.930Z",
+  "checkedAt": "2026-10-08T02:40:32.146Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 4,
-    "drift": [
+    "stable": 5,
+    "drift": [],
+    "overhaul": [
       "chyz"
     ],
-    "overhaul": [],
-    "unreachable": [
-      "cjlo"
-    ]
+    "unreachable": []
   },
   "stations": [
     {
       "id": "chyz",
-      "published": 39,
-      "fresh": 32,
+      "published": 34,
+      "fresh": 40,
       "added": [
-        "dim 14:45–17:30 Remparts de Québec",
+        "dim 19:00–21:00 Le Monde d'Erik Arsenault - 10 ans",
+        "mar 19:00–20:00 CATHJO FAIT DE LA RADIO",
+        "mer 11:00–12:00 On en Parle",
+        "mer 21:30–22:30 Blasphème",
+        "jeu 11:30–12:30 Conduite Antisportive",
+        "ven 16:00–17:30 Chéri.e, j’arrive!",
+        "ven 18:45–21:30 Remparts de Québec",
+        "sam 12:00–13:00 Un Samedi d'Ici",
+        "sam 13:00–16:00 Radio Futura",
+        "sam 18:30–22:30 Football du Rouge et Or"
+      ],
+      "removed": [
         "mar 10:00–11:30 L'art des Histoires",
+        "mer 11:00–11:30 Question de savoir",
         "sam 13:00–15:30 Radio Futura",
         "sam 15:45–18:30 Remparts de Québec"
       ],
-      "removed": [
-        "dim 13:00–15:30 Radio Futura",
-        "dim 15:45–18:30 Remparts de Québec",
-        "lun 16:00–17:00 Chéri.e, Jme Mobilise!",
-        "mar 19:00–20:00 CATHJO FAIT DE LA RADIO",
-        "mer 11:00–11:30 Question de savoir",
-        "mer 11:30–12:00 On en Parle",
-        "mer 13:00–14:00 ON EST OÙ LÀ?",
-        "mer 21:30–22:30 Blasphème",
-        "ven 18:45–21:30 Remparts de Québec",
-        "sam 12:00–12:30 Un Monde de Couleurs et de Son",
-        "sam 12:30–16:30 Football du Rouge et Or"
-      ],
-      "changed": 15,
-      "ratio": 0.385,
-      "status": "drift"
+      "changed": 14,
+      "ratio": 0.412,
+      "status": "overhaul"
     },
     {
       "id": "cism",
@@ -64,12 +61,12 @@
     {
       "id": "cjlo",
       "published": 379,
-      "fresh": 0,
+      "fresh": 379,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
-      "status": "unreachable"
+      "status": "stable"
     },
     {
       "id": "cfak",

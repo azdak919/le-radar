@@ -559,6 +559,11 @@
       const res = await fetch('sports.json', { cache: 'no-store' });
       if (!res.ok) throw new Error(String(res.status));
       let data = await res.json();
+      // sports.json est « packed » (scripts/sports-payload-lib.js).
+      if (typeof RadarSportsPayload !== 'undefined'
+          && typeof RadarSportsPayload.unpackSportsPayload === 'function') {
+        data = RadarSportsPayload.unpackSportsPayload(data);
+      }
       if (typeof RadarSportsFreshness !== 'undefined'
           && typeof RadarSportsFreshness.pruneSportsPayload === 'function') {
         data = RadarSportsFreshness.pruneSportsPayload(data);
