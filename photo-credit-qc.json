@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-08T02:34:49.153Z",
+  "updated": "2026-10-08T05:18:25.382Z",
   "total": 177,
   "withImage": 157,
   "withCredit": 157,
@@ -7,9 +7,9 @@
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 6,
-  "citedNew": 3,
+  "checked": 14,
+  "updatedCount": 7,
+  "citedNew": 4,
   "fallbackNew": 10,
   "samples": [
     {
@@ -20,18 +20,11 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
+      "title": "Le « self-care » : qui valide votre repos ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
-      "cited": true,
-      "method": "via-attribution"
     },
     {
       "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
@@ -53,6 +46,20 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
