@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-08T06:22:49.684Z",
+  "updated": "2026-10-08T09:21:01.589Z",
   "total": 177,
   "withImage": 157,
   "withCredit": 157,
@@ -7,22 +7,15 @@
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 7,
-  "citedNew": 4,
+  "checked": 11,
+  "updatedCount": 4,
+  "citedNew": 1,
   "fallbackNew": 10,
   "samples": [
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "Est-ce que je dois un bébé à l’État ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Scott Tan",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -46,20 +39,6 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
-      "cited": true,
-      "method": "via-attribution"
     }
   ]
 }
