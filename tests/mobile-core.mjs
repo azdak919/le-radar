@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { existsSync, lstatSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import core from '../mobile/app/js/core.js';
 import follow from '../scripts/media-follow-store.js';
@@ -192,6 +193,30 @@ const article = read('article/index.html');
 assert.ok(shell.indexOf('id="player-audio"') > shell.indexOf('</main>'), 'audio radio hors de #screen');
 assert.equal((shell.match(/<audio\b/g) || []).length, 1, 'un seul <audio> dans la coquille');
 assert.equal(/<audio\s/.test(appJs), false, 'aucun <audio> rendu dans un écran');
+assert.match(shell, /Journaux, radios et sports étudiants du Québec,/);
+assert.match(shell, /réunis au même endroit/);
+assert.doesNotMatch(shell, /Médias étudiants du Québec/);
+assert.match(shell, /LE-RADAR\.ca/);
+assert.match(shell, /id="translate-toggle"/);
+assert.match(shell, /js\/translate\.js/);
+assert.match(prepare, /translate\.js/);
+assert.match(prepare, /indigenous-mt\.json/);
+const prepared = spawnSync(process.execPath, ['mobile/scripts/prepare.mjs'], { cwd: root, encoding: 'utf8' });
+assert.equal(prepared.status, 0, prepared.stderr);
+for (const rel of ['mobile/www/js/translate.js', 'mobile/www/css/translate-menu.css', 'mobile/www/img/masthead.jpg']) {
+  const st = lstatSync(join(root, rel));
+  assert.equal(st.isSymbolicLink(), false, `${rel} doit être un fichier, pas le lien d’aperçu`);
+  assert.equal(st.isFile(), true, rel);
+}
+assert.equal(read('mobile/www/js/translate.js'), read('translate.js'));
+assert.match(shell, /id="wire-title"/);
+assert.match(shell, /Le fil étudiant/);
+assert.match(appJs, /theme-cycle/);
+assert.match(shell, /id="theme-toggle"/);
+assert.match(prepare, /masthead\.jpg/);
+const translate = read('translate.js');
+assert.match(translate, /Québec student newspapers, campus radio and sports,/);
+assert.match(translate, /all in one place/);
 assert.equal(shell.includes('umami'), false);
 assert.equal(shell.includes('news-archive'), false);
 assert.equal(shell.includes('radar-news.js'), false);

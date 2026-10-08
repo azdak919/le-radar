@@ -39,7 +39,7 @@
     ? TRANSLATE_API_BASE
     : 'https://le-radar-translate.azdak.workers.dev';
   /** Mât, tuner, CTA, nav, tête du fil, pied — avant les articles. */
-  const CHROME_SELECTOR = 'header.masthead, #tuner, #masthead-sports-strip, nav.site-sections, .wire-head, .site-foot';
+  const CHROME_SELECTOR = 'header.masthead, header.top, nav.tabs, .player, a.skip, #tuner, #masthead-sports-strip, nav.site-sections, .wire-head, .site-foot';
 
   /**
    * Catalogue de langues.
@@ -862,9 +862,21 @@
     }
   }
 
+  /**
+   * Chemin d’un JSON du site. L’application téléphone pose
+   * RADAR_TRANSLATE_ASSETS (data/ dans l’APK, racine du dépôt en preview).
+   */
+  function translateAsset(file) {
+    try {
+      const map = globalThis.RADAR_TRANSLATE_ASSETS;
+      if (map && typeof map[file] === 'string' && map[file]) return map[file];
+    } catch { /* pas de global */ }
+    return `./${file}`;
+  }
+
   function loadIndigenousRegistry() {
     if (indigenousRegistryReady) return Promise.resolve();
-    return fetch('./indigenous-mt.json', { cache: 'no-store' })
+    return fetch(translateAsset('indigenous-mt.json'), { cache: 'no-store' })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (data) applyIndigenousRegistry(data);
@@ -893,7 +905,7 @@
   let mutateObserver = null;
   /** Noms de médias étudiants (propres) — ne jamais traduire. */
   const protectedMediaNames = new Set([
-    'Le Radar', 'LE RADAR', 'Le radar',
+    'Le Radar', 'LE RADAR', 'Le radar', 'LE-RADAR',
     'LE-RADAR.ca', 'Le-Radar.ca', 'le-radar.ca',
     'LE·RADAR.ca', 'LE.RADAR.ca', 'LE RADAR.ca',
   ]);
@@ -1376,6 +1388,156 @@
    * Clés = texte source affiché en FR dans le shell.
    */
   const UI_PHRASES = {
+    // Slogan public du site (mât) et chrome de l’application téléphone.
+    // L’anglais est figé : c’est la même phrase que TAGLINE_EN, pas un calque gtx.
+    'Journaux, radios et sports étudiants du Québec,': {
+      en: 'Québec student newspapers, campus radio and sports,',
+    },
+    'réunis au même endroit': { en: 'all in one place' },
+    'Aller au contenu': { en: 'Skip to content' },
+    Explorer: { en: 'Explore' },
+    Recherche: { en: 'Search' },
+    Enregistrés: { en: 'Saved' },
+    Réglages: { en: 'Settings' },
+    'Chargement du fil…': { en: 'Loading the feed…' },
+    'Radio en cours': { en: 'Radio playing' },
+    Écouter: { en: 'Listen' },
+    'Arrêter la radio': { en: 'Stop the radio' },
+    'Sections de l’application': { en: 'App sections' },
+    Enregistrer: { en: 'Save' },
+    Enregistré: { en: 'Saved' },
+    Partager: { en: 'Share' },
+    Tout: { en: 'All' },
+    Régions: { en: 'Regions' },
+    'Mots-clés': { en: 'Keywords' },
+    Suivie: { en: 'Following' },
+    'Afficher la suite': { en: 'Show more' },
+    'Aucun article dans le fil pour le moment.': { en: 'No articles in the feed right now.' },
+    'Vous ne suivez encore aucun média, ou leurs articles sont masqués.': {
+      en: 'You do not follow any outlet yet, or their articles are hidden.',
+    },
+    'Choisir des médias': { en: 'Choose outlets' },
+    'Aucun article ne contient vos mots-clés.': { en: 'No article contains your keywords.' },
+    'Modifier les mots-clés': { en: 'Edit keywords' },
+    'Aucune région suivie, ou aucun article correspondant.': {
+      en: 'No region followed, or no matching article.',
+    },
+    'Choisir des régions': { en: 'Choose regions' },
+    'Marquer comme vu': { en: 'Mark as seen' },
+    'Suivez un journal, une région ou une radio. Le texte intégral reste chez la publication.': {
+      en: 'Follow a paper, a region or a station. The full article stays at the publication.',
+    },
+    'Filtrer les médias': { en: 'Filter outlets' },
+    'Aucun média ne correspond.': { en: 'No outlet matches.' },
+    masqué: { en: 'hidden' },
+    'Retour à Explorer': { en: 'Back to Explore' },
+    'Site de': { en: 'Website of' },
+    'Fiche sur le-radar.ca': { en: 'Profile on le-radar.ca' },
+    Média: { en: 'Outlet' },
+    'Ce média n’est pas dans le registre chargé.': { en: 'This outlet is not in the loaded registry.' },
+    Réafficher: { en: 'Show again' },
+    Masquer: { en: 'Hide' },
+    'Dans le fil': { en: 'In the feed' },
+    'Aucun article de ce média dans le fil chargé.': { en: 'No articles from this outlet in the loaded feed.' },
+    'Retour aux radios': { en: 'Back to stations' },
+    'Radio introuvable': { en: 'Station not found' },
+    'En ondes :': { en: 'On air:' },
+    'Écouter en direct': { en: 'Listen live' },
+    'Mettre en pause': { en: 'Pause' },
+    Pause: { en: 'Pause' },
+    'La radio reste dans la barre du bas pendant que vous parcourez l’application. L’écoute écran verrouillé n’est pas garantie.': {
+      en: 'The station stays in the bottom bar while you move through the app. Lock-screen playback is not guaranteed.',
+    },
+    'Pas de flux HTTPS validé. La station s’écoute sur son site.': {
+      en: 'No validated HTTPS stream. The station plays on its website.',
+    },
+    'Ouvrir le site de': { en: 'Open the website of' },
+    'Connexion au direct…': { en: 'Connecting to the live stream…' },
+    'Flux indisponible. Touchez lecture pour réessayer.': {
+      en: 'Stream unavailable. Tap play to try again.',
+    },
+    'Saisissez au moins deux lettres. La recherche couvre le fil chargé : titres, sources, auteurices et extraits.': {
+      en: 'Type at least two letters. Search covers the loaded feed: titles, sources, authors and excerpts.',
+    },
+    'Aucun résultat dans le fil chargé.': { en: 'No results in the loaded feed.' },
+    'Rechercher dans le fil': { en: 'Search the feed' },
+    'Les favoris et l’historique restent sur cet appareil. Le texte intégral n’est pas téléchargé.': {
+      en: 'Favorites and history stay on this device. The full article is not downloaded.',
+    },
+    Favoris: { en: 'Favorites' },
+    Historique: { en: 'History' },
+    'Confirmer l’effacement': { en: 'Confirm erase' },
+    'Effacer l’historique': { en: 'Erase history' },
+    'Effacer les favoris': { en: 'Erase favorites' },
+    'Aucun article consulté récemment.': { en: 'No recently opened articles.' },
+    'Aucun favori pour le moment.': { en: 'No favorites yet.' },
+    Thème: { en: 'Theme' },
+    'Thème : système': { en: 'Theme: system' },
+    'Thème : clair': { en: 'Theme: light' },
+    'Thème : sombre': { en: 'Theme: dark' },
+    Système: { en: 'System' },
+    'Radios étudiantes': { en: 'Campus radio' },
+    Clair: { en: 'Light' },
+    Sombre: { en: 'Dark' },
+    'Un mot-clé filtre le fil « Mots-clés ». Il reste sur l’appareil.': {
+      en: 'A keyword filters the Keywords feed. It stays on the device.',
+    },
+    'Ajouter un mot-clé': { en: 'Add a keyword' },
+    Ajouter: { en: 'Add' },
+    Retirer: { en: 'Remove' },
+    'Sources masquées': { en: 'Hidden sources' },
+    'Aucune source masquée.': { en: 'No hidden source.' },
+    Notifications: { en: 'Notifications' },
+    'Aucun envoi système n’est branché. Ces cases mémorisent un choix sur l’appareil et ne transmettent rien. Le rappel des nouveaux articles de vos suivis s’affiche dans l’accueil.': {
+      en: 'No system alert is connected. These boxes remember a choice on the device and send nothing. The reminder of new articles from outlets you follow shows on Home.',
+    },
+    'Nouveautés des médias suivis': { en: 'New articles from followed outlets' },
+    'Résumé quotidien': { en: 'Daily summary' },
+    'Nouveau média ajouté à LE-RADAR': { en: 'New outlet added to LE-RADAR' },
+    'Autoriser un futur envoi (reste inactif)': { en: 'Allow a future alert (stays off)' },
+    'Vie privée': { en: 'Privacy' },
+    'Pas de compte, pas de publicité, pas de mesure d’audience dans l’application. Favoris, suivis, historique et mots-clés restent dans ce navigateur ou cette application. Charger le fil contacte le-radar.ca. Les images et les articles originaux sont demandés aux publications, qui voient alors une requête HTTPS ordinaire.': {
+      en: 'No account, no ads, no audience measurement in the app. Favorites, follows, history and keywords stay in this browser or this app. Loading the feed contacts le-radar.ca. Images and original articles are requested from the publications, which then see an ordinary HTTPS request.',
+    },
+    'Ouvrir le-radar.ca': { en: 'Open le-radar.ca' },
+    'Code source': { en: 'Source code' },
+    'Garder Android ouvert': { en: 'Keep Android Open' },
+    'Campagne contre la vérification obligatoire des développeurs Google, soutenue par F-Droid.': {
+      en: 'Campaign against Google’s mandatory developer verification, supported by F-Droid.',
+    },
+    'Données locales': { en: 'Local data' },
+    'Confirmer l’effacement de tout': { en: 'Confirm erasing everything' },
+    'Effacer toutes les données de l’application': { en: 'Erase all app data' },
+    Version: { en: 'Version' },
+    '· application de découverte, distincte du site.': {
+      en: '· discovery app, separate from the website.',
+    },
+    'Fiche introuvable': { en: 'Card not found' },
+    'Cet article n’est plus dans le fil chargé, ni dans les favoris.': {
+      en: 'This article is no longer in the loaded feed or in favorites.',
+    },
+    'Retour au fil': { en: 'Back to the feed' },
+    'Cet article est publié par': { en: 'This article is published by' },
+    'LE-RADAR ne le reproduit pas et n’en est pas l’auteur.': {
+      en: 'LE-RADAR does not reproduce it and is not its author.',
+    },
+    'la publication d’origine': { en: 'the original publication' },
+    Publication: { en: 'Publication' },
+    Source: { en: 'Source' },
+    'Partager l’original': { en: 'Share the original' },
+    'Partager la fiche': { en: 'Share the card' },
+    'Lire l’article original': { en: 'Read the original article' },
+    'Aucun fil disponible hors ligne.': { en: 'No feed available offline.' },
+    'Copie locale du fil. Les articles originaux demandent une connexion.': {
+      en: 'Local copy of the feed. Original articles need a connection.',
+    },
+    'Impossible de démarrer l’application.': { en: 'The app could not start.' },
+    'Ajouté aux favoris.': { en: 'Added to favorites.' },
+    'Retiré des favoris.': { en: 'Removed from favorites.' },
+    'Radio arrêtée.': { en: 'Radio stopped.' },
+    'Données effacées sur cet appareil.': { en: 'Data erased on this device.' },
+    'Illustration de l’article original': { en: 'Illustration from the original article' },
+    'Radio étudiante': { en: 'Campus radio' },
     Suivre: {
       en: 'Follow', es: 'Seguir', pt: 'Seguir', de: 'Folgen', it: 'Segui',
       zh: '关注', ar: 'متابعة', ru: 'Подписаться',
@@ -1937,6 +2099,30 @@
       if (lang === 'fr') return `${n} article${n === '1' ? '' : 's'}`;
     }
 
+    // Application téléphone : libellés dynamiques (le nom propre reste tel quel).
+    if (institutionLangKey(targetLang) === 'en') {
+      const suite = core.match(/^Afficher la suite \((\d+)\)$/);
+      if (suite) {
+        const stem = uiPhraseLookup('Afficher la suite', targetLang) || 'Show more';
+        return `${stem} (${suite[1]})`;
+      }
+      const fresh = core.match(/^(\d+)\s+articles? de vos suivis depuis votre dernière visite\.?$/i);
+      if (fresh) {
+        const n = fresh[1];
+        return `${n} ${n === '1' ? 'article' : 'articles'} from the outlets you follow since your last visit.`;
+      }
+      const readAt = core.match(/^Lire chez (.+)$/);
+      if (readAt) return `Read at ${readAt[1]}`;
+      const listen = core.match(/^Écouter (.+)$/);
+      if (listen && listen[1] !== 'en direct') return `Listen to ${listen[1]}`;
+      const pauseNamed = core.match(/^Mettre (.+) en pause$/);
+      if (pauseNamed && pauseNamed[1] !== 'en pause') return `Pause ${pauseNamed[1]}`;
+      const openCard = core.match(/^(.+) : ouvrir la fiche$/);
+      if (openCard) return `Open the ${openCard[1]} card`;
+      const illus = core.match(/^Illustration publiée par (.+)$/);
+      if (illus) return `Illustration published by ${illus[1]}`;
+    }
+
     return null;
   }
 
@@ -2330,7 +2516,7 @@
 
   function loadProtectedMediaNames() {
     if (mediaNamesReady) return Promise.resolve();
-    return fetch('./news-sources.json', { cache: 'no-store' })
+    return fetch(translateAsset('news-sources.json'), { cache: 'no-store' })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         for (const s of data?.active || []) {

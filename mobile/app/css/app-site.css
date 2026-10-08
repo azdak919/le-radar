@@ -1,0 +1,95 @@
+/* Adaptations de la coquille autour des feuilles du site.
+   Les règles du mât, du syntoniseur, du fil et des sports viennent du site.
+   Ici : seulement ce que l’application change (onglets, hors accueil, focus). */
+
+html { overflow-x: hidden; }
+
+.skip { color: var(--accent-ink); }
+
+#bg-photo-layer:not(.loaded) {
+  opacity: 1;
+  background-image: url("../img/masthead.jpg");
+}
+
+button.masthead-icon,
+.install-menu__item,
+.translate-toggle {
+  min-height: 0;
+}
+
+.tuner button { min-height: 0; }
+
+#home-wire {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 8px var(--pad) 0;
+}
+
+#home-wire[hidden] { display: none !important; }
+
+#home-wire .wire-head {
+  border-bottom: 2px solid var(--rule-strong);
+  margin-top: 0;
+}
+
+/* Le titre du fil est hors de #screen pour rester à côté du sélecteur de langue. */
+body.is-home #screen { padding-top: 10px; }
+
+/* Hors accueil : le mât photo du site laisserait trop peu de place aux outils. */
+body:not(.is-home) #bg-photo-layer,
+body:not(.is-home) .bg-photo-scrim,
+body:not(.is-home) .bg-photo-credit,
+body:not(.is-home) .masthead-shuffle-slot,
+body:not(.is-home) .masthead-date,
+body:not(.is-home) .wordmark-full,
+body:not(.is-home) .masthead-icon:not(.theme-toggle),
+body:not(.is-home) #tuner,
+body:not(.is-home) .masthead-weather-dock,
+body:not(.is-home) #masthead-sports-strip,
+body:not(.is-home) .site-sections {
+  display: none !important;
+}
+
+body:not(.is-home) .masthead {
+  background: var(--bg);
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+}
+
+body:not(.is-home) .masthead-inner { padding-bottom: 8px; }
+
+body:not(.is-home) .masthead-brand,
+body:not(.is-home) .wordmark {
+  align-items: flex-start;
+  text-align: left;
+}
+
+body:not(.is-home) .wordmark-mark,
+body:not(.is-home) .wordmark-brand {
+  color: var(--ink) !important;
+  text-shadow: none !important;
+  font-size: 1.15rem !important;
+  text-align: left;
+}
+
+body:not(.is-home) .masthead-icon.theme-toggle {
+  color: var(--ink);
+  background: var(--bg);
+  border-color: var(--rule);
+  box-shadow: none;
+}
+
+/* La colonne d’app reste celle d’un téléphone, même dans une fenêtre large. */
+@media (min-width: 1280px) {
+  .shell .wordmark-full,
+  .shell .masthead:has(#bg-photo-layer.loaded) .wordmark-full {
+    flex-direction: column;
+    width: auto;
+    max-width: calc(100% - 8px);
+    white-space: normal;
+  }
+}
+
+.tabs { z-index: 30; }
+
+.player { z-index: 31; }

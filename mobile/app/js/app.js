@@ -1,7 +1,7 @@
 /**
  * Interface téléphone de LE-RADAR.
- * Le site le-radar.ca reste une autre surface : ici, fil personnel,
- * fiches, enregistrements et radios — pas le mât du site.
+ * L’accueil reprend le mât mobile du site (photo, syntoniseur, météo,
+ * sports). Le fil, les onglets et la barre radio restent ceux de l’app.
  *
  * Radio : barre #player dans la coquille, hors de #screen (jamais
  * re-rendue). Sur le web / iOS : un seul <audio>. Sur Android natif :
@@ -27,6 +27,8 @@
     confirm: '',
     recorded: '',
     routeKey: '',
+    tunedId: '',
+    homeCountLabel: '',
   };
 
   // status : idle (barre cachée) · loading · playing · paused · error
@@ -157,9 +159,18 @@
     } catch { /* appareil sans retour haptique */ }
   }
 
+  function uiText(fr) {
+    const raw = String(fr ?? '');
+    try {
+      const api = window.RadarTranslate;
+      if (api && typeof api.displayUiText === 'function') return api.displayUiText(raw);
+    } catch { /* module pas prêt */ }
+    return raw;
+  }
+
   function announce(message) {
     const node = document.getElementById('status');
-    if (node) node.textContent = message || '';
+    if (node) node.textContent = uiText(message || '');
   }
 
   async function openExternal(url) {
@@ -280,7 +291,7 @@
     const time = Date.parse(iso || '');
     if (Number.isNaN(time)) return '';
     try {
-      return new Intl.DateTimeFormat('fr-CA', {
+      return new Intl.DateTimeFormat(document.documentElement.lang || 'fr-CA', {
         dateStyle: 'medium',
         timeStyle: 'short',
         timeZone: 'America/Toronto',
@@ -298,23 +309,31 @@
 
   function imageHtml(meta) {
     if (!meta.image) return '';
-    const alt = meta.source ? `Illustration publiée par ${meta.source}` : 'Illustration de l’article original';
+    const alt = meta.source
+      ? uiText(`Illustration publiée par ${meta.source}`)
+      : uiText('Illustration de l’article original');
     return `<img class="card-photo" src="${esc(meta.image)}" alt="${esc(alt)}" loading="lazy" decoding="async" width="640" height="427">`;
   }
 
-  function cardHtml(item) {
+  function cardHtml(item, lead) {
     const meta = core().articleMeta(item);
     if (!meta) return '';
     const saved = core().isFavorite(loadLibrary(), meta.id);
-    const lang = meta.lang === 'en' ? '<span class="lang">EN</span>' : '';
-    const author = meta.author ? ` · ${esc(meta.author)}` : '';
-    return `<article class="card">
+    const lang = meta.lang === 'en' ? '<span class="lang notranslate" translate="no">EN</span>' : '';
+    const author = meta.author
+      ? `<p class="card-by"><span>Par </span><span class="article-author">${esc(meta.author)}</span></p>`
+      : '';
+    const sourceClass = meta.source ? 'article-source' : '';
+    return `<article class="card${lead ? ' card-lead' : ''}">
       <a class="card-open" href="#/article/${meta.id}">
-        ${imageHtml(meta)}
-        <p class="card-source">${swatch(meta.institution)}<span>${esc(meta.source || 'Source')}</span>${lang}</p>
+        <div class="card-top">
+          <p class="card-source">${swatch(meta.institution)}<span class="${sourceClass}">${esc(meta.source || 'Source')}</span>${lang}</p>
+          <time class="notranslate" datetime="${esc(meta.date)}">${esc(formatDate(meta.date))}</time>
+        </div>
         <h2 class="card-title">${esc(meta.title)}</h2>
+        ${author}
+        ${imageHtml(meta)}
         ${meta.excerpt ? `<p class="card-excerpt">${esc(meta.excerpt)}</p>` : ''}
-        <p class="card-meta"><time datetime="${esc(meta.date)}">${esc(formatDate(meta.date))}</time>${author}</p>
       </a>
       <div class="card-actions">
         <button type="button" data-action="save" data-id="${meta.id}" aria-pressed="${saved ? 'true' : 'false'}">${saved ? 'Enregistré' : 'Enregistrer'}</button>
@@ -323,9 +342,10 @@
     </article>`;
   }
 
-  function cardsHtml(items, empty) {
+  function cardsHtml(items, empty, leadLabel) {
     if (!items.length) return `<p class="empty">${empty}</p>`;
-    return `<div class="cards">${items.map(cardHtml).join('')}</div>`;
+    const kicker = leadLabel ? '<p class="wire-kicker">À la une</p>' : '';
+    return `${kicker}<div class="cards">${items.map((item, index) => cardHtml(item, leadLabel && index === 0)).join('')}</div>`;
   }
 
   function chip(href, label, current) {
@@ -359,16 +379,15 @@
     const more = shown.length < filtered.length
       ? `<button type="button" class="wide" data-action="more">Afficher la suite (${filtered.length - shown.length})</button>`
       : '';
-    return `<h1>Accueil</h1>
-      <p class="lede">Journaux, radios et sports étudiants du Québec, réunis au même endroit.</p>
-      ${freshHtml}
+    state.homeCountLabel = `${filtered.length} ${filtered.length === 1 ? 'article' : 'articles'}`;
+    return `${freshHtml}
       <nav class="chips" aria-label="Filtre du fil">
         ${chip('#/accueil?filtre=tout', 'Tout', mode === 'tout')}
         ${chip('#/accueil?filtre=suivis', 'Suivis', mode === 'suivis')}
         ${chip('#/accueil?filtre=regions', 'Régions', mode === 'regions')}
         ${chip('#/accueil?filtre=mots', 'Mots-clés', mode === 'mots')}
       </nav>
-      ${cardsHtml(shown, empty)}
+      ${cardsHtml(shown, empty, mode === 'tout')}
       ${more}`;
   }
 
@@ -390,13 +409,13 @@
       body = `<ul class="plain">${regions.map((source) => {
         const on = prefs.regions.includes(source.regionId);
         return `<li class="source-row">
-          <span><span class="source-name">${esc(source.region)}</span></span>
+          <span><span class="source-name notranslate">${esc(source.region)}</span></span>
           <button type="button" data-action="region" data-id="${esc(source.regionId)}" aria-pressed="${on ? 'true' : 'false'}">${on ? 'Suivie' : 'Suivre'}</button>
         </li>`;
       }).join('')}</ul>`;
     } else if (section === 'radios') {
       body = `<ul class="plain">${state.radios.map((radio) => `<li class="source-row">
-        <a href="#/radio/${esc(radio.id)}"><span class="source-name">${esc(radio.name)}</span><span class="source-meta">${esc(radio.institution)}</span></a>
+        <a href="#/radio/${esc(radio.id)}"><span class="source-name notranslate">${esc(radio.name)}</span><span class="source-meta article-inst">${esc(radio.institution)}</span></a>
         ${radio.stream ? radioToggleHtml(radio, 'Écouter', 'Pause') : ''}
       </li>`).join('')}</ul>`;
     } else {
@@ -412,8 +431,8 @@
           const hidden = prefs.hidden.includes(source.id);
           return `<li class="source-row${hidden ? ' is-hidden' : ''}">
             <a href="#/explorer/source/${esc(source.id)}">
-              <span class="source-name">${swatch(source.institution)}${esc(source.name)}</span>
-              <span class="source-meta">${esc(source.institution)}${source.region ? ` · ${esc(source.region)}` : ''}${hidden ? ' · masqué' : ''}</span>
+              <span class="source-name">${swatch(source.institution)}<span class="article-source">${esc(source.name)}</span></span>
+              <span class="source-meta"><span class="article-inst">${esc(source.institution)}</span>${source.region ? ` · <span class="notranslate">${esc(source.region)}</span>` : ''}${hidden ? ' · <span>masqué</span>' : ''}</span>
             </a>
             <button type="button" data-action="follow" data-name="${esc(source.name)}" aria-pressed="${on ? 'true' : 'false'}">${on ? 'Suivi' : 'Suivre'}</button>
           </li>`;
@@ -436,12 +455,18 @@
     const followed = followIds().includes(route.slug);
     const hidden = core().isHidden(loadPrefs(), route.slug);
     const site = source && source.site
-      ? `<a class="wide link" data-action="external" href="${esc(source.site)}" target="_blank" rel="noopener noreferrer">Site de ${esc(name)}</a>`
+      ? `<a class="wide link" data-action="external" href="${esc(source.site)}" target="_blank" rel="noopener noreferrer">Site de <span class="article-source">${esc(name)}</span></a>`
       : '';
     const fiche = `<a class="wide link" data-action="external" href="https://le-radar.ca/journaux/${esc(route.slug)}/" target="_blank" rel="noopener noreferrer">Fiche sur le-radar.ca</a>`;
+    const title = source
+      ? `<h1><span class="notranslate">${esc(source.name)}</span></h1>`
+      : '<h1>Média</h1>';
+    const lede = source
+      ? `<p class="lede"><span class="article-inst">${esc(source.institution)}</span>${source.region ? ` · <span class="notranslate">${esc(source.region)}</span>` : ''}</p>`
+      : '<p class="lede">Ce média n’est pas dans le registre chargé.</p>';
     return `<p class="back"><a href="#/explorer">Retour à Explorer</a></p>
-      <h1>${esc(source ? source.name : 'Média')}</h1>
-      <p class="lede">${esc(source ? source.institution : 'Ce média n’est pas dans le registre chargé.')}${source && source.region ? ` · ${esc(source.region)}` : ''}</p>
+      ${title}
+      ${lede}
       <div class="row-actions">
         <button type="button" data-action="follow" data-name="${esc(name)}" aria-pressed="${followed ? 'true' : 'false'}">${followed ? 'Suivi' : 'Suivre'}</button>
         <button type="button" data-action="hide" data-id="${esc(route.slug)}" aria-pressed="${hidden ? 'true' : 'false'}">${hidden ? 'Réafficher' : 'Masquer'}</button>
@@ -460,16 +485,19 @@
     ensureNowPlaying();
     const now = core().nowPlayingLabel(player.nowPayload, radio.id);
     const audio = radio.stream
-      ? `<p class="now-line" data-now-for="${esc(radio.id)}"${now ? '' : ' hidden'}>En ondes : <span>${esc(now)}</span></p>
+      ? `<p class="now-line" data-now-for="${esc(radio.id)}"${now ? '' : ' hidden'}>En ondes : <span class="notranslate">${esc(now)}</span></p>
          ${radioToggleHtml(radio, 'Écouter en direct', 'Mettre en pause', 'wide primary')}
          <p class="note">La radio reste dans la barre du bas pendant que vous parcourez l’application. L’écoute écran verrouillé n’est pas garantie.</p>`
       : '<p class="note">Pas de flux HTTPS validé. La station s’écoute sur son site.</p>';
     const site = radio.website
-      ? `<a class="wide link" data-action="external" href="${esc(radio.website)}" target="_blank" rel="noopener noreferrer">Ouvrir le site de ${esc(radio.name)}</a>`
+      ? `<a class="wide link" data-action="external" href="${esc(radio.website)}" target="_blank" rel="noopener noreferrer">Ouvrir le site de <span class="notranslate">${esc(radio.name)}</span></a>`
       : '';
+    const ledeMain = radio.slogan
+      ? esc(radio.slogan)
+      : `<span class="article-inst">${esc(radio.institution)}</span>`;
     return `<p class="back"><a href="#/explorer?section=radios">Retour aux radios</a></p>
-      <h1>${esc(radio.name)}</h1>
-      <p class="lede">${esc(radio.slogan || radio.institution)}${radio.frequency ? ` · ${esc(radio.frequency)}` : ''}</p>
+      <h1 class="notranslate">${esc(radio.name)}</h1>
+      <p class="lede">${ledeMain}${radio.frequency ? ` · <span class="notranslate">${esc(radio.frequency)}</span>` : ''}</p>
       ${audio}
       ${site}`;
   }
@@ -484,7 +512,8 @@
 
   function radioToggleHtml(radio, offLabel, onLabel, extraClass) {
     const on = player.id === radio.id && playerBusy();
-    return `<button type="button"${extraClass ? ` class="${extraClass}"` : ''} data-action="radio-toggle" data-id="${esc(radio.id)}" data-label-off="${esc(offLabel)}" data-label-on="${esc(onLabel)}" aria-pressed="${on ? 'true' : 'false'}">${esc(on ? onLabel : offLabel)}</button>`;
+    const classes = ['notranslate', extraClass].filter(Boolean).join(' ');
+    return `<button type="button" class="${classes}" data-action="radio-toggle" data-id="${esc(radio.id)}" data-label-off="${esc(offLabel)}" data-label-on="${esc(onLabel)}" aria-pressed="${on ? 'true' : 'false'}">${esc(uiText(on ? onLabel : offLabel))}</button>`;
   }
 
   function playerAudio() {
@@ -555,16 +584,16 @@
       if (name) name.textContent = radio.name;
       if (now) {
         let line = player.now || radio.institution || '';
-        if (player.status === 'loading') line = 'Connexion au direct…';
-        else if (player.status === 'error') line = 'Flux indisponible. Touchez lecture pour réessayer.';
+        if (player.status === 'loading') line = uiText('Connexion au direct…');
+        else if (player.status === 'error') line = uiText('Flux indisponible. Touchez lecture pour réessayer.');
         now.textContent = line;
       }
       if (info) {
         info.setAttribute('href', `#/radio/${radio.id}`);
-        info.setAttribute('aria-label', `${radio.name} : ouvrir la fiche`);
+        info.setAttribute('aria-label', uiText(`${radio.name} : ouvrir la fiche`));
       }
       if (toggle) {
-        toggle.setAttribute('aria-label', playerBusy() ? `Mettre ${radio.name} en pause` : `Écouter ${radio.name}`);
+        toggle.setAttribute('aria-label', uiText(playerBusy() ? `Mettre ${radio.name} en pause` : `Écouter ${radio.name}`));
         if (player.status === 'loading') toggle.setAttribute('aria-busy', 'true');
         else toggle.removeAttribute('aria-busy');
       }
@@ -573,7 +602,8 @@
       const on = button.dataset.id === player.id && playerBusy();
       button.setAttribute('aria-pressed', on ? 'true' : 'false');
       const label = on ? button.dataset.labelOn : button.dataset.labelOff;
-      if (label && button.textContent !== label) button.textContent = label;
+      const shown = uiText(label);
+      if (label && button.textContent !== shown) button.textContent = shown;
     }
     for (const line of document.querySelectorAll('[data-now-for]')) {
       const text = core().nowPlayingLabel(player.nowPayload, line.dataset.nowFor);
@@ -583,6 +613,63 @@
     }
     syncMediaSession(radio);
     if (radio && useNativeRadio() && !player.nativeSync) pushNativeMetadata(radio);
+    syncTuner();
+  }
+
+  function syncTuner() {
+    const tuner = document.getElementById('tuner');
+    const select = document.getElementById('tuner-select');
+    const name = document.getElementById('tuner-now-name');
+    const sub = document.getElementById('tuner-now-sub');
+    const play = document.getElementById('tuner-play');
+    if (!tuner || !select) return;
+    if (select.dataset.filled !== '1' && state.radios.length) {
+      for (const station of state.radios) {
+        const option = document.createElement('option');
+        option.value = station.id;
+        option.textContent = station.name;
+        option.className = 'notranslate';
+        option.setAttribute('translate', 'no');
+        select.append(option);
+      }
+      select.dataset.filled = '1';
+      tuner.classList.add('is-dial-ready');
+    }
+    const active = player.id || state.tunedId || '';
+    if (active && [...select.options].some((option) => option.value === active) && select.value !== active) {
+      select.value = active;
+    }
+    const radio = (select.value && radioById(select.value)) || (active ? radioById(active) : null);
+    if (name) name.textContent = radio ? radio.name : uiText('Syntoniser un poste');
+    if (sub) {
+      if (radio && player.now && player.id === radio.id) sub.textContent = player.now;
+      else if (radio && radio.institution) sub.textContent = radio.institution;
+      else sub.textContent = uiText('Radios étudiantes en direct');
+    }
+    const on = Boolean(radio) && player.id === radio.id && playerBusy();
+    tuner.classList.toggle('is-playing', on);
+    if (play) {
+      play.classList.toggle('is-buffering', player.status === 'loading' && player.id === (radio && radio.id));
+      const playIcon = play.querySelector('.ico-play');
+      const pauseIcon = play.querySelector('.ico-pause');
+      if (playIcon) playIcon.classList.toggle('hidden', on);
+      if (pauseIcon) pauseIcon.classList.toggle('hidden', !on);
+      play.setAttribute('aria-label', uiText(on ? 'Pause du syntoniseur' : 'Lecture du syntoniseur'));
+    }
+  }
+
+  function stepTuner(direction) {
+    const list = state.radios.filter((radio) => radio && radio.id);
+    if (!list.length) return;
+    const select = document.getElementById('tuner-select');
+    const current = (select && select.value) || state.tunedId || player.id;
+    let index = list.findIndex((radio) => radio.id === current);
+    if (index < 0) index = direction > 0 ? -1 : 0;
+    const next = list[(index + direction + list.length) % list.length];
+    state.tunedId = next.id;
+    if (select) select.value = next.id;
+    if (player.id && playerBusy()) playRadio(next.id);
+    else syncPlayer();
   }
 
   function playRadio(id) {
@@ -844,11 +931,11 @@
             <button type="submit">Ajouter</button>
           </div>
         </form>
-        <ul class="plain">${prefs.keywords.map((word) => `<li class="source-row"><span>${esc(word)}</span><button type="button" data-action="unkeyword" data-word="${esc(word)}">Retirer</button></li>`).join('')}</ul>
+        <ul class="plain">${prefs.keywords.map((word) => `<li class="source-row"><span class="notranslate">${esc(word)}</span><button type="button" data-action="unkeyword" data-word="${esc(word)}">Retirer</button></li>`).join('')}</ul>
       </section>
       <section>
         <h2 class="section">Sources masquées</h2>
-        ${hidden.length ? `<ul class="plain">${hidden.map((source) => `<li class="source-row"><span>${esc(source.name)}</span><button type="button" data-action="hide" data-id="${esc(source.id)}">Réafficher</button></li>`).join('')}</ul>` : '<p class="note">Aucune source masquée.</p>'}
+        ${hidden.length ? `<ul class="plain">${hidden.map((source) => `<li class="source-row"><span class="article-source">${esc(source.name)}</span><button type="button" data-action="hide" data-id="${esc(source.id)}">Réafficher</button></li>`).join('')}</ul>` : '<p class="note">Aucune source masquée.</p>'}
       </section>
       <section>
         <h2 class="section">Notifications</h2>
@@ -875,7 +962,7 @@
         <h2 class="section">Données locales</h2>
         ${confirmAll}
       </section>
-      <p class="note">Version ${esc(core().APP_VERSION)} · application de découverte, distincte du site.</p>`;
+      <p class="note"><span>Version </span><span class="notranslate">${esc(core().APP_VERSION)}</span><span> · application de découverte, distincte du site.</span></p>`;
   }
 
   function viewArticle(route) {
@@ -890,12 +977,12 @@
     const followed = meta.source ? followIds().includes(core().slugify(meta.source)) : false;
     return `<p class="back"><a href="#/accueil">Retour au fil</a></p>
       <article class="fiche">
-        <p class="card-source">${swatch(meta.institution)}<span>${esc(meta.source || 'Publication')}</span></p>
+        <p class="card-source">${swatch(meta.institution)}<span class="${meta.source ? 'article-source' : ''}">${esc(meta.source || 'Publication')}</span></p>
         <h1>${esc(meta.title)}</h1>
-        <p class="card-meta"><time datetime="${esc(meta.date)}">${esc(formatDate(meta.date))}</time>${meta.author ? ` · ${esc(meta.author)}` : ''}</p>
+        <p class="card-meta"><time class="notranslate" datetime="${esc(meta.date)}">${esc(formatDate(meta.date))}</time>${meta.author ? ` · <span class="article-author">${esc(meta.author)}</span>` : ''}</p>
         ${imageHtml(meta)}
         ${meta.excerpt ? `<p class="excerpt">${esc(meta.excerpt)}</p>` : ''}
-        <p class="attribution">Cet article est publié par ${esc(meta.source || 'la publication d’origine')}. LE-RADAR ne le reproduit pas et n’en est pas l’auteur.</p>
+        <p class="attribution"><span>Cet article est publié par </span><span class="${meta.source ? 'article-source' : ''}">${esc(meta.source || 'la publication d’origine')}</span><span>. </span><span>LE-RADAR ne le reproduit pas et n’en est pas l’auteur.</span></p>
         <a class="wide primary" data-action="read" data-id="${meta.id}" href="${esc(action.url)}" target="_blank" rel="noopener noreferrer">${esc(action.label)}</a>
         <div class="row-actions">
           <button type="button" data-action="save" data-id="${meta.id}" aria-pressed="${saved ? 'true' : 'false'}">${saved ? 'Enregistré' : 'Enregistrer'}</button>
@@ -926,6 +1013,178 @@
     }
   }
 
+  const MASTHEAD_DATE_FORMATS = [
+    { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Toronto' },
+    { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Toronto' },
+    { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'America/Toronto' },
+    { dateStyle: 'short', timeZone: 'America/Toronto' },
+    { month: 'short', day: 'numeric', year: '2-digit', timeZone: 'America/Toronto' },
+    { month: 'numeric', day: 'numeric', year: '2-digit', timeZone: 'America/Toronto' },
+    { month: 'numeric', day: 'numeric', timeZone: 'America/Toronto' },
+  ];
+  let mastheadDateLabelKey = '';
+
+  function mastheadLocale() {
+    let tag = null;
+    try {
+      const mode = window.RadarTranslate && window.RadarTranslate.getMode && window.RadarTranslate.getMode();
+      if (mode && mode !== 'original') tag = mode === 'fr' ? 'fr-CA' : mode === 'en' ? 'en-CA' : mode;
+    } catch { /* module pas prêt */ }
+    if (!tag) {
+      tag = (document.documentElement.lang || 'fr').toLowerCase().startsWith('en') ? 'en-CA' : 'fr-CA';
+    }
+    try {
+      if (!Intl.DateTimeFormat.supportedLocalesOf(tag).length) return 'fr-CA';
+    } catch { return 'fr-CA'; }
+    return tag;
+  }
+
+  function mastheadDateChipFits(dateEl) {
+    if (!dateEl) return true;
+    if (dateEl.scrollWidth > dateEl.clientWidth + 1) return false;
+    const host = dateEl.closest('.masthead-date');
+    if (!host) return true;
+    const hostBox = host.getBoundingClientRect();
+    if (hostBox.width < 1) return false;
+    const actions = document.querySelector('.masthead-actions');
+    if (actions) {
+      const actionsBox = actions.getBoundingClientRect();
+      if (actionsBox.width > 0 && hostBox.right > actionsBox.left + 1) return false;
+    }
+    const timeEl = document.getElementById('today-time');
+    if (timeEl) {
+      const timeBox = timeEl.getBoundingClientRect();
+      if (timeBox.width > 1 && timeBox.right > hostBox.right + 1) return false;
+      if (timeEl.scrollWidth > timeEl.clientWidth + 1) return false;
+    }
+    return true;
+  }
+
+  function renderTodayDate() {
+    const dateEl = document.getElementById('today-date');
+    const timeEl = document.getElementById('today-time');
+    if (!dateEl && !timeEl) return;
+    const now = new Date();
+    const locale = mastheadLocale();
+    const isEnglish = locale.toLowerCase().startsWith('en');
+    if (timeEl) {
+      const rawClock = now.toLocaleTimeString(isEnglish ? 'en-CA' : 'fr-CA', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hourCycle: 'h23',
+        timeZone: 'America/Toronto',
+      });
+      timeEl.dateTime = now.toLocaleTimeString('en-CA', {
+        hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'America/Toronto',
+      });
+      if (isEnglish) {
+        timeEl.textContent = rawClock.replace(/\s*h\s*/iu, ':').replace(/(\d{1,2})\s*[:.]\s*(\d{2})/, '$1:$2').trim();
+      } else {
+        timeEl.textContent = rawClock
+          .replace(/(\d{1,2})\s*[:.]\s*(\d{2})/, '$1 h $2')
+          .replace(/\s*h\s*/iu, ' h ')
+          .replace(/\s+/g, ' ')
+          .trim();
+      }
+    }
+    if (dateEl) {
+      const host = dateEl.closest('.masthead-date');
+      if (host) host.style.minWidth = '';
+      for (const options of MASTHEAD_DATE_FORMATS) {
+        dateEl.textContent = now.toLocaleDateString(locale, options);
+        void dateEl.offsetWidth;
+        if (mastheadDateChipFits(dateEl)) break;
+      }
+    }
+    const dateKey = (dateEl && dateEl.textContent) || '';
+    const dateChanged = dateKey !== mastheadDateLabelKey;
+    mastheadDateLabelKey = dateKey;
+    if (dateChanged && typeof scheduleMastheadWeatherLayout === 'function') {
+      window.setTimeout(() => scheduleMastheadWeatherLayout(), 0);
+    }
+  }
+
+  function sloganLineWidth(pill) {
+    const parts = [...pill.querySelectorAll('.wordmark-full__lead, .wordmark-full__tag')];
+    const style = getComputedStyle(pill);
+    if (style.flexDirection === 'row' && parts.length) {
+      const gap = parseFloat(style.gap) || 0;
+      return parts.reduce((sum, el) => sum + el.scrollWidth, 0) + gap * Math.max(0, parts.length - 1);
+    }
+    let widest = 0;
+    for (const el of parts) widest = Math.max(widest, el.scrollWidth);
+    return Math.max(widest, pill.scrollWidth);
+  }
+
+  function fitMastheadSlogan() {
+    const pill = document.querySelector('.wordmark-full');
+    if (!pill || !pill.getClientRects().length) return;
+    pill.style.fontSize = '';
+    pill.style.letterSpacing = '';
+    void pill.offsetWidth;
+    const style = getComputedStyle(pill);
+    const pad = (parseFloat(style.paddingLeft) || 0) + (parseFloat(style.paddingRight) || 0);
+    const border = (parseFloat(style.borderLeftWidth) || 0) + (parseFloat(style.borderRightWidth) || 0);
+    const parentW = (pill.parentElement && pill.parentElement.getBoundingClientRect().width) || window.innerWidth;
+    let maxW = parseFloat(style.maxWidth);
+    if (!Number.isFinite(maxW) || style.maxWidth === 'none') maxW = parentW;
+    const cap = Math.max(48, Math.min(maxW, parentW) - pad - border);
+    let size = parseFloat(style.fontSize) || 11;
+    let tracking = parseFloat(style.letterSpacing);
+    if (!Number.isFinite(tracking)) tracking = 0;
+    let guard = 48;
+    while (sloganLineWidth(pill) > cap + 1 && guard--) {
+      if (tracking > 0.2) {
+        tracking = Math.max(0, tracking - 0.3);
+        pill.style.letterSpacing = `${tracking}px`;
+      } else if (size > 8) {
+        size = Math.max(8, size - 0.25);
+        pill.style.fontSize = `${size}px`;
+      } else break;
+      void pill.offsetWidth;
+    }
+  }
+
+  window.renderTodayDate = renderTodayDate;
+  window.fitMastheadSlogan = fitMastheadSlogan;
+
+  function syncChromeAria() {
+    const stop = document.querySelector('[data-action="player-stop"]');
+    if (stop) stop.setAttribute('aria-label', uiText('Arrêter la radio'));
+    const bar = document.getElementById('player');
+    if (bar) bar.setAttribute('aria-label', uiText('Radio en cours'));
+    const tabs = document.getElementById('tabs');
+    if (tabs) tabs.setAttribute('aria-label', uiText('Sections de l’application'));
+    const skip = document.querySelector('a.skip');
+    if (skip) skip.textContent = uiText('Aller au contenu');
+    renderTodayDate();
+    const route = core().parseDeepLink(location.href);
+    const onHome = route.kind === 'home';
+    const homeIcon = document.querySelector('.masthead-home');
+    if (homeIcon) {
+      if (onHome) homeIcon.setAttribute('aria-current', 'page');
+      else homeIcon.removeAttribute('aria-current');
+    }
+    const sectionHref = onHome
+      ? '#/accueil'
+      : (route.kind === 'explorer' && route.section === 'radios' ? '#/explorer?section=radios' : '');
+    for (const link of document.querySelectorAll('.site-sections a')) {
+      if (sectionHref && link.getAttribute('href') === sectionHref) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    }
+    const theme = loadPrefs().theme;
+    const themeButton = document.getElementById('theme-toggle');
+    if (themeButton) {
+      const full = { system: 'Thème : système', light: 'Thème : clair', dark: 'Thème : sombre' }[theme] || 'Thème : système';
+      const short = { system: 'Système', light: 'Clair', dark: 'Sombre' }[theme] || 'Système';
+      const label = uiText(full);
+      themeButton.setAttribute('aria-label', label);
+      themeButton.setAttribute('title', label);
+      const text = themeButton.querySelector('.theme-toggle__label');
+      if (text) text.textContent = uiText(short);
+    }
+  }
+
   function applyTheme() {
     const theme = loadPrefs().theme;
     if (theme === 'system') document.documentElement.removeAttribute('data-theme');
@@ -935,6 +1194,10 @@
       && window.matchMedia
       && window.matchMedia('(prefers-color-scheme: dark)').matches
     );
+    const sun = document.querySelector('#theme-toggle .ico-sun');
+    const moon = document.querySelector('#theme-toggle .ico-moon');
+    if (sun) sun.classList.toggle('hidden', !dark);
+    if (moon) moon.classList.toggle('hidden', dark);
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', dark ? '#0e0f12' : '#ffffff');
     const status = plugin('StatusBar');
@@ -988,12 +1251,21 @@
           : 'Copie locale du fil. Les articles originaux demandent une connexion.')
         : '';
     }
+    document.body.classList.toggle('is-home', route.kind === 'home');
+    const homeWire = document.getElementById('home-wire');
+    if (homeWire) homeWire.hidden = route.kind !== 'home';
+    const homeCount = document.getElementById('home-count');
+    if (homeCount && route.kind === 'home') homeCount.textContent = state.homeCountLabel || '';
     syncTabs(route);
+    syncChromeAria();
     applyTheme();
+    fitMastheadSlogan();
     if (!same) {
       state.routeKey = key;
       window.scrollTo(0, 0);
-      const title = screen && screen.querySelector('h1');
+      const title = route.kind === 'home'
+        ? document.getElementById('wire-title')
+        : screen && screen.querySelector('h1');
       if (title) {
         title.tabIndex = -1;
         title.focus({ preventScroll: true });
@@ -1003,8 +1275,63 @@
     }
   }
 
+  function closeInstallMenu() {
+    const menu = document.querySelector('[data-install-menu]');
+    const panel = document.getElementById('install-menu-panel');
+    const toggle = document.querySelector('[data-install-toggle]');
+    if (menu) menu.classList.remove('is-open');
+    if (panel) panel.hidden = true;
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  function siteUrl(href) {
+    if (!href) return '';
+    if (/^https?:/i.test(href)) return href;
+    if (href.startsWith('/')) return `https://le-radar.ca${href}`;
+    return '';
+  }
+
   function bindEvents() {
     document.addEventListener('click', async (event) => {
+      const installItem = event.target.closest('[data-install-app]');
+      if (installItem) {
+        event.preventDefault();
+        closeInstallMenu();
+        const urls = {
+          pomo: 'https://le-radar.ca/pomo/',
+          solitaire: 'https://le-radar.ca/solitaire/',
+          sports: 'https://le-radar.ca/sports/',
+        };
+        const url = urls[installItem.getAttribute('data-install-app')];
+        if (url) await openExternal(url);
+        return;
+      }
+      const installToggle = event.target.closest('[data-install-toggle]');
+      if (installToggle) {
+        event.preventDefault();
+        const panel = document.getElementById('install-menu-panel');
+        const menu = installToggle.closest('[data-install-menu]');
+        const open = panel ? panel.hidden : false;
+        closeInstallMenu();
+        if (open && panel && menu) {
+          panel.hidden = false;
+          menu.classList.add('is-open');
+          installToggle.setAttribute('aria-expanded', 'true');
+        }
+        return;
+      }
+      if (!event.target.closest('[data-install-menu]')) closeInstallMenu();
+
+      const blank = event.target.closest('a[target="_blank"]');
+      if (blank && !blank.dataset.action) {
+        const url = siteUrl(blank.getAttribute('href'));
+        if (url) {
+          event.preventDefault();
+          await openExternal(url);
+          return;
+        }
+      }
+
       const el = event.target.closest('[data-action], a[href^="#/"]');
       if (!el) return;
       const action = el.dataset.action || '';
@@ -1017,6 +1344,22 @@
           return;
         }
         await openExternal(el.getAttribute('href'));
+        return;
+      }
+      if (action === 'tuner-play') {
+        event.preventDefault();
+        const select = document.getElementById('tuner-select');
+        const id = (select && select.value) || state.tunedId || (state.radios[0] && state.radios[0].id);
+        if (!id) return;
+        state.tunedId = id;
+        toggleRadio(id);
+        haptic();
+        return;
+      }
+      if (action === 'tuner-step') {
+        event.preventDefault();
+        stepTuner(el.dataset.dir === 'prev' ? -1 : 1);
+        haptic();
         return;
       }
       if (action === 'radio-toggle' || action === 'player-toggle') {
@@ -1085,8 +1428,13 @@
         render();
         return;
       }
-      if (action === 'theme') {
-        savePrefs(core().setTheme(loadPrefs(), el.dataset.value));
+      if (action === 'theme' || action === 'theme-cycle') {
+        const order = ['system', 'light', 'dark'];
+        const current = loadPrefs().theme;
+        const next = action === 'theme'
+          ? el.dataset.value
+          : order[(Math.max(0, order.indexOf(current)) + 1) % order.length];
+        savePrefs(core().setTheme(loadPrefs(), next));
         render();
         return;
       }
@@ -1154,6 +1502,12 @@
     });
 
     document.addEventListener('change', (event) => {
+      if (event.target.id === 'tuner-select') {
+        state.tunedId = event.target.value;
+        if (player.id && playerBusy() && event.target.value) playRadio(event.target.value);
+        else syncPlayer();
+        return;
+      }
       if (event.target.dataset.action !== 'note') return;
       const key = event.target.dataset.key;
       savePrefs(core().updateNotifications(loadPrefs(), { [key]: event.target.checked }));
@@ -1163,6 +1517,10 @@
     document.addEventListener('error', (event) => {
       if (event.target && event.target.tagName === 'IMG') event.target.remove();
     }, true);
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeInstallMenu();
+    });
   }
 
   async function consumeUrl(url) {
@@ -1234,6 +1592,8 @@
     if (screen) screen.innerHTML = '<p class="loading">Chargement du fil…</p>';
     bindEvents();
     bindPlayer();
+    const here = document.querySelector('[data-install-app="radar"]');
+    if (here) here.classList.add('is-current');
     await loadData();
     window.addEventListener('hashchange', render);
     window.addEventListener('online', () => { state.online = true; loadData().then(render); });
@@ -1246,8 +1606,30 @@
     }
     if (!location.hash) location.replace('#/accueil');
     else render();
+    window.setInterval(renderTodayDate, 30000);
+    window.addEventListener('resize', () => {
+      renderTodayDate();
+      fitMastheadSlogan();
+    });
+    const photo = document.getElementById('bg-photo-layer');
+    if (photo && typeof MutationObserver === 'function') {
+      const watch = new MutationObserver(() => fitMastheadSlogan());
+      watch.observe(photo, { attributes: true, attributeFilter: ['class'] });
+    }
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => fitMastheadSlogan()).catch(() => {});
+    }
     bindNative();
   }
+
+  let translateRefresh = 0;
+  window.addEventListener('radar:translate-mode', () => {
+    if (!window.__radarMobileStarted) return;
+    window.clearTimeout(translateRefresh);
+    translateRefresh = window.setTimeout(() => {
+      render();
+    }, 80);
+  });
 
   window.__radarBoot.then(start).catch((error) => {
     console.error(error);

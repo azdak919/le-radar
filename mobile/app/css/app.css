@@ -1,4 +1,47 @@
-/* LE-RADAR — application téléphone. Jetons alignés sur style.css du site. */
+/* LE-RADAR — application téléphone. Jetons alignés sur style.css du site.
+   Inter et Source Serif 4 : SIL Open Font License, fichiers dans ./fonts/. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/inter-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/inter-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/inter-700.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/source-serif-4-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/source-serif-4-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/source-serif-4-700.woff2") format("woff2");
+}
 
 :root {
   --bg: #ffffff;
@@ -10,9 +53,17 @@
   --accent: #6c2163;
   --accent-ink: #ffffff;
   --live: #c8102e;
+  --live-dark: #9c0c24;
   --radio: #003da5;
-  --serif: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
-  --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radio-bright: #5d9be0;
+  --rule-strong: #14161a;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans: "Inter", system-ui, -apple-system, sans-serif;
+  --pad: 24px;
+  --maxw: 800px;
+  --tuner-bg: #111317;
+  --status-live-soft: #ff7d6e;
+  --status-upcoming-soft: #e8c07a;
   --tab: calc(56px + env(safe-area-inset-bottom));
   /* Hauteur réservée à la barre radio (0 tant qu’elle est cachée). */
   --player: 0px;
@@ -28,6 +79,8 @@
   --rule: #26282d;
   --accent: #cf7ec1;
   --accent-ink: #1a0d18;
+  --tuner-bg: #1a1c21;
+  --rule-strong: #f1f2f4;
   color-scheme: dark;
 }
 
@@ -41,6 +94,8 @@
     --rule: #26282d;
     --accent: #cf7ec1;
     --accent-ink: #1a0d18;
+    --tuner-bg: #1a1c21;
+    --rule-strong: #f1f2f4;
     color-scheme: dark;
   }
 }
@@ -75,35 +130,35 @@ body.fiche { padding: calc(16px + env(safe-area-inset-top)) 16px calc(24px + env
 .shell {
   width: min(40rem, 100%);
   margin: 0 auto;
-  padding: calc(12px + env(safe-area-inset-top)) 16px calc(var(--tab) + var(--player));
+  padding: 0 0 calc(var(--tab) + var(--player));
 }
 
 body.has-player { --player: 72px; }
 
-.top {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin-bottom: 8px;
-}
+#net { margin: 12px var(--pad) 0; }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: inherit;
-  text-decoration: none;
+#screen { padding: 4px var(--pad) 16px; }
+
+h1, h2, .card-title {
+  font-family: var(--serif);
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: -0.02em;
 }
-
-.brand img { border-radius: 8px; }
-
-.tagline { margin: 0; color: var(--muted); font-size: 0.85rem; }
-
-h1, h2, .card-title { font-family: var(--serif); font-weight: 600; letter-spacing: -0.01em; }
 
 h1 { font-size: 1.75rem; line-height: 1.15; margin: 0.2rem 0 0.4rem; }
+
+h1.wire-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+}
+
+h1[tabindex="-1"]:focus { outline: none; }
 
 .section { font-size: 1.15rem; margin: 1.2rem 0 0.4rem; }
 
@@ -178,18 +233,46 @@ h1 { font-size: 1.75rem; line-height: 1.15; margin: 0.2rem 0 0.4rem; }
   display: block;
   color: inherit;
   text-decoration: none;
-  padding: 12px;
+  padding: 14px 14px 8px;
+}
+
+.wire-kicker, #screen .wire-status {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+#screen .wire-status { letter-spacing: 0.02em; text-transform: none; font-weight: 500; font-size: 0.85rem; }
+
+.card-top {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.card-top time {
+  margin-left: auto;
+  color: var(--live);
+  font-size: 0.78rem;
+  white-space: nowrap;
 }
 
 .card-photo {
   display: block;
-  width: calc(100% + 24px);
-  max-width: none;
-  margin: -12px -12px 10px;
+  width: 100%;
+  margin: 10px 0 0;
+  border-radius: 12px;
   aspect-ratio: 3 / 2;
   object-fit: cover;
   background: var(--bg-soft);
 }
+
+.card-lead .card-title { font-size: 1.65rem; }
+
+.card-by { margin: 0; color: var(--muted); font-size: 0.92rem; }
 
 .fiche .card-photo { width: 100%; margin: 8px 0; border-radius: 12px; }
 
@@ -198,8 +281,11 @@ h1 { font-size: 1.75rem; line-height: 1.15; margin: 0.2rem 0 0.4rem; }
   align-items: center;
   gap: 8px;
   margin: 0;
-  font-size: 0.85rem;
-  font-weight: 650;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .card-title { font-size: 1.35rem; line-height: 1.2; margin: 6px 0; }
@@ -350,9 +436,9 @@ audio { width: 100%; margin: 8px 0; }
 .player-btn svg { width: 22px; height: 22px; }
 
 .player-toggle {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-ink);
+  background: var(--live);
+  border-color: var(--live);
+  color: #fff;
 }
 
 .player-stop { border-color: transparent; background: transparent; color: var(--muted); }
