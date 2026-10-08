@@ -77,8 +77,12 @@
     }
   }
 
-  function packSportsPayload(data) {
-    if (!data || typeof data !== 'object' || isPacked(data) || !data.teams) return data;
+  function packSportsPayload(input) {
+    if (!input || typeof input !== 'object' || isPacked(input) || !input.teams) return input;
+    // Forme JSON d’abord : les clés à `undefined` (errors, sportsMissing…)
+    // disparaissent comme dans le fichier écrit, sinon `shapes` / `topOrder`
+    // les listeraient et un re-pack du fichier déplié différerait.
+    const data = JSON.parse(JSON.stringify(input));
     const teams = teamList(data.teams);
 
     // Passe 1 : champs communs (même valeur) à toutes les vues d’un gameId.

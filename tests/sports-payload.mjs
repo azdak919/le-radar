@@ -41,15 +41,19 @@ function fixture() {
         results: [game('odd', { url: 'https://example.org/odd' })],
         lastGame: game('nourl', { url: undefined }),
       },
-      d: { id: 'd', name: 'Sans matchs', sport: 'golf' },
+      d: { id: 'd', name: 'Sans matchs', sport: 'golf', teamsPreservedOnError: undefined },
+      e: { id: 'e', name: 'E', nextGames: [{ ...game('g9'), opponentNickname: undefined }], nextGame: undefined, results: [] },
     },
     teamCount: 4,
+    // Comme fetch-sports : des clés à undefined, absentes du JSON écrit.
+    errors: undefined,
   };
 }
 
 test('sports payload : pack → unpack identique (fixture, cas limites)', () => {
-  const src = JSON.parse(JSON.stringify(fixture()));
-  const packed = P.packSportsPayload(src);
+  const original = fixture();
+  const src = JSON.parse(JSON.stringify(original));
+  const packed = P.packSportsPayload(original);
   assert.equal(packed.format, P.FORMAT);
   assert.ok(P.isPacked(packed));
   // Le match g1 est stocké une fois ; l’URL RSEQ canonique n’est pas répétée.
@@ -62,6 +66,8 @@ test('sports payload : pack → unpack identique (fixture, cas limites)', () => 
   assert.equal(packed.teams.a.lastGame, undefined);
   const round = P.unpackSportsPayload(JSON.parse(JSON.stringify(packed)));
   assert.equal(JSON.stringify(round), JSON.stringify(src));
+  // Re-pack du déplié = fichier packed (garde-fou de la gate bot).
+  assert.equal(JSON.stringify(P.packSportsPayload(round)), JSON.stringify(packed));
 });
 
 test('sports payload : idempotent et transparent pour un payload déplié', () => {
