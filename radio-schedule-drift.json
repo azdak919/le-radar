@@ -1,24 +1,42 @@
 {
-  "checkedAt": "2026-10-07T02:18:31.623Z",
+  "checkedAt": "2026-10-08T02:40:32.146Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 6,
+    "stable": 5,
     "drift": [],
-    "overhaul": [],
+    "overhaul": [
+      "chyz"
+    ],
     "unreachable": []
   },
   "stations": [
     {
       "id": "chyz",
-      "published": 33,
-      "fresh": 33,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "published": 34,
+      "fresh": 40,
+      "added": [
+        "dim 19:00–21:00 Le Monde d'Erik Arsenault - 10 ans",
+        "mar 19:00–20:00 CATHJO FAIT DE LA RADIO",
+        "mer 11:00–12:00 On en Parle",
+        "mer 21:30–22:30 Blasphème",
+        "jeu 11:30–12:30 Conduite Antisportive",
+        "ven 16:00–17:30 Chéri.e, j’arrive!",
+        "ven 18:45–21:30 Remparts de Québec",
+        "sam 12:00–13:00 Un Samedi d'Ici",
+        "sam 13:00–16:00 Radio Futura",
+        "sam 18:30–22:30 Football du Rouge et Or"
+      ],
+      "removed": [
+        "mar 10:00–11:30 L'art des Histoires",
+        "mer 11:00–11:30 Question de savoir",
+        "sam 13:00–15:30 Radio Futura",
+        "sam 15:45–18:30 Remparts de Québec"
+      ],
+      "changed": 14,
+      "ratio": 0.412,
+      "status": "overhaul"
     },
     {
       "id": "cism",
