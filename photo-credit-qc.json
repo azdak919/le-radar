@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-08T11:31:36.098Z",
+  "updated": "2026-10-08T15:44:40.184Z",
   "total": 177,
   "withImage": 157,
   "withCredit": 157,
@@ -7,20 +7,48 @@
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 12,
-  "updatedCount": 5,
-  "citedNew": 2,
+  "checked": 18,
+  "updatedCount": 11,
+  "citedNew": 8,
   "fallbackNew": 10,
   "samples": [
     {
+      "title": "De la rue aux égouts : le parcours de l’eau",
+      "source": "La Pige",
+      "credit": "Photo : Étienne Harvey-Soucy",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Beauté sur mesure, à quel prix?",
+      "source": "La Pige",
+      "credit": "Photo : Marine De Ville",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "La Ligue Frontière à Saguenay: un dossier fermé",
+      "source": "La Pige",
+      "credit": "Photo : Colin Perron",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "S.O.S. Huîtres menacées",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "S.O.S. Huîtres menacées",
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
       "source": "Le Délit",
       "credit": "Photo : Ana Camila Torchia",
       "cited": true,
@@ -46,6 +74,20 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }

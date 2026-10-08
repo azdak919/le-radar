@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-08T11:25:14.629Z",
+  "updated": "2026-10-08T15:39:37.146Z",
   "total": 177,
   "pool": 56,
-  "incomplete": 10,
+  "incomplete": 12,
   "withLeadExcerpt": 116,
-  "candidates": 10,
-  "enriched": 1,
+  "candidates": 12,
+  "enriched": 4,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -19,12 +19,39 @@
       "changed": false
     },
     {
-      "title": "S.O.S. Huîtres menacées",
-      "link": "https://www.delitfrancais.com/2026/09/23/s-o-s-huitres-menacees/",
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "link": "https://www.delitfrancais.com/2026/09/23/arrestations-visant-les-lgbtq-en-turquie/",
+      "ok": true,
+      "score": 96,
+      "chars": 217,
+      "sample": "Au total, plus de 80 personnes ont été placées en détention provisoire. Le ministère de la Justice t",
+      "changed": true
+    },
+    {
+      "title": "De la rue aux égouts : le parcours de l’eau",
+      "link": "https://lapige.atmjonquiere.com/2026/10/08/de-la-rue-aux-egouts-le-parcours-de-leau/?utm_source=rss&utm_medium=rss&utm_campaign=de-la-rue-aux-egouts-le-parcours-de-leau",
+      "ok": true,
+      "score": 96,
+      "chars": 164,
+      "sample": "Lorsqu’une forte pluie s’abat sur une ville, une grande partie du travail se déroule sous nos pieds.",
+      "changed": true
+    },
+    {
+      "title": "Beauté sur mesure, à quel prix?",
+      "link": "https://lapige.atmjonquiere.com/2026/10/08/beaute-sur-mesure-a-quel-prix/?utm_source=rss&utm_medium=rss&utm_campaign=beaute-sur-mesure-a-quel-prix",
+      "ok": true,
+      "score": 96,
+      "chars": 220,
+      "sample": "Elles ne sont pas toutes tentées pour autant. Clémence et Marilou, 17 ans, n’y ont « jamais » pensé.",
+      "changed": true
+    },
+    {
+      "title": "La Ligue Frontière à Saguenay: un dossier fermé",
+      "link": "https://lapige.atmjonquiere.com/2026/10/08/la-ligue-frontiere-a-saguenay-un-dossier-ferme/?utm_source=rss&utm_medium=rss&utm_campaign=la-ligue-frontiere-a-saguenay-un-dossier-ferme",
       "ok": true,
       "score": 100,
-      "chars": 318,
-      "sample": "Cependant, depuis 2024, les récoltes d’huîtres de l’Île-du-Prince-Édouard ont chuté subitement. En e",
+      "chars": 307,
+      "sample": "La possibilité d’accueillir une équipe de la Ligue Frontière a déjà été évoquée à Saguenay, mais le ",
       "changed": true
     },
     {
@@ -34,15 +61,6 @@
       "score": 87,
       "chars": 400,
       "sample": "Le 3 septembre , le juge de la Cour supérieure Martin Castonguay a ordonné au gouvernement du Québec",
-      "changed": false
-    },
-    {
-      "title": "Ce soir, Dubuc, nous y sommes ! » : Émile Simard remporte la circonscription",
-      "link": "https://lapige.atmjonquiere.com/2026/10/06/ce-soir-dubuc-nous-y-sommes-emile-simard-remporte-la-circonscription-2/?utm_source=rss&utm_medium=rss&utm_campaign=ce-soir-dubuc-nous-y-sommes-emile-simard-remporte-la-circonscription-2",
-      "ok": true,
-      "score": 96,
-      "chars": 399,
-      "sample": "Émile Simard, candidat du Parti québécois dans Dubuc, est devenu le premier député de la région à êt",
       "changed": false
     },
     {
@@ -61,24 +79,6 @@
       "score": 96,
       "chars": 400,
       "sample": "Under the bylaw, which took effect on Oct. 1, people who insult city staff could face fines between ",
-      "changed": false
-    },
-    {
-      "title": "Concordia does not care about its disabled students",
-      "link": "https://thelinknewspaper.ca/article/16455",
-      "ok": true,
-      "score": 96,
-      "chars": 400,
-      "sample": "As a human relations student at Concordia University, I have had a plethora of opportunities to exam",
-      "changed": false
-    },
-    {
-      "title": "Les équipes à suivre cette saison",
-      "link": "https://www.delitfrancais.com/2026/10/07/les-equipes-a-suivre-cette-saison/",
-      "ok": true,
-      "score": 96,
-      "chars": 165,
-      "sample": "Pour la première fois, McGill entame une saison avec 25 équipes de moins. Alors, comment se porte le",
       "changed": false
     }
   ]
