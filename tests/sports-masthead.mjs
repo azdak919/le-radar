@@ -99,8 +99,11 @@ test('sports masthead : snapshot commité léger et exploitable', () => {
   assert.equal(compact.teamCount, Object.keys(compact.teams).length);
   assert.ok(compact.teamCount < Object.keys(full.teams).length);
   assert.ok(compact.masthead?.nextGameLimit >= 16);
+  // Référence : payload complet indenté (2 espaces), comme à l’origine du
+  // plafond — sports.json est désormais écrit compact sur disque.
+  const fullIndentedBytes = Buffer.byteLength(`${JSON.stringify(full, null, 2)}\n`);
   assert.ok(
-    statSync(join(ROOT, 'sports-masthead.json')).size < statSync(join(ROOT, 'sports.json')).size * 0.15,
+    statSync(join(ROOT, 'sports-masthead.json')).size < fullIndentedBytes * 0.15,
     'le snapshot du mât doit rester sous 15 % du payload complet',
   );
 });

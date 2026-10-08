@@ -1169,7 +1169,9 @@ async function main() {
   );
 
   if (update) {
-    fs.writeFileSync(OUT_PATH, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
+    // JSON compact : ~27 % plus léger qu’indenté (budget 5 Mo de
+    // tests/artifact-budget.mjs, sondage client aux 15 s en direct).
+    fs.writeFileSync(OUT_PATH, `${JSON.stringify(payload)}\n`, 'utf8');
     const mastheadPath = path.join(ROOT, 'sports-masthead.json');
     // Snapshot d’accueil : JSON compact (sans indent) pour rester largement
     // sous le plafond 15 % du payload complet (tests/sports-masthead.mjs).
