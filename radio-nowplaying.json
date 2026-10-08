@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-08T16:46:18.260Z",
+  "updatedAt": "2026-10-08T17:59:59.955Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-08T16:45:52.635Z"
+      "checkedAt": "2026-10-08T17:59:36.839Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-08T16:45:54.394Z"
+      "checkedAt": "2026-10-08T17:59:38.594Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-08T16:45:56.692Z"
+      "checkedAt": "2026-10-08T17:59:41.148Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Power Hour",
+        "title": "Give Me Shelter",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/the-power-hour"
+        "start": "13:30",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/give-me-shelter"
       },
       "next": {
-        "title": "What's Happening in NDG",
+        "title": "Secondhand Sounds",
         "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/secondhand-sounds"
       },
       "track": "",
-      "showTitle": "The Power Hour",
+      "showTitle": "Give Me Shelter",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-08T16:45:59.183Z"
+      "checkedAt": "2026-10-08T17:59:43.424Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,20 +126,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-08T16:46:00.160Z"
+      "checkedAt": "2026-10-08T17:59:44.678Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Onde de CHOQ",
+        "title": "Palmarès CHOQ.ca",
         "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
       },
-      "track": "Phoebe Bridgers — As Above",
+      "track": "Angela Autumn — Heavy Tobacco",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-08T16:46:17.910Z"
+      "checkedAt": "2026-10-08T17:59:59.604Z"
     }
   }
 }
