@@ -1,10 +1,50 @@
 {
-  "updated": "2026-10-09T16:20:55.143Z",
+  "updated": "2026-10-09T20:54:05.762Z",
   "total": 177,
   "withAuthor": 177,
-  "mismatches": 17,
+  "mismatches": 22,
   "ok": true,
   "samples": [
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-11/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Samuel Girard",
+      "reason": "page-byline"
+    },
+    {
+      "title": "The Stingers win the Kelly-Anne Drummond Cup",
+      "link": "https://thelinknewspaper.ca/article/16474",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Marisa Filice",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Stingers 20, Gaiters 5: The Stingers win their first game of the season",
+      "link": "https://thelinknewspaper.ca/article/16473",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Colin van den Ameele",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Rouge et Or 48, Stingers 15: The Laval Rouge et Or take home the Shrine Bowl",
+      "link": "https://thelinknewspaper.ca/article/16472",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Colin van den Ameele",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Stingers 1, Gaiters 0: Vermaire’s penalty gives Concordia the win over Bishop’s",
+      "link": "https://thelinknewspaper.ca/article/16471",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Hugo Conquet",
+      "reason": "page-byline"
+    },
     {
       "title": "Editorial: Three years of genocide, decades of occupation",
       "link": "https://thelinknewspaper.ca/article/16467",
@@ -124,23 +164,7 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
-    },
-    {
-      "title": "Find 5 Gaiters in this photo!",
-      "link": "https://thebucampus.ca/2026/04/06/find-5-gaiters-in-this-photo/",
-      "source": "The Campus",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "Garda World au CVM (Éditorial)",
-      "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
-      "source": "Exil",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
     }
   ],
-  "fixed": 17
+  "fixed": 22
 }

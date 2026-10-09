@@ -1,51 +1,51 @@
 {
-  "updated": "2026-10-09T16:27:39.253Z",
+  "updated": "2026-10-09T21:01:00.627Z",
   "total": 177,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 104,
+  "cited": 107,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
   "checked": 13,
   "updatedCount": 5,
-  "citedNew": 2,
-  "fallbackNew": 11,
+  "citedNew": 4,
+  "fallbackNew": 9,
   "samples": [
     {
-      "title": "Rouge d’une part, blanche de l’autre",
-      "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Est-ce que je dois un bébé à l’État ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
+      "title": "Cinq nouvelles de la semaine",
       "source": "Quartier Libre",
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
     },
     {
-      "title": "Summer in Paradise (Lennoxville Edition)",
-      "source": "The Campus",
-      "credit": "Photo credit: The Campus",
-      "cited": false,
-      "method": null
+      "title": "The Stingers win the Kelly-Anne Drummond Cup",
+      "source": "The Link",
+      "credit": "Photo : Andraé Lerone Lewis",
+      "cited": true,
+      "method": "figcaption"
     },
     {
-      "title": "Culture Paints Time a Different Colour",
-      "source": "The Plant",
-      "credit": "Photo credit: The Plant",
-      "cited": false,
-      "method": null
+      "title": "Stingers 20, Gaiters 5: The Stingers win their first game of the season",
+      "source": "The Link",
+      "credit": "Photo : Andraé Lerone Lewis",
+      "cited": true,
+      "method": "figcaption"
+    },
+    {
+      "title": "Rouge et Or 48, Stingers 15: The Laval Rouge et Or take home the Shrine Bowl",
+      "source": "The Link",
+      "credit": "Photo : Yann Rifflard",
+      "cited": true,
+      "method": "figcaption"
+    },
+    {
+      "title": "Stingers 1, Gaiters 0: Vermaire’s penalty gives Concordia the win over Bishop’s",
+      "source": "The Link",
+      "credit": "Photo : Marisa Filice",
+      "cited": true,
+      "method": "figcaption"
     }
   ]
 }
