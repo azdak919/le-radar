@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-09T15:37:27.262Z",
+  "updated": "2026-10-09T16:27:39.253Z",
   "total": 177,
   "withImage": 157,
   "withCredit": 157,
@@ -7,22 +7,22 @@
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 7,
-  "citedNew": 4,
+  "checked": 13,
+  "updatedCount": 5,
+  "citedNew": 2,
   "fallbackNew": 11,
   "samples": [
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
+      "credit": "Photo : Scott Tan",
       "cited": true,
-      "method": "figcaption-bare"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "title": "Est-ce que je dois un bébé à l’État ?",
       "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -46,20 +46,6 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
-      "cited": true,
-      "method": "via-attribution"
     }
   ]
 }
