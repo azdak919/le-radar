@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-08T23:27:45.798Z",
+  "updated": "2026-10-09T01:45:45.015Z",
   "total": 177,
   "pool": 56,
-  "incomplete": 14,
+  "incomplete": 12,
   "withLeadExcerpt": 118,
-  "candidates": 14,
-  "enriched": 5,
+  "candidates": 12,
+  "enriched": 3,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -19,48 +19,30 @@
       "changed": false
     },
     {
-      "title": "Est-ce que je dois un bébé à l’État ?",
-      "link": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
+      "title": "Manifestation anti-IA à Montréal",
+      "link": "https://www.delitfrancais.com/2026/09/23/manifestation-anti-ia-a-montreal/",
+      "ok": true,
+      "score": 94,
+      "chars": 249,
+      "sample": "La possibilité qui revient le plus est celle d’une extinction humaine après le développement d’une s",
+      "changed": true
+    },
+    {
+      "title": "Quand la fiction banalise les traumatismes",
+      "link": "https://www.delitfrancais.com/2026/09/23/quand-la-fiction-banalise-les-traumatismes/",
       "ok": true,
       "score": 96,
-      "chars": 288,
-      "sample": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est ",
+      "chars": 377,
+      "sample": "Quel est le point commun entre la série Off campus , le livre Captive , et Jamais plus ? Outre leur ",
       "changed": true
     },
     {
-      "title": "Le « self-care » : qui valide votre repos ?",
-      "link": "https://www.delitfrancais.com/2026/09/23/le-self-care-qui-valide-votre-repos/",
-      "ok": true,
-      "score": 96,
-      "chars": 347,
-      "sample": "Ce n’était pas une dérive isolée, mais une règle, que Talcott Parsons nommera en 1951 : le « rôle de",
-      "changed": true
-    },
-    {
-      "title": "Expo World Press Photo : le monde vu par les photojournalistes",
-      "link": "https://lecollectif.ca/a-la-une/expo-world-press-photo-le-monde-vu-par-les-photojournalistes/",
+      "title": "Faire compter sa voix",
+      "link": "https://www.delitfrancais.com/2026/09/23/faire-compter-sa-voix/",
       "ok": true,
       "score": 100,
-      "chars": 289,
-      "sample": "Dans le Vieux-Montréal, le Marché Bonsecours accueille une nouvelle édition de l’Expo World Press Ph",
-      "changed": true
-    },
-    {
-      "title": "Le petit écran reprend son rythme quotidien",
-      "link": "https://lecollectif.ca/a-la-une/le-petit-ecran-reprend-son-rythme-quotidien/",
-      "ok": true,
-      "score": 100,
-      "chars": 328,
-      "sample": "Après la pause estivale, les émissions quotidiennes québécoises reprennent progressivement leur plac",
-      "changed": true
-    },
-    {
-      "title": "Un don pour faire avancer la recherche sur Alzheimer à l’UdeS",
-      "link": "https://lecollectif.ca/a-la-une/un-don-pour-faire-avancer-la-recherche-sur-alzheimer-a-ludes/",
-      "ok": true,
-      "score": 100,
-      "chars": 395,
-      "sample": "L’Université de Sherbrooke (UdeS) reçoit un don majeur de 10 millions de dollars de l’homme d’affair",
+      "chars": 282,
+      "sample": "En quinze ans, les Indigenous Awareness Weeks (IAW) sont devenues un espace de « dialogue, de rappro",
       "changed": true
     },
     {
@@ -79,6 +61,24 @@
       "score": 96,
       "chars": 400,
       "sample": "The opening game of the tournament was against the Guelph Gryphons and was very penalty-heavy. Despi",
+      "changed": false
+    },
+    {
+      "title": "Montreal adopts bylaw to ban insults against police, inciting criticism",
+      "link": "https://thelinknewspaper.ca/article/16457",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "Under the bylaw, which took effect on Oct. 1, people who insult city staff could face fines between ",
+      "changed": false
+    },
+    {
+      "title": "Concordia does not care about its disabled students",
+      "link": "https://thelinknewspaper.ca/article/16455",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "As a human relations student at Concordia University, I have had a plethora of opportunities to exam",
       "changed": false
     }
   ]
