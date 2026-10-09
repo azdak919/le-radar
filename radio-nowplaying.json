@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-09T06:05:12.661Z",
+  "updatedAt": "2026-10-09T08:27:09.267Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-09T06:04:46.774Z"
+      "checkedAt": "2026-10-09T08:26:44.155Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
-      },
-      "next": {
         "title": "Club classique (reprise)",
         "source": "schedule",
         "start": "03:00",
         "end": "05:00",
         "url": "https://cism893.ca/emissions/club-classique"
       },
+      "next": {
+        "title": "Le Séismix",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
+      },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "Club classique (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-09T06:04:48.465Z"
+      "checkedAt": "2026-10-09T08:26:45.856Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Listen! You Smell Something?",
-        "source": "api-live",
-        "start": "01:00",
-        "end": "04:00"
-      },
-      "next": {
         "title": "G-Flex Survivor's Corner",
         "source": "api-live",
         "start": "04:00",
         "end": "07:00"
       },
-      "track": "",
-      "showTitle": "Listen! You Smell Something?",
+      "next": {
+        "title": "Morning Detour",
+        "source": "api-live",
+        "start": "07:00",
+        "end": "09:00"
+      },
+      "track": "G-Flex Survivor",
+      "showTitle": "G-Flex Survivor's Corner",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-09T06:04:51.007Z"
+      "checkedAt": "2026-10-09T08:26:48.088Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-09T06:04:53.462Z"
+      "checkedAt": "2026-10-09T08:26:50.367Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-09T06:04:54.505Z"
+      "checkedAt": "2026-10-09T08:26:51.369Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:30",
         "url": "https://www.choq.ca/emissions/box-sophisme"
       },
-      "track": "ID — Alix-Fernz",
+      "track": "ID — Naima-Frank",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -148,7 +148,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-09T06:05:12.310Z"
+      "checkedAt": "2026-10-09T08:27:08.917Z"
     }
   }
 }
