@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-09T20:54:30.697Z",
+  "updated": "2026-10-09T21:04:32.683Z",
   "total": 177,
   "pool": 56,
-  "incomplete": 14,
+  "incomplete": 15,
   "withLeadExcerpt": 120,
-  "candidates": 14,
-  "enriched": 5,
+  "candidates": 15,
+  "enriched": 6,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -17,6 +17,15 @@
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
       "changed": false
+    },
+    {
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "link": "https://www.delitfrancais.com/2026/09/23/arrestations-visant-les-lgbtq-en-turquie/",
+      "ok": true,
+      "score": 96,
+      "chars": 217,
+      "sample": "Au total, plus de 80 personnes ont été placées en détention provisoire. Le ministère de la Justice t",
+      "changed": true
     },
     {
       "title": "The Stingers win the Kelly-Anne Drummond Cup",
@@ -70,15 +79,6 @@
       "score": 96,
       "chars": 400,
       "sample": "The opening game of the tournament was against the Guelph Gryphons and was very penalty-heavy. Despi",
-      "changed": false
-    },
-    {
-      "title": "Montreal adopts bylaw to ban insults against police, inciting criticism",
-      "link": "https://thelinknewspaper.ca/article/16457",
-      "ok": true,
-      "score": 96,
-      "chars": 400,
-      "sample": "Under the bylaw, which took effect on Oct. 1, people who insult city staff could face fines between ",
       "changed": false
     }
   ]
