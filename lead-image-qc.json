@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-09T11:28:51.922Z",
+  "updated": "2026-10-09T15:37:20.770Z",
   "total": 177,
   "withPhoto": 157,
-  "withStock": 36,
+  "withStock": 35,
   "withCampusBank": 24,
   "fullyCovered": 177,
-  "leadReadyPhotos": 125,
+  "leadReadyPhotos": 130,
   "pageScraped": 23,
   "photosRecovered": 18,
   "imagesCleared": 3,
-  "stockSearches": 53,
+  "stockSearches": 54,
   "stockFound": 29,
-  "campusBankFound": 17,
+  "campusBankFound": 18,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -48,7 +48,13 @@
       "title": "Searching For a Third Space",
       "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
       "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/8365/8489345587_dd0a832f29_b.jpg"
+      "image": "https://live.staticflickr.com/72/172898013_80d53c9edc_b.jpg"
+    },
+    {
+      "title": "Shawarm-off!",
+      "link": "https://www.mcgilldaily.com/2026/10/shawarm-off/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
     },
     {
       "title": "Prepare for Fewer Course Options in the Coming Years: Budget Cuts are Affecting the Number of Courses Available at BU",
@@ -77,12 +83,6 @@
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://www.thetribune.ca/opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/5/56/Walking_west_on_Sherbrooke_Street_near_McGill_University%2C_May_1%2C_2023.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Know Your Artist: Stina Baudin",
-      "link": "https://www.thetribune.ca/a-e/know-your-artist-stina-baudin-08092026/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/3/3d/McGill_University_downtown_campus_36.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
