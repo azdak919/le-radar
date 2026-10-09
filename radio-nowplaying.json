@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-10-09T19:33:20.903Z",
+  "updatedAt": "2026-10-09T20:18:01.904Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Conduite Antisportive",
-        "source": "api-live",
-        "start": "14:30",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/conduite-antisportive/"
-      },
-      "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "Conduite Antisportive",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-09T19:32:45.156Z"
+      "checkedAt": "2026-10-09T20:17:17.012Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Salsa et Bembê",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/salsa-et-bembe"
-      },
-      "next": {
         "title": "Turbo Tannant",
         "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "https://cism893.ca/emissions/turbo-tannant"
       },
+      "next": {
+        "title": "OK Doomer",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/ok-doomer"
+      },
       "track": "",
-      "showTitle": "Salsa et Bembê",
+      "showTitle": "Turbo Tannant",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-09T19:32:47.062Z"
+      "checkedAt": "2026-10-09T20:17:18.597Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-09T19:32:59.530Z"
+      "checkedAt": "2026-10-09T20:17:20.891Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Dead Beats",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/dead-beats"
-      },
-      "next": {
         "title": "Tapeworms",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/tapeworms"
       },
+      "next": {
+        "title": "The Groove Master's Hour",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
+      },
       "track": "",
-      "showTitle": "Dead Beats",
+      "showTitle": "Tapeworms",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-09T19:33:14.072Z"
+      "checkedAt": "2026-10-09T20:17:55.104Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,28 +133,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-09T19:33:15.496Z"
+      "checkedAt": "2026-10-09T20:17:56.230Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Histoire de passer le temps",
         "source": "api-live",
         "start": "16:00",
         "end": "17:00",
         "slug": "histoire-de-passer-le-temps"
       },
-      "track": "Naomi, SLM — Hershey Kiss",
-      "showTitle": "",
+      "next": {
+        "title": "OPUS",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "13:00",
+        "slug": "opus"
+      },
+      "track": "Histoire — de-passer-le-temps-Jingle-44khz16",
+      "showTitle": "Histoire de passer le temps",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-09T19:33:20.553Z"
+      "checkedAt": "2026-10-09T20:18:01.553Z"
     }
   }
 }
