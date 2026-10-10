@@ -15,6 +15,7 @@ Application Android 1.1.0 (`versionCode` 3, tag `android-v1.1.0`). Le site est d
 
 ### Corrigé
 
+- Soirée de match : une feuille RSEQ ouverte sans pointage (`-999`, pas encore versée aux classements) ne retire plus le match du fichier. Le score officiel entre quand le rapport est déposé.
 - Application mobile : la radio a maintenant la même barre persistante que le site. Elle reste en bas de l’écran (au-dessus des onglets, zones sûres respectées) et l’écoute continue d’un onglet à l’autre ; avant, le seul `<audio>` vivait dans la fiche radio et quittait avec elle. « Écouter » aussi dans Explorer → Radios, émission en ondes, retour Android = arrière-plan pendant l’écoute. Écran verrouillé non garanti (service natif requis, voir `docs/mobile/architecture.md`).
 - Bandeau sports du soir : un coup d’envoi déjà passé (plus de 3 h, pas en direct) n’occupe plus tout le ruban en « Aujourd’hui » sans score. Il sort du pool à-venir ; s’il a un score, il rejoint les résultats. Reliquat = scores (hier / journée), pas quatre puces « Aujourd’hui ».
 - Mât météo ≥1440 : le reliquat va aux villes secondaires (`1fr`), plus de trou à droite du board. Montréal/Québec restent calées au contenu ; le nom ne s’étire pas jusqu’au °C.
