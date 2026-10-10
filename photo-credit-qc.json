@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-10T05:07:35.736Z",
+  "updated": "2026-10-10T07:15:53.412Z",
   "total": 177,
   "withImage": 157,
   "withCredit": 157,
@@ -7,9 +7,9 @@
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 6,
-  "citedNew": 3,
+  "checked": 16,
+  "updatedCount": 8,
+  "citedNew": 5,
   "fallbackNew": 11,
   "samples": [
     {
@@ -20,18 +20,18 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
+      "title": "Faire compter sa voix",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée d’Élections Québec",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
-      "method": "via-attribution"
+      "method": "media-credit-featured"
     },
     {
       "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
@@ -53,6 +53,20 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }

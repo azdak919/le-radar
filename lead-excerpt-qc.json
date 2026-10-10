@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-10T05:01:40.676Z",
+  "updated": "2026-10-10T07:09:41.818Z",
   "total": 177,
   "pool": 56,
-  "incomplete": 10,
+  "incomplete": 12,
   "withLeadExcerpt": 120,
-  "candidates": 10,
-  "enriched": 0,
+  "candidates": 12,
+  "enriched": 2,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -17,6 +17,24 @@
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
       "changed": false
+    },
+    {
+      "title": "Faire compter sa voix",
+      "link": "https://www.delitfrancais.com/2026/09/23/faire-compter-sa-voix/",
+      "ok": true,
+      "score": 100,
+      "chars": 282,
+      "sample": "En quinze ans, les Indigenous Awareness Weeks (IAW) sont devenues un espace de « dialogue, de rappro",
+      "changed": true
+    },
+    {
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "link": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
+      "ok": true,
+      "score": 96,
+      "chars": 288,
+      "sample": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est ",
+      "changed": true
     },
     {
       "title": "Stingers 20, Gaiters 5: The Stingers win their first game of the season",
@@ -61,24 +79,6 @@
       "score": 96,
       "chars": 400,
       "sample": "As a human relations student at Concordia University, I have had a plethora of opportunities to exam",
-      "changed": false
-    },
-    {
-      "title": "De la rue aux égouts : le parcours de l’eau",
-      "link": "https://lapige.atmjonquiere.com/2026/10/08/de-la-rue-aux-egouts-le-parcours-de-leau/?utm_source=rss&utm_medium=rss&utm_campaign=de-la-rue-aux-egouts-le-parcours-de-leau",
-      "ok": true,
-      "score": 96,
-      "chars": 164,
-      "sample": "Lorsqu’une forte pluie s’abat sur une ville, une grande partie du travail se déroule sous nos pieds.",
-      "changed": false
-    },
-    {
-      "title": "Les équipes à suivre cette saison",
-      "link": "https://www.delitfrancais.com/2026/10/07/les-equipes-a-suivre-cette-saison/",
-      "ok": true,
-      "score": 96,
-      "chars": 165,
-      "sample": "Pour la première fois, McGill entame une saison avec 25 équipes de moins. Alors, comment se porte le",
       "changed": false
     }
   ]

@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-10T05:07:26.126Z",
+  "updated": "2026-10-10T07:15:45.806Z",
   "total": 177,
   "withPhoto": 157,
-  "withStock": 34,
-  "withCampusBank": 24,
+  "withStock": 35,
+  "withCampusBank": 23,
   "fullyCovered": 177,
-  "leadReadyPhotos": 123,
-  "pageScraped": 23,
-  "photosRecovered": 19,
-  "imagesCleared": 3,
-  "stockSearches": 54,
+  "leadReadyPhotos": 127,
+  "pageScraped": 22,
+  "photosRecovered": 18,
+  "imagesCleared": 4,
+  "stockSearches": 52,
   "stockFound": 28,
-  "campusBankFound": 18,
+  "campusBankFound": 16,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -19,12 +19,6 @@
       "link": "https://thelinknewspaper.ca/article/16474",
       "reason": "no-stock-match",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/_U2A7376_900_1178_90.jpg"
-    },
-    {
-      "title": "Spectacles de drones: raconter l’histoire dans le ciel",
-      "link": "https://lapige.atmjonquiere.com/2026/10/07/des-histoires-aeriennes/?utm_source=rss&utm_medium=rss&utm_campaign=des-histoires-aeriennes",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_20261002_143205262_HDR.jpg"
     },
     {
       "title": "Quand Polytechnique tend la main: l'aide financière sous tous ses angles",
@@ -49,12 +43,6 @@
       "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/8365/8489345587_dd0a832f29_b.jpg"
-    },
-    {
-      "title": "Shawarm-off!",
-      "link": "https://www.mcgilldaily.com/2026/10/shawarm-off/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
     },
     {
       "title": "Prepare for Fewer Course Options in the Coming Years: Budget Cuts are Affecting the Number of Courses Available at BU",
@@ -84,7 +72,19 @@
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://www.thetribune.ca/opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/5/56/Walking_west_on_Sherbrooke_Street_near_McGill_University%2C_May_1%2C_2023.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Know Your Artist: Stina Baudin",
+      "link": "https://www.thetribune.ca/a-e/know-your-artist-stina-baudin-08092026/",
+      "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/3/3d/McGill_University_downtown_campus_36.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Clear bags: A simple remedy for Montreal’s lacklustre composting habits?",
+      "link": "https://www.thetribune.ca/opinion/clear-bags-a-simple-remedy-for-montreals-lacklustre-composting-habits-08092026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f4/McGill_University_downtown_campus_29.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }
