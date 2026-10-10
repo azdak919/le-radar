@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-10T00:03:07.765Z",
+  "updatedAt": "2026-10-10T00:12:53.560Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T00:02:40.483Z"
+      "checkedAt": "2026-10-10T00:12:06.288Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T00:02:42.206Z"
+      "checkedAt": "2026-10-10T00:12:08.249Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T00:02:45.501Z"
+      "checkedAt": "2026-10-10T00:12:11.288Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "El Encuentro Latino",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "20:00",
         "end": "21:00",
         "url": "http://www.cjlo.com/shows/el-encuentro-latino"
       },
       "next": {
         "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "21:00",
         "end": "22:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "El Encuentro Latino",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T00:02:59.751Z"
+      "checkedAt": "2026-10-10T00:12:45.771Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T00:03:01.041Z"
+      "checkedAt": "2026-10-10T00:12:46.790Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "13:00",
         "slug": "opus"
       },
-      "track": "Geneviève Legault — Laisse couler",
+      "track": "Bye Parula — Home",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T00:03:07.415Z"
+      "checkedAt": "2026-10-10T00:12:53.209Z"
     }
   }
 }
