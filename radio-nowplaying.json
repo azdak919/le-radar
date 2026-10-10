@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-10T05:48:28.935Z",
+  "updatedAt": "2026-10-10T06:12:03.425Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,86 +21,87 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T05:47:58.310Z"
+      "checkedAt": "2026-10-10T06:11:25.846Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rythmologie (reprise)",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "02:00",
         "end": "05:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Voix tropicale",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/voix-tropicale"
+      },
       "track": "",
-      "showTitle": "Rythmologie (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T05:48:00.167Z"
+      "checkedAt": "2026-10-10T06:11:27.698Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "WEFUNK",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Soca Sessions",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "The Mash Time Show",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "06:00"
+      },
       "track": "",
-      "showTitle": "WEFUNK",
+      "showTitle": "Soca Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T05:48:10.048Z"
+      "checkedAt": "2026-10-10T06:11:32.822Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Jazz Boulevard",
-        "source": "schedule-live",
+        "title": "CJLO Late Night",
+        "source": "schedule",
         "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/jazz-boulevard"
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "World-Up'",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "Jazz Boulevard",
+      "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T05:48:13.083Z"
+      "checkedAt": "2026-10-10T06:11:55.366Z"
     },
     "cfak": {
       "id": "cfak",
@@ -120,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T05:48:21.772Z"
+      "checkedAt": "2026-10-10T06:11:56.611Z"
     },
     "choq": {
       "id": "choq",
@@ -133,7 +134,7 @@
         "end": "14:00",
         "slug": "box-sophisme"
       },
-      "track": "Gaelle - home",
+      "track": "Dolphin Hyperspace - Memories of the Deep Blue Sea feat. Justin Brown",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -144,7 +145,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-10-10T05:48:28.584Z"
+      "checkedAt": "2026-10-10T06:12:03.074Z"
     }
   }
 }
