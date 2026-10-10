@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-10-10T17:38:18.289Z",
+  "updatedAt": "2026-10-10T21:07:56.500Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Radio Futura",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "15:30",
-        "url": "https://chyz.ca/emission/radio-futura/"
-      },
-      "next": {
         "title": "Remparts de Québec",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "15:45",
         "end": "18:30",
         "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
+      "next": {
+        "title": "Palmarès CHYZ",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "10:30",
+        "url": "https://chyz.ca/emission/palmares-chyz/"
+      },
       "track": "",
-      "showTitle": "Radio Futura",
+      "showTitle": "Remparts de Québec",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T17:37:44.620Z"
+      "checkedAt": "2026-10-10T21:07:14.617Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Change le beat",
+        "title": "Le radar",
         "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/change-le-beat"
+        "start": "17:00",
+        "end": "17:30",
+        "url": "https://cism893.ca/emissions/le-radar-2"
       },
       "next": {
-        "title": "Basses fréquences",
+        "title": "Disconomique",
         "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/disconomique"
       },
       "track": "",
-      "showTitle": "Change le beat",
+      "showTitle": "Le radar",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T17:37:46.357Z"
+      "checkedAt": "2026-10-10T21:07:16.290Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Samedi Midi",
+        "title": "West Indian Rhythms",
         "source": "api-live",
-        "start": "10:30",
-        "end": "14:00"
+        "start": "16:00",
+        "end": "19:00"
       },
       "next": {
-        "title": "Funky Revolutions",
+        "title": "Masters At Work",
         "source": "api-live",
-        "start": "14:00",
-        "end": "16:00"
+        "start": "19:00",
+        "end": "21:00"
       },
       "track": "Beverly Glenn-Copeland - Children",
-      "showTitle": "Samedi Midi",
+      "showTitle": "West Indian Rhythms",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T17:37:48.669Z"
+      "checkedAt": "2026-10-10T21:07:18.614Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Anatomy of Caribbean Music",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "next": {
-        "title": "Caribbean Callaloo",
+        "title": "The Limelight",
         "source": "schedule",
-        "start": "14:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-limelight"
       },
       "track": "",
-      "showTitle": "Anatomy of Caribbean Music",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T17:38:10.968Z"
+      "checkedAt": "2026-10-10T21:07:40.933Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,18 +128,12 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T17:38:12.052Z"
+      "checkedAt": "2026-10-10T21:07:41.964Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Opération beurre de cinoche",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "14:00",
-        "slug": "box-sophisme"
-      },
+      "current": null,
       "next": {
         "title": "D'amour et de sexe",
         "source": "api-live",
@@ -147,15 +141,15 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "ID — lysandre",
-      "showTitle": "Opération beurre de cinoche",
+      "track": "Have a Nice Life — Bloodhail",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T17:38:17.939Z"
+      "checkedAt": "2026-10-10T21:07:56.149Z"
     }
   }
 }
