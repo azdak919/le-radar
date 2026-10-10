@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-10T12:51:41.456Z",
+  "updatedAt": "2026-10-10T17:38:18.289Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Radio Futura",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "15:30",
+        "url": "https://chyz.ca/emission/radio-futura/"
+      },
       "next": {
-        "title": "Palmarès CHYZ",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
+        "title": "Remparts de Québec",
+        "source": "schedule-live",
+        "start": "15:45",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Radio Futura",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T12:51:25.032Z"
+      "checkedAt": "2026-10-10T17:37:44.620Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Voix tropicale",
+        "title": "Change le beat",
         "source": "schedule",
-        "start": "05:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/voix-tropicale"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/change-le-beat"
       },
       "next": {
-        "title": "Elkin Polo El Show",
+        "title": "Basses fréquences",
         "source": "schedule",
-        "start": "09:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/elkin-polo-el-show"
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/basses-frequences"
       },
       "track": "",
-      "showTitle": "Voix tropicale",
+      "showTitle": "Change le beat",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T12:51:26.676Z"
+      "checkedAt": "2026-10-10T17:37:46.357Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Quebec Acadie",
+        "title": "Samedi Midi",
         "source": "api-live",
-        "start": "06:00",
-        "end": "10:00"
+        "start": "10:30",
+        "end": "14:00"
       },
       "next": {
-        "title": "Making Contact/Anything Goes",
+        "title": "Funky Revolutions",
         "source": "api-live",
-        "start": "10:00",
-        "end": "10:30"
+        "start": "14:00",
+        "end": "16:00"
       },
-      "track": "",
-      "showTitle": "Quebec Acadie",
+      "track": "Beverly Glenn-Copeland - Children",
+      "showTitle": "Samedi Midi",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T12:51:29.794Z"
+      "checkedAt": "2026-10-10T17:37:48.669Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "World-Up'",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/world-up"
+        "title": "Anatomy of Caribbean Music",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
       },
       "next": {
-        "title": "The Live Wire Show",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/the-live-wire-show"
+        "title": "Caribbean Callaloo",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
       },
       "track": "",
-      "showTitle": "World-Up'",
+      "showTitle": "Anatomy of Caribbean Music",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T12:51:32.799Z"
+      "checkedAt": "2026-10-10T17:38:10.968Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,31 +128,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-10T12:51:34.277Z"
+      "checkedAt": "2026-10-10T17:38:12.052Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Opération beurre de cinoche",
         "source": "api-live",
         "start": "13:00",
         "end": "14:00",
         "slug": "box-sophisme"
       },
-      "track": "WHITESOCKS x KAMA x NAWFAL - L",
-      "showTitle": "",
+      "next": {
+        "title": "D'amour et de sexe",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "00:00",
+        "slug": "damour-et-de-sexe"
+      },
+      "track": "ID — lysandre",
+      "showTitle": "Opération beurre de cinoche",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-10-10T12:51:41.106Z"
+      "clientPoll": null,
+      "checkedAt": "2026-10-10T17:38:17.939Z"
     }
   }
 }
