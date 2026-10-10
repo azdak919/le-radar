@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-10T01:49:43.570Z",
+  "updated": "2026-10-10T05:01:40.676Z",
   "total": 177,
   "pool": 56,
-  "incomplete": 13,
+  "incomplete": 10,
   "withLeadExcerpt": 120,
-  "candidates": 13,
-  "enriched": 3,
+  "candidates": 10,
+  "enriched": 0,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -17,33 +17,6 @@
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
       "changed": false
-    },
-    {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
-      "link": "https://www.delitfrancais.com/2026/09/23/arrestations-visant-les-lgbtq-en-turquie/",
-      "ok": true,
-      "score": 96,
-      "chars": 217,
-      "sample": "Au total, plus de 80 personnes ont été placées en détention provisoire. Le ministère de la Justice t",
-      "changed": true
-    },
-    {
-      "title": "Manifestation anti-IA à Montréal",
-      "link": "https://www.delitfrancais.com/2026/09/23/manifestation-anti-ia-a-montreal/",
-      "ok": true,
-      "score": 94,
-      "chars": 249,
-      "sample": "La possibilité qui revient le plus est celle d’une extinction humaine après le développement d’une s",
-      "changed": true
-    },
-    {
-      "title": "Quand la fiction banalise les traumatismes",
-      "link": "https://www.delitfrancais.com/2026/09/23/quand-la-fiction-banalise-les-traumatismes/",
-      "ok": true,
-      "score": 96,
-      "chars": 377,
-      "sample": "Quel est le point commun entre la série Off campus , le livre Captive , et Jamais plus ? Outre leur ",
-      "changed": true
     },
     {
       "title": "Stingers 20, Gaiters 5: The Stingers win their first game of the season",
@@ -79,6 +52,33 @@
       "score": 96,
       "chars": 400,
       "sample": "Under the bylaw, which took effect on Oct. 1, people who insult city staff could face fines between ",
+      "changed": false
+    },
+    {
+      "title": "Concordia does not care about its disabled students",
+      "link": "https://thelinknewspaper.ca/article/16455",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "As a human relations student at Concordia University, I have had a plethora of opportunities to exam",
+      "changed": false
+    },
+    {
+      "title": "De la rue aux égouts : le parcours de l’eau",
+      "link": "https://lapige.atmjonquiere.com/2026/10/08/de-la-rue-aux-egouts-le-parcours-de-leau/?utm_source=rss&utm_medium=rss&utm_campaign=de-la-rue-aux-egouts-le-parcours-de-leau",
+      "ok": true,
+      "score": 96,
+      "chars": 164,
+      "sample": "Lorsqu’une forte pluie s’abat sur une ville, une grande partie du travail se déroule sous nos pieds.",
+      "changed": false
+    },
+    {
+      "title": "Les équipes à suivre cette saison",
+      "link": "https://www.delitfrancais.com/2026/10/07/les-equipes-a-suivre-cette-saison/",
+      "ok": true,
+      "score": 96,
+      "chars": 165,
+      "sample": "Pour la première fois, McGill entame une saison avec 25 équipes de moins. Alors, comment se porte le",
       "changed": false
     }
   ]
