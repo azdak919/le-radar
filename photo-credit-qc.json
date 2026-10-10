@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-09T21:10:44.817Z",
+  "updated": "2026-10-10T01:56:04.042Z",
   "total": 177,
   "withImage": 157,
   "withCredit": 157,
@@ -7,45 +7,17 @@
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 12,
-  "citedNew": 8,
+  "checked": 15,
+  "updatedCount": 7,
+  "citedNew": 4,
   "fallbackNew": 11,
   "samples": [
     {
-      "title": "Cinq nouvelles de la semaine",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "The Stingers win the Kelly-Anne Drummond Cup",
-      "source": "The Link",
-      "credit": "Photo : Andraé Lerone Lewis",
+      "title": "Rouge d’une part, blanche de l’autre",
+      "source": "Le Délit",
+      "credit": "Photo : Scott Tan",
       "cited": true,
-      "method": "figcaption"
-    },
-    {
-      "title": "Stingers 20, Gaiters 5: The Stingers win their first game of the season",
-      "source": "The Link",
-      "credit": "Photo : Andraé Lerone Lewis",
-      "cited": true,
-      "method": "figcaption"
-    },
-    {
-      "title": "Rouge et Or 48, Stingers 15: The Laval Rouge et Or take home the Shrine Bowl",
-      "source": "The Link",
-      "credit": "Photo : Yann Rifflard",
-      "cited": true,
-      "method": "figcaption"
-    },
-    {
-      "title": "Stingers 1, Gaiters 0: Vermaire’s penalty gives Concordia the win over Bishop’s",
-      "source": "The Link",
-      "credit": "Photo : Marisa Filice",
-      "cited": true,
-      "method": "figcaption"
+      "method": "media-credit-featured"
     },
     {
       "title": "Arrestations visant les LGBTQ+ en Turquie",
@@ -55,25 +27,18 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Rouge d’une part, blanche de l’autre",
+      "title": "Manifestation anti-IA à Montréal",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
+      "credit": "Photo : Héloïse Durning",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
+      "title": "Quand la fiction banalise les traumatismes",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
-      "method": "via-attribution"
+      "method": "media-credit-featured"
     },
     {
       "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
@@ -83,32 +48,18 @@
       "method": null
     },
     {
-      "title": "The Stingers win the Kelly-Anne Drummond Cup",
-      "source": "The Link",
-      "credit": "Photo : Andraé Lerone Lewis",
-      "cited": true,
-      "method": "figcaption"
+      "title": "Summer in Paradise (Lennoxville Edition)",
+      "source": "The Campus",
+      "credit": "Photo credit: The Campus",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Stingers 20, Gaiters 5: The Stingers win their first game of the season",
-      "source": "The Link",
-      "credit": "Photo : Andraé Lerone Lewis",
-      "cited": true,
-      "method": "figcaption"
-    },
-    {
-      "title": "Rouge et Or 48, Stingers 15: The Laval Rouge et Or take home the Shrine Bowl",
-      "source": "The Link",
-      "credit": "Photo : Yann Rifflard",
-      "cited": true,
-      "method": "figcaption"
-    },
-    {
-      "title": "Stingers 1, Gaiters 0: Vermaire’s penalty gives Concordia the win over Bishop’s",
-      "source": "The Link",
-      "credit": "Photo : Marisa Filice",
-      "cited": true,
-      "method": "figcaption"
+      "title": "Culture Paints Time a Different Colour",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
     }
   ]
 }

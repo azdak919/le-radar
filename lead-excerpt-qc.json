@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-09T21:04:32.683Z",
+  "updated": "2026-10-10T01:49:43.570Z",
   "total": 177,
   "pool": 56,
-  "incomplete": 15,
+  "incomplete": 13,
   "withLeadExcerpt": 120,
-  "candidates": 15,
-  "enriched": 6,
+  "candidates": 13,
+  "enriched": 3,
   "failed": 2,
   "ok": true,
   "samples": [
@@ -28,12 +28,21 @@
       "changed": true
     },
     {
-      "title": "The Stingers win the Kelly-Anne Drummond Cup",
-      "link": "https://thelinknewspaper.ca/article/16474",
+      "title": "Manifestation anti-IA à Montréal",
+      "link": "https://www.delitfrancais.com/2026/09/23/manifestation-anti-ia-a-montreal/",
       "ok": true,
-      "score": 100,
-      "chars": 346,
-      "sample": "The Concordia University Stingers women’s rugby team defeated the Bishop's University Gaiters 76-5 o",
+      "score": 94,
+      "chars": 249,
+      "sample": "La possibilité qui revient le plus est celle d’une extinction humaine après le développement d’une s",
+      "changed": true
+    },
+    {
+      "title": "Quand la fiction banalise les traumatismes",
+      "link": "https://www.delitfrancais.com/2026/09/23/quand-la-fiction-banalise-les-traumatismes/",
+      "ok": true,
+      "score": 96,
+      "chars": 377,
+      "sample": "Quel est le point commun entre la série Off campus , le livre Captive , et Jamais plus ? Outre leur ",
       "changed": true
     },
     {
@@ -43,25 +52,7 @@
       "score": 96,
       "chars": 400,
       "sample": "The Concordia University Stingers men’s rugby team has had a difficult start to the season. Still, t",
-      "changed": true
-    },
-    {
-      "title": "Rouge et Or 48, Stingers 15: The Laval Rouge et Or take home the Shrine Bowl",
-      "link": "https://thelinknewspaper.ca/article/16472",
-      "ok": true,
-      "score": 100,
-      "chars": 225,
-      "sample": "The Concordia University Stingers men's football team lost by more than 30 points in the 38th Annual",
-      "changed": true
-    },
-    {
-      "title": "Stingers 1, Gaiters 0: Vermaire’s penalty gives Concordia the win over Bishop’s",
-      "link": "https://thelinknewspaper.ca/article/16471",
-      "ok": true,
-      "score": 96,
-      "chars": 240,
-      "sample": "After a great run into the box, a Bishop's player fouled Stingers' forward Ashley Burdick, leading t",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Une rentrée sauvée, et après?",
@@ -79,6 +70,15 @@
       "score": 96,
       "chars": 400,
       "sample": "The opening game of the tournament was against the Guelph Gryphons and was very penalty-heavy. Despi",
+      "changed": false
+    },
+    {
+      "title": "Montreal adopts bylaw to ban insults against police, inciting criticism",
+      "link": "https://thelinknewspaper.ca/article/16457",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "Under the bylaw, which took effect on Oct. 1, people who insult city staff could face fines between ",
       "changed": false
     }
   ]

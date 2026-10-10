@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-09T21:12:12.793Z",
+  "updated": "2026-10-10T01:57:18.075Z",
   "count": 20,
   "items": [
     {
@@ -19,7 +19,7 @@
           "type": "facebook",
           "url": "https://www.facebook.com/QuartierLibre.ca",
           "handle": "QuartierLibre.ca",
-          "stats": "",
+          "stats": "Quartier Libre, Montreal. 6,550 followers · 3 talking about this. Magazine indépendant des étudiant(e)s de l'UdeM, émission tous les vendredis à 12 h sur CISM",
           "label": "Facebook"
         },
         {
@@ -55,7 +55,7 @@
           "type": "x",
           "url": "https://twitter.com/montrealcampus",
           "handle": "@montrealcampus",
-          "stats": "",
+          "stats": "🗞️ Le journal indépendant des étudiants et des étudiantes de l'Université du Québec à Montréal (UQAM) depuis 1980.",
           "label": "X"
         }
       ]
@@ -113,44 +113,8 @@
           "type": "x",
           "url": "https://twitter.com/mcgilldaily",
           "handle": "@mcgilldaily",
-          "stats": "",
+          "stats": "An independent student newspaper at McGill since 1911. New issues hit stands Mondays.",
           "label": "X"
-        }
-      ]
-    },
-    {
-      "name": "The Link",
-      "institution": "Concordia University",
-      "type": "universite",
-      "kind": "journal",
-      "networks": [
-        {
-          "type": "instagram",
-          "url": "https://www.instagram.com/linknewspaper/",
-          "handle": "@linknewspaper",
-          "stats": "",
-          "label": "Instagram"
-        },
-        {
-          "type": "facebook",
-          "url": "https://facebook.com/thelinknewspaper",
-          "handle": "thelinknewspaper",
-          "stats": "",
-          "label": "Facebook"
-        },
-        {
-          "type": "x",
-          "url": "https://twitter.com/linknewspaper",
-          "handle": "@linknewspaper",
-          "stats": "",
-          "label": "X"
-        },
-        {
-          "type": "tiktok",
-          "url": "https://www.tiktok.com/@thelinknewspaper",
-          "handle": "@thelinknewspaper",
-          "stats": "",
-          "label": "TikTok"
         }
       ]
     },
@@ -186,14 +150,14 @@
           "type": "facebook",
           "url": "https://www.facebook.com/lexemplaire",
           "handle": "lexemplaire",
-          "stats": "",
+          "stats": "L'Exemplaire. 850 followers. Le média-école des étudiants en journalisme de l'Université Laval.",
           "label": "Facebook"
         },
         {
           "type": "x",
           "url": "https://twitter.com/lexemplaire",
           "handle": "@lexemplaire",
-          "stats": "",
+          "stats": "Le média-école des étudiant.e.s en journalisme de l'Université Laval, Québec.",
           "label": "X"
         }
       ]
@@ -288,7 +252,7 @@
           "type": "x",
           "url": "https://twitter.com/Polyscope",
           "handle": "@Polyscope",
-          "stats": "",
+          "stats": "Journal étudiant de Polytechnique Montréal @PolyMTL − De toute façon, on est les meilleurs depuis 1967!",
           "label": "X"
         }
       ]
@@ -334,6 +298,42 @@
           "handle": "@theplantdawson",
           "stats": "",
           "label": "TikTok"
+        }
+      ]
+    },
+    {
+      "name": "L'Oisif",
+      "institution": "Cégep de Chicoutimi",
+      "type": "cegep",
+      "kind": "journal",
+      "networks": [
+        {
+          "type": "instagram",
+          "url": "https://www.instagram.com/cegepchicoutimi/",
+          "handle": "@cegepchicoutimi",
+          "stats": "",
+          "label": "Instagram"
+        },
+        {
+          "type": "facebook",
+          "url": "https://www.facebook.com/CegepChicoutimi",
+          "handle": "CegepChicoutimi",
+          "stats": "",
+          "label": "Facebook"
+        },
+        {
+          "type": "x",
+          "url": "https://www.twitter.com/CegepChicoutimi",
+          "handle": "@CegepChicoutimi",
+          "stats": "",
+          "label": "X"
+        },
+        {
+          "type": "youtube",
+          "url": "https://www.youtube.com/channel/UCK61mhwLjnBG2QgN5vex2bw",
+          "handle": "@UCK61mhwLjnBG2QgN5vex2bw",
+          "stats": "",
+          "label": "YouTube"
         }
       ]
     },
@@ -463,14 +463,14 @@
           "type": "facebook",
           "url": "https://www.facebook.com/cjlo1690am",
           "handle": "cjlo1690am",
-          "stats": "",
+          "stats": "CJLO - 1690AM, Montreal. 7,014 followers · 4 talking about this. Your friendly neighbourhood campus-community radio station at Concordia University.",
           "label": "Facebook"
         },
         {
           "type": "x",
           "url": "https://twitter.com/CJLO1690AM",
           "handle": "@CJLO1690AM",
-          "stats": "",
+          "stats": "We're your friendly campus-community radio station at @concordia. 📻 1690 on the AM dial 💻 https://t.co/t4p6fA8m2k",
           "label": "X"
         },
         {
@@ -523,6 +523,13 @@
           "handle": "@choq.ca",
           "stats": "",
           "label": "Instagram"
+        },
+        {
+          "type": "x",
+          "url": "https://twitter.com/choq_ca",
+          "handle": "@choq_ca",
+          "stats": "📻 Podcasts • Reportages • Musique",
+          "label": "X"
         }
       ]
     }
