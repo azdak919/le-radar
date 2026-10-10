@@ -1,14 +1,11 @@
 {
-  "checkedAt": "2026-10-09T02:55:11.709Z",
+  "checkedAt": "2026-10-10T02:16:49.436Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 4,
-    "drift": [
-      "chyz",
-      "choq"
-    ],
+    "stable": 6,
+    "drift": [],
     "overhaul": [],
     "unreachable": []
   },
@@ -17,21 +14,11 @@
       "id": "chyz",
       "published": 40,
       "fresh": 40,
-      "added": [
-        "mer 11:00–11:30 Question de savoir",
-        "mer 11:30–12:00 On en Parle",
-        "sam 13:00–15:30 Radio Futura",
-        "sam 15:45–18:30 Remparts de Québec"
-      ],
-      "removed": [
-        "mer 11:00–12:00 On en Parle",
-        "ven 18:45–21:30 Remparts de Québec",
-        "sam 13:00–16:00 Radio Futura",
-        "sam 18:30–22:30 Football du Rouge et Or"
-      ],
-      "changed": 8,
-      "ratio": 0.2,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "cism",
@@ -77,15 +64,11 @@
       "id": "choq",
       "published": 24,
       "fresh": 24,
-      "added": [
-        "sam 13:00–14:00 Opération beurre de cinoche"
-      ],
-      "removed": [
-        "ven 11:30–12:30 Opération beurre de cinoche"
-      ],
-      "changed": 2,
-      "ratio": 0.083,
-      "status": "drift"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     }
   ]
 }
