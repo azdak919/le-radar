@@ -1,58 +1,30 @@
 {
-  "updated": "2026-10-11T20:37:08.258Z",
-  "total": 177,
-  "withImage": 157,
-  "withCredit": 157,
+  "updated": "2026-10-11T22:23:36.720Z",
+  "total": 178,
+  "withImage": 158,
+  "withCredit": 158,
   "cited": 107,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 6,
-  "citedNew": 3,
-  "fallbackNew": 11,
+  "checked": 11,
+  "updatedCount": 2,
+  "citedNew": 1,
+  "fallbackNew": 10,
   "samples": [
     {
-      "title": "Concordia’s Solidarity Brunch goes monthly",
-      "source": "The Link",
-      "credit": "Photo: Courtesy Sheena Swirlz",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "title": "Le Polyscope - Journal des étudiants de l",
+      "source": "Le Polyscope",
+      "credit": "Crédit photo : Le Polyscope",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Rouge d’une part, blanche de l’autre",
+      "title": "S.O.S. Huîtres menacées",
       "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Le « self-care » : qui valide votre repos ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Summer in Paradise (Lennoxville Edition)",
-      "source": "The Campus",
-      "credit": "Photo credit: The Campus",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Culture Paints Time a Different Colour",
-      "source": "The Plant",
-      "credit": "Photo credit: The Plant",
-      "cited": false,
-      "method": null
     }
   ]
 }
