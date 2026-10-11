@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-11T20:20:33.058Z",
+  "updated": "2026-10-11T20:26:55.921Z",
   "total": 177,
   "withPhoto": 157,
   "withStock": 35,
-  "withCampusBank": 24,
+  "withCampusBank": 23,
   "fullyCovered": 177,
   "leadReadyPhotos": 129,
   "pageScraped": 22,
   "photosRecovered": 18,
-  "imagesCleared": 4,
-  "stockSearches": 53,
+  "imagesCleared": 3,
+  "stockSearches": 54,
   "stockFound": 29,
-  "campusBankFound": 18,
+  "campusBankFound": 17,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -19,6 +19,12 @@
       "link": "https://thelinknewspaper.ca/article/16474",
       "reason": "no-stock-match",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/_U2A7376_900_1178_90.jpg"
+    },
+    {
+      "title": "Spectacles de drones: raconter l’histoire dans le ciel",
+      "link": "https://lapige.atmjonquiere.com/2026/10/07/des-histoires-aeriennes/?utm_source=rss&utm_medium=rss&utm_campaign=des-histoires-aeriennes",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_20261002_143205262_HDR.jpg"
     },
     {
       "title": "Quand Polytechnique tend la main: l'aide financière sous tous ses angles",
@@ -79,12 +85,6 @@
       "link": "https://www.thetribune.ca/opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/d/da/McGill_University_downtown_campus_16.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Know Your Artist: Stina Baudin",
-      "link": "https://www.thetribune.ca/a-e/know-your-artist-stina-baudin-08092026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/5/54/McGill_University_downtown_campus_37.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }
