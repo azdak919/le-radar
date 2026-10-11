@@ -5,7 +5,9 @@
  * jusqu’au rapport, puis deviennent officiels. On distingue :
  *  - upcoming : hors fenêtre visuelle
  *  - live     : coup d’envoi −15 min / +3 h, pas encore final
- *  - final    : classements / rapport, ou score hors fenêtre
+ *  - final    : versé aux classements, ou score hors fenêtre
+ * Une feuille ouverte (GameReportId) sans score reste en cours : le
+ * marqueur crée le rapport avant de déposer le pointage.
  *
  * Jour civil et heure de coup d’envoi : America/Toronto. GitHub Actions est
  * en UTC ; un `toISOString().slice(0, 10)` à 20:00 EDT ferait disparaître
@@ -17,7 +19,6 @@ const SCORE_NONE = -999;
 const TZ = 'America/Toronto';
 const LIVE_LEAD_MS = 15 * 60 * 1000;
 const LIVE_TAIL_MS = 3 * 3600 * 1000;
-const ZERO_GUID = '00000000-0000-0000-0000-000000000000';
 
 function torontoDayKey(msOrDate = Date.now()) {
   const d = msOrDate instanceof Date ? msOrDate : new Date(msOrDate);
@@ -100,18 +101,16 @@ function rseqHasScore(game) {
   return isScoreValue(Number(game.scoreFor)) && isScoreValue(Number(game.scoreAgainst));
 }
 
-function isZeroGuid(id) {
-  const s = String(id || '').trim().toLowerCase();
-  return !s || s === ZERO_GUID;
-}
-
+/**
+ * Résultat versé. Un GameReportId non nul veut dire que la feuille est
+ * ouverte, pas que le pointage est officiel : le 9 oct. 2026, soccer et flag
+ * collégiaux avaient un rapport domicile, IsSubmittedForStandings false et
+ * des scores -999. Les traiter comme finaux les sortait des prochains et des
+ * résultats en même temps.
+ */
 function rseqIsSubmitted(game) {
   if (!game) return false;
-  if (game.IsSubmittedForStandings === true || game.final === true) return true;
-  if (!isZeroGuid(game.HomeTeamGameReportId) || !isZeroGuid(game.VisitingTeamGameReportId)) {
-    return true;
-  }
-  return false;
+  return game.IsSubmittedForStandings === true || game.final === true;
 }
 
 function inLiveWindow(game, now = Date.now()) {
@@ -128,8 +127,9 @@ function isLiveRaw(game, now = Date.now()) {
 }
 
 /**
- * Terminé : rapport / classements, ou score hors fenêtre live.
- * Un 0-0 encore dans la fenêtre (rapport pas déposé) reste live.
+ * Terminé : classements versés, ou score hors fenêtre live.
+ * Une feuille ouverte sans chiffre (-999) reste en cours dans la fenêtre.
+ * Un 0-0 numérique encore dans la fenêtre reste live.
  */
 function isFinalRaw(game, now = Date.now()) {
   if (!game) return false;

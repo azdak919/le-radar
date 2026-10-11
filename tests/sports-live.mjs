@@ -46,6 +46,29 @@ test('0-0 encore dans la fenêtre n’est pas un résultat final', () => {
   assert.equal(Live.isFinalRaw(game, NOW_DONE), true);
 });
 
+test('feuille ouverte sans score reste en cours (9 oct. 2026)', () => {
+  // 20:30 HAE = 00:30 UTC ; relevé bot 21:48 HAE.
+  const now = Date.parse('2026-10-10T01:48:00.000Z');
+  const game = {
+    date: '2026-10-09',
+    time: '20:30',
+    HomeTeamScore: -999,
+    VisitingTeamScore: -999,
+    IsSubmittedForStandings: false,
+    HomeTeamGameReportId: 'fe9f7563-bb17-432d-aad4-83542dff9425',
+    VisitingTeamGameReportId: '00000000-0000-0000-0000-000000000000',
+  };
+  assert.equal(Live.rseqHasScore(game), false);
+  assert.equal(Live.rseqIsSubmitted(game), false);
+  assert.equal(Live.isLiveRaw(game, now), true);
+  assert.equal(Live.isFinalRaw(game, now), false);
+  const out = { date: '2026-10-09', time: '20:30', home: false, opponent: 'Barons', sport: 'soccer' };
+  Live.annotateNextGame(out, game, { home: false, sport: 'soccer', now });
+  assert.equal(out.live, true);
+  assert.equal(out.final, undefined);
+  assert.equal(out.scoreFor, undefined);
+});
+
 test('classements versés → final, plus live', () => {
   const game = {
     date: '2026-08-23',
