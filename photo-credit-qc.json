@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-11T15:58:58.491Z",
+  "updated": "2026-10-11T18:25:48.756Z",
   "total": 177,
   "withImage": 157,
   "withCredit": 157,
@@ -7,15 +7,15 @@
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 12,
-  "updatedCount": 3,
-  "citedNew": 3,
-  "fallbackNew": 9,
+  "checked": 15,
+  "updatedCount": 7,
+  "citedNew": 4,
+  "fallbackNew": 11,
   "samples": [
     {
-      "title": "Est-ce que je dois un bébé à l’État ?",
+      "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Scott Tan",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -25,6 +25,41 @@
       "credit": "Photo : Photo tirée d’Élections Québec",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Le « self-care » : qui valide votre repos ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Summer in Paradise (Lennoxville Edition)",
+      "source": "The Campus",
+      "credit": "Photo credit: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Culture Paints Time a Different Colour",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
     }
   ]
 }
