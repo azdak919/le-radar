@@ -50,7 +50,47 @@ function stripEmbeddedCss(title = '') {
 
 /** Retire puces / symboles en tête, mais garde chiffres et lettres (« 14 bourses… »). */
 function stripLeadingNonLetters(title = '') {
-  return String(title).replace(/^[^\p{L}\p{N}]+/u, '').trim();
+  const t = String(title);
+  // Garder un guillemet ouvrant en tête (« Citation » : …) — sinon on
+  // produit des titres déséquilibrés « …extrême » : … ».
+  const m = t.match(/^[^\p{L}\p{N}]*?([«“"‘]\s*)(?=[\p{L}\p{N}])/u);
+  if (m) {
+    const q = m[1].trim();
+    return `${q === '«' ? '« ' : q}${t.slice(m[0].length)}`.trim();
+  }
+  return t.replace(/^[^\p{L}\p{N}]+/u, '').trim();
+}
+
+/** » sans « : restaurer le guillemet ouvrant en tête (citation en ouverture). */
+function balanceGuillemets(title = '') {
+  const t = String(title).trim();
+  const opens = (t.match(/«/g) || []).length;
+  const closes = (t.match(/»/g) || []).length;
+  if (closes > opens && opens === 0 && closes === 1) return `« ${t}`;
+  return t;
+}
+
+function normTitleKey(s = '') {
+  return String(s).normalize('NFD').replace(/\p{M}/gu, '').toLowerCase()
+    .replace(/[’']/g, "'").replace(/[^\p{L}\p{N}']+/gu, ' ').trim();
+}
+
+/**
+ * Titre de site (og:title global d’une SPA, <title> générique) plutôt
+ * que titre d’article : égal au nom de source, ou « Source - slogan ».
+ */
+function isSiteNameTitle(title = '', sourceName = '', siteNames = []) {
+  const t = normTitleKey(title);
+  if (!t) return false;
+  const names = [sourceName, ...siteNames].map(normTitleKey).filter(Boolean);
+  for (const n of names) {
+    if (t === n) return true;
+    if (new RegExp(`^${n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*[-–—|:]`).test(
+      String(title).normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/[’']/g, "'"),
+    )) return true;
+  }
+  if (/\bjournal (des|etudiant)|\bstudent (news|newspaper)\b/.test(t) && /\s[-–—|]\s/.test(title)) return true;
+  return false;
 }
 
 /**
@@ -106,9 +146,9 @@ function sanitizeTitle(title = '') {
   if (series) {
     const label = series[1].trim();
     const rest = series[2].trim();
-    if (rest) return stripLeadingNonLetters(`${label} : ${rest}`);
+    if (rest) return balanceGuillemets(stripLeadingNonLetters(`${label} : ${rest}`));
   }
-  return stripLeadingNonLetters(t);
+  return balanceGuillemets(stripLeadingNonLetters(t));
 }
 
 module.exports = {
@@ -119,4 +159,6 @@ module.exports = {
   fixCamelGlue,
   rejoinKnownTokens,
   sanitizeTitle,
+  balanceGuillemets,
+  isSiteNameTitle,
 };

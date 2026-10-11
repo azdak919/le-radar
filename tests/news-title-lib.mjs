@@ -58,3 +58,18 @@ assert.equal(fixCamelGlue('LeRadar'), 'LeRadar');
 assert.equal(fixCamelGlue('UQAMCe que'), 'UQAM : Ce que');
 
 console.log('news-title-lib: ok');
+
+// Polyscope (SPA) : og:title global = nom du site → rejeté comme titre d'article.
+{
+  const { isSiteNameTitle, balanceGuillemets } = require('../scripts/news-title-lib.js');
+  assert.equal(isSiteNameTitle("Le Polyscope - Journal des étudiants de l'École Polytechnique de Montréal.", 'Le Polyscope'), true);
+  assert.equal(isSiteNameTitle('Le Polyscope - Journal des étudiants de l', 'Le Polyscope'), true);
+  assert.equal(isSiteNameTitle('Le Polyscope', 'Le Polyscope'), true);
+  assert.equal(isSiteNameTitle('Un polytechnicien en Espagne', 'Le Polyscope'), false);
+  assert.equal(isSiteNameTitle('Débat électoral à l’UQAM : Ce que les partis ont à offrir', 'Montréal Campus'), false);
+  // Guillemet ouvrant conservé / restauré.
+  const EXP = '« La politique, c’est un sport extrême » : François Legault quitte le pouvoir';
+  assert.equal(sanitizeTitle(EXP), EXP);
+  assert.equal(sanitizeTitle('La politique, c’est un sport extrême » : François Legault quitte le pouvoir'), EXP);
+  assert.equal(balanceGuillemets('« A » et « B »'), '« A » et « B »');
+}

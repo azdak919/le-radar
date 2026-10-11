@@ -310,6 +310,7 @@ function truncateExcerpt(text = '', max = 280) {
 
 const {
   sanitizeTitle,
+  isSiteNameTitle,
 } = require('./news-title-lib');
 const {
   filterHousekeepingForDisplay,
@@ -667,12 +668,12 @@ async function fetchRssItems(src = {}) {
 // === Article-page enrichment (missing author / thin excerpt) ===================
 function metaContent(html, key) {
   const patterns = [
-    new RegExp(`<meta[^>]+(?:name|property)=["']${key}["'][^>]+content=["']([^"']+)["']`, 'i'),
-    new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]+(?:name|property)=["']${key}["']`, 'i'),
+    new RegExp(`<meta[^>]+(?:name|property)=["']${key}["'][^>]+content=(?:"([^"]*)"|'([^']*)')`, 'i'),
+    new RegExp(`<meta[^>]+content=(?:"([^"]*)"|'([^']*)')[^>]+(?:name|property)=["']${key}["']`, 'i'),
   ];
   for (const re of patterns) {
     const m = html.match(re);
-    if (m) return decodeEntities(m[1]).trim();
+    if (m) return decodeEntities(m[1] ?? m[2] ?? '').trim();
   }
   return '';
 }
@@ -742,8 +743,11 @@ async function enrichItem(item, sourceByName = new Map()) {
     const m = slim.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
     return m ? m[1] : '';
   })();
-  const pageTitle = sanitizeTitle(h1Inner)
+  let pageTitle = sanitizeTitle(h1Inner)
     || sanitizeTitle(metaContent(slim, 'og:title') || metaContent(slim, 'twitter:title'));
+  // SPA (Polyscope/Firestore) : og:title = nom du site → ne jamais l’adopter.
+  if (pageTitle && (isSiteNameTitle(pageTitle, item.source, [src?.name, metaContent(slim, 'og:site_name')].filter(Boolean))
+    || src?.fetchMode === 'firebase')) pageTitle = '';
   const current = String(next.title || '').trim();
   const repaired = current ? sanitizeTitle(current) : '';
   if (repaired && repaired !== current) next.title = repaired;
