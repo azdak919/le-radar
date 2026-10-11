@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-11T18:25:48.756Z",
+  "updated": "2026-10-11T20:20:40.705Z",
   "total": 177,
   "withImage": 157,
   "withCredit": 157,
@@ -7,15 +7,22 @@
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 7,
-  "citedNew": 4,
+  "checked": 17,
+  "updatedCount": 9,
+  "citedNew": 6,
   "fallbackNew": 11,
   "samples": [
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Quand la fiction banalise les traumatismes",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -28,13 +35,6 @@
     },
     {
       "title": "Est-ce que je dois un bébé à l’État ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Le « self-care » : qui valide votre repos ?",
       "source": "Le Délit",
       "credit": "Photo : Catvy Tran",
       "cited": true,
@@ -60,6 +60,20 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
