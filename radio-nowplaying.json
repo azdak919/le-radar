@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-12T10:43:37.924Z",
+  "updatedAt": "2026-10-12T15:19:49.667Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Lundi Indie",
+        "title": "Little Songs On The Prairie",
         "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://chyz.ca/emission/little-songs-on-the-prairie/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T10:43:20.162Z"
+      "checkedAt": "2026-10-12T15:19:20.473Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le terrain sportif",
+        "title": "o'keb",
         "source": "schedule",
-        "start": "06:30",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/le-terrain-sportif"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/okeb"
       },
       "next": {
-        "title": "Yallah! Lâcher prise avec Rhabibiii",
+        "title": "L'alter ego",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/lalter-ego"
       },
       "track": "",
-      "showTitle": "Le terrain sportif",
+      "showTitle": "o'keb",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T10:43:22.304Z"
+      "checkedAt": "2026-10-12T15:19:22.857Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Adventures In Music",
+        "title": "All Things Campus",
         "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "next": {
-        "title": "Unmuted with Svetlana and Miss Trish",
+        "title": "World Skip The Beat",
         "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "track": "",
-      "showTitle": "Adventures In Music",
+      "showTitle": "All Things Campus",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,81 +74,80 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T10:43:26.704Z"
+      "checkedAt": "2026-10-12T15:19:26.555Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Experiments",
+        "title": "I Think You Might Like This",
         "source": "schedule-live",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/experiments"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/i-think-you-might-like-this"
       },
       "next": {
-        "title": "Trawling the Megahertz",
+        "title": "Twang City",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/twang-city"
       },
       "track": "",
-      "showTitle": "Experiments",
+      "showTitle": "I Think You Might Like This",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T10:43:29.682Z"
+      "checkedAt": "2026-10-12T15:19:29.733Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
+        "title": "Solénoïde",
         "source": "schedule-live",
-        "start": "00:01",
-        "end": "07:00"
+        "start": "09:00",
+        "end": "18:00"
       },
       "next": {
-        "title": "Folkswagen",
+        "title": "Ma radio Académia",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "18:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Solénoïde",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T10:43:31.048Z"
+      "checkedAt": "2026-10-12T15:19:30.791Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Kongossa na UQAM",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://www.choq.ca/emissions/kongossa-na-uqam"
+        "title": "Onde de CHOQ",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
       },
-      "track": "Empress Of — Wild Storm",
+      "track": "Ela Minus and Nick León — espiral",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T10:43:37.574Z"
+      "checkedAt": "2026-10-12T15:19:49.316Z"
     }
   }
 }
