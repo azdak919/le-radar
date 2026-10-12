@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-12T01:31:33.922Z",
+  "updatedAt": "2026-10-12T02:22:19.387Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T01:31:19.427Z"
+      "checkedAt": "2026-10-12T02:22:02.041Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T01:31:21.222Z"
+      "checkedAt": "2026-10-12T02:22:04.192Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T01:31:23.789Z"
+      "checkedAt": "2026-10-12T02:22:07.075Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Afro Archives",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/afro-archives"
-      },
-      "next": {
         "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
         "start": "22:00",
         "end": "00:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
+      "next": {
+        "title": "Cinema Smackdown",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "00:30",
+        "url": "http://www.cjlo.com/shows/cinema-smackdown"
+      },
       "track": "",
-      "showTitle": "Afro Archives",
+      "showTitle": "CJLO's Alternative Mega Mix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T01:31:26.184Z"
+      "checkedAt": "2026-10-12T02:22:09.769Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T01:31:27.164Z"
+      "checkedAt": "2026-10-12T02:22:11.023Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "BAIE — Trait d'union",
+      "track": "beabadoobee — Write Me A Letter",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T01:31:33.573Z"
+      "checkedAt": "2026-10-12T02:22:19.037Z"
     }
   }
 }
