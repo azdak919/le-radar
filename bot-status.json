@@ -1,92 +1,92 @@
 {
-  "updated": "2026-10-05T17:32:06.380Z",
+  "updated": "2026-10-12T18:08:34.217Z",
   "healthy": true,
   "needsHuman": false,
   "pipeline": [
     {
       "step": "Institutions catalogue",
       "ok": true,
-      "ms": 245
+      "ms": 1185
     },
     {
       "step": "Media scanner (gaps)",
       "ok": true,
-      "ms": 8783
+      "ms": 8056
     },
     {
       "step": "News source maintainer",
       "ok": true,
-      "ms": 119567
+      "ms": 135794
     },
     {
       "step": "Stream tracker + radio promotion",
       "ok": true,
-      "ms": 706250
+      "ms": 940076
     },
     {
       "step": "Radio now-playing metadata",
       "ok": true,
-      "ms": 39703
+      "ms": 59294
     },
     {
       "step": "RSEQ sports league catalog",
       "ok": true,
-      "ms": 3987
+      "ms": 2362
     },
     {
       "step": "RSEQ sports results",
       "ok": true,
-      "ms": 27745
+      "ms": 40488
     },
     {
       "step": "Radio schedule drift",
       "ok": true,
-      "ms": 19554
+      "ms": 38913
     },
     {
       "step": "News sources verify",
       "ok": true,
-      "ms": 28829
+      "ms": 24646
     },
     {
       "step": "News aggregator",
       "ok": true,
-      "ms": 45692
+      "ms": 61903
     },
     {
       "step": "Quebec masthead landscape bank",
       "ok": true,
-      "ms": 269121
+      "ms": 241603
     },
     {
       "step": "Quebec masthead university bank",
       "ok": true,
-      "ms": 111559
+      "ms": 118502
     },
     {
       "step": "Quebec pomo landscape bank",
       "ok": true,
-      "ms": 177674
+      "ms": 173553
     },
     {
       "step": "Quebec nations/Inuit bank (shared)",
       "ok": true,
-      "ms": 311492
+      "ms": 130430
     },
     {
       "step": "Quebec photo bank pixel audit (report)",
       "ok": true,
-      "ms": 440493
+      "ms": 394002
     },
     {
       "step": "Social feed",
       "ok": true,
-      "ms": 62215
+      "ms": 73973
     },
     {
       "step": "RSS export",
       "ok": true,
-      "ms": 48
+      "ms": 81
     }
   ],
   "summary": {
@@ -96,38 +96,38 @@
       "dead": 0,
       "stale": 3,
       "candidates": 3,
-      "articles": 175,
-      "withAuthor": 175,
-      "withExcerpt": 174,
+      "articles": 178,
+      "withAuthor": 178,
+      "withExcerpt": 177,
       "authorQc": {
         "ok": true,
-        "mismatches": 8
+        "mismatches": 17
       },
       "leadImageQc": {
-        "fullyCovered": 174,
-        "withPhoto": 162,
-        "withStock": 23,
-        "leadReadyPhotos": 139,
-        "pageScraped": 34,
+        "fullyCovered": 178,
+        "withPhoto": 158,
+        "withStock": 36,
+        "leadReadyPhotos": 128,
+        "pageScraped": 21,
         "mainPageLeadReady": true
       },
       "photoCreditQc": {
         "ok": false,
-        "withCredit": 162,
-        "cited": 107,
-        "pending": 10,
+        "withCredit": 158,
+        "cited": 108,
+        "pending": 9,
         "missingHero": 0
       }
     },
     "backgrounds": {
       "masthead": {
-        "count": 115,
+        "count": 116,
         "maxBank": 50,
         "lastSessionCleanup": null,
         "lastSessionId": null
       },
       "universities": {
-        "count": 149,
+        "count": 150,
         "maxBank": 50,
         "lastSessionCleanup": null,
         "lastSessionId": null
@@ -144,7 +144,7 @@
         "lastSessionCleanup": null,
         "lastSessionId": null
       },
-      "count": 115,
+      "count": 116,
       "maxBank": 50,
       "lastSessionCleanup": null,
       "lastSessionId": null
@@ -204,7 +204,17 @@
     {
       "level": "info",
       "code": "schedule_drift",
-      "message": "Hors programmation : choq (+1 −0)"
+      "message": "Hors programmation : ckut (+7 −5)"
+    },
+    {
+      "level": "warn",
+      "code": "schedule_overhaul",
+      "message": "Grille refaite : choq (+11 −8) — relancer fetch-radio-schedules.js --update"
+    },
+    {
+      "level": "warn",
+      "code": "schedule_source_down",
+      "message": "Source horaire muette : cjlo"
     }
   ]
 }

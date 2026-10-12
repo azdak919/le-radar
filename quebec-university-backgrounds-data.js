@@ -2003,5 +2003,18 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     place: "Université Laval",
     campus: true,
     tags: ["mat", "campus"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Campus_UdeM_sous_la_neige%2C_Montr%C3%A9al_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    credit: "Thomas1313",
+    link: "https://commons.wikimedia.org/wiki/File:Campus%20UdeM%20sous%20la%20neige%2C%20Montr%C3%A9al%2003.jpg",
+    license: "CC BY-SA 3.0",
+    title: "Campus UdeM sous la neige, Montréal 03",
+    width: 3648,
+    height: 2736,
+    place: "Montréal",
+    campus: true,
+    season: "hiver",
+    tags: ["mat", "campus"],
   }
 ];
