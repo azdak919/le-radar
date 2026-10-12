@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-12T01:33:36.008Z",
+  "updated": "2026-10-12T05:14:51.134Z",
   "total": 178,
   "pool": 56,
-  "incomplete": 12,
+  "incomplete": 13,
   "withLeadExcerpt": 120,
-  "candidates": 12,
-  "enriched": 0,
+  "candidates": 13,
+  "enriched": 2,
   "failed": 3,
   "ok": true,
   "samples": [
@@ -17,6 +17,24 @@
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
       "changed": false
+    },
+    {
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "link": "https://www.delitfrancais.com/2026/09/23/arrestations-visant-les-lgbtq-en-turquie/",
+      "ok": true,
+      "score": 96,
+      "chars": 217,
+      "sample": "Au total, plus de 80 personnes ont été placées en détention provisoire. Le ministère de la Justice t",
+      "changed": true
+    },
+    {
+      "title": "Pro-Palestine student groups rally on Oct. 7 in the face of counter-protesters",
+      "link": "https://thelinknewspaper.ca/article/16477",
+      "ok": true,
+      "score": 95,
+      "chars": 192,
+      "sample": "SPHR branches from McGill, Concordia University, Dawson College and Université de Montréal organized",
+      "changed": true
     },
     {
       "title": "Concordia’s Solidarity Brunch goes monthly",
@@ -61,24 +79,6 @@
       "score": 96,
       "chars": 400,
       "sample": "Under the bylaw, which took effect on Oct. 1, people who insult city staff could face fines between ",
-      "changed": false
-    },
-    {
-      "title": "Concordia does not care about its disabled students",
-      "link": "https://thelinknewspaper.ca/article/16455",
-      "ok": true,
-      "score": 96,
-      "chars": 400,
-      "sample": "As a human relations student at Concordia University, I have had a plethora of opportunities to exam",
-      "changed": false
-    },
-    {
-      "title": "De la rue aux égouts : le parcours de l’eau",
-      "link": "https://lapige.atmjonquiere.com/2026/10/08/de-la-rue-aux-egouts-le-parcours-de-leau/?utm_source=rss&utm_medium=rss&utm_campaign=de-la-rue-aux-egouts-le-parcours-de-leau",
-      "ok": true,
-      "score": 96,
-      "chars": 164,
-      "sample": "Lorsqu’une forte pluie s’abat sur une ville, une grande partie du travail se déroule sous nos pieds.",
       "changed": false
     }
   ]
