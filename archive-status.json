@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-12T00:50:52.115Z",
+  "updated": "2026-10-12T11:28:51.697Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -4080,13 +4080,19 @@
       "via": "save-page-now",
       "source": "The Link",
       "snapshot": "https://web.archive.org/web/20261012005005/https://thelinknewspaper.ca/article/16474"
+    },
+    "https://thelinknewspaper.ca/article/16455": {
+      "at": "2026-10-12T11:27:32.653Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20261012112710/https://thelinknewspaper.ca/article/16455"
     }
   },
   "stats": {
-    "total": 712,
+    "total": 713,
     "lastRun": {
-      "saved": 3,
-      "skipped": 1,
+      "saved": 1,
+      "skipped": 0,
       "failed": 12,
       "stoppedEarly": false
     }
@@ -4095,17 +4101,19 @@
     "Le Collectif": {
       "host": "lecollectif.ca",
       "pages": 27,
-      "checkedAt": "2026-10-05T10:49:37.395Z"
+      "checkedAt": "2026-10-12T11:18:19.656Z"
     },
     "The Tribune": {
       "host": "www.thetribune.ca",
       "pages": 37,
-      "checkedAt": "2026-10-05T10:49:25.105Z"
+      "checkedAt": "2026-10-05T10:49:25.105Z",
+      "stale": true
     },
     "The Link": {
       "host": "thelinknewspaper.ca",
       "pages": 138,
-      "checkedAt": "2026-10-05T10:49:31.404Z"
+      "checkedAt": "2026-10-05T10:49:31.404Z",
+      "stale": true
     },
     "The McGill Daily": {
       "host": "www.mcgilldaily.com",
