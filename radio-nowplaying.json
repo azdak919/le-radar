@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-12T02:22:19.387Z",
+  "updatedAt": "2026-10-12T08:33:36.358Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T02:22:02.041Z"
+      "checkedAt": "2026-10-12T08:33:22.132Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix Anglo",
+        "title": "Le char de marge (reprise)",
         "source": "schedule",
-        "start": "21:30",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
       },
       "next": {
-        "title": "L'alter ego (reprise)",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/lalter-ego"
+        "start": "05:00",
+        "end": "06:30",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "track": "",
-      "showTitle": "Mix Anglo",
+      "showTitle": "Le char de marge (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T02:22:04.192Z"
+      "checkedAt": "2026-10-12T08:33:23.826Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Cha Cha In Blue",
+        "title": "Adventures In Music",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "04:00",
+        "end": "07:00"
       },
       "next": {
-        "title": "Ill Groove Garden",
+        "title": "Unmuted with Svetlana and Miss Trish",
         "source": "api-live",
-        "start": "23:00",
-        "end": "00:00"
+        "start": "07:00",
+        "end": "08:00"
       },
       "track": "",
-      "showTitle": "Cha Cha In Blue",
+      "showTitle": "Adventures In Music",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,80 +74,81 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T02:22:07.075Z"
+      "checkedAt": "2026-10-12T08:33:26.047Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
-      },
-      "next": {
-        "title": "Cinema Smackdown",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "00:00",
-        "end": "00:30",
-        "url": "http://www.cjlo.com/shows/cinema-smackdown"
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
+      },
+      "next": {
+        "title": "Experiments",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/experiments"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T02:22:09.769Z"
+      "checkedAt": "2026-10-12T08:33:28.180Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Solénoïde",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:01",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T02:22:11.023Z"
+      "checkedAt": "2026-10-12T08:33:29.433Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Les rois de l'arène",
-        "source": "api-live",
-        "start": "05:00",
-        "end": "07:00",
-        "slug": "les-rois-de-larene"
+        "title": "Kongossa na UQAM",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://www.choq.ca/emissions/kongossa-na-uqam"
       },
-      "track": "beabadoobee — Write Me A Letter",
+      "track": "Ezra Collective — Blow Your Trumpet",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T02:22:19.037Z"
+      "checkedAt": "2026-10-12T08:33:36.007Z"
     }
   }
 }
