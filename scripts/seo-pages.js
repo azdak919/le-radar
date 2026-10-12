@@ -1297,7 +1297,7 @@ function sportsResultRows(team, t, lang) {
   const isSailing = team.sport === 'sailing';
   /** Adversaire : surnom en 1ʳᵉ si connu (identité d’équipe), sinon nom court. */
   const formatOpp = (game) => {
-    const short = game.opponent || game.opponentCode || '—';
+    const short = (lang === 'en' && game.opponentEn) || game.opponent || game.opponentCode || '—';
     const full = game.opponentFullName && game.opponentFullName !== short
       ? game.opponentFullName
       : '';
@@ -1327,8 +1327,13 @@ function sportsResultRows(team, t, lang) {
       ? `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(tip)}">${inner}</a>`
       : inner;
   };
-  const last = team.lastGame;
-  if (last) {
+  const pastGames = (isSailing && Array.isArray(team.results) && team.results.length)
+    ? team.results.slice().sort((a, b) => (
+      String(b.date || '').localeCompare(String(a.date || ''))
+      || (Number(a.scoreFor) || 99) - (Number(b.scoreFor) || 99)
+    )).slice(0, 16)
+    : (team.lastGame ? [team.lastGame] : []);
+  for (const last of pastGames) {
     const opp = formatOpp(last);
     const placeKind = sportsIsPlaceResult(last, team.sport);
     const placeBadge = placeKind ? sportsPlaceBadgeSpec(last, t) : null;
@@ -1345,7 +1350,7 @@ function sportsResultRows(team, t, lang) {
       ? `${t.sportsPlace} ${sportsPlaceScoreText(last, lang) || `${last.scoreFor} / ${last.scoreAgainst}`}`
       : label;
     const when = sportsDayWord(last.date, t) || formatSportsDate(last.date, lang);
-    const prior = !!(last.priorSeason || team.lastGamePriorSeason);
+    const prior = !!(last.priorSeason || (!isSailing && team.lastGamePriorSeason));
     const priorClass = prior ? ' sports-result--prior-season' : '';
     const kindClass = placeKind ? 'place' : escapeHtml(last.result || 'D');
     const priorMeta = prior
@@ -1484,6 +1489,26 @@ function sportsPageToolsHtml(t) {
       </div>\n`;
 }
 
+/** Classement national CICSA — meta de carte, pas une fausse régate. */
+function sportsCicsaSeasonMeta(team, lang) {
+  const season = team && team.cicsaSeason;
+  const rank = Number(season && season.rank);
+  const field = Number(season && season.field);
+  if (!season || !Number.isFinite(rank) || rank < 1 || !Number.isFinite(field) || field < 1) return '';
+  const ord = sportsPlaceOrdinal(rank, lang);
+  const score = Number(season.score);
+  const points = Number.isFinite(score)
+    ? (Number.isInteger(score) ? String(score) : score.toFixed(1))
+    : '';
+  const pts = points
+    ? (lang === 'en' ? `${points} pts` : `${points.replace('.', ',')} pts`)
+    : '';
+  const label = lang === 'en'
+    ? `CICSA season ${season.season || ''}`.trim()
+    : `Saison CICSA ${season.season || ''}`.trim();
+  return [label, `${ord}/${field}`, pts].filter(Boolean).join(' · ');
+}
+
 function sportsPanelHtml(team, t, lang) {
   const sport = team.sport || '';
   const glyph = SPORT_GLYPH[sport] || '🏅';
@@ -1501,7 +1526,8 @@ function sportsPanelHtml(team, t, lang) {
   const isSailingClub = sport === 'sailing'
     && (team.kind === 'association-etudiante'
       || team.source === 'sailing-watchlist'
-      || team.source === 'icsa-collegesailing');
+      || team.source === 'icsa-collegesailing'
+      || team.source === 'cicsa');
   const nick = isSailingClub ? '' : String(team.nickname || '').trim();
   const shortName = String(team.name || '').trim() || 'Équipe';
   const code = String(team.code || '').trim();
@@ -1534,6 +1560,7 @@ function sportsPanelHtml(team, t, lang) {
     sportsSportLabel(team, t, lang),
     team.division,
     sportsSectorLabel(team.sector, t),
+    sportsCicsaSeasonMeta(team, lang),
     team.record?.label ? `${t.sportsRecord} ${team.record.label}` : '',
   ].filter(Boolean).join(' · ');
   const regAttr = team.registryId ? ` data-registry="${escapeHtml(team.registryId)}"` : '';
@@ -1600,6 +1627,7 @@ function externalSportPanelHtml(sport, t, board) {
       sportLabel: t.sportsSailingLabel,
       why: t.sportsSailingWhy,
       links: [
+        { href: 'https://cicsailing.ca/season-results', label: t.sportsSailingCicsa },
         { href: 'https://scores.collegesailing.org/', label: t.sportsSailingIcsa },
         { href: 'https://mcgillathletics.ca/sports/sailing', label: t.sportsSailingMcgill },
         { href: 'https://neisa.collegesailing.org/', label: t.sportsSailingNeisa },

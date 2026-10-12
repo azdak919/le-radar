@@ -1,5 +1,5 @@
 {
-  "description": "Voile campus — Québec seulement. ICSA = scores réels. watchlist = clubs QC confirmés seulement (pas d’équipages inventés).",
+  "description": "Voile campus — Québec seulement. ICSA = circuit américain (McGill). CICSA = clubs étudiants QC. watchlist = club QC sans feuille ni page de scores.",
   "region": "QC",
   "icsaBase": "https://scores.collegesailing.org/schools/",
   "schools": [
@@ -20,47 +20,66 @@
       "lastSeen": "2026-10-05T17:07:10.974Z"
     }
   ],
-  "watchlist": [
-    {
-      "registryId": "polytechnique",
-      "name": "Polytechnique Montréal",
-      "shortName": "Polytechnique",
-      "code": "POLY",
-      "sector": "universitaire",
-      "status": "club",
-      "province": "QC",
-      "kind": "association-etudiante",
-      "clubName": "PolyVoile",
-      "note": "Association de voile étudiante (comité AEP) — pas un programme d’excellence varsity. Pas d’équipe ICSA publique pour l’instant.",
-      "url": "https://polyvoile.wordpress.com/",
-      "icsaSlugCandidates": [
-        "polytechnique",
-        "polymtl",
-        "polytechnique-montreal",
-        "polyvoile"
-      ],
-      "lastChecked": "2026-10-05T17:07:11.449Z"
-    },
-    {
-      "registryId": "ulaval",
-      "name": "Université Laval",
-      "shortName": "Laval",
-      "code": "LAV",
-      "sector": "universitaire",
-      "status": "upcoming",
-      "province": "QC",
-      "kind": "association-etudiante",
-      "clubName": "ULaVoile",
-      "note": "Club / association étudiante ULaVoile — distinct du programme d’excellence Rouge et Or. Découverte ICSA en attente.",
-      "url": "https://www.instagram.com/clubdevoileulaval/",
-      "icsaSlugCandidates": [
-        "laval",
-        "ulaval",
-        "universite-laval",
-        "quebec-laval"
-      ],
-      "lastChecked": "2026-10-05T17:07:11.921Z"
-    }
-  ],
-  "updated": "2026-10-05T17:07:11.921Z"
+  "watchlist": [],
+  "cicsa": {
+    "resultsUrl": "https://cicsailing.ca/season-results",
+    "scheduleUrl": "https://cicsailing.ca/season-schedule",
+    "scoresSheetId": "1thFiZSt588RM6VUcTqi_DimeEWXxuj8VRuZCzZn9nyk",
+    "scheduleSheetId": "1ZBvA8dTQwkedpS0Ti96kvf7gvmIetFxSBHmksbH5ZlY",
+    "seasonLabel": "2026-2027",
+    "seasonStartYear": 2026,
+    "clubs": [
+      {
+        "registryId": "mcgill",
+        "name": "Université McGill",
+        "shortName": "McGill",
+        "code": "MCG",
+        "clubName": "McGill Sailing",
+        "rseqTeamId": "mcgill",
+        "url": "https://www.mcgillsailing.com/",
+        "note": "Équipe de voile étudiante (student-led), distincte du programme d’excellence Redbirds."
+      },
+      {
+        "registryId": "concordia",
+        "name": "Université Concordia",
+        "shortName": "Concordia",
+        "code": "UCON",
+        "clubName": "Concordia Sailing",
+        "rseqTeamId": "concordia",
+        "url": "https://www.facebook.com/concordiasailing/",
+        "note": "Association étudiante Concordia Sailing — distincte des Stingers."
+      },
+      {
+        "registryId": "polytechnique",
+        "name": "Polytechnique Montréal",
+        "shortName": "Polytechnique",
+        "code": "POLY",
+        "clubName": "PolyVoile",
+        "rseqTeamId": "POLY",
+        "url": "https://www.facebook.com/PolyVoile/",
+        "note": "Association de voile étudiante PolyVoile — pas un programme d’excellence."
+      },
+      {
+        "registryId": "ulaval",
+        "name": "Université Laval",
+        "shortName": "Laval",
+        "code": "LAV",
+        "clubName": "ULaVoile",
+        "rseqTeamId": "ulaval",
+        "url": "https://www.instagram.com/clubdevoileulaval/",
+        "note": "Club ULaVoile — distinct du programme d’excellence Rouge et Or."
+      },
+      {
+        "registryId": "usherbrooke",
+        "name": "Université de Sherbrooke",
+        "shortName": "Sherbrooke",
+        "code": "USHE",
+        "clubName": "Voile UdeS",
+        "rseqTeamId": "usherbrooke",
+        "url": "https://cicsailing.ca/school-teams",
+        "note": "Pas de nom de club publié. MdeS / UdeS est l’équipage CICSA, distinct du Vert & Or."
+      }
+    ]
+  },
+  "updated": "2026-10-11T12:00:00.000Z"
 }

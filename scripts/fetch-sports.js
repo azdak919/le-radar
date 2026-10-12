@@ -11,6 +11,8 @@
  * Usage:
  *   node scripts/fetch-sports.js           # dry-run résumé
  *   node scripts/fetch-sports.js --update  # écrit sports.json
+ *   node scripts/fetch-sports.js --sailing-only [--update]
+ *     # remplace seulement les clubs de voile (ICSA + CICSA QC)
  */
 
 const fs = require('fs');
@@ -38,9 +40,11 @@ const { buildSportsMastheadPayload } = require('./sports-masthead-lib');
 const { preserveHarvestCatalogStats } = require('./harvest-freshness-lib');
 const { isChallengeOrInterstitialPage } = require('./source-retention-lib');
 const CampusHockey = require('./campus-hockey-lib');
+const Cicsa = require('./cicsa-sailing-lib');
 
 const update = process.argv.includes('--update');
 const liveOnly = process.argv.includes('--live');
+const sailingOnly = process.argv.includes('--sailing-only');
 const GAME_API = 'https://s1.rseq.ca/api/GameApi/GetGameDiffusion/?gameId=';
 
 function getJson(url) {
@@ -507,7 +511,8 @@ async function fetchHockeyTeams(reg, { skipCampus = false } = {}) {
 
 /**
  * Voile campus — Québec seulement (sports-sailing.json).
- * ICSA = scores réels ; watchlist = clubs QC sans feed encore (UdeM, Sherbrooke, Laval…).
+ * ICSA = régates College Sailing. CICSA = saison des clubs universitaires QC
+ * (https://cicsailing.ca/season-results). Watchlist = club QC sans feed.
  */
 const SAILING_CFG_PATH = path.join(ROOT, 'sports-sailing.json');
 
@@ -648,6 +653,7 @@ function parseSailingSchoolPage(html, school) {
   };
 
   const key = `sailing:universitaire:${school.slug}`;
+  const resultEntries = official.map((r) => toEntry(r, true));
   const team = {
     id: key,
     rseqTeamId: school.code,
@@ -663,7 +669,8 @@ function parseSailingSchoolPage(html, school) {
     leagueLabel: school.kind === 'association-etudiante'
       ? `ICSA · association étudiante · ${school.conference || 'College sailing'}`
       : `ICSA · ${school.conference || 'College sailing'}`,
-    lastGame: official[0] ? toEntry(official[0], true) : null,
+    results: resultEntries,
+    lastGame: resultEntries[0] || null,
     nextGame: (pending.find((r) => !r.date || r.date >= today)
       ? toEntry(pending.find((r) => !r.date || r.date >= today), false)
       : null),
@@ -710,8 +717,14 @@ function applySailingClubIdentity(team, clubOrSchool) {
     ? 'Association · à venir'
     : clubOrSchool.status === 'icsa'
       ? (clubOrSchool.conference || 'ICSA')
-      : 'Association étudiante';
-  team.leagueLabel = 'Voile · association étudiante QC';
+      : clubOrSchool.status === 'cicsa'
+        ? (team.division && team.division !== 'CICSA' ? `${team.division} · CICSA` : 'CICSA')
+        : 'Association étudiante';
+  team.leagueLabel = clubOrSchool.status === 'cicsa'
+    ? 'CICSA · association étudiante QC'
+    : (team.leagueLabel && /CICSA/.test(team.leagueLabel)
+      ? team.leagueLabel
+      : 'Voile · association étudiante QC');
   if (clubOrSchool.note) team.clubNote = clubOrSchool.note;
   if (clubOrSchool.url) team.url = clubOrSchool.url;
   return team;
@@ -751,6 +764,37 @@ function sailingWatchlistTeam(club, reg) {
   return team;
 }
 
+function mergeSailingResults(base, extra) {
+  const results = [];
+  const seen = new Set();
+  for (const game of [...(base.results || []), ...(extra.results || [])]) {
+    if (!game) continue;
+    const key = game.gameId || `${game.date}|${game.opponent}|${game.scoreFor}|${game.url}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    results.push(game);
+  }
+  results.sort((a, b) => (
+    String(b.date || '').localeCompare(String(a.date || ''))
+    || (Number(a.scoreFor) || 99) - (Number(b.scoreFor) || 99)
+  ));
+  base.results = results;
+  base.lastGame = results[0] || base.lastGame || null;
+  if (extra.cicsaSeason) base.cicsaSeason = extra.cicsaSeason;
+  const extraNext = extra.nextGame;
+  if (extraNext && (!base.nextGame || String(extraNext.date || '9999') < String(base.nextGame.date || '9999'))) {
+    base.nextGame = extraNext;
+    base.nextGames = extra.nextGames && extra.nextGames.length ? extra.nextGames : [extraNext];
+  }
+  if (!/CICSA/.test(String(base.leagueLabel || ''))) {
+    base.leagueLabel = 'ICSA · CICSA · association étudiante QC';
+  }
+  if (base.division && !/CICSA/.test(String(base.division))) {
+    base.division = `${base.division} · CICSA`;
+  }
+  return base;
+}
+
 async function fetchSailingTeams(reg) {
   const cfg = loadSailingConfig();
   const schools = (cfg.schools || []).filter((s) => !s.province || s.province === 'QC');
@@ -788,8 +832,57 @@ async function fetchSailingTeams(reg) {
     }
   }
 
-  // Clubs QC sans ICSA (UdeM, Sherbrooke, Laval…) — cartes campus, pas de scores hors province.
+  const cicsaCfg = cfg.cicsa || {};
+  const cicsaIds = new Set((cicsaCfg.clubs || []).map((club) => club.registryId).filter(Boolean));
+  if (cicsaCfg.scoresSheetId && cicsaCfg.scheduleSheetId) {
+    process.stderr.write('sports: voile CICSA QC… ');
+    try {
+      const scoresUrl = `https://docs.google.com/spreadsheets/d/${cicsaCfg.scoresSheetId}/export?format=csv`;
+      const scheduleUrl = `https://docs.google.com/spreadsheets/d/${cicsaCfg.scheduleSheetId}/export?format=csv`;
+      const [scoresCsv, scheduleCsv] = await Promise.all([
+        fetchText(scoresUrl),
+        fetchText(scheduleUrl),
+      ]);
+      const built = Cicsa.buildCicsaQcTeams(scoresCsv, scheduleCsv, {
+        seasonStartYear: cicsaCfg.seasonStartYear,
+        seasonLabel: cicsaCfg.seasonLabel,
+        clubs: cicsaCfg.clubs,
+        resultsUrl: cicsaCfg.resultsUrl,
+        scheduleUrl: cicsaCfg.scheduleUrl,
+      });
+      let added = 0;
+      let merged = 0;
+      for (const team of Object.values(built.teams)) {
+        const club = (cicsaCfg.clubs || []).find((item) => item.registryId === team.registryId) || {};
+        team.kind = 'association-etudiante';
+        applyRegistryToTeam(team, reg);
+        applySailingClubIdentity(team, { ...club, kind: 'association-etudiante', status: 'cicsa' });
+        const existing = Object.values(out).find((item) => (
+          item.registryId === team.registryId && item.source !== 'sailing-watchlist'
+        ));
+        if (existing) {
+          mergeSailingResults(existing, team);
+          merged += 1;
+        } else {
+          out[team.id] = team;
+          added += 1;
+        }
+      }
+      process.stderr.write(`ok (${added} clubs, ${merged} fusion ICSA)\n`);
+    } catch (err) {
+      process.stderr.write(`ERREUR ${err.message}\n`);
+      errors.push({
+        leagueId: 'cicsa',
+        label: 'Voile CICSA',
+        error: String(err.message || err),
+      });
+    }
+  }
+
+  // Clubs QC sans feuille CICSA ni page ICSA.
   for (const club of watchlist) {
+    if (cicsaIds.has(club.registryId)) continue;
+    if (Object.values(out).some((team) => team.registryId === club.registryId)) continue;
     const team = sailingWatchlistTeam(club, reg);
     out[team.id] = team;
     process.stderr.write(`sports: voile watchlist ${team.name} (${team.status})\n`);
@@ -880,7 +973,127 @@ function preserveBySource(previousTeams, source, reason) {
   );
 }
 
+function sailingRegistryIds(teams) {
+  const ids = new Set();
+  for (const team of Object.values(teams || {})) {
+    if (team && team.sport === 'sailing' && team.registryId) ids.add(team.registryId);
+  }
+  return ids;
+}
+
+/**
+ * Feuille CICSA ou page ICSA en panne : remettre les clubs absents du run
+ * précédent, sans doubler un registryId déjà couvert.
+ */
+function restoreSailingGaps(teams, previousTeams, sailing) {
+  const present = sailingRegistryIds(teams);
+  const errors = (sailing && sailing.errors) || [];
+  const fetched = Object.keys((sailing && sailing.teams) || {}).length;
+  const cicsaFailed = errors.some((e) => e.leagueId === 'cicsa');
+  const icsaFailed = errors.some((e) => String(e.leagueId || '').startsWith('icsa-'));
+  const totalFail = !fetched && errors.length > 0;
+  const sources = new Set();
+  if (cicsaFailed || totalFail) sources.add('cicsa');
+  if (icsaFailed || totalFail) sources.add('icsa-collegesailing');
+  if (totalFail || cicsaFailed) sources.add('sailing-watchlist');
+  let n = 0;
+  for (const src of sources) {
+    const kept = preserveBySource(previousTeams, src, 'sailing-failed');
+    for (const [id, team] of Object.entries(kept)) {
+      if (!team || team.sport !== 'sailing') continue;
+      if (teams[id]) continue;
+      if (team.registryId && present.has(team.registryId)) continue;
+      teams[id] = SportsFreshness.pruneSportsTeam(team);
+      if (team.registryId) present.add(team.registryId);
+      n += 1;
+    }
+  }
+  return n;
+}
+
+function writeSportsFiles(payload) {
+  fs.writeFileSync(
+    OUT_PATH,
+    `${JSON.stringify(SportsPayload.packSportsPayload(payload))}\n`,
+    'utf8',
+  );
+  const mastheadPath = path.join(ROOT, 'sports-masthead.json');
+  fs.writeFileSync(
+    mastheadPath,
+    `${JSON.stringify(buildSportsMastheadPayload(payload))}\n`,
+    'utf8',
+  );
+}
+
+const SAILING_NOTE = 'Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA et CICSA (clubs QC). Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.';
+
+async function runSailingOnly() {
+  const previousPayload = loadPreviousPayload();
+  const previousTeams = previousPayload && previousPayload.teams && typeof previousPayload.teams === 'object'
+    ? previousPayload.teams
+    : null;
+  if (!previousTeams) {
+    console.error('sports: ABORT --sailing-only — sports.json précédent illisible.');
+    process.exit(1);
+  }
+  const reg = loadSportsTeamsRegistry();
+  const sailing = await fetchSailingTeams(reg);
+  const teams = {};
+  for (const [id, team] of Object.entries(previousTeams)) {
+    if (!team || team.sport === 'sailing') continue;
+    teams[id] = team;
+  }
+  for (const [key, team] of Object.entries(sailing.teams)) {
+    let entry = mergePreservedPast(team, previousTeams);
+    applyRegistryToTeam(entry, reg);
+    teams[key] = SportsFreshness.pruneSportsTeam(entry);
+  }
+  const restored = restoreSailingGaps(teams, previousTeams, sailing);
+  if (restored) {
+    process.stderr.write(`sports: voile incomplet → conservé ${restored} équipes\n`);
+  }
+  const sailingCount = Object.values(teams).filter((team) => team && team.sport === 'sailing').length;
+  if (!sailingCount) {
+    console.error('sports: ABORT --sailing-only — aucun club de voile. Refus d’écraser sports.json.');
+    process.exit(1);
+  }
+  const fetchedAt = new Date().toISOString();
+  const payload = {
+    ...previousPayload,
+    updated: fetchedAt,
+    fetchedAt,
+    source: 'rseq-s1-all+spordle-hockey+sailing-qc',
+    note: SAILING_NOTE,
+    sportsFreshness: {
+      ...(previousPayload.sportsFreshness || {}),
+      rule: 'B',
+      referenceDate: fetchedAt,
+    },
+    teamCount: Object.keys(teams).length,
+    teams,
+    errors: sailing.errors.length ? sailing.errors : previousPayload.errors,
+  };
+  console.log(JSON.stringify({
+    mode: 'sailing-only',
+    sailingClubs: sailingCount,
+    teams: payload.teamCount,
+    restored,
+    errors: sailing.errors.length,
+    update,
+  }, null, 2));
+  if (!update) {
+    console.error('sports: dry-run (passe --update pour écrire)');
+    return;
+  }
+  writeSportsFiles(payload);
+  console.error(`sports: écrit ${path.relative(ROOT, OUT_PATH)} (${payload.teamCount} équipes, voile seulement)`);
+}
+
 async function main() {
+  if (sailingOnly) {
+    await runSailingOnly();
+    return;
+  }
   const catalog = JSON.parse(fs.readFileSync(LEAGUES_PATH, 'utf8'));
   const previousPayload = loadPreviousPayload();
   const previousTeams = previousPayload && previousPayload.teams && typeof previousPayload.teams === 'object'
@@ -1059,16 +1272,12 @@ async function main() {
       if (!team.lastGame && entry.lastGame) preservedPast += 1;
       teams[key] = SportsFreshness.pruneSportsTeam(entry);
     }
-  } else if (sailing.errors.length) {
-    const kept = {
-      ...preserveBySource(previousTeams, 'icsa-collegesailing', 'sailing-failed'),
-      ...preserveBySource(previousTeams, 'sailing-watchlist', 'sailing-failed'),
-    };
-    const n = Object.keys(kept).length;
-    if (n) {
-      Object.assign(teams, kept);
-      teamsPreservedOnError += n;
-      process.stderr.write(`sports: voile en panne → conservé ${n} équipes\n`);
+  }
+  if (!liveOnly) {
+    const restored = restoreSailingGaps(teams, previousTeams, sailing);
+    if (restored) {
+      teamsPreservedOnError += restored;
+      process.stderr.write(`sports: voile incomplet → conservé ${restored} équipes\n`);
     }
   }
   errors.push(...sailing.errors);
@@ -1125,7 +1334,7 @@ async function main() {
     updated: fetchedAt,
     fetchedAt,
     source: 'rseq-s1-all+spordle-hockey+sailing-qc',
-    note: 'Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA QC. Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.',
+    note: SAILING_NOTE,
     sportsFreshness: { rule: 'B', referenceDate: fetchedAt },
     registry: 'sports-teams.json',
     registryMatched: registryHits,
@@ -1173,19 +1382,9 @@ async function main() {
     // Format « packed » compact (scripts/sports-payload-lib.js) : chaque match
     // une seule fois, adversaires et URL RSEQ factorisés. Les lecteurs
     // déplient avec unpackSportsPayload (budget tests/artifact-budget.mjs).
-    fs.writeFileSync(
-      OUT_PATH,
-      `${JSON.stringify(SportsPayload.packSportsPayload(payload))}\n`,
-      'utf8',
-    );
-    const mastheadPath = path.join(ROOT, 'sports-masthead.json');
-    // Snapshot d’accueil : JSON compact (sans indent) pour rester largement
-    // sous le plafond 15 % du payload complet (tests/sports-masthead.mjs).
-    fs.writeFileSync(
-      mastheadPath,
-      `${JSON.stringify(buildSportsMastheadPayload(payload))}\n`,
-      'utf8',
-    );
+    // Snapshot d’accueil : JSON compact (sans indent) — plafond 15 %
+    // (tests/sports-masthead.mjs).
+    writeSportsFiles(payload);
     console.error(`sports: écrit ${path.relative(ROOT, OUT_PATH)} (${teamCount} équipes, ${leaguesFailed} erreurs ligue)`);
   } else {
     console.error('sports: dry-run (passe --update pour écrire)');
