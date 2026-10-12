@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-12T05:18:31.404Z",
+  "updated": "2026-10-12T06:16:29.101Z",
   "total": 178,
   "withPhoto": 158,
-  "withStock": 37,
+  "withStock": 35,
   "withCampusBank": 24,
   "fullyCovered": 178,
-  "leadReadyPhotos": 127,
-  "pageScraped": 22,
-  "photosRecovered": 18,
+  "leadReadyPhotos": 123,
+  "pageScraped": 21,
+  "photosRecovered": 17,
   "imagesCleared": 3,
-  "stockSearches": 56,
-  "stockFound": 31,
+  "stockSearches": 55,
+  "stockFound": 29,
   "campusBankFound": 18,
   "mainPageLeadReady": true,
   "gaps": [
@@ -31,12 +31,6 @@
       "link": "https://thelinknewspaper.ca/article/16474",
       "reason": "no-stock-match",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/_U2A7376_900_1178_90.jpg"
-    },
-    {
-      "title": "Spectacles de drones: raconter l’histoire dans le ciel",
-      "link": "https://lapige.atmjonquiere.com/2026/10/07/des-histoires-aeriennes/?utm_source=rss&utm_medium=rss&utm_campaign=des-histoires-aeriennes",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_20261002_143205262_HDR.jpg"
     },
     {
       "title": "Quand Polytechnique tend la main: l'aide financière sous tous ses angles",
@@ -85,6 +79,12 @@
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Bishop_Otter_Campus%2C_University_of_Chichester_-_geograph.org.uk_-_2726552.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     }
   ]
 }
