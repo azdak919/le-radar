@@ -29,6 +29,10 @@ if [[ ! -d node_modules ]]; then
   npm ci --omit=optional
 fi
 
+# Bascule du lundi : régénère « Semaine du … » des pages SEO avant
+# static-integrity (sinon tout bot échoue jusqu’au passage horaires radio).
+node scripts/seo-week-freshness.js --refresh
+
 if [[ "$mode" == "full" ]]; then
   echo "bot-prepush-check: npm test (full, Playwright)…"
   npx playwright install chromium 2>/dev/null || true
