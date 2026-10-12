@@ -207,7 +207,10 @@ function applyRegistryToTeam(team, reg) {
   // Associations de voile (ULaVoile, PolyVoile, McGill Sailing) : le nom du club
   // et l’établissement hôte priment — pas le surnom d’excellence (Rouge et Or…).
   const sailingClub = team.sport === 'sailing'
-    && (team.kind === 'association-etudiante' || team.source === 'sailing-watchlist' || team.source === 'icsa-collegesailing');
+    && (team.kind === 'association-etudiante'
+      || team.source === 'sailing-watchlist'
+      || team.source === 'icsa-collegesailing'
+      || team.source === 'cicsa');
   const clubName = team.kind === 'association-etudiante' ? team.name : null;
   const clubFull = sailingClub ? team.fullName : null;
   const resolved = resolveSportsTeam(reg, {
@@ -240,6 +243,9 @@ function applyRegistryToTeam(team, reg) {
 
 function applyRegistryToGameSide(game, reg, sector) {
   if (!game) return;
+  // Régate : le nom d’épreuve n’est pas une école. Ne pas réécrire
+  // « Régionale Québec » en sigle UCON / LAV / MCG.
+  if (game.scoreKind === 'place' || game.sport === 'sailing' || game.opponentCode === 'CICS') return;
   // Indices collégiaux dans fullName adversaire priment sur le secteur de l’équipe
   // (évite UdeS quand le flux dit « Cégep de Sherbrooke »).
   let oppSector = sector;

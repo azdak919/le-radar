@@ -1745,6 +1745,10 @@ function sportsChipWithInstitution(label, paren) {
 function sportsChipTeamShort(team) {
   const sport = String(team?.sport || '').toLowerCase();
   const sailing = sport === 'sailing' || sport === 'voile';
+  if (sailing) {
+    const club = String(team?.name || team?.shortName || '').trim();
+    if (club) return club;
+  }
   const args = {
     shortName: team?.name || team?.shortName,
     fullName: team?.fullName,
@@ -1767,6 +1771,9 @@ function sportsChipTeamShort(team) {
 
 /** Adversaire sur puce — surnom + (sigle), comme l’équipe à domicile. */
 function sportsChipOpponentLabel(game) {
+  if (sportsIsSailingGame(null, game)) {
+    return String(game?.opponent || game?.opponentFullName || 'Régate').trim();
+  }
   const full = String(game?.opponentFullName || '');
   const code = String(game?.opponentCode || '').toUpperCase();
   const sport = String(game?.sport || '').toLowerCase();
@@ -1799,6 +1806,11 @@ function sportsPlaceEventShort(game) {
   if (comp) return comp;
   const opp = sportsPlainOpponentName(game);
   return opp;
+}
+
+function sportsIsSailingGame(team, game) {
+  const s = String(team?.sport || game?.sport || '').toLowerCase();
+  return s === 'sailing' || s === 'voile';
 }
 
 /** Verbe de rencontre — domicile « reçoit », visiteur « chez » (ton presse : à = lieu, chez = domicile d’équipe). */
@@ -2180,6 +2192,7 @@ function sportsCtaLabelFromSlide(slide) {
     return `${glyph} ${home} ${sportsLiveScoreText(g)} ${opp}`;
   }
   if (slide.mode === 'next') {
+    if (sportsIsSailingGame(slide.team, g)) return `${glyph} ${home} · ${opp}`;
     return `${glyph} ${home} ${sportsMatchVerb(g)} ${opp}`;
   }
   if (slide.mode === 'result') {
@@ -3312,9 +3325,12 @@ function fillSportsCtaLayer(layer, slide) {
     const g = src.game;
     const home = sportsChipTeamShort(src.team);
     const opp = sportsChipOpponentLabel(g);
-    text.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-      + sportsVsHtml(g)
-      + ` <span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+    text.innerHTML = sportsIsSailingGame(src.team, g)
+      ? `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`
+      : `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + sportsVsHtml(g)
+        + ` <span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
   } else if (src?.team && src.game && src.mode === 'result') {
     const g = src.game;
     const home = sportsChipTeamShort(src.team);
@@ -3904,9 +3920,13 @@ function paintSportsChip(slide, animate = false) {
     if (whenTag) a.append(whenTag, glyph);
     else a.append(glyph);
     // « reçoit » / « chez » — même ton presse que la CTA ; verbe en .sports-chip__vs (gris).
-    inner.innerHTML = `<span class="sports-chip__name">${escapeHtml(home)}</span> `
-      + sportsVsHtml(g)
-      + ` <span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
+    // Régate : club + épreuve, sans verbe de rencontre.
+    inner.innerHTML = sportsIsSailingGame(team, g)
+      ? `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + `<span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`
+      : `<span class="sports-chip__name">${escapeHtml(home)}</span> `
+        + sportsVsHtml(g)
+        + ` <span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
     setSportsLocalizableText(subText, subLine);
     a.title = sportsChipTitle(slide);
     a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);

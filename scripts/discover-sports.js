@@ -452,6 +452,9 @@ function syncSportsTeamsRegistry(sailingResult) {
   for (const w of sailingResult.watchlist || []) {
     if (w.registryId) sailingIds.add(w.registryId);
   }
+  for (const c of (sailingResult.cicsa && sailingResult.cicsa.clubs) || []) {
+    if (c.registryId) sailingIds.add(c.registryId);
+  }
 
   let sportsAdded = 0;
   let sailingTagged = 0;
@@ -605,14 +608,17 @@ async function main() {
   const sailingOut = {
     ...sailingCfg,
     description:
-      'Voile campus — Québec seulement. ICSA = scores réels. watchlist = clubs QC confirmés seulement (pas d’équipages inventés).',
+      'Voile campus — Québec seulement. ICSA = circuit américain (McGill). CICSA = clubs étudiants QC. watchlist = club QC sans feuille ni page de scores.',
     region: 'QC',
     updated: new Date().toISOString(),
     schools: sailingResult.schools,
     watchlist: sailingResult.watchlist,
   };
 
-  const regSync = syncSportsTeamsRegistry(sailingResult);
+  const regSync = syncSportsTeamsRegistry({
+    ...sailingResult,
+    cicsa: sailingCfg.cicsa,
+  });
 
   const summary = {
     update,
