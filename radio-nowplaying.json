@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-12T08:33:36.358Z",
+  "updatedAt": "2026-10-12T10:43:37.924Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T08:33:22.132Z"
+      "checkedAt": "2026-10-12T10:43:20.162Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le char de marge (reprise)",
+        "title": "Le terrain sportif",
         "source": "schedule",
-        "start": "03:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/le-char-de-marge"
+        "start": "06:30",
+        "end": "08:00",
+        "url": "https://cism893.ca/emissions/le-terrain-sportif"
       },
       "next": {
-        "title": "Le Séismix",
+        "title": "Yallah! Lâcher prise avec Rhabibiii",
         "source": "schedule",
-        "start": "05:00",
-        "end": "06:30",
-        "url": "https://cism893.ca/emissions/le-seismix"
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/yallah-lacher-prise-avec-rhabibiii"
       },
       "track": "",
-      "showTitle": "Le char de marge (reprise)",
+      "showTitle": "Le terrain sportif",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T08:33:23.826Z"
+      "checkedAt": "2026-10-12T10:43:22.304Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T08:33:26.047Z"
+      "checkedAt": "2026-10-12T10:43:26.704Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Experiments",
         "source": "schedule-live",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/experiments"
       },
+      "next": {
+        "title": "Trawling the Megahertz",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/trawling-the-megahertz"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Experiments",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T08:33:28.180Z"
+      "checkedAt": "2026-10-12T10:43:29.682Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T08:33:29.433Z"
+      "checkedAt": "2026-10-12T10:43:31.048Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "11:00",
         "url": "https://www.choq.ca/emissions/kongossa-na-uqam"
       },
-      "track": "Ezra Collective — Blow Your Trumpet",
+      "track": "Empress Of — Wild Storm",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -148,7 +148,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T08:33:36.007Z"
+      "checkedAt": "2026-10-12T10:43:37.574Z"
     }
   }
 }
