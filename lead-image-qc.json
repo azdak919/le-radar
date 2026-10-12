@@ -1,15 +1,15 @@
 {
-  "updated": "2026-10-11T23:56:59.953Z",
+  "updated": "2026-10-12T01:40:37.259Z",
   "total": 178,
   "withPhoto": 158,
   "withStock": 36,
   "withCampusBank": 24,
   "fullyCovered": 178,
-  "leadReadyPhotos": 128,
-  "pageScraped": 22,
-  "photosRecovered": 18,
+  "leadReadyPhotos": 121,
+  "pageScraped": 21,
+  "photosRecovered": 17,
   "imagesCleared": 3,
-  "stockSearches": 56,
+  "stockSearches": 54,
   "stockFound": 30,
   "campusBankFound": 18,
   "mainPageLeadReady": true,
@@ -31,12 +31,6 @@
       "link": "https://thelinknewspaper.ca/article/16474",
       "reason": "no-stock-match",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/_U2A7376_900_1178_90.jpg"
-    },
-    {
-      "title": "Spectacles de drones: raconter l’histoire dans le ciel",
-      "link": "https://lapige.atmjonquiere.com/2026/10/07/des-histoires-aeriennes/?utm_source=rss&utm_medium=rss&utm_campaign=des-histoires-aeriennes",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_20261002_143205262_HDR.jpg"
     },
     {
       "title": "Quand Polytechnique tend la main: l'aide financière sous tous ses angles",
@@ -69,22 +63,28 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
     },
     {
-      "title": "Prepare for Fewer Course Options in the Coming Years: Budget Cuts are Affecting the Number of Courses Available at BU",
-      "link": "https://thebucampus.ca/2026/09/30/prepare-for-fewer-course-options-in-the-coming-years-budget-cuts-are-affecting-the-number-of-courses-available-at-bu/",
+      "title": "A Tradition on the Edge: The Future of Homecoming",
+      "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chichester%2C_Bishop_Otter_Campus_-_geograph.org.uk_-_3003126.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "A Tradition on the Edge: The Future of Homecoming",
-      "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
+      "title": "Gaiters Hockey Season Preview: A Team Full of Potential",
+      "link": "https://thebucampus.ca/2026/09/30/gaiters-hockey-season-preview-a-team-full-of-potential/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/4031/4400844746_a47c17ef6d_b.jpg"
     },
     {
       "title": "Battling Adversity",
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Bishop_Otter_Campus%2C_University_of_Chichester_-_geograph.org.uk_-_2726552.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     }
   ]
 }
