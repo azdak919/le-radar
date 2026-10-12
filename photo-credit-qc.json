@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-12T23:05:30.583Z",
+  "updated": "2026-10-12T23:13:18.961Z",
   "total": 178,
   "withImage": 158,
   "withCredit": 158,
@@ -7,15 +7,22 @@
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 7,
-  "citedNew": 4,
+  "checked": 17,
+  "updatedCount": 9,
+  "citedNew": 6,
   "fallbackNew": 11,
   "samples": [
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Faire compter sa voix",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée d’Élections Québec",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -30,13 +37,6 @@
       "title": "Le « self-care » : qui valide votre repos ?",
       "source": "Le Délit",
       "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "S.O.S. Huîtres menacées",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -60,6 +60,20 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }

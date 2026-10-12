@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-12T22:59:07.010Z",
+  "updated": "2026-10-12T23:08:35.771Z",
   "total": 178,
   "pool": 56,
-  "incomplete": 14,
+  "incomplete": 13,
   "withLeadExcerpt": 120,
-  "candidates": 14,
-  "enriched": 3,
+  "candidates": 13,
+  "enriched": 2,
   "failed": 3,
   "ok": true,
   "samples": [
@@ -34,15 +34,6 @@
       "score": 96,
       "chars": 347,
       "sample": "Ce n’était pas une dérive isolée, mais une règle, que Talcott Parsons nommera en 1951 : le « rôle de",
-      "changed": true
-    },
-    {
-      "title": "S.O.S. Huîtres menacées",
-      "link": "https://www.delitfrancais.com/2026/09/23/s-o-s-huitres-menacees/",
-      "ok": true,
-      "score": 100,
-      "chars": 318,
-      "sample": "Cependant, depuis 2024, les récoltes d’huîtres de l’Île-du-Prince-Édouard ont chuté subitement. En e",
       "changed": true
     },
     {
@@ -79,6 +70,15 @@
       "score": 96,
       "chars": 400,
       "sample": "The opening game of the tournament was against the Guelph Gryphons and was very penalty-heavy. Despi",
+      "changed": false
+    },
+    {
+      "title": "Montreal adopts bylaw to ban insults against police, inciting criticism",
+      "link": "https://thelinknewspaper.ca/article/16457",
+      "ok": true,
+      "score": 96,
+      "chars": 400,
+      "sample": "Under the bylaw, which took effect on Oct. 1, people who insult city staff could face fines between ",
       "changed": false
     }
   ]
