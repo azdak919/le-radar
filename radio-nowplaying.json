@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-10-12T18:33:51.955Z",
+  "updatedAt": "2026-10-12T20:17:46.777Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Little Songs On The Prairie",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://chyz.ca/emission/little-songs-on-the-prairie/"
-      },
+      "current": null,
       "next": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
       "track": "",
-      "showTitle": "Little Songs On The Prairie",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-12T18:33:24.615Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Le palmarès",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
-      },
-      "next": {
-        "title": "Les garçons pleurent aussi",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
-      },
-      "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T18:33:26.429Z"
+      "checkedAt": "2026-10-12T20:17:21.092Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Les garçons pleurent aussi",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+      },
+      "next": {
+        "title": "Les criquets crinqués",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/les-criquets-crinques"
+      },
+      "track": "",
+      "showTitle": "Les garçons pleurent aussi",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-12T20:17:22.902Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Radio Is Dead",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Whose Vibe Is It Anyway",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "En Profondeur",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Radio Is Dead",
+      "showTitle": "Whose Vibe Is It Anyway",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T18:33:30.697Z"
+      "checkedAt": "2026-10-12T20:17:25.330Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "L'Organe à la radio",
+        "title": "Dreamscapes",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/lorgane-a-la-radio"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/dreamscapes"
       },
       "next": {
-        "title": "Whip Appeal",
+        "title": "The Pressure Drop",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/whip-appeal"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-pressure-drop"
       },
       "track": "",
-      "showTitle": "L'Organe à la radio",
+      "showTitle": "Dreamscapes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T18:33:32.736Z"
+      "checkedAt": "2026-10-12T20:17:27.674Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,28 +126,29 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T18:33:33.843Z"
+      "checkedAt": "2026-10-12T20:17:28.692Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
+        "title": "Les rois de l'arène",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Arca — Enraptured",
+      "track": "Ana Tijoux — VINOS Y VINILOS",
       "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T18:33:51.606Z"
+      "checkedAt": "2026-10-12T20:17:46.426Z"
     }
   }
 }
