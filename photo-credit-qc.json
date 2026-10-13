@@ -1,49 +1,21 @@
 {
-  "updated": "2026-10-13T21:23:23.956Z",
+  "updated": "2026-10-13T23:01:57.841Z",
   "total": 178,
-  "withImage": 158,
-  "withCredit": 158,
+  "withImage": 156,
+  "withCredit": 156,
   "cited": 105,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
   "checked": 19,
   "updatedCount": 11,
-  "citedNew": 7,
-  "fallbackNew": 12,
+  "citedNew": 8,
+  "fallbackNew": 11,
   "samples": [
     {
-      "title": "Voter ou s’abstenir, le dilemme de la jeunesse québécoise",
-      "source": "Montréal Campus",
-      "credit": "Illustration : Éloi Duquette",
-      "cited": true,
-      "method": "figcaption-mention"
-    },
-    {
-      "title": "La bière locale cherche sa place dans un marché saturé",
+      "title": "Québec roule pour de saines habitudes de vie",
       "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Manifestation anti-IA à Montréal",
-      "source": "Le Délit",
-      "credit": "Photo : Héloïse Durning",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
-      "source": "La Pige",
-      "credit": "Photo : Noah Thomas",
+      "credit": "Photo : Benjamin Lessard / L’Exemplaire",
       "cited": true,
       "method": "figcaption-paren-kind"
     },
@@ -55,18 +27,18 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
+      "title": "Quand la fiction banalise les traumatismes",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
+      "title": "Faire compter sa voix",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée d’Élections Québec",
       "cited": true,
-      "method": "via-attribution"
+      "method": "media-credit-featured"
     },
     {
       "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
@@ -83,11 +55,39 @@
       "method": null
     },
     {
-      "title": "Culture Paints Time a Different Colour",
-      "source": "The Plant",
-      "credit": "Photo credit: The Plant",
+      "title": "Le RADIS nourrit à petits prix",
+      "source": "L'Exemplaire",
+      "credit": "Crédit photo : L'Exemplaire",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Mobilisation étudiante massive à l’Université Laval pour le débat des candidats de Jean-Talon",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Juliette Kot / L'Exemplaire",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
+      "source": "La Pige",
+      "credit": "Photo : Noah Thomas",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
