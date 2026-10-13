@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-13T18:26:45.197Z",
+  "updated": "2026-10-13T21:18:42.084Z",
   "total": 178,
   "pool": 56,
-  "incomplete": 11,
-  "withLeadExcerpt": 116,
-  "candidates": 11,
-  "enriched": 1,
+  "incomplete": 14,
+  "withLeadExcerpt": 117,
+  "candidates": 14,
+  "enriched": 4,
   "failed": 3,
   "ok": true,
   "samples": [
@@ -19,12 +19,39 @@
       "changed": false
     },
     {
-      "title": "Faire campagne entre deux cours",
-      "link": "https://quartierlibre.ca/faire-campagne-entre-deux-cours/",
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "link": "https://www.delitfrancais.com/2026/09/23/arrestations-visant-les-lgbtq-en-turquie/",
+      "ok": true,
+      "score": 96,
+      "chars": 217,
+      "sample": "Au total, plus de 80 personnes ont été placées en détention provisoire. Le ministère de la Justice t",
+      "changed": true
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "link": "https://www.delitfrancais.com/2026/09/23/manifestation-anti-ia-a-montreal/",
+      "ok": true,
+      "score": 94,
+      "chars": 249,
+      "sample": "La possibilité qui revient le plus est celle d’une extinction humaine après le développement d’une s",
+      "changed": true
+    },
+    {
+      "title": "Voter ou s’abstenir, le dilemme de la jeunesse québécoise",
+      "link": "https://montrealcampus.ca/2026/10/13/voter-ou-sabstenir-le-dilemme-de-la-jeunesse-quebecoise/",
       "ok": true,
       "score": 100,
-      "chars": 357,
-      "sample": "À l’Assemblée nationale, la jeunesse est peu représentée, puisqu’aucun·e député·e n’a moins de 35 an",
+      "chars": 289,
+      "sample": "Près d’un(e) jeune Québécois(e) de moins de 34 ans sur deux n’a pas voté aux élections provinciales ",
+      "changed": true
+    },
+    {
+      "title": "La bière locale cherche sa place dans un marché saturé",
+      "link": "https://www.exemplaire.com.ulaval.ca/a-la-une/la-biere-locale-cherche-sa-place-dans-un-marche-sature/",
+      "ok": true,
+      "score": 100,
+      "chars": 293,
+      "sample": "Les microbrasseries québécoises sont de plus en plus nombreuses et la concurrence est vive. Malgré l",
       "changed": true
     },
     {
@@ -52,33 +79,6 @@
       "score": 87,
       "chars": 400,
       "sample": "Le 3 septembre , le juge de la Cour supérieure Martin Castonguay a ordonné au gouvernement du Québec",
-      "changed": false
-    },
-    {
-      "title": "The Theresa Humes Cup wraps up as the Stingers look strong ahead of the season",
-      "link": "https://thelinknewspaper.ca/article/16464",
-      "ok": true,
-      "score": 96,
-      "chars": 400,
-      "sample": "The opening game of the tournament was against the Guelph Gryphons and was very penalty-heavy. Despi",
-      "changed": false
-    },
-    {
-      "title": "De la rue aux égouts : le parcours de l’eau",
-      "link": "https://lapige.atmjonquiere.com/2026/10/08/de-la-rue-aux-egouts-le-parcours-de-leau/?utm_source=rss&utm_medium=rss&utm_campaign=de-la-rue-aux-egouts-le-parcours-de-leau",
-      "ok": true,
-      "score": 96,
-      "chars": 164,
-      "sample": "Lorsqu’une forte pluie s’abat sur une ville, une grande partie du travail se déroule sous nos pieds.",
-      "changed": false
-    },
-    {
-      "title": "Les équipes à suivre cette saison",
-      "link": "https://www.delitfrancais.com/2026/10/07/les-equipes-a-suivre-cette-saison/",
-      "ok": true,
-      "score": 96,
-      "chars": 165,
-      "sample": "Pour la première fois, McGill entame une saison avec 25 équipes de moins. Alors, comment se porte le",
       "changed": false
     }
   ]

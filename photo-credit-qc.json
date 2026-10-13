@@ -1,30 +1,72 @@
 {
-  "updated": "2026-10-13T18:33:14.252Z",
+  "updated": "2026-10-13T21:23:23.956Z",
   "total": 178,
   "withImage": 158,
   "withCredit": 158,
-  "cited": 106,
+  "cited": 105,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 5,
-  "citedNew": 2,
-  "fallbackNew": 11,
+  "checked": 19,
+  "updatedCount": 11,
+  "citedNew": 7,
+  "fallbackNew": 12,
   "samples": [
     {
-      "title": "Faire campagne entre deux cours",
-      "source": "Quartier Libre",
-      "credit": "Photo : Samuel Girard",
+      "title": "Voter ou s’abstenir, le dilemme de la jeunesse québécoise",
+      "source": "Montréal Campus",
+      "credit": "Illustration : Éloi Duquette",
       "cited": true,
-      "method": "figcaption"
+      "method": "figcaption-mention"
+    },
+    {
+      "title": "La bière locale cherche sa place dans un marché saturé",
+      "source": "L'Exemplaire",
+      "credit": "Crédit photo : L'Exemplaire",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "source": "Le Délit",
+      "credit": "Photo : Héloïse Durning",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
+      "source": "La Pige",
+      "credit": "Photo : Noah Thomas",
+      "cited": true,
+      "method": "figcaption-paren-kind"
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
     },
     {
       "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
