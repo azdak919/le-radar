@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-13T12:05:10.703Z",
+  "updated": "2026-10-13T16:23:20.627Z",
   "total": 178,
   "withImage": 158,
   "withCredit": 158,
@@ -7,9 +7,59 @@
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 9,
-  "updatedCount": 0,
-  "citedNew": 0,
-  "fallbackNew": 9,
-  "samples": []
+  "checked": 15,
+  "updatedCount": 7,
+  "citedNew": 4,
+  "fallbackNew": 11,
+  "samples": [
+    {
+      "title": "Pourquoi « brosser » au tailgate du Rouge et Or ?",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Raphaël Bédard / L’Exemplaire",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Rouge d’une part, blanche de l’autre",
+      "source": "Le Délit",
+      "credit": "Photo : Scott Tan",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Quand la fiction banalise les traumatismes",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Faire compter sa voix",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée d’Élections Québec",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Summer in Paradise (Lennoxville Edition)",
+      "source": "The Campus",
+      "credit": "Photo credit: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Culture Paints Time a Different Colour",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
+    }
+  ]
 }
