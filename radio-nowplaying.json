@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-12T20:17:46.777Z",
+  "updatedAt": "2026-10-13T01:05:57.725Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Les Arshitechs du Son",
+        "title": "Mardi Champ Gauche",
         "source": "schedule",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T20:17:21.092Z"
+      "checkedAt": "2026-10-13T01:05:29.565Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les garçons pleurent aussi",
+        "title": "Mono Fred (en stéréo)",
         "source": "schedule",
-        "start": "15:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/mono-fred-en-stereo"
       },
       "next": {
-        "title": "Les criquets crinqués",
+        "title": "Mix Anglo",
         "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-criquets-crinques"
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
       },
       "track": "",
-      "showTitle": "Les garçons pleurent aussi",
+      "showTitle": "Mono Fred (en stéréo)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T20:17:22.902Z"
+      "checkedAt": "2026-10-13T01:05:31.998Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Whose Vibe Is It Anyway",
+        "title": "Underground Sounds",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "20:00",
+        "end": "22:00"
       },
       "next": {
-        "title": "En Profondeur",
+        "title": "Drastic Plastic",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "22:00",
+        "end": "23:00"
       },
       "track": "",
-      "showTitle": "Whose Vibe Is It Anyway",
+      "showTitle": "Underground Sounds",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,60 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T20:17:25.330Z"
+      "checkedAt": "2026-10-13T01:05:34.705Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Dreamscapes",
+        "title": "LEKTOR DECODER",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/dreamscapes"
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/lektor-decoder"
       },
       "next": {
-        "title": "The Pressure Drop",
+        "title": "Past Tense",
         "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-pressure-drop"
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/past-tense"
       },
       "track": "",
-      "showTitle": "Dreamscapes",
+      "showTitle": "LEKTOR DECODER",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T20:17:27.674Z"
+      "checkedAt": "2026-10-13T01:05:37.642Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Solénoïde",
+        "title": "Le terrain sportif",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "18:00"
+        "start": "20:00",
+        "end": "00:01"
       },
       "next": {
-        "title": "Ma radio Académia",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "20:00"
+        "title": "Les nuits CFAK",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Le terrain sportif",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T20:17:28.692Z"
+      "checkedAt": "2026-10-13T01:05:38.817Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +140,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Ana Tijoux — VINOS Y VINILOS",
+      "track": "Lex Walton — Ultimate Love 4Ever",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -148,7 +149,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-12T20:17:46.426Z"
+      "checkedAt": "2026-10-13T01:05:57.375Z"
     }
   }
 }
