@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-13T06:05:19.651Z",
+  "updated": "2026-10-13T08:06:32.748Z",
   "total": 178,
   "pool": 56,
-  "incomplete": 10,
+  "incomplete": 11,
   "withLeadExcerpt": 115,
-  "candidates": 10,
-  "enriched": 0,
+  "candidates": 11,
+  "enriched": 1,
   "failed": 3,
   "ok": true,
   "samples": [
@@ -17,6 +17,15 @@
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
       "changed": false
+    },
+    {
+      "title": "Faire compter sa voix",
+      "link": "https://www.delitfrancais.com/2026/09/23/faire-compter-sa-voix/",
+      "ok": true,
+      "score": 100,
+      "chars": 282,
+      "sample": "En quinze ans, les Indigenous Awareness Weeks (IAW) sont devenues un espace de « dialogue, de rappro",
+      "changed": true
     },
     {
       "title": "Concordia’s Solidarity Brunch goes monthly",
