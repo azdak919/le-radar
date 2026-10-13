@@ -1,106 +1,114 @@
 {
-  "updatedAt": "2026-10-13T16:14:24.636Z",
+  "updatedAt": "2026-10-13T18:17:30.800Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Émission (presque) sérieuse",
+        "source": "api-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://chyz.ca/emission/emission-presque-serieuse/"
+      },
       "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Émission (presque) sérieuse",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T16:13:44.121Z"
+      "checkedAt": "2026-10-13T18:16:49.627Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les sentinelles de l'art",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
-      },
-      "next": {
         "title": "Le palmarès",
         "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
+      "next": {
+        "title": "À la bonne heure",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/a-la-bonne-heure"
+      },
       "track": "",
-      "showTitle": "Les sentinelles de l'art",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T16:13:47.075Z"
+      "checkedAt": "2026-10-13T18:16:52.295Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Universal Break",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Voice of Korea",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
-      "track": "Mama",
-      "showTitle": "Universal Break",
+      "next": {
+        "title": "Montreal Sessions",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
+      "track": "",
+      "showTitle": "Voice of Korea",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T16:13:50.011Z"
+      "checkedAt": "2026-10-13T18:16:55.091Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "World Beat News",
+        "title": "Something for the Mood",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/world-beat-news"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/something-for-the-mood"
       },
       "next": {
-        "title": "Shaking the Habitual",
+        "title": "Sonic Lit: A SpokenWeb Radio Show",
         "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/shaking-the-habitual"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
       },
       "track": "",
-      "showTitle": "World Beat News",
+      "showTitle": "Something for the Mood",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T16:14:04.758Z"
+      "checkedAt": "2026-10-13T18:17:10.581Z"
     },
     "cfak": {
       "id": "cfak",
@@ -125,28 +133,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T16:14:06.271Z"
+      "checkedAt": "2026-10-13T18:17:12.190Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
-        "title": "L'UQAM en info",
+      "current": {
+        "title": "Onde de CHOQ",
         "source": "api-live",
-        "start": "12:45",
-        "end": "13:30",
-        "slug": "uqam-en-info"
+        "start": "14:00",
+        "end": "14:45",
+        "slug": "onde-de-choq"
       },
-      "track": "Lael Neale — Slip Away",
-      "showTitle": "",
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
+      },
+      "track": "7 — Jingle nouvelles copie",
+      "showTitle": "Onde de CHOQ",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T16:14:24.286Z"
+      "checkedAt": "2026-10-13T18:17:30.449Z"
     }
   }
 }
