@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-13T01:07:41.805Z",
+  "updated": "2026-10-13T02:07:38.869Z",
   "total": 178,
   "pool": 56,
-  "incomplete": 12,
+  "incomplete": 11,
   "withLeadExcerpt": 115,
-  "candidates": 12,
-  "enriched": 1,
+  "candidates": 11,
+  "enriched": 0,
   "failed": 3,
   "ok": true,
   "samples": [
@@ -17,15 +17,6 @@
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
       "changed": false
-    },
-    {
-      "title": "Affaire Thélyson Orélien : une chasse aux sorcières ?",
-      "link": "https://www.delitfrancais.com/2026/09/30/affaire-thelyson-orelien-une-chasse-aux-sorcieres/",
-      "ok": true,
-      "score": 96,
-      "chars": 233,
-      "sample": "Thélyson Orélien. Aujourd’hui, même ceux qui ignorent tout de la littérature connaissent son nom. En",
-      "changed": true
     },
     {
       "title": "Concordia’s Solidarity Brunch goes monthly",
@@ -79,6 +70,15 @@
       "score": 96,
       "chars": 164,
       "sample": "Lorsqu’une forte pluie s’abat sur une ville, une grande partie du travail se déroule sous nos pieds.",
+      "changed": false
+    },
+    {
+      "title": "Les équipes à suivre cette saison",
+      "link": "https://www.delitfrancais.com/2026/10/07/les-equipes-a-suivre-cette-saison/",
+      "ok": true,
+      "score": 96,
+      "chars": 165,
+      "sample": "Pour la première fois, McGill entame une saison avec 25 équipes de moins. Alors, comment se porte le",
       "changed": false
     }
   ]
