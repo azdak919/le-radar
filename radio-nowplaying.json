@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-10-13T21:24:57.562Z",
+  "updatedAt": "2026-10-13T23:17:49.315Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
+        "title": "CATHJO FAIT DE LA RADIO",
         "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://chyz.ca/emission/la-plug/"
       },
       "next": {
-        "title": "Les Arshitechs du Son",
+        "title": "Mercredi Bonbon",
         "source": "schedule-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mercredi-bonbon/"
       },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "CATHJO FAIT DE LA RADIO",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T21:24:18.582Z"
+      "checkedAt": "2026-10-13T23:17:08.662Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "London café",
+        "title": "Catharmix",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://cism893.ca/emissions/london-cafe"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/catharmix"
       },
       "next": {
-        "title": "les pénibles",
+        "title": "Les garçons pleurent aussi (reprise)",
         "source": "schedule",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-penibles"
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
       },
       "track": "",
-      "showTitle": "London café",
+      "showTitle": "Catharmix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T21:24:20.359Z"
+      "checkedAt": "2026-10-13T23:17:10.592Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off The Hour: Local Journalism Stories",
+        "title": "Soul Perspectives",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:30"
       },
       "next": {
-        "title": "Rez Rock Radio",
+        "title": "Marca-RO",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "20:30",
+        "end": "21:00"
       },
       "track": "",
-      "showTitle": "Off The Hour: Local Journalism Stories",
+      "showTitle": "Soul Perspectives",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,72 +81,72 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T21:24:23.035Z"
+      "checkedAt": "2026-10-13T23:17:13.518Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "Ashes to Ashes",
         "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
       },
       "next": {
-        "title": "feminemix",
+        "title": "Hittin' All The Bases",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/feminemix"
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
       },
       "track": "",
-      "showTitle": "CJLO's Alternative Mega Mix",
+      "showTitle": "Ashes to Ashes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T21:24:37.412Z"
+      "checkedAt": "2026-10-13T23:17:28.948Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "18:30"
-      },
-      "next": {
         "title": "L'Aut'Rock",
         "source": "schedule-live",
         "start": "18:30",
         "end": "20:00"
       },
+      "next": {
+        "title": "Dichotomie 88.3",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "22:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "L'Aut'Rock",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T21:24:38.715Z"
+      "checkedAt": "2026-10-13T23:17:30.268Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Le Studio",
+        "title": "10 sur 10 : un podcast 100% rap",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00",
-        "slug": "live"
+        "start": "20:30",
+        "end": "22:30",
+        "slug": "10-sur-10-un-podcast-100-rap"
       },
-      "track": "N NAO — Deja (feat. Sea Oleena)",
+      "track": "Ezra Collective — Only Love (feat. Pa Salieu)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T21:24:57.212Z"
+      "checkedAt": "2026-10-13T23:17:48.964Z"
     }
   }
 }
