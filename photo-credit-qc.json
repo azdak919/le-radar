@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-13T17:06:35.943Z",
+  "updated": "2026-10-13T18:33:14.252Z",
   "total": 178,
   "withImage": 158,
   "withCredit": 158,
@@ -7,43 +7,22 @@
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 18,
-  "updatedCount": 10,
-  "citedNew": 6,
-  "fallbackNew": 12,
+  "checked": 13,
+  "updatedCount": 5,
+  "citedNew": 2,
+  "fallbackNew": 11,
   "samples": [
     {
-      "title": "Les étudiants autochtones se sentent-ils bien représentés sur le campus ?",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Pourquoi « brosser » au tailgate du Rouge et Or ?",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Raphaël Bédard / L’Exemplaire",
+      "title": "Faire campagne entre deux cours",
+      "source": "Quartier Libre",
+      "credit": "Photo : Samuel Girard",
       "cited": true,
-      "method": "figcaption-paren-kind"
+      "method": "figcaption"
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "Le « self-care » : qui valide votre repos ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "S.O.S. Huîtres menacées",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "credit": "Photo : Scott Tan",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -67,20 +46,6 @@
       "credit": "Photo credit: The Plant",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
-      "cited": true,
-      "method": "via-attribution"
     }
   ]
 }
