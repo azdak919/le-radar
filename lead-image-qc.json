@@ -1,14 +1,14 @@
 {
-  "updated": "2026-10-13T16:24:12.408Z",
+  "updated": "2026-10-13T17:06:22.729Z",
   "total": 178,
   "withPhoto": 158,
   "withStock": 38,
   "withCampusBank": 26,
   "fullyCovered": 178,
-  "leadReadyPhotos": 126,
-  "pageScraped": 20,
-  "photosRecovered": 16,
-  "imagesCleared": 4,
+  "leadReadyPhotos": 131,
+  "pageScraped": 19,
+  "photosRecovered": 15,
+  "imagesCleared": 3,
   "stockSearches": 53,
   "stockFound": 32,
   "campusBankFound": 20,
@@ -19,12 +19,6 @@
       "link": "https://thelinknewspaper.ca/article/16476",
       "reason": "no-stock-match",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_0067_900_1200_90.jpg"
-    },
-    {
-      "title": "Un polytechnicien en Espagne",
-      "link": "https://www.polyscope.qc.ca/blog/post/kbgnDbewLv2wv6hDMWI3",
-      "reason": "stock-too-small",
-      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2F04c4a050-9f16-42f1-9d8c-105cfc148422.jpeg?alt=media&token=0b042590-65ec-4454-ab18-f1e9eafed527"
     },
     {
       "title": "The Stingers win the Kelly-Anne Drummond Cup",
@@ -85,6 +79,12 @@
       "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
+    },
+    {
+      "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
+      "link": "https://www.thetribune.ca/opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/3/3d/McGill_University_downtown_campus_36.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }
