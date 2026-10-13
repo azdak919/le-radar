@@ -1,15 +1,65 @@
 {
-  "updated": "2026-10-13T03:42:55.802Z",
+  "updated": "2026-10-13T06:11:10.776Z",
   "total": 178,
-  "withImage": 157,
-  "withCredit": 157,
+  "withImage": 158,
+  "withCredit": 158,
   "cited": 107,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 9,
-  "updatedCount": 0,
-  "citedNew": 0,
-  "fallbackNew": 9,
-  "samples": []
+  "checked": 15,
+  "updatedCount": 7,
+  "citedNew": 3,
+  "fallbackNew": 12,
+  "samples": [
+    {
+      "title": "Marcher pour mieux vieillir",
+      "source": "L'Exemplaire",
+      "credit": "Crédit photo : L'Exemplaire",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Rouge d’une part, blanche de l’autre",
+      "source": "Le Délit",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Summer in Paradise (Lennoxville Edition)",
+      "source": "The Campus",
+      "credit": "Photo credit: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Culture Paints Time a Different Colour",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
+    }
+  ]
 }
