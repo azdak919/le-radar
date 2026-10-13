@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-13T01:05:57.725Z",
+  "updatedAt": "2026-10-13T02:34:24.044Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T01:05:29.565Z"
+      "checkedAt": "2026-10-13T02:33:56.295Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mono Fred (en stéréo)",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/mono-fred-en-stereo"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule",
         "start": "22:00",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "Les sentinelles de l'art (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+      },
       "track": "",
-      "showTitle": "Mono Fred (en stéréo)",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T01:05:31.998Z"
+      "checkedAt": "2026-10-13T02:33:58.000Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Underground Sounds",
-        "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
-      },
-      "next": {
         "title": "Drastic Plastic",
         "source": "api-live",
         "start": "22:00",
         "end": "23:00"
       },
+      "next": {
+        "title": "27th Hr.",
+        "source": "api-live",
+        "start": "23:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Underground Sounds",
+      "showTitle": "Drastic Plastic",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T01:05:34.705Z"
+      "checkedAt": "2026-10-13T02:34:00.727Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "LEKTOR DECODER",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/lektor-decoder"
-      },
-      "next": {
         "title": "Past Tense",
         "source": "schedule-live",
         "start": "22:00",
         "end": "23:00",
         "url": "http://www.cjlo.com/shows/past-tense"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "23:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "LEKTOR DECODER",
+      "showTitle": "Past Tense",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T01:05:37.642Z"
+      "checkedAt": "2026-10-13T02:34:04.258Z"
     },
     "cfak": {
       "id": "cfak",
@@ -127,7 +127,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T01:05:38.817Z"
+      "checkedAt": "2026-10-13T02:34:05.313Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +140,7 @@
         "end": "07:00",
         "url": "https://www.choq.ca/emissions/les-rois-de-larene"
       },
-      "track": "Lex Walton — Ultimate Love 4Ever",
+      "track": "Namasenda — Romeo Must Die",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -149,7 +149,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-13T01:05:57.375Z"
+      "checkedAt": "2026-10-13T02:34:23.693Z"
     }
   }
 }
