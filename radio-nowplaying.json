@@ -1,164 +1,160 @@
 {
-  "updatedAt": "2026-10-14T15:21:15.504Z",
+  "updatedAt": "2026-10-14T19:35:08.267Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Question de savoir",
-        "source": "api-live",
-        "start": "11:00",
-        "end": "11:30",
-        "url": "https://chyz.ca/emission/question-de-savoir/"
-      },
+      "current": null,
       "next": {
-        "title": "On en Parle",
-        "source": "schedule-live",
-        "start": "11:30",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/on-en-parle/"
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Question de savoir",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-14T15:20:50.978Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "À la loupe du droit",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/a-la-loupe-du-droit"
-      },
-      "next": {
-        "title": "La carte cadeau",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
-      },
-      "track": "",
-      "showTitle": "À la loupe du droit",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T15:21:04.792Z"
+      "checkedAt": "2026-10-14T19:34:19.639Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Vibrance: voyage dance vers Montréal et ailleurs",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/vibrance"
+      },
+      "next": {
+        "title": "Le cours de math",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/le-cours-de-math"
+      },
+      "track": "",
+      "showTitle": "Vibrance: voyage dance vers Montréal et ailleurs",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-14T19:34:33.292Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Free City Radio",
+        "title": "All Da Way Live",
         "source": "api-live",
-        "start": "11:00",
-        "end": "11:30"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "If You Got Ears",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00"
+        "title": "Off the Hour/Sounds of Resistance",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Free City Radio",
+      "showTitle": "All Da Way Live",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "stream",
-        "schedule"
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T15:21:07.853Z"
+      "checkedAt": "2026-10-14T19:34:35.799Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Code Switch",
+        "title": "Patch Notes",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/code-switch"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/patch-notes"
       },
       "next": {
-        "title": "North-South Hockey",
+        "title": "Borderline",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/north-south-hockey"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/borderline"
       },
       "track": "",
-      "showTitle": "Code Switch",
+      "showTitle": "Patch Notes",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T15:21:11.086Z"
+      "checkedAt": "2026-10-14T19:34:39.099Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Le popcorn de l'infini",
         "source": "schedule-live",
         "start": "14:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Le popcorn de l'infini",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T15:21:12.453Z"
+      "checkedAt": "2026-10-14T19:34:40.127Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
+      "current": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://www.choq.ca/emissions/palmareschoq"
+      },
       "next": {
-        "title": "Échos du monde",
-        "source": "api-live",
-        "start": "13:00",
-        "end": "14:00",
-        "slug": "echos-du-monde"
+        "title": "Les chroniques atmosphériques",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://www.choq.ca/emissions/les-chroniques-atmospheriques"
       },
-      "track": "Ginie - j",
-      "showTitle": "",
+      "track": "Sheenah Ko — Wake Up",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
-      "clientPoll": {
-        "type": "triton-np",
-        "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
-      },
-      "checkedAt": "2026-10-14T15:21:15.153Z"
+      "clientPoll": null,
+      "checkedAt": "2026-10-14T19:35:07.916Z"
     }
   }
 }
