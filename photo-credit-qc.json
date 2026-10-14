@@ -1,42 +1,35 @@
 {
-  "updated": "2026-10-13T23:01:57.841Z",
+  "updated": "2026-10-14T00:36:56.749Z",
   "total": 178,
-  "withImage": 156,
-  "withCredit": 156,
+  "withImage": 158,
+  "withCredit": 158,
   "cited": 105,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 11,
-  "citedNew": 8,
-  "fallbackNew": 11,
+  "checked": 13,
+  "updatedCount": 5,
+  "citedNew": 1,
+  "fallbackNew": 12,
   "samples": [
     {
-      "title": "Québec roule pour de saines habitudes de vie",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Benjamin Lessard / L’Exemplaire",
-      "cited": true,
-      "method": "figcaption-paren-kind"
+      "title": "Horoscope September 2026",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Creative Writing September 2026",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "Quand la fiction banalise les traumatismes",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Faire compter sa voix",
-      "source": "Le Délit",
-      "credit": "Photo : Photo tirée d’Élections Québec",
+      "credit": "Photo : Scott Tan",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -53,41 +46,6 @@
       "credit": "Photo credit: The Campus",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Le RADIS nourrit à petits prix",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Mobilisation étudiante massive à l’Université Laval pour le débat des candidats de Jean-Talon",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Juliette Kot / L'Exemplaire",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
-      "source": "La Pige",
-      "credit": "Photo : Noah Thomas",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
-      "cited": true,
-      "method": "via-attribution"
     }
   ]
 }
