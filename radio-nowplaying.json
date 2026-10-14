@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-14T19:35:08.267Z",
+  "updatedAt": "2026-10-14T22:58:21.871Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "3600 secondes d'histoire",
+        "source": "api-live",
+        "start": "18:30",
+        "end": "19:30",
+        "url": "https://chyz.ca/emission/3600-secondes-dhistoire/"
+      },
       "next": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "title": "Funk Connection",
+        "source": "schedule-live",
+        "start": "19:30",
+        "end": "21:30",
+        "url": "https://chyz.ca/emission/funk-connection/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "3600 secondes d'histoire",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T19:34:19.639Z"
+      "checkedAt": "2026-10-14T22:57:42.621Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Vibrance: voyage dance vers Montréal et ailleurs",
+        "title": "Feu | Metal | Chaos",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/vibrance"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/feu-metal-chaos"
       },
       "next": {
-        "title": "Le cours de math",
+        "title": "Effets sonores (reprise)",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/le-cours-de-math"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/effets-sonores"
       },
       "track": "",
-      "showTitle": "Vibrance: voyage dance vers Montréal et ailleurs",
+      "showTitle": "Feu | Metal | Chaos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T19:34:33.292Z"
+      "checkedAt": "2026-10-14T22:57:56.106Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "All Da Way Live",
+        "title": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "next": {
-        "title": "Off the Hour/Sounds of Resistance",
+        "title": "Harbinger Showcase",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "All Da Way Live",
+      "showTitle": "Hersay: Audio Smut/OWL/The Teachings/Metro Boulot Dodo",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T19:34:35.799Z"
+      "checkedAt": "2026-10-14T22:57:58.503Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Patch Notes",
+        "title": "The New Consonance",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/patch-notes"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-new-consonance"
       },
       "next": {
-        "title": "Borderline",
+        "title": "BVST",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/borderline"
+        "start": "19:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/bvst"
       },
       "track": "",
-      "showTitle": "Patch Notes",
+      "showTitle": "The New Consonance",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T19:34:39.099Z"
+      "checkedAt": "2026-10-14T22:58:01.117Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,35 +133,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T19:34:40.127Z"
+      "checkedAt": "2026-10-14T22:58:02.213Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://www.choq.ca/emissions/palmareschoq"
-      },
-      "next": {
         "title": "Les chroniques atmosphériques",
-        "source": "schedule",
+        "source": "api-live",
         "start": "18:00",
         "end": "19:00",
-        "url": "https://www.choq.ca/emissions/les-chroniques-atmospheriques"
+        "slug": "les-chroniques-atmospheriques"
       },
-      "track": "Sheenah Ko — Wake Up",
-      "showTitle": "Palmarès CHOQ.ca",
+      "next": {
+        "title": "Opération beurre de cinoche",
+        "source": "api-live",
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
+      },
+      "track": "Boy Harsher — Jeans",
+      "showTitle": "Les chroniques atmosphériques",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T19:35:07.916Z"
+      "checkedAt": "2026-10-14T22:58:21.522Z"
     }
   }
 }
