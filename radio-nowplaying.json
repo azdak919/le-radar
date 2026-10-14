@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-14T05:14:47.434Z",
+  "updatedAt": "2026-10-14T10:10:12.608Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T05:14:19.552Z"
+      "checkedAt": "2026-10-14T10:09:42.971Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La carte cadeau (reprise)",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "next": {
-        "title": "Mix franco",
+        "title": "Club classique",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "07:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/club-classique"
       },
       "track": "",
-      "showTitle": "La carte cadeau (reprise)",
+      "showTitle": "Le Séismix",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T05:14:21.297Z"
+      "checkedAt": "2026-10-14T10:09:45.039Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Space Plane",
+        "title": "Full Circle",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "04:00",
+        "end": "07:00"
       },
       "next": {
-        "title": "WarpCor / Out of the Void",
+        "title": "The Wednesday Morning After",
         "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
+        "start": "07:00",
+        "end": "09:00"
       },
       "track": "",
-      "showTitle": "Space Plane",
+      "showTitle": "Full Circle",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,35 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T05:14:24.125Z"
+      "checkedAt": "2026-10-14T10:09:47.871Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Morning Electro-shock",
         "source": "schedule-live",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/morning-electro-shock"
       },
+      "next": {
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Morning Electro-shock",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T05:14:39.155Z"
+      "checkedAt": "2026-10-14T10:10:02.741Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,20 +127,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T05:14:40.269Z"
+      "checkedAt": "2026-10-14T10:10:03.732Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Onde de CHOQ",
+        "title": "Échos du monde",
         "source": "api-live",
         "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "end": "14:00",
+        "slug": "echos-du-monde"
       },
-      "track": "MaSHeNKa - Can i Be Electric?",
+      "track": "Hauterive - Love is a battlefield",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +151,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-10-14T05:14:47.084Z"
+      "checkedAt": "2026-10-14T10:10:12.257Z"
     }
   }
 }
