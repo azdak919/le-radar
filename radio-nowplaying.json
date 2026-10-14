@@ -1,145 +1,153 @@
 {
-  "updatedAt": "2026-10-14T11:49:08.194Z",
+  "updatedAt": "2026-10-14T15:11:56.287Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Question de savoir",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "11:30",
+        "url": "https://chyz.ca/emission/question-de-savoir/"
+      },
       "next": {
-        "title": "Mercredi Bonbon",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mercredi-bonbon/"
+        "title": "On en Parle",
+        "source": "schedule-live",
+        "start": "11:30",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/on-en-parle/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Question de savoir",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T11:48:44.251Z"
+      "checkedAt": "2026-10-14T15:11:10.466Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique",
+        "title": "À la loupe du droit",
         "source": "schedule",
-        "start": "07:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/club-classique"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/a-la-loupe-du-droit"
       },
       "next": {
-        "title": "La collation",
+        "title": "La carte cadeau",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
       "track": "",
-      "showTitle": "Club classique",
+      "showTitle": "À la loupe du droit",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T11:48:45.780Z"
+      "checkedAt": "2026-10-14T15:11:23.999Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Wednesday Morning After",
+        "title": "Free City Radio",
         "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
+        "start": "11:00",
+        "end": "11:30"
       },
       "next": {
-        "title": "The Sleepy King/Terminal 5",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "title": "If You Got Ears",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00"
       },
       "track": "",
-      "showTitle": "The Wednesday Morning After",
+      "showTitle": "Free City Radio",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "stream"
+        "stream",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T11:48:48.151Z"
+      "checkedAt": "2026-10-14T15:11:26.449Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Words and Culture",
-        "source": "schedule-live",
-        "start": "07:30",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/words-and-culture"
+        "title": "Code Switch",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/code-switch"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "title": "North-South Hockey",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/north-south-hockey"
       },
       "track": "",
-      "showTitle": "Words and Culture",
+      "showTitle": "Code Switch",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T11:49:01.784Z"
+      "checkedAt": "2026-10-14T15:11:48.672Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Palmarès CFAK",
         "source": "schedule-live",
         "start": "08:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Le popcorn de l'infini",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-14T11:49:02.718Z"
+      "checkedAt": "2026-10-14T15:11:49.653Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Onde de CHOQ",
+        "title": "Échos du monde",
         "source": "api-live",
         "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "end": "14:00",
+        "slug": "echos-du-monde"
       },
-      "track": "Brutalismus 3000 - Gore Louvre",
+      "track": "aja monet - indigo",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -150,7 +158,7 @@
         "type": "triton-np",
         "url": "https://np.tritondigital.com/public/nowplaying?mountName=SP_R4799664&numberToFetch=1&eventType=track"
       },
-      "checkedAt": "2026-10-14T11:49:07.843Z"
+      "checkedAt": "2026-10-14T15:11:55.936Z"
     }
   }
 }
