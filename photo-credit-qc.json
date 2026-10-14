@@ -1,44 +1,44 @@
 {
-  "updated": "2026-10-14T22:28:27.950Z",
+  "updated": "2026-10-14T23:24:37.256Z",
   "total": 178,
-  "withImage": 158,
-  "withCredit": 158,
-  "cited": 104,
-  "pending": 10,
+  "withImage": 156,
+  "withCredit": 156,
+  "cited": 105,
+  "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 7,
-  "citedNew": 2,
-  "fallbackNew": 13,
+  "checked": 14,
+  "updatedCount": 6,
+  "citedNew": 4,
+  "fallbackNew": 10,
   "samples": [
     {
-      "title": "Transports adaptés à l’UdeM : un obstacle après l’autre ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Leane Fautrat",
+      "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
+      "source": "La Pige",
+      "credit": "Photo : Noah Thomas",
       "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Horoscope September 2026",
-      "source": "The Plant",
-      "credit": "Photo credit: The Plant",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Creative Writing September 2026",
-      "source": "The Plant",
-      "credit": "Photo credit: The Plant",
-      "cited": false,
-      "method": null
+      "method": "figcaption-paren-kind"
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
       "cited": true,
       "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
     },
     {
       "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
@@ -51,13 +51,6 @@
       "title": "Summer in Paradise (Lennoxville Edition)",
       "source": "The Campus",
       "credit": "Photo credit: The Campus",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
-      "source": "La Pige",
-      "credit": "Crédit photo : La Pige",
       "cited": false,
       "method": null
     }
