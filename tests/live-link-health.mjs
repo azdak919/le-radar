@@ -15,6 +15,7 @@ const {
   applyLedger,
   emptyLedger,
   MISSING_TTL_MS,
+  dedupeArticlesByLink,
 } = require('../scripts/live-link-health-lib.js');
 
 const MCGILL = 'https://www.mcgilldaily.com/2026/10/language-laws-meet-the-ballot-box/';
@@ -153,3 +154,16 @@ const fetchNews = readFileSync(new URL('../scripts/fetch-news.js', import.meta.u
 assert.match(fetchNews, /omitMissingItems/);
 
 console.log('OK live-link-health');
+
+{
+  const deduped = dedupeArticlesByLink([
+    { title: 'A', link: 'https://www.delitfrancais.com/2026/09/30/affaire/' },
+    { title: 'B', link: 'https://www.delitfrancais.com/2026/09/30/affaire' },
+    { title: 'C', link: 'https://example.com/c?utm=1' },
+    { title: 'D', link: 'https://example.com/c' },
+  ]);
+  assert.deepEqual(deduped.map((i) => i.title), ['A', 'C']);
+  const src = readFileSync(new URL('../scripts/fetch-news.js', import.meta.url), 'utf8');
+  assert.match(src, /allLinkKeys\.has\(linkKey\)/, 'fetch-news doit dédupliquer les liens à l’ingestion');
+  assert.match(src, /dedupeArticlesByLink\(filterHousekeepingForDisplay/, 'fetch-news doit dédupliquer avant écriture');
+}

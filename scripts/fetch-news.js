@@ -70,6 +70,7 @@ const { mergeHistoricalCatalog, serializeHistoricalCatalog } = require('./histor
 const { scheduledSlotFor } = require('./news-schedule-lib');
 const {
   articleLinkKey,
+  dedupeArticlesByLink,
   readLedger,
   confirmedMissingUrlSet,
   omitMissingItems,
@@ -905,6 +906,10 @@ async function main() {
   }
 
   const all = [];
+  // Une même page (même lien canonique) ne doit entrer qu'une fois dans le
+  // fil, même si le flux la répète ou si deux sources la publient : sinon
+  // static-integrity bloque tous les bots (lien d'article dupliqué).
+  const allLinkKeys = new Set();
   // Flux bruts reçus cette passe : le catalogue historique les garde avant
   // qu'ils soient exclus du fil par la règle de fraîcheur.
   const historicalItems = [];
@@ -1053,6 +1058,9 @@ async function main() {
       // d'enrichissement et re-scrapent leurs pages à chaque passe.
       const prior = priorByLink.get(normalizeArticleUrl(next.link));
       if (prior) mergePriorAuthor(next, prior);
+      const linkKey = articleLinkKey(next.link);
+      if (linkKey && allLinkKeys.has(linkKey)) continue;
+      if (linkKey) allLinkKeys.add(linkKey);
       all.push(next);
     }
   }
@@ -1160,7 +1168,7 @@ async function main() {
     }
   }
   const afterWithdrawn = withdrawn.items;
-  const visibleItems = filterHousekeepingForDisplay(afterWithdrawn, referenceDate);
+  const visibleItems = dedupeArticlesByLink(filterHousekeepingForDisplay(afterWithdrawn, referenceDate));
   const hkRemoved = afterWithdrawn.length - visibleItems.length;
   if (hkRemoved > 0) {
     console.log(`Ménage médias: ${hkRemoved} avis de fermeture/pause hors saison retiré(s) du fil`);

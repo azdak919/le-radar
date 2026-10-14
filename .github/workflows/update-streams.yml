@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   discover:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # Le sondage des flux prend ~15 min ; borne contre les exécutions zombies.
     timeout-minutes: 30
     permissions:

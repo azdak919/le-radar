@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   maintain:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # Mesuré 2026-07-27 : ~47 min. Face-detect + QC images poussaient à 50+
     # → 6 lundis cancelled, bot-status figé. QC auteurs/photos = bots news
     # quotidiens. Plafond 90 min = filet zombie, pas une cible de durée.

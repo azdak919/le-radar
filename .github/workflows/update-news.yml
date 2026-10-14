@@ -33,7 +33,7 @@ concurrency:
 jobs:
   aggregate:
     if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # 25 min suffit avec plafonds par source ; 45 min laissait un hang McGill
     # Daily bloquer toute l'après-midi.
     timeout-minutes: 25

@@ -27,7 +27,7 @@ concurrency:
 
 jobs:
   archive:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # 20 URL × (~18 s de capture + 4 s de pause) ≈ 8 min ; 20 min de marge.
     timeout-minutes: 20
     permissions:

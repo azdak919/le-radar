@@ -31,6 +31,18 @@ function articleLinkKey(link = '') {
   }
 }
 
+// Garde le premier article pour chaque lien canonique (ordre préservé).
+function dedupeArticlesByLink(items = []) {
+  const seen = new Set();
+  return items.filter((item) => {
+    const key = articleLinkKey(item?.link);
+    if (!key) return true;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 function decodeBasic(value) {
   return String(value || '')
     .replace(/&amp;/g, '&')
@@ -237,6 +249,7 @@ module.exports = {
   CHECK_REFRESH_MS,
   emptyLedger,
   articleLinkKey,
+  dedupeArticlesByLink,
   pageTitleFromHtml,
   titleMatchesArticle,
   isHomepageRedirect,
