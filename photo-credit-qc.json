@@ -1,15 +1,65 @@
 {
-  "updated": "2026-10-14T19:36:13.353Z",
+  "updated": "2026-10-14T22:28:27.950Z",
   "total": 178,
   "withImage": 158,
   "withCredit": 158,
-  "cited": 105,
-  "pending": 9,
+  "cited": 104,
+  "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 9,
-  "updatedCount": 0,
-  "citedNew": 0,
-  "fallbackNew": 9,
-  "samples": []
+  "checked": 15,
+  "updatedCount": 7,
+  "citedNew": 2,
+  "fallbackNew": 13,
+  "samples": [
+    {
+      "title": "Transports adaptés à l’UdeM : un obstacle après l’autre ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Leane Fautrat",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Horoscope September 2026",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Creative Writing September 2026",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Rouge d’une part, blanche de l’autre",
+      "source": "Le Délit",
+      "credit": "Photo : Scott Tan",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Summer in Paradise (Lennoxville Edition)",
+      "source": "The Campus",
+      "credit": "Photo credit: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
+    }
+  ]
 }
