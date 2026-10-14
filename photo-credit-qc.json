@@ -1,23 +1,65 @@
 {
-  "updated": "2026-10-14T05:10:25.992Z",
+  "updated": "2026-10-14T07:46:25.368Z",
   "total": 178,
-  "withImage": 158,
-  "withCredit": 158,
+  "withImage": 156,
+  "withCredit": 156,
   "cited": 105,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 9,
-  "updatedCount": 1,
-  "citedNew": 0,
-  "fallbackNew": 9,
+  "checked": 15,
+  "updatedCount": 7,
+  "citedNew": 5,
+  "fallbackNew": 10,
   "samples": [
+    {
+      "title": "Rouge d’une part, blanche de l’autre",
+      "source": "Le Délit",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "S.O.S. Huîtres menacées",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
     {
       "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
       "source": "Quartier Libre",
       "credit": "Crédit photo : Quartier Libre",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Summer in Paradise (Lennoxville Edition)",
+      "source": "The Campus",
+      "credit": "Photo credit: The Campus",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
+      "source": "La Pige",
+      "credit": "Photo : Noah Thomas",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
