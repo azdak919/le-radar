@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-14T00:39:57.406Z",
+  "updated": "2026-10-14T09:12:13.704Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -4103,15 +4103,27 @@
       "via": "save-page-now",
       "source": "Quartier Libre",
       "snapshot": "https://web.archive.org/web/20261013205353/https://quartierlibre.ca/faire-campagne-entre-deux-cours/"
+    },
+    "https://theplantnews.com/2026/10/13/horoscope-september-2026/": {
+      "at": "2026-10-14T09:11:38.546Z",
+      "via": "save-page-now",
+      "source": "The Plant",
+      "snapshot": "https://web.archive.org/web/20261014091124/https://theplantnews.com/2026/10/13/horoscope-september-2026/"
+    },
+    "https://theplantnews.com/2026/10/13/creative-writing-september-2026/": {
+      "at": "2026-10-14T09:12:13.704Z",
+      "via": "save-page-now",
+      "source": "The Plant",
+      "snapshot": "https://web.archive.org/web/20261014091158/https://theplantnews.com/2026/10/13/creative-writing-september-2026/"
     }
   },
   "stats": {
-    "total": 716,
+    "total": 718,
     "lastRun": {
-      "saved": 0,
+      "saved": 2,
       "skipped": 0,
-      "failed": 10,
-      "stoppedEarly": true
+      "failed": 13,
+      "stoppedEarly": false
     }
   },
   "sources": {
@@ -4163,12 +4175,12 @@
     "Zone Campus": {
       "host": "zonecampus.ca",
       "pages": 18,
-      "checkedAt": "2026-10-07T01:00:17.615Z"
+      "checkedAt": "2026-10-14T09:00:07.109Z"
     },
     "Exil": {
       "host": "exilecvm.wordpress.com",
       "pages": 1,
-      "checkedAt": "2026-10-07T01:00:20.864Z"
+      "checkedAt": "2026-10-14T09:00:12.218Z"
     },
     "The Campus": {
       "host": "thebucampus.ca",
