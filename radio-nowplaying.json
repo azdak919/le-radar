@@ -1,107 +1,113 @@
 {
-  "updatedAt": "2026-10-15T19:58:37.538Z",
+  "updatedAt": "2026-10-15T22:16:46.685Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Les Arshitechs du Son",
+        "source": "api-live",
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "next": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+        "title": "Crooch Control",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "https://chyz.ca/emission/crooch-control/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T19:58:00.909Z"
+      "checkedAt": "2026-10-15T22:15:37.781Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La session live",
+        "title": "Entropie",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/session-live-a-cism"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/entropie"
       },
       "next": {
-        "title": "Rythmologie",
+        "title": "La rumba latina",
         "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/la-rumba"
       },
       "track": "",
-      "showTitle": "La session live",
+      "showTitle": "Entropie",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T19:58:14.638Z"
+      "checkedAt": "2026-10-15T22:15:51.336Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Positive Vibes",
+        "title": "Upstage",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "next": {
-        "title": "Off the Hour: Labour Radio",
+        "title": "Grey Matters",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "track": "",
-      "showTitle": "Positive Vibes",
+      "showTitle": "Upstage",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T19:58:16.926Z"
+      "checkedAt": "2026-10-15T22:15:53.816Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Weirdo Rippers",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/weirdo-rippers"
+        "title": "Unheard Of",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/unheard-of"
       },
       "next": {
-        "title": "Hooked On Sonics",
-        "source": "schedule-live",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
+        "title": "Electric Messiah",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/electric-messiah"
       },
       "track": "",
-      "showTitle": "Weirdo Rippers",
+      "showTitle": "Unheard Of",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T19:58:19.081Z"
+      "checkedAt": "2026-10-15T22:16:28.126Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,34 +132,28 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T19:58:19.960Z"
+      "checkedAt": "2026-10-15T22:16:29.105Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Palmarès CHOQ.ca",
-        "source": "api-live",
-        "start": "15:30",
-        "end": "16:30",
-        "slug": "palmareschoq"
-      },
+      "current": null,
       "next": {
-        "title": "La 3ème demie",
+        "title": "Les Apatrides Anonymes",
         "source": "api-live",
-        "start": "17:15",
-        "end": "18:00",
-        "slug": "le-12-mtlsup"
+        "start": "18:30",
+        "end": "19:45",
+        "slug": "apatrides-anonymes"
       },
-      "track": "Satya — Realness",
-      "showTitle": "Palmarès CHOQ.ca",
+      "track": "Jeanne Bonjour — One way (le mode automatique)",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T19:58:37.187Z"
+      "checkedAt": "2026-10-15T22:16:46.335Z"
     }
   }
 }
