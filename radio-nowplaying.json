@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-15T09:52:54.699Z",
+  "updatedAt": "2026-10-15T11:27:54.505Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T09:52:27.215Z"
+      "checkedAt": "2026-10-15T11:27:26.711Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "05:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "La lecture pis toi",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
       },
+      "next": {
+        "title": "Jimmy et Neutron",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/jimmy-et-neutron"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "La lecture pis toi",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T09:52:29.121Z"
+      "checkedAt": "2026-10-15T11:27:28.573Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "William Shatner's Whiskey Tears",
+        "title": "OFC Podcast Radio",
         "source": "api-live",
-        "start": "04:00",
-        "end": "06:00"
+        "start": "07:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "Total €clipse of The ☾harts",
+        "title": "Folk Directions",
         "source": "api-live",
-        "start": "06:00",
-        "end": "07:00"
+        "start": "09:00",
+        "end": "11:00"
       },
-      "track": "William Shatner",
-      "showTitle": "William Shatner's Whiskey Tears",
+      "track": "",
+      "showTitle": "OFC Podcast Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,60 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T09:52:31.853Z"
+      "checkedAt": "2026-10-15T11:27:31.804Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Daydream Nation",
         "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/daydream-nation"
       },
+      "next": {
+        "title": "Everything Everywhere",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/everything-everywhere"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Daydream Nation",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live"
+        "schedule-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T09:52:34.551Z"
+      "checkedAt": "2026-10-15T11:27:34.916Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule-live",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T09:52:35.860Z"
+      "checkedAt": "2026-10-15T11:27:35.858Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +140,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "BLAMM — Ironie du sort",
+      "track": "Chénier — Mon meilleur angle",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +148,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T09:52:54.348Z"
+      "checkedAt": "2026-10-15T11:27:54.154Z"
     }
   }
 }
