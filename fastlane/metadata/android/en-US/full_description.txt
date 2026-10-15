@@ -11,7 +11,7 @@ The app is for discovery and for a list kept on the device. It does not replace 
 
 The app interface is in French only. Some feed items are in English and are marked EN.
 
-Network use: on each start the app downloads the current feed, the source list and the radio list from https://le-radar.ca/. If that fails, it uses the copy bundled in the app. Card images load from each outlet’s own website, and radio audio streams directly from the station.
+Network use: on each start the app downloads the current feed, the source list and the radio list from https://le-radar.ca/. While a station plays, it also fetches what is on air from https://le-radar.ca/radio-nowplaying.json. If that fails, it uses the copy bundled in the app. Card images load from each outlet’s own website, and radio audio streams directly from the station.
 
 No account. No ads. Follows and favorites stay on the device and can be erased in Settings.
 

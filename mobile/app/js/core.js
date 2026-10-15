@@ -7,7 +7,9 @@
 
 (function initRadarMobile(global) {
   const ORIGIN = 'https://le-radar.ca';
-  const APP_VERSION = '1.0.0';
+  // Synchronisé depuis android/app/build.gradle (versionName) par mobile/scripts/prepare.mjs ;
+  // vérifié par tests/mobile-core.mjs.
+  const APP_VERSION = '1.1.0';
   const LIBRARY_KEY = 'radar-mobile-library-v1';
   const PREFS_KEY = 'radar-mobile-prefs-v1';
   const SNAPSHOT_KEY = 'radar-mobile-snapshot-v1';

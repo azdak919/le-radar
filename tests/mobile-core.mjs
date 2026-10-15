@@ -228,6 +228,7 @@ assert.match(article, /mobile\/app\/js\/core\.js/);
 assert.equal(core.escapeHtml('<img src=x onerror=alert(1)>'), '&lt;img src=x onerror=alert(1)&gt;');
 
 const pkg = JSON.parse(read('package.json'));
+// package.json, core.js et versionName Android doivent rester alignés.
 assert.equal(pkg.version, core.APP_VERSION);
 const gradle = read('android/variables.gradle');
 assert.match(gradle, /targetSdkVersion = 36/);
@@ -272,3 +273,14 @@ const privacy = read('ios/App/App/PrivacyInfo.xcprivacy');
 assert.match(privacy, /<key>NSPrivacyTracking<\/key>\s*<false\/>/);
 
 console.log('OK mobile-core');
+
+// APP_VERSION (Réglages) doit égaler versionName du build Android.
+{
+  const { readFileSync: rf } = await import('node:fs');
+  const gradle = rf(new URL('../android/app/build.gradle', import.meta.url), 'utf8');
+  const coreSrc = rf(new URL('../mobile/app/js/core.js', import.meta.url), 'utf8');
+  const vn = gradle.match(/versionName\s+"([^"]+)"/)?.[1];
+  const av = coreSrc.match(/const APP_VERSION = '([^']*)';/)?.[1];
+  if (!vn || vn !== av) { console.error(`APP_VERSION ${av} ≠ versionName ${vn}`); process.exit(1); }
+  console.log(`ok APP_VERSION = versionName (${vn})`);
+}

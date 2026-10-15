@@ -4,7 +4,7 @@
  * Copie l’interface, les JSON publics du fil, et le mât mobile du site
  * (feuilles, banque photo, météo, bandeau sports). Pas sports.json.
  */
-import { cpSync, mkdirSync, rmSync } from 'node:fs';
+import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -23,6 +23,18 @@ for (const file of ['news.json', 'news-sources.json', 'radios.json', 'brand-colo
 // Même module que le site. L’aperçu navigateur passe par un lien dans
 // mobile/app. Recopié dans www, ce lien vise le fichier source : cpSync
 // refuse alors (source et destination identiques). On retire le lien d’abord.
+// Version affichée dans Réglages : toujours celle du build Android (versionName).
+{
+  const gradle = readFileSync(join(root, 'android', 'app', 'build.gradle'), 'utf8');
+  const m = gradle.match(/versionName\s+"([^"]+)"/);
+  if (m) {
+    const corePath = join(root, 'mobile', 'app', 'js', 'core.js');
+    const core = readFileSync(corePath, 'utf8');
+    const next = core.replace(/const APP_VERSION = '[^']*';/, `const APP_VERSION = '${m[1]}';`);
+    if (next !== core) writeFileSync(corePath, next);
+  }
+}
+
 function copyRealFile(src, dest) {
   rmSync(dest, { force: true });
   cpSync(src, dest);
