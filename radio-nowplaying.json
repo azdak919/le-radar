@@ -1,114 +1,107 @@
 {
-  "updatedAt": "2026-10-15T16:16:50.032Z",
+  "updatedAt": "2026-10-15T19:07:16.300Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Conduite Antisportive",
-        "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "url": "https://chyz.ca/emission/conduite-antisportive/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Conduite Antisportive",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T16:15:52.207Z"
+      "checkedAt": "2026-10-15T19:06:50.241Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque",
+        "title": "La session live",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/session-live-a-cism"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "Rythmologie",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "https://cism893.ca/emissions/rythmologie"
       },
       "track": "",
-      "showTitle": "La grande ludothèque",
+      "showTitle": "La session live",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T16:16:02.122Z"
+      "checkedAt": "2026-10-15T19:06:51.792Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Venus Radio",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00"
+        "title": "Positive Vibes",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
-        "source": "schedule",
-        "start": "14:00",
-        "end": "15:00"
+        "title": "Off the Hour: Labour Radio",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Venus Radio",
+      "showTitle": "Positive Vibes",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "stream",
-        "schedule"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T16:16:26.769Z"
+      "checkedAt": "2026-10-15T19:06:54.170Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Power Hour",
+        "title": "Weirdo Rippers",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/the-power-hour"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/weirdo-rippers"
       },
       "next": {
-        "title": "What's Happening in NDG",
+        "title": "Hooked On Sonics",
         "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/whats-happening-in-ndg"
+        "start": "16:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
       },
       "track": "",
-      "showTitle": "The Power Hour",
+      "showTitle": "Weirdo Rippers",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T16:16:29.877Z"
+      "checkedAt": "2026-10-15T19:06:56.149Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,20 +126,20 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T16:16:32.535Z"
+      "checkedAt": "2026-10-15T19:06:57.661Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Onde de CHOQ",
+        "title": "Palmarès CHOQ.ca",
         "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "start": "15:30",
+        "end": "16:30",
+        "slug": "palmareschoq"
       },
-      "track": "Natanya — FAMILY",
+      "track": "sueter7 — Escritorio",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T16:16:49.681Z"
+      "checkedAt": "2026-10-15T19:07:15.949Z"
     }
   }
 }
