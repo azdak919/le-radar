@@ -1,11 +1,13 @@
 {
-  "checkedAt": "2026-10-14T01:50:27.403Z",
+  "checkedAt": "2026-10-15T01:25:26.433Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 6,
-    "drift": [],
+    "stable": 5,
+    "drift": [
+      "choq"
+    ],
     "overhaul": [],
     "unreachable": []
   },
@@ -64,11 +66,15 @@
       "id": "choq",
       "published": 27,
       "fresh": 27,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "added": [
+        "mer 13:00–14:00 Échos du monde"
+      ],
+      "removed": [
+        "mer 13:00–13:45 Onde de CHOQ"
+      ],
+      "changed": 2,
+      "ratio": 0.074,
+      "status": "drift"
     }
   ]
 }
