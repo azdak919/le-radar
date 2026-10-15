@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-15T04:33:53.873Z",
+  "updatedAt": "2026-10-15T06:10:34.743Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T04:33:26.126Z"
+      "checkedAt": "2026-10-15T06:10:06.641Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La grande ludothèque (reprise)",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
-      },
-      "next": {
         "title": "Mix franco",
         "source": "schedule",
         "start": "02:00",
         "end": "03:00",
         "url": "https://cism893.ca/emissions/mix-franco"
       },
+      "next": {
+        "title": "Les Charlottes",
+        "source": "schedule",
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/les-charlottes"
+      },
       "track": "",
-      "showTitle": "La grande ludothèque (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T04:33:27.779Z"
+      "checkedAt": "2026-10-15T06:10:08.298Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Off The Hook",
-        "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
-      },
-      "next": {
         "title": "Freeform Air",
         "source": "api-live",
         "start": "02:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "William Shatner's Whiskey Tears",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "06:00"
+      },
       "track": "",
-      "showTitle": "Off The Hook",
+      "showTitle": "Freeform Air",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T04:33:30.321Z"
+      "checkedAt": "2026-10-15T06:10:10.649Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Night Watch",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "01:00",
-        "url": "http://www.cjlo.com/shows/the-night-watch"
-      },
-      "next": {
         "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "01:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
+      "next": {
+        "title": "Daydream Nation",
+        "source": "schedule-live",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/daydream-nation"
+      },
       "track": "",
-      "showTitle": "The Night Watch",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T04:33:32.841Z"
+      "checkedAt": "2026-10-15T06:10:13.138Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T04:33:33.806Z"
+      "checkedAt": "2026-10-15T06:10:14.092Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Immolation — Descent",
+      "track": "Siyahkal — Anarchy in Iran",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T04:33:53.523Z"
+      "checkedAt": "2026-10-15T06:10:34.393Z"
     }
   }
 }
