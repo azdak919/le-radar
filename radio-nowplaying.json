@@ -1,72 +1,80 @@
 {
-  "updatedAt": "2026-10-15T11:53:42.315Z",
+  "updatedAt": "2026-10-15T15:00:16.318Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Sons de Cloches",
+        "source": "api-live",
+        "start": "10:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/sons-de-cloches/"
+      },
       "next": {
-        "title": "Jeudi Révolte",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/jeudi-revolte/"
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Sons de Cloches",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
+        "api-live",
+        "schedule-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T11:53:17.073Z"
+      "checkedAt": "2026-10-15T14:59:30.534Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La lecture pis toi",
+        "title": "Une fenêtre sur le monde",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
       },
       "next": {
-        "title": "Jimmy et Neutron",
+        "title": "Présentement à l'écoute",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/jimmy-et-neutron"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/presentement-a-lecoute-2"
       },
       "track": "",
-      "showTitle": "La lecture pis toi",
+      "showTitle": "Une fenêtre sur le monde",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T11:53:18.745Z"
+      "checkedAt": "2026-10-15T14:59:32.063Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "OFC Podcast Radio",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Folk Directions",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Under The Olive Tree",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "OFC Podcast Radio",
+      "showTitle": "Folk Directions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,60 +82,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T11:53:21.058Z"
+      "checkedAt": "2026-10-15T14:59:34.732Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Daydream Nation",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/daydream-nation"
+        "title": "Democracy Now",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "next": {
-        "title": "Everything Everywhere",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/everything-everywhere"
+        "title": "Chi and Ri",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/chi-and-ri"
       },
       "track": "",
-      "showTitle": "Daydream Nation",
+      "showTitle": "Democracy Now",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T11:53:23.138Z"
+      "checkedAt": "2026-10-15T14:59:57.055Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Palmarès CFAK",
         "source": "schedule-live",
         "start": "08:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "À nous le futur",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T11:53:24.516Z"
+      "checkedAt": "2026-10-15T14:59:58.161Z"
     },
     "choq": {
       "id": "choq",
@@ -140,7 +147,7 @@
         "end": "13:45",
         "slug": "onde-de-choq"
       },
-      "track": "Ginie — j'evite",
+      "track": "Täbï Yösha — Kinda Love",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -148,7 +155,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T11:53:41.964Z"
+      "checkedAt": "2026-10-15T15:00:15.968Z"
     }
   }
 }
