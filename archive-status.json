@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-15T19:30:02.030Z",
+  "updated": "2026-10-15T23:57:53.882Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -44,7 +44,7 @@
       "snapshot": "https://web.archive.org/web/20260726003730/https://le-radar.ca/llms.txt"
     },
     "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/": {
-      "at": "2026-04-18T22:22:53.000Z",
+      "at": "2026-07-26T00:18:15.000Z",
       "via": "existant",
       "source": "Exil"
     },
@@ -4127,13 +4127,25 @@
       "via": "save-page-now",
       "source": "The Link",
       "snapshot": "https://web.archive.org/web/20261015001710/https://thelinknewspaper.ca/article/16479"
+    },
+    "https://thelinknewspaper.ca/article/16481": {
+      "at": "2026-10-15T23:56:16.724Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20261015235557/https://thelinknewspaper.ca/article/16481"
+    },
+    "https://quartierlibre.ca/ia-que-fait-linstitut-mila/": {
+      "at": "2026-10-15T23:56:47.928Z",
+      "via": "save-page-now",
+      "source": "Quartier Libre",
+      "snapshot": "https://web.archive.org/web/20261015235633/https://quartierlibre.ca/ia-que-fait-linstitut-mila/"
     }
   },
   "stats": {
-    "total": 720,
+    "total": 722,
     "lastRun": {
-      "saved": 0,
-      "skipped": 0,
+      "saved": 2,
+      "skipped": 1,
       "failed": 12,
       "stoppedEarly": false
     }
