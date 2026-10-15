@@ -1,51 +1,58 @@
 {
-  "updated": "2026-10-15T15:46:50.313Z",
+  "updated": "2026-10-15T17:09:03.952Z",
   "total": 178,
-  "withImage": 156,
-  "withCredit": 156,
+  "withImage": 158,
+  "withCredit": 158,
   "cited": 105,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 7,
-  "citedNew": 5,
-  "fallbackNew": 10,
+  "checked": 16,
+  "updatedCount": 8,
+  "citedNew": 4,
+  "fallbackNew": 12,
   "samples": [
     {
-      "title": "Est-ce que je dois un bébé à l’État ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Horoscope September 2026",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
-      "source": "La Pige",
-      "credit": "Photo : Noah Thomas",
-      "cited": true,
-      "method": "figcaption-paren-kind"
+      "title": "Creative Writing September 2026",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
+      "credit": "Photo : Scott Tan",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
+      "title": "Manifestation anti-IA à Montréal",
+      "source": "Le Délit",
+      "credit": "Photo : Héloïse Durning",
       "cited": true,
-      "method": "via-attribution"
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Quand la fiction banalise les traumatismes",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Faire compter sa voix",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée d’Élections Québec",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
