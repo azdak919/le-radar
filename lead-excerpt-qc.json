@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-15T21:33:22.637Z",
+  "updated": "2026-10-15T23:00:48.308Z",
   "total": 178,
   "pool": 56,
-  "incomplete": 13,
+  "incomplete": 15,
   "withLeadExcerpt": 119,
-  "candidates": 13,
-  "enriched": 2,
+  "candidates": 15,
+  "enriched": 4,
   "failed": 3,
   "ok": true,
   "samples": [
@@ -19,21 +19,39 @@
       "changed": false
     },
     {
-      "title": "Est-ce que je dois un bébé à l’État ?",
-      "link": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
+      "title": "Manifestation anti-IA à Montréal",
+      "link": "https://www.delitfrancais.com/2026/09/23/manifestation-anti-ia-a-montreal/",
       "ok": true,
-      "score": 96,
-      "chars": 288,
-      "sample": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est ",
+      "score": 94,
+      "chars": 249,
+      "sample": "La possibilité qui revient le plus est celle d’une extinction humaine après le développement d’une s",
       "changed": true
     },
     {
-      "title": "Le « self-care » : qui valide votre repos ?",
-      "link": "https://www.delitfrancais.com/2026/09/23/le-self-care-qui-valide-votre-repos/",
+      "title": "Quand la fiction banalise les traumatismes",
+      "link": "https://www.delitfrancais.com/2026/09/23/quand-la-fiction-banalise-les-traumatismes/",
       "ok": true,
       "score": 96,
-      "chars": 347,
-      "sample": "Ce n’était pas une dérive isolée, mais une règle, que Talcott Parsons nommera en 1951 : le « rôle de",
+      "chars": 377,
+      "sample": "Quel est le point commun entre la série Off campus , le livre Captive , et Jamais plus ? Outre leur ",
+      "changed": true
+    },
+    {
+      "title": "Faire compter sa voix",
+      "link": "https://www.delitfrancais.com/2026/09/23/faire-compter-sa-voix/",
+      "ok": true,
+      "score": 100,
+      "chars": 282,
+      "sample": "En quinze ans, les Indigenous Awareness Weeks (IAW) sont devenues un espace de « dialogue, de rappro",
+      "changed": true
+    },
+    {
+      "title": "March for Palestine garners widespread support",
+      "link": "https://thelinknewspaper.ca/article/16481",
+      "ok": true,
+      "score": 96,
+      "chars": 294,
+      "sample": "Montreal has seen mass mobilizations and campaigns in solidarity with Palestinian people for the pas",
       "changed": true
     },
     {
@@ -61,24 +79,6 @@
       "score": 96,
       "chars": 400,
       "sample": "The Concordia University Stingers men’s rugby team has had a difficult start to the season. Still, t",
-      "changed": false
-    },
-    {
-      "title": "Une rentrée sauvée, et après?",
-      "link": "https://www.delitfrancais.com/2026/10/07/une-rentree-sauvee-et-apres/",
-      "ok": true,
-      "score": 87,
-      "chars": 400,
-      "sample": "Le 3 septembre , le juge de la Cour supérieure Martin Castonguay a ordonné au gouvernement du Québec",
-      "changed": false
-    },
-    {
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
-      "ok": true,
-      "score": 60,
-      "chars": 98,
-      "sample": "Comment Reblog Subscribe Subscribed The Plant Sign me up Have a WordPress.com account? Log in now.",
       "changed": false
     }
   ]

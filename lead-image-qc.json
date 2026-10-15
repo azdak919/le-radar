@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-15T21:39:18.096Z",
+  "updated": "2026-10-15T23:04:57.198Z",
   "total": 178,
   "withPhoto": 156,
   "withStock": 40,
   "withCampusBank": 28,
   "fullyCovered": 178,
-  "leadReadyPhotos": 125,
-  "pageScraped": 19,
-  "photosRecovered": 16,
-  "imagesCleared": 5,
-  "stockSearches": 54,
-  "stockFound": 33,
-  "campusBankFound": 21,
+  "leadReadyPhotos": 132,
+  "pageScraped": 20,
+  "photosRecovered": 18,
+  "imagesCleared": 6,
+  "stockSearches": 53,
+  "stockFound": 34,
+  "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -31,12 +31,6 @@
       "link": "https://thelinknewspaper.ca/article/16476",
       "reason": "no-stock-match",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_0067_900_1200_90.jpg"
-    },
-    {
-      "title": "Un polytechnicien en Espagne",
-      "link": "https://www.polyscope.qc.ca/blog/post/kbgnDbewLv2wv6hDMWI3",
-      "reason": "stock-too-small",
-      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2F04c4a050-9f16-42f1-9d8c-105cfc148422.jpeg?alt=media&token=0b042590-65ec-4454-ab18-f1e9eafed527"
     },
     {
       "title": "The Stingers win the Kelly-Anne Drummond Cup",
@@ -75,16 +69,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
     },
     {
-      "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
-      "link": "https://thebucampus.ca/2026/09/30/gods-heroes-men-and-pigs-classics-department-brings-reflections-on-nolans-the-odyssey-to-the-agora/",
+      "title": "Prepare for Fewer Course Options in the Coming Years: Budget Cuts are Affecting the Number of Courses Available at BU",
+      "link": "https://thebucampus.ca/2026/09/30/prepare-for-fewer-course-options-in-the-coming-years-budget-cuts-are-affecting-the-number-of-courses-available-at-bu/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chichester%2C_Bishop_Otter_Campus_-_geograph.org.uk_-_3003126.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Prepare for Fewer Course Options in the Coming Years: Budget Cuts are Affecting the Number of Courses Available at BU",
-      "link": "https://thebucampus.ca/2026/09/30/prepare-for-fewer-course-options-in-the-coming-years-budget-cuts-are-affecting-the-number-of-courses-available-at-bu/",
+      "title": "A Tradition on the Edge: The Future of Homecoming",
+      "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
+    },
+    {
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Bishop_Otter_Campus%2C_University_of_Chichester_-_geograph.org.uk_-_2726552.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }

@@ -1,10 +1,18 @@
 {
-  "updated": "2026-10-15T21:33:03.423Z",
+  "updated": "2026-10-15T23:00:26.820Z",
   "total": 178,
   "withAuthor": 178,
-  "mismatches": 17,
+  "mismatches": 19,
   "ok": true,
   "samples": [
+    {
+      "title": "March for Palestine garners widespread support",
+      "link": "https://thelinknewspaper.ca/article/16481",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Julia Miller",
+      "reason": "page-byline"
+    },
     {
       "title": "Horoscope September 2026",
       "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
@@ -78,6 +86,14 @@
       "reason": "no-author-source"
     },
     {
+      "title": "From Scripts to Stage: BU New Plays 2026",
+      "link": "https://thebucampus.ca/2026/09/30/from-scripts-to-stage-bu-new-plays-2026/",
+      "source": "The Campus",
+      "fieldAuthor": "Zachary Jaimes",
+      "canonicalAuthor": "Zachary Jaimes Saint Cyr",
+      "reason": "page-byline-overrides-rss"
+    },
+    {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://www.thetribune.ca/opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "source": "The Tribune",
@@ -142,5 +158,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 17
+  "fixed": 19
 }
