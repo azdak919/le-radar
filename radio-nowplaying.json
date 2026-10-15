@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-15T22:16:46.685Z",
+  "updatedAt": "2026-10-15T22:58:40.198Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T22:15:37.781Z"
+      "checkedAt": "2026-10-15T22:57:18.299Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T22:15:51.336Z"
+      "checkedAt": "2026-10-15T22:57:34.358Z"
     },
     "ckut": {
       "id": "ckut",
@@ -80,7 +80,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T22:15:53.816Z"
+      "checkedAt": "2026-10-15T22:57:43.832Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -107,7 +107,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T22:16:28.126Z"
+      "checkedAt": "2026-10-15T22:58:18.628Z"
     },
     "cfak": {
       "id": "cfak",
@@ -132,28 +132,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T22:16:29.105Z"
+      "checkedAt": "2026-10-15T22:58:21.938Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Les Apatrides Anonymes",
         "source": "api-live",
         "start": "18:30",
         "end": "19:45",
         "slug": "apatrides-anonymes"
       },
-      "track": "Jeanne Bonjour — One way (le mode automatique)",
-      "showTitle": "",
+      "next": {
+        "title": "Le grand maître des jeux",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "22:30",
+        "slug": "le-maitre-des-jeux"
+      },
+      "track": "58049a — emission-du-3-septembre-2026",
+      "showTitle": "Les Apatrides Anonymes",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T22:16:46.335Z"
+      "checkedAt": "2026-10-15T22:58:39.847Z"
     }
   }
 }
