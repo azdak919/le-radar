@@ -1,44 +1,51 @@
 {
-  "updated": "2026-10-14T23:24:37.256Z",
+  "updated": "2026-10-15T00:41:44.676Z",
   "total": 178,
-  "withImage": 156,
-  "withCredit": 156,
+  "withImage": 158,
+  "withCredit": 158,
   "cited": 105,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 6,
-  "citedNew": 4,
-  "fallbackNew": 10,
+  "checked": 15,
+  "updatedCount": 7,
+  "citedNew": 3,
+  "fallbackNew": 12,
   "samples": [
     {
-      "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
-      "source": "La Pige",
-      "credit": "Photo : Noah Thomas",
-      "cited": true,
-      "method": "figcaption-paren-kind"
+      "title": "Horoscope September 2026",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Creative Writing September 2026",
+      "source": "The Plant",
+      "credit": "Photo credit: The Plant",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
+      "credit": "Photo : Scott Tan",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
-      "method": "via-attribution"
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "source": "Le Délit",
+      "credit": "Photo : Héloïse Durning",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "Déficit budgétaire au Québec : ce qu’il faut savoir",
