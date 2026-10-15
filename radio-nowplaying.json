@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-15T19:07:16.300Z",
+  "updatedAt": "2026-10-15T19:58:37.538Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T19:06:50.241Z"
+      "checkedAt": "2026-10-15T19:58:00.909Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T19:06:51.792Z"
+      "checkedAt": "2026-10-15T19:58:14.638Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T19:06:54.170Z"
+      "checkedAt": "2026-10-15T19:58:16.926Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T19:06:56.149Z"
+      "checkedAt": "2026-10-15T19:58:19.081Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,28 +126,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T19:06:57.661Z"
+      "checkedAt": "2026-10-15T19:58:19.960Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Palmarès CHOQ.ca",
         "source": "api-live",
         "start": "15:30",
         "end": "16:30",
         "slug": "palmareschoq"
       },
-      "track": "sueter7 — Escritorio",
-      "showTitle": "",
+      "next": {
+        "title": "La 3ème demie",
+        "source": "api-live",
+        "start": "17:15",
+        "end": "18:00",
+        "slug": "le-12-mtlsup"
+      },
+      "track": "Satya — Realness",
+      "showTitle": "Palmarès CHOQ.ca",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T19:07:15.949Z"
+      "checkedAt": "2026-10-15T19:58:37.187Z"
     }
   }
 }
