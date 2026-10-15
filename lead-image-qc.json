@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-15T00:42:41.549Z",
+  "updated": "2026-10-15T03:57:07.187Z",
   "total": 178,
   "withPhoto": 156,
-  "withStock": 39,
-  "withCampusBank": 28,
+  "withStock": 41,
+  "withCampusBank": 27,
   "fullyCovered": 178,
-  "leadReadyPhotos": 122,
-  "pageScraped": 20,
-  "photosRecovered": 17,
+  "leadReadyPhotos": 125,
+  "pageScraped": 19,
+  "photosRecovered": 16,
   "imagesCleared": 5,
-  "stockSearches": 52,
-  "stockFound": 32,
+  "stockSearches": 54,
+  "stockFound": 35,
   "campusBankFound": 21,
   "mainPageLeadReady": true,
   "gaps": [
@@ -66,25 +66,25 @@
       "title": "Searching For a Third Space",
       "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
       "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/8365/8489345587_dd0a832f29_b.jpg"
+      "image": "https://live.staticflickr.com/72/172898013_80d53c9edc_b.jpg"
+    },
+    {
+      "title": "Shawarm-off!",
+      "link": "https://www.mcgilldaily.com/2026/10/shawarm-off/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
+    },
+    {
+      "title": "Prepare for Fewer Course Options in the Coming Years: Budget Cuts are Affecting the Number of Courses Available at BU",
+      "link": "https://thebucampus.ca/2026/09/30/prepare-for-fewer-course-options-in-the-coming-years-budget-cuts-are-affecting-the-number-of-courses-available-at-bu/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chichester%2C_Bishop_Otter_Campus_-_geograph.org.uk_-_3003126.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "A Tradition on the Edge: The Future of Homecoming",
       "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chichester%2C_Bishop_Otter_Campus_-_geograph.org.uk_-_3003126.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Battling Adversity",
-      "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
-      "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
-    },
-    {
-      "title": "Blackface at McGill",
-      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
     }
   ]
 }

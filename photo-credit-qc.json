@@ -1,49 +1,35 @@
 {
-  "updated": "2026-10-15T00:41:44.676Z",
+  "updated": "2026-10-15T03:57:18.528Z",
   "total": 178,
-  "withImage": 158,
-  "withCredit": 158,
+  "withImage": 156,
+  "withCredit": 156,
   "cited": 105,
   "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 7,
-  "citedNew": 3,
-  "fallbackNew": 12,
+  "checked": 16,
+  "updatedCount": 8,
+  "citedNew": 6,
+  "fallbackNew": 10,
   "samples": [
-    {
-      "title": "Horoscope September 2026",
-      "source": "The Plant",
-      "credit": "Photo credit: The Plant",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Creative Writing September 2026",
-      "source": "The Plant",
-      "credit": "Photo credit: The Plant",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
-      "credit": "Photo : Scott Tan",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "title": "Le « self-care » : qui valide votre repos ?",
       "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Manifestation anti-IA à Montréal",
-      "source": "Le Délit",
-      "credit": "Photo : Héloïse Durning",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -60,6 +46,27 @@
       "credit": "Photo credit: The Campus",
       "cited": false,
       "method": null
+    },
+    {
+      "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
+      "source": "La Pige",
+      "credit": "Photo : Noah Thomas",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
