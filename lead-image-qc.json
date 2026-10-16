@@ -1,19 +1,25 @@
 {
-  "updated": "2026-10-16T00:34:47.540Z",
+  "updated": "2026-10-16T23:14:06.282Z",
   "total": 178,
-  "withPhoto": 156,
-  "withStock": 40,
-  "withCampusBank": 28,
-  "fullyCovered": 178,
-  "leadReadyPhotos": 132,
+  "withPhoto": 151,
+  "withStock": 43,
+  "withCampusBank": 31,
+  "fullyCovered": 177,
+  "leadReadyPhotos": 125,
   "pageScraped": 18,
-  "photosRecovered": 16,
-  "imagesCleared": 5,
-  "stockSearches": 53,
-  "stockFound": 34,
-  "campusBankFound": 22,
+  "photosRecovered": 18,
+  "imagesCleared": 10,
+  "stockSearches": 55,
+  "stockFound": 37,
+  "campusBankFound": 24,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Une semaine pour sensibiliser aux violences sexuelles à l’UdeS",
+      "link": "https://lecollectif.ca/a-la-une/une-semaine-pour-sensibiliser-aux-violences-sexuelles-a-ludes/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Universit%C3%A9_de_Sherbrooke_-_R%C3%A9sidences_G8_%C3%A0_G15_%28panorama%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
     {
       "title": "Horoscope September 2026",
       "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
@@ -29,26 +35,44 @@
     {
       "title": "Concordia’s Solidarity Brunch goes monthly",
       "link": "https://thelinknewspaper.ca/article/16476",
-      "reason": "no-stock-match",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/IMG_0067_900_1200_90.jpg"
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+    },
+    {
+      "title": "Un polytechnicien en Espagne",
+      "link": "https://www.polyscope.qc.ca/blog/post/kbgnDbewLv2wv6hDMWI3",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/5329/8859735037_dec50a0182_b.jpg"
     },
     {
       "title": "The Stingers win the Kelly-Anne Drummond Cup",
       "link": "https://thelinknewspaper.ca/article/16474",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg"
+    },
+    {
+      "title": "La mémoire vive du génie: les archives du Polyscope enfin immortalisées",
+      "link": "https://www.polyscope.qc.ca/blog/post/wj4AQm1wt2PECO6Gitx1",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/%C3%89cole_polytechnique_de_Montr%C3%A9al.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "La politique commence ici",
+      "link": "https://quartierlibre.ca/la-politique-commence-ici/",
       "reason": "no-stock-match",
-      "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/_U2A7376_900_1178_90.jpg"
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/AC7688E9-8982-4425-804C-B4DD9D09D6B6_1_201_a-964x1024.jpeg"
+    },
+    {
+      "title": "Spectacles de drones: raconter l’histoire dans le ciel",
+      "link": "https://lapige.atmjonquiere.com/2026/10/07/des-histoires-aeriennes/?utm_source=rss&utm_medium=rss&utm_campaign=des-histoires-aeriennes",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_20261002_143205262_HDR.jpg"
     },
     {
       "title": "Quand Polytechnique tend la main: l'aide financière sous tous ses angles",
       "link": "https://www.polyscope.qc.ca/blog/post/QPEKa1YZQ6rHD8StJeGU",
       "reason": "no-stock-match",
       "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Fbourses_sep.png?alt=media&token=8353fe47-ac3c-4cf7-8d47-ae677a785f76"
-    },
-    {
-      "title": "La mémoire vive du génie: les archives du Polyscope enfin immortalisées",
-      "link": "https://www.polyscope.qc.ca/blog/post/wj4AQm1wt2PECO6Gitx1",
-      "reason": "no-stock-match",
-      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2FCapture%20d%E2%80%99%C3%A9cran%202026-10-07%20111839.png?alt=media&token=48cf0e83-5ace-41a5-a731-509794f102dd"
     },
     {
       "title": "Health First!",
@@ -61,30 +85,6 @@
       "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
       "reason": "stock-too-small",
       "image": "https://live.staticflickr.com/72/172898013_80d53c9edc_b.jpg"
-    },
-    {
-      "title": "Shawarm-off!",
-      "link": "https://www.mcgilldaily.com/2026/10/shawarm-off/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg"
-    },
-    {
-      "title": "Prepare for Fewer Course Options in the Coming Years: Budget Cuts are Affecting the Number of Courses Available at BU",
-      "link": "https://thebucampus.ca/2026/09/30/prepare-for-fewer-course-options-in-the-coming-years-budget-cuts-are-affecting-the-number-of-courses-available-at-bu/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chichester%2C_Bishop_Otter_Campus_-_geograph.org.uk_-_3003126.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "A Tradition on the Edge: The Future of Homecoming",
-      "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
-    },
-    {
-      "title": "Battling Adversity",
-      "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Bishop_Otter_Campus%2C_University_of_Chichester_-_geograph.org.uk_-_2726552.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }

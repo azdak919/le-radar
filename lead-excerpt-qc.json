@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-16T21:34:34.127Z",
+  "updated": "2026-10-16T23:05:40.332Z",
   "total": 178,
   "pool": 58,
-  "incomplete": 12,
+  "incomplete": 11,
   "withLeadExcerpt": 120,
-  "candidates": 12,
-  "enriched": 1,
+  "candidates": 11,
+  "enriched": 0,
   "failed": 3,
   "ok": true,
   "samples": [
@@ -17,15 +17,6 @@
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
       "changed": false
-    },
-    {
-      "title": "Est-ce que je dois un bébé à l’État ?",
-      "link": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
-      "ok": true,
-      "score": 96,
-      "chars": 288,
-      "sample": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est ",
-      "changed": true
     },
     {
       "title": "Creative Writing September 2026",
@@ -79,6 +70,15 @@
       "score": 96,
       "chars": 164,
       "sample": "Lorsqu’une forte pluie s’abat sur une ville, une grande partie du travail se déroule sous nos pieds.",
+      "changed": false
+    },
+    {
+      "title": "Les équipes à suivre cette saison",
+      "link": "https://www.delitfrancais.com/2026/10/07/les-equipes-a-suivre-cette-saison/",
+      "ok": true,
+      "score": 96,
+      "chars": 165,
+      "sample": "Pour la première fois, McGill entame une saison avec 25 équipes de moins. Alors, comment se porte le",
       "changed": false
     }
   ]
