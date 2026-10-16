@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-10-16T01:02:49.745Z",
+  "updatedAt": "2026-10-16T06:07:13.835Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Crooch Control",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "https://chyz.ca/emission/crooch-control/"
-      },
+      "current": null,
       "next": {
         "title": "Vendredi Nostalgie",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/vendredi-nostalgie/"
       },
       "track": "",
-      "showTitle": "Crooch Control",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-16T01:01:56.722Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "La courbe 2.0",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/la-courbe-2-0"
-      },
-      "next": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "track": "",
-      "showTitle": "La courbe 2.0",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T01:02:11.078Z"
+      "checkedAt": "2026-10-16T06:06:15.024Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
+      "next": {
+        "title": "Club classique (reprise)",
+        "source": "schedule",
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/club-classique"
+      },
+      "track": "",
+      "showTitle": "Mix franco",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-16T06:06:28.568Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Chaud Pour/Francis",
+        "title": "Listen! You Smell Something?",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "01:00",
+        "end": "04:00"
       },
       "next": {
-        "title": "You Need A Heart To Live 2",
+        "title": "G-Flex Survivor's Corner",
         "source": "api-live",
-        "start": "23:00",
-        "end": "01:00"
+        "start": "04:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Chaud Pour/Francis",
+      "showTitle": "Listen! You Smell Something?",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,86 +74,80 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T01:02:16.197Z"
+      "checkedAt": "2026-10-16T06:06:31.739Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The 514",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-514"
+        "title": "CJLO Late Night",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "How Did We Get Here?",
-        "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/how-did-we-get-here"
+        "title": "Wake up Folks!",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/wake-up-folks"
       },
       "track": "",
-      "showTitle": "The 514",
+      "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T01:02:30.164Z"
+      "checkedAt": "2026-10-16T06:06:54.029Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "After 5@8",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "After 5@8",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T01:02:31.304Z"
+      "checkedAt": "2026-10-16T06:06:55.109Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "Le grand maître des jeux",
-        "source": "api-live",
-        "start": "21:00",
-        "end": "22:30",
-        "slug": "le-maitre-des-jeux"
-      },
+      "current": null,
       "next": {
         "title": "Opération beurre de cinoche",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:30",
         "end": "12:30",
-        "url": "https://www.choq.ca/emissions/box-sophisme"
+        "slug": "box-sophisme"
       },
-      "track": "sequence — 478",
-      "showTitle": "Le grand maître des jeux",
+      "track": "Converge — It's Not Up To Us",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T01:02:49.394Z"
+      "checkedAt": "2026-10-16T06:07:13.484Z"
     }
   }
 }
