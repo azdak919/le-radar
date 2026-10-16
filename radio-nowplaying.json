@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T11:44:53.961Z",
+  "updatedAt": "2026-10-16T16:02:02.695Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Vendredi Nostalgie",
+        "title": "Le Détour",
         "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://chyz.ca/emission/detour/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T11:44:28.434Z"
+      "checkedAt": "2026-10-16T16:01:35.367Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Toute est dans toute",
+        "title": "Rebelles soniques",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/tout-est-dans-toute"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/rebelles-soniques"
       },
       "next": {
-        "title": "Quartier libre",
+        "title": "Le palmarès",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/quartier-libre"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
       "track": "",
-      "showTitle": "Toute est dans toute",
+      "showTitle": "Rebelles soniques",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T11:44:30.038Z"
+      "checkedAt": "2026-10-16T16:01:37.192Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Morning Detour",
+        "title": "Butcher T's Noontime Cuts",
         "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "next": {
-        "title": "Jazz Amuck",
+        "title": "NNB/SQUAT FM/QPIRG/knots",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "14:00",
+        "end": "15:00"
       },
-      "track": "",
-      "showTitle": "Morning Detour",
+      "track": "Butcher T",
+      "showTitle": "Butcher T's Noontime Cuts",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,80 +74,86 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T11:44:33.161Z"
+      "checkedAt": "2026-10-16T16:01:39.885Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Wake up Folks!",
+        "title": "Charts & Crafts",
         "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/wake-up-folks"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/charts-and-crafts"
       },
       "next": {
-        "title": "CJLO News Hour",
+        "title": "the castle",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/cjlo-news-hour"
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/the-castle"
       },
       "track": "",
-      "showTitle": "Wake up Folks!",
+      "showTitle": "Charts & Crafts",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T11:44:35.427Z"
+      "checkedAt": "2026-10-16T16:01:42.650Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
+        "title": "Ciné-Histoire",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "12:00",
+        "end": "15:00"
       },
       "next": {
-        "title": "Palmarès CFAK",
+        "title": "Nouveautés Franco",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00"
+        "start": "15:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Ciné-Histoire",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T11:44:36.483Z"
+      "checkedAt": "2026-10-16T16:01:43.868Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Opération beurre de cinoche",
         "source": "api-live",
         "start": "11:30",
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "worry — regret",
-      "showTitle": "",
+      "next": {
+        "title": "Onde de CHOQ",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
+      },
+      "track": "ID — Naima-Frank",
+      "showTitle": "Opération beurre de cinoche",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T11:44:53.611Z"
+      "checkedAt": "2026-10-16T16:02:02.344Z"
     }
   }
 }
