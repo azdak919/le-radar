@@ -418,6 +418,12 @@ async function main() {
     await sleep(200);
   }
 
+  // Point de sauvegarde : l’étape CI a un plafond de 6 min. Si la file
+  // banque/campus dépasse, les unes bandeau/portrait déjà écartées restent.
+  if (doUpdate) {
+    fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: allItems, count: allItems.length }, null, 2) + '\n');
+  }
+
   // Priorité : articles sans aucune photo (ex. Tribune RSS vide) d'abord,
   // les plus récents en tête — récupère les vraies og:image avant la banque.
   const scrapeQueue = items
