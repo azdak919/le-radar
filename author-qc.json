@@ -1,10 +1,26 @@
 {
-  "updated": "2026-10-16T15:27:11.616Z",
+  "updated": "2026-10-16T18:10:47.902Z",
   "total": 178,
   "withAuthor": 178,
-  "mismatches": 17,
+  "mismatches": 19,
   "ok": true,
   "samples": [
+    {
+      "title": "Social media is changing consumer habits",
+      "link": "https://thelinknewspaper.ca/article/16483",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Sam Casciati",
+      "reason": "page-byline"
+    },
+    {
+      "title": "La politique commence ici",
+      "link": "https://quartierlibre.ca/la-politique-commence-ici/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "La rédaction",
+      "reason": "no-author-source"
+    },
     {
       "title": "Horoscope September 2026",
       "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
@@ -142,5 +158,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 17
+  "fixed": 19
 }

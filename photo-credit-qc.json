@@ -1,21 +1,35 @@
 {
-  "updated": "2026-10-16T15:33:51.897Z",
+  "updated": "2026-10-16T18:17:35.792Z",
   "total": 178,
   "withImage": 158,
   "withCredit": 158,
-  "cited": 104,
+  "cited": 105,
   "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 11,
-  "updatedCount": 1,
-  "citedNew": 1,
+  "checked": 12,
+  "updatedCount": 3,
+  "citedNew": 2,
   "fallbackNew": 10,
   "samples": [
     {
-      "title": "Faire compter sa voix",
+      "title": "Social media is changing consumer habits",
+      "source": "The Link",
+      "credit": "Illustration: Lola McCarthy",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "La politique commence ici",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "S.O.S. Huîtres menacées",
       "source": "Le Délit",
-      "credit": "Photo : Photo tirée d’Élections Québec",
+      "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
     }
