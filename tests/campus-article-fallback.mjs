@@ -341,3 +341,13 @@ assert.match(
 assert.match(radarNews, /resetBackupPhotoClaims\(\)/, 'fil : les claims repartent à chaque rendu');
 
 console.log(`OK campus-article-fallback (${covered.length} sources couvertes, 0 trou)`);
+
+// Régression Le Collectif : « …_CreditFEUS-819x1024.jpg » donnait « ItFEUS ».
+{
+  const { extractFilenameCredit: efc } = await import('../scripts/article-photo-credit-lib.js');
+  const c = efc('', 'https://lecollectif.ca/wp-content/uploads/2026/10/CAMPUS_X_CreditFEUS-819x1024.jpg', 'fr');
+  if (!c || c.creator !== 'FEUS') throw new Error(`CreditFEUS → ${c && c.creator}`);
+  const c2 = efc('', 'https://x/opinions_3_credlatoyasimms.png', 'fr');
+  if (!c2 || !/latoya/i.test(c2.creator)) throw new Error('credlatoyasimms cassé');
+  console.log('ok filename CreditFEUS');
+}

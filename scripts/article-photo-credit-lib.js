@@ -18,7 +18,7 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 10;
+const CREDIT_EXTRACTOR_REV = 11;
 
 /** Placeholders WP / comptes génériques (Zone Campus : « Crédit : Journaliste »). */
 const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin)$/i;
@@ -777,8 +777,11 @@ function extractFilenameCredit(html = '', imageUrl = '', lang = 'fr') {
     new RegExp(String.raw`(?:^|\/|[_-])credit[_-]?photo[_-]([a-z0-9-]+?)${sizedExt}`, 'i'),
     new RegExp(String.raw`[_-](?:cr[eé]dits|credits)[_-]([a-z0-9-]+?)${sizedExt}`, 'i'),
     new RegExp(String.raw`[_-](?:cr[eé]ds|creds)[_-]([a-z0-9-]+?)${sizedExt}`, 'i'),
+    // Le Collectif : « …_CreditFEUS.jpg » / « -Credit-Jean-Roy.jpg » — sans ce
+    // motif, la variante collée « _cred… » lisait « Cred|itFEUS » → « ItFEUS ».
+    new RegExp(String.raw`[_-]cr[eé]dit[_-]?((?!photo)[a-z0-9-]+?)${sizedExt}`, 'i'),
     // _cred-piper-howell  OU  _credlatoyasimms / _credgabriellelalonde
-    new RegExp(String.raw`[_-]cr[eé]d(?:[_-]([a-z0-9-]+?)|([a-z][a-z0-9-]+?))${sizedExt}`, 'i'),
+    new RegExp(String.raw`[_-]cr[eé]d(?:[_-]([a-z0-9-]+?)|(?!its?(?:[_-]|$|[A-Z]))([a-z][a-z0-9-]+?))${sizedExt}`, 'i'),
     new RegExp(String.raw`[_-]crd[_-]([a-z0-9-]+?)${sizedExt}`, 'i'),
   ];
   for (const re of filePatterns) {
