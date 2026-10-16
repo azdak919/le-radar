@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-10-16T21:04:43.409Z",
+  "updatedAt": "2026-10-16T22:29:31.090Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "Remparts de Québec",
+        "source": "schedule-live",
+        "start": "18:45",
+        "end": "21:30",
+        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T21:04:11.588Z"
+      "checkedAt": "2026-10-16T22:29:03.562Z"
     },
     "cism": {
       "id": "cism",
@@ -55,96 +55,89 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T21:04:13.121Z"
+      "checkedAt": "2026-10-16T22:29:05.306Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Café",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Listening to Latin America: Blanca-Victoria",
+        "source": "api-live",
+        "start": "19:00",
+        "end": "20:00"
+      },
       "track": "",
-      "showTitle": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
+      "showTitle": "Café",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live",
-        "stream"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T21:04:15.662Z"
+      "checkedAt": "2026-10-16T22:29:08.847Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Groove Master's Hour",
-        "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
-      },
-      "next": {
         "title": "The Go-Go Radio Magic Show",
         "source": "schedule-live",
         "start": "18:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
       },
+      "next": {
+        "title": "El Encuentro Latino",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/el-encuentro-latino"
+      },
       "track": "",
-      "showTitle": "The Groove Master's Hour",
+      "showTitle": "The Go-Go Radio Magic Show",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T21:04:18.106Z"
+      "checkedAt": "2026-10-16T22:29:11.522Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Nouveautés Franco",
-        "source": "schedule-live",
-        "start": "15:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "La récréation",
         "source": "schedule-live",
         "start": "18:00",
         "end": "19:00"
       },
+      "next": {
+        "title": "Enfin vendredi",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Nouveautés Franco",
+      "showTitle": "La récréation",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T21:04:18.944Z"
+      "checkedAt": "2026-10-16T22:29:12.762Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "La Niche",
-        "source": "api-live",
-        "start": "17:00",
-        "end": "18:00",
-        "slug": "la-niche"
-      },
+      "current": null,
       "next": {
         "title": "D'amour et de sexe",
         "source": "schedule",
@@ -152,16 +145,16 @@
         "end": "00:00",
         "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
       },
-      "track": "la — Niche-ep.-12",
-      "showTitle": "La Niche",
+      "track": "Fyore — SWITCH",
+      "showTitle": "",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
         "api-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T21:04:43.059Z"
+      "checkedAt": "2026-10-16T22:29:30.740Z"
     }
   }
 }
