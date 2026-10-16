@@ -1,100 +1,30 @@
 {
-  "updated": "2026-10-16T21:30:02.995Z",
+  "updated": "2026-10-16T21:40:55.134Z",
   "total": 178,
-  "withImage": 158,
-  "withCredit": 158,
-  "cited": 105,
-  "pending": 10,
+  "withImage": 147,
+  "withCredit": 147,
+  "cited": 98,
+  "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 55,
-  "updatedCount": 55,
+  "checked": 11,
+  "updatedCount": 2,
   "citedNew": 2,
-  "fallbackNew": 53,
+  "fallbackNew": 9,
   "samples": [
     {
-      "title": "Le Marathon Beneva 2026 porté par la foule montréalaise",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "title": "Est-ce que je dois un bébé à l’État ?",
       "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "La politique commence ici",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Décès de Jean-Luc Mongrain : une personnalité médiatique sherbrookoise nous quitte",
-      "source": "Le Collectif",
-      "credit": "Photo : BertrandExertier",
+      "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
+      "source": "La Pige",
+      "credit": "Photo : Noah Thomas",
       "cited": true,
-      "method": "filename-credit"
-    },
-    {
-      "title": "IA : que fait réellement l’institut Mila ?",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Horoscope September 2026",
-      "source": "The Plant",
-      "credit": "Photo credit: The Plant",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Creative Writing September 2026",
-      "source": "The Plant",
-      "credit": "Photo credit: The Plant",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "La bière locale cherche sa place dans un marché saturé",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Les étudiants autochtones se sentent-ils bien représentés sur le campus ?",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Marcher pour mieux vieillir",
-      "source": "L'Exemplaire",
-      "credit": "Crédit photo : L'Exemplaire",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Un polytechnicien en Espagne",
-      "source": "Le Polyscope",
-      "credit": "Crédit photo : Le Polyscope",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Cinq nouvelles de la semaine",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
+      "method": "figcaption-paren-kind"
     }
   ]
 }
