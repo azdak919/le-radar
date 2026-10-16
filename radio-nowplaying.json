@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-10-16T19:38:17.960Z",
+  "updatedAt": "2026-10-16T21:04:43.409Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Conduite Antisportive",
-        "source": "api-live",
-        "start": "14:30",
-        "end": "16:00",
-        "url": "https://chyz.ca/emission/conduite-antisportive/"
-      },
-      "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "Conduite Antisportive",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T19:37:51.766Z"
+      "checkedAt": "2026-10-16T21:04:11.588Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Salsa et Bembê",
+        "title": "OK Doomer",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/salsa-et-bembe"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/ok-doomer"
       },
       "next": {
-        "title": "Turbo Tannant",
+        "title": "Mix électro",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/turbo-tannant"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/mix-electro"
       },
       "track": "",
-      "showTitle": "Salsa et Bembê",
+      "showTitle": "OK Doomer",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T19:37:53.618Z"
+      "checkedAt": "2026-10-16T21:04:13.121Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "New Shit",
-        "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
-      },
-      "next": {
         "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00"
       },
+      "next": {
+        "title": "Café",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00"
+      },
       "track": "",
-      "showTitle": "New Shit",
+      "showTitle": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T19:37:56.242Z"
+      "checkedAt": "2026-10-16T21:04:15.662Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Dead Beats",
+        "title": "The Groove Master's Hour",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/dead-beats"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/the-groove-masters-hour"
       },
       "next": {
-        "title": "Tapeworms",
+        "title": "The Go-Go Radio Magic Show",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/tapeworms"
+        "start": "18:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/the-go-go-radio-magic-show"
       },
       "track": "",
-      "showTitle": "Dead Beats",
+      "showTitle": "The Groove Master's Hour",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T19:37:58.515Z"
+      "checkedAt": "2026-10-16T21:04:18.106Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,28 +133,35 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T19:37:59.784Z"
+      "checkedAt": "2026-10-16T21:04:18.944Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
-        "title": "Histoire de passer le temps",
+      "current": {
+        "title": "La Niche",
         "source": "api-live",
-        "start": "16:00",
-        "end": "17:00",
-        "slug": "histoire-de-passer-le-temps"
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "la-niche"
       },
-      "track": "LaMascotte — DansLeBon",
-      "showTitle": "",
+      "next": {
+        "title": "D'amour et de sexe",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
+      },
+      "track": "la — Niche-ep.-12",
+      "showTitle": "La Niche",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-16T19:38:17.609Z"
+      "checkedAt": "2026-10-16T21:04:43.059Z"
     }
   }
 }
