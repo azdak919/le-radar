@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-16T09:04:22.657Z",
+  "updated": "2026-10-16T11:47:24.086Z",
   "updatedSlot": null,
   "count": 178,
   "freshnessSessions": 3,
   "sources": {
     "Quartier Libre": {
-      "fetchOk": true,
-      "stale": false,
+      "fetchOk": false,
+      "stale": true,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-15T19:00:00.000Z",
-      "lastFetchOk": "2026-10-16T09:03:31.586Z"
+      "lastFetchOk": null
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-13T18:46:55.000Z",
-      "lastFetchOk": "2026-10-16T09:03:32.193Z"
+      "lastFetchOk": "2026-10-16T11:45:29.960Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-10-07T11:08:00.000Z",
-      "lastFetchOk": "2026-10-16T09:03:34.817Z"
+      "lastFetchOk": "2026-10-16T11:45:34.379Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-10-05T17:42:02.000Z",
-      "lastFetchOk": "2026-10-16T09:03:35.454Z"
+      "lastFetchOk": "2026-10-16T11:45:35.681Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,7 +42,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-10-15T21:39:00.000Z",
-      "lastFetchOk": "2026-10-16T09:03:36.738Z"
+      "lastFetchOk": "2026-10-16T11:45:36.738Z"
     },
     "Zone Campus": {
       "fetchOk": true,
@@ -50,7 +50,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-05-08T14:20:26.000Z",
-      "lastFetchOk": "2026-10-16T09:03:38.294Z"
+      "lastFetchOk": "2026-10-16T11:45:38.931Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,7 +58,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-13T21:23:27.000Z",
-      "lastFetchOk": "2026-10-16T09:03:40.389Z"
+      "lastFetchOk": "2026-10-16T11:45:41.694Z"
     },
     "Le Collectif": {
       "fetchOk": true,
@@ -66,7 +66,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-08T21:08:36.000Z",
-      "lastFetchOk": "2026-10-16T09:03:41.585Z"
+      "lastFetchOk": "2026-10-16T11:45:43.485Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,7 +74,7 @@
       "articleCount": 10,
       "freshArticleCount": 4,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-10-16T09:03:41.926Z"
+      "lastFetchOk": "2026-10-16T11:45:45.277Z"
     },
     "La Pige": {
       "fetchOk": true,
@@ -82,7 +82,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-08T12:58:59.000Z",
-      "lastFetchOk": "2026-10-16T09:03:42.835Z"
+      "lastFetchOk": "2026-10-16T11:45:46.659Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-11T18:28:17.755Z",
-      "lastFetchOk": "2026-10-16T09:03:46.317Z"
+      "lastFetchOk": "2026-10-16T11:45:54.114Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-08T15:35:43.000Z",
-      "lastFetchOk": "2026-10-16T09:03:48.362Z"
+      "lastFetchOk": "2026-10-16T11:45:56.444Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-30T20:28:36.000Z",
-      "lastFetchOk": "2026-10-16T09:03:48.828Z"
+      "lastFetchOk": "2026-10-16T11:45:58.867Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-13T22:28:02.000Z",
-      "lastFetchOk": "2026-10-16T09:03:49.049Z"
+      "lastFetchOk": "2026-10-16T11:45:59.761Z"
     },
     "L'Oisif": {
       "fetchOk": true,
@@ -122,7 +122,7 @@
       "articleCount": 3,
       "freshArticleCount": 0,
       "lastArticle": "2019-08-23T18:43:43.000Z",
-      "lastFetchOk": "2026-10-16T09:03:51.517Z"
+      "lastFetchOk": "2026-10-16T11:46:01.583Z"
     },
     "La Gifle": {
       "fetchOk": true,
@@ -130,7 +130,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2018-05-19T20:19:20.000Z",
-      "lastFetchOk": "2026-10-16T09:03:51.749Z"
+      "lastFetchOk": "2026-10-16T11:46:02.468Z"
     },
     "Le Trait d'Union": {
       "fetchOk": true,
@@ -138,7 +138,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2024-11-14T14:41:41.000Z",
-      "lastFetchOk": "2026-10-16T09:03:53.008Z"
+      "lastFetchOk": "2026-10-16T11:46:04.106Z"
     }
   },
   "items": [
@@ -182,7 +182,6 @@
       "excerpt": "Situé à Montréal, l’Institut québécois d’intelligence artificielle Mila est le plus grand centre de recherche universitaire en apprentissage profond au monde. Malgré son statut, le rôle qu’il assume dans l’industrie de l’intelligence artificielle (IA) demeure peu connu du",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/EDEB66A9-605C-4B07-9157-912733F0060C.jpeg",
       "authorCheckedAt": "2026-10-15T20:04:28.588Z",
-      "_pageAuthor": "Charles-David Desrochers",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/ia-que-fait-linstitut-mila/",
       "sourceImageCreditFrom": "media",
@@ -193,7 +192,8 @@
       "leadExcerpt": "Situé à Montréal , l’Institut québécois d’intelligence artificielle Mila est le plus grand centre de recherche universitaire en apprentissage profond au monde. Malgré son statut, le rôle qu’il assume dans l’industrie de l’intelligence artificielle (IA) demeure peu connu du public. Quartier Libre s’est donc penché sur son positionnement dans ce secteur en constante évolution.",
       "imageLocal": "assets/news-images/28632a09558f37fe.jpg",
       "imageLocalKey": "28632a09558f37fe",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -208,7 +208,6 @@
       "excerpt": "Se déplacer sur le campus de la montagne de l’Université de Montréal (UdeM) n’est pas toujours simple pour les étudiant·e·s en situation de handicap, notamment en raison de la superficie brute du campus, supérieure à 580 000 m2. Quartier Libre s’est donc intéressé aux enjeux",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/Alliance-de-la-montagne-pour-lecologie_banderole-1024x574.jpg",
       "authorCheckedAt": "2026-10-15T22:59:50.371Z",
-      "_pageAuthor": "Léane Fautrat",
       "sourceImageCredit": "Photo : Leane Fautrat",
       "sourceImageCreator": "Leane Fautrat",
       "sourceImageCreditUrl": "https://quartierlibre.ca/transports-adaptes-a-ludem/",
@@ -220,7 +219,8 @@
       "leadExcerpt": "Se déplacer sur le campus de la montagne de l’Université de Montréal (UdeM) n’est pas toujours simple pour les étudiant·e·s en situation de handicap , notamment en raison de la superficie brute du campus, supérieure à 580 000 m 2 . Quartier Libre s’est donc intéressé aux enjeux d’accessibilité pour ces étudiant·e·s qui ont besoin de transports adaptés.",
       "imageLocal": "assets/news-images/ccb6253b5e029f74.jpg",
       "imageLocalKey": "ccb6253b5e029f74",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -399,7 +399,6 @@
       "excerpt": "À l’Assemblée nationale, la jeunesse est peu représentée, puisqu’aucun·e député·e n’a moins de 35 ans. Plusieurs jeunes essaient pourtant d’y remédier en se présentant comme candidat·e·s lors des élections provinciales. Face à cet effort, Quartier Libre s’est intéressé aux",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/IMG_1198-3.jpg",
       "authorCheckedAt": "2026-10-15T20:04:28.934Z",
-      "_pageAuthor": "Samuel Girard",
       "sourceImageCredit": "Photo : Samuel Girard",
       "sourceImageCreator": "Samuel Girard",
       "sourceImageCreditUrl": "https://quartierlibre.ca/faire-campagne-entre-deux-cours/",
@@ -411,7 +410,8 @@
       "leadExcerpt": "À l’Assemblée nationale, la jeunesse est peu représentée, puisqu’aucun·e député·e n’a moins de 35 ans. Plusieurs jeunes essaient pourtant d’y remédier en se présentant comme candidat·e·s lors des élections provinciales. Face à cet effort, Quartier Libre s’est intéressé aux jeunes étudiant·e·s qui font le choix audacieux de faire campagne entre deux cours.",
       "imageLocal": "assets/news-images/ddb53bf134cefce8.jpg",
       "imageLocalKey": "ddb53bf134cefce8",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "L'Exemplaire",
@@ -522,7 +522,7 @@
       "date": "2026-10-12T03:10:00.000Z",
       "excerpt": "Protesters gathered in front of Roddick Gates and marched to fight for Palestinian solidarity in academic spaces Student groups from various Montreal universities and CEGEPs marched to show solidarity with Palestine on the third anniversary of the Oct. 7 attacks. Photo Andraé",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/_U2A8215_900_600_90.jpg",
-      "authorCheckedAt": "2026-10-15T09:11:53.300Z",
+      "authorCheckedAt": "2026-10-16T11:47:34.672Z",
       "_pageAuthor": "Soraya Yale-Ramanathan",
       "sourceImageCredit": "Photo: Andraé Lerone Lewis",
       "sourceImageCreator": "Andraé Lerone Lewis",
@@ -607,7 +607,6 @@
       "excerpt": "Voici les nouvelles qui ont marqué l’actualité des derniers jours. Pour consulter les nouvelles de la semaine passée, cliquer ici.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/01/5Infos_QL-e1769792962990-1024x703.png",
       "authorCheckedAt": "2026-10-16T06:08:54.406Z",
-      "_pageAuthor": "Samuel Girard",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-11/",
       "sourceImageCreditFrom": "media",
@@ -618,7 +617,8 @@
       "leadExcerpt": "Une femme d’une cinquantaine d’années, dont l’identité n’a pas été révélée, est décédée lors d’un incendie ayant détruit un campement pour itinérants. Le Service de police de la Ville de Montréal affirme que les causes du feu sont probablement accidentelles et que le décès est vraisemblablement associé à l’incendie, même si une autopsie est nécessaire pour le confirmer.",
       "imageLocal": "assets/news-images/70d779abf4792bc3.png",
       "imageLocalKey": "70d779abf4792bc3",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Link",
@@ -820,7 +820,6 @@
       "excerpt": "Le Parti québécois (PQ) est historiquement associé à la social-démocratie et à son fondateur, René Lévesque, mais aujourd’hui, certaines positions du parti, notamment sur l’immigration et l’identité, évoquent davantage des positions de droite. Face à ce changement, Quartier",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/073_Grand_Debat_des_Chefs_Noovo_2026-1024x683.jpg",
       "authorCheckedAt": "2026-10-16T06:09:00.930Z",
-      "_pageAuthor": "Gérard Gagné",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/les-jeunes-souverainistes-et-le-pq/",
       "sourceImageCreditFrom": "media",
@@ -831,7 +830,8 @@
       "leadExcerpt": "Le Parti québécois (PQ) est historiquement associé à la social-démocratie et à son fondateur, René Lévesque, mais aujourd’hui, certaines positions du parti, notamment sur l’immigration et l’identité, évoquent davantage des positions de droite. Face à ce changement, Quartier Libre s’est intéressé aux jeunes souverainistes, dont le vote peut pencher à droite comme à gauche.",
       "imageLocal": "assets/news-images/3c66bad9e3ec3bb3.jpg",
       "imageLocalKey": "3c66bad9e3ec3bb3",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "La Pige",
@@ -1975,7 +1975,7 @@
       "date": "2026-10-05T17:42:02.000Z",
       "excerpt": "The McGill University Non-Academic Certified Association ( MUNACA ), a union with a staff of roughly 1,700 people, represents McGill’s administrative, clerical, and technical support staff, as well as nurses and health professionals. On August 31, after months of negotiation",
       "image": "",
-      "authorCheckedAt": "2026-10-15T09:11:54.024Z",
+      "authorCheckedAt": "2026-10-16T11:47:36.045Z",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b9/View_from_McGill_University_downtown_campus_01.JPG",
       "imageTitle": "View from McGill University downtown campus 01",
@@ -1998,7 +1998,7 @@
       "date": "2026-10-05T17:27:13.000Z",
       "excerpt": "According to Sium, Desai, and Ritskes in Volume 1 of the Decolonization: Indigeneity, Education, and Society journal, decolonization entails “reimagin[ing] and rearticulat[ing] power, change, and knowledge through a multiplicity of epistemologies, ontologies and axiologies.”",
       "image": "",
-      "authorCheckedAt": "2026-10-15T09:11:54.307Z",
+      "authorCheckedAt": "2026-10-16T11:47:36.525Z",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
       "imageTitle": "McGill University downtown campus 18",
@@ -2021,7 +2021,7 @@
       "date": "2026-10-05T17:19:32.000Z",
       "excerpt": "Physical wellbeing should not be sacrificed for academic success",
       "image": "",
-      "authorCheckedAt": "2026-10-15T09:11:54.574Z",
+      "authorCheckedAt": "2026-10-16T11:47:36.985Z",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg",
       "imageTitle": "Arts Building, McGill University",
@@ -2044,7 +2044,7 @@
       "date": "2026-10-05T17:10:45.000Z",
       "excerpt": "As we spend September eating hot dogs on the Lower Field and strolling Montreal’s pedestrianized streets, we experience a city very different from the one it becomes in the winter. In November, when temperatures drop sharply and the first snow hits the ground the entire",
       "image": "",
-      "authorCheckedAt": "2026-10-15T09:11:54.847Z",
+      "authorCheckedAt": "2026-10-16T11:47:37.328Z",
       "leadImageReady": false,
       "stockImage": "https://live.staticflickr.com/72/172898013_80d53c9edc_b.jpg",
       "imageTitle": "Queen St commons - model for a 'third space' for entrepreneurs",
@@ -2067,7 +2067,7 @@
       "date": "2026-10-05T12:00:00.000Z",
       "excerpt": "Sigmund Freud once contended that “Where they love they do not desire and where they desire they cannot love,” ‘they’ referring to men. This framework describes a broader cultural dichotomy in which women are categorized based on whether they are worthy of love or desirable for",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/10/Untitled_Artwork-2-930x620.jpg",
-      "authorCheckedAt": "2026-10-15T09:11:55.122Z",
+      "authorCheckedAt": "2026-10-16T11:47:37.793Z",
       "sourceImageCredit": "Photo : Annabelle Premont",
       "sourceImageCreator": "Annabelle Premont",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/10/the-madonna-whore-dichotomy-the-impossible-woman/",
@@ -2093,7 +2093,7 @@
       "date": "2026-10-05T12:00:00.000Z",
       "excerpt": "Whether you’re a first-year or a weary senior, you’ll likely have a cursory understanding of the food options on and around campus.",
       "image": "",
-      "authorCheckedAt": "2026-10-15T09:11:55.394Z",
+      "authorCheckedAt": "2026-10-16T11:47:38.132Z",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg",
       "imageTitle": "McGill University, Montreal, Quebec 2009",
@@ -2116,7 +2116,7 @@
       "date": "2026-10-05T12:00:00.000Z",
       "excerpt": "There was something special about this past summer in Montreal. The energy of the city was palpable, and the city’s well-established festival scene managed to draw on a rejuvenated Montreal crowd by pulling record numbers of attendees . But none drummed up the nostalgia and",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/10/IMG_7967-930x620.jpg",
-      "authorCheckedAt": "2026-10-15T09:11:55.663Z",
+      "authorCheckedAt": "2026-10-16T11:47:38.468Z",
       "sourceImageCredit": "Photo : Matthew Tussman",
       "sourceImageCreator": "Matthew Tussman",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/10/i-couldnt-wait-for-the-summer-and-the-warped-tour/",
@@ -2142,7 +2142,7 @@
       "date": "2026-10-05T12:00:00.000Z",
       "excerpt": "Upon walking into Theatre Sainte-Catherine (TSC) you may see one of the following: a workshop, young professionals working, a gorilla costume, a punk rock band, or a man blowing a conch on stage in an angel costume. You may walk into a quiet environment, or a chaotic one. You",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/10/IMG_9639_1-930x620.jpg",
-      "authorCheckedAt": "2026-10-15T09:11:55.933Z",
+      "authorCheckedAt": "2026-10-16T11:47:38.808Z",
       "sourceImageCredit": "Photo : Amihan del Rosario-Tapan",
       "sourceImageCreator": "Amihan del Rosario-Tapan",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/10/theatre-sainte-catherine-improv-workshops-and-comedy-as-medicine/",
@@ -2168,7 +2168,7 @@
       "date": "2026-10-05T12:00:00.000Z",
       "excerpt": "Four years ago, McGill announced that it would begin the first stage of underground investigation on the site of the former Royal Victoria Hospital (RVH). Sustainability Park, formerly called the New Vic Project, was described by provost, Christopher Manfredi, as “the most",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/10/IMG_9996.jpg",
-      "authorCheckedAt": "2026-10-15T09:11:56.205Z",
+      "authorCheckedAt": "2026-10-16T11:47:39.272Z",
       "sourceImageCredit": "Photo : Adair Nelson",
       "sourceImageCreator": "Adair Nelson",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/10/mcgill-is-a-gravesite-kanienkehaka-kahnistenstera-hold-vigil-for-indigenous-children/",
@@ -2194,7 +2194,7 @@
       "date": "2026-10-05T12:00:00.000Z",
       "excerpt": "Have you ever opened TikTok one morning and somehow ended up 16 parts deep into the story of a stranger’s divorce? Before you even know it, you’re able to recount every detail about her husband’s drug addiction and his crazy mother. Yet you haven’t actually ever met the woman,",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/10/Untitled_Artwork-5.png",
-      "authorCheckedAt": "2026-10-15T09:11:56.476Z",
+      "authorCheckedAt": "2026-10-16T11:47:39.614Z",
       "sourceImageCredit": "Photo : Zoé Sanguin",
       "sourceImageCreator": "Zoé Sanguin",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/10/did-the-journal-factory-explode/",
@@ -2220,7 +2220,7 @@
       "date": "2026-10-05T12:00:00.000Z",
       "excerpt": "“It’s definitely been hard being in front of a camera. Even doing this interview is difficult,” Tex Crick remarked to Radio TinTin during his Montreal tour stop with Canada’s indie giant, Mac DeMarco. Soaring to success as an internationally touring musician after signing with",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/09/IMG_7656-edited.png",
-      "authorCheckedAt": "2026-10-15T09:11:56.747Z",
+      "authorCheckedAt": "2026-10-16T11:47:40.080Z",
       "sourceImageCredit": "Photo : Radio TinTin",
       "sourceImageCreator": "Radio TinTin",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/10/tex-crick-indie-through-and-through/",
@@ -2245,7 +2245,7 @@
       "date": "2026-10-05T12:00:00.000Z",
       "excerpt": "Good People is a bi-weekly article series highlighting McGill students doing community-oriented work on and around campus — because it’ s important to celebrate good people doing good things.",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/10/IMG_9708-930x620.jpeg",
-      "authorCheckedAt": "2026-10-15T09:11:56.989Z",
+      "authorCheckedAt": "2026-10-16T11:47:40.423Z",
       "sourceImageCredit": "Photo credit: The McGill Daily",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/10/student-start-up-provides-free-healthcare-resources-for-mcgill-students/",
       "sourceImageCreditFrom": "media",
@@ -2270,7 +2270,7 @@
       "date": "2026-10-05T12:00:00.000Z",
       "excerpt": "At the beginning of September, Elections Québec announced that, for the first time, voter information documents would be mailed only in French. This decision was made to comply with Bill 96 , which extended the French language requirement to the civil administration’s",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2014/09/COMMENTARY_McGill-Quebec_Tamim-Sujat_WEB-e1739169881236.jpg",
-      "authorCheckedAt": "2026-10-15T09:11:57.231Z",
+      "authorCheckedAt": "2026-10-16T11:47:40.762Z",
       "sourceImageCredit": "Photo : Courtesy of the Daily Archives",
       "sourceImageCreator": "Courtesy of the Daily Archives",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/10/language-laws-meet-the-ballot-box/",
@@ -2296,7 +2296,7 @@
       "date": "2026-10-05T12:00:00.000Z",
       "excerpt": "On September 28, 2026, the Students’ Society of McGill University (SSMU) held a General Assembly in the SSMU ballroom which presented a motion demanding the academic boycott of McGill’s exchange program with the Hebrew University of Jerusalem (HUJI).",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/10/Screenshot-2026-10-04-at-8.42.26-PM.png",
-      "authorCheckedAt": "2026-10-15T09:11:57.501Z",
+      "authorCheckedAt": "2026-10-16T11:47:41.099Z",
       "sourceImageCredit": "Photo : Eva Marriott-Fabre",
       "sourceImageCreator": "Eva Marriott-Fabre",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/10/mcgill-students-pass-historic-boycott-motion/",
@@ -2321,7 +2321,7 @@
       "date": "2026-10-05T12:00:00.000Z",
       "excerpt": "Quebec’s provincial election on October 5 will interrupt the academic calendar for many of the province’s students. On August 28, McGill announced that classes, laboratories, and examinations will be cancelled on the day of the election with exceptions for certain health",
       "image": "https://www.mcgilldaily.com/wp-content/uploads/2026/10/Untitled-1943-x-7116-px-1-930x620.png",
-      "authorCheckedAt": "2026-10-15T09:11:57.743Z",
+      "authorCheckedAt": "2026-10-16T11:47:41.443Z",
       "sourceImageCredit": "Photo credit: The McGill Daily",
       "sourceImageCreditUrl": "https://www.mcgilldaily.com/2026/10/beyond-the-ballot/",
       "sourceImageCreditFrom": "media",
@@ -2388,7 +2388,8 @@
       "leadExcerpt": "Les Canadiens de Montréal ont remporté leur premier match de la saison sur une victoire de 3-2 contre les Maple Leafs de Toronto. Le défenseur Alexandre Carrier a marqué le dernier but de l’affrontement, en plus d’avoir une passe décisive, et a été nommé meilleur joueur du match. L’équipe montréalaise affrontera les Penguins de Pittsburgh samedi soir, dans l’espoir de rester invaincue.",
       "imageLocal": "assets/news-images/95d1c982cd32b09e.png",
       "imageLocalKey": "95d1c982cd32b09e",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -2414,7 +2415,8 @@
       "leadExcerpt": "Le fonds des générations, « c’est un mécanisme direct d’équité entre les générations , explique M. Bouvette . Si la dette augmente, ça pourrait devenir un enjeu significatif pour notre génération dans 20, 30, 40 ans. Les intérêts qu’on paie sur la dette pourraient devenir importants, et c’est de l’argent qu’on ne met pas dans les services publics, en santé, en éducation, en culture. »",
       "imageLocal": "assets/news-images/58bffa5b70d664a5.jpg",
       "imageLocalKey": "58bffa5b70d664a5",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Quartier Libre",
@@ -2439,7 +2441,8 @@
       "leadExcerpt": "Québec solidaire (QS) a annoncé le 22 septembre dernier des mesures pour les études supérieures, dans le cadre de la campagne électorale provinciale. Le parti s’est ainsi engagé à réduire de moitié les frais de scolarité dans les cégeps et les universités dans un premier mandat, ainsi qu’à rémunérer l’ensemble des stages obligatoires.",
       "imageLocal": "assets/news-images/e0c58a6127e3b53c.jpg",
       "imageLocalKey": "e0c58a6127e3b53c",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Plant",
@@ -2591,7 +2594,8 @@
       "leadExcerpt": "Tous les partis en lice proposent un budget et promettent de revenir à l’équilibre budgétaire d’ici 2029-2030, et pour cause : la Loi sur l’équilibre budgétaire, votée en 1996, les y oblige. D’ici la fin du mandat du parti au pouvoir, les recettes du gouvernement doivent être au moins égales à ses dépenses.",
       "imageLocal": "assets/news-images/445b3cf4091052a7.png",
       "imageLocalKey": "445b3cf4091052a7",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "The Campus",
@@ -3033,33 +3037,6 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "Une épidémie de solitude masculine, vraiment ?",
-      "link": "https://www.delitfrancais.com/2026/09/30/une-epidemie-de-solitude-masculine-vraiment/",
-      "author": "Dalia Djazouli",
-      "date": "2026-09-30T07:00:00.000Z",
-      "excerpt": "La manosphère, vecteur de radicalisation.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/Lonely.jpeg",
-      "featured": true,
-      "authorCheckedAt": "2026-09-30T15:37:39.345Z",
-      "sourceImageCredit": "Photo : Félix Fournier l Le Délit",
-      "sourceImageCreator": "Félix Fournier l Le Délit",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/09/30/une-epidemie-de-solitude-masculine-vraiment/",
-      "sourceImageCreditFrom": "article",
-      "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "lonely.jpeg",
-      "sourceImageCreditRev": 10,
-      "leadImageReady": true,
-      "leadExcerpt": "Ce phénomène purement médiatique a été popularisé en 2023, à la suite d’un rapport émis par le gouvernement américain alertant sur un recul généralisé des liens sociaux. Justifiée par des données sélectionnées de manière tendancieuse, la « Male Loneliness Epidemic » s’apparente davantage à une panique morale qu’une réalité sociale.",
-      "imageLocal": "assets/news-images/2ab4782df799135a.jpg",
-      "imageLocalKey": "2ab4782df799135a",
-      "imageLocalVia": "origin"
-    },
-    {
-      "source": "Le Délit",
-      "institution": "Université McGill",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "fr",
       "title": "Rouge d’une part, blanche de l’autre",
       "link": "https://www.delitfrancais.com/2026/09/30/rouge-dune-part-blanche-de-lautre/",
       "author": "Jiayuan Cao",
@@ -3104,6 +3081,33 @@
       "leadExcerpt": "Thélyson Orélien. Aujourd’hui, même ceux qui ignorent tout de la littérature connaissent son nom. En quelques instants, la carrière prometteuse de cet auteur québécois a basculé pour le reléguer au rang de paria du milieu littéraire.",
       "imageLocal": "assets/news-images/e899a83b50a2ea36.png",
       "imageLocalKey": "e899a83b50a2ea36",
+      "imageLocalVia": "origin"
+    },
+    {
+      "source": "Le Délit",
+      "institution": "Université McGill",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "fr",
+      "title": "Une épidémie de solitude masculine, vraiment ?",
+      "link": "https://www.delitfrancais.com/2026/09/30/une-epidemie-de-solitude-masculine-vraiment/",
+      "author": "Dalia Djazouli",
+      "date": "2026-09-30T07:00:00.000Z",
+      "excerpt": "La manosphère, vecteur de radicalisation.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/Lonely.jpeg",
+      "featured": true,
+      "authorCheckedAt": "2026-09-30T15:37:39.345Z",
+      "sourceImageCredit": "Photo : Félix Fournier l Le Délit",
+      "sourceImageCreator": "Félix Fournier l Le Délit",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/09/30/une-epidemie-de-solitude-masculine-vraiment/",
+      "sourceImageCreditFrom": "article",
+      "sourceImageCreditCited": true,
+      "sourceImageCreditImageKey": "lonely.jpeg",
+      "sourceImageCreditRev": 10,
+      "leadImageReady": true,
+      "leadExcerpt": "Ce phénomène purement médiatique a été popularisé en 2023, à la suite d’un rapport émis par le gouvernement américain alertant sur un recul généralisé des liens sociaux. Justifiée par des données sélectionnées de manière tendancieuse, la « Male Loneliness Epidemic » s’apparente davantage à une panique morale qu’une réalité sociale.",
+      "imageLocal": "assets/news-images/2ab4782df799135a.jpg",
+      "imageLocalKey": "2ab4782df799135a",
       "imageLocalVia": "origin"
     },
     {
@@ -3252,7 +3256,8 @@
       "leadExcerpt": "Un article de La Presse a révélé mardi qu’un étudiant a été hospitalisé lors des intégrations étudiantes de Polytechnique en raison d’une surconsommation d’alcool. Polytechnique s’est dissociée de l’incident en condamnant celui-ci, et l’association étudiante de Polytechnique (AÉP), qui a organisé l’événement, l’a caractérisé de « potentielle situation malheureuse ».",
       "imageLocal": "assets/news-images/95d1c982cd32b09e.png",
       "imageLocalKey": "95d1c982cd32b09e",
-      "imageLocalVia": "origin"
+      "imageLocalVia": "origin",
+      "_retainedFromCache": true
     },
     {
       "source": "Montréal Campus",
@@ -3292,16 +3297,17 @@
       "excerpt": "Questionnements à l’ère de la baisse démographique au Québec.",
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/question-de-natalite-2.0.jpg",
       "featured": true,
-      "leadExcerpt": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est pas le personnage le moins controversé de l’histoire et, bien évidemment, il flirtait ouvertement avec la misogynie . Mais qu’est-ce que ce fameux contrat social a à voir avec mon utérus ?",
-      "imageLocal": "assets/news-images/548c24ab5d205e58.jpg",
-      "imageLocalKey": "548c24ab5d205e58",
       "sourceImageCredit": "Photo : Catvy Tran",
       "sourceImageCreator": "Catvy Tran",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "question-de-natalite-2.0.jpg",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est pas le personnage le moins controversé de l’histoire et, bien évidemment, il flirtait ouvertement avec la misogynie . Mais qu’est-ce que ce fameux contrat social a à voir avec mon utérus ?",
+      "imageLocal": "assets/news-images/548c24ab5d205e58.jpg",
+      "imageLocalKey": "548c24ab5d205e58",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Délit",
@@ -3316,16 +3322,17 @@
       "excerpt": "Tour à tour billet médical, arme politique et conseil d’employeur.",
       "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/self-care-768x768.png",
       "featured": true,
-      "leadExcerpt": "Ce n’était pas une dérive isolée, mais une règle, que Talcott Parsons nommera en 1951 : le « rôle de malade ». Se retirer de ses obligations est permis, à condition de chercher à guérir et de s’en remettre à l’autorité d’un professionnel reconnu. À une autre échelle, cette logique persiste : pour reporter un examen, il faut un billet du médecin.",
-      "imageLocal": "assets/news-images/fa17c876f57a58f5.png",
-      "imageLocalKey": "fa17c876f57a58f5",
       "sourceImageCredit": "Photo : Catvy Tran",
       "sourceImageCreator": "Catvy Tran",
       "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/09/23/le-self-care-qui-valide-votre-repos/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "self-care.png",
-      "sourceImageCreditRev": 10
+      "sourceImageCreditRev": 10,
+      "leadExcerpt": "Ce n’était pas une dérive isolée, mais une règle, que Talcott Parsons nommera en 1951 : le « rôle de malade ». Se retirer de ses obligations est permis, à condition de chercher à guérir et de s’en remettre à l’autorité d’un professionnel reconnu. À une autre échelle, cette logique persiste : pour reporter un examen, il faut un billet du médecin.",
+      "imageLocal": "assets/news-images/fa17c876f57a58f5.png",
+      "imageLocalKey": "fa17c876f57a58f5",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Délit",
