@@ -446,6 +446,33 @@ assert(
 assert(meetsArticleKeepSize(540, 438), '540×438 (og Collectif) reste une photo d’article');
 assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé comme photo courte');
 
+
+// Une portrait (affiche FEUS 819×1024, Le Collectif 16 oct. 2026) : jamais
+// affichée en bandes ni rognée — autre photo paysage, sinon repli normal.
+{
+  const { replacePortraitLead } = require('../scripts/ensure-lead-images.js');
+  const { isPortraitLeadRatio, imageUrlLooksPortrait } = require('../scripts/article-image-lib.js');
+  const check = (ok, msg) => { if (ok) console.log(`  ✓ ${msg}`); else { failed += 1; console.error(`  ✗ ${msg}`); } };
+  check(isPortraitLeadRatio(1080, 1350) && !isPortraitLeadRatio(1200, 800), 'ratio portrait détecté');
+  check(imageUrlLooksPortrait('https://x/wp-content/uploads/a_CreditFEUS-819x1024.jpg'), 'suffixe WP 819x1024 = portrait');
+  const base = () => ({
+    link: 'https://lecollectif.ca/a', image: 'https://x/wp-content/uploads/a_CreditFEUS-819x1024.jpg',
+    imageLocal: 'assets/news-images/x.jpg', imageLocalKey: 'x',
+    sourceImageCredit: 'Photo : FEUS', sourceImageCreator: 'FEUS', sourceImageCreditRev: 11,
+  });
+  const a = base();
+  const r1 = await replacePortraitLead(a, { resolve: async () => ({ url: 'https://x/b-1200x800.jpg', width: 1200, height: 800, leadReady: true }) });
+  check(r1 === 'replaced' && a.image === 'https://x/b-1200x800.jpg' && !a.imageLocal && !a.sourceImageCredit, 'portrait → autre photo paysage de l’article, crédit FEUS retiré');
+  const b = base();
+  const r2 = await replacePortraitLead(b, { resolve: async () => null });
+  check(r2 === 'cleared' && !b.image && !b.imageLocal && !b.sourceImageCredit && !b.sourceImageCreator && b.leadImageReady === false, 'sans autre photo → image retirée (repli campus)');
+  const c = { link: 'https://x/c', image: 'https://x/c-1200x800.jpg' };
+  check(await replacePortraitLead(c, { probe: async () => null }) === null && c.image, 'photo paysage conservée');
+  const radar = readFileSync(new URL('../radar-news.js', import.meta.url), 'utf8');
+  const css = readFileSync(new URL('../style-feed.css', import.meta.url), 'utf8');
+  check(!/is-poster/.test(radar + css), 'plus de une en bandes (is-poster / contain)');
+}
+
 if (failed) {
   console.error(`\n${failed} failure(s)`);
   process.exit(1);

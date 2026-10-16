@@ -3922,16 +3922,6 @@ function applyDocumentContentCropNow(img) {
   if (!img || img.dataset.docCrop === '1') return;
   const box = documentContentViewBox(img);
   if (!box) return;
-  /* Affiche / visuel texte en portrait (ex. Le Collectif, visuel FEUS 4:5) :
-     le recadrage « capture d’écran » + cover 3:2 n’en laissait qu’un éclat.
-     On montre l’affiche entière (contain) au lieu de la rogner. */
-  const nw = img.naturalWidth || 0;
-  const nh = img.naturalHeight || 0;
-  if (nw && nh && nh > nw * 1.05) {
-    img.dataset.docCrop = '1';
-    img.classList.add('is-poster');
-    return;
-  }
   img.dataset.docCrop = '1';
   img.classList.add('is-doc-crop');
   const top = (box.y0 * 100).toFixed(2);

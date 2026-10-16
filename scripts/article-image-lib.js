@@ -244,11 +244,21 @@ function parseImageSize(buf) {
   return parseJpegSize(buf) || parsePngSize(buf) || parseWebpSize(buf);
 }
 
+/* Mémo par processus : ensure-lead-images sonde la même URL à plusieurs
+   phases (portrait, bandeau, lead-ready) sous un budget CI de 6 min. */
+const probeSizeMemo = new Map();
 async function probeRemoteImageSize(url) {
   if (!url) return null;
-  const buf = await fetchBinaryPrefix(url);
-  if (!buf) return null;
-  return parseImageSize(buf);
+  if (probeSizeMemo.has(url)) return probeSizeMemo.get(url);
+  const p = (async () => {
+    const buf = await fetchBinaryPrefix(url);
+    if (!buf) return null;
+    return parseImageSize(buf);
+  })();
+  probeSizeMemo.set(url, p);
+  const dims = await p;
+  if (!dims) probeSizeMemo.delete(url);
+  return dims;
 }
 
 function metaContent(html, key) {
@@ -732,6 +742,21 @@ function imageUrlLooksBannerLike(url = '') {
   return !!(size && isBannerLikeRatio(size.width, size.height));
 }
 
+/**
+ * Une photo de une se recadre en 3:2 (cover). Une affiche en hauteur (FEUS
+ * 1080×1350, Le Collectif 16 oct. 2026) n’y entre pas : rognée elle perd son
+ * texte, entière elle laisse des bandes. Règle : on prend une autre image.
+ */
+const LEAD_MIN_FIT_RATIO = 0.95;
+function isPortraitLeadRatio(width = 0, height = 0) {
+  if (!width || !height) return false;
+  return width / height < LEAD_MIN_FIT_RATIO;
+}
+function imageUrlLooksPortrait(url = '') {
+  const size = wpSizeFromImageUrl(url);
+  return !!(size && isPortraitLeadRatio(size.width, size.height));
+}
+
 /** Le fil affiche imageLocal en priorité : le vider dès que l’URL source change. */
 function clearMirroredLead(item) {
   if (!item) return;
@@ -939,7 +964,7 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     if (dims && meetsFeatureDisplaySize(dims.width, dims.height)) {
       return { url, width: dims.width, height: dims.height, source: 'probe-feature', leadReady: false };
     }
-    if (dims && dims.width >= 200 && dims.height >= 150) {
+    if (dims && dims.width >= 200 && dims.height >= 150 && !isPortraitLeadRatio(dims.width, dims.height)) {
       return { url, width: dims.width, height: dims.height, source: 'probe-small', leadReady: false };
     }
     return null;
@@ -1056,6 +1081,8 @@ module.exports = {
   isBannerLikeRatio,
   wpSizeFromImageUrl,
   imageUrlLooksBannerLike,
+  isPortraitLeadRatio,
+  imageUrlLooksPortrait,
   clearMirroredLead,
   cardFitBonus,
   captionLooksLikeCampaignGraphic,

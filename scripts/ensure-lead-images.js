@@ -38,6 +38,8 @@ const {
   imageUrlsMatch,
   imageUrlLooksBannerLike,
   clearMirroredLead,
+  isPortraitLeadRatio,
+  imageUrlLooksPortrait,
 } = require('./article-image-lib');
 const { findStockPhoto, cleanCreatorName, stockStillFits } = require('./stock-photo-lib');
 const { pickCampusPhoto, hasCampusBank, diversifyCampusBankItems } = require('./campus-photo-bank');
@@ -73,6 +75,48 @@ function assignSourceImage(item, url, leadReady) {
   }
   item.image = url;
   if (leadReady !== undefined) item.leadImageReady = leadReady;
+}
+
+/** Crédit photo source : lié à l’image retirée, il ne doit pas survivre. */
+function clearSourceImageCredit(item) {
+  for (const k of Object.keys(item)) {
+    if (/^sourceImageCre(?:dit|ator)/.test(k)) delete item[k];
+  }
+}
+
+/**
+ * Une en hauteur (affiche portrait) : elle ne cadre pas dans la une 3:2.
+ * On cherche une autre photo paysage de l’article ; sinon on retire l’image
+ * pour que le repli habituel (banque thématique / campus) prenne le relais.
+ * @returns {Promise<'replaced'|'cleared'|null>}
+ */
+async function replacePortraitLead(item, { reject = [], opts = {}, resolve = resolveLeadReadyPhoto, probe = probeRemoteImageSize } = {}) {
+  if (!item || !item.image) return null;
+  let portrait = imageUrlLooksPortrait(item.image);
+  if (!portrait) {
+    const dims = await probe(item.image);
+    portrait = !!(dims && isPortraitLeadRatio(dims.width, dims.height));
+  }
+  if (!portrait) return null;
+  const portraitUrl = item.image;
+  let resolved = null;
+  try { resolved = await resolve(item, reject, opts); } catch { resolved = null; }
+  const ok = resolved?.url
+    && resolved.leadReady !== false
+    && !imageUrlsMatch(resolved.url, portraitUrl)
+    && !(resolved.width && resolved.height && isPortraitLeadRatio(resolved.width, resolved.height));
+  if (ok) {
+    assignSourceImage(item, resolved.url, true);
+    clearSourceImageCredit(item);
+    clearLegacyFallback(item);
+    clearStockPhoto(item);
+    return 'replaced';
+  }
+  clearMirroredLead(item);
+  clearSourceImageCredit(item);
+  item.image = '';
+  item.leadImageReady = false;
+  return 'cleared';
 }
 
 function clearStockPhoto(item) {
@@ -330,17 +374,30 @@ async function main() {
   // les unes du fil dont l’image est un bandeau campagne (Fondation UdeS
   // 1139×500) doivent céder à la 16:9 du corps. Sinon le miroir local fige
   // le bandeau même si le sélecteur sait déjà choisir photo-2.
+  // Même chemin pour les affiches en hauteur (FEUS 819×1024, Le Collectif
+  // 16 oct. 2026) : elles ne cadrent pas non plus dans la une 3:2 → autre
+  // photo du corps via resolveLeadReadyPhoto, sinon retrait comme une image
+  // rejetée (repli banque / campus habituel).
   const bannerHeroes = items
     .filter((item) => item.link && item.image)
     .sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0))
-    .slice(0, Math.max(HERO_MIN_POOL, 12));
+    .slice(0, Math.max(HERO_MIN_POOL, HERO_PRIORITY_POOL));
   for (const item of bannerHeroes) {
     try {
       const { reject, opts, ok } = isCandidateForItem(item, sourceMap);
       if (!ok(item.image)) continue;
       const urlBanner = imageUrlLooksBannerLike(item.image);
-      const dims = urlBanner ? null : await probeRemoteImageSize(item.image);
-      if (!urlBanner && !(dims && isBannerLikeRatio(dims.width, dims.height))) continue;
+      const urlPortrait = imageUrlLooksPortrait(item.image);
+      const dims = (urlBanner || urlPortrait) ? null : await probeRemoteImageSize(item.image);
+      const portrait = urlPortrait || !!(dims && isPortraitLeadRatio(dims.width, dims.height));
+      if (!urlBanner && !portrait && !(dims && isBannerLikeRatio(dims.width, dims.height))) continue;
+      if (portrait) {
+        const r = doUpdate ? await replacePortraitLead(item, { reject, opts }) : 'dry';
+        if (r === 'replaced') { pageScraped += 1; photosRecovered += 1; }
+        if (r === 'cleared') imagesCleared += 1;
+        console.log(`  ↻ une portrait (${r}) : ${item.source} — ${item.title}`);
+        continue;
+      }
       const resolved = await resolveLeadReadyPhoto(item, reject, opts);
       if (
         resolved?.url
@@ -706,7 +763,11 @@ async function main() {
   }
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+module.exports = { replacePortraitLead };
+
+if (require.main === module) {
+  main().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}

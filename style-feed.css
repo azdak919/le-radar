@@ -1123,12 +1123,6 @@ html[data-translate-busy="1"] .translate-toggle {
   aspect-ratio: 3 / 2;
   object-fit: cover;
 }
-/* Affiche portrait sur fond clair : visible en entier, pas rognée. */
-.article-media img.is-poster {
-  object-fit: contain !important;
-  object-position: center center !important;
-  background: #f4f1ec;
-}
 /* Capture d’écran : ancrer à gauche pour ne pas manger le début des lignes. */
 .article-media img.is-doc-crop {
   object-position: left center;
