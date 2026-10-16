@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-10-15T22:58:40.198Z",
+  "updatedAt": "2026-10-16T01:02:49.745Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
-      "next": {
         "title": "Crooch Control",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "21:00",
         "end": "22:00",
         "url": "https://chyz.ca/emission/crooch-control/"
       },
+      "next": {
+        "title": "Vendredi Nostalgie",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
+      },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
+      "showTitle": "Crooch Control",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,138 +28,139 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T22:57:18.299Z"
+      "checkedAt": "2026-10-16T01:01:56.722Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Entropie",
+        "title": "La courbe 2.0",
         "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/entropie"
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/la-courbe-2-0"
       },
       "next": {
-        "title": "La rumba latina",
+        "title": "Mix Anglo",
         "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/la-rumba"
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
       },
       "track": "",
-      "showTitle": "Entropie",
+      "showTitle": "La courbe 2.0",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T22:57:34.358Z"
+      "checkedAt": "2026-10-16T01:02:11.078Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Upstage",
+        "title": "Chaud Pour/Francis",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "21:00",
+        "end": "23:00"
       },
       "next": {
-        "title": "Grey Matters",
+        "title": "You Need A Heart To Live 2",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "23:00",
+        "end": "01:00"
       },
       "track": "",
-      "showTitle": "Upstage",
+      "showTitle": "Chaud Pour/Francis",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T22:57:43.832Z"
+      "checkedAt": "2026-10-16T01:02:16.197Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Unheard Of",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/unheard-of"
+        "title": "The 514",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/the-514"
       },
       "next": {
-        "title": "Electric Messiah",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/electric-messiah"
+        "title": "How Did We Get Here?",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/how-did-we-get-here"
       },
       "track": "",
-      "showTitle": "Unheard Of",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-15T22:58:18.628Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "À nous le futur",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "20:00"
-      },
-      "next": {
-        "title": "After 5@8",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "00:00"
-      },
-      "track": "",
-      "showTitle": "À nous le futur",
+      "showTitle": "The 514",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T22:58:21.938Z"
+      "checkedAt": "2026-10-16T01:02:30.164Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "After 5@8",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "00:00"
+      },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
+      "track": "",
+      "showTitle": "After 5@8",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-16T01:02:31.304Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Les Apatrides Anonymes",
-        "source": "api-live",
-        "start": "18:30",
-        "end": "19:45",
-        "slug": "apatrides-anonymes"
-      },
-      "next": {
         "title": "Le grand maître des jeux",
         "source": "api-live",
         "start": "21:00",
         "end": "22:30",
         "slug": "le-maitre-des-jeux"
       },
-      "track": "58049a — emission-du-3-septembre-2026",
-      "showTitle": "Les Apatrides Anonymes",
+      "next": {
+        "title": "Opération beurre de cinoche",
+        "source": "schedule",
+        "start": "11:30",
+        "end": "12:30",
+        "url": "https://www.choq.ca/emissions/box-sophisme"
+      },
+      "track": "sequence — 478",
+      "showTitle": "Le grand maître des jeux",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-15T22:58:39.847Z"
+      "checkedAt": "2026-10-16T01:02:49.394Z"
     }
   }
 }
