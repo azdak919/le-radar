@@ -1,15 +1,15 @@
 {
-  "updated": "2026-10-17T00:42:20.816Z",
+  "updated": "2026-10-17T03:43:49.051Z",
   "total": 178,
   "withPhoto": 151,
-  "withStock": 41,
-  "withCampusBank": 31,
+  "withStock": 42,
+  "withCampusBank": 32,
   "fullyCovered": 177,
-  "leadReadyPhotos": 125,
+  "leadReadyPhotos": 127,
   "pageScraped": 18,
   "photosRecovered": 18,
   "imagesCleared": 11,
-  "stockSearches": 56,
+  "stockSearches": 55,
   "stockFound": 37,
   "campusBankFound": 26,
   "mainPageLeadReady": true,
@@ -37,6 +37,12 @@
       "link": "https://thelinknewspaper.ca/article/16476",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Henry_F._Hall_Building_07.JPG"
+    },
+    {
+      "title": "Un polytechnicien en Espagne",
+      "link": "https://www.polyscope.qc.ca/blog/post/kbgnDbewLv2wv6hDMWI3",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/5329/8859735037_dec50a0182_b.jpg"
     },
     {
       "title": "The Stingers win the Kelly-Anne Drummond Cup",
@@ -72,19 +78,13 @@
       "title": "Searching For a Third Space",
       "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
       "reason": "stock-too-small",
-      "image": "https://live.staticflickr.com/72/172898013_80d53c9edc_b.jpg"
+      "image": "https://live.staticflickr.com/8365/8489345587_dd0a832f29_b.jpg"
     },
     {
       "title": "Shawarm-off!",
       "link": "https://www.mcgilldaily.com/2026/10/shawarm-off/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
-    },
-    {
-      "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
-      "link": "https://thebucampus.ca/2026/09/30/gods-heroes-men-and-pigs-classics-department-brings-reflections-on-nolans-the-odyssey-to-the-agora/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chichester%2C_Bishop_Otter_Campus_-_geograph.org.uk_-_3003126.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }
