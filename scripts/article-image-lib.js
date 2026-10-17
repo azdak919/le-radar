@@ -122,7 +122,24 @@ function fetchTextWithAgent(url, redirects, timeout, userAgent) {
   });
 }
 
+/*
+ * Mémo par processus : ensure-lead-images appelait resolveLeadReadyPhoto
+ * jusqu'à 4 fois par article (bandeau, file sans photo, enrichissement,
+ * banque) → la même page re-téléchargée à chaque phase. Scripts courts :
+ * pas d'invalidation nécessaire. LE_RADAR_FETCH_MEMO=0 pour désactiver.
+ */
+const fetchTextMemo = new Map();
+
 async function fetchText(url, redirects = 3, timeout = DEFAULT_TIMEOUT) {
+  if (!url || process.env.LE_RADAR_FETCH_MEMO === '0') return fetchTextUncached(url, redirects, timeout);
+  const key = String(url);
+  if (fetchTextMemo.has(key)) return fetchTextMemo.get(key);
+  const p = fetchTextUncached(url, redirects, timeout);
+  fetchTextMemo.set(key, p);
+  return p;
+}
+
+async function fetchTextUncached(url, redirects = 3, timeout = DEFAULT_TIMEOUT) {
   const first = await fetchTextWithAgent(url, redirects, timeout, BOT_USER_AGENT);
   // Réponse vide ou page d'interstitiel minuscule : probable blocage d'UA.
   if (first && first.length >= 2048) return first;
@@ -247,6 +264,7 @@ function parseImageSize(buf) {
 /* Mémo par processus : ensure-lead-images sonde la même URL à plusieurs
    phases (portrait, bandeau, lead-ready) sous un budget CI de 6 min. */
 const probeSizeMemo = new Map();
+const probeFailCount = new Map();
 async function probeRemoteImageSize(url) {
   if (!url) return null;
   if (probeSizeMemo.has(url)) return probeSizeMemo.get(url);
@@ -257,7 +275,12 @@ async function probeRemoteImageSize(url) {
   })();
   probeSizeMemo.set(url, p);
   const dims = await p;
-  if (!dims) probeSizeMemo.delete(url);
+  // Échec gardé 1 fois en mémo : un hôte mort coûtait 12 s × chaque phase.
+  if (!dims) {
+    const fails = (probeFailCount.get(url) || 0) + 1;
+    probeFailCount.set(url, fails);
+    if (fails < 2) probeSizeMemo.delete(url);
+  }
   return dims;
 }
 
@@ -947,6 +970,10 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     // (Image-16-600x315.jpg → Image-16.jpg). On ne skip que si *aucune*
     // variante n'est viable (géré par l'appelant via leadImageUrlCandidates).
     if (isWeakImageUrl(url, options)) return null;
+    // Jamais d'image en hauteur pour la une (même « faible ») : elle revenait
+    // par la file sans photo (Quartier Libre 964×1024, ratio 0,94 < 0,95)
+    // juste après avoir été retirée par la passe portrait.
+    if (metaW && metaH && isPortraitLeadRatio(metaW, metaH)) return null;
     if (metaW && metaH && meetsLeadDisplaySize(metaW, metaH)) {
       return { url, width: metaW, height: metaH, source: 'meta', leadReady: true };
     }
@@ -954,6 +981,7 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
       return { url, width: metaW, height: metaH, source: 'meta-editorial', leadReady: true };
     }
     const dims = await probeRemoteImageSize(url);
+    if (dims && isPortraitLeadRatio(dims.width, dims.height)) return null;
     if (dims && meetsLeadDisplaySize(dims.width, dims.height)) {
       return { url, width: dims.width, height: dims.height, source: 'probe', leadReady: true };
     }

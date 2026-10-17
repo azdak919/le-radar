@@ -41,7 +41,14 @@ const {
   isPortraitLeadRatio,
   imageUrlLooksPortrait,
 } = require('./article-image-lib');
-const { findStockPhoto, cleanCreatorName, stockStillFits } = require('./stock-photo-lib');
+const {
+  findStockPhoto,
+  cleanCreatorName,
+  stockStillFits,
+  saveStockSearchCache,
+  setStockDeadline,
+  stockNetworkStats,
+} = require('./stock-photo-lib');
 const { pickCampusPhoto, hasCampusBank, diversifyCampusBankItems } = require('./campus-photo-bank');
 const { pruneToFreshWindow, loadSourceRegistryMap, getBotHints } = require('./source-retention-lib');
 const { imageHostIsFragile, sourceNeedsCampusBackup } = require('./campus-fallback-lib');
@@ -56,6 +63,43 @@ const PAGE_SCRAPE_LIMIT = 40;
 /* Assez large pour couvrir le pool frais de toutes les sources. */
 const STOCK_SEARCH_LIMIT = 120;
 const doUpdate = process.argv.includes('--update');
+/*
+ * Budget temps : l'étape CI est plafonnée à 6 min (timeout-minutes). Mesuré
+ * le 2026-10-17 : la passe séquentielle dépassait (pages re-téléchargées à
+ * chaque phase, Openverse throttlé ~20 s/requête, 200 ms de pause par
+ * article) et était tuée avant l'écriture finale. On travaille en parallèle,
+ * on mémorise pages/probes, et passé le budget on saute le réseau restant
+ * pour TOUJOURS finir par les replis locaux + l'écriture de news.json.
+ */
+const STEP_BUDGET_MS = Number(process.env.LE_RADAR_LEAD_BUDGET_MS) || 4 * 60 * 1000;
+const CONCURRENCY = Math.max(1, Number(process.env.LE_RADAR_LEAD_CONCURRENCY) || 8);
+const startedAt = Date.now();
+let budgetWarned = false;
+function overBudget() {
+  const over = Date.now() - startedAt > STEP_BUDGET_MS;
+  if (over && !budgetWarned) {
+    budgetWarned = true;
+    console.warn(`⚠ budget ${Math.round(STEP_BUDGET_MS / 1000)} s atteint — réseau restant sauté, replis locaux + écriture`);
+  }
+  return over;
+}
+function logPhase(name) {
+  console.log(`⏱ ${name} : ${((Date.now() - startedAt) / 1000).toFixed(1)} s`);
+}
+
+/** map en parallèle borné ; `fn` n'est plus appelé une fois le budget dépassé. */
+async function mapPool(list, limit, fn, { budget = overBudget } = {}) {
+  let next = 0;
+  const worker = async () => {
+    while (next < list.length) {
+      const i = next;
+      next += 1;
+      if (budget && budget()) return;
+      await fn(list[i], i);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(limit, list.length) }, worker));
+}
 /* QC visuelle soft (photo-visual-qc-lib) sur le stock libre seulement. */
 if (process.argv.includes('--no-visual-qc')) {
   process.env.LE_RADAR_VISUAL_QC = '0';
@@ -117,6 +161,27 @@ async function replacePortraitLead(item, { reject = [], opts = {}, resolve = res
   item.image = '';
   item.leadImageReady = false;
   return 'cleared';
+}
+
+/**
+ * Une retirée (portrait, image rejetée) : repli dans l'ordre habituel —
+ * photo libre thématique (applyStockPhoto → findStockPhoto) puis campus.
+ * Un campus déjà posé est retiré d'abord, sinon photoIsLeadReady() le
+ * prenait pour un visuel valable et la banque libre n'était jamais tentée
+ * (cause du campus générique sur l'article FEUS du Collectif).
+ * @returns {Promise<'stock'|'campus'|'kept'|'none'>}
+ */
+async function fillClearedLead(item, sourceMap = new Map(), { avoidCampusUrls = null, apply = applyStockPhoto } = {}) {
+  if (item.image) return 'kept';
+  if (item.stockImage && item.imageProvider !== 'campus-bank' && stockStillFits(item)) return 'kept';
+  if (item.stockImage) {
+    if (avoidCampusUrls && item.imageProvider === 'campus-bank') avoidCampusUrls.delete(item.stockImage);
+    clearStockPhoto(item);
+  }
+  let found = false;
+  try { found = await apply(item, sourceMap, { avoidCampusUrls }); } catch { found = false; }
+  if (!found || !item.stockImage) return 'none';
+  return item.imageProvider === 'campus-bank' ? 'campus' : 'stock';
 }
 
 function clearStockPhoto(item) {
@@ -339,6 +404,8 @@ function backfillImageCreator(item) {
 }
 
 async function main() {
+  // Requêtes banques libres coupées 20 s avant le budget (marge écriture).
+  setStockDeadline(startedAt + STEP_BUDGET_MS - 20000);
   const news = readJson(NEWS_PATH, { items: [] });
   const allItems = news.items || [];
   const sourceMap = loadSourceRegistryMap();
@@ -357,18 +424,24 @@ async function main() {
   let imagesCleared = 0;
   const gaps = [];
 
-  for (const item of items) {
-    if (!shouldValidateImageOnPage(item, sourceMap)) continue;
+  // URLs campus déjà utilisées (y compris hors file d'attente) pour varier.
+  const usedCampusUrls = new Set(
+    items
+      .filter((i) => i.imageProvider === 'campus-bank' && i.stockImage)
+      .map((i) => i.stockImage),
+  );
+
+  await mapPool(items.filter((item) => shouldValidateImageOnPage(item, sourceMap)), CONCURRENCY, async (item) => {
     const { reject, opts } = isCandidateForItem(item, sourceMap);
     const html = await fetchText(item.link);
-    if (!html || articleImageIsValidOnPage(html, item.image, reject, opts, item.link)) continue;
+    if (!html || articleImageIsValidOnPage(html, item.image, reject, opts, item.link)) return;
     if (doUpdate) {
       item.image = '';
       item.leadImageReady = false;
     }
     imagesCleared += 1;
-    await sleep(120);
-  }
+  });
+  logPhase('validation sur page');
 
   // Avant la file « sans photo » (jusqu’à 40 scrapes, timeout CI 6 min) :
   // les unes du fil dont l’image est un bandeau campagne (Fondation UdeS
@@ -382,21 +455,31 @@ async function main() {
     .filter((item) => item.link && item.image)
     .sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0))
     .slice(0, Math.max(HERO_MIN_POOL, HERO_PRIORITY_POOL));
-  for (const item of bannerHeroes) {
+  await mapPool(bannerHeroes, CONCURRENCY, async (item) => {
     try {
       const { reject, opts, ok } = isCandidateForItem(item, sourceMap);
-      if (!ok(item.image)) continue;
+      if (!ok(item.image)) return;
       const urlBanner = imageUrlLooksBannerLike(item.image);
       const urlPortrait = imageUrlLooksPortrait(item.image);
       const dims = (urlBanner || urlPortrait) ? null : await probeRemoteImageSize(item.image);
       const portrait = urlPortrait || !!(dims && isPortraitLeadRatio(dims.width, dims.height));
-      if (!urlBanner && !portrait && !(dims && isBannerLikeRatio(dims.width, dims.height))) continue;
+      if (!urlBanner && !portrait && !(dims && isBannerLikeRatio(dims.width, dims.height))) return;
       if (portrait) {
         const r = doUpdate ? await replacePortraitLead(item, { reject, opts }) : 'dry';
         if (r === 'replaced') { pageScraped += 1; photosRecovered += 1; }
-        if (r === 'cleared') imagesCleared += 1;
+        if (r === 'cleared') {
+          imagesCleared += 1;
+          // Retrait = image rejetée : même chemin que la file banque, tout de
+          // suite (avant le point de sauvegarde) — photo libre thématique
+          // Openverse/Commons d'abord, campus seulement à défaut.
+          const via = await fillClearedLead(item, sourceMap, { avoidCampusUrls: usedCampusUrls });
+          if (via === 'stock') stockFound += 1;
+          if (via === 'campus') { stockFound += 1; campusBankFound += 1; }
+          console.log(`  ↻ une portrait (cleared → ${via}) : ${item.source} — ${item.title}${item.imageTitle ? ` → ${item.imageProvider}: ${item.imageTitle}` : ''}`);
+          return;
+        }
         console.log(`  ↻ une portrait (${r}) : ${item.source} — ${item.title}`);
-        continue;
+        return;
       }
       const resolved = await resolveLeadReadyPhoto(item, reject, opts);
       if (
@@ -415,13 +498,14 @@ async function main() {
     } catch (err) {
       console.warn(`  ⚠ banner upgrade skip ${item.source}: ${(err && err.message) || err}`);
     }
-    await sleep(200);
-  }
+  });
+  logPhase('unes bandeau / portrait');
 
   // Point de sauvegarde : l’étape CI a un plafond de 6 min. Si la file
   // banque/campus dépasse, les unes bandeau/portrait déjà écartées restent.
   if (doUpdate) {
     fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: allItems, count: allItems.length }, null, 2) + '\n');
+    saveStockSearchCache();
   }
 
   // Priorité : articles sans aucune photo (ex. Tribune RSS vide) d'abord,
@@ -439,12 +523,12 @@ async function main() {
     })
     .slice(0, PAGE_SCRAPE_LIMIT);
 
-  for (const item of scrapeQueue) {
+  await mapPool(scrapeQueue, CONCURRENCY, async (item) => {
     // Isolation par item : un scrape qui plante ne doit pas tuer la file.
     try {
       const { reject, opts } = isCandidateForItem(item, sourceMap);
       const resolved = await resolveLeadReadyPhoto(item, reject, opts);
-      if (!resolved?.url) continue;
+      if (!resolved?.url) return;
       pageScraped += 1;
       if (doUpdate) {
         assignSourceImage(item, resolved.url, resolved.leadReady !== false);
@@ -455,13 +539,13 @@ async function main() {
     } catch (err) {
       console.warn(`  ⚠ scrape skip ${item.source}: ${(err && err.message) || err}`);
     }
-    await sleep(200);
-  }
+  });
+  logPhase('file sans photo (scrape)');
 
   let upgraded = 0;
-  for (const item of items) {
+  await mapPool(items, CONCURRENCY, async (item) => {
     if (await tryUpgradeExistingImage(item, sourceMap)) upgraded += 1;
-  }
+  });
   if (upgraded) console.log(`↻ ${upgraded} image(s) WordPress passée(s) en pleine résolution`);
 
   let stockCleared = 0;
@@ -476,8 +560,8 @@ async function main() {
   if (stockCleared) console.log(`↻ ${stockCleared} photo(s) banque retirée(s) (hors-sujet)`);
 
   const stockQueue = [];
-  for (let index = 0; index < items.length; index += 1) {
-    const item = items[index];
+  const enrichQueue = items.map((item, index) => ({ item, index }));
+  await mapPool(enrichQueue, CONCURRENCY, async ({ item, index }) => {
     // Isolation par item : un échec (scrape, probe, parse) ne doit pas avorter
     // la boucle et empêcher la phase banque/campus des items suivants. L'item
     // fautif reste éligible au repli campus (poussé dans la file).
@@ -524,7 +608,7 @@ async function main() {
           await markSourceLeadQuality(item);
           clearLegacyFallback(item);
         }
-        continue;
+        return;
       }
 
       if (!item.image || !ok(item.image)) {
@@ -543,7 +627,7 @@ async function main() {
             // Ne pas écrire le logo faible dans item.image
           }
         }
-        if (await photoIsLeadReady(item)) continue;
+        if (await photoIsLeadReady(item)) return;
       } else if (hasSourcePhoto(item, sourceMap)) {
         const resolved = await resolveLeadReadyPhoto(item, reject, opts);
         if (resolved?.url && doUpdate) {
@@ -575,7 +659,7 @@ async function main() {
             }
             clearLegacyFallback(item);
           }
-          continue;
+          return;
         }
       }
 
@@ -584,7 +668,8 @@ async function main() {
       console.error(`⚠ enrich ignoré (${item.source || '?'}): ${err.message}`);
       stockQueue.push({ item, index });
     }
-  }
+  });
+  logPhase('enrichissement source');
 
   stockQueue.sort((a, b) => {
     const aHero = a.index < HERO_PRIORITY_POOL ? 0 : 1;
@@ -596,20 +681,13 @@ async function main() {
     return (Date.parse(b.item.date) || 0) - (Date.parse(a.item.date) || 0);
   });
 
-  // URLs campus déjà utilisées (y compris hors file d'attente) pour varier.
-  const usedCampusUrls = new Set(
-    items
-      .filter((i) => i.imageProvider === 'campus-bank' && i.stockImage)
-      .map((i) => i.stockImage),
-  );
-
-  for (const { item } of stockQueue.slice(0, STOCK_SEARCH_LIMIT)) {
+  await mapPool(stockQueue.slice(0, STOCK_SEARCH_LIMIT), CONCURRENCY, async ({ item }) => {
     // Un item défaillant (URL, parse, réseau) ne doit jamais interrompre la
     // phase banque/campus et priver tous les suivants de leur photo.
     try {
       if (await photoIsLeadReady(item)) {
         if (doUpdate) clearLegacyFallback(item);
-        continue;
+        return;
       }
 
       stockSearches += 1;
@@ -622,7 +700,7 @@ async function main() {
           // dry-run : comptage approximatif via pick
         }
       }
-      if (await photoIsLeadReady(item)) continue;
+      if (await photoIsLeadReady(item)) return;
 
       gaps.push({
         title: item.title,
@@ -632,11 +710,11 @@ async function main() {
           : 'no-stock-match',
         image: item.image || item.stockImage || null,
       });
-      await sleep(300);
     } catch (err) {
       console.error(`⚠ stock/campus ignoré (${item.source || '?'}): ${err.message}`);
     }
-  }
+  });
+  logPhase('banque libre / campus');
 
   // Filet campus (local, sans réseau) : tout article encore sans visuel — y
   // compris ceux situés au-delà du plafond de recherche libre — rattaché à un
@@ -671,28 +749,29 @@ async function main() {
   // après unicité campus — mots-clés titre/contenu via stock-photo-lib.
   if (doUpdate) {
     let freeRetry = 0;
-    for (const item of items) {
-      if (hasSourcePhoto(item, sourceMap)) continue;
+    const retryQueue = items.filter((item) => {
+      if (hasSourcePhoto(item, sourceMap)) return false;
       // Campus déjà posé : encore le droit à une photo thématique (ordre 2 avant 3).
       const hasThematic = item.stockImage
         && item.imageProvider !== 'campus-bank'
         && isCandidateImageUrl(item.stockImage);
-      if (hasThematic) continue;
-      if (isSubstackItem(item)) continue;
-      const hints = imageHintsFor(item, sourceMap);
-      if (hints.disableFreeStock === true) continue;
+      if (hasThematic) return false;
+      if (isSubstackItem(item)) return false;
+      return imageHintsFor(item, sourceMap).disableFreeStock !== true;
+    });
+    await mapPool(retryQueue, CONCURRENCY, async (item) => {
       try {
         const stock = await findStockPhoto(item);
-        if (!stock?.stockImage) continue;
+        if (!stock?.stockImage) return;
         applyPhotoFields(item, stock);
         item.leadImageReady = false;
         freeRetry += 1;
         stockFound += 1;
-        await sleep(200);
       } catch (err) {
         console.warn(`⚠ free-retry skip ${item.source}: ${(err && err.message) || err}`);
       }
-    }
+    });
+    logPhase('2e chance banque libre');
     if (freeRetry) console.log(`↻ ${freeRetry} photo(s) libre(s) (2e chance, toutes sources)`);
 
     // Filet campus final pour ce qui reste vide (unicité).
@@ -721,7 +800,10 @@ async function main() {
   const withStock = items.filter((i) => i.stockImage && isCandidateImageUrl(i.stockImage)).length;
   const withCampus = items.filter((i) => i.imageProvider === 'campus-bank' && i.stockImage).length;
   const fullyCovered = items.filter((i) => hasUsableImage(i)).length;
-  const leadReadyCount = (await Promise.all(items.map((i) => photoIsLeadReady(i)))).filter(Boolean).length;
+  let leadReadyCount = 0;
+  await mapPool(items, CONCURRENCY * 2, async (i) => {
+    if (await photoIsLeadReady(i)) leadReadyCount += 1;
+  }, { budget: null });
 
   const qc = {
     updated: new Date().toISOString(),
@@ -759,9 +841,14 @@ async function main() {
     gaps.slice(0, 5).forEach((g) => console.log(`  · ${g.title} — ${g.reason}`));
   }
 
+  const net = stockNetworkStats();
+  console.log(`Banques libres    : Openverse ${net.openverseCalls} requête(s)${net.openverseDisabled ? ' (suspendu)' : ''}, cache ${net.cacheEntries} entrée(s)`);
+  logPhase('total');
+
   if (doUpdate) {
     fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: allItems, count: allItems.length }, null, 2) + '\n');
     fs.writeFileSync(QC_PATH, JSON.stringify(qc, null, 2) + '\n');
+    saveStockSearchCache();
     console.log(`\n✅ ${NEWS_PATH}`);
     console.log(`✅ ${QC_PATH}`);
   } else {
@@ -769,7 +856,7 @@ async function main() {
   }
 }
 
-module.exports = { replacePortraitLead };
+module.exports = { replacePortraitLead, fillClearedLead, mapPool };
 
 if (require.main === module) {
   main().catch((e) => {

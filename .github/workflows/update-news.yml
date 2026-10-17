@@ -116,12 +116,33 @@ jobs:
           CI: true
         continue-on-error: true
 
+      # Cache des recherches banques libres (Openverse / Commons / Pexels,
+      # 14 j) : Openverse anonyme = 20 req/min et 200 req/jour. Sans cache,
+      # chaque passe relançait toutes les recherches, grillait le quota et
+      # dépassait le plafond de 6 min de l'étape suivante.
+      - name: Restore free-stock search cache
+        if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: data/stock-search-cache.json
+          key: stock-search-${{ github.run_id }}
+          restore-keys: stock-search-
+        continue-on-error: true
+
+      # Budget interne 4 min (LE_RADAR_LEAD_BUDGET_MS) : le script finit
+      # toujours par les replis locaux + l'écriture de news.json, sous le
+      # plafond CI. Secrets optionnels : PEXELS_API_KEY (banque Pexels),
+      # OPENVERSE_CLIENT_ID / OPENVERSE_CLIENT_SECRET (quota Openverse élevé).
       - name: Ensure lead images
         if: steps.gate.outputs.skip != 'true' && steps.fetch.outcome == 'success'
         timeout-minutes: 6
         run: node scripts/ensure-lead-images.js --update
         env:
           CI: true
+          LE_RADAR_LEAD_BUDGET_MS: '240000'
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          OPENVERSE_CLIENT_ID: ${{ secrets.OPENVERSE_CLIENT_ID }}
+          OPENVERSE_CLIENT_SECRET: ${{ secrets.OPENVERSE_CLIENT_SECRET }}
         continue-on-error: true
 
       # Miroir local des photos source (GitHub Pages) — si un journal tombe

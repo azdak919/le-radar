@@ -6,10 +6,13 @@
  * (campus-photo-bank.js).
  */
 
+const fs = require('fs');
+const path = require('path');
 const https = require('https');
 const http = require('http');
 const {
   meetsLeadDisplaySize,
+  isPortraitLeadRatio,
   probeRemoteImageSize,
   sleep,
   LEAD_MIN_WIDTH,
@@ -22,7 +25,8 @@ const {
   visualQcEnabled,
 } = require('./photo-visual-qc-lib');
 
-const USER_AGENT = 'LE-RADAR-NewsBot/1.0 (student media aggregator; contact: le-radar)';
+// Politique UA Wikimedia : un contact joignable (URL), sinon 429 sporadiques.
+const USER_AGENT = 'LE-RADAR-NewsBot/1.0 (student media aggregator; https://le-radar.ca; azdak-qc@proton.me)';
 
 const STOP_WORDS = new Set([
   'le', 'la', 'les', 'un', 'une', 'des', 'du', 'de', 'd', 'l', 'à', 'au', 'aux', 'en', 'et', 'ou',
@@ -34,6 +38,8 @@ const STOP_WORDS = new Set([
   /* Bruit fréquent dans les extraits RSS (crédits, UI) */
   'credit', 'crédit', 'photo', 'photos', 'pexels', 'unsplash', 'commons', 'wikimedia',
   'medias', 'médias', 'sociaux', 'sera', 'etre', 'être', 'comme', 'aussi', 'tres', 'très',
+  /* Adverbes / pronoms FR sans valeur visuelle (« La politique commence ici ») */
+  'ici', 'enfin', 'nous', 'notre', 'nos', 'vous', 'votre', 'vos',
 ]);
 
 /**
@@ -115,7 +121,54 @@ const QUEBEC_INSTITUTION_RE = /uqam|uqtr|udem|ulaval|mcgill|concordia|hec montr�
 const QUEBEC_POLITICS_RE = /québécois|quebecois|élection provinciale|election provinciale|monde politique québécois|monde politique quebecois|\bcaq\b|parti québécois|parti quebecois|\bpq\b|\bqs\b|\bplq\b|\bpspp\b|françois legault|francois legault|hôtel du parlement|hotel du parlement|assemblée nationale du québec|assemblee nationale du quebec|député provincial|depute provincial|\bmna\b|\bmnas\b/i;
 const FEDERAL_CANADA_RE = /chambre des communes|parlement du canada|ottawa|trudeau|député fédéral|depute federal|\bmp\b|house of commons|parliament hill/i;
 const FRANCE_SUBJECT_RE = /g7|évian|evian|sommet|elysée|elysee|macron|paris 202|france 202|coupe du monde|jeux olympiques paris/i;
-const SPORTS_TOPIC_RE = /\b(hockey|rink|athlete|u-sports|usports|soccer|football|basketball|volleyball|championship|mvp|golf|links|tennis|swim|sportifs?|sports)\b/i;
+const SPORTS_TOPIC_RE = /\b(hockey|rink|athlete|u-sports|usports|soccer|football|basketball|volleyball|championship|mvp|golf|links|tennis|swim|sportifs?|sports|rugby|rseq|stingers|gaiters|martlets|redbirds|carabins|citadins|varsity)\b/i;
+
+/**
+ * Sujets sensibles (violences sexuelles, harcèlement, consentement) : on
+ * illustre la SENSIBILISATION (ruban, marche, kiosque, affiche « consent »),
+ * jamais une victime ni une scène. Le Collectif, 16 oct. 2026 : semaine de
+ * prévention de la FEUS — l'affiche en hauteur ne cadrait pas, le repli
+ * campus était muet sur le sujet.
+ */
+const SENSITIVE_TOPIC_RE = /\b(?:violences?\s+(?:sexuelles?|conjugales?|faites\s+aux\s+femmes|genre)|agressions?\s+sexuelles?|harc[eè]lement|inconduites?\s+sexuelles?|consentement|sexual\s+(?:violence|assault|harassment|misconduct)|harassment|consent\s+(?:week|culture|awareness))\b/i;
+/* Marqueurs d'une image de sensibilisation neutre (au moins un requis). */
+const SENSITIVE_SAFE_PHOTO_RE = /\b(?:awareness|ribbon|teal|march|marche|rally|vigil|campaign|consent|prevention|pr[eé]vention|sensibilisation|take back the night|sign|signs|poster|booth|kiosque|banner|walk|support|solidarity|purple|candle|candles)\b/i;
+/* Jamais pour ces sujets : victimes, scènes, corps, contenu suggestif. */
+const SENSITIVE_UNSAFE_PHOTO_RE = /\b(?:victims?|victime|crying|cries|tears|weeping|sad|sadness|bruises?|bruised|blood|bloody|injur\w*|wounds?|abuse[ds]?|abusive|rape[ds]?|raping|beaten|beating|hurt|attack\w*|assaulted|nude|naked|nudity|sexy|lingerie|bikini|erotic\w*|porn\w*|fetish|bdsm|kiss\w*|bed|bedroom|police|arrest\w*|crime|criminal|mugshot|prison|jail|weapons?|guns?|knife|knives|fear|afraid|scared|hiding|domestic|alcohol|drunk|party|nightclub|selfie|army|military|navy|naval|air force|marines?|soldiers?|sailors?|airmen|troops|garrison|deployed|dvids|sapr|usag|national guard|afghanistan|iraq|apg|slut\w*)\b|\b\d{6}-[a-z]-[a-z0-9]{2,6}-\d{2,4}\b/i;
+
+/**
+ * Destinations étrangères nommées dans le TITRE (« Un polytechnicien en
+ * Espagne ») : le lieu est le sujet, il ne doit plus être pénalisé comme
+ * « hors Québec », et la saison du corps (« froid hivernal du Québec »)
+ * ne doit pas imposer une photo d'hiver.
+ */
+const FOREIGN_DESTINATIONS = [
+  { re: /\bespagne\b|\bspain\b|\bespa[nñ]a\b/i, markers: ['spain', 'espagne', 'espana', 'madrid', 'barcelona', 'seville', 'sevilla', 'valencia', 'granada'], queries: ['Madrid Spain city street', 'Barcelona Spain street', 'Seville Spain plaza'] },
+  { re: /\bfrance\b|\bparis\b|\blyon\b/i, markers: ['france', 'paris france', 'paris', 'lyon', 'marseille'], queries: ['Paris France street', 'Lyon France city'] },
+  { re: /\bitalie\b|\bitaly\b/i, markers: ['italy', 'italia', 'rome', 'milan', 'florence', 'venice'], queries: ['Rome Italy street', 'Florence Italy city'] },
+  { re: /\ballemagne\b|\bgermany\b/i, markers: ['germany', 'berlin', 'munich'], queries: ['Berlin Germany street', 'Munich Germany city'] },
+  { re: /\bportugal\b/i, markers: ['portugal', 'lisbon', 'lisboa', 'porto'], queries: ['Lisbon Portugal street', 'Porto Portugal city'] },
+  { re: /\bjapon\b|\bjapan\b/i, markers: ['japan', 'tokyo', 'kyoto', 'osaka'], queries: ['Tokyo Japan street', 'Kyoto Japan city'] },
+  { re: /\bmexique\b|\bmexico\b/i, markers: ['mexico', 'mexico city'], queries: ['Mexico City street', 'Mexico colonial city plaza'] },
+];
+
+/* Premiers mots capitalisés qui ne sont pas des prénoms (« Gold Medalists, »). */
+const NAME_LIKE_COMMON_WORDS = new Set([
+  'the', 'new', 'gold', 'silver', 'bronze', 'team', 'old', 'north', 'south', 'east', 'west', 'saint',
+  'st', 'mount', 'lake', 'grand', 'royal', 'national', 'university', 'college', 'women', 'men',
+  'girls', 'boys', 'student', 'students', 'food', 'free', 'day', 'night', 'world', 'canada',
+  'canadian', 'midnight', 'take', 'teal', 'mock', 'young', 'first', 'annual', 'spring', 'summer',
+  'fall', 'autumn', 'winter', 'city', 'street', 'main', 'central', 'downtown', 'campus',
+]);
+
+const FOREIGN_POLITICIAN_TOKENS = [
+  'obama', 'barack', 'romney', 'trump', 'clinton', 'biden', 'sanders', 'harris', 'pelosi',
+  'macron', 'pen', 'sarkozy', 'hollande', 'varadkar', 'modi', 'putin', 'poutine', 'netanyahu',
+];
+
+function foreignDestinationOf(title = '') {
+  return FOREIGN_DESTINATIONS.find((d) => d.re.test(title)) || null;
+}
 const STUDENT_MOBILIZATION_RE = /\b(mobilization|mobilisation|austerity|austérité|student federation|general meeting|grève|strike|manifestation)\b/i;
 
 /** Lieux étrangers à pénaliser quand l'article parle du Québec / Canada. */
@@ -127,7 +180,13 @@ const FOREIGN_LOCATION_MARKERS = [
   'japan', 'tokyo', 'india', 'china', 'beijing', 'shanghai', 'hong kong', 'shenzhen',
   'seoul', 'busan', 'taipei', 'bangkok', 'singapore', 'jakarta', 'manila',
   'africa', 'brazil', 'mexico city', 'buenos aires', 'moscow', 'istanbul',
+  'nigeria', 'lagos', 'ghana', 'kenya', 'nairobi', 'delhi', 'mumbai', 'pakistan',
+  'philippines', 'korea', 'vietnam', 'indonesia',
 ];
+
+/* Graphiques, cartes, logos : pas des photos (« 2025 Canadian Election -
+   Student Vote Results.png » pour un billet jeunesse). */
+const NON_PHOTO_GRAPHIC_RE = /\b(?:results?\s+map|map|maps|chart|charts|graph|graphs|diagram|infographic|logo|logos|icon|icons|screenshot|coat of arms|seal of|results)\b/i;
 
 /**
  * Éditos / billets de la rédaction sans sujet visuel propre :
@@ -257,6 +316,26 @@ function institutionPhrases(item = {}) {
   return phrases;
 }
 
+/**
+ * Mots de la scène décrite par les branches thématiques (curatées). Deux
+ * mots distincts de la scène valent un ancrage : « Take Back the Night
+ * march » ou « teal ribbon » ne partagent aucun mot avec « Une semaine pour
+ * sensibiliser aux violences sexuelles », mais répondent exactement à la
+ * scène demandée.
+ */
+const SCENE_GENERIC_WORDS = new Set([
+  'university', 'campus', 'students', 'student', 'community', 'city', 'street', 'canada',
+  // Verbes / décors trop génériques : « Rex Richardson playing piccolo
+  // trumpet » répondait à « pianist playing grand piano stage ».
+  'playing', 'stage', 'concert', 'performance', 'performing', 'live', 'music', 'musician',
+  'people', 'group', 'team', 'event', 'outdoor', 'program', 'center', 'centre',
+]);
+function sceneWordsFor(item = {}) {
+  return [...new Set(topicBranchQueries(item)
+    .flatMap((q) => tokenize(q))
+    .filter((w) => w.length > 3 && !GENERIC_GEO_TOKENS.has(w) && !SCENE_GENERIC_WORDS.has(w)))];
+}
+
 function detectEditorialContext(item = {}) {
   const content = extractArticleContent(item);
   const title = editorialTitle(item);
@@ -279,8 +358,10 @@ function detectEditorialContext(item = {}) {
 
   const titleNorm = normalizeText(title);
 
-  const summerTopic = SUMMER_TOPIC_RE.test(full) || SUMMER_TOPIC_RE.test(title);
-  const winterTopic = WINTER_TOPIC_RE.test(full) || WINTER_TOPIC_RE.test(title);
+  const destination = foreignDestinationOf(title);
+  // Destination étrangère au titre : la saison vient du titre seul.
+  const summerTopic = destination ? SUMMER_TOPIC_RE.test(title) : (SUMMER_TOPIC_RE.test(full) || SUMMER_TOPIC_RE.test(title));
+  const winterTopic = destination ? WINTER_TOPIC_RE.test(title) : (WINTER_TOPIC_RE.test(full) || WINTER_TOPIC_RE.test(title));
 
   return {
     quebec,
@@ -294,6 +375,9 @@ function detectEditorialContext(item = {}) {
     historicalTopic: HISTORICAL_TOPIC_RE.test(norm) || ARCHIVAL_YEAR_RE.test(titleNorm),
     summerTopic,
     winterTopic,
+    sensitiveTopic: SENSITIVE_TOPIC_RE.test(full),
+    sceneWords: sceneWordsFor(item),
+    foreignMarkers: destination ? destination.markers.map((m) => normalizeText(m)) : [],
     institutionPhrases: institutionPhrases(item),
     norm,
     titleNorm,
@@ -357,6 +441,11 @@ function extractContextualQueries(item, context = detectEditorialContext(item)) 
       queries.push('university golf athlete');
       queries.push('golf sport campus');
     }
+    if (/\brugby\b/i.test(combined)) {
+      if (/\b(women|women['’]s|femmes?|f[eé]minin\w*)\b/i.test(combined)) queries.push('women rugby union match');
+      queries.push('university rugby match');
+      queries.push('rugby union match tackle');
+    }
     if (/\bathlete\b/i.test(combined)) {
       queries.push('university athlete sport Canada');
     }
@@ -403,9 +492,20 @@ function extractContextualQueries(item, context = detectEditorialContext(item)) 
   return [...new Set(queries.filter((q) => q && q.length > 2))];
 }
 
+/**
+ * Texte de correspondance d'un résultat : titre + tags + URL SANS query
+ * string. Commons ajoute `?utm_campaign=imageinfo` à chaque URL : avec
+ * l'alias « sensibiliser → campaign », n'importe quel fichier (« Langar.jpg »)
+ * passait pour une photo de campagne de sensibilisation.
+ */
+function hitHay(hit = {}) {
+  const url = String(hit.url || '').split(/[?#]/)[0];
+  return normalizeText(`${hit.title || ''} ${hit.tags || ''} ${url}`);
+}
+
 function applyContextScoring(hit, context = {}) {
   if (!context || !hit) return 0;
-  const hay = normalizeText(`${hit.title || ''} ${hit.tags || ''} ${hit.url || ''}`);
+  const hay = hitHay(hit);
   let delta = 0;
 
   if (context.provincialParliament || (context.assemblyTopic && context.quebec)) {
@@ -436,9 +536,13 @@ function applyContextScoring(hit, context = {}) {
   }
 
   if (context.quebec || context.montreal) {
+    const subjectMarkers = context.foreignMarkers || [];
     for (const marker of FOREIGN_LOCATION_MARKERS) {
-      if (hay.includes(normalizeText(marker))) delta -= 85;
+      const m = normalizeText(marker);
+      if (subjectMarkers.some((s) => s === m || s.includes(m) || m.includes(s))) continue;
+      if (hay.includes(m)) delta -= 85;
     }
+    if (subjectMarkers.some((m) => hay.includes(m))) delta += 40;
     if (/\b(canada|canadian|quebec|québec|montreal|montréal)\b/.test(hay)) delta += 25;
   }
 
@@ -508,7 +612,7 @@ function topicBranchQueries(item = {}) {
     queries.push('street artists painting mural');
   }
   // Cyclisme / routes
-  if (/\bcyclist|v[eé]lo|bicyclette|cyclisme|cyclistes?\b/i.test(full)) {
+  if (/\b(?:cycling|cyclist\w*|v[eé]los?|bicyclettes?|cyclisme|cyclistes?)\b/i.test(full)) {
     queries.push('cyclist bicycle road');
     queries.push('cyclists riding bicycles street');
     queries.push('bicycle riders memorial road safety');
@@ -582,6 +686,40 @@ function topicBranchQueries(item = {}) {
     queries.push('youth community center students Canada');
     queries.push('community youth program Canada');
   }
+  // Sensibilisation violences sexuelles / consentement : visuels neutres de
+  // campagne (ruban, marche, kiosque) — jamais de victime ni de scène.
+  if (SENSITIVE_TOPIC_RE.test(full)) {
+    queries.push('sexual assault awareness teal ribbon');
+    queries.push('consent awareness campaign university');
+    queries.push('Take Back the Night march');
+    queries.push('sexual violence awareness march');
+  }
+  // Insécurité alimentaire / repas gratuits sur le campus.
+  if (/\b(brunch|free (?:food|meals?|lunch)|repas gratuits?|food (?:insecurity|bank|coalition)|ins[eé]curit[eé] alimentaire|banque alimentaire|people['’]s potato)\b/i.test(full)) {
+    queries.push('free breakfast students university');
+    queries.push('community brunch volunteers serving food');
+    queries.push('free community meal volunteers');
+    queries.push('students sharing meal community kitchen');
+    queries.push('food bank volunteers');
+  }
+  // Jeunes et politique / vote.
+  if (/\b(politique|politics|political|[eé]lections?|vote|voter)\b/i.test(full)
+    && /\b(jeunes|jeunesse|g[eé]n[eé]ration|youth|young|[eé]tudiant\w*|students?)\b/i.test(full)) {
+    queries.push('young voters polling station');
+    queries.push('youth vote election');
+    queries.push('students voting election');
+  }
+  // Archives d'un journal étudiant (numérisation, reliures).
+  if (/\barchives?\b/i.test(full) && /\b(journal|newspaper|polyscope|num[eé]ris\w*|digiti[sz]\w*|[eé]crire|r[eé]daction)\b/i.test(full)) {
+    queries.push('stack of newspapers');
+    queries.push('student newspaper office');
+    queries.push('newspaper archive bound volumes library');
+    queries.push('newspaper archives reading room');
+    queries.push('old newspapers stack');
+  }
+  // Séjour / échange à l'étranger nommé au titre.
+  const destination = foreignDestinationOf(title);
+  if (destination) queries.push(...destination.queries);
 
   return queries;
 }
@@ -677,7 +815,7 @@ function extractSearchQueries(item, context = detectEditorialContext(item)) {
   return [...new Set(queries.filter((q) => q && q.length > 2))];
 }
 
-function fetchJson(url, timeout = 12000) {
+function fetchJson(url, timeout = 12000, extraHeaders = {}) {
   return new Promise((resolve) => {
     // Module par protocole + garde : une redirection http:// ou une URL invalide
     // ne doit pas rejeter la promesse (planterait la phase banque/campus).
@@ -695,11 +833,11 @@ function fetchJson(url, timeout = 12000) {
     try {
       req = mod.get(
         url,
-        { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' }, timeout },
+        { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json', ...extraHeaders }, timeout },
         (res) => {
           if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
             res.resume();
-            return resolve(fetchJson(new URL(res.headers.location, url).toString(), timeout));
+            return resolve(fetchJson(new URL(res.headers.location, url).toString(), timeout, extraHeaders));
           }
           if (res.statusCode >= 400) {
             res.resume();
@@ -731,6 +869,7 @@ function licenseLabel(code = '') {
     'by-nd': 'CC BY-ND',
     'by-nc-sa': 'CC BY-NC-SA',
     'by-nc-nd': 'CC BY-NC-SA',
+    'pexels license': 'Licence Pexels',
   };
   return map[String(code).toLowerCase()] || String(code).toUpperCase();
 }
@@ -760,10 +899,16 @@ function parseOpenverseCreator(result = {}) {
   return cleanCreatorName(first);
 }
 
+const STOCK_PROVIDER_LABELS = {
+  wikimedia: 'Wikimedia Commons',
+  openverse: 'Openverse',
+  pexels: 'Pexels',
+};
+
 function formatAttribution(hit) {
   const creator = cleanCreatorName(hit.creator || hit.artist || '') || 'Auteur·e inconnu·e';
   const license = licenseLabel(hit.license || hit.licenseShort || 'CC');
-  const via = hit.provider === 'wikimedia' ? 'Wikimedia Commons' : 'Openverse';
+  const via = STOCK_PROVIDER_LABELS[hit.provider] || 'Openverse';
   return `Photo : ${creator} / ${license} · ${via}`;
 }
 
@@ -834,6 +979,25 @@ const TOKEN_ALIASES = {
   telerealites: ['reality tv', 'reality show', 'television'],
   emission: ['television', 'tv show', 'broadcast'],
   emissions: ['television', 'tv show', 'broadcast'],
+  sensibiliser: ['awareness', 'prevention', 'campaign'],
+  sensibilisation: ['awareness', 'prevention', 'campaign'],
+  prevention: ['prevention', 'awareness'],
+  violences: ['violence', 'assault', 'take back the night'],
+  violence: ['violence', 'assault', 'take back the night'],
+  sexuelles: ['sexual', 'consent', 'take back the night'],
+  sexuelle: ['sexual', 'consent', 'take back the night'],
+  consentement: ['consent'],
+  harcelement: ['harassment'],
+  semaine: ['week'],
+  espagne: ['spain', 'spanish', 'espana', 'madrid', 'barcelona', 'seville', 'sevilla', 'valencia', 'granada'],
+  polytechnicien: ['engineering student', 'student'],
+  politique: ['politics', 'political', 'vote', 'voting', 'election', 'voters'],
+  brunch: ['brunch', 'breakfast', 'meal', 'meals', 'food'],
+  solidarity: ['solidarity', 'community', 'volunteers', 'volunteer'],
+  archives: ['archive', 'archives', 'newspapers', 'newspaper'],
+  polyscope: ['newspaper', 'newspapers', 'student newspaper'],
+  memoire: ['memory', 'archive'],
+  stingers: ['rugby', 'team'],
 };
 
 /**
@@ -923,7 +1087,7 @@ function scoreCandidate(hit, matchTokens, context = null) {
   if (ratio >= 1.1 && ratio <= 2.2) score += 18;
   score += Math.min(w, 2400) / 45;
 
-  const hay = normalizeText(`${hit.title || ''} ${hit.tags || ''} ${hit.url || ''}`);
+  const hay = hitHay(hit);
 
   // Document d'archive (année 15xx-19xx, gravure, atlas, N&B, BnF…) : qualité
   // trop faible pour illustrer un article — rejet, sauf sujet historique.
@@ -936,6 +1100,10 @@ function scoreCandidate(hit, matchTokens, context = null) {
     || /\bbtv1b\d|\bgallica\b|\bscan\b|\bnum[eé]ris/i.test(hay)
     || CREATOR_LIFESPAN_RE.test(creatorNorm)
   )) {
+    return -1;
+  }
+
+  if (NON_PHOTO_GRAPHIC_RE.test(hay) && !/\b(?:carte|map|graphique|chart|logo)\b/i.test(context?.titleNorm || '')) {
     return -1;
   }
 
@@ -980,24 +1148,34 @@ function scoreCandidate(hit, matchTokens, context = null) {
     if (context?.winterTopic && photoWinter) score += 35;
   }
 
-  const topicMatched = contentMatched + titleMatched + importantMatched;
-  // Ancrage thématique réel (pas seulement Québec / Montréal / campus).
-  if (topicMatched === 0) return -1;
-  if (acronymOnly > 0 && topicMatched === 0) return -1;
-  // Un match uniquement sur des mots abstraits (« relations », « société »…)
-  // n'est pas un ancrage visuel : il faut au moins un token concret.
-  if (concreteMatched === 0) return -1;
+  const sceneMatched = (context?.sceneWords || []).filter((w) => hayHasToken(hay, w)).length;
+  const sceneAnchored = sceneMatched >= 2;
+  if (sceneMatched) score += Math.min(40, sceneMatched * 12);
 
-  // Titre avec ≥2 tokens : exiger au moins 1 match titre OU 2 importants.
-  const titleTopicCount = title.filter((t) => isTopicToken(t) && t.length >= 3).length;
-  if (titleTopicCount >= 2 && titleMatched === 0 && importantMatched < 2) {
-    return -1;
-  }
-  // Titre riche (≥3 mots de sujet) : un seul mot en commun est une coïncidence
-  // de vocabulaire, pas un ancrage — « Wonder » (Stevie Wonder) ↔ « Wonder
-  // Woman Review! ». Il en faut deux distincts, sinon mieux vaut aucune photo.
-  if (titleTopicCount >= 3 && anchorCount < 2) {
-    return -1;
+  const topicMatched = contentMatched + titleMatched + importantMatched;
+  if (!sceneAnchored) {
+    // Ancrage thématique réel (pas seulement Québec / Montréal / campus).
+    if (topicMatched === 0) return -1;
+    if (acronymOnly > 0 && topicMatched === 0) return -1;
+    // Un match uniquement sur des mots abstraits (« relations », « société »…)
+    // n'est pas un ancrage visuel : il faut au moins un token concret.
+    if (concreteMatched === 0) return -1;
+
+    // Titre avec ≥2 tokens : exiger au moins 1 match titre OU 2 importants.
+    const titleTopicCount = title.filter((t) => isTopicToken(t) && t.length >= 3).length;
+    if (titleTopicCount >= 2 && titleMatched === 0 && importantMatched < 2) {
+      return -1;
+    }
+    // Titre riche (≥3 mots de sujet) : un seul mot en commun est une coïncidence
+    // de vocabulaire, pas un ancrage — « Wonder » (Stevie Wonder) ↔ « Wonder
+    // Woman Review! ». Il en faut deux distincts, sinon mieux vaut aucune photo.
+    if (titleTopicCount >= 3 && anchorCount < 2) {
+      return -1;
+    }
+    // Branche thématique reconnue mais un seul écho (titre OU scène) : un
+    // portrait au lutrin « Rock the Vote » pour « La politique commence
+    // ici ». Il faut deux ancres, du titre ou de la scène.
+    if ((context?.sceneWords || []).length && anchorCount < 2) return -1;
   }
 
   if (institutionMatched > 0 && topicMatched > 0) score += 28;
@@ -1007,8 +1185,38 @@ function scoreCandidate(hit, matchTokens, context = null) {
       return -1;
     }
   }
+  // Portrait d'une personne nommée (« Heather Smith, Rock the Vote ») absente
+  // de l'article : hors-sujet, quelle que soit la scène.
+  const namedPerson = String(hit.title || '').replace(/^File:/, '').match(/^([A-Z][a-z]+)((?:\s[A-Z]\.)?)\s([A-Z][a-z]+)\s*[,:–-]/);
+  if (namedPerson
+    && !NAME_LIKE_COMMON_WORDS.has(namedPerson[1].toLowerCase())
+    && !/s$/.test(namedPerson[3])
+    && !(context?.norm || '').includes(normalizeText(`${namedPerson[1]} ${namedPerson[3]}`))) return -1;
+  // Personnalité politique étrangère absente de l'article : photo partisane
+  // hors-sujet (« Baracking the Uber-Youth Vote » pour un billet jeunesse
+  // québécois).
+  for (const name of FOREIGN_POLITICIAN_TOKENS) {
+    // Noms longs en sous-chaîne : les tags Flickr soudent (« barackobama »).
+    const inHay = name.length >= 5 ? hay.includes(name) : hayHasToken(hay, name);
+    if (inHay && !hayHasToken(context?.norm || '', name)) return -1;
+  }
+  // Manifestation / contre-manifestation : chargée politiquement, seulement
+  // si l'article parle lui-même de mobilisation ou de sensibilisation
+  // (« Protecting Women's Sports Event » pour une analyse de publicités).
+  if (/\b(?:protests?|protesters?|rally|rallies|demonstrations?|counter-?protest\w*|protect(?:ing)? women s sports)\b/.test(hay)
+    && !STUDENT_MOBILIZATION_RE.test(context?.norm || '')
+    && !/\b(?:manifestation|manifestants?|protest\w*|rally|marche|march)\b/.test(context?.norm || '')
+    && !context?.sensitiveTopic) {
+    return -1;
+  }
+  if (context?.sensitiveTopic) {
+    if (SENSITIVE_UNSAFE_PHOTO_RE.test(hay) || SENSITIVE_UNSAFE_PHOTO_RE.test(creatorNorm)) return -1;
+    if (!SENSITIVE_SAFE_PHOTO_RE.test(hay)) return -1;
+    score += 30;
+  }
   if (SPORTS_TOPIC_RE.test(context?.norm || '')) {
-    if (!/\b(sport|sports|athlete|hockey|golf|rink|ice|team|championship|university|college|player|game)\b/.test(hay)) {
+    if (/\brugby\b/.test(context?.norm || '') && !/\brugby\b/.test(hay)) return -1;
+    if (!/\b(sport|sports|athlete|hockey|golf|rink|ice|team|championship|university|college|player|game|rugby|match)\b/.test(hay)) {
       return -1;
     }
   }
@@ -1037,7 +1245,7 @@ function scoreCandidate(hit, matchTokens, context = null) {
   }
 
   // Cyclistes : exiger un marqueur vélo (pas une caravane / route générique).
-  if (/\bcyclist|v[eé]lo|bicyclette|cyclisme|cyclistes?\b/.test(context?.norm || '')) {
+  if (/\b(?:cycling|cyclist\w*|v[eé]los?|bicyclettes?|cyclisme|cyclistes?)\b/.test(context?.norm || '')) {
     if (!/\b(cyclist|bicycle|bike|v[eé]lo|cycling|bike lane|piste cyclable|bicycl)\b/i.test(hay)) {
       return -1;
     }
@@ -1101,7 +1309,7 @@ function stockHitFromItem(item, stockUrl = '', meta = {}) {
     height: meta.height || 720,
     title: meta.title || filename,
     tags: meta.tags || '',
-    provider: stockUrl.includes('wikimedia') ? 'wikimedia' : 'openverse',
+    provider: stockUrl.includes('wikimedia') ? 'wikimedia' : (/pexels\.com/.test(stockUrl) ? 'pexels' : 'openverse'),
     license: meta.license || '',
     creator: meta.creator || '',
   };
@@ -1151,13 +1359,179 @@ function stockStillFits(item, meta = {}) {
   }) >= STOCK_MIN_RETAIN_SCORE;
 }
 
-async function searchOpenverse(query, matchTokens, context = null) {
-  const q = encodeURIComponent(query);
-  const url = `https://api.openverse.org/v1/images/?q=${q}&page_size=12&license=cc0,by,by-sa,pdm&format=json`;
-  const data = await fetchJson(url);
-  if (!data?.results?.length) return [];
+/* ------------------------------------------------------------------ *
+ * Couche réseau des banques libres : cache disque + quotas.
+ *
+ * Mesuré le 2026-10-17 : Openverse anonyme = 20 req/min et 200 req/jour.
+ * Une passe CI lançait jusqu'à 120 articles × 8 requêtes ; une fois le
+ * quota grillé, chaque requête attendait ~18-20 s puis tombait au délai de
+ * 12 s → aucune photo libre trouvée ET l'étape « Ensure lead images »
+ * dépassait ses 6 min. Désormais : cache des résultats bruts (14 jours,
+ * data/stock-search-cache.json, restauré par actions/cache), plafond
+ * Openverse par passe, disjoncteur après 2 échecs. Commons (rapide) reste
+ * illimité.
+ * ------------------------------------------------------------------ */
+const STOCK_CACHE_TTL_MS = 14 * 24 * 3600 * 1000;
+const STOCK_CACHE_MAX_ENTRIES = 900;
+const STOCK_CACHED_HITS = 10;
+let stockCache = null;
+let stockCacheDirty = false;
 
-  return data.results
+function stockCachePath() {
+  const env = process.env.LE_RADAR_STOCK_CACHE;
+  if (env === '0') return null;
+  return env || path.join(__dirname, '..', 'data', 'stock-search-cache.json');
+}
+
+function loadStockCache() {
+  if (stockCache) return stockCache;
+  stockCache = {};
+  const p = stockCachePath();
+  if (!p) return stockCache;
+  try {
+    const raw = JSON.parse(fs.readFileSync(p, 'utf8'));
+    if (raw && typeof raw === 'object' && !Array.isArray(raw)) stockCache = raw;
+  } catch { /* pas de cache */ }
+  return stockCache;
+}
+
+function stockCacheGet(key) {
+  const entry = loadStockCache()[key];
+  if (!entry || !Array.isArray(entry.hits)) return null;
+  if (Date.now() - (Date.parse(entry.at) || 0) > STOCK_CACHE_TTL_MS) return null;
+  return entry.hits;
+}
+
+function stockCacheSet(key, hits) {
+  loadStockCache()[key] = {
+    at: new Date().toISOString(),
+    hits: hits.slice(0, STOCK_CACHED_HITS).map((h) => ({
+      url: h.url,
+      width: h.width || 0,
+      height: h.height || 0,
+      creator: h.creator || '',
+      license: h.license || '',
+      title: String(h.title || '').slice(0, 200),
+      tags: String(h.tags || '').slice(0, 300),
+      provider: h.provider,
+      foreignLandingUrl: h.foreignLandingUrl || h.url,
+    })),
+  };
+  stockCacheDirty = true;
+}
+
+/** Écrit le cache (entrées périmées purgées, les plus récentes gardées). */
+function saveStockSearchCache() {
+  const p = stockCachePath();
+  if (!p || !stockCacheDirty || !stockCache) return false;
+  const now = Date.now();
+  const kept = Object.entries(stockCache)
+    .filter(([, e]) => e && Array.isArray(e.hits) && now - (Date.parse(e.at) || 0) <= STOCK_CACHE_TTL_MS)
+    .sort((a, b) => (Date.parse(b[1].at) || 0) - (Date.parse(a[1].at) || 0))
+    .slice(0, STOCK_CACHE_MAX_ENTRIES);
+  const out = {};
+  for (const [k, e] of kept.sort((a, b) => a[0].localeCompare(b[0]))) out[k] = e;
+  try {
+    fs.mkdirSync(path.dirname(p), { recursive: true });
+    fs.writeFileSync(p, `${JSON.stringify(out)}\n`);
+    stockCacheDirty = false;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/* Échéance globale (ms epoch) posée par ensure-lead-images : passé ce cap,
+   plus de nouvelle requête réseau — on rend la main pour l'écriture finale. */
+let stockDeadline = Infinity;
+function setStockDeadline(ts) { stockDeadline = Number.isFinite(ts) ? ts : Infinity; }
+function pastStockDeadline() { return Date.now() > stockDeadline; }
+
+const openverseState = {
+  calls: 0,
+  failures: 0,
+  disabled: false,
+  nextAt: 0,
+  token: undefined,
+};
+
+function openverseAuthConfigured() {
+  return !!(process.env.OPENVERSE_CLIENT_ID && process.env.OPENVERSE_CLIENT_SECRET);
+}
+
+function openverseMaxCalls() {
+  const env = Number(process.env.LE_RADAR_OPENVERSE_MAX);
+  if (Number.isFinite(env) && env >= 0) return env;
+  // Anonyme : ~10 passes/jour sous le plafond de 200/jour.
+  return openverseAuthConfigured() ? 80 : 15;
+}
+
+async function openverseToken() {
+  if (openverseState.token !== undefined) return openverseState.token;
+  openverseState.token = null;
+  if (!openverseAuthConfigured() || typeof fetch !== 'function') return null;
+  try {
+    const body = new URLSearchParams({
+      grant_type: 'client_credentials',
+      client_id: process.env.OPENVERSE_CLIENT_ID,
+      client_secret: process.env.OPENVERSE_CLIENT_SECRET,
+    });
+    const res = await fetch('https://api.openverse.org/v1/auth_tokens/token/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': USER_AGENT },
+      body,
+      signal: AbortSignal.timeout(15000),
+    });
+    if (res.ok) openverseState.token = (await res.json()).access_token || null;
+  } catch { /* anonyme */ }
+  return openverseState.token;
+}
+
+/** Réserve un créneau Openverse (synchrone avant l'attente → sûr en parallèle). */
+async function openverseSlot() {
+  if (openverseState.disabled || openverseState.calls >= openverseMaxCalls() || pastStockDeadline()) return false;
+  openverseState.calls += 1;
+  const gap = openverseAuthConfigured() ? 1100 : 3200;
+  const now = Date.now();
+  const at = Math.max(now, openverseState.nextAt);
+  openverseState.nextAt = at + gap;
+  if (at > now) await sleep(at - now);
+  return true;
+}
+
+function resetStockNetworkState() {
+  Object.assign(openverseState, { calls: 0, failures: 0, disabled: false, nextAt: 0, token: undefined });
+  stockCache = null;
+  stockCacheDirty = false;
+}
+
+function stockNetworkStats() {
+  return {
+    openverseCalls: openverseState.calls,
+    openverseDisabled: openverseState.disabled,
+    cacheEntries: Object.keys(loadStockCache()).length,
+  };
+}
+
+async function fetchOpenverseHits(query) {
+  const key = `openverse|${query}`;
+  const cached = stockCacheGet(key);
+  if (cached) return cached;
+  if (!(await openverseSlot())) return [];
+  const q = encodeURIComponent(query);
+  const url = `https://api.openverse.org/v1/images/?q=${q}&page_size=12&license=cc0,by,by-sa,pdm&mature=false&format=json`;
+  const token = await openverseToken();
+  const data = await fetchJson(url, 25000, token ? { Authorization: `Bearer ${token}` } : {});
+  if (!data || !Array.isArray(data.results)) {
+    openverseState.failures += 1;
+    if (openverseState.failures >= 2 && !openverseState.disabled) {
+      openverseState.disabled = true;
+      console.warn('⚠ Openverse indisponible ou quota atteint — banque suspendue pour cette passe');
+    }
+    return [];
+  }
+  openverseState.failures = 0;
+  const hits = data.results
     .filter((r) => r.url && (r.width || 0) >= 300)
     .map((r) => ({
       url: r.url,
@@ -1169,46 +1543,121 @@ async function searchOpenverse(query, matchTokens, context = null) {
       tags: (r.tags || []).map((t) => t.name || t).join(' '),
       provider: 'openverse',
       foreignLandingUrl: r.foreign_landing_url || r.url,
-      score: 0,
-    }))
-    .map((r) => ({ ...r, score: scoreCandidate(r, matchTokens, context) }))
-    .filter((r) => r.score > 0)
-    .sort((a, b) => b.score - a.score);
+    }));
+  stockCacheSet(key, hits);
+  return hits;
 }
 
-async function searchWikimedia(query, matchTokens, context = null) {
-  const q = encodeURIComponent(query);
+async function fetchWikimediaHits(query) {
+  const key = `wikimedia|${query}`;
+  const cached = stockCacheGet(key);
+  if (cached) return cached;
+  if (pastStockDeadline()) return [];
+  // filetype:bitmap : sans lui, Commons renvoie surtout des PDF/DjVu scannés
+  // (« The autocrat of the breakfast-table (1858).djvu »).
+  const q = encodeURIComponent(`${query} filetype:bitmap`);
   const url = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrnamespace=6&gsrlimit=10&prop=imageinfo&iiprop=url|size|extmetadata&iiurlwidth=1280&format=json`;
-  const data = await fetchJson(url);
+  let data = await fetchJson(url);
+  if (!data) {
+    await sleep(1500);
+    data = await fetchJson(url);
+  }
+  if (!data) return [];
   const pages = data?.query?.pages;
-  if (!pages) return [];
-
-  const out = [];
-  for (const page of Object.values(pages)) {
+  const hits = [];
+  for (const page of Object.values(pages || {})) {
     const info = page.imageinfo?.[0];
     if (!info?.url) continue;
     const meta = info.extmetadata || {};
     const artist = stripHtml(meta.Artist?.value || meta.Credit?.value || '');
     const licenseShort = stripHtml(meta.LicenseShortName?.value || 'CC');
-    const w = info.thumbwidth || info.width || 0;
-    const h = info.thumbheight || info.height || 0;
-    const hit = {
+    hits.push({
       url: info.url,
-      width: w,
-      height: h,
+      width: info.thumbwidth || info.width || 0,
+      height: info.thumbheight || info.height || 0,
       creator: cleanCreatorName(artist),
       license: licenseShort,
-      licenseShort,
       title: page.title || '',
       tags: page.title || '',
       provider: 'wikimedia',
       foreignLandingUrl: info.descriptionurl || info.url,
-      score: 0,
-    };
-    hit.score = scoreCandidate(hit, matchTokens, context);
-    if (hit.score > 0) out.push(hit);
+    });
   }
-  return out.sort((a, b) => b.score - a.score);
+  stockCacheSet(key, hits);
+  return hits;
+}
+
+/**
+ * Pexels (licence Pexels : usage commercial permis, attribution appréciée —
+ * on crédite photographe + Pexels avec lien). Actif seulement si le secret
+ * PEXELS_API_KEY est fourni ; sinon la banque est ignorée sans erreur.
+ */
+async function fetchPexelsHits(query) {
+  const apiKey = process.env.PEXELS_API_KEY;
+  if (!apiKey) return [];
+  const key = `pexels|${query}`;
+  const cached = stockCacheGet(key);
+  if (cached) return cached;
+  if (pastStockDeadline()) return [];
+  const q = encodeURIComponent(query);
+  const data = await fetchJson(
+    `https://api.pexels.com/v1/search?query=${q}&per_page=12&orientation=landscape`,
+    15000,
+    { Authorization: apiKey },
+  );
+  if (!data || !Array.isArray(data.photos)) return [];
+  const hits = data.photos
+    .filter((ph) => ph?.src?.original && ph.width && ph.height)
+    .map((ph) => {
+      const w = Math.min(1600, ph.width);
+      return {
+        url: `${ph.src.original}?auto=compress&cs=tinysrgb&w=${w}`,
+        width: w,
+        height: Math.round((w * ph.height) / ph.width),
+        creator: cleanCreatorName(ph.photographer || ''),
+        license: 'Pexels License',
+        title: ph.alt || '',
+        tags: ph.alt || '',
+        provider: 'pexels',
+        foreignLandingUrl: ph.url || ph.src.original,
+      };
+    });
+  stockCacheSet(key, hits);
+  return hits;
+}
+
+/**
+ * Licences acceptées : CC0, CC BY, CC BY-SA, domaine public (Openverse filtre
+ * déjà côté API ; Commons non) + licence Pexels pour la banque Pexels.
+ * Exclut GODL, OGL, GFDL seule, NC/ND, etc.
+ */
+function stockLicenseAllowed(hit = {}) {
+  const lic = String(hit.license || hit.licenseShort || '').trim().toLowerCase();
+  if (hit.provider === 'pexels') return lic === 'pexels license';
+  if (!lic) return false;
+  if (/\b(?:nc|nd)\b|non-?commercial|no-?deriv/.test(lic)) return false;
+  return /^(?:cc0|pdm|public domain|pd(?:[- ].*)?|no restrictions|cc[- ]?by(?:[- ]sa)?(?:[- ]\d(?:\.\d)?)?(?:[- ][a-z]{2,3})?|by|by-sa)$/.test(lic)
+    || /^cc[- ]?by(?:[- ]sa)?[- ]\d\.\d(?:[- ][a-z]{2,3})?$/.test(lic);
+}
+
+function scoreHits(hits, matchTokens, context) {
+  return hits
+    .filter(stockLicenseAllowed)
+    .map((h) => ({ ...h, score: scoreCandidate(h, matchTokens, context) }))
+    .filter((h) => h.score > 0)
+    .sort((a, b) => b.score - a.score);
+}
+
+async function searchOpenverse(query, matchTokens, context = null) {
+  return scoreHits(await fetchOpenverseHits(query), matchTokens, context);
+}
+
+async function searchWikimedia(query, matchTokens, context = null) {
+  return scoreHits(await fetchWikimediaHits(query), matchTokens, context);
+}
+
+async function searchPexels(query, matchTokens, context = null) {
+  return scoreHits(await fetchPexelsHits(query), matchTokens, context);
 }
 
 function isRasterImageUrl(url = '') {
@@ -1219,6 +1668,9 @@ function isRasterImageUrl(url = '') {
 
 async function validateCandidate(hit) {
   if (!isRasterImageUrl(hit.url)) return null;
+  // Même règle que pour les photos source : une image en hauteur ne cadre
+  // pas dans la une 3:2 (affiche FEUS, ruban « Title IX » 1280×1707).
+  if (isPortraitLeadRatio(hit.width, hit.height)) return null;
   if (meetsLeadDisplaySize(hit.width, hit.height)) return hit;
   const dims = await probeRemoteImageSize(hit.url);
   if (!dims) {
@@ -1226,6 +1678,7 @@ async function validateCandidate(hit) {
     return null;
   }
   const enriched = { ...hit, width: dims.width, height: dims.height };
+  if (isPortraitLeadRatio(dims.width, dims.height)) return null;
   return meetsLeadDisplaySize(dims.width, dims.height) ? enriched : null;
 }
 
@@ -1272,7 +1725,7 @@ function matchesRequestedScene(item = {}, hit = {}, context = detectEditorialCon
       .filter((w) => w.length > 3),
   );
   if (!sceneWords.size) return false;
-  const hay = normalizeText(`${hit.title || ''} ${hit.tags || ''} ${hit.url || ''}`);
+  const hay = hitHay(hit);
   for (const word of sceneWords) {
     if (hayHasToken(hay, word)) return true;
   }
@@ -1302,26 +1755,34 @@ async function findStockPhoto(item) {
   const pool = [];
 
   for (const query of queries.slice(0, STOCK_QUERY_LIMIT)) {
+    if (pastStockDeadline()) break;
     const batches = await Promise.all([
-      searchOpenverse(query, matchTokens, context),
       searchWikimedia(query, matchTokens, context),
+      searchOpenverse(query, matchTokens, context),
+      searchPexels(query, matchTokens, context),
     ]);
     for (const cand of batches.flat()) {
       if (seen.has(cand.url)) continue;
       seen.add(cand.url);
       pool.push(cand);
     }
-    if (pool.some((c) => c.score >= STOCK_STRONG_SCORE)) break;
-    await sleep(250);
+    // Arrêt anticipé seulement sur un candidat fort ET exploitable (raster,
+    // scène demandée) : un PDF Commons fort coupait la recherche avant
+    // « food bank volunteers » (The Link, 17 oct. 2026).
+    if (pool.some((c) => c.score >= STOCK_STRONG_SCORE
+      && isRasterImageUrl(c.url)
+      && !isPortraitLeadRatio(c.width, c.height)
+      && matchesRequestedScene(item, c, context))) break;
   }
 
+  // Le bonus « scène demandée » est dans scoreCandidate (context.sceneWords).
   pool.sort((a, b) => b.score - a.score);
 
   for (const cand of pool) {
     // Trié par score décroissant : sous le seuil de rétention, tout ce qui
     // suit est plus faible — mieux vaut aucune photo qu'une photo hors-sujet
     // (qui serait de toute façon retirée à la passe suivante).
-    if (cand.score < STOCK_MIN_RETAIN_SCORE) break;
+    if (cand.score < STOCK_MIN_RETAIN_SCORE) continue;
     if (!matchesRequestedScene(item, cand, context)) continue;
     const valid = await validateCandidate(cand);
     if (!valid) continue;
@@ -1363,6 +1824,13 @@ module.exports = {
   STOCK_MIN_RETAIN_SCORE,
   searchOpenverse,
   searchWikimedia,
+  searchPexels,
+  saveStockSearchCache,
+  setStockDeadline,
+  stockLicenseAllowed,
+  resetStockNetworkState,
+  stockNetworkStats,
+  SENSITIVE_TOPIC_RE,
   SUMMER_TOPIC_RE,
   WINTER_TOPIC_RE,
   WINTER_PHOTO_RE,
