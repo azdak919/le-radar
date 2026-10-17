@@ -606,7 +606,10 @@ function fetchText(url, { timeoutMs = FETCH_TIMEOUT_MS } = {}) {
     }, (res) => {
       if (res.statusCode !== 200) {
         res.resume();
-        finish(reject, new Error(`HTTP ${res.statusCode}`));
+        // Diagnostic : pare-feu AWS WAF (x-amzn-waf-action: captcha/challenge).
+        const waf = res.headers['x-amzn-waf-action'];
+        const server = res.headers.server;
+        finish(reject, new Error(`HTTP ${res.statusCode}${waf ? ` waf=${waf}` : ''}${server ? ` server=${server}` : ''}`));
         return;
       }
       const chunks = [];
