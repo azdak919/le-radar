@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-17T17:17:43.503Z",
+  "updated": "2026-10-17T17:20:43.864Z",
   "total": 178,
   "withPhoto": 150,
-  "withStock": 47,
+  "withStock": 48,
   "withCampusBank": 27,
   "fullyCovered": 178,
-  "leadReadyPhotos": 125,
-  "pageScraped": 15,
-  "photosRecovered": 15,
+  "leadReadyPhotos": 126,
+  "pageScraped": 16,
+  "photosRecovered": 16,
   "imagesCleared": 11,
-  "stockSearches": 56,
-  "stockFound": 48,
-  "campusBankFound": 23,
+  "stockSearches": 55,
+  "stockFound": 47,
+  "campusBankFound": 21,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -19,12 +19,6 @@
       "link": "https://www.polyscope.qc.ca/blog/post/QPEKa1YZQ6rHD8StJeGU",
       "reason": "no-stock-match",
       "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Fbourses_sep.png?alt=media&token=8353fe47-ac3c-4cf7-8d47-ae677a785f76"
-    },
-    {
-      "title": "Un polytechnicien en Espagne",
-      "link": "https://www.polyscope.qc.ca/blog/post/kbgnDbewLv2wv6hDMWI3",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Street_artists_at_Plaza_Mayor%2C_Madrid%2C_Spain_%28PPL3-Altered%29_julesvernex2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "La mémoire vive du génie: les archives du Polyscope enfin immortalisées",
@@ -45,10 +39,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/3/31/Canada_vs_Scotland_Women%27s_Rugby_World_Cup_Pool_B_match.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
+      "title": "Une semaine pour sensibiliser aux violences sexuelles à l’UdeS",
+      "link": "https://lecollectif.ca/a-la-une/une-semaine-pour-sensibiliser-aux-violences-sexuelles-a-ludes/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Take_Back_the_Night_march%2C_Montpelier_May_2024.jpg"
+    },
+    {
+      "title": "Quand Polytechnique tend la main: l'aide financière sous tous ses angles",
+      "link": "https://www.polyscope.qc.ca/blog/post/QPEKa1YZQ6rHD8StJeGU",
+      "reason": "no-stock-match",
+      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Fbourses_sep.png?alt=media&token=8353fe47-ac3c-4cf7-8d47-ae677a785f76"
     },
     {
       "title": "Creative Writing September 2026",
@@ -57,34 +57,34 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Dawson_College_06.jpg"
     },
     {
+      "title": "Horoscope September 2026",
+      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
+    },
+    {
+      "title": "Shawarm-off!",
+      "link": "https://www.mcgilldaily.com/2026/10/shawarm-off/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/McGill_University_downtown_campus_31.JPG"
+    },
+    {
       "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
       "link": "https://thebucampus.ca/2026/09/30/gods-heroes-men-and-pigs-classics-department-brings-reflections-on-nolans-the-odyssey-to-the-agora/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chichester%2C_Bishop_Otter_Campus_-_geograph.org.uk_-_3003126.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
+      "title": "Health First!",
+      "link": "https://www.mcgilldaily.com/2026/10/health-first/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/df/Arts_Building%2C_McGill_University%2C_Aug_31_2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "Prepare for Fewer Course Options in the Coming Years: Budget Cuts are Affecting the Number of Courses Available at BU",
       "link": "https://thebucampus.ca/2026/09/30/prepare-for-fewer-course-options-in-the-coming-years-budget-cuts-are-affecting-the-number-of-courses-available-at-bu/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
-    },
-    {
-      "title": "“Decolonization”",
-      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/3/3d/McGill_University_downtown_campus_36.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Health First!",
-      "link": "https://www.mcgilldaily.com/2026/10/health-first/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/5/54/McGill_University_downtown_campus_37.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Shawarm-off!",
-      "link": "https://www.mcgilldaily.com/2026/10/shawarm-off/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
     }
   ]
 }
