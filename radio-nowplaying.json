@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T10:41:34.388Z",
+  "updatedAt": "2026-10-17T13:27:16.729Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T10:41:06.944Z"
+      "checkedAt": "2026-10-17T13:26:29.998Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Voix tropicale",
-        "source": "schedule",
-        "start": "05:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/voix-tropicale"
-      },
-      "next": {
         "title": "Elkin Polo El Show",
         "source": "schedule",
         "start": "09:00",
         "end": "13:00",
         "url": "https://cism893.ca/emissions/elkin-polo-el-show"
       },
+      "next": {
+        "title": "Change le beat",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/change-le-beat"
+      },
       "track": "",
-      "showTitle": "Voix tropicale",
+      "showTitle": "Elkin Polo El Show",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T10:41:08.821Z"
+      "checkedAt": "2026-10-17T13:26:31.376Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,54 +74,54 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T10:41:11.570Z"
+      "checkedAt": "2026-10-17T13:26:34.092Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "World-Up'",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/world-up"
-      },
-      "next": {
         "title": "The Live Wire Show",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/the-live-wire-show"
       },
+      "next": {
+        "title": "Gospel Unlimited",
+        "source": "schedule",
+        "start": "10:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/gospel-unlimited"
+      },
       "track": "",
-      "showTitle": "World-Up'",
+      "showTitle": "The Live Wire Show",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T10:41:14.376Z"
+      "checkedAt": "2026-10-17T13:26:56.671Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
+      "current": null,
+      "next": {
         "title": "Les nuits CFAK",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
-        "end": "07:00"
+        "end": "21:00"
       },
-      "next": null,
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T10:41:15.769Z"
+      "checkedAt": "2026-10-17T13:26:57.915Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Sainte-Croix — Couche tard",
+      "track": "Leanne Betasamosake Simpson — 85 Dollars An Acre",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -142,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T10:41:34.037Z"
+      "checkedAt": "2026-10-17T13:27:16.379Z"
     }
   }
 }
