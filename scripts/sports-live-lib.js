@@ -212,15 +212,30 @@ function annotateNextGame(out, rseqGame, opts = {}) {
   return out;
 }
 
+/**
+ * Résultat provisoire collé par sports-presto-live-lib (final U SPORTS /
+ * RSEQ Direct) : la ligue reste à relire tant que RSEQ n’a pas versé le
+ * pointage officiel, qui le remplace.
+ */
+function isProvisionalResult(g, now = Date.now()) {
+  return !!(g && g.liveFeed && g.result && inLiveWindow(g, now));
+}
+
+function pendingGames(team, now) {
+  const games = [team.nextGame].concat(Array.isArray(team.nextGames) ? team.nextGames : []);
+  const out = games.filter((g) => g && isLiveRaw(g, now));
+  for (const g of Array.isArray(team.results) ? team.results : []) {
+    if (isProvisionalResult(g, now)) out.push(g);
+  }
+  return out;
+}
+
 function findLiveLeagueIds(teams, now = Date.now()) {
   const ids = new Set();
   if (!teams || typeof teams !== 'object') return [];
   for (const team of Object.values(teams)) {
     if (!team || !team.leagueId) continue;
-    const games = [team.nextGame].concat(Array.isArray(team.nextGames) ? team.nextGames : []);
-    for (const g of games) {
-      if (g && isLiveRaw(g, now)) ids.add(String(team.leagueId));
-    }
+    if (pendingGames(team, now).length) ids.add(String(team.leagueId));
   }
   return [...ids];
 }
@@ -229,9 +244,9 @@ function liveGameIdsFromTeams(teams, now = Date.now()) {
   const ids = new Set();
   if (!teams || typeof teams !== 'object') return [];
   for (const team of Object.values(teams)) {
-    const games = [team.nextGame].concat(Array.isArray(team.nextGames) ? team.nextGames : []);
-    for (const g of games) {
-      if (g && isLiveRaw(g, now) && g.gameId) ids.add(String(g.gameId));
+    if (!team) continue;
+    for (const g of pendingGames(team, now)) {
+      if (g.gameId) ids.add(String(g.gameId));
     }
   }
   return [...ids];
@@ -255,6 +270,7 @@ module.exports = {
   formatLivePeriod,
   overlayLiveDetail,
   annotateNextGame,
+  isProvisionalResult,
   findLiveLeagueIds,
   liveGameIdsFromTeams,
 };

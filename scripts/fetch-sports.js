@@ -36,6 +36,7 @@ const {
 const SportsFreshness = require('./sports-freshness-lib');
 const SportsPayload = require('./sports-payload-lib');
 const SportsLive = require('./sports-live-lib');
+const PrestoLive = require('./sports-presto-live-lib');
 const { buildSportsMastheadPayload } = require('./sports-masthead-lib');
 const { preserveHarvestCatalogStats } = require('./harvest-freshness-lib');
 const { isChallengeOrInterstitialPage } = require('./source-retention-lib');
@@ -1286,6 +1287,29 @@ async function main() {
   // Filet registre (adversaires + champs) sur tout le payload.
   for (const team of Object.values(teams)) {
     applyRegistryToTeam(team, reg);
+  }
+
+  // Pointages en cours de match (U SPORTS / RSEQ Direct, PrestoSports) :
+  // seulement s’il y a un match RSEQ en fenêtre live. Ne lève jamais ; une
+  // source en panne laisse le payload RSEQ intact. RSEQ officiel l’emporte.
+  if (process.env.SPORTS_PRESTO_LIVE !== '0') {
+    const presto = await PrestoLive.overlayPrestoLive(teams, {
+      registry: reg,
+      previousTeams,
+      log: (m) => process.stderr.write(`sports: direct ${m}\n`),
+    });
+    if (!presto.skipped) {
+      process.stderr.write(`sports: direct ${JSON.stringify({
+        live: presto.live || 0,
+        final: presto.final || 0,
+        dropped: presto.dropped || 0,
+        unmatched: presto.unmatched || 0,
+        carried: presto.carried || 0,
+        failed: presto.failed && presto.failed.length ? presto.failed : undefined,
+        error: presto.error,
+      })}\n`);
+      for (const line of presto.matched || []) process.stderr.write(`sports: direct ✓ ${line}\n`);
+    }
   }
 
   // Seconde passe fraîcheur (registre peut avoir muté lastGame).

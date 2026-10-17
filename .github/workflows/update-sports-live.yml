@@ -58,6 +58,9 @@ jobs:
       # Tant qu’un match RSEQ est dans la fenêtre live, on refait une passe
       # aux 3 min (≈ 30 min max ; le prochain déclenchement prend le relais,
       # concurrency annule l’ancien). Dépôt public → minutes Actions gratuites.
+      # Chaque passe lit aussi U SPORTS / RSEQ Direct (1 page par site) pour le
+      # pointage en cours de match (scripts/sports-presto-live-lib.js) ; une
+      # panne de ces sites n’échoue jamais la passe.
       - name: Fetch live RSEQ scores (boucle tant qu’un match est en fenêtre)
         env:
           HOCKEY_CACHE_URL: https://le-radar-hockey.azdak.workers.dev
