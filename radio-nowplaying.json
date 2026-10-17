@@ -1,138 +1,126 @@
 {
-  "updatedAt": "2026-10-17T00:43:41.670Z",
+  "updatedAt": "2026-10-17T04:21:38.793Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Remparts de Québec",
-        "source": "api-live",
-        "start": "18:45",
-        "end": "21:30",
-        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
-      },
+      "current": null,
       "next": {
         "title": "Palmarès CHYZ",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "10:00",
         "end": "10:30",
         "url": "https://chyz.ca/emission/palmares-chyz/"
       },
       "track": "",
-      "showTitle": "Remparts de Québec",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-17T00:43:11.604Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Rave de nuit",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "https://cism893.ca/emissions/rave-de-nuit"
-      },
-      "next": {
-        "title": "Le 120e parallèle (reprise)",
-        "source": "schedule",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/le-120e-parallele"
-      },
-      "track": "",
-      "showTitle": "Rave de nuit",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T00:43:13.358Z"
+      "checkedAt": "2026-10-17T04:21:00.008Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Rythmologie (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/rythmologie"
+      },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
+      "track": "",
+      "showTitle": "Rythmologie (reprise)",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-17T04:21:13.579Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Macondo",
+        "title": "WEFUNK",
         "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "next": {
-        "title": "Weekend Groove",
+        "title": "Soca Sessions",
         "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "track": "",
-      "showTitle": "Macondo",
+      "showTitle": "WEFUNK",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T00:43:18.231Z"
+      "checkedAt": "2026-10-17T04:21:16.801Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "El Encuentro Latino",
+        "title": "Jazz Boulevard",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/el-encuentro-latino"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "http://www.cjlo.com/shows/jazz-boulevard"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "World-Up'",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "06:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "El Encuentro Latino",
+      "showTitle": "Jazz Boulevard",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T00:43:21.329Z"
+      "checkedAt": "2026-10-17T04:21:18.889Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Enfin vendredi",
+        "title": "Les nuits CFAK",
         "source": "schedule-live",
-        "start": "19:00",
-        "end": "21:00"
+        "start": "00:00",
+        "end": "07:00"
       },
-      "next": {
-        "title": "Mangue, Goyave et Reggae",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00"
-      },
+      "next": null,
       "track": "",
-      "showTitle": "Enfin vendredi",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T00:43:22.325Z"
+      "checkedAt": "2026-10-17T04:21:20.096Z"
     },
     "choq": {
       "id": "choq",
@@ -140,21 +128,20 @@
       "current": null,
       "next": {
         "title": "D'amour et de sexe",
-        "source": "schedule",
+        "source": "api-live",
         "start": "22:00",
         "end": "00:00",
-        "url": "https://www.choq.ca/emissions/damour-et-de-sexe"
+        "slug": "damour-et-de-sexe"
       },
-      "track": "Jonathan Personne — Lendemain",
+      "track": "Lammoth — A Final Parting",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T00:43:41.319Z"
+      "checkedAt": "2026-10-17T04:21:38.442Z"
     }
   }
 }
