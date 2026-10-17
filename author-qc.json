@@ -1,10 +1,18 @@
 {
-  "updated": "2026-10-17T14:20:37.737Z",
+  "updated": "2026-10-17T16:36:37.304Z",
   "total": 178,
   "withAuthor": 178,
-  "mismatches": 18,
+  "mismatches": 19,
   "ok": true,
   "samples": [
+    {
+      "title": "Que faire à Montréal en octobre ?",
+      "link": "https://quartierlibre.ca/que-faire-a-montreal-en-octobre/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Paul Ambroise",
+      "reason": "page-byline"
+    },
     {
       "title": "La politique commence ici",
       "link": "https://quartierlibre.ca/la-politique-commence-ici/",
@@ -150,5 +158,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 18
+  "fixed": 19
 }
