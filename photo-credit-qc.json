@@ -1,17 +1,38 @@
 {
-  "updated": "2026-10-17T03:43:39.096Z",
+  "updated": "2026-10-17T05:23:35.079Z",
   "total": 178,
-  "withImage": 147,
-  "withCredit": 147,
-  "cited": 98,
-  "pending": 9,
+  "withImage": 151,
+  "withCredit": 151,
+  "cited": 101,
+  "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 4,
-  "citedNew": 4,
-  "fallbackNew": 9,
+  "checked": 17,
+  "updatedCount": 8,
+  "citedNew": 7,
+  "fallbackNew": 10,
   "samples": [
+    {
+      "title": "La politique commence ici",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Rouge d’une part, blanche de l’autre",
+      "source": "Le Délit",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "S.O.S. Huîtres menacées",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
     {
       "title": "Arrestations visant les LGBTQ+ en Turquie",
       "source": "Le Délit",
@@ -27,18 +48,25 @@
       "method": "media-credit-featured"
     },
     {
-      "title": "Quand la fiction banalise les traumatismes",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
       "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
       "source": "La Pige",
       "credit": "Photo : Noah Thomas",
       "cited": true,
       "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
