@@ -1,17 +1,31 @@
 {
-  "updated": "2026-10-17T16:43:21.327Z",
+  "updated": "2026-10-17T17:01:11.214Z",
   "total": 178,
-  "withImage": 147,
-  "withCredit": 147,
-  "cited": 99,
+  "withImage": 150,
+  "withCredit": 150,
+  "cited": 102,
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 11,
-  "updatedCount": 3,
-  "citedNew": 3,
+  "checked": 16,
+  "updatedCount": 8,
+  "citedNew": 8,
   "fallbackNew": 8,
   "samples": [
+    {
+      "title": "Un classique revisité",
+      "source": "Le Délit",
+      "credit": "Photo : Danny Tallo",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Rouge d’une part, blanche de l’autre",
+      "source": "Le Délit",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
     {
       "title": "Est-ce que je dois un bébé à l’État ?",
       "source": "Le Délit",
@@ -27,11 +41,32 @@
       "method": "media-credit-featured"
     },
     {
+      "title": "Les équipes à suivre cette saison",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
       "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
       "source": "La Pige",
       "credit": "Photo : Noah Thomas",
       "cited": true,
       "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
