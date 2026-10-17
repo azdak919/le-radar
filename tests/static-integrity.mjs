@@ -1044,6 +1044,7 @@ const TUNER_FRAME_ORIGINS = [
 const CONNECT_ORIGINS = [
   "'self'",
   'blob:',
+  'https://s1.rseq.ca', /* pointages RSEQ en direct (radar-sports-cta) */
   'https://le-radar-weather.azdak.workers.dev',
   'https://le-radar-nowplaying.azdak.workers.dev',
   'https://le-radar-bg-rotation.azdak.workers.dev',

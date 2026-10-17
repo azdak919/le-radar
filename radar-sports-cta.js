@@ -201,6 +201,8 @@ const SPORTS_CTA_TAG_TOMORROW = 'Demain';
 const SPORTS_CTA_TAG_LATEST = 'Derniers résultats';
 /** Après demain : Prochain + date courte en 2ᵉ ligne. */
 const SPORTS_CTA_TAG_NEXT = 'Prochain';
+/** Match fini, rapport RSEQ pas encore déposé (deux lignes : Score / à venir). */
+const SPORTS_CTA_TAG_PENDING = 'Score à venir';
 /** Repli idle (creux total, pas de match) ; sinon ton du sport via sportsCtaTone. Rouge = direct. */
 const SPORTS_CTA_REST_TONE = '#6a7580';
 const SPORTS_CTA_LIVE_TONE = '#c8102e';
@@ -544,6 +546,7 @@ function sportsLivePeriodLabel(game) {
  */
 function sportsGameIsLive(game, now = Date.now()) {
   if (!game || game.final === true || game.live === false) return false;
+  if (sportsGameAwaitingScore(game, now)) return false;
   const t = sportsGameMs(game);
   const inWindow = Number.isFinite(t)
     && t <= now + SPORTS_LIVE_VISUAL_LEAD_MS
@@ -551,6 +554,45 @@ function sportsGameIsLive(game, now = Date.now()) {
   if (game.live === true) return inWindow || !Number.isFinite(t);
   if (sportsGameHasScore(game)) return false;
   return inWindow;
+}
+
+/**
+ * Durée attendue d’un match (min), marge incluse. L’API RSEQ S1 ne donne
+ * jamais de score en cours : le pointage arrive d’un coup, au dépôt du
+ * rapport (17 oct. 2026 : baseball 16 h → 17 h 46 ; flag 16 h 30 → 18 h 07).
+ * Passé ce délai sans score, « En direct 0–0 » est faux : on affiche
+ * « Score à venir » (voir `sportsGameAwaitingScore`).
+ */
+const SPORTS_EXPECTED_DURATION_MIN = {
+  'flag-football': 105,
+  soccer: 130,
+  basketball: 135,
+  volleyball: 150,
+  rugby: 130,
+  badminton: 180,
+  baseball: 165,
+  football: 210,
+  hockey: 165,
+};
+const SPORTS_EXPECTED_DURATION_DEFAULT_MIN = 150;
+
+function sportsExpectedDurationMs(game) {
+  const sport = String(game?.sport || '').toLowerCase();
+  const min = SPORTS_EXPECTED_DURATION_MIN[sport] || SPORTS_EXPECTED_DURATION_DEFAULT_MIN;
+  return min * 60 * 1000;
+}
+
+/**
+ * Match commencé depuis plus que sa durée attendue, sans score ni statut
+ * final : terminé mais rapport pas encore déposé. Pas « En direct ».
+ */
+function sportsGameAwaitingScore(game, now = Date.now()) {
+  if (!game || game.final === true) return false;
+  if (sportsGameHasScore(game)) return false;
+  if (sportsIsPlaceResult(game, game?.sport)) return false;
+  const t = sportsGameMs(game);
+  if (!Number.isFinite(t)) return false;
+  return now - t > sportsExpectedDurationMs(game) && now - t <= SPORTS_LIVE_AFTER_MS;
 }
 
 /** Âge d’un résultat en ms (négatif si le match est à venir). */
@@ -2037,6 +2079,7 @@ function sportsCtaTagUsesMeridiem(wanted) {
   if (wanted === RADAR_BRAND_SHORT) return false;
   if (wanted === 'Hier') return false;
   if (wanted === SPORTS_CTA_TAG_LATEST) return false;
+  if (wanted === SPORTS_CTA_TAG_PENDING) return false;
   return true;
 }
 
@@ -2073,7 +2116,12 @@ function sportsRelativeWhen(ms, now = Date.now()) {
  * n’y a pas de survol, donc sur téléphone personne ne l’a jamais vu.
  */
 function sportsUpdatedShort() {
-  const raw = sportsData?.updated;
+  let raw = sportsData?.updated;
+  // Sondage RSEQ direct plus récent que le bot : c’est l’heure de la vraie vérif.
+  const botMs = raw ? Date.parse(raw) : Number.NaN;
+  if (sportsRseqLastOk && (!Number.isFinite(botMs) || sportsRseqLastOk > botMs)) {
+    raw = new Date(sportsRseqLastOk).toISOString();
+  }
   if (!raw) return '';
   try {
     const when = new Intl.DateTimeFormat('fr-CA', {
@@ -2113,6 +2161,9 @@ function sportsMatchWhenTag(slide) {
   const day = sportsSlideDayKey(slide);
   const today = torontoDayKey();
   if (slide?.mode === 'next') {
+    if (sportsGameAwaitingScore(g)) {
+      return { word: SPORTS_CTA_TAG_PENDING, lamp: 'past' };
+    }
     if (day && day === today) {
       return { word: SPORTS_CTA_TAG_SOON, lamp: 'soon' };
     }
@@ -2324,6 +2375,10 @@ function sportsCtaTagLinePair(wanted, shown, extra = {}) {
   if (wanted === SPORTS_CTA_TAG_LATEST) {
     const parts = String(shown).trim().split(/\s+/).filter(Boolean);
     if (parts.length >= 2) return [parts.slice(0, -1).join(' '), parts[parts.length - 1]];
+  }
+  if (wanted === SPORTS_CTA_TAG_PENDING) {
+    const parts = String(shown).trim().split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) return [parts[0], parts.slice(1).join(' ')];
   }
   if (wanted === SPORTS_CTA_TAG_NEXT) {
     const dateLine = String(extra.dateLine || '').trim();
@@ -4515,17 +4570,172 @@ function patchVisibleLiveScorebugs() {
   });
 }
 
+/*
+ * Sondage direct de l’API RSEQ S1 (CORS `*`, publique, sans clé).
+ * sports-masthead.json dépend du bot GitHub, dont le cron « 5 min » ne tire en
+ * pratique qu’aux 45–90 min. Le navigateur demande donc lui-même, aux 60 s,
+ * le pointage des matchs en cours ou en attente de score : il s’affiche dans
+ * la minute du dépôt du rapport, sans attendre le bot.
+ */
+const SPORTS_RSEQ_GAME_API = 'https://s1.rseq.ca/api/GameApi/GetGameDiffusion/?gameId=';
+const SPORTS_RSEQ_POLL_MS = 60000;
+const SPORTS_RSEQ_MAX_GAMES = 12;
+const SPORTS_RSEQ_SCORE_NONE = -999;
+/** gameId → { home, visiting, final, at } */
+const sportsRseqOverrides = new Map();
+let sportsRseqLastPoll = 0;
+let sportsRseqInFlight = false;
+/** Dernière réponse RSEQ valide (même sans score) : alimente « mis à jour à ». */
+let sportsRseqLastOk = 0;
+
+function sportsRseqGameId(game) {
+  const id = String(game?.gameId || '');
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) return '';
+  if (game.url && !/^https:\/\/diffusion\.rseq\.ca\//.test(String(game.url))) return '';
+  return id;
+}
+
+function sportsEachPayloadGame(data, fn) {
+  for (const team of Object.values(data?.teams || {})) {
+    if (!team || typeof team !== 'object') continue;
+    const games = [team.lastGame, team.nextGame]
+      .concat(Array.isArray(team.results) ? team.results : [])
+      .concat(Array.isArray(team.nextGames) ? team.nextGames : []);
+    for (const g of games) if (g && typeof g === 'object') fn(g, team);
+  }
+}
+
+/** Colle un pointage RSEQ frais sur un match du payload (score « pour nous »). */
+function sportsApplyRseqOverride(game) {
+  const id = sportsRseqGameId(game);
+  if (!id || typeof game.home !== 'boolean') return false;
+  const o = sportsRseqOverrides.get(id);
+  if (!o) return false;
+  const sf = game.home ? o.home : o.visiting;
+  const sa = game.home ? o.visiting : o.home;
+  game.scoreFor = sf;
+  game.scoreAgainst = sa;
+  if (o.final) {
+    game.final = true;
+    game.live = false;
+    game.result = sf > sa ? 'W' : sf < sa ? 'L' : 'D';
+    delete game.period;
+  }
+  return true;
+}
+
+function sportsApplyRseqOverrides(data) {
+  if (!sportsRseqOverrides.size || !data) return;
+  sportsEachPayloadGame(data, (g) => { sportsApplyRseqOverride(g); });
+}
+
+/** Matchs à sonder : en direct, ou terminés sans score (≤ 3 h après le coup d’envoi). */
+function sportsRseqPollCandidates(now = Date.now()) {
+  const ids = new Map();
+  sportsEachPayloadGame(sportsData, (g) => {
+    const id = sportsRseqGameId(g);
+    if (!id || ids.has(id) || g.final === true) return;
+    const done = sportsRseqOverrides.get(id);
+    if (done?.final) return;
+    if (!sportsGameIsLive(g, now) && !sportsGameAwaitingScore(g, now)) return;
+    ids.set(id, sportsGameMs(g));
+  });
+  // Les plus anciens d’abord : ce sont eux qui ont un rapport imminent.
+  return [...ids.entries()]
+    .sort((a, b) => (a[1] || 0) - (b[1] || 0))
+    .slice(0, SPORTS_RSEQ_MAX_GAMES)
+    .map(([id]) => id);
+}
+
+function sportsRseqScoreValue(n) {
+  const v = Number(n);
+  return Number.isFinite(v) && v >= 0 && v !== SPORTS_RSEQ_SCORE_NONE ? v : null;
+}
+
+async function sportsFetchRseqGame(id) {
+  const res = await fetch(`${SPORTS_RSEQ_GAME_API}${encodeURIComponent(id)}`, {
+    cache: 'no-store',
+    credentials: 'omit',
+  });
+  if (!res.ok) return null;
+  const d = await res.json();
+  if (!d || String(d.GameId || '').toLowerCase() !== id.toLowerCase()) return null;
+  sportsRseqLastOk = Date.now();
+  const home = sportsRseqScoreValue(d.HomeTeamScore);
+  const visiting = sportsRseqScoreValue(d.VisitingTeamScore);
+  if (home == null || visiting == null) return null;
+  // Résultat partiel (rare) : score collé mais le match reste en direct.
+  return { home, visiting, final: d.IsPartialResults !== true, at: Date.now() };
+}
+
+async function pollRseqLiveGames(force = false) {
+  const now = Date.now();
+  if (sportsRseqInFlight) return false;
+  if (!force && now - sportsRseqLastPoll < SPORTS_RSEQ_POLL_MS) return false;
+  if (typeof document !== 'undefined' && document.visibilityState === 'hidden') return false;
+  const ids = sportsRseqPollCandidates(now);
+  if (!ids.length) return false;
+  sportsRseqInFlight = true;
+  sportsRseqLastPoll = now;
+  let changed = false;
+  try {
+    const rows = await Promise.allSettled(ids.map((id) => sportsFetchRseqGame(id)));
+    rows.forEach((row, i) => {
+      if (row.status !== 'fulfilled' || !row.value) return;
+      const prev = sportsRseqOverrides.get(ids[i]);
+      const next = row.value;
+      if (prev && prev.home === next.home && prev.visiting === next.visiting && prev.final === next.final) return;
+      sportsRseqOverrides.set(ids[i], next);
+      changed = true;
+    });
+  } catch { /* CSP / réseau : le snapshot du bot reste */ }
+  finally {
+    sportsRseqInFlight = false;
+  }
+  return changed;
+}
+
 function applySportsPayload(raw) {
   sportsData = (typeof RadarSportsFreshness !== 'undefined'
     && typeof RadarSportsFreshness.pruneSportsPayload === 'function')
     ? RadarSportsFreshness.pruneSportsPayload(raw)
     : raw;
+  sportsApplyRseqOverrides(sportsData);
   sportsSlides = buildSportsSlides(sportsData);
+}
+
+/** Re-rendu minimal après un changement de score live (bot ou RSEQ direct). */
+function sportsRerenderAfterLiveChange(prevSig, prevKeys) {
+  const nextSig = sportsBoardLiveSig();
+  const nextKeys = sportsVisibleLiveKeys();
+  if (prevSig === nextSig) return;
+  if (prevKeys && prevKeys === nextKeys) {
+    patchVisibleLiveScorebugs();
+    return;
+  }
+  sportsFitCount = null;
+  sportsFitDepth = 0;
+  renderSportsStrip();
+  scheduleSportsRotate();
+}
+
+async function pollRseqAndRerender() {
+  if (!sportsData) return;
+  const prevSig = sportsBoardLiveSig();
+  const prevKeys = sportsVisibleLiveKeys();
+  const changed = await pollRseqLiveGames();
+  if (!changed) return;
+  sportsApplyRseqOverrides(sportsData);
+  sportsSlides = buildSportsSlides(sportsData);
+  sportsRerenderAfterLiveChange(prevSig, prevKeys);
 }
 
 async function pollLiveSportsJson() {
   // Timer toujours allumé : un coup d’envoi peut entrer dans la fenêtre
   // après le boot (page ouverte à 18 h, KO 19 h).
+  // RSEQ direct d’abord (throttle 60 s interne) : couvre aussi les matchs
+  // « Score à venir », qui ne sont plus live.
+  try { await pollRseqAndRerender(); } catch { /* ignore */ }
   if (!sportsLivePollNeeded()) return;
   try {
     const res = await fetch(appAsset('sports-masthead.json'), { cache: 'no-store' });
@@ -4534,17 +4744,7 @@ async function pollLiveSportsJson() {
     const prevSig = sportsBoardLiveSig();
     const prevKeys = sportsVisibleLiveKeys();
     applySportsPayload(raw);
-    const nextSig = sportsBoardLiveSig();
-    const nextKeys = sportsVisibleLiveKeys();
-    if (prevSig === nextSig) return;
-    if (prevKeys && prevKeys === nextKeys) {
-      patchVisibleLiveScorebugs();
-      return;
-    }
-    sportsFitCount = null;
-    sportsFitDepth = 0;
-    renderSportsStrip();
-    scheduleSportsRotate();
+    sportsRerenderAfterLiveChange(prevSig, prevKeys);
   } catch { /* ignore : le snapshot en mémoire reste */ }
 }
 
@@ -4568,6 +4768,8 @@ async function initMastheadSports() {
     renderSportsStrip();
     scheduleSportsRotate();
     scheduleLiveSportsPoll();
+    // Premier sondage RSEQ tout de suite : le snapshot du bot peut dater.
+    pollRseqAndRerender().catch(() => {});
     if (!initMastheadSports._resizeBound) {
       initMastheadSports._resizeBound = true;
       initMastheadSports._lastWidth = MASTHEAD_SPORTS_STRIP.clientWidth || 0;

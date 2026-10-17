@@ -32,7 +32,7 @@ jobs:
   live:
     if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 40
     permissions:
       contents: write
 
@@ -53,26 +53,50 @@ jobs:
         run: pip install --quiet 'curl_cffi>=0.7'
         continue-on-error: true
 
-      - name: Fetch live RSEQ scores (ligues en fenêtre seulement)
-        run: node scripts/fetch-sports.js --update --live
+      # Boucle interne : le cron */5 de GitHub ne tire en pratique qu’aux
+      # 45–90 min (observé le 17 oct. 2026 : 16:35, 17:20, 18:04, 20:29 UTC…).
+      # Tant qu’un match RSEQ est dans la fenêtre live, on refait une passe
+      # aux 3 min (≈ 30 min max ; le prochain déclenchement prend le relais,
+      # concurrency annule l’ancien). Dépôt public → minutes Actions gratuites.
+      - name: Fetch live RSEQ scores (boucle tant qu’un match est en fenêtre)
         env:
           HOCKEY_CACHE_URL: https://le-radar-hockey.azdak.workers.dev
-
-      - name: Commit sports.json
+          LIVE_PASSES: '10'
+          LIVE_SLEEP_SECONDS: '180'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sports.json sports-masthead.json
-          if git diff --staged --quiet; then
-            echo "No live sports changes."
-            exit 0
-          fi
-          git commit -m "chore(sports): refresh live RSEQ scores"
-          for i in 1 2 3; do
-            git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
-            git rebase --abort 2>/dev/null || true
-            echo "push attempt $i failed, retrying…"
-            sleep $((i * 3))
+          push_live() {
+            git add sports.json sports-masthead.json
+            if git diff --staged --quiet; then
+              echo "No live sports changes."
+              return 0
+            fi
+            git commit -m "chore(sports): refresh live RSEQ scores"
+            for i in 1 2 3; do
+              git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && return 0
+              git rebase --abort 2>/dev/null || true
+              echo "push attempt $i failed, retrying…"
+              sleep $((i * 3))
+            done
+            echo "::error::could not push live sports update after retries"
+            return 1
+          }
+          pass=1
+          while :; do
+            echo "::group::passe live $pass/${LIVE_PASSES}"
+            node scripts/fetch-sports.js --update --live
+            push_live
+            echo "::endgroup::"
+            if [ "$pass" -ge "$LIVE_PASSES" ]; then
+              echo "Plafond de passes atteint."
+              break
+            fi
+            if ! node scripts/sports-live-pending.js; then
+              echo "Plus aucun match en fenêtre live — fin."
+              break
+            fi
+            pass=$((pass + 1))
+            sleep "$LIVE_SLEEP_SECONDS"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || git rebase --abort 2>/dev/null || true
           done
-          echo "::error::could not push live sports update after retries"
-          exit 1

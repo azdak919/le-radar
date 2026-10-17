@@ -125,3 +125,61 @@ for (const file of htmlFiles) {
 }
 
 console.log('OK sports-cta-contract');
+
+/* Score à venir + sondage RSEQ direct (17 oct. 2026 : baseball 16 h resté
+ * « En direct 0–0 » à 18 h 22 alors que RSEQ affichait 15–3 depuis 17 h 46). */
+{
+  const ctx = {
+    Date,
+    Number,
+    String,
+    Object,
+    Array,
+    Map,
+    SPORTS_LIVE_VISUAL_LEAD_MS: 15 * 60 * 1000,
+    SPORTS_LIVE_VISUAL_TAIL_MS: 3 * 3600 * 1000,
+    SPORTS_LIVE_AFTER_MS: 3 * 3600 * 1000,
+    sportsIsPlaceResult: () => false,
+    sportsGameMs: (g) => Date.parse(`${g.date}T${g.time}:00-04:00`),
+  };
+  vm.runInNewContext(
+    `${sourceBetween('/** Sentinelle RSEQ', '/** Âge d’un résultat en ms')}
+     ${sourceBetween('const SPORTS_RSEQ_GAME_API', 'function sportsRseqScoreValue')}
+     this.api = { sportsGameIsLive, sportsGameAwaitingScore, sportsApplyRseqOverrides,
+       sportsRseqOverrides, sportsRseqGameId };`,
+    ctx,
+  );
+  const { api } = ctx;
+  const base = {
+    date: '2026-10-17',
+    time: '16:00',
+    sport: 'baseball',
+    live: true,
+    home: false,
+    gameId: 'b351da41-d8fc-4c4f-81ba-3c9e5ef0407f',
+    url: 'https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=b351da41-d8fc-4c4f-81ba-3c9e5ef0407f',
+  };
+  const at = (hhmm) => Date.parse(`2026-10-17T${hhmm}:00-04:00`);
+  assert.equal(api.sportsGameIsLive({ ...base }, at('17:30')), true, 'baseball 16 h : en direct à 17 h 30');
+  assert.equal(api.sportsGameAwaitingScore({ ...base }, at('17:30')), false);
+  assert.equal(api.sportsGameIsLive({ ...base }, at('18:50')), false, 'baseball 16 h : plus « En direct » après 2 h 45 sans score');
+  assert.equal(api.sportsGameAwaitingScore({ ...base }, at('18:50')), true, 'baseball 16 h : « Score à venir »');
+  const soccer = { ...base, sport: 'soccer' };
+  assert.equal(api.sportsGameAwaitingScore(soccer, at('18:22')), true, 'soccer 16 h : score à venir à 18 h 22');
+  assert.equal(api.sportsGameAwaitingScore({ ...soccer, scoreFor: 1, scoreAgainst: 0 }, at('18:22')), false);
+  assert.equal(api.sportsGameAwaitingScore(soccer, at('19:30')), false, 'hors fenêtre 3 h : rien');
+
+  // Override RSEQ : Limoilou (visiteur) 15, Édouard-Montpetit 3.
+  api.sportsRseqOverrides.set(base.gameId, { home: 3, visiting: 15, final: true, at: 0 });
+  const titans = { ...base, home: true, opponent: 'Limoilou' };
+  const limoilou = { ...base, home: false, opponent: 'Édouard-Montpetit' };
+  const hockey = { ...base, gameId: 'abc', url: 'https://collegial.rseqhockey.com/fr/x' };
+  api.sportsApplyRseqOverrides({ teams: { a: { nextGame: titans }, b: { nextGame: limoilou }, c: { nextGame: hockey } } });
+  assert.deepEqual([titans.scoreFor, titans.scoreAgainst, titans.result, titans.final, titans.live], [3, 15, 'L', true, false]);
+  assert.deepEqual([limoilou.scoreFor, limoilou.scoreAgainst, limoilou.result], [15, 3, 'W']);
+  assert.equal(api.sportsGameIsLive(titans, at('18:22')), false, 'final RSEQ : plus en direct');
+  assert.equal(hockey.scoreFor, undefined, 'hors RSEQ S1 : pas touché');
+  assert.equal(api.sportsRseqGameId({ gameId: base.gameId, url: 'https://evil.example/' }), '');
+}
+assert.match(sportsSrc, /https:\/\/s1\.rseq\.ca\/api\/GameApi\/GetGameDiffusion/, 'sondage direct RSEQ S1');
+assert.match(sportsSrc, /SPORTS_RSEQ_POLL_MS = 60000/, 'sondage RSEQ aux 60 s');

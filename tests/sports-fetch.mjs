@@ -142,3 +142,10 @@ test('update-sports-live.yml sonde les fenêtres de match', () => {
   assert.doesNotMatch(yml, /0,15,30,45/);
   assert.match(yml, /--live/);
 });
+
+test('update-sports-live.yml boucle tant qu’un match est en fenêtre', () => {
+  const yml = readFileSync(join(ROOT, '.github/workflows/update-sports-live.yml'), 'utf8');
+  assert.match(yml, /node scripts\/sports-live-pending\.js/);
+  assert.match(yml, /LIVE_SLEEP_SECONDS/);
+  assert.match(yml, /cancel-in-progress: true/);
+});
