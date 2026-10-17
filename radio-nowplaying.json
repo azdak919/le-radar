@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-10-17T13:27:16.729Z",
+  "updatedAt": "2026-10-17T16:35:00.828Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Un Samedi d'Ici",
+        "source": "api-live",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "https://chyz.ca/emission/un-samedi-dici/"
+      },
       "next": {
-        "title": "Palmarès CHYZ",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "10:30",
-        "url": "https://chyz.ca/emission/palmares-chyz/"
+        "title": "Radio Futura",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/radio-futura/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Un Samedi d'Ici",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T13:26:29.998Z"
+      "checkedAt": "2026-10-17T16:34:31.221Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T13:26:31.376Z"
+      "checkedAt": "2026-10-17T16:34:32.966Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Quebec Acadie",
+        "title": "Samedi Midi",
         "source": "api-live",
-        "start": "06:00",
-        "end": "10:00"
+        "start": "10:30",
+        "end": "14:00"
       },
       "next": {
-        "title": "Making Contact/Anything Goes",
+        "title": "Funky Revolutions",
         "source": "api-live",
-        "start": "10:00",
-        "end": "10:30"
+        "start": "14:00",
+        "end": "16:00"
       },
       "track": "",
-      "showTitle": "Quebec Acadie",
+      "showTitle": "Samedi Midi",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T13:26:34.092Z"
+      "checkedAt": "2026-10-17T16:34:36.234Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Live Wire Show",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/the-live-wire-show"
+        "title": "Anatomy of Caribbean Music",
+        "source": "schedule-live",
+        "start": "12:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/anatomy-of-caribbean-music"
       },
       "next": {
-        "title": "Gospel Unlimited",
-        "source": "schedule",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/gospel-unlimited"
+        "title": "Caribbean Callaloo",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/caribbean-callaloo"
       },
       "track": "",
-      "showTitle": "The Live Wire Show",
+      "showTitle": "Anatomy of Caribbean Music",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T13:26:56.671Z"
+      "checkedAt": "2026-10-17T16:34:41.481Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T13:26:57.915Z"
+      "checkedAt": "2026-10-17T16:34:42.721Z"
     },
     "choq": {
       "id": "choq",
@@ -134,7 +141,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Leanne Betasamosake Simpson — 85 Dollars An Acre",
+      "track": "6ODEM3 — SEXES",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -142,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T13:27:16.379Z"
+      "checkedAt": "2026-10-17T16:35:00.477Z"
     }
   }
 }
