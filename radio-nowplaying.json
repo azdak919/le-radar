@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T05:18:35.973Z",
+  "updatedAt": "2026-10-17T09:19:52.136Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,69 +21,70 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T05:17:55.108Z"
+      "checkedAt": "2026-10-17T09:19:10.143Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rythmologie (reprise)",
+        "title": "Voix tropicale",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
+        "start": "05:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/voix-tropicale"
       },
       "next": {
-        "title": "Mix franco",
+        "title": "Elkin Polo El Show",
         "source": "schedule",
-        "start": "02:00",
-        "end": "05:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "09:00",
+        "end": "13:00",
+        "url": "https://cism893.ca/emissions/elkin-polo-el-show"
       },
       "track": "",
-      "showTitle": "Rythmologie (reprise)",
+      "showTitle": "Voix tropicale",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T05:18:09.146Z"
+      "checkedAt": "2026-10-17T09:19:23.863Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "WEFUNK",
+        "title": "The Mash Time Show",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "04:00",
+        "end": "06:00"
       },
       "next": {
-        "title": "Soca Sessions",
+        "title": "Quebec Acadie",
         "source": "api-live",
-        "start": "02:00",
-        "end": "04:00"
+        "start": "06:00",
+        "end": "10:00"
       },
       "track": "",
-      "showTitle": "WEFUNK",
+      "showTitle": "The Mash Time Show",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T05:18:12.111Z"
+      "checkedAt": "2026-10-17T09:19:26.901Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Jazz Boulevard",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
         "start": "00:00",
-        "end": "02:00",
-        "url": "http://www.cjlo.com/shows/jazz-boulevard"
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "World-Up'",
@@ -93,14 +94,14 @@
         "url": "http://www.cjlo.com/shows/world-up"
       },
       "track": "",
-      "showTitle": "Jazz Boulevard",
+      "showTitle": "CJLO Late Night",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T05:18:15.474Z"
+      "checkedAt": "2026-10-17T09:19:30.144Z"
     },
     "cfak": {
       "id": "cfak",
@@ -120,7 +121,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T05:18:16.901Z"
+      "checkedAt": "2026-10-17T09:19:31.748Z"
     },
     "choq": {
       "id": "choq",
@@ -133,7 +134,7 @@
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "MIRAR — Raskolnikov",
+      "track": "Less Toches — Gente Paisano",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -141,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-17T05:18:35.623Z"
+      "checkedAt": "2026-10-17T09:19:51.787Z"
     }
   }
 }
