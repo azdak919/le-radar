@@ -1,10 +1,18 @@
 {
-  "updated": "2026-10-17T17:18:25.013Z",
+  "updated": "2026-10-17T19:02:55.488Z",
   "total": 178,
   "withAuthor": 178,
-  "mismatches": 18,
+  "mismatches": 19,
   "ok": true,
   "samples": [
+    {
+      "title": "Cinq nouvelles de la semaine",
+      "link": "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-12/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Samuel Girard",
+      "reason": "page-byline"
+    },
     {
       "title": "La politique commence ici",
       "link": "https://quartierlibre.ca/la-politique-commence-ici/",
@@ -150,5 +158,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 18
+  "fixed": 19
 }
