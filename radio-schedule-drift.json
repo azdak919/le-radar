@@ -1,26 +1,29 @@
 {
-  "checkedAt": "2026-10-16T01:15:22.789Z",
+  "checkedAt": "2026-10-17T01:15:49.890Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
-    "drift": [],
-    "overhaul": [],
-    "unreachable": [
+    "stable": 4,
+    "drift": [
+      "chyz",
       "cjlo"
-    ]
+    ],
+    "overhaul": [],
+    "unreachable": []
   },
   "stations": [
     {
       "id": "chyz",
       "published": 46,
-      "fresh": 46,
-      "added": [],
+      "fresh": 47,
+      "added": [
+        "mer 13:00–14:00 ON EST OÙ LÀ?"
+      ],
       "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "changed": 1,
+      "ratio": 0.022,
+      "status": "drift"
     },
     {
       "id": "cism",
@@ -45,12 +48,16 @@
     {
       "id": "cjlo",
       "published": 379,
-      "fresh": 0,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "unreachable"
+      "fresh": 379,
+      "added": [
+        "dim 14:00–15:00 Methods and Madness"
+      ],
+      "removed": [
+        "dim 14:00–15:00 CJLO's Alternative Mega Mix"
+      ],
+      "changed": 2,
+      "ratio": 0.005,
+      "status": "drift"
     },
     {
       "id": "cfak",
