@@ -1,23 +1,65 @@
 {
-  "updated": "2026-10-16T23:12:01.652Z",
+  "updated": "2026-10-17T00:34:22.197Z",
   "total": 178,
-  "withImage": 147,
-  "withCredit": 147,
-  "cited": 98,
-  "pending": 9,
+  "withImage": 151,
+  "withCredit": 151,
+  "cited": 101,
+  "pending": 10,
   "missingHero": 0,
   "ok": false,
-  "checked": 10,
-  "updatedCount": 1,
-  "citedNew": 1,
-  "fallbackNew": 9,
+  "checked": 16,
+  "updatedCount": 7,
+  "citedNew": 6,
+  "fallbackNew": 10,
   "samples": [
+    {
+      "title": "La politique commence ici",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Un classique revisité",
+      "source": "Le Délit",
+      "credit": "Photo : Danny Tallo",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Rouge d’une part, blanche de l’autre",
+      "source": "Le Délit",
+      "credit": "Photo : Tan YiYang",
+      "cited": true,
+      "method": "figcaption-bare"
+    },
+    {
+      "title": "Les équipes à suivre cette saison",
+      "source": "Le Délit",
+      "credit": "Photo : Félix Fournier",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
     {
       "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
       "source": "La Pige",
       "credit": "Photo : Noah Thomas",
       "cited": true,
       "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
