@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-18T01:01:31.054Z",
+  "updatedAt": "2026-10-18T02:55:36.381Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,88 +21,87 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T01:00:28.213Z"
+      "checkedAt": "2026-10-18T02:54:58.424Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "InfiniBIT!",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "21:30",
-        "url": "https://cism893.ca/emissions/infinibit"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule",
         "start": "21:30",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "Basses fréquences (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/basses-frequences"
+      },
       "track": "",
-      "showTitle": "InfiniBIT!",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T01:00:29.933Z"
+      "checkedAt": "2026-10-18T02:55:00.036Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
         "title": "Howls From Hell/Too Loud For The Crowd",
-        "source": "schedule",
+        "source": "api-live",
         "start": "21:00",
         "end": "23:00"
       },
       "next": {
         "title": "SKEwInGTheWaBeS$$",
-        "source": "schedule",
+        "source": "api-live",
         "start": "23:00",
         "end": "00:00"
       },
       "track": "",
       "showTitle": "Howls From Hell/Too Loud For The Crowd",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "stream",
-        "schedule"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T01:00:56.389Z"
+      "checkedAt": "2026-10-18T02:55:02.368Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "The Spacious Astrology Playlist",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/the-spacious-astrology-playlist"
-      },
-      "next": {
         "title": "Brave New Jams",
         "source": "schedule-live",
         "start": "22:00",
         "end": "00:00",
         "url": "http://www.cjlo.com/shows/brave-new-jams"
       },
+      "next": {
+        "title": "Floydian Slip",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "01:00",
+        "url": "http://www.cjlo.com/shows/floydian-slip"
+      },
       "track": "",
-      "showTitle": "The Spacious Astrology Playlist",
+      "showTitle": "Brave New Jams",
       "host": "",
       "source": "schedule-live",
       "sources": [
-        "schedule-live",
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T01:01:10.145Z"
+      "checkedAt": "2026-10-18T02:55:16.639Z"
     },
     "cfak": {
       "id": "cfak",
@@ -122,28 +121,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T01:01:11.479Z"
+      "checkedAt": "2026-10-18T02:55:17.827Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "D'amour et de sexe",
         "source": "api-live",
         "start": "22:00",
         "end": "00:00",
         "slug": "damour-et-de-sexe"
       },
-      "track": "Angela Autumn — Bleach Bugs",
-      "showTitle": "",
+      "next": {
+        "title": "Kongossa na UQAM",
+        "source": "api-live",
+        "start": "10:00",
+        "end": "11:00",
+        "slug": "kongossa-na-uqam"
+      },
+      "track": "choq415",
+      "showTitle": "D'amour et de sexe",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T01:01:30.703Z"
+      "checkedAt": "2026-10-18T02:55:36.030Z"
     }
   }
 }
