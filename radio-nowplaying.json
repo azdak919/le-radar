@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-18T20:39:00.166Z",
+  "updatedAt": "2026-10-18T21:14:29.598Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T20:38:19.217Z"
+      "checkedAt": "2026-10-18T21:13:50.113Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La Grapevine",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/la-grapevine"
-      },
-      "next": {
         "title": "Le grand repos",
         "source": "schedule",
         "start": "17:00",
         "end": "18:00",
         "url": "https://cism893.ca/emissions/le-grand-repos"
       },
+      "next": {
+        "title": "Symbiose",
+        "source": "schedule",
+        "start": "18:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/symbiose"
+      },
       "track": "",
-      "showTitle": "La Grapevine",
+      "showTitle": "Le grand repos",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T20:38:21.195Z"
+      "checkedAt": "2026-10-18T21:13:52.211Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T20:38:24.217Z"
+      "checkedAt": "2026-10-18T21:13:55.117Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T20:38:39.234Z"
+      "checkedAt": "2026-10-18T21:14:10.263Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,28 +133,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T20:38:41.086Z"
+      "checkedAt": "2026-10-18T21:14:11.270Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Mutations",
         "source": "api-live",
         "start": "17:00",
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Chairlift — I Belong In Your Arms",
-      "showTitle": "",
+      "next": {
+        "title": "CUCH CAST",
+        "source": "api-live",
+        "start": "18:00",
+        "end": "19:00",
+        "slug": "cuch-cast"
+      },
+      "track": "Nate Husser — Dwayne Carter Flow",
+      "showTitle": "Mutations",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T20:38:59.816Z"
+      "checkedAt": "2026-10-18T21:14:29.247Z"
     }
   }
 }
