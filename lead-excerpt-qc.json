@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-18T20:13:22.065Z",
+  "updated": "2026-10-18T20:54:49.874Z",
   "total": 178,
   "pool": 58,
-  "incomplete": 13,
+  "incomplete": 11,
   "withLeadExcerpt": 119,
-  "candidates": 13,
-  "enriched": 2,
+  "candidates": 11,
+  "enriched": 0,
   "failed": 3,
   "ok": true,
   "samples": [
@@ -17,24 +17,6 @@
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
       "changed": false
-    },
-    {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
-      "link": "https://www.delitfrancais.com/2026/09/23/arrestations-visant-les-lgbtq-en-turquie/",
-      "ok": true,
-      "score": 96,
-      "chars": 217,
-      "sample": "Au total, plus de 80 personnes ont été placées en détention provisoire. Le ministère de la Justice t",
-      "changed": true
-    },
-    {
-      "title": "Manifestation anti-IA à Montréal",
-      "link": "https://www.delitfrancais.com/2026/09/23/manifestation-anti-ia-a-montreal/",
-      "ok": true,
-      "score": 94,
-      "chars": 249,
-      "sample": "La possibilité qui revient le plus est celle d’une extinction humaine après le développement d’une s",
-      "changed": true
     },
     {
       "title": "Le Grand Prix cyclistes s’amène à Montréal !",
@@ -79,6 +61,24 @@
       "score": 87,
       "chars": 400,
       "sample": "Le 3 septembre , le juge de la Cour supérieure Martin Castonguay a ordonné au gouvernement du Québec",
+      "changed": false
+    },
+    {
+      "title": "Horoscope September 2026",
+      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "ok": true,
+      "score": 60,
+      "chars": 98,
+      "sample": "Comment Reblog Subscribe Subscribed The Plant Sign me up Have a WordPress.com account? Log in now.",
+      "changed": false
+    },
+    {
+      "title": "De la rue aux égouts : le parcours de l’eau",
+      "link": "https://lapige.atmjonquiere.com/2026/10/08/de-la-rue-aux-egouts-le-parcours-de-leau/?utm_source=rss&utm_medium=rss&utm_campaign=de-la-rue-aux-egouts-le-parcours-de-leau",
+      "ok": true,
+      "score": 96,
+      "chars": 164,
+      "sample": "Lorsqu’une forte pluie s’abat sur une ville, une grande partie du travail se déroule sous nos pieds.",
       "changed": false
     }
   ]
