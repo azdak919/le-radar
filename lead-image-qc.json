@@ -1,19 +1,25 @@
 {
-  "updated": "2026-10-18T08:54:47.817Z",
+  "updated": "2026-10-18T12:28:13.702Z",
   "total": 178,
   "withPhoto": 150,
   "withStock": 48,
   "withCampusBank": 27,
   "fullyCovered": 178,
-  "leadReadyPhotos": 121,
-  "pageScraped": 15,
-  "photosRecovered": 15,
+  "leadReadyPhotos": 129,
+  "pageScraped": 16,
+  "photosRecovered": 16,
   "imagesCleared": 11,
-  "stockSearches": 57,
-  "stockFound": 50,
-  "campusBankFound": 23,
+  "stockSearches": 54,
+  "stockFound": 47,
+  "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Quand Polytechnique tend la main: l'aide financière sous tous ses angles",
+      "link": "https://www.polyscope.qc.ca/blog/post/QPEKa1YZQ6rHD8StJeGU",
+      "reason": "no-stock-match",
+      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Fbourses_sep.png?alt=media&token=8353fe47-ac3c-4cf7-8d47-ae677a785f76"
+    },
     {
       "title": "Un polytechnicien en Espagne",
       "link": "https://www.polyscope.qc.ca/blog/post/kbgnDbewLv2wv6hDMWI3",
@@ -25,12 +31,6 @@
       "link": "https://www.polyscope.qc.ca/blog/post/wj4AQm1wt2PECO6Gitx1",
       "reason": "stock-too-small",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Vecteezy_stack-of-newspaper_1961329.jpg"
-    },
-    {
-      "title": "Concordia’s Solidarity Brunch goes monthly",
-      "link": "https://thelinknewspaper.ca/article/16476",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Midnight_Breakfast_2015_%2817301521071%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "The Stingers win the Kelly-Anne Drummond Cup",
@@ -45,22 +45,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Take_Back_the_Night_march%2C_Montpelier_May_2024.jpg"
     },
     {
-      "title": "Quand Polytechnique tend la main: l'aide financière sous tous ses angles",
-      "link": "https://www.polyscope.qc.ca/blog/post/QPEKa1YZQ6rHD8StJeGU",
-      "reason": "no-stock-match",
-      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Fbourses_sep.png?alt=media&token=8353fe47-ac3c-4cf7-8d47-ae677a785f76"
+      "title": "Horoscope September 2026",
+      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
     },
     {
       "title": "Creative Writing September 2026",
       "link": "https://theplantnews.com/2026/10/13/creative-writing-september-2026/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Dawson_College_06.jpg"
-    },
-    {
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
     },
     {
       "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
@@ -75,16 +69,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Prepare for Fewer Course Options in the Coming Years: Budget Cuts are Affecting the Number of Courses Available at BU",
-      "link": "https://thebucampus.ca/2026/09/30/prepare-for-fewer-course-options-in-the-coming-years-budget-cuts-are-affecting-the-number-of-courses-available-at-bu/",
+      "title": "Health First!",
+      "link": "https://www.mcgilldaily.com/2026/10/health-first/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/5/54/McGill_University_downtown_campus_37.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Battling Adversity",
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Bishop_Otter_Campus%2C_University_of_Chichester_-_geograph.org.uk_-_2726552.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Vecteezy_stack-of-newspaper_1961329.jpg"
     }
   ]
 }
