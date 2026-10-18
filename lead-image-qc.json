@@ -1,19 +1,25 @@
 {
-  "updated": "2026-10-18T14:44:37.927Z",
+  "updated": "2026-10-18T16:05:46.116Z",
   "total": 178,
   "withPhoto": 150,
   "withStock": 48,
   "withCampusBank": 27,
   "fullyCovered": 178,
-  "leadReadyPhotos": 123,
-  "pageScraped": 17,
-  "photosRecovered": 17,
-  "imagesCleared": 12,
-  "stockSearches": 58,
-  "stockFound": 50,
+  "leadReadyPhotos": 121,
+  "pageScraped": 16,
+  "photosRecovered": 16,
+  "imagesCleared": 11,
+  "stockSearches": 57,
+  "stockFound": 49,
   "campusBankFound": 23,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Spectacles de drones: raconter l’histoire dans le ciel",
+      "link": "https://lapige.atmjonquiere.com/2026/10/07/des-histoires-aeriennes/?utm_source=rss&utm_medium=rss&utm_campaign=des-histoires-aeriennes",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_20261002_143205262_HDR.jpg"
+    },
     {
       "title": "Un polytechnicien en Espagne",
       "link": "https://www.polyscope.qc.ca/blog/post/kbgnDbewLv2wv6hDMWI3",
@@ -25,12 +31,6 @@
       "link": "https://www.polyscope.qc.ca/blog/post/wj4AQm1wt2PECO6Gitx1",
       "reason": "stock-too-small",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Vecteezy_stack-of-newspaper_1961329.jpg"
-    },
-    {
-      "title": "Concordia’s Solidarity Brunch goes monthly",
-      "link": "https://thelinknewspaper.ca/article/16476",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Midnight_Breakfast_2015_%2817301521071%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "The Stingers win the Kelly-Anne Drummond Cup",
@@ -51,22 +51,16 @@
       "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Fbourses_sep.png?alt=media&token=8353fe47-ac3c-4cf7-8d47-ae677a785f76"
     },
     {
-      "title": "Spectacles de drones: raconter l’histoire dans le ciel",
-      "link": "https://lapige.atmjonquiere.com/2026/10/07/des-histoires-aeriennes/?utm_source=rss&utm_medium=rss&utm_campaign=des-histoires-aeriennes",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_20261002_143205262_HDR.jpg"
+      "title": "Horoscope September 2026",
+      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
     },
     {
       "title": "Creative Writing September 2026",
       "link": "https://theplantnews.com/2026/10/13/creative-writing-september-2026/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Dawson_College_06.jpg"
-    },
-    {
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
     },
     {
       "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
@@ -85,6 +79,12 @@
       "link": "https://thebucampus.ca/2026/09/30/prepare-for-fewer-course-options-in-the-coming-years-budget-cuts-are-affecting-the-number-of-courses-available-at-bu/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
+    },
+    {
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Bishop_Otter_Campus%2C_University_of_Chichester_-_geograph.org.uk_-_2726552.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }
