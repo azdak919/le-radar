@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-18T18:48:19.904Z",
+  "updated": "2026-10-18T20:13:43.412Z",
   "total": 178,
   "withPhoto": 150,
   "withStock": 48,
   "withCampusBank": 27,
   "fullyCovered": 178,
-  "leadReadyPhotos": 127,
-  "pageScraped": 16,
-  "photosRecovered": 16,
+  "leadReadyPhotos": 126,
+  "pageScraped": 17,
+  "photosRecovered": 17,
   "imagesCleared": 11,
-  "stockSearches": 54,
-  "stockFound": 47,
+  "stockSearches": 55,
+  "stockFound": 48,
   "campusBankFound": 23,
   "mainPageLeadReady": true,
   "gaps": [
@@ -39,16 +39,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/3/31/Canada_vs_Scotland_Women%27s_Rugby_World_Cup_Pool_B_match.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Shawarm-off!",
-      "link": "https://www.mcgilldaily.com/2026/10/shawarm-off/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
+      "title": "Une semaine pour sensibiliser aux violences sexuelles à l’UdeS",
+      "link": "https://lecollectif.ca/a-la-une/une-semaine-pour-sensibiliser-aux-violences-sexuelles-a-ludes/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Take_Back_the_Night_march%2C_Montpelier_May_2024.jpg"
     },
     {
       "title": "Horoscope September 2026",
       "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
+    },
+    {
+      "title": "Creative Writing September 2026",
+      "link": "https://theplantnews.com/2026/10/13/creative-writing-september-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Dawson_College_06.jpg"
     },
     {
       "title": "Health First!",
@@ -79,12 +85,6 @@
       "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Vecteezy_stack-of-newspaper_1961329.jpg"
-    },
-    {
-      "title": "Creative Writing September 2026",
-      "link": "https://theplantnews.com/2026/10/13/creative-writing-september-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Dawson_College_06.jpg"
     }
   ]
 }
