@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-18T11:01:12.279Z",
+  "updatedAt": "2026-10-18T11:00:33.872Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T11:00:33.897Z"
+      "checkedAt": "2026-10-18T10:59:49.445Z"
     },
     "cism": {
       "id": "cism",
@@ -34,11 +34,11 @@
         "slug": "mix-franco"
       },
       "next": {
-        "title": "Par mots et par vaux",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
+        "title": "Genre de bleu",
+        "source": "api-live",
+        "start": "07:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/370259.mp3",
+        "slug": "genre-de-bleu"
       },
       "track": "",
       "showTitle": "Mix franco",
@@ -46,13 +46,13 @@
       "source": "api-live",
       "sources": [
         "api-live",
-        "schedule"
+        "stream"
       ],
       "clientPoll": {
         "type": "cism-v1",
         "url": "https://admin.cism893.ca/api/v1/live"
       },
-      "checkedAt": "2026-10-18T11:00:35.596Z"
+      "checkedAt": "2026-10-18T10:59:51.461Z"
     },
     "ckut": {
       "id": "ckut",
@@ -78,7 +78,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T11:00:39.537Z"
+      "checkedAt": "2026-10-18T10:59:54.271Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -105,7 +105,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T11:00:53.167Z"
+      "checkedAt": "2026-10-18T11:00:09.542Z"
     },
     "cfak": {
       "id": "cfak",
@@ -130,7 +130,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T11:00:54.201Z"
+      "checkedAt": "2026-10-18T11:00:10.465Z"
     },
     "choq": {
       "id": "choq",
@@ -143,7 +143,7 @@
         "end": "13:00",
         "slug": "opus"
       },
-      "track": "ID — lysandre",
+      "track": "Monk.E x DJ Manifest — Ponts à corde (avec OG Brax)",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +151,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T11:01:11.929Z"
+      "checkedAt": "2026-10-18T11:00:33.521Z"
     }
   }
 }
