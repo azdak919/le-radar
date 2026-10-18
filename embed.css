@@ -390,7 +390,7 @@ html[data-embed="tuner"] .tuner-now::after {
 }
 
 html[data-embed="tuner"] .tuner-now-sub {
-  font-family: var(--sans);
+  font-family: var(--serif);
   font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -1083,13 +1083,13 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner {
 
 /* Override C : titres poste/émission serif ; libellés UI Inter (rythme sports). */
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-now-name,
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-now-sub,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-title {
   font-family: var(--serif);
 }
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-onair,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-label,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-nowair-sub,
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-now-sub,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-embed-credit,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-labels {
   font-family: var(--sans);
