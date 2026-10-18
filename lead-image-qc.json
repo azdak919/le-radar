@@ -1,25 +1,19 @@
 {
-  "updated": "2026-10-18T20:55:18.422Z",
+  "updated": "2026-10-18T22:40:36.160Z",
   "total": 178,
-  "withPhoto": 150,
-  "withStock": 48,
+  "withPhoto": 149,
+  "withStock": 49,
   "withCampusBank": 27,
   "fullyCovered": 178,
-  "leadReadyPhotos": 124,
-  "pageScraped": 17,
-  "photosRecovered": 17,
-  "imagesCleared": 11,
+  "leadReadyPhotos": 125,
+  "pageScraped": 16,
+  "photosRecovered": 16,
+  "imagesCleared": 12,
   "stockSearches": 56,
-  "stockFound": 49,
+  "stockFound": 50,
   "campusBankFound": 23,
   "mainPageLeadReady": true,
   "gaps": [
-    {
-      "title": "Quand Polytechnique tend la main: l'aide financière sous tous ses angles",
-      "link": "https://www.polyscope.qc.ca/blog/post/QPEKa1YZQ6rHD8StJeGU",
-      "reason": "no-stock-match",
-      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2Fbourses_sep.png?alt=media&token=8353fe47-ac3c-4cf7-8d47-ae677a785f76"
-    },
     {
       "title": "Un polytechnicien en Espagne",
       "link": "https://www.polyscope.qc.ca/blog/post/kbgnDbewLv2wv6hDMWI3",
@@ -45,6 +39,12 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/3/31/Canada_vs_Scotland_Women%27s_Rugby_World_Cup_Pool_B_match.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
+      "title": "Les jeunes voteront-ils le 5 octobre ?",
+      "link": "https://quartierlibre.ca/les-jeunes-voteront-ils/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Students_voting_in_Fall_Elections%2C_University_of_Texas_at_Arlington_%2810005980%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "Horoscope September 2026",
       "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
       "reason": "campus-bank",
@@ -57,10 +57,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chichester%2C_Bishop_Otter_Campus_-_geograph.org.uk_-_3003126.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Creative Writing September 2026",
-      "link": "https://theplantnews.com/2026/10/13/creative-writing-september-2026/",
+      "title": "“Decolonization”",
+      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Dawson_College_06.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/3/3d/McGill_University_downtown_campus_36.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "A Tradition on the Edge: The Future of Homecoming",
