@@ -1,10 +1,18 @@
 {
-  "updated": "2026-10-18T17:27:38.473Z",
+  "updated": "2026-10-18T18:47:37.930Z",
   "total": 178,
   "withAuthor": 178,
-  "mismatches": 18,
+  "mismatches": 19,
   "ok": true,
   "samples": [
+    {
+      "title": "Le Grand Prix cyclistes s’amène à Montréal !",
+      "link": "https://quartierlibre.ca/le-grand-prix-cyclistes-montreal/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Josephine Dao Devenyns",
+      "reason": "page-byline"
+    },
     {
       "title": "La politique commence ici",
       "link": "https://quartierlibre.ca/la-politique-commence-ici/",
@@ -150,5 +158,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 18
+  "fixed": 19
 }
