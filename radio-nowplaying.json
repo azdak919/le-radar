@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-18T11:00:33.872Z",
+  "updatedAt": "2026-10-18T12:26:24.816Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,38 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T10:59:49.445Z"
+      "checkedAt": "2026-10-18T12:25:45.918Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Mix franco",
-        "source": "api-live",
-        "start": "02:00",
-        "url": "https://stream.cism893.ca/",
-        "slug": "mix-franco"
+        "title": "Par mots et par vaux",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/par-mots-et-par-vaux"
       },
       "next": {
-        "title": "Genre de bleu",
-        "source": "api-live",
-        "start": "07:00",
-        "url": "https://podcast.cism893.ca/podcast/download_mp3/370259.mp3",
-        "slug": "genre-de-bleu"
+        "title": "Le 120e parallèle",
+        "source": "schedule",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/le-120e-parallele"
       },
       "track": "",
-      "showTitle": "Mix franco",
+      "showTitle": "Par mots et par vaux",
       "host": "",
-      "source": "api-live",
+      "source": "schedule",
       "sources": [
-        "api-live",
-        "stream"
+        "schedule"
       ],
-      "clientPoll": {
-        "type": "cism-v1",
-        "url": "https://admin.cism893.ca/api/v1/live"
-      },
-      "checkedAt": "2026-10-18T10:59:51.461Z"
+      "clientPoll": null,
+      "checkedAt": "2026-10-18T12:25:47.703Z"
     },
     "ckut": {
       "id": "ckut",
@@ -78,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T10:59:54.271Z"
+      "checkedAt": "2026-10-18T12:25:50.320Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Sun Ra, Sun Rise",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
-      },
-      "next": {
         "title": "The Gigi Brown Experience",
         "source": "schedule-live",
         "start": "08:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
       },
+      "next": {
+        "title": "REVC",
+        "source": "schedule-live",
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/revc"
+      },
       "track": "",
-      "showTitle": "Sun Ra, Sun Rise",
+      "showTitle": "The Gigi Brown Experience",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T11:00:09.542Z"
+      "checkedAt": "2026-10-18T12:26:04.858Z"
     },
     "cfak": {
       "id": "cfak",
@@ -130,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T11:00:10.465Z"
+      "checkedAt": "2026-10-18T12:26:06.247Z"
     },
     "choq": {
       "id": "choq",
@@ -143,7 +139,7 @@
         "end": "13:00",
         "slug": "opus"
       },
-      "track": "Monk.E x DJ Manifest — Ponts à corde (avec OG Brax)",
+      "track": "Kallitechnis & Mango Heist — passport picture",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -151,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T11:00:33.521Z"
+      "checkedAt": "2026-10-18T12:26:24.466Z"
     }
   }
 }
