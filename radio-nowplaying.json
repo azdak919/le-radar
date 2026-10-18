@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-18T18:05:23.307Z",
+  "updatedAt": "2026-10-18T18:45:57.465Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T18:04:25.479Z"
+      "checkedAt": "2026-10-18T18:45:20.287Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T18:04:27.243Z"
+      "checkedAt": "2026-10-18T18:45:22.097Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,21 +81,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T18:04:30.473Z"
+      "checkedAt": "2026-10-18T18:45:24.335Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Methods and Madness",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "14:00",
         "end": "15:00",
         "url": "http://www.cjlo.com/shows/methods-and-madness"
       },
       "next": {
         "title": "Fukubukuro",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/fukubukuro"
@@ -103,12 +103,12 @@
       "track": "",
       "showTitle": "Methods and Madness",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T18:05:04.667Z"
+      "checkedAt": "2026-10-18T18:45:38.301Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T18:05:05.511Z"
+      "checkedAt": "2026-10-18T18:45:39.293Z"
     },
     "choq": {
       "id": "choq",
@@ -152,7 +152,7 @@
         "end": "18:00",
         "slug": "mutations"
       },
-      "track": "Le Belladone — L'homme",
+      "track": "Miro Belzil — Reverse Uno",
       "showTitle": "Pôle hip-hop",
       "host": "",
       "source": "api-live",
@@ -160,7 +160,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T18:05:22.957Z"
+      "checkedAt": "2026-10-18T18:45:57.114Z"
     }
   }
 }
