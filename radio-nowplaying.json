@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-18T23:10:02.634Z",
+  "updatedAt": "2026-10-18T23:28:06.413Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T23:09:03.174Z"
+      "checkedAt": "2026-10-18T23:27:27.524Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T23:09:05.083Z"
+      "checkedAt": "2026-10-18T23:27:29.279Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,21 +81,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T23:09:07.709Z"
+      "checkedAt": "2026-10-18T23:27:31.992Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "No Boundaries",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/no-boundaries"
       },
       "next": {
         "title": "Eastern Promises",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "20:00",
         "end": "20:30",
         "url": "http://www.cjlo.com/shows/eastern-promises"
@@ -103,12 +103,12 @@
       "track": "",
       "showTitle": "No Boundaries",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T23:09:43.449Z"
+      "checkedAt": "2026-10-18T23:27:46.828Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T23:09:44.649Z"
+      "checkedAt": "2026-10-18T23:27:48.040Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Alewya — Selah",
+      "track": "Gilla Band — Giraffe",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T23:10:02.283Z"
+      "checkedAt": "2026-10-18T23:28:06.062Z"
     }
   }
 }
