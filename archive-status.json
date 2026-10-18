@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-18T08:29:26.746Z",
+  "updated": "2026-10-18T13:36:51.463Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -4184,14 +4184,19 @@
       "via": "save-page-now",
       "source": "Quartier Libre",
       "snapshot": "https://web.archive.org/web/20261018082900/https://quartierlibre.ca/que-faire-a-montreal-en-octobre/"
+    },
+    "https://quartierlibre.ca/cinq-nouvelles-de-la-semaine-12/": {
+      "at": "2026-10-18T08:28:43.000Z",
+      "via": "existant",
+      "source": "Quartier Libre"
     }
   },
   "stats": {
-    "total": 730,
+    "total": 731,
     "lastRun": {
-      "saved": 1,
-      "skipped": 0,
-      "failed": 13,
+      "saved": 0,
+      "skipped": 1,
+      "failed": 12,
       "stoppedEarly": false
     }
   },
