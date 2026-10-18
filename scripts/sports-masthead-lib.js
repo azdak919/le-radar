@@ -35,10 +35,30 @@ function gameStamp(game) {
   return `${String(game?.date || '9999-12-31')}T${String(game?.time || '23:59')}`;
 }
 
+const RSEQ_GAME_URL = 'https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=';
+
+/**
+ * Retire d’un match ce que le client sait reconstruire (expandSportsMasthead
+ * dans radar-sports-cta.js) : sport / compétition identiques à l’équipe,
+ * URL RSEQ standard dérivable du gameId.
+ */
+function compactGame(game, team) {
+  const out = { ...game };
+  if (out.sport && out.sport === team?.sport) delete out.sport;
+  if (out.competition && out.competition === team?.leagueLabel) delete out.competition;
+  if (out.gameId && out.url === `${RSEQ_GAME_URL}${out.gameId}`) delete out.url;
+  return out;
+}
+
 function compactTeam(team, { results = [], nextGames = [] } = {}) {
-  const out = { ...team, results, nextGames };
-  out.lastGame = results[0] || null;
-  out.nextGame = nextGames[0] || null;
+  // lastGame / nextGame = results[0] / nextGames[0] : reconstruits côté client.
+  const out = {
+    ...team,
+    results: results.map((g) => compactGame(g, team)),
+    nextGames: nextGames.map((g) => compactGame(g, team)),
+  };
+  delete out.lastGame;
+  delete out.nextGame;
   // Champs utiles seulement au tableau complet / au crawl — pas au mât.
   delete out.record;
   delete out.schedule;
@@ -100,9 +120,14 @@ function buildSportsMastheadPayload(payload, {
     for (const { team, game } of faces) {
       if (!team?.id || !game) continue;
       if (!selectedTeams.has(team.id)) {
-        selectedTeams.set(team.id, { team, results: [], nextGames: [] });
+        selectedTeams.set(team.id, { team, results: [], nextGames: [], seen: new Set() });
       }
       const entry = selectedTeams.get(team.id);
+      // Une même face peut arriver deux fois (lastGame + results[0], ou
+      // doublon RSEQ) : ne l’écrire qu’une fois dans le mât.
+      const faceKey = gameKey(game, team);
+      if (entry.seen.has(faceKey)) continue;
+      entry.seen.add(faceKey);
       const result = [team.lastGame, ...(team.results || [])].some((candidate) => candidate === game);
       (result ? entry.results : entry.nextGames).push(game);
     }
@@ -114,6 +139,7 @@ function buildSportsMastheadPayload(payload, {
   }
 
   return {
+    compact: 1,
     updated: payload?.updated,
     fetchedAt: payload?.fetchedAt,
     source: payload?.source,

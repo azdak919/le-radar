@@ -4695,7 +4695,32 @@ async function pollRseqLiveGames(force = false) {
   return changed;
 }
 
+/**
+ * Le snapshot du mât est compacté (scripts/sports-masthead-lib.js) :
+ * lastGame/nextGame, sport, compétition et URL RSEQ y sont omis quand ils
+ * se déduisent. On les reconstruit avant tout traitement.
+ */
+function expandSportsMasthead(raw) {
+  if (!raw || !raw.compact || !raw.teams) return raw;
+  for (const team of Object.values(raw.teams)) {
+    if (!team) continue;
+    for (const list of [team.results, team.nextGames]) {
+      if (!Array.isArray(list)) continue;
+      for (const g of list) {
+        if (!g) continue;
+        if (!g.sport && team.sport) g.sport = team.sport;
+        if (!g.competition && team.leagueLabel) g.competition = team.leagueLabel;
+        if (!g.url && g.gameId) g.url = `https://diffusion.rseq.ca/Default.aspx?Type=Game&GameId=${g.gameId}`;
+      }
+    }
+    if (!('lastGame' in team)) team.lastGame = (team.results && team.results[0]) || null;
+    if (!('nextGame' in team)) team.nextGame = (team.nextGames && team.nextGames[0]) || null;
+  }
+  return raw;
+}
+
 function applySportsPayload(raw) {
+  raw = expandSportsMasthead(raw);
   sportsData = (typeof RadarSportsFreshness !== 'undefined'
     && typeof RadarSportsFreshness.pruneSportsPayload === 'function')
     ? RadarSportsFreshness.pruneSportsPayload(raw)
