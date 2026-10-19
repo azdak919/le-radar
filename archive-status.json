@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-18T23:40:45.561Z",
+  "updated": "2026-10-19T09:31:08.580Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -4189,15 +4189,33 @@
       "at": "2026-10-18T08:28:43.000Z",
       "via": "existant",
       "source": "Quartier Libre"
+    },
+    "https://thelinknewspaper.ca/article/16487": {
+      "at": "2026-10-19T09:29:15.894Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20261019092856/https://thelinknewspaper.ca/article/16487"
+    },
+    "https://quartierlibre.ca/les-jeunes-voteront-ils/": {
+      "at": "2026-10-19T09:30:45.398Z",
+      "via": "save-page-now",
+      "source": "Quartier Libre",
+      "snapshot": "https://web.archive.org/web/20261019093031/https://quartierlibre.ca/les-jeunes-voteront-ils/"
+    },
+    "https://quartierlibre.ca/le-grand-prix-cyclistes-montreal/": {
+      "at": "2026-10-19T09:31:08.580Z",
+      "via": "save-page-now",
+      "source": "Quartier Libre",
+      "snapshot": "https://web.archive.org/web/20261019093053/https://quartierlibre.ca/le-grand-prix-cyclistes-montreal/"
     }
   },
   "stats": {
-    "total": 731,
+    "total": 734,
     "lastRun": {
-      "saved": 0,
+      "saved": 3,
       "skipped": 0,
-      "failed": 7,
-      "stoppedEarly": true
+      "failed": 12,
+      "stoppedEarly": false
     }
   },
   "sources": {
