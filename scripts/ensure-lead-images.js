@@ -40,6 +40,7 @@ const {
   clearMirroredLead,
   isPortraitLeadRatio,
   imageUrlLooksPortrait,
+  LEAD_CROP_MIN_RATIO,
 } = require('./article-image-lib');
 const {
   findStockPhoto,
@@ -113,12 +114,27 @@ function clearLegacyFallback(item) {
   delete item.fallbackImage;
 }
 
-function assignSourceImage(item, url, leadReady) {
+function assignSourceImage(item, url, leadReady, cropSafe = false) {
   if (item.image && url && !imageUrlsMatch(url, item.image)) {
     clearMirroredLead(item);
   }
   item.image = url;
   if (leadReady !== undefined) item.leadImageReady = leadReady;
+  // Portrait recadrable (crédit Photo/Dessin) : retenu pour les passes
+  // suivantes, qui n'ont plus l'alt de la page sous la main.
+  if (cropSafe && url) item.imageCropSafe = url;
+  else if (item.imageCropSafe && !imageUrlsMatch(item.imageCropSafe, url || '')) delete item.imageCropSafe;
+}
+
+/** La photo d'article actuelle a été jugée recadrable en 3:2 centré. */
+function hasCropSafeImage(item) {
+  return !!(item?.image && item.imageCropSafe && imageUrlsMatch(item.imageCropSafe, item.image));
+}
+
+/** Portrait modéré qui remplit encore une une 3:2 une fois recadré au centre. */
+function fillsLeadWhenCropped(width = 0, height = 0) {
+  if (!width || !height) return false;
+  return width / height >= LEAD_CROP_MIN_RATIO && width >= 640 && width / 1.5 >= 360;
 }
 
 /** Crédit photo source : lié à l’image retirée, il ne doit pas survivre. */
@@ -136,6 +152,8 @@ function clearSourceImageCredit(item) {
  */
 async function replacePortraitLead(item, { reject = [], opts = {}, resolve = resolveLeadReadyPhoto, probe = probeRemoteImageSize } = {}) {
   if (!item || !item.image) return null;
+  // Photo / dessin crédité, déjà jugé recadrable : on le centre, on le garde.
+  if (hasCropSafeImage(item)) return null;
   let portrait = imageUrlLooksPortrait(item.image);
   if (!portrait) {
     const dims = await probe(item.image);
@@ -145,12 +163,22 @@ async function replacePortraitLead(item, { reject = [], opts = {}, resolve = res
   const portraitUrl = item.image;
   let resolved = null;
   try { resolved = await resolve(item, reject, opts); } catch { resolved = null; }
+  // La photo de l'article elle-même est recadrable (crédit Photo/Dessin, pas
+  // une affiche) : la garder, centrée en 3:2, plutôt qu'un stock ou le campus.
+  if (resolved?.url && resolved.cropSafe && resolved.leadReady !== false
+    && imageUrlsMatch(resolved.url, portraitUrl)) {
+    assignSourceImage(item, portraitUrl, true, true);
+    clearLegacyFallback(item);
+    clearStockPhoto(item);
+    return 'cropped';
+  }
   const ok = resolved?.url
     && resolved.leadReady !== false
     && !imageUrlsMatch(resolved.url, portraitUrl)
-    && !(resolved.width && resolved.height && isPortraitLeadRatio(resolved.width, resolved.height));
+    && (resolved.cropSafe
+      || !(resolved.width && resolved.height && isPortraitLeadRatio(resolved.width, resolved.height)));
   if (ok) {
-    assignSourceImage(item, resolved.url, true);
+    assignSourceImage(item, resolved.url, true, !!resolved.cropSafe);
     clearSourceImageCredit(item);
     clearLegacyFallback(item);
     clearStockPhoto(item);
@@ -245,14 +273,16 @@ function shouldValidateImageOnPage(item = {}, sourceMap = new Map()) {
   return !tokens.some((t) => img.includes(t));
 }
 
-async function probeLeadReady(url, reject = [], opts = {}) {
+async function probeLeadReady(url, reject = [], opts = {}, { cropSafe = false } = {}) {
   if (!url || !isCandidateImageUrl(url, reject) || isWeakImageUrl(url, opts)) return false;
   const dims = await probeRemoteImageSize(url);
-  return !!(dims && meetsLeadDisplaySize(dims.width, dims.height));
+  if (!dims) return false;
+  if (meetsLeadDisplaySize(dims.width, dims.height)) return true;
+  return !!(cropSafe && isPortraitLeadRatio(dims.width, dims.height) && fillsLeadWhenCropped(dims.width, dims.height));
 }
 
 async function markSourceLeadQuality(item) {
-  const sourceReady = await probeLeadReady(item.image);
+  const sourceReady = await probeLeadReady(item.image, [], {}, { cropSafe: hasCropSafeImage(item) });
   item.leadImageReady = sourceReady;
   return sourceReady;
 }
@@ -346,8 +376,7 @@ async function applyStockPhoto(item, sourceMap = new Map(), { avoidCampusUrls = 
     );
     if (resolved?.url && doUpdate) {
       if (resolved.leadReady !== false) {
-        item.image = resolved.url;
-        item.leadImageReady = true;
+        assignSourceImage(item, resolved.url, true, !!resolved.cropSafe);
         clearLegacyFallback(item);
         clearStockPhoto(item);
         return false;
@@ -463,6 +492,7 @@ async function main() {
       const urlPortrait = imageUrlLooksPortrait(item.image);
       const dims = (urlBanner || urlPortrait) ? null : await probeRemoteImageSize(item.image);
       const portrait = urlPortrait || !!(dims && isPortraitLeadRatio(dims.width, dims.height));
+      if (portrait && hasCropSafeImage(item)) return;
       if (!urlBanner && !portrait && !(dims && isBannerLikeRatio(dims.width, dims.height))) return;
       if (portrait) {
         const r = doUpdate ? await replacePortraitLead(item, { reject, opts }) : 'dry';
@@ -488,7 +518,7 @@ async function main() {
         && !imageUrlsMatch(resolved.url, item.image)
       ) {
         if (doUpdate) {
-          assignSourceImage(item, resolved.url, true);
+          assignSourceImage(item, resolved.url, true, !!resolved.cropSafe);
           clearLegacyFallback(item);
           clearStockPhoto(item);
         }
@@ -531,7 +561,7 @@ async function main() {
       if (!resolved?.url) return;
       pageScraped += 1;
       if (doUpdate) {
-        assignSourceImage(item, resolved.url, resolved.leadReady !== false);
+        assignSourceImage(item, resolved.url, resolved.leadReady !== false, !!resolved.cropSafe);
         clearLegacyFallback(item);
         if (resolved.leadReady !== false) clearStockPhoto(item);
       }
@@ -589,7 +619,7 @@ async function main() {
                 && resolved.leadReady !== false
                 && !imageUrlsMatch(resolved.url, item.image)
               ) {
-                assignSourceImage(item, resolved.url, true);
+                assignSourceImage(item, resolved.url, true, !!resolved.cropSafe);
                 clearLegacyFallback(item);
                 clearStockPhoto(item);
                 pageScraped += 1;
@@ -599,7 +629,8 @@ async function main() {
           }
           // Ne retirer le stock QUE si la photo SOURCE seule est lead-ready.
           // Sinon (stock Assemblée + logo Exil) on effaçait le bon visuel.
-          const sourceLead = item.image && ok(item.image) && await probeLeadReady(item.image);
+          const sourceLead = item.image && ok(item.image)
+            && await probeLeadReady(item.image, [], {}, { cropSafe: hasCropSafeImage(item) });
           if (sourceLead) {
             clearStockPhoto(item);
           } else if (item.stockImage && item.image && !ok(item.image)) {
@@ -617,7 +648,7 @@ async function main() {
           // leadReady : vraie photo → garder. Sinon défaut de site faible
           // (logo partagé) : ne pas l'imposer, laisser la file stock.
           if (resolved.leadReady !== false) {
-            assignSourceImage(item, resolved.url, true);
+            assignSourceImage(item, resolved.url, true, !!resolved.cropSafe);
             clearLegacyFallback(item);
             clearStockPhoto(item);
             pageScraped += 1;
@@ -635,7 +666,7 @@ async function main() {
             || resolved.url !== item.image
             || !item.leadImageReady;
           if (better && resolved.leadReady !== false) {
-            assignSourceImage(item, resolved.url, true);
+            assignSourceImage(item, resolved.url, true, !!resolved.cropSafe);
             clearLegacyFallback(item);
             // Une vraie photo d'article remplace toujours la banque campus / stock.
             clearStockPhoto(item);
@@ -644,7 +675,7 @@ async function main() {
           } else if (better && resolved.leadReady === false && resolved.url !== item.image) {
             // Amélioration faible seulement si on n'a pas encore de stock thématique
             if (!item.stockImage || item.imageProvider === 'campus-bank') {
-              assignSourceImage(item, resolved.url, false);
+              assignSourceImage(item, resolved.url, false, !!resolved.cropSafe);
               clearLegacyFallback(item);
               pageScraped += 1;
             }
@@ -652,7 +683,8 @@ async function main() {
         }
         if (await photoIsLeadReady(item)) {
           if (doUpdate) {
-            const sourceLead = item.image && ok(item.image) && await probeLeadReady(item.image);
+            const sourceLead = item.image && ok(item.image)
+            && await probeLeadReady(item.image, [], {}, { cropSafe: hasCropSafeImage(item) });
             // Hôte fragile sans miroir : garder le stock campus comme filet.
             if (sourceLead && !(imageHostIsFragile(item.image) && !item.imageLocal)) {
               clearStockPhoto(item);
@@ -856,7 +888,7 @@ async function main() {
   }
 }
 
-module.exports = { replacePortraitLead, fillClearedLead, mapPool };
+module.exports = { replacePortraitLead, fillClearedLead, mapPool, assignSourceImage, hasCropSafeImage, fillsLeadWhenCropped };
 
 if (require.main === module) {
   main().catch((e) => {

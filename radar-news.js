@@ -3340,6 +3340,18 @@ function displaySizedImageUrl(raw = '', role = 'lead') {
       return src;
     }
 
+    // Original Commons (…/commons/5/5a/Fichier.jpg) : vignette directe à une
+    // largeur standard, sans les 2 redirections de Special:FilePath — à la une,
+    // ces sauts dépassaient le délai et la photo thématique cédait au campus
+    // (Quartier Libre, « Les jeunes voteront-ils le 5 octobre ? »). Si la
+    // vignette échoue (original plus petit), onerror retente l'original.
+    if (host === 'upload.wikimedia.org') {
+      const orig = u.pathname.match(/^\/wikipedia\/commons\/([0-9a-f])\/([0-9a-f]{2})\/([^/]+\.(?:jpe?g|png|webp))$/i);
+      if (orig) {
+        const bucket = role === 'lead' ? 1280 : (isThumb ? 500 : 960);
+        return `https://upload.wikimedia.org/wikipedia/commons/thumb/${orig[1]}/${orig[2]}/${orig[3]}/${bucket}px-${orig[3]}`;
+      }
+    }
     if (host === 'upload.wikimedia.org' || host.endsWith('.wikimedia.org')) {
       const fileMatch = u.pathname.match(/\/([^/]+\.(?:jpe?g|png|webp|gif))$/i);
       if (fileMatch) {
@@ -4159,6 +4171,9 @@ function attachArticleImage(article, item, role) {
     window.setTimeout(() => {
       if (settled || article.classList.contains('has-image') || !media.isConnected) return;
       if (kind === 'photo' && !fragileRemote && !fromArchive && !fromPhoton) return;
+      // Photo thématique lente : elle reste jusqu'à onload/onerror. Le délai
+      // ne doit jamais la remplacer par le pavillon du campus.
+      if (kind === 'stock' && item.imageProvider !== 'campus-bank') return;
       const alt = alternateDisplayImage(item, kind, role, src);
       if (alt.src && alt.src !== src && (allowRetry || alt.kind !== kind)) {
         settled = true;

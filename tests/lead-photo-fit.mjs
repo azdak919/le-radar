@@ -473,6 +473,46 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
   check(!/is-poster/.test(radar + css), 'plus de une en bandes (is-poster / contain)');
 }
 
+// Portrait recadrable (Quartier Libre, « Les jeunes voteront-ils le 5 octobre ? »,
+// 18 oct. 2026) : le dessin de l'article (724×1024, « Dessin: Wendy Kim Pires »)
+// était écarté par la règle portrait < 0,95 puis remplacé par un stock / le
+// campus UdeM. Une photo ou un dessin crédité à une personne se centre en 3:2 ;
+// une affiche (FEUS), une story 9:16, un sigle ou un organisme, non.
+{
+  const { isCropSafePortrait } = require('../scripts/article-image-lib.js');
+  const { replacePortraitLead, hasCropSafeImage, fillsLeadWhenCropped } = require('../scripts/ensure-lead-images.js');
+  const check = (ok, msg) => { if (ok) console.log(`  ✓ ${msg}`); else { failed += 1; console.error(`  ✗ ${msg}`); } };
+  const QL_URL = 'https://quartierlibre.ca/wp-content/uploads/2026/10/8-9_Illu-jeune-vote-724x1024.jpg';
+  const QL_ALT = 'Environ 54 % des jeunes de 18 à 24 ans avaient voté aux élections provinciales de 2022, pour un taux de 66 %. Dessin: Wendy Kim Pires';
+  check(isCropSafePortrait(724, 1024, { alt: QL_ALT, url: QL_URL }), 'dessin Quartier Libre 724×1024 crédité → recadré au centre');
+  check(isCropSafePortrait(800, 1000, { caption: 'Crédit photo : Jean-Philippe Roy', url: 'https://x/manif-800x1000.jpg' }), 'photo portrait 4:5 créditée → recadrée');
+  check(!isCropSafePortrait(819, 1024, { alt: 'Photo : FEUS', url: 'https://x/wp-content/uploads/a_CreditFEUS-819x1024.jpg' }), 'affiche FEUS (sigle) toujours écartée');
+  check(!isCropSafePortrait(800, 1000, { alt: 'Photo : Courtoisie Université Laval' }), 'crédit d’organisme → écartée');
+  check(!isCropSafePortrait(1080, 1920, { alt: 'Photo : Marie Tremblay' }), 'story 9:16 → écartée (trop haute)');
+  check(!isCropSafePortrait(800, 1000, { alt: 'Affiche du spectacle. Photo : Marie Tremblay' }), 'mot « affiche » → écartée');
+  check(!isCropSafePortrait(800, 1000, { alt: 'Photo : Marie Tremblay', url: 'https://x/infographie-budget-800x1000.jpg' }), 'fichier « infographie » → écarté');
+  check(!isCropSafePortrait(800, 1000, {}), 'portrait sans crédit → règle inchangée (écarté)');
+  check(!isCropSafePortrait(400, 560, { alt: QL_ALT }), 'trop petit pour une une recadrée');
+  check(fillsLeadWhenCropped(724, 1024) && !fillsLeadWhenCropped(540, 1024), 'recadrage 3:2 remplit la une');
+
+  const html = `<html><head><meta property="og:image" content="${QL_URL}" />
+    <meta property="og:image:width" content="724" /><meta property="og:image:height" content="1024" />
+    <meta property="og:image:alt" content="${QL_ALT}" /></head><body><article>
+    <figure><img width="724" height="1024" src="${QL_URL}" class="attachment-large size-large wp-image-32367" alt="${QL_ALT}" /></figure>
+    ${'<p>Texte de l’article sur la participation électorale des jeunes.</p>'.repeat(8)}</article></body></html>`;
+  const top = listArticleImageCandidates(html, [], {}, 'https://quartierlibre.ca/les-jeunes-voteront-ils/')[0];
+  check(top?.url === QL_URL && /Wendy Kim Pires/.test(top.alt || ''), 'candidat og:image porte son alt (crédit du dessin)');
+  check(isCropSafePortrait(top.w, top.h, { ...top }), 'photo de l’article retenue pour la une (recadrage centré)');
+
+  const it = { link: 'https://quartierlibre.ca/x', image: QL_URL, stockImage: 'https://upload.wikimedia.org/a.jpg', imageProvider: 'campus-bank' };
+  const r = await replacePortraitLead(it, { resolve: async () => ({ url: QL_URL, width: 724, height: 1024, leadReady: true, cropSafe: true }) });
+  check(r === 'cropped' && it.image === QL_URL && !it.stockImage && hasCropSafeImage(it), 'passe portrait : photo d’article gardée, campus retiré');
+  check(await replacePortraitLead(it, { probe: async () => { throw new Error('ne doit pas sonder'); } }) === null && it.image === QL_URL, 'déjà recadrable : plus jamais retirée aux passes suivantes');
+  const radar = readFileSync(new URL('../radar-news.js', import.meta.url), 'utf8');
+  check(/kind === 'stock' && item\.imageProvider !== 'campus-bank'\) return;/.test(radar), 'client : délai dépassé ne remplace pas une photo thématique par le campus');
+  check(/commons\/thumb\/\$\{orig\[1\]\}/.test(radar), 'client : vignette Commons directe (sans redirections FilePath)');
+}
+
 if (failed) {
   console.error(`\n${failed} failure(s)`);
   process.exit(1);

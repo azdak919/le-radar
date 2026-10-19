@@ -513,10 +513,11 @@ function captionedFigureMeta(content = '') {
     for (const img of fig.match(/<img[^>]*>/gi) || []) {
       const key = normalizeImagePath(imgTagSrc(img));
       if (!key) continue;
-      const prev = byKey.get(key) || { hasCaption: false, campaignGraphic: false };
+      const prev = byKey.get(key) || { hasCaption: false, campaignGraphic: false, caption: '' };
       byKey.set(key, {
         hasCaption: prev.hasCaption || hasCaption,
         campaignGraphic: prev.campaignGraphic || campaignGraphic,
+        caption: prev.caption || (hasCaption ? text : ''),
       });
     }
   }
@@ -555,6 +556,7 @@ function collectContentImages(content = '', extraRejectPatterns = [], options = 
     const demoted = isPathDemoted(src, demotePatterns);
     urls.push({
       url: src, tag, w, h, isFull, isCropThumb, hasCaption, campaignGraphic, demoted,
+      alt, caption: figMeta.caption || '',
     });
   }
   if (preferSizeFull) {
@@ -775,6 +777,42 @@ function isPortraitLeadRatio(width = 0, height = 0) {
   if (!width || !height) return false;
   return width / height < LEAD_MIN_FIT_RATIO;
 }
+/**
+ * Portrait « recadrable » : la une recadre en 3:2 centré (object-fit: cover,
+ * jamais de bandes). Une photo ou un dessin modérément en hauteur s'y prête
+ * (Quartier Libre, « Les jeunes voteront-ils… », dessin 724×1024 : mains et
+ * urne au centre). Une affiche à texte (FEUS 819×1024), une story 9:16, une
+ * infographie ou un logo, non. Sans OCR, on exige un signal éditorial :
+ * crédit « Photo : / Dessin : / Illustration : Nom » dans l'alt ou la
+ * légende, et aucun mot d'affiche dans l'alt, la légende ou le nom de fichier.
+ */
+const LEAD_CROP_MIN_RATIO = 0.66;
+const PORTRAIT_POSTER_RE = /(?:^|[^\p{L}])(?:affiches?|posters?|flyers?|infographi\p{L}*|programmation|programme|horaires?|calendrier|stor(?:y|ies)|invitations?|logos?|slogans?|menu|annonces?|communiqu[ée]s?|campagnes?|campaigns?|visuels?|textes?|texts?|quotes?|citations?)(?=$|[^\p{L}])/iu;
+const EDITORIAL_CREDIT_RE = /(?:^|[^\p{L}])(?:photos?|photographie|photographe|photographer|dessins?|illustrations?|illustr\.|illustrat(?:eur|rice|or)|photo credit|cr[ée]dit photo)\s*(?:[:：©]|par\s|by\s)\s*(\p{L})/giu;
+const EDITORIAL_PERSON_RE = /^\p{Lu}\p{Ll}+(?:[-'’]\p{L}+)*\s+(?:(?:de|du|des|da|van|von|le|la)\s+)?\p{Lu}\p{Ll}/u;
+const CREDIT_ORG_RE = /(?:^|\s)(?:courtoisie|gracieuset[ée]|courtesy|universit[ée]|university|c[ée]gep|coll[eè]ge|college|association|f[ée]d[ée]ration|comit[ée]|syndicat|service|archives?|soci[ée]t[ée]|ville|minist[eè]re|gouvernement|union|club|groupe|r[ée]daction|staff)(?=\s|$)/iu;
+function isCropSafePortrait(width = 0, height = 0, ctx = {}) {
+  if (!width || !height || !isPortraitLeadRatio(width, height)) return false;
+  if (width / height < LEAD_CROP_MIN_RATIO) return false;
+  // Le recadrage 3:2 doit encore remplir la une.
+  if (width < LEAD_MIN_WIDTH || width / 1.5 < LEAD_MIN_HEIGHT) return false;
+  if (ctx.campaignGraphic) return false;
+  const text = `${ctx.alt || ''} ${ctx.caption || ''}`.replace(/\s+/g, ' ').trim();
+  let path = String(ctx.url || '');
+  try { path = decodeURIComponent(new URL(path).pathname); } catch { /* brut */ }
+  const file = path.split('/').pop().replace(/[_+.-]+/g, ' ');
+  if (PORTRAIT_POSTER_RE.test(text) || PORTRAIT_POSTER_RE.test(file)) return false;
+  if (captionLooksLikeCampaignGraphic(text)) return false;
+  // Crédité à une personne (« Dessin: Wendy Kim Pires ») : Prénom Nom.
+  // Un sigle ou un organisme (« Photo : FEUS », affiche FEUS du Collectif ;
+  // « Courtoisie », « Université… ») ne suffit pas.
+  for (const m of text.matchAll(EDITORIAL_CREDIT_RE)) {
+    const name = text.slice(m.index + m[0].length - 1).split(/[|,;()\n]/)[0].trim();
+    if (EDITORIAL_PERSON_RE.test(name) && !CREDIT_ORG_RE.test(name.split(/\s+/).slice(0, 4).join(' '))) return true;
+  }
+  return false;
+}
+
 function imageUrlLooksPortrait(url = '') {
   const size = wpSizeFromImageUrl(url);
   return !!(size && isPortraitLeadRatio(size.width, size.height));
@@ -851,6 +889,8 @@ function listArticleImageCandidates(html = '', extraRejectPatterns = [], options
         h: dimH,
         demoted: isPathDemoted(url, demotePatterns),
         campaignGraphic: !!extra.campaignGraphic,
+        alt: extra.alt || '',
+        caption: extra.caption || '',
       });
       break;
     }
@@ -867,6 +907,8 @@ function listArticleImageCandidates(html = '', extraRejectPatterns = [], options
     // Bonus fort si aussi dans le corps ; sinon on accepte quand même (Substack).
     pushMeta(ogImage, ogInContent ? 110 : 95, ogW, ogH, {
       campaignGraphic: !!(ogMatch && ogMatch.campaignGraphic),
+      alt: metaContent(html, 'og:image:alt') || (ogMatch && ogMatch.alt) || '',
+      caption: (ogMatch && ogMatch.caption) || '',
     });
 
     for (const key of ['twitter:image', 'twitter:image:src']) {
@@ -874,6 +916,8 @@ function listArticleImageCandidates(html = '', extraRejectPatterns = [], options
       const twMatch = tw && contentImages.find((img) => imageUrlsMatch(img.url, tw));
       pushMeta(tw, twMatch ? 95 : 85, 0, 0, {
         campaignGraphic: !!(twMatch && twMatch.campaignGraphic),
+        alt: metaContent(html, 'twitter:image:alt') || (twMatch && twMatch.alt) || '',
+        caption: (twMatch && twMatch.caption) || '',
       });
     }
   }
@@ -901,6 +945,8 @@ function listArticleImageCandidates(html = '', extraRejectPatterns = [], options
       h: img.h || 0,
       demoted: !!img.demoted,
       campaignGraphic: !!img.campaignGraphic,
+      alt: img.alt || '',
+      caption: img.caption || '',
     });
   }
 
@@ -964,7 +1010,13 @@ function leadImageUrlCandidates(raw = '') {
 }
 
 async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {}) {
-  const tryUrlOnce = async (url, metaW = 0, metaH = 0) => {
+  /** Portrait recadrable (crédit Photo/Dessin, pas une affiche) : une 3:2 centrée. */
+  const portraitHit = (url, width, height, ctx, source) => (
+    isCropSafePortrait(width, height, { ...ctx, url })
+      ? { url, width, height, source, leadReady: true, cropSafe: true }
+      : null
+  );
+  const tryUrlOnce = async (url, metaW = 0, metaH = 0, ctx = {}) => {
     if (!url || !isCandidateImageUrl(url, extraRejectPatterns)) return null;
     // Ne pas abandonner une URL « weak » : leadImageUrlCandidates la promeut
     // (Image-16-600x315.jpg → Image-16.jpg). On ne skip que si *aucune*
@@ -973,7 +1025,9 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     // Jamais d'image en hauteur pour la une (même « faible ») : elle revenait
     // par la file sans photo (Quartier Libre 964×1024, ratio 0,94 < 0,95)
     // juste après avoir été retirée par la passe portrait.
-    if (metaW && metaH && isPortraitLeadRatio(metaW, metaH)) return null;
+    if (metaW && metaH && isPortraitLeadRatio(metaW, metaH)) {
+      return portraitHit(url, metaW, metaH, ctx, 'meta-portrait-crop');
+    }
     if (metaW && metaH && meetsLeadDisplaySize(metaW, metaH)) {
       return { url, width: metaW, height: metaH, source: 'meta', leadReady: true };
     }
@@ -981,7 +1035,9 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
       return { url, width: metaW, height: metaH, source: 'meta-editorial', leadReady: true };
     }
     const dims = await probeRemoteImageSize(url);
-    if (dims && isPortraitLeadRatio(dims.width, dims.height)) return null;
+    if (dims && isPortraitLeadRatio(dims.width, dims.height)) {
+      return portraitHit(url, dims.width, dims.height, ctx, 'probe-portrait-crop');
+    }
     if (dims && meetsLeadDisplaySize(dims.width, dims.height)) {
       return { url, width: dims.width, height: dims.height, source: 'probe', leadReady: true };
     }
@@ -999,17 +1055,17 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
   };
 
   /** Ne retourne un hit « prêt vedette » que si leadReady !== false. */
-  const tryUrlLeadReady = async (url, metaW = 0, metaH = 0) => {
+  const tryUrlLeadReady = async (url, metaW = 0, metaH = 0, ctx = {}) => {
     for (const candidate of leadImageUrlCandidates(url)) {
-      const hit = await tryUrlOnce(candidate, metaW, metaH);
+      const hit = await tryUrlOnce(candidate, metaW, metaH, ctx);
       if (hit && hit.leadReady !== false) return hit;
     }
     return null;
   };
 
-  const tryUrlAny = async (url, metaW = 0, metaH = 0) => {
+  const tryUrlAny = async (url, metaW = 0, metaH = 0, ctx = {}) => {
     for (const candidate of leadImageUrlCandidates(url)) {
-      const hit = await tryUrlOnce(candidate, metaW, metaH);
+      const hit = await tryUrlOnce(candidate, metaW, metaH, ctx);
       if (hit) return hit;
     }
     return null;
@@ -1047,7 +1103,7 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
   let bannerFallback = null;
   let weakFallback = null;
   for (const c of ranked.slice(0, 8)) {
-    const hit = await tryUrlLeadReady(c.url, c.w || 0, c.h || 0);
+    const hit = await tryUrlLeadReady(c.url, c.w || 0, c.h || 0, c);
     if (hit) {
       const merged = {
         ...c,
@@ -1062,7 +1118,7 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
       continue;
     }
     if (!weakFallback) {
-      const weak = await tryUrlAny(c.url, c.w || 0, c.h || 0);
+      const weak = await tryUrlAny(c.url, c.w || 0, c.h || 0, c);
       if (weak) weakFallback = weak;
     }
   }
@@ -1111,6 +1167,8 @@ module.exports = {
   imageUrlLooksBannerLike,
   isPortraitLeadRatio,
   imageUrlLooksPortrait,
+  isCropSafePortrait,
+  LEAD_CROP_MIN_RATIO,
   clearMirroredLead,
   cardFitBonus,
   captionLooksLikeCampaignGraphic,
