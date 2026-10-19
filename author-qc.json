@@ -1,24 +1,16 @@
 {
-  "updated": "2026-10-19T19:22:03.558Z",
+  "updated": "2026-10-19T21:04:14.860Z",
   "total": 178,
   "withAuthor": 178,
-  "mismatches": 22,
+  "mismatches": 21,
   "ok": true,
   "samples": [
     {
-      "title": "The different sides of Montreal’s nightlife",
-      "link": "https://thelinknewspaper.ca/article/16489",
-      "source": "The Link",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Liv Borkity",
-      "reason": "page-byline"
-    },
-    {
-      "title": "CSU fails to reach quorum at special council meeting",
-      "link": "https://thelinknewspaper.ca/article/16488",
-      "source": "The Link",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "Sean Richard",
+      "title": "Comment les étudiant·e·s internationaux·ales vivent-ils les élections ?",
+      "link": "https://quartierlibre.ca/etudiants-internationaux-elections/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Frédéric Chouinard",
       "reason": "page-byline"
     },
     {
@@ -164,7 +156,15 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "Find 5 Gaiters in this photo!",
+      "link": "https://thebucampus.ca/2026/04/06/find-5-gaiters-in-this-photo/",
+      "source": "The Campus",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 22
+  "fixed": 21
 }

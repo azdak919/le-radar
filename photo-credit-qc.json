@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-19T19:23:23.605Z",
+  "updated": "2026-10-19T21:05:40.945Z",
   "total": 178,
   "withImage": 152,
   "withCredit": 152,
@@ -7,24 +7,38 @@
   "pending": 7,
   "missingHero": 0,
   "ok": false,
-  "checked": 16,
-  "updatedCount": 10,
-  "citedNew": 9,
+  "checked": 19,
+  "updatedCount": 12,
+  "citedNew": 12,
   "fallbackNew": 7,
   "samples": [
     {
-      "title": "The different sides of Montreal’s nightlife",
-      "source": "The Link",
-      "credit": "Illustration: Isabelle Noyes-Brown",
+      "title": "Le partage de la route au cœur d’une opération policière à Saguenay",
+      "source": "La Pige",
+      "credit": "Photo : Julianne Landry",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "figcaption-paren-kind"
     },
     {
-      "title": "Bulletins de nouvelles La Pige Radio",
+      "title": "Un nouveau restaurant s’installe au Club Option GSS à Kénogami",
       "source": "La Pige",
-      "credit": "Crédit photo : La Pige",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Étienne Harvey-Soucy",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "« Il n’y a plus de rendez-vous disponibles » : la campagne de vaccination contre la grippe démarre fort",
+      "source": "La Pige",
+      "credit": "Photo : Pixabay, libre de droits",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Comment les étudiant·e·s internationaux·ales vivent-ils les élections ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Simone Gingras",
+      "cited": true,
+      "method": "figcaption-paren-kind"
     },
     {
       "title": "Concordia’s Solidarity Brunch goes monthly",
@@ -48,21 +62,21 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "title": "Est-ce que je dois un bébé à l’État ?",
       "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Manifestation anti-IA à Montréal",
+      "title": "Le « self-care » : qui valide votre repos ?",
       "source": "Le Délit",
-      "credit": "Photo : Héloïse Durning",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Quand la fiction banalise les traumatismes",
+      "title": "S.O.S. Huîtres menacées",
       "source": "Le Délit",
       "credit": "Photo : Ana Camila Torchia",
       "cited": true,
