@@ -1,24 +1,36 @@
 {
-  "updated": "2026-10-19T04:54:24.379Z",
+  "updated": "2026-10-19T05:53:02.565Z",
   "total": 178,
-  "withPhoto": 149,
-  "withStock": 49,
+  "withPhoto": 150,
+  "withStock": 48,
   "withCampusBank": 27,
   "fullyCovered": 178,
-  "leadReadyPhotos": 125,
-  "pageScraped": 15,
-  "photosRecovered": 15,
+  "leadReadyPhotos": 127,
+  "pageScraped": 16,
+  "photosRecovered": 16,
   "imagesCleared": 12,
-  "stockSearches": 56,
-  "stockFound": 50,
+  "stockSearches": 54,
+  "stockFound": 48,
   "campusBankFound": 23,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Un polytechnicien en Espagne",
+      "link": "https://www.polyscope.qc.ca/blog/post/kbgnDbewLv2wv6hDMWI3",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Street_artists_at_Plaza_Mayor%2C_Madrid%2C_Spain_%28PPL3-Altered%29_julesvernex2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
     {
       "title": "La mémoire vive du génie: les archives du Polyscope enfin immortalisées",
       "link": "https://www.polyscope.qc.ca/blog/post/wj4AQm1wt2PECO6Gitx1",
       "reason": "stock-too-small",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Vecteezy_stack-of-newspaper_1961329.jpg"
+    },
+    {
+      "title": "Concordia’s Solidarity Brunch goes monthly",
+      "link": "https://thelinknewspaper.ca/article/16476",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Midnight_Breakfast_2015_%2817301521071%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "The Stingers win the Kelly-Anne Drummond Cup",
@@ -27,28 +39,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/3/31/Canada_vs_Scotland_Women%27s_Rugby_World_Cup_Pool_B_match.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Une semaine pour sensibiliser aux violences sexuelles à l’UdeS",
-      "link": "https://lecollectif.ca/a-la-une/une-semaine-pour-sensibiliser-aux-violences-sexuelles-a-ludes/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Take_Back_the_Night_march%2C_Montpelier_May_2024.jpg"
-    },
-    {
-      "title": "Les jeunes voteront-ils le 5 octobre ?",
-      "link": "https://quartierlibre.ca/les-jeunes-voteront-ils/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Students_voting_in_Fall_Elections%2C_University_of_Texas_at_Arlington_%2810005980%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "title": "Horoscope September 2026",
+      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
     },
     {
       "title": "Creative Writing September 2026",
       "link": "https://theplantnews.com/2026/10/13/creative-writing-september-2026/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Dawson_College_06.jpg"
-    },
-    {
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
     },
     {
       "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
@@ -69,22 +69,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
-      "title": "Battling Adversity",
-      "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Bishop_Otter_Campus%2C_University_of_Chichester_-_geograph.org.uk_-_2726552.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
       "title": "Blackface at McGill",
       "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Vecteezy_stack-of-newspaper_1961329.jpg"
     },
     {
-      "title": "Shawarm-off!",
-      "link": "https://www.mcgilldaily.com/2026/10/shawarm-off/",
+      "title": "Searching For a Third Space",
+      "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f4/McGill_University_downtown_campus_29.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "La politique commence ici",
+      "link": "https://quartierlibre.ca/la-politique-commence-ici/",
+      "reason": "stock-too-small",
+      "image": "https://live.staticflickr.com/5604/30751203172_5861be988f_b.jpg"
     }
   ]
 }

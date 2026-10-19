@@ -1,17 +1,24 @@
 {
-  "updated": "2026-10-19T04:54:45.271Z",
+  "updated": "2026-10-19T05:53:20.095Z",
   "total": 178,
-  "withImage": 149,
-  "withCredit": 149,
+  "withImage": 150,
+  "withCredit": 150,
   "cited": 101,
-  "pending": 8,
+  "pending": 9,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 5,
-  "citedNew": 5,
-  "fallbackNew": 8,
+  "checked": 15,
+  "updatedCount": 7,
+  "citedNew": 6,
+  "fallbackNew": 9,
   "samples": [
+    {
+      "title": "Les jeunes voteront-ils le 5 octobre ?",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
@@ -20,9 +27,16 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "S.O.S. Huîtres menacées",
+      "title": "Quand la fiction banalise les traumatismes",
       "source": "Le Délit",
       "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Faire compter sa voix",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée d’Élections Québec",
       "cited": true,
       "method": "media-credit-featured"
     },
