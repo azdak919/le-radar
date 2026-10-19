@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-19T09:58:16.854Z",
+  "updated": "2026-10-19T13:21:23.001Z",
   "total": 178,
   "withImage": 152,
   "withCredit": 152,
@@ -9,29 +9,36 @@
   "ok": false,
   "checked": 19,
   "updatedCount": 13,
-  "citedNew": 11,
-  "fallbackNew": 8,
+  "citedNew": 13,
+  "fallbackNew": 6,
   "samples": [
     {
-      "title": "Les élections de mi-mandat américaines approchent à grands pas",
+      "title": "Movember : au-delà de la moustache",
       "source": "Le Collectif",
-      "credit": "Photo : AlexWong",
+      "credit": "Photo : Michael Currie/SOPA Images/LightRocket via Getty Images",
       "cited": true,
-      "method": "filename-credit"
+      "method": "json-ld"
     },
     {
-      "title": "Vos bonnes nouvelles environnementales #41",
+      "title": "Le SOPK change de nom",
       "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
-      "cited": false,
-      "method": null
+      "credit": "Photo : BioRender",
+      "cited": true,
+      "method": "body-tail"
     },
     {
-      "title": "La montée de Jésus dans un documentaire de Télé-Québec",
+      "title": "Élections en Lettonie : montée du populisme",
       "source": "Le Collectif",
-      "credit": "Crédit photo : Le Collectif",
-      "cited": false,
-      "method": null
+      "credit": "Photo : Wikimedia Commons",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Le climat devant la Cour suprême américaine",
+      "source": "Le Collectif",
+      "credit": "Photo : Finn Gomez/Getty Images",
+      "cited": true,
+      "method": "json-ld"
     },
     {
       "title": "Patrick Sénécal, un livre ouvert",
@@ -39,13 +46,6 @@
       "credit": "Photo : Frederique Maysenhoelder",
       "cited": true,
       "method": "filename-credit"
-    },
-    {
-      "title": "Consommer plus de protéines ne sert à rien !",
-      "source": "Le Collectif",
-      "credit": "Photo : Science Presse",
-      "cited": true,
-      "method": "body-tail"
     },
     {
       "title": "Concordia’s Solidarity Brunch goes monthly",
@@ -69,25 +69,25 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Manifestation anti-IA à Montréal",
+      "title": "Est-ce que je dois un bébé à l’État ?",
       "source": "Le Délit",
-      "credit": "Photo : Héloïse Durning",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Quand la fiction banalise les traumatismes",
+      "title": "Le « self-care » : qui valide votre repos ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "S.O.S. Huîtres menacées",
       "source": "Le Délit",
       "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
-      "source": "La Pige",
-      "credit": "Photo : Noah Thomas",
-      "cited": true,
-      "method": "figcaption-paren-kind"
     },
     {
       "title": "Tex Crick: Indie Through and Through",
