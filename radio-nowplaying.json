@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-19T01:18:42.918Z",
+  "updatedAt": "2026-10-19T01:32:29.533Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,34 +21,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-19T01:17:44.260Z"
+      "checkedAt": "2026-10-19T01:31:45.494Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "London café (reprise)",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "21:30",
-        "url": "https://cism893.ca/emissions/london-cafe"
-      },
-      "next": {
         "title": "Mix Anglo",
         "source": "schedule",
         "start": "21:30",
         "end": "00:00",
         "url": "https://cism893.ca/emissions/mix-anglo"
       },
+      "next": {
+        "title": "L'alter ego (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/lalter-ego"
+      },
       "track": "",
-      "showTitle": "London café (reprise)",
+      "showTitle": "Mix Anglo",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-19T01:17:46.151Z"
+      "checkedAt": "2026-10-19T01:31:48.047Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-19T01:17:48.909Z"
+      "checkedAt": "2026-10-19T01:31:54.263Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Afro Archives",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "21:00",
         "end": "22:00",
         "url": "http://www.cjlo.com/shows/afro-archives"
       },
       "next": {
         "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "22:00",
         "end": "00:00",
         "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "Afro Archives",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-19T01:18:23.644Z"
+      "checkedAt": "2026-10-19T01:32:09.198Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-19T01:18:24.876Z"
+      "checkedAt": "2026-10-19T01:32:10.087Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Natanya — TICKET STOP",
+      "track": "Alewya — Runner",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-19T01:18:42.567Z"
+      "checkedAt": "2026-10-19T01:32:29.182Z"
     }
   }
 }
