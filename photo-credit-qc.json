@@ -1,51 +1,58 @@
 {
-  "updated": "2026-10-19T13:21:23.001Z",
+  "updated": "2026-10-19T16:34:04.039Z",
   "total": 178,
-  "withImage": 152,
-  "withCredit": 152,
-  "cited": 106,
+  "withImage": 153,
+  "withCredit": 153,
+  "cited": 109,
   "pending": 6,
   "missingHero": 0,
   "ok": false,
-  "checked": 19,
-  "updatedCount": 13,
-  "citedNew": 13,
+  "checked": 20,
+  "updatedCount": 14,
+  "citedNew": 14,
   "fallbackNew": 6,
   "samples": [
     {
-      "title": "Movember : au-delà de la moustache",
-      "source": "Le Collectif",
-      "credit": "Photo : Michael Currie/SOPA Images/LightRocket via Getty Images",
+      "title": "Challenger Banque Nationale : place à la compétition",
+      "source": "La Pige",
+      "credit": "Photo : Charles Pinel",
       "cited": true,
-      "method": "json-ld"
+      "method": "figcaption-paren-kind"
     },
     {
-      "title": "Le SOPK change de nom",
+      "title": "Fin de saison abrupte pour la cycliste Magdeleine Vallières Mill",
       "source": "Le Collectif",
-      "credit": "Photo : BioRender",
+      "credit": "Photo : Source : Getty Images",
+      "cited": true,
+      "method": "body-line"
+    },
+    {
+      "title": "Le Grand Défi Pierre Lavoie débarque à Sherbrooke",
+      "source": "Le Collectif",
+      "credit": "Photo : Facebook Le Grand Défi Pierre Lavoie",
       "cited": true,
       "method": "body-tail"
     },
     {
-      "title": "Élections en Lettonie : montée du populisme",
+      "title": "Le grand retour après plus de 50 ans d’absence",
       "source": "Le Collectif",
-      "credit": "Photo : Wikimedia Commons",
+      "credit": "Photo : Michel Caron",
       "cited": true,
       "method": "body-tail"
     },
     {
-      "title": "Le climat devant la Cour suprême américaine",
+      "title": "Le futur du hockey universitaire sherbrookois tatoué sur le cœur",
       "source": "Le Collectif",
-      "credit": "Photo : Finn Gomez/Getty Images",
+      "credit": "Photo : Université de Sherbrooke par Michel Caron",
       "cited": true,
       "method": "json-ld"
     },
     {
-      "title": "Patrick Sénécal, un livre ouvert",
+      "title": "Un résultat qui inquiète les personnes étudiantes",
       "source": "Le Collectif",
-      "credit": "Photo : Frederique Maysenhoelder",
+      "credit": "Photo : page Facebook De Paul St-Pierre Plamondon",
       "cited": true,
-      "method": "filename-credit"
+      "method": "body-tail"
     },
     {
       "title": "Concordia’s Solidarity Brunch goes monthly",
@@ -86,13 +93,6 @@
       "title": "S.O.S. Huîtres menacées",
       "source": "Le Délit",
       "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
       "cited": true,
       "method": "media-credit-featured"
     }
