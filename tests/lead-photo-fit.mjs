@@ -493,6 +493,10 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
   check(!isCropSafePortrait(800, 1000, { alt: 'Photo : Marie Tremblay', url: 'https://x/infographie-budget-800x1000.jpg' }), 'fichier « infographie » → écarté');
   check(!isCropSafePortrait(800, 1000, {}), 'portrait sans crédit → règle inchangée (écarté)');
   check(!isCropSafePortrait(400, 560, { alt: QL_ALT }), 'trop petit pour une une recadrée');
+  check(isCropSafePortrait(900, 1200, { url: 'https://thelinknewspaper.ca/images/articles/_resized/IMG_0067.jpg' }), 'fichier d’appareil IMG_0067 (The Link) → photo recadrée');
+  check(isCropSafePortrait(900, 1178, { url: 'https://thelinknewspaper.ca/images/made/images/articles/_resized/_U2A7376_900_1178_90.jpg' }), 'fichier d’appareil _U2A7376 → photo recadrée');
+  check(!isCropSafePortrait(819, 1024, { url: 'https://x/FEUS2026-819x1024.jpg' }), 'sigle + année ≠ fichier d’appareil');
+  check(!isCropSafePortrait(964, 1024, { alt: 'image couverture magazine Quartier Libre volume 33 n.1', url: 'https://x/AC7688E9-8982-4425-804C-B4DD9D09D6B6_1_201_a-964x1024.jpeg' }), 'couverture de magazine (texte) → écartée');
   check(fillsLeadWhenCropped(724, 1024) && !fillsLeadWhenCropped(540, 1024), 'recadrage 3:2 remplit la une');
 
   const html = `<html><head><meta property="og:image" content="${QL_URL}" />
@@ -508,7 +512,11 @@ assert(!meetsArticleKeepSize(1139, 500), 'bandeau 1139×500 n’est pas gardé c
   const r = await replacePortraitLead(it, { resolve: async () => ({ url: QL_URL, width: 724, height: 1024, leadReady: true, cropSafe: true }) });
   check(r === 'cropped' && it.image === QL_URL && !it.stockImage && hasCropSafeImage(it), 'passe portrait : photo d’article gardée, campus retiré');
   check(await replacePortraitLead(it, { probe: async () => { throw new Error('ne doit pas sonder'); } }) === null && it.image === QL_URL, 'déjà recadrable : plus jamais retirée aux passes suivantes');
+  const credit = require('../scripts/article-photo-credit-lib.js').resolveSourcePhotoCredit(
+    { link: 'https://quartierlibre.ca/les-jeunes-voteront-ils/', image: QL_URL, source: 'Quartier Libre', lang: 'fr' }, html);
+  check(credit?.creditLine === 'Dessin : Wendy Kim Pires', 'crédit « Dessin : Wendy Kim Pires » (pas « Crédit photo : Quartier Libre »)');
   const radar = readFileSync(new URL('../radar-news.js', import.meta.url), 'utf8');
+  check(/is-portrait-crop/.test(radar) && /is-portrait-crop[\s\S]{0,40}object-position: 50% 30%/.test(readFileSync(new URL('../style-feed.css', import.meta.url), 'utf8')), 'portrait recadré (cover, tiers haut), jamais en bandes');
   check(/kind === 'stock' && item\.imageProvider !== 'campus-bank'\) return;/.test(radar), 'client : délai dépassé ne remplace pas une photo thématique par le campus');
   check(/commons\/thumb\/\$\{orig\[1\]\}/.test(radar), 'client : vignette Commons directe (sans redirections FilePath)');
 }

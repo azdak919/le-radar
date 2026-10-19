@@ -1123,6 +1123,11 @@ html[data-translate-busy="1"] .translate-toggle {
   aspect-ratio: 3 / 2;
   object-fit: cover;
 }
+/* Photo d’article en hauteur : recadrée (cover), jamais en bandes ; tiers
+   haut pour garder visages et sujet (The Link 900×1200, dessin Quartier Libre). */
+.article-media img.is-portrait-crop {
+  object-position: 50% 30%;
+}
 /* Capture d’écran : ancrer à gauche pour ne pas manger le début des lignes. */
 .article-media img.is-doc-crop {
   object-position: left center;

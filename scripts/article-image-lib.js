@@ -791,6 +791,15 @@ const PORTRAIT_POSTER_RE = /(?:^|[^\p{L}])(?:affiches?|posters?|flyers?|infograp
 const EDITORIAL_CREDIT_RE = /(?:^|[^\p{L}])(?:photos?|photographie|photographe|photographer|dessins?|illustrations?|illustr\.|illustrat(?:eur|rice|or)|photo credit|cr[ée]dit photo)\s*(?:[:：©]|par\s|by\s)\s*(\p{L})/giu;
 const EDITORIAL_PERSON_RE = /^\p{Lu}\p{Ll}+(?:[-'’]\p{L}+)*\s+(?:(?:de|du|des|da|van|von|le|la)\s+)?\p{Lu}\p{Ll}/u;
 const CREDIT_ORG_RE = /(?:^|\s)(?:courtoisie|gracieuset[ée]|courtesy|universit[ée]|university|c[ée]gep|coll[eè]ge|college|association|f[ée]d[ée]ration|comit[ée]|syndicat|service|archives?|soci[ée]t[ée]|ville|minist[eè]re|gouvernement|union|club|groupe|r[ée]daction|staff)(?=\s|$)/iu;
+function looksLikeCameraFile(name = '') {
+  // « IMG 0067 900 1200 90 jpg » (séparateurs déjà normalisés en espaces)
+  const stem = String(name).replace(/\s+(?:jpe?g|png|webp|heic)$/i, '').trim();
+  if (/^(?:IMG|DSC[FN]?|MVIMG|PXL|GOPR|DJI|P\d{3})\s?\d{3,}/i.test(stem)) return true;
+  // Préfixe Canon/Nikon personnalisé : « _U2A7376 », « 5D3A1234 » (+ taille WP)
+  // Au moins un chiffre dans le préfixe : « FEUS2026 » n'est pas un appareil.
+  return /^(?=[A-Z]{0,3}\d)[A-Z0-9]{3,4}\d{4}(?:\s\d{2,4}){0,3}$/.test(stem);
+}
+
 function isCropSafePortrait(width = 0, height = 0, ctx = {}) {
   if (!width || !height || !isPortraitLeadRatio(width, height)) return false;
   if (width / height < LEAD_CROP_MIN_RATIO) return false;
@@ -803,6 +812,9 @@ function isCropSafePortrait(width = 0, height = 0, ctx = {}) {
   const file = path.split('/').pop().replace(/[_+.-]+/g, ' ');
   if (PORTRAIT_POSTER_RE.test(text) || PORTRAIT_POSTER_RE.test(file)) return false;
   if (captionLooksLikeCampaignGraphic(text)) return false;
+  // Nom de fichier d'appareil photo (IMG_0067, DSC_1234, _U2A7376) : une vraie
+  // photo, même sans alt (The Link, 900×1200) — pas une affiche montée.
+  if (looksLikeCameraFile(file)) return true;
   // Crédité à une personne (« Dessin: Wendy Kim Pires ») : Prénom Nom.
   // Un sigle ou un organisme (« Photo : FEUS », affiche FEUS du Collectif ;
   // « Courtoisie », « Université… ») ne suffit pas.

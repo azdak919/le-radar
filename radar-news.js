@@ -3782,10 +3782,12 @@ function buildSourcePhotoCreditElement(item = {}) {
     return cap;
   }
 
-  const inline = credit.match(/^Photo\s*:\s*(.+)$/i);
+  // « Dessin : Wendy Kim Pires » (Quartier Libre) garde son type de crédit.
+  const inline = credit.match(/^(Photo|Dessin|Illustration|Drawing)\s*:\s*(.+)$/i);
   if (inline) {
-    cap.appendChild(document.createTextNode(en ? 'Photo: ' : 'Photo : '));
-    const label = cleanCreatorDisplay(inline[1].trim());
+    const kind = inline[1].charAt(0).toUpperCase() + inline[1].slice(1).toLowerCase();
+    cap.appendChild(document.createTextNode(en ? `${kind}: ` : `${kind} : `));
+    const label = cleanCreatorDisplay(inline[2].trim());
     if (url && label) {
       const a = creditLink(url, label, 'article-media-credit__creator notranslate');
       a.setAttribute('translate', 'no');
@@ -4019,6 +4021,13 @@ function applyDocumentContentCrop(img) {
 function showArticleImage(article, media, img, kind, item) {
   media.replaceChildren(img);
   if (kind === 'photo') applyDocumentContentCrop(img);
+  // Photo / dessin d'article en hauteur (jugé recadrable par le bot) : cover
+  // 3:2 sans bandes, cadré au tiers haut — visages et sujet restent visibles.
+  if (kind === 'photo' && !img.classList.contains('is-doc-crop')) {
+    const w = img.naturalWidth || 0;
+    const h = img.naturalHeight || 0;
+    if (w && h && w / h < 0.95) img.classList.add('is-portrait-crop');
+  }
   let cap = null;
   if (kind === 'photo') {
     if (item?.sourceImageCredit) {

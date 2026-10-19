@@ -18,7 +18,7 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 11;
+const CREDIT_EXTRACTOR_REV = 12;
 
 /** Placeholders WP / comptes génériques (Zone Campus : « Crédit : Journaliste »). */
 const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin)$/i;
@@ -89,7 +89,8 @@ const CREDIT_LINE_RE = /^(?:Photo|Crédits?(?:\s+photo)?|Credits?(?:\s+photo)?)\
 const PHOTO_BY_RE = /(?:\(|^)\s*Photo\s+by\s+([^).]+?)(?:\s+via\s+([^).]+))?\s*\)?\.?$/i;
 const MENTION_PHOTO_RE = /(?:Mention\s+)?(?:Photo|Crédits?|Credits?)\s*:\s*([^\n<.]+)/i;
 /** Fin de légende Zone Campus : « … Beach Party. Crédit : Journaliste » */
-const TRAILING_FR_CREDIT_RE = /(?:^|[.!?…»"”]\s+)(Crédits?(?:\s+photo)?|Credits?(?:\s+photo)?|Photo)\s*:\s*([^\n.]+?)\s*\.?$/iu;
+// Quartier Libre : « … pour un taux de 66 %. Dessin: Wendy Kim Pires » (alt)
+const TRAILING_FR_CREDIT_RE = /(?:^|[.!?…»"”]\s+)(Crédits?(?:\s+photo)?|Credits?(?:\s+photo)?|Photo|Dessins?|Illustrations?)\s*:\s*([^\n.]+?)\s*\.?$/iu;
 
 function stripHtml(text = '') {
   return decodeEntities(String(text))
@@ -441,9 +442,12 @@ function parseTrailingCaptionCredit(t = '', lang = 'fr') {
       return { ...parsed, source: 'figcaption-trailing-fr-journalist' };
     }
     const en = lang === 'en';
+    const kindFr = /^dessin/i.test(frTrail[1]) ? 'Dessin'
+      : (/^illustration/i.test(frTrail[1]) ? 'Illustration' : 'Photo');
+    const kindEn = kindFr === 'Photo' ? 'Photo' : (kindFr === 'Dessin' ? 'Drawing' : 'Illustration');
     return {
       ...parsed,
-      creditLine: en ? `Photo: ${parsed.creator}` : `Photo : ${parsed.creator}`,
+      creditLine: en ? `${kindEn}: ${parsed.creator}` : `${kindFr} : ${parsed.creator}`,
       source: 'figcaption-trailing-fr',
     };
   }
