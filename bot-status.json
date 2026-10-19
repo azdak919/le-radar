@@ -1,92 +1,92 @@
 {
-  "updated": "2026-10-12T18:08:34.217Z",
+  "updated": "2026-10-19T16:06:47.590Z",
   "healthy": true,
   "needsHuman": false,
   "pipeline": [
     {
       "step": "Institutions catalogue",
       "ok": true,
-      "ms": 1185
+      "ms": 358
     },
     {
       "step": "Media scanner (gaps)",
       "ok": true,
-      "ms": 8056
+      "ms": 9294
     },
     {
       "step": "News source maintainer",
       "ok": true,
-      "ms": 135794
+      "ms": 117630
     },
     {
       "step": "Stream tracker + radio promotion",
       "ok": true,
-      "ms": 940076
+      "ms": 695372
     },
     {
       "step": "Radio now-playing metadata",
       "ok": true,
-      "ms": 59294
+      "ms": 50400
     },
     {
       "step": "RSEQ sports league catalog",
       "ok": true,
-      "ms": 2362
+      "ms": 2562
     },
     {
       "step": "RSEQ sports results",
       "ok": true,
-      "ms": 40488
+      "ms": 47015
     },
     {
       "step": "Radio schedule drift",
       "ok": true,
-      "ms": 38913
+      "ms": 18317
     },
     {
       "step": "News sources verify",
       "ok": true,
-      "ms": 24646
+      "ms": 23405
     },
     {
       "step": "News aggregator",
       "ok": true,
-      "ms": 61903
+      "ms": 48552
     },
     {
       "step": "Quebec masthead landscape bank",
       "ok": true,
-      "ms": 241603
+      "ms": 807914
     },
     {
       "step": "Quebec masthead university bank",
       "ok": true,
-      "ms": 118502
+      "ms": 109102
     },
     {
       "step": "Quebec pomo landscape bank",
       "ok": true,
-      "ms": 173553
+      "ms": 117654
     },
     {
       "step": "Quebec nations/Inuit bank (shared)",
       "ok": true,
-      "ms": 130430
+      "ms": 105922
     },
     {
       "step": "Quebec photo bank pixel audit (report)",
       "ok": true,
-      "ms": 394002
+      "ms": 377348
     },
     {
       "step": "Social feed",
       "ok": true,
-      "ms": 73973
+      "ms": 63429
     },
     {
       "step": "RSS export",
       "ok": true,
-      "ms": 81
+      "ms": 83
     }
   ],
   "summary": {
@@ -101,21 +101,21 @@
       "withExcerpt": 177,
       "authorQc": {
         "ok": true,
-        "mismatches": 17
+        "mismatches": 22
       },
       "leadImageQc": {
         "fullyCovered": 178,
-        "withPhoto": 158,
-        "withStock": 36,
-        "leadReadyPhotos": 128,
-        "pageScraped": 21,
+        "withPhoto": 152,
+        "withStock": 49,
+        "leadReadyPhotos": 116,
+        "pageScraped": 20,
         "mainPageLeadReady": true
       },
       "photoCreditQc": {
         "ok": false,
-        "withCredit": 158,
-        "cited": 108,
-        "pending": 9,
+        "withCredit": 152,
+        "cited": 106,
+        "pending": 6,
         "missingHero": 0
       }
     },
@@ -127,7 +127,7 @@
         "lastSessionId": null
       },
       "universities": {
-        "count": 150,
+        "count": 156,
         "maxBank": 50,
         "lastSessionCleanup": null,
         "lastSessionId": null
@@ -204,17 +204,12 @@
     {
       "level": "info",
       "code": "schedule_drift",
-      "message": "Hors programmation : ckut (+7 −5)"
+      "message": "Hors programmation : ckut (+6 −8)"
     },
     {
       "level": "warn",
       "code": "schedule_overhaul",
-      "message": "Grille refaite : choq (+11 −8) — relancer fetch-radio-schedules.js --update"
-    },
-    {
-      "level": "warn",
-      "code": "schedule_source_down",
-      "message": "Source horaire muette : cjlo"
+      "message": "Grille refaite : choq (+7 −24) — relancer fetch-radio-schedules.js --update"
     }
   ]
 }
