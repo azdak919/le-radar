@@ -1,18 +1,10 @@
 {
-  "updated": "2026-10-19T21:04:14.860Z",
+  "updated": "2026-10-19T22:28:55.254Z",
   "total": 178,
   "withAuthor": 178,
-  "mismatches": 21,
+  "mismatches": 20,
   "ok": true,
   "samples": [
-    {
-      "title": "Comment les étudiant·e·s internationaux·ales vivent-ils les élections ?",
-      "link": "https://quartierlibre.ca/etudiants-internationaux-elections/",
-      "source": "Quartier Libre",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Frédéric Chouinard",
-      "reason": "page-byline"
-    },
     {
       "title": "Movember : au-delà de la moustache",
       "link": "https://lecollectif.ca/societe/movember-au-dela-de-la-moustache/",
@@ -164,7 +156,15 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "Garda World au CVM (Éditorial)",
+      "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
+      "source": "Exil",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "La rédaction",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 21
+  "fixed": 20
 }
