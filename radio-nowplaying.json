@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-10-19T20:20:56.521Z",
+  "updatedAt": "2026-10-19T23:51:15.684Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Chéri.e, Jme Mobilise!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://chyz.ca/emission/cheri-e-jmorganise/"
-      },
+      "current": null,
       "next": {
-        "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
-        "start": "17:30",
-        "end": "18:30",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+        "title": "Mardi Champ Gauche",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "Chéri.e, Jme Mobilise!",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-19T20:20:15.971Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Les garçons pleurent aussi",
-        "source": "schedule",
-        "start": "15:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
-      },
-      "next": {
-        "title": "Les criquets crinqués",
-        "source": "schedule",
-        "start": "17:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/les-criquets-crinques"
-      },
-      "track": "",
-      "showTitle": "Les garçons pleurent aussi",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-19T20:20:18.008Z"
+      "checkedAt": "2026-10-19T23:50:34.552Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Les vinyles versatiles",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/les-vinyles-versatiles"
+      },
+      "next": {
+        "title": "Mono Fred (en stéréo)",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/mono-fred-en-stereo"
+      },
+      "track": "",
+      "showTitle": "Les vinyles versatiles",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-19T23:50:36.581Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Whose Vibe Is It Anyway",
+        "title": "Lesbo-sons",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "next": {
-        "title": "En Profondeur",
+        "title": "Underground Sounds",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "20:00",
+        "end": "22:00"
       },
       "track": "",
-      "showTitle": "Whose Vibe Is It Anyway",
+      "showTitle": "Lesbo-sons",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,80 +74,87 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-19T20:20:21.024Z"
+      "checkedAt": "2026-10-19T23:50:39.480Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Dreamscapes",
+        "title": "Monday Mass with Father Kate",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/dreamscapes"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/monday-mass-with-father-kate"
       },
       "next": {
-        "title": "The Pressure Drop",
+        "title": "In The Garage",
         "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/the-pressure-drop"
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/in-the-garage"
       },
       "track": "",
-      "showTitle": "Dreamscapes",
+      "showTitle": "Monday Mass with Father Kate",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-19T20:20:36.026Z"
+      "checkedAt": "2026-10-19T23:50:54.557Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Solénoïde",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "18:00"
-      },
-      "next": {
         "title": "Ma radio Académia",
         "source": "schedule-live",
         "start": "18:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Le terrain sportif",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "00:01"
+      },
       "track": "",
-      "showTitle": "Solénoïde",
+      "showTitle": "Ma radio Académia",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-19T20:20:37.536Z"
+      "checkedAt": "2026-10-19T23:50:56.033Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
-        "title": "Faire avec",
+      "current": {
+        "title": "Bitume",
         "source": "api-live",
-        "start": "17:30",
-        "end": "18:30",
-        "slug": "faire-avec"
+        "start": "19:00",
+        "end": "20:00",
+        "slug": "bitume"
       },
-      "track": "My New Band Believe — Actress",
-      "showTitle": "",
+      "next": {
+        "title": "Les rois de l'arène",
+        "source": "schedule",
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://www.choq.ca/emissions/les-rois-de-larene"
+      },
+      "track": "Oli Féra — AVALANCHE",
+      "showTitle": "Bitume",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-19T20:20:56.172Z"
+      "checkedAt": "2026-10-19T23:51:15.333Z"
     }
   }
 }
