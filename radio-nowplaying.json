@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-10-18T23:28:06.413Z",
+  "updatedAt": "2026-10-19T01:18:42.918Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Le Monde d'Erik Arsenault - 10 ans",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
-      },
+      "current": null,
       "next": {
         "title": "Lundi Indie",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
       },
       "track": "",
-      "showTitle": "Le Monde d'Erik Arsenault - 10 ans",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-18T23:27:27.524Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Symbiose",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/symbiose"
-      },
-      "next": {
-        "title": "London café (reprise)",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "21:30",
-        "url": "https://cism893.ca/emissions/london-cafe"
-      },
-      "track": "",
-      "showTitle": "Symbiose",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T23:27:29.279Z"
+      "checkedAt": "2026-10-19T01:17:44.260Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "London café (reprise)",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "21:30",
+        "url": "https://cism893.ca/emissions/london-cafe"
+      },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "21:30",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
+      "track": "",
+      "showTitle": "London café (reprise)",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-19T01:17:46.151Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Bluegrass Rambling",
+        "title": "Cha Cha In Blue",
         "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
+        "start": "21:00",
+        "end": "23:00"
       },
       "next": {
-        "title": "Country Classics",
+        "title": "Ill Groove Garden",
         "source": "api-live",
-        "start": "20:00",
-        "end": "21:00"
+        "start": "23:00",
+        "end": "00:00"
       },
       "track": "",
-      "showTitle": "Bluegrass Rambling",
+      "showTitle": "Cha Cha In Blue",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T23:27:31.992Z"
+      "checkedAt": "2026-10-19T01:17:48.909Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "No Boundaries",
-        "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/no-boundaries"
+        "title": "Afro Archives",
+        "source": "schedule",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/afro-archives"
       },
       "next": {
-        "title": "Eastern Promises",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "20:30",
-        "url": "http://www.cjlo.com/shows/eastern-promises"
+        "title": "CJLO's Alternative Mega Mix",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "No Boundaries",
+      "showTitle": "Afro Archives",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T23:27:46.828Z"
+      "checkedAt": "2026-10-19T01:18:23.644Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "21:00"
-      },
-      "next": {
         "title": "Solénoïde",
         "source": "schedule-live",
         "start": "21:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:01",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Solénoïde",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T23:27:48.040Z"
+      "checkedAt": "2026-10-19T01:18:24.876Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +139,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Gilla Band — Giraffe",
+      "track": "Natanya — TICKET STOP",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-18T23:28:06.062Z"
+      "checkedAt": "2026-10-19T01:18:42.567Z"
     }
   }
 }
