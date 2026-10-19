@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-19T07:19:44.444Z",
+  "updated": "2026-10-19T09:58:16.854Z",
   "total": 178,
   "withImage": 152,
   "withCredit": 152,
@@ -7,11 +7,53 @@
   "pending": 6,
   "missingHero": 0,
   "ok": false,
-  "checked": 11,
-  "updatedCount": 5,
-  "citedNew": 5,
-  "fallbackNew": 6,
+  "checked": 19,
+  "updatedCount": 13,
+  "citedNew": 11,
+  "fallbackNew": 8,
   "samples": [
+    {
+      "title": "Les élections de mi-mandat américaines approchent à grands pas",
+      "source": "Le Collectif",
+      "credit": "Photo : AlexWong",
+      "cited": true,
+      "method": "filename-credit"
+    },
+    {
+      "title": "Vos bonnes nouvelles environnementales #41",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "La montée de Jésus dans un documentaire de Télé-Québec",
+      "source": "Le Collectif",
+      "credit": "Crédit photo : Le Collectif",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Patrick Sénécal, un livre ouvert",
+      "source": "Le Collectif",
+      "credit": "Photo : Frederique Maysenhoelder",
+      "cited": true,
+      "method": "filename-credit"
+    },
+    {
+      "title": "Consommer plus de protéines ne sert à rien !",
+      "source": "Le Collectif",
+      "credit": "Photo : Science Presse",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Concordia’s Solidarity Brunch goes monthly",
+      "source": "The Link",
+      "credit": "Photo: Courtesy Sheena Swirlz",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
     {
       "title": "The Stingers win the Kelly-Anne Drummond Cup",
       "source": "The Link",
@@ -27,6 +69,20 @@
       "method": "figcaption-bare"
     },
     {
+      "title": "Manifestation anti-IA à Montréal",
+      "source": "Le Délit",
+      "credit": "Photo : Héloïse Durning",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Quand la fiction banalise les traumatismes",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
       "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
       "source": "La Pige",
       "credit": "Photo : Noah Thomas",
@@ -39,13 +95,6 @@
       "credit": "Photo : Zafiro Chiossoni",
       "cited": true,
       "method": "media-credit-featured"
-    },
-    {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
-      "cited": true,
-      "method": "via-attribution"
     }
   ]
 }
