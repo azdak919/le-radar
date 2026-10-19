@@ -1,23 +1,30 @@
 {
-  "updated": "2026-10-19T05:53:20.095Z",
+  "updated": "2026-10-19T06:00:46.121Z",
   "total": 178,
-  "withImage": 150,
-  "withCredit": 150,
-  "cited": 101,
-  "pending": 9,
+  "withImage": 152,
+  "withCredit": 152,
+  "cited": 106,
+  "pending": 6,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 7,
-  "citedNew": 6,
-  "fallbackNew": 9,
+  "checked": 57,
+  "updatedCount": 57,
+  "citedNew": 11,
+  "fallbackNew": 46,
   "samples": [
     {
-      "title": "Les jeunes voteront-ils le 5 octobre ?",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
+      "title": "Concordia’s Solidarity Brunch goes monthly",
+      "source": "The Link",
+      "credit": "Photo: Courtesy Sheena Swirlz",
+      "cited": true,
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "The Stingers win the Kelly-Anne Drummond Cup",
+      "source": "The Link",
+      "credit": "Photo : Andraé Lerone Lewis",
+      "cited": true,
+      "method": "figcaption"
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
@@ -27,39 +34,67 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Quand la fiction banalise les traumatismes",
+      "title": "Le « self-care » : qui valide votre repos ?",
       "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Faire compter sa voix",
-      "source": "Le Délit",
-      "credit": "Photo : Photo tirée d’Élections Québec",
+      "title": "Les jeunes voteront-ils le 5 octobre ?",
+      "source": "Quartier Libre",
+      "credit": "Dessin : Wendy Kim Pires",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-trailing-fr"
     },
     {
-      "title": "Festivals: Québec envoie des millions de dollars aux États-Unis",
-      "source": "La Pige",
-      "credit": "Photo : Noah Thomas",
-      "cited": true,
-      "method": "figcaption-paren-kind"
+      "title": "Le Grand Prix cyclistes s’amène à Montréal !",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
+      "title": "Cinq nouvelles de la semaine",
+      "source": "Quartier Libre",
+      "credit": "Illustration : Mathilde Ségar",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-trailing-fr"
     },
     {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
+      "title": "Le Marathon Beneva 2026 porté par la foule montréalaise",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Décès de Jean-Luc Mongrain : une personnalité médiatique sherbrookoise nous quitte",
+      "source": "Le Collectif",
+      "credit": "Photo : BertrandExertier",
       "cited": true,
-      "method": "via-attribution"
+      "method": "filename-credit"
+    },
+    {
+      "title": "IA : que fait réellement l’institut Mila ?",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "La bière locale cherche sa place dans un marché saturé",
+      "source": "L'Exemplaire",
+      "credit": "Crédit photo : L'Exemplaire",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Les étudiants autochtones se sentent-ils bien représentés sur le campus ?",
+      "source": "L'Exemplaire",
+      "credit": "Crédit photo : L'Exemplaire",
+      "cited": false,
+      "method": null
     }
   ]
 }
