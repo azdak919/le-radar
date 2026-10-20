@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-20T00:49:25.711Z",
+  "updated": "2026-10-20T08:53:38.080Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -4265,18 +4265,17 @@
   "stats": {
     "total": 743,
     "lastRun": {
-      "saved": 8,
-      "skipped": 1,
-      "failed": 11,
-      "stoppedEarly": false
+      "saved": 0,
+      "skipped": 0,
+      "failed": 7,
+      "stoppedEarly": true
     }
   },
   "sources": {
     "Le Collectif": {
       "host": "lecollectif.ca",
       "pages": 27,
-      "checkedAt": "2026-10-12T11:18:19.656Z",
-      "stale": true
+      "checkedAt": "2026-10-20T08:51:31.749Z"
     },
     "The Tribune": {
       "host": "www.thetribune.ca",
@@ -4286,8 +4285,7 @@
     "The Link": {
       "host": "thelinknewspaper.ca",
       "pages": 138,
-      "checkedAt": "2026-10-12T22:35:10.761Z",
-      "stale": true
+      "checkedAt": "2026-10-20T08:51:40.061Z"
     },
     "The McGill Daily": {
       "host": "www.mcgilldaily.com",
@@ -4302,7 +4300,7 @@
     "L'Exemplaire": {
       "host": "www.exemplaire.com.ulaval.ca",
       "pages": 9,
-      "checkedAt": "2026-10-12T22:35:16.327Z"
+      "checkedAt": "2026-10-20T08:51:45.725Z"
     },
     "Quartier Libre": {
       "host": "quartierlibre.ca",
