@@ -1,23 +1,23 @@
 {
-  "updated": "2026-10-20T09:29:28.742Z",
+  "updated": "2026-10-20T14:08:10.820Z",
   "total": 178,
   "withImage": 152,
   "withCredit": 152,
-  "cited": 107,
-  "pending": 7,
+  "cited": 106,
+  "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 12,
-  "updatedCount": 5,
-  "citedNew": 5,
-  "fallbackNew": 7,
+  "checked": 14,
+  "updatedCount": 7,
+  "citedNew": 6,
+  "fallbackNew": 8,
   "samples": [
     {
-      "title": "Concordia’s Solidarity Brunch goes monthly",
-      "source": "The Link",
-      "credit": "Photo: Courtesy Sheena Swirlz",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "title": "Reportages radio du 19 octobre 2026",
+      "source": "La Pige",
+      "credit": "Crédit photo : La Pige",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
@@ -25,6 +25,20 @@
       "credit": "Photo : Tan YiYang",
       "cited": true,
       "method": "figcaption-bare"
+    },
+    {
+      "title": "S.O.S. Huîtres menacées",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Concordia’s Solidarity Brunch goes monthly",
+      "source": "The Link",
+      "credit": "Photo: Courtesy Sheena Swirlz",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "The Stingers win the Kelly-Anne Drummond Cup",
