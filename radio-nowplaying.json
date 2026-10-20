@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-20T17:00:13.499Z",
+  "updatedAt": "2026-10-20T18:35:47.276Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Émission (presque) sérieuse",
-        "source": "schedule",
+        "source": "api-live",
         "start": "14:00",
         "end": "15:00",
         "url": "https://chyz.ca/emission/emission-presque-serieuse/"
       },
+      "next": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Émission (presque) sérieuse",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T16:59:43.701Z"
+      "checkedAt": "2026-10-20T18:35:03.893Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les sentinelles de l'art",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
-      },
-      "next": {
         "title": "Le palmarès",
         "source": "schedule",
         "start": "14:00",
         "end": "15:00",
         "url": "https://cism893.ca/emissions/palmares-de-cism"
       },
+      "next": {
+        "title": "À la bonne heure",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/a-la-bonne-heure"
+      },
       "track": "",
-      "showTitle": "Les sentinelles de l'art",
+      "showTitle": "Le palmarès",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T16:59:45.690Z"
+      "checkedAt": "2026-10-20T18:35:08.096Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Universal Break",
-        "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Voice of Korea",
         "source": "api-live",
         "start": "14:00",
         "end": "15:00"
       },
+      "next": {
+        "title": "Montreal Sessions",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "17:00"
+      },
       "track": "",
-      "showTitle": "Universal Break",
+      "showTitle": "Voice of Korea",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T16:59:51.440Z"
+      "checkedAt": "2026-10-20T18:35:17.171Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "World Beat News",
+        "title": "Something for the Mood",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/world-beat-news"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/something-for-the-mood"
       },
       "next": {
-        "title": "Shaking the Habitual",
+        "title": "Sonic Lit: A SpokenWeb Radio Show",
         "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/shaking-the-habitual"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
       },
       "track": "",
-      "showTitle": "World Beat News",
+      "showTitle": "Something for the Mood",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T16:59:53.995Z"
+      "checkedAt": "2026-10-20T18:35:19.968Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,34 +133,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T16:59:55.226Z"
+      "checkedAt": "2026-10-20T18:35:28.713Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "L'UQAM en info",
-        "source": "api-live",
-        "start": "12:45",
-        "end": "13:30",
-        "slug": "uqam-en-info"
-      },
-      "next": {
         "title": "Onde de CHOQ",
         "source": "api-live",
         "start": "14:00",
         "end": "14:45",
         "slug": "onde-de-choq"
       },
-      "track": "Victo — marionettes_2",
-      "showTitle": "L'UQAM en info",
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "api-live",
+        "start": "15:00",
+        "end": "16:00",
+        "slug": "palmareschoq"
+      },
+      "track": "Switchblade",
+      "showTitle": "Onde de CHOQ",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T17:00:13.149Z"
+      "checkedAt": "2026-10-20T18:35:46.926Z"
     }
   }
 }
