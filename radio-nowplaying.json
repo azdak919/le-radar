@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-10-20T20:34:28.586Z",
+  "updatedAt": "2026-10-20T22:04:33.490Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Chéri.e, j’arrive!",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
-      },
-      "next": {
         "title": "Les Arshitechs du Son",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "17:30",
         "end": "18:30",
         "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
+      "next": {
+        "title": "CATHJO FAIT DE LA RADIO",
+        "source": "schedule-live",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://chyz.ca/emission/la-plug/"
+      },
       "track": "",
-      "showTitle": "Chéri.e, j’arrive!",
+      "showTitle": "Les Arshitechs du Son",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T20:33:59.974Z"
+      "checkedAt": "2026-10-20T22:04:05.839Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "London café",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "17:30",
-        "url": "https://cism893.ca/emissions/london-cafe"
-      },
-      "next": {
         "title": "les pénibles",
         "source": "schedule",
         "start": "17:30",
         "end": "19:00",
         "url": "https://cism893.ca/emissions/les-penibles"
       },
+      "next": {
+        "title": "Catharmix",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/catharmix"
+      },
       "track": "",
-      "showTitle": "London café",
+      "showTitle": "les pénibles",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T20:34:02.104Z"
+      "checkedAt": "2026-10-20T22:04:07.895Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Montreal Sessions",
+        "title": "Prison Radio",
         "source": "api-live",
-        "start": "15:00",
-        "end": "17:00"
+        "start": "18:00",
+        "end": "19:00"
       },
       "next": {
-        "title": "Off The Hour: Local Journalism Stories",
+        "title": "Soul Perspectives",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:30"
       },
       "track": "",
-      "showTitle": "Montreal Sessions",
+      "showTitle": "Prison Radio",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T20:34:04.839Z"
+      "checkedAt": "2026-10-20T22:04:10.940Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Bikini Brrroadcast",
+        "title": "feminemix",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/feminemix"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "Ashes to Ashes",
         "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/ashes-to-ashes"
       },
       "track": "",
-      "showTitle": "Bikini Brrroadcast",
+      "showTitle": "feminemix",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T20:34:08.405Z"
+      "checkedAt": "2026-10-20T22:04:13.988Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,34 +133,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T20:34:09.720Z"
+      "checkedAt": "2026-10-20T22:04:14.812Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Passion Psy",
-        "source": "api-live",
-        "start": "16:00",
-        "end": "17:30",
-        "slug": "passion-psy"
-      },
-      "next": {
         "title": "Le Studio",
         "source": "api-live",
         "start": "18:00",
         "end": "19:00",
         "slug": "live"
       },
-      "track": "Episode — Épisode 3",
-      "showTitle": "Passion Psy",
+      "next": {
+        "title": "Les Amazones",
+        "source": "api-live",
+        "start": "19:30",
+        "end": "20:30",
+        "slug": "les-amazones"
+      },
+      "track": "Le Studio Ouverture",
+      "showTitle": "Le Studio",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T20:34:28.236Z"
+      "checkedAt": "2026-10-20T22:04:33.139Z"
     }
   }
 }
