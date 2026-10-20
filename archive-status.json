@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-19T09:31:08.580Z",
+  "updated": "2026-10-20T00:49:25.711Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -4207,14 +4207,67 @@
       "via": "save-page-now",
       "source": "Quartier Libre",
       "snapshot": "https://web.archive.org/web/20261019093053/https://quartierlibre.ca/le-grand-prix-cyclistes-montreal/"
+    },
+    "https://theplantnews.com/2026/10/19/math-now-thinking-outside-the-box/": {
+      "at": "2026-10-20T00:38:50.051Z",
+      "via": "save-page-now",
+      "source": "The Plant",
+      "snapshot": "https://web.archive.org/web/20261020003833/https://theplantnews.com/2026/10/19/math-now-thinking-outside-the-box/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/19/bulletins-de-nouvelles-la-pige-radio/": {
+      "at": "2026-10-20T00:40:18.720Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261020004001/https://lapige.atmjonquiere.com/2026/10/19/bulletins-de-nouvelles-la-pige-radio/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/19/challenger-banque-nationale-place-a-la-competition/": {
+      "at": "2026-10-19T16:58:06.000Z",
+      "via": "existant",
+      "source": "La Pige"
+    },
+    "https://lecollectif.ca/sports-et-bien-etre/fin-de-saison-abrupte-pour-la-cycliste-magdeleine-vallieres-mill/": {
+      "at": "2026-10-20T00:46:11.470Z",
+      "via": "save-page-now",
+      "source": "Le Collectif",
+      "snapshot": "https://web.archive.org/web/20261020004556/https://lecollectif.ca/sports-et-bien-etre/fin-de-saison-abrupte-pour-la-cycliste-magdeleine-vallieres-mill/"
+    },
+    "https://lecollectif.ca/sports-et-bien-etre/le-grand-defi-pierre-lavoie-debarque-a-sherbrooke/": {
+      "at": "2026-10-20T00:46:33.826Z",
+      "via": "save-page-now",
+      "source": "Le Collectif",
+      "snapshot": "https://web.archive.org/web/20261020004618/https://lecollectif.ca/sports-et-bien-etre/le-grand-defi-pierre-lavoie-debarque-a-sherbrooke/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/19/fin-de-la-saison-de-chasse-a-lorignal-2026-au-saguenay-lac-saint-jean/": {
+      "at": "2026-10-20T00:47:02.120Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261020004641/https://lapige.atmjonquiere.com/2026/10/19/fin-de-la-saison-de-chasse-a-lorignal-2026-au-saguenay-lac-saint-jean/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/19/le-partage-de-la-route-au-coeur-dune-operation-policiere-a-saguenay/": {
+      "at": "2026-10-20T00:47:48.426Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261020004728/https://lapige.atmjonquiere.com/2026/10/19/le-partage-de-la-route-au-coeur-dune-operation-policiere-a-saguenay/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/19/un-nouveau-restaurant-sinstalle-au-club-option-gss-a-kenogami/": {
+      "at": "2026-10-20T00:48:22.709Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261020004807/https://lapige.atmjonquiere.com/2026/10/19/un-nouveau-restaurant-sinstalle-au-club-option-gss-a-kenogami/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/19/il-ny-a-plus-de-rendez-vous-disponibles-la-campagne-de-vaccination-contre-la-grippe-demarre-fort/": {
+      "at": "2026-10-20T00:49:00.859Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261020004841/https://lapige.atmjonquiere.com/2026/10/19/il-ny-a-plus-de-rendez-vous-disponibles-la-campagne-de-vaccination-contre-la-grippe-demarre-fort/"
     }
   },
   "stats": {
-    "total": 734,
+    "total": 743,
     "lastRun": {
-      "saved": 3,
-      "skipped": 0,
-      "failed": 12,
+      "saved": 8,
+      "skipped": 1,
+      "failed": 11,
       "stoppedEarly": false
     }
   },
@@ -4222,17 +4275,19 @@
     "Le Collectif": {
       "host": "lecollectif.ca",
       "pages": 27,
-      "checkedAt": "2026-10-12T11:18:19.656Z"
+      "checkedAt": "2026-10-12T11:18:19.656Z",
+      "stale": true
     },
     "The Tribune": {
       "host": "www.thetribune.ca",
       "pages": 37,
-      "checkedAt": "2026-10-12T22:35:05.125Z"
+      "checkedAt": "2026-10-20T00:37:24.821Z"
     },
     "The Link": {
       "host": "thelinknewspaper.ca",
       "pages": 138,
-      "checkedAt": "2026-10-12T22:35:10.761Z"
+      "checkedAt": "2026-10-12T22:35:10.761Z",
+      "stale": true
     },
     "The McGill Daily": {
       "host": "www.mcgilldaily.com",
