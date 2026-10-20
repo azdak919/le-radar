@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-10-20T18:35:47.276Z",
+  "updatedAt": "2026-10-20T20:34:28.586Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Émission (presque) sérieuse",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://chyz.ca/emission/emission-presque-serieuse/"
-      },
-      "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
+      "next": {
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
+      },
       "track": "",
-      "showTitle": "Émission (presque) sérieuse",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T18:35:03.893Z"
+      "checkedAt": "2026-10-20T20:33:59.974Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le palmarès",
+        "title": "London café",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://cism893.ca/emissions/london-cafe"
       },
       "next": {
-        "title": "À la bonne heure",
+        "title": "les pénibles",
         "source": "schedule",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "https://cism893.ca/emissions/a-la-bonne-heure"
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/les-penibles"
       },
       "track": "",
-      "showTitle": "Le palmarès",
+      "showTitle": "London café",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T18:35:08.096Z"
+      "checkedAt": "2026-10-20T20:34:02.104Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Voice of Korea",
-        "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
-      },
-      "next": {
         "title": "Montreal Sessions",
         "source": "api-live",
         "start": "15:00",
         "end": "17:00"
       },
+      "next": {
+        "title": "Off The Hour: Local Journalism Stories",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00"
+      },
       "track": "",
-      "showTitle": "Voice of Korea",
+      "showTitle": "Montreal Sessions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T18:35:17.171Z"
+      "checkedAt": "2026-10-20T20:34:04.839Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Something for the Mood",
+        "title": "Bikini Brrroadcast",
         "source": "schedule-live",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "http://www.cjlo.com/shows/something-for-the-mood"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/bikini-brrroadcast"
       },
       "next": {
-        "title": "Sonic Lit: A SpokenWeb Radio Show",
+        "title": "CJLO's Alternative Mega Mix",
         "source": "schedule-live",
-        "start": "15:00",
-        "end": "16:00",
-        "url": "http://www.cjlo.com/shows/sonic-lit-a-spokenweb-radio-show"
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
       },
       "track": "",
-      "showTitle": "Something for the Mood",
+      "showTitle": "Bikini Brrroadcast",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T18:35:19.968Z"
+      "checkedAt": "2026-10-20T20:34:08.405Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,34 +133,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T18:35:28.713Z"
+      "checkedAt": "2026-10-20T20:34:09.720Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": {
-        "title": "Onde de CHOQ",
+        "title": "Passion Psy",
         "source": "api-live",
-        "start": "14:00",
-        "end": "14:45",
-        "slug": "onde-de-choq"
+        "start": "16:00",
+        "end": "17:30",
+        "slug": "passion-psy"
       },
       "next": {
-        "title": "Palmarès CHOQ.ca",
+        "title": "Le Studio",
         "source": "api-live",
-        "start": "15:00",
-        "end": "16:00",
-        "slug": "palmareschoq"
+        "start": "18:00",
+        "end": "19:00",
+        "slug": "live"
       },
-      "track": "Switchblade",
-      "showTitle": "Onde de CHOQ",
+      "track": "Episode — Épisode 3",
+      "showTitle": "Passion Psy",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T18:35:46.926Z"
+      "checkedAt": "2026-10-20T20:34:28.236Z"
     }
   }
 }
