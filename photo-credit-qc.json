@@ -1,30 +1,44 @@
 {
-  "updated": "2026-10-20T15:45:10.950Z",
+  "updated": "2026-10-20T18:34:51.627Z",
   "total": 178,
-  "withImage": 152,
-  "withCredit": 152,
+  "withImage": 157,
+  "withCredit": 157,
   "cited": 106,
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 6,
-  "citedNew": 6,
-  "fallbackNew": 8,
+  "checked": 21,
+  "updatedCount": 14,
+  "citedNew": 8,
+  "fallbackNew": 13,
   "samples": [
+    {
+      "title": "L’effet Trump au Québec",
+      "source": "Quartier Libre",
+      "credit": "Dessin : Wendy Kim Pires",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "L’UQAM octroie un contrat de quatre millions de dollars à Amazon",
+      "source": "Montréal Campus",
+      "credit": "Illustration : Fanny Lécaudé",
+      "cited": true,
+      "method": "figcaption-mention"
+    },
+    {
+      "title": "Le Marathon Beneva 2026 porté par la foule montréalaise",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
       "credit": "Photo : Tan YiYang",
       "cited": true,
       "method": "figcaption-bare"
-    },
-    {
-      "title": "Faire compter sa voix",
-      "source": "Le Délit",
-      "credit": "Photo : Photo tirée d’Élections Québec",
-      "cited": true,
-      "method": "media-credit-featured"
     },
     {
       "title": "Concordia’s Solidarity Brunch goes monthly",
@@ -41,18 +55,46 @@
       "method": "figcaption"
     },
     {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Blackface at McGill",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
+      "title": "Know Your Artist: Stina Baudin",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Clear bags: A simple remedy for Montreal’s lacklustre composting habits?",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Belonging is not something we have to earn",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "‘The Tribune’ Explains: How to vote in Quebec’s 2026 general election",
+      "source": "The Tribune",
+      "credit": "Photo credit: The Tribune",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Que faire à Montréal en octobre ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Chantal Ginzi, tirée du projet Farīsāt: Gunpowder’s Daughters exposée au World Press Photo",
       "cited": true,
-      "method": "via-attribution"
+      "method": "figcaption-trailing-fr"
     }
   ]
 }

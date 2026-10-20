@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-20T15:44:29.591Z",
+  "updated": "2026-10-20T18:33:48.809Z",
   "total": 178,
   "pool": 58,
-  "incomplete": 10,
+  "incomplete": 11,
   "withLeadExcerpt": 116,
-  "candidates": 10,
-  "enriched": 1,
+  "candidates": 11,
+  "enriched": 2,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -19,12 +19,21 @@
       "changed": false
     },
     {
-      "title": "Faire compter sa voix",
-      "link": "https://www.delitfrancais.com/2026/09/23/faire-compter-sa-voix/",
+      "title": "L’effet Trump au Québec",
+      "link": "https://quartierlibre.ca/leffet-trump-au-quebec/",
       "ok": true,
       "score": 100,
-      "chars": 282,
-      "sample": "En quinze ans, les Indigenous Awareness Weeks (IAW) sont devenues un espace de « dialogue, de rappro",
+      "chars": 378,
+      "sample": "Les tensions commerciales entre le Canada et les États-Unis ne cessent d’augmenter. Elles ont pris u",
+      "changed": true
+    },
+    {
+      "title": "L’UQAM octroie un contrat de quatre millions de dollars à Amazon",
+      "link": "https://montrealcampus.ca/2026/10/20/luqam-octroie-un-contrat-de-quatre-millions-de-dollars-a-amazon/",
+      "ok": true,
+      "score": 100,
+      "chars": 320,
+      "sample": "Malgré l’opposition syndicale et étudiante formulée au printemps dernier, l’UQAM a renouvelé son con",
       "changed": true
     },
     {
@@ -70,15 +79,6 @@
       "score": 96,
       "chars": 400,
       "sample": "The Concordia University Stingers men’s rugby team has had a difficult start to the season. Still, t",
-      "changed": false
-    },
-    {
-      "title": "Bulletins de nouvelles La Pige Radio",
-      "link": "https://lapige.atmjonquiere.com/2026/10/19/bulletins-de-nouvelles-la-pige-radio/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-de-nouvelles-la-pige-radio",
-      "ok": true,
-      "score": 67,
-      "chars": 140,
-      "sample": "Un incendie sur une base militaire en Alberta fait 4 morts, manifestations en France et à Montréal e",
       "changed": false
     }
   ]
