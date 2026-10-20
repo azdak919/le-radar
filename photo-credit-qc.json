@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-20T18:34:51.627Z",
+  "updated": "2026-10-20T18:38:59.323Z",
   "total": 178,
   "withImage": 157,
   "withCredit": 157,
@@ -7,9 +7,9 @@
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 21,
-  "updatedCount": 14,
-  "citedNew": 8,
+  "checked": 22,
+  "updatedCount": 15,
+  "citedNew": 9,
   "fallbackNew": 13,
   "samples": [
     {
@@ -39,6 +39,13 @@
       "credit": "Photo : Tan YiYang",
       "cited": true,
       "method": "figcaption-bare"
+    },
+    {
+      "title": "S.O.S. Huîtres menacées",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "Concordia’s Solidarity Brunch goes monthly",
@@ -88,13 +95,6 @@
       "credit": "Photo credit: The Tribune",
       "cited": false,
       "method": null
-    },
-    {
-      "title": "Que faire à Montréal en octobre ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Chantal Ginzi, tirée du projet Farīsāt: Gunpowder’s Daughters exposée au World Press Photo",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
     }
   ]
 }
