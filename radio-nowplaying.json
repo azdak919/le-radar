@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-20T11:36:28.580Z",
+  "updatedAt": "2026-10-20T14:05:38.304Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "L'art des Histoires",
+        "source": "api-live",
+        "start": "10:00",
+        "end": "11:30",
+        "url": "https://chyz.ca/emission/lart-des-histoires/"
+      },
       "next": {
-        "title": "Mardi Champ Gauche",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mardi-champ-gauche-playlist-du-matin/"
+        "title": "Émission (presque) sérieuse",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://chyz.ca/emission/emission-presque-serieuse/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "L'art des Histoires",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T11:35:32.152Z"
+      "checkedAt": "2026-10-20T14:04:58.646Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Raconte ton quartier",
+        "title": "Lentement mais sûrement",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/raconte-ton-quartier"
+        "start": "10:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/lentement-mais-surement"
       },
       "next": {
-        "title": "450DB",
+        "title": "Les sentinelles de l'art",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/450db"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
       },
       "track": "",
-      "showTitle": "Raconte ton quartier",
+      "showTitle": "Lentement mais sûrement",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T11:35:33.794Z"
+      "checkedAt": "2026-10-20T14:05:00.790Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Tuesday Morning After Pt1",
+        "title": "Basa Basa",
         "source": "api-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "09:00",
+        "end": "11:00"
       },
       "next": {
-        "title": "Tuesday Morning After Pt2",
+        "title": "Ecolibrium/Environment in Canada",
         "source": "api-live",
-        "start": "08:00",
-        "end": "09:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "track": "",
-      "showTitle": "Tuesday Morning After Pt1",
+      "showTitle": "Basa Basa",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,82 +81,80 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T11:35:35.864Z"
+      "checkedAt": "2026-10-20T14:05:04.003Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hip's Time to Wake Hop",
+        "title": "Democracy Now",
         "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "next": {
-        "title": "At The Movies",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/at-the-movies"
+        "title": "Mirror Journal",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/mirror-journal"
       },
       "track": "",
-      "showTitle": "Hip's Time to Wake Hop",
-      "host": "",
-      "source": "schedule",
-      "sources": [
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-20T11:36:09.898Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/at-the-movies"
-      },
-      "next": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "18:30"
-      },
-      "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Democracy Now",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T11:36:10.951Z"
+      "checkedAt": "2026-10-20T14:05:18.552Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "18:30"
+      },
+      "next": {
+        "title": "L'Aut'Rock",
+        "source": "schedule-live",
+        "start": "18:30",
+        "end": "20:00"
+      },
+      "track": "",
+      "showTitle": "Palmarès CFAK",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-20T14:05:19.691Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Le Monde Dans Mes Oreilles",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://www.choq.ca/emissions/le-monde-dans-mes-oreilles"
+        "title": "L'UQAM en info",
+        "source": "api-live",
+        "start": "12:45",
+        "end": "13:30",
+        "slug": "uqam-en-info"
       },
-      "track": "Lysandre — L'odeur de la pluie",
+      "track": "The Go! Team — Ladyflash",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T11:36:28.230Z"
+      "checkedAt": "2026-10-20T14:05:37.953Z"
     }
   }
 }
