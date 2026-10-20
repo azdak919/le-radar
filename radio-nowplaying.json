@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-20T06:00:20.166Z",
+  "updatedAt": "2026-10-20T08:47:22.296Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T05:59:29.035Z"
+      "checkedAt": "2026-10-20T08:46:21.059Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les sentinelles de l'art (reprise)",
+        "title": "À l'horizon",
         "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/les-sentinelles-de-lart"
+        "start": "03:00",
+        "end": "05:00",
+        "url": "https://cism893.ca/emissions/a-lhorizon"
       },
       "next": {
-        "title": "Mix franco",
+        "title": "Le Séismix",
         "source": "schedule",
-        "start": "02:00",
-        "end": "03:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "start": "05:00",
+        "end": "07:00",
+        "url": "https://cism893.ca/emissions/le-seismix"
       },
       "track": "",
-      "showTitle": "Les sentinelles de l'art (reprise)",
+      "showTitle": "À l'horizon",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T05:59:31.045Z"
+      "checkedAt": "2026-10-20T08:46:22.703Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harmony Express",
+        "title": "Attik / Show For Children",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "03:00",
+        "end": "05:00"
       },
       "next": {
-        "title": "Pirate et Libres",
+        "title": "The Beat Power Hour",
         "source": "api-live",
-        "start": "02:00",
-        "end": "03:00"
+        "start": "05:00",
+        "end": "07:00"
       },
       "track": "",
-      "showTitle": "Harmony Express",
+      "showTitle": "Attik / Show For Children",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T05:59:37.544Z"
+      "checkedAt": "2026-10-20T08:46:25.992Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Hip's Time to Wake Hop",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/hips-time-to-wake-hop"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T05:59:52.301Z"
+      "checkedAt": "2026-10-20T08:47:00.318Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T05:59:58.836Z"
+      "checkedAt": "2026-10-20T08:47:01.409Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "07:00",
         "slug": "les-rois-de-larene"
       },
-      "track": "Rosegaze — Laisser le monde s'effriter en attendant la nouvelle",
+      "track": "l i l a — to be considered",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T06:00:19.815Z"
+      "checkedAt": "2026-10-20T08:47:21.946Z"
     }
   }
 }
