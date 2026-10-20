@@ -1,15 +1,17 @@
 {
-  "checkedAt": "2026-10-19T01:09:05.794Z",
+  "checkedAt": "2026-10-20T01:45:01.474Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
-    "drift": [
+    "stable": 4,
+    "drift": [],
+    "overhaul": [
       "choq"
     ],
-    "overhaul": [],
-    "unreachable": []
+    "unreachable": [
+      "cjlo"
+    ]
   },
   "stations": [
     {
@@ -34,8 +36,8 @@
     },
     {
       "id": "ckut",
-      "published": 102,
-      "fresh": 102,
+      "published": 100,
+      "fresh": 100,
       "added": [],
       "removed": [],
       "changed": 0,
@@ -45,12 +47,12 @@
     {
       "id": "cjlo",
       "published": 379,
-      "fresh": 379,
+      "fresh": 0,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
-      "status": "stable"
+      "status": "unreachable"
     },
     {
       "id": "cfak",
@@ -65,20 +67,46 @@
     {
       "id": "choq",
       "published": 42,
-      "fresh": 46,
+      "fresh": 26,
       "added": [
-        "dim 08:00–08:30 Infra Test",
-        "dim 09:00–09:30 Infra Test",
-        "dim 09:30–10:00 Infra Test",
-        "dim 10:00–10:30 Infra Test",
-        "mer 13:00–13:45 Onde de CHOQ"
+        "lun 10:00–11:00 Kongossa na UQAM",
+        "lun 17:30–18:30 Faire avec",
+        "lun 19:00–20:00 Bitume",
+        "mar 16:00–17:30 Passion Psy",
+        "mar 19:30–20:30 Les Amazones",
+        "mer 11:00–12:00 Miroirs d’Orient",
+        "mer 13:00–13:45 Onde de CHOQ",
+        "jeu 14:00–15:00 Dans les airs"
       ],
       "removed": [
-        "mer 13:00–14:00 Échos du monde"
+        "dim 01:00–01:30 Infra Test",
+        "dim 02:00–02:30 Infra Test",
+        "dim 02:30–03:00 Infra Test",
+        "dim 14:00–16:00 Pôle hip-hop",
+        "dim 18:00–19:00 CUCH CAST",
+        "mar 11:00–12:00 Le Monde Dans Mes Oreilles",
+        "mar 20:30–22:30 10 sur 10 : un podcast 100% rap",
+        "mer 13:00–14:00 Échos du monde",
+        "mer 18:00–19:00 Les chroniques atmosphériques",
+        "mer 22:00–22:15 Infra Test",
+        "jeu 18:30–19:45 Les Apatrides Anonymes",
+        "ven 14:00–14:30 Les fleurs du tapis",
+        "ven 17:00–18:00 La Niche",
+        "sam 11:00–11:15 Infra Test",
+        "sam 11:30–11:45 Infra Test",
+        "sam 11:45–12:00 Infra Test",
+        "sam 12:30–13:00 Infra Test",
+        "sam 13:30–14:00 Infra Test",
+        "sam 15:00–15:30 Infra Test",
+        "sam 16:30–17:00 Infra Test",
+        "sam 17:00–17:30 Infra Test",
+        "sam 18:00–18:30 Infra Test",
+        "sam 19:00–19:30 Infra Test",
+        "sam 19:30–20:00 Infra Test"
       ],
-      "changed": 6,
-      "ratio": 0.143,
-      "status": "drift"
+      "changed": 32,
+      "ratio": 0.762,
+      "status": "overhaul"
     }
   ]
 }
