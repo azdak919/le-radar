@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-20T08:53:38.080Z",
+  "updated": "2026-10-20T14:40:04.787Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -4260,15 +4260,65 @@
       "via": "save-page-now",
       "source": "La Pige",
       "snapshot": "https://web.archive.org/web/20261020004841/https://lapige.atmjonquiere.com/2026/10/19/il-ny-a-plus-de-rendez-vous-disponibles-la-campagne-de-vaccination-contre-la-grippe-demarre-fort/"
+    },
+    "https://lecollectif.ca/edition-papier/vers-une-10e-equipe-dans-la-lcf/": {
+      "at": "2026-10-20T14:34:07.148Z",
+      "via": "save-page-now",
+      "source": "Le Collectif",
+      "snapshot": "https://web.archive.org/web/20261020143351/https://lecollectif.ca/edition-papier/vers-une-10e-equipe-dans-la-lcf/"
+    },
+    "https://lecollectif.ca/sports-et-bien-etre/le-grand-retour-apres-plus-de-50-ans-dabsence/": {
+      "at": "2026-10-19T16:50:23.000Z",
+      "via": "existant",
+      "source": "Le Collectif"
+    },
+    "https://lecollectif.ca/sports-et-bien-etre/le-futur-du-hockey-universitaire-sherbrookois-tatoue-sur-le-coeur/": {
+      "at": "2026-10-19T16:51:32.000Z",
+      "via": "existant",
+      "source": "Le Collectif"
+    },
+    "https://lecollectif.ca/societe/politique-quebecoise/un-resultat-qui-inquiete-les-personnes-etudiantes/": {
+      "at": "2026-10-19T16:53:13.000Z",
+      "via": "existant",
+      "source": "Le Collectif"
+    },
+    "https://lecollectif.ca/societe/demission-de-christine-frechette-quel-avenir-pour-la-caq/": {
+      "at": "2026-10-19T16:54:45.000Z",
+      "via": "existant",
+      "source": "Le Collectif"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/20/reportages-radio-du-19-octobre-2026/": {
+      "at": "2026-10-20T14:35:31.847Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261020143517/https://lapige.atmjonquiere.com/2026/10/20/reportages-radio-du-19-octobre-2026/"
+    },
+    "https://quartierlibre.ca/etudiants-internationaux-elections/": {
+      "at": "2026-10-20T14:38:07.193Z",
+      "via": "save-page-now",
+      "source": "Quartier Libre",
+      "snapshot": "https://web.archive.org/web/20261020143756/https://quartierlibre.ca/etudiants-internationaux-elections/"
+    },
+    "https://thelinknewspaper.ca/article/16489": {
+      "at": "2026-10-20T14:39:36.214Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20261020143917/https://thelinknewspaper.ca/article/16489"
+    },
+    "https://thelinknewspaper.ca/article/16488": {
+      "at": "2026-10-20T14:40:04.787Z",
+      "via": "save-page-now",
+      "source": "The Link",
+      "snapshot": "https://web.archive.org/web/20261020143944/https://thelinknewspaper.ca/article/16488"
     }
   },
   "stats": {
-    "total": 743,
+    "total": 752,
     "lastRun": {
-      "saved": 0,
-      "skipped": 0,
-      "failed": 7,
-      "stoppedEarly": true
+      "saved": 5,
+      "skipped": 4,
+      "failed": 11,
+      "stoppedEarly": false
     }
   },
   "sources": {
@@ -4295,7 +4345,7 @@
     "La Pige": {
       "host": "lapige.atmjonquiere.com",
       "pages": 9,
-      "checkedAt": "2026-10-13T11:03:05.735Z"
+      "checkedAt": "2026-10-20T14:28:07.901Z"
     },
     "L'Exemplaire": {
       "host": "www.exemplaire.com.ulaval.ca",
@@ -4305,7 +4355,7 @@
     "Quartier Libre": {
       "host": "quartierlibre.ca",
       "pages": 40,
-      "checkedAt": "2026-10-13T11:03:12.355Z"
+      "checkedAt": "2026-10-20T14:28:13.580Z"
     },
     "The Plant": {
       "host": "theplantnews.com",
