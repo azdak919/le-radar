@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-20T14:23:36.106Z",
+  "updated": "2026-10-20T15:44:29.591Z",
   "total": 178,
   "pool": 58,
-  "incomplete": 9,
+  "incomplete": 10,
   "withLeadExcerpt": 116,
-  "candidates": 9,
-  "enriched": 0,
+  "candidates": 10,
+  "enriched": 1,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -17,6 +17,15 @@
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
       "changed": false
+    },
+    {
+      "title": "Faire compter sa voix",
+      "link": "https://www.delitfrancais.com/2026/09/23/faire-compter-sa-voix/",
+      "ok": true,
+      "score": 100,
+      "chars": 282,
+      "sample": "En quinze ans, les Indigenous Awareness Weeks (IAW) sont devenues un espace de « dialogue, de rappro",
+      "changed": true
     },
     {
       "title": "Reportages radio du 19 octobre 2026",
@@ -70,15 +79,6 @@
       "score": 67,
       "chars": 140,
       "sample": "Un incendie sur une base militaire en Alberta fait 4 morts, manifestations en France et à Montréal e",
-      "changed": false
-    },
-    {
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
-      "ok": true,
-      "score": 60,
-      "chars": 98,
-      "sample": "Comment Reblog Subscribe Subscribed The Plant Sign me up Have a WordPress.com account? Log in now.",
       "changed": false
     }
   ]
