@@ -1,18 +1,10 @@
 {
-  "updated": "2026-10-20T18:37:46.854Z",
+  "updated": "2026-10-20T20:01:08.049Z",
   "total": 178,
   "withAuthor": 178,
-  "mismatches": 21,
+  "mismatches": 20,
   "ok": true,
   "samples": [
-    {
-      "title": "L’effet Trump au Québec",
-      "link": "https://quartierlibre.ca/leffet-trump-au-quebec/",
-      "source": "Quartier Libre",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Cassie Bertrand",
-      "reason": "page-byline"
-    },
     {
       "title": "Movember : au-delà de la moustache",
       "link": "https://lecollectif.ca/societe/movember-au-dela-de-la-moustache/",
@@ -164,7 +156,15 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "Garda World au CVM (Éditorial)",
+      "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
+      "source": "Exil",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "La rédaction",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 21
+  "fixed": 20
 }

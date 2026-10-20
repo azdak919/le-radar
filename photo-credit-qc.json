@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-20T18:38:59.323Z",
+  "updated": "2026-10-20T20:02:11.531Z",
   "total": 178,
   "withImage": 157,
   "withCredit": 157,
@@ -7,32 +7,11 @@
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 22,
-  "updatedCount": 15,
+  "checked": 17,
+  "updatedCount": 9,
   "citedNew": 9,
-  "fallbackNew": 13,
+  "fallbackNew": 8,
   "samples": [
-    {
-      "title": "L’effet Trump au Québec",
-      "source": "Quartier Libre",
-      "credit": "Dessin : Wendy Kim Pires",
-      "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "L’UQAM octroie un contrat de quatre millions de dollars à Amazon",
-      "source": "Montréal Campus",
-      "credit": "Illustration : Fanny Lécaudé",
-      "cited": true,
-      "method": "figcaption-mention"
-    },
-    {
-      "title": "Le Marathon Beneva 2026 porté par la foule montréalaise",
-      "source": "Quartier Libre",
-      "credit": "Crédit photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
@@ -41,7 +20,21 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "S.O.S. Huîtres menacées",
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "source": "Le Délit",
+      "credit": "Photo : Héloïse Durning",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Quand la fiction banalise les traumatismes",
       "source": "Le Délit",
       "credit": "Photo : Ana Camila Torchia",
       "cited": true,
@@ -62,39 +55,25 @@
       "method": "figcaption"
     },
     {
-      "title": "Blackface at McGill",
-      "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
-      "cited": false,
-      "method": null
+      "title": "Que faire à Montréal en octobre ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Chantal Ginzi, tirée du projet Farīsāt: Gunpowder’s Daughters exposée au World Press Photo",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
     },
     {
-      "title": "Know Your Artist: Stina Baudin",
-      "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
-      "cited": false,
-      "method": null
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
-      "title": "Clear bags: A simple remedy for Montreal’s lacklustre composting habits?",
-      "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Belonging is not something we have to earn",
-      "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "‘The Tribune’ Explains: How to vote in Quebec’s 2026 general election",
-      "source": "The Tribune",
-      "credit": "Photo credit: The Tribune",
-      "cited": false,
-      "method": null
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
+      "cited": true,
+      "method": "via-attribution"
     }
   ]
 }
