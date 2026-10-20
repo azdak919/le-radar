@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-20T11:32:15.670Z",
+  "updatedAt": "2026-10-20T11:36:28.580Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T11:31:33.466Z"
+      "checkedAt": "2026-10-20T11:35:32.152Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T11:31:35.222Z"
+      "checkedAt": "2026-10-20T11:35:33.794Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T11:31:42.770Z"
+      "checkedAt": "2026-10-20T11:35:35.864Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -88,7 +88,7 @@
       },
       "next": {
         "title": "At The Movies",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/at-the-movies"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "Hip's Time to Wake Hop",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T11:31:56.739Z"
+      "checkedAt": "2026-10-20T11:36:09.898Z"
     },
     "cfak": {
       "id": "cfak",
@@ -109,8 +109,9 @@
       "current": {
         "title": "Folkswagen",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "http://www.cjlo.com/shows/at-the-movies"
       },
       "next": {
         "title": "Palmarès CFAK",
@@ -126,7 +127,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T11:31:58.075Z"
+      "checkedAt": "2026-10-20T11:36:10.951Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +140,7 @@
         "end": "12:00",
         "url": "https://www.choq.ca/emissions/le-monde-dans-mes-oreilles"
       },
-      "track": "Oli Féra — AVALANCHE",
+      "track": "Lysandre — L'odeur de la pluie",
       "showTitle": "",
       "host": "",
       "source": "schedule",
@@ -148,7 +149,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-20T11:32:15.319Z"
+      "checkedAt": "2026-10-20T11:36:28.230Z"
     }
   }
 }
