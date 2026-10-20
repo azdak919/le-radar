@@ -1,10 +1,18 @@
 {
-  "updated": "2026-10-20T20:01:08.049Z",
+  "updated": "2026-10-20T22:06:05.972Z",
   "total": 178,
   "withAuthor": 178,
-  "mismatches": 20,
+  "mismatches": 21,
   "ok": true,
   "samples": [
+    {
+      "title": "L’environnement : invisible, mais partout",
+      "link": "https://quartierlibre.ca/environnement-invisible-elections/",
+      "source": "Quartier Libre",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "Sarah-Jane Vincent",
+      "reason": "page-byline"
+    },
     {
       "title": "Movember : au-delà de la moustache",
       "link": "https://lecollectif.ca/societe/movember-au-dela-de-la-moustache/",
@@ -156,15 +164,7 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
-    },
-    {
-      "title": "Garda World au CVM (Éditorial)",
-      "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
-      "source": "Exil",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
     }
   ],
-  "fixed": 20
+  "fixed": 21
 }
