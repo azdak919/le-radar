@@ -1,10 +1,18 @@
 {
-  "updated": "2026-10-21T00:41:20.200Z",
+  "updated": "2026-10-21T03:52:57.951Z",
   "total": 178,
   "withAuthor": 178,
-  "mismatches": 20,
+  "mismatches": 22,
   "ok": true,
   "samples": [
+    {
+      "title": "Storytelling through dance",
+      "link": "https://thelinknewspaper.ca/article/16490",
+      "source": "The Link",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "Ryan Pyke",
+      "reason": "page-byline"
+    },
     {
       "title": "Movember : au-delà de la moustache",
       "link": "https://lecollectif.ca/societe/movember-au-dela-de-la-moustache/",
@@ -102,6 +110,14 @@
       "reason": "no-author-source"
     },
     {
+      "title": "From Scripts to Stage: BU New Plays 2026",
+      "link": "https://thebucampus.ca/2026/09/30/from-scripts-to-stage-bu-new-plays-2026/",
+      "source": "The Campus",
+      "fieldAuthor": "Zachary Jaimes",
+      "canonicalAuthor": "Zachary Jaimes Saint Cyr",
+      "reason": "page-byline-overrides-rss"
+    },
+    {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://www.thetribune.ca/opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "source": "The Tribune",
@@ -148,23 +164,7 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
-    },
-    {
-      "title": "Find 5 Gaiters in this photo!",
-      "link": "https://thebucampus.ca/2026/04/06/find-5-gaiters-in-this-photo/",
-      "source": "The Campus",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "Garda World au CVM (Éditorial)",
-      "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
-      "source": "Exil",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
     }
   ],
-  "fixed": 20
+  "fixed": 22
 }
