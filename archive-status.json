@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-20T19:49:12.628Z",
+  "updated": "2026-10-21T00:11:49.798Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -4337,10 +4337,10 @@
   "stats": {
     "total": 756,
     "lastRun": {
-      "saved": 2,
-      "skipped": 2,
-      "failed": 14,
-      "stoppedEarly": false
+      "saved": 0,
+      "skipped": 0,
+      "failed": 9,
+      "stoppedEarly": true
     }
   },
   "sources": {
@@ -4362,7 +4362,7 @@
     "The McGill Daily": {
       "host": "www.mcgilldaily.com",
       "pages": 235,
-      "checkedAt": "2026-10-13T20:48:26.225Z"
+      "checkedAt": "2026-10-21T00:06:38.737Z"
     },
     "La Pige": {
       "host": "lapige.atmjonquiere.com",
@@ -4382,12 +4382,12 @@
     "The Plant": {
       "host": "theplantnews.com",
       "pages": 3,
-      "checkedAt": "2026-10-13T20:48:28.903Z"
+      "checkedAt": "2026-10-21T00:06:44.804Z"
     },
     "Montréal Campus": {
       "host": "montrealcampus.ca",
       "pages": 38,
-      "checkedAt": "2026-10-13T20:48:31.326Z"
+      "checkedAt": "2026-10-21T00:06:50.535Z"
     },
     "Zone Campus": {
       "host": "zonecampus.ca",
