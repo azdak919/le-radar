@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-21T20:09:34.089Z",
+  "updatedAt": "2026-10-21T20:17:11.315Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T20:08:35.324Z"
+      "checkedAt": "2026-10-21T20:16:33.092Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T20:08:37.305Z"
+      "checkedAt": "2026-10-21T20:16:35.005Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,21 +81,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T20:08:40.151Z"
+      "checkedAt": "2026-10-21T20:16:37.599Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Borderline",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/borderline"
       },
       "next": {
         "title": "Advice By The Fireplace",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "17:00",
         "end": "18:00",
         "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
@@ -103,12 +103,12 @@
       "track": "",
       "showTitle": "Borderline",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T20:09:14.692Z"
+      "checkedAt": "2026-10-21T20:16:52.084Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T20:09:15.927Z"
+      "checkedAt": "2026-10-21T20:16:53.119Z"
     },
     "choq": {
       "id": "choq",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T20:09:33.739Z"
+      "checkedAt": "2026-10-21T20:17:10.965Z"
     }
   }
 }
