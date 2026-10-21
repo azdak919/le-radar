@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-21T04:42:41.536Z",
+  "updatedAt": "2026-10-21T05:42:21.403Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T04:41:33.333Z"
+      "checkedAt": "2026-10-21T05:41:44.942Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T04:41:34.864Z"
+      "checkedAt": "2026-10-21T05:41:46.628Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T04:41:37.231Z"
+      "checkedAt": "2026-10-21T05:41:48.944Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "CJLO Late Night",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "00:00",
         "end": "06:00",
         "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
         "title": "Morning Electro-shock",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/morning-electro-shock"
@@ -96,12 +96,12 @@
       "track": "",
       "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T04:42:11.519Z"
+      "checkedAt": "2026-10-21T05:42:02.872Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T04:42:12.538Z"
+      "checkedAt": "2026-10-21T05:42:04.065Z"
     },
     "choq": {
       "id": "choq",
@@ -139,7 +139,7 @@
         "end": "12:00",
         "slug": "miroirs-dorient"
       },
-      "track": "",
+      "track": "Elisabeth Simpson — Theme Amazone",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T04:42:41.186Z"
+      "checkedAt": "2026-10-21T05:42:21.053Z"
     }
   }
 }
