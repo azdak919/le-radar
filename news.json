@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-21T03:52:33.042Z",
+  "updated": "2026-10-21T05:00:33.498Z",
   "updatedSlot": null,
   "count": 178,
   "freshnessSessions": 3,
   "sources": {
     "Quartier Libre": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-20T22:00:00.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-10-21T04:59:40.393Z"
     },
     "Montréal Campus": {
       "fetchOk": true,
@@ -18,7 +18,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-20T17:36:33.000Z",
-      "lastFetchOk": "2026-10-21T03:52:08.168Z"
+      "lastFetchOk": "2026-10-21T04:59:41.205Z"
     },
     "Le Délit": {
       "fetchOk": true,
@@ -26,7 +26,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-10-07T11:08:00.000Z",
-      "lastFetchOk": "2026-10-21T03:52:10.168Z"
+      "lastFetchOk": "2026-10-21T04:59:44.255Z"
     },
     "The McGill Daily": {
       "fetchOk": true,
@@ -34,7 +34,7 @@
       "articleCount": 15,
       "freshArticleCount": 15,
       "lastArticle": "2026-10-05T17:42:02.000Z",
-      "lastFetchOk": "2026-10-21T03:52:10.496Z"
+      "lastFetchOk": "2026-10-21T04:59:45.040Z"
     },
     "The Link": {
       "fetchOk": true,
@@ -42,15 +42,15 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-10-21T03:09:00.000Z",
-      "lastFetchOk": "2026-10-21T03:52:11.773Z"
+      "lastFetchOk": "2026-10-21T04:59:46.297Z"
     },
     "Zone Campus": {
-      "fetchOk": false,
-      "stale": true,
-      "articleCount": 9,
-      "freshArticleCount": 9,
-      "lastArticle": "2026-05-04T13:12:21.000Z",
-      "lastFetchOk": null
+      "fetchOk": true,
+      "stale": false,
+      "articleCount": 10,
+      "freshArticleCount": 10,
+      "lastArticle": "2026-05-08T14:20:26.000Z",
+      "lastFetchOk": "2026-10-21T04:59:47.878Z"
     },
     "L'Exemplaire": {
       "fetchOk": true,
@@ -58,15 +58,15 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-13T21:23:27.000Z",
-      "lastFetchOk": "2026-10-21T03:52:13.696Z"
+      "lastFetchOk": "2026-10-21T04:59:49.080Z"
     },
     "Le Collectif": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-19T14:09:03.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-10-21T04:59:50.218Z"
     },
     "Exil": {
       "fetchOk": true,
@@ -74,15 +74,15 @@
       "articleCount": 10,
       "freshArticleCount": 4,
       "lastArticle": "2026-04-18T22:22:07.000Z",
-      "lastFetchOk": "2026-10-21T03:52:14.263Z"
+      "lastFetchOk": "2026-10-21T04:59:50.466Z"
     },
     "La Pige": {
-      "fetchOk": false,
-      "stale": true,
+      "fetchOk": true,
+      "stale": false,
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-20T14:04:34.000Z",
-      "lastFetchOk": null
+      "lastFetchOk": "2026-10-21T04:59:51.264Z"
     },
     "Le Polyscope": {
       "fetchOk": true,
@@ -90,7 +90,7 @@
       "articleCount": 20,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-11T18:28:17.755Z",
-      "lastFetchOk": "2026-10-21T03:52:16.210Z"
+      "lastFetchOk": "2026-10-21T04:59:54.787Z"
     },
     "The Tribune": {
       "fetchOk": true,
@@ -98,7 +98,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-08T15:35:43.000Z",
-      "lastFetchOk": "2026-10-21T03:52:18.277Z"
+      "lastFetchOk": "2026-10-21T04:59:56.786Z"
     },
     "The Campus": {
       "fetchOk": true,
@@ -106,7 +106,7 @@
       "articleCount": 20,
       "freshArticleCount": 20,
       "lastArticle": "2026-09-30T20:28:36.000Z",
-      "lastFetchOk": "2026-10-21T03:52:18.509Z"
+      "lastFetchOk": "2026-10-21T04:59:57.102Z"
     },
     "The Plant": {
       "fetchOk": true,
@@ -114,7 +114,7 @@
       "articleCount": 10,
       "freshArticleCount": 10,
       "lastArticle": "2026-10-19T15:51:48.000Z",
-      "lastFetchOk": "2026-10-21T03:52:18.658Z"
+      "lastFetchOk": "2026-10-21T04:59:57.285Z"
     },
     "L'Oisif": {
       "fetchOk": true,
@@ -122,7 +122,7 @@
       "articleCount": 3,
       "freshArticleCount": 0,
       "lastArticle": "2019-08-23T18:43:43.000Z",
-      "lastFetchOk": "2026-10-21T03:52:19.981Z"
+      "lastFetchOk": "2026-10-21T04:59:59.798Z"
     },
     "La Gifle": {
       "fetchOk": true,
@@ -130,7 +130,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2018-05-19T20:19:20.000Z",
-      "lastFetchOk": "2026-10-21T03:52:20.151Z"
+      "lastFetchOk": "2026-10-21T04:59:59.999Z"
     },
     "Le Trait d'Union": {
       "fetchOk": true,
@@ -138,7 +138,7 @@
       "articleCount": 10,
       "freshArticleCount": 0,
       "lastArticle": "2024-11-14T14:41:41.000Z",
-      "lastFetchOk": "2026-10-21T03:52:21.210Z"
+      "lastFetchOk": "2026-10-21T05:00:01.186Z"
     }
   },
   "items": [
@@ -154,19 +154,20 @@
       "date": "2026-10-21T03:09:00.000Z",
       "excerpt": "Students from the Gilbert Dance Academy perform at Cabaret Lion d’Or On Oct. 18, Gilbert Dance Academy students put on a multidisciplinary show called l’Orient, mon amour at Cabaret Lion d’Or. Courtesy Gilbert Dance Academy",
       "image": "https://thelinknewspaper.ca/images/made/images/articles/_resized/Courtesy_l_amour_d_orient_2026_900_675_90.jpg",
-      "_pageAuthor": "Ryan Pyke",
       "authorCheckedAt": "2026-10-21T03:52:43.221Z",
-      "leadExcerpt": "Mhanna mingled with the audience and greeted them around 2:30 p.m., then began the show, which featured plenty of audience participation. At the beginning, Mhanna asked several attendees to tell a story, introducing the storytelling theme that would run throughout the production.",
-      "leadImageReady": true,
-      "imageLocal": "assets/news-images/5443094535d3d803.jpg",
-      "imageLocalKey": "5443094535d3d803",
+      "_pageAuthor": "Ryan Pyke",
       "sourceImageCredit": "Photo: Courtesy of Gilbert Dance Academy",
       "sourceImageCreator": "Gilbert Dance Academy",
       "sourceImageCreditUrl": "https://thelinknewspaper.ca/article/16490",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "courtesy_l_amour_d_orient_2026.jpg",
-      "sourceImageCreditRev": 12
+      "sourceImageCreditRev": 12,
+      "leadImageReady": true,
+      "leadExcerpt": "Mhanna mingled with the audience and greeted them around 2:30 p.m., then began the show, which featured plenty of audience participation. At the beginning, Mhanna asked several attendees to tell a story, introducing the storytelling theme that would run throughout the production.",
+      "imageLocal": "assets/news-images/5443094535d3d803.jpg",
+      "imageLocalKey": "5443094535d3d803",
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -181,6 +182,7 @@
       "excerpt": "Canicules inégalées, feux de forêt omniprésents, pluies diluviennes et inondations récurrentes, les événements météorologiques extrêmes et leurs images se multiplient. Pourtant, la question des enjeux environnementaux se pose peu dans la campagne électorale québécoise.",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/10-11_Illu-place-ecologie-.jpg",
       "authorCheckedAt": "2026-10-20T22:05:58.625Z",
+      "_pageAuthor": "Sarah-Jane Vincent",
       "sourceImageCredit": "Dessin : Wendy Kim Pires",
       "sourceImageCreator": "Wendy Kim Pires",
       "sourceImageCreditUrl": "https://quartierlibre.ca/environnement-invisible-elections/",
@@ -188,8 +190,7 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "10-11_illu-place-ecologie-.jpg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadImageReady": true
     },
     {
       "source": "Quartier Libre",
@@ -204,6 +205,7 @@
       "excerpt": "Les tensions commerciales entre le Canada et les États-Unis ne cessent d’augmenter. Elles ont pris un nouveau virage le 22 août dernier lorsque Washington a évoqué la souveraineté culturelle du Québec. Cette déclaration reconfigure la campagne électorale québécoise, qui",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/13_Illu-usa.jpg",
       "authorCheckedAt": "2026-10-20T18:37:27.539Z",
+      "_pageAuthor": "Cassie Bertrand",
       "sourceImageCredit": "Dessin : Wendy Kim Pires",
       "sourceImageCreator": "Wendy Kim Pires",
       "sourceImageCreditUrl": "https://quartierlibre.ca/leffet-trump-au-quebec/",
@@ -211,12 +213,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "13_illu-usa.jpg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Les tensions commerciales entre le Canada et les États-Unis ne cessent d’augmenter. Elles ont pris un nouveau virage le 22 août dernier lorsque Washington a évoqué la souveraineté culturelle du Québec . Cette déclaration reconfigure la campagne électorale québécoise, qui s’achèvera le 5 octobre prochain, et remet en question le calendrier référendaire du Parti québécois (PQ).",
       "imageLocal": "assets/news-images/0ad9a2ed57aba017.jpg",
       "imageLocalKey": "0ad9a2ed57aba017",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -253,6 +254,7 @@
       "date": "2026-10-20T14:04:34.000Z",
       "excerpt": "C’est jour de référendum en Alberta. Même si, pour certains l’indépendance semble hors d’atteinte, le mouvement indépendantiste albertain aura laissé des traces. Maxim Fauteux a plus de détails. Les manifestations en France ont fait échos au Québec cette fin de semaine. Coût de",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0117.jpg",
+      "_pageAuthor": "juliebergeron",
       "sourceImageCredit": "Crédit photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/10/20/reportages-radio-du-19-octobre-2026/?utm_source=rss&utm_medium=rss&utm_campaign=reportages-radio-du-19-octobre-2026",
       "sourceImageCreditFrom": "media",
@@ -260,7 +262,7 @@
       "sourceImageCreditImageKey": "dsc0117.jpg",
       "sourceImageCreditRev": 12,
       "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadExcerpt": "C’est jour de référendum en Alberta. Même si, pour certains l’indépendance semble hors d’atteinte, le mouvement indépendantiste albertain aura laissé des traces. Maxim Fauteux a plus de détails . Les manifestations en France ont fait échos au Québec cette fin de semaine. Coût de la vie et davantage d’investissement en éducation, des enjeux qui interpellent ici aussi. Comment les syndicats et les o"
     },
     {
       "source": "La Pige",
@@ -274,6 +276,7 @@
       "date": "2026-10-20T02:02:15.000Z",
       "excerpt": "Crédit Photo: Dominic Delude Les réserves stratégiques de sirop d’érable du Québec sont vides. Cette annonce survient au lendemain de la Journée nationale de l’érable. La demande de sirop d’érable est en augmentation, mais la production ne suit pas. En 2025, les Producteurs et",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_20261019_171119749_HDR-scaled.jpg",
+      "_pageAuthor": "Dominic Delude",
       "sourceImageCredit": "Photo : Dominic Delude",
       "sourceImageCreator": "Dominic Delude",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/10/19/reserves-strategiques-de-sirop-derable-du-quebec-a-sec/?utm_source=rss&utm_medium=rss&utm_campaign=reserves-strategiques-de-sirop-derable-du-quebec-a-sec",
@@ -281,12 +284,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_20261019_171119749_hdr.jpg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "« Il faut une meilleure façon de gérer l’entrepôt », dénonce le copropriétaire de l’érablière au Sucre d’Or, Vincent Néron. Actuellement, aucune annonce n’a été faite pour renflouer les réserves du Québec.",
       "imageLocal": "assets/news-images/c12fda6988c9d20d.jpg",
       "imageLocalKey": "c12fda6988c9d20d",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -300,6 +302,7 @@
       "date": "2026-10-19T21:07:35.000Z",
       "excerpt": "L’orignal est le gros gibier le plus populaire au Québec ( Photo : Tamara Tremblay) La saison de chasse à l’orignal dans la région du Saguenay a pris fin le vendredi dernier. Des experts au Saguenay craignent que le futur de la chasse à l’orignal mâle soit menacé dû à la",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/photo-troisioo.jpg",
+      "_pageAuthor": "Noah Thomas",
       "sourceImageCredit": "Photo : Tamara Tremblay",
       "sourceImageCreator": "Tamara Tremblay",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/10/19/fin-de-la-saison-de-chasse-a-lorignal-2026-au-saguenay-lac-saint-jean/?utm_source=rss&utm_medium=rss&utm_campaign=fin-de-la-saison-de-chasse-a-lorignal-2026-au-saguenay-lac-saint-jean",
@@ -307,12 +310,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "photo-troisioo.jpg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Les dix zones d’exploitation contrôlées (ZEC) au Saguenay accueillent chaque année plusieurs chasseurs venant tenter leur chance de trouver un « buck ». Il arrive parfois que leur tir initial ne tue pas directement l’orignal. Dans ces cas-ci, la bête a parfois le temps de fuir avant de succomber à ses blessures.",
       "imageLocal": "assets/news-images/24a6185287e92457.jpg",
       "imageLocalKey": "24a6185287e92457",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -326,6 +328,7 @@
       "date": "2026-10-19T20:57:07.000Z",
       "excerpt": "Dans le Bilan routier 2025 de la SAAQ, 75 piétons sont décédés à la suite d’accidents sur la route. (Archives : La Pige) Le Service de police de Saguenay intensifiera ses interventions concernant le partage de la route dans le cadre d’une opération nationale concertée (ONC) du",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2025/02/police-4566193_1920.jpg",
+      "_pageAuthor": "Julianne Landry",
       "sourceImageCredit": "Photo : Julianne Landry",
       "sourceImageCreator": "Julianne Landry",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/10/19/le-partage-de-la-route-au-coeur-dune-operation-policiere-a-saguenay/?utm_source=rss&utm_medium=rss&utm_campaign=le-partage-de-la-route-au-coeur-dune-operation-policiere-a-saguenay",
@@ -333,12 +336,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "police-4566193_1920.jpg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Le Service de police de Saguenay intensifiera ses interventions concernant le partage de la route dans le cadre d’une opération nationale concertée (ONC) du 16 au 22 octobre. « Le service de police a fait beaucoup de prévention. Là, nous allons un peu plus vers la répression », explique la conseillère en communication, Andrée-Anne Duchesne.",
       "imageLocal": "assets/news-images/292f03d1ca51c309.jpg",
       "imageLocalKey": "292f03d1ca51c309",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "La Pige",
@@ -352,6 +354,7 @@
       "date": "2026-10-19T20:51:22.000Z",
       "excerpt": "La salle peut accueillir une quarantaine de personnes. (Photo: Étienne Harvey-Soucy) Le Club Option GSS a annoncé l’ouverture officielle de son tout nouveau restaurant. Situé sur la rue du Roi-George, à Kénogami, le bar accueille désormais un restaurant dirigé par le chef",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Image-4.jpg",
+      "_pageAuthor": "Étienne Harvey-Soucy",
       "sourceImageCredit": "Photo : Étienne Harvey-Soucy",
       "sourceImageCreator": "Étienne Harvey-Soucy",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/10/19/un-nouveau-restaurant-sinstalle-au-club-option-gss-a-kenogami/?utm_source=rss&utm_medium=rss&utm_campaign=un-nouveau-restaurant-sinstalle-au-club-option-gss-a-kenogami",
@@ -359,9 +362,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "image-4.jpg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
-      "leadExcerpt": "Le Club Option GSS a annoncé l’ouverture officielle de son tout nouveau restaurant. Situé sur la rue du Roi-George, à Kénogami, le bar accueille désormais un restaurant dirigé par le chef cuisinier Steeve Langlais.",
-      "_retainedFromCache": true
+      "leadImageReady": true,
+      "leadExcerpt": "Le Club Option GSS a annoncé l’ouverture officielle de son tout nouveau restaurant. Situé sur la rue du Roi-George, à Kénogami, le bar accueille désormais un restaurant dirigé par le chef cuisinier Steeve Langlais."
     },
     {
       "source": "La Pige",
@@ -375,6 +377,7 @@
       "date": "2026-10-19T20:11:49.000Z",
       "excerpt": "Plus de 500000 rendez-vous ont déjà été pris dans tous le Québec. (Photo : Pixabay, libre de droits) La campagne de vaccination contre la grippe (Influenza) et la Covid-19 débute ce mardi 20 octobre au Québec. Elle vise particulièrement les personnes vulnérables de plus de 65",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/spencerbdavis1-vaccine-6165772_1920.jpg",
+      "_pageAuthor": "Merlin Restoux-Pinglot",
       "sourceImageCredit": "Photo : Pixabay, libre de droits",
       "sourceImageCreator": "Pixabay, libre de droits",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/10/19/il-ny-a-plus-de-rendez-vous-disponibles-la-campagne-de-vaccination-contre-la-grippe-demarre-fort/?utm_source=rss&utm_medium=rss&utm_campaign=il-ny-a-plus-de-rendez-vous-disponibles-la-campagne-de-vaccination-contre-la-grippe-demarre-fort",
@@ -382,12 +385,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "spencerbdavis1-vaccine-6165772_1920.jpg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "La campagne de vaccination contre la grippe (Influenza) et la Covid-19 débute ce mardi 20 octobre au Québec. Elle vise particulièrement les personnes vulnérables de plus de 65 ans. Dans la région du Saguenay-Lac-Saint-Jean, les rendez-vous pour la vaccination sont déjà pris d’assaut.",
       "imageLocal": "assets/news-images/6aae25f39e9a9a28.jpg",
       "imageLocalKey": "6aae25f39e9a9a28",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -402,6 +404,7 @@
       "excerpt": "Du 27 août au 5 octobre 2026 se déroule la campagne électorale des élections générales provinciales, qui sont déterminantes pour l’avenir au Québec de plusieurs étudiant·e·s internationaux·ales de l’Université de Montréal (UdeM).",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/12_etudiants-inter.jpg",
       "authorCheckedAt": "2026-10-20T22:05:58.973Z",
+      "_pageAuthor": "Frédéric Chouinard",
       "sourceImageCredit": "Photo : Simone Gingras",
       "sourceImageCreator": "Simone Gingras",
       "sourceImageCreditUrl": "https://quartierlibre.ca/etudiants-internationaux-elections/",
@@ -409,11 +412,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "12_etudiants-inter.jpg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "imageLocal": "assets/news-images/e4cb1497549561ec.jpg",
       "imageLocalKey": "e4cb1497549561ec",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -450,6 +452,7 @@
       "date": "2026-10-19T17:06:37.000Z",
       "excerpt": "Bulletin de 12h Référendum en Alberta, suite des manifestations en France et un opéra en langue innue. Écoutez le résumé de ces nouvelles et bien d’autres ici, dans le bulletin d’Alex Loiselle. Bulletin 14h30 Un incendie sur une base militaire en Alberta fait 4 morts,",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg",
+      "_pageAuthor": "juliebergeron",
       "sourceImageCredit": "Crédit photo : La Pige",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/10/19/bulletins-de-nouvelles-la-pige-radio/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-de-nouvelles-la-pige-radio",
       "sourceImageCreditFrom": "media",
@@ -457,7 +460,7 @@
       "sourceImageCreditImageKey": "dsc0108.jpg",
       "sourceImageCreditRev": 12,
       "leadImageReady": false,
-      "_retainedFromCache": true
+      "leadExcerpt": "Un incendie sur une base militaire en Alberta fait 4 morts, manifestations en France et à Montréal et réouverture de la scierie Petit Paris."
     },
     {
       "source": "The Link",
@@ -495,6 +498,7 @@
       "date": "2026-10-19T16:27:35.000Z",
       "excerpt": "La 19e édition du Challenger Banque Nationale de Saguenay s’est entamé dimanche matin avec la ronde de qualification. (Photo : Charles Pinel) Le premier tour de qualification du Challenger Banque Nationale a eu lieu ce dimanche au Club de tennis de Saguenay. Trente-deux joueuses",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/full-back-left.jpg",
+      "_pageAuthor": "Charles Pinel",
       "sourceImageCredit": "Photo : Charles Pinel",
       "sourceImageCreator": "Charles Pinel",
       "sourceImageCreditUrl": "https://lapige.atmjonquiere.com/2026/10/19/challenger-banque-nationale-place-a-la-competition/?utm_source=rss&utm_medium=rss&utm_campaign=challenger-banque-nationale-place-a-la-competition",
@@ -502,16 +506,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "full-back-left.jpg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
-      "leadExcerpt": "L’initiative a à nouveau été populaire auprès des jeunes familles saguenéennes. Durant la première heure de jeu, la foule était plutôt modeste mais la situation a rapidement changé à partir de 10 h, si bien qu’avant la mi-journée, la plupart des 500 places assises étaient occupées.",
-      "_retainedFromCache": true,
-      "stockImage": "https://live.staticflickr.com/8636/15997904353_84ebe0ebb4_b.jpg",
-      "imageTitle": "Play It Smart Centennial - Fall 2014",
-      "imageCredit": "Photo : Play it Smart Centennial / CC BY · Openverse",
-      "imageCreator": "Play it Smart Centennial",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/130710700@N07/15997904353"
+      "leadImageReady": true,
+      "leadExcerpt": "L’initiative a à nouveau été populaire auprès des jeunes familles saguenéennes. Durant la première heure de jeu, la foule était plutôt modeste mais la situation a rapidement changé à partir de 10 h, si bien qu’avant la mi-journée, la plupart des 500 places assises étaient occupées."
     },
     {
       "source": "The Plant",
@@ -553,6 +549,7 @@
       "excerpt": "La cycliste sherbrookoise Magdeleine Vallières Mill a vu sa saison s’arrêter brusquement le 26 septembre dernier lors des Championnats du monde de cyclisme sur route à Montréal, après une lourde chute à plus de 90 kilomètres de l’arrivée. Malgré l’incident malheureux, la Ville",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SPORT-Fin_de_saison_abrupte_pour_la_cycliste_Magdeleine_Vallieres_Credit_photo_Mill_Darjk_Belingheri_Getty_Images.jpeg",
       "authorCheckedAt": "2026-10-19T16:32:49.085Z",
+      "_pageAuthor": "Charles Landry",
       "sourceImageCredit": "Photo : Source : Getty Images",
       "sourceImageCreator": "Source : Getty Images",
       "sourceImageCreditUrl": "https://lecollectif.ca/sports-et-bien-etre/fin-de-saison-abrupte-pour-la-cycliste-magdeleine-vallieres-mill/",
@@ -560,19 +557,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sport-fin_de_saison_abrupte_pour_la_cycliste_magdeleine_vallieres_credit_photo_mill_darjk_belingheri_getty_images.jpeg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Il y a un an, au Rwanda, la Sherbrookoise était devenue la troisième cycliste non européenne à remporter ce titre chez les élites. Une véritable surprise, elle qui n’était sur le radar d’aucun analyste à l’aube de l’évènement. Son opportunisme et ses stratégies lui avaient valu une victoire historique, autant pour elle que pour le Canada.",
       "imageLocal": "assets/news-images/6ebd10f3775b7c03.jpg",
       "imageLocalKey": "6ebd10f3775b7c03",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true,
-      "stockImage": "https://live.staticflickr.com/3551/3835901706_636ccf3533_b.jpg",
-      "imageTitle": "sara 31 weeks pregnant",
-      "imageCredit": "Photo : jonny.hunter / CC BY · Openverse",
-      "imageCreator": "jonny.hunter",
-      "imageLicense": "by",
-      "imageProvider": "openverse",
-      "imageSourceUrl": "https://www.flickr.com/photos/51931594@N00/3835901706"
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -586,6 +575,7 @@
       "date": "2026-10-19T14:05:22.000Z",
       "excerpt": "Le 7 octobre dernier, en direct de l’hôtel de ville de Sherbrooke, le triathlète Pierre Lavoie a annoncé que son célèbre défi élirait domicile dans la ville reine des Cantons-de-l’Est pour sa 19 e édition, du 10 au 13 juin 2027.",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SPORT-Le_Grand_Defi_Pierre_Lavoie_debarquera_a_Sherbrooke_en_juin_prochain-Credit_photo_Facebook_Le_Grand_Defi_Pierre_Lavoie.jpeg",
+      "_pageAuthor": "Olivier Boivin",
       "sourceImageCredit": "Photo : Facebook Le Grand Défi Pierre Lavoie",
       "sourceImageCreator": "Facebook Le Grand Défi Pierre Lavoie",
       "sourceImageCreditUrl": "https://lecollectif.ca/sports-et-bien-etre/le-grand-defi-pierre-lavoie-debarque-a-sherbrooke/",
@@ -593,18 +583,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sport-le_grand_defi_pierre_lavoie_debarquera_a_sherbrooke_en_juin_prochain-credit_photo_facebook_le_grand_defi_pierre_lavoie.jpeg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "imageLocal": "assets/news-images/636c30e55090e431.jpg",
       "imageLocalKey": "636c30e55090e431",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Le_Grand_d%C3%A9fi_Pierre_Lavoie_-_Premi%C3%A8re_avenue%2C_Qu%C3%A9bec.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "File:Le Grand défi Pierre Lavoie - Première avenue, Québec.jpg",
-      "imageCredit": "Photo : Geneviève M. / CC BY-SA 3.0 · Wikimedia Commons",
-      "imageCreator": "Geneviève M.",
-      "imageLicense": "CC BY-SA 3.0",
-      "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Le_Grand_d%C3%A9fi_Pierre_Lavoie_-_Premi%C3%A8re_avenue,_Qu%C3%A9bec.jpg"
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -618,6 +600,7 @@
       "date": "2026-10-19T14:01:07.000Z",
       "excerpt": "Le retour des Nordiques à Québec, des Expos à Montréal ou d’une équipe de la NBA à Montréal : qu’est-ce qui arrivera en premier ? Selon le FM93 de Québec, il s’agirait plutôt d’une équipe de la Ligue canadienne de football (LCF) à Québec. C’est l’animateur Sylvain Bouchard qui a",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SPORT-Vers_une_dixieme_equipe_dans_la_LCF-Credit_photo_Richard_Wolowicz_Getty_Images.jpeg",
+      "_pageAuthor": "Nicolas Hamel",
       "sourceImageCredit": "Photo : Richard Wolowicz Getty Images",
       "sourceImageCreator": "Richard Wolowicz Getty Images",
       "sourceImageCreditUrl": "https://lecollectif.ca/edition-papier/vers-une-10e-equipe-dans-la-lcf/",
@@ -625,12 +608,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sport-vers_une_dixieme_equipe_dans_la_lcf-credit_photo_richard_wolowicz_getty_images.jpeg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Le promoteur immobilier et président du Groupe Trudel, William Trudel, aurait d’ailleurs rencontré le commissaire du circuit de la LCF Stewart Johnston. Le prix d’entrée fixé à 25 millions de dollars est une aubaine, une poussière comparée aux 3 milliards qu’il faut pour introduire une organisation dans le circuit Bettman (LNH) en ce moment.",
       "imageLocal": "assets/news-images/c107298c0f82a7ad.jpg",
       "imageLocalKey": "c107298c0f82a7ad",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -644,6 +626,7 @@
       "date": "2026-10-19T13:36:50.000Z",
       "excerpt": "L’équipe masculine de hockey du Vert & Or foulait officiellement la glace du Complexe Sportif Thibault GM pour une toute première fois, le 10 octobre dernier. Devant une salle comble à l’occasion de cette ouverture locale, les favoris de la foule ont lessivé les Torrents de",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SPORT-Le_grand_retour_apres_plus_de_50_ans_d_absence-Michel_Caron_Universite_de_Sherbrooke.jpeg",
+      "_pageAuthor": "Olivier Boivin",
       "sourceImageCredit": "Photo : Michel Caron",
       "sourceImageCreator": "Michel Caron",
       "sourceImageCreditUrl": "https://lecollectif.ca/sports-et-bien-etre/le-grand-retour-apres-plus-de-50-ans-dabsence/",
@@ -651,12 +634,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sport-le_grand_retour_apres_plus_de_50_ans_d_absence-michel_caron_universite_de_sherbrooke.jpeg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Ça n’aura pris que 54 secondes au Vert & Or pour ouvrir le bal, gracieuseté d’Éli Baillargeon. « Ça a cassé la glace. Avec la cérémonie de présentation des joueurs et tout, on voulait s’assurer d’avoir un gros départ. Ce but-là a fait baisser le stress pas mal », a souligné Baillargeon au terme de cette rencontre.",
       "imageLocal": "assets/news-images/663ab856bbb8041a.jpg",
       "imageLocalKey": "663ab856bbb8041a",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -670,6 +652,7 @@
       "date": "2026-10-19T13:24:10.000Z",
       "excerpt": "Les athlètes masculins de hockey au Vert & Or sont sur un petit nuage en ce début de saison. Après un camp préparatoire fort satisfaisant, l’équipe est sortie en lion avec 16 buts dans ses deux premiers matchs, ce qui lui a permis d’aller rafler une fiche parfaite jusqu’à",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SPORT-Le_futur_du_hockey_universitaire_sherbrookois_tatoue_sur_le_coeur-Credit_photo_Facebook_Vert__Or.jpeg",
+      "_pageAuthor": "Olivier Boivin",
       "sourceImageCredit": "Photo : Université de Sherbrooke par Michel Caron",
       "sourceImageCreator": "Université de Sherbrooke par Michel Caron",
       "sourceImageCreditUrl": "https://lecollectif.ca/sports-et-bien-etre/le-futur-du-hockey-universitaire-sherbrookois-tatoue-sur-le-coeur/",
@@ -677,12 +660,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "sport-le_futur_du_hockey_universitaire_sherbrookois_tatoue_sur_le_coeur-credit_photo_facebook_vert__or.jpeg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Les athlètes masculins de hockey au Vert & Or sont sur un petit nuage en ce début de saison. Après un camp préparatoire fort satisfaisant, l’équipe est sortie en lion avec 16 buts dans ses deux premiers matchs, ce qui lui a permis d’aller rafler une fiche parfaite jusqu’à maintenant.",
       "imageLocal": "assets/news-images/62c44c2c53075958.jpg",
       "imageLocalKey": "62c44c2c53075958",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -696,6 +678,7 @@
       "date": "2026-10-19T13:18:21.000Z",
       "excerpt": "Le gouvernement minoritaire du Parti Québécois a été élu le 5 octobre. Dans la communauté universitaire, un sentiment de stress et d’impuissance se fait sentir. C’est du moins ce qu’a constaté l’équipe du Collectif qui a rencontré certaines personnes étudiantes sur le Campus de",
       "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SOCIETE_ResultatsElectionsAnxietePersonnesEtudiantes_SourcePageFacebookDePaulStPierrePlamondon.jpeg",
+      "_pageAuthor": "Nicolas Hamel",
       "sourceImageCredit": "Photo : page Facebook De Paul St-Pierre Plamondon",
       "sourceImageCreator": "page Facebook De Paul St-Pierre Plamondon",
       "sourceImageCreditUrl": "https://lecollectif.ca/societe/politique-quebecoise/un-resultat-qui-inquiete-les-personnes-etudiantes/",
@@ -703,12 +686,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_resultatselectionsanxietepersonnesetudiantes_sourcepagefacebookdepaulstpierreplamondon.jpeg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Le gouvernement minoritaire du Parti Québécois a été élu le 5 octobre. Dans la communauté universitaire, un sentiment de stress et d’impuissance se fait sentir. C’est du moins ce qu’a constaté l’équipe du Collectif qui a rencontré certaines personnes étudiantes sur le Campus de l’Université de Sherbrooke.",
       "imageLocal": "assets/news-images/36ab2e3516fb8c6f.jpg",
       "imageLocalKey": "36ab2e3516fb8c6f",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -722,6 +704,7 @@
       "date": "2026-10-19T13:03:42.000Z",
       "excerpt": "Après une cuisante défaite aux élections provinciales, la cheffe de la Coalition avenir Québec (CAQ) a annoncé sa démission le lendemain des résultats. L’avenir du parti semble incertain, malgré huit années passées au pouvoir, tandis que le ou la prochaine cheffe aura la lourde",
       "image": "",
+      "_pageAuthor": "Médéric Dens",
       "leadExcerpt": "Après une cuisante défaite aux élections provinciales, la cheffe de la Coalition avenir Québec (CAQ) a annoncé sa démission le lendemain des résultats. L’avenir du parti semble incertain, malgré huit années passées au pouvoir, tandis que le ou la prochaine cheffe aura la lourde tâche de rétablir la crédibilité du parti et d’en assurer sa survie.",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/7/71/Christine_Fr%C3%A9chette.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
@@ -730,8 +713,7 @@
       "imageCreator": "TVA Nouvelles",
       "imageLicense": "CC0",
       "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Christine_Fr%C3%A9chette.jpg",
-      "_retainedFromCache": true
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Christine_Fr%C3%A9chette.jpg"
     },
     {
       "source": "Le Collectif",
@@ -757,8 +739,7 @@
       "leadExcerpt": "Le mois de novembre est pour certains un lien direct avec la moustache. Le Movember, une campagne de sensibilisation à la santé masculine, en est la raison. Derrière le geste de se laisser pousser la moustache se trouve trois grands enjeux : le cancer de la prostate et des testicules ainsi que la santé mentale et la prévention du suicide.",
       "imageLocal": "assets/news-images/7eb565b1d456e826.jpg",
       "imageLocalKey": "7eb565b1d456e826",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -780,12 +761,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_le-sopk-change-de-nom-–-image-renouvelee-dune-condition-qui-touche-des-millions-de-femmes_world-obesity-biorender.png",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Après un processus de consultation sur deux ans impliquant plus de 14 000 personnes patientes et professionnelles de la santé, le syndrome des ovaires polykystiques (SOPK) devient le syndrome ovarien métabolique polyendocrinien (SOMP). Ce nouveau nom a été dévoilé le 12 mai dernier dans une publication du journal The Lancet .",
       "imageLocal": "assets/news-images/09d65b324307866a.png",
       "imageLocalKey": "09d65b324307866a",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Collectif",
@@ -807,11 +787,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "societe_elections-en-lettonie-le-parti-pro-europeen-et-pro-ukrainien-lemporte-malgre-une-montee-du-populisme_wikimedia-commons.jpg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "imageLocal": "assets/news-images/d3ea3971de256491.jpg",
       "imageLocalKey": "d3ea3971de256491",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -853,6 +832,7 @@
       "excerpt": "À l’approche des élections générales québécoises du 5 octobre, la participation des jeunes reste un défi. Pourtant, le politologue André Blais estime que parler de désengagement de la jeunesse serait exagéré. Entre intérêt pour la politique, enjeux électoraux et sentiment de",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/8-9_Illu-jeune-vote-724x1024.jpg",
       "authorCheckedAt": "2026-10-21T00:41:19.959Z",
+      "_pageAuthor": "Josephine Dao Devenyns",
       "sourceImageCredit": "Dessin : Wendy Kim Pires",
       "sourceImageCreator": "Wendy Kim Pires",
       "sourceImageCreditUrl": "https://quartierlibre.ca/les-jeunes-voteront-ils/",
@@ -860,20 +840,12 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "8-9_illu-jeune-vote.jpg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "À l’approche des élections générales québécoises du 5 octobre, la participation des jeunes reste un défi. Pourtant, le politologue André Blais estime que parler de désengagement de la jeunesse serait exagéré. Entre intérêt pour la politique, enjeux électoraux et sentiment de représentation, les raisons de voter ou de s’abstenir sont multiples.",
       "imageCropSafe": "https://quartierlibre.ca/wp-content/uploads/2026/10/8-9_Illu-jeune-vote-724x1024.jpg",
       "imageLocal": "assets/news-images/6db18e81d93f7385.jpg",
       "imageLocalKey": "6db18e81d93f7385",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Students_voting_in_Fall_Elections%2C_University_of_Texas_at_Arlington_%2810005980%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "File:Students voting in Fall Elections, University of Texas at Arlington (10005980).jpg",
-      "imageCredit": "Photo : University of Texas at Arlington News Service Photograph Collection / CC BY 4.0 · Wikimedia Commons",
-      "imageCreator": "University of Texas at Arlington News Service Photograph Collection",
-      "imageLicense": "CC BY 4.0",
-      "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Students_voting_in_Fall_Elections,_University_of_Texas_at_Arlington_(10005980).jpg"
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -886,26 +858,19 @@
       "author": "Josephine Dao Devenyns",
       "date": "2026-10-18T18:00:00.000Z",
       "excerpt": "Le 13 septembre dernier, Montréal a accueilli son Grand Prix cyclistes. Sur les pentes du mont Royal, entre le chemin de Polytechnique et les abords de l’Université de Montréal (UdeM), les athlètes de l’élite mondiale se sont affronté·e·s sur un parcours exigeant. Le cycliste",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/20-21_photo-1.jpeg",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/20-21_photo-3.jpeg",
       "authorCheckedAt": "2026-10-20T20:01:07.547Z",
+      "leadExcerpt": "Le 13 septembre dernier, Montréal a accueilli son Grand Prix cyclistes. Sur les pentes du mont Royal, entre le chemin de Polytechnique et les abords de l’Université de Montréal (UdeM) , les athlètes de l’élite mondiale se sont affronté · e · s sur un parcours exigeant . Le cycliste mexicain Isaac Del Toro s’est imposé au terme d’un duel avec le cycliste français Paul Seixas. Depuis le bord de la r",
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/5af34fd79d937ee9.jpg",
+      "imageLocalKey": "5af34fd79d937ee9",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
+      "sourceImageCreator": "",
       "sourceImageCreditUrl": "https://quartierlibre.ca/le-grand-prix-cyclistes-montreal/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
-      "sourceImageCreditImageKey": "20-21_photo-1.jpeg",
-      "sourceImageCreditRev": 12,
-      "leadImageReady": false,
-      "imageLocal": "assets/news-images/3198587a7d79cbb3.jpg",
-      "imageLocalKey": "3198587a7d79cbb3",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Cyclist_Alison_Road_Randwick.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "File:Cyclist Alison Road Randwick.jpg",
-      "imageCredit": "Photo : Sardaka / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Sardaka",
-      "imageLicense": "CC BY-SA 4.0",
-      "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Cyclist_Alison_Road_Randwick.jpg"
+      "sourceImageCreditImageKey": "20-21_photo-3.jpeg",
+      "sourceImageCreditRev": 12
     },
     {
       "source": "Quartier Libre",
@@ -927,12 +892,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "5infos_ql-e1769792962990.png",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "L’auteur du roman C’était ça ou mourir , qui a été accusé d’avoir utilisé l’intelligence artificielle (IA) pour écrire son roman, est finalement sorti du silence formulant une déclaration écrite dans laquelle il décrit les accusations d’utilisation de l’IA comme « une calomnie et une hérésie ». Il avoue cependant avoir plagié des auteurs dont il admirait l’écriture, et s’en est excusé.",
       "imageLocal": "assets/news-images/95d1c982cd32b09e.png",
       "imageLocalKey": "95d1c982cd32b09e",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -954,11 +918,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "14-15_world-press-photo.webp",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "imageLocal": "assets/news-images/eb2663d0b7403af3.webp",
       "imageLocalKey": "eb2663d0b7403af3",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Quartier Libre",
@@ -972,19 +935,18 @@
       "date": "2026-10-16T21:00:00.000Z",
       "excerpt": "Le 11 octobre dernier, Quartier Libre était sur la ligne de départ de la 34e édition du Marathon Beneva. Près de 21 500 coureur·euse·s, selon La Presse, ont investi les rues de Montréal, du parc Jean-Drapeau jusqu’au parc Maisonneuve. Le long du parcours, des milliers de",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/image3.jpg",
-      "authorCheckedAt": "2026-10-20T03:19:11.783Z",
+      "authorCheckedAt": "2026-10-21T05:00:42.701Z",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/le-marathon-beneva-2026-montreal/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "image3.jpg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Le 11 octobre dernier, Quartier Libre était sur la ligne de départ de la 34 e édition du Marathon Beneva. Près de 21 500 coureur·euse·s, selon La Presse , ont investi les rues de Montréal, du parc Jean-Drapeau jusqu’au parc Maisonneuve. Le long du parcours, des milliers de supporter·rice·s se sont mobilisé·e·s pour les accompagner jusqu’à la ligne d’arrivée.",
       "imageLocal": "assets/news-images/5ae90f0c67fb24fa.jpg",
       "imageLocalKey": "5ae90f0c67fb24fa",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -1052,7 +1014,6 @@
       "authorCheckedAt": "2026-10-20T22:06:05.693Z",
       "leadImageReady": false,
       "leadExcerpt": "Notre génération avance avec beaucoup d’ambition, mais aussi avec un petit vertige. On nous demande de rêver grand dans un monde qui, soyons honnêtes, ne nous facilite pas toujours la tâche. Malgré tout, notre avenir n’est pas déjà décidé et il ne devrait certainement pas l’être sans nous.",
-      "_retainedFromCache": true,
       "stockImage": "https://live.staticflickr.com/5604/30751203172_5861be988f_b.jpg",
       "imageTitle": "Mock Election Day",
       "imageCredit": "Photo : Phil Roeder / CC BY · Openverse",
@@ -1099,19 +1060,18 @@
       "date": "2026-10-15T19:00:00.000Z",
       "excerpt": "Situé à Montréal, l’Institut québécois d’intelligence artificielle Mila est le plus grand centre de recherche universitaire en apprentissage profond au monde. Malgré son statut, le rôle qu’il assume dans l’industrie de l’intelligence artificielle (IA) demeure peu connu du",
       "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/EDEB66A9-605C-4B07-9157-912733F0060C.jpeg",
-      "authorCheckedAt": "2026-10-20T03:19:14.369Z",
+      "authorCheckedAt": "2026-10-21T05:00:43.066Z",
       "sourceImageCredit": "Crédit photo : Quartier Libre",
       "sourceImageCreditUrl": "https://quartierlibre.ca/ia-que-fait-linstitut-mila/",
       "sourceImageCreditFrom": "media",
       "sourceImageCreditCited": false,
       "sourceImageCreditImageKey": "edeb66a9-605c-4b07-9157-912733f0060c.jpeg",
       "sourceImageCreditRev": 12,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Situé à Montréal , l’Institut québécois d’intelligence artificielle Mila est le plus grand centre de recherche universitaire en apprentissage profond au monde. Malgré son statut, le rôle qu’il assume dans l’industrie de l’intelligence artificielle (IA) demeure peu connu du public. Quartier Libre s’est donc penché sur son positionnement dans ce secteur en constante évolution.",
       "imageLocal": "assets/news-images/28632a09558f37fe.jpg",
       "imageLocalKey": "28632a09558f37fe",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Link",
@@ -1151,7 +1111,7 @@
       "date": "2026-10-13T22:28:02.000Z",
       "excerpt": "Aries (Mar. 20 – Apr.18): For a short period of time, your least wise friends will give you the most sage advice. Keep your eyes and ears open around them. Taurus (Apr.19 – May 20): Use your brain less and your heart more. Not just in love but in your day-to-day life. You’ll",
       "image": "",
-      "authorCheckedAt": "2026-10-20T04:52:25.769Z",
+      "authorCheckedAt": "2026-10-21T05:00:43.344Z",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Dawson_College_10.JPG",
       "imageTitle": "Dawson College 10",
@@ -1175,7 +1135,7 @@
       "date": "2026-10-13T22:19:55.000Z",
       "excerpt": "With the start of the next semester, our very fitting theme for the submissions this issue was renewal. I feel like renewal has a very binary connotation: transitioning from a flawed past to an improved present. However, I feel that it’s much more nuanced than that. Our lives",
       "image": "",
-      "authorCheckedAt": "2026-10-20T04:52:26.001Z",
+      "authorCheckedAt": "2026-10-21T05:00:43.580Z",
       "leadImageReady": false,
       "stockImage": "https://upload.wikimedia.org/wikipedia/commons/9/96/Dawson_College_11.JPG",
       "imageTitle": "Dawson College 11",
@@ -1208,13 +1168,13 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "L’événement « Ça roule Doc ! » était de retour samedi le 28 septembre dernier pour sa cinquième édition sur le campus de l’Université Laval. Ce sont près de 500 personnes qui se sont rassemblées afin de se balader à vélo ou à pied dans les rues de Québec pour promouvoir les saines habitudes de vie.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/de/Pavillon_Louis-Jacques-Casault_3.jpg",
-      "imageTitle": "Pavillon Louis-Jacques-Casault, Université Laval",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Park_in_Universit%C3%A9_Laval.jpg",
+      "imageTitle": "Park in Université Laval",
       "imageCredit": "Photo : Wilfredor / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Wilfredor",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Louis-Jacques-Casault_3.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Park_in_Universit%C3%A9_Laval.jpg",
       "imageLocal": "assets/news-images/b3c705d98e3955f0.jpg",
       "imageLocalKey": "b3c705d98e3955f0",
       "imageLocalVia": "origin"
@@ -1261,13 +1221,13 @@
       "sourceImageCreditRev": 12,
       "leadImageReady": true,
       "leadExcerpt": "Les microbrasseries québécoises sont de plus en plus nombreuses et la concurrence est vive. Malgré l’intérêt des consommateurs pour ce type de produits, le contexte économique actuel contraint certains brasseurs à redoubler d’effort pour se démarquer. Le marché serait-il en train de saturer ?",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Entrance_of_the_Pavillon_Alphonse-Desjardins_at_Universite_Laval.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Entrance of the Pavillon Alphonse-Desjardins at Universite Laval",
-      "imageCredit": "Photo : Wilfredor / CC0 · Wikimedia Commons",
-      "imageCreator": "Wilfredor",
-      "imageLicense": "CC0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Pavillon_DKN%2C_Universit%C3%A9_Laval_12.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Pavillon DKN, Université Laval 12",
+      "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "Cephas",
+      "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Entrance%20of%20the%20Pavillon%20Alphonse-Desjardins%20at%20Universite%20Laval.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2012.jpg",
       "imageLocal": "assets/news-images/ea46ef6162ef9475.jpg",
       "imageLocalKey": "ea46ef6162ef9475",
       "imageLocalVia": "origin"
@@ -1292,13 +1252,13 @@
       "sourceImageCreditRev": 12,
       "leadImageReady": true,
       "leadExcerpt": "La représentation des communautés autochtones sur le campus de l’Université Laval ne se limite pas à l’organisation d’évènements comme celui du 30 septembre. Elle doit se traduire aussi par d’autres actions concrètes comme la nouvelle résidence étudiante Yahndawa’ qui vient d’ouvrir ses portes.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/5/57/Pavillon_DKN%2C_Universit%C3%A9_Laval_07.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon DKN, Université Laval 07",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/6/62/Pavillon_DKN%2C_Universit%C3%A9_Laval_11.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Pavillon DKN, Université Laval 11",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2007.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2011.jpg",
       "imageLocal": "assets/news-images/294ffdc14f33c43b.jpg",
       "imageLocalKey": "294ffdc14f33c43b",
       "imageLocalVia": "origin"
@@ -1324,13 +1284,13 @@
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
       "leadExcerpt": "Rassemblement, consommations, hot-dogs et football Voilà des mots souvent associés aux fêtes d'avant-match du Rouge et Or. Quoi dire de l'omniprésence de l'alcool dans ces rendez-vous supposément sportifs ouverts aux étudiants et aux familles ?",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Pavillon_DKN%2C_Universit%C3%A9_Laval_06.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon DKN, Université Laval 06",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Pavillon_DKN%2C_Universit%C3%A9_Laval_05.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Pavillon DKN, Université Laval 05",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2006.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2005.jpg",
       "imageLocal": "assets/news-images/e4a25ec6e0bc7969.jpg",
       "imageLocalKey": "e4a25ec6e0bc7969",
       "imageLocalVia": "origin"
@@ -1355,13 +1315,13 @@
       "sourceImageCreditRev": 12,
       "leadImageReady": true,
       "leadExcerpt": "La marche Agissons ensemble pour le mieux-être des aînés, en l’honneur de la Journée internationale des aînés, s’étend sur trois kilomètres dans le secteur du parc de la Francophonie à Québec. L'occasion pour les personnes âgées de réaffirmer qu'elles ont encore un rôle à jouer dans notre société.",
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/5/54/Internal_street_in_the_Universit%C3%A9_Laval%2C_Quebec_Canada.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Internal street in the Université Laval, Quebec Canada",
-      "imageCredit": "Photo : Wilfredor / CC0 · Wikimedia Commons",
-      "imageCreator": "Wilfredor",
-      "imageLicense": "CC0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Pavillon_La_Laurentienne_ULaval.jpg",
+      "imageTitle": "Pavillon La Laurentienne",
+      "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "Cephas",
+      "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Internal%20street%20in%20the%20Universit%C3%A9%20Laval%2C%20Quebec%20Canada.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_La_Laurentienne_ULaval.jpg",
       "imageLocal": "assets/news-images/a677e6cc600c71d7.jpg",
       "imageLocalKey": "a677e6cc600c71d7",
       "imageLocalVia": "origin"
@@ -1564,9 +1524,8 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "image-1.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
-      "leadExcerpt": "Lorsqu’une forte pluie s’abat sur une ville, une grande partie du travail se déroule sous nos pieds. Un réseau de conduites permet de recueillir et d’évacuer l’eau.",
-      "_retainedFromCache": true
+      "leadImageReady": true,
+      "leadExcerpt": "Lorsqu’une forte pluie s’abat sur une ville, une grande partie du travail se déroule sous nos pieds. Un réseau de conduites permet de recueillir et d’évacuer l’eau."
     },
     {
       "source": "La Pige",
@@ -1587,12 +1546,11 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "photo-comparaison-sur-lesreseaux-sociaux.jpg",
       "sourceImageCreditRev": 10,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "leadExcerpt": "Elles ne sont pas toutes tentées pour autant. Clémence et Marilou, 17 ans, n’y ont « jamais » pensé. Emie, étudiante en physiothérapie au Cégep de Chicoutimi, a été refroidie par « tous les “side effects” qu’on voyait ».",
       "imageLocal": "assets/news-images/07fc1905248e1a9c.jpg",
       "imageLocalKey": "07fc1905248e1a9c",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Le Polyscope",
@@ -2572,13 +2530,13 @@
       "sourceImageCreditImageKey": "alexas_fotos-journalist-985073-scaled-e1791153792413.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/1/16/Pavillon_DKN%2C_Universit%C3%A9_Laval_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon DKN, Université Laval 04",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Pavillon_DKN%2C_Universit%C3%A9_Laval_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Pavillon DKN, Université Laval 03",
       "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
       "imageCreator": "Cephas",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2004.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2003.jpg",
       "imageLocal": "assets/news-images/41ee39a656453c37.jpg",
       "imageLocalKey": "41ee39a656453c37",
       "imageLocalVia": "origin"
@@ -3054,7 +3012,7 @@
       "lang": "en",
       "title": "From Scripts to Stage: BU New Plays 2026",
       "link": "https://thebucampus.ca/2026/09/30/from-scripts-to-stage-bu-new-plays-2026/",
-      "author": "Zachary Jaimes Saint Cyr",
+      "author": "Zachary Jaimes",
       "date": "2026-09-30T17:18:52.000Z",
       "excerpt": "Saint Cyr New Plays is back at Bishop’s! This year, the festival ambitiously features a record nine student-written plays, the largest number since pre-COVID, as well as a Saturday Reading Series – all written, directed and organized by our talented students!",
       "image": "https://thebucampus.ca/wp-content/uploads/2026/09/capture-decran-le-2026-09-30-a-13.18.26.png",
@@ -3223,13 +3181,13 @@
       "sourceImageCreditImageKey": "2222-scaled-e1790714177232.jpeg",
       "sourceImageCreditRev": 12,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Bus_stop_in_winter_near_Universite_Laval.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Bus stop in winter near Universite Laval",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/7/78/University_building_at_Universite_Laval.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "University building at Universite Laval",
       "imageCredit": "Photo : Wilfredor / CC0 · Wikimedia Commons",
       "imageCreator": "Wilfredor",
       "imageLicense": "CC0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bus%20stop%20in%20winter%20near%20Universite%20Laval.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:University%20building%20at%20Universite%20Laval.jpg",
       "imageLocal": "assets/news-images/1d3f9ced47b22b4c.jpg",
       "imageLocalKey": "1d3f9ced47b22b4c",
       "imageLocalVia": "origin"
@@ -3254,13 +3212,13 @@
       "sourceImageCreditImageKey": "img_0051_oui.jpeg",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Pavillon_Louis-Jacques-Casault_-_Universit%C3%A9_-Laval_-_Quebec_City_-_October_2007.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "Pavillon Louis-Jacques-Casault - Université -Laval - Quebec City - October 2007",
-      "imageCredit": "Photo : Colin Rose / CC BY-SA 2.0 · Wikimedia Commons",
-      "imageCreator": "Colin Rose",
-      "imageLicense": "CC BY-SA 2.0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Pavillon_DKN%2C_Universit%C3%A9_Laval_10.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageTitle": "Pavillon DKN, Université Laval 10",
+      "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "Cephas",
+      "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20Louis-Jacques-Casault%20-%20Universit%C3%A9%20-Laval%20-%20Quebec%20City%20-%20October%202007.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon%20DKN%2C%20Universit%C3%A9%20Laval%2010.jpg",
       "imageLocal": "assets/news-images/154c6fcbb151eb6d.jpg",
       "imageLocalKey": "154c6fcbb151eb6d",
       "imageLocalVia": "origin"
@@ -3285,13 +3243,13 @@
       "sourceImageCreditImageKey": "img_0732-3-e1790710346154.jpeg",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Pavillon_Ferdinand-Vandry_06.jpg",
-      "imageTitle": "Pavillon Ferdinand-Vandry, Université Laval",
-      "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Cephas",
-      "imageLicense": "CC BY-SA 4.0",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/d/de/Universit%C3%A9_Laval%2C_Quebec%2C_Canada_02.jpg",
+      "imageTitle": "Université Laval, Quebec, Canada 02",
+      "imageCredit": "Photo : Wilfredor / CC0 · Wikimedia Commons",
+      "imageCreator": "Wilfredor",
+      "imageLicense": "CC0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_Laval,_Quebec,_Canada_02.jpg",
       "imageLocal": "assets/news-images/b334f7cd3ffc3ba9.jpg",
       "imageLocalKey": "b334f7cd3ffc3ba9",
       "imageLocalVia": "origin"
@@ -3316,13 +3274,13 @@
       "sourceImageCreditImageKey": "825256892_2256056895249410_3022686307242620777_n1.jpg",
       "sourceImageCreditRev": 10,
       "leadImageReady": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Grand_Axe_ULaval.jpg",
-      "imageTitle": "Grand Axe ULaval",
-      "imageCredit": "Photo : Cephas / CC BY-SA 4.0 · Wikimedia Commons",
-      "imageCreator": "Cephas",
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Peps_Universit%C3%A9_Laval.jpg",
+      "imageTitle": "PEPS",
+      "imageCredit": "Photo : Wilfredor / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "Wilfredor",
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "campus-bank",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Grand_Axe_ULaval.jpg",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Peps_Universit%C3%A9_Laval.jpg",
       "imageLocal": "assets/news-images/60fcb408c3a18888.jpg",
       "imageLocalKey": "60fcb408c3a18888",
       "imageLocalVia": "origin"
@@ -3358,23 +3316,21 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "Est-ce que je dois un bébé à l’État ?",
-      "link": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
-      "author": "Catherine Brunet Rodriguez",
+      "title": "Quand la fiction banalise les traumatismes",
+      "link": "https://www.delitfrancais.com/2026/09/23/quand-la-fiction-banalise-les-traumatismes/",
+      "author": "Juliette Aviat",
       "date": "2026-09-23T07:00:00.000Z",
-      "excerpt": "Questionnements à l’ère de la baisse démographique au Québec.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/question-de-natalite-2.0.jpg",
+      "excerpt": "Entre toxicité et réalité, où trouver la limite dans la « new romance » ?",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/New-romance.png",
       "featured": true,
-      "leadExcerpt": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est pas le personnage le moins controversé de l’histoire et, bien évidemment, il flirtait ouvertement avec la misogynie . Mais qu’est-ce que ce fameux contrat social a à voir avec mon utérus ?",
+      "leadExcerpt": "Quel est le point commun entre la série Off campus , le livre Captive , et Jamais plus ? Outre leur notoriété sur TikTok – ce qui en dit long – ils partagent tous un thème central : la jeune femme victime de viol, généralement au secondaire ou à l’université, qui tente de se reconstruire dans un environnement hostile, continuellement rattrapée par cet événement traumatisant.",
       "leadImageReady": true,
-      "imageLocal": "assets/news-images/548c24ab5d205e58.jpg",
-      "imageLocalKey": "548c24ab5d205e58",
-      "sourceImageCredit": "Photo : Catvy Tran",
-      "sourceImageCreator": "Catvy Tran",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
+      "sourceImageCredit": "Photo : Ana Camila Torchia",
+      "sourceImageCreator": "Ana Camila Torchia",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/09/23/quand-la-fiction-banalise-les-traumatismes/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "question-de-natalite-2.0.jpg",
+      "sourceImageCreditImageKey": "new-romance.png",
       "sourceImageCreditRev": 12
     },
     {
@@ -3383,22 +3339,24 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "Le « self-care » : qui valide votre repos ?",
-      "link": "https://www.delitfrancais.com/2026/09/23/le-self-care-qui-valide-votre-repos/",
-      "author": "Joséphine Miton",
+      "title": "Faire compter sa voix",
+      "link": "https://www.delitfrancais.com/2026/09/23/faire-compter-sa-voix/",
+      "author": "Juliette Cherifi",
       "date": "2026-09-23T07:00:00.000Z",
-      "excerpt": "Tour à tour billet médical, arme politique et conseil d’employeur.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/self-care.png",
+      "excerpt": "Entre sensibilisation et élections, quelle place pour les voix autochtones ?",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/galerie-carte-rappel-1-scaled.jpg",
       "featured": true,
-      "sourceImageCredit": "Photo : Catvy Tran",
-      "sourceImageCreator": "Catvy Tran",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/09/23/le-self-care-qui-valide-votre-repos/",
+      "leadExcerpt": "En quinze ans, les Indigenous Awareness Weeks (IAW) sont devenues un espace de « dialogue, de rapprochement et de célébration » où peuvent également être abordées des conversations difficiles, explique Brittanny Janvier , directrice du Bureau des initiatives autochtones de McGill .",
+      "leadImageReady": true,
+      "imageLocal": "assets/news-images/97b4d830d80fb0f5.jpg",
+      "imageLocalKey": "97b4d830d80fb0f5",
+      "sourceImageCredit": "Photo : Photo tirée d’Élections Québec",
+      "sourceImageCreator": "Photo tirée d’Élections Québec",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/09/23/faire-compter-sa-voix/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "self-care.png",
-      "sourceImageCreditRev": 12,
-      "leadImageReady": true,
-      "leadExcerpt": "Ce n’était pas une dérive isolée, mais une règle, que Talcott Parsons nommera en 1951 : le « rôle de malade ». Se retirer de ses obligations est permis, à condition de chercher à guérir et de s’en remettre à l’autorité d’un professionnel reconnu. À une autre échelle, cette logique persiste : pour reporter un examen, il faut un billet du médecin."
+      "sourceImageCreditImageKey": "galerie-carte-rappel-1.jpg",
+      "sourceImageCreditRev": 12
     },
     {
       "source": "Le Délit",
@@ -3406,22 +3364,25 @@
       "region": "Montréal",
       "type": "universite",
       "lang": "fr",
-      "title": "S.O.S. Huîtres menacées",
-      "link": "https://www.delitfrancais.com/2026/09/23/s-o-s-huitres-menacees/",
-      "author": "Minola Grent",
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "link": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
+      "author": "Catherine Brunet Rodriguez",
       "date": "2026-09-23T07:00:00.000Z",
-      "excerpt": "Les huîtres prince-édouardiennes décimées par des parasites.",
-      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/Huitres.png",
+      "excerpt": "Questionnements à l’ère de la baisse démographique au Québec.",
+      "image": "https://www.delitfrancais.com/wp-content/uploads/2026/09/question-de-natalite-2.0.jpg",
       "featured": true,
-      "sourceImageCredit": "Photo : Ana Camila Torchia",
-      "sourceImageCreator": "Ana Camila Torchia",
-      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/09/23/s-o-s-huitres-menacees/",
+      "sourceImageCredit": "Photo : Catvy Tran",
+      "sourceImageCreator": "Catvy Tran",
+      "sourceImageCreditUrl": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
-      "sourceImageCreditImageKey": "huitres.png",
+      "sourceImageCreditImageKey": "question-de-natalite-2.0.jpg",
       "sourceImageCreditRev": 12,
       "leadImageReady": true,
-      "leadExcerpt": "Cependant, depuis 2024, les récoltes d’huîtres de l’Île-du-Prince-Édouard ont chuté subitement. En effet, la maladie de la sphère X multinuclée inconnue (MSX) et la maladie dermo, deux maladies parasitaires, se sont emparées des eaux prince-édouardiennes et emportent avec elles de plus en plus d’huîtres chaque année."
+      "leadExcerpt": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est pas le personnage le moins controversé de l’histoire et, bien évidemment, il flirtait ouvertement avec la misogynie . Mais qu’est-ce que ce fameux contrat social a à voir avec mon utérus ?",
+      "imageLocal": "assets/news-images/548c24ab5d205e58.jpg",
+      "imageLocalKey": "548c24ab5d205e58",
+      "imageLocalVia": "origin"
     },
     {
       "source": "The Campus",
@@ -4079,11 +4040,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3417.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "imageLocal": "assets/news-images/23af229881dbdeec.jpg",
       "imageLocalKey": "23af229881dbdeec",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -4176,11 +4136,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "17c4541a-839d-48b8-b5aa-2cc81e91e3c8.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "imageLocal": "assets/news-images/16a813216f7afeb2.jpg",
       "imageLocalKey": "16a813216f7afeb2",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Montréal Campus",
@@ -4222,11 +4181,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3939.jpg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "imageLocal": "assets/news-images/debd9bf479305512.jpg",
       "imageLocalKey": "debd9bf479305512",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -4247,15 +4205,7 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_9786.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": false,
-      "_retainedFromCache": true,
-      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/4/45/Art_Zhyzhal_2014_exhibition_in_Minsk_Center_of_Contemporary_Art.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-      "imageTitle": "File:Art Zhyzhal 2014 exhibition in Minsk Center of Contemporary Art.JPG",
-      "imageCredit": "Photo : Tatiana Markina / CC BY-SA 2.0 · Wikimedia Commons",
-      "imageCreator": "Tatiana Markina",
-      "imageLicense": "CC BY-SA 2.0",
-      "imageProvider": "wikimedia",
-      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Art_Zhyzhal_2014_exhibition_in_Minsk_Center_of_Contemporary_Art.JPG"
+      "leadImageReady": true
     },
     {
       "source": "Zone Campus",
@@ -4276,11 +4226,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3397-1.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "imageLocal": "assets/news-images/7428914d1b64d542.jpg",
       "imageLocalKey": "7428914d1b64d542",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -4301,11 +4250,10 @@
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "img_3405.jpeg",
       "sourceImageCreditRev": 8,
-      "leadImageReady": false,
+      "leadImageReady": true,
       "imageLocal": "assets/news-images/7f86c6d6d4e73d30.jpg",
       "imageLocalKey": "7f86c6d6d4e73d30",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -4325,11 +4273,10 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "dany_portrait_vignette_zc-copie-1068x641-3-2.jpg",
-      "leadImageReady": false,
+      "leadImageReady": true,
       "imageLocal": "assets/news-images/df8807d73a194404.jpg",
       "imageLocalKey": "df8807d73a194404",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -4349,11 +4296,10 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "604823445_853711280773514_928679255052921821_n.jpg",
-      "leadImageReady": false,
+      "leadImageReady": true,
       "imageLocal": "assets/news-images/4828a1e7cbf0e7ff.jpg",
       "imageLocalKey": "4828a1e7cbf0e7ff",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Zone Campus",
@@ -4373,11 +4319,10 @@
       "sourceImageCreditFrom": "article",
       "sourceImageCreditCited": true,
       "sourceImageCreditImageKey": "672687004_1331193022389249_583407324812045529_n.jpg",
-      "leadImageReady": false,
+      "leadImageReady": true,
       "imageLocal": "assets/news-images/fcac91d58ef48893.jpg",
       "imageLocalKey": "fcac91d58ef48893",
-      "imageLocalVia": "origin",
-      "_retainedFromCache": true
+      "imageLocalVia": "origin"
     },
     {
       "source": "Exil",

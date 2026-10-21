@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-21T03:54:04.379Z",
+  "updated": "2026-10-21T05:01:59.421Z",
   "total": 178,
   "withImage": 157,
   "withCredit": 157,
@@ -7,17 +7,17 @@
   "pending": 8,
   "missingHero": 0,
   "ok": false,
-  "checked": 15,
-  "updatedCount": 7,
-  "citedNew": 7,
+  "checked": 16,
+  "updatedCount": 9,
+  "citedNew": 8,
   "fallbackNew": 8,
   "samples": [
     {
-      "title": "Storytelling through dance",
-      "source": "The Link",
-      "credit": "Photo: Courtesy of Gilbert Dance Academy",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "title": "Le Grand Prix cyclistes s’amène à Montréal !",
+      "source": "Quartier Libre",
+      "credit": "Crédit photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
@@ -27,9 +27,16 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Est-ce que je dois un bébé à l’État ?",
+      "title": "Quand la fiction banalise les traumatismes",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Faire compter sa voix",
+      "source": "Le Délit",
+      "credit": "Photo : Photo tirée d’Élections Québec",
       "cited": true,
       "method": "media-credit-featured"
     },
@@ -46,6 +53,13 @@
       "credit": "Photo : Andraé Lerone Lewis",
       "cited": true,
       "method": "figcaption"
+    },
+    {
+      "title": "Que faire à Montréal en octobre ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Chantal Ginzi, tirée du projet Farīsāt: Gunpowder’s Daughters exposée au World Press Photo",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
     },
     {
       "title": "Tex Crick: Indie Through and Through",
