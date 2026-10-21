@@ -1,153 +1,169 @@
 {
-  "updatedAt": "2026-10-21T11:48:13.012Z",
+  "updatedAt": "2026-10-21T15:14:07.394Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "On en Parle",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/on-en-parle/",
+        "special": true
+      },
       "next": {
-        "title": "Mercredi Bonbon",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/mercredi-bonbon/"
+        "title": "ON EST OÙ LÀ?",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://chyz.ca/emission/entre-nous/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "On en Parle",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
+        "api-live",
+        "schedule-live",
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T11:47:35.521Z"
+      "checkedAt": "2026-10-21T15:13:07.018Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Club classique",
+        "title": "À la loupe du droit",
         "source": "schedule",
-        "start": "07:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/club-classique"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/a-la-loupe-du-droit"
       },
       "next": {
-        "title": "La collation",
+        "title": "La carte cadeau",
         "source": "schedule",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "https://cism893.ca/emissions/mix-collation"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
       "track": "",
-      "showTitle": "Club classique",
+      "showTitle": "À la loupe du droit",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T11:47:37.392Z"
+      "checkedAt": "2026-10-21T15:13:09.675Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Wednesday Morning After",
+        "title": "Free City Radio",
         "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
+        "start": "11:00",
+        "end": "11:30"
       },
       "next": {
-        "title": "The Sleepy King/Terminal 5",
-        "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "title": "If You Got Ears",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "14:00"
       },
       "track": "",
-      "showTitle": "The Wednesday Morning After",
+      "showTitle": "Free City Radio",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live",
-        "stream"
+        "stream",
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T11:47:39.750Z"
+      "checkedAt": "2026-10-21T15:13:12.915Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Words and Culture",
-        "source": "schedule-live",
-        "start": "07:30",
-        "end": "08:00",
-        "url": "http://www.cjlo.com/shows/words-and-culture"
+        "title": "Code Switch",
+        "source": "schedule",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/code-switch"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "title": "North-South Hockey",
+        "source": "schedule",
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/north-south-hockey"
       },
       "track": "",
-      "showTitle": "Words and Culture",
+      "showTitle": "Code Switch",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T11:47:53.696Z"
+      "checkedAt": "2026-10-21T15:13:47.619Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
-      "next": {
         "title": "Palmarès CFAK",
         "source": "schedule-live",
         "start": "08:00",
         "end": "14:00"
       },
+      "next": {
+        "title": "Le popcorn de l'infini",
+        "source": "schedule-live",
+        "start": "14:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Palmarès CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T11:47:54.781Z"
+      "checkedAt": "2026-10-21T15:13:48.744Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Miroirs d’Orient",
         "source": "api-live",
         "start": "11:00",
         "end": "12:00",
         "slug": "miroirs-dorient"
       },
+      "next": {
+        "title": "Onde de CHOQ",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
+      },
       "track": "Elisabeth Simpson — Theme Amazone",
-      "showTitle": "",
+      "showTitle": "Miroirs d’Orient",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T11:48:12.662Z"
+      "checkedAt": "2026-10-21T15:14:07.044Z"
     }
   }
 }
