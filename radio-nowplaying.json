@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-21T00:44:47.105Z",
+  "updatedAt": "2026-10-21T04:42:41.536Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T00:44:19.936Z"
+      "checkedAt": "2026-10-21T04:41:33.333Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Les garçons pleurent aussi (reprise)",
+        "title": "La carte cadeau (reprise)",
         "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/les-garcons-pleurent-aussi"
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/la-carte-cadeau"
       },
       "next": {
-        "title": "Mix Anglo",
+        "title": "Mix franco",
         "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
       },
       "track": "",
-      "showTitle": "Les garçons pleurent aussi (reprise)",
+      "showTitle": "La carte cadeau (reprise)",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T00:44:21.781Z"
+      "checkedAt": "2026-10-21T04:41:34.864Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Marca-RO",
+        "title": "Space Plane",
         "source": "api-live",
-        "start": "20:30",
-        "end": "21:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "next": {
-        "title": "Montreal Sound Ark",
+        "title": "WarpCor / Out of the Void",
         "source": "api-live",
-        "start": "21:00",
-        "end": "23:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "track": "",
-      "showTitle": "Marca-RO",
+      "showTitle": "Space Plane",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T00:44:24.445Z"
+      "checkedAt": "2026-10-21T04:41:37.231Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hittin' All The Bases",
-        "source": "schedule-live",
-        "start": "20:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/hittin-all-the-bases"
+        "title": "CJLO Late Night",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "next": {
-        "title": "NSIDE!",
-        "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/nside"
+        "title": "Morning Electro-shock",
+        "source": "schedule",
+        "start": "06:00",
+        "end": "08:00",
+        "url": "http://www.cjlo.com/shows/morning-electro-shock"
       },
       "track": "",
-      "showTitle": "Hittin' All The Bases",
+      "showTitle": "CJLO Late Night",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T00:44:26.489Z"
+      "checkedAt": "2026-10-21T04:42:11.519Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Dichotomie 88.3",
+        "title": "Les nuits CFAK",
         "source": "schedule-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "00:00",
+        "end": "07:00"
       },
       "next": {
-        "title": "Mix Franco",
+        "title": "Folkswagen",
         "source": "schedule-live",
-        "start": "22:00",
-        "end": "00:00"
+        "start": "07:00",
+        "end": "08:00"
       },
       "track": "",
-      "showTitle": "Dichotomie 88.3",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T00:44:28.966Z"
+      "checkedAt": "2026-10-21T04:42:12.538Z"
     },
     "choq": {
       "id": "choq",
@@ -134,21 +134,20 @@
       "current": null,
       "next": {
         "title": "Miroirs d’Orient",
-        "source": "schedule",
+        "source": "api-live",
         "start": "11:00",
         "end": "12:00",
-        "url": "https://www.choq.ca/emissions/miroirs-dorient"
+        "slug": "miroirs-dorient"
       },
-      "track": "Elisabeth Simpson — Theme Amazone",
+      "track": "",
       "showTitle": "",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "api-live",
-        "schedule"
+        "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T00:44:46.754Z"
+      "checkedAt": "2026-10-21T04:42:41.186Z"
     }
   }
 }
