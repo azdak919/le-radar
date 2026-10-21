@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-21T19:33:31.281Z",
+  "updated": "2026-10-21T20:49:49.352Z",
   "total": 178,
   "withImage": 157,
   "withCredit": 157,
-  "cited": 107,
+  "cited": 105,
   "pending": 7,
   "missingHero": 0,
   "ok": false,
-  "checked": 14,
-  "updatedCount": 7,
-  "citedNew": 7,
-  "fallbackNew": 7,
+  "checked": 13,
+  "updatedCount": 6,
+  "citedNew": 4,
+  "fallbackNew": 9,
   "samples": [
     {
       "title": "Rouge d’une part, blanche de l’autre",
@@ -20,25 +20,18 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Est-ce que je dois un bébé à l’État ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
       "title": "Concordia’s Solidarity Brunch goes monthly",
       "source": "The Link",
-      "credit": "Photo: Courtesy Sheena Swirlz",
-      "cited": true,
-      "method": "figcaption-trailing"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "The Stingers win the Kelly-Anne Drummond Cup",
       "source": "The Link",
-      "credit": "Photo : Andraé Lerone Lewis",
-      "cited": true,
-      "method": "figcaption"
+      "credit": "Photo credit: The Link",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Que faire à Montréal en octobre ?",
