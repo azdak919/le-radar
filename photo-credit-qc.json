@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-21T20:49:49.352Z",
+  "updated": "2026-10-21T23:37:48.011Z",
   "total": 178,
-  "withImage": 157,
-  "withCredit": 157,
-  "cited": 105,
+  "withImage": 158,
+  "withCredit": 158,
+  "cited": 107,
   "pending": 7,
   "missingHero": 0,
   "ok": false,
   "checked": 13,
   "updatedCount": 6,
-  "citedNew": 4,
-  "fallbackNew": 9,
+  "citedNew": 6,
+  "fallbackNew": 7,
   "samples": [
     {
       "title": "Rouge d’une part, blanche de l’autre",
@@ -20,18 +20,18 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Concordia’s Solidarity Brunch goes monthly",
-      "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "title": "S.O.S. Huîtres menacées",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
-      "title": "The Stingers win the Kelly-Anne Drummond Cup",
+      "title": "Concordia’s Solidarity Brunch goes monthly",
       "source": "The Link",
-      "credit": "Photo credit: The Link",
-      "cited": false,
-      "method": null
+      "credit": "Photo: Courtesy Sheena Swirlz",
+      "cited": true,
+      "method": "figcaption-trailing"
     },
     {
       "title": "Que faire à Montréal en octobre ?",
