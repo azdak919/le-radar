@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-21T16:01:57.219Z",
+  "updatedAt": "2026-10-21T20:09:34.089Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Chéri.e, j’arrive!",
+        "source": "api-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
+      },
       "next": {
-        "title": "ON EST OÙ LÀ?",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://chyz.ca/emission/entre-nous/"
+        "title": "Les Arshitechs du Son",
+        "source": "schedule-live",
+        "start": "17:30",
+        "end": "18:30",
+        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Chéri.e, j’arrive!",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T16:01:19.974Z"
+      "checkedAt": "2026-10-21T20:08:35.324Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La carte cadeau",
+        "title": "Le cours de math",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/la-carte-cadeau"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/le-cours-de-math"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "Feu | Metal | Chaos",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "17:00",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/feu-metal-chaos"
       },
       "track": "",
-      "showTitle": "La carte cadeau",
+      "showTitle": "Le cours de math",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T16:01:21.961Z"
+      "checkedAt": "2026-10-21T20:08:37.305Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "If You Got Ears",
+        "title": "All Da Way Live",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "Radyo Kapwa",
+        "title": "Off the Hour/Sounds of Resistance",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
       "track": "",
-      "showTitle": "If You Got Ears",
+      "showTitle": "All Da Way Live",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,70 +81,70 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T16:01:24.160Z"
+      "checkedAt": "2026-10-21T20:08:40.151Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "North-South Hockey",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/north-south-hockey"
+        "title": "Borderline",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/borderline"
       },
       "next": {
-        "title": "The Fluid Mosaic",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/the-fluid-mosaic"
+        "title": "Advice By The Fireplace",
+        "source": "schedule",
+        "start": "17:00",
+        "end": "18:00",
+        "url": "http://www.cjlo.com/shows/advice-by-the-fireplace"
       },
       "track": "",
-      "showTitle": "North-South Hockey",
+      "showTitle": "Borderline",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T16:01:38.219Z"
+      "checkedAt": "2026-10-21T20:09:14.692Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Palmarès CFAK",
-        "source": "schedule-live",
-        "start": "08:00",
-        "end": "14:00"
-      },
-      "next": {
         "title": "Le popcorn de l'infini",
         "source": "schedule-live",
         "start": "14:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "Palmarès CFAK",
+      "showTitle": "Le popcorn de l'infini",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T16:01:39.521Z"
+      "checkedAt": "2026-10-21T20:09:15.927Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Onde de CHOQ",
+        "title": "Opération beurre de cinoche",
         "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "start": "11:30",
+        "end": "12:30",
+        "slug": "box-sophisme"
       },
       "track": "Elisabeth Simpson — Theme Amazone",
       "showTitle": "",
@@ -147,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T16:01:56.868Z"
+      "checkedAt": "2026-10-21T20:09:33.739Z"
     }
   }
 }
