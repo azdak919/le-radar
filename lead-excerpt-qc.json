@@ -1,12 +1,12 @@
 {
-  "updated": "2026-10-21T05:01:04.893Z",
+  "updated": "2026-10-21T07:54:25.781Z",
   "total": 178,
   "pool": 58,
-  "incomplete": 10,
+  "incomplete": 9,
   "withLeadExcerpt": 115,
-  "candidates": 10,
-  "enriched": 5,
-  "failed": 1,
+  "candidates": 9,
+  "enriched": 1,
+  "failed": 2,
   "ok": true,
   "samples": [
     {
@@ -19,21 +19,12 @@
       "changed": false
     },
     {
-      "title": "Quand la fiction banalise les traumatismes",
-      "link": "https://www.delitfrancais.com/2026/09/23/quand-la-fiction-banalise-les-traumatismes/",
+      "title": "Le « self-care » : qui valide votre repos ?",
+      "link": "https://www.delitfrancais.com/2026/09/23/le-self-care-qui-valide-votre-repos/",
       "ok": true,
       "score": 96,
-      "chars": 377,
-      "sample": "Quel est le point commun entre la série Off campus , le livre Captive , et Jamais plus ? Outre leur ",
-      "changed": true
-    },
-    {
-      "title": "Faire compter sa voix",
-      "link": "https://www.delitfrancais.com/2026/09/23/faire-compter-sa-voix/",
-      "ok": true,
-      "score": 100,
-      "chars": 282,
-      "sample": "En quinze ans, les Indigenous Awareness Weeks (IAW) sont devenues un espace de « dialogue, de rappro",
+      "chars": 347,
+      "sample": "Ce n’était pas une dérive isolée, mais une règle, que Talcott Parsons nommera en 1951 : le « rôle de",
       "changed": true
     },
     {
@@ -43,25 +34,7 @@
       "score": 100,
       "chars": 400,
       "sample": "C’est jour de référendum en Alberta. Même si, pour certains l’indépendance semble hors d’atteinte, l",
-      "changed": true
-    },
-    {
-      "title": "Bulletins de nouvelles La Pige Radio",
-      "link": "https://lapige.atmjonquiere.com/2026/10/19/bulletins-de-nouvelles-la-pige-radio/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-de-nouvelles-la-pige-radio",
-      "ok": true,
-      "score": 67,
-      "chars": 140,
-      "sample": "Un incendie sur une base militaire en Alberta fait 4 morts, manifestations en France et à Montréal e",
-      "changed": true
-    },
-    {
-      "title": "Le Grand Prix cyclistes s’amène à Montréal !",
-      "link": "https://quartierlibre.ca/le-grand-prix-cyclistes-montreal/",
-      "ok": true,
-      "score": 91,
-      "chars": 400,
-      "sample": "Le 13 septembre dernier, Montréal a accueilli son Grand Prix cyclistes. Sur les pentes du mont Royal",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Creative Writing September 2026",
@@ -79,6 +52,24 @@
       "score": 96,
       "chars": 400,
       "sample": "For a year and a half, the CFC held its solidarity brunch only during exam period. Since September, ",
+      "changed": false
+    },
+    {
+      "title": "Bulletins de nouvelles La Pige Radio",
+      "link": "https://lapige.atmjonquiere.com/2026/10/19/bulletins-de-nouvelles-la-pige-radio/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-de-nouvelles-la-pige-radio",
+      "ok": true,
+      "score": 67,
+      "chars": 140,
+      "sample": "Un incendie sur une base militaire en Alberta fait 4 morts, manifestations en France et à Montréal e",
+      "changed": false
+    },
+    {
+      "title": "Horoscope September 2026",
+      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "ok": true,
+      "score": 60,
+      "chars": 98,
+      "sample": "Comment Reblog Subscribe Subscribed The Plant Sign me up Have a WordPress.com account? Log in now.",
       "changed": false
     }
   ]
