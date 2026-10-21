@@ -1,14 +1,12 @@
 {
-  "checkedAt": "2026-10-20T01:45:01.474Z",
+  "checkedAt": "2026-10-21T01:30:32.776Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 4,
+    "stable": 5,
     "drift": [],
-    "overhaul": [
-      "choq"
-    ],
+    "overhaul": [],
     "unreachable": [
       "cjlo"
     ]
@@ -66,47 +64,13 @@
     },
     {
       "id": "choq",
-      "published": 42,
+      "published": 26,
       "fresh": 26,
-      "added": [
-        "lun 10:00–11:00 Kongossa na UQAM",
-        "lun 17:30–18:30 Faire avec",
-        "lun 19:00–20:00 Bitume",
-        "mar 16:00–17:30 Passion Psy",
-        "mar 19:30–20:30 Les Amazones",
-        "mer 11:00–12:00 Miroirs d’Orient",
-        "mer 13:00–13:45 Onde de CHOQ",
-        "jeu 14:00–15:00 Dans les airs"
-      ],
-      "removed": [
-        "dim 01:00–01:30 Infra Test",
-        "dim 02:00–02:30 Infra Test",
-        "dim 02:30–03:00 Infra Test",
-        "dim 14:00–16:00 Pôle hip-hop",
-        "dim 18:00–19:00 CUCH CAST",
-        "mar 11:00–12:00 Le Monde Dans Mes Oreilles",
-        "mar 20:30–22:30 10 sur 10 : un podcast 100% rap",
-        "mer 13:00–14:00 Échos du monde",
-        "mer 18:00–19:00 Les chroniques atmosphériques",
-        "mer 22:00–22:15 Infra Test",
-        "jeu 18:30–19:45 Les Apatrides Anonymes",
-        "ven 14:00–14:30 Les fleurs du tapis",
-        "ven 17:00–18:00 La Niche",
-        "sam 11:00–11:15 Infra Test",
-        "sam 11:30–11:45 Infra Test",
-        "sam 11:45–12:00 Infra Test",
-        "sam 12:30–13:00 Infra Test",
-        "sam 13:30–14:00 Infra Test",
-        "sam 15:00–15:30 Infra Test",
-        "sam 16:30–17:00 Infra Test",
-        "sam 17:00–17:30 Infra Test",
-        "sam 18:00–18:30 Infra Test",
-        "sam 19:00–19:30 Infra Test",
-        "sam 19:30–20:00 Infra Test"
-      ],
-      "changed": 32,
-      "ratio": 0.762,
-      "status": "overhaul"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     }
   ]
 }
