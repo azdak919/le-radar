@@ -1,23 +1,30 @@
 {
-  "updated": "2026-10-22T16:09:27.786Z",
+  "updated": "2026-10-22T18:11:58.948Z",
   "total": 178,
-  "withImage": 158,
-  "withCredit": 158,
-  "cited": 108,
-  "pending": 7,
+  "withImage": 159,
+  "withCredit": 159,
+  "cited": 109,
+  "pending": 6,
   "missingHero": 0,
   "ok": false,
-  "checked": 13,
-  "updatedCount": 6,
-  "citedNew": 6,
+  "checked": 14,
+  "updatedCount": 8,
+  "citedNew": 7,
   "fallbackNew": 7,
   "samples": [
     {
-      "title": "La Nuit des sans-abri sous la neige à Saguenay",
-      "source": "La Pige",
-      "credit": "Photo : Marylène Bouanga",
+      "title": "« Mon voile ne change pas ma façon d’enseigner »",
+      "source": "Quartier Libre",
+      "credit": "Photo : Léane Fautrat",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "La garantie de bon fonctionnement, une vielle loi enfin claire",
+      "source": "La Pige",
+      "credit": "Photo : Marine De Ville",
+      "cited": true,
+      "method": "figcaption-paren-kind"
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
@@ -32,6 +39,13 @@
       "credit": "Photo: Courtesy Sheena Swirlz",
       "cited": true,
       "method": "figcaption-trailing"
+    },
+    {
+      "title": "Un polytechnicien en Espagne",
+      "source": "Le Polyscope",
+      "credit": "Crédit photo : Le Polyscope",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Que faire à Montréal en octobre ?",
