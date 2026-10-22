@@ -54,6 +54,7 @@
       'radar-weather.js',
       'radar-sports-cta.js',
       'radar-tuner.js',
+      'scripts/article-card-lib.js',
       'radar-news.js',
       'radar-lifecycle.js',
       'app.js',

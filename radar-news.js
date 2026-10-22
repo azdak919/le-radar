@@ -3097,35 +3097,21 @@ function createArticle(item, role = 'standard') {
   const bylineHtml = `<p class="article-byline"><span class="article-byline__label">${escapeHtml(byLabel)}</span><strong class="article-author notranslate" translate="no">${escapeHtml(displayAuthor)}</strong></p>`;
   const titleHtml = `<h3 class="article-title">${escapeHtml(cleanTitle(item.title))}</h3>`;
   const mediaHtml = hasImageCandidate ? '<figure class="article-media"></figure>' : '';
-  if (role === 'lead') {
-    // À la une : l'auteur suit directement le titre, avant la photo.
-    a.innerHTML = `
-      <span class="article-eyebrow">À la une</span>
-      ${metaHtml}
-      ${titleHtml}
-      ${bylineHtml}
-      ${mediaHtml}
-      ${briefHtml}
-    `;
-  } else if (role === 'feature' || (role === 'compact' && hasImageCandidate)) {
-    // Vedettes + En bref avec photo : titre + byline puis media (float wrap).
-    a.innerHTML = `
-      ${metaHtml}
-      ${titleHtml}
-      ${bylineHtml}
-      ${mediaHtml}
-      ${briefHtml}
-    `;
-  } else {
-    // Suite du fil / En bref sans photo : media d’abord si présent.
-    a.innerHTML = `
-      ${metaHtml}
-      ${mediaHtml}
-      ${titleHtml}
-      ${bylineHtml}
-      ${briefHtml}
-    `;
-  }
+  // Ordre des blocs : scripts/article-card-lib.js (cardSlots), partagé avec l’app.
+  //  lead : bandeau, méta, titre, byline, photo, chapô ;
+  //  vedettes + En bref avec photo : titre + byline puis media (float wrap) ;
+  //  suite du fil / En bref sans photo : media d’abord si présent.
+  const slotHtml = {
+    eyebrow: '<span class="article-eyebrow">À la une</span>',
+    meta: metaHtml,
+    title: titleHtml,
+    byline: bylineHtml,
+    media: mediaHtml,
+    brief: briefHtml,
+  };
+  a.innerHTML = articleCardSlots(role, hasImageCandidate)
+    .map((slot) => slotHtml[slot])
+    .join('\n');
 
   if (hasImageCandidate) {
     /* Vignettes (vedettes + En bref) aussi sur mobile, avec crédit photo —
@@ -4430,84 +4416,14 @@ function formatStampCompact(d, lang = 'fr') {
 }
 
 // ─── Title / brief cleanup ───────────────────────────────────────────────────────
-// Rubrique seulement si elle est suivie d’un séparateur ou collée à une majuscule
-// (« OpinionLe… », « Critique : … ») — jamais un début de mot (« Reportages radio… »).
-const MC_CATEGORY_PREFIX = /^(?:Photoreportage|Marché aux puces|Cobaye|Incursion|Reportage|Opinion|Entrevue|Critique|Chronique)(?:\s*[:：–—-]\s*|(?=\p{Lu}))/u;
-
-function stripEmbeddedCss(title = '') {
-  let t = String(title).trim();
-  if (!/^\.[\w-]+\s*\{/.test(t) && !/@media/i.test(t)) return t;
-  const start = t.indexOf('{');
-  if (start === -1) return t;
-  let depth = 0;
-  for (let i = start; i < t.length; i += 1) {
-    if (t[i] === '{') depth += 1;
-    else if (t[i] === '}') {
-      depth -= 1;
-      if (depth === 0) return t.slice(i + 1).trim();
-    }
-  }
-  return t;
-}
-
-/** Retire puces / symboles en tête, mais garde chiffres et lettres (« 14 bourses… »). */
-function stripLeadingNonLetters(title = '') {
-  return String(title).replace(/^[^\p{L}\p{N}]+/u, '').trim();
-}
-
-/** Aligné sur scripts/html-entities-lib.js — inclut &eacute;, &ccedil;, etc. */
-const NAMED_HTML_ENTITIES = {
-  amp: '&', lt: '<', gt: '>', quot: '"', apos: "'",
-  nbsp: '\u00A0', hellip: '…', mdash: '—', ndash: '–',
-  rsquo: '\u2019', lsquo: '\u2018', rdquo: '\u201D', ldquo: '\u201C',
-  laquo: '«', raquo: '»',
-  aacute: 'á', agrave: 'à', acirc: 'â', atilde: 'ã', auml: 'ä', aring: 'å', aelig: 'æ',
-  ccedil: 'ç', eacute: 'é', egrave: 'è', ecirc: 'ê', euml: 'ë',
-  iacute: 'í', igrave: 'ì', icirc: 'î', iuml: 'ï',
-  ntilde: 'ñ', oacute: 'ó', ograve: 'ò', ocirc: 'ô', otilde: 'õ', ouml: 'ö', oslash: 'ø',
-  uacute: 'ú', ugrave: 'ù', ucirc: 'û', uuml: 'ü', yacute: 'ý', yuml: 'ÿ',
-  Aacute: 'Á', Agrave: 'À', Acirc: 'Â', Atilde: 'Ã', Auml: 'Ä', Aring: 'Å', AElig: 'Æ',
-  Ccedil: 'Ç', Eacute: 'É', Egrave: 'È', Ecirc: 'Ê', Euml: 'Ë',
-  Iacute: 'Í', Igrave: 'Ì', Icirc: 'Î', Iuml: 'Ï',
-  Ntilde: 'Ñ', Oacute: 'Ó', Ograve: 'Ò', Ocirc: 'Ô', Otilde: 'Õ', Ouml: 'Ö', Oslash: 'Ø',
-  Uacute: 'Ú', Ugrave: 'Ù', Ucirc: 'Û', Uuml: 'Ü', Yacute: 'Ý',
-  oelig: 'œ', OElig: 'Œ',
-};
-
-function decodeNamedHtmlEntities(str = '') {
-  return String(str).replace(/&([a-zA-Z][a-zA-Z0-9]{1,31});/g, (match, name) => (
-    Object.prototype.hasOwnProperty.call(NAMED_HTML_ENTITIES, name)
-      ? NAMED_HTML_ENTITIES[name]
-      : match
-  ));
-}
-
-/** fromCodePoint sûr : couvre les caractères astraux (émojis) sans lever sur un code invalide. */
-function safeFromCodePoint(code, fallback) {
-  if (!Number.isFinite(code) || code < 0 || code > 0x10FFFF) return fallback;
-  try {
-    return String.fromCodePoint(code);
-  } catch {
-    return fallback;
-  }
-}
-
-function decodeHtmlEntities(str = '') {
-  let s = String(str);
-  for (let pass = 0; pass < 3; pass += 1) {
-    const prev = s;
-    s = s
-      .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-      .replace(/&#(\d+);/g, (m, n) => safeFromCodePoint(parseInt(n, 10), m))
-      .replace(/&#x([0-9a-f]+);/gi, (m, n) => safeFromCodePoint(parseInt(n, 16), m))
-      .replace(/&#0?39;/gi, '’');
-    s = decodeNamedHtmlEntities(s)
-      .replace(/&lt;/gi, '<')
-      .replace(/&gt;/gi, '>');
-    if (s === prev) break;
-  }
-  return s;
-}
+// Source unique : scripts/article-card-lib.js (partagé avec l’app mobile).
+const {
+  MC_CATEGORY_PREFIX,
+  decodeHtmlEntities,
+  cleanTitle,
+  stripLeadingByline,
+  cardSlots: articleCardSlots,
+} = globalThis.RadarArticleCard;
 
 /**
  * Aligné sur scripts/html-entities-lib.js (fixDropCapSpacing).
@@ -4523,32 +4439,6 @@ function fixDropCapSpacing(text = '') {
     .replace(/^([\p{Lu}])\s+([\p{Ll}])/u, (match, cap, next) => (
       STANDALONE_CAPITAL_WORD_RE.test(cap) ? match : `${cap}${next}`
     ));
-}
-
-function cleanTitle(title = '') {
-  let t = decodeHtmlEntities(stripEmbeddedCss(title));
-  t = t.replace(/\s+/g, ' ').trim();
-  // Suffixes SEO collés aux og:title (Rank Math) — déjà stripés côté bot, mais
-  // on nettoie aussi les news.json déjà en cache.
-  t = t.replace(/\s*[–—|-]\s*Montréal\s+Campus\s*$/i, '').trim();
-  t = t.replace(/\s*[–—|-]\s*Quartier\s+Libre\s*$/i, '').trim();
-  t = t.replace(/\s*[–—|-]\s*Le\s+D[eé]lit\s*$/i, '').trim();
-  t = t.replace(/\bUde\s+M\b/g, 'UdeM').replace(/\bUde\s+S\b/g, 'UdeS');
-  t = t.replace(/\bMc\s+Gill\b/g, 'McGill');
-  const prefix = t.match(MC_CATEGORY_PREFIX);
-  if (prefix) t = t.slice(prefix[0].length).trim();
-  t = stripLeadingNonLetters(t);
-  // Titres doubles sans ponctuation (ex. « Magazines à potins En papier… »)
-  return t.replace(
-    /([\p{Ll}àâäéèêëïîôùûüç'’])\s+(En|Le|La|Les|L'|L'|Un|Une|The|A|An)\s+/gu,
-    '$1 — $2 ',
-  );
-}
-
-function stripLeadingByline(text = '', author = '') {
-  if (!text || !author) return text;
-  const escaped = author.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return String(text).replace(new RegExp(`^(?:Par|By)\\s+${escaped}\\s*`, 'iu'), '').trim();
 }
 
 function leadBriefSource(item) {

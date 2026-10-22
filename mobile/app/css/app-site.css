@@ -93,3 +93,100 @@ body:not(.is-home) .masthead-icon.theme-toggle {
 .tabs { z-index: 30; }
 
 .player { z-index: 31; }
+
+/* ─── Cartes article : rendu du site (style-feed.css) dans la carte d’app ───
+   Les blocs viennent de scripts/article-card-lib.js (même ordre que le site).
+   On neutralise seulement les anciens réglages .card-* de app.css. */
+.card-site > .article {
+  padding: 14px 14px 8px;
+  border-bottom: 0;
+}
+.card-site > .article::before { left: 0; }
+.card-site .article-title.card-title {
+  font-size: 1.2rem;
+  line-height: 1.22;
+  margin: 4px 0 6px;
+}
+.card-site.card-lead .article-title.card-title { font-size: 1.55rem; }
+.card-site .article-meta__lead {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  min-width: 0;
+}
+/* Photo de l’article recadrée au centre (object-fit: cover), jamais de letterbox. */
+.card-site .article-media .card-photo {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  aspect-ratio: auto;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.card-site.card-lead .article-media { aspect-ratio: 3 / 2; }
+.card-site .article-brief { margin: 6px 0 0; }
+.card-site .card-excerpt { color: var(--ink-soft); }
+
+/* ─── Thème « verre » : la photo du mât, floue, en fond d’application ───
+   Même image que #bg-photo-layer (pas de seconde rotation) ; voile pour
+   garder le contraste AA ; flou de fond seulement sur la barre du haut et
+   les onglets. Opaque si le navigateur ne sait pas faire, ou si l’usager
+   demande moins de transparence ou de mouvement. */
+#app-glass-bg {
+  display: none;
+}
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  @media not (prefers-reduced-transparency: reduce) {
+    @media not (prefers-reduced-motion: reduce) {
+      :root { --glass-veil: rgba(255, 255, 255, 0.62); --glass-card: rgba(255, 255, 255, 0.84); --glass-line: rgba(255, 255, 255, 0.7); --glass-bar: rgba(255, 255, 255, 0.72); }
+      :root[data-theme="dark"] { --glass-veil: rgba(14, 15, 18, 0.66); --glass-card: rgba(20, 22, 26, 0.84); --glass-line: rgba(255, 255, 255, 0.14); --glass-bar: rgba(14, 15, 18, 0.72); }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) { --glass-veil: rgba(14, 15, 18, 0.66); --glass-card: rgba(20, 22, 26, 0.84); --glass-line: rgba(255, 255, 255, 0.14); --glass-bar: rgba(14, 15, 18, 0.72); }
+      }
+      #app-glass-bg.is-ready {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      #app-glass-bg.is-ready::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: var(--glass-photo);
+        background-size: cover;
+        background-position: center;
+        filter: blur(24px) saturate(1.2);
+        transform: scale(1.1);
+      }
+      #app-glass-bg.is-ready::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--glass-veil);
+      }
+      body.has-glass .shell { position: relative; z-index: 1; }
+      body.has-glass .card,
+      body.has-glass .fiche {
+        background: var(--glass-card);
+        border: 1px solid var(--glass-line);
+      }
+      body.has-glass .tabs {
+        background: var(--glass-bar);
+        border-top: 1px solid var(--glass-line);
+        -webkit-backdrop-filter: blur(20px) saturate(1.4);
+        backdrop-filter: blur(20px) saturate(1.4);
+      }
+      body.has-glass:not(.is-home) .masthead {
+        background: var(--glass-bar);
+        border-bottom: 1px solid var(--glass-line);
+        -webkit-backdrop-filter: blur(20px) saturate(1.4);
+        backdrop-filter: blur(20px) saturate(1.4);
+      }
+    }
+  }
+}

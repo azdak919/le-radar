@@ -74,11 +74,11 @@ console.log('news-title-lib: ok');
   assert.equal(balanceGuillemets('« A » et « B »'), '« A » et « B »');
 }
 
-// Régression : MC_CATEGORY_PREFIX (radar-news.js) ne doit pas amputer un mot
+// Régression : MC_CATEGORY_PREFIX (scripts/article-card-lib.js) ne doit pas amputer un mot
 // qui commence par une rubrique (« Reportages radio… » → « s radio… »).
 {
   const { readFileSync } = await import('node:fs');
-  const src = readFileSync(new URL('../radar-news.js', import.meta.url), 'utf8');
+  const src = readFileSync(new URL('../scripts/article-card-lib.js', import.meta.url), 'utf8');
   const lit = src.match(/const MC_CATEGORY_PREFIX = (\/.*\/u?);/)[1];
   const re = eval(lit);
   const strip = (t) => { const m = t.match(re); return m ? t.slice(m[0].length).trim() : t; };

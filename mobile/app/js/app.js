@@ -315,25 +315,75 @@
     return `<img class="card-photo" src="${esc(meta.image)}" alt="${esc(alt)}" loading="lazy" decoding="async" width="640" height="427">`;
   }
 
-  function cardHtml(item, lead) {
+  /* Cartes : mêmes règles que le site (scripts/article-card-lib.js) —
+     titre nettoyé, chapô sans « Par Auteur », ordre des blocs par rôle. */
+  function cardLib() {
+    return window.RadarArticleCard || null;
+  }
+
+  function displayTitle(title) {
+    const lib = cardLib();
+    return lib ? lib.cleanTitle(title) : String(title || '');
+  }
+
+  function displayExcerpt(meta) {
+    const lib = cardLib();
+    const text = String(meta.excerpt || '');
+    return lib && meta.author ? lib.stripLeadingByline(text, meta.author) : text;
+  }
+
+  function isFresh(iso) {
+    const lib = cardLib();
+    return lib ? lib.isFreshToday(iso) : false;
+  }
+
+  function cardSlots(role, hasMedia) {
+    const lib = cardLib();
+    if (lib) return lib.cardSlots(role, hasMedia);
+    return ['meta', 'title', 'byline', 'media', 'brief'];
+  }
+
+  /** Rôle façon site : une, vedettes, En bref, puis suite du fil. */
+  function cardRole(index, layout) {
+    if (!layout) return 'standard';
+    if (index === 0) return 'lead';
+    if (index <= 2) return 'feature';
+    if (index <= 6) return 'compact';
+    return 'standard';
+  }
+
+  function cardHtml(item, role = 'standard') {
     const meta = core().articleMeta(item);
     if (!meta) return '';
     const saved = core().isFavorite(loadLibrary(), meta.id);
-    const lang = meta.lang === 'en' ? '<span class="lang notranslate" translate="no">EN</span>' : '';
-    const author = meta.author
-      ? `<p class="card-by"><span>Par </span><span class="article-author">${esc(meta.author)}</span></p>`
+    const en = meta.lang === 'en';
+    const lang = en ? '<span class="lang notranslate" translate="no">EN</span>' : '';
+    const color = core().institutionColor(state.brand, meta.institution) || 'var(--accent)';
+    const hasMedia = Boolean(meta.image);
+    const excerpt = displayExcerpt(meta);
+    const readMore = en ? 'Read more →' : 'Lire la suite →';
+    const byLabel = en ? 'By' : 'Par';
+    const time = meta.date
+      ? `<time class="article-time notranslate${isFresh(meta.date) ? ' is-fresh' : ''}" datetime="${esc(meta.date)}">${esc(formatDate(meta.date))}</time>`
       : '';
-    const sourceClass = meta.source ? 'article-source' : '';
-    return `<article class="card${lead ? ' card-lead' : ''}">
-      <a class="card-open" href="#/article/${meta.id}">
-        <div class="card-top">
-          <p class="card-source">${swatch(meta.institution)}<span class="${sourceClass}">${esc(meta.source || 'Source')}</span>${lang}</p>
-          <time class="notranslate" datetime="${esc(meta.date)}">${esc(formatDate(meta.date))}</time>
-        </div>
-        <h2 class="card-title">${esc(meta.title)}</h2>
-        ${author}
-        ${imageHtml(meta)}
-        ${meta.excerpt ? `<p class="card-excerpt">${esc(meta.excerpt)}</p>` : ''}
+    const inst = meta.institution ? `<span class="article-inst">${esc(meta.institution)}</span>` : '';
+    const slotHtml = {
+      eyebrow: '<span class="article-eyebrow">À la une</span>',
+      meta: `<div class="article-meta"><span class="article-meta__lead"><span class="article-source notranslate" translate="no">${esc(meta.source || 'Source')}</span>${lang}${inst}</span>${time}</div>`,
+      title: `<h2 class="article-title card-title">${esc(displayTitle(meta.title))}</h2>`,
+      byline: meta.author
+        ? `<p class="article-byline card-by"><span class="article-byline__label">${byLabel}</span><strong class="article-author notranslate" translate="no">${esc(meta.author)}</strong></p>`
+        : '',
+      media: hasMedia ? `<figure class="article-media">${imageHtml(meta)}</figure>` : '',
+      brief: `<p class="article-brief is-truncated"><span class="article-brief-text card-excerpt">${esc(excerpt)}</span><span class="article-more" style="color:${esc(color)}">\u00a0${readMore}</span></p>`,
+    };
+    const classes = ['article', `article--${role}`, 'card-open'];
+    if (hasMedia) classes.push('has-image');
+    else classes.push('article--text');
+    if (hasMedia && role !== 'lead') classes.push('article--thumb');
+    return `<article class="card card-site card--${role}${role === 'lead' ? ' card-lead' : ''}">
+      <a class="${classes.join(' ')}" href="#/article/${meta.id}" style="--c:${esc(color)}">
+        ${cardSlots(role, hasMedia).map((slot) => slotHtml[slot]).join('\n        ')}
       </a>
       <div class="card-actions">
         <button type="button" data-action="save" data-id="${meta.id}" aria-pressed="${saved ? 'true' : 'false'}">${saved ? 'Enregistré' : 'Enregistrer'}</button>
@@ -342,10 +392,9 @@
     </article>`;
   }
 
-  function cardsHtml(items, empty, leadLabel) {
+  function cardsHtml(items, empty, layout) {
     if (!items.length) return `<p class="empty">${empty}</p>`;
-    const kicker = leadLabel ? '<p class="wire-kicker">À la une</p>' : '';
-    return `${kicker}<div class="cards">${items.map((item, index) => cardHtml(item, leadLabel && index === 0)).join('')}</div>`;
+    return `<div class="cards${layout ? ' cards--wire' : ''}">${items.map((item, index) => cardHtml(item, cardRole(index, layout))).join('')}</div>`;
   }
 
   function chip(href, label, current) {
@@ -978,10 +1027,10 @@
     return `<p class="back"><a href="#/accueil">Retour au fil</a></p>
       <article class="fiche">
         <p class="card-source">${swatch(meta.institution)}<span class="${meta.source ? 'article-source' : ''}">${esc(meta.source || 'Publication')}</span></p>
-        <h1>${esc(meta.title)}</h1>
+        <h1>${esc(displayTitle(meta.title))}</h1>
         <p class="card-meta"><time class="notranslate" datetime="${esc(meta.date)}">${esc(formatDate(meta.date))}</time>${meta.author ? ` · <span class="article-author">${esc(meta.author)}</span>` : ''}</p>
         ${imageHtml(meta)}
-        ${meta.excerpt ? `<p class="excerpt">${esc(meta.excerpt)}</p>` : ''}
+        ${displayExcerpt(meta) ? `<p class="excerpt">${esc(displayExcerpt(meta))}</p>` : ''}
         <p class="attribution"><span>Cet article est publié par </span><span class="${meta.source ? 'article-source' : ''}">${esc(meta.source || 'la publication d’origine')}</span><span>. </span><span>LE-RADAR ne le reproduit pas et n’en est pas l’auteur.</span></p>
         <a class="wide primary" data-action="read" data-id="${meta.id}" href="${esc(action.url)}" target="_blank" rel="noopener noreferrer">${esc(action.label)}</a>
         <div class="row-actions">
@@ -1291,6 +1340,33 @@
     return '';
   }
 
+  /* Fond « verre » : recopie la photo du mât affichée (#bg-photo-layer)
+     dès qu’elle est chargée ; suit ses changements, sans seconde rotation. */
+  function bindGlassBackground() {
+    const glass = document.getElementById('app-glass-bg');
+    if (!glass || typeof MutationObserver !== 'function') return;
+    let layer = null;
+    const sync = () => {
+      if (!layer || !layer.classList.contains('loaded')) return;
+      const url = layer.style.backgroundImage || getComputedStyle(layer).backgroundImage;
+      if (!url || url === 'none') return;
+      glass.style.setProperty('--glass-photo', url);
+      glass.classList.add('is-ready');
+      document.body.classList.add('has-glass');
+    };
+    const attach = () => {
+      layer = document.getElementById('bg-photo-layer');
+      if (!layer) return false;
+      new MutationObserver(sync).observe(layer, { attributes: true, attributeFilter: ['class', 'style'] });
+      sync();
+      return true;
+    };
+    if (!attach()) {
+      const wait = new MutationObserver(() => { if (attach()) wait.disconnect(); });
+      wait.observe(document.body, { childList: true, subtree: true });
+    }
+  }
+
   function bindEvents() {
     document.addEventListener('click', async (event) => {
       const installItem = event.target.closest('[data-install-app]');
@@ -1515,7 +1591,19 @@
     });
 
     document.addEventListener('error', (event) => {
-      if (event.target && event.target.tagName === 'IMG') event.target.remove();
+      const img = event.target;
+      if (!img || img.tagName !== 'IMG') return;
+      // Photo d’article cassée : on retire le cadre entier (jamais de case vide
+      // ni de letterbox), la carte reprend la mise en page texte du site.
+      const figure = img.closest('.article-media');
+      const card = img.closest('.article');
+      if (figure && card) {
+        figure.remove();
+        card.classList.remove('has-image', 'article--thumb');
+        card.classList.add('article--text');
+        return;
+      }
+      img.remove();
     }, true);
 
     document.addEventListener('keydown', (event) => {
@@ -1591,6 +1679,7 @@
     const screen = document.getElementById('screen');
     if (screen) screen.innerHTML = '<p class="loading">Chargement du fil…</p>';
     bindEvents();
+    bindGlassBackground();
     bindPlayer();
     const here = document.querySelector('[data-install-app="radar"]');
     if (here) here.classList.add('is-current');

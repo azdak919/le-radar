@@ -1167,6 +1167,7 @@ ${renderWideLayoutAssets(up)}${renderTunerCriticalCss()}
     <script src="${up}scripts/sports-freshness-lib.js" defer></script>
     <script src="${up}radar-sports-cta.js" defer></script>
     <script src="${up}radar-tuner.js" defer></script>
+    <script src="${up}scripts/article-card-lib.js" defer></script>
     <script src="${up}radar-news.js" defer></script>
     <script src="${up}radar-lifecycle.js" defer></script>
     <script src="${up}app.js" defer></script>
