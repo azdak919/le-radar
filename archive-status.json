@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-22T00:22:04.713Z",
+  "updated": "2026-10-22T08:55:38.423Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -4366,10 +4366,10 @@
   "stats": {
     "total": 761,
     "lastRun": {
-      "saved": 4,
-      "skipped": 1,
-      "failed": 13,
-      "stoppedEarly": false
+      "saved": 0,
+      "skipped": 0,
+      "failed": 5,
+      "stoppedEarly": true
     }
   },
   "sources": {
@@ -4431,7 +4431,7 @@
     "The Campus": {
       "host": "thebucampus.ca",
       "pages": 4,
-      "checkedAt": "2026-10-15T08:34:17.806Z"
+      "checkedAt": "2026-10-22T08:54:40.464Z"
     },
     "Le Délit": {
       "host": "www.delitfrancais.com",
