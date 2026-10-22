@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-10-22T21:50:55.236Z",
+  "updatedAt": "2026-10-22T23:21:49.123Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Les Arshitechs du Son",
-        "source": "api-live",
-        "start": "17:30",
-        "end": "19:00",
-        "url": "https://chyz.ca/emission/les-arshitechs-du-son/"
-      },
+      "current": null,
       "next": {
         "title": "Crooch Control",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "21:00",
         "end": "22:00",
         "url": "https://chyz.ca/emission/crooch-control/"
       },
       "track": "",
-      "showTitle": "Les Arshitechs du Son",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-22T21:50:15.704Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Rythmologie",
-        "source": "schedule",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "https://cism893.ca/emissions/rythmologie"
-      },
-      "next": {
-        "title": "Entropie",
-        "source": "schedule",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "https://cism893.ca/emissions/entropie"
-      },
-      "track": "",
-      "showTitle": "Rythmologie",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T21:50:17.482Z"
+      "checkedAt": "2026-10-22T23:21:10.512Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "La rumba latina",
+        "source": "schedule",
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/la-rumba"
+      },
+      "next": {
+        "title": "La courbe 2.0",
+        "source": "schedule",
+        "start": "20:00",
+        "end": "22:00",
+        "url": "https://cism893.ca/emissions/la-courbe-2-0"
+      },
+      "track": "",
+      "showTitle": "La rumba latina",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-22T23:21:12.340Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "The Barricade",
+        "title": "Grey Matters",
         "source": "api-live",
-        "start": "17:00",
-        "end": "18:00"
+        "start": "19:00",
+        "end": "20:00"
       },
       "next": {
-        "title": "Upstage",
+        "title": "Other Worlds on Earth/Dromostexte",
         "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
+        "start": "20:00",
+        "end": "21:00"
       },
       "track": "",
-      "showTitle": "The Barricade",
+      "showTitle": "Grey Matters",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T21:50:19.821Z"
+      "checkedAt": "2026-10-22T23:21:14.876Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Hooked On Sonics",
+        "title": "Electric Messiah",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/hooked-on-sonics"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/electric-messiah"
       },
       "next": {
-        "title": "Unheard Of",
+        "title": "Maiden Voyage",
         "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/unheard-of"
+        "start": "20:00",
+        "end": "21:00",
+        "url": "http://www.cjlo.com/shows/maiden-voyage"
       },
       "track": "",
-      "showTitle": "Hooked On Sonics",
+      "showTitle": "Electric Messiah",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T21:50:34.578Z"
+      "checkedAt": "2026-10-22T23:21:29.668Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,18 +126,12 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T21:50:35.932Z"
+      "checkedAt": "2026-10-22T23:21:30.853Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": {
-        "title": "La 3ème demie",
-        "source": "api-live",
-        "start": "17:15",
-        "end": "18:00",
-        "slug": "le-12-mtlsup"
-      },
+      "current": null,
       "next": {
         "title": "Le grand maître des jeux",
         "source": "api-live",
@@ -153,14 +140,14 @@
         "slug": "le-maitre-des-jeux"
       },
       "track": "Cadence Weapon — Line Dry",
-      "showTitle": "La 3ème demie",
+      "showTitle": "",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T21:50:54.885Z"
+      "checkedAt": "2026-10-22T23:21:48.773Z"
     }
   }
 }
