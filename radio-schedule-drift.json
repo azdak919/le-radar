@@ -1,26 +1,31 @@
 {
-  "checkedAt": "2026-10-21T01:30:32.776Z",
+  "checkedAt": "2026-10-22T01:27:06.198Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
     "stable": 5,
-    "drift": [],
+    "drift": [
+      "chyz"
+    ],
     "overhaul": [],
-    "unreachable": [
-      "cjlo"
-    ]
+    "unreachable": []
   },
   "stations": [
     {
       "id": "chyz",
       "published": 47,
-      "fresh": 47,
-      "added": [],
-      "removed": [],
-      "changed": 0,
-      "ratio": 0,
-      "status": "stable"
+      "fresh": 46,
+      "added": [
+        "mer 11:00–12:00 On en Parle"
+      ],
+      "removed": [
+        "mer 11:00–11:30 Question de savoir",
+        "mer 11:30–12:00 On en Parle"
+      ],
+      "changed": 3,
+      "ratio": 0.064,
+      "status": "drift"
     },
     {
       "id": "cism",
@@ -45,12 +50,12 @@
     {
       "id": "cjlo",
       "published": 379,
-      "fresh": 0,
+      "fresh": 379,
       "added": [],
       "removed": [],
       "changed": 0,
       "ratio": 0,
-      "status": "unreachable"
+      "status": "stable"
     },
     {
       "id": "cfak",
