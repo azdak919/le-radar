@@ -1,17 +1,90 @@
 {
-  "updated": "2026-10-22T09:37:14.255Z",
+  "updated": "2026-10-22T13:16:45.872Z",
   "total": 178,
   "withPhoto": 158,
   "withStock": 32,
-  "withCampusBank": 27,
+  "withCampusBank": 28,
   "fullyCovered": 178,
   "leadReadyPhotos": 121,
   "pageScraped": 22,
   "photosRecovered": 22,
   "imagesCleared": 6,
-  "stockSearches": 0,
-  "stockFound": 12,
-  "campusBankFound": 10,
+  "stockSearches": 57,
+  "stockFound": 21,
+  "campusBankFound": 19,
   "mainPageLeadReady": true,
-  "gaps": []
+  "gaps": [
+    {
+      "title": "Un polytechnicien en Espagne",
+      "link": "https://www.polyscope.qc.ca/blog/post/kbgnDbewLv2wv6hDMWI3",
+      "reason": "campus-bank",
+      "image": "/assets/masthead/polytechnique-nuit-abdallahh.jpg"
+    },
+    {
+      "title": "Festivals au Québec : la fête à quel prix ?",
+      "link": "https://quartierlibre.ca/festivals-au-quebec-quel-prix/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/16-17_angine.avif"
+    },
+    {
+      "title": "Reportages radio du 19 octobre 2026",
+      "link": "https://lapige.atmjonquiere.com/2026/10/20/reportages-radio-du-19-octobre-2026/?utm_source=rss&utm_medium=rss&utm_campaign=reportages-radio-du-19-octobre-2026",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0117.jpg"
+    },
+    {
+      "title": "Bulletins de nouvelles La Pige Radio",
+      "link": "https://lapige.atmjonquiere.com/2026/10/19/bulletins-de-nouvelles-la-pige-radio/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-de-nouvelles-la-pige-radio",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
+    },
+    {
+      "title": "Movember : au-delà de la moustache",
+      "link": "https://lecollectif.ca/societe/movember-au-dela-de-la-moustache/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SOCIETE_Movember-au-dela-de-la-moustache_Getty-Images.jpg"
+    },
+    {
+      "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
+      "link": "https://thebucampus.ca/2026/09/30/gods-heroes-men-and-pigs-classics-department-brings-reflections-on-nolans-the-odyssey-to-the-agora/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Prepare for Fewer Course Options in the Coming Years: Budget Cuts are Affecting the Number of Courses Available at BU",
+      "link": "https://thebucampus.ca/2026/09/30/prepare-for-fewer-course-options-in-the-coming-years-budget-cuts-are-affecting-the-number-of-courses-available-at-bu/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+    },
+    {
+      "title": "A Tradition on the Edge: The Future of Homecoming",
+      "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Gaiters Hockey Season Preview: A Team Full of Potential",
+      "link": "https://thebucampus.ca/2026/09/30/gaiters-hockey-season-preview-a-team-full-of-potential/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Bishop_Otter_Campus%2C_University_of_Chichester_-_geograph.org.uk_-_2726552.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chichester%2C_Bishop_Otter_Campus_-_geograph.org.uk_-_3003126.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "“Decolonization”",
+      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/0/0b/McGillCampusMap.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
+      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
+    }
+  ]
 }
