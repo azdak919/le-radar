@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-22T11:49:47.143Z",
+  "updatedAt": "2026-10-22T13:05:57.516Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Jeudi Révolte",
-        "source": "schedule",
+        "source": "api-live",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
+      "next": {
+        "title": "Sons de Cloches",
+        "source": "schedule-live",
+        "start": "10:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/sons-de-cloches/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Jeudi Révolte",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T11:49:18.782Z"
+      "checkedAt": "2026-10-22T13:05:27.465Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La lecture pis toi",
+        "title": "La collation",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/la-lecture-pis-toi"
+        "start": "09:00",
+        "end": "10:00",
+        "url": "https://cism893.ca/emissions/mix-collation"
       },
       "next": {
-        "title": "Jimmy et Neutron",
+        "title": "Une fenêtre sur le monde",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/jimmy-et-neutron"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "https://cism893.ca/emissions/une-fenetre-sur-le-monde"
       },
       "track": "",
-      "showTitle": "La lecture pis toi",
+      "showTitle": "La collation",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T11:49:20.867Z"
+      "checkedAt": "2026-10-22T13:05:29.546Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "OFC Podcast Radio",
-        "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
-      },
-      "next": {
         "title": "Folk Directions",
         "source": "api-live",
         "start": "09:00",
         "end": "11:00"
       },
+      "next": {
+        "title": "Under The Olive Tree",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00"
+      },
       "track": "",
-      "showTitle": "OFC Podcast Radio",
+      "showTitle": "Folk Directions",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,60 +81,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T11:49:23.983Z"
+      "checkedAt": "2026-10-22T13:05:33.713Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Daydream Nation",
-        "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/daydream-nation"
-      },
-      "next": {
         "title": "Everything Everywhere",
         "source": "schedule-live",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/everything-everywhere"
       },
-      "track": "",
-      "showTitle": "Daydream Nation",
-      "host": "",
-      "source": "schedule-live",
-      "sources": [
-        "schedule-live",
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-22T11:49:26.947Z"
-    },
-    "cfak": {
-      "id": "cfak",
-      "name": "CFAK 88,3",
-      "current": {
-        "title": "Folkswagen",
-        "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
-      },
       "next": {
-        "title": "Palmarès CFAK",
+        "title": "Democracy Now",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "11:00"
+        "start": "10:00",
+        "end": "11:00",
+        "url": "http://www.cjlo.com/shows/democracy-now"
       },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Everything Everywhere",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T11:49:27.717Z"
+      "checkedAt": "2026-10-22T13:05:36.861Z"
+    },
+    "cfak": {
+      "id": "cfak",
+      "name": "CFAK 88,3",
+      "current": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "11:00"
+      },
+      "next": {
+        "title": "À nous le futur",
+        "source": "schedule-live",
+        "start": "11:00",
+        "end": "20:00"
+      },
+      "track": "",
+      "showTitle": "Palmarès CFAK",
+      "host": "",
+      "source": "schedule-live",
+      "sources": [
+        "schedule-live"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-22T13:05:38.037Z"
     },
     "choq": {
       "id": "choq",
@@ -148,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T11:49:46.792Z"
+      "checkedAt": "2026-10-22T13:05:57.167Z"
     }
   }
 }
