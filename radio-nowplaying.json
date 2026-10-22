@@ -1,79 +1,72 @@
 {
-  "updatedAt": "2026-10-22T01:45:56.347Z",
+  "updatedAt": "2026-10-22T04:39:36.294Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Blasphème",
-        "source": "api-live",
-        "start": "21:30",
-        "end": "22:30",
-        "url": "https://chyz.ca/emission/blaspheme/"
-      },
+      "current": null,
       "next": {
         "title": "Jeudi Révolte",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "08:00",
         "end": "10:00",
         "url": "https://chyz.ca/emission/jeudi-revolte/"
       },
       "track": "",
-      "showTitle": "Blasphème",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-22T01:45:16.967Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Jeunesse cosmique",
-        "source": "schedule",
-        "start": "20:00",
-        "end": "22:00",
-        "url": "https://cism893.ca/emissions/jeunesse-cosmique"
-      },
-      "next": {
-        "title": "Mix Anglo",
-        "source": "schedule",
-        "start": "22:00",
-        "end": "00:00",
-        "url": "https://cism893.ca/emissions/mix-anglo"
-      },
-      "track": "",
-      "showTitle": "Jeunesse cosmique",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T01:45:19.017Z"
+      "checkedAt": "2026-10-22T04:38:57.939Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "La grande ludothèque (reprise)",
+        "source": "schedule",
+        "start": "00:00",
+        "end": "02:00",
+        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
+      },
+      "next": {
+        "title": "Mix franco",
+        "source": "schedule",
+        "start": "02:00",
+        "end": "03:00",
+        "url": "https://cism893.ca/emissions/mix-franco"
+      },
+      "track": "",
+      "showTitle": "La grande ludothèque (reprise)",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-22T04:38:59.749Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Jazz Euphorium",
+        "title": "Off The Hook",
         "source": "api-live",
-        "start": "20:00",
-        "end": "22:00"
+        "start": "00:00",
+        "end": "02:00"
       },
       "next": {
-        "title": "Lo Signal - 3rd Wed Of The Week",
+        "title": "Freeform Air",
         "source": "api-live",
-        "start": "22:00",
-        "end": "00:00"
+        "start": "02:00",
+        "end": "04:00"
       },
       "track": "",
-      "showTitle": "Jazz Euphorium",
+      "showTitle": "Off The Hook",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,70 +74,70 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T01:45:21.660Z"
+      "checkedAt": "2026-10-22T04:39:02.447Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "There's a Synth in the House",
+        "title": "The Night Watch",
         "source": "schedule-live",
-        "start": "21:00",
-        "end": "22:00",
-        "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
+        "start": "00:00",
+        "end": "01:00",
+        "url": "http://www.cjlo.com/shows/the-night-watch"
       },
       "next": {
-        "title": "Sippin' On Sound",
+        "title": "CJLO Late Night",
         "source": "schedule-live",
-        "start": "22:00",
-        "end": "23:00",
-        "url": "http://www.cjlo.com/shows/sippin-on-sound"
+        "start": "01:00",
+        "end": "06:00",
+        "url": "http://www.cjlo.com/shows/cjlo-late-night"
       },
       "track": "",
-      "showTitle": "There's a Synth in the House",
+      "showTitle": "The Night Watch",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T01:45:36.098Z"
+      "checkedAt": "2026-10-22T04:39:16.760Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Le popcorn de l'infini",
-        "source": "schedule-live",
-        "start": "14:00",
-        "end": "00:00"
-      },
-      "next": {
         "title": "Les nuits CFAK",
         "source": "schedule-live",
         "start": "00:00",
         "end": "07:00"
       },
+      "next": {
+        "title": "Folkswagen",
+        "source": "schedule-live",
+        "start": "07:00",
+        "end": "08:00"
+      },
       "track": "",
-      "showTitle": "Le popcorn de l'infini",
+      "showTitle": "Les nuits CFAK",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T01:45:37.483Z"
+      "checkedAt": "2026-10-22T04:39:18.079Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Opération beurre de cinoche",
+        "title": "Onde de CHOQ",
         "source": "api-live",
-        "start": "11:30",
-        "end": "12:30",
-        "slug": "box-sophisme"
+        "start": "13:00",
+        "end": "13:45",
+        "slug": "onde-de-choq"
       },
       "track": "Cadence Weapon — Line Dry",
       "showTitle": "",
@@ -154,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T01:45:55.997Z"
+      "checkedAt": "2026-10-22T04:39:35.943Z"
     }
   }
 }
