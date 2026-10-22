@@ -254,8 +254,8 @@ assert.match(appJs, /RadioPlayback/);
 assert.match(appJs, /useNativeRadio/);
 // F-Droid : signature optionnelle. Sans keystore.properties, assembleRelease sort un APK non signé.
 const appGradle = read('android/app/build.gradle');
-assert.match(appGradle, /versionCode 3/);
-assert.match(appGradle, /versionName "1\.1\.0"/);
+assert.match(appGradle, /versionCode 4/);
+assert.match(appGradle, /versionName "1\.1\.1"/);
 assert.match(appGradle, /if \(keystorePropertiesFile\.exists\(\)\) \{\s*signingConfigs \{/);
 assert.match(appGradle, /if \(keystorePropertiesFile\.exists\(\)\) \{\s*signingConfig signingConfigs\.release/);
 assert.equal(existsSync(join(root, 'fastlane/metadata/android/en-US/short_description.txt')), true);
