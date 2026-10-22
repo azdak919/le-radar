@@ -4430,7 +4430,9 @@ function formatStampCompact(d, lang = 'fr') {
 }
 
 // ─── Title / brief cleanup ───────────────────────────────────────────────────────
-const MC_CATEGORY_PREFIX = /^(?:Photoreportage|Marché aux puces|Cobaye|Incursion|Reportage|Opinion|Entrevue|Critique|Chronique)/;
+// Rubrique seulement si elle est suivie d’un séparateur ou collée à une majuscule
+// (« OpinionLe… », « Critique : … ») — jamais un début de mot (« Reportages radio… »).
+const MC_CATEGORY_PREFIX = /^(?:Photoreportage|Marché aux puces|Cobaye|Incursion|Reportage|Opinion|Entrevue|Critique|Chronique)(?:\s*[:：–—-]\s*|(?=\p{Lu}))/u;
 
 function stripEmbeddedCss(title = '') {
   let t = String(title).trim();

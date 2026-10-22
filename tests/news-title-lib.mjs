@@ -73,3 +73,20 @@ console.log('news-title-lib: ok');
   assert.equal(sanitizeTitle('La politique, c’est un sport extrême » : François Legault quitte le pouvoir'), EXP);
   assert.equal(balanceGuillemets('« A » et « B »'), '« A » et « B »');
 }
+
+// Régression : MC_CATEGORY_PREFIX (radar-news.js) ne doit pas amputer un mot
+// qui commence par une rubrique (« Reportages radio… » → « s radio… »).
+{
+  const { readFileSync } = await import('node:fs');
+  const src = readFileSync(new URL('../radar-news.js', import.meta.url), 'utf8');
+  const lit = src.match(/const MC_CATEGORY_PREFIX = (\/.*\/u?);/)[1];
+  const re = eval(lit);
+  const strip = (t) => { const m = t.match(re); return m ? t.slice(m[0].length).trim() : t; };
+  const eq = (a, b) => { if (a !== b) throw new Error(`MC_CATEGORY_PREFIX: « ${a} » ≠ « ${b} »`); };
+  eq(strip('Reportages radio du 19 octobre 2026'), 'Reportages radio du 19 octobre 2026');
+  eq(strip('Opinions croisées sur le budget'), 'Opinions croisées sur le budget');
+  eq(strip('Critiques de cinéma'), 'Critiques de cinéma');
+  eq(strip('OpinionLe tramway, enfin'), 'Le tramway, enfin');
+  eq(strip('Critique : Le dernier album'), 'Le dernier album');
+  console.log('MC_CATEGORY_PREFIX : pas d’amputation de mot ✓');
+}
