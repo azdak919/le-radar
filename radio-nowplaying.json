@@ -1,80 +1,72 @@
 {
-  "updatedAt": "2026-10-22T15:18:50.491Z",
+  "updatedAt": "2026-10-22T18:06:50.542Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": {
-        "title": "Sons de Cloches",
-        "source": "api-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/sons-de-cloches/"
-      },
+      "current": null,
       "next": {
         "title": "Chéri.e, j’arrive!",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "16:00",
         "end": "17:30",
         "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "Sons de Cloches",
-      "host": "",
-      "source": "api-live",
-      "sources": [
-        "api-live",
-        "schedule-live",
-        "schedule"
-      ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-22T15:18:22.249Z"
-    },
-    "cism": {
-      "id": "cism",
-      "name": "CISM 89,3",
-      "current": {
-        "title": "Présentement à l'écoute",
-        "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/presentement-a-lecoute-2"
-      },
-      "next": {
-        "title": "La grande ludothèque",
-        "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/la-grande-ludotheque"
-      },
-      "track": "",
-      "showTitle": "Présentement à l'écoute",
+      "showTitle": "",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T15:18:24.490Z"
+      "checkedAt": "2026-10-22T18:06:11.158Z"
+    },
+    "cism": {
+      "id": "cism",
+      "name": "CISM 89,3",
+      "current": {
+        "title": "Le palmarès",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "15:00",
+        "url": "https://cism893.ca/emissions/palmares-de-cism"
+      },
+      "next": {
+        "title": "La session live",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/session-live-a-cism"
+      },
+      "track": "",
+      "showTitle": "Le palmarès",
+      "host": "",
+      "source": "schedule",
+      "sources": [
+        "schedule"
+      ],
+      "clientPoll": null,
+      "checkedAt": "2026-10-22T18:06:12.995Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Under The Olive Tree",
+        "title": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
         "source": "api-live",
-        "start": "11:00",
-        "end": "12:00"
+        "start": "14:00",
+        "end": "15:00"
       },
       "next": {
-        "title": "Venus Radio",
+        "title": "Positive Vibes",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "track": "",
-      "showTitle": "Under The Olive Tree",
+      "showTitle": "Voices of Montreal: New Voices/Tranzister Radio/Radio Moon/Panacea",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -82,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T15:18:27.562Z"
+      "checkedAt": "2026-10-22T18:06:15.711Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Chi and Ri",
+        "title": "Secondhand Sounds",
         "source": "schedule-live",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/chi-and-ri"
+        "start": "14:00",
+        "end": "15:00",
+        "url": "http://www.cjlo.com/shows/secondhand-sounds"
       },
       "next": {
-        "title": "The Power Hour",
+        "title": "Weirdo Rippers",
         "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/the-power-hour"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/weirdo-rippers"
       },
       "track": "",
-      "showTitle": "Chi and Ri",
+      "showTitle": "Secondhand Sounds",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T15:18:30.407Z"
+      "checkedAt": "2026-10-22T18:06:30.274Z"
     },
     "cfak": {
       "id": "cfak",
@@ -134,28 +126,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T15:18:31.786Z"
+      "checkedAt": "2026-10-22T18:06:31.318Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
-        "title": "Onde de CHOQ",
+      "current": {
+        "title": "Dans les airs",
         "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "start": "14:00",
+        "end": "15:00",
+        "slug": "dans-les-airs"
+      },
+      "next": {
+        "title": "Palmarès CHOQ.ca",
+        "source": "api-live",
+        "start": "15:30",
+        "end": "16:30",
+        "slug": "palmareschoq"
       },
       "track": "Cadence Weapon — Line Dry",
-      "showTitle": "",
+      "showTitle": "Dans les airs",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T15:18:50.140Z"
+      "checkedAt": "2026-10-22T18:06:50.192Z"
     }
   }
 }
