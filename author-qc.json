@@ -1,18 +1,10 @@
 {
-  "updated": "2026-10-22T18:09:23.702Z",
+  "updated": "2026-10-22T19:17:33.335Z",
   "total": 178,
   "withAuthor": 178,
-  "mismatches": 21,
+  "mismatches": 18,
   "ok": true,
   "samples": [
-    {
-      "title": "« Mon voile ne change pas ma façon d’enseigner »",
-      "link": "https://quartierlibre.ca/loi-94-voile-ensiegnement/",
-      "source": "Quartier Libre",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Léane Fautrat",
-      "reason": "page-byline"
-    },
     {
       "title": "Movember : au-delà de la moustache",
       "link": "https://lecollectif.ca/societe/movember-au-dela-de-la-moustache/",
@@ -24,14 +16,6 @@
     {
       "title": "Le SOPK change de nom",
       "link": "https://lecollectif.ca/societe/le-sopk-change-de-nom/",
-      "source": "Le Collectif",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "La rédaction",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "Élections en Lettonie : montée du populisme",
-      "link": "https://lecollectif.ca/societe/elections-en-lettonie-montee-du-populisme/",
       "source": "Le Collectif",
       "fieldAuthor": "La rédaction",
       "canonicalAuthor": "La rédaction",
@@ -102,14 +86,6 @@
       "reason": "no-author-source"
     },
     {
-      "title": "From Scripts to Stage: BU New Plays 2026",
-      "link": "https://thebucampus.ca/2026/09/30/from-scripts-to-stage-bu-new-plays-2026/",
-      "source": "The Campus",
-      "fieldAuthor": "Zachary Jaimes",
-      "canonicalAuthor": "Zachary Jaimes Saint Cyr",
-      "reason": "page-byline-overrides-rss"
-    },
-    {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://www.thetribune.ca/opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "source": "The Tribune",
@@ -164,7 +140,15 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
+    },
+    {
+      "title": "Garda World au CVM (Éditorial)",
+      "link": "https://exilecvm.wordpress.com/2026/03/13/manifestation-contre-gardaworld/",
+      "source": "Exil",
+      "fieldAuthor": "La rédaction",
+      "canonicalAuthor": "La rédaction",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 21
+  "fixed": 18
 }

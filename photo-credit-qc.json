@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-22T18:11:58.948Z",
+  "updated": "2026-10-22T19:20:58.902Z",
   "total": 178,
   "withImage": 159,
   "withCredit": 159,
@@ -9,22 +9,15 @@
   "ok": false,
   "checked": 14,
   "updatedCount": 8,
-  "citedNew": 7,
-  "fallbackNew": 7,
+  "citedNew": 8,
+  "fallbackNew": 6,
   "samples": [
     {
-      "title": "« Mon voile ne change pas ma façon d’enseigner »",
-      "source": "Quartier Libre",
-      "credit": "Photo : Léane Fautrat",
+      "title": "Une Halloween effrayante dans le quartier universitaire",
+      "source": "Le Collectif",
+      "credit": "Photo : QU2025",
       "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "La garantie de bon fonctionnement, une vielle loi enfin claire",
-      "source": "La Pige",
-      "credit": "Photo : Marine De Ville",
-      "cited": true,
-      "method": "figcaption-paren-kind"
+      "method": "body-tail"
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
@@ -34,18 +27,25 @@
       "method": "figcaption-bare"
     },
     {
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "source": "Le Délit",
+      "credit": "Photo : Héloïse Durning",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
       "title": "Concordia’s Solidarity Brunch goes monthly",
       "source": "The Link",
       "credit": "Photo: Courtesy Sheena Swirlz",
       "cited": true,
       "method": "figcaption-trailing"
-    },
-    {
-      "title": "Un polytechnicien en Espagne",
-      "source": "Le Polyscope",
-      "credit": "Crédit photo : Le Polyscope",
-      "cited": false,
-      "method": null
     },
     {
       "title": "Que faire à Montréal en octobre ?",

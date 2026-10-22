@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-22T18:09:54.984Z",
+  "updated": "2026-10-22T19:17:54.448Z",
   "total": 178,
   "pool": 58,
-  "incomplete": 10,
-  "withLeadExcerpt": 114,
-  "candidates": 10,
-  "enriched": 2,
+  "incomplete": 11,
+  "withLeadExcerpt": 115,
+  "candidates": 11,
+  "enriched": 3,
   "failed": 1,
   "ok": true,
   "samples": [
@@ -19,12 +19,30 @@
       "changed": false
     },
     {
-      "title": "La garantie de bon fonctionnement, une vielle loi enfin claire",
-      "link": "https://lapige.atmjonquiere.com/2026/10/22/la-garantie-de-bon-fonctionnement-une-vielle-loi-enfin-claire/?utm_source=rss&utm_medium=rss&utm_campaign=la-garantie-de-bon-fonctionnement-une-vielle-loi-enfin-claire",
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "link": "https://www.delitfrancais.com/2026/09/23/arrestations-visant-les-lgbtq-en-turquie/",
+      "ok": true,
+      "score": 96,
+      "chars": 217,
+      "sample": "Au total, plus de 80 personnes ont été placées en détention provisoire. Le ministère de la Justice t",
+      "changed": true
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "link": "https://www.delitfrancais.com/2026/09/23/manifestation-anti-ia-a-montreal/",
+      "ok": true,
+      "score": 94,
+      "chars": 249,
+      "sample": "La possibilité qui revient le plus est celle d’une extinction humaine après le développement d’une s",
+      "changed": true
+    },
+    {
+      "title": "Une Halloween effrayante dans le quartier universitaire",
+      "link": "https://lecollectif.ca/a-la-une/une-halloween-effrayante-dans-le-quartier-universitaire/",
       "ok": true,
       "score": 100,
-      "chars": 227,
-      "sample": "Depuis le 5 octobre, les appareils électroniques et électroménagers neufs achetés au Québec sont cou",
+      "chars": 399,
+      "sample": "Après le succès monstre 𝐝e l’H𝐚l𝐥o𝐰e𝐞n l𝐚 𝐩l𝐮s e𝐟f𝐫a𝐲a𝐧t𝐞 (m𝐚i𝐬 𝐩a𝐬 𝐭r𝐨p) l’année",
       "changed": true
     },
     {
@@ -61,24 +79,6 @@
       "score": 96,
       "chars": 400,
       "sample": "For a year and a half, the CFC held its solidarity brunch only during exam period. Since September, ",
-      "changed": false
-    },
-    {
-      "title": "« Mon voile ne change pas ma façon d’enseigner »",
-      "link": "https://quartierlibre.ca/loi-94-voile-ensiegnement/",
-      "ok": true,
-      "score": 100,
-      "chars": 342,
-      "sample": "Les établissements privés, que l’UdeM propose comme principale solution pour trouver un stage en l’a",
-      "changed": true
-    },
-    {
-      "title": "Bulletins de nouvelles La Pige Radio",
-      "link": "https://lapige.atmjonquiere.com/2026/10/19/bulletins-de-nouvelles-la-pige-radio/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-de-nouvelles-la-pige-radio",
-      "ok": true,
-      "score": 67,
-      "chars": 140,
-      "sample": "Un incendie sur une base militaire en Alberta fait 4 morts, manifestations en France et à Montréal e",
       "changed": false
     }
   ]
