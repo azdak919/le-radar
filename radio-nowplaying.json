@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-10-21T23:31:20.460Z",
+  "updatedAt": "2026-10-22T01:45:56.347Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
       "current": {
-        "title": "Funk Connection",
-        "source": "api-live",
-        "start": "19:30",
-        "end": "21:30",
-        "url": "https://chyz.ca/emission/funk-connection/"
-      },
-      "next": {
         "title": "Blasphème",
-        "source": "schedule-live",
+        "source": "api-live",
         "start": "21:30",
         "end": "22:30",
         "url": "https://chyz.ca/emission/blaspheme/"
       },
+      "next": {
+        "title": "Jeudi Révolte",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/jeudi-revolte/"
+      },
       "track": "",
-      "showTitle": "Funk Connection",
+      "showTitle": "Blasphème",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -28,52 +28,52 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T23:30:19.425Z"
+      "checkedAt": "2026-10-22T01:45:16.967Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Effets sonores (reprise)",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/effets-sonores"
-      },
-      "next": {
         "title": "Jeunesse cosmique",
         "source": "schedule",
         "start": "20:00",
         "end": "22:00",
         "url": "https://cism893.ca/emissions/jeunesse-cosmique"
       },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "Effets sonores (reprise)",
+      "showTitle": "Jeunesse cosmique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T23:30:21.649Z"
+      "checkedAt": "2026-10-22T01:45:19.017Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Harbinger Showcase",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Jazz Euphorium",
         "source": "api-live",
         "start": "20:00",
         "end": "22:00"
       },
+      "next": {
+        "title": "Lo Signal - 3rd Wed Of The Week",
+        "source": "api-live",
+        "start": "22:00",
+        "end": "00:00"
+      },
       "track": "",
-      "showTitle": "Harbinger Showcase",
+      "showTitle": "Jazz Euphorium",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T23:30:24.822Z"
+      "checkedAt": "2026-10-22T01:45:21.660Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "BVST",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "21:00",
-        "url": "http://www.cjlo.com/shows/bvst"
-      },
-      "next": {
         "title": "There's a Synth in the House",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "21:00",
         "end": "22:00",
         "url": "http://www.cjlo.com/shows/theres-a-synth-in-the-house"
       },
+      "next": {
+        "title": "Sippin' On Sound",
+        "source": "schedule-live",
+        "start": "22:00",
+        "end": "23:00",
+        "url": "http://www.cjlo.com/shows/sippin-on-sound"
+      },
       "track": "",
-      "showTitle": "BVST",
+      "showTitle": "There's a Synth in the House",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T23:30:59.717Z"
+      "checkedAt": "2026-10-22T01:45:36.098Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T23:31:01.653Z"
+      "checkedAt": "2026-10-22T01:45:37.483Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +146,7 @@
         "end": "12:30",
         "slug": "box-sophisme"
       },
-      "track": "Elisabeth Simpson — Theme Amazone",
+      "track": "Cadence Weapon — Line Dry",
       "showTitle": "",
       "host": "",
       "source": "api-live",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-21T23:31:20.110Z"
+      "checkedAt": "2026-10-22T01:45:55.997Z"
     }
   }
 }
