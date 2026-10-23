@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-23T16:58:08.508Z",
+  "updatedAt": "2026-10-23T19:11:45.362Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Conduite Antisportive",
+        "source": "api-live",
+        "start": "14:30",
+        "end": "16:00",
+        "url": "https://chyz.ca/emission/conduite-antisportive/"
+      },
       "next": {
-        "title": "Le Détour",
-        "source": "schedule",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "https://chyz.ca/emission/detour/"
+        "title": "Chéri.e, j’arrive!",
+        "source": "schedule-live",
+        "start": "16:00",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/cheri-e-jarrive/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Conduite Antisportive",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T16:57:28.651Z"
+      "checkedAt": "2026-10-23T19:10:46.319Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Rebelles soniques",
+        "title": "Salsa et Bembê",
         "source": "schedule",
-        "start": "12:00",
-        "end": "14:00",
-        "url": "https://cism893.ca/emissions/rebelles-soniques"
+        "start": "15:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/salsa-et-bembe"
       },
       "next": {
-        "title": "Le palmarès",
+        "title": "Turbo Tannant",
         "source": "schedule",
-        "start": "14:00",
-        "end": "15:00",
-        "url": "https://cism893.ca/emissions/palmares-de-cism"
+        "start": "16:00",
+        "end": "17:00",
+        "url": "https://cism893.ca/emissions/turbo-tannant"
       },
       "track": "",
-      "showTitle": "Rebelles soniques",
+      "showTitle": "Salsa et Bembê",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T16:57:30.763Z"
+      "checkedAt": "2026-10-23T19:10:48.472Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Butcher T's Noontime Cuts",
+        "title": "New Shit",
         "source": "api-live",
-        "start": "12:00",
-        "end": "14:00"
+        "start": "15:00",
+        "end": "17:00"
       },
       "next": {
-        "title": "NNB/SQUAT FM/QPIRG/knots",
+        "title": "Girls Meet World/STEMinism/Radio TET/Migrant Nation",
         "source": "api-live",
-        "start": "14:00",
-        "end": "15:00"
+        "start": "17:00",
+        "end": "18:00"
       },
-      "track": "Butcher T",
-      "showTitle": "Butcher T's Noontime Cuts",
+      "track": "",
+      "showTitle": "New Shit",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T16:57:33.573Z"
+      "checkedAt": "2026-10-23T19:10:50.857Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Charts & Crafts",
-        "source": "schedule-live",
-        "start": "12:00",
-        "end": "13:00",
-        "url": "http://www.cjlo.com/shows/charts-and-crafts"
+        "title": "Dead Beats",
+        "source": "schedule",
+        "start": "15:00",
+        "end": "16:00",
+        "url": "http://www.cjlo.com/shows/dead-beats"
       },
       "next": {
-        "title": "the castle",
-        "source": "schedule-live",
-        "start": "13:00",
-        "end": "14:00",
-        "url": "http://www.cjlo.com/shows/the-castle"
+        "title": "Tapeworms",
+        "source": "schedule",
+        "start": "16:00",
+        "end": "17:00",
+        "url": "http://www.cjlo.com/shows/tapeworms"
       },
       "track": "",
-      "showTitle": "Charts & Crafts",
+      "showTitle": "Dead Beats",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T16:57:48.898Z"
+      "checkedAt": "2026-10-23T19:11:25.065Z"
     },
     "cfak": {
       "id": "cfak",
@@ -126,18 +133,18 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T16:57:50.099Z"
+      "checkedAt": "2026-10-23T19:11:26.257Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
       "current": null,
       "next": {
-        "title": "Onde de CHOQ",
+        "title": "Histoire de passer le temps",
         "source": "api-live",
-        "start": "13:00",
-        "end": "13:45",
-        "slug": "onde-de-choq"
+        "start": "16:00",
+        "end": "17:00",
+        "slug": "histoire-de-passer-le-temps"
       },
       "track": "Cadence Weapon — Line Dry",
       "showTitle": "",
@@ -147,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T16:58:08.157Z"
+      "checkedAt": "2026-10-23T19:11:45.012Z"
     }
   }
 }
