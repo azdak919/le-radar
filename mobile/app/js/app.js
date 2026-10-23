@@ -956,7 +956,6 @@
     const prefs = loadPrefs();
     const theme = prefs.theme;
     const hidden = state.sources.filter((source) => prefs.hidden.includes(source.id));
-    const notes = prefs.notifications;
     const confirmAll = state.confirm === 'all'
       ? '<button type="button" class="danger" data-action="confirm-clear" data-target="all">Confirmer l’effacement de tout</button>'
       : '<button type="button" data-action="ask-clear" data-target="all">Effacer toutes les données de l’application</button>';
@@ -986,19 +985,7 @@
         <h2 class="section">Sources masquées</h2>
         ${hidden.length ? `<ul class="plain">${hidden.map((source) => `<li class="source-row"><span class="article-source">${esc(source.name)}</span><button type="button" data-action="hide" data-id="${esc(source.id)}">Réafficher</button></li>`).join('')}</ul>` : '<p class="note">Aucune source masquée.</p>'}
       </section>
-      <section>
-        <h2 class="section">Notifications</h2>
-        <p class="note">Aucun envoi système n’est branché. Ces cases mémorisent un choix sur l’appareil et ne transmettent rien. Le rappel des nouveaux articles de vos suivis s’affiche dans l’accueil.</p>
-        ${['follows', 'digest', 'newMedia'].map((key) => {
-          const label = {
-            follows: 'Nouveautés des médias suivis',
-            digest: 'Résumé quotidien',
-            newMedia: 'Nouveau média ajouté à LE-RADAR',
-          }[key];
-          return `<label class="check"><input type="checkbox" data-action="note" data-key="${key}" ${notes[key] ? 'checked' : ''}> ${label}</label>`;
-        }).join('')}
-        <label class="check"><input type="checkbox" data-action="note" data-key="enabled" ${notes.enabled ? 'checked' : ''}> Autoriser un futur envoi (reste inactif)</label>
-      </section>
+      <section id="news-alerts"><h2 class="section">Notifications</h2></section>
       <section>
         <h2 class="section">Vie privée</h2>
         <p class="note">Pas de compte, pas de publicité, pas de mesure d’audience dans l’application. Favoris, suivis, historique et mots-clés restent dans ce navigateur ou cette application. Charger le fil contacte le-radar.ca. Les images et les articles originaux sont demandés aux publications, qui voient alors une requête HTTPS ordinaire.</p>
@@ -1291,6 +1278,7 @@
     else if (route.kind === 'article') html = viewArticle(route);
     else html = viewHome(route);
     if (screen) screen.innerHTML = html;
+    if (route.kind === 'settings' && window.RadarNewsAlerts && window.RadarNewsAlerts.mount) window.RadarNewsAlerts.mount();
     syncPlayer();
     if (net) {
       const offline = !state.online || state.feedOrigin === 'snapshot' || state.feedOrigin === 'bundle' || state.feedOrigin === 'empty';

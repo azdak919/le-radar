@@ -60,8 +60,11 @@ dependencies {
     // AndroidX Media3 (Apache-2.0) — FOSS background radio for F-Droid.
     implementation "androidx.media3:media3-exoplayer:$media3Version"
     implementation "androidx.media3:media3-session:$media3Version"
+    // WorkManager (Apache-2.0) : sondage local des nouveaux articles, sans service Google.
+    implementation "androidx.work:work-runtime:$androidxWorkVersion"
     implementation project(':capacitor-android')
     testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.json:json:20240303"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
