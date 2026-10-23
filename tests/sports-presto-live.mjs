@@ -119,7 +119,9 @@ test('période / horloge en français', () => {
   assert.equal(p('1st half - 09:54', 'soccer'), '1re mi-temps · 10e min');
   assert.equal(p('Halftime', 'soccer'), 'Mi-temps');
   assert.equal(p('OT - 03:00', 'hockey'), 'Prolongation 3:00');
-  assert.equal(p('25-18,23-22', 'volleyball'), '2e manche 23–22');
+  assert.equal(p('25-18,23-22', 'volleyball'), '2e manche · 23–22 pts');
+  // Ordre du scorebug (domicile en haut) : « 16-25,7-1 » visiteur-domicile.
+  assert.equal(Presto.parseLiveStatus('16-25,7-1', 'volleyball', { homeFirst: true }).label, '2e manche · 1–7 pts');
   assert.equal(p('', 'hockey'), '');
 });
 

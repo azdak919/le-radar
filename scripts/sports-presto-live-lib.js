@@ -238,7 +238,7 @@ function cleanClock(c) {
  * « End of 1st », « Halftime », « OT - 03:00 », volleyball « 25-18,23-22 ».
  * n = numéro de période (null si inconnu) ; endOf = période terminée.
  */
-function parseLiveStatus(statusText, sport) {
+function parseLiveStatus(statusText, sport, opts = {}) {
   const raw = String(statusText || '').replace(/\s+/g, ' ').trim();
   const noun = periodNoun(sport);
   if (!raw) return { n: null, label: '' };
@@ -246,8 +246,14 @@ function parseLiveStatus(statusText, sport) {
   if (sport === 'volleyball' && /^\d+-\d+(\s*,\s*\d+-\d+)*$/.test(raw)) {
     const sets = raw.split(/\s*,\s*/);
     const n = sets.length;
-    const cur = sets[n - 1].replace('-', '–');
-    return { n, label: `${frOrdinal(n, true)} manche ${cur}` };
+    // Presto : points « visiteur-domicile ». Le scorebug affiche le domicile
+    // en haut, le visiteur en bas : opts.homeFirst réoriente les points de la
+    // manche dans ce même ordre (sinon « 1 / 0 » en manches et « 3–1 » en
+    // points se contredisent). Libellé « pts » pour ne pas les confondre avec
+    // le pointage en manches.
+    let [a, b] = sets[n - 1].split('-');
+    if (opts.homeFirst) [a, b] = [b, a];
+    return { n, label: `${frOrdinal(n, true)} manche · ${a}–${b} pts` };
   }
   if (/^half\s*time$|^halftime$|^half$/i.test(raw)) {
     // Soccer : 1 demie jouée ; basket / football : 2 quarts joués.
@@ -539,8 +545,12 @@ function applyPrestoLive(teams, feeds, { registry, now = Date.now() } = {}) {
       used.add(cand.key);
       const homeScore = swapped ? ev.away.score : ev.home.score;
       const awayScore = swapped ? ev.home.score : ev.away.score;
-      const period = event.state === 'live' ? parseLiveStatus(ev.statusText, ev.sport).label : '';
+      // Ordre domicile–visiteur (celui du scorebug) ; si swapped, le « domicile »
+      // Presto est notre visiteur et l’ordre brut visiteur-domicile convient déjà.
+      const period = event.state === 'live'
+        ? parseLiveStatus(ev.statusText, ev.sport, { homeFirst: !swapped }).label : '';
       for (const { team, game } of cand.faces) {
+        const facePeriod = period;
         const sf = game.home ? homeScore : awayScore;
         const sa = game.home ? awayScore : homeScore;
         if (event.state === 'live') {
@@ -549,7 +559,7 @@ function applyPrestoLive(teams, feeds, { registry, now = Date.now() } = {}) {
           game.live = true;
           game.scoreFor = sf;
           game.scoreAgainst = sa;
-          if (period) game.period = period;
+          if (facePeriod) game.period = facePeriod;
           else delete game.period;
           game.liveFeed = feed.source;
         } else {
