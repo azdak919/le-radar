@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T10:22:59.023Z",
+  "updatedAt": "2026-10-23T11:38:23.861Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T10:21:59.128Z"
+      "checkedAt": "2026-10-23T11:37:44.984Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Le Séismix",
-        "source": "schedule",
-        "start": "05:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/le-seismix"
-      },
-      "next": {
         "title": "Toute est dans toute",
         "source": "schedule",
         "start": "07:00",
         "end": "08:00",
         "url": "https://cism893.ca/emissions/tout-est-dans-toute"
       },
+      "next": {
+        "title": "Quartier libre",
+        "source": "schedule",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "https://cism893.ca/emissions/quartier-libre"
+      },
       "track": "",
-      "showTitle": "Le Séismix",
+      "showTitle": "Toute est dans toute",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T10:22:00.968Z"
+      "checkedAt": "2026-10-23T11:37:46.683Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "G-Flex Survivor's Corner",
-        "source": "api-live",
-        "start": "04:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Morning Detour",
         "source": "api-live",
         "start": "07:00",
         "end": "09:00"
       },
-      "track": "G-Flex Survivor",
-      "showTitle": "G-Flex Survivor's Corner",
+      "next": {
+        "title": "Jazz Amuck",
+        "source": "api-live",
+        "start": "09:00",
+        "end": "11:00"
+      },
+      "track": "",
+      "showTitle": "Morning Detour",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,21 +74,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T10:22:03.884Z"
+      "checkedAt": "2026-10-23T11:37:50.233Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Wake up Folks!",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "06:00",
         "end": "09:00",
         "url": "http://www.cjlo.com/shows/wake-up-folks"
       },
       "next": {
         "title": "CJLO News Hour",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "09:00",
         "end": "10:00",
         "url": "http://www.cjlo.com/shows/cjlo-news-hour"
@@ -96,37 +96,37 @@
       "track": "",
       "showTitle": "Wake up Folks!",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T10:22:38.446Z"
+      "checkedAt": "2026-10-23T11:38:04.770Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Les nuits CFAK",
-        "source": "schedule-live",
-        "start": "00:00",
-        "end": "07:00"
-      },
-      "next": {
         "title": "Folkswagen",
         "source": "schedule-live",
         "start": "07:00",
         "end": "08:00"
       },
+      "next": {
+        "title": "Palmarès CFAK",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "11:00"
+      },
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "Folkswagen",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T10:22:39.944Z"
+      "checkedAt": "2026-10-23T11:38:05.575Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T10:22:58.672Z"
+      "checkedAt": "2026-10-23T11:38:23.510Z"
     }
   }
 }
