@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-23T00:15:53.700Z",
+  "updated": "2026-10-23T08:50:53.395Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -4373,14 +4373,20 @@
       "via": "save-page-now",
       "source": "Quartier Libre",
       "snapshot": "https://web.archive.org/web/20261023001534/https://quartierlibre.ca/naza-enquete-israel-gaza/"
+    },
+    "https://lapige.atmjonquiere.com/2026/10/22/la-garantie-de-bon-fonctionnement-une-vielle-loi-enfin-claire/": {
+      "at": "2026-10-23T08:50:15.198Z",
+      "via": "save-page-now",
+      "source": "La Pige",
+      "snapshot": "https://web.archive.org/web/20261023084959/https://lapige.atmjonquiere.com/2026/10/22/la-garantie-de-bon-fonctionnement-une-vielle-loi-enfin-claire/"
     }
   },
   "stats": {
-    "total": 763,
+    "total": 764,
     "lastRun": {
-      "saved": 2,
+      "saved": 1,
       "skipped": 0,
-      "failed": 13,
+      "failed": 3,
       "stoppedEarly": true
     }
   },
@@ -4454,6 +4460,16 @@
       "host": "www.polyscope.qc.ca",
       "pages": 36,
       "checkedAt": "2026-10-22T00:10:38.794Z"
+    },
+    "Impact Campus": {
+      "host": "impactcampus.ca",
+      "pages": 42,
+      "checkedAt": "2026-10-23T08:49:02.072Z"
+    },
+    "The Concordian": {
+      "host": "theconcordian.com",
+      "pages": 122,
+      "checkedAt": "2026-10-23T08:49:07.835Z"
     }
   }
 }
