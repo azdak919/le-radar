@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-22T23:21:49.123Z",
+  "updatedAt": "2026-10-23T00:23:28.937Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T23:21:10.512Z"
+      "checkedAt": "2026-10-23T00:22:46.579Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "La rumba latina",
-        "source": "schedule",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "https://cism893.ca/emissions/la-rumba"
-      },
-      "next": {
         "title": "La courbe 2.0",
         "source": "schedule",
         "start": "20:00",
         "end": "22:00",
         "url": "https://cism893.ca/emissions/la-courbe-2-0"
       },
+      "next": {
+        "title": "Mix Anglo",
+        "source": "schedule",
+        "start": "22:00",
+        "end": "00:00",
+        "url": "https://cism893.ca/emissions/mix-anglo"
+      },
       "track": "",
-      "showTitle": "La rumba latina",
+      "showTitle": "La courbe 2.0",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T23:21:12.340Z"
+      "checkedAt": "2026-10-23T00:22:48.698Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Grey Matters",
-        "source": "api-live",
-        "start": "19:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "Other Worlds on Earth/Dromostexte",
         "source": "api-live",
         "start": "20:00",
         "end": "21:00"
       },
+      "next": {
+        "title": "Chaud Pour/Francis",
+        "source": "api-live",
+        "start": "21:00",
+        "end": "23:00"
+      },
       "track": "",
-      "showTitle": "Grey Matters",
+      "showTitle": "Other Worlds on Earth/Dromostexte",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +74,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T23:21:14.876Z"
+      "checkedAt": "2026-10-23T00:22:51.804Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Electric Messiah",
-        "source": "schedule-live",
-        "start": "19:00",
-        "end": "20:00",
-        "url": "http://www.cjlo.com/shows/electric-messiah"
-      },
-      "next": {
         "title": "Maiden Voyage",
         "source": "schedule-live",
         "start": "20:00",
         "end": "21:00",
         "url": "http://www.cjlo.com/shows/maiden-voyage"
       },
+      "next": {
+        "title": "The 514",
+        "source": "schedule-live",
+        "start": "21:00",
+        "end": "22:00",
+        "url": "http://www.cjlo.com/shows/the-514"
+      },
       "track": "",
-      "showTitle": "Electric Messiah",
+      "showTitle": "Maiden Voyage",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T23:21:29.668Z"
+      "checkedAt": "2026-10-23T00:23:09.153Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "À nous le futur",
-        "source": "schedule-live",
-        "start": "11:00",
-        "end": "20:00"
-      },
-      "next": {
         "title": "After 5@8",
         "source": "schedule-live",
         "start": "20:00",
         "end": "00:00"
       },
+      "next": {
+        "title": "Les nuits CFAK",
+        "source": "schedule-live",
+        "start": "00:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "À nous le futur",
+      "showTitle": "After 5@8",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T23:21:30.853Z"
+      "checkedAt": "2026-10-23T00:23:10.265Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-22T23:21:48.773Z"
+      "checkedAt": "2026-10-23T00:23:28.586Z"
     }
   }
 }
