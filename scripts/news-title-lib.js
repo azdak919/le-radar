@@ -142,6 +142,15 @@ function sanitizeTitle(title = '') {
   t = t.replace(/\s*[–—|-]\s*Montréal\s+Campus\s*$/i, '').trim();
   t = t.replace(/\s*[–—|-]\s*Quartier\s+Libre\s*$/i, '').trim();
   t = t.replace(/\s*[–—|-]\s*Le\s+D[eé]lit\s*$/i, '').trim();
+  // Kicker entre crochets/parenthèses en tête : « [Chronique] X » → « Chronique : X »
+  // (sinon stripLeadingNonLetters laissait un « ] » orphelin).
+  const kicker = t.match(/^\s*[\[(]\s*([^\[\]()]{1,40}?)\s*[\])]\s*[:–—-]?\s*(\S.*)$/u);
+  if (kicker) t = `${kicker[1]} : ${kicker[2]}`;
+  else {
+    // Crochet déjà perdu en amont : « Chronique] X » → « Chronique : X ».
+    const orphan = t.match(/^\s*([^\[\]()]{1,40}?)\s*[\])]\s*[:–—-]?\s*(\S.*)$/u);
+    if (orphan && !/[\[(]/.test(orphan[1])) t = `${orphan[1]} : ${orphan[2]}`;
+  }
   const series = t.match(MC_SERIES_LABEL);
   if (series) {
     const label = series[1].trim();

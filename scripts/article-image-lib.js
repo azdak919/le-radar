@@ -775,6 +775,20 @@ function meetsArticleKeepSize(width = 0, height = 0) {
 const BANNER_RATIO_MIN = 2.12;
 const HTML_PARSE_CAP = 250_000;
 
+/**
+ * Capture d'écran en bandeau (≥ 2,4:1) = graphique texte (couverture,
+ * affiche) : le crop 3:2 le rend illisible (Impact Campus, Québec en toutes
+ * lettres, 2560×659, 22 oct. 2026). Les captures de proportion photo
+ * (The Campus, 762×582) restent acceptées.
+ */
+const SCREENSHOT_FILE_RE = /(?:capture[-_ ]?d[-_ ]?(?:e|%c3%a9|é)cran|screen[-_ ]?shot)/i;
+const SCREENSHOT_MAX_RATIO = 2.4;
+function isWideScreenshotGraphic(url = '', width = 0, height = 0) {
+  if (!width || !height || !SCREENSHOT_FILE_RE.test(String(url))) return false;
+  const r = width / height;
+  return r >= SCREENSHOT_MAX_RATIO || r <= 1 / SCREENSHOT_MAX_RATIO;
+}
+
 function isBannerLikeRatio(width = 0, height = 0) {
   if (!width || !height) return false;
   return width / height >= BANNER_RATIO_MIN;
@@ -1094,6 +1108,7 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
     // Jamais d'image en hauteur pour la une (même « faible ») : elle revenait
     // par la file sans photo (Quartier Libre 964×1024, ratio 0,94 < 0,95)
     // juste après avoir été retirée par la passe portrait.
+    if (isWideScreenshotGraphic(url, metaW, metaH)) return null;
     if (metaW && metaH && isPortraitLeadRatio(metaW, metaH)) {
       return portraitHit(url, metaW, metaH, ctx, 'meta-portrait-crop');
     }
@@ -1104,6 +1119,7 @@ async function resolveLeadReadyPhoto(item, extraRejectPatterns = [], options = {
       return { url, width: metaW, height: metaH, source: 'meta-editorial', leadReady: true };
     }
     const dims = await probeRemoteImageSize(url);
+    if (dims && isWideScreenshotGraphic(url, dims.width, dims.height)) return null;
     if (dims && isPortraitLeadRatio(dims.width, dims.height)) {
       return portraitHit(url, dims.width, dims.height, ctx, 'probe-portrait-crop');
     }
@@ -1246,6 +1262,7 @@ module.exports = {
   compareLeadCandidates,
   leadFitTier,
   meetsLeadDisplaySize,
+  isWideScreenshotGraphic,
   meetsFeatureDisplaySize,
   meetsArticleKeepSize,
   stripAdSlots,

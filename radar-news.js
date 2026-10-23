@@ -4016,19 +4016,10 @@ function showArticleImage(article, media, img, kind, item) {
   }
   let cap = null;
   if (kind === 'photo') {
-    if (item?.sourceImageCredit) {
+    // Crédit réel seulement (légende / JSON-LD / « Photo : » de la page).
+    // Pas de crédit générique « Crédit photo : [média] » : mieux vaut rien.
+    if (item?.sourceImageCredit && item.sourceImageCreditFrom !== 'media') {
       cap = buildSourcePhotoCreditElement(item);
-    } else if (item?.source) {
-      // Photo source sans crédit scrapé (ex. La Pige en En bref) :
-      // afficher au moins « Crédit photo : [média] » en attendant le bot.
-      const en = item.lang === 'en';
-      const mediaName = String(item.source).trim();
-      cap = buildSourcePhotoCreditElement({
-        ...item,
-        sourceImageCredit: en ? `Photo credit: ${mediaName}` : `Crédit photo : ${mediaName}`,
-        sourceImageCreditFrom: 'media',
-        sourceImageCreditUrl: item.link || item.sourceImageCreditUrl || '',
-      });
     }
   } else if ((kind === 'stock' || kind === 'fallback') && (item?.imageCredit || item?.imageSourceUrl)) {
     cap = buildMediaCreditElement(item);
