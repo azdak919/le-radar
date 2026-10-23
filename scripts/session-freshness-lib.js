@@ -1,13 +1,17 @@
 /**
  * LE RADAR — règle universelle de fraîcheur des articles (sessions universitaires QC).
  *
- * Règle (tous les articles, bots + UI) :
- *  1. Inclure la session en cours + les 2 précédentes
- *     → sur un cycle : automne + hiver + été
- *  2. L’été est toujours dans le cycle (session mai–août)
- *  3. Septembre = mois de grâce en début d’automne :
- *     on garde aussi l’automne d’avant tant que la nouvelle session
- *     n’a pas vraiment démarré (peu de publications encore)
+ * Règle d’AFFICHAGE des articles (fil, une, En bref, pages SEO, flux) :
+ *  - un article est montré s’il est publié pendant la session en cours
+ *    OU depuis au plus NEWS_MAX_AGE_DAYS jours (chevauchement de début
+ *    de session : début septembre, on voit encore la fin de l’été) ;
+ *  - aucune exception par source : un journal muet depuis une session
+ *    passée n’affiche rien (pas de « dernier article » de repli).
+ *
+ * Cycle de 3 sessions (en cours + 2 précédentes, grâce de septembre) :
+ *  conservé SEULEMENT pour le cycle de vie des sources (ok/stale/dead,
+ *  retrait du registre) et les résultats sportifs passés
+ *  (isWithinSessionCycleWindow / sessionCycleWindowStart).
  *
  * Calendrier des débuts de session :
  *  - Automne : 1er septembre
@@ -35,6 +39,9 @@
   const CONTINGENCY_MAX_SESSIONS_BACK = FRESHNESS_SESSION_COUNT - 1;
   /** Septembre (0-index) : mois de grâce pour l’automne précédent. */
   const SEPTEMBER_AUTUMN_GRACE_MONTH = 8;
+  /** Âge max d’un article hors session en cours (chevauchement de rentrée). */
+  const NEWS_MAX_AGE_DAYS = 45;
+  const DAY_MS = 86400000;
 
   function getCurrentUniversitySessionStart(referenceDate = new Date()) {
     const year = referenceDate.getFullYear();
@@ -126,14 +133,33 @@
     return t >= start.getTime() && t <= end.getTime();
   }
 
-  /** True si l’article tombe dans la fenêtre universelle de fraîcheur. */
-  function isWithinFreshnessWindow(item, referenceDate = new Date()) {
+  /** Cycle 3 sessions (+ grâce sept.) : sources et résultats sportifs. */
+  function isWithinSessionCycleWindow(item, referenceDate = new Date()) {
     if (!isPublishedOnOrBefore(item, referenceDate)) return false;
     const maxBack = freshnessMaxSessionsBack(referenceDate);
     for (let band = 0; band <= maxBack; band += 1) {
       if (isWithinUniversitySessionBand(item, referenceDate, band)) return true;
     }
     return false;
+  }
+
+  /** Début de la plus vieille session du cycle (cycle de vie des sources). */
+  function sessionCycleWindowStart(referenceDate = new Date()) {
+    return getUniversitySessionStart(referenceDate, freshnessMaxSessionsBack(referenceDate));
+  }
+
+  /** Début de la fenêtre d’affichage : min(début de session, maintenant − 45 j). */
+  function freshnessWindowStart(referenceDate = new Date()) {
+    const sessionStart = getCurrentUniversitySessionStart(referenceDate).getTime();
+    const ageStart = referenceDate.getTime() - NEWS_MAX_AGE_DAYS * DAY_MS;
+    return new Date(Math.min(sessionStart, ageStart));
+  }
+
+  /** True si l’article est affichable (session en cours ou ≤ 45 jours). */
+  function isWithinFreshnessWindow(item, referenceDate = new Date()) {
+    if (!isPublishedOnOrBefore(item, referenceDate)) return false;
+    const t = new Date(item?.date || 0).getTime();
+    return t >= freshnessWindowStart(referenceDate).getTime();
   }
 
   function filterFreshItems(items = [], referenceDate = new Date()) {
@@ -144,15 +170,13 @@
     return filterFreshItems(items, referenceDate);
   }
 
-  /** Début de la plus vieille session encore dans la fenêtre. */
-  function freshnessWindowStart(referenceDate = new Date()) {
-    return getUniversitySessionStart(referenceDate, freshnessMaxSessionsBack(referenceDate));
-  }
-
   const api = {
     FRESHNESS_SESSION_COUNT,
     CONTINGENCY_MAX_SESSIONS_BACK,
     SEPTEMBER_AUTUMN_GRACE_MONTH,
+    NEWS_MAX_AGE_DAYS,
+    isWithinSessionCycleWindow,
+    sessionCycleWindowStart,
     getCurrentUniversitySessionStart,
     getCurrentUniversitySessionId,
     applyUniversitySessionTheme,

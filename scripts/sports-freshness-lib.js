@@ -123,7 +123,7 @@
   function isPastGameFresh(game, referenceDate = new Date()) {
     const d = parseGameDay(game);
     if (!d) return false;
-    return SF.isWithinFreshnessWindow({ date: dayKey(d) }, referenceDate);
+    return (SF.isWithinSessionCycleWindow || SF.isWithinFreshnessWindow)({ date: dayKey(d) }, referenceDate);
   }
 
   function isPastGameKeepable(game, referenceDate = new Date()) {

@@ -391,7 +391,9 @@ function buildModel({ radios, sources, news, institutions }) {
   });
 
   const newsBySource = new Map();
-  for (const item of news || []) {
+  // Même règle d'affichage que le fil (session en cours ou ≤ 45 j) :
+  // un journal muet n'affiche pas son dernier vieil article.
+  for (const item of require('./session-freshness-lib').filterFreshItems(news || [])) {
     if (!item.source || !item.title || !item.link) continue;
     if (!newsBySource.has(item.source)) newsBySource.set(item.source, []);
     newsBySource.get(item.source).push(item);

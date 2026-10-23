@@ -26,6 +26,8 @@ const {
   filterFreshItems,
   pruneToFreshWindow,
   freshnessWindowStart,
+  sessionCycleWindowStart,
+  isWithinSessionCycleWindow,
 } = sessionFreshness;
 
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
@@ -191,7 +193,7 @@ function applyUnreachableRegistryUpdate(src, {
     Date.parse(src._lastItemDate || '') || 0,
     Date.parse(lastItemDate || '') || 0,
   );
-  const insideWindow = lastFreshMs >= freshnessWindowStart(referenceDate).getTime();
+  const insideWindow = lastFreshMs >= sessionCycleWindowStart(referenceDate).getTime();
   if (cachedFresh || insideWindow) {
     src._status = 'stale';
   } else if (src._failCount >= maxFails) {
@@ -214,7 +216,7 @@ function shouldDropSource({
   const lastRegistry = registryEntry?._lastItemDate;
   if (lastRegistry) {
     const t = Date.parse(lastRegistry);
-    if (Number.isFinite(t) && t >= freshnessWindowStart(referenceDate).getTime()) {
+    if (Number.isFinite(t) && t >= sessionCycleWindowStart(referenceDate).getTime()) {
       return false;
     }
   }
@@ -272,7 +274,7 @@ function classifyFeedFreshness(lastItemMs, referenceDate = new Date()) {
   if (lastItemMs == null || !Number.isFinite(lastItemMs)) {
     return { status: 'stale', lastItemDate: null };
   }
-  const windowStart = freshnessWindowStart(referenceDate).getTime();
+  const windowStart = sessionCycleWindowStart(referenceDate).getTime();
   let status = 'ok';
   if (lastItemMs < windowStart) status = 'dead';
   else if ((referenceDate.getTime() - lastItemMs) / DAY_MS > OK_DAYS) status = 'stale';
@@ -302,6 +304,8 @@ module.exports = {
   FRESHNESS_SESSION_COUNT,
   CONTINGENCY_MAX_SESSIONS_BACK,
   freshnessWindowStart,
+  sessionCycleWindowStart,
+  isWithinSessionCycleWindow,
   freshnessMaxSessionsBack,
   isSeptemberAutumnGrace,
   getCurrentUniversitySessionStart,

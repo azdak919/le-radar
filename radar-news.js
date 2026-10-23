@@ -2000,7 +2000,7 @@ function isArticlePicked(item, picks) {
 
 /**
  * À la une + vedettes — **strictement par date** sur le pool déjà filtré frais.
- * (filterFreshItems a déjà appliqué la fenêtre 3 sessions ; pas de bande
+ * (filterFreshItems a déjà appliqué la fenêtre session en cours / 45 j ; pas de bande
  * intermédiaire qui re-trierait autrement.)
  * - Une = sorted[0] (le plus récent de tout le fil)
  * - Vedettes = sorted[1..n] (même source OK)

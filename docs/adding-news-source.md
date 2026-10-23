@@ -15,7 +15,7 @@ Voir aussi `docs/maintenance.md` pour le pipeline global.
 | Périmètre | Québec — universités et cégeps |
 | Nature | **Média étudiant** : rédaction étudiante indépendante ou journal de campus |
 | Langue | `fr` ou `en` (filtre UI) |
-| Fraîcheur | Publications récentes (le fil global plafonne à ~3 sessions universitaires) |
+| Fraîcheur | Publications récentes (le fil affiche la session en cours ou les 45 derniers jours ; le cycle de vie des sources suit 3 sessions) |
 | Indépendance | Plusieurs journaux par établissement sont acceptés s'ils sont distincts (ex. The Link + The Concordian) |
 
 **Exclus** : portails de communications institutionnelles (ex. `nouvelles.ulaval.ca`,

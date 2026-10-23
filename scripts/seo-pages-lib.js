@@ -300,7 +300,7 @@ const T = {
     /** CTA fil vivant (fenêtre de fraîcheur : session en cours + 2 précédentes). */
     allRecentArticles: 'Voir les articles les plus récents',
     viewArchives: 'Voir les archives',
-    noRecentInWindow: 'Aucun article publié dans la fenêtre de fraîcheur (session universitaire en cours et les deux précédentes).',
+    noRecentInWindow: 'Aucun article publié dans la fenêtre de fraîcheur (session universitaire en cours ou 45 derniers jours).',
     noHeadlines: 'Aucun article récent au moment de la dernière mise à jour.',
     schedule: 'À l’antenne cette semaine',
     scheduleLive: 'À l’antenne',
@@ -478,7 +478,7 @@ const T = {
     readMore: 'Read more →',
     allRecentArticles: 'View the most recent articles',
     viewArchives: 'View the archives',
-    noRecentInWindow: 'No articles published in the freshness window (current university term and the two before it).',
+    noRecentInWindow: 'No articles published in the freshness window (current university term or the last 45 days).',
     noHeadlines: 'No recent articles as of the last update.',
     schedule: 'On air this week',
     scheduleLive: 'On air',
