@@ -42,10 +42,18 @@ Le site se déploie automatiquement à chaque poussée sur `main`. Vérifier ave
 | `android-v1.1.1` | 2026-10-21 | ⏳ dans la recette fdroiddata, pas encore construite ni publiée |
 | `android-v1.2.0` | 2026-10-23 | ⏳ étiquetée (versionCode 5) ; en attente de la détection F-Droid (`^android-v`) |
 | `android-v1.2.1` | 2026-10-23 | ⏳ étiquetée (versionCode 6) ; en attente de la détection F-Droid (`^android-v`) |
+| `android-v1.2.2` | 2026-10-23 | ⏳ étiquetée (versionCode 7) ; en attente de la détection F-Droid (`^android-v`) |
 
 F-Droid construit par lots ; compter quelques jours à une semaine après l'étiquette.
 L'APK embarque son propre code (pas de `server.url`) ; seules les données viennent de
 le-radar.ca en direct.
+
+### Contenu de `android-v1.2.2` (versionCode 7)
+
+Filtres de l'onglet Sports identiques à le-radar.ca/sports/ (`46f80b571`, `1ff84d491`) :
+sport (18), catégorie, secteur, période (Toutes par défaut, + « 7 jours »), recherche,
+choix gardés sur l'appareil, 30 équipes par page. Mât compact hors accueil, fond plein,
+barre radio alignée.
 
 ### Contenu de `android-v1.2.1` (versionCode 6)
 
