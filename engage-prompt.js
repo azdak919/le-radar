@@ -1202,13 +1202,67 @@
     if (focusFirst) focusMenuItem(panel, 0);
   }
 
+  const FDROID_URL = 'https://f-droid.org/packages/ca.leradar.app/';
+
+  function isCapacitorShell() {
+    try {
+      const cap = window.Capacitor;
+      return Boolean(cap && (typeof cap.isNativePlatform === 'function' ? cap.isNativePlatform() : cap.isNative));
+    } catch {
+      return false;
+    }
+  }
+
+  /** Option F-Droid dans le menu « Installer une app » (pas dans l’app Capacitor). */
+  function addFdroidItem(panel) {
+    if (isCapacitorShell() || panel.querySelector('[data-install-fdroid]')) return;
+    const android = /Android/i.test(navigator.userAgent || '');
+    const a = document.createElement('a');
+    a.className = 'install-menu__item install-menu__fdroid' + (android ? ' is-android' : '');
+    a.href = FDROID_URL;
+    a.rel = 'noopener';
+    a.target = '_blank';
+    a.setAttribute('role', 'menuitem');
+    a.tabIndex = -1;
+    a.dataset.installFdroid = '1';
+    let src = 'assets/badges/get-it-on-fdroid-fr.png';
+    try { src = new URL(src, SITE_BASE).href; } catch {}
+    a.innerHTML = `<img src="${src}" width="646" height="250" alt="Disponible sur F-Droid" decoding="async" style="display:block;width:auto;height:${android ? 44 : 22}px;max-width:100%;opacity:${android ? 1 : 0.85}">`
+      + (android ? '' : '<span style="font-size:.8em;opacity:.75">App Android</span>');
+    a.style.textDecoration = 'none';
+    const radar = panel.querySelector('[data-install-app="radar"]');
+    if (android && radar) radar.after(a);
+    else panel.appendChild(a);
+  }
+
+  /** Lien F-Droid dans le pied de page, juste après « Installer LE-RADAR.ca ». */
+  function addFdroidFooterLink() {
+    if (isCapacitorShell()) return;
+    document.querySelectorAll('.site-foot__link-btn[data-install-app="radar"]').forEach((btn) => {
+      if (btn.parentNode.querySelector('[data-foot-fdroid]')) return;
+      const sep = document.createElement('span');
+      sep.className = 'site-foot__sep';
+      sep.setAttribute('aria-hidden', 'true');
+      sep.textContent = '·';
+      const a = document.createElement('a');
+      a.href = FDROID_URL;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.dataset.footFdroid = '1';
+      a.textContent = 'Obtenir sur F-Droid';
+      btn.after(sep, a);
+    });
+  }
+
   function wireInstallMenus() {
+    addFdroidFooterLink();
     document.querySelectorAll('[data-install-menu]').forEach((menu) => {
       if (menu.dataset.wired === '1') return;
       menu.dataset.wired = '1';
       const toggle = menu.querySelector('[data-install-toggle]');
       const panel = menu.querySelector('[data-install-panel]');
       if (!toggle || !panel) return;
+      addFdroidItem(panel);
 
       toggle.addEventListener('click', (e) => {
         e.preventDefault();
