@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-23T18:29:29.122Z",
+  "updated": "2026-10-23T18:38:29.906Z",
   "total": 168,
   "withImage": 150,
   "withCredit": 150,
@@ -7,9 +7,9 @@
   "pending": 38,
   "missingHero": 0,
   "ok": false,
-  "checked": 60,
-  "updatedCount": 60,
-  "citedNew": 8,
+  "checked": 61,
+  "updatedCount": 61,
+  "citedNew": 9,
   "fallbackNew": 52,
   "samples": [
     {
@@ -32,6 +32,13 @@
       "credit": "Photo : Tan YiYang",
       "cited": true,
       "method": "figcaption-bare"
+    },
+    {
+      "title": "S.O.S. Huîtres menacées",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
     },
     {
       "title": "QUICKSPIN: Remi Wolf — Mud",
@@ -88,13 +95,6 @@
       "credit": "Photo : Université de Sherbrooke par Michel Caron",
       "cited": true,
       "method": "json-ld"
-    },
-    {
-      "title": "Le Grand Prix cyclistes s’amène à Montréal !",
-      "source": "Quartier Libre",
-      "credit": "Photo : Quartier Libre",
-      "cited": false,
-      "method": null
     }
   ]
 }
