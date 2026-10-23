@@ -494,8 +494,6 @@
       const name = String((radio && (radio.name || radio.fullName)) || '').trim();
       const id = slugify((radio && radio.id) || name);
       if (!id || !name) return null;
-      // Flux muet confirmé par le bot : masqué jusqu'au retour du son.
-      if (radio._streamStatus === 'silent') return null;
       return {
         id,
         name,
@@ -505,6 +503,8 @@
         website: safeHttpUrl(radio.website),
         stream: safeHttpUrl(radio.stream),
         slogan: String(radio.slogan || '').trim(),
+        // Flux muet confirmé par le bot : affiché « Hors ligne », revient seul.
+        offline: radio._streamStatus === 'silent',
       };
     }).filter(Boolean);
   }

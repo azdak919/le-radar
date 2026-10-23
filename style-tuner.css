@@ -1320,3 +1320,8 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
     max-width: 1180px;
   }
 }
+
+/* Poste « Hors ligne » : flux muet confirmé par le bot (_streamStatus: silent). */
+#tuner-select option.is-offline { color: #8a8a8a; }
+.tuner.is-station-offline #tuner-now-name,
+#tuner.is-station-offline #tuner-now-name { opacity: .55; filter: grayscale(1); }

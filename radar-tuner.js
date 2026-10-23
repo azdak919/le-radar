@@ -1146,8 +1146,9 @@ function compactDialTitleLine(radio) {
   const inst = isTunerDialMidLayout()
     ? adaptRadarInstitutionLabel(tunerInstitutionLabel(radio.institution || ''))
     : tunerDialInstitutionLabel(radio);
-  if (!name) return inst || '';
-  return inst ? `${name} · ${inst}` : name;
+  const off = isStationOffline(radio) ? ' · Hors ligne' : '';
+  if (!name) return (inst || '') + off;
+  return (inst ? `${name} · ${inst}` : name) + off;
 }
 
 /**
@@ -2505,7 +2506,8 @@ function buildTunerOptions() {
     inGroup.forEach(r => {
       const opt = document.createElement('option');
       opt.value = r.id;
-      opt.textContent = `${r.name} · ${formatInstitutionDisplay(r.institution)}`;
+      opt.textContent = `${r.name} · ${formatInstitutionDisplay(r.institution)}${isStationOffline(r) ? ' — Hors ligne' : ''}`;
+      if (isStationOffline(r)) opt.classList.add('is-offline');
       og.appendChild(opt);
     });
     TUNER_SELECT.appendChild(og);
@@ -2983,6 +2985,11 @@ function selectStation(id, { autoplay = false, openExternal = false, fromSync = 
   if (prevId !== radio.id) {
     cancelLoudnessProbe();
     nowAirCrossfadePending = true;
+  }
+
+  document.getElementById('tuner')?.classList.toggle('is-station-offline', isStationOffline(radio));
+  if (autoplay && isStationOffline(radio) && typeof showToast === 'function') {
+    showToast('Station hors ligne pour le moment');
   }
 
   const playable = getPlayableStream(radio);

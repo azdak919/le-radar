@@ -34,8 +34,10 @@ assert.equal(s.applySilenceSample({ ...base, _streamStatus: 'none' }, b, quiet).
 // clients
 assert.equal(s.isStationSilent(b), true);
 const cat = core.radioCatalog([{ id: 'choq', name: 'CHOQ', stream: 'https://x', _streamStatus: 'silent' }, { id: 'cism', name: 'CISM', stream: 'https://y', _streamStatus: 'working' }]);
-assert.deepEqual(cat.map((r) => r.id), ['cism']);
+assert.deepEqual(cat.map((r) => [r.id, r.offline]), [['choq', true], ['cism', false]]);
 import { readFileSync } from 'node:fs';
-assert.match(readFileSync(new URL('../radar-lifecycle.js', import.meta.url), 'utf8'), /_streamStatus !== 'silent'/);
+assert.match(readFileSync(new URL('../radar-utils.js', import.meta.url), 'utf8'), /function isStationOffline/);
+assert.match(readFileSync(new URL('../radar-tuner.js', import.meta.url), 'utf8'), /Hors ligne/);
+assert.match(readFileSync(new URL('../mobile/app/js/app.js', import.meta.url), 'utf8'), /Station hors ligne pour le moment/);
 assert.match(readFileSync(new URL('../.github/workflows/update-streams.yml', import.meta.url), 'utf8'), /ffmpeg/);
 console.log('stream-silence: ok');

@@ -519,3 +519,8 @@ button, a.wide, .card-actions { scroll-margin-bottom: calc(var(--tab) + var(--pl
   .tabs { width: min(40rem, 100%); margin: 0 auto; border-left: 1px solid var(--rule); border-right: 1px solid var(--rule); }
   .player { left: 50%; right: auto; width: calc(min(40rem, 100%) - 16px); transform: translateX(-50%); }
 }
+
+/* Poste « Hors ligne » (flux muet confirmé par le bot). */
+.badge-offline { margin-left: .5em; padding: .05em .45em; border-radius: 999px; font-size: .75em; background: #8a8a8a33; color: #8a8a8a; }
+#tuner-select option.is-offline { color: #8a8a8a; }
+#tuner.is-station-offline #tuner-now-name { opacity: .55; }

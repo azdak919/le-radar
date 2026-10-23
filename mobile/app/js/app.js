@@ -457,7 +457,7 @@
     let body = '';
     if (section === 'radios') {
       body = `<ul class="plain">${state.radios.map((radio) => `<li class="source-row">
-        <a href="#/radio/${esc(radio.id)}"><span class="source-name notranslate">${esc(radio.name)}</span><span class="source-meta article-inst">${esc(radio.institution)}</span></a>
+        <a href="#/radio/${esc(radio.id)}"><span class="source-name notranslate">${esc(radio.name)}</span>${radio.offline ? '<span class="badge-offline">Hors ligne</span>' : ''}<span class="source-meta article-inst">${esc(radio.institution)}</span></a>
         ${radio.stream ? radioToggleHtml(radio, 'Écouter', 'Pause') : ''}
       </li>`).join('')}</ul>`;
     } else {
@@ -668,7 +668,8 @@
       for (const station of state.radios) {
         const option = document.createElement('option');
         option.value = station.id;
-        option.textContent = station.name;
+        option.textContent = station.offline ? `${station.name} — Hors ligne` : station.name;
+        if (station.offline) option.classList.add('is-offline');
         option.className = 'notranslate';
         option.setAttribute('translate', 'no');
         select.append(option);
@@ -687,7 +688,8 @@
       || (select.value && radioById(select.value)) || (active ? radioById(active) : null);
     if (ticking) scheduleTunerTicker();
     else stopTunerTicker();
-    if (name) name.textContent = radio ? radio.name : uiText('Syntoniser un poste');
+    if (name) name.textContent = radio ? (radio.offline ? `${radio.name} · ${uiText('Hors ligne')}` : radio.name) : uiText('Syntoniser un poste');
+    tuner.classList.toggle('is-station-offline', !!(radio && radio.offline));
     if (sub) {
       if (radio && player.now && player.id === radio.id) sub.textContent = player.now;
       else if (radio && radio.institution) sub.textContent = radio.institution;
@@ -777,6 +779,10 @@
   function playRadio(id) {
     const radio = radioById(id);
     if (!radio || !radio.stream) return;
+    if (radio.offline) {
+      const sub = document.getElementById('tuner-now-sub');
+      if (sub) sub.textContent = 'Station hors ligne pour le moment';
+    }
     const native = radioNative();
     if (native) {
       // Couper tout <audio> résiduel : une seule source de son.

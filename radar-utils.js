@@ -69,6 +69,11 @@ function getPlayableStream(radio) {
   return `${PROXY_BASE}/?url=${encodeURIComponent(url)}`;
 }
 
+/** Flux muet confirmé par le bot (2 contrôles) : affiché « Hors ligne », revient seul. */
+function isStationOffline(radio) {
+  return radio?._streamStatus === 'silent';
+}
+
 function getListenUrl(radio) {
   return radio?.listenUrl || radio?.website || null;
 }
