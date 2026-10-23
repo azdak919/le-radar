@@ -102,3 +102,14 @@ test('clubs QC : places, classement, pas de hors-province', () => {
   assert.ok(con.results.some((game) => game.opponent.includes('CAN/AMs') && game.scoreFor === 6));
   assert.equal(con.results.some((game) => /Régionale Québec/.test(game.opponent) && game.scoreFor), false);
 });
+
+test('régate terminée sans scores publiés : reste visible « résultats à venir »', () => {
+  const scoresNoQr = SCORES.replace(/,Quebec Regionals \(October 10-11\),/, ',,').replace(/,,,,1,9\.23,|,,,,2,8\.46,|,,,,3,7\.69,/g, '');
+  const { teams } = buildCicsaQcTeams(scoresNoQr, SCHEDULE, {
+    seasonStartYear: 2026, seasonLabel: '2026-2027', clubs: CLUBS, today: '2026-10-12',
+  });
+  const laval = teams['sailing:universitaire:ulaval'];
+  assert.ok(laval.nextGame, 'Laval garde une entrée');
+  assert.equal(laval.nextGame.awaitingResults, true);
+  assert.match(laval.nextGame.opponentEn, /Quebec Regionals/);
+});

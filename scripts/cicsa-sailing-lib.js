@@ -422,6 +422,11 @@ function resultEntry(event, boatRow, club, urls) {
   return entry;
 }
 
+const AWAIT_RESULTS_DAYS = 14;
+function daysBetween(a, b) {
+  return Math.round((Date.parse(`${b}T00:00:00Z`) - Date.parse(`${a}T00:00:00Z`)) / 86400000);
+}
+
 function nextEntry(event, club, urls) {
   const fr = eventFr(event.name);
   const boat = event.boat || '';
@@ -512,7 +517,10 @@ function buildCicsaQcTeams(scoresCsv, scheduleCsv, options = {}) {
   }
 
   for (const event of schedule) {
-    if (event.end < today) continue;
+    // Régate terminée mais feuille de scores pas encore à jour : la garder
+    // visible (« résultats à venir ») au lieu de la faire disparaître.
+    const awaiting = event.end < today;
+    if (awaiting && daysBetween(event.end, today) > AWAIT_RESULTS_DAYS) continue;
     const scored = events.find((item) => fold(item.name) === fold(event.name));
     const primaries = event.qc.filter((boat) => !boat.boat);
     const boats = primaries.length ? primaries : event.qc;
@@ -526,11 +534,20 @@ function buildCicsaQcTeams(scoresCsv, scheduleCsv, options = {}) {
       if (already) continue;
       ensure(boat.registryId);
       const date = event.start >= today ? event.start : today;
-      upcoming[boat.registryId].push(nextEntry(
+      const next = nextEntry(
         { ...event, date, boat: '' },
         clubs[boat.registryId] || boat,
         urls,
-      ));
+      );
+      if (awaiting) {
+        next.awaitingResults = true;
+        next.eventEnd = event.end;
+        next.opponent += ' · résultats à venir';
+        next.opponentEn += ' · results pending';
+        next.competition += ' · résultats à venir';
+        next.url = urls.results;
+      }
+      upcoming[boat.registryId].push(next);
     }
   }
 
