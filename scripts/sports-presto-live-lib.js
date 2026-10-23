@@ -283,11 +283,12 @@ function parseLiveStatus(statusText, sport) {
     if (/^so$/i.test(which)) return { n: (PERIOD_COUNT[sport] || 0) + 1, label: 'Tirs de barrage' };
     const n = ordinalNumber(which);
     if (n && clock && sport === 'soccer') {
-      // PrestoSports soccer : horloge à rebours dans la demie (45:00 → 0:00).
+      // PrestoSports soccer : horloge MONTANTE dans la demie (0:00 → 45:00).
+      // Observé 23 oct. 2026 : « 1st half - 30:44 » puis 31:17 75 s plus tard.
       // On affiche la minute jouée (ex. « 2e mi-temps · 67e min »).
       const [mm, ss] = clock.split(':').map(Number);
-      const left = mm * 60 + ss;
-      const played = Math.max(0, 45 * 60 - left);
+      const played = mm * 60 + ss;
+      const left = Math.max(0, 45 * 60 - played);
       const minute = 45 * (n - 1) + Math.min(45, Math.floor(played / 60) + 1);
       return { n, clockLeft: left, label: `${frOrdinal(n, noun.fem)} ${noun.word} · ${minute}e min` };
     }

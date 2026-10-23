@@ -116,7 +116,7 @@ test('période / horloge en français', () => {
   assert.equal(p('2nd - 15:14', 'hockey'), '2e période 15:14');
   assert.equal(p('Start of 2nd', 'hockey'), 'Début de la 2e période');
   assert.equal(p('End of 1st', 'basketball'), 'Fin du 1er quart');
-  assert.equal(p('1st half - 09:54', 'soccer'), '1re mi-temps · 36e min');
+  assert.equal(p('1st half - 09:54', 'soccer'), '1re mi-temps · 10e min');
   assert.equal(p('Halftime', 'soccer'), 'Mi-temps');
   assert.equal(p('OT - 03:00', 'hockey'), 'Prolongation 3:00');
   assert.equal(p('25-18,23-22', 'volleyball'), '2e manche 23–22');
@@ -312,19 +312,22 @@ test('WAF direct → repli relais Cloudflare (workers/presto-cache)', async () =
 
 test('horloge : avancement croissant, jamais de recul à l’écran', () => {
   const p = (s, sp = 'soccer') => Presto.liveProgress(s, sp);
-  assert.ok(p('2nd half - 45:00') < p('2nd half - 22:51'));
-  assert.ok(p('2nd half - 22:51') < p('2nd half - 15:38'));
-  assert.ok(p('1st half - 01:00') < p('Halftime'));
+  // Horloge soccer montante (0:00 → 45:00), observée le 23 oct. 2026.
+  assert.ok(p('2nd half - 00:30') < p('2nd half - 22:51'));
+  assert.ok(p('2nd half - 22:51') < p('2nd half - 29:22'));
+  assert.ok(p('1st half - 30:44') < p('1st half - 31:17'));
+  assert.ok(p('1st half - 44:00') < p('Halftime'));
   assert.ok(p('Halftime') < p('Start of 2nd'));
   assert.ok(p('3rd - 05:00', 'hockey') < p('End of 3rd', 'hockey'));
-  assert.equal(Presto.parseLiveStatus('2nd half - 15:38', 'soccer').label, '2e mi-temps · 75e min');
+  assert.equal(Presto.parseLiveStatus('2nd half - 29:22', 'soccer').label, '2e mi-temps · 75e min');
+  assert.equal(Presto.parseLiveStatus('1st half - 30:44', 'soccer').label, '1re mi-temps · 31e min');
   const mk = (prog, period) => ({ t: { nextGames: [{ gameId: 'g', live: true, liveFeed: 'usports', liveProgress: prog, period, scoreFor: 1 }] } });
-  const prev = mk(p('2nd half - 15:38'), '2e mi-temps · 75e min');
-  const cur = mk(p('2nd half - 45:00'), '2e mi-temps · 46e min');
+  const prev = mk(p('2nd half - 29:22'), '2e mi-temps · 75e min');
+  const cur = mk(p('2nd half - 00:30'), '2e mi-temps · 46e min');
   cur.t.nextGames[0].scoreFor = 2;
   assert.equal(Presto.enforceMonotonicClock(cur, prev), 1);
   assert.equal(cur.t.nextGames[0].period, '2e mi-temps · 75e min');
   assert.equal(cur.t.nextGames[0].scoreFor, 2);
-  const fwd = mk(p('2nd half - 05:00'), '2e mi-temps · 86e min');
+  const fwd = mk(p('2nd half - 40:00'), '2e mi-temps · 86e min');
   assert.equal(Presto.enforceMonotonicClock(fwd, prev), 0);
 });
