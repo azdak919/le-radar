@@ -1,7 +1,7 @@
 # LE-RADAR.ca
 
 > Annuaire et agrégateur des médias étudiants des cégeps et universités du
-> Québec (Canada) : 17 journaux étudiants et 6 radios de campus,
+> Québec (Canada) : 19 journaux étudiants et 6 radios de campus,
 > réunis sur une seule page. Le fil est mis à jour plusieurs fois par jour.
 
 ## Ce qu'est LE-RADAR.ca
@@ -32,7 +32,7 @@ traduction facultatif est offert dans l'interface.
 - CFAK 88,3 FM — Université de Sherbrooke — Sherbrooke : https://le-radar.ca/radios/cfak/ (site officiel : https://www.cfak.ca/)
 - CHOQ.ca — Université du Québec à Montréal — Montréal : https://le-radar.ca/radios/choq/ (site officiel : https://www.choq.ca/)
 
-## Journaux étudiants recensés (17)
+## Journaux étudiants recensés (19)
 
 - Quartier Libre — Université de Montréal — Montréal : https://le-radar.ca/journaux/quartier-libre/ (site officiel : https://quartierlibre.ca/)
 - Montréal Campus — Université du Québec à Montréal — Montréal : https://le-radar.ca/journaux/montreal-campus/ (site officiel : https://montrealcampus.ca/)
@@ -51,6 +51,8 @@ traduction facultatif est offert dans l'interface.
 - L'Oisif — Cégep de Chicoutimi — Saguenay–Lac-Saint-Jean : https://le-radar.ca/journaux/loisif/ (site officiel : https://cchic.ca/categorie/journal-etudiant-loisif/)
 - La Gifle — Collège Lionel-Groulx — Laurentides : https://le-radar.ca/journaux/la-gifle/ (site officiel : https://lagifleblog.wordpress.com/)
 - Le Trait d'Union — Collège de Maisonneuve — Montréal : https://le-radar.ca/journaux/le-trait-dunion/ (site officiel : https://letdu.org/)
+- The Concordian — Concordia University — Montréal : https://le-radar.ca/journaux/the-concordian/ (site officiel : https://theconcordian.com/)
+- Impact Campus — Université Laval — Capitale-Nationale : https://le-radar.ca/journaux/impact-campus/ (site officiel : https://impactcampus.ca/)
 
 ## Établissements couverts (15)
 
@@ -60,7 +62,7 @@ traduction facultatif est offert dans l'interface.
 - Cégep du Vieux Montréal : https://le-radar.ca/etablissements/cegep-du-vieux-montreal/ (1 journal, 0 radio)
 - Collège de Maisonneuve : https://le-radar.ca/etablissements/college-de-maisonneuve/ (1 journal, 0 radio)
 - Collège Lionel-Groulx : https://le-radar.ca/etablissements/college-lionel-groulx/ (1 journal, 0 radio)
-- Concordia University : https://le-radar.ca/etablissements/concordia-university/ (1 journal, 1 radio)
+- Concordia University : https://le-radar.ca/etablissements/concordia-university/ (2 journaux, 1 radio)
 - Dawson College : https://le-radar.ca/etablissements/dawson-college/ (1 journal, 0 radio)
 - McGill University : https://le-radar.ca/etablissements/mcgill-university/ (3 journaux, 1 radio)
 - Polytechnique Montréal : https://le-radar.ca/etablissements/polytechnique-montreal/ (1 journal, 0 radio)
@@ -68,7 +70,7 @@ traduction facultatif est offert dans l'interface.
 - Université de Sherbrooke : https://le-radar.ca/etablissements/universite-de-sherbrooke/ (1 journal, 1 radio)
 - Université du Québec à Montréal : https://le-radar.ca/etablissements/universite-du-quebec-a-montreal/ (1 journal, 1 radio)
 - Université du Québec à Trois-Rivières : https://le-radar.ca/etablissements/universite-du-quebec-a-trois-rivieres/ (1 journal, 0 radio)
-- Université Laval : https://le-radar.ca/etablissements/universite-laval/ (1 journal, 1 radio)
+- Université Laval : https://le-radar.ca/etablissements/universite-laval/ (2 journaux, 1 radio)
 
 ## Pages de référence
 
@@ -82,7 +84,7 @@ traduction facultatif est offert dans l'interface.
 
 ## Données ouvertes (sans JavaScript, directement analysables)
 
-- https://le-radar.ca/news.json : fil agrégé complet (178 articles), avec source, établissement, région, langue, autrice ou auteur, date et lien d'origine
+- https://le-radar.ca/news.json : fil agrégé complet (194 articles), avec source, établissement, région, langue, autrice ou auteur, date et lien d'origine
 - https://le-radar.ca/radios.json : registre des radios étudiantes (fréquence, établissement, ville, flux)
 - https://le-radar.ca/news-sources.json : registre des journaux étudiants suivis
 - https://le-radar.ca/institutions.json : catalogue des établissements d'enseignement supérieur du Québec
@@ -97,4 +99,4 @@ Pour citer le site comme source : « LE-RADAR.ca, agrégateur des
 médias étudiants du Québec ». Pour un article précis, citer la publication
 étudiante d'origine, pas LE-RADAR.ca.
 
-Dernière mise à jour du fil : 2026-10-23T05:03:07.619Z
+Dernière mise à jour du fil : 2026-10-23T06:21:22.539Z

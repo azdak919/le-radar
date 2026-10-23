@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="fr-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="Impact Campus, le journal étudiant de l’Université Laval. Les derniers articles, avec un lien vers chaque texte original." />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self' https: blob:; connect-src 'self' blob: https://s1.rseq.ca https://le-radar-weather.azdak.workers.dev https://le-radar-nowplaying.azdak.workers.dev https://le-radar-bg-rotation.azdak.workers.dev https://le-radar-translate.azdak.workers.dev https://cloud.umami.is https://gateway.umami.is https://clients5.google.com https://clients4.google.com https://translate.googleapis.com https://api.mymemory.translated.net; frame-src 'self' https://chyz.ca https://cism893.ca https://ckut.ca https://www.cjlo.com https://www.cfak.ca https://www.choq.ca; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <title>Impact Campus — journal étudiant de l’Université Laval | LE-RADAR.ca</title>
+    <link rel="canonical" href="https://le-radar.ca/journaux/impact-campus/" />
+    <link rel="alternate" hreflang="fr-CA" href="https://le-radar.ca/journaux/impact-campus/" />
+    <link rel="alternate" hreflang="en-CA" href="https://le-radar.ca/en/newspapers/impact-campus/" />
+    <!-- x-default → français : c'est la langue principale du projet. -->
+    <link rel="alternate" hreflang="x-default" href="https://le-radar.ca/journaux/impact-campus/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="LE-RADAR.ca" />
+    <meta property="og:locale" content="fr_CA" />
+    <meta property="og:url" content="https://le-radar.ca/journaux/impact-campus/" />
+    <meta property="og:title" content="Impact Campus — journal étudiant de l’Université Laval | LE-RADAR.ca" />
+    <meta property="og:description" content="Impact Campus, le journal étudiant de l’Université Laval. Les derniers articles, avec un lien vers chaque texte original." />
+    <meta property="og:image" content="https://le-radar.ca/assets/og-cover.png?v=3" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://le-radar.ca/assets/og-cover.png?v=3" />
+
+    <link rel="icon" href="../../assets/icon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="../../assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../../assets/icon-192.png" />
+    <link rel="manifest" href="../../manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="../../seo-page-theme.js"></script>
+    <link rel="stylesheet" href="../../style-masthead.css" />
+    <link rel="stylesheet" href="../../style.css" />
+    <link rel="stylesheet" href="../../style-sports-strip.css" />
+    <link rel="stylesheet" href="../../style-masthead-chrome.css" />
+    <link rel="stylesheet" href="../../style-tuner.css" />
+    <link rel="stylesheet" href="../../style-feed.css" />
+    <link rel="stylesheet" href="../../style-chrome.css" />
+    <link rel="stylesheet" href="../../seo-pages.css" />
+    <link rel="stylesheet" href="../../dev/midwidth-preview.css?v=wide-auto-e102" />
+    <link rel="stylesheet" href="../../dev/wide-desktop-preview.css?v=wide-auto-e102" />
+    <script src="../../dev/midwidth-preview.js?v=wide-auto-e102"></script>
+    <script src="../../dev/wide-desktop-preview.js?v=wide-auto-e102"></script>
+    <!--
+      CSS critique du synthé bureau : réserve « À l'antenne » + volume compact
+      dès le premier paint (avant le CSS mis en cache / le JS async).
+    -->
+    <style>
+      @media (min-width: 1100px) {
+        .tuner-inner {
+          display: grid !important;
+          grid-template-columns: minmax(0, 1.15fr) minmax(300px, 370px) !important;
+          gap: 0 !important;
+          align-items: center !important;
+          max-width: 1180px;
+        }
+        .tuner-controls { grid-column: 1; min-width: 0; }
+        .tuner-actions { margin-left: 0 !important; flex-shrink: 0; }
+        .tuner-nowair {
+          grid-column: 2;
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: flex-start !important;
+          gap: 10px;
+          width: 100% !important;
+          min-width: 0;
+          padding-left: 20px;
+          border-left: none !important;
+          opacity: 1 !important;
+          pointer-events: auto !important;
+          box-sizing: border-box;
+        }
+        .tuner-nowair-body {
+          flex: 1 1 auto !important;
+          min-width: 0 !important;
+          opacity: 1 !important;
+        }
+        .tuner-vol {
+          flex: 0 0 auto !important;
+          max-width: 168px !important;
+          min-width: 0 !important;
+        }
+        .tuner-vol-slot {
+          display: flex !important;
+          align-items: center;
+          max-width: 120px !important;
+        }
+        .tuner-vol-track {
+          width: 112px !important;
+          max-width: 112px !important;
+          min-width: 96px !important;
+          flex: 0 0 112px !important;
+        }
+      }
+    </style>
+
+    <script src="../../nav-shell.js" defer></script>
+    <script src="../../cast.js" defer></script>
+    <script src="../../mobile-playback.js" defer></script>
+    <script src="../../player-sync.js" defer></script>
+    <!-- season-lib.js avant la banque : sans lui le filtre saisonnier rend le
+         pool tel quel, et une photo d'hiver peut sortir en août. -->
+    <script src="../../scripts/season-lib.js" defer></script>
+    <script src="../../bg-rotation-lib.js" defer></script>
+    <script src="../../photo-bank-data.js" defer></script>
+    <script src="../../quebec-backgrounds-data.js" defer></script>
+    <script src="../../quebec-university-backgrounds-data.js" defer></script>
+    <script src="../../scripts/campus-fallback-lib.js" defer></script>
+    <script src="../../scripts/media-channels-lib.js" defer></script>
+    <script src="../../scripts/media-follow-store.js" defer></script>
+    <script src="../../scripts/media-follow-ui.js" defer></script>
+    <script src="../../quebec-nations-backgrounds-data.js" defer></script>
+    <script src="../../quebec-favorites-backgrounds-data.js" defer></script>
+    <script src="../../quebec-backgrounds.js" defer></script>
+    <script src="../../institution-acronyms-data.js" defer></script>
+    <script src="../../weather-cities-data.js" defer></script>
+    <script src="../../radar-utils.js" defer></script>
+    <script src="../../radar-state.js" defer></script>
+    <script src="../../radar-weather.js" defer></script>
+    <script src="../../scripts/session-freshness-lib.js" defer></script>
+    <script src="../../scripts/news-housekeeping-lib.js" defer></script>
+    <script src="../../scripts/sports-freshness-lib.js" defer></script>
+    <script src="../../radar-sports-cta.js" defer></script>
+    <script src="../../radar-tuner.js" defer></script>
+    <script src="../../scripts/article-card-lib.js" defer></script>
+    <script src="../../radar-news.js" defer></script>
+    <script src="../../radar-lifecycle.js" defer></script>
+    <script src="../../app.js" defer></script>
+    <script src="../../engage-prompt.js" defer></script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Impact Campus","url":"https://impactcampus.ca/","parentOrganization":{"@type":"CollegeOrUniversity","name":"Université Laval"},"inLanguage":"fr","sameAs":["https://impactcampus.ca/","https://www.instagram.com/impact_campus_ul/","https://facebook.com/impactcampus"],"subjectOf":{"@type":"ItemList","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/","name":"Retour sur le festival d’arts littéraires Québec en toutes lettres"},{"@type":"ListItem","position":2,"url":"https://impactcampus.ca/arts-et-culture/chronique-glass-house-la-place-de-lia-dans-lart-visuel/","name":"Chronique] Glass House : la place de l’IA dans l’art visuel"},{"@type":"ListItem","position":3,"url":"https://impactcampus.ca/arts-et-culture/retour-sur-la-nature-des-choses-de-renee-forest/","name":"Retour sur La nature des choses de Renée Forest"},{"@type":"ListItem","position":4,"url":"https://impactcampus.ca/arts-et-culture/hantee-le-nouveau-film-jeunesse-dindia-desjardins/","name":"Hantée : Le nouveau film jeunesse d’India Desjardins"},{"@type":"ListItem","position":5,"url":"https://impactcampus.ca/arts-et-culture/pauline-julien-femme-pays-ode-a-une-femme-libre/","name":"Pauline Julien : femme pays, ode à une femme libre"},{"@type":"ListItem","position":6,"url":"https://impactcampus.ca/arts-et-culture/nos-suggestions-de-films-automnals/","name":"Nos suggestions de films automnals"},{"@type":"ListItem","position":7,"url":"https://impactcampus.ca/sciences-et-technologies/chronique-mamu-ensemble/","name":"Chronique] Mamu – Ensemble"},{"@type":"ListItem","position":8,"url":"https://impactcampus.ca/actualites/partager-la-culture-et-les-savoirs-autochtones-sur-le-campus/","name":"Partager la culture et les savoirs autochtones sur le campus"},{"@type":"ListItem","position":9,"url":"https://impactcampus.ca/arts-et-culture/la-television-a-lere-metoo-danne-sophie-gravel-lancement-a-la-liberte/","name":"La Télévision à l’ère #Me Too d’Anne-Sophie Gravel | Lancement à La Liberté"},{"@type":"ListItem","position":10,"url":"https://impactcampus.ca/actualites/midis-conferences-sur-les-reseaux-transnationaux/","name":"Midis-conférences sur les réseaux transnationaux"}]}}</script>
+  </head>
+  <body>
+    <header class="masthead">
+      <!-- Fond photo (banque du Québec) — même bloc que l'accueil : la couche,
+           le voile, le crédit et le bouton de rotation. Sans lui, ces pages
+           affichaient un mât nu alors que leur CSP whiteliste déjà le worker
+           de rotation : la chrome était prévue pour l'avoir, elle ne l'avait
+           jamais reçue. -->
+      <div id="bg-photo-layer" aria-hidden="true"></div>
+      <div class="bg-photo-scrim" aria-hidden="true"></div>
+      <div class="bg-photo-credit" id="bg-photo-credit"></div>
+      <div id="masthead-shuffle-slot" class="masthead-shuffle-slot">
+        <button id="masthead-bg-shuffle" class="masthead-icon masthead-bg-shuffle" type="button" aria-label="Changer la photo du mât" title="Changer la photo du mât">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H9a5 5 0 0 0-5 5v1"/><path d="m8 21-4-4 4-4"/><path d="M4 17h11a5 5 0 0 0 5-5v-1"/></svg>
+        </button>
+      </div>
+      <div class="masthead-inner">
+        <div class="masthead-top">
+          <!-- Date et heure hors du moteur de traduction : ce sont des données,
+               formatées par Intl dans la langue active (voir mastheadLocale dans
+               app.js). Traduites mot à mot, elles revenaient en « THURSDAY
+               AUGUST 6, 20 » — mauvaise casse et longueur non mesurée. -->
+          <span class="masthead-date notranslate" translate="no">
+            <span id="today-date"></span>
+            <time id="today-time" class="masthead-time" aria-label="Heure actuelle"></time>
+          </span>
+          <div id="masthead-weather" class="masthead-weather hidden" aria-label="Météo du Québec" aria-live="polite">
+            <span class="masthead-weather__board" aria-label="Conditions actuelles"></span>
+          </div>
+          <div class="masthead-actions">
+            <a href="../../" class="masthead-icon masthead-home" data-home-nav title="Accueil" aria-label="Accueil — LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg></a>
+            <a href="../../feeds.html" class="masthead-icon masthead-rss" title="Flux RSS" aria-label="S’abonner au flux RSS de LE-RADAR.ca"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83C19.56 12.06 12.94 5.44 4 4.44z"/><path d="M4 10.11v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.46-4.42-9.9-9.9-9.9z"/></svg></a>
+            <a href="../../pomo/" class="masthead-icon masthead-pomo" title="Pomodoro — minuteur focus" aria-label="Pomodoro — minuteur focus"><img class="app-emoji" src="../../assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+            <a href="../../solitaire/" class="masthead-icon masthead-solitaire" title="Solitaire" aria-label="Solitaire"><img class="app-emoji" src="../../assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+            <a href="../../sports/" class="masthead-icon masthead-sports" title="Sports — scores collégiaux et universitaires" aria-label="Sports — scores collégiaux et universitaires"><img class="app-emoji" src="../../assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true"></a>
+            <a href="https://www.buymeacoffee.com/azdak" class="masthead-icon masthead-coffee" title="Offrir un café" aria-label="Offrir un café — Buy me a coffee" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path fill="none" d="M18 8h1a4 4 0 0 1 0 8h-1"/><path fill="none" d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line fill="none" x1="6" y1="1" x2="6" y2="4"/><line fill="none" x1="10" y1="1" x2="10" y2="4"/><line fill="none" x1="14" y1="1" x2="14" y2="4"/></svg></a>
+            <div class="install-menu" data-install-menu>
+        <button type="button" class="masthead-icon install-menu__toggle" data-install-toggle aria-haspopup="menu" aria-expanded="false" aria-controls="install-menu-panel" title="Installer une app" aria-label="Installer une app — LE-RADAR, Pomodoro, Solitaire, Sports Étudiants"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></button>
+        <div id="install-menu-panel" class="install-menu__panel" data-install-panel role="menu" aria-labelledby="install-menu-panel-title" hidden>
+          <div class="install-menu__title" id="install-menu-panel-title">Installer une app</div>
+          <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="radar">
+            <img class="app-emoji" src="../../assets/emoji/satellite.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+            <span>LE-RADAR.ca</span>
+          </button>
+          <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="pomo">
+            <img class="app-emoji" src="../../assets/emoji/tomato.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+            <span>Pomodoro</span>
+          </button>
+          <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="solitaire">
+            <img class="app-emoji" src="../../assets/emoji/playing-cards.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+            <span>Solitaire</span>
+          </button>
+          <button type="button" class="install-menu__item" role="menuitem" tabindex="-1" data-install-app="sports">
+            <img class="app-emoji" src="../../assets/emoji/trophy.png" width="16" height="16" alt="" decoding="async" aria-hidden="true">
+            <span>Sports Étudiants</span>
+          </button>
+        </div>
+      </div>
+            <button id="theme-toggle" class="masthead-icon theme-toggle" type="button" aria-label="Changer de thème" title="Mode clair / sombre"><svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><svg class="ico-moon hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+          </div>
+        </div>
+        <div class="masthead-brand">
+          <a href="../../" class="wordmark">
+            <span class="wordmark-mark"><img class="wordmark-logo" src="../../assets/icon.svg" width="48" height="48" alt="" aria-hidden="true"><span class="wordmark-brand notranslate" translate="no">LE-RADAR.ca</span></span>
+            <span class="wordmark-full"><span class="wordmark-full__lead">Journaux, radios et sports étudiants du Québec,</span> <span class="wordmark-full__tag">réunis au même endroit</span></span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div id="tuner" class="tuner">
+      <div class="tuner-inner">
+        <div class="tuner-controls">
+          <div class="tuner-label">
+            <span id="tuner-onair" class="tuner-onair">EN ONDES</span>
+          </div>
+
+          <button id="tuner-prev" class="tuner-step" title="Poste précédent" aria-label="Poste précédent">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+          </button>
+
+          <div class="tuner-dial">
+            <label for="tuner-select" class="sr-only">Choisir un poste</label>
+            <select id="tuner-select" class="tuner-select" aria-label="Choisir un poste"></select>
+            <div class="tuner-now">
+              <span id="tuner-now-name" class="tuner-now-name">Syntoniser un poste</span>
+              <div class="tuner-now-sub-rotate" aria-live="polite">
+                <span id="tuner-now-sub" class="tuner-now-sub is-active">Radios étudiantes en direct</span>
+                <span id="tuner-now-sub-air" class="tuner-now-sub tuner-now-sub--air" aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
+
+          <button id="tuner-next" class="tuner-step" title="Poste suivant" aria-label="Poste suivant">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+          </button>
+
+          <div class="tuner-actions">
+            <button id="tuner-play" class="tuner-play" title="Écouter" aria-label="Écouter">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="ico-play"><path d="M8 5v14l11-7z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" class="ico-pause hidden" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" class="ico-external hidden" aria-hidden="true"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+            </button>
+
+            <button id="tuner-cast" class="tuner-cast tuner-cast--bar hidden" type="button" aria-label="Diffuser sur un appareil" title="Diffuser sur un appareil" aria-pressed="false" hidden>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm0-4v2c4.97 0 9 3.03 9 9h2c0-6.08-4.93-11-11-11zm20-7H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+            </button>
+
+            <button id="tuner-cast-mob" class="tuner-cast tuner-cast--mobile hidden" type="button" aria-label="Diffuser sur un appareil" title="Diffuser sur un appareil" aria-pressed="false" hidden>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm0-4v2c4.97 0 9 3.03 9 9h2c0-6.08-4.93-11-11-11zm20-7H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+            </button>
+
+            <div class="tuner-eq" id="tuner-eq" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </div>
+
+            <div id="tuner-vol" class="tuner-vol">
+              <button id="tuner-vol-toggle" class="tuner-vol-btn" type="button" aria-label="Réglages du volume" aria-pressed="false" aria-expanded="false" aria-controls="tuner-vol-slot" title="Réglages du volume">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="ico-vol" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" class="ico-vol-mute hidden" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm7.59-3.41L9.17 7H3v6h4l5 5v-6.17l2.59 2.59 1.41-1.42L3.83 3 2.41 4.41 7 9v6h4l5 5v-6.17l1.59 1.59 1.41-1.41L12 12.83V4l-1.41 1.59z"/><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v1.99c3.01.89 5.25 3.71 5.25 7.02z"/></svg>
+              </button>
+              <div id="tuner-vol-slot" class="tuner-vol-slot">
+                <div class="tuner-vol-popover">
+                  <button id="tuner-vol-mute" class="tuner-vol-mute-btn" type="button" aria-label="Couper le son" aria-pressed="false" title="Couper le son">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="ico-vol-mute" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm7.59-3.41L9.17 7H3v6h4l5 5v-6.17l2.59 2.59 1.41-1.42L3.83 3 2.41 4.41 7 9v6h4l5 5v-6.17l1.59 1.59 1.41-1.41L12 12.83V4l-1.41 1.59z"/><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v1.99c3.01.89 5.25 3.71 5.25 7.02z"/></svg>
+                  </button>
+                  <div class="tuner-vol-track">
+                    <div class="tuner-vol-slider">
+                      <div class="tuner-vol-rail" aria-hidden="true">
+                        <div class="tuner-vol-zone tuner-vol-zone--boost"></div>
+                        <div class="tuner-vol-fill tuner-vol-fill--base"></div>
+                        <div class="tuner-vol-fill tuner-vol-fill--boost"></div>
+                      </div>
+                      <span class="tuner-vol-tick tuner-vol-tick--100" aria-hidden="true"></span>
+                      <div class="tuner-vol-thumb" aria-hidden="true"></div>
+                      <input id="tuner-volume" type="range" min="0" max="2" step="0.02" value="1" class="tuner-volume" aria-label="Volume — 0 % à gauche, 100 % au centre, 200 % à droite" aria-valuetext="100 %" />
+                    </div>
+                    <div class="tuner-vol-labels">
+                      <span class="tuner-vol-label--min" aria-hidden="true">0 %</span>
+                      <span class="tuner-vol-label--mid" aria-hidden="true">100 %</span>
+                      <span class="tuner-vol-label--max" aria-hidden="true">200 %</span>
+                    </div>
+                  </div>
+                  <button id="tuner-cast-pop" class="tuner-cast tuner-cast--popover hidden" type="button" aria-label="Diffuser sur un appareil" title="Diffuser sur un appareil" aria-pressed="false" hidden>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm0-4v2c4.97 0 9 3.03 9 9h2c0-6.08-4.93-11-11-11zm20-7H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visible dès le premier paint (pas de .hidden) : évite le volume géant
+             pendant le chargement JS. app.js met à jour le contenu ensuite. -->
+        <aside id="tuner-nowair" class="tuner-nowair" aria-live="polite" aria-label="À l'antenne" role="link" tabindex="0" title="Ouvrir l'horaire de la station dans un nouvel onglet">
+          <span class="tuner-nowair-label">À l'antenne</span>
+          <div class="tuner-nowair-body">
+            <p id="tuner-nowair-title" class="tuner-nowair-title">Syntoniser un poste</p>
+            <p id="tuner-nowair-sub" class="tuner-nowair-sub">Les radios étudiantes jouent en direct, 24/7</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Lecteur natif : requis pour la lecture en arrière-plan (écran verrouillé). -->
+    <audio id="radar-player" class="sr-only" preload="none" playsinline webkit-playsinline x-webkit-airplay="allow" aria-hidden="true"></audio>
+
+    <!-- Repli mobile : quand le masthead n'a plus de place, app.js déplace
+         #masthead-weather ici (même carte que sur bureau). -->
+    <div id="masthead-weather-dock" class="masthead-weather-dock"></div>
+
+    <!-- Scoreboard RSEQ / unis QC : sous la radio (mobile + bureau). -->
+    <div id="masthead-sports-strip" class="masthead-sports-strip" hidden aria-label="Résultats sportifs étudiants du Québec" aria-live="polite"></div>
+
+    <main class="wire seo-wire">
+      <nav class="seo-crumbs" aria-label="Fil d’Ariane"><a href="../../">Accueil</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><a href="../../medias/">Les médias étudiants</a><span class="seo-crumbs__sep" aria-hidden="true">›</span><span aria-current="page">Impact Campus</span></nav>
+      <p class="seo-eyebrow">Journaux étudiants</p>
+      <h1 class="seo-title">Impact Campus</h1>
+      <p class="seo-lead">Impact Campus est le journal étudiant de l’Université Laval.</p>
+      <p class="media-follow-row"><button type="button" class="media-follow" data-media-follow data-media-id="impact-campus" data-media-name="Impact Campus" data-follow-lang="fr" data-label-follow="Suivre" data-label-following="Suivi" data-label-follow-named="Suivre {name} dans LE-RADAR" data-label-following-named="Ne plus suivre {name}" aria-pressed="false" aria-label="Suivre Impact Campus dans LE-RADAR" title="Suivre Impact Campus dans LE-RADAR"><span class="media-follow__mark" aria-hidden="true">☆</span><span class="media-follow__label">Suivre</span></button></p>
+      <dl class="seo-facts">
+          <div class="seo-fact"><dt>Établissement</dt><dd><a href="../../etablissements/universite-laval/">Université Laval</a></dd></div>
+          <div class="seo-fact"><dt>Région</dt><dd><a href="https://www.quebec-cite.com/fr" target="_blank" rel="noopener noreferrer" aria-label="Tourisme Capitale-Nationale — site officiel">Capitale-Nationale</a></dd></div>
+          <div class="seo-fact"><dt>Langue</dt><dd>Français</dd></div>
+          <div class="seo-fact"><dt>Site officiel</dt><dd><a href="https://impactcampus.ca/" target="_blank" rel="noopener noreferrer">https://impactcampus.ca/</a></dd></div>
+      </dl>
+      <section class="media-channels">
+        <h2 class="media-channels__title">Disponible sur</h2>
+        <ul class="media-channels__list">
+          <li class="media-channels__item media-channels__item--website"><a href="https://impactcampus.ca/" target="_blank" rel="noopener noreferrer">Site officiel</a></li>
+          <li class="media-channels__item media-channels__item--rss"><a href="https://impactcampus.ca/feed/" target="_blank" rel="noopener noreferrer" title="Flux d’articles, à ouvrir dans un lecteur de nouvelles" aria-label="RSS — Flux d’articles, à ouvrir dans un lecteur de nouvelles">RSS</a></li>
+          <li class="media-channels__item media-channels__item--instagram"><a href="https://www.instagram.com/impact_campus_ul/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li class="media-channels__item media-channels__item--facebook"><a href="https://facebook.com/impactcampus" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+        </ul>
+      </section>
+      <section class="seo-section">
+        <h2>Derniers articles</h2>
+        <p class="seo-headlines__status">Dernier article : 22 octobre 2026 à 16 h 32</p>
+      <ul class="seo-headlines">
+          <li class="seo-headline"><a class="seo-headline__title" href="https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/" target="_blank" rel="noopener noreferrer">Retour sur le festival d’arts littéraires Québec en toutes lettres</a><p class="seo-headline__meta"><time datetime="2026-10-22T20:32:47.000Z">2026-10-22 · 16 h 32</time><span class="seo-headline__by">Par Lou-Ann Valery</span></p><p class="seo-headline__brief">Le festival d’arts littéraires Québec en toutes lettres est de retour pour sa 17e édition du 15 au 25 octobre. Avec une programmation riche en performances multidisciplinaires, spectacles, rencontres et invasions de l’espace public par les banderoles « Ceci n’est pas une pub » <a class="seo-headline__more" href="https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
+          <li class="seo-headline"><a class="seo-headline__title" href="https://impactcampus.ca/arts-et-culture/chronique-glass-house-la-place-de-lia-dans-lart-visuel/" target="_blank" rel="noopener noreferrer">Chronique] Glass House : la place de l’IA dans l’art visuel</a><p class="seo-headline__meta"><time datetime="2026-10-20T17:20:35.000Z">2026-10-20 · 13 h 20</time><span class="seo-headline__by">Par Pierre-Olivier Gingras</span></p><p class="seo-headline__brief">La Bande Vidéo, une galerie d’art médiatique faisant partie du collectif artistique Méduse, basé au centre-ville de Québec, a mis en exposition une nouvelle œuvre de l’artiste pluridisciplinaire français Boris Labbé, du 10 septembre au 11 octobre. Malgré une impression positive de l’œuvre, le contexte derrière sa création soulève quelques questions. <a class="seo-headline__more" href="https://impactcampus.ca/arts-et-culture/chronique-glass-house-la-place-de-lia-dans-lart-visuel/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
+          <li class="seo-headline"><a class="seo-headline__title" href="https://impactcampus.ca/arts-et-culture/retour-sur-la-nature-des-choses-de-renee-forest/" target="_blank" rel="noopener noreferrer">Retour sur La nature des choses de Renée Forest</a><p class="seo-headline__meta"><time datetime="2026-10-16T00:51:38.000Z">2026-10-15 · 20 h 51</time><span class="seo-headline__by">Par Marie Bilodeau Duguay</span></p><p class="seo-headline__brief">Finalement, trois projecteurs à pellicule dotés d’ampoules incandescentes projettent le dernier triptyque. Un marais brumeux d’où émergent nos précédentes alvéoles cylindriques. Deux vers sont obnubilés par de petites sphères orangées. D’autres émergent d’une eau trouble et nous épient. Une lumière dorée enveloppe les algues au sein desquelles ils sont tapis. … <a class="seo-headline__more" href="https://impactcampus.ca/arts-et-culture/retour-sur-la-nature-des-choses-de-renee-forest/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
+          <li class="seo-headline"><a class="seo-headline__title" href="https://impactcampus.ca/arts-et-culture/hantee-le-nouveau-film-jeunesse-dindia-desjardins/" target="_blank" rel="noopener noreferrer">Hantée : Le nouveau film jeunesse d’India Desjardins</a><p class="seo-headline__meta"><time datetime="2026-10-14T21:38:55.000Z">2026-10-14 · 17 h 38</time><span class="seo-headline__by">Par Pierre-Olivier Gingras</span></p><p class="seo-headline__brief">Le réalisateur, Rafaël Ouellet, est notamment connu pour les films Camion et Arsenault et fils pour lesquels il a été nommé au Gala Québec Cinéma. Certain.nes reconnaîtront le nom de la scénariste, India Desjardins, autrice de la série de livres jeunesse Le journal d’Aurélie Laflamme parue en 2006. Hantée est son deuxième scénario de long métrage après 23 décembre. … <a class="seo-headline__more" href="https://impactcampus.ca/arts-et-culture/hantee-le-nouveau-film-jeunesse-dindia-desjardins/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
+          <li class="seo-headline"><a class="seo-headline__title" href="https://impactcampus.ca/arts-et-culture/pauline-julien-femme-pays-ode-a-une-femme-libre/" target="_blank" rel="noopener noreferrer">Pauline Julien : femme pays, ode à une femme libre</a><p class="seo-headline__meta"><time datetime="2026-10-08T12:27:42.000Z">2026-10-08 · 08 h 27</time><span class="seo-headline__by">Par Léa Turgeon</span></p><p class="seo-headline__brief">Passionnée, libre, rebelle, tous autant de qualificatifs pour décrire Pauline Julien. Figure de proue du Québec de la Révolution tranquille, cette grande femme a marqué la nation comme chanteuse tout comme militante féministe et souverainiste. Le film Pauline Julien : femme pays … <a class="seo-headline__more" href="https://impactcampus.ca/arts-et-culture/pauline-julien-femme-pays-ode-a-une-femme-libre/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
+          <li class="seo-headline"><a class="seo-headline__title" href="https://impactcampus.ca/arts-et-culture/nos-suggestions-de-films-automnals/" target="_blank" rel="noopener noreferrer">Nos suggestions de films automnals</a><p class="seo-headline__meta"><time datetime="2026-10-07T14:12:47.000Z">2026-10-07 · 10 h 12</time><span class="seo-headline__by">Par Léann Laquerre</span></p><p class="seo-headline__brief">Les feuilles tombent, le soleil redevient couche-tôt, l’air se rafraîchit et la mi-session nous guette déjà. Pour des moments de pause dédiée au déni ou au repos des esprits, Impact Campus vous a dressé une petite liste de films d’automne, parfois réconfortants, parfois … <a class="seo-headline__more" href="https://impactcampus.ca/arts-et-culture/nos-suggestions-de-films-automnals/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
+          <li class="seo-headline"><a class="seo-headline__title" href="https://impactcampus.ca/sciences-et-technologies/chronique-mamu-ensemble/" target="_blank" rel="noopener noreferrer">Chronique] Mamu – Ensemble</a><p class="seo-headline__meta"><time datetime="2026-10-05T14:06:57.000Z">2026-10-05 · 10 h 06</time><span class="seo-headline__by">Par Marie Tremblay</span></p><p class="seo-headline__brief">En histoire secondaire 4, notre enseignante nous avait parlé de la sombre histoire des pensionnats autochtones. En fait, elle avait laissé les survivant.es nous raconter à travers un documentaire. Elle nous avait prévenu.es que ce serait une écoute difficile et elle avait … <a class="seo-headline__more" href="https://impactcampus.ca/sciences-et-technologies/chronique-mamu-ensemble/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
+          <li class="seo-headline"><a class="seo-headline__title" href="https://impactcampus.ca/actualites/partager-la-culture-et-les-savoirs-autochtones-sur-le-campus/" target="_blank" rel="noopener noreferrer">Partager la culture et les savoirs autochtones sur le campus</a><p class="seo-headline__meta"><time datetime="2026-10-03T19:18:31.000Z">2026-10-03 · 15 h 18</time><span class="seo-headline__by">Par Marie Tremblay</span></p><p class="seo-headline__brief">En septembre 2026, on comptait 675 personnes étudiantes autochtones auto-déclarées à l’Université Laval. Une augmentation de près de 70% par rapport à l’année scolaire 2021 associée aux mesures mises en place, comme le Cercle des premiers peuples et le Bureau des premiers … <a class="seo-headline__more" href="https://impactcampus.ca/actualites/partager-la-culture-et-les-savoirs-autochtones-sur-le-campus/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
+          <li class="seo-headline"><a class="seo-headline__title" href="https://impactcampus.ca/arts-et-culture/la-television-a-lere-metoo-danne-sophie-gravel-lancement-a-la-liberte/" target="_blank" rel="noopener noreferrer">La Télévision à l’ère #Me Too d’Anne-Sophie Gravel | Lancement à La Liberté</a><p class="seo-headline__meta"><time datetime="2026-10-01T16:51:05.000Z">2026-10-01 · 12 h 51</time><span class="seo-headline__by">Par Léann Laquerre</span></p><p class="seo-headline__brief">Ce mercredi 30 septembre, à la librairie La Liberté, se tenait le lancement de premier livre d’Anne-Sophie Gravel, La Télévision à l’ère #MeToo. Merveilleuse occasion pour penser, discuter et réfléchir aux représentations du féminin à l’écran (à travers la révolution streaming … <a class="seo-headline__more" href="https://impactcampus.ca/arts-et-culture/la-television-a-lere-metoo-danne-sophie-gravel-lancement-a-la-liberte/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
+          <li class="seo-headline"><a class="seo-headline__title" href="https://impactcampus.ca/actualites/midis-conferences-sur-les-reseaux-transnationaux/" target="_blank" rel="noopener noreferrer">Midis-conférences sur les réseaux transnationaux</a><p class="seo-headline__meta"><time datetime="2026-09-30T01:00:11.000Z">2026-09-29 · 21 h 00</time><span class="seo-headline__by">Par Marie Tremblay</span></p><p class="seo-headline__brief">Depuis sa mise sur pied en 2025, le centre interdisciplinaire de recherche sur la gouvernance mondiale (CIRGoM) organise des conférences sur l’heure du midi. Cette année, le centre offre cinq conférences dans le cadre de leur série « Gouverner en réseaux ». Par Marie Tremblay, … <a class="seo-headline__more" href="https://impactcampus.ca/actualites/midis-conferences-sur-les-reseaux-transnationaux/" target="_blank" rel="noopener noreferrer">Lire la suite →</a></p></li>
+      </ul>
+        <div class="seo-source-actions">
+          <p class="seo-cta seo-cta--source"><a href="../../?source=Impact%20Campus#news-list" data-news-source="Impact Campus">Voir les articles les plus récents</a></p>
+        </div>
+      </section>
+
+    </main>
+    <footer class="site-foot">
+      <div class="site-foot__brand">
+        <p class="site-foot__wordmark notranslate" translate="no"><img class="site-foot__logo" src="../../assets/icon.svg" width="24" height="24" alt="" aria-hidden="true">LE-RADAR.ca</p>
+        <p class="site-foot__signature notranslate" translate="no" lang="fr">Le Réseau Académique de Découverte et d’Agrégation de Ressources</p>
+      </div>
+      <p>LE-RADAR.ca est un projet indépendant et non officiel. Il n’est affilié à aucun des médias ni des établissements recensés. Les contenus appartiennent à leurs publications d’origine.</p>
+      <nav class="site-foot__links" aria-label="Liens de pied de page">
+        <a href="../../" data-home-nav>Accueil</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../medias/">Médias</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../medias/#journaux">Journaux</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../horaires/">Radios</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../sports/" data-sports-reset target="_blank" rel="noopener noreferrer">Sports</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../archives/">Archives</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../kit-media/">Kit média</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../iframes/">iFrames</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <a href="../../en/newspapers/impact-campus/" hreflang="en-CA">English</a>
+        <span class="site-foot__sep" aria-hidden="true">·</span>
+        <button type="button" class="site-foot__link-btn" data-install-app="radar">Installer LE-RADAR.ca</button>
+      </nav>
+      <p>Ce projet est distribué sous <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" rel="noopener noreferrer license">licence publique générale GNU, version 2</a>.</p>
+      <p class="site-foot__kao"><a href="https://keepandroidopen.org/fr/" target="_blank" rel="noopener noreferrer">Garder Android ouvert</a> <span class="site-foot__kao-hint">Campagne contre la vérification obligatoire des développeurs Google.</span></p>
+      <div class="site-foot__credit">
+        <p class="site-foot__author">
+          Conçu avec <a href="../../easter-egg.html" class="site-foot__heart" aria-label="Ouvrir l’easter egg">♡</a>
+          par <a href="https://www.buymeacoffee.com/azdak" class="site-foot__author-link" target="_blank" rel="noopener noreferrer" title="Offrir un café — Buy me a coffee">Azdak</a>
+          en 2026
+        </p>
+        <p class="site-foot__contact"><a href="mailto:azdak-qc@proton.me" data-contact-channel="email" aria-label="Nous joindre par courriel"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>Nous joindre</a></p>
+        <p class="site-foot__legal">Code libre utilisé conformément aux licences applicables; contenus et médias crédités à leurs auteurs respectifs.</p>
+        <p class="site-foot__bot"><span class="site-foot__bot-ico" aria-hidden="true">🤖</span> Agrégateur automatisé de contenus.</p>
+      </div>
+      <p class="seo-foot-meta">Mise à jour 2026-10-22</p>
+    </footer>
+  </body>
+</html>
