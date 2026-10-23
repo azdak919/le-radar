@@ -18,7 +18,7 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 12;
+const CREDIT_EXTRACTOR_REV = 13;
 
 /** Placeholders WP / comptes génériques (Zone Campus : « Crédit : Journaliste »). */
 const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin)$/i;
@@ -894,7 +894,7 @@ function formatMediaFallbackCredit(item = {}) {
   const en = item.lang === 'en';
   return {
     cited: false,
-    creditLine: en ? `Photo credit: ${media}` : `Crédit photo : ${media}`,
+    creditLine: en ? `Photo: ${media}` : `Photo : ${media}`,
     creator: '',
     creditUrl: String(item.link || '').trim(),
     from: 'media',
@@ -953,10 +953,56 @@ function resolveSourcePhotoCredit(item = {}, html = '') {
   return formatMediaFallbackCredit(item);
 }
 
+/**
+ * Légende WordPress de l'image vedette (texte réel saisi par le média) → crédit.
+ * « Photo par Marie Tremblay » → Marie Tremblay ;
+ * « Glass House (partie 5, capture), Boris Labbé, 2024. » (crédit d'œuvre) → légende entière.
+ * Les légendes purement descriptives sont ignorées. Aucune OCR.
+ */
+function creditFromWpMediaCaption(captionHtml = '', lang = 'fr') {
+  const text = decodeEntities(String(captionHtml || '').replace(/<[^>]+>/g, ' '))
+    .replace(/\s+/g, ' ').trim();
+  if (!text || text.length > 200) return null;
+  const en = lang === 'en';
+  const mk = (creator) => {
+    const c = String(creator || '').replace(/[.\s]+$/, '').trim();
+    if (!c || c.length < 2 || isPlaceholderPhotoCredit(c)) return null;
+    return { creditLine: en ? `Photo: ${c}` : `Photo : ${c}`, creator: c, source: 'wp-media-caption' };
+  };
+  const m = text.match(/(?:^|[.;]\s*)(?:photo(?:graphie)?s?|cr[ée]dits?(?:\s+photo)?|photo credit|image)\s*(?:par|by|:|–|-)\s*([^.;]{2,80})\.?\s*$/i);
+  if (m) return mk(m[1]);
+  // Crédit d'œuvre : « Titre, Artiste, 2024 ».
+  if (/^.{1,140},\s*[^,]{2,60},\s*(?:19|20)\d{2}\.?$/.test(text)) return mk(text);
+  return null;
+}
+
+async function fetchWpFeaturedMediaCaption(link = '') {
+  let u;
+  try { u = new URL(link); } catch { return ''; }
+  const slug = u.pathname.split('/').filter(Boolean).pop();
+  if (!slug) return '';
+  const api = `${u.origin}/wp-json/wp/v2/posts?slug=${encodeURIComponent(slug)}&_embed=wp:featuredmedia&_fields=id,_links,_embedded`;
+  try {
+    const raw = await fetchText(api);
+    const posts = JSON.parse(raw || '[]');
+    const media = posts?.[0]?._embedded?.['wp:featuredmedia']?.[0];
+    return String(media?.caption?.rendered || '');
+  } catch { return ''; }
+}
+
 async function fetchSourcePhotoCredit(item) {
   if (!item?.link || !item?.image) return null;
   const html = await fetchText(item.link);
-  return resolveSourcePhotoCredit(item, html);
+  const resolved = resolveSourcePhotoCredit(item, html);
+  if (resolved && resolved.from === 'media') {
+    const cap = await fetchWpFeaturedMediaCaption(item.link);
+    const hit = creditFromWpMediaCaption(cap, item.lang === 'en' ? 'en' : 'fr');
+    if (hit) {
+      return { cited: true, creditLine: hit.creditLine, creator: hit.creator,
+        creditUrl: String(item.link || '').trim(), from: 'article', method: hit.source };
+    }
+  }
+  return resolved;
 }
 
 function applySourcePhotoCredit(item, resolved, { doUpdate = false } = {}) {
@@ -1128,6 +1174,8 @@ module.exports = {
   extractPhotoCreditFromHtml,
   resolveSourcePhotoCredit,
   fetchSourcePhotoCredit,
+  creditFromWpMediaCaption,
+  fetchWpFeaturedMediaCaption,
   applySourcePhotoCredit,
   needsSourceCreditCheck,
   buildPhotoCreditQueue,

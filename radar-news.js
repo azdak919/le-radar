@@ -3728,8 +3728,8 @@ function buildSourcePhotoCreditElement(item = {}) {
     const prefixMatch = credit.match(/^(Photo credit|Crédit photo|Photo)\s*:\s*(.+)$/i);
     const name = (prefixMatch ? prefixMatch[2] : credit).trim() || mediaName || credit;
     const prefix = prefixMatch
-      ? `${prefixMatch[1].replace(/:$/, '')}: `
-      : (en ? 'Photo credit: ' : 'Crédit photo : ');
+      ? (en ? 'Photo: ' : 'Photo : ')
+      : (en ? 'Photo: ' : 'Photo : ');
     cap.appendChild(document.createTextNode(prefix));
     if (url) {
       const a = creditLink(url, name, 'article-media-credit__creator notranslate');
@@ -4016,10 +4016,11 @@ function showArticleImage(article, media, img, kind, item) {
   }
   let cap = null;
   if (kind === 'photo') {
-    // Crédit réel seulement (légende / JSON-LD / « Photo : » de la page).
-    // Pas de crédit générique « Crédit photo : [média] » : mieux vaut rien.
-    if (item?.sourceImageCredit && item.sourceImageCreditFrom !== 'media') {
-      cap = buildSourcePhotoCreditElement(item);
+    // Crédit réel en priorité (légende / JSON-LD / légende WP) ; à défaut,
+    // « Photo : [nom du média] ».
+    if (item?.sourceImageCredit || item?.source) {
+      cap = buildSourcePhotoCreditElement(
+        item.sourceImageCredit ? item : { ...item, sourceImageCredit: String(item.source), sourceImageCreditFrom: 'media' });
     }
   } else if ((kind === 'stock' || kind === 'fallback') && (item?.imageCredit || item?.imageSourceUrl)) {
     cap = buildMediaCreditElement(item);
