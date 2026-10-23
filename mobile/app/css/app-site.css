@@ -178,3 +178,77 @@ body.has-glass .card.card-site {
   }
 }
 
+
+/* ─── Hors accueil : mât compact sur une rangée (logo à gauche, thème à droite),
+   fond plein, sans la photo floue sous le contenu. ─── */
+body:not(.is-home) .masthead,
+body.has-glass:not(.is-home) .masthead {
+  background: var(--bg) !important;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border-bottom: 1px solid var(--rule);
+  min-height: 0;
+}
+body:not(.is-home) .masthead::before,
+body:not(.is-home) .masthead::after { display: none !important; }
+body:not(.is-home) .masthead-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 0;
+  padding: 8px 16px !important;
+}
+body:not(.is-home) .masthead-brand {
+  order: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+body:not(.is-home) .masthead-top {
+  order: 2;
+  flex: none;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0;
+  background: none;
+  box-shadow: none;
+}
+body:not(.is-home) .masthead-top > :not(.masthead-actions) { display: none !important; }
+body:not(.is-home) .masthead-actions { gap: 0; padding: 0; background: none; box-shadow: none; }
+body:not(.is-home) .install-menu { display: none !important; }
+body:not(.is-home) .wordmark,
+body:not(.is-home) .wordmark-mark { margin: 0; padding: 0; background: none !important; box-shadow: none !important; filter: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+body:not(.is-home) .masthead-icon.theme-toggle {
+  position: static;
+  width: 36px;
+  height: 36px;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+body:not(.is-home) .masthead-icon.theme-toggle svg { width: 18px; height: 18px; }
+
+/* Fond plein sous le contenu des onglets (la photo floue reste à l’accueil). */
+body.has-glass:not(.is-home) #app-glass-bg { display: none !important; }
+body:not(.is-home) { background: var(--bg); }
+
+/* Barre radio : pleine largeur, cadran et bouton lecture de même hauteur, centrés. */
+.tuner, .tuner-inner { width: 100%; box-sizing: border-box; }
+.tuner .tuner-inner { align-items: center; }
+.tuner .tuner-dial { align-self: center; height: 44px; }
+.tuner .tuner-play { width: 44px; height: 44px; min-width: 44px; flex: 0 0 44px; align-self: center; margin: 0; }
+body:not(.is-home) .wordmark::before,
+body:not(.is-home) .wordmark::after,
+body:not(.is-home) .masthead-brand::before,
+body:not(.is-home) .masthead-brand::after { display: none !important; content: none !important; }
+body:not(.is-home) .masthead .masthead-icon.theme-toggle {
+  color: var(--ink) !important;
+  background: var(--bg-soft, var(--bg)) !important;
+  border: 1px solid var(--rule) !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+body:not(.is-home) .wordmark-logo { margin-right: 4px; }

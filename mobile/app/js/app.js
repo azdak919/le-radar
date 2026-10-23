@@ -1009,20 +1009,24 @@
      lues dans sports-masthead.json (en ligne sur l’APK, copie embarquée en secours). */
   const SPORTS_LIVE_URL = 'https://le-radar.ca/sports-masthead.json';
   const SPORTS_GLYPHS = [['basket', '🏀'], ['hockey', '🏒'], ['soccer', '⚽'], ['football', '🏈'], ['volley', '🏐'], ['rugby', '🏉'], ['voile', '⛵'], ['sail', '⛵'], ['badminton', '🏸'], ['cross', '🏃'], ['athl', '🏃'], ['natation', '🏊'], ['golf', '⛳'], ['baseball', '⚾'], ['curling', '🥌']];
-  const SPORTS_FILTERS_KEY = 'radar-app-sports-filters';
-  const SPORTS_PERIODS = [['7d', '7 jours'], ['live', 'En direct'], ['week', 'Cette semaine'], ['next-week', 'Semaine prochaine'], ['month', 'Ce mois-ci'], ['session', 'Cette session'], ['all', 'Toutes']];
+  const SPORTS_FILTERS_KEY = 'radar-app-sports-filters-v2';
+  const SPORTS_PERIODS = [['all', 'Toutes'], ['live', 'En direct'], ['7d', '7 jours'], ['week', 'Cette semaine'], ['next-week', 'Semaine prochaine'], ['month', 'Ce mois-ci'], ['session', 'Cette session']];
   const SPORTS_PAGE = 30;
+  const SPORTS_SITE_SPORTS = [['hockey', 'Hockey'], ['football', 'Football'], ['soccer', 'Soccer'], ['basketball', 'Basketball'], ['volleyball', 'Volleyball'], ['rugby', 'Rugby'], ['flag-football', 'Flag-football'], ['soccer-interieur', 'Soccer intérieur'], ['futsal', 'Futsal'], ['baseball', 'Baseball'], ['badminton', 'Badminton'], ['natation', 'Natation'], ['athletisme', 'Athlétisme'], ['cross-country', 'Cross-country'], ['golf', 'Golf'], ['cheerleading', 'Cheerleading'], ['ultimate', 'Ultimate'], ['sailing', 'Voile']];
+  /* « En direct » : coup d’envoi entre 15 min à venir et 3 h passées (sports-board.js). */
+  const SPORTS_LIVE_LEAD_MS = 15 * 60 * 1000;
+  const SPORTS_LIVE_TAIL_MS = 3 * 3600 * 1000;
   const sportsState = { data: null, loading: false, error: false, limit: SPORTS_PAGE, ...loadSportsFilters() };
 
   /* Même jeu de filtres que le-radar.ca/sports/ (sport, secteur, catégorie, période, recherche),
-     gardé sur l’appareil. Par défaut : 7 jours glissants (passés pour Résultats, à venir pour À venir), 30 équipes par page. */
+     gardé sur l’appareil. Par défaut : toutes les périodes, comme le site, 30 équipes par page (« 7 jours » en option). */
   function loadSportsFilters() {
-    const base = { tab: 'resultats', sport: 'all', sector: 'all', sex: 'all', period: '7d', q: '' };
+    const base = { tab: 'resultats', sport: 'all', sector: 'all', sex: 'all', period: 'all', q: '' };
     try {
       const saved = JSON.parse(localStorage.getItem(SPORTS_FILTERS_KEY) || '{}');
       for (const key of Object.keys(base)) if (typeof saved[key] === 'string') base[key] = saved[key];
     } catch { /* défauts */ }
-    if (!SPORTS_PERIODS.some(([k]) => k === base.period)) base.period = '7d';
+    if (!SPORTS_PERIODS.some(([k]) => k === base.period)) base.period = 'all';
     return base;
   }
 
@@ -1074,7 +1078,9 @@
     if (f.sex !== 'all' && String(team.sex || '').toLowerCase() !== f.sex) return false;
     const q = sportsFold(f.q).trim();
     if (q) {
-      const hay = sportsFold([team.name, team.code, team.fullName, team.sportLabel, team.leagueLabel, team.division].join(' '));
+      const sectorLabel = team.sector === 'universitaire' ? 'universitaire' : team.sector === 'collegial' ? 'collegial' : '';
+      const sexLabel = { F: 'feminin', M: 'masculin', X: 'mixte' }[String(team.sex || '').toUpperCase()] || '';
+      const hay = sportsFold([team.name, team.code, team.fullName, team.sport, team.sportLabel, team.leagueLabel, team.division, sectorLabel, sexLabel].join(' '));
       if (!q.split(/\s+/).every((w) => hay.includes(w))) return false;
     }
     return true;
@@ -1098,15 +1104,17 @@
       row.n += 1;
       counts.set(team.sport, row);
     }
-    const sports = [['all', 'Tous'], ...[...counts.entries()].sort((a, b) => b[1].n - a[1].n).map(([k, v]) => [k, v.label])];
-    const active = ['sport', 'sector', 'sex'].filter((k) => f[k] !== 'all').length + (f.q ? 1 : 0) + (f.period !== '7d' ? 1 : 0);
+    /* Même liste et même ordre que le-radar.ca/sports/ ; un sport absent de la liste du site s’ajoute à la fin. */
+    const sports = [['all', 'Tous'], ...SPORTS_SITE_SPORTS];
+    for (const [k, v] of counts) if (!sports.some(([key]) => key === k)) sports.push([k, v.label]);
+    const active = ['sport', 'sector', 'sex'].filter((k) => f[k] !== 'all').length + (f.q ? 1 : 0) + (f.period !== 'all' ? 1 : 0);
     return `<div class="sports-filters sports-native-filters" role="group" aria-label="Filtres sports">
       <label class="sports-native-search"><span class="sr-only">Chercher une école ou une équipe</span>
-        <input type="search" data-sports-search placeholder="École, équipe, ligue…" value="${esc(f.q)}" autocomplete="off" enterkeyhint="search"></label>
-      ${sportsFilterRow('Période', 'period', SPORTS_PERIODS, f.period)}
+        <input type="search" data-sports-search placeholder="Équipe, institution, sport, code…" value="${esc(f.q)}" autocomplete="off" enterkeyhint="search"></label>
       ${sportsFilterRow('Sport', 'sport', sports, f.sport)}
-      ${sportsFilterRow('Secteur', 'sector', [['all', 'Tous'], ['universitaire', 'Universitaire'], ['collegial', 'Collégial']], f.sector)}
       ${sportsFilterRow('Catégorie', 'sex', [['all', 'Tous'], ['f', 'Féminin'], ['m', 'Masculin'], ['x', 'Mixte']], f.sex)}
+      ${sportsFilterRow('Secteur', 'sector', [['all', 'Tous'], ['collegial', 'Collégial'], ['universitaire', 'Universitaire']], f.sector)}
+      ${sportsFilterRow('Période', 'period', SPORTS_PERIODS, f.period)}
       ${active ? '<button type="button" class="sports-native-reset" data-sports-reset>Réinitialiser les filtres</button>' : ''}
     </div>`;
   }
@@ -1209,8 +1217,9 @@
       return `<div data-sports-board class="sports-native-empty">${sportsState.error ? 'Sports indisponibles pour le moment.' : 'Chargement des sports…'}</div>`;
     }
     const now = Date.now();
-    const next = sportsState.tab === 'avenir';
-    const range = sportsPeriodRange(sportsState.period);
+    const live = sportsState.period === 'live';
+    const next = live || sportsState.tab === 'avenir';
+    const range = live ? null : sportsPeriodRange(sportsState.period);
     const panels = [];
     const seen = new Set();
     for (const team of Object.values(sportsState.data.teams || {})) {
@@ -1219,6 +1228,7 @@
       const games = pool.filter((g) => {
         if (g.priorSeason) return false;
         const ms = sportsGameMsOf(g);
+        if (live) return ms <= now + SPORTS_LIVE_LEAD_MS && ms >= now - SPORTS_LIVE_TAIL_MS;
         if (next ? ms < now - 3 * 36e5 : ms > now) return false;
         return !range || (g.date >= range.start && g.date <= range.end);
       }).sort((x, y) => next ? sportsGameMsOf(x) - sportsGameMsOf(y) : sportsGameMsOf(y) - sportsGameMsOf(x)).slice(0, 3);
@@ -1235,7 +1245,7 @@
       ? `<button type="button" class="wide" data-sports-more>Afficher plus (${panels.length - list.length})</button>` : '';
     const body = list.length
       ? count + list.map((p) => sportsPanel(p.team, p.games, next)).join('') + more
-      : `<p class="sports-native-empty">${next ? 'Aucun match à venir pour ces filtres.' : 'Aucun résultat pour ces filtres.'}</p>`;
+      : `<p class="sports-native-empty">${live ? 'Aucun match en direct.' : next ? 'Aucun match à venir pour ces filtres.' : 'Aucun résultat pour ces filtres.'}</p>`;
     return `<div data-sports-board class="sports-native">${body}</div>`;
   }
 
@@ -1680,7 +1690,7 @@
       }
       if (event.target.closest('[data-sports-reset]')) {
         event.preventDefault();
-        Object.assign(sportsState, { sport: 'all', sector: 'all', sex: 'all', period: '7d', q: '', limit: SPORTS_PAGE });
+        Object.assign(sportsState, { sport: 'all', sector: 'all', sex: 'all', period: 'all', q: '', limit: SPORTS_PAGE });
         saveSportsFilters();
         render();
         return;
