@@ -1,52 +1,17 @@
 {
-  "updated": "2026-10-23T06:23:44.290Z",
-  "total": 194,
-  "withImage": 175,
-  "withCredit": 175,
-  "cited": 116,
+  "updated": "2026-10-23T07:49:32.453Z",
+  "total": 168,
+  "withImage": 153,
+  "withCredit": 153,
+  "cited": 97,
   "pending": 6,
   "missingHero": 0,
   "ok": false,
-  "checked": 25,
-  "updatedCount": 19,
-  "citedNew": 10,
-  "fallbackNew": 15,
+  "checked": 12,
+  "updatedCount": 6,
+  "citedNew": 6,
+  "fallbackNew": 6,
   "samples": [
-    {
-      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
-      "source": "Impact Campus",
-      "credit": "Crédit photo : Impact Campus",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "QUICKSPIN: Remi Wolf — Mud",
-      "source": "The Concordian",
-      "credit": "Photo credit: The Concordian",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Our circle matters",
-      "source": "The Concordian",
-      "credit": "Photo credit: The Concordian",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Campus Resource Guide: Free healthy cooking classes",
-      "source": "The Concordian",
-      "credit": "Photo credit: The Concordian",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Chronique] Glass House : la place de l’IA dans l’art visuel",
-      "source": "Impact Campus",
-      "credit": "Crédit photo : Impact Campus",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
@@ -55,46 +20,39 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Manifestation anti-IA à Montréal",
+      "title": "Est-ce que je dois un bébé à l’État ?",
       "source": "Le Délit",
-      "credit": "Photo : Héloïse Durning",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Quand la fiction banalise les traumatismes",
+      "title": "Le « self-care » : qui valide votre repos ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "S.O.S. Huîtres menacées",
       "source": "Le Délit",
       "credit": "Photo : Ana Camila Torchia",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Faire compter sa voix",
-      "source": "Le Délit",
-      "credit": "Photo : Photo tirée d’Élections Québec",
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "Retour sur La nature des choses de Renée Forest",
-      "source": "Impact Campus",
-      "credit": "Crédit photo : Impact Campus",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Hantée : Le nouveau film jeunesse d’India Desjardins",
-      "source": "Impact Campus",
-      "credit": "Photo : Hugo-Sébastien Aubert, La Presse",
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
       "cited": true,
-      "method": "json-ld"
-    },
-    {
-      "title": "Pauline Julien : femme pays, ode à une femme libre",
-      "source": "Impact Campus",
-      "credit": "Crédit photo : Impact Campus",
-      "cited": false,
-      "method": null
+      "method": "via-attribution"
     }
   ]
 }

@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-23T06:23:04.897Z",
-  "total": 194,
-  "withPhoto": 175,
-  "withStock": 39,
-  "withCampusBank": 25,
-  "fullyCovered": 194,
-  "leadReadyPhotos": 153,
-  "pageScraped": 39,
-  "photosRecovered": 39,
-  "imagesCleared": 8,
-  "stockSearches": 43,
-  "stockFound": 34,
-  "campusBankFound": 20,
+  "updated": "2026-10-23T07:49:19.691Z",
+  "total": 168,
+  "withPhoto": 153,
+  "withStock": 34,
+  "withCampusBank": 23,
+  "fullyCovered": 168,
+  "leadReadyPhotos": 132,
+  "pageScraped": 31,
+  "photosRecovered": 31,
+  "imagesCleared": 11,
+  "stockSearches": 37,
+  "stockFound": 31,
+  "campusBankFound": 21,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -39,10 +39,16 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SOCIETE_Movember-au-dela-de-la-moustache_Getty-Images.jpg"
     },
     {
-      "title": "Health First!",
-      "link": "https://www.mcgilldaily.com/2026/10/health-first/",
+      "title": "Horoscope September 2026",
+      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+    },
+    {
+      "title": "CSU fails to reach quorum at special council meeting",
+      "link": "https://thelinknewspaper.ca/article/16488",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Henry_F._Hall_Building_01.JPG"
     },
     {
       "title": "Creative Writing September 2026",
@@ -51,22 +57,16 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
     },
     {
-      "title": "Festivals au Québec : la fête à quel prix ?",
-      "link": "https://quartierlibre.ca/festivals-au-quebec-quel-prix/",
-      "reason": "stock-too-small",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/16-17_angine.avif"
-    },
-    {
       "title": "A Tradition on the Edge: The Future of Homecoming",
       "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "title": "Health First!",
+      "link": "https://www.mcgilldaily.com/2026/10/health-first/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
     },
     {
       "title": "Battling Adversity",
@@ -81,10 +81,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
     },
     {
-      "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
-      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
+      "title": "Un polytechnicien en Espagne",
+      "link": "https://www.polyscope.qc.ca/blog/post/kbgnDbewLv2wv6hDMWI3",
       "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
+      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2F04c4a050-9f16-42f1-9d8c-105cfc148422.jpeg?alt=media&token=0b042590-65ec-4454-ab18-f1e9eafed527"
     }
   ]
 }

@@ -1,12 +1,12 @@
 {
-  "updated": "2026-10-23T06:21:59.476Z",
-  "total": 194,
+  "updated": "2026-10-23T07:48:08.089Z",
+  "total": 168,
   "pool": 58,
-  "incomplete": 15,
-  "withLeadExcerpt": 120,
-  "candidates": 15,
+  "incomplete": 12,
+  "withLeadExcerpt": 117,
+  "candidates": 12,
   "enriched": 7,
-  "failed": 4,
+  "failed": 0,
   "ok": true,
   "samples": [
     {
@@ -19,30 +19,30 @@
       "changed": false
     },
     {
-      "title": "Manifestation anti-IA à Montréal",
-      "link": "https://www.delitfrancais.com/2026/09/23/manifestation-anti-ia-a-montreal/",
-      "ok": true,
-      "score": 94,
-      "chars": 249,
-      "sample": "La possibilité qui revient le plus est celle d’une extinction humaine après le développement d’une s",
-      "changed": true
-    },
-    {
-      "title": "Quand la fiction banalise les traumatismes",
-      "link": "https://www.delitfrancais.com/2026/09/23/quand-la-fiction-banalise-les-traumatismes/",
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "link": "https://www.delitfrancais.com/2026/09/23/est-ce-que-je-dois-un-bebe-a-letat/",
       "ok": true,
       "score": 96,
-      "chars": 377,
-      "sample": "Quel est le point commun entre la série Off campus , le livre Captive , et Jamais plus ? Outre leur ",
+      "chars": 288,
+      "sample": "Certes, pour mettre la table (ou faire un court commentaire éditorial), Jean-Jacques Rousseau n’est ",
       "changed": true
     },
     {
-      "title": "Faire compter sa voix",
-      "link": "https://www.delitfrancais.com/2026/09/23/faire-compter-sa-voix/",
+      "title": "Le « self-care » : qui valide votre repos ?",
+      "link": "https://www.delitfrancais.com/2026/09/23/le-self-care-qui-valide-votre-repos/",
+      "ok": true,
+      "score": 96,
+      "chars": 347,
+      "sample": "Ce n’était pas une dérive isolée, mais une règle, que Talcott Parsons nommera en 1951 : le « rôle de",
+      "changed": true
+    },
+    {
+      "title": "S.O.S. Huîtres menacées",
+      "link": "https://www.delitfrancais.com/2026/09/23/s-o-s-huitres-menacees/",
       "ok": true,
       "score": 100,
-      "chars": 282,
-      "sample": "En quinze ans, les Indigenous Awareness Weeks (IAW) sont devenues un espace de « dialogue, de rappro",
+      "chars": 318,
+      "sample": "Cependant, depuis 2024, les récoltes d’huîtres de l’Île-du-Prince-Édouard ont chuté subitement. En e",
       "changed": true
     },
     {
@@ -52,16 +52,7 @@
       "score": 76,
       "chars": 400,
       "sample": "The light shone in my eyes as I looked up at Santiago de Compostela’s cathedral on May 13, 2026. I h",
-      "changed": true
-    },
-    {
-      "title": "Chronique] Glass House : la place de l’IA dans l’art visuel",
-      "link": "https://impactcampus.ca/arts-et-culture/chronique-glass-house-la-place-de-lia-dans-lart-visuel/",
-      "ok": true,
-      "score": 100,
-      "chars": 351,
-      "sample": "La Bande Vidéo, une galerie d’art médiatique faisant partie du collectif artistique Méduse, basé au ",
-      "changed": true
+      "changed": false
     },
     {
       "title": "Reportages radio du 19 octobre 2026",
@@ -80,6 +71,15 @@
       "chars": 400,
       "sample": "Le 13 septembre dernier, Montréal a accueilli son Grand Prix cyclistes. Sur les pentes du mont Royal",
       "changed": false
+    },
+    {
+      "title": "QUICKSPIN: Remi Wolf — Mud",
+      "link": "https://theconcordian.com/2026/10/remi-wolf-mud-quickspin-album-review/",
+      "ok": true,
+      "score": 100,
+      "chars": 158,
+      "sample": "The cover of Remi Wolf ’s third album features the singer covered in mud. The true mud, however, is ",
+      "changed": true
     }
   ]
 }
