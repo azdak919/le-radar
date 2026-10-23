@@ -29,7 +29,28 @@ function main() {
   }
   const ids = SportsLive.liveGameIdsFromTeams(teams);
   console.error(`sports-live-pending: ${ids.length} match(s) en fenêtre live`);
-  process.exit(ids.length ? 0 : 1);
+  if (ids.length) process.exit(0);
+  // Le cron GitHub peut manquer le début d’une soirée : on garde la boucle
+  // en vie si un match commence bientôt (LIVE_LOOKAHEAD_MIN, défaut 0).
+  const ahead = Number(process.env.LIVE_LOOKAHEAD_MIN || 0);
+  const soon = upcomingWithin(teams, ahead * 60000);
+  if (soon) console.error(`sports-live-pending: prochain match dans ${Math.round(soon / 60000)} min — on attend`);
+  process.exit(soon ? 0 : 1);
 }
 
-main();
+/** ms avant le prochain coup d’envoi non versé, s’il tombe dans `windowMs`. */
+function upcomingWithin(teams, windowMs, now = Date.now()) {
+  if (!(windowMs > 0)) return 0;
+  let best = 0;
+  for (const team of Object.values(teams || {})) {
+    for (const g of [team && team.nextGame, ...((team && team.nextGames) || [])]) {
+      const t = g && SportsLive.gameMs(g);
+      if (!Number.isFinite(t) || t <= now || t - now > windowMs) continue;
+      if (!best || t - now < best) best = t - now;
+    }
+  }
+  return best;
+}
+
+if (require.main === module) main();
+module.exports = { upcomingWithin };

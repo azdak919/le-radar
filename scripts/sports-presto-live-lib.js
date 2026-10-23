@@ -282,9 +282,35 @@ function parseLiveStatus(statusText, sport) {
     }
     if (/^so$/i.test(which)) return { n: (PERIOD_COUNT[sport] || 0) + 1, label: 'Tirs de barrage' };
     const n = ordinalNumber(which);
-    if (n) return { n, label: [`${frOrdinal(n, noun.fem)} ${noun.word}`, clock].filter(Boolean).join(' ') };
+    if (n && clock && sport === 'soccer') {
+      // PrestoSports soccer : horloge à rebours dans la demie (45:00 → 0:00).
+      // On affiche la minute jouée (ex. « 2e mi-temps · 67e min »).
+      const [mm, ss] = clock.split(':').map(Number);
+      const left = mm * 60 + ss;
+      const played = Math.max(0, 45 * 60 - left);
+      const minute = 45 * (n - 1) + Math.min(45, Math.floor(played / 60) + 1);
+      return { n, clockLeft: left, label: `${frOrdinal(n, noun.fem)} ${noun.word} · ${minute}e min` };
+    }
+    if (n) {
+      const left = clock ? clock.split(':').map(Number).reduce((a, b) => a * 60 + b) : undefined;
+      return { n, clockLeft: left, label: [`${frOrdinal(n, noun.fem)} ${noun.word}`, clock].filter(Boolean).join(' ') };
+    }
   }
   return { n: null, label: '' };
+}
+
+/**
+ * Avancement d’un match (nombre croissant) d’après le statut Presto : les
+ * horloges PrestoSports sont à rebours. null si inconnu.
+ */
+function liveProgress(statusText, sport) {
+  const st = parseLiveStatus(statusText, sport);
+  if (!st.n) return null;
+  const base = st.n * 100000;
+  if (st.endOf) return base + 99999;
+  if (Number.isFinite(st.clockLeft)) return base + (99998 - Math.min(99998, st.clockLeft));
+  if (/^start of/i.test(String(statusText || '').trim())) return base;
+  return base + 1;
 }
 
 // ── Plausibilité (fausses entrées) ───────────────────────────────────────
@@ -445,6 +471,7 @@ function matchEvent(event, sector, candidates, index) {
 
 function clearFeedFields(g) {
   if (!g || !g.liveFeed) return;
+  delete g.liveProgress;
   delete g.scoreFor;
   delete g.scoreAgainst;
   delete g.period;
@@ -516,6 +543,8 @@ function applyPrestoLive(teams, feeds, { registry, now = Date.now() } = {}) {
         const sf = game.home ? homeScore : awayScore;
         const sa = game.home ? awayScore : homeScore;
         if (event.state === 'live') {
+          const prog = liveProgress(ev.statusText, ev.sport);
+          if (prog != null) game.liveProgress = prog;
           game.live = true;
           game.scoreFor = sf;
           game.scoreAgainst = sa;
@@ -555,6 +584,33 @@ function promoteToResult(team, game, sf, sa, source) {
 }
 
 /**
+ * L’horloge ne recule jamais à l’écran : si la source publie un état plus
+ * ancien que la passe précédente (cache, page figée, saisie corrigée), on
+ * garde la période / l’horloge précédentes. Le pointage, lui, suit la source.
+ */
+function enforceMonotonicClock(teams, previousTeams) {
+  let kept = 0;
+  for (const [id, team] of Object.entries(teams || {})) {
+    const prev = previousTeams && previousTeams[id];
+    if (!team || !prev) continue;
+    const prevById = new Map();
+    for (const g of teamGames(prev)) if (g && g.gameId && g.live && Number.isFinite(g.liveProgress)) prevById.set(g.gameId, g);
+    if (!prevById.size) continue;
+    for (const g of teamGames(team)) {
+      const p = g && g.gameId && prevById.get(g.gameId);
+      if (!p || !g.live || !g.liveFeed) continue;
+      if (!Number.isFinite(g.liveProgress) || g.liveProgress < p.liveProgress) {
+        g.liveProgress = p.liveProgress;
+        if (p.period) g.period = p.period;
+        else delete g.period;
+        kept += 1;
+      }
+    }
+  }
+  return kept;
+}
+
+/**
  * Source en panne pendant cette passe : on recolle le dernier pointage connu
  * (snapshot précédent) sur les matchs encore sans score, pour éviter un
  * clignotement vers 0–0. Rien n’est inventé : seulement l’état d’il y a 3 min.
@@ -580,6 +636,7 @@ function carryPreviousFeed(teams, previousTeams, okSectors, now = Date.now()) {
         g.scoreFor = p.scoreFor;
         g.scoreAgainst = p.scoreAgainst;
         if (p.period) g.period = p.period;
+        if (Number.isFinite(p.liveProgress)) g.liveProgress = p.liveProgress;
         g.liveFeed = p.liveFeed;
       }
       carried += 1;
@@ -718,6 +775,7 @@ async function overlayPrestoLive(teams, {
     for (const s of badSectors) okSectors.delete(s);
     const stats = applyPrestoLive(teams, feeds.filter((f) => okSectors.has(f.sector)), { registry, now });
     stats.carried = carryPreviousFeed(teams, previousTeams, okSectors, now);
+    stats.clockKept = enforceMonotonicClock(teams, previousTeams);
     stats.failed = feeds.filter((f) => !f.ok).map((f) => `${f.source} ${f.error}`);
     return stats;
   } catch (err) {
@@ -741,6 +799,8 @@ function liveSourceHealth(presto, now = Date.now()) {
 }
 
 module.exports = {
+  liveProgress,
+  enforceMonotonicClock,
   liveSourceHealth,
   SOURCES,
   SPORT_CODES,

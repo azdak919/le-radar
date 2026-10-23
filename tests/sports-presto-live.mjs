@@ -116,7 +116,7 @@ test('période / horloge en français', () => {
   assert.equal(p('2nd - 15:14', 'hockey'), '2e période 15:14');
   assert.equal(p('Start of 2nd', 'hockey'), 'Début de la 2e période');
   assert.equal(p('End of 1st', 'basketball'), 'Fin du 1er quart');
-  assert.equal(p('1st half - 09:54', 'soccer'), '1re mi-temps 9:54');
+  assert.equal(p('1st half - 09:54', 'soccer'), '1re mi-temps · 36e min');
   assert.equal(p('Halftime', 'soccer'), 'Mi-temps');
   assert.equal(p('OT - 03:00', 'hockey'), 'Prolongation 3:00');
   assert.equal(p('25-18,23-22', 'volleyball'), '2e manche 23–22');
@@ -308,4 +308,23 @@ test('WAF direct → repli relais Cloudflare (workers/presto-cache)', async () =
   });
   assert.equal(s2.failed.length, 2);
   assert.ok(s2.failed.every((f) => /HTTP 405 \+ relais upstream_http/.test(f)));
+});
+
+test('horloge : avancement croissant, jamais de recul à l’écran', () => {
+  const p = (s, sp = 'soccer') => Presto.liveProgress(s, sp);
+  assert.ok(p('2nd half - 45:00') < p('2nd half - 22:51'));
+  assert.ok(p('2nd half - 22:51') < p('2nd half - 15:38'));
+  assert.ok(p('1st half - 01:00') < p('Halftime'));
+  assert.ok(p('Halftime') < p('Start of 2nd'));
+  assert.ok(p('3rd - 05:00', 'hockey') < p('End of 3rd', 'hockey'));
+  assert.equal(Presto.parseLiveStatus('2nd half - 15:38', 'soccer').label, '2e mi-temps · 75e min');
+  const mk = (prog, period) => ({ t: { nextGames: [{ gameId: 'g', live: true, liveFeed: 'usports', liveProgress: prog, period, scoreFor: 1 }] } });
+  const prev = mk(p('2nd half - 15:38'), '2e mi-temps · 75e min');
+  const cur = mk(p('2nd half - 45:00'), '2e mi-temps · 46e min');
+  cur.t.nextGames[0].scoreFor = 2;
+  assert.equal(Presto.enforceMonotonicClock(cur, prev), 1);
+  assert.equal(cur.t.nextGames[0].period, '2e mi-temps · 75e min');
+  assert.equal(cur.t.nextGames[0].scoreFor, 2);
+  const fwd = mk(p('2nd half - 05:00'), '2e mi-temps · 86e min');
+  assert.equal(Presto.enforceMonotonicClock(fwd, prev), 0);
 });

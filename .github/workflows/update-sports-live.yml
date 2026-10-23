@@ -32,7 +32,7 @@ jobs:
   live:
     if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 230
+    timeout-minutes: 355
     permissions:
       contents: write
       issues: write
@@ -66,7 +66,8 @@ jobs:
         env:
           HOCKEY_CACHE_URL: https://le-radar-hockey.azdak.workers.dev
           PRESTO_CACHE_URL: https://le-radar-presto.azdak.workers.dev
-          LIVE_PASSES: '70'
+          LIVE_PASSES: '110'
+          LIVE_LOOKAHEAD_MIN: '75'
           LIVE_SLEEP_SECONDS: '180'
         run: |
           git config user.name "github-actions[bot]"
@@ -112,12 +113,12 @@ jobs:
           echo "LIVE_PASSES_RUN=$pass" >> "$GITHUB_ENV"
           echo "LIVE_SOURCE_FAILS=$fails" >> "$GITHUB_ENV"
 
-      # Alerte : une source en direct (U SPORTS / RSEQ Direct) a échoué à
-      # TOUTES les passes de ce run (ex. 23 oct. 2026 : WAF CloudFront captcha
+      # Alerte : une source en direct (U SPORTS / RSEQ Direct) a échoué à ≥ 3 passes
+      # de ce run (ex. 23 oct. 2026 : WAF CloudFront captcha
       # sur les IP GitHub → 0-0 affiché pendant 3-0). Une seule issue ouverte,
       # commentée à chaque run fautif. Aucun courriel envoyé par le bot.
       - name: Alert on live source outage
-        if: ${{ always() && env.LIVE_SOURCE_FAILS != '' && env.LIVE_SOURCE_FAILS != '0' && env.LIVE_SOURCE_FAILS == env.LIVE_PASSES_RUN }}
+        if: ${{ always() && env.LIVE_SOURCE_FAILS != '' && fromJSON(env.LIVE_SOURCE_FAILS) >= 3 }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
