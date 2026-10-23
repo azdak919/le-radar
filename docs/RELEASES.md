@@ -9,9 +9,11 @@ _Dernière mise à jour : 23 octobre 2026._
 
 | Élément | Valeur |
 |---|---|
-| Dernier commit `main` déployé | `5fce3112c` — fix(pwa): plus de rechargement automatique au changement de service worker |
-| Déploiement GitHub Pages | ✅ réussi (`pages-build-deployment`, run 39900114253) |
-| Date du déploiement | 23 octobre 2026, 0 h 24 (HAE) |
+| Dernier commit `main` déployé | `324deea06` — bot : mise à jour du fil (auto), 23 oct. 2026, 9 h 29 (HAE) |
+| Dernier changement de code déployé | `0e56639e4` — fix(news) : n'afficher que la session en cours ou ≤ 45 jours |
+| Déploiement GitHub Pages | ✅ réussi (`pages-build-deployment`, run 39961702958) |
+| Date du déploiement | 23 octobre 2026, 9 h 30 (HAE) |
+| le-radar.ca | ✅ HTTP 200 (vérifié le 23 oct. 2026, 9 h 35 HAE) |
 
 Le site se déploie automatiquement à chaque poussée sur `main`. Vérifier avec
 `gh run list -w pages-build-deployment -L 1`.
@@ -20,11 +22,15 @@ Le site se déploie automatiquement à chaque poussée sur `main`. Vérifier ave
 
 | Service worker | Cache actuel en ligne |
 |---|---|
-| `sw.js` (site) | `radar-shell-v918` (+ `radar-offline-v22`) |
-| `sports/sw.js` (Sports) | `sports-shell-v285` |
+| `sw.js` (site) | `radar-shell-v924` (+ `radar-offline-v22`) — introduit par `0e56639e4` |
+| `sports/sw.js` (Sports) | `sports-shell-v291` — introduit par `0e56639e4` |
+
+Le `sw.js` servi en ligne correspond à celui de `main` (pas de version périmée).
 
 ### Historique récent des correctifs PWA
 
+- 2026-10-23 — `0e56639e4` : fraîcheur des nouvelles (session en cours ou ≤ 45 jours);
+  `news.json` élagué, caches montés à v924 / v291.
 - **2026-10-23 — `5fce3112c`** : retrait du rechargement automatique sur `controllerchange`.
   L'app se rechargeait seule après chaque nouvelle version (et au retour après plus d'une
   heure), ce qui obligeait à rafraîchir une à trois fois avant d'être utilisable.
@@ -39,14 +45,23 @@ Le site se déploie automatiquement à chaque poussée sur `main`. Vérifier ave
 | `android-v1.0.0` | 2026-09-21 | — (antérieure à F-Droid) |
 | `android-v1.0.1` | 2026-10-05 | — (antérieure à F-Droid) |
 | `android-v1.1.0` | 2026-10-07 | ✅ publiée (MR fdroiddata 49671 fusionnée le 2026-10-15) |
-| `android-v1.1.1` | 2026-10-21 | ⏳ dans la recette fdroiddata, pas encore construite ni publiée |
+| `android-v1.1.1` | 2026-10-21 | ⏳ recette fdroiddata mise à jour le 2026-10-22 (`bba9c08a`, CurrentVersion 1.1.1 / 4), pas encore construite ni publiée |
 | `android-v1.2.0` | 2026-10-23 | ⏳ étiquetée (versionCode 5) ; en attente de la détection F-Droid (`^android-v`) |
 | `android-v1.2.1` | 2026-10-23 | ⏳ étiquetée (versionCode 6) ; en attente de la détection F-Droid (`^android-v`) |
 | `android-v1.2.2` | 2026-10-23 | ⏳ étiquetée (versionCode 7) ; en attente de la détection F-Droid (`^android-v`) |
 
+Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-10-23) :
+**1.1.0 (versionCode 3)**. `main` est à **1.2.2 (versionCode 7)**.
+
 F-Droid construit par lots ; compter quelques jours à une semaine après l'étiquette.
 L'APK embarque son propre code (pas de `server.url`) ; seules les données viennent de
 le-radar.ca en direct.
+
+### Changements web pas encore dans l'APK (après `android-v1.2.2`)
+
+- `0e56639e4` — règle de fraîcheur des nouvelles (session en cours ou ≤ 45 jours). L'élagage
+  se fait côté serveur dans `news.json`, que l'APK lit en direct : l'app en profite déjà.
+  Aucun code de l'app touché (seulement un commentaire dans `radar-news.js`).
 
 ### Contenu de `android-v1.2.2` (versionCode 7)
 
@@ -67,7 +82,7 @@ Barre radio persistante en haut avec défilement des postes au repos, onglet Spo
 (remplace Enregistrés, désormais dans Réglages), icône d'engrenage, notifications des
 nouveaux articles, cartes article comme le site, bouton lecture 48 px.
 
-### Changements web pas encore dans l'APK (après `android-v1.1.1`) — inclus dans 1.2.0
+### Changements web d'après `android-v1.1.1` — inclus dans 1.2.0
 
 - `5fce3112c` — retrait du rechargement automatique du service worker (sans effet sur l'APK,
   qui n'utilise pas le service worker).
