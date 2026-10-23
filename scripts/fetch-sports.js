@@ -848,6 +848,7 @@ async function fetchSailingTeams(reg) {
         seasonStartYear: cicsaCfg.seasonStartYear,
         seasonLabel: cicsaCfg.seasonLabel,
         clubs: cicsaCfg.clubs,
+        absences: cicsaCfg.absences,
         resultsUrl: cicsaCfg.resultsUrl,
         scheduleUrl: cicsaCfg.scheduleUrl,
       });

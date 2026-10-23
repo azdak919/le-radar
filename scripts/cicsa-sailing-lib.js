@@ -500,6 +500,15 @@ function buildCicsaQcTeams(scoresCsv, scheduleCsv, options = {}) {
     if (!upcoming[id]) upcoming[id] = [];
   };
 
+  // Absences confirmées par un rapport de régate officiel, alors que la feuille
+  // de scores classe quand même le club (points de non-présence, sans note).
+  const absent = new Set((options.absences || []).map((a) => `${fold(a.event)}|${a.registryId}`));
+  for (const event of events) {
+    for (const row of event.boats) {
+      if (row.boat && absent.has(`${fold(event.name)}|${row.boat.registryId}`)) row.noShow = true;
+    }
+  }
+
   for (const event of events) {
     const scheduled = scheduleByName.get(fold(event.name));
     const enriched = {

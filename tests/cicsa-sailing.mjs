@@ -113,3 +113,12 @@ test('régate terminée sans scores publiés : reste visible « résultats à ve
   assert.equal(laval.nextGame.awaitingResults, true);
   assert.match(laval.nextGame.opponentEn, /Quebec Regionals/);
 });
+
+test('absence confirmée par rapport de régate : pas de résultat', () => {
+  const { teams } = buildCicsaQcTeams(SCORES, SCHEDULE, {
+    seasonStartYear: 2026, seasonLabel: '2026-2027', clubs: CLUBS, today: '2026-10-12',
+    absences: [{ event: 'Womens Event', registryId: 'ulaval' }],
+  });
+  const laval = teams['sailing:universitaire:ulaval'];
+  assert.ok(!(laval?.results || []).some((r) => /Womens/.test(r.opponentEn)));
+});
