@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T19:11:45.362Z",
+  "updatedAt": "2026-10-23T19:26:56.376Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,7 +28,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T19:10:46.319Z"
+      "checkedAt": "2026-10-23T19:26:17.105Z"
     },
     "cism": {
       "id": "cism",
@@ -55,7 +55,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T19:10:48.472Z"
+      "checkedAt": "2026-10-23T19:26:19.238Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,21 +81,21 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T19:10:50.857Z"
+      "checkedAt": "2026-10-23T19:26:22.385Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
         "title": "Dead Beats",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "15:00",
         "end": "16:00",
         "url": "http://www.cjlo.com/shows/dead-beats"
       },
       "next": {
         "title": "Tapeworms",
-        "source": "schedule",
+        "source": "schedule-live",
         "start": "16:00",
         "end": "17:00",
         "url": "http://www.cjlo.com/shows/tapeworms"
@@ -103,12 +103,12 @@
       "track": "",
       "showTitle": "Dead Beats",
       "host": "",
-      "source": "schedule",
+      "source": "schedule-live",
       "sources": [
-        "schedule"
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T19:11:25.065Z"
+      "checkedAt": "2026-10-23T19:26:37.535Z"
     },
     "cfak": {
       "id": "cfak",
@@ -133,7 +133,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T19:11:26.257Z"
+      "checkedAt": "2026-10-23T19:26:39.443Z"
     },
     "choq": {
       "id": "choq",
@@ -154,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T19:11:45.012Z"
+      "checkedAt": "2026-10-23T19:26:56.025Z"
     }
   }
 }
