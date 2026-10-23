@@ -1,37 +1,51 @@
 {
-  "updated": "2026-10-23T20:01:20.129Z",
+  "updated": "2026-10-23T22:14:43.714Z",
   "total": 168,
-  "withImage": 150,
-  "withCredit": 150,
-  "cited": 96,
+  "withImage": 149,
+  "withCredit": 149,
+  "cited": 97,
   "pending": 38,
   "missingHero": 0,
   "ok": false,
   "checked": 47,
   "updatedCount": 10,
-  "citedNew": 7,
-  "fallbackNew": 40,
+  "citedNew": 8,
+  "fallbackNew": 39,
   "samples": [
     {
-      "title": "La région se mobilise pour le trouble développemental du langage",
-      "source": "La Pige",
-      "credit": "Photo : Émile Barthe",
-      "cited": true,
-      "method": "body-line"
+      "title": "De la France au Québec, la colère lycéenne trouve un écho",
+      "source": "Quartier Libre",
+      "credit": "Photo : Quartier Libre",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Retour aux sources pour le directeur artistique du film La place",
+      "title": "Marie-Karlynn Laflamme au ministère de la Santé, de la Prévention et des Aînés",
       "source": "La Pige",
-      "credit": "Photo : Film du Québec",
+      "credit": "Photo : Julianne Landry",
       "cited": true,
       "method": "figcaption-paren-kind"
     },
     {
-      "title": "The different sides of Montreal’s nightlife",
-      "source": "The Link",
-      "credit": "Photo: The Link",
-      "cited": false,
-      "method": null
+      "title": "Le communautaire à boutte s’adresse au gouvernement péquiste avec une nouvelle semaine de mobilisation",
+      "source": "La Pige",
+      "credit": "Photo : Charles Pinel",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "L’Oktoberfest du Club Lions célèbre sa 7e édition",
+      "source": "La Pige",
+      "credit": "Photo : Rosalie Lepage",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Le cercle de presse pour souligne le premier anniversaire du maire",
+      "source": "La Pige",
+      "credit": "Photo : Colin Perron",
+      "cited": true,
+      "method": "body-line"
     },
     {
       "title": "Rouge d’une part, blanche de l’autre",
@@ -41,28 +55,14 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Est-ce que je dois un bébé à l’État ?",
+      "title": "Faire compter sa voix",
       "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Le « self-care » : qui valide votre repos ?",
-      "source": "Le Délit",
-      "credit": "Photo : Catvy Tran",
+      "credit": "Photo : Photo tirée d’Élections Québec",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
       "title": "Looking back at my journey walking El Camino de Santiago",
-      "source": "The Concordian",
-      "credit": "Photo: The Concordian",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Stingers men’s soccer team earns first win of the season",
       "source": "The Concordian",
       "credit": "Photo: The Concordian",
       "cited": false,

@@ -1,30 +1,30 @@
 {
-  "updated": "2026-10-23T20:00:11.961Z",
+  "updated": "2026-10-23T22:14:04.519Z",
   "total": 168,
-  "withPhoto": 150,
-  "withStock": 36,
-  "withCampusBank": 25,
+  "withPhoto": 149,
+  "withStock": 37,
+  "withCampusBank": 26,
   "fullyCovered": 168,
-  "leadReadyPhotos": 134,
-  "pageScraped": 30,
-  "photosRecovered": 30,
-  "imagesCleared": 12,
-  "stockSearches": 35,
+  "leadReadyPhotos": 130,
+  "pageScraped": 31,
+  "photosRecovered": 31,
+  "imagesCleared": 13,
+  "stockSearches": 38,
   "stockFound": 31,
-  "campusBankFound": 21,
+  "campusBankFound": 20,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "L’Oktoberfest du Club Lions célèbre sa 7e édition",
+      "link": "https://lapige.atmjonquiere.com/2026/10/23/loktoberfest-du-club-lions-celebre-sa-7e-edition/?utm_source=rss&utm_medium=rss&utm_campaign=loktoberfest-du-club-lions-celebre-sa-7e-edition",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/image.jpeg"
+    },
     {
       "title": "Reportages radio du 19 octobre 2026",
       "link": "https://lapige.atmjonquiere.com/2026/10/20/reportages-radio-du-19-octobre-2026/?utm_source=rss&utm_medium=rss&utm_campaign=reportages-radio-du-19-octobre-2026",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0117.jpg"
-    },
-    {
-      "title": "« Il n’y a plus de rendez-vous disponibles » : la campagne de vaccination contre la grippe démarre fort",
-      "link": "https://lapige.atmjonquiere.com/2026/10/19/il-ny-a-plus-de-rendez-vous-disponibles-la-campagne-de-vaccination-contre-la-grippe-demarre-fort/?utm_source=rss&utm_medium=rss&utm_campaign=il-ny-a-plus-de-rendez-vous-disponibles-la-campagne-de-vaccination-contre-la-grippe-demarre-fort",
-      "reason": "no-stock-match",
-      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/20261022_085344.jpg"
     },
     {
       "title": "Movember : au-delà de la moustache",
@@ -36,19 +36,31 @@
       "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
       "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Pavillon_La_Laurentienne_ULaval.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Pavillon_DKN%2C_Universit%C3%A9_Laval_11.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "La femme parfaite est un objet",
-      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
+      "title": "The Honey Bank: CSU’s sustainability initiatives",
+      "link": "https://theconcordian.com/2026/10/the-honey-bank-csus-sustainability-initiatives/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "“Decolonization”",
-      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/de/McGill_University_downtown_campus_23.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "title": "Festivals au Québec : la fête à quel prix ?",
+      "link": "https://quartierlibre.ca/festivals-au-quebec-quel-prix/",
+      "reason": "stock-too-small",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/16-17_angine.avif"
+    },
+    {
+      "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
+      "link": "https://thebucampus.ca/2026/09/30/gods-heroes-men-and-pigs-classics-department-brings-reflections-on-nolans-the-odyssey-to-the-agora/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Prepare for Fewer Course Options in the Coming Years: Budget Cuts are Affecting the Number of Courses Available at BU",
+      "link": "https://thebucampus.ca/2026/09/30/prepare-for-fewer-course-options-in-the-coming-years-budget-cuts-are-affecting-the-number-of-courses-available-at-bu/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
     },
     {
       "title": "A Tradition on the Edge: The Future of Homecoming",
@@ -57,34 +69,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
-      "title": "Shawarm-off!",
-      "link": "https://www.mcgilldaily.com/2026/10/shawarm-off/",
+      "title": "La femme parfaite est un objet",
+      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/da/McGill_University_downtown_campus_16.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Battling Adversity",
+      "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
+      "reason": "no-stock-match",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
       "title": "Blackface at McGill",
       "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Vecteezy_stack-of-newspaper_1961329.jpg"
-    },
-    {
-      "title": "Creative Writing September 2026",
-      "link": "https://theplantnews.com/2026/10/13/creative-writing-september-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Dawson_College_04.jpg"
-    },
-    {
-      "title": "Un polytechnicien en Espagne",
-      "link": "https://www.polyscope.qc.ca/blog/post/kbgnDbewLv2wv6hDMWI3",
-      "reason": "stock-too-small",
-      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2F04c4a050-9f16-42f1-9d8c-105cfc148422.jpeg?alt=media&token=0b042590-65ec-4454-ab18-f1e9eafed527"
-    },
-    {
-      "title": "Pauline Julien : femme pays, ode à une femme libre",
-      "link": "https://impactcampus.ca/arts-et-culture/pauline-julien-femme-pays-ode-a-une-femme-libre/",
-      "reason": "no-stock-match",
-      "image": "https://cdn.impactcampus.ca/wp-content/uploads/2026/10/08082726/pauline-julien-suzanne-clement.jpg.webp"
     }
   ]
 }
