@@ -524,6 +524,29 @@ function captionedFigureMeta(content = '') {
   return byKey;
 }
 
+function linksToOtherArticle(content = '', imgIndex = 0, baseUrl = '') {
+  if (!baseUrl) return false;
+  const before = content.slice(Math.max(0, imgIndex - 600), imgIndex);
+  const open = before.lastIndexOf('<a ');
+  if (open < 0 || before.indexOf('</a>', open) >= 0) return false;
+  const href = (before.slice(open).match(/\bhref=["']([^"']+)["']/i) || [])[1];
+  if (!href) return false;
+  let target; let self;
+  try {
+    target = new URL(decodeEntities(href), baseUrl);
+    self = new URL(baseUrl);
+  } catch { return false; }
+  if (target.host !== self.host) return false;
+  // Lien vers le fichier image lui-même (lightbox) : légitime.
+  if (/\.(?:jpe?g|png|webp|gif|avif)$/i.test(target.pathname) || /\/wp-content\//i.test(target.pathname)) return false;
+  const norm = (u) => u.pathname.replace(/\/+$/, '');
+  if (!norm(target) || norm(target) === norm(self)) return false;
+  // Seulement un permalien d'article (au moins un segment avec tiret), pas
+  // une page d'attachement / auteur / catégorie.
+  if (/\/(?:author|category|tag|attachment)\//i.test(target.pathname)) return false;
+  return /[a-z0-9]-[a-z0-9]/i.test(norm(target).split('/').pop() || '');
+}
+
 function collectContentImages(content = '', extraRejectPatterns = [], options = {}, baseUrl = '') {
   const urls = [];
   const preferSizeFull = !!options.preferSizeFull;
@@ -533,6 +556,11 @@ function collectContentImages(content = '', extraRejectPatterns = [], options = 
     const tag = m[0];
     const rawSrc = imgTagSrc(tag);
     if (!rawSrc) continue;
+    // Vignette d'un AUTRE billet (bloc « en vedette » / articles liés, ex.
+    // thème WP 15zine d'Impact Campus) : <a href="/autre-article/"><img …>.
+    // Ce n'est pas la photo de cet article — sinon la même vignette se
+    // retrouve sur tous les billets de la source.
+    if (linksToOtherArticle(content, m.index, baseUrl)) continue;
     const alt = decodeEntities((tag.match(/\balt=["']([^"']*)["']/i) || [])[1] || '');
     if (/\b(?:antidote|publicit[eé]|annonceur|commandit[eé])\b/i.test(alt)) continue;
     let src = toAbsoluteImageUrl(rawSrc, baseUrl);
@@ -836,6 +864,35 @@ function clearMirroredLead(item) {
   delete item.imageLocal;
   delete item.imageLocalKey;
   delete item.imageLocalVia;
+}
+
+/**
+ * Garde générale : une même image sur >= minUses billets d'une même source
+ * est un visuel générique (logo, vignette de bloc « en vedette », bannière),
+ * pas la photo propre de chaque article. On la retire (l'article retombe sur
+ * le placeholder / ré-enrichissement depuis sa page).
+ * Retourne le nombre d'articles nettoyés.
+ */
+function dropSharedSourceImages(items = [], minUses = 3) {
+  const key = (it) => `${it.source}\u0000${normalizeImagePath(it.image) || it.image}`;
+  const uses = new Map();
+  for (const it of items) {
+    if (!it || !it.image || !it.source) continue;
+    const k = key(it);
+    uses.set(k, (uses.get(k) || 0) + 1);
+  }
+  let dropped = 0;
+  for (const it of items) {
+    if (!it || !it.image || !it.source) continue;
+    if ((uses.get(key(it)) || 0) >= minUses) {
+      it.image = '';
+      clearMirroredLead(it);
+      delete it.leadImageReady;
+      for (const k of Object.keys(it)) if (k.startsWith('sourceImageCredit')) delete it[k];
+      dropped += 1;
+    }
+  }
+  return dropped;
 }
 
 function cardFitBonus(width = 0, height = 0) {
@@ -1182,6 +1239,8 @@ module.exports = {
   isCropSafePortrait,
   LEAD_CROP_MIN_RATIO,
   clearMirroredLead,
+  dropSharedSourceImages,
+  linksToOtherArticle,
   cardFitBonus,
   captionLooksLikeCampaignGraphic,
   compareLeadCandidates,
