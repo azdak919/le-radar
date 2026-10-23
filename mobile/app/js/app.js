@@ -669,8 +669,8 @@
         const option = document.createElement('option');
         option.value = station.id;
         option.textContent = station.offline ? `${station.name} — Hors ligne` : station.name;
+        option.classList.add('notranslate');
         if (station.offline) option.classList.add('is-offline');
-        option.className = 'notranslate';
         option.setAttribute('translate', 'no');
         select.append(option);
       }
@@ -691,7 +691,9 @@
     if (name) name.textContent = radio ? (radio.offline ? `${radio.name} · ${uiText('Hors ligne')}` : radio.name) : uiText('Syntoniser un poste');
     tuner.classList.toggle('is-station-offline', !!(radio && radio.offline));
     if (sub) {
-      if (radio && player.now && player.id === radio.id) sub.textContent = player.now;
+      if (radio && radio.offline && player.offlineNotice && player.offlineNotice.id === radio.id
+        && Date.now() < player.offlineNotice.until) sub.textContent = OFFLINE_NOTICE;
+      else if (radio && player.now && player.id === radio.id) sub.textContent = player.now;
       else if (radio && radio.institution) sub.textContent = radio.institution;
       else sub.textContent = uiText('Radios étudiantes en direct');
     }
@@ -776,12 +778,20 @@
     else syncPlayer();
   }
 
+  const OFFLINE_NOTICE = 'Station hors ligne pour le moment';
+  const OFFLINE_NOTICE_MS = 4000;
+
   function playRadio(id) {
     const radio = radioById(id);
     if (!radio || !radio.stream) return;
     if (radio.offline) {
+      // On tente quand même la lecture, mais le message reste visible
+      // OFFLINE_NOTICE_MS avant que le titre en ondes puisse le remplacer.
+      player.offlineNotice = { id, until: Date.now() + OFFLINE_NOTICE_MS };
+      clearTimeout(player.offlineNoticeTimer);
+      player.offlineNoticeTimer = setTimeout(() => { player.offlineNotice = null; syncTuner(); }, OFFLINE_NOTICE_MS);
       const sub = document.getElementById('tuner-now-sub');
-      if (sub) sub.textContent = 'Station hors ligne pour le moment';
+      if (sub) sub.textContent = OFFLINE_NOTICE;
     }
     const native = radioNative();
     if (native) {

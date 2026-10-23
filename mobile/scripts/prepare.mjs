@@ -67,6 +67,7 @@ const siteFiles = [
   'radar-utils.js',
   'radar-state.js',
   'radar-weather.js',
+  'scripts/session-freshness-lib.js',
   'scripts/sports-freshness-lib.js',
   'radar-sports-cta.js',
   'sports-masthead.json',
