@@ -177,3 +177,7 @@ body.has-glass .card.card-site {
     }
   }
 }
+
+/* Onglet Sports : section sports du site dans un cadre plein écran. */
+.sports-frame-wrap { margin: 0 -16px; }
+.sports-frame { display: block; width: 100%; height: calc(100vh - 260px); min-height: 480px; border: 0; background: transparent; }

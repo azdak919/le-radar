@@ -338,6 +338,7 @@
     if (parts[0] === 'recherche') return { kind: 'search', q: params.get('q') || '' };
     if (parts[0] === 'enregistres') return { kind: 'saved', tab: params.get('onglet') || 'favoris' };
     if (parts[0] === 'reglages') return { kind: 'settings' };
+    if (parts[0] === 'sports') return { kind: 'sports' };
     if (parts[0] === 'article' && parts[1] && /^[0-9a-f]{16}$/.test(parts[1])) {
       return { kind: 'article', id: parts[1] };
     }
@@ -385,6 +386,7 @@
     }
     if (kind === 'saved') return '#/enregistres';
     if (kind === 'settings') return '#/reglages';
+    if (kind === 'sports') return '#/sports';
     if (route && route.filter) return `#/accueil?filtre=${encodeURIComponent(route.filter)}`;
     return '#/accueil';
   }

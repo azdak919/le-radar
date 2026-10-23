@@ -43,6 +43,12 @@
     nativeBound: false,
     nativeSync: false,
   };
+
+  // Défilement des postes au repos (voir tunerTickerActive).
+  const TUNER_TICKER_DWELL_MS = 8000; // NOW_AIR_PREVIEW_DWELL_MS du site
+  const TUNER_TICKER_FADE_MS = 700; // NOW_AIR_CROSSFADE_MS du site
+  const REDUCED_MOTION = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  const tickerState = { radio: null, lastId: '', timer: 0 };
   const NOW_PLAYING_TTL_MS = 90 * 1000;
 
   function esc(value) {
@@ -674,7 +680,13 @@
     if (active && [...select.options].some((option) => option.value === active) && select.value !== active) {
       select.value = active;
     }
-    const radio = (select.value && radioById(select.value)) || (active ? radioById(active) : null);
+    const ticking = tunerTickerActive();
+    if (ticking && !tickerState.radio) pickTickerRadio();
+    if (ticking && tickerState.radio && select.value !== tickerState.radio.id) select.value = tickerState.radio.id;
+    const radio = (ticking && tickerState.radio)
+      || (select.value && radioById(select.value)) || (active ? radioById(active) : null);
+    if (ticking) scheduleTunerTicker();
+    else stopTunerTicker();
     if (name) name.textContent = radio ? radio.name : uiText('Syntoniser un poste');
     if (sub) {
       if (radio && player.now && player.id === radio.id) sub.textContent = player.now;
@@ -692,6 +704,61 @@
       play.setAttribute('aria-label', uiText(on ? 'Pause du syntoniseur' : 'Lecture du syntoniseur'));
     }
   }
+
+  /*
+   * Défilement des postes au repos — même comportement que le site
+   * (radar-tuner.js : isNowAirPanelPreviewMode / scheduleNowAirPreviewTick) :
+   * tant que rien ne joue et qu'aucun poste n'a été choisi, un poste au hasard
+   * (jamais deux fois de suite) toutes les 8 s, en fondu 700 ms. Verrouillé dès
+   * la lecture, la pause ou un choix explicite ; coupé si prefers-reduced-motion.
+   */
+
+  function tunerTickerActive() {
+    return !(REDUCED_MOTION && REDUCED_MOTION.matches)
+      && state.radios.length > 0
+      && !player.id
+      && !state.tunedId
+      && !document.hidden;
+  }
+
+  function pickTickerRadio() {
+    const pool = state.radios.filter((radio) => radio && radio.id && radio.stream);
+    const list = pool.length ? pool : state.radios.filter((radio) => radio && radio.id);
+    if (!list.length) { tickerState.radio = null; return null; }
+    let pick = list[Math.floor(Math.random() * list.length)];
+    if (list.length > 1 && pick.id === tickerState.lastId) {
+      const others = list.filter((radio) => radio.id !== tickerState.lastId);
+      pick = others[Math.floor(Math.random() * others.length)];
+    }
+    tickerState.radio = pick;
+    tickerState.lastId = pick.id;
+    return pick;
+  }
+
+  function stopTunerTicker() {
+    if (tickerState.timer) clearTimeout(tickerState.timer);
+    tickerState.timer = 0;
+    tickerState.radio = null;
+    for (const el of document.querySelectorAll('#tuner-now-name, #tuner-now-sub')) el.classList.remove('is-crossfading');
+  }
+
+  function scheduleTunerTicker() {
+    if (tickerState.timer) return;
+    tickerState.timer = setTimeout(() => {
+      tickerState.timer = 0;
+      if (!tunerTickerActive()) { syncTuner(); return; }
+      const fading = [...document.querySelectorAll('#tuner-now-name, #tuner-now-sub')];
+      for (const el of fading) el.classList.add('is-crossfading');
+      setTimeout(() => {
+        if (tunerTickerActive()) pickTickerRadio();
+        syncTuner();
+        requestAnimationFrame(() => { for (const el of fading) el.classList.remove('is-crossfading'); });
+      }, TUNER_TICKER_FADE_MS);
+    }, TUNER_TICKER_DWELL_MS);
+  }
+
+  if (REDUCED_MOTION && REDUCED_MOTION.addEventListener) REDUCED_MOTION.addEventListener('change', () => syncTuner());
+  document.addEventListener('visibilitychange', () => syncTuner());
 
   function stepTuner(direction) {
     const list = state.radios.filter((radio) => radio && radio.id);
@@ -938,6 +1005,15 @@
       <div class="row-actions">${confirm}</div>`;
   }
 
+  /** Onglet Sports : la section sports du site (cartes RSEQ, U SPORTS, voile…). */
+  function viewSports() {
+    return `<h1 class="sr-only">Sports</h1>
+      <div class="sports-frame-wrap">
+        <iframe class="sports-frame" src="https://le-radar.ca/sports/" title="Sports universitaires et collégiaux" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      </div>
+      <a class="wide link" data-action="external" href="https://le-radar.ca/sports/" target="_blank" rel="noopener noreferrer">Ouvrir les sports dans le navigateur</a>`;
+  }
+
   function viewSettings() {
     const prefs = loadPrefs();
     const theme = prefs.theme;
@@ -946,6 +1022,10 @@
       ? '<button type="button" class="danger" data-action="confirm-clear" data-target="all">Confirmer l’effacement de tout</button>'
       : '<button type="button" data-action="ask-clear" data-target="all">Effacer toutes les données de l’application</button>';
     return `<h1>Réglages</h1>
+      <section>
+        <h2 class="section">Mes articles</h2>
+        <a class="wide link" href="#/enregistres">Articles enregistrés et historique</a>
+      </section>
       <section>
         <h2 class="section">Thème</h2>
         <div class="row-actions" role="group" aria-label="Thème">
@@ -1008,6 +1088,7 @@
     if (route.kind === 'search') return 'recherche';
     if (route.kind === 'saved') return 'enregistres';
     if (route.kind === 'settings') return 'reglages';
+    if (route.kind === 'sports') return 'sports';
     return 'explorer';
   }
 
@@ -1249,6 +1330,7 @@
     else if (route.kind === 'search') html = viewSearch(route);
     else if (route.kind === 'saved') html = viewSaved(route);
     else if (route.kind === 'settings') html = viewSettings();
+    else if (route.kind === 'sports') html = viewSports();
     else if (route.kind === 'article') html = viewArticle(route);
     else html = viewHome(route);
     if (screen) screen.innerHTML = html;
