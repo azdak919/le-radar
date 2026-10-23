@@ -2082,7 +2082,7 @@ function initTunerPresentationLifecycle() {
  *              horaires — et un rechargement franc est plus honnête qu'une
  *              page à moitié fraîche. Sauf si la radio joue : cette règle-là ne
  *              se négocie pas (un déploiement coupait l'écoute, voir
- *              `reloadUnlessListening`).
+ *              `registerServiceWorker`).
  *
  * Dans tous les cas au-delà de 5 min, on redemande aussi le service worker :
  * une version déployée pendant l'absence sera prise au prochain moment sûr.

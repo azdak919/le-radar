@@ -457,18 +457,12 @@ function setBuffering(next) {
 
 function registerServiceWorker() {
   if (IS_EMBED || !('serviceWorker' in navigator)) return;
-  // Recharge uniquement après une *mise à jour* (pas la 1ʳᵉ prise de contrôle SW),
-  // sinon la page charge → SW claim → controllerchange → reload = double flash.
-  // Ne jamais recharger pendant une écoute (déploiement coupait la radio).
+  // Pas de rechargement sur `controllerchange` : HTML, JS, CSS et JSON sont
+  // servis réseau d'abord par sw.js, donc la page ouverte est déjà à jour.
+  // L'ancien reload survenait quelques secondes après l'ouverture (fin de
+  // l'install du nouveau worker, ~80 fichiers), en pleine navigation : l'app
+  // installée semblait « charger drôlement » et exigeait des rafraîchissements.
   const hadControllerOnLoad = !!navigator.serviceWorker.controller;
-  let reloading = false;
-  const reloadUnlessListening = () => {
-    if (reloading) return;
-    if (!hadControllerOnLoad) return; // 1ʳᵉ activation : rester sur cette page
-    if (isPlaybackActive()) return;
-    reloading = true;
-    window.location.reload();
-  };
   // Toujours depuis la racine de l’app (app.js), pas le chemin de la page :
   // sinon /sports/ enregistre /sports/sw.js (404) et casse le lecteur SEO.
   navigator.serviceWorker.register(appAsset('sw.js')).then((reg) => {
@@ -490,7 +484,6 @@ function registerServiceWorker() {
   });
   // update() en arrière-plan — ne force pas de reload immédiat
   checkForAppUpdate();
-  navigator.serviceWorker.addEventListener('controllerchange', reloadUnlessListening);
 }
 
 /**
@@ -499,8 +492,8 @@ function registerServiceWorker() {
  * Appelé au chargement, puis à chaque retour dans l'app : une PWA installée
  * n'est jamais « rechargée » au sens habituel, donc sans cette relance elle
  * peut servir le shell du jour de son installation pendant des semaines.
- * Le rechargement, lui, reste piloté par `controllerchange` — qui ne coupe
- * jamais une écoute en cours.
+ * Le nouveau worker prend la main sans recharger la page (voir
+ * `registerServiceWorker`).
  */
 function checkForAppUpdate() {
   if (IS_EMBED || !('serviceWorker' in navigator)) return;
