@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T04:45:17.077Z",
+  "updatedAt": "2026-10-23T05:10:54.563Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T04:44:39.239Z"
+      "checkedAt": "2026-10-23T05:10:12.168Z"
     },
     "cism": {
       "id": "cism",
@@ -48,32 +48,33 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T04:44:40.795Z"
+      "checkedAt": "2026-10-23T05:10:14.264Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "L'aire du Diable",
-        "source": "api-live",
-        "start": "23:00",
-        "end": "01:00"
-      },
-      "next": {
         "title": "Listen! You Smell Something?",
         "source": "api-live",
         "start": "01:00",
         "end": "04:00"
       },
+      "next": {
+        "title": "G-Flex Survivor's Corner",
+        "source": "api-live",
+        "start": "04:00",
+        "end": "07:00"
+      },
       "track": "",
-      "showTitle": "L'aire du Diable",
+      "showTitle": "Listen! You Smell Something?",
       "host": "",
       "source": "api-live",
       "sources": [
-        "api-live"
+        "api-live",
+        "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T04:44:43.130Z"
+      "checkedAt": "2026-10-23T05:10:16.960Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -100,7 +101,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T04:44:57.604Z"
+      "checkedAt": "2026-10-23T05:10:32.450Z"
     },
     "cfak": {
       "id": "cfak",
@@ -125,7 +126,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T04:44:58.866Z"
+      "checkedAt": "2026-10-23T05:10:33.670Z"
     },
     "choq": {
       "id": "choq",
@@ -146,7 +147,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T04:45:16.726Z"
+      "checkedAt": "2026-10-23T05:10:54.212Z"
     }
   }
 }
