@@ -81,10 +81,15 @@ function campusNeedlesFor(institution = '') {
   if (/\bhec\b/.test(raw)) add('hec');
   if (/\bteluq\b/.test(raw)) add('teluq');
   if (/\benap\b/.test(raw)) add('enap');
-  if (/\blaval\b/.test(raw)) add('laval');
+  // « laval » seul attrapait « UdeM Laval » (campus de l’UdeM à Laval).
+  if (/\blaval\b/.test(raw)) {
+    add('universite laval');
+    add('ulaval');
+  }
   if (/\bmcgill\b/.test(raw)) add('mcgill');
   if (/\bconcordia\b/.test(raw)) add('concordia');
-  if (/\bbishop/.test(raw)) add('bishop');
+  // « bishop » seul attrapait Bishop Otter Campus (Chichester, R.-U.).
+  if (/\bbishop/.test(raw)) add('bishop s');
   if (/\bsherbrooke\b/.test(raw)) {
     add('sherbrooke');
     add('longueuil');
@@ -111,8 +116,12 @@ function campusPhotoHay(photo = {}) {
   );
 }
 
+/** Photos hors campus repérées par l’audit (autre établissement, hôpital…). */
+const CAMPUS_PHOTO_EXCLUDE_RE = /\budem\b|\bcentre ville\b|\bsanatorium\b|sante mentale|chichester/;
+
 function photoMatchesNeedles(photo, needles = []) {
   if (!needles.length) return false;
+  if (CAMPUS_PHOTO_EXCLUDE_RE.test(campusPhotoHay(photo))) return false;
   // Le lieu curaté prime. Une vue « UdeM et Polytechnique » dont le lieu est
   // l’Université de Montréal ne sert pas de photo de Polytechnique.
   const place = normalizeCampusKey(photo.place || '');

@@ -3146,7 +3146,7 @@ function ensureLeadTitleAboveMedia(article) {
 const WEAK_IMAGE_PATH = /article-tile|size-article-tile/;
 
 /** Aligné sur scripts/article-image-lib.js GLOBAL_IMAGE_REJECT_RE */
-const GLOBAL_IMAGE_REJECT_RE = /(?:logo|avatar|icon|placeholder|default|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic|article-tile|size-article-tile|thumbnail|thumb_|recent-posts|wp-block-query|widget|sponsor|banner|social-share|-150x\d+\.|cropped-logo|logoexile|121330814_121456603062023_8783413434532337259_n|(?:^|\/)daily\.png$|editorial[_-]|(?:^|\/)editorial(?:s)?(?:[_./-]|$)|画板|%e7%94%bb%e6%9d%bf|_optimized_optimized_optimized|00\.graphics\.csu\.naya_hachwa|antidote|banni[eè]re|pub_agenda|jlc-ad)/i;
+const GLOBAL_IMAGE_REJECT_RE = /(?:logo|avatar|icon|placeholder|(?:^|\/)(?:no[-_]?image[-_]?)?default(?:[-_](?:image|img|photo|thumb|thumbnail|featured|post|cover|og|share|bg|background))?(?:[-_]?\d+x\d+)?(?:@\dx)?\.(?:jpe?g|png|gif|webp|svg|avif)(?:$|[?#])|\/defaults?\/|(?:default|fallback)[-_](?:image|img|photo|thumb|thumbnail)|blank|spacer|profile|author|favicon|gravatar|emoji|smiley|lapige_web|(?:^|\/)article-2\.|campus-logo|campusgraphic|article-tile|size-article-tile|thumbnail|thumb_|recent-posts|wp-block-query|widget|sponsor|banner|social-share|-150x\d+\.|cropped-logo|logoexile|121330814_121456603062023_8783413434532337259_n|(?:^|\/)daily\.png$|editorial[_-]|(?:^|\/)editorial(?:s)?(?:[_./-]|$)|画板|%e7%94%bb%e6%9d%bf|_optimized_optimized_optimized|00\.graphics\.csu\.naya_hachwa|antidote|banni[eè]re|pub_agenda|jlc-ad)/i;
 
 function articleImagePathRejected(raw = '') {
   const src = String(raw || '').trim();
