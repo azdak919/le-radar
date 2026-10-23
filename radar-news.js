@@ -4331,37 +4331,7 @@ function normalizeAuthor(name = '') {
 }
 
 // ─── Date / time formatting (Québec) ────────────────────────────────────────────
-function formatTime(d, lang = 'fr') {
-  if (isNaN(d)) return '';
-  if (lang === 'en') {
-    return d.toLocaleTimeString('en-CA', {
-      timeZone: 'America/Toronto',
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true,
-    });
-  }
-  const parts = new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'America/Toronto', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
-  }).formatToParts(d);
-  const part = (type) => parts.find((entry) => entry.type === type)?.value;
-  return `${part('hour')} h ${part('minute')}`;
-}
 
-function formatCompactCalendarDate(d, lang = 'fr') {
-  if (isNaN(d)) return '';
-  if (lang === 'en') {
-    return d.toLocaleDateString('en-CA', {
-      timeZone: 'America/Toronto',
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    });
-  }
-  return d.toLocaleDateString('fr-CA', {
-    timeZone: 'America/Toronto', day: 'numeric', month: 'short', year: 'numeric',
-  });
-}
 
 function formatStamp(d) {
   if (isNaN(d)) return '';
@@ -4388,32 +4358,6 @@ function formatStamp(d) {
 }
 
 /** Date courte pour cartes compactes (En bref, Suite du fil). */
-function formatStampCompact(d, lang = 'fr') {
-  if (isNaN(d)) return '';
-  const now = new Date();
-  const diffMin = Math.round((now - d) / 60000);
-  const l = lang === 'en' ? 'en' : 'fr';
-
-  if (diffMin < 1) return l === 'en' ? 'just now' : "à l'instant";
-  if (diffMin < 60) return l === 'en' ? `${diffMin} min ago` : `il y a ${diffMin} min`;
-
-  const sameDay = d.toDateString() === now.toDateString();
-  const yest = new Date(now); yest.setDate(now.getDate() - 1);
-  const isYesterday = d.toDateString() === yest.toDateString();
-  const clock = formatTime(d, l);
-
-  if (sameDay) {
-    if (l === 'en') return clock ? `Today, ${clock}` : 'Today';
-    return clock ? `aujourd'hui, ${clock}` : "aujourd'hui";
-  }
-  if (isYesterday) {
-    if (l === 'en') return clock ? `Yesterday, ${clock}` : 'Yesterday';
-    return clock ? `hier, ${clock}` : 'hier';
-  }
-
-  const date = formatCompactCalendarDate(d, l);
-  return [date, clock].filter(Boolean).join(' · ');
-}
 
 // ─── Title / brief cleanup ───────────────────────────────────────────────────────
 // Source unique : scripts/article-card-lib.js (partagé avec l’app mobile).
@@ -4423,6 +4367,9 @@ const {
   cleanTitle,
   stripLeadingByline,
   cardSlots: articleCardSlots,
+  formatTime,
+  formatCompactCalendarDate,
+  formatStampCompact,
 } = globalThis.RadarArticleCard;
 
 /**

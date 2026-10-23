@@ -42,6 +42,7 @@ function copyRealFile(src, dest) {
 copyRealFile(join(root, 'translate.js'), join(www, 'js', 'translate.js'));
 // Cartes article : mêmes règles que le site (titre, chapô, ordre des blocs).
 copyRealFile(join(root, 'scripts/article-card-lib.js'), join(www, 'js', 'article-card-lib.js'));
+copyRealFile(join(root, 'institution-acronyms-data.js'), join(www, 'js', 'institution-acronyms-data.js'));
 copyRealFile(join(root, 'translate-menu.css'), join(www, 'css', 'translate-menu.css'));
 for (const file of [
   'style-masthead.css',

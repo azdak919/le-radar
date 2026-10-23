@@ -88,13 +88,7 @@
   }
 
   function loadPrefs() {
-    const prefs = core().normalizePrefs(readJson(core().PREFS_KEY, core().emptyPrefs));
-    if (!prefs.seenAt) {
-      const stamped = core().markSeen(prefs, new Date().toISOString());
-      writeJson(core().PREFS_KEY, stamped);
-      return stamped;
-    }
-    return prefs;
+    return core().normalizePrefs(readJson(core().PREFS_KEY, core().emptyPrefs));
   }
 
   function savePrefs(prefs) {
@@ -287,6 +281,14 @@
     return null;
   }
 
+  /** Date du fil comme sur le site (« hier, 17 h 00 »). */
+  function stampDate(iso, en) {
+    const lib = cardLib();
+    const time = Date.parse(iso || '');
+    if (!lib || !lib.formatStampCompact || Number.isNaN(time)) return formatDate(iso);
+    return lib.formatStampCompact(new Date(time), en ? 'en' : 'fr');
+  }
+
   function formatDate(iso) {
     const time = Date.parse(iso || '');
     if (Number.isNaN(time)) return '';
@@ -308,11 +310,15 @@
   }
 
   function imageHtml(meta) {
-    if (!meta.image) return '';
-    const alt = meta.source
-      ? uiText(`Illustration publiée par ${meta.source}`)
-      : uiText('Illustration de l’article original');
-    return `<img class="card-photo" src="${esc(meta.image)}" alt="${esc(alt)}" loading="lazy" decoding="async" width="640" height="427">`;
+    if (!meta.image && !meta.imageLocal) return '';
+    const src = meta.imageLocal ? `https://le-radar.ca/${meta.imageLocal}` : meta.image;
+    return `<img src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">`;
+  }
+
+  /* Crédit photo sous la vignette, comme sur le site (.article-media-credit). */
+  function creditHtml(meta) {
+    if (!meta.imageCreator) return '';
+    return `<figcaption class="article-media-credit notranslate" translate="no">Photo : <span class="article-media-credit__creator">${esc(meta.imageCreator)}</span></figcaption>`;
   }
 
   /* Cartes : mêmes règles que le site (scripts/article-card-lib.js) —
@@ -347,8 +353,8 @@
   function cardRole(index, layout) {
     if (!layout) return 'standard';
     if (index === 0) return 'lead';
-    if (index <= 2) return 'feature';
-    if (index <= 6) return 'compact';
+    if (index <= 4) return 'feature';
+    if (index <= 14) return 'compact';
     return 'standard';
   }
 
@@ -359,23 +365,29 @@
     const en = meta.lang === 'en';
     const lang = en ? '<span class="lang notranslate" translate="no">EN</span>' : '';
     const color = core().institutionColor(state.brand, meta.institution) || 'var(--accent)';
-    const hasMedia = Boolean(meta.image);
+    const hasMedia = Boolean(meta.image || meta.imageLocal);
     const excerpt = displayExcerpt(meta);
     const readMore = en ? 'Read more →' : 'Lire la suite →';
     const byLabel = en ? 'By' : 'Par';
     const time = meta.date
-      ? `<time class="article-time notranslate${isFresh(meta.date) ? ' is-fresh' : ''}" datetime="${esc(meta.date)}">${esc(formatDate(meta.date))}</time>`
+      ? `<time class="article-time notranslate${isFresh(meta.date) ? ' is-fresh' : ''}" datetime="${esc(meta.date)}">${esc(stampDate(meta.date, en))}</time>`
       : '';
-    const inst = meta.institution ? `<span class="article-inst">${esc(meta.institution)}</span>` : '';
+    const lib = cardLib();
+    const short = lib && lib.institutionShort ? lib.institutionShort(meta.institution) : '';
+    const full = meta.institution.replace(/\s*\([^)]*\)\s*$/, '').trim();
+    const inst = !meta.institution ? ''
+      : (short && short !== full
+        ? `<span class="article-inst"><span class="article-inst__full">${esc(full)}</span><span class="article-inst__short">${esc(short)}</span></span>`
+        : `<span class="article-inst">${esc(full)}</span>`);
     const slotHtml = {
       eyebrow: '<span class="article-eyebrow">À la une</span>',
       meta: `<div class="article-meta"><span class="article-meta__lead"><span class="article-source notranslate" translate="no">${esc(meta.source || 'Source')}</span>${lang}${inst}</span>${time}</div>`,
-      title: `<h2 class="article-title card-title">${esc(displayTitle(meta.title))}</h2>`,
+      title: `<h3 class="article-title">${esc(displayTitle(meta.title))}</h3>`,
       byline: meta.author
-        ? `<p class="article-byline card-by"><span class="article-byline__label">${byLabel}</span><strong class="article-author notranslate" translate="no">${esc(meta.author)}</strong></p>`
+        ? `<p class="article-byline"><span class="article-byline__label">${byLabel}</span><strong class="article-author notranslate" translate="no">${esc(meta.author)}</strong></p>`
         : '',
-      media: hasMedia ? `<figure class="article-media">${imageHtml(meta)}</figure>` : '',
-      brief: `<p class="article-brief is-truncated"><span class="article-brief-text card-excerpt">${esc(excerpt)}</span><span class="article-more" style="color:${esc(color)}">\u00a0${readMore}</span></p>`,
+      media: hasMedia ? `<figure class="article-media">${imageHtml(meta)}${creditHtml(meta)}</figure>` : '',
+      brief: `<p class="article-brief is-truncated"><span class="article-brief-text">${esc(excerpt)}</span><span class="article-more" style="color:${esc(color)}">\u00a0${readMore}</span></p>`,
     };
     const classes = ['article', `article--${role}`, 'card-open'];
     if (hasMedia) classes.push('has-image');
@@ -385,16 +397,17 @@
       <a class="${classes.join(' ')}" href="#/article/${meta.id}" style="--c:${esc(color)}">
         ${cardSlots(role, hasMedia).map((slot) => slotHtml[slot]).join('\n        ')}
       </a>
-      <div class="card-actions">
-        <button type="button" data-action="save" data-id="${meta.id}" aria-pressed="${saved ? 'true' : 'false'}">${saved ? 'Enregistré' : 'Enregistrer'}</button>
-        <button type="button" data-action="share-original" data-id="${meta.id}">Partager</button>
-      </div>
     </article>`;
   }
 
   function cardsHtml(items, empty, layout) {
     if (!items.length) return `<p class="empty">${empty}</p>`;
-    return `<div class="cards${layout ? ' cards--wire' : ''}">${items.map((item, index) => cardHtml(item, cardRole(index, layout))).join('')}</div>`;
+    if (!layout) return `<div class="cards">${items.map((item) => cardHtml(item, 'standard')).join('')}</div>`;
+    /* Même découpage que le fil du site : une + vedettes (.news-hero),
+       En bref (.brief-rail), puis suite du fil (.news-tail-body). */
+    const html = items.map((item, index) => cardHtml(item, cardRole(index, layout)));
+    const group = (cls, part) => (part.length ? `<div class="${cls}">${part.join('')}</div>` : '');
+    return `<div class="cards cards--wire news-list">${group('news-hero', html.slice(0, 5))}${group('brief-rail', html.slice(5, 15))}${html.length > 15 ? `<div class="news-tail">${group('news-tail-body', html.slice(15))}</div>` : ''}</div>`;
   }
 
   function chip(href, label, current) {
@@ -406,63 +419,37 @@
     const follows = followIds();
     const prefs = loadPrefs();
     const mode = core().homeMode(route.filter, follows);
-    const modeName = { tout: 'all', suivis: 'follows', mots: 'keywords', regions: 'regions' }[mode] || 'all';
+    const modeName = mode === 'suivis' ? 'follows' : 'all';
     const filtered = core().filterFeed(state.items, {
       mode: modeName,
       follows,
       hidden: prefs.hidden,
-      regions: prefs.regions,
-      keywords: prefs.keywords,
     });
     const shown = filtered.slice(0, state.visible);
-    const fresh = prefs.seenAt ? core().countFreshFollows(state.items, follows, prefs.seenAt) : 0;
-    const freshHtml = fresh
-      ? `<p class="banner">${fresh > 1 ? `${fresh} articles` : '1 article'} de vos suivis depuis votre dernière visite. <button type="button" data-action="seen">Marquer comme vu</button></p>`
-      : '';
     const empty = {
       tout: 'Aucun article dans le fil pour le moment.',
       suivis: 'Vous ne suivez encore aucun média, ou leurs articles sont masqués. <a href="#/explorer">Choisir des médias</a>.',
-      mots: 'Aucun article ne contient vos mots-clés. <a href="#/reglages">Modifier les mots-clés</a>.',
-      regions: 'Aucune région suivie, ou aucun article correspondant. <a href="#/explorer?section=regions">Choisir des régions</a>.',
     }[mode];
     const more = shown.length < filtered.length
       ? `<button type="button" class="wide" data-action="more">Afficher la suite (${filtered.length - shown.length})</button>`
       : '';
     state.homeCountLabel = `${filtered.length} ${filtered.length === 1 ? 'article' : 'articles'}`;
-    return `${freshHtml}
+    return `
       <nav class="chips" aria-label="Filtre du fil">
         ${chip('#/accueil?filtre=tout', 'Tout', mode === 'tout')}
         ${chip('#/accueil?filtre=suivis', 'Suivis', mode === 'suivis')}
-        ${chip('#/accueil?filtre=regions', 'Régions', mode === 'regions')}
-        ${chip('#/accueil?filtre=mots', 'Mots-clés', mode === 'mots')}
       </nav>
       ${cardsHtml(shown, empty, mode === 'tout')}
       ${more}`;
   }
 
   function viewExplorer(route) {
-    const section = route.section === 'radios' || route.section === 'regions' ? route.section : 'sources';
+    const section = route.section === 'radios' ? 'radios' : 'sources';
     const prefs = loadPrefs();
     const query = core().fold(state.sourceQuery);
     const institution = route.institution || '';
     let body = '';
-    if (section === 'regions') {
-      const regions = [];
-      const seen = new Set();
-      for (const source of state.sources) {
-        if (!source.regionId || seen.has(source.regionId)) continue;
-        seen.add(source.regionId);
-        regions.push(source);
-      }
-      regions.sort((a, b) => a.region.localeCompare(b.region, 'fr'));
-      body = `<ul class="plain">${regions.map((source) => {
-        const on = prefs.regions.includes(source.regionId);
-        return `<li class="source-row">
-          <span><span class="source-name notranslate">${esc(source.region)}</span></span>
-          <button type="button" data-action="region" data-id="${esc(source.regionId)}" aria-pressed="${on ? 'true' : 'false'}">${on ? 'Suivie' : 'Suivre'}</button>
-        </li>`;
-      }).join('')}</ul>`;
-    } else if (section === 'radios') {
+    if (section === 'radios') {
       body = `<ul class="plain">${state.radios.map((radio) => `<li class="source-row">
         <a href="#/radio/${esc(radio.id)}"><span class="source-name notranslate">${esc(radio.name)}</span><span class="source-meta article-inst">${esc(radio.institution)}</span></a>
         ${radio.stream ? radioToggleHtml(radio, 'Écouter', 'Pause') : ''}
@@ -491,7 +478,6 @@
       <p class="lede">Suivez un journal, une région ou une radio. Le texte intégral reste chez la publication.</p>
       <nav class="chips" aria-label="Explorer">
         ${chip('#/explorer?section=sources', 'Médias', section === 'sources')}
-        ${chip('#/explorer?section=regions', 'Régions', section === 'regions')}
         ${chip('#/explorer?section=radios', 'Radios', section === 'radios')}
       </nav>
       ${body}`;
@@ -970,25 +956,13 @@
         </div>
       </section>
       <section>
-        <h2 class="section">Mots-clés</h2>
-        <p class="note">Un mot-clé filtre le fil « Mots-clés ». Il reste sur l’appareil.</p>
-        <form id="keyword-form">
-          <label class="field" for="keyword">Ajouter un mot-clé</label>
-          <div class="row-actions">
-            <input id="keyword" name="keyword" type="text" maxlength="40" autocomplete="off">
-            <button type="submit">Ajouter</button>
-          </div>
-        </form>
-        <ul class="plain">${prefs.keywords.map((word) => `<li class="source-row"><span class="notranslate">${esc(word)}</span><button type="button" data-action="unkeyword" data-word="${esc(word)}">Retirer</button></li>`).join('')}</ul>
-      </section>
-      <section>
         <h2 class="section">Sources masquées</h2>
         ${hidden.length ? `<ul class="plain">${hidden.map((source) => `<li class="source-row"><span class="article-source">${esc(source.name)}</span><button type="button" data-action="hide" data-id="${esc(source.id)}">Réafficher</button></li>`).join('')}</ul>` : '<p class="note">Aucune source masquée.</p>'}
       </section>
       <section id="news-alerts"><h2 class="section">Notifications</h2></section>
       <section>
         <h2 class="section">Vie privée</h2>
-        <p class="note">Pas de compte, pas de publicité, pas de mesure d’audience dans l’application. Favoris, suivis, historique et mots-clés restent dans ce navigateur ou cette application. Charger le fil contacte le-radar.ca. Les images et les articles originaux sont demandés aux publications, qui voient alors une requête HTTPS ordinaire.</p>
+        <p class="note">Pas de compte, pas de publicité, pas de mesure d’audience dans l’application. Favoris, suivis et historique restent dans ce navigateur ou cette application. Charger le fil contacte le-radar.ca. Les images et les articles originaux sont demandés aux publications, qui voient alors une requête HTTPS ordinaire.</p>
         <a class="wide link" data-action="external" href="https://le-radar.ca/" target="_blank" rel="noopener noreferrer">Ouvrir le-radar.ca</a>
         <a class="wide link" data-action="external" href="https://github.com/azdak919/le-radar" target="_blank" rel="noopener noreferrer">Code source</a>
         <a class="wide link" data-action="external" href="https://keepandroidopen.org/fr/" target="_blank" rel="noopener noreferrer">Garder Android ouvert</a>
@@ -1473,22 +1447,8 @@
         render();
         return;
       }
-      if (action === 'region') {
-        const prefs = loadPrefs();
-        const id = el.dataset.id;
-        const on = prefs.regions.includes(id);
-        savePrefs(core().setRegionFollow(prefs, id, !on));
-        haptic();
-        render();
-        return;
-      }
       if (action === 'more') {
         state.visible += 40;
-        render();
-        return;
-      }
-      if (action === 'seen') {
-        savePrefs(core().markSeen(loadPrefs(), new Date().toISOString()));
         render();
         return;
       }
@@ -1499,11 +1459,6 @@
           ? el.dataset.value
           : order[(Math.max(0, order.indexOf(current)) + 1) % order.length];
         savePrefs(core().setTheme(loadPrefs(), next));
-        render();
-        return;
-      }
-      if (action === 'unkeyword') {
-        savePrefs(core().removeKeyword(loadPrefs(), el.dataset.word || ''));
         render();
         return;
       }
@@ -1554,15 +1509,6 @@
           if (typeof start === 'number') again.setSelectionRange(start, start);
         }
       }
-    });
-
-    document.addEventListener('submit', (event) => {
-      if (event.target.id !== 'keyword-form') return;
-      event.preventDefault();
-      const input = event.target.querySelector('input');
-      savePrefs(core().addKeyword(loadPrefs(), input && input.value));
-      if (input) input.value = '';
-      render();
     });
 
     document.addEventListener('change', (event) => {

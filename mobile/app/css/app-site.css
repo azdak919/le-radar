@@ -101,40 +101,18 @@ html.has-tuner-safe-cap .tuner { top: var(--safe-top); }
 .player, .player:not([hidden]) { display: none !important; }
 body.has-player { --player: 0px; }
 
-/* ─── Cartes article : rendu du site (style-feed.css) dans la carte d’app ───
-   Les blocs viennent de scripts/article-card-lib.js (même ordre que le site).
-   On neutralise seulement les anciens réglages .card-* de app.css. */
-.card-site > .article {
-  padding: 14px 14px 8px;
-  border-bottom: 0;
-}
-.card-site > .article::before { left: 0; }
-.card-site .article-title.card-title {
-  font-size: 1.2rem;
-  line-height: 1.22;
-  margin: 4px 0 6px;
-}
-.card-site.card-lead .article-title.card-title { font-size: 1.55rem; }
-.card-site .article-meta__lead {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 8px;
-  min-width: 0;
-}
-/* Photo de l’article recadrée au centre (object-fit: cover), jamais de letterbox. */
-.card-site .article-media .card-photo {
-  margin: 0;
-  width: 100%;
-  height: 100%;
+/* ─── Cartes article : exactement le rendu du site mobile (style-feed.css) ───
+   Les blocs viennent de scripts/article-card-lib.js (même ordre, mêmes dates,
+   mêmes acronymes). On retire la « carte » d’app (bordure, fond, boutons) :
+   chaque article est séparé par le filet du site, sans encadré. */
+.cards { gap: 0; }
+.card.card-site,
+body.has-glass .card.card-site {
+  border: 0;
   border-radius: 0;
-  aspect-ratio: auto;
-  object-fit: cover;
-  object-position: 50% 50%;
+  background: transparent;
+  overflow: visible;
 }
-.card-site.card-lead .article-media { aspect-ratio: 3 / 2; }
-.card-site .article-brief { margin: 6px 0 0; }
-.card-site .card-excerpt { color: var(--ink-soft); }
 
 /* ─── Thème « verre » : la photo du mât, floue, en fond d’application ───
    Même image que #bg-photo-layer (pas de seconde rotation) ; voile pour

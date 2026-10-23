@@ -148,6 +148,74 @@ function cardSlots(role = 'standard', hasMedia = false) {
   return ['meta', 'media', 'title', 'byline', 'brief'];
 }
 
+/** Dates du fil (site ↔ app) : « hier, 17 h 00 », « il y a 5 min ». */
+function formatTime(d, lang = 'fr') {
+  if (isNaN(d)) return '';
+  if (lang === 'en') {
+    return d.toLocaleTimeString('en-CA', {
+      timeZone: 'America/Toronto',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    });
+  }
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Toronto', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).formatToParts(d);
+  const part = (type) => parts.find((entry) => entry.type === type)?.value;
+  return `${part('hour')} h ${part('minute')}`;
+}
+
+function formatCompactCalendarDate(d, lang = 'fr') {
+  if (isNaN(d)) return '';
+  if (lang === 'en') {
+    return d.toLocaleDateString('en-CA', {
+      timeZone: 'America/Toronto',
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    });
+  }
+  return d.toLocaleDateString('fr-CA', {
+    timeZone: 'America/Toronto', day: 'numeric', month: 'short', year: 'numeric',
+  });
+}
+
+function formatStampCompact(d, lang = 'fr') {
+  if (isNaN(d)) return '';
+  const now = new Date();
+  const diffMin = Math.round((now - d) / 60000);
+  const l = lang === 'en' ? 'en' : 'fr';
+
+  if (diffMin < 1) return l === 'en' ? 'just now' : "à l'instant";
+  if (diffMin < 60) return l === 'en' ? `${diffMin} min ago` : `il y a ${diffMin} min`;
+
+  const sameDay = d.toDateString() === now.toDateString();
+  const yest = new Date(now); yest.setDate(now.getDate() - 1);
+  const isYesterday = d.toDateString() === yest.toDateString();
+  const clock = formatTime(d, l);
+
+  if (sameDay) {
+    if (l === 'en') return clock ? `Today, ${clock}` : 'Today';
+    return clock ? `aujourd'hui, ${clock}` : "aujourd'hui";
+  }
+  if (isYesterday) {
+    if (l === 'en') return clock ? `Yesterday, ${clock}` : 'Yesterday';
+    return clock ? `hier, ${clock}` : 'hier';
+  }
+
+  const date = formatCompactCalendarDate(d, l);
+  return [date, clock].filter(Boolean).join(' · ');
+}
+
+/** Acronyme d’établissement (institution-acronyms-data.js), sinon ''. */
+function institutionShort(name = '', table = (typeof globalThis !== 'undefined' && globalThis.RadarInstitutionAcronyms) || {}) {
+  if (!name) return '';
+  if (table[name]) return table[name];
+  const paren = String(name).match(/\((UQ[A-Z]{1,4}|UdeM|ULaval|UdeS|McGill)\)/i);
+  return paren ? paren[1] : '';
+}
+
 return {
   MC_CATEGORY_PREFIX,
   decodeHtmlEntities,
@@ -156,5 +224,9 @@ return {
   torontoDay,
   isFreshToday,
   cardSlots,
+  formatTime,
+  formatCompactCalendarDate,
+  formatStampCompact,
+  institutionShort,
 };
 }));

@@ -6,16 +6,17 @@ test.describe('application mobile', () => {
       await page.setViewportSize(size);
       await page.goto('/mobile/app/#/accueil', { waitUntil: 'domcontentloaded' });
       await expect(page.getByRole('heading', { level: 1, name: 'Le fil étudiant' })).toBeVisible();
-      await expect(page.locator('.card-title').first()).toBeVisible();
+      await expect(page.locator('.card-site .article-title').first()).toBeVisible();
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
       expect(overflow).toBe(false);
     }
 
     await page.setViewportSize({ width: 390, height: 844 });
-    const title = (await page.locator('.card-title').first().innerText()).trim();
-    await page.locator('.card').first().getByRole('button', { name: 'Enregistrer' }).click();
+    const title = (await page.locator('.card-site .article-title').first().innerText()).trim();
+    await page.locator('.card-site a[href^="#/article/"]').first().click();
+    await page.getByRole('button', { name: 'Enregistrer' }).first().click();
     await page.goto('/mobile/app/#/enregistres', { waitUntil: 'domcontentloaded' });
-    await expect(page.getByRole('heading', { level: 2, name: title })).toBeVisible();
+    await expect(page.locator('.card-site .article-title', { hasText: title }).first()).toBeVisible();
     await page.getByRole('link', { name: 'Explorer' }).click();
     await expect(page.getByRole('heading', { level: 1, name: 'Explorer' })).toBeVisible();
     await page.getByRole('link', { name: 'Recherche' }).click();
@@ -24,7 +25,7 @@ test.describe('application mobile', () => {
 
   test('fiche web noindex et lien vers la publication @ci-critical', async ({ page }) => {
     await page.goto('/mobile/app/#/accueil', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('.card-title').first()).toBeVisible();
+    await expect(page.locator('.card-site .article-title').first()).toBeVisible();
     const target = await page.evaluate(async () => {
       const news = await (await fetch('/news.json')).json();
       const item = news.items.find((entry) => entry && entry.title && entry.link && entry.source);
