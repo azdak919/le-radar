@@ -1,72 +1,79 @@
 {
-  "updatedAt": "2026-10-23T11:38:23.861Z",
+  "updatedAt": "2026-10-23T15:02:55.492Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
+      "current": {
+        "title": "Punk-o-rama",
+        "source": "api-live",
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://chyz.ca/emission/punk-o-rama/"
+      },
       "next": {
-        "title": "Vendredi Nostalgie",
-        "source": "schedule",
-        "start": "08:00",
-        "end": "10:00",
-        "url": "https://chyz.ca/emission/vendredi-nostalgie/"
+        "title": "Le Détour",
+        "source": "schedule-live",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "https://chyz.ca/emission/detour/"
       },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Punk-o-rama",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T11:37:44.984Z"
+      "checkedAt": "2026-10-23T15:02:16.108Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Toute est dans toute",
+        "title": "Accents ouverts",
         "source": "schedule",
-        "start": "07:00",
-        "end": "08:00",
-        "url": "https://cism893.ca/emissions/tout-est-dans-toute"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "https://cism893.ca/emissions/accents-ouverts"
       },
       "next": {
-        "title": "Quartier libre",
+        "title": "Rebelles soniques",
         "source": "schedule",
-        "start": "08:00",
-        "end": "09:00",
-        "url": "https://cism893.ca/emissions/quartier-libre"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/rebelles-soniques"
       },
       "track": "",
-      "showTitle": "Toute est dans toute",
+      "showTitle": "Accents ouverts",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T11:37:46.683Z"
+      "checkedAt": "2026-10-23T15:02:18.079Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Morning Detour",
+        "title": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
         "source": "api-live",
-        "start": "07:00",
-        "end": "09:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "next": {
-        "title": "Jazz Amuck",
+        "title": "Butcher T's Noontime Cuts",
         "source": "api-live",
-        "start": "09:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "14:00"
       },
       "track": "",
-      "showTitle": "Morning Detour",
+      "showTitle": "electronic intifada/Jewish Heretics/Radio AlHara/Alright, Now What?",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,59 +81,59 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T11:37:50.233Z"
+      "checkedAt": "2026-10-23T15:02:20.988Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Wake up Folks!",
+        "title": "The Alley",
         "source": "schedule-live",
-        "start": "06:00",
-        "end": "09:00",
-        "url": "http://www.cjlo.com/shows/wake-up-folks"
+        "start": "11:00",
+        "end": "12:00",
+        "url": "http://www.cjlo.com/shows/the-alley"
       },
       "next": {
-        "title": "CJLO News Hour",
+        "title": "Charts & Crafts",
         "source": "schedule-live",
-        "start": "09:00",
-        "end": "10:00",
-        "url": "http://www.cjlo.com/shows/cjlo-news-hour"
+        "start": "12:00",
+        "end": "13:00",
+        "url": "http://www.cjlo.com/shows/charts-and-crafts"
       },
       "track": "",
-      "showTitle": "Wake up Folks!",
+      "showTitle": "The Alley",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T11:38:04.770Z"
+      "checkedAt": "2026-10-23T15:02:35.960Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
       "current": {
-        "title": "Folkswagen",
+        "title": "Le Ré-Show : Deuxième service",
         "source": "schedule-live",
-        "start": "07:00",
-        "end": "08:00"
+        "start": "11:00",
+        "end": "12:00"
       },
       "next": {
-        "title": "Palmarès CFAK",
+        "title": "Ciné-Histoire",
         "source": "schedule-live",
-        "start": "08:00",
-        "end": "11:00"
+        "start": "12:00",
+        "end": "16:30"
       },
       "track": "",
-      "showTitle": "Folkswagen",
+      "showTitle": "Le Ré-Show : Deuxième service",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T11:38:05.575Z"
+      "checkedAt": "2026-10-23T15:02:36.894Z"
     },
     "choq": {
       "id": "choq",
@@ -147,7 +154,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-23T11:38:23.510Z"
+      "checkedAt": "2026-10-23T15:02:55.142Z"
     }
   }
 }
