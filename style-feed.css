@@ -1374,6 +1374,15 @@ html[data-translate-busy="1"] .translate-toggle {
   overflow-wrap: anywhere;
   word-break: break-word;
 }
+/* « Suite du fil » : vignette paysage 3:2 uniforme. Sans ce verrou, la règle
+   « .article-media:has(.article-media-credit) img » (16:9, plus spécifique)
+   l’emportait sur les cartes avec crédit et les autres restaient carrées. */
+.news-tail-body .article.article--thumb.has-image .article-media img {
+  aspect-ratio: 3 / 2;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
 /*
  * Vedettes + photo — grille 2 pistes (focus-group brief-more A).
  * Plus de float wrap (CTA orphelin). Une reste carrée, colonne.
