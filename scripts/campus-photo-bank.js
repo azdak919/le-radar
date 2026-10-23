@@ -266,11 +266,11 @@ const BANK = {
       tags: 'exterior campus quebec city casault pavilion',
     },
     {
-      url: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Park_in_Universit%C3%A9_Laval.jpg',
+      url: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Wooded_lawn_on_the_Universite_Laval_campus_at_dusk.jpg',
       title: 'Park in Université Laval',
       creator: 'Wilfredor',
       license: 'CC BY-SA 4.0',
-      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Park_in_Universit%C3%A9_Laval.jpg',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Wooded_lawn_on_the_Universite_Laval_campus_at_dusk.jpg',
       tags: 'exterior campus quebec city park green summer landscape',
     },
     {

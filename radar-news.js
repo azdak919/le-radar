@@ -3402,6 +3402,7 @@ function isThumbRoleName(role = '') {
 
 function hasUsablePhoto(item, role = 'lead') {
   if (articleImagePathRejected(item?.image)) return false;
+  if (articlePhotoTakenByOther(item)) return false;
   if (hasLocalPhoto(item)) return true;
   const forThumb = isThumbRoleName(role);
   return !!getCandidateImage(item?.image, { forThumb });
@@ -3425,6 +3426,7 @@ let backupClaimByKey = new Map();
 
 function resetBackupPhotoClaims() {
   backupClaimByKey = new Map();
+  articlePhotoClaimByKey = new Map();
 }
 
 function backupOwnerKey(item) {
@@ -3446,9 +3448,55 @@ function claimBackupPhoto(url, item) {
   return true;
 }
 
+/** Repli campus mort (404, ORB) : jamais re-proposé dans cette session. */
+const deadCampusPhotos = new Map();
+
+function markDeadCampusPhoto(url) {
+  const key = backupPhotoKey(url);
+  if (key) deadCampusPhotos.set(key, String(url).trim());
+}
+
+function isDeadCampusPhoto(url) {
+  const key = backupPhotoKey(url);
+  return !!key && deadCampusPhotos.has(key);
+}
+
+/** Photo d'article déjà affichée par une AUTRE carte : deux articles
+ *  différents ne montrent jamais la même image (ex. vignette « The Latest »
+ *  du Concordian reprise sur un billet voisin). */
+let articlePhotoClaimByKey = new Map();
+
+function articlePhotoKey(url) {
+  const raw = String(url || '').trim();
+  if (!raw) return '';
+  try {
+    const u = new URL(raw, 'https://le-radar.ca/');
+    // Variantes WP (-300x200, -scaled) = même image.
+    const path = u.pathname.replace(/-(?:\d+x\d+|scaled)(?=\.[a-z0-9]+$)/i, '').toLowerCase();
+    return `${u.host.replace(/^www\./, '')}${path}`;
+  } catch { return raw.toLowerCase(); }
+}
+
+function articlePhotoTakenByOther(item) {
+  const key = articlePhotoKey(item?.image);
+  if (!key) return false;
+  const prev = articlePhotoClaimByKey.get(key);
+  return !!prev && prev !== backupOwnerKey(item);
+}
+
+function claimArticlePhoto(item) {
+  const key = articlePhotoKey(item?.image);
+  if (!key) return true;
+  const me = backupOwnerKey(item);
+  const prev = articlePhotoClaimByKey.get(key);
+  if (prev && prev !== me) return false;
+  articlePhotoClaimByKey.set(key, me);
+  return true;
+}
+
 function backupAvoidUrls(item) {
   const me = backupOwnerKey(item);
-  const urls = [];
+  const urls = [...deadCampusPhotos.values()];
   for (const entry of backupClaimByKey.values()) {
     if (entry.owner !== me) urls.push(entry.url);
   }
@@ -3486,7 +3534,8 @@ function isThematicStock(item, role = 'lead') {
 function ensureCampusStock(item, { replace = false } = {}) {
   if (!item || typeof item !== 'object') return null;
   const existing = String(item.stockImage || '').trim();
-  const existingOk = existing && getCandidateImage(existing, { forThumb: true });
+  const existingOk = existing && getCandidateImage(existing, { forThumb: true })
+    && !(item.imageProvider === 'campus-bank' && isDeadCampusPhoto(existing));
   const existingIsCampus = item.imageProvider === 'campus-bank';
 
   // Photo thématique : pas un repli campus, on ne la déduplique pas ici.
@@ -3576,6 +3625,8 @@ function shouldPreferStockPhoto(item, role = 'lead') {
 function resolveDisplayImage(item, { preferPhoto = true, role = 'lead' } = {}) {
   const forThumb = isThumbRoleName(role);
   if (shouldPreferStockPhoto(item, role)) preferPhoto = false;
+  // Même image qu'une autre carte déjà rendue : repli propre à cet article.
+  if (preferPhoto && item?.image && !claimArticlePhoto(item)) preferPhoto = false;
 
   // 1) Photo d’article : miroir local, puis URL source (hôte fragile inclus).
   if (preferPhoto && hasLocalPhoto(item) && !articleImagePathRejected(item?.image)) {
@@ -3666,7 +3717,10 @@ function alternateDisplayImage(item, failedKind, role = 'lead', failedSrc = '') 
     if (different(remote)) return { src: remote, kind: 'photo' };
   }
   // Thématique morte → campus (on remplace le stock Openverse 404).
-  const replaceThematic = failedKind === 'stock' && item.imageProvider !== 'campus-bank';
+  // Campus mort (fichier renommé sur Commons → 404) → autre photo du campus.
+  const failedCampus = failedKind === 'stock' && item.imageProvider === 'campus-bank';
+  if (failedCampus) { markDeadCampusPhoto(failed); markDeadCampusPhoto(item.stockImage); }
+  const replaceThematic = failedKind === 'stock';
   ensureCampusStock(item, { replace: replaceThematic });
   if (hasStockPhoto(item, role)) {
     const stock = getCandidateImage(item.stockImage, { forThumb });
@@ -4163,7 +4217,9 @@ function attachArticleImage(article, item, role) {
         const alt = alternateDisplayImage(item, kind, role, src);
         if (alt.src && alt.src !== src) {
           settled = true;
-          loadImage(alt.src, alt.kind, alt.kind === 'photo');
+          // Stock → campus suivant : banque finie, URL mortes écartées,
+          // la chaîne se termine toujours.
+          loadImage(alt.src, alt.kind, alt.kind === 'photo' || alt.kind === 'stock');
         } else {
           failToText();
         }

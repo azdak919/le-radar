@@ -266,7 +266,7 @@ assert(
 );
 assert(
   require('../scripts/campus-photo-bank.js').BANK['universite laval']?.some((e) =>
-    /Park_in_Universit|Ferdinand-Vandry/i.test(e.url)
+    /Park_in_Universit|Wooded_lawn_on_the_Universite_Laval|Ferdinand-Vandry/i.test(e.url)
   ),
   'campus seed ULaval a parc ou Vandry',
 );

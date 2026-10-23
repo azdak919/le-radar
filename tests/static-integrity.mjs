@@ -301,7 +301,7 @@ assert(
   'Pouliot 07/08/09 restent les rejets labo',
 );
 assert(
-  /Park_in_Universit|Ferdinand-Vandry/i.test(uniData),
+  /Park_in_Universit|Wooded_lawn_on_the_Universite_Laval|Ferdinand-Vandry/i.test(uniData),
   'banque universities : remplacement ULaval (parc ou Vandry)',
 );
 const solitaireHtml = readFileSync(join(root, 'solitaire/index.html'), 'utf8');

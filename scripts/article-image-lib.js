@@ -547,6 +547,39 @@ function linksToOtherArticle(content = '', imgIndex = 0, baseUrl = '') {
   return /[a-z0-9]-[a-z0-9]/i.test(norm(target).split('/').pop() || '');
 }
 
+/**
+ * Retire les <article class="post-NNN"> d'AUTRES billets (panneau de
+ * recherche « The Latest », articles liés) : sinon articleBodyHtml peut
+ * prendre l'un d'eux pour le corps et sa vignette devient notre photo.
+ */
+function stripOtherPostArticles(html = '', pagePostId = '') {
+  if (!pagePostId) return html;
+  return html.replace(
+    /<article\b[^>]*\bclass=["'][^"']*\bpost-(\d+)\b[^>]*>[\s\S]*?<\/article>/gi,
+    (block, id) => (id === pagePostId ? block : ''),
+  );
+}
+
+/**
+ * <img> à l'intérieur d'un <article class="post-NNN"> d'un AUTRE billet
+ * (ex. panneau « The Latest » de la recherche du thème Concordian, listes
+ * d'articles liés). Le billet courant est donné par <body class="postid-NNN">.
+ */
+function insideOtherPostArticle(content = '', imgIndex = 0, pagePostId = '') {
+  const pageId = pagePostId
+    || (content.match(/<body[^>]*\bclass=["'][^"']*\bpostid-(\d+)/i) || [])[1];
+  const before = content.slice(Math.max(0, imgIndex - 4000), imgIndex);
+  const re = /<article\b[^>]*\bclass=["'][^"']*\bpost-(\d+)\b[^>]*>/gi;
+  let last = null;
+  let m;
+  while ((m = re.exec(before))) last = m;
+  if (!last) return false;
+  if (before.indexOf('</article>', last.index) >= 0) return false;
+  const id = last[1];
+  if (pageId) return id !== pageId;
+  return false;
+}
+
 function collectContentImages(content = '', extraRejectPatterns = [], options = {}, baseUrl = '') {
   const urls = [];
   const preferSizeFull = !!options.preferSizeFull;
@@ -561,6 +594,7 @@ function collectContentImages(content = '', extraRejectPatterns = [], options = 
     // Ce n'est pas la photo de cet article — sinon la même vignette se
     // retrouve sur tous les billets de la source.
     if (linksToOtherArticle(content, m.index, baseUrl)) continue;
+    if (insideOtherPostArticle(content, m.index, options.pagePostId)) continue;
     const alt = decodeEntities((tag.match(/\balt=["']([^"']*)["']/i) || [])[1] || '');
     if (/\b(?:antidote|publicit[eé]|annonceur|commandit[eé])\b/i.test(alt)) continue;
     let src = toAbsoluteImageUrl(rawSrc, baseUrl);
@@ -941,11 +975,14 @@ function listArticleImageCandidates(html = '', extraRejectPatterns = [], options
   html = stripAdSlots(stripStyleAndScript(html));
   // Plafond après strip : le CSS inline ne cache plus <article>.
   if (html && html.length > HTML_PARSE_CAP) html = html.slice(0, HTML_PARSE_CAP);
+  const pagePostId = (html.match(/<body[^>]*\bclass=["'][^"']*\bpostid-(\d+)/i) || [])[1] || '';
+  html = stripOtherPostArticles(html, pagePostId);
   const preferFirstContentImage = !!options.preferFirstContentImage;
   const imageRegion = preferFirstContentImage
     ? (articleBodyHtml(html) || articleImageRegions(html))
     : articleImageRegions(html);
-  const contentImages = collectContentImages(imageRegion, extraRejectPatterns, options, baseUrl);
+  const contentImages = collectContentImages(imageRegion, extraRejectPatterns,
+    pagePostId ? { ...options, pagePostId } : options, baseUrl);
   const demotePatterns = Array.isArray(options.demotePathPatterns) ? options.demotePathPatterns : [];
 
   const candidates = [];
@@ -1257,6 +1294,8 @@ module.exports = {
   clearMirroredLead,
   dropSharedSourceImages,
   linksToOtherArticle,
+  insideOtherPostArticle,
+  stripOtherPostArticles,
   cardFitBonus,
   captionLooksLikeCampaignGraphic,
   compareLeadCandidates,

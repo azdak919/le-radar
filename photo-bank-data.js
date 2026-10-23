@@ -2963,9 +2963,9 @@ const PHOTO_BANK = [
     surfaces: ["masthead"],
   },
   {
-    url: "https://upload.wikimedia.org/wikipedia/commons/3/3e/Park_in_Universit%C3%A9_Laval.jpg",
+    url: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Wooded_lawn_on_the_Universite_Laval_campus_at_dusk.jpg",
     credit: "Wilfredor",
-    link: "https://commons.wikimedia.org/wiki/File:Park_in_Universit%C3%A9_Laval.jpg",
+    link: "https://commons.wikimedia.org/wiki/File:Wooded_lawn_on_the_Universite_Laval_campus_at_dusk.jpg",
     license: "CC BY-SA 4.0",
     title: "Park in Université Laval",
     place: "Université Laval",

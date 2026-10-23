@@ -1077,7 +1077,10 @@ async function main() {
 
   // Image partagée par >= 3 billets d'une source = visuel générique : la
   // retirer pour forcer un ré-enrichissement depuis la page de chaque article.
-  const sharedBefore = dropSharedSourceImages(all);
+  // Même image sur 2 billets différents d'une source : au moins un l'a prise
+  // d'un bloc voisin (vignette « The Latest », article lié). On la retire
+  // des deux et chacun se ré-enrichit depuis sa propre page.
+  const sharedBefore = dropSharedSourceImages(all, 2);
   if (sharedBefore) console.log(`↻ ${sharedBefore} images génériques (partagées par source) retirées`);
   console.log('\nPhase enrichissement (images / extraits manquants)…');
   await enrichItems(all, feedDefaults, sourceByName);
