@@ -1,24 +1,78 @@
 {
-  "updated": "2026-10-23T01:33:25.509Z",
+  "updated": "2026-10-23T03:59:15.802Z",
   "total": 178,
   "withPhoto": 159,
-  "withStock": 39,
+  "withStock": 45,
   "withCampusBank": 25,
   "fullyCovered": 178,
-  "leadReadyPhotos": 141,
-  "pageScraped": 24,
-  "photosRecovered": 24,
-  "imagesCleared": 4,
-  "stockSearches": 40,
-  "stockFound": 33,
+  "leadReadyPhotos": 106,
+  "pageScraped": 21,
+  "photosRecovered": 21,
+  "imagesCleared": 3,
+  "stockSearches": 75,
+  "stockFound": 39,
   "campusBankFound": 20,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "NAZA : enquête sur les rouages des frappes israéliennes sur Gaza.",
+      "link": "https://quartierlibre.ca/naza-enquete-israel-gaza/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/Naza_Photo.png"
+    },
+    {
+      "title": "Une Halloween effrayante dans le quartier universitaire",
+      "link": "https://lecollectif.ca/a-la-une/une-halloween-effrayante-dans-le-quartier-universitaire/",
+      "reason": "no-stock-match",
+      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/Halloween_QU2025.jpg"
+    },
+    {
+      "title": "« Mon voile ne change pas ma façon d’enseigner »",
+      "link": "https://quartierlibre.ca/loi-94-voile-ensiegnement/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/6-7_stage.jpg"
+    },
+    {
+      "title": "La garantie de bon fonctionnement, une vielle loi enfin claire",
+      "link": "https://lapige.atmjonquiere.com/2026/10/22/la-garantie-de-bon-fonctionnement-une-vielle-loi-enfin-claire/?utm_source=rss&utm_medium=rss&utm_campaign=la-garantie-de-bon-fonctionnement-une-vielle-loi-enfin-claire",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_1638.jpeg"
+    },
+    {
+      "title": "Démission de Christine Fréchette : quel avenir pour la CAQ ?",
+      "link": "https://lecollectif.ca/societe/demission-de-christine-frechette-quel-avenir-pour-la-caq/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/71/Christine_Fr%C3%A9chette.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "F(R)ICTION : quand le jeu vidéo devient une expérience artistique",
+      "link": "https://quartierlibre.ca/friction-jeu-video-art/",
+      "reason": "no-stock-match",
+      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/image1-1.jpg"
+    },
     {
       "title": "Reportages radio du 19 octobre 2026",
       "link": "https://lapige.atmjonquiere.com/2026/10/20/reportages-radio-du-19-octobre-2026/?utm_source=rss&utm_medium=rss&utm_campaign=reportages-radio-du-19-octobre-2026",
       "reason": "no-stock-match",
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0117.jpg"
+    },
+    {
+      "title": "Réserves stratégiques de sirop d’érable du Québec à sec",
+      "link": "https://lapige.atmjonquiere.com/2026/10/19/reserves-strategiques-de-sirop-derable-du-quebec-a-sec/?utm_source=rss&utm_medium=rss&utm_campaign=reserves-strategiques-de-sirop-derable-du-quebec-a-sec",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/IMG_20261019_171119749_HDR-scaled.jpg"
+    },
+    {
+      "title": "Fin de la saison de chasse à l’orignal 2026 au Saguenay-Lac-Saint-Jean",
+      "link": "https://lapige.atmjonquiere.com/2026/10/19/fin-de-la-saison-de-chasse-a-lorignal-2026-au-saguenay-lac-saint-jean/?utm_source=rss&utm_medium=rss&utm_campaign=fin-de-la-saison-de-chasse-a-lorignal-2026-au-saguenay-lac-saint-jean",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/photo-troisioo.jpg"
+    },
+    {
+      "title": "Un nouveau restaurant s’installe au Club Option GSS à Kénogami",
+      "link": "https://lapige.atmjonquiere.com/2026/10/19/un-nouveau-restaurant-sinstalle-au-club-option-gss-a-kenogami/?utm_source=rss&utm_medium=rss&utm_campaign=un-nouveau-restaurant-sinstalle-au-club-option-gss-a-kenogami",
+      "reason": "no-stock-match",
+      "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/10/Image-4.jpg"
     },
     {
       "title": "Bulletins de nouvelles La Pige Radio",
@@ -27,64 +81,10 @@
       "image": "https://lapige.atmjonquiere.com/wp-content/uploads/sites/3/2026/08/DSC0108.jpg"
     },
     {
-      "title": "Movember : au-delà de la moustache",
-      "link": "https://lecollectif.ca/societe/movember-au-dela-de-la-moustache/",
-      "reason": "no-stock-match",
-      "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SOCIETE_Movember-au-dela-de-la-moustache_Getty-Images.jpg"
-    },
-    {
-      "title": "Health First!",
-      "link": "https://www.mcgilldaily.com/2026/10/health-first/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
-    },
-    {
-      "title": "Shawarm-off!",
-      "link": "https://www.mcgilldaily.com/2026/10/shawarm-off/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg"
-    },
-    {
-      "title": "A Tradition on the Edge: The Future of Homecoming",
-      "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
       "title": "Horoscope September 2026",
       "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
-    },
-    {
-      "title": "Battling Adversity",
-      "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Bishop_Otter_Campus%2C_University_of_Chichester_-_geograph.org.uk_-_2726552.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "“Decolonization”",
-      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
-    },
-    {
-      "title": "Opinion – L’hypocrisie qui rampe à l’Assemblée nationale",
-      "link": "https://exilecvm.wordpress.com/2026/04/18/opinion-lhypocrisie-qui-rampe-a-lassemblee-nationale/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Assembl%C3%A9e_nationale_du_Qu%C3%A9bec%2C_l%27H%C3%B4tel_du_Parlement%2C_fa%C3%A7ade_avec_ancien_entr%C3%A9_principal.jpg"
-    },
-    {
-      "title": "Creative Writing September 2026",
-      "link": "https://theplantnews.com/2026/10/13/creative-writing-september-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
-    },
-    {
-      "title": "Le pays avant tout – esquisse",
-      "link": "https://exilecvm.wordpress.com/2026/02/28/le-pays-avant-tout-esquisse/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG"
     }
   ]
 }
