@@ -14,7 +14,56 @@ function json(value, status = 200, extra = {}) {
   });
 }
 
+// ── Cron : relance la boucle live GitHub (le cron */5 de GitHub est peu fiable) ──
+const REPO = 'azdak919/le-radar';
+const WORKFLOW = 'update-sports-live.yml';
+const WINDOW_URL = 'https://le-radar.ca/sports-live-window.json';
+const LEAD_MS = 75 * 60 * 1000;
+
+/** Un coup d’envoi est-il dans [−lead, +tail] autour de maintenant ? */
+export function needsLiveLoop(win, now = Date.now()) {
+  const tail = Number(win && win.tailMs) || 3 * 3600 * 1000;
+  const list = (win && Array.isArray(win.kickoffs)) ? win.kickoffs : [];
+  return list.some((t) => Number.isFinite(t) && t - LEAD_MS <= now && now <= t + tail);
+}
+
+async function gh(env, path, init = {}) {
+  return fetch(`https://api.github.com/repos/${REPO}${path}`, {
+    ...init,
+    headers: {
+      Authorization: `Bearer ${env.RADAR_GH_ACTIONS_TOKEN}`,
+      Accept: 'application/vnd.github+json',
+      'User-Agent': 'le-radar-presto-cron',
+      'X-GitHub-Api-Version': '2022-11-28',
+      ...(init.headers || {}),
+    },
+  });
+}
+
+export async function maybeDispatch(env, now = Date.now()) {
+  if (!env.RADAR_GH_ACTIONS_TOKEN) return 'no_token';
+  const w = await fetch(`${WINDOW_URL}?_=${Math.floor(now / 60000)}`, { cf: { cacheTtl: 60 } });
+  if (!w.ok) return `window_http_${w.status}`;
+  if (!needsLiveLoop(await w.json(), now)) return 'idle';
+  for (const status of ['in_progress', 'queued']) {
+    const r = await gh(env, `/actions/workflows/${WORKFLOW}/runs?status=${status}&per_page=1`);
+    if (!r.ok) return `runs_http_${r.status}`;
+    const j = await r.json();
+    if (j.total_count > 0) return `already_${status}`;
+  }
+  const d = await gh(env, `/actions/workflows/${WORKFLOW}/dispatches`, {
+    method: 'POST',
+    body: JSON.stringify({ ref: 'main' }),
+    headers: { 'Content-Type': 'application/json' },
+  });
+  return d.status === 204 ? 'dispatched' : `dispatch_http_${d.status}`;
+}
+
 export default {
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(maybeDispatch(env, event.scheduledTime).then((r) => console.log(`cron live: ${r}`)));
+  },
+
   async fetch(request) {
     if (request.method !== 'GET') return json({ error: 'method_not_allowed' }, 405);
     const url = new URL(request.url);

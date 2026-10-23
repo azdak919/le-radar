@@ -73,7 +73,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           push_live() {
-            git add sports.json sports-masthead.json
+            git add sports.json sports-masthead.json sports-live-window.json
             if git diff --staged --quiet; then
               echo "No live sports changes."
               return 0

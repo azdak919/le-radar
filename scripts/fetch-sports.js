@@ -1025,6 +1025,26 @@ function writeSportsFiles(payload) {
     `${JSON.stringify(buildSportsMastheadPayload(payload))}\n`,
     'utf8',
   );
+  // Petit index lu par le cron du Worker le-radar-presto : déclenche la boucle
+  // live seulement autour des coups d’envoi (sports.json ≈ 2 Mo, trop lourd).
+  fs.writeFileSync(
+    path.join(ROOT, 'sports-live-window.json'),
+    `${JSON.stringify(buildLiveWindow(payload))}\n`,
+    'utf8',
+  );
+}
+
+/** Coups d’envoi (ms UTC) de −3 h à +7 jours, triés, dédoublonnés. */
+function buildLiveWindow(payload, now = Date.now()) {
+  const set = new Set();
+  for (const team of Object.values((payload && payload.teams) || {})) {
+    for (const g of [team && team.nextGame, ...((team && team.nextGames) || [])]) {
+      if (!g || g.final === true) continue;
+      const t = SportsLive.gameMs(g);
+      if (Number.isFinite(t) && t >= now - SportsLive.LIVE_TAIL_MS && t <= now + 7 * 86400000) set.add(t);
+    }
+  }
+  return { v: 1, tailMs: SportsLive.LIVE_TAIL_MS, kickoffs: [...set].sort((a, b) => a - b) };
 }
 
 const SAILING_NOTE = 'Tous sports RSEQ S1 sans exclusion + hockey Spordle + voile ICSA et CICSA (clubs QC). Fraîcheur B (session en cours + 2 préc. ; next ≤ session suivante). Sources en panne : snapshot précédent conservé.';
