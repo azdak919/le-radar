@@ -127,7 +127,9 @@ async function init() {
   ]);
 
   radios = radiosData.status === 'fulfilled'
-    ? sortRadios(radiosData.value).filter((r) => getPlayableStream(r))
+    ? sortRadios(radiosData.value)// « silent » : flux muet confirmé par le bot (2 contrôles) — masqué
+    // temporairement, revient seul quand le son revient.
+    .filter((r) => r._streamStatus !== 'silent' && getPlayableStream(r))
     : [];
   wideDialFixedPx = 0;
   radioNowPlaying = nowPlayingData.status === 'fulfilled'

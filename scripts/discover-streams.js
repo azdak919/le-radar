@@ -24,6 +24,7 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const http = require('http');
+const silence = require('./stream-silence-lib');
 
 const RADIOS_PATH = path.join(__dirname, '..', 'radios.json');
 const CANDIDATES_PATH = path.join(__dirname, '..', 'radios-candidates.json');
@@ -644,7 +645,13 @@ async function main() {
     console.log(`→ ${radio.fullName || radio.name} (${radio.id})`);
 
     const discovery = await discoverForRadio(radio);
-    const newEntry = applyStreamToRadio(radio, discovery);
+    let newEntry = applyStreamToRadio(radio, discovery);
+    if (newEntry.stream && !args.includes('--no-audio')) {
+      const sample = await silence.sampleStreamLoudness(newEntry.stream);
+      newEntry = silence.applySilenceSample(newEntry, radio, sample);
+      if (!sample) console.log('   ? échantillon audio raté — statut inchangé');
+      else console.log(`   ♪ ${sample.meanDb} dB moyen → ${newEntry._streamStatus}${newEntry._silentStreak ? ` (silence ${newEntry._silentStreak}/${silence.SILENT_STREAK_REQUIRED})` : ''}`);
+    }
 
     if (discovery.stream) {
       const tags = [

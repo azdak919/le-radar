@@ -494,6 +494,8 @@
       const name = String((radio && (radio.name || radio.fullName)) || '').trim();
       const id = slugify((radio && radio.id) || name);
       if (!id || !name) return null;
+      // Flux muet confirmé par le bot : masqué jusqu'au retour du son.
+      if (radio._streamStatus === 'silent') return null;
       return {
         id,
         name,
