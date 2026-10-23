@@ -55,9 +55,10 @@ const follows = ['la-pige'];
 const hidden = ['le-delit'];
 assert.deepEqual(core.filterFeed(items, { mode: 'follows', follows, hidden }).map((item) => item.title), ['A']);
 assert.equal(core.filterFeed(items, { mode: 'all', hidden }).length, 2);
-assert.equal(core.filterFeed(items, { mode: 'regions', regions: ['Montréal'], hidden }).length, 1);
-assert.equal(core.filterFeed(items, { mode: 'keywords', keywords: ['election'] }).length, 1);
-assert.equal(core.filterFeed(items, { mode: 'keywords', keywords: ['z'] }).length, 0);
+// Suivis régions / mots-clés retirés : seuls « tout » et les médias suivis (site) filtrent.
+assert.equal(core.filterFeed(items, { mode: 'regions', regions: ['Montréal'] }).length, 3);
+assert.equal(core.homeMode('mots', []), 'tout');
+assert.equal(core.homeMode('regions', ['x']), 'suivis');
 assert.equal(core.searchFeed(items, 'logement', hidden).length, 1);
 assert.equal(core.searchFeed(items, 'a', []).length, 0);
 
@@ -94,28 +95,15 @@ assert.equal(core.systemNotificationsActive(prefs), false);
 prefs = core.updateNotifications(prefs, { enabled: true, follows: true });
 assert.equal(prefs.notifications.enabled, true);
 assert.equal(core.systemNotificationsActive(prefs), false);
-prefs = core.addKeyword(prefs, 'élection');
-prefs = core.addKeyword(prefs, 'Election');
-prefs = core.addKeyword(prefs, 'a');
-assert.deepEqual(prefs.keywords, ['élection']);
-prefs = core.removeKeyword(prefs, 'election');
-assert.equal(prefs.keywords.length, 0);
+assert.equal(core.addKeyword, undefined);
+assert.equal('keywords' in core.normalizePrefs({ keywords: ['x'], regions: ['y'], seenAt: '2026-01-01' }), false);
 prefs = core.setHidden(prefs, 'Le Délit', true);
 assert.equal(core.isHidden(prefs, 'le-delit'), true);
 prefs = core.setHidden(prefs, 'Le Délit', false);
 assert.equal(core.isHidden(prefs, 'le-delit'), false);
-prefs = core.setRegionFollow(prefs, 'Montréal', true);
-assert.ok(prefs.regions.includes('montreal'));
 prefs = core.setTheme(prefs, 'bleu');
 assert.equal(prefs.theme, 'system');
-prefs = core.markSeen(prefs, '2026-09-01T00:00:00.000Z');
-assert.equal(core.countFreshFollows(items, ['Quartier Libre'], prefs.seenAt), 0);
-assert.equal(core.countFreshFollows(
-  [{ source: 'Quartier Libre', date: '2026-09-02T00:00:00.000Z' }],
-  ['Quartier Libre'],
-  prefs.seenAt,
-), 1);
-assert.equal(core.countFreshFollows(items, [], prefs.seenAt), 0);
+assert.equal(core.countFreshFollows, undefined);
 
 const picked = core.pickFeed({
   online: false,

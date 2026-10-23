@@ -13,7 +13,7 @@
   const LIBRARY_KEY = 'radar-mobile-library-v1';
   const PREFS_KEY = 'radar-mobile-prefs-v1';
   const SNAPSHOT_KEY = 'radar-mobile-snapshot-v1';
-  const LIMITS = { favorites: 200, history: 80, keywords: 24, excerpt: 280, snapshot: 200 };
+  const LIMITS = { favorites: 200, history: 80, excerpt: 280, snapshot: 200 };
   const NOTIFICATION_KEYS = ['enabled', 'follows', 'digest', 'newMedia'];
 
   function slugify(value = '') {
@@ -107,6 +107,10 @@
       date: typeof item.date === 'string' ? item.date : '',
       excerpt: clip(item.leadExcerpt || item.excerpt || ''),
       image: safeHttpUrl(item.image),
+      // Photo mirroirée par le site (assets/news-images/…) : même image que le-radar.ca.
+      imageLocal: /^assets\/news-images\/[a-z0-9]+\.(?:jpe?g|png|webp|gif)$/i.test(String(item.imageLocal || '')) ? String(item.imageLocal) : '',
+      imageCreator: String(item.sourceImageCreator || '').trim(),
+      imageCreditUrl: safeHttpUrl(item.sourceImageCreditUrl) || '',
       institution: String(item.institution || '').trim(),
       author: String(item.author || '').trim(),
       region: String(item.region || '').trim(),
@@ -127,9 +131,6 @@
       v: 1,
       theme: 'system',
       hidden: [],
-      regions: [],
-      keywords: [],
-      seenAt: '',
       notifications: defaultNotifications(),
     };
   }
@@ -167,36 +168,16 @@
     };
   }
 
-  function normalizeKeyword(value) {
-    return String(value || '').replace(/\s+/g, ' ').trim();
-  }
-
   function normalizePrefs(prefs) {
     const source = prefs && typeof prefs === 'object' ? prefs : {};
     const theme = source.theme === 'light' || source.theme === 'dark' ? source.theme : 'system';
-    const keywords = [];
-    const seenWords = new Set();
-    for (const value of source.keywords || []) {
-      const word = normalizeKeyword(value);
-      const key = fold(word);
-      if (key.length < 2 || key.length > 40 || seenWords.has(key)) continue;
-      seenWords.add(key);
-      keywords.push(word);
-      if (keywords.length >= LIMITS.keywords) break;
-    }
     const notes = defaultNotifications();
     const incoming = source.notifications && typeof source.notifications === 'object' ? source.notifications : {};
     for (const key of NOTIFICATION_KEYS) notes[key] = Boolean(incoming[key]);
-    const seenAt = typeof source.seenAt === 'string' && !Number.isNaN(Date.parse(source.seenAt))
-      ? new Date(source.seenAt).toISOString()
-      : '';
     return {
       v: 1,
       theme,
       hidden: uniqueSlugs(source.hidden),
-      regions: uniqueSlugs(source.regions),
-      keywords,
-      seenAt,
       notifications: notes,
     };
   }
@@ -264,34 +245,6 @@
     return Boolean(slug) && normalizePrefs(prefs).hidden.includes(slug);
   }
 
-  function setRegionFollow(prefs, region, followed) {
-    const current = normalizePrefs(prefs);
-    const slug = slugify(region);
-    if (!slug) return current;
-    const has = current.regions.includes(slug);
-    if (followed && !has) return normalizePrefs({ ...current, regions: [...current.regions, slug] });
-    if (!followed && has) return normalizePrefs({ ...current, regions: current.regions.filter((item) => item !== slug) });
-    return current;
-  }
-
-  function addKeyword(prefs, raw) {
-    const current = normalizePrefs(prefs);
-    const word = normalizeKeyword(raw);
-    const key = fold(word);
-    if (key.length < 2 || key.length > 40) return current;
-    if (current.keywords.some((item) => fold(item) === key)) return current;
-    return normalizePrefs({ ...current, keywords: [...current.keywords, word] });
-  }
-
-  function removeKeyword(prefs, raw) {
-    const current = normalizePrefs(prefs);
-    const key = fold(raw);
-    return normalizePrefs({
-      ...current,
-      keywords: current.keywords.filter((item) => fold(item) !== key),
-    });
-  }
-
   function updateNotifications(prefs, patch) {
     const current = normalizePrefs(prefs);
     const next = { ...current.notifications };
@@ -304,13 +257,6 @@
   /** v1 : aucun canal système. Les préférences restent locales pour un service futur. */
   function systemNotificationsActive() {
     return false;
-  }
-
-  function markSeen(prefs, iso) {
-    const when = typeof iso === 'string' && !Number.isNaN(Date.parse(iso))
-      ? new Date(iso).toISOString()
-      : new Date().toISOString();
-    return normalizePrefs({ ...normalizePrefs(prefs), seenAt: when });
   }
 
   function setTheme(prefs, theme) {
@@ -333,8 +279,6 @@
   function filterFeed(items, options = {}) {
     const follows = new Set((options.follows || []).map(slugify).filter(Boolean));
     const hidden = new Set((options.hidden || []).map(slugify).filter(Boolean));
-    const regions = new Set((options.regions || []).map(slugify).filter(Boolean));
-    const keywords = (options.keywords || []).map(normalizeKeyword).filter((word) => fold(word).length >= 2);
     const mode = options.mode || 'all';
     const out = [];
     for (const item of items || []) {
@@ -342,24 +286,9 @@
       const sourceId = slugify(item.sourceId || item.source);
       if (!sourceId || hidden.has(sourceId)) continue;
       if (mode === 'follows' && !follows.has(sourceId)) continue;
-      if (mode === 'regions' && !regions.has(slugify(item.region))) continue;
-      if (mode === 'keywords' && !matchesKeyword(item, keywords)) continue;
       out.push(item);
     }
     return out;
-  }
-
-  function countFreshFollows(items, follows, sinceIso) {
-    const ids = new Set((follows || []).map(slugify).filter(Boolean));
-    const since = Date.parse(sinceIso || '');
-    if (!ids.size || Number.isNaN(since)) return 0;
-    let count = 0;
-    for (const item of items || []) {
-      if (!ids.has(slugify(item && (item.sourceId || item.source)))) continue;
-      const when = Date.parse(item && item.date);
-      if (!Number.isNaN(when) && when > since) count += 1;
-    }
-    return count;
   }
 
   function searchFeed(items, query, hidden = []) {
@@ -604,7 +533,7 @@
   }
 
   function homeMode(filter, follows) {
-    if (filter === 'tout' || filter === 'suivis' || filter === 'mots' || filter === 'regions') return filter;
+    if (filter === 'tout' || filter === 'suivis') return filter;
     return follows && follows.length ? 'suivis' : 'tout';
   }
 
@@ -636,15 +565,10 @@
     clearLibrary,
     setHidden,
     isHidden,
-    setRegionFollow,
-    addKeyword,
-    removeKeyword,
     updateNotifications,
     systemNotificationsActive,
-    markSeen,
     setTheme,
     filterFeed,
-    countFreshFollows,
     searchFeed,
     findById,
     parseDeepLink,
