@@ -2579,6 +2579,8 @@ function balanceMagazineColumns() {
 
   magazineBalanceBusy = true;
   magazineBalanceQueued = false;
+  // Mesurer la hauteur naturelle (sans étirement des cartes).
+  brief.classList.remove('brief-rail--spread');
   const isSourceMode = NEWS_LIST.dataset.mode === 'source';
   const mid = !isSourceMode && isMidwidthMagazinePreview();
   const wideE = typeof isWideNoMarqueeMode === 'function' && isWideNoMarqueeMode();
@@ -2725,32 +2727,15 @@ function balanceMagazineColumns() {
     }
   };
 
-  /** Trou résiduel sous En bref (< 1 carte complète, > GOOD_GAP_MAX) :
-   *  la carte suivante dépasserait le hero, donc on l’ajoute en version
-   *  « mini » (titre + byline, sans photo ni extrait) si elle tient. */
-  const fillBriefGapWithMiniCards = () => {
-    if (briefCols > 1) return;
-    let guard = 0;
-    while (guard < 4) {
-      guard += 1;
-      const gap = magazineColumnContentHeight(hero) - magazineColumnContentHeight(brief);
-      if (gap <= GOOD_GAP_MAX * 0.6) return;
-      if (!magazineReserve.length) return;
-      if (brief.querySelectorAll('.article--compact').length >= briefSidebarMaxSlots()) return;
-      const item = takeNextBriefFromReserve({ allowExtra: true, allowHeroInstitution: isSourceMode });
-      if (!item) return;
-      const el = safeCreateArticle(item, 'compact');
-      if (!el) return;
-      el.classList.add('article--compact-mini');
-      appendBeforeMagazineSpacer(brief, el);
-      const overshoot = magazineColumnContentHeight(brief) - magazineColumnContentHeight(hero);
-      if (overshoot > tol) {
-        demoteBriefCardToTail(brief, el);
-        return;
-      }
-      markPromotedToBrief(item);
-      removeTailArticleForItem(item);
-    }
+  /** Trou résiduel sous En bref (< 1 carte complète) : plutôt que d’ajouter
+   *  une carte tronquée (les anciennes « mini » avaient l’air cassées), on
+   *  répartit l’espace restant entre les cartes (CSS .brief-rail--spread,
+   *  flex-grow). Le bas de la colonne s’aligne sur les vedettes, même après
+   *  le chargement tardif des images, sans carte orpheline. */
+  const applyBriefSpread = () => {
+    const single = briefCols < 2;
+    const cards = brief.querySelectorAll('.article--compact').length;
+    brief.classList.toggle('brief-rail--spread', single && cards >= 2);
   };
 
   try {
@@ -2781,7 +2766,6 @@ function balanceMagazineColumns() {
     if (purgeBriefCardsFromHeroInstitutions(brief)) trimBriefIfTaller();
     trimBriefOrphanRow();
     completeLastBriefRow();
-    fillBriefGapWithMiniCards();
 
     // --- 4) Midwidth : priorité = zéro grand vide sous les vedettes.
     // (Le spacer flex sous le hero est très visible en rail étroit.)
@@ -2867,6 +2851,7 @@ function balanceMagazineColumns() {
       }
     }
   } finally {
+    applyBriefSpread();
     window.setTimeout(() => {
       magazineBalanceBusy = false;
       if (magazineBalanceQueued) {

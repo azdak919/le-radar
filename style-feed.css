@@ -1638,7 +1638,11 @@ html[data-translate-busy="1"] .translate-toggle {
 
 .news-empty { text-align: center; color: var(--muted); padding: 60px 0; }
 
-/* En bref « mini » : comble le dernier trou sous la colonne (titre + byline). */
-.brief-rail .article--compact-mini.article--thumb.has-image { display: block; }
-.brief-rail .article--compact-mini .article-media,
-.brief-rail .article--compact-mini .article-brief { display: none !important; }
+/* En bref : le trou résiduel (< 1 carte) est réparti entre les cartes pour
+   que la colonne finisse au même niveau que les vedettes (pas de carte mini). */
+@media (min-width: 768px) {
+  .brief-rail.brief-rail--spread > .article--compact { flex: 1 0 auto; }
+  .brief-rail.brief-rail--spread > .brief-rail-spacer { flex: 0 0 0; }
+  /* Wide E 1 col : la grille n’étire pas ses rangées → flex en mode spread. */
+  html[data-wide-preview] .brief-rail.brief-rail--spread { display: flex; flex-direction: column; }
+}
