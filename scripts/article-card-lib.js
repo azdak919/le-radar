@@ -34,7 +34,24 @@ function stripEmbeddedCss(title = '') {
 
 /** Retire puces / symboles en tête, mais garde chiffres et lettres (« 14 bourses… »). */
 function stripLeadingNonLetters(title = '') {
-  return String(title).replace(/^[^\p{L}\p{N}]+/u, '').trim();
+  const t = String(title);
+  // Garder un guillemet ouvrant en tête (« Citation ») — sinon le titre
+  // affiché devient déséquilibré « Citation » » → « Citation » ».
+  const m = t.match(/^[^\p{L}\p{N}]*?([«“"‘]\s*)(?=[\p{L}\p{N}])/u);
+  if (m) {
+    const q = m[1].trim();
+    return `${q === '«' ? '« ' : q}${t.slice(m[0].length)}`.trim();
+  }
+  return t.replace(/^[^\p{L}\p{N}]+/u, '').trim();
+}
+
+/** » sans « : restaurer le guillemet ouvrant (citation en ouverture). */
+function balanceGuillemets(title = '') {
+  const t = String(title).trim();
+  const opens = (t.match(/«/g) || []).length;
+  const closes = (t.match(/»/g) || []).length;
+  if (closes > opens && opens === 0 && closes === 1) return `« ${t}`;
+  return t;
 }
 
 /** Aligné sur scripts/html-entities-lib.js — inclut &eacute;, &ccedil;, etc. */
@@ -103,7 +120,7 @@ function cleanTitle(title = '') {
   t = t.replace(/\bMc\s+Gill\b/g, 'McGill');
   const prefix = t.match(MC_CATEGORY_PREFIX);
   if (prefix) t = t.slice(prefix[0].length).trim();
-  t = stripLeadingNonLetters(t);
+  t = balanceGuillemets(stripLeadingNonLetters(t));
   // Titres doubles sans ponctuation (ex. « Magazines à potins En papier… »)
   return t.replace(
     /([\p{Ll}àâäéèêëïîôùûüç'’])\s+(En|Le|La|Les|L'|L'|Un|Une|The|A|An)\s+/gu,

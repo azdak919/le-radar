@@ -90,3 +90,15 @@ console.log('news-title-lib: ok');
   eq(strip('Critique : Le dernier album'), 'Le dernier album');
   console.log('MC_CATEGORY_PREFIX : pas d’amputation de mot ✓');
 }
+
+{
+  // Affichage (article-card-lib.cleanTitle) : ne pas perdre le « ouvrant.
+  const { cleanTitle } = require('../scripts/article-card-lib.js');
+  const eq = (a, b) => assert.equal(a, b);
+  eq(cleanTitle('« Mon voile ne change pas ma façon d’enseigner »'), '« Mon voile ne change pas ma façon d’enseigner »');
+  eq(cleanTitle('• « Citation » : suite'), '« Citation » : suite');
+  eq(cleanTitle('Mon voile ne change pas »'), '« Mon voile ne change pas »');
+  eq(cleanTitle('“Quote” here'), '“Quote” here');
+  eq(cleanTitle('— Titre simple'), 'Titre simple');
+  console.log('cleanTitle : guillemets équilibrés ✓');
+}
