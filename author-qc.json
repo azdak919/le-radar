@@ -1,18 +1,10 @@
 {
-  "updated": "2026-10-23T18:33:22.062Z",
+  "updated": "2026-10-23T19:59:07.174Z",
   "total": 168,
   "withAuthor": 168,
-  "mismatches": 18,
+  "mismatches": 16,
   "ok": true,
   "samples": [
-    {
-      "title": "Comment bien habiter le campus ?",
-      "link": "https://quartierlibre.ca/bien-habiter-le-campus/",
-      "source": "Quartier Libre",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Simone Gingras",
-      "reason": "page-byline"
-    },
     {
       "title": "Movember : au-delà de la moustache",
       "link": "https://lecollectif.ca/societe/movember-au-dela-de-la-moustache/",
@@ -94,14 +86,6 @@
       "reason": "no-author-source"
     },
     {
-      "title": "From Scripts to Stage: BU New Plays 2026",
-      "link": "https://thebucampus.ca/2026/09/30/from-scripts-to-stage-bu-new-plays-2026/",
-      "source": "The Campus",
-      "fieldAuthor": "Zachary Jaimes",
-      "canonicalAuthor": "Zachary Jaimes Saint Cyr",
-      "reason": "page-byline-overrides-rss"
-    },
-    {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://www.thetribune.ca/opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "source": "The Tribune",
@@ -150,5 +134,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 18
+  "fixed": 16
 }

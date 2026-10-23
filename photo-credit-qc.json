@@ -1,28 +1,35 @@
 {
-  "updated": "2026-10-23T18:38:29.906Z",
+  "updated": "2026-10-23T20:01:20.129Z",
   "total": 168,
   "withImage": 150,
   "withCredit": 150,
-  "cited": 98,
+  "cited": 96,
   "pending": 38,
   "missingHero": 0,
   "ok": false,
-  "checked": 61,
-  "updatedCount": 61,
-  "citedNew": 9,
-  "fallbackNew": 52,
+  "checked": 47,
+  "updatedCount": 10,
+  "citedNew": 7,
+  "fallbackNew": 40,
   "samples": [
     {
-      "title": "Student Spotlight: Farabi Khaleque",
-      "source": "The Concordian",
-      "credit": "Photo: Saima Mazumder // _saimamazumder // The Concordian",
+      "title": "La région se mobilise pour le trouble développemental du langage",
+      "source": "La Pige",
+      "credit": "Photo : Émile Barthe",
       "cited": true,
-      "method": "wp-media-caption"
+      "method": "body-line"
     },
     {
-      "title": "The Honey Bank: CSU’s sustainability initiatives",
-      "source": "The Concordian",
-      "credit": "Photo: The Concordian",
+      "title": "Retour aux sources pour le directeur artistique du film La place",
+      "source": "La Pige",
+      "credit": "Photo : Film du Québec",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "The different sides of Montreal’s nightlife",
+      "source": "The Link",
+      "credit": "Photo: The Link",
       "cited": false,
       "method": null
     },
@@ -34,67 +41,46 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "S.O.S. Huîtres menacées",
+      "title": "Est-ce que je dois un bébé à l’État ?",
       "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
       "method": "media-credit-featured"
     },
     {
-      "title": "QUICKSPIN: Remi Wolf — Mud",
+      "title": "Le « self-care » : qui valide votre repos ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Looking back at my journey walking El Camino de Santiago",
       "source": "The Concordian",
       "credit": "Photo: The Concordian",
       "cited": false,
       "method": null
     },
     {
-      "title": "Our circle matters",
+      "title": "Stingers men’s soccer team earns first win of the season",
       "source": "The Concordian",
       "credit": "Photo: The Concordian",
       "cited": false,
       "method": null
     },
     {
-      "title": "Reportages radio du 19 octobre 2026",
-      "source": "La Pige",
-      "credit": "Photo : La Pige",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Bulletins de nouvelles La Pige Radio",
-      "source": "La Pige",
-      "credit": "Photo : La Pige",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Fin de saison abrupte pour la cycliste Magdeleine Vallières Mill",
-      "source": "Le Collectif",
-      "credit": "Photo : Source : Getty Images",
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
       "cited": true,
-      "method": "body-line"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Le Grand Défi Pierre Lavoie débarque à Sherbrooke",
-      "source": "Le Collectif",
-      "credit": "Photo : Facebook Le Grand Défi Pierre Lavoie",
+      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
+      "source": "The Plant",
+      "credit": "Photo: Cosmos",
       "cited": true,
-      "method": "body-tail"
-    },
-    {
-      "title": "Vers une 10e équipe dans la LCF?",
-      "source": "Le Collectif",
-      "credit": "Photo : Richard Wolowicz Getty Images",
-      "cited": true,
-      "method": "filename-photo-name"
-    },
-    {
-      "title": "Le futur du hockey universitaire sherbrookois tatoué sur le cœur",
-      "source": "Le Collectif",
-      "credit": "Photo : Université de Sherbrooke par Michel Caron",
-      "cited": true,
-      "method": "json-ld"
+      "method": "via-attribution"
     }
   ]
 }
