@@ -280,3 +280,32 @@ test('overlay : 1 requête par site et par jour, cache contourné', async () => 
   assertM.equal(h.at, '2026-10-23T20:00:00.000Z');
   console.log('ok liveSourceHealth');
 }
+
+test('WAF direct → repli relais Cloudflare (workers/presto-cache)', async () => {
+  const urls = [];
+  const teams = todayTeams();
+  const stats = await Presto.overlayPrestoLive(teams, {
+    registry,
+    now: NOW,
+    cacheUrl: 'https://relais.example/',
+    fetchImpl: async (url) => {
+      urls.push(url);
+      if (url.includes('/composite')) throw new Error('HTTP 405 waf=captcha server=CloudFront');
+      const site = new URL(url).searchParams.get('site');
+      assert.match(url, /^https:\/\/relais\.example\/v1\/presto\?site=(usports|rseqdirect)&d=2026-10-17$/);
+      return JSON.stringify({ ok: true, html: site === 'rseqdirect' ? RD_HTML : US_HTML });
+    },
+  });
+  assert.equal(urls.length, 4);
+  assert.ok(stats.live >= 2);
+  assert.equal(stats.failed.length, 0);
+  // Relais en panne aussi : échec signalé avec les deux causes.
+  const t2 = todayTeams();
+  const s2 = await Presto.overlayPrestoLive(t2, {
+    registry, now: NOW, cacheUrl: 'https://relais.example',
+    fetchImpl: async (url) => (url.includes('/composite')
+      ? Promise.reject(new Error('HTTP 405')) : JSON.stringify({ ok: false, error: 'upstream_http' })),
+  });
+  assert.equal(s2.failed.length, 2);
+  assert.ok(s2.failed.every((f) => /HTTP 405 \+ relais upstream_http/.test(f)));
+});

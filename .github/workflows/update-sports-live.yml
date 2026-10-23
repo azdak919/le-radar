@@ -65,6 +65,7 @@ jobs:
       - name: Fetch live RSEQ scores (boucle tant qu’un match est en fenêtre)
         env:
           HOCKEY_CACHE_URL: https://le-radar-hockey.azdak.workers.dev
+          PRESTO_CACHE_URL: https://le-radar-presto.azdak.workers.dev
           LIVE_PASSES: '70'
           LIVE_SLEEP_SECONDS: '180'
         run: |

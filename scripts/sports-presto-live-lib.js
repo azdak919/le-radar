@@ -647,8 +647,11 @@ function liveNeeds(teams, now = Date.now()) {
  * Lit les pages composite nécessaires. Ne lève jamais : une source en panne
  * revient { ok: false }.
  */
+const DEFAULT_PRESTO_CACHE_URL = 'https://le-radar-presto.azdak.workers.dev';
+
 async function fetchPrestoFeeds(teams, {
-  now = Date.now(), fetchImpl = fetchText, log = () => {}, sleep = (ms) => new Promise((r) => setTimeout(r, ms)),
+  now = Date.now(), fetchImpl = fetchText,
+  cacheUrl = process.env.PRESTO_CACHE_URL === undefined ? DEFAULT_PRESTO_CACHE_URL : process.env.PRESTO_CACHE_URL, log = () => {}, sleep = (ms) => new Promise((r) => setTimeout(r, ms)),
 } = {}) {
   const need = liveNeeds(teams, now);
   const feeds = [];
@@ -662,14 +665,35 @@ async function fetchPrestoFeeds(teams, {
       first = false;
       // Paramètre supplémentaire : contourne le cache de 5 min de la page.
       const url = `${src.base}/composite?d=${date}&_=${Math.floor(now / 60000)}`;
+      let html = null;
+      let via = 'direct';
+      let directErr = null;
       try {
-        const html = await fetchImpl(url);
-        const events = parseCompositeHtml(html);
-        feeds.push({ source: src.id, sector: src.sector, date, ok: true, events });
-        log(`${src.id} ${date}: ${events.length} matchs, ${events.filter((e) => e.state === 'live').length} en cours`);
+        html = await fetchImpl(url);
       } catch (err) {
-        feeds.push({ source: src.id, sector: src.sector, date, ok: false, events: [], error: String(err.message || err) });
-        log(`${src.id} ${date}: indisponible (${err.message || err})`);
+        directErr = err;
+      }
+      // Repli : relais Cloudflare (le WAF CloudFront d’U SPORTS bloque les IP
+      // GitHub Actions — 23 oct. 2026). workers/presto-cache.
+      if (html == null && cacheUrl) {
+        try {
+          const body = await fetchImpl(`${cacheUrl.replace(/\/+$/, '')}/v1/presto?site=${src.id}&d=${date}`);
+          const j = JSON.parse(body);
+          if (!j || !j.ok || typeof j.html !== 'string') throw new Error(`relais ${(j && (j.error || j.status)) || 'vide'}`);
+          html = j.html;
+          via = 'relais';
+        } catch (err) {
+          directErr = new Error(`${directErr ? (directErr.message || directErr) : 'direct'} + ${err.message || err}`);
+        }
+      }
+      if (html != null) {
+        const events = parseCompositeHtml(html);
+        feeds.push({ source: src.id, sector: src.sector, date, ok: true, via, events });
+        log(`${src.id} ${date} (${via}${directErr ? ` après ${directErr.message || directErr}` : ''}): ${events.length} matchs, ${events.filter((e) => e.state === 'live').length} en cours`);
+      } else {
+        const msg = String((directErr && directErr.message) || directErr);
+        feeds.push({ source: src.id, sector: src.sector, date, ok: false, events: [], error: msg });
+        log(`${src.id} ${date}: indisponible (${msg})`);
       }
     }
   }
@@ -681,10 +705,12 @@ async function fetchPrestoFeeds(teams, {
  * jamais ; en cas de pépin, le payload RSEQ reste tel quel.
  */
 async function overlayPrestoLive(teams, {
-  registry, previousTeams, now = Date.now(), fetchImpl, log = () => {}, sleep,
+  registry, previousTeams, now = Date.now(), fetchImpl, log = () => {}, sleep, cacheUrl,
 } = {}) {
   try {
-    const feeds = await fetchPrestoFeeds(teams, { now, fetchImpl, log, sleep });
+    const opts = { now, fetchImpl, log, sleep };
+    if (cacheUrl !== undefined) opts.cacheUrl = cacheUrl;
+    const feeds = await fetchPrestoFeeds(teams, opts);
     if (!feeds.length) return { skipped: true };
     const okSectors = new Set();
     const badSectors = new Set();
