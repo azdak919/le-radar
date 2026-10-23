@@ -32,7 +32,7 @@ jobs:
   live:
     if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 40
+    timeout-minutes: 230
     permissions:
       contents: write
 
@@ -56,7 +56,7 @@ jobs:
       # Boucle interne : le cron */5 de GitHub ne tire en pratique qu’aux
       # 45–90 min (observé le 17 oct. 2026 : 16:35, 17:20, 18:04, 20:29 UTC…).
       # Tant qu’un match RSEQ est dans la fenêtre live, on refait une passe
-      # aux 3 min (≈ 30 min max ; le prochain déclenchement prend le relais,
+      # aux 3 min jusqu’à la fin des matchs (≈ 3 h 30 max, 70 passes ; observé 23 oct. 2026 : arrêt à 30 min → 0-0 figé pendant que c’était 3-0). Le prochain déclenchement prend le relais,
       # concurrency annule l’ancien). Dépôt public → minutes Actions gratuites.
       # Chaque passe lit aussi U SPORTS / RSEQ Direct (1 page par site) pour le
       # pointage en cours de match (scripts/sports-presto-live-lib.js) ; une
@@ -64,7 +64,7 @@ jobs:
       - name: Fetch live RSEQ scores (boucle tant qu’un match est en fenêtre)
         env:
           HOCKEY_CACHE_URL: https://le-radar-hockey.azdak.workers.dev
-          LIVE_PASSES: '10'
+          LIVE_PASSES: '70'
           LIVE_SLEEP_SECONDS: '180'
         run: |
           git config user.name "github-actions[bot]"
