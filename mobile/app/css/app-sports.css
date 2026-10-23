@@ -431,3 +431,15 @@
 .sports-result--live .sports-result__badge:empty {
   visibility: hidden;
 }
+
+/* Filtres (copie de seo-pages.css .sports-filters) ; rangées défilantes sur téléphone. */
+.sports-filters { display: flex; flex-direction: column; gap: 10px; margin: 12px 0 6px; }
+.sports-filters__row { display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 0 -16px; padding: 0 16px; }
+.sports-filters__row::-webkit-scrollbar { display: none; }
+.sports-filters__label { flex: none; font-family: var(--sans); font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-right: 2px; min-width: 72px; }
+.sports-filter { flex: none; appearance: none; border: 1px solid var(--rule); background: var(--bg-soft); color: var(--ink-soft); font-family: var(--sans); font-size: 13px; font-weight: 600; line-height: 1.2; padding: 7px 12px; border-radius: 999px; cursor: pointer; min-height: 34px; white-space: nowrap; }
+.sports-filter[aria-pressed="true"], .sports-filter.is-active { border-color: color-mix(in srgb, var(--accent) 55%, var(--rule)); background: color-mix(in srgb, var(--accent) 12%, var(--bg)); color: var(--accent); }
+.sports-filter[data-value="live"][aria-pressed="true"] { color: var(--status-live, #c8102e); border-color: var(--status-live, #c8102e); }
+.sports-native-search input { width: 100%; box-sizing: border-box; font: 500 15px var(--sans); padding: 10px 14px; border: 1px solid var(--rule); border-radius: 999px; background: var(--bg-soft); color: var(--ink); }
+.sports-native-reset { align-self: flex-start; font-size: 13px; padding: 6px 12px; }
+.sports-native-count { font: 600 12px var(--sans); color: var(--muted); margin: 0; }

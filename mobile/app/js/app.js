@@ -1009,7 +1009,107 @@
      lues dans sports-masthead.json (en ligne sur l’APK, copie embarquée en secours). */
   const SPORTS_LIVE_URL = 'https://le-radar.ca/sports-masthead.json';
   const SPORTS_GLYPHS = [['basket', '🏀'], ['hockey', '🏒'], ['soccer', '⚽'], ['football', '🏈'], ['volley', '🏐'], ['rugby', '🏉'], ['voile', '⛵'], ['sail', '⛵'], ['badminton', '🏸'], ['cross', '🏃'], ['athl', '🏃'], ['natation', '🏊'], ['golf', '⛳'], ['baseball', '⚾'], ['curling', '🥌']];
-  const sportsState = { data: null, loading: false, error: false, tab: 'resultats' };
+  const SPORTS_FILTERS_KEY = 'radar-app-sports-filters';
+  const SPORTS_PERIODS = [['7d', '7 jours'], ['live', 'En direct'], ['week', 'Cette semaine'], ['next-week', 'Semaine prochaine'], ['month', 'Ce mois-ci'], ['session', 'Cette session'], ['all', 'Toutes']];
+  const SPORTS_PAGE = 30;
+  const sportsState = { data: null, loading: false, error: false, limit: SPORTS_PAGE, ...loadSportsFilters() };
+
+  /* Même jeu de filtres que le-radar.ca/sports/ (sport, secteur, catégorie, période, recherche),
+     gardé sur l’appareil. Par défaut : 7 jours glissants (passés pour Résultats, à venir pour À venir), 30 équipes par page. */
+  function loadSportsFilters() {
+    const base = { tab: 'resultats', sport: 'all', sector: 'all', sex: 'all', period: '7d', q: '' };
+    try {
+      const saved = JSON.parse(localStorage.getItem(SPORTS_FILTERS_KEY) || '{}');
+      for (const key of Object.keys(base)) if (typeof saved[key] === 'string') base[key] = saved[key];
+    } catch { /* défauts */ }
+    if (!SPORTS_PERIODS.some(([k]) => k === base.period)) base.period = '7d';
+    return base;
+  }
+
+  function saveSportsFilters() {
+    const { tab, sport, sector, sex, period, q } = sportsState;
+    try { localStorage.setItem(SPORTS_FILTERS_KEY, JSON.stringify({ tab, sport, sector, sex, period, q })); } catch { /* plein */ }
+  }
+
+  function sportsYmd(ms) {
+    return new Date(ms).toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+  }
+
+  function sportsAddDays(ymd, days) {
+    const [y, m, d] = ymd.split('-').map(Number);
+    return new Date(Date.UTC(y, m - 1, d + days)).toISOString().slice(0, 10);
+  }
+
+  /** Plage [start, end] inclusive, mêmes règles que sports-board.js du site. */
+  function sportsPeriodRange(key) {
+    const today = sportsYmd(Date.now());
+    const [y, m] = today.split('-').map(Number);
+    const wd = new Date(`${today}T12:00:00Z`).getUTCDay();
+    const monday = sportsAddDays(today, wd === 0 ? -6 : 1 - wd);
+    if (key === '7d') return sportsState.tab === 'avenir' ? { start: today, end: sportsAddDays(today, 7) } : { start: sportsAddDays(today, -7), end: today };
+    if (key === 'live') return { start: today, end: today };
+    if (key === 'week') return { start: monday, end: sportsAddDays(monday, 6) };
+    if (key === 'next-week') return { start: sportsAddDays(monday, 7), end: sportsAddDays(monday, 13) };
+    if (key === 'month') {
+      const start = `${y}-${String(m).padStart(2, '0')}-01`;
+      const nextFirst = m === 12 ? `${y + 1}-01-01` : `${y}-${String(m + 1).padStart(2, '0')}-01`;
+      return { start, end: sportsAddDays(nextFirst, -1) };
+    }
+    if (key === 'session') {
+      if (m >= 9) return { start: `${y}-09-01`, end: `${y}-12-31` };
+      if (m >= 5) return { start: `${y}-05-01`, end: `${y}-08-31` };
+      return { start: `${y}-01-01`, end: `${y}-04-30` };
+    }
+    return null;
+  }
+
+  function sportsFold(text) {
+    return String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
+  function sportsTeamMatches(team) {
+    const f = sportsState;
+    if (f.sport !== 'all' && team.sport !== f.sport) return false;
+    if (f.sector !== 'all' && team.sector !== f.sector) return false;
+    if (f.sex !== 'all' && String(team.sex || '').toLowerCase() !== f.sex) return false;
+    const q = sportsFold(f.q).trim();
+    if (q) {
+      const hay = sportsFold([team.name, team.code, team.fullName, team.sportLabel, team.leagueLabel, team.division].join(' '));
+      if (!q.split(/\s+/).every((w) => hay.includes(w))) return false;
+    }
+    return true;
+  }
+
+  function sportsFilterButton(kind, value, label, current) {
+    const on = value === current;
+    return `<button type="button" class="sports-filter${on ? ' is-active' : ''}" data-sports-filter="${kind}" data-value="${esc(value)}" aria-pressed="${on}">${esc(label)}</button>`;
+  }
+
+  function sportsFilterRow(label, kind, options, current) {
+    return `<div class="sports-filters__row"><span class="sports-filters__label">${esc(label)}</span>${options.map(([v, l]) => sportsFilterButton(kind, v, l, current)).join('')}</div>`;
+  }
+
+  function sportsFiltersHtml() {
+    const f = sportsState;
+    const counts = new Map();
+    for (const team of Object.values((f.data && f.data.teams) || {})) {
+      if (!team.sport) continue;
+      const row = counts.get(team.sport) || { label: team.sportLabel || team.sport, n: 0 };
+      row.n += 1;
+      counts.set(team.sport, row);
+    }
+    const sports = [['all', 'Tous'], ...[...counts.entries()].sort((a, b) => b[1].n - a[1].n).map(([k, v]) => [k, v.label])];
+    const active = ['sport', 'sector', 'sex'].filter((k) => f[k] !== 'all').length + (f.q ? 1 : 0) + (f.period !== '7d' ? 1 : 0);
+    return `<div class="sports-filters sports-native-filters" role="group" aria-label="Filtres sports">
+      <label class="sports-native-search"><span class="sr-only">Chercher une école ou une équipe</span>
+        <input type="search" data-sports-search placeholder="École, équipe, ligue…" value="${esc(f.q)}" autocomplete="off" enterkeyhint="search"></label>
+      ${sportsFilterRow('Période', 'period', SPORTS_PERIODS, f.period)}
+      ${sportsFilterRow('Sport', 'sport', sports, f.sport)}
+      ${sportsFilterRow('Secteur', 'sector', [['all', 'Tous'], ['universitaire', 'Universitaire'], ['collegial', 'Collégial']], f.sector)}
+      ${sportsFilterRow('Catégorie', 'sex', [['all', 'Tous'], ['f', 'Féminin'], ['m', 'Masculin'], ['x', 'Mixte']], f.sex)}
+      ${active ? '<button type="button" class="sports-native-reset" data-sports-reset>Réinitialiser les filtres</button>' : ''}
+    </div>`;
+  }
 
   function sportsGlyphFor(sport) {
     const s = String(sport || '').toLowerCase();
@@ -1041,6 +1141,8 @@
     if (screen && location.hash.startsWith('#/sports')) {
       const holder = screen.querySelector('[data-sports-board]');
       if (holder) holder.outerHTML = sportsBoard();
+      const wrap = screen.querySelector('[data-sports-filters-wrap]');
+      if (wrap) wrap.innerHTML = sportsFiltersHtml();
     }
   }
 
@@ -1108,15 +1210,18 @@
     }
     const now = Date.now();
     const next = sportsState.tab === 'avenir';
+    const range = sportsPeriodRange(sportsState.period);
     const panels = [];
     const seen = new Set();
     for (const team of Object.values(sportsState.data.teams || {})) {
+      if (!sportsTeamMatches(team)) continue;
       const pool = next ? (team.nextGames || []) : (team.results || []);
       const games = pool.filter((g) => {
         if (g.priorSeason) return false;
         const ms = sportsGameMsOf(g);
-        return next ? ms >= now - 3 * 36e5 && ms <= now + 8 * 864e5 : ms <= now && ms >= now - 6 * 864e5;
-      }).sort((x, y) => next ? sportsGameMsOf(x) - sportsGameMsOf(y) : sportsGameMsOf(y) - sportsGameMsOf(x)).slice(0, 2);
+        if (next ? ms < now - 3 * 36e5 : ms > now) return false;
+        return !range || (g.date >= range.start && g.date <= range.end);
+      }).sort((x, y) => next ? sportsGameMsOf(x) - sportsGameMsOf(y) : sportsGameMsOf(y) - sportsGameMsOf(x)).slice(0, 3);
       if (!games.length) continue;
       const stamp = `${team.name}|${team.sport}|${team.sex}|${games[0].date}|${games[0].opponent}`;
       if (seen.has(stamp)) continue;
@@ -1124,10 +1229,13 @@
       panels.push({ team, games, ms: sportsGameMsOf(games[0]) });
     }
     panels.sort((x, y) => next ? x.ms - y.ms : y.ms - x.ms);
-    const list = panels.slice(0, 80);
+    const list = panels.slice(0, sportsState.limit);
+    const count = `<p class="sports-native-count">${panels.length} équipe${panels.length > 1 ? 's' : ''}</p>`;
+    const more = panels.length > list.length
+      ? `<button type="button" class="wide" data-sports-more>Afficher plus (${panels.length - list.length})</button>` : '';
     const body = list.length
-      ? list.map((p) => sportsPanel(p.team, p.games, next)).join('')
-      : `<p class="sports-native-empty">${next ? 'Aucun match prévu cette semaine.' : 'Aucun résultat récent.'}</p>`;
+      ? count + list.map((p) => sportsPanel(p.team, p.games, next)).join('') + more
+      : `<p class="sports-native-empty">${next ? 'Aucun match à venir pour ces filtres.' : 'Aucun résultat pour ces filtres.'}</p>`;
     return `<div data-sports-board class="sports-native">${body}</div>`;
   }
 
@@ -1139,6 +1247,7 @@
         <button type="button" data-action="sports-tab" data-tab="resultats" aria-pressed="${tab === 'resultats'}">Résultats</button>
         <button type="button" data-action="sports-tab" data-tab="avenir" aria-pressed="${tab === 'avenir'}">À venir</button>
       </nav>
+      <div data-sports-filters-wrap>${sportsFiltersHtml()}</div>
       ${sportsBoard()}
       <a class="wide link" data-action="external" href="https://le-radar.ca/sports/" target="_blank" rel="noopener noreferrer">Ouvrir la page Sports complète dans le navigateur</a>`;
   }
@@ -1541,12 +1650,46 @@
   }
 
   function bindEvents() {
+    document.addEventListener('input', (event) => {
+      const box = event.target.closest && event.target.closest('[data-sports-search]');
+      if (!box) return;
+      sportsState.q = box.value.slice(0, 80);
+      sportsState.limit = SPORTS_PAGE;
+      saveSportsFilters();
+      const holder = document.querySelector('[data-sports-board]');
+      if (holder) holder.outerHTML = sportsBoard();
+    });
     document.addEventListener('click', async (event) => {
       const sportsTab = event.target.closest('[data-action="sports-tab"]');
       if (sportsTab) {
         event.preventDefault();
         sportsState.tab = sportsTab.getAttribute('data-tab') === 'avenir' ? 'avenir' : 'resultats';
+        sportsState.limit = SPORTS_PAGE;
+        saveSportsFilters();
         render();
+        return;
+      }
+      const sportsFilter = event.target.closest('[data-sports-filter]');
+      if (sportsFilter) {
+        event.preventDefault();
+        sportsState[sportsFilter.getAttribute('data-sports-filter')] = sportsFilter.getAttribute('data-value') || 'all';
+        sportsState.limit = SPORTS_PAGE;
+        saveSportsFilters();
+        render();
+        return;
+      }
+      if (event.target.closest('[data-sports-reset]')) {
+        event.preventDefault();
+        Object.assign(sportsState, { sport: 'all', sector: 'all', sex: 'all', period: '7d', q: '', limit: SPORTS_PAGE });
+        saveSportsFilters();
+        render();
+        return;
+      }
+      if (event.target.closest('[data-sports-more]')) {
+        event.preventDefault();
+        sportsState.limit += SPORTS_PAGE;
+        const holder = document.querySelector('[data-sports-board]');
+        if (holder) holder.outerHTML = sportsBoard();
         return;
       }
       const installItem = event.target.closest('[data-install-app]');
