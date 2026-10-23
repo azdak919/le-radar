@@ -495,14 +495,24 @@
     },
     {
       "name": "Le Brise-Glace",
-      "institution": "Cégep de Rimouski",
+      "institution": "Université du Québec à Rimouski (UQAR)",
       "region": "Bas-Saint-Laurent",
-      "type": "cegep",
+      "type": "universite",
       "lang": "fr",
       "site": "https://lebrise-glace.com/",
       "_lastChecked": "2026-10-19T15:23:55.153Z",
       "_failCount": 25,
-      "_note": "Staged — site lebrise-glace.com injoignable (timeout/DNS) au dernier sondage."
+      "_note": "Retired — blogue étudiant de l'UQAR (pas le journal du Cégep de Rimouski) ; domaine lebrise-glace.com mort (DNS/timeout). Ne pas promouvoir. (2026-10)",
+      "_status": "retired"
+    },
+    {
+      "name": "Le Prétexte",
+      "institution": "Cégep de Rimouski",
+      "region": "Bas-Saint-Laurent",
+      "type": "cegep",
+      "lang": "fr",
+      "site": "https://www.cegep-rimouski.qc.ca/le-pretexte",
+      "_note": "Staged — journal de l'association étudiante, imprimé seulement ; aucun flux RSS (2026-10)."
     }
   ],
   "_lastRun": "2026-10-19T15:25:40.497Z",
