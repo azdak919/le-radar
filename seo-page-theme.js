@@ -31,6 +31,33 @@
     /* stockage indisponible (mode privé strict) : on garde le thème clair. */
   }
 
+  // Synchro entre documents : quand la radio joue, nav-shell affiche les
+  // pages dans un iframe ; une bascule faite dans l'iframe (ou dans un autre
+  // onglet) doit aussi changer l'hôte — sinon la PWA garde la barre d'état
+  // et le shell sombres, et revient au sombre en quittant le shell.
+  function syncTheme(theme) {
+    if (theme !== 'dark' && theme !== 'light') return;
+    var isDark = theme === 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', isDark ? '#0e0f12' : '#ffffff');
+    var btn = document.getElementById('theme-toggle');
+    if (btn) {
+      var sun = btn.querySelector('.ico-sun');
+      var moon = btn.querySelector('.ico-moon');
+      if (sun) sun.classList.toggle('hidden', !isDark);
+      if (moon) moon.classList.toggle('hidden', isDark);
+      var label = isDark ? 'Passer en mode clair' : 'Passer en mode sombre';
+      btn.setAttribute('aria-label', label);
+      btn.setAttribute('title', label);
+    }
+  }
+  try {
+    window.addEventListener('storage', function (ev) {
+      if (ev.key === 'radar-theme' && ev.newValue) syncTheme(ev.newValue);
+    });
+  } catch (e3) { /* ignore */ }
+
   function readWideParam() {
     try {
       return (new URL(location.href).searchParams.get('wide') || '').toLowerCase().trim();

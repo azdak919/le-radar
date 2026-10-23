@@ -538,7 +538,11 @@ function initTheme() {
   const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
   const theme = saved || (prefersDark ? 'dark' : 'light');
   applyTheme(theme);
-  THEME_TOGGLE?.addEventListener('click', () => {
+  // Un seul écouteur par bouton : feeds.html charge feeds-page.js ET
+  // radar-lifecycle.js (via native-tuner.js) ; deux bascules s'annulaient.
+  if (!THEME_TOGGLE || THEME_TOGGLE.dataset.themeBound === '1') return;
+  THEME_TOGGLE.dataset.themeBound = '1';
+  THEME_TOGGLE.addEventListener('click', () => {
     const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     localStorage.setItem('radar-theme', next);
     applyTheme(next);

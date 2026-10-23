@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v936",
+    "cache": "radar-shell-v937",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -12,7 +12,7 @@
       "embed.css": "5d3b24489e0b0f14",
       "embed.js": "7f01f6c142b5fde8",
       "engage-prompt.js": "310cea147e153cbf",
-      "feeds-page.js": "23103d49de90f8fc",
+      "feeds-page.js": "7fe5f8e4afaa576e",
       "mobile-playback.js": "955026530d5993b0",
       "nav-shell.js": "08126a03961125dd",
       "photo-bank-data.js": "d2be76e1abad90e3",
@@ -22,7 +22,7 @@
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
       "quebec-nations-backgrounds-data.js": "785dada0487012ab",
       "quebec-university-backgrounds-data.js": "254f9d48920bcd98",
-      "radar-lifecycle.js": "e552acd64cce5990",
+      "radar-lifecycle.js": "34f26d0d950e8140",
       "radar-news.js": "b6470782a3248c02",
       "radar-sports-cta.js": "f59b728ad025ef10",
       "radar-state.js": "1addac8447b272a8",
@@ -38,7 +38,7 @@
       "scripts/season-lib.js": "ff74cb33a15dc7ae",
       "scripts/session-freshness-lib.js": "4aadd97e95256dfb",
       "scripts/sports-freshness-lib.js": "d0f908a8b4ab0f1c",
-      "seo-page-theme.js": "a4d5b1bec059cc45",
+      "seo-page-theme.js": "8d32dcb10d24af89",
       "style-chrome.css": "cc9e367992c7bb6e",
       "style-feed.css": "2b72ba1f61c1b8bc",
       "style-masthead-chrome.css": "14f32bc972a5ccdc",
@@ -101,7 +101,7 @@
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v301",
+    "cache": "sports-shell-v302",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "0e0df2c60f5900e3",
@@ -115,7 +115,7 @@
       "mobile-playback.js": "955026530d5993b0",
       "nav-shell.js": "08126a03961125dd",
       "player-sync.js": "36e84f1afaff7fcb",
-      "radar-lifecycle.js": "e552acd64cce5990",
+      "radar-lifecycle.js": "34f26d0d950e8140",
       "radar-news.js": "b6470782a3248c02",
       "radar-sports-cta.js": "f59b728ad025ef10",
       "radar-state.js": "1addac8447b272a8",
@@ -126,7 +126,7 @@
       "scripts/media-channels-lib.js": "c34f4336ae2caa03",
       "scripts/media-follow-store.js": "fc24810268eb10d8",
       "scripts/media-follow-ui.js": "dd5acb6d8596c6e6",
-      "seo-page-theme.js": "a4d5b1bec059cc45",
+      "seo-page-theme.js": "8d32dcb10d24af89",
       "seo-pages.css": "4df4854239b3c2e4",
       "sports-board.js": "de9f7bbe6f780a85",
       "style-chrome.css": "cc9e367992c7bb6e",
