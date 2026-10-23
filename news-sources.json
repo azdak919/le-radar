@@ -449,6 +449,29 @@
       "_lastChecked": "2026-10-23T05:02:38.318Z",
       "_failCount": 0,
       "_lastFetchOk": "2026-10-23T05:02:38.318Z"
+    },
+    {
+      "name": "The Concordian",
+      "institution": "Concordia University",
+      "region": "Montréal",
+      "type": "universite",
+      "lang": "en",
+      "url": "https://theconcordian.com/feed/",
+      "site": "https://theconcordian.com/",
+      "_note": "Réactivé (2026-10) — flux WordPress du site theconcordian.com/feed/ (pas Substack).",
+      "_status": "ok",
+      "_lastChecked": "2026-10-19T15:25:40.495Z",
+      "_failCount": 0
+    },
+    {
+      "name": "Impact Campus",
+      "institution": "Université Laval",
+      "region": "Capitale-Nationale",
+      "type": "universite",
+      "lang": "fr",
+      "url": "https://impactcampus.ca/feed/",
+      "site": "https://impactcampus.ca/",
+      "_note": "Journal étudiant généraliste ULaval — flux WordPress /feed/."
     }
   ],
   "candidates": [
@@ -473,19 +496,6 @@
       "_lastChecked": "2026-10-19T15:23:55.153Z",
       "_failCount": 25,
       "_note": "Staged — site lebrise-glace.com injoignable (timeout/DNS) au dernier sondage."
-    },
-    {
-      "name": "The Concordian",
-      "institution": "Concordia University",
-      "region": "Montréal",
-      "type": "universite",
-      "lang": "en",
-      "url": "https://theconcordian.com/feed/",
-      "site": "https://theconcordian.com/",
-      "_note": "Retiré du fil actif (2026-07) — Cloudflare / Substack peu fiable. The Link reste pour Concordia.",
-      "_status": "retired",
-      "_lastChecked": "2026-10-19T15:25:40.495Z",
-      "_failCount": 2
     }
   ],
   "_lastRun": "2026-10-19T15:25:40.497Z",

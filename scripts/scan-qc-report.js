@@ -44,7 +44,7 @@ const SEED_PAPERS = [
   { name: 'Le Délit', institution: 'Université McGill', region: 'Montréal', site: 'https://www.delitfrancais.com/', lang: 'fr' },
   { name: 'The McGill Daily', institution: 'McGill University', region: 'Montréal', site: 'https://www.mcgilldaily.com/', lang: 'en' },
   { name: 'The Link', institution: 'Concordia University', region: 'Montréal', site: 'https://thelinknewspaper.ca/', lang: 'en' },
-  { name: 'The Concordian', institution: 'Concordia University', region: 'Montréal', site: 'https://theconcordian.com/', lang: 'en', note: 'retired active (Cloudflare)' },
+  { name: 'The Concordian', institution: 'Concordia University', region: 'Montréal', site: 'https://theconcordian.com/', lang: 'en', note: 'réactivé 2026-10 (flux WordPress du site, pas Substack)' },
   { name: 'Zone Campus', institution: 'Université du Québec à Trois-Rivières', region: 'Mauricie', site: 'https://www.zonecampus.ca/', lang: 'fr' },
   { name: "L'Exemplaire", institution: 'Université Laval', region: 'Capitale-Nationale', site: 'https://www.exemplaire.com.ulaval.ca/', lang: 'fr' },
   { name: 'Le Collectif', institution: 'Université de Sherbrooke', region: 'Estrie', site: 'https://lecollectif.ca/', lang: 'fr' },
