@@ -44,3 +44,21 @@ for (const f of ['../data/quebec-university-backgrounds.json', '../scripts/campu
   assert.ok(!/3e\/Park_in_Universit/.test(t), `${f} : URL morte`);
 }
 console.log('news-image-dedupe-fallback: OK');
+
+// 5) Repli campus : jamais un plan du campus (vraie banque).
+{
+  const lib = require('../scripts/campus-fallback-lib.js');
+  const raw = JSON.parse(fs.readFileSync(new URL('../data/quebec-university-backgrounds.json', import.meta.url), 'utf8'));
+  const universityPhotos = Array.isArray(raw) ? raw : (raw.photos || raw.items || Object.values(raw).find(Array.isArray));
+  let seen = 0;
+  for (let n = 0; n < 200; n += 1) {
+    const pick = lib.pickCampusFallback({ source: 'The Concordian', institution: 'Concordia University', type: 'universite', link: `https://x/${n}` }, { universityPhotos });
+    const u = String(pick?.url || pick?.stockImage || '');
+    if (u) seen += 1;
+    assert.ok(!/campus_map/i.test(u), `plan du campus choisi : ${u}`);
+  }
+  assert.ok(seen > 0, 'Concordia a un repli');
+}
+for (const f of ['../data/quebec-university-backgrounds.json', '../quebec-university-backgrounds-data.js']) {
+  assert.ok(!/campus_map/i.test(fs.readFileSync(new URL(f, import.meta.url), 'utf8')), `${f} : plan du campus`);
+}

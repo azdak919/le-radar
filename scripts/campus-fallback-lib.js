@@ -389,7 +389,9 @@ function pickCampusFallback(item = {}, opts = {}) {
   }));
   const avoid = avoidKeySet(opts.avoidUrls);
   const pool = [...uni, ...extrasForInstitution(inst)]
-    .filter((p) => p && p.url && !avoid.has(campusPhotoKey(p.url)));
+    .filter((p) => p && p.url && !avoid.has(campusPhotoKey(p.url)))
+    // Plan du campus (PNG/SVG cartographique) : pas une photo de carte.
+    .filter((p) => !/(?:^|[_\-/])(?:campus[_-]?)?map(?:[_\-.]|\d|$)|plan[_-]du[_-]campus/i.test(decodeURIComponent(String(p.url).split('?')[0].split('/').pop() || '')));
   if (!pool.length) return null;
   const pick = pool[hashIndex(item.link || item.title || inst, pool.length)];
   return toFallbackFields(pick);

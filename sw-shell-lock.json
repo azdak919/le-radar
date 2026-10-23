@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v934",
+    "cache": "radar-shell-v935",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -15,13 +15,13 @@
       "feeds-page.js": "23103d49de90f8fc",
       "mobile-playback.js": "955026530d5993b0",
       "nav-shell.js": "08126a03961125dd",
-      "photo-bank-data.js": "b7f0d171e2a068b2",
+      "photo-bank-data.js": "15012c8ba644863e",
       "player-sync.js": "36e84f1afaff7fcb",
       "quebec-backgrounds-data.js": "f2e0d8613fcfbe89",
       "quebec-backgrounds.js": "9a2b9c3be0fc49aa",
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
       "quebec-nations-backgrounds-data.js": "785dada0487012ab",
-      "quebec-university-backgrounds-data.js": "ab9fa2f6de6289b2",
+      "quebec-university-backgrounds-data.js": "db6a76c4b1a469d7",
       "radar-lifecycle.js": "e552acd64cce5990",
       "radar-news.js": "b6470782a3248c02",
       "radar-sports-cta.js": "f59b728ad025ef10",
@@ -30,7 +30,7 @@
       "radar-utils.js": "45c34f2919afb0fa",
       "radar-weather.js": "f8220a2a3936d8b4",
       "scripts/article-card-lib.js": "975821ed5d6ea24d",
-      "scripts/campus-fallback-lib.js": "55a4a9d93ac37395",
+      "scripts/campus-fallback-lib.js": "ab7c11b87d330d4e",
       "scripts/media-channels-lib.js": "c34f4336ae2caa03",
       "scripts/media-follow-store.js": "fc24810268eb10d8",
       "scripts/media-follow-ui.js": "dd5acb6d8596c6e6",
@@ -54,12 +54,12 @@
     }
   },
   "pomo/sw.js": {
-    "cache": "pomo-shell-v156",
+    "cache": "pomo-shell-v157",
     "assets": {
       "bg-rotation-lib.js": "264ab71f12434497",
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
       "install-chrome.css": "c7852ffafaa5d4b9",
-      "photo-bank-data.js": "b7f0d171e2a068b2",
+      "photo-bank-data.js": "15012c8ba644863e",
       "pomo/js/app.js": "a8138a1bc0e114d6",
       "pomo/js/backgrounds-data.js": "2d0226d859a86c4a",
       "pomo/js/backgrounds.js": "583851988a59e754",
@@ -88,11 +88,11 @@
     }
   },
   "solitaire/sw.js": {
-    "cache": "solitaire-shell-v93",
+    "cache": "solitaire-shell-v94",
     "assets": {
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
       "install-chrome.css": "c7852ffafaa5d4b9",
-      "photo-bank-data.js": "b7f0d171e2a068b2",
+      "photo-bank-data.js": "15012c8ba644863e",
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
       "solitaire/js/backgrounds-data.js": "df914f462e7db906",
       "solitaire/js/solitaire-rules.js": "c19bd4f9a851fda6",

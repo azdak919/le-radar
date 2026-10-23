@@ -1690,18 +1690,6 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     tags: ["mat", "campus"],
   },
   {
-    url: "https://upload.wikimedia.org/wikipedia/commons/8/84/Concordia_campus_map-2.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-    credit: "Concordia_campus_map.svg : Adqproductions",
-    link: "https://commons.wikimedia.org/wiki/File:Concordia%20campus%20map-2.png",
-    license: "Public domain",
-    title: "Concordia campus map-2",
-    width: 855,
-    height: 1158,
-    place: "Concordia",
-    campus: true,
-    tags: ["mat", "campus"],
-  },
-  {
     url: "https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
     credit: "Justinhandgregory",
     link: "https://commons.wikimedia.org/wiki/File:CJ%20Building%2C%20Loyola%20Campus%2C%20Communication%20Studies%2C%20Concordia%20University.jpg",
