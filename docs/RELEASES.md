@@ -49,19 +49,26 @@ Le `sw.js` servi en ligne correspond à celui de `main` (pas de version périmé
 | `android-v1.2.0` | 2026-10-23 | ⏳ étiquetée (versionCode 5) ; en attente de la détection F-Droid (`^android-v`) |
 | `android-v1.2.1` | 2026-10-23 | ⏳ étiquetée (versionCode 6) ; en attente de la détection F-Droid (`^android-v`) |
 | `android-v1.2.2` | 2026-10-23 | ⏳ étiquetée (versionCode 7) ; en attente de la détection F-Droid (`^android-v`) |
+| `android-v1.2.3` | 2026-10-23 | ⏳ étiquetée (versionCode 8) ; en attente de la détection F-Droid (`^android-v`) |
 
 Version publiée par F-Droid (API `packages/ca.leradar.app`, vérifiée le 2026-10-23) :
-**1.1.0 (versionCode 3)**. `main` est à **1.2.2 (versionCode 7)**.
+**1.1.0 (versionCode 3)**. `main` est à **1.2.3 (versionCode 8)**.
 
 F-Droid construit par lots ; compter quelques jours à une semaine après l'étiquette.
 L'APK embarque son propre code (pas de `server.url`) ; seules les données viennent de
 le-radar.ca en direct.
 
-### Changements web pas encore dans l'APK (après `android-v1.2.2`)
+### Changements web pas encore dans l'APK (après `android-v1.2.3`)
 
-- `0e56639e4` — règle de fraîcheur des nouvelles (session en cours ou ≤ 45 jours). L'élagage
-  se fait côté serveur dans `news.json`, que l'APK lit en direct : l'app en profite déjà.
-  Aucun code de l'app touché (seulement un commentaire dans `radar-news.js`).
+Aucun pour l'instant.
+
+### Contenu de `android-v1.2.3` (versionCode 8)
+
+Radios muettes affichées « Hors ligne » (`578dd4f80`, `664adde04`) : pastille dans la liste,
+barre radio grisée, message « Station hors ligne pour le moment » 4 s quand on lance la
+lecture (la lecture est quand même tentée, `dfac0668c`). Guillemet ouvrant « conservé dans
+les titres (`9dc2a26bd`). Chargement de `session-freshness-lib` avant `sports-freshness-lib`
+dans le mât (`dfac0668c`). Déjà côté serveur : fraîcheur des nouvelles (`0e56639e4`).
 
 ### Contenu de `android-v1.2.2` (versionCode 7)
 
