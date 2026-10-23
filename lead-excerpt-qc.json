@@ -1,11 +1,11 @@
 {
-  "updated": "2026-10-23T09:23:44.440Z",
+  "updated": "2026-10-23T13:28:19.622Z",
   "total": 168,
   "pool": 58,
-  "incomplete": 8,
+  "incomplete": 11,
   "withLeadExcerpt": 117,
-  "candidates": 8,
-  "enriched": 0,
+  "candidates": 11,
+  "enriched": 3,
   "failed": 0,
   "ok": true,
   "samples": [
@@ -17,6 +17,33 @@
       "chars": 400,
       "sample": "La pièce Rose rouge et rose blanche est une adaptation réalisée en 2008 par la metteuse en scène Tia",
       "changed": false
+    },
+    {
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "link": "https://www.delitfrancais.com/2026/09/23/arrestations-visant-les-lgbtq-en-turquie/",
+      "ok": true,
+      "score": 96,
+      "chars": 217,
+      "sample": "Au total, plus de 80 personnes ont été placées en détention provisoire. Le ministère de la Justice t",
+      "changed": true
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "link": "https://www.delitfrancais.com/2026/09/23/manifestation-anti-ia-a-montreal/",
+      "ok": true,
+      "score": 94,
+      "chars": 249,
+      "sample": "La possibilité qui revient le plus est celle d’une extinction humaine après le développement d’une s",
+      "changed": true
+    },
+    {
+      "title": "Quand la fiction banalise les traumatismes",
+      "link": "https://www.delitfrancais.com/2026/09/23/quand-la-fiction-banalise-les-traumatismes/",
+      "ok": true,
+      "score": 96,
+      "chars": 377,
+      "sample": "Quel est le point commun entre la série Off campus , le livre Captive , et Jamais plus ? Outre leur ",
+      "changed": true
     },
     {
       "title": "Looking back at my journey walking El Camino de Santiago",
@@ -52,33 +79,6 @@
       "score": 100,
       "chars": 158,
       "sample": "The cover of Remi Wolf ’s third album features the singer covered in mud. The true mud, however, is ",
-      "changed": false
-    },
-    {
-      "title": "Stingers men’s soccer team earns first win of the season",
-      "link": "https://theconcordian.com/2026/10/stingers-mens-soccer-first-win/",
-      "ok": true,
-      "score": 100,
-      "chars": 175,
-      "sample": "Pouring rain fell on the Stingers’ field as the final whistle blew on Oct. 7. The players, in a cine",
-      "changed": false
-    },
-    {
-      "title": "A step forward for Canada’s women’s soccer team",
-      "link": "https://theconcordian.com/2026/10/team-canada-denmark-womens-soccer/",
-      "ok": true,
-      "score": 100,
-      "chars": 162,
-      "sample": "Both teams struggled to score due to intense marking and defence. Canada had a very solid backline, ",
-      "changed": false
-    },
-    {
-      "title": "Bulletins de nouvelles La Pige Radio",
-      "link": "https://lapige.atmjonquiere.com/2026/10/19/bulletins-de-nouvelles-la-pige-radio/?utm_source=rss&utm_medium=rss&utm_campaign=bulletins-de-nouvelles-la-pige-radio",
-      "ok": true,
-      "score": 67,
-      "chars": 140,
-      "sample": "Un incendie sur une base militaire en Alberta fait 4 morts, manifestations en France et à Montréal e",
       "changed": false
     }
   ]
