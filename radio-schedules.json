@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-22T14:10:51.625Z",
+  "updatedAt": "2026-10-23T13:53:24.602Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-10-22T14:10:51.625Z",
+      "checkedAt": "2026-10-23T13:53:24.602Z",
       "verifiedWeekOf": "2026-10-19",
       "grid": [
         {
@@ -341,7 +341,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-10-22T14:10:51.625Z",
+      "checkedAt": "2026-10-23T13:53:24.602Z",
       "verifiedWeekOf": "2026-10-19",
       "grid": [
         {
@@ -1122,7 +1122,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-10-22T14:10:51.625Z",
+      "checkedAt": "2026-10-23T13:53:24.602Z",
       "verifiedWeekOf": "2026-10-19",
       "grid": [
         {
@@ -1734,7 +1734,7 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-10-22T14:10:51.625Z",
+      "checkedAt": "2026-10-23T13:53:24.602Z",
       "verifiedWeekOf": "2026-10-19",
       "grid": [
         {
@@ -4398,20 +4398,14 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-10-22T14:10:51.625Z",
+      "checkedAt": "2026-10-23T13:53:24.602Z",
       "verifiedWeekOf": "2026-10-19",
       "grid": [
         {
           "day": 0,
           "start": "00:00",
-          "end": "21:00",
+          "end": "07:00",
           "title": "Les nuits CFAK"
-        },
-        {
-          "day": 0,
-          "start": "21:00",
-          "end": "00:00",
-          "title": "Solénoïde"
         },
         {
           "day": 1,
@@ -4434,6 +4428,12 @@
         {
           "day": 1,
           "start": "09:00",
+          "end": "13:00",
+          "title": "Le NEUF"
+        },
+        {
+          "day": 1,
+          "start": "13:00",
           "end": "18:00",
           "title": "Solénoïde"
         },
@@ -4464,8 +4464,14 @@
         {
           "day": 2,
           "start": "08:00",
-          "end": "18:30",
+          "end": "12:00",
           "title": "Palmarès CFAK"
+        },
+        {
+          "day": 2,
+          "start": "12:00",
+          "end": "18:30",
+          "title": "Le DOUZE"
         },
         {
           "day": 2,
@@ -4500,14 +4506,20 @@
         {
           "day": 3,
           "start": "08:00",
-          "end": "14:00",
+          "end": "09:00",
           "title": "Palmarès CFAK"
         },
         {
           "day": 3,
-          "start": "14:00",
+          "start": "09:00",
+          "end": "12:00",
+          "title": "Le NEUF"
+        },
+        {
+          "day": 3,
+          "start": "12:00",
           "end": "00:00",
-          "title": "Le popcorn de l'infini"
+          "title": "Le DOUZE"
         },
         {
           "day": 4,
@@ -4523,45 +4535,39 @@
         },
         {
           "day": 4,
-          "start": "08:00",
-          "end": "11:00",
-          "title": "Palmarès CFAK"
-        },
-        {
-          "day": 4,
-          "start": "11:00",
-          "end": "20:00",
-          "title": "À nous le futur"
-        },
-        {
-          "day": 4,
-          "start": "20:00",
-          "end": "00:00",
-          "title": "After 5@8"
-        },
-        {
-          "day": 5,
-          "start": "00:00",
-          "end": "07:00",
-          "title": "Les nuits CFAK"
-        },
-        {
-          "day": 5,
-          "start": "07:00",
-          "end": "08:00",
-          "title": "Folkswagen"
-        },
-        {
-          "day": 5,
           "start": "08:00",
           "end": "09:00",
           "title": "Palmarès CFAK"
         },
         {
-          "day": 5,
+          "day": 4,
           "start": "09:00",
           "end": "11:00",
-          "title": "La Souterraine"
+          "title": "Le NEUF"
+        },
+        {
+          "day": 4,
+          "start": "11:00",
+          "end": "00:00",
+          "title": "À nous le futur"
+        },
+        {
+          "day": 5,
+          "start": "00:00",
+          "end": "07:00",
+          "title": "Les nuits CFAK"
+        },
+        {
+          "day": 5,
+          "start": "07:00",
+          "end": "08:00",
+          "title": "Folkswagen"
+        },
+        {
+          "day": 5,
+          "start": "08:00",
+          "end": "11:00",
+          "title": "Palmarès CFAK"
         },
         {
           "day": 5,
@@ -4572,20 +4578,20 @@
         {
           "day": 5,
           "start": "12:00",
-          "end": "15:00",
+          "end": "16:30",
           "title": "Ciné-Histoire"
         },
         {
           "day": 5,
-          "start": "15:00",
+          "start": "16:30",
           "end": "18:00",
-          "title": "Nouveautés Franco"
+          "title": "Remix ta console"
         },
         {
           "day": 5,
           "start": "18:00",
           "end": "19:00",
-          "title": "La récréation"
+          "title": "La Récréation"
         },
         {
           "day": 5,
@@ -4603,7 +4609,7 @@
           "day": 5,
           "start": "22:00",
           "end": "00:00",
-          "title": "Mix Anglo"
+          "title": "Entre ciel et terre"
         },
         {
           "day": 6,
@@ -4619,7 +4625,7 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-10-22T14:10:51.625Z",
+      "checkedAt": "2026-10-23T13:53:24.602Z",
       "verifiedWeekOf": "2026-10-19",
       "grid": [
         {
