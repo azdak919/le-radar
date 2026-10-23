@@ -60,8 +60,11 @@ test.describe('application mobile', () => {
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/mobile/app/#/explorer?section=radios', { waitUntil: 'domcontentloaded' });
-    const bar = page.locator('#player');
-    await expect(bar).toBeHidden();
+    // Comme sur le site : le syntoniseur reste en haut sur toutes les routes ;
+    // le mini-lecteur du bas n'est plus affiché.
+    const bar = page.locator('#tuner');
+    await expect(bar).toBeVisible();
+    await expect(page.locator('#player')).toBeHidden();
     const listen = page.locator('[data-action="radio-toggle"]').first();
     await expect(listen).toBeVisible();
     const id = await listen.getAttribute('data-id');
@@ -69,8 +72,9 @@ test.describe('application mobile', () => {
     await expect(page.locator('#screen audio')).toHaveCount(0);
     await page.getByRole('button', { name: 'Écouter en direct' }).click();
     await expect(bar).toBeVisible();
-    await expect(bar).toHaveAttribute('data-state', 'playing');
-    await expect(page.getByRole('button', { name: 'Mettre en pause' })).toHaveAttribute('aria-pressed', 'true');
+    await expect(bar).toHaveClass(/is-playing/);
+    await expect(page.locator('#player')).toHaveAttribute('data-state', 'playing');
+    await expect(page.locator('#player')).toBeHidden();
     await page.evaluate(() => { document.getElementById('player-audio').dataset.marker = 'same'; });
 
     for (const tab of ['Accueil', 'Recherche', 'Réglages']) {
@@ -78,6 +82,7 @@ test.describe('application mobile', () => {
       const heading = tab === 'Accueil' ? 'Le fil étudiant' : tab;
       await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible();
       await expect(bar).toBeVisible();
+      await expect(bar).toHaveClass(/is-playing/);
       const audio = await page.evaluate(() => {
         const node = document.getElementById('player-audio');
         return { marker: node.dataset.marker, paused: node.paused, src: Boolean(node.getAttribute('src')) };
@@ -85,22 +90,17 @@ test.describe('application mobile', () => {
       expect(audio).toEqual({ marker: 'same', paused: false, src: true });
     }
 
-    // La barre est posée sur les onglets, sans les recouvrir ni déborder.
-    const boxes = await page.evaluate(() => ({
-      bar: document.getElementById('player').getBoundingClientRect().toJSON(),
-      tabs: document.getElementById('tabs').getBoundingClientRect().toJSON(),
-      overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
-    }));
-    expect(boxes.bar.bottom).toBeLessThanOrEqual(boxes.tabs.top);
-    expect(boxes.overflow).toBe(false);
+    // Collé en haut pendant le défilement, sans débordement horizontal.
+    await page.evaluate(() => window.scrollTo(0, 4000));
+    await expect.poll(async () => page.evaluate(() => Math.round(document.getElementById('tuner').getBoundingClientRect().top))).toBe(0);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
+    expect(overflow).toBe(false);
 
-    await page.locator('#player-toggle').click();
-    await expect(bar).toHaveAttribute('data-state', 'paused');
+    await page.locator('#tuner-play').click();
+    await expect(bar).not.toHaveClass(/is-playing/);
     expect(await page.evaluate(() => document.getElementById('player-audio').getAttribute('src'))).toBeNull();
-    await page.locator('#player-toggle').click();
-    await expect(bar).toHaveAttribute('data-state', 'playing');
-    await page.getByRole('button', { name: 'Arrêter la radio' }).click();
-    await expect(bar).toBeHidden();
+    await page.locator('#tuner-play').click();
+    await expect(bar).toHaveClass(/is-playing/);
   });
 
   test('slogan du site et anglais sans service de traduction @ci-critical', async ({ page }) => {
