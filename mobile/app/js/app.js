@@ -1005,13 +1005,142 @@
       <div class="row-actions">${confirm}</div>`;
   }
 
-  /** Onglet Sports : la section sports du site (cartes RSEQ, U SPORTS, voile…). */
+  /* Onglet Sports : cartes natives (même look que le-radar.ca/sports/),
+     lues dans sports-masthead.json (en ligne sur l’APK, copie embarquée en secours). */
+  const SPORTS_LIVE_URL = 'https://le-radar.ca/sports-masthead.json';
+  const SPORTS_GLYPHS = [['basket', '🏀'], ['hockey', '🏒'], ['soccer', '⚽'], ['football', '🏈'], ['volley', '🏐'], ['rugby', '🏉'], ['voile', '⛵'], ['sail', '⛵'], ['badminton', '🏸'], ['cross', '🏃'], ['athl', '🏃'], ['natation', '🏊'], ['golf', '⛳'], ['baseball', '⚾'], ['curling', '🥌']];
+  const sportsState = { data: null, loading: false, error: false, tab: 'resultats' };
+
+  function sportsGlyphFor(sport) {
+    const s = String(sport || '').toLowerCase();
+    const hit = SPORTS_GLYPHS.find(([key]) => s.includes(key));
+    return hit ? hit[1] : '🏅';
+  }
+
+  function sportsDataUrls() {
+    const inSource = /\/mobile\/app\/?/.test(location.pathname);
+    const local = inSource ? '../../sports-masthead.json' : './site/sports-masthead.json';
+    const native = window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform();
+    return native ? [SPORTS_LIVE_URL, local] : [local, SPORTS_LIVE_URL];
+  }
+
+  async function loadSportsData() {
+    if (sportsState.loading) return;
+    sportsState.loading = true;
+    for (const url of sportsDataUrls()) {
+      try {
+        const res = await fetch(url, { cache: 'no-store' });
+        if (!res.ok) continue;
+        const data = await res.json();
+        if (data && data.teams) { sportsState.data = data; sportsState.error = false; break; }
+      } catch { /* source suivante */ }
+    }
+    if (!sportsState.data) sportsState.error = true;
+    sportsState.loading = false;
+    const screen = document.getElementById('screen');
+    if (screen && location.hash.startsWith('#/sports')) {
+      const holder = screen.querySelector('[data-sports-board]');
+      if (holder) holder.outerHTML = sportsBoard();
+    }
+  }
+
+  function sportsGameMsOf(game) {
+    const t = Date.parse(`${game.date}T${game.time && /^\d\d:\d\d/.test(game.time) ? game.time : '12:00'}:00-04:00`);
+    return Number.isNaN(t) ? 0 : t;
+  }
+
+  function sportsDayLabel(game) {
+    const key = (ms) => new Date(ms).toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+    const today = key(Date.now());
+    const day = String(game.date || '');
+    if (day === today) return "Aujourd’hui";
+    if (day === key(Date.now() + 864e5)) return 'Demain';
+    if (day === key(Date.now() - 864e5)) return 'Hier';
+    const t = Date.parse(`${day}T12:00:00-04:00`);
+    return Number.isNaN(t) ? day : new Date(t).toLocaleDateString('fr-CA', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'America/Toronto' });
+  }
+
+  function sportsClock(game) {
+    const m = /^(\d\d):(\d\d)/.exec(game.time || '');
+    return m ? `${Number(m[1])} h ${m[2]}` : '';
+  }
+
+  function sportsGameRow(game, next) {
+    const hasScore = Number.isFinite(game.scoreFor) && Number.isFinite(game.scoreAgainst);
+    const result = String(game.result || '').toUpperCase();
+    const cls = next ? 'sports-result--next' : (['W', 'L', 'D', 'T'].includes(result) ? `sports-result--${result}` : '');
+    const score = next
+      ? '<span class="sports-result__score sports-result__score--next" aria-label="À venir">À venir</span>'
+      : `<span class="sports-result__score">${hasScore ? `${esc(game.scoreFor)}–${esc(game.scoreAgainst)}` : (game.place ? esc(`${game.place}e`) : '—')}</span>`;
+    const badge = next ? '→' : ({ W: 'V', L: 'D', D: 'N', T: 'N' }[result] || '');
+    const opp = game.opponent || game.event || '';
+    return `<li class="sports-result ${cls}">
+      <time class="sports-result__time" datetime="${esc(game.date || '')}"><span class="sports-result__day">${esc(sportsDayLabel(game))}</span><span class="sports-result__clock">${esc(sportsClock(game))}</span></time>
+      ${score}
+      <span class="sports-result__title">${opp ? `<span class="sports-result__vs">vs</span> <span class="sports-result__opp">${esc(opp)}</span>` : ''}${game.opponentFullName ? `<span class="sports-result__opp-full">${esc(game.opponentFullName)}</span>` : ''}${opp && typeof game.home === 'boolean' ? `<span class="sports-result__venue">${game.home ? 'domicile' : 'extérieur'}</span>` : ''}</span>
+      <span class="sports-result__badge${next ? ' sports-result__badge--next' : ''}">${esc(badge)}</span>
+    </li>`;
+  }
+
+  function sportsPanel(team, games, next) {
+    const color = core().institutionColor(state.brand, team.fullName) || core().institutionColor(state.brand, team.name) || '';
+    const sex = String(team.sex || '').toUpperCase();
+    const sexHtml = sex === 'F' ? '<span class="sports-panel__sex sports-panel__sex--f">Féminin</span>'
+      : sex === 'M' ? '<span class="sports-panel__sex sports-panel__sex--m">Masculin</span>' : '';
+    const sector = team.sector === 'universitaire' ? 'Universitaire' : team.sector === 'collegial' ? 'Collégial' : '';
+    const meta = [team.sportLabel || team.sport, team.division, sector].filter(Boolean).join(' · ');
+    return `<section class="sports-panel"${color ? ` style="--sports-panel-c:${esc(color)}"` : ''}>
+      <header class="sports-panel__head">
+        <span class="sports-panel__glyph" aria-hidden="true">${sportsGlyphFor(team.sport)}</span>
+        <div class="sports-panel__identity">
+          <h3 class="sports-panel__name"><span class="sports-panel__brand">${esc(team.name || team.code || '')}</span> ${sexHtml}</h3>
+          ${team.fullName && team.fullName !== team.name ? `<p class="sports-panel__school">${esc(team.fullName)}</p>` : ''}
+          <p class="sports-panel__meta">${esc(meta)}</p>
+        </div>
+      </header>
+      <ul class="sports-panel__list">${games.map((g) => sportsGameRow(g, next)).join('')}</ul>
+    </section>`;
+  }
+
+  function sportsBoard() {
+    if (!sportsState.data) {
+      return `<div data-sports-board class="sports-native-empty">${sportsState.error ? 'Sports indisponibles pour le moment.' : 'Chargement des sports…'}</div>`;
+    }
+    const now = Date.now();
+    const next = sportsState.tab === 'avenir';
+    const panels = [];
+    const seen = new Set();
+    for (const team of Object.values(sportsState.data.teams || {})) {
+      const pool = next ? (team.nextGames || []) : (team.results || []);
+      const games = pool.filter((g) => {
+        if (g.priorSeason) return false;
+        const ms = sportsGameMsOf(g);
+        return next ? ms >= now - 3 * 36e5 && ms <= now + 8 * 864e5 : ms <= now && ms >= now - 6 * 864e5;
+      }).sort((x, y) => next ? sportsGameMsOf(x) - sportsGameMsOf(y) : sportsGameMsOf(y) - sportsGameMsOf(x)).slice(0, 2);
+      if (!games.length) continue;
+      const stamp = `${team.name}|${team.sport}|${team.sex}|${games[0].date}|${games[0].opponent}`;
+      if (seen.has(stamp)) continue;
+      seen.add(stamp);
+      panels.push({ team, games, ms: sportsGameMsOf(games[0]) });
+    }
+    panels.sort((x, y) => next ? x.ms - y.ms : y.ms - x.ms);
+    const list = panels.slice(0, 80);
+    const body = list.length
+      ? list.map((p) => sportsPanel(p.team, p.games, next)).join('')
+      : `<p class="sports-native-empty">${next ? 'Aucun match prévu cette semaine.' : 'Aucun résultat récent.'}</p>`;
+    return `<div data-sports-board class="sports-native">${body}</div>`;
+  }
+
   function viewSports() {
-    return `<h1 class="sr-only">Sports</h1>
-      <div class="sports-frame-wrap">
-        <iframe class="sports-frame" src="https://le-radar.ca/sports/" title="Sports universitaires et collégiaux" loading="lazy" referrerpolicy="no-referrer"></iframe>
-      </div>
-      <a class="wide link" data-action="external" href="https://le-radar.ca/sports/" target="_blank" rel="noopener noreferrer">Ouvrir les sports dans le navigateur</a>`;
+    if (!sportsState.data && !sportsState.loading) loadSportsData();
+    const tab = sportsState.tab;
+    return `<h1 class="sports-native-title">Sports</h1>
+      <nav class="chips" aria-label="Sports">
+        <button type="button" data-action="sports-tab" data-tab="resultats" aria-pressed="${tab === 'resultats'}">Résultats</button>
+        <button type="button" data-action="sports-tab" data-tab="avenir" aria-pressed="${tab === 'avenir'}">À venir</button>
+      </nav>
+      ${sportsBoard()}
+      <a class="wide link" data-action="external" href="https://le-radar.ca/sports/" target="_blank" rel="noopener noreferrer">Ouvrir la page Sports complète dans le navigateur</a>`;
   }
 
   function viewSettings() {
@@ -1413,6 +1542,13 @@
 
   function bindEvents() {
     document.addEventListener('click', async (event) => {
+      const sportsTab = event.target.closest('[data-action="sports-tab"]');
+      if (sportsTab) {
+        event.preventDefault();
+        sportsState.tab = sportsTab.getAttribute('data-tab') === 'avenir' ? 'avenir' : 'resultats';
+        render();
+        return;
+      }
       const installItem = event.target.closest('[data-install-app]');
       if (installItem) {
         event.preventDefault();
