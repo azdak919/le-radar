@@ -3430,6 +3430,9 @@ function attachAudioListeners(el) {
     // Ces événements ne proviennent d'un <audio> que lorsqu'un flux est en
     // cours de préparation; `currentStation` couvre aussi l'instant où le
     // navigateur normalise l'URL de src.
+    // Jamais de spinner sans lecture demandée : un src posé à l'arrêt
+    // (rebranchement du gain, restauration) peut émettre `loadstart`.
+    if (el.paused) return;
     if (!userPaused && !syncRemotePlaying && (el.src || currentStation)) {
       setBuffering(true);
       updatePlayUI();

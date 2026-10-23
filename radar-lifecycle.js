@@ -292,7 +292,24 @@ function initPlayerSync() {
 
 const PLAYER_ARMED_KEY = 'radar-player-armed';
 
+/**
+ * Rechargement (F5, Ctrl+Shift+R) : jamais de reprise automatique. Le
+ * sessionStorage survit au rechargement, donc l'ancien « armé » relançait
+ * play() sans geste — spinner de connexion (souvent bloqué par la politique
+ * d'autoplay) alors que l'utilisateur n'a rien demandé.
+ */
+function isPageReload() {
+  try {
+    const nav = performance.getEntriesByType?.('navigation')?.[0];
+    if (nav) return nav.type === 'reload';
+    return performance.navigation?.type === 1;
+  } catch {
+    return false;
+  }
+}
+
 function isPlayerSessionArmed() {
+  if (isPageReload()) return false;
   try {
     return sessionStorage.getItem(PLAYER_ARMED_KEY) === '1';
   } catch {
