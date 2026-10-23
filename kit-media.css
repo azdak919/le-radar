@@ -266,3 +266,11 @@
     min-height: 200px;
   }
 }
+
+/* Identité visuelle */
+.kit-swatches{list-style:none;padding:0;margin:12px 0 20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.kit-swatch{display:flex;flex-direction:column;gap:2px;border:1px solid var(--rule);border-radius:10px;padding:10px;font-size:.85rem}
+.kit-swatch__chip{display:block;height:56px;border-radius:6px;border:1px solid var(--rule);margin-bottom:6px}
+.kit-swatch__name{font-weight:600}
+.kit-swatch__var{color:var(--muted)}
+.kit-type{padding-left:1.1em}

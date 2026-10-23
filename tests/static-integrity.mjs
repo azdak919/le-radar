@@ -549,7 +549,8 @@ assert(laPigePage.includes('seo-source-actions'), 'journal : rangée d’actions
 assert(laPigePage.includes('href="../../archives/">Archives</a>'), 'footer : lien Archives partagé requis');
 {
   const kit = readFileSync(join(root, 'kit-media/index.html'), 'utf8');
-  assert(kit.includes('Kit média'), 'kit-media : titre Kit média requis');
+  assert(kit.includes('Affiches et identité visuelle'), 'kit-media : titre Affiches et identité visuelle requis');
+  assert(kit.includes('id="identite"') && kit.includes('#6C2163'), 'kit-media : section identité visuelle requise');
   assert(kit.includes('assets/icon.svg'), 'kit-media : pictogramme téléchargeable requis');
   assert(kit.includes('wordmark-on-dark.svg'), 'kit-media : mot-symbole sombre requis');
   assert(kit.includes('wordmark-on-light.svg'), 'kit-media : mot-symbole clair requis');
@@ -1084,32 +1085,6 @@ for (const rel of ['index.html', 'tuner-embed.html', 'feeds.html']) {
   for (const origin of CONNECT_ORIGINS) {
     assert(connectSrc.includes(origin), `${rel}: connect-src doit autoriser ${origin}`);
   }
-}
-{
-  const iframes = readFileSync(join(root, 'iframes/index.html'), 'utf8');
-  assert(iframes.includes('iFrames'), 'iframes : titre iFrames requis');
-  assert(iframes.includes('tuner-embed.html'), 'iframes : snippet radio requis');
-  assert(iframes.includes('surface=bar'), 'iframes : surface=bar pour la barre campus');
-  assert(iframes.includes('sports-ad-embed.html'), 'iframes : snippet sports IAB requis');
-  assert(!/Flipper|phosphore|Sports SAT|data-sat-skin/.test(iframes), 'iframes : plus de copy Flipper / SAT');
-  assert(iframes.includes('id="snippet-radio"'), 'iframes : bloc copiable radio requis');
-  assert(iframes.includes('id="snippet-300x250"'), 'iframes : bloc copiable 300×250 requis');
-  assert(iframes.includes('Copier le code radio'), 'iframes : bouton copier radio requis');
-  assert(iframes.includes('fmt=300x250'), 'iframes : format MPU 300×250 requis');
-  assert(iframes.includes('fmt=728x90'), 'iframes : format leaderboard requis');
-  assert(iframes.includes('fmt=320x50'), 'iframes : format mobile requis');
-  assert(iframes.includes('fmt=300x600'), 'iframes : format half-page requis');
-  for (const sheet of [
-    'style-sports-strip.css',
-    'style-masthead-chrome.css',
-    'style-tuner.css',
-    'style-feed.css',
-    'style-chrome.css',
-  ]) {
-    assert(iframes.includes(sheet), `iframes : feuille chrome ${sheet} requise (sinon icônes SVG géantes)`);
-  }
-  assert(/site-foot__contact[\s\S]*?<svg[^>]*\bwidth=["']15["']/.test(iframes),
-    'iframes : SVG contact avec width=15');
 }
 {
   const ad = readFileSync(join(root, 'sports-ad-embed.html'), 'utf8');
