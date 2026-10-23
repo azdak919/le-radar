@@ -41,10 +41,17 @@ Le site se déploie automatiquement à chaque poussée sur `main`. Vérifier ave
 | `android-v1.1.0` | 2026-10-07 | ✅ publiée (MR fdroiddata 49671 fusionnée le 2026-10-15) |
 | `android-v1.1.1` | 2026-10-21 | ⏳ dans la recette fdroiddata, pas encore construite ni publiée |
 | `android-v1.2.0` | 2026-10-23 | ⏳ étiquetée (versionCode 5) ; en attente de la détection F-Droid (`^android-v`) |
+| `android-v1.2.1` | 2026-10-23 | ⏳ étiquetée (versionCode 6) ; en attente de la détection F-Droid (`^android-v`) |
 
 F-Droid construit par lots ; compter quelques jours à une semaine après l'étiquette.
 L'APK embarque son propre code (pas de `server.url`) ; seules les données viennent de
 le-radar.ca en direct.
+
+### Contenu de `android-v1.2.1` (versionCode 6)
+
+Onglet Sports natif (`8301a549d`) : cartes résultats / à venir rendues dans l'app depuis
+`sports-masthead.json`, au lieu de la page le-radar.ca/sports/ en cadre (en-tête et barre
+radio du site en double). Bouton pour ouvrir la page complète dans le navigateur.
 
 ### Contenu de `android-v1.2.0` (versionCode 5)
 
