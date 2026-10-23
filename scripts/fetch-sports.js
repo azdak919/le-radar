@@ -1293,6 +1293,7 @@ async function main() {
   // Pointages en cours de match (U SPORTS / RSEQ Direct, PrestoSports) :
   // seulement s’il y a un match RSEQ en fenêtre live. Ne lève jamais ; une
   // source en panne laisse le payload RSEQ intact. RSEQ officiel l’emporte.
+  let liveSourceStatus;
   if (process.env.SPORTS_PRESTO_LIVE !== '0') {
     const presto = await PrestoLive.overlayPrestoLive(teams, {
       registry: reg,
@@ -1310,6 +1311,10 @@ async function main() {
         error: presto.error,
       })}\n`);
       for (const line of presto.matched || []) process.stderr.write(`sports: direct ✓ ${line}\n`);
+    }
+    liveSourceStatus = PrestoLive.liveSourceHealth(presto) || undefined;
+    if (liveSourceStatus) {
+      process.stderr.write(`::warning title=Source sports en direct en panne::${liveSourceStatus.failed.join(' ; ')}\n`);
     }
   }
 
@@ -1374,6 +1379,7 @@ async function main() {
     sportsMissing: missingSports.length ? missingSports : undefined,
     teamCount,
     errors: errors.length ? errors : undefined,
+    liveSourceStatus,
     teams: prunedTeams,
   });
   if (liveOnly) {

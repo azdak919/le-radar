@@ -267,3 +267,16 @@ test('overlay : 1 requête par site et par jour, cache contourné', async () => 
   await Presto.overlayPrestoLive({}, { registry, now: NOW, fetchImpl: async (u) => { none.push(u); return ''; } });
   assert.equal(none.length, 0);
 });
+
+// ── Alerte source en direct (liveSourceHealth) ──
+{
+  const { liveSourceHealth } = (await import('node:module')).createRequire(import.meta.url)('../scripts/sports-presto-live-lib.js');
+  const assertM = (await import('node:assert/strict')).default;
+  assertM.equal(liveSourceHealth({ skipped: true }), null);
+  assertM.equal(liveSourceHealth({ live: 1, failed: [] }), null);
+  const h = liveSourceHealth({ failed: ['usports HTTP 405 waf=captcha server=CloudFront'] }, Date.UTC(2026, 9, 23, 20));
+  assertM.equal(h.ok, false);
+  assertM.deepEqual(h.failed, ['usports HTTP 405 waf=captcha server=CloudFront']);
+  assertM.equal(h.at, '2026-10-23T20:00:00.000Z');
+  console.log('ok liveSourceHealth');
+}

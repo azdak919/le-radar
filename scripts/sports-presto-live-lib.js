@@ -700,7 +700,22 @@ async function overlayPrestoLive(teams, {
   }
 }
 
+/**
+ * État des sources en direct pour cette passe : null si rien à signaler,
+ * sinon { ok: false, failed: [...], at } quand toutes les sources requises
+ * ont échoué (ex. WAF CloudFront « captcha » sur les IP GitHub). Sert
+ * d’alerte : le payload porte `liveSourceStatus`, le workflow avertit.
+ */
+function liveSourceHealth(presto, now = Date.now()) {
+  if (!presto || presto.skipped) return null;
+  const failed = Array.isArray(presto.failed) ? presto.failed.filter(Boolean) : [];
+  if (presto.error) failed.push(`erreur ${presto.error}`);
+  if (!failed.length) return null;
+  return { ok: false, failed, at: new Date(now).toISOString() };
+}
+
 module.exports = {
+  liveSourceHealth,
   SOURCES,
   SPORT_CODES,
   FEED_FIELDS,
