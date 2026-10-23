@@ -40,12 +40,19 @@ Le site se déploie automatiquement à chaque poussée sur `main`. Vérifier ave
 | `android-v1.0.1` | 2026-10-05 | — (antérieure à F-Droid) |
 | `android-v1.1.0` | 2026-10-07 | ✅ publiée (MR fdroiddata 49671 fusionnée le 2026-10-15) |
 | `android-v1.1.1` | 2026-10-21 | ⏳ dans la recette fdroiddata, pas encore construite ni publiée |
+| `android-v1.2.0` | 2026-10-23 | ⏳ étiquetée (versionCode 5) ; en attente de la détection F-Droid (`^android-v`) |
 
 F-Droid construit par lots ; compter quelques jours à une semaine après l'étiquette.
 L'APK embarque son propre code (pas de `server.url`) ; seules les données viennent de
 le-radar.ca en direct.
 
-### Changements web pas encore dans l'APK (après `android-v1.1.1`)
+### Contenu de `android-v1.2.0` (versionCode 5)
+
+Barre radio persistante en haut avec défilement des postes au repos, onglet Sports
+(remplace Enregistrés, désormais dans Réglages), icône d'engrenage, notifications des
+nouveaux articles, cartes article comme le site, bouton lecture 48 px.
+
+### Changements web pas encore dans l'APK (après `android-v1.1.1`) — inclus dans 1.2.0
 
 - `5fce3112c` — retrait du rechargement automatique du service worker (sans effet sur l'APK,
   qui n'utilise pas le service worker).
