@@ -1637,3 +1637,8 @@ html[data-translate-busy="1"] .translate-toggle {
 }
 
 .news-empty { text-align: center; color: var(--muted); padding: 60px 0; }
+
+/* En bref « mini » : comble le dernier trou sous la colonne (titre + byline). */
+.brief-rail .article--compact-mini.article--thumb.has-image { display: block; }
+.brief-rail .article--compact-mini .article-media,
+.brief-rail .article--compact-mini .article-brief { display: none !important; }

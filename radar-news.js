@@ -2725,6 +2725,34 @@ function balanceMagazineColumns() {
     }
   };
 
+  /** Trou résiduel sous En bref (< 1 carte complète, > GOOD_GAP_MAX) :
+   *  la carte suivante dépasserait le hero, donc on l’ajoute en version
+   *  « mini » (titre + byline, sans photo ni extrait) si elle tient. */
+  const fillBriefGapWithMiniCards = () => {
+    if (briefCols > 1) return;
+    let guard = 0;
+    while (guard < 4) {
+      guard += 1;
+      const gap = magazineColumnContentHeight(hero) - magazineColumnContentHeight(brief);
+      if (gap <= GOOD_GAP_MAX * 0.6) return;
+      if (!magazineReserve.length) return;
+      if (brief.querySelectorAll('.article--compact').length >= briefSidebarMaxSlots()) return;
+      const item = takeNextBriefFromReserve({ allowExtra: true, allowHeroInstitution: isSourceMode });
+      if (!item) return;
+      const el = safeCreateArticle(item, 'compact');
+      if (!el) return;
+      el.classList.add('article--compact-mini');
+      appendBeforeMagazineSpacer(brief, el);
+      const overshoot = magazineColumnContentHeight(brief) - magazineColumnContentHeight(hero);
+      if (overshoot > tol) {
+        demoteBriefCardToTail(brief, el);
+        return;
+      }
+      markPromotedToBrief(item);
+      removeTailArticleForItem(item);
+    }
+  };
+
   try {
     clearMagazineSpacers(hero);
     clearMagazineSpacers(brief);
@@ -2753,6 +2781,7 @@ function balanceMagazineColumns() {
     if (purgeBriefCardsFromHeroInstitutions(brief)) trimBriefIfTaller();
     trimBriefOrphanRow();
     completeLastBriefRow();
+    fillBriefGapWithMiniCards();
 
     // --- 4) Midwidth : priorité = zéro grand vide sous les vedettes.
     // (Le spacer flex sous le hero est très visible en rail étroit.)
