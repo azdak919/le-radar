@@ -1,17 +1,31 @@
 {
-  "updated": "2026-10-23T15:56:36.005Z",
+  "updated": "2026-10-23T18:29:29.122Z",
   "total": 168,
-  "withImage": 153,
-  "withCredit": 153,
-  "cited": 97,
-  "pending": 6,
+  "withImage": 150,
+  "withCredit": 150,
+  "cited": 98,
+  "pending": 38,
   "missingHero": 0,
   "ok": false,
-  "checked": 12,
-  "updatedCount": 6,
-  "citedNew": 6,
-  "fallbackNew": 6,
+  "checked": 60,
+  "updatedCount": 60,
+  "citedNew": 8,
+  "fallbackNew": 52,
   "samples": [
+    {
+      "title": "Student Spotlight: Farabi Khaleque",
+      "source": "The Concordian",
+      "credit": "Photo: Saima Mazumder // _saimamazumder // The Concordian",
+      "cited": true,
+      "method": "wp-media-caption"
+    },
+    {
+      "title": "The Honey Bank: CSU’s sustainability initiatives",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
+    },
     {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
@@ -20,39 +34,67 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "QUICKSPIN: Remi Wolf — Mud",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Manifestation anti-IA à Montréal",
-      "source": "Le Délit",
-      "credit": "Photo : Héloïse Durning",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Our circle matters",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Quand la fiction banalise les traumatismes",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Reportages radio du 19 octobre 2026",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Bulletins de nouvelles La Pige Radio",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Pop’s Patriarchy: How We Hold Women to a Higher Standard",
-      "source": "The Plant",
-      "credit": "Photo: Cosmos",
+      "title": "Fin de saison abrupte pour la cycliste Magdeleine Vallières Mill",
+      "source": "Le Collectif",
+      "credit": "Photo : Source : Getty Images",
       "cited": true,
-      "method": "via-attribution"
+      "method": "body-line"
+    },
+    {
+      "title": "Le Grand Défi Pierre Lavoie débarque à Sherbrooke",
+      "source": "Le Collectif",
+      "credit": "Photo : Facebook Le Grand Défi Pierre Lavoie",
+      "cited": true,
+      "method": "body-tail"
+    },
+    {
+      "title": "Vers une 10e équipe dans la LCF?",
+      "source": "Le Collectif",
+      "credit": "Photo : Richard Wolowicz Getty Images",
+      "cited": true,
+      "method": "filename-photo-name"
+    },
+    {
+      "title": "Le futur du hockey universitaire sherbrookois tatoué sur le cœur",
+      "source": "Le Collectif",
+      "credit": "Photo : Université de Sherbrooke par Michel Caron",
+      "cited": true,
+      "method": "json-ld"
+    },
+    {
+      "title": "Le Grand Prix cyclistes s’amène à Montréal !",
+      "source": "Quartier Libre",
+      "credit": "Photo : Quartier Libre",
+      "cited": false,
+      "method": null
     }
   ]
 }
