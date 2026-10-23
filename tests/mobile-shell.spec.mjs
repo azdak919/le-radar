@@ -60,16 +60,24 @@ test.describe('application mobile', () => {
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/mobile/app/#/explorer?section=radios', { waitUntil: 'domcontentloaded' });
+    // Depuis 7bd8ad0, la barre radio persistante est le syntoniseur fixé EN HAUT
+    // (comme sur le site) ; le mini-lecteur du bas (#player) reste dans le DOM
+    // pour l'état et l'audio, mais n'est plus affiché.
     const bar = page.locator('#player');
+    const tuner = page.locator('#tuner');
     await expect(bar).toBeHidden();
+    await expect(tuner).toBeVisible();
+    await expect(tuner).not.toHaveClass(/\bis-playing\b/);
     const listen = page.locator('[data-action="radio-toggle"]').first();
     await expect(listen).toBeVisible();
     const id = await listen.getAttribute('data-id');
     await page.goto(`/mobile/app/#/radio/${id}`, { waitUntil: 'domcontentloaded' });
     await expect(page.locator('#screen audio')).toHaveCount(0);
     await page.getByRole('button', { name: 'Écouter en direct' }).click();
-    await expect(bar).toBeVisible();
     await expect(bar).toHaveAttribute('data-state', 'playing');
+    await expect(bar).toBeHidden();
+    await expect(tuner).toBeVisible();
+    await expect(tuner).toHaveClass(/\bis-playing\b/);
     await expect(page.getByRole('button', { name: 'Mettre en pause' })).toHaveAttribute('aria-pressed', 'true');
     await page.evaluate(() => { document.getElementById('player-audio').dataset.marker = 'same'; });
 
@@ -77,7 +85,8 @@ test.describe('application mobile', () => {
       await page.locator('#tabs').getByRole('link', { name: tab }).click();
       const heading = tab === 'Accueil' ? 'Le fil étudiant' : tab;
       await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible();
-      await expect(bar).toBeVisible();
+      await expect(tuner).toBeVisible();
+      await expect(tuner).toHaveClass(/\bis-playing\b/);
       const audio = await page.evaluate(() => {
         const node = document.getElementById('player-audio');
         return { marker: node.dataset.marker, paused: node.paused, src: Boolean(node.getAttribute('src')) };
@@ -85,22 +94,23 @@ test.describe('application mobile', () => {
       expect(audio).toEqual({ marker: 'same', paused: false, src: true });
     }
 
-    // La barre est posée sur les onglets, sans les recouvrir ni déborder.
+    // Le syntoniseur est collé en haut, au-dessus des onglets, sans déborder.
     const boxes = await page.evaluate(() => ({
-      bar: document.getElementById('player').getBoundingClientRect().toJSON(),
+      tuner: document.getElementById('tuner').getBoundingClientRect().toJSON(),
       tabs: document.getElementById('tabs').getBoundingClientRect().toJSON(),
       overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
     }));
-    expect(boxes.bar.bottom).toBeLessThanOrEqual(boxes.tabs.top);
+    expect(boxes.tuner.top).toBeGreaterThanOrEqual(0);
+    expect(boxes.tuner.bottom).toBeLessThanOrEqual(boxes.tabs.top);
     expect(boxes.overflow).toBe(false);
 
-    await page.locator('#player-toggle').click();
+    await page.locator('#tuner-play').click();
     await expect(bar).toHaveAttribute('data-state', 'paused');
+    await expect(tuner).not.toHaveClass(/\bis-playing\b/);
     expect(await page.evaluate(() => document.getElementById('player-audio').getAttribute('src'))).toBeNull();
-    await page.locator('#player-toggle').click();
+    await page.locator('#tuner-play').click();
     await expect(bar).toHaveAttribute('data-state', 'playing');
-    await page.getByRole('button', { name: 'Arrêter la radio' }).click();
-    await expect(bar).toBeHidden();
+    await expect(tuner).toHaveClass(/\bis-playing\b/);
   });
 
   test('slogan du site et anglais sans service de traduction @ci-critical', async ({ page }) => {
