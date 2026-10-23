@@ -4763,7 +4763,7 @@ async function pollLiveSportsJson() {
   try { await pollRseqAndRerender(); } catch { /* ignore */ }
   if (!sportsLivePollNeeded()) return;
   try {
-    const res = await fetch(appAsset('sports-masthead.json'), { cache: 'no-store' });
+    const res = await fetchSportsMasthead();
     if (!res.ok) return;
     const raw = await res.json();
     const prevSig = sportsBoardLiveSig();
@@ -4771,6 +4771,23 @@ async function pollLiveSportsJson() {
     applySportsPayload(raw);
     sportsRerenderAfterLiveChange(prevSig, prevKeys);
   } catch { /* ignore : le snapshot en mémoire reste */ }
+}
+
+/**
+ * App Android (Capacitor) : la copie embarquée de sports-masthead.json est figée
+ * au build de l'APK. On lit d'abord la version en ligne (CORS *), puis on
+ * retombe sur la copie locale hors ligne. Site / PWA : inchangé (copie locale).
+ */
+async function fetchSportsMasthead() {
+  const native = typeof window !== 'undefined' && window.Capacitor
+    && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform();
+  if (native) {
+    try {
+      const live = await fetch('https://le-radar.ca/sports-masthead.json', { cache: 'no-store' });
+      if (live.ok) return live;
+    } catch { /* hors ligne : copie embarquée */ }
+  }
+  return fetch(appAsset('sports-masthead.json'), { cache: 'no-store' });
 }
 
 function scheduleLiveSportsPoll() {
@@ -4781,7 +4798,7 @@ function scheduleLiveSportsPoll() {
 async function initMastheadSports() {
   if (!MASTHEAD_SPORTS_STRIP) return;
   try {
-    const res = await fetch(appAsset('sports-masthead.json'), { cache: 'no-store' });
+    const res = await fetchSportsMasthead();
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const raw = await res.json();
     /* Focus-group B : même fenêtre de sessions que les articles + filet hors saison. */

@@ -43,7 +43,6 @@ body:not(.is-home) .masthead-shuffle-slot,
 body:not(.is-home) .masthead-date,
 body:not(.is-home) .wordmark-full,
 body:not(.is-home) .masthead-icon:not(.theme-toggle),
-body:not(.is-home) #tuner,
 body:not(.is-home) .masthead-weather-dock,
 body:not(.is-home) #masthead-sports-strip,
 body:not(.is-home) .site-sections {
@@ -93,6 +92,14 @@ body:not(.is-home) .masthead-icon.theme-toggle {
 .tabs { z-index: 30; }
 
 .player { z-index: 31; }
+
+/* Barre radio persistante EN HAUT, comme sur le site : le syntoniseur reste
+   affiché sur toutes les routes et colle sous la barre d'état (StatusBar en
+   overlay sur Android). La coiffe .tuner-safe-cap comble la bande de l'encoche.
+   La mini-barre du bas devient redondante : on la retire. */
+html.has-tuner-safe-cap .tuner { top: var(--safe-top); }
+.player, .player:not([hidden]) { display: none !important; }
+body.has-player { --player: 0px; }
 
 /* ─── Cartes article : rendu du site (style-feed.css) dans la carte d’app ───
    Les blocs viennent de scripts/article-card-lib.js (même ordre que le site).

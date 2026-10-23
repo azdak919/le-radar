@@ -1658,6 +1658,9 @@ function readWeatherCache() {
 /** Lab local (python http.server / vite) — pas de météo en prod sans API. */
 function isLocalWeatherLabHost() {
   try {
+    // App Android (Capacitor) : servie depuis https://localhost, mais ce
+    // n'est pas un lab — jamais de fausses températures.
+    if (window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform()) return false;
     const h = String(location.hostname || '');
     return h === 'localhost' || h === '127.0.0.1' || h === '[::1]';
   } catch {
