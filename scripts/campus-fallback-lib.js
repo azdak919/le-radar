@@ -119,8 +119,44 @@ function campusPhotoHay(photo = {}) {
 /** Photos hors campus repérées par l’audit (autre établissement, hôpital…). */
 const CAMPUS_PHOTO_EXCLUDE_RE = /\budem\b|\bcentre ville\b|\bsanatorium\b|sante mentale|chichester/;
 
+/**
+ * Règle : la photo de repli montre le campus de l’université (ou du cégep)
+ * du média — pas une vue de ville, une carte, une peinture, un autre campus
+ * ni un campus satellite dans une autre ville.
+ * Fichiers Commons écartés par l’audit du 2026-10-23 (fragment normalisé).
+ */
+const CAMPUS_PHOTO_REJECT_FILES = [
+  'universite laval quebec canada 02', // 404 + maison dans la neige
+  'bus stop in winter near universite laval', // abribus « près de » ULaval
+  'institut nordique du quebec', // bâtiment non identifié comme ULaval
+  'udem laval', // campus UdeM à Laval (confusion avec ULaval)
+  'formation wikipedia universite du quebec a montreal', // formation en salle, personnes
+  'mcgillcampusmap', // carte
+  'walking west on sherbrooke street near mcgill', // vue de rue
+  'view from mcgill university downtown campus', // vue du centre-ville
+  'sherbrooke quebec centre ville en automne', // vue de ville
+  'bishop otter campus', // University of Chichester (R.-U.)
+  'university of chichester',
+  'campus du cegep de jonquiere', // vue aérienne de Saguenay
+  'campus de l uqtr a drummondville', // campus satellite, pas Trois-Rivières
+];
+/** Cartes, peintures, logos, vues de ville : jamais un repli campus. */
+const CAMPUS_PHOTO_KIND_REJECT_RE = /\b(map|carte|plan du campus|openstreetmap|logo|painting|peinture|tableau|oil on canvas|huile sur toile|skyline|cityscape|panorama de la ville|vue de la ville|centre ville|downtown view|aerial view of saguenay|vue aerienne de saguenay)\b|campusmap/;
+
+function isRejectedCampusPhoto(photo = {}) {
+  const hay = normalizeCampusKey(
+    [photo.title, photo.url, photo.link, photo.sourceUrl].filter(Boolean).map((v) => {
+      try { return decodeURIComponent(String(v)); } catch { return String(v); }
+    }).join(' ').replace(/[_]/g, ' '),
+  );
+  if (!hay) return false;
+  if (CAMPUS_PHOTO_REJECT_FILES.some((f) => hay.includes(f))) return true;
+  return CAMPUS_PHOTO_KIND_REJECT_RE.test(hay);
+}
+
 function photoMatchesNeedles(photo, needles = []) {
   if (!needles.length) return false;
+  if (isRejectedCampusPhoto(photo)) return false;
   if (CAMPUS_PHOTO_EXCLUDE_RE.test(campusPhotoHay(photo))) return false;
   // Le lieu curaté prime. Une vue « UdeM et Polytechnique » dont le lieu est
   // l’Université de Montréal ne sert pas de photo de Polytechnique.
@@ -437,6 +473,8 @@ const api = {
   normalizeCampusKey,
   campusNeedlesFor,
   filterUniversityPhotos,
+  isRejectedCampusPhoto,
+  CAMPUS_PHOTO_REJECT_FILES,
   extrasForInstitution,
   pickCampusFallback,
   campusPhotoKey,

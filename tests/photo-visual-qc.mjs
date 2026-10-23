@@ -255,8 +255,9 @@ assert(
   matchHardBanned({
     url: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Universit%C3%A9_Laval%2C_Quebec%2C_Canada_02.jpg',
     title: 'Université Laval, Quebec, Canada 02',
-  }) == null,
-  'Canada_02 Maison Eugène-Roberge NOT banned',
+  }) != null,
+  // Audit 2026-10-23 : fichier 404 sur Commons, décrit « maison rouge près de Québec ».
+  'Canada_02 (404, pas le campus) banni',
 );
 assert(
   require('../scripts/campus-photo-bank.js').BANK['universite laval']?.some((e) =>

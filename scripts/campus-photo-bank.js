@@ -13,6 +13,7 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const { isRejectedCampusPhoto } = require('./campus-fallback-lib.js');
 
 function normalizeKey(text = '') {
   return String(text)
@@ -50,6 +51,16 @@ const WALLPAPER_INST_RULES = [
 ];
 
 function mapWallpaperToBankKey(photo = {}) {
+  if (isRejectedCampusPhoto(photo)) return null;
+  // Le lieu curaté prime : « Pavillon Claudette-MacKay-Lassonde » (Polytechnique)
+  // ne doit pas tomber chez Concordia à cause de « mackay ».
+  const place = String(photo.place || '').trim();
+  if (place) {
+    for (const rule of WALLPAPER_INST_RULES) {
+      if (rule.re.test(place)) return rule.key;
+    }
+    return null;
+  }
   const hay = `${photo.title || ''} ${photo.url || ''} ${photo.link || ''}`;
   for (const rule of WALLPAPER_INST_RULES) {
     if (rule.re.test(hay)) return rule.key;
@@ -111,24 +122,24 @@ const BANK = {
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg',
       title: 'Roddick Gates, McGill University',
-      creator: 'Acarpentier',
-      license: 'CC BY 2.5',
+      creator: 'Gene.arboit',
+      license: 'CC BY-SA 3.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Roddick_Gates_(McGill_University)_2005-09-02.jpg',
       tags: 'exterior summer autumn gates campus montreal',
     },
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/2/2d/McGill_University_Montr%C3%A9al.jpeg',
       title: 'McGill University, Montréal',
-      creator: 'Thomas1313',
-      license: 'CC BY-SA 4.0',
+      creator: 'illuminatusds',
+      license: 'CC BY-SA 3.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:McGill_University_Montr%C3%A9al.jpeg',
       tags: 'exterior arts building campus montreal green lawn',
     },
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg',
       title: 'Roddick Gates closed, McGill University, July 17, 2024',
-      creator: 'Gen. Quon',
-      license: 'CC BY-SA 4.0',
+      creator: 'D. Benjamin Miller',
+      license: 'CC0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Roddick_Gates_closed,_McGill_University,_July_17,_2024.jpg',
       tags: 'exterior summer july gates campus montreal',
     },
@@ -141,14 +152,6 @@ const BANK = {
       tags: 'exterior downtown campus montreal buildings green',
     },
     {
-      url: 'https://upload.wikimedia.org/wikipedia/commons/b/b9/View_from_McGill_University_downtown_campus_01.JPG',
-      title: 'View from McGill University downtown campus 01',
-      creator: 'Jeangagnon',
-      license: 'CC BY-SA 3.0',
-      sourceUrl: 'https://commons.wikimedia.org/wiki/File:View_from_McGill_University_downtown_campus_01.JPG',
-      tags: 'exterior downtown campus montreal skyline view',
-    },
-    {
       url: 'https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg',
       title: 'Wilson Hall, McGill University',
       creator: 'Jeangagnon',
@@ -159,7 +162,7 @@ const BANK = {
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/1/1d/4_McGill_University%2C_Montreal%2CQuebec_2009.jpg',
       title: 'McGill University, Montreal, Quebec 2009',
-      creator: 'Taxiarchos228',
+      creator: 'XeresNelro',
       license: 'CC BY-SA 4.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:4_McGill_University,_Montreal,Quebec_2009.jpg',
       tags: 'exterior campus montreal autumn green paths',
@@ -167,7 +170,7 @@ const BANK = {
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/a/a2/Arts_Building%2C_McGill_University.jpg',
       title: 'Arts Building, McGill University',
-      creator: 'Abdallahh',
+      creator: 'Guilhermeduartegarcia',
       license: 'CC BY-SA 3.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Arts_Building,_McGill_University.jpg',
       tags: 'exterior arts building columns campus montreal',
@@ -175,7 +178,7 @@ const BANK = {
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/8/8b/McGill_University%2C_Winter.jpg',
       title: 'McGill University, Winter',
-      creator: 'Abdallahh',
+      creator: 'Guilhermeduartegarcia',
       license: 'CC BY-SA 3.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:McGill_University,_Winter.jpg',
       tags: 'exterior winter snow campus montreal',
@@ -188,8 +191,8 @@ const BANK = {
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Universit%C3%A9_de_Montr%C3%A9al%2C_Pavillon_Roger-Gaudry.JPG',
       title: 'Université de Montréal, Pavillon Roger-Gaudry',
-      creator: 'Jeangagnon',
-      license: 'CC BY-SA 3.0',
+      creator: 'Laurent Bélanger',
+      license: 'CC BY-SA 4.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Universit%C3%A9_de_Montr%C3%A9al,_Pavillon_Roger-Gaudry.JPG',
       tags: 'exterior tower campus montreal building',
     },
@@ -199,8 +202,8 @@ const BANK = {
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/UQAM-Judith-Jasmin.jpg',
       title: 'UQAM — Pavillon Judith-Jasmin',
-      creator: 'Jeangagnon',
-      license: 'CC BY-SA 3.0',
+      creator: 'Groov3',
+      license: 'CC BY-SA 4.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:UQAM-Judith-Jasmin.jpg',
       tags: 'exterior campus montreal judith jasmin',
     },
@@ -210,7 +213,7 @@ const BANK = {
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/1/16/CJ_Building%2C_Loyola_Campus%2C_Communication_Studies%2C_Concordia_University.jpg',
       title: 'CJ Building, Loyola Campus, Concordia University',
-      creator: 'Gen. Quon',
+      creator: 'Justinhandgregory',
       license: 'CC BY-SA 4.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:CJ_Building,_Loyola_Campus,_Communication_Studies,_Concordia_University.jpg',
       tags: 'exterior loyola campus montreal building',
@@ -281,22 +284,13 @@ const BANK = {
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Pavillon_Ferdinand-Vandry_06.jpg',
       tags: 'exterior campus quebec city modern vandry pavilion',
     },
-    {
-      // Maison Eugène-Roberge — patrimoine campus, PAS style église (garder)
-      url: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Universit%C3%A9_Laval%2C_Quebec%2C_Canada_02.jpg',
-      title: 'Université Laval, Quebec, Canada 02',
-      creator: 'Wilfredor',
-      license: 'CC0',
-      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Universit%C3%A9_Laval,_Quebec,_Canada_02.jpg',
-      tags: 'exterior campus quebec city maison eugene-roberge',
-    },
   ],
   'universite de sherbrooke': [
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/a/af/Campus_de_Longueuil_-_Universite_de_Sherbrooke_09.jpg',
       title: 'Campus de Longueuil — Université de Sherbrooke',
       creator: 'Jeangagnon',
-      license: 'CC BY-SA 4.0',
+      license: 'CC BY-SA 3.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Campus_de_Longueuil_-_Universite_de_Sherbrooke_09.jpg',
       tags: 'exterior campus longueuil sherbrooke modern',
     },
@@ -305,29 +299,87 @@ const BANK = {
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg',
       title: "Bishop's University campus 2011",
-      creator: 'Balcer',
-      license: 'CC BY 3.0',
+      creator: 'JasonParis',
+      license: 'CC BY 2.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Bishop%27s_University_campus_2011.jpg',
       tags: 'exterior campus lennoxville green summer',
     },
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg',
       title: "Bishop's University McGreer Hall",
-      creator: 'Balcer',
-      license: 'CC BY 3.0',
+      creator: 'JasonParis',
+      license: 'CC BY 2.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Bishop%27s_University_McGreer_Hall.jpg',
       tags: 'exterior campus lennoxville building',
     },
   ],
   'polytechnique montreal': [],
-  'universite du quebec a chicoutimi': [],
-  'universite du quebec a rimouski': [],
+  'universite du quebec a chicoutimi': [
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/2016-10_Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Chicoutimi_01.jpg/1920px-2016-10_Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Chicoutimi_01.jpg',
+      title: '2016-10 Université du Québec à Chicoutimi 01',
+      creator: '0x010C',
+      license: 'CC BY-SA 4.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:2016-10_Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Chicoutimi_01.jpg',
+      tags: 'exterior campus chicoutimi uqac',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/2016-10_Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Chicoutimi_02.jpg/1920px-2016-10_Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Chicoutimi_02.jpg',
+      title: '2016-10 Université du Québec à Chicoutimi 02',
+      creator: '0x010C',
+      license: 'CC BY-SA 4.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:2016-10_Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Chicoutimi_02.jpg',
+      tags: 'exterior campus chicoutimi uqac',
+    },
+  ],
+  'universite du quebec a rimouski': [
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Facade_uqar.jpg',
+      title: 'Facade uqar',
+      creator: 'Alchimist',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Facade_uqar.jpg',
+      tags: 'exterior campus rimouski uqar',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Rimouski_-_Entr%C3%A9e_principale.jpg/1920px-Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Rimouski_-_Entr%C3%A9e_principale.jpg',
+      title: 'Université du Québec à Rimouski - Entrée principale',
+      creator: 'AzertyFab',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Rimouski_-_Entr%C3%A9e_principale.jpg',
+      tags: 'exterior campus rimouski uqar',
+    },
+  ],
   'universite du quebec a trois rivieres': [
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/9/90/UQTR_-_Pavillon_Michel_Sarrazin_01.JPG',
+      title: 'UQTR - Pavillon Michel Sarrazin 01',
+      creator: 'Khayman',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:UQTR_-_Pavillon_Michel_Sarrazin_01.JPG',
+      tags: 'exterior campus trois rivieres uqtr pavillon',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/5/57/UQTR_-_Pavillon_Michel_Sarrazin_03.JPG',
+      title: 'UQTR - Pavillon Michel Sarrazin 03',
+      creator: 'Khayman',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:UQTR_-_Pavillon_Michel_Sarrazin_03.JPG',
+      tags: 'exterior campus trois rivieres uqtr pavillon',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/3/34/UQTR_-_Pavillon_Albert_Tessier_et_L%C3%A9on_Provancher.JPG',
+      title: 'UQTR - Pavillon Albert Tessier et Léon Provancher',
+      creator: 'Khayman',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:UQTR_-_Pavillon_Albert_Tessier_et_L%C3%A9on_Provancher.JPG',
+      tags: 'exterior campus trois rivieres uqtr pavillon',
+    },
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/4/47/Pavillon_Pierre-Boucher_UQTR.jpg',
       title: 'Pavillon Pierre-Boucher, UQTR',
-      creator: 'Jeangagnon',
-      license: 'CC BY-SA 3.0',
+      creator: 'FoufouneEl3ctriK',
+      license: 'CC BY 3.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Pavillon_Pierre-Boucher_UQTR.jpg',
       tags: 'exterior campus trois-rivieres building',
     },
@@ -336,7 +388,7 @@ const BANK = {
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/9/94/C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG',
       title: 'Cégep du Vieux Montréal',
-      creator: 'Jeangagnon',
+      creator: 'Khayman',
       license: 'CC BY-SA 3.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:C%C3%A9gep_du_Vieux_Montr%C3%A9al01.JPG',
       tags: 'exterior cegep montreal',
@@ -344,8 +396,8 @@ const BANK = {
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/6/6c/C%C3%A9gep_du_Vieux_Montr%C3%A9al%2C_Nov_03_2022.jpg',
       title: 'Cégep du Vieux Montréal, Nov 03 2022',
-      creator: 'Gen. Quon',
-      license: 'CC BY-SA 4.0',
+      creator: 'D. Benjamin Miller',
+      license: 'CC0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:C%C3%A9gep_du_Vieux_Montr%C3%A9al,_Nov_03_2022.jpg',
       tags: 'exterior cegep montreal autumn',
     },
@@ -354,7 +406,7 @@ const BANK = {
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/f/f4/Pavillon_principal_du_C%C3%A9gep_de_Jonqui%C3%A8re.jpg',
       title: 'Pavillon principal du Cégep de Jonquière',
-      creator: 'Jeangagnon',
+      creator: 'Cegep jonquiere',
       license: 'CC BY-SA 4.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Pavillon_principal_du_C%C3%A9gep_de_Jonqui%C3%A8re.jpg',
       tags: 'exterior cegep jonquiere saguenay pavillon',
@@ -382,14 +434,6 @@ const BANK = {
       license: 'CC BY-SA 3.0',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Entr%C3%A9e_du_pavillon_G%C3%A9rard-Arguin_du_C%C3%A9gep_de_Jonqui%C3%A8re02.JPG',
       tags: 'exterior cegep jonquiere gerard arguin entree',
-    },
-    {
-      url: 'https://upload.wikimedia.org/wikipedia/commons/3/31/Campus_du_C%C3%A9gep_de_Jonqui%C3%A8re.jpg',
-      title: 'Campus du Cégep de Jonquière',
-      creator: 'Khayman',
-      license: 'CC BY-SA 3.0',
-      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Campus_du_C%C3%A9gep_de_Jonqui%C3%A8re.jpg',
-      tags: 'aerial campus cegep jonquiere saguenay',
     },
   ],
   'dawson college': [
@@ -529,7 +573,7 @@ const BANK = {
       url: 'https://upload.wikimedia.org/wikipedia/commons/c/cf/C%C3%89GEP_Chicoutimi_aile_H.jpg',
       title: 'CÉGEP Chicoutimi, aile H',
       creator: 'Adqproductions',
-      license: 'CC0',
+      license: 'domaine public',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:C%C3%89GEP_Chicoutimi_aile_H.jpg',
       tags: 'exterior campus chicoutimi wing',
     },
@@ -573,7 +617,7 @@ const BANK = {
       url: 'https://upload.wikimedia.org/wikipedia/commons/8/84/Rimouski-Cegep.jpg',
       title: 'Cégep de Rimouski',
       creator: 'Sebb',
-      license: 'CC BY-SA 3.0',
+      license: 'domaine public',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Rimouski-Cegep.jpg',
       tags: 'exterior campus rimouski cegep building',
     },
@@ -581,7 +625,7 @@ const BANK = {
       url: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Cegeprimouski2.jpg',
       title: 'Cégep de Rimouski 2',
       creator: 'Stéphanevoyer',
-      license: 'CC BY-SA 3.0',
+      license: 'CC BY-SA 2.5',
       sourceUrl: 'https://commons.wikimedia.org/wiki/File:Cegeprimouski2.jpg',
       tags: 'exterior campus rimouski cegep',
     },
@@ -667,7 +711,7 @@ function resolveBankKey(institution = '') {
 function bankEntriesFor(institution = '') {
   const key = resolveBankKey(institution);
   if (!key) return [];
-  const curated = BANK[key] || [];
+  const curated = (BANK[key] || []).filter((e) => !isRejectedCampusPhoto(e));
   // Enrichissement soft : photos du pool mât universities (même établissement).
   // Désactiver : LE_RADAR_CAMPUS_WALLPAPER_MERGE=0
   const mergeEnv = String(process.env.LE_RADAR_CAMPUS_WALLPAPER_MERGE || '1').trim().toLowerCase();

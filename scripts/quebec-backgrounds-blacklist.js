@@ -315,6 +315,25 @@ const HARD_BANNED = [
     reason: 'user_curated_photo_rejected',
     note: 'Purge 2026-08-11 mât+pomo — rue résidentielle / bâti / parking (signalement humain)',
   },
+  {
+    // Audit campus 2026-10-23 : un repli campus doit montrer le campus du
+    // média — pas une carte, une vue de rue/ville, un autre établissement.
+    fragments: [
+      'Université Laval, Quebec, Canada 02',
+      'Bus stop in winter near Universite Laval',
+      'Institut nordique du Québec',
+      'UdeM Laval',
+      'Formation Wikipédia - Université du Québec à Montréal',
+      'McGillCampusMap',
+      'Walking west on Sherbrooke Street near McGill',
+      'View from McGill University downtown campus',
+      'Bishop Otter Campus',
+      'University of Chichester',
+      "Campus de l'UQTR à Drummondville",
+    ],
+    reason: 'campus_fallback_wrong_place',
+    note: 'Audit 2026-10-23 — repli campus : mauvais lieu, carte ou vue de ville',
+  },
 ];
 
 function loadLabRejectedEntries() {

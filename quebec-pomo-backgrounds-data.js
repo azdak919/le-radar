@@ -1211,6 +1211,6 @@ const QUEBEC_POMO_BACKGROUNDS = [
     place: "Sherbrooke",
     season: "automne",
     surfaces: ["masthead", "pomo"],
-    tags: ["campus", "mat", "pomo"],
+    tags: ["mat", "pomo"],
   }
 ];
