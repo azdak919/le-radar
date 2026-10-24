@@ -403,6 +403,7 @@
       } catch { /* ignore */ }
     }
     if (!row) return null;
+    expandPanelList(row.closest('.sports-panel'));
     row.classList.add('is-spotlight');
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
@@ -834,13 +835,61 @@
     };
     root.querySelectorAll('.sports-result time[datetime]').forEach((el) => {
       const ymd = String(el.getAttribute('datetime') || '').slice(0, 10);
-      const w = word(ymd);
-      if (!w) return;
+      let w = word(ymd);
+      if (!w) {
+        // Mot relatif périmé (« Hier », « Demain »… figé au build) → date courte.
+        const cur = (el.querySelector('.sports-result__day') || el).textContent || '';
+        if (!/^(Aujourd|Hier|Demain|Today|Yesterday|Tomorrow)/.test(cur.trim()) || !/^\d{4}-\d{2}-\d{2}$/.test(ymd)) return;
+        try {
+          w = new Intl.DateTimeFormat(lang === 'en' ? 'en-CA' : 'fr-CA', { day: 'numeric', month: 'short', timeZone: 'UTC' })
+            .format(new Date(`${ymd}T12:00:00Z`));
+        } catch { return; }
+      }
       const dayEl = el.querySelector('.sports-result__day');
       if (dayEl) dayEl.textContent = w;
       else if (!el.querySelector('.sports-result__clock')) el.textContent = w;
     });
   }
+
+  /*
+   * Longues listes (ex. voile : 15 régates) : on n’affiche que les plus récents
+   * résultats + le prochain match, le reste derrière « Voir plus ». Sinon la
+   * carte étire toute la rangée de la grille et laisse un grand vide à côté.
+   */
+  const LIST_KEEP = 6;
+  function expandPanelList(panel) {
+    const list = panel?.querySelector('.sports-panel__list.is-collapsed');
+    if (!list) return;
+    list.classList.remove('is-collapsed');
+    const btn = panel.querySelector('.sports-panel__more');
+    if (btn) btn.remove();
+  }
+  function collapseLongLists() {
+    panels.forEach((panel) => {
+      const list = panel.querySelector('.sports-panel__list');
+      if (!list || list.classList.contains('is-collapsed')) return;
+      const rows = Array.from(list.children).filter((li) => li.classList.contains('sports-result'));
+      if (rows.length <= LIST_KEEP + 1) return;
+      let shown = 0;
+      let hidden = 0;
+      rows.forEach((li) => {
+        const keep = li.classList.contains('sports-result--next') || li.classList.contains('is-live')
+          || li.classList.contains('sports-result--live') || shown < LIST_KEEP;
+        if (keep) { if (!li.classList.contains('sports-result--next')) shown += 1; li.classList.remove('is-extra'); }
+        else { li.classList.add('is-extra'); hidden += 1; }
+      });
+      if (!hidden) return;
+      list.classList.add('is-collapsed');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'sports-panel__more';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.textContent = lang === 'en' ? `Show ${hidden} more` : `Voir ${hidden} de plus`;
+      btn.addEventListener('click', () => expandPanelList(panel));
+      list.after(btn);
+    });
+  }
+  collapseLongLists();
 
   apply(sport, sector, sex, period, team, initial.q || '', initial.game || '');
   relabelCivilDays();
