@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-24T08:57:09.597Z",
+  "updated": "2026-10-24T10:18:07.753Z",
   "total": 168,
-  "withPhoto": 149,
-  "withStock": 37,
-  "withCampusBank": 26,
+  "withPhoto": 150,
+  "withStock": 36,
+  "withCampusBank": 25,
   "fullyCovered": 168,
-  "leadReadyPhotos": 131,
-  "pageScraped": 29,
-  "photosRecovered": 29,
-  "imagesCleared": 12,
-  "stockSearches": 39,
-  "stockFound": 32,
-  "campusBankFound": 21,
+  "leadReadyPhotos": 133,
+  "pageScraped": 25,
+  "photosRecovered": 25,
+  "imagesCleared": 7,
+  "stockSearches": 36,
+  "stockFound": 29,
+  "campusBankFound": 19,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -33,28 +33,10 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SOCIETE_Movember-au-dela-de-la-moustache_Getty-Images.jpg"
     },
     {
-      "title": "Démission de Christine Fréchette : quel avenir pour la CAQ ?",
-      "link": "https://lecollectif.ca/societe/demission-de-christine-frechette-quel-avenir-pour-la-caq/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/7/71/Christine_Fr%C3%A9chette.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "CSU fails to reach quorum at special council meeting",
-      "link": "https://thelinknewspaper.ca/article/16488",
+      "title": "La femme parfaite est un objet",
+      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
-    },
-    {
-      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
-      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Pavillon_DKN%2C_Universit%C3%A9_Laval_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "“Decolonization”",
-      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
@@ -75,16 +57,34 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
-      "title": "Health First!",
-      "link": "https://www.mcgilldaily.com/2026/10/health-first/",
+      "title": "“Decolonization”",
+      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
       "title": "Battling Adversity",
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
+    },
+    {
+      "title": "Blackface at McGill",
+      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Vecteezy_stack-of-newspaper_1961329.jpg"
+    },
+    {
+      "title": "Horoscope September 2026",
+      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+    },
+    {
+      "title": "Un polytechnicien en Espagne",
+      "link": "https://www.polyscope.qc.ca/blog/post/kbgnDbewLv2wv6hDMWI3",
+      "reason": "stock-too-small",
+      "image": "https://firebasestorage.googleapis.com/v0/b/polyscope-6feba.appspot.com/o/blog-image%2F04c4a050-9f16-42f1-9d8c-105cfc148422.jpeg?alt=media&token=0b042590-65ec-4454-ab18-f1e9eafed527"
     }
   ]
 }
