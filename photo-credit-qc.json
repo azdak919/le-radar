@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-23T23:15:22.396Z",
+  "updated": "2026-10-24T00:45:28.481Z",
   "total": 168,
   "withImage": 149,
   "withCredit": 149,
@@ -7,9 +7,9 @@
   "pending": 38,
   "missingHero": 0,
   "ok": false,
-  "checked": 42,
-  "updatedCount": 4,
-  "citedNew": 4,
+  "checked": 43,
+  "updatedCount": 5,
+  "citedNew": 5,
   "fallbackNew": 38,
   "samples": [
     {
@@ -20,9 +20,16 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "S.O.S. Huîtres menacées",
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
       "source": "Le Délit",
       "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Manifestation anti-IA à Montréal",
+      "source": "Le Délit",
+      "credit": "Photo : Héloïse Durning",
       "cited": true,
       "method": "media-credit-featured"
     },
