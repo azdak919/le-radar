@@ -183,3 +183,11 @@ console.log('OK sports-cta-contract');
 }
 assert.match(sportsSrc, /https:\/\/s1\.rseq\.ca\/api\/GameApi\/GetGameDiffusion/, 'sondage direct RSEQ S1');
 assert.match(sportsSrc, /SPORTS_RSEQ_POLL_MS = 60000/, 'sondage RSEQ aux 60 s');
+
+// Retour terrain 2026-10-23 : volley D2 sans pointage resté « En direct » et bandeau figé.
+{
+  const hold = sourceBetween('function sportsCtaHoldOnLive', '\n}\n');
+  assert.match(hold, /!sportsGameHasScore\(g\) && !sportsLivePeriodLabel\(g\)\) return false/,
+    'un direct sans pointage ni période ne fige pas la CTA');
+  assert.match(sportsSrc, /volleyball: 135,/, 'volley : 2 h 15 max sans pointage');
+}

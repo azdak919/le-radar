@@ -567,7 +567,7 @@ const SPORTS_EXPECTED_DURATION_MIN = {
   'flag-football': 105,
   soccer: 130,
   basketball: 135,
-  volleyball: 150,
+  volleyball: 135,
   rugby: 130,
   badminton: 180,
   baseball: 165,
@@ -3205,10 +3205,17 @@ function sportsCtaState(slide) {
   return 'idle';
 }
 
-/** Un seul direct : la CTA reste dessus. Plusieurs : elle tourne entre eux. */
+/**
+ * Un seul direct : la CTA reste dessus. Plusieurs : elle tourne entre eux.
+ * Un direct sans aucun pointage ni période à la source (ex. collégial D2,
+ * pas de saisie en direct) ne fige pas le bandeau : rien à suivre, la
+ * rotation continue (retour terrain 2026-10-23, carte « bloquée »).
+ */
 function sportsCtaHoldOnLive(slide) {
   const g = slide?.ctaFrom?.game || slide?.game;
-  return sportsGameIsLive(g) && sportsCtaLiveSources().length < 2;
+  if (!sportsGameIsLive(g)) return false;
+  if (!sportsGameHasScore(g) && !sportsLivePeriodLabel(g)) return false;
+  return sportsCtaLiveSources().length < 2;
 }
 
 /**
