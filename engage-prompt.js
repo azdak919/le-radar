@@ -671,7 +671,7 @@
     if (appId === 'sports') {
       return lang === 'en'
         ? 'Québec college and university scores — one tap away.'
-        : 'Scores collégiaux et universitaires du Québec — en un geste.';
+        : 'Pointages collégiaux et universitaires du Québec — en un geste.';
     }
     // Hub radar — triade marque (verdict B reconvene 2026-08-11).
     return lang === 'en'

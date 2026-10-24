@@ -88,7 +88,7 @@ const SPORTS_CTA_WITHIN_HOUR_MS = 60 * 60 * 1000;
  * « Hors saison » à côté de vrais prochains matchs).
  */
 const SPORTS_CTA_IDLE_LABELS = [
-  'Scores collégiaux et universitaires',
+  'Pointages collégiaux et universitaires',
   'Voir le tableau des résultats',
 ];
 const RADAR_BRAND_SHORT = 'LE-RADAR.ca';
@@ -3753,7 +3753,7 @@ function sportsSportLabelFr(sport) {
  * (sans « voir le tableau… » redondant — le clic est déjà le CTA).
  */
 function sportsChipTitle(slide) {
-  if (!slide?.team || !slide.game) return 'Sports — scores étudiants';
+  if (!slide?.team || !slide.game) return 'Sports — pointages étudiants';
   const team = slide.team;
   const g = slide.game;
   const sport = sportsSportLabelFr(g.sport || team.sport);
