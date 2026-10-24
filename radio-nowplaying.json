@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T20:10:46.162Z",
+  "updatedAt": "2026-10-24T22:28:23.941Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T20:10:03.204Z"
+      "checkedAt": "2026-10-24T22:27:46.766Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Contenu explicite",
+        "title": "Disconomique",
         "source": "schedule",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "https://cism893.ca/emissions/contenu-explicite"
+        "start": "17:30",
+        "end": "19:00",
+        "url": "https://cism893.ca/emissions/disconomique"
       },
       "next": {
-        "title": "Le radar",
+        "title": "Solénoïde",
         "source": "schedule",
-        "start": "17:00",
-        "end": "17:30",
-        "url": "https://cism893.ca/emissions/le-radar-2"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "https://cism893.ca/emissions/solenoide"
       },
       "track": "",
-      "showTitle": "Contenu explicite",
+      "showTitle": "Disconomique",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T20:10:05.465Z"
+      "checkedAt": "2026-10-24T22:27:48.454Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T20:10:08.212Z"
+      "checkedAt": "2026-10-24T22:27:50.898Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Mi Dun Talk",
+        "title": "The Limelight",
         "source": "schedule-live",
-        "start": "16:00",
-        "end": "17:00",
-        "url": "http://www.cjlo.com/shows/mi-dun-talk"
+        "start": "18:00",
+        "end": "19:00",
+        "url": "http://www.cjlo.com/shows/the-limelight"
       },
       "next": {
-        "title": "CJLO's Alternative Mega Mix",
+        "title": "Screamers",
         "source": "schedule-live",
-        "start": "17:00",
-        "end": "18:00",
-        "url": "http://www.cjlo.com/shows/cjlos-alternative-mega-mix"
+        "start": "19:00",
+        "end": "20:00",
+        "url": "http://www.cjlo.com/shows/screamers"
       },
       "track": "",
-      "showTitle": "Mi Dun Talk",
+      "showTitle": "The Limelight",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T20:10:23.482Z"
+      "checkedAt": "2026-10-24T22:28:04.818Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T20:10:25.463Z"
+      "checkedAt": "2026-10-24T22:28:05.863Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T20:10:45.811Z"
+      "checkedAt": "2026-10-24T22:28:23.591Z"
     }
   }
 }
