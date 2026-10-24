@@ -321,7 +321,7 @@ const T = {
     /** Pied de page seulement (focus-group le-radar-footer-sports) — pas le H1/CTA. */
     sportsFooter: 'Sports',
     sportsTitle: 'Sports collégiaux et universitaires du Québec',
-    sportsDesc: 'Scores et prochains matchs de {n} formations collégiales et universitaires du Québec (catalogue RSEQ) : hockey, football, soccer, basketball, volleyball, badminton, natation et plus.',
+    sportsDesc: 'Résultats et prochains matchs de {n} formations collégiales et universitaires du Québec (catalogue RSEQ) : hockey, football, soccer, basketball, volleyball, badminton, natation et plus.',
     sportsH1: 'Sports collégiaux et universitaires du Québec',
     sportsLead: '',
     sportsEmpty: 'Aucun résultat sportif disponible au moment de la dernière mise à jour.',

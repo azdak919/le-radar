@@ -402,7 +402,7 @@ ${instLines.join('\n') || '- (aucun)'}
 
 - ${SITE_BASE}/medias/ : annuaire complet, par établissement
 - ${SITE_BASE}/horaires/ : grilles des radios étudiantes
-- ${SITE_BASE}/sports/ : tableau des scores RSEQ (collégial et universitaire)
+- ${SITE_BASE}/sports/ : tableau des résultats RSEQ (collégial et universitaire)
 - ${SITE_BASE}/en/ : présentation en anglais (pour les personnes étudiantes internationales au Québec)
 - ${SITE_BASE}/en/media/ : annuaire en anglais
 - ${SITE_BASE}/en/sports/ : scoreboard in English

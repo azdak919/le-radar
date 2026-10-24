@@ -126,7 +126,7 @@ for (const file of htmlFiles) {
 
 console.log('OK sports-cta-contract');
 
-/* Score à venir + sondage RSEQ direct (17 oct. 2026 : baseball 16 h resté
+/* Résultat à venir + sondage RSEQ direct (17 oct. 2026 : baseball 16 h resté
  * « En direct 0–0 » à 18 h 22 alors que RSEQ affichait 15–3 depuis 17 h 46). */
 {
   const ctx = {
@@ -163,7 +163,7 @@ console.log('OK sports-cta-contract');
   assert.equal(api.sportsGameIsLive({ ...base }, at('17:30')), true, 'baseball 16 h : en direct à 17 h 30');
   assert.equal(api.sportsGameAwaitingScore({ ...base }, at('17:30')), false);
   assert.equal(api.sportsGameIsLive({ ...base }, at('18:50')), false, 'baseball 16 h : plus « En direct » après 2 h 45 sans score');
-  assert.equal(api.sportsGameAwaitingScore({ ...base }, at('18:50')), true, 'baseball 16 h : « Score à venir »');
+  assert.equal(api.sportsGameAwaitingScore({ ...base }, at('18:50')), true, 'baseball 16 h : « Résultat à venir »');
   const soccer = { ...base, sport: 'soccer' };
   assert.equal(api.sportsGameAwaitingScore(soccer, at('18:22')), true, 'soccer 16 h : score à venir à 18 h 22');
   assert.equal(api.sportsGameAwaitingScore({ ...soccer, scoreFor: 1, scoreAgainst: 0 }, at('18:22')), false);

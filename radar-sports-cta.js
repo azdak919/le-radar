@@ -89,7 +89,7 @@ const SPORTS_CTA_WITHIN_HOUR_MS = 60 * 60 * 1000;
  */
 const SPORTS_CTA_IDLE_LABELS = [
   'Scores collégiaux et universitaires',
-  'Voir le tableau des scores',
+  'Voir le tableau des résultats',
 ];
 const RADAR_BRAND_SHORT = 'LE-RADAR.ca';
 const RADAR_BRAND_LONG = 'Le Réseau Académique de Découverte et d’Agrégation de Ressources';
@@ -202,7 +202,7 @@ const SPORTS_CTA_TAG_LATEST = 'Derniers résultats';
 /** Après demain : Prochain + date courte en 2ᵉ ligne. */
 const SPORTS_CTA_TAG_NEXT = 'Prochain';
 /** Match fini, rapport RSEQ pas encore déposé (deux lignes : Score / à venir). */
-const SPORTS_CTA_TAG_PENDING = 'Score à venir';
+const SPORTS_CTA_TAG_PENDING = 'Résultat à venir';
 /** Repli idle (creux total, pas de match) ; sinon ton du sport via sportsCtaTone. Rouge = direct. */
 const SPORTS_CTA_REST_TONE = '#6a7580';
 const SPORTS_CTA_LIVE_TONE = '#c8102e';
@@ -561,7 +561,7 @@ function sportsGameIsLive(game, now = Date.now()) {
  * jamais de score en cours : le pointage arrive d’un coup, au dépôt du
  * rapport (17 oct. 2026 : baseball 16 h → 17 h 46 ; flag 16 h 30 → 18 h 07).
  * Passé ce délai sans score, « En direct 0–0 » est faux : on affiche
- * « Score à venir » (voir `sportsGameAwaitingScore`).
+ * « Résultat à venir » (voir `sportsGameAwaitingScore`).
  */
 const SPORTS_EXPECTED_DURATION_MIN = {
   'flag-football': 105,
@@ -3805,7 +3805,7 @@ function paintSportsChip(slide, animate = false) {
     a.dataset.sportsSport = 'board';
     a.style.setProperty('--sports-tone', slide.tone || '#5a6570');
     a.title = slide.label || 'Sports';
-    a.setAttribute('aria-label', slide.label || 'Voir le tableau des scores (nouvel onglet)');
+    a.setAttribute('aria-label', slide.label || 'Voir le tableau des résultats (nouvel onglet)');
     const line = document.createElement('span');
     line.className = 'sports-chip__line';
     const inner = document.createElement('span');
@@ -3960,7 +3960,7 @@ function paintSportsChip(slide, animate = false) {
     setSportsLocalizableText(subText, subLine);
     if (prior) a.classList.add('sports-chip--prior-season');
     a.title = sportsChipTitle(slide) + (prior ? ' · Saison précédente' : '');
-    a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
+    a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des résultats (nouvel onglet).`);
   } else if (slide.mode === 'next' && sportsGameIsLive(g)) {
     a.dataset.sportsLive = '1';
     a.dataset.ctaState = 'live';
@@ -3969,7 +3969,7 @@ function paintSportsChip(slide, animate = false) {
     inner.innerHTML = sportsLiveTeamsScoreHtml(team, g);
     setSportsLocalizableText(subText, sportsLiveSubParts(slide).join(' · '));
     a.title = sportsChipTitle(slide);
-    a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
+    a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des résultats (nouvel onglet).`);
   } else {
     a.dataset.ctaState = 'next';
     if (whenTag) a.append(whenTag, glyph);
@@ -3984,7 +3984,7 @@ function paintSportsChip(slide, animate = false) {
         + ` <span class="sports-chip__name sports-chip__opp">${escapeHtml(opp)}</span>`;
     setSportsLocalizableText(subText, subLine);
     a.title = sportsChipTitle(slide);
-    a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des scores (nouvel onglet).`);
+    a.setAttribute('aria-label', `${a.title}. Ouvrir le tableau des résultats (nouvel onglet).`);
   }
   line.append(inner);
   sub.append(subText);
@@ -4759,7 +4759,7 @@ async function pollLiveSportsJson() {
   // Timer toujours allumé : un coup d’envoi peut entrer dans la fenêtre
   // après le boot (page ouverte à 18 h, KO 19 h).
   // RSEQ direct d’abord (throttle 60 s interne) : couvre aussi les matchs
-  // « Score à venir », qui ne sont plus live.
+  // « Résultat à venir », qui ne sont plus live.
   try { await pollRseqAndRerender(); } catch { /* ignore */ }
   if (!sportsLivePollNeeded()) return;
   try {

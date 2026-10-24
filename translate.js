@@ -1753,10 +1753,10 @@
       zh: '明天', ar: 'غدًا', ko: '내일', ja: '明日', hi: 'कल', vi: 'Ngày mai',
       ht: 'Demen', fr: 'Demain',
     },
-    'Score à venir': {
+    'Résultat à venir': {
       en: 'Score pending', es: 'Marcador pendiente', pt: 'Placar pendente',
       de: 'Ergebnis folgt', it: 'Risultato in arrivo', nl: 'Uitslag volgt',
-      fr: 'Score à venir',
+      fr: 'Résultat à venir',
     },
     'Derniers résultats': {
       en: 'Latest results', es: 'Últimos resultados', pt: 'Últimos resultados',
@@ -2024,7 +2024,7 @@
   /** Ne jamais envoyer ces libellés au MT, même en IU/ar (cas « correspondre »). */
   const UI_LOCK_NO_MT = new Set([
     'match', 'Match', 'Prochains match', 'Prochain match',
-    'En direct', 'En cours', 'Derniers résultats', 'Score à venir', 'AM', 'PM', 'reçoit', 'reçoivent', 'chez', 'v.',
+    'En direct', 'En cours', 'Derniers résultats', 'Résultat à venir', 'AM', 'PM', 'reçoit', 'reçoivent', 'chez', 'v.',
   ]);
 
   function uiPhraseLookup(core = '', targetLang = '') {
