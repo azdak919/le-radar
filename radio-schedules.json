@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T13:53:24.602Z",
+  "updatedAt": "2026-10-24T12:59:15.713Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -8,7 +8,7 @@
       "sources": [
         "chyz:https://chyz.ca/horaire/"
       ],
-      "checkedAt": "2026-10-23T13:53:24.602Z",
+      "checkedAt": "2026-10-24T12:59:15.713Z",
       "verifiedWeekOf": "2026-10-19",
       "grid": [
         {
@@ -27,15 +27,8 @@
         },
         {
           "day": 0,
-          "start": "12:30",
-          "end": "16:00",
-          "title": "Football du Rouge et Or",
-          "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
-        },
-        {
-          "day": 0,
-          "start": "16:00",
-          "end": "18:30",
+          "start": "14:45",
+          "end": "17:30",
           "title": "Remparts de Québec",
           "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
         },
@@ -321,17 +314,17 @@
         },
         {
           "day": 6,
-          "start": "12:00",
-          "end": "13:00",
-          "title": "Un Samedi d'Ici",
-          "url": "https://chyz.ca/emission/un-samedi-dici/"
+          "start": "12:30",
+          "end": "16:00",
+          "title": "Football du Rouge et Or",
+          "url": "https://chyz.ca/emission/football-du-rouge-et-or/"
         },
         {
           "day": 6,
-          "start": "13:00",
-          "end": "16:00",
-          "title": "Radio Futura",
-          "url": "https://chyz.ca/emission/radio-futura/"
+          "start": "16:00",
+          "end": "19:00",
+          "title": "Remparts de Québec",
+          "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
         }
       ]
     },
@@ -341,7 +334,7 @@
       "sources": [
         "cism:https://cism893.ca/grille-horaire/"
       ],
-      "checkedAt": "2026-10-23T13:53:24.602Z",
+      "checkedAt": "2026-10-24T12:59:15.713Z",
       "verifiedWeekOf": "2026-10-19",
       "grid": [
         {
@@ -1122,7 +1115,7 @@
       "sources": [
         "airtime:https://ckut.airtime.pro"
       ],
-      "checkedAt": "2026-10-23T13:53:24.602Z",
+      "checkedAt": "2026-10-24T12:59:15.713Z",
       "verifiedWeekOf": "2026-10-19",
       "grid": [
         {
@@ -1734,7 +1727,7 @@
         "cjlo:http://www.cjlo.com/schedule",
         "cjlo:https://www.cjlo.com/schedule/"
       ],
-      "checkedAt": "2026-10-23T13:53:24.602Z",
+      "checkedAt": "2026-10-24T12:59:15.713Z",
       "verifiedWeekOf": "2026-10-19",
       "grid": [
         {
@@ -4398,7 +4391,7 @@
       "sources": [
         "cfak:https://www.cfak.ca/programmation/"
       ],
-      "checkedAt": "2026-10-23T13:53:24.602Z",
+      "checkedAt": "2026-10-24T12:59:15.713Z",
       "verifiedWeekOf": "2026-10-19",
       "grid": [
         {
@@ -4625,7 +4618,7 @@
       "sources": [
         "choq:https://www.choq.ca/api/graphql"
       ],
-      "checkedAt": "2026-10-23T13:53:24.602Z",
+      "checkedAt": "2026-10-24T12:59:15.713Z",
       "verifiedWeekOf": "2026-10-19",
       "grid": [
         {
