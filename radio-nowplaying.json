@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T16:35:19.575Z",
+  "updatedAt": "2026-10-24T17:31:56.708Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -28,34 +28,34 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T16:34:41.888Z"
+      "checkedAt": "2026-10-24T17:31:15.650Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Elkin Polo El Show",
-        "source": "schedule",
-        "start": "09:00",
-        "end": "13:00",
-        "url": "https://cism893.ca/emissions/elkin-polo-el-show"
-      },
-      "next": {
         "title": "Change le beat",
         "source": "schedule",
         "start": "13:00",
         "end": "14:00",
         "url": "https://cism893.ca/emissions/change-le-beat"
       },
+      "next": {
+        "title": "Basses fréquences",
+        "source": "schedule",
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/basses-frequences"
+      },
       "track": "",
-      "showTitle": "Elkin Polo El Show",
+      "showTitle": "Change le beat",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T16:34:43.462Z"
+      "checkedAt": "2026-10-24T17:31:17.706Z"
     },
     "ckut": {
       "id": "ckut",
@@ -81,7 +81,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T16:34:45.805Z"
+      "checkedAt": "2026-10-24T17:31:21.089Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -108,7 +108,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T16:35:00.150Z"
+      "checkedAt": "2026-10-24T17:31:36.466Z"
     },
     "cfak": {
       "id": "cfak",
@@ -128,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T16:35:01.252Z"
+      "checkedAt": "2026-10-24T17:31:37.594Z"
     },
     "choq": {
       "id": "choq",
@@ -149,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T16:35:19.224Z"
+      "checkedAt": "2026-10-24T17:31:56.357Z"
     }
   }
 }
