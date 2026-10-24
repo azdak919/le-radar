@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-24T13:25:40.252Z",
+  "updated": "2026-10-24T14:45:02.772Z",
   "total": 168,
   "withPhoto": 149,
   "withStock": 37,
@@ -9,9 +9,9 @@
   "pageScraped": 29,
   "photosRecovered": 29,
   "imagesCleared": 12,
-  "stockSearches": 38,
-  "stockFound": 31,
-  "campusBankFound": 20,
+  "stockSearches": 39,
+  "stockFound": 32,
+  "campusBankFound": 21,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -39,16 +39,22 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/7/71/Christine_Fr%C3%A9chette.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
+      "title": "“Decolonization”",
+      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
+    },
+    {
+      "title": "La femme parfaite est un objet",
+      "link": "https://www.delitfrancais.com/2026/10/07/la-femme-parfaite-est-un-objet/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
       "title": "Health First!",
       "link": "https://www.mcgilldaily.com/2026/10/health-first/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/d/de/McGill_University_downtown_campus_23.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
       "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
@@ -79,12 +85,6 @@
       "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
-    },
-    {
-      "title": "Blackface at McGill",
-      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Vecteezy_stack-of-newspaper_1961329.jpg"
     }
   ]
 }
