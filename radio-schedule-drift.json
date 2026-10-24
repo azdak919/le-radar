@@ -1,14 +1,12 @@
 {
-  "checkedAt": "2026-10-23T01:26:18.109Z",
+  "checkedAt": "2026-10-24T01:32:05.465Z",
   "timezone": "America/Toronto",
   "overhaulRatio": 0.4,
   "summary": {
     "checked": 6,
-    "stable": 5,
+    "stable": 6,
     "drift": [],
-    "overhaul": [
-      "cfak"
-    ],
+    "overhaul": [],
     "unreachable": []
   },
   "stations": [
@@ -54,44 +52,13 @@
     },
     {
       "id": "cfak",
-      "published": 35,
+      "published": 36,
       "fresh": 36,
-      "added": [
-        "dim 00:00–07:00 Les nuits CFAK",
-        "lun 09:00–13:00 Le NEUF",
-        "lun 13:00–18:00 Solénoïde",
-        "mar 08:00–12:00 Palmarès CFAK",
-        "mar 12:00–18:30 Le DOUZE",
-        "mer 08:00–09:00 Palmarès CFAK",
-        "mer 09:00–12:00 Le NEUF",
-        "mer 12:00–00:00 Le DOUZE",
-        "jeu 08:00–09:00 Palmarès CFAK",
-        "jeu 09:00–11:00 Le NEUF",
-        "jeu 11:00–00:00 À nous le futur",
-        "ven 08:00–11:00 Palmarès CFAK",
-        "ven 12:00–16:30 Ciné-Histoire",
-        "ven 16:30–18:00 Remix ta console",
-        "ven 22:00–00:00 Entre ciel et terre"
-      ],
-      "removed": [
-        "dim 00:00–21:00 Les nuits CFAK",
-        "dim 21:00–00:00 Solénoïde",
-        "lun 09:00–18:00 Solénoïde",
-        "mar 08:00–18:30 Palmarès CFAK",
-        "mer 08:00–14:00 Palmarès CFAK",
-        "mer 14:00–00:00 Le popcorn de l'infini",
-        "jeu 08:00–11:00 Palmarès CFAK",
-        "jeu 11:00–20:00 À nous le futur",
-        "jeu 20:00–00:00 After 5@8",
-        "ven 08:00–09:00 Palmarès CFAK",
-        "ven 09:00–11:00 La Souterraine",
-        "ven 12:00–15:00 Ciné-Histoire",
-        "ven 15:00–18:00 Nouveautés Franco",
-        "ven 22:00–00:00 Mix Anglo"
-      ],
-      "changed": 29,
-      "ratio": 0.829,
-      "status": "overhaul"
+      "added": [],
+      "removed": [],
+      "changed": 0,
+      "ratio": 0,
+      "status": "stable"
     },
     {
       "id": "choq",
