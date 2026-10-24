@@ -320,6 +320,59 @@ function liveProgress(statusText, sport) {
   return base + 1;
 }
 
+// ── Final déduit ─────────────────────────────────────────────────────────
+
+/** Séries éliminatoires (soccer : égalité → prolongation). */
+function isPlayoffDate(date) {
+  const m = String(date || '').match(/^\d{4}-(\d{2})-(\d{2})$/);
+  if (!m) return false;
+  const mo = Number(m[1]);
+  // Saison régulière soccer U SPORTS / RSEQ : août à octobre.
+  return mo === 11 || mo === 12;
+}
+
+/** Manches gagnées d’après « 25-18,23-25,15-10 » (manche terminée seulement). */
+function volleySetsWon(statusText) {
+  const raw = String(statusText || '').replace(/\s+/g, '');
+  if (!/^\d+-\d+(,\d+-\d+)*$/.test(raw)) return null;
+  const won = [0, 0];
+  raw.split(',').forEach((set, i) => {
+    const [a, b] = set.split('-').map(Number);
+    const target = i === 4 ? 15 : 25;
+    if (Math.max(a, b) >= target && Math.abs(a - b) >= 2) won[a > b ? 0 : 1] += 1;
+  });
+  return won;
+}
+
+/**
+ * Match « en cours » dont l’issue est déjà acquise : affiché comme un final
+ * (même rendu, même emoji), le pointage officiel le remplace ensuite.
+ *  - hockey : fin de la 3e (ou d’une prolongation) sans égalité ;
+ *  - basket / football : fin du 4e quart (ou prolongation) sans égalité ;
+ *  - soccer : fin de la 2e mi-temps (égalité acceptée en saison régulière) ;
+ *  - volley : une équipe à 3 manches (format 3 de 5).
+ * Horloge à 0:00 dans la dernière période = fin de période.
+ */
+function inferFinal(event) {
+  if (!event || event.state !== 'live') return false;
+  const a = event.away && event.away.score;
+  const h = event.home && event.home.score;
+  if (!Number.isFinite(a) || !Number.isFinite(h)) return false;
+  const sport = event.sport;
+  if (sport === 'volleyball') {
+    const won = volleySetsWon(event.statusText);
+    return Math.max(a, h) >= 3 || !!(won && Math.max(won[0], won[1]) >= 3);
+  }
+  const need = PERIOD_COUNT[sport];
+  if (!need) return false;
+  const st = parseLiveStatus(event.statusText, sport);
+  if (!st.n || st.n < need) return false;
+  const over = st.endOf || (sport !== 'soccer' && st.clockLeft === 0);
+  if (!over) return false;
+  if (a !== h) return true;
+  return sport === 'soccer' && st.n === need && !isPlayoffDate(event.date);
+}
+
 // ── Plausibilité (fausses entrées) ───────────────────────────────────────
 
 /**
@@ -528,6 +581,7 @@ function applyPrestoLive(teams, feeds, { registry, now = Date.now() } = {}) {
       if (ev.state === 'scheduled') continue;
       if (ev.home.score == null || ev.away.score == null) continue;
       const event = { ...ev, date: feed.date };
+      if (inferFinal(event)) event.state = 'final';
       const hit = matchEvent(event, feed.sector, candidates, index);
       if (!hit) {
         stats.unmatched += 1;
@@ -823,6 +877,8 @@ module.exports = {
   parseCompositeHtml,
   parseLiveStatus,
   isPlausible,
+  inferFinal,
+  volleySetsWon,
   sideScore,
   collectCandidates,
   matchEvent,
