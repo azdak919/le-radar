@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T10:59:39.085Z",
+  "updatedAt": "2026-10-24T12:39:57.635Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,7 +21,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T10:59:01.190Z"
+      "checkedAt": "2026-10-24T12:39:20.486Z"
     },
     "cism": {
       "id": "cism",
@@ -48,7 +48,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T10:59:03.110Z"
+      "checkedAt": "2026-10-24T12:39:22.300Z"
     },
     "ckut": {
       "id": "ckut",
@@ -74,7 +74,7 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T10:59:05.825Z"
+      "checkedAt": "2026-10-24T12:39:24.956Z"
     },
     "cjlo": {
       "id": "cjlo",
@@ -101,27 +101,27 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T10:59:20.009Z"
+      "checkedAt": "2026-10-24T12:39:38.704Z"
     },
     "cfak": {
       "id": "cfak",
       "name": "CFAK 88,3",
-      "current": {
+      "current": null,
+      "next": {
         "title": "Les nuits CFAK",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "00:00",
         "end": "07:00"
       },
-      "next": null,
       "track": "",
-      "showTitle": "Les nuits CFAK",
+      "showTitle": "",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T10:59:21.082Z"
+      "checkedAt": "2026-10-24T12:39:39.725Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +142,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-24T10:59:38.735Z"
+      "checkedAt": "2026-10-24T12:39:57.284Z"
     }
   }
 }
