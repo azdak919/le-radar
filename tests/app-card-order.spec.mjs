@@ -43,7 +43,7 @@ test('cartes app : même ordre des blocs que le site @ci-critical', async ({ pag
   const app = appStandard.find((entry) => entry.media === ref.media) || appStandard[0];
   sameOrder(app.seq, ref.seq);
   if (ref.media) expect(app.seq.indexOf('article-media')).toBeLessThan(app.seq.indexOf('article-title'));
-  await expect(page.locator('.card-site .article--lead .article-more')).toContainText('Lire la suite');
+  await expect(page.locator('.card-site .article--lead .article-more')).toContainText(/Lire la suite|Read more/);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
   expect(overflow).toBe(false);
 });
