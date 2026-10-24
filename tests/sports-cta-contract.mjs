@@ -187,7 +187,17 @@ assert.match(sportsSrc, /SPORTS_RSEQ_POLL_MS = 60000/, 'sondage RSEQ aux 60 s');
 // Retour terrain 2026-10-23 : volley D2 sans pointage resté « En direct » et bandeau figé.
 {
   const hold = sourceBetween('function sportsCtaHoldOnLive', '\n}\n');
-  assert.match(hold, /!sportsGameHasScore\(g\) && !sportsLivePeriodLabel\(g\)\) return false/,
-    'un direct sans pointage ni période ne fige pas la CTA');
+  assert.match(hold, /return false;/, 'aucun direct ne fige la CTA');
+  assert.doesNotMatch(hold, /sportsCtaLiveSources\(\)\.length < 2/, 'plus de blocage « direct unique »');
   assert.match(sportsSrc, /volleyball: 135,/, 'volley : 2 h 15 max sans pointage');
+}
+
+// Retour terrain 2026-10-23 (2) : même avec un direct pointé, la rotation montre les autres matchs du jour.
+{
+  const pool = sourceBetween('function sportsCtaCandidateSlides', '\n}\n');
+  assert.match(pool, /const out = lives\.slice\(\)/, 'directs en tête du pool CTA');
+  assert.match(pool, /out\.push\(s\)/, 'résultats et à-venir du jour inclus dans la rotation');
+  assert.match(pool, /lives\[i % lives\.length\]/, 'direct intercalé un tour sur deux');
+  assert.match(sportsSrc, /return \[SPORTS_OPEN_LIVE, SPORTS_OPEN_TODAY_RESULT, SPORTS_OPEN_TODAY_NEXT\]/,
+    'une carte direct peut céder la place à un résultat du jour');
 }

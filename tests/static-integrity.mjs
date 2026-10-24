@@ -1653,8 +1653,8 @@ assert(
   appJs.includes('function sportsOpenOrderSlides')
     && appJs.includes('sportsCtaHoldOnLive(sportsVisible[slot])')
     && appJs.includes('sportsCtaHoldOnLive(slide)')
-    && /sportsCtaLiveSources\(\)\.length < 2/.test(appJs),
-  'app.js : liste B unique ; 1 direct figé, plusieurs directs en cascade',
+    && appJs.includes('function sportsCtaCandidateSlides(now'),
+  'app.js : liste B unique ; directs prioritaires mais jamais figés',
 );
 assert(
   !/state === 'live'[\s\S]{0,200}sportsRelativeAge/.test(appFlat)

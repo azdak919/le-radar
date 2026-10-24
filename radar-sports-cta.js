@@ -2826,9 +2826,8 @@ function sportsSoftSportDiversity(slides, now = Date.now()) {
  * + gates mainteneur (civil aujourd’hui/hier ; hors saison 7 j) :
  *
  *  CTA (droite)
- *   • **en direct** : uniquement les matchs en cours. Un seul → carte figée ;
- *     plusieurs → rotation entre eux. Dès qu’il n’y a plus de live, le cycle
- *     normal reprend.
+ *   • **en direct** : en tête et un tour sur deux, mais jamais figée : la
+ *     rotation inclut aussi les résultats et les à-venir du jour.
  *   • sans live, ordre du cycle :
  *     1. à venir **dans l’heure**
  *     2. résultats **d’hier**
@@ -3174,13 +3173,27 @@ function sportsSplitPreferBuckets(outgoing, boardN, now = Date.now()) {
     ];
   }
   if (b === SPORTS_OPEN_LIVE) {
-    return [SPORTS_OPEN_LIVE, SPORTS_OPEN_TODAY_NEXT];
+    return [SPORTS_OPEN_LIVE, SPORTS_OPEN_TODAY_RESULT, SPORTS_OPEN_TODAY_NEXT];
   }
   return null;
 }
 
-function sportsCtaCandidateSlides() {
-  return sportsOpenOrderSlides();
+/**
+ * Pool CTA : directs en tête, puis intercalés un tour sur deux avec les autres
+ * matchs (résultats du jour, à venir) — priorité au direct sans figer.
+ */
+function sportsCtaCandidateSlides(now = Date.now()) {
+  const all = sportsOpenOrderSlides(now) || [];
+  const lives = all.filter((s) => sportsOpenOrderBucket(s, now) === SPORTS_OPEN_LIVE);
+  if (!lives.length || lives.length === all.length) return all;
+  const others = all.filter((s) => sportsOpenOrderBucket(s, now) !== SPORTS_OPEN_LIVE);
+  const out = lives.slice();
+  others.forEach((s, i) => {
+    out.push(s);
+    // Un direct revient après chaque autre match (copie : clé distincte).
+    if (i < others.length - 1) out.push(lives[i % lives.length]);
+  });
+  return out;
 }
 
 /** Libellés CTA : matchs chauds, sinon messages hors saison / creux. */
@@ -3206,16 +3219,16 @@ function sportsCtaState(slide) {
 }
 
 /**
- * Un seul direct : la CTA reste dessus. Plusieurs : elle tourne entre eux.
- * Un direct sans aucun pointage ni période à la source (ex. collégial D2,
- * pas de saisie en direct) ne fige pas le bandeau : rien à suivre, la
- * rotation continue (retour terrain 2026-10-23, carte « bloquée »).
+ * La CTA ne se fige jamais sur un direct (retour terrain 2026-10-23 : « même
+ * s’il reste des matchs en direct on devrait voir les résultats des autres
+ * matchs du jour »). Les directs gardent la priorité par
+ * `sportsCtaCandidateSlides` (en tête, puis un tour sur deux), et le pointage
+ * continue de se mettre à jour par le sondage ; la rotation inclut les
+ * résultats et les à-venir du jour. Gardé pour les appels historiques.
  */
 function sportsCtaHoldOnLive(slide) {
-  const g = slide?.ctaFrom?.game || slide?.game;
-  if (!sportsGameIsLive(g)) return false;
-  if (!sportsGameHasScore(g) && !sportsLivePeriodLabel(g)) return false;
-  return sportsCtaLiveSources().length < 2;
+  void slide;
+  return false;
 }
 
 /**
@@ -4491,7 +4504,7 @@ function scheduleSportsWave({ fromSlot = 0, firstWait = true } = {}) {
     }
     const slot = index;
     const slide = sportsVisible[slot];
-    // Direct unique : la carte En direct ne tourne pas. Plusieurs lives : cycle.
+    // Un direct ne fige plus la carte (sportsCtaHoldOnLive → false).
     if (sportsCtaHoldOnLive(slide)) {
       sportsWaveTimer = window.setTimeout(() => step(index + 1), stepMs);
       return;

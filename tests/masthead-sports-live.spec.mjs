@@ -251,6 +251,9 @@ function upcomingTodayPayload(offsetMs = 3 * 3600 * 1000) {
 }
 
 async function openWithSports(page, payload, viewport = { width: 1280, height: 900 }) {
+  // Isoler du vrai sondage RSEQ S1 : le gameId de la fixture existe en vrai
+  // et son pointage final écrasait le direct simulé.
+  await page.route('https://s1.rseq.ca/**', (route) => route.abort());
   await page.route('**/sports-masthead.json', async (route) => {
     await route.fulfill({
       status: 200,
@@ -331,30 +334,24 @@ test('CTA live : score et période dès qu’ils sont collés', async ({ page })
   expect(sub).toMatch(/\d{1,2}\s*h\s*\d{2}/);
 });
 
-test('CTA live : un direct écarte résultats et prochains du cycle', async ({ page }) => {
+test('CTA live : un direct prioritaire ne fige pas la rotation', async ({ page }) => {
   const cta = await openWithSports(page, livePlusYesterdayPayload());
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/En\s*direct/i);
   const text = await cta.locator('.sports-chip__line-inner').innerText();
   expect(text).toMatch(/Saint-Hyacinthe/);
-  expect(text).not.toMatch(/Concordia/);
   const pool = await page.evaluate(() => sportsCtaCandidateSlides().map((s) => ({
     live: sportsGameIsLive(s.game),
     name: s.team?.name || '',
-    mode: s.mode,
   })));
   expect(pool[0].live, 'tête de liste B = le direct').toBe(true);
-  expect(pool[0].name).toMatch(/Saint-Hyacinthe/);
-  expect(pool.some((s) => /Concordia/i.test(s.name)), 'hier reste en reliquat').toBe(true);
-  await page.evaluate(() => {
-    scheduleSportsWave({ fromSlot: 0, firstWait: false });
-  });
-  await page.waitForTimeout(900);
-  const still = page.locator('#masthead-sports-strip .sports-chip').first();
-  await expect(still).toHaveAttribute('data-cta-state', 'live');
-  const after = await still.locator('.sports-chip__line-inner').innerText();
-  expect(after).toMatch(/Saint-Hyacinthe/);
-  expect(after).not.toMatch(/Concordia/);
+  expect(pool.some((s) => /Concordia/i.test(s.name)), 'les autres matchs restent dans la rotation').toBe(true);
+  expect(await page.evaluate(() => sportsCtaHoldOnLive(sportsVisible[0]))).toBe(false);
+  await page.evaluate(() => scheduleSportsWave({ fromSlot: 0, firstWait: false }));
+  await expect.poll(async () => {
+    const chips = page.locator('#masthead-sports-strip .sports-chip');
+    return (await chips.allInnerTexts()).join(' | ');
+  }, { timeout: 5000 }).toMatch(/Concordia/);
 });
 
 test('bandeau : deux directs visibles, reliquat ensuite', async ({ page }) => {
