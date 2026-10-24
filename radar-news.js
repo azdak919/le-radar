@@ -3032,12 +3032,10 @@ function createArticle(item, role = 'standard') {
   const time = d
     ? formatStampCompact(d, item.lang === 'en' ? 'en' : 'fr')
     : '';
-  /* Le rouge « frais » couvre toute la journée civile québécoise, et non les
-     120 dernières minutes : le fil des journaux étudiants publie par à-coups,
-     souvent quelques articles par jour. Une fenêtre de 2 h laissait donc la
-     quasi-totalité des parutions du jour en gris, ce que la fenêtre était
-     justement censée signaler. */
-  const fresh = d ? torontoDayKey(d) === torontoDayKey() : false;
+  /* Rouge « frais » : publié dans les 12 dernières heures (fenêtre glissante,
+     scripts/article-card-lib.js isFreshRecent). Rafraîchi chaque minute par
+     refreshFreshMarks tant que la page reste ouverte. */
+  const fresh = item.date ? globalThis.RadarArticleCard.isFreshRecent(item.date) : false;
   const { author: rawAuthor, body } = splitByline(item);
   const displayAuthor = resolveDisplayAuthor(item, rawAuthor);
   /* Vedettes : même règles de contenu que la une (leadExcerpt, longueur, minimum). */
@@ -4643,3 +4641,11 @@ if (typeof MediaFollowStore !== 'undefined' && MediaFollowStore.subscribe) {
   });
 }
 
+
+// Rouge « frais » 12 h : la fenêtre glisse pendant que la page reste ouverte.
+if (typeof document !== 'undefined' && globalThis.RadarArticleCard?.refreshFreshMarks) {
+  setInterval(() => globalThis.RadarArticleCard.refreshFreshMarks(document), 60 * 1000);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) globalThis.RadarArticleCard.refreshFreshMarks(document);
+  });
+}

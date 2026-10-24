@@ -144,11 +144,38 @@ function torontoDay(value = Date.now()) {
   }).format(d);
 }
 
-/** Rouge « frais » : toute la journée civile québécoise (voir createArticle). */
-function isFreshToday(iso, now = Date.now()) {
+/** Fenêtre glissante du rouge « frais » : 12 heures. */
+const FRESH_WINDOW_MS = 12 * 60 * 60 * 1000;
+
+/**
+ * Rouge « frais » : publié dans les 12 dernières heures (fenêtre glissante,
+ * calculée côté client). Une date seule (AAAA-MM-JJ, sans heure) ne permet pas
+ * de mesurer 12 h : on la garde en rouge seulement si c'est aujourd'hui (jour
+ * civil québécois). Une date future (horloge décalée) de moins de 5 min compte.
+ */
+function isFreshRecent(iso, now = Date.now()) {
   if (!iso) return false;
-  const day = torontoDay(iso);
-  return Boolean(day) && day === torontoDay(now);
+  const raw = String(iso).trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw === torontoDay(now);
+  const t = new Date(raw).getTime();
+  const n = now instanceof Date ? now.getTime() : Number(now);
+  if (!Number.isFinite(t) || !Number.isFinite(n)) return false;
+  const age = n - t;
+  return age >= -5 * 60 * 1000 && age < FRESH_WINDOW_MS;
+}
+
+/** Ancien nom, conservé pour compatibilité : applique la règle des 12 h. */
+const isFreshToday = isFreshRecent;
+
+/** Réapplique .is-fresh sur les <time class="article-time" datetime> (page restée ouverte). */
+function refreshFreshMarks(root, now = Date.now()) {
+  if (!root || typeof root.querySelectorAll !== 'function') return 0;
+  let n = 0;
+  root.querySelectorAll('time.article-time[datetime]').forEach((el) => {
+    const on = isFreshRecent(el.getAttribute('datetime'), now);
+    if (el.classList.contains('is-fresh') !== on) { el.classList.toggle('is-fresh', on); n += 1; }
+  });
+  return n;
 }
 
 /**
@@ -240,6 +267,9 @@ return {
   stripLeadingByline,
   torontoDay,
   isFreshToday,
+  isFreshRecent,
+  refreshFreshMarks,
+  FRESH_WINDOW_MS,
   cardSlots,
   formatTime,
   formatCompactCalendarDate,

@@ -1827,12 +1827,11 @@ assert(
   'app.js : plus de filet multi-jours upcomingLater dans le pool CTA',
 );
 
-// Fraîcheur des articles : jour civil québécois, pas une fenêtre de minutes.
-// Le fil publie par à-coups ; une fenêtre de 2 h laissait la quasi-totalité des
-// parutions du jour en gris, ce qu'elle était censée signaler.
+// Fraîcheur des articles : fenêtre glissante de 12 h (article-card-lib isFreshRecent).
 assert(
-  /const fresh = d \? torontoDayKey\(d\) === torontoDayKey\(\) : false;/.test(appJs),
-  'app.js : la date rouge couvre toute la journée civile (torontoDayKey), pas 120 min',
+  /const fresh = item\.date \? globalThis\.RadarArticleCard\.isFreshRecent\(item\.date\) : false;/.test(appJs)
+    && /refreshFreshMarks\(document\)/.test(appJs),
+  'app.js : la date rouge couvre les 12 dernières heures, rafraîchie chaque minute',
 );
 // La pastille pulse ne doit pas être masquée sur En bref / vedettes / mobile :
 // seules les dates non-fraîches perdent le point gris (::before).

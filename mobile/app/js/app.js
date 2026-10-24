@@ -346,7 +346,7 @@
 
   function isFresh(iso) {
     const lib = cardLib();
-    return lib ? lib.isFreshToday(iso) : false;
+    return lib ? (lib.isFreshRecent || lib.isFreshToday)(iso) : false;
   }
 
   function cardSlots(role, hasMedia) {
@@ -1197,7 +1197,7 @@
     const cls = next ? 'sports-result--next' : (['W', 'L', 'D', 'T'].includes(result) ? `sports-result--${result}` : '');
     const score = next
       ? '<span class="sports-result__score sports-result__score--next" aria-label="À venir">À venir</span>'
-      : `<span class="sports-result__score">${hasScore ? `${esc(game.scoreFor)}–${esc(game.scoreAgainst)}` : (game.place ? esc(`${game.place}e`) : '—')}</span>`;
+      : `<span class="sports-result__score">${hasScore ? `${esc(game.scoreFor)}–${esc(game.scoreAgainst)}` : (game.place ? esc(`${game.place}e`) : 'Résultat à venir')}</span>`;
     const badge = next ? '→' : ({ W: 'V', L: 'D', D: 'N', T: 'N' }[result] || '');
     const opp = game.opponent || game.event || '';
     return `<li class="sports-result ${cls}">
@@ -1268,7 +1268,7 @@
   function viewSports() {
     if (!sportsState.data && !sportsState.loading) loadSportsData();
     const tab = sportsState.tab;
-    return `<h1 class="sports-native-title">Sports</h1>
+    return `<h1 class="sports-native-title">Sports collégiaux et universitaires du Québec</h1>
       <nav class="chips" aria-label="Sports">
         <button type="button" data-action="sports-tab" data-tab="resultats" aria-pressed="${tab === 'resultats'}">Résultats</button>
         <button type="button" data-action="sports-tab" data-tab="avenir" aria-pressed="${tab === 'avenir'}">À venir</button>
@@ -2017,6 +2017,8 @@
     if (!location.hash) location.replace('#/accueil');
     else render();
     window.setInterval(renderTodayDate, 30000);
+    // Rouge « frais » 12 h : fenêtre glissante, page restée ouverte.
+    window.setInterval(() => { const lib = cardLib(); if (lib && lib.refreshFreshMarks) lib.refreshFreshMarks(document); }, 60000);
     window.addEventListener('resize', () => {
       renderTodayDate();
       fitMastheadSlogan();
