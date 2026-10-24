@@ -630,7 +630,8 @@ function parseSailingSchoolPage(html, school) {
       date: r.date || null,
       time: '',
       // Régate : nom d’événement (+ hôte), pas un « adversaire » unique.
-      opponent: r.event || r.host || 'Régate',
+      opponent: r.event ? Cicsa.sailingNameFr(r.event) : (r.host || 'Régate'),
+      opponentEn: r.event || r.host || 'Regatta',
       opponentFullName: r.host && r.event && r.host !== r.event
         ? `${r.event} · ${r.host}`
         : (r.host || r.event || ''),

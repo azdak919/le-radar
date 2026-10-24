@@ -80,10 +80,10 @@ test('clubs QC : places, classement, pas de hors-province', () => {
   assert.equal(mcgill.kind, 'association-etudiante');
   assert.equal(mcgill.source, 'cicsa');
   const places = mcgill.results.map((game) => `${game.date} ${game.opponent} ${game.scoreFor}/${game.scoreAgainst}`);
-  assert.ok(places.some((line) => line.includes('2026-10-04') && line.includes('Épreuve féminine') && line.includes('1/')), places.join(' | '));
+  assert.ok(places.some((line) => line.includes('2026-10-04') && line.includes('Régate féminine') && line.includes('1/')), places.join(' | '));
   assert.ok(places.some((line) => line.includes('équipage 2')), 'le deuxième équipage reste un résultat');
   assert.equal(mcgill.results.some((game) => /no show/i.test(JSON.stringify(game))), false);
-  assert.equal(mcgill.nextGame.opponent, 'Régionale Québec');
+  assert.equal(mcgill.nextGame.opponent, 'Championnat régional du Québec');
   assert.equal(mcgill.nextGame.date, '2026-10-11');
   assert.equal(mcgill.nextGame.url, 'https://cicsailing.ca/season-schedule');
   assert.match(mcgill.results[0].url, /cicsailing\.ca\/season-results/);
@@ -91,7 +91,7 @@ test('clubs QC : places, classement, pas de hors-province', () => {
   const poly = teams['sailing:universitaire:polytechnique'];
   assert.equal(poly.results.length, 0);
   assert.equal(poly.cicsaSeason.rank, 14);
-  assert.equal(poly.nextGame.opponent, 'Nationaux team race');
+  assert.equal(poly.nextGame.opponent, 'Championnat canadien de course par équipes');
   assert.equal(poly.nextGame.date, '2026-10-24');
 
   const laval = teams['sailing:universitaire:ulaval'];
@@ -100,7 +100,7 @@ test('clubs QC : places, classement, pas de hors-province', () => {
 
   const con = teams['sailing:universitaire:concordia'];
   assert.ok(con.results.some((game) => game.opponent.includes('CAN/AMs') && game.scoreFor === 6));
-  assert.equal(con.results.some((game) => /Régionale Québec/.test(game.opponent) && game.scoreFor), false);
+  assert.equal(con.results.some((game) => /Championnat régional du Québec/.test(game.opponent) && game.scoreFor), false);
 });
 
 test('régate terminée sans scores publiés : reste visible « résultats à venir »', () => {
@@ -122,3 +122,17 @@ test('absence confirmée par rapport de régate : pas de résultat', () => {
   const laval = teams['sailing:universitaire:ulaval'];
   assert.ok(!(laval?.results || []).some((r) => /Womens/.test(r.opponentEn)));
 });
+
+{
+  const { sailingNameFr } = require('../scripts/cicsa-sailing-lib.js');
+  const cases = {
+    'Team Race Nationals': 'Championnat canadien de course par équipes',
+    'Match Race Nationals': 'Championnat canadien de match-racing',
+    "The George Warren Smith '22 Trophy 2026": "Trophée George Warren Smith '22",
+    'Charles Invite': 'Régate sur invitation Charles',
+    'Penobscot Bay Open': 'Régate ouverte Penobscot Bay',
+    'Peak Foliage': 'Peak Foliage',
+  };
+  for (const [en, fr] of Object.entries(cases)) assert.equal(sailingNameFr(en), fr);
+  console.log('sailing FR names OK');
+}

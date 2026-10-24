@@ -403,7 +403,6 @@
       } catch { /* ignore */ }
     }
     if (!row) return null;
-    expandPanelList(row.closest('.sports-panel'));
     row.classList.add('is-spotlight');
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
@@ -852,47 +851,61 @@
   }
 
   /*
-   * Longues listes (ex. voile : 15 régates) : on n’affiche que les plus récents
-   * résultats + le prochain match, le reste derrière « Voir plus ». Sinon la
-   * carte étire toute la rangée de la grille et laisse un grand vide à côté.
+   * Mosaïque (masonry) : toutes les cartes affichent TOUS leurs résultats ;
+   * chaque enfant de .sports-board s’étend sur N rangées fines (4 px) selon sa
+   * hauteur réelle, et l’auto-placement de la grille le glisse dans le trou le
+   * plus haut disponible. L’ordre de lecture (gauche→droite, haut→bas) reste
+   * celui du DOM. Recalcul : redimensionnement, images, données en direct.
    */
-  const LIST_KEEP = 6;
-  function expandPanelList(panel) {
-    const list = panel?.querySelector('.sports-panel__list.is-collapsed');
-    if (!list) return;
-    list.classList.remove('is-collapsed');
-    const btn = panel.querySelector('.sports-panel__more');
-    if (btn) btn.remove();
+  const MS_ROW = 4;
+  const MS_GAP = 14;
+  const boards = Array.from(root.querySelectorAll('.sports-board'));
+  function boardCols(board) {
+    const t = getComputedStyle(board).gridTemplateColumns || '';
+    return t.split(' ').filter((x) => x && x !== '0px').length || 1;
   }
-  function collapseLongLists() {
-    panels.forEach((panel) => {
-      const list = panel.querySelector('.sports-panel__list');
-      if (!list || list.classList.contains('is-collapsed')) return;
-      const rows = Array.from(list.children).filter((li) => li.classList.contains('sports-result'));
-      if (rows.length <= LIST_KEEP + 1) return;
-      let shown = 0;
-      let hidden = 0;
-      rows.forEach((li) => {
-        const keep = li.classList.contains('sports-result--next') || li.classList.contains('is-live')
-          || li.classList.contains('sports-result--live') || shown < LIST_KEEP;
-        if (keep) { if (!li.classList.contains('sports-result--next')) shown += 1; li.classList.remove('is-extra'); }
-        else { li.classList.add('is-extra'); hidden += 1; }
-      });
-      if (!hidden) return;
-      list.classList.add('is-collapsed');
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'sports-panel__more';
-      btn.setAttribute('aria-expanded', 'false');
-      btn.textContent = lang === 'en' ? `Show ${hidden} more` : `Voir ${hidden} de plus`;
-      btn.addEventListener('click', () => expandPanelList(panel));
-      list.after(btn);
+  function layoutBoard(board) {
+    if (!board.isConnected) return;
+    const on = boardCols(board) > 1;
+    board.classList.toggle('is-masonry', on);
+    Array.from(board.children).forEach((el) => {
+      if (!on || el.hidden) { el.style.removeProperty('grid-row-end'); return; }
+      const cs = getComputedStyle(el);
+      const h = el.getBoundingClientRect().height
+        + (parseFloat(cs.marginTop) || 0) + (parseFloat(cs.marginBottom) || 0);
+      const span = Math.max(1, Math.ceil((h + MS_GAP) / MS_ROW));
+      const v = `span ${span}`;
+      if (el.style.gridRowEnd !== v) el.style.gridRowEnd = v;
     });
   }
-  collapseLongLists();
+  let msRaf = 0;
+  function layoutMasonry() {
+    if (msRaf) return;
+    msRaf = window.requestAnimationFrame(() => {
+      msRaf = 0;
+      boards.forEach(layoutBoard);
+    });
+  }
+  window.__sportsMasonry = layoutMasonry;
+  if ('ResizeObserver' in window) {
+    const ro = new ResizeObserver(layoutMasonry);
+    boards.forEach((b) => { ro.observe(b); Array.from(b.children).forEach((c) => ro.observe(c)); });
+    // Cartes ajoutées/remplacées par les mises à jour en direct.
+    const mo = new MutationObserver((muts) => {
+      muts.forEach((m) => m.addedNodes.forEach((n) => { if (n.nodeType === 1 && n.parentElement?.classList.contains('sports-board')) ro.observe(n); }));
+      layoutMasonry();
+    });
+    boards.forEach((b) => mo.observe(b, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden', 'open'] }));
+  }
+  window.addEventListener('resize', layoutMasonry, { passive: true });
+  window.addEventListener('load', layoutMasonry);
+  root.addEventListener('load', layoutMasonry, true);
+  root.addEventListener('toggle', layoutMasonry, true);
+  if (document.fonts?.ready) document.fonts.ready.then(layoutMasonry).catch(() => {});
 
   apply(sport, sector, sex, period, team, initial.q || '', initial.game || '');
   relabelCivilDays();
+  layoutMasonry();
   if (initial.q) setSearchOpen(true);
   if (!team && !initial.q) openHashSport();
   window.addEventListener('hashchange', openHashSport);

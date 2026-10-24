@@ -32,19 +32,45 @@ const MONTHS = {
 
 const EVENT_RE = /^(.+?)\s*\(((?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sept?(?:ember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\s+\d{1,2}(?:\s*[-–]\s*(?:[A-Za-z]+\s+)?\d{1,2})?)\)\s*$/i;
 
+// Terminologie Voile Canada (fr.sailing.ca : « Championnat canadien en … »,
+// « Championnats régionaux ») et FFVoile (course par équipes, match-racing,
+// course en flotte).
 const EVENT_FR = [
-  [/quebec regional/, 'Régionale Québec'],
-  [/women/, 'Épreuve féminine'],
-  [/keelboat/, 'Nationaux quillards'],
-  [/team race/, 'Nationaux team race'],
-  [/match race/, 'Nationaux match race'],
-  [/fleet race/, 'Nationaux fleet race'],
-  [/single hand/, 'Solitaire'],
+  [/quebec regional/, 'Championnat régional du Québec'],
+  [/women/, 'Régate féminine'],
+  [/keelboat/, 'Championnat canadien en quillard'],
+  [/team race/, 'Championnat canadien de course par équipes'],
+  [/match race/, 'Championnat canadien de match-racing'],
+  [/fleet race/, 'Championnat canadien de course en flotte'],
+  [/single ?hand/, 'Championnat en solitaire'],
   [/can\s*\/?\s*am/, 'CAN/AMs'],
   [/western canada/, "Coupe de l'Ouest"],
-  [/ontario regional|uoft invite/, 'Régionale Ontario'],
+  [/ontario regional|uoft invite/, "Championnat régional de l'Ontario"],
   [/^musc$/, 'MUSC'],
 ];
+
+/*
+ * Noms d’épreuves ICSA/CICSA (anglais) → français, sans franglais.
+ * Noms propres conservés ; « X Trophy » → « Trophée X », etc.
+ */
+function sailingNameFr(name) {
+  let t = String(name || '').replace(/\s+/g, ' ').trim();
+  if (!t) return t;
+  const key = fold(t);
+  for (const [re, label] of EVENT_FR) if (re.test(key)) return label;
+  t = t.replace(/^The\s+/i, '').replace(/\s+(19|20)\d{2}$/, '');
+  let m;
+  if ((m = t.match(/^(.+?)\s+Trophy$/i))) return `Trophée ${m[1]}`;
+  if ((m = t.match(/^(.+?)\s+(?:Invite|Invitational)$/i))) return `Régate sur invitation ${m[1]}`;
+  if ((m = t.match(/^(.+?)\s+Open$/i))) return `Régate ouverte ${m[1]}`;
+  if ((m = t.match(/^(.+?)\s+(?:Nationals|National Championships?)$/i))) return `Championnat national ${m[1]}`;
+  if ((m = t.match(/^(.+?)\s+Championships?$/i))) return `Championnat ${m[1]}`;
+  if ((m = t.match(/^(.+?)\s+(?:Cup)$/i))) return `Coupe ${m[1]}`;
+  if ((m = t.match(/^(.+?)\s+(?:Regatta)$/i))) return `Régate ${m[1]}`;
+  if ((m = t.match(/^(.+?)\s+(?:Intersectional)$/i))) return `Interconférences ${m[1]}`;
+  return t;
+}
+
 
 function parseCsv(text) {
   const rows = [];
@@ -121,11 +147,7 @@ function qcBoat(raw) {
 }
 
 function eventFr(name) {
-  const key = fold(name);
-  for (const [re, label] of EVENT_FR) {
-    if (re.test(key)) return label;
-  }
-  return String(name || '').trim();
+  return sailingNameFr(name);
 }
 
 function parseLooseRange(label, seasonStartYear) {
@@ -623,6 +645,7 @@ function buildCicsaQcTeams(scoresCsv, scheduleCsv, options = {}) {
 }
 
 module.exports = {
+  sailingNameFr,
   parseCsv,
   torontoYmd,
   qcBoat,
