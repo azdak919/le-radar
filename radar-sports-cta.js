@@ -1883,13 +1883,13 @@ function sportsResultVsHtml() {
 }
 
 /**
- * Score live : chiffre collé, sinon 0–0 (soccer, hockey, football, basket,
- * volleyball…). RSEQ envoie souvent -999 tant que le rapport n’est pas versé
- * — un match sans chiffre s’affiche comme au coup d’envoi. Place / voile
- * n’utilisent jamais ce 0–0.
+ * Score live : chiffre réel seulement. Sans pointage à la source (RSEQ S1
+ * envoie -999, RSEQ Direct n’affiche que l’heure pour le football collégial),
+ * on n’invente JAMAIS un 0–0 (23 oct. 2026 : Champlain–Vanier affiché 0–0
+ * à 22 h 14). On montre « vs » et un tiret par côté dans le scorebug.
  */
-const SPORTS_LIVE_SCORE_PENDING_SIDE = '0';
-const SPORTS_LIVE_SCORE_PENDING = `${SPORTS_LIVE_SCORE_PENDING_SIDE}–${SPORTS_LIVE_SCORE_PENDING_SIDE}`;
+const SPORTS_LIVE_SCORE_PENDING_SIDE = '–';
+const SPORTS_LIVE_SCORE_PENDING = 'vs';
 
 function sportsLiveScoreText(game) {
   if (sportsIsPlaceResult(game, game?.sport)) {

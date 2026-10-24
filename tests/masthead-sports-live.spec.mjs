@@ -280,7 +280,7 @@ test('CTA live : En cours, scorebug et tampon, pas « dans 15 min »', async ({ 
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/En\s*direct/i);
   await expect(cta.locator('.sports-chip__glyph')).toBeVisible();
-  await expect(cta.locator('.sports-chip__score')).toHaveText('0–0');
+  await expect(cta.locator('.sports-chip__score')).toHaveText('vs');
   const text = await cta.locator('.sports-chip__line-inner').innerText();
   expect(text).toMatch(/Saint-Hyacinthe/);
   expect(text).toMatch(/Vanier/);
@@ -301,7 +301,7 @@ test('CTA live : pas « il y a 2 min » sous En cours', async ({ page }) => {
   const cta = await openWithSports(page, payload);
   await expect(cta).toHaveAttribute('data-cta-state', 'live');
   await expect(cta.locator('.sports-chip__cta-tag')).toHaveText(/En\s*direct/i);
-  await expect(cta.locator('.sports-chip__score')).toHaveText('0–0');
+  await expect(cta.locator('.sports-chip__score')).toHaveText('vs');
   const sub = await cta.locator('.sports-chip__sub-text').innerText();
   const kick = kickoffClockFromPayload(payload);
   expect(sub).toMatch(new RegExp(kick.replace(' ', '\\s+')));
