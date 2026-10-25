@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-25T07:44:59.632Z",
+  "updated": "2026-10-25T09:13:11.732Z",
   "total": 168,
   "withPhoto": 149,
   "withStock": 37,
   "withCampusBank": 26,
   "fullyCovered": 168,
   "leadReadyPhotos": 132,
-  "pageScraped": 29,
-  "photosRecovered": 29,
+  "pageScraped": 30,
+  "photosRecovered": 30,
   "imagesCleared": 12,
-  "stockSearches": 37,
-  "stockFound": 30,
-  "campusBankFound": 20,
+  "stockSearches": 39,
+  "stockFound": 32,
+  "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -33,16 +33,22 @@
       "image": "https://lecollectif.ca/wp-content/uploads/2026/10/SOCIETE_Movember-au-dela-de-la-moustache_Getty-Images.jpg"
     },
     {
-      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
-      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
+      "title": "The Honey Bank: CSU’s sustainability initiatives",
+      "link": "https://theconcordian.com/2026/10/the-honey-bank-csus-sustainability-initiatives/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Pavillon_DKN%2C_Universit%C3%A9_Laval_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG"
     },
     {
-      "title": "Creative Writing September 2026",
-      "link": "https://theplantnews.com/2026/10/13/creative-writing-september-2026/",
+      "title": "Horoscope September 2026",
+      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+    },
+    {
+      "title": "Searching For a Third Space",
+      "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/de/McGill_University_downtown_campus_23.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
@@ -63,10 +69,10 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
     },
     {
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "title": "CSU fails to reach quorum at special council meeting",
+      "link": "https://thelinknewspaper.ca/article/16488",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Henry_F._Hall_Building_04.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     },
     {
       "title": "Battling Adversity",
@@ -79,12 +85,6 @@
       "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
       "reason": "stock-too-small",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Vecteezy_stack-of-newspaper_1961329.jpg"
-    },
-    {
-      "title": "“Decolonization”",
-      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     }
   ]
 }
