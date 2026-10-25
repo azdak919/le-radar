@@ -1507,7 +1507,7 @@ assert(
   'nom long LE-RADAR : notranslate (pied + gabarit)',
 );
 assert(
-  /const SPORTS_CTA_TAG_LIVE\s*=\s*['"]En direct['"]/.test(appJs)
+  /const SPORTS_CTA_TAG_LIVE\s*=\s*['"]En cours['"]/.test(appJs)
     && appJs.includes('function sportsCtaTagLabel')
     && appJs.includes('function sportsLiveTeamsScoreHtml')
     && appJs.includes('function sportsResultMarkText')

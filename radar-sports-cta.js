@@ -183,7 +183,7 @@ const SPORTS_ARRIVE_MS = 640;
  */
 const SPORTS_CTA_TAG = 'Sports';
 /** Pastille pendant un match en cours — le seul cas qui remplace la rubrique. */
-const SPORTS_CTA_TAG_LIVE = 'En direct';
+const SPORTS_CTA_TAG_LIVE = 'En cours';
 /** Coup d’envoi du jour, pas encore commencé — mot Aujourd’hui, lamp soon (pulse). */
 const SPORTS_MATCH_TAG_TODAY = 'Aujourd’hui';
 const SPORTS_CTA_TAG_SOON = SPORTS_MATCH_TAG_TODAY;

@@ -44,9 +44,9 @@
         : `${n} entrée${n > 1 ? 's' : ''} sur ${total}`),
       boardsOnly: 'Tableaux officiels (liens)',
       empty: 'Aucune équipe pour ce filtre.',
-      live: 'En direct',
+      live: 'En cours',
       emptyPeriod: {
-        live: 'Aucun match en direct.',
+        live: 'Aucun match en cours.',
         week: 'Aucun match cette semaine.',
         'next-week': 'Aucun match la semaine prochaine.',
         month: 'Aucun match ce mois-ci.',

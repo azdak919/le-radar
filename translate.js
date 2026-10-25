@@ -1745,7 +1745,7 @@
       nl: 'Live', pl: 'Na żywo', tr: 'Canlı', ru: 'В эфире', uk: 'Наживо',
       zh: '直播', 'zh-tw': '直播', ar: 'مباشر', ko: '생중계', ja: 'ライブ',
       hi: 'लाइव', vi: 'Trực tiếp', ht: 'An dirèk',
-      fr: 'En direct',
+      fr: 'En cours',
     },
     Demain: {
       en: 'Tomorrow', es: 'Mañana', pt: 'Amanhã', de: 'Morgen', it: 'Domani',

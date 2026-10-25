@@ -1026,7 +1026,7 @@
   const SPORTS_LIVE_URL = 'https://le-radar.ca/sports-masthead.json';
   const SPORTS_GLYPHS = [['basket', '🏀'], ['hockey', '🏒'], ['soccer', '⚽'], ['football', '🏈'], ['volley', '🏐'], ['rugby', '🏉'], ['voile', '⛵'], ['sail', '⛵'], ['badminton', '🏸'], ['cross', '🏃'], ['athl', '🏃'], ['natation', '🏊'], ['golf', '⛳'], ['baseball', '⚾'], ['curling', '🥌']];
   const SPORTS_FILTERS_KEY = 'radar-app-sports-filters-v2';
-  const SPORTS_PERIODS = [['all', 'Toutes'], ['live', 'En direct'], ['7d', '7 jours'], ['week', 'Cette semaine'], ['next-week', 'Semaine prochaine'], ['month', 'Ce mois-ci'], ['session', 'Cette session']];
+  const SPORTS_PERIODS = [['all', 'Toutes'], ['live', 'En cours'], ['7d', '7 jours'], ['week', 'Cette semaine'], ['next-week', 'Semaine prochaine'], ['month', 'Ce mois-ci'], ['session', 'Cette session']];
   const SPORTS_PAGE = 30;
   const SPORTS_SITE_SPORTS = [['hockey', 'Hockey'], ['football', 'Football'], ['soccer', 'Soccer'], ['basketball', 'Basketball'], ['volleyball', 'Volleyball'], ['rugby', 'Rugby'], ['flag-football', 'Flag-football'], ['soccer-interieur', 'Soccer intérieur'], ['futsal', 'Futsal'], ['baseball', 'Baseball'], ['badminton', 'Badminton'], ['natation', 'Natation'], ['athletisme', 'Athlétisme'], ['cross-country', 'Cross-country'], ['golf', 'Golf'], ['cheerleading', 'Cheerleading'], ['ultimate', 'Ultimate'], ['sailing', 'Voile']];
   /* « En direct » : coup d’envoi entre 15 min à venir et 3 h passées (sports-board.js). */
@@ -1261,7 +1261,7 @@
       ? `<button type="button" class="wide" data-sports-more>Afficher plus (${panels.length - list.length})</button>` : '';
     const body = list.length
       ? count + list.map((p) => sportsPanel(p.team, p.games, next)).join('') + more
-      : `<p class="sports-native-empty">${live ? 'Aucun match en direct.' : next ? 'Aucun match à venir pour ces filtres.' : 'Aucun résultat pour ces filtres.'}</p>`;
+      : `<p class="sports-native-empty">${live ? 'Aucun match en cours.' : next ? 'Aucun match à venir pour ces filtres.' : 'Aucun résultat pour ces filtres.'}</p>`;
     return `<div data-sports-board class="sports-native">${body}</div>`;
   }
 

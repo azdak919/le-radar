@@ -496,15 +496,15 @@ test('wide E : horaires et sports gardent des cartes assez larges', async ({ pag
   expect(Math.min(...widths), `sports 1920 trop étroit: ${widths}`).toBeGreaterThanOrEqual(340);
 });
 
-test('sports : filtre En direct', async ({ page }) => {
+test('sports : filtre En cours', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/sports/', { waitUntil: 'domcontentloaded' });
   const live = page.locator('[data-filter-period="live"]');
   await expect(live).toBeVisible();
-  await expect(live).toHaveText('En direct');
+  await expect(live).toHaveText('En cours');
   await live.click();
   await expect(live).toHaveAttribute('aria-pressed', 'true');
   const status = page.locator('[data-sports-status]');
   await expect(status).toBeVisible();
-  await expect(status).toContainText(/en direct|entrée/i);
+  await expect(status).toContainText(/en cours|entrée/i);
 });
