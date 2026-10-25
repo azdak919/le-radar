@@ -1,14 +1,12 @@
 # Découverte des médias étudiants — journal du bot
 
-Dernière passe : **2026-10-25 18:28 UTC** · sources actives : **21**.
+Dernière passe : **2026-10-25 18:40 UTC** · sources actives : **20**.
 
 Les médias qui respectent les règles sont **ajoutés automatiquement** au fil. Pour retirer une source hors sujet sans qu'elle revienne : ajouter une entrée dans `data/source-blocklist.json` (nom ou site + raison).
 
 ## Ajoutés lors de cette passe
 
-| Média | Établissement | Flux | Dernier article |
-|---|---|---|---|
-| Bandersnatch | John Abbott College | https://bandersnatch.ca/feed/ | 2026-10-12 |
+_Aucun nouvel ajout._
 
 ## Candidats écartés
 
@@ -16,7 +14,8 @@ Les médias qui respectent les règles sont **ajoutés automatiquement** au fil.
 |---|---|---|---|
 | Le Griffonnier | Université du Québec à Chicoutimi | https://ceuc.ca/ | aucun flux RSS/Atom public |
 | Le Prétexte | Cégep de Rimouski | https://www.cegep-rimouski.qc.ca/le-pretexte | site de l'établissement (portail institutionnel) |
-| La Plume | Cégep de Jonquière | https://laplumejournal.ca/ | aucun flux RSS/Atom public |
+| La Plume | Cégep de Jonquière | https://laplumejournal.ca/ | flux bloqué par une page anti-robot (collecte impossible) |
+| Bandersnatch | John Abbott College | https://bandersnatch.ca/ | liste de blocage : flux protégé par un captcha SiteGround (sgcaptcha) depuis GitHub Actions : bloqué, aucun contournement (relais refusé) |
 | The Blue Ink | Champlain College Saint-Lambert | https://www.theblueink.ca/ | aucun flux RSS/Atom public |
 | Le Brise-Glace | Cégep de Rimouski | https://lebrise-glace.com/ | liste de blocage : site mort, retiré le 2026-10-23 |
 | L'Heuristique | École de technologie supérieure (ÉTS) | https://lheuris.ca/ | aucun flux RSS/Atom public |
@@ -38,7 +37,7 @@ Les médias qui respectent les règles sont **ajoutés automatiquement** au fil.
 | Le Point G | Collège André-Grasset | https://lepointg.ca/ | aucun flux RSS/Atom public |
 | The PaperCut | Marianopolis College | https://marianopolispapercut.wordpress.com/ | établissement hors catalogue Québec |
 | The Free Press | John Abbott College | https://jacfreepress.com/ | aucun flux RSS/Atom public |
-| The Bull & Bear | McGill University | https://bullandbearmcgill.com/ | aucun flux RSS/Atom public |
+| The Bull & Bear | McGill University | https://bullandbearmcgill.com/ | aucun signal « journal étudiant » sur le site |
 | L'Obiter | Université de Sherbrooke | https://lobiter.com/ | aucun flux RSS/Atom public |
 | Le Soufflet | Université du Québec à Rimouski (UQAR) | https://lesoufflet.ca/ | aucun flux RSS/Atom public |
 | L’Organe | Concordia University | https://lorgane.ca/ | aucun flux RSS/Atom public |
