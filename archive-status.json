@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-25T13:55:39.964Z",
+  "updated": "2026-10-25T18:34:35.759Z",
   "archived": {
     "https://le-radar.ca/": {
       "at": "2026-07-26T00:17:35.330Z",
@@ -4504,14 +4504,38 @@
       "via": "save-page-now",
       "source": "The Concordian",
       "snapshot": "https://web.archive.org/web/20261024182846/https://theconcordian.com/2026/10/stingers-mens-soccer-first-win/"
+    },
+    "https://journallagriffe.ca/2026/10/gatineau-est-represente-dans-les-nominations-du-gala-de-ladisq/": {
+      "at": "2026-10-25T18:32:43.304Z",
+      "via": "save-page-now",
+      "source": "La Griffe",
+      "snapshot": "https://web.archive.org/web/20261025183228/https://journallagriffe.ca/2026/10/gatineau-est-represente-dans-les-nominations-du-gala-de-ladisq/"
+    },
+    "https://journallagriffe.ca/2026/10/grabuge-au-minotaure-avec-have-no-heroes-et-fair-dos/": {
+      "at": "2026-10-25T18:33:05.810Z",
+      "via": "save-page-now",
+      "source": "La Griffe",
+      "snapshot": "https://web.archive.org/web/20261025183250/https://journallagriffe.ca/2026/10/grabuge-au-minotaure-avec-have-no-heroes-et-fair-dos/"
+    },
+    "https://journallagriffe.ca/2026/09/les-griffons-en-forme/": {
+      "at": "2026-10-25T18:33:34.302Z",
+      "via": "save-page-now",
+      "source": "La Griffe",
+      "snapshot": "https://web.archive.org/web/20261025183318/https://journallagriffe.ca/2026/09/les-griffons-en-forme/"
+    },
+    "https://journallagriffe.ca/2026/09/les-griffons-reprennent-ou-ils-avaient-laisse/": {
+      "at": "2026-10-25T18:33:56.784Z",
+      "via": "save-page-now",
+      "source": "La Griffe",
+      "snapshot": "https://web.archive.org/web/20261025183341/https://journallagriffe.ca/2026/09/les-griffons-reprennent-ou-ils-avaient-laisse/"
     }
   },
   "stats": {
-    "total": 785,
+    "total": 789,
     "lastRun": {
-      "saved": 0,
+      "saved": 4,
       "skipped": 0,
-      "failed": 6,
+      "failed": 3,
       "stoppedEarly": true
     }
   },
@@ -4595,6 +4619,11 @@
       "host": "theconcordian.com",
       "pages": 122,
       "checkedAt": "2026-10-23T08:49:07.835Z"
+    },
+    "La Griffe": {
+      "host": "journallagriffe.ca",
+      "pages": 1,
+      "checkedAt": "2026-10-25T18:32:24.053Z"
     }
   }
 }
