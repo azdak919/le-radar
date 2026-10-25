@@ -47,3 +47,23 @@ test('cartes app : même ordre des blocs que le site @ci-critical', async ({ pag
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
   expect(overflow).toBe(false);
 });
+
+// Dates des cartes de l'app : toujours en français, même pour un article en
+// anglais et sur un téléphone (WebView) réglé en anglais.
+test.describe('dates des cartes app en français', () => {
+  test.use({ locale: 'en-US', timezoneId: 'America/Toronto' });
+  test('aucune date « Today / Yesterday » dans l’app @ci-critical', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/mobile/app/#/accueil', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('.card-site .article--lead')).toBeVisible({ timeout: 20000 });
+    const stamps = await page.$$eval('.card-site time.article-time, .card-site .card-meta time', (els) => els.map((e) => ({
+      text: e.textContent.trim(),
+      en: (e.closest('[lang]')?.getAttribute('lang') || '').startsWith('en'),
+    })));
+    expect(stamps.length).toBeGreaterThan(0);
+    for (const { text } of stamps) {
+      expect(text, text).not.toMatch(/\b(Today|Yesterday|ago|just now|AM|PM)\b/i);
+      expect(text, text).toMatch(/aujourd'hui|hier|il y a|à l'instant|\d{1,2} h \d{2}|\d{4}|[a-zéû]+\.?\s/);
+    }
+  });
+});

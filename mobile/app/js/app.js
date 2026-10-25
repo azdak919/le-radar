@@ -289,19 +289,21 @@
     return null;
   }
 
-  /** Date du fil comme sur le site (« hier, 17 h 00 »). */
-  function stampDate(iso, en) {
+  /** Date du fil comme sur le site (« aujourd'hui, 15 h 23 », « hier, 17 h 00 »).
+   *  Toujours en français, quelle que soit la langue de l'article, de
+   *  l'interface ou du téléphone (WebView en anglais compris). */
+  function stampDate(iso) {
     const lib = cardLib();
     const time = Date.parse(iso || '');
     if (!lib || !lib.formatStampCompact || Number.isNaN(time)) return formatDate(iso);
-    return lib.formatStampCompact(new Date(time), en ? 'en' : 'fr');
+    return lib.formatStampCompact(new Date(time), 'fr');
   }
 
   function formatDate(iso) {
     const time = Date.parse(iso || '');
     if (Number.isNaN(time)) return '';
     try {
-      return new Intl.DateTimeFormat(document.documentElement.lang || 'fr-CA', {
+      return new Intl.DateTimeFormat('fr-CA', {
         dateStyle: 'medium',
         timeStyle: 'short',
         timeZone: 'America/Toronto',
@@ -378,7 +380,7 @@
     const readMore = en ? 'Read more →' : 'Lire la suite →';
     const byLabel = en ? 'By' : 'Par';
     const time = meta.date
-      ? `<time class="article-time notranslate${isFresh(meta.date) ? ' is-fresh' : ''}" datetime="${esc(meta.date)}">${esc(stampDate(meta.date, en))}</time>`
+      ? `<time class="article-time notranslate${isFresh(meta.date) ? ' is-fresh' : ''}" datetime="${esc(meta.date)}">${esc(stampDate(meta.date))}</time>`
       : '';
     const lib = cardLib();
     const short = lib && lib.institutionShort ? lib.institutionShort(meta.institution) : '';
