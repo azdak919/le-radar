@@ -1,0 +1,11 @@
+{
+  "_doc": "Provenance des logos de stations. Seuls des logos OFFICIELS, adaptés (recadrage + marges) par scripts/build-station-logos.py. Aucun logo généré ou redessiné.",
+  "stations": [
+    {"id": "chyz", "sourceUrl": "https://cdn.chyz.ca/wp-content/uploads/2024/09/23144307/CHYZLOGO.png", "sourcePage": "https://chyz.ca/", "kind": "logo du site officiel", "retrieved": "2026-10-25", "original": "assets/logos/originals/chyz-CHYZLOGO.png", "adapt": {"background": "#ffffff", "fill": 0.78}},
+    {"id": "cism", "sourceUrl": "https://admin.cism893.ca/storage/15/favicon.svg", "sourcePage": "https://cism893.ca/", "kind": "logotype SVG officiel (favicon du site)", "retrieved": "2026-10-25", "original": "assets/logos/originals/cism-favicon.svg", "adapt": {"background": "#ffffff", "fill": 0.84}},
+    {"id": "ckut", "sourceUrl": "https://ckut.ca/logo.jpg", "sourcePage": "https://ckut.ca/", "kind": "og:image officielle", "retrieved": "2026-10-25", "original": "assets/logos/originals/ckut-logo.jpg", "adapt": {"background": "#000000", "fill": 1.0, "crop": [285, 0, 915, 630], "trim": false}},
+    {"id": "cjlo", "sourceUrl": "https://www.cjlo.com/sites/all/themes/cjlo/images/header.png", "sourcePage": "https://www.cjlo.com/", "kind": "bannière officielle du thème du site", "retrieved": "2026-10-25", "original": "assets/logos/originals/cjlo-header.png", "adapt": {"background": "#ffffff", "fill": 0.92}},
+    {"id": "cfak", "sourceUrl": "https://www.cfak.ca/_nuxt/icons/icon_512x512.2240ca.png", "sourcePage": "https://www.cfak.ca/", "kind": "apple-touch-icon officielle 512 px", "retrieved": "2026-10-25", "original": "assets/logos/originals/cfak-icon_512x512.png", "adapt": {"background": "#e47701", "fill": 0.78, "backgroundNote": "orange tiré de l'og:image officielle (reseauxfallback-768x403.png)"}},
+    {"id": "choq", "sourceUrl": "https://www.choq.ca/assets/_1200x630_crop_center-center_82_none/fond-02.jpg?mtime=1673289467", "sourcePage": "https://www.choq.ca/", "kind": "og:image officielle (logotype CHOQ.ca)", "retrieved": "2026-10-25", "original": "assets/logos/originals/choq-fond-02.jpg", "adapt": {"background": "#20201e", "fill": 1.0, "crop": [300, 0, 900, 600], "trim": false}}
+  ]
+}

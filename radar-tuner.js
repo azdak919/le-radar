@@ -3990,11 +3990,23 @@ function updateMediaSession(radio, { title, sub } = {}) {
     title: meta.title,
     artist: meta.artist,
     album: meta.album,
-    artwork: [
-      { src: assetUrl('assets/icon-192.png'), sizes: '192x192', type: 'image/png' },
-      { src: assetUrl('assets/icon-512.png'), sizes: '512x512', type: 'image/png' },
-    ],
+    artwork: stationArtwork(radio),
   });
+}
+
+/** Logo officiel de la station (assets/logos/stations/, voir data/station-logos-sources.json). */
+function stationArtwork(radio) {
+  const id = String(radio?.id || '').replace(/[^a-z0-9-]/gi, '');
+  if (id && /assets\/logos\/stations\//.test(String(radio?.logo || ''))) {
+    return [
+      { src: assetUrl(`assets/logos/stations/${id}-192.png`), sizes: '192x192', type: 'image/png' },
+      { src: assetUrl(`assets/logos/stations/${id}-512.png`), sizes: '512x512', type: 'image/png' },
+    ];
+  }
+  return [
+    { src: assetUrl('assets/icon-192.png'), sizes: '192x192', type: 'image/png' },
+    { src: assetUrl('assets/icon-512.png'), sizes: '512x512', type: 'image/png' },
+  ];
 }
 
 function restoreVolume() {

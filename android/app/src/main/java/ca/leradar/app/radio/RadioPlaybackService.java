@@ -253,6 +253,11 @@ public class RadioPlaybackService extends MediaLibraryService {
 
   @Nullable
   private Uri artworkUri(Station s) {
+    // Logo officiel embarqué (res/drawable-nodpi/station_<id>.png, voir data/station-logos-sources.json) :
+    // fonctionne hors ligne, sur Android Auto et en AVRCP sans téléchargement.
+    String res = "station_" + s.id.toLowerCase(java.util.Locale.ROOT).replaceAll("[^a-z0-9_]", "_");
+    int id = getResources().getIdentifier(res, "drawable", getPackageName());
+    if (id != 0) return Uri.parse("android.resource://" + getPackageName() + "/drawable/" + res);
     if (!s.artwork.isEmpty() && s.artwork.startsWith("https://")) return Uri.parse(s.artwork);
     return Uri.parse("android.resource://" + getPackageName() + "/" + R.mipmap.ic_launcher);
   }

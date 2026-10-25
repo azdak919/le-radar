@@ -659,7 +659,10 @@
           title: radio.name,
           artist,
           album: 'LE-RADAR',
-          artwork: [
+          artwork: /assets\/logos\/stations\//.test(radio.logo || '') ? [
+            { src: new URL(String(radio.logo).replace(/-512\.png$/, '-192.png'), 'https://le-radar.ca/').href, sizes: '192x192', type: 'image/png' },
+            { src: new URL(radio.logo, 'https://le-radar.ca/').href, sizes: '512x512', type: 'image/png' },
+          ] : [
             { src: new URL('./icons/icon-192.png', location.href).href, sizes: '192x192', type: 'image/png' },
             { src: new URL('./icons/icon-512.png', location.href).href, sizes: '512x512', type: 'image/png' },
           ],
