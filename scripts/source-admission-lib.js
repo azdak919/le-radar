@@ -12,7 +12,11 @@
  *  7. actif : dernier article ≤ 45 jours, ou publié depuis le début de la
  *     session en cours ;
  *  8. signal « média étudiant » (graine vérifiée, ou mention sur la page) ;
- *  9. une photo du campus de SON établissement existe (repli des images).
+ *  9. une photo du campus de SON établissement existe (repli des images) ;
+ * 10. crédits lisibles : sur les articles échantillonnés du flux, l'auteur
+ *     et le crédit photo extraits par le pipeline ne sont ni des libellés
+ *     d'interface (« See author's posts »), ni un pseudo/média collé
+ *     (« X // @x // Média »), ni un compte générique (« admin »).
  * Aucun réseau ici : fonctions pures, testées par tests/source-admission.mjs.
  */
 
@@ -153,7 +157,36 @@ function evaluateAdmission(cand, probe = {}, ctx = {}) {
   if (ctx.hasCampusPhoto && !ctx.hasCampusPhoto(inst.name, cand.institution)) {
     return { admit: false, reason: `pas de photo de campus pour ${inst.name} (repli d'image requis)` };
   }
+  const creditProblems = auditSampleCredits(probe.creditSamples, cand.name);
+  if (creditProblems.length) {
+    return { admit: false, reason: `crédits mal extraits : ${creditProblems[0]}` };
+  }
   return { admit: true, reason: 'critères respectés', institution: inst };
+}
+
+const JUNK_CREDIT = /\b(?:see|view)\s+(?:all\s+)?(?:author['’]?s?\s+)?posts\b|\bposts\s+by\b|\bvoir\s+(?:tous\s+)?(?:les\s+)?articles\b|\/\/|(?:^|\s)@[\w.]+|^(?:admin|administrator|administrateur|wordpress|webmaster|editor|user\d*)$/i;
+
+/**
+ * Valide les crédits extraits par le pipeline sur un échantillon d'articles
+ * du flux : [{ link, author, creditLine, creator }]. Renvoie les problèmes
+ * (vides = OK). Un auteur absent ou un repli « Photo : [média] » n'est pas
+ * une erreur (le site affiche alors « La rédaction » / le média) — seul un
+ * crédit FAUX bloque l'admission.
+ */
+function auditSampleCredits(samples = [], sourceName = '') {
+  const problems = [];
+  const src = norm(sourceName);
+  for (const s of samples || []) {
+    const author = String(s.author || '').trim();
+    const creator = String(s.creator || '').trim();
+    const line = String(s.creditLine || '').trim();
+    if (author && JUNK_CREDIT.test(author)) problems.push(`auteur illisible « ${author} » (${s.link || '?'})`);
+    if (author && src && norm(author) === src) problems.push(`nom du média pris pour l'auteur (${s.link || '?'})`);
+    if ((creator && JUNK_CREDIT.test(creator)) || (line && JUNK_CREDIT.test(line))) {
+      problems.push(`crédit photo illisible « ${line || creator} » (${s.link || '?'})`);
+    }
+  }
+  return problems;
 }
 
 const AUTO_PALETTE = ['#1F6FB2', '#B23A1F', '#2E7D32', '#6A1B9A', '#C77700', '#00838F', '#AD1457', '#455A64'];
@@ -231,5 +264,5 @@ function renderDiscoveryLog({ added = [], rejected = [], now = Date.now(), activ
 module.exports = {
   ACTIVE_DAYS, MIN_ITEMS, norm, hostOf, currentSessionStart, isActive, findInstitution,
   loadBlocklist, isBlocked, findDuplicate, staticRejection, evaluateAdmission,
-  buildSourceConfig, autoColor, dedupeCandidates, renderDiscoveryLog, STUDENT_SIGNAL,
+  buildSourceConfig, autoColor, auditSampleCredits, dedupeCandidates, renderDiscoveryLog, STUDENT_SIGNAL,
 };

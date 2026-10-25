@@ -91,6 +91,9 @@ function isJunkAuthorName(name = '') {
   if (/https?:\/\//i.test(a) || /\.(?:php|js|css)\b/i.test(a)) return true;
   if (/\b(?:wp-content|wp-admin|wp-block|prefetch|selector_matches|splide)\b/i.test(a)) return true;
   if (/\b(?:Recent Posts|Skip to content|Written by|Read more|Lire la suite)\b/i.test(a)) return true;
+  // Libellés de boîte auteur (WP Post Author, Molongui, Jetpack…) :
+  // « See author's posts », « View all posts », « Voir tous les articles »…
+  if (/\b(?:see|view|more)\s+(?:all\s+)?(?:author['’]?s?\s+)?(?:posts|articles|stories)\b|\b(?:all\s+)?posts\s+by\b|\bvoir\s+(?:tous\s+)?(?:les\s+)?(?:articles|publications)\b|\barticles\s+de\s+l['’]auteur|\bplus\s+d['’]articles\b/i.test(a)) return true;
   if (/\b(?:photo|crédit|credit)\s*:/i.test(a)) return true;
   if (/\d+\s*,\s*\d+\s*,\s*[\d.]+\s*/.test(a)) return true;
   if (/\b(?:rgba?|box-shadow|max-width|font-family|\.td-|\.wp-|\.molongui|Open Sans)\b/i.test(a)) return true;
@@ -106,6 +109,8 @@ function expandAuthorName(name = '', lang = 'fr') {
   if (/\s+et\s+|\s+and\s+/i.test(raw)) {
     const parts = raw.split(/\s+et\s+|\s+and\s+/i).map((p) => normalizeAuthor(p)).filter(Boolean);
     if (parts.length > 1) return joinAuthorNames(parts, lang);
+    // « Nom et See author's posts » : un seul vrai nom après filtrage.
+    if (parts.length === 1) return parts[0];
   }
   return normalizeAuthor(raw);
 }
@@ -1203,14 +1208,14 @@ function bylineFromLedger(source = '', link = '', ledger = undefined) {
   const bucket = book[source];
   if (!bucket || typeof bucket !== 'object') return '';
   const key = normalizeArticleUrl(link);
-  const name = normalizeAuthor(bucket[key] || '');
+  const name = expandAuthorName(bucket[key] || '');
   if (!name || isEditorialPlaceholder(name)) return '';
   return name;
 }
 
 /** Mémorise une byline réelle. Un thème qui repasse à « Admin » ne l'efface pas. */
 function rememberResolvedByline(source = '', link = '', author = '') {
-  const name = normalizeAuthor(author);
+  const name = expandAuthorName(author);
   const key = normalizeArticleUrl(link);
   if (!source || !key || !name || isEditorialPlaceholder(name)) return false;
   const ledger = loadBylineLedger();

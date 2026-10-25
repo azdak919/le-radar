@@ -54,6 +54,8 @@ const BLOCKLIST_PATH = path.join(__dirname, '..', 'data', 'source-blocklist.json
 const DISCOVERY_LOG_PATH = path.join(__dirname, '..', 'data', 'news-discovery.md');
 const BRAND_PATH = path.join(__dirname, '..', 'brand-colors.json');
 const admission = require('./source-admission-lib');
+const { authorFromArticleHtml } = require('./author-lib');
+const { extractPhotoCreditFromHtml } = require('./article-photo-credit-lib');
 const campusBank = require('./campus-photo-bank');
 
 function readJsonSafe(p, fallback) {
@@ -264,7 +266,7 @@ async function probeCandidate(cand) {
     if (ch) challenge = true;
     if (ok && body && (isChallengeOrInterstitialPage(body) || /sgcaptcha|cf-chl|captcha/i.test(body.slice(0, 2000)))) challenge = true;
     if (!ok || !body || !isFeed(body) || countItems(body) === 0) continue;
-    best = { feedUrl: url, isFeed: true, items: countItems(body), lastItemMs: latestItemDate(body), feedHead: body.slice(0, 3000) };
+    best = { feedUrl: url, isFeed: true, items: countItems(body), lastItemMs: latestItemDate(body), feedHead: body.slice(0, 3000), body };
     break;
   }
   let pageText = '';
@@ -272,9 +274,36 @@ async function probeCandidate(cand) {
     const home = await fetchText(base);
     pageText = `${home.ok ? String(home.body || '').slice(0, 200000) : ''}\n${best.feedHead}`;
   }
+  // Règle 10 : échantillon de 3 articles du flux passés dans les mêmes
+  // extracteurs que le pipeline (auteur + crédit de l'image vedette).
+  let creditSamples = [];
+  if (best) creditSamples = await sampleFeedCredits(best.body || '', cand);
+  if (best) delete best.body;
   if (!best) cand._failCount = (cand._failCount || 0) + 1;
   else cand._failCount = 0;
-  return { ...(best || { feedUrl: null, isFeed: false, items: 0, lastItemMs: null }), challenge, pageText };
+  return { ...(best || { feedUrl: null, isFeed: false, items: 0, lastItemMs: null }), challenge, pageText, creditSamples };
+}
+
+async function sampleFeedCredits(xml = '', cand = {}) {
+  const links = [...xml.matchAll(/<item\b[\s\S]*?<link>\s*(?:<!\[CDATA\[)?([^<\]]+)/gi)].map((m) => m[1].trim()).slice(0, 3);
+  const lang = cand.lang === 'en' ? 'en' : 'fr';
+  const out = [];
+  for (const link of links) {
+    try {
+      const page = await fetchText(link);
+      if (!page.ok || !page.body) continue;
+      const html = String(page.body);
+      const og = (html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i) || [])[1] || '';
+      const credit = og ? extractPhotoCreditFromHtml(html, og, lang) : null;
+      out.push({
+        link,
+        author: authorFromArticleHtml(html, lang, {}, cand.name || ''),
+        creditLine: credit?.creditLine || '',
+        creator: credit?.creator || '',
+      });
+    } catch { /* échantillon non bloquant */ }
+  }
+  return out;
 }
 
 function markChallengeBlocked(registry, cand) {

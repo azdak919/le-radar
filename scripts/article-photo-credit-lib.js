@@ -18,7 +18,7 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 13;
+const CREDIT_EXTRACTOR_REV = 14;
 
 /** Placeholders WP / comptes génériques (Zone Campus : « Crédit : Journaliste »). */
 const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin)$/i;
@@ -251,9 +251,22 @@ function extractMediaCreditPlugin(html = '', imageUrl = '') {
   return null;
 }
 
+/**
+ * « Saima Mazumder // _saimamazumder // The Concordian » → « Saima Mazumder ».
+ * Les segments « // @pseudo // Média » (convention The Concordian et autres)
+ * ne font pas partie du nom du photographe ; un « @pseudo » isolé non plus.
+ */
+function stripCreditHandles(text = '') {
+  let s = String(text || '');
+  if (/\s*\/\/\s*/.test(s)) s = s.split(/\s*\/\/\s*/)[0];
+  s = s.replace(/\s*[(\[]?@[\w.]+[)\]]?\s*$/u, '');
+  return s.replace(/[\s,;:–-]+$/u, '').trim();
+}
+
 function normalizeCreditPhrase(text = '') {
   const embedded = extractEmbeddedPhotoCredit(text);
   let s = embedded || sanitizeCreditText(extractCreditSnippet(text));
+  s = stripCreditHandles(s);
   s = s.replace(/^["'«]|["'»]$/g, '').trim();
   s = s.replace(PHOTO_BY_RE, (_, who, via) => (via ? `${who.trim()} via ${via.trim()}` : who.trim()));
   s = s.replace(/^[(\[]+|[)\]]+$/g, '').trim();
@@ -359,7 +372,7 @@ function parseCopyrightCaptionCredit(t = '', lang = 'fr') {
 
 /** Légendes WordPress « Nom / Média » ou « Illustration by … » (The Tribune, etc.). */
 function parseFigcaptionAttribution(text = '', lang = 'fr') {
-  const t = sanitizeCreditText(text);
+  const t = stripCreditHandles(sanitizeCreditText(text));
   if (!t || t.length < 4) return null;
 
   // Crédit parenthésé typé et « © Nom » : fiables quelle que soit la longueur
@@ -504,12 +517,27 @@ function extractJsonLdCredit(html = '', imageUrl = '') {
   return null;
 }
 
+function figureImageUrls(fig = '') {
+  const out = [];
+  for (const tag of fig.match(/<(?:img|source)\b[^>]*>/gi) || []) {
+    for (const m of tag.matchAll(/\b(?:data-[\w-]*src(?:set)?|src(?:set)?)=["']([^"']+)["']/gi)) {
+      for (const part of m[1].split(',')) {
+        const u = part.trim().split(/\s+/)[0];
+        if (u && !/^data:/i.test(u)) out.push(decodeEntities(u));
+      }
+    }
+  }
+  return out;
+}
+
 function extractFigureCredit(html = '', imageUrl = '', lang = 'fr') {
   const figures = html.match(/<figure[^>]*>[\s\S]*?<\/figure>/gi) || [];
   for (const fig of figures) {
-    const srcM = fig.match(/<img[^>]+(?:src|data-src|data-lazy-src)=["']([^"']+)["']/i)
-      || fig.match(/(?:src|data-src)=["']([^"']+)["']/i);
-    if (!srcM || (imageUrl && !urlsMatch(srcM[1], imageUrl))) continue;
+    // Toutes les URL d'image de la figure (src, data-src, data-pk-src,
+    // data-lazy-src, srcset…) : un src « data:image » de lazy-load ne doit
+    // pas faire rater la légende de la bonne image.
+    const urls = figureImageUrls(fig);
+    if (!urls.length || (imageUrl && !urls.some((u) => urlsMatch(u, imageUrl)))) continue;
     const capM = fig.match(/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/i);
     if (capM) {
       const attr = parseFigcaptionAttribution(capM[1], lang);
@@ -537,14 +565,18 @@ function extractFigureCredit(html = '', imageUrl = '', lang = 'fr') {
     }
   }
 
-  const captions = html.match(/<(?:p|span)[^>]*class=["'][^"']*wp-caption-text[^"']*["'][^>]*>([\s\S]*?)<\/(?:p|span)>/gi) || [];
+  // wp-caption-text : <p>/<span> classiques, mais aussi <figcaption>/<div>
+  // placés APRÈS </figure> (thème Csco de The Concordian : image vedette
+  // en lazy-load data-pk-src, légende sœur de la figure).
+  const captions = html.match(/<(p|span|div|figcaption)[^>]*class=["'][^"']*wp-caption-text[^"']*["'][^>]*>([\s\S]*?)<\/\1>/gi) || [];
   for (const cap of captions) {
-    const inner = cap.replace(/<(?:p|span)[^>]*>/i, '').replace(/<\/(?:p|span)>$/i, '');
-    const block = cap.match(/<img[^>]+src=["']([^"']+)["']/i)
-      ? cap
-      : html.slice(Math.max(0, html.indexOf(cap) - 400), html.indexOf(cap) + cap.length);
-    const srcM = block.match(/<img[^>]+src=["']([^"']+)["']/i);
-    if (srcM && imageUrl && !urlsMatch(srcM[1], imageUrl)) continue;
+    const inner = cap.replace(/^<(?:p|span|div|figcaption)[^>]*>/i, '').replace(/<\/(?:p|span|div|figcaption)>$/i, '');
+    const at = html.indexOf(cap);
+    const block = /<img\b/i.test(cap) ? cap : html.slice(Math.max(0, at - 6000), at + cap.length);
+    const tags = block.match(/<img\b[^>]*>/gi) || [];
+    const lastImg = tags.length ? tags[tags.length - 1] : '';
+    const urls = figureImageUrls(lastImg);
+    if (imageUrl && urls.length && !urls.some((u) => urlsMatch(u, imageUrl))) continue;
     // « (illustration : X) » / « © Nom » dans une légende wp-caption-text
     const attr = parseFigcaptionAttribution(inner, lang);
     if (attr) return { ...attr, source: attr.source || 'wp-caption' };
@@ -965,7 +997,7 @@ function creditFromWpMediaCaption(captionHtml = '', lang = 'fr') {
   if (!text || text.length > 200) return null;
   const en = lang === 'en';
   const mk = (creator) => {
-    const c = String(creator || '').replace(/[.\s]+$/, '').trim();
+    const c = stripCreditHandles(String(creator || '')).replace(/[.\s]+$/, '').trim();
     if (!c || c.length < 2 || isPlaceholderPhotoCredit(c)) return null;
     return { creditLine: en ? `Photo: ${c}` : `Photo : ${c}`, creator: c, source: 'wp-media-caption' };
   };
@@ -1019,6 +1051,22 @@ function applySourcePhotoCredit(item, resolved, { doUpdate = false } = {}) {
   };
   const imageKey = imageUrlKey(item.image);
   const storedKey = item.sourceImageCreditImageKey || '';
+  // Un crédit cité (flux, légende) pour la même image vaut mieux qu'un repli
+  // « Photo : [média] » : la page rendue (lazy-load) peut cacher la légende.
+  if (resolved.from === 'media' && item.sourceImageCreditCited && item.sourceImageCreator
+    && storedKey === imageKey && !isPlaceholderPhotoCredit(item.sourceImageCreator)) {
+    const clean = stripCreditHandles(item.sourceImageCreator);
+    if (clean && clean !== item.sourceImageCreator) {
+      if (doUpdate) {
+        item.sourceImageCreditRev = CREDIT_EXTRACTOR_REV;
+        item.sourceImageCredit = `${item.lang === 'en' ? 'Photo: ' : 'Photo : '}${clean}`;
+        item.sourceImageCreator = clean;
+      }
+      return { changed: true, cited: true, method: 'kept-cited-cleaned' };
+    }
+    if (doUpdate) item.sourceImageCreditRev = CREDIT_EXTRACTOR_REV;
+    return { changed: false, cited: true, method: 'kept-cited' };
+  }
   const keyChanged = imageKey && storedKey !== imageKey;
   const revChanged = (item.sourceImageCreditRev || 0) !== CREDIT_EXTRACTOR_REV;
   const changed = prev.line !== next.line
@@ -1043,6 +1091,8 @@ function applySourcePhotoCredit(item, resolved, { doUpdate = false } = {}) {
 }
 
 function creditLooksCorrupt(text = '') {
+  // Pseudo social / nom du média collé au photographe (« X // @x // Média »).
+  if (/\/\/|(?:^|\s)@[\w.]+/.test(String(text || ''))) return true;
   return /\b(?:width|height|srcset)\s*=/i.test(text) || /\\?"\s*width/i.test(text);
 }
 
@@ -1156,6 +1206,8 @@ function auditPhotoCredits(items = []) {
 }
 
 module.exports = {
+  stripCreditHandles,
+  figureImageUrls,
   CREDIT_EXTRACTOR_REV,
   extractFilenameCredit,
   hasFilenameCreditHint,
