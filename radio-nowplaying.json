@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-25T05:39:06.724Z",
+  "updatedAt": "2026-10-25T10:40:22.227Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -21,52 +21,55 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T05:38:26.744Z"
+      "checkedAt": "2026-10-25T10:39:44.970Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Basses fréquences (reprise)",
-        "source": "schedule",
-        "start": "00:00",
-        "end": "02:00",
-        "url": "https://cism893.ca/emissions/basses-frequences"
+        "title": "Mix franco",
+        "source": "api-live",
+        "start": "02:00",
+        "url": "https://stream.cism893.ca/",
+        "slug": "mix-franco"
       },
       "next": {
-        "title": "Mix franco",
-        "source": "schedule",
-        "start": "02:00",
-        "end": "07:00",
-        "url": "https://cism893.ca/emissions/mix-franco"
+        "title": "Genre de bleu",
+        "source": "api-live",
+        "start": "07:00",
+        "url": "https://podcast.cism893.ca/podcast/download_mp3/370717.mp3",
+        "slug": "genre-de-bleu"
       },
       "track": "",
-      "showTitle": "Basses fréquences (reprise)",
+      "showTitle": "Mix franco",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live"
       ],
-      "clientPoll": null,
-      "checkedAt": "2026-10-25T05:38:28.716Z"
+      "clientPoll": {
+        "type": "cism-v1",
+        "url": "https://admin.cism893.ca/api/v1/live"
+      },
+      "checkedAt": "2026-10-25T10:39:46.721Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "stereOphobic",
+        "title": "Mind, Soul, & Spirit",
         "source": "api-live",
-        "start": "00:00",
-        "end": "02:00"
+        "start": "06:00",
+        "end": "09:00"
       },
       "next": {
-        "title": "Utopia's Paradise",
+        "title": "Latin Time",
         "source": "api-live",
-        "start": "02:00",
-        "end": "06:00"
+        "start": "09:00",
+        "end": "10:30"
       },
       "track": "",
-      "showTitle": "stereOphobic",
+      "showTitle": "Mind, Soul, & Spirit",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +77,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T05:38:31.459Z"
+      "checkedAt": "2026-10-25T10:39:49.344Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "CJLO Late Night",
-        "source": "schedule-live",
-        "start": "01:00",
-        "end": "06:00",
-        "url": "http://www.cjlo.com/shows/cjlo-late-night"
-      },
-      "next": {
         "title": "Sun Ra, Sun Rise",
         "source": "schedule-live",
         "start": "06:00",
         "end": "08:00",
         "url": "http://www.cjlo.com/shows/sun-ra-sun-rise"
       },
+      "next": {
+        "title": "The Gigi Brown Experience",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "09:00",
+        "url": "http://www.cjlo.com/shows/the-gigi-brown-experience"
+      },
       "track": "",
-      "showTitle": "CJLO Late Night",
+      "showTitle": "Sun Ra, Sun Rise",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T05:38:46.667Z"
+      "checkedAt": "2026-10-25T10:40:03.432Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +124,7 @@
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T05:38:47.777Z"
+      "checkedAt": "2026-10-25T10:40:04.594Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +145,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T05:39:06.373Z"
+      "checkedAt": "2026-10-25T10:40:21.877Z"
     }
   }
 }
