@@ -37,7 +37,9 @@
   gap: 6px;
 }
 .seo-crumbs a { color: var(--muted); text-decoration: none; }
+@media (hover: hover) and (pointer: fine) {
 .seo-crumbs a:hover { color: var(--accent); text-decoration: underline; }
+}
 .seo-crumbs__sep { opacity: 0.55; }
 
 /* ── Titres ─────────────────────────────────────────────────────────────── */
@@ -67,8 +69,10 @@
   text-decoration: none;
   border-radius: 4px;
 }
+@media (hover: hover) and (pointer: fine) {
 .seo-title__link:hover {
   color: var(--accent);
+}
 }
 .seo-title__link:focus-visible {
   outline: 2px solid var(--accent);
@@ -125,7 +129,9 @@
   padding: 8px 14px;
   text-decoration: none;
 }
+@media (hover: hover) and (pointer: fine) {
 .media-channels__item a:hover { color: var(--accent); }
+}
 .media-channels__item a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -222,7 +228,9 @@
   color: var(--accent);
   text-decoration: none;
 }
+@media (hover: hover) and (pointer: fine) {
 .seo-toc__list a:hover { text-decoration: underline; }
+}
 
 /* ── Fiche de faits ─────────────────────────────────────────────────────── */
 
@@ -254,7 +262,9 @@
   overflow-wrap: anywhere;
 }
 .seo-fact dd a { color: var(--accent); text-decoration: none; }
+@media (hover: hover) and (pointer: fine) {
 .seo-fact dd a:hover { text-decoration: underline; }
+}
 
 /* ── Appel à l'action ───────────────────────────────────────────────────── */
 
@@ -291,7 +301,9 @@
   border-radius: 999px;
   text-decoration: none;
 }
+@media (hover: hover) and (pointer: fine) {
 .seo-cta a:hover { background: var(--accent-dark); }
+}
 /* CTA secondaire (archives) : même pilule, contour accent. */
 .seo-cta--secondary a {
   color: var(--accent);
@@ -299,10 +311,12 @@
   border: 1.5px solid color-mix(in srgb, var(--accent) 72%, transparent);
   box-shadow: none;
 }
+@media (hover: hover) and (pointer: fine) {
 .seo-cta--secondary a:hover {
   color: #fff;
   background: var(--accent);
   border-color: var(--accent);
+}
 }
 .seo-archive-link {
   margin: 12px 0 0;
@@ -333,7 +347,9 @@
   line-height: 1.2;
 }
 .seo-archive-record h2 a { color: var(--ink); }
+@media (hover: hover) and (pointer: fine) {
 .seo-archive-record h2 a:hover { color: var(--accent); }
+}
 .seo-archive-record p { margin: 7px 0 0; }
 .seo-archive-record__source {
   color: var(--accent);
@@ -378,7 +394,9 @@
   text-decoration: none;
   transition: border-color 140ms ease, transform 140ms ease;
 }
+@media (hover: hover) and (pointer: fine) {
 .seo-card a:hover { border-color: var(--accent); transform: translateY(-1px); }
+}
 .seo-card__name {
   display: block;
   font-family: var(--serif);
@@ -416,7 +434,9 @@
   text-decoration: none;
   transition: border-color 140ms ease, transform 140ms ease;
 }
+@media (hover: hover) and (pointer: fine) {
 .seo-radio-card a:hover { border-color: var(--accent); transform: translateY(-1px); }
+}
 .seo-radio-card__name {
   display: block;
   font-family: var(--serif);
@@ -520,7 +540,9 @@
   color: var(--ink);
   text-decoration: none;
 }
+@media (hover: hover) and (pointer: fine) {
 .seo-headline__title:hover { color: var(--accent); text-decoration: underline; }
+}
 .seo-headline__meta {
   display: flex;
   flex-wrap: wrap;
@@ -547,7 +569,9 @@
   text-decoration: none;
   white-space: nowrap;
 }
+@media (hover: hover) and (pointer: fine) {
 .seo-headline__more:hover { text-decoration: underline; }
+}
 
 /* ── Grille horaire ─────────────────────────────────────────────────────── */
 
@@ -693,7 +717,9 @@
 .seo-slot__dash { margin: 0 2px; opacity: 0.6; }
 .seo-slot__title { min-width: 0; }
 .seo-slot__title a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+@media (hover: hover) and (pointer: fine) {
 .seo-slot__title a:hover { color: var(--accent); }
+}
 .seo-day__none {
   font-family: var(--sans);
   font-size: 13px;
@@ -830,9 +856,11 @@
   cursor: pointer;
   transition: border-color 120ms ease, color 120ms ease, background 120ms ease;
 }
+@media (hover: hover) and (pointer: fine) {
 .sports-filter:hover {
   border-color: color-mix(in srgb, var(--accent) 45%, var(--rule));
   color: var(--ink);
+}
 }
 .sports-filter[aria-pressed="true"],
 .sports-filter.is-active {
@@ -887,7 +915,9 @@
 }
 .sports-sport-block__title::-webkit-details-marker { display: none; }
 .sports-sport-block__title::marker { content: ''; }
+@media (hover: hover) and (pointer: fine) {
 .sports-sport-block__title:hover { color: var(--accent); }
+}
 .sports-sport-block__title:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -1333,10 +1363,12 @@
   text-decoration: none;
   min-width: 0;
 }
+@media (hover: hover) and (pointer: fine) {
 .sports-result__title a:hover {
   color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 0.12em;
+}
 }
 .sports-result__vs {
   opacity: 0.65;
@@ -1559,7 +1591,7 @@
   }
 }
 .sports-page-tools__fab:active { transform: scale(0.96); }
-.sports-page-tools__fab:focus { outline: none; }
+.sports-page-tools__fab:focus:not(:focus-visible) { outline: none; }
 .sports-page-tools__fab:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -1613,7 +1645,7 @@
   }
 }
 .sports-search__fab:active { transform: scale(0.96); }
-.sports-search__fab:focus { outline: none; }
+.sports-search__fab:focus:not(:focus-visible) { outline: none; }
 .sports-search__fab:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;

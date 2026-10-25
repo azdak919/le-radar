@@ -282,16 +282,30 @@ html[data-embed="tuner"] .tuner-embed-credit-text {
   min-width: 0;
 }
 
-html[data-embed="tuner"] .tuner-embed-credit:hover,
 html[data-embed="tuner"] .tuner-embed-credit:focus-visible {
   color: var(--embed-radio);
   text-decoration: none;
   outline: none;
 }
 
-html[data-embed="tuner"] .tuner-embed-credit:hover .tuner-embed-credit-emoji,
+@media (hover: hover) and (pointer: fine) {
+
+html[data-embed="tuner"] .tuner-embed-credit:hover {
+  color: var(--embed-radio);
+  text-decoration: none;
+  outline: none;
+}
+}
+
 html[data-embed="tuner"] .tuner-embed-credit:focus-visible .tuner-embed-credit-emoji {
   opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+html[data-embed="tuner"] .tuner-embed-credit:hover .tuner-embed-credit-emoji {
+  opacity: 1;
+}
 }
 
 /* Reste bleu en lecture (ne pas virer coral comme EN ONDES) */
@@ -299,9 +313,15 @@ html[data-embed="tuner"] .tuner.is-playing .tuner-embed-credit {
   color: var(--embed-radio);
 }
 
-html[data-embed="tuner"] .tuner.is-playing .tuner-embed-credit:hover,
 html[data-embed="tuner"] .tuner.is-playing .tuner-embed-credit:focus-visible {
   color: var(--embed-radio);
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+html[data-embed="tuner"] .tuner.is-playing .tuner-embed-credit:hover {
+  color: var(--embed-radio);
+}
 }
 
 /* ── Prev / next — 42 px comme le bureau ──────────────────── */
@@ -322,10 +342,13 @@ html[data-embed="tuner"] .tuner-step svg {
   height: 20px;
 }
 
+@media (hover: hover) and (pointer: fine) {
+
 html[data-embed="tuner"] .tuner-step:hover {
   color: var(--embed-ink);
   background: var(--embed-control-bg-hover);
   border-color: var(--embed-control-border-hover);
+}
 }
 
 /* ── Dial (2 lignes : poste · acronyme / slogan) ───────────── */
@@ -353,9 +376,12 @@ html[data-embed="tuner"] .tuner-now {
   border: 1px solid var(--embed-control-border);
 }
 
+@media (hover: hover) and (pointer: fine) {
+
 html[data-embed="tuner"] .tuner-dial:hover .tuner-now {
   background: var(--embed-control-bg-hover);
   border-color: var(--embed-control-border-hover);
+}
 }
 
 html[data-embed="tuner"] .tuner-now-name {
@@ -445,9 +471,12 @@ html[data-embed="tuner"] .tuner.is-playing .tuner-now {
   box-shadow: 0 0 0 1px var(--embed-live-ring);
 }
 
+@media (hover: hover) and (pointer: fine) {
+
 html[data-embed="tuner"] .tuner.is-playing .tuner-dial:hover .tuner-now {
   border-color: rgba(255, 125, 110, 0.85);
   background: rgba(200, 16, 46, 0.14);
+}
 }
 
 html[data-embed="tuner"] .tuner.is-external .tuner-now {
@@ -511,11 +540,14 @@ html[data-embed="tuner"] .tuner-vol-btn {
   transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
 }
 
+@media (hover: hover) and (pointer: fine) {
+
 html[data-embed="tuner"] .tuner-vol-btn:hover {
   color: var(--embed-ink);
   background: var(--embed-control-bg-hover);
   border-color: var(--embed-control-border-hover);
 }
+  }
 
 html[data-embed="tuner"] .tuner-vol-btn:active {
   transform: scale(0.93);
@@ -634,11 +666,17 @@ html[data-embed="tuner"]:not([data-theme="dark"]) .tuner-vol-thumb {
     background: var(--embed-control-bg);
     color: var(--embed-muted-strong);
   }
-  html[data-embed="tuner"] .tuner-vol-btn:hover,
   html[data-embed="tuner"] .tuner-vol.is-open .tuner-vol-btn {
     color: var(--embed-ink);
     background: var(--embed-control-bg-hover);
     border-color: var(--embed-control-border-hover);
+  }
+  @media (hover: hover) and (pointer: fine) {
+  html[data-embed="tuner"] .tuner-vol-btn:hover {
+    color: var(--embed-ink);
+    background: var(--embed-control-bg-hover);
+    border-color: var(--embed-control-border-hover);
+  }
   }
   html[data-embed="tuner"] .tuner.is-boosted .tuner-vol-btn {
     color: #ff7d6e;
@@ -662,10 +700,12 @@ html[data-embed="tuner"]:not([data-theme="dark"]) .tuner-vol-thumb {
     background: var(--embed-control-bg);
     color: var(--embed-muted-strong);
   }
+  @media (hover: hover) and (pointer: fine) {
   html[data-embed="tuner"]:not([data-theme="dark"]) .tuner-vol-slot .tuner-vol-mute-btn:not([aria-pressed="true"]):hover {
     color: var(--embed-ink);
     background: var(--embed-control-bg-hover);
     border-color: var(--embed-control-border-hover);
+  }
   }
 
   /* Bouton « diffuser » (Cast / AirPlay) rétabli dans la bulle volume sur
@@ -676,10 +716,12 @@ html[data-embed="tuner"]:not([data-theme="dark"]) .tuner-vol-thumb {
     background: var(--embed-control-bg);
     color: var(--embed-muted-strong);
   }
+  @media (hover: hover) and (pointer: fine) {
   html[data-embed="tuner"] .tuner-vol-slot .tuner-cast--popover:not(.is-casting):not(.is-unavailable):hover {
     color: var(--embed-ink);
     background: var(--embed-control-bg-hover);
     border-color: var(--embed-control-border-hover);
+  }
   }
 
   /* État « Connexion au service Cast… » (.is-unavailable) : le gris blanc-
@@ -1156,10 +1198,13 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-btn {
   color: rgba(255, 255, 255, 0.72);
 }
 
+@media (hover: hover) and (pointer: fine) {
+
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-btn:hover {
   color: rgba(255, 255, 255, 0.95);
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.28);
+}
 }
 
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-vol-btn .ico-vol,
@@ -1549,9 +1594,13 @@ html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-label .tuner-embed-cr
   pointer-events: auto;
   z-index: auto;
 }
-html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-embed-credit:hover,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-embed-credit:focus-visible {
   color: color-mix(in srgb, var(--embed-radio, #8eb8ff) 88%, #fff);
+}
+@media (hover: hover) and (pointer: fine) {
+html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-embed-credit:hover {
+  color: color-mix(in srgb, var(--embed-radio, #8eb8ff) 88%, #fff);
+}
 }
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-embed-credit-emoji,
 html[data-embed="tuner"][data-surface="kiosque-v1"] .tuner-embed-credit .app-emoji {

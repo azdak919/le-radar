@@ -51,7 +51,9 @@
   color: var(--accent);
   text-decoration: none;
 }
+@media (hover: hover) and (pointer: fine) {
 .media-follow-bar__fiche:hover { text-decoration: underline; }
+}
 .media-follow-bar__fiche:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -108,11 +110,17 @@
   overflow: visible;
   transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
 }
-.translate-toggle:hover,
 .translate-toggle[aria-expanded="true"] {
   border-color: var(--accent);
   color: var(--accent);
   background: color-mix(in srgb, var(--accent) 7%, var(--bg));
+}
+@media (hover: hover) and (pointer: fine) {
+.translate-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, var(--bg));
+}
 }
 .translate-toggle__icon {
   display: inline-flex;
@@ -278,8 +286,10 @@
 .translate-menu__opt[hidden] {
   display: none !important;
 }
+@media (hover: hover) and (pointer: fine) {
 .translate-menu__opt:hover {
   background: var(--bg-soft);
+}
 }
 /* Focus clavier distinct du survol — indicateur ≥ 3:1 (WCAG non-text). */
 .translate-menu__opt:focus-visible {
@@ -299,8 +309,10 @@
   opacity: 0.55;
   cursor: help;
 }
+@media (hover: hover) and (pointer: fine) {
 .translate-menu__opt.is-unavailable:hover {
   background: color-mix(in srgb, var(--muted) 12%, var(--bg));
+}
 }
 .translate-menu__row {
   display: flex;
@@ -825,17 +837,21 @@ html[data-translate-busy="1"] .translate-toggle {
   text-underline-offset: 2px;
   text-decoration-color: color-mix(in srgb, var(--muted) 55%, transparent);
 }
+@media (hover: hover) and (pointer: fine) {
 .article-media-credit a:hover {
   color: var(--ink-soft);
   text-decoration-color: currentColor;
+}
 }
 .article-media-credit__creator {
   font-weight: 600;
   color: var(--c, var(--ink-soft));
   text-decoration-color: color-mix(in srgb, var(--c, var(--accent)) 45%, transparent);
 }
+@media (hover: hover) and (pointer: fine) {
 .article-media-credit__creator:hover {
   color: var(--c, var(--accent));
+}
 }
 
 .article-meta {
@@ -1031,8 +1047,10 @@ html[data-translate-busy="1"] .translate-toggle {
   float: none;
   text-align: end;
 }
+@media (hover: hover) and (pointer: fine) {
 .article:hover .article-more {
   color: var(--c, var(--accent));
+}
 }
 
 /*
@@ -1075,9 +1093,11 @@ html[data-translate-busy="1"] .translate-toggle {
   text-align: end;
   white-space: nowrap;
 }
+@media (hover: hover) and (pointer: fine) {
 .news-tail .article--standard .article-more:hover {
   text-decoration: underline;
   text-underline-offset: 2px;
+}
 }
 .news-tail .article--standard .article-more:focus-visible {
   outline: 2px solid var(--c, var(--accent));

@@ -128,6 +128,7 @@
 }
 }
 /* Hover CTA hors direct : même élévation pourpre que les scores (le live garde son rouge). */
+@media (hover: hover) and (pointer: fine) {
 .masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):not([data-cta-lamp="soon"]):hover {
   border-color: color-mix(in srgb, var(--accent, #6c2163) 72%, rgba(255, 255, 255, 0.28));
   background:
@@ -137,6 +138,7 @@
     0 1px 3px rgba(0, 0, 0, 0.32),
     inset 0 1px 0 rgba(255, 255, 255, 0.14),
     0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 34%, transparent);
+}
 }
 .masthead-sports-strip .sports-chip:focus-visible {
   outline: 2px solid color-mix(in srgb, var(--accent, #6c2163) 70%, #fff);
@@ -449,6 +451,7 @@
   backdrop-filter: blur(10px) saturate(1.06);
   -webkit-backdrop-filter: blur(10px) saturate(1.06);
 }
+@media (hover: hover) and (pointer: fine) {
 [data-theme="light"] .masthead-sports-strip .sports-chip:not([data-cta-state="live"]):not([data-cta-lamp="soon"]):hover,
 [data-theme="light"] .masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):not([data-cta-lamp="soon"]):hover {
   background:
@@ -459,6 +462,7 @@
     0 3px 10px rgba(0, 0, 0, 0.18),
     inset 0 1px 0 rgba(255, 255, 255, 0.14),
     0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 34%, transparent);
+}
 }
 [data-theme="light"] .masthead-sports-strip .sports-chip:not(.sports-chip--cta):not(.is-leaving):not(.is-arriving),
 [data-theme="light"] .masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):not([data-cta-lamp="soon"]):not(.is-leaving):not(.is-arriving) {
@@ -496,12 +500,14 @@
     0 0 0 0 rgba(200, 16, 46, 0);
   animation: sports-cta-ring-pulse 2.6s ease-in-out infinite;
 }
+@media (hover: hover) and (pointer: fine) {
 .masthead-sports-strip .sports-chip--cta[data-cta-state="live"]:hover,
 .masthead-sports-strip .sports-chip--cta[data-cta-lamp="soon"]:hover {
   border-color: color-mix(in srgb, #c8102e 72%, rgba(255, 255, 255, 0.28));
   background:
     linear-gradient(90deg, color-mix(in srgb, #c8102e 44%, transparent) 0%, transparent 58%),
     rgba(60, 48, 52, 0.94);
+}
 }
 /* Clair live/soon : verre météo (0.68 + blur), lavis rouge 16 %, halo inchangé. */
 [data-theme="light"] .masthead-sports-strip .sports-chip--cta[data-cta-state="live"],
@@ -521,11 +527,13 @@
 [data-theme="light"] .masthead-sports-strip .sports-chip--cta[data-cta-lamp="soon"]:not(.is-leaving):not(.is-arriving) {
   animation: sports-cta-ring-pulse-light 2.6s ease-in-out infinite;
 }
+@media (hover: hover) and (pointer: fine) {
 [data-theme="light"] .masthead-sports-strip .sports-chip--cta[data-cta-state="live"]:hover,
 [data-theme="light"] .masthead-sports-strip .sports-chip--cta[data-cta-lamp="soon"]:hover {
   background:
     linear-gradient(90deg, color-mix(in srgb, #c8102e 23%, transparent) 0%, transparent 58%),
     rgba(67, 73, 84, 0.78);
+}
 }
 /* Pastille : rubrique stable au repos, « En direct » pendant un match. */
 .masthead-sports-strip .sports-chip--cta .sports-chip__cta-rail {
@@ -1025,11 +1033,16 @@
 /* Bordure fine (1 px), comme les autres cartes : plus d'anneau d'ombre de
  * 1 px qui doublait la bordure (2–2,5 px à l'écran), au repos, au survol et
  * dans la pulsation « En cours ». Thèmes clair et sombre. */
-.masthead-sports-strip .sports-chip,
+.masthead-sports-strip .sports-chip {
+  border-width: 1px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+@media (hover: hover) and (pointer: fine) {
 .masthead-sports-strip .sports-chip:hover,
 .masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):not([data-cta-lamp="soon"]):hover {
   border-width: 1px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
 }
 @keyframes sports-chip-rim-glow {
   0%, 100% { border-color: color-mix(in srgb, var(--accent, #6c2163) 52%, rgba(255, 255, 255, 0.2)); }

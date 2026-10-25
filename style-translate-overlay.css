@@ -274,9 +274,15 @@ main.wire.is-translate-locked > :not(.translate-progress) {
   display: none !important;
 }
 
-.translate-progress__skip:hover,
 .translate-progress__skip:focus-visible {
   color: var(--accent-dark, var(--accent));
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+.translate-progress__skip:hover {
+  color: var(--accent-dark, var(--accent));
+}
 }
 
 .translate-progress__live {

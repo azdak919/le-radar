@@ -503,9 +503,12 @@ html[data-layout="wide"] .quote-action-row .btn {
   background: rgba(255, 255, 255, 0.07);
 }
 
+@media (hover: hover) and (pointer: fine) {
+
 html[data-layout="wide"] .quote-action-row .btn:hover {
   background: rgba(255, 255, 255, 0.14);
   border-color: rgba(255, 255, 255, 0.3);
+}
 }
 
 

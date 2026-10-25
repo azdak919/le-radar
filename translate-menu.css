@@ -24,11 +24,19 @@
   white-space: nowrap;
 }
 
-.translate-toggle:hover,
 .translate-toggle[aria-expanded="true"] {
   border-color: var(--accent, #d99b57);
   color: var(--accent, #f3c58e);
   background: color-mix(in srgb, var(--accent, #d99b57) 10%, transparent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+.translate-toggle:hover {
+  border-color: var(--accent, #d99b57);
+  color: var(--accent, #f3c58e);
+  background: color-mix(in srgb, var(--accent, #d99b57) 10%, transparent);
+}
 }
 
 .radar-translate-control--app .translate-toggle {
@@ -45,11 +53,19 @@
   padding: 0.42rem 0.72rem;
 }
 
-.radar-translate-control--app .translate-toggle:hover,
 .radar-translate-control--app .translate-toggle[aria-expanded="true"] {
   border-color: transparent;
   color: var(--chrome-text-strong, rgba(255, 255, 255, 0.95));
   background: var(--chrome-hover, rgba(255, 255, 255, 0.1));
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+.radar-translate-control--app .translate-toggle:hover {
+  border-color: transparent;
+  color: var(--chrome-text-strong, rgba(255, 255, 255, 0.95));
+  background: var(--chrome-hover, rgba(255, 255, 255, 0.1));
+}
 }
 
 .translate-toggle__icon,
@@ -145,11 +161,17 @@
   font: 500 22px/1 var(--sans, var(--font-body, system-ui, sans-serif));
   cursor: pointer;
 }
-.translate-menu__close:hover,
 .translate-menu__close:focus-visible {
   background: var(--bg-soft, rgba(255, 255, 255, 0.08));
   color: var(--ink, var(--text-primary, #f5f1eb));
   outline: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+.translate-menu__close:hover {
+  background: var(--bg-soft, rgba(255, 255, 255, 0.08));
+  color: var(--ink, var(--text-primary, #f5f1eb));
+  outline: 0;
+}
 }
 .translate-menu__close:focus-visible {
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent, #d99b57) 45%, transparent);
@@ -231,8 +253,10 @@
   font-family: var(--sans, var(--font-body, system-ui, sans-serif));
   cursor: pointer;
 }
-.translate-menu__opt:hover,
 .translate-menu__opt:focus-visible { background: var(--bg-soft, rgba(255, 255, 255, 0.08)); outline: 0; }
+@media (hover: hover) and (pointer: fine) {
+.translate-menu__opt:hover { background: var(--bg-soft, rgba(255, 255, 255, 0.08)); outline: 0; }
+}
 .translate-menu__opt.is-active { background: color-mix(in srgb, var(--accent, #d99b57) 16%, transparent); }
 .translate-menu__opt.is-active .translate-menu__name::before { content: "✓ "; color: var(--accent, #d99b57); font-weight: 800; }
 .translate-menu__opt.is-unavailable { opacity: 0.52; cursor: help; }
@@ -299,9 +323,11 @@ html[data-translate-busy="1"] .translate-toggle { opacity: 0.9; }
    ouvert reste visible via aria-expanded, mais un bouton refermé redevient
    immédiatement neutre. */
 @media (hover: none) {
+  @media (hover: hover) and (pointer: fine) {
   .radar-translate-control--app .translate-toggle:hover:not([aria-expanded="true"]) {
     background: transparent;
     color: var(--chrome-text, rgba(255, 255, 255, 0.72));
+  }
   }
 }
 

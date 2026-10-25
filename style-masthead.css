@@ -159,13 +159,18 @@
   padding: 0;
   transition: color 180ms ease, text-decoration-color 180ms ease;
 }
-.bg-photo-credit:hover,
 .bg-photo-credit:focus-within { color: rgba(255, 255, 255, 0.95); }
-.bg-photo-credit a:hover,
+@media (hover: hover) and (pointer: fine) {
+.bg-photo-credit:hover { color: rgba(255, 255, 255, 0.95); } }
 .bg-photo-credit a:focus-visible {
   text-decoration: underline;
   text-decoration-color: rgba(255, 255, 255, 0.5);
 }
+@media (hover: hover) and (pointer: fine) {
+.bg-photo-credit a:hover {
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+} }
 .bg-photo-credit a:active {
   text-decoration: underline;
   text-decoration-color: rgba(255, 255, 255, 0.45);
@@ -629,12 +634,13 @@
   backdrop-filter: blur(10px) saturate(1.1);
   -webkit-backdrop-filter: blur(10px) saturate(1.1);
 }
+@media (hover: hover) and (pointer: fine) {
 .masthead:has(#bg-photo-layer.loaded) .masthead-weather__city:hover {
   border-color: color-mix(in srgb, var(--weather-tone, #c8102e) 55%, rgba(255, 255, 255, 0.22));
   background:
     linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 28%, transparent) 0%, transparent 55%),
     rgba(32, 35, 44, 0.9);
-}
+} }
 .masthead:has(#bg-photo-layer.loaded) .masthead-weather__name,
 .masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-text,
 .masthead:has(#bg-photo-layer.loaded) .masthead-weather__name-full,
@@ -666,11 +672,12 @@
   backdrop-filter: blur(10px) saturate(1.06);
   -webkit-backdrop-filter: blur(10px) saturate(1.06);
 }
+@media (hover: hover) and (pointer: fine) {
 [data-theme="light"] .masthead:has(#bg-photo-layer.loaded) .masthead-weather__city:hover {
   background:
     linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 23%, transparent) 0%, transparent 55%),
     rgba(67, 73, 84, 0.78);
-}
+} }
 
 /* Sans photo de mât, le thème clair conserve les cartes ardoise récentes
    plutôt que l'ancien panneau pâle. Elles restent ainsi cohérentes avec la
@@ -1171,13 +1178,14 @@ a { color: inherit; }
     0 1px 2px rgba(0, 0, 0, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
+@media (hover: hover) and (pointer: fine) {
 .masthead-weather--docked .masthead-weather__city:hover {
   border-color: color-mix(in srgb, var(--weather-tone, var(--accent)) 62%, rgba(255, 255, 255, 0.22));
   background:
     linear-gradient(90deg, color-mix(in srgb, var(--weather-tone, #c8102e) 36%, transparent) 0%, transparent 55%),
     rgba(48, 52, 62, 0.96);
   background-color: transparent;
-}
+} }
 .masthead-weather--docked .masthead-weather__name,
 .masthead-weather--docked .masthead-weather__name-text,
 .masthead-weather--docked .masthead-weather__name-full,

@@ -31,7 +31,9 @@
   overflow: hidden;
 }
 .dash a { color: var(--soft); }
+@media (hover: hover) and (pointer: fine) {
 .dash a:hover { color: var(--ink); }
+}
 
 .dash-controls {
   overflow-y: auto;
@@ -183,9 +185,11 @@ select.greeting:focus {
   font: 700 12px/1.2 var(--sans);
   cursor: pointer;
 }
+@media (hover: hover) and (pointer: fine) {
 .photo-more:hover {
   border-color: var(--purple);
   background: color-mix(in srgb, var(--purple) 18%, var(--bg));
+}
 }
 .photo-more[hidden] { display: none !important; }
 #photo-upload-box[hidden] { display: none !important; }
@@ -203,9 +207,11 @@ select.greeting:focus {
   font: 700 12px/1.2 var(--sans);
   cursor: pointer;
 }
+@media (hover: hover) and (pointer: fine) {
 .photo-upload:hover {
   border-color: var(--purple);
   background: color-mix(in srgb, var(--purple) 18%, var(--bg));
+}
 }
 .photo-upload input {
   position: absolute;

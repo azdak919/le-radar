@@ -69,11 +69,13 @@ html[data-theme="light"] {
   font-family: var(--sans);
   animation: ad-rim 3.2s ease-in-out infinite;
 }
+@media (hover: hover) and (pointer: fine) {
 .ad:hover {
   border-color: color-mix(in srgb, var(--accent) 72%, var(--rule));
   background:
     linear-gradient(105deg, color-mix(in srgb, var(--sports-tone) 40%, transparent) 0%, transparent 55%),
     var(--chip);
+}
 }
 .ad:focus-visible {
   outline: 2px solid color-mix(in srgb, var(--accent) 70%, #fff);

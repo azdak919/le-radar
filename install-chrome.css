@@ -2,7 +2,7 @@
  * Menu d'installation + carte d'invite — feuille pour Pomodoro et Solitaire.
  *
  * POURQUOI UN FICHIER PLUTÔT QU'UNE INJECTION
- * `engage-prompt.js` posait ces règles dans un `<style>` créé à l'exécution.
+ * `engage-prompt.js` posait ces règles dans un `\3c style>` créé à l'exécution.
  * La CSP de Pomodoro (`pomo/index.html`) déclare `style-src 'self'` SANS
  * `'unsafe-inline'` : la balise arrivait bien dans le DOM, mais le navigateur
  * jetait son contenu. Résultat mesuré : `position: static`, fond transparent,
@@ -93,10 +93,15 @@
   white-space: nowrap;
   cursor: pointer;
 }
-.install-menu__item:hover,
 .install-menu__item:focus-visible {
   background: color-mix(in srgb, var(--accent, #2563eb) 12%, transparent);
   outline: none;
+}
+@media (hover: hover) and (pointer: fine) {
+.install-menu__item:hover {
+  background: color-mix(in srgb, var(--accent, #2563eb) 12%, transparent);
+  outline: none;
+}
 }
 .install-menu__item.is-current {
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent, #2563eb) 45%, transparent);

@@ -1,6 +1,6 @@
 {
   "sw.js": {
-    "cache": "radar-shell-v962",
+    "cache": "radar-shell-v963",
     "assets": {
       "app.js": "0e0df2c60f5900e3",
       "bg-rotation-lib.js": "264ab71f12434497",
@@ -9,7 +9,7 @@
       "dev/midwidth-preview.js": "084e3f5a6af6f825",
       "dev/wide-desktop-preview.css": "13925c143124ff27",
       "dev/wide-desktop-preview.js": "3879a96a2264f004",
-      "embed.css": "5d3b24489e0b0f14",
+      "embed.css": "cb0559f70312e19b",
       "embed.js": "7f01f6c142b5fde8",
       "engage-prompt.js": "2d703365a2647978",
       "feeds-page.js": "7fe5f8e4afaa576e",
@@ -39,26 +39,26 @@
       "scripts/session-freshness-lib.js": "4aadd97e95256dfb",
       "scripts/sports-freshness-lib.js": "d0f908a8b4ab0f1c",
       "seo-page-theme.js": "8d32dcb10d24af89",
-      "style-chrome.css": "cc9e367992c7bb6e",
-      "style-feed.css": "6487707e9e002cd5",
-      "style-masthead-chrome.css": "75280937dc31986c",
-      "style-masthead.css": "61ebd45cef596ae8",
-      "style-sports-strip.css": "47b0abb959d9e65a",
-      "style-translate-overlay.css": "a53149d47f203a02",
-      "style-tuner.css": "135a54e66558d507",
+      "style-chrome.css": "ad2c917628f61cf0",
+      "style-feed.css": "1209e7332679564f",
+      "style-masthead-chrome.css": "89f23178444b9f01",
+      "style-masthead.css": "88bce9788c070034",
+      "style-sports-strip.css": "81d564ba1e598583",
+      "style-translate-overlay.css": "51298bec3a3a6654",
+      "style-tuner.css": "314018a1ac5dd359",
       "style.css": "a20a2d2dbde0d6a9",
-      "translate-menu.css": "6bd5d163abf725e2",
+      "translate-menu.css": "fd0e95a4bc5b20c2",
       "translate-menu.js": "2f70f0aa5ff76db2",
       "translate.js": "b12facf7c054ee3b",
       "weather-cities-data.js": "55d8ae8c518bfbdf"
     }
   },
   "pomo/sw.js": {
-    "cache": "pomo-shell-v165",
+    "cache": "pomo-shell-v166",
     "assets": {
       "bg-rotation-lib.js": "264ab71f12434497",
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
-      "install-chrome.css": "c7852ffafaa5d4b9",
+      "install-chrome.css": "9653f55cb28d8936",
       "photo-bank-data.js": "ff44817bf79eebef",
       "pomo/js/app.js": "a8138a1bc0e114d6",
       "pomo/js/backgrounds-data.js": "2d0226d859a86c4a",
@@ -77,31 +77,31 @@
       "pomo/js/translate.js": "ded41e2932ed1d02",
       "pomo/js/weather.js": "bb03d6c0d4642dca",
       "pomo/styles/base.css": "b2d504bbe64c9141",
-      "pomo/styles/layout.css": "6022df23e477bc37",
+      "pomo/styles/layout.css": "4b95b06510b73283",
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
       "quebec-nations-backgrounds-data.js": "88571ba7993b82c0",
       "quebec-pomo-backgrounds-data.js": "e8a54cff8c8b9915",
       "scripts/season-lib.js": "ff74cb33a15dc7ae",
-      "translate-menu.css": "6bd5d163abf725e2",
+      "translate-menu.css": "fd0e95a4bc5b20c2",
       "translate-menu.js": "2f70f0aa5ff76db2",
       "weather-cities-data.js": "55d8ae8c518bfbdf"
     }
   },
   "solitaire/sw.js": {
-    "cache": "solitaire-shell-v102",
+    "cache": "solitaire-shell-v103",
     "assets": {
       "fullscreen-wallpaper-qc.js": "2efff73a86189579",
-      "install-chrome.css": "c7852ffafaa5d4b9",
+      "install-chrome.css": "9653f55cb28d8936",
       "photo-bank-data.js": "ff44817bf79eebef",
       "quebec-favorites-backgrounds-data.js": "c9897ce1ffe0f2e4",
       "solitaire/js/backgrounds-data.js": "df914f462e7db906",
       "solitaire/js/solitaire-rules.js": "c19bd4f9a851fda6",
-      "translate-menu.css": "6bd5d163abf725e2",
+      "translate-menu.css": "fd0e95a4bc5b20c2",
       "translate-menu.js": "2f70f0aa5ff76db2"
     }
   },
   "sports/sw.js": {
-    "cache": "sports-shell-v322",
+    "cache": "sports-shell-v323",
     "assets": {
       "app-sw-register.js": "386e54fcec34bbb3",
       "app.js": "0e0df2c60f5900e3",
@@ -127,14 +127,14 @@
       "scripts/media-follow-store.js": "fc24810268eb10d8",
       "scripts/media-follow-ui.js": "dd5acb6d8596c6e6",
       "seo-page-theme.js": "8d32dcb10d24af89",
-      "seo-pages.css": "dc3fd4eeca2d30a7",
+      "seo-pages.css": "5863c6b610dd94de",
       "sports-board.js": "4ab31c94449b9937",
-      "style-chrome.css": "cc9e367992c7bb6e",
-      "style-feed.css": "6487707e9e002cd5",
-      "style-masthead-chrome.css": "75280937dc31986c",
-      "style-masthead.css": "61ebd45cef596ae8",
-      "style-sports-strip.css": "47b0abb959d9e65a",
-      "style-tuner.css": "135a54e66558d507",
+      "style-chrome.css": "ad2c917628f61cf0",
+      "style-feed.css": "1209e7332679564f",
+      "style-masthead-chrome.css": "89f23178444b9f01",
+      "style-masthead.css": "88bce9788c070034",
+      "style-sports-strip.css": "81d564ba1e598583",
+      "style-tuner.css": "314018a1ac5dd359",
       "style.css": "a20a2d2dbde0d6a9",
       "weather-cities-data.js": "55d8ae8c518bfbdf"
     }
