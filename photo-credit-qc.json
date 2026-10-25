@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-25T17:31:19.583Z",
+  "updated": "2026-10-25T17:38:59.756Z",
   "total": 168,
-  "withImage": 149,
-  "withCredit": 149,
-  "cited": 98,
+  "withImage": 148,
+  "withCredit": 148,
+  "cited": 96,
   "pending": 38,
   "missingHero": 0,
   "ok": false,
   "checked": 42,
   "updatedCount": 4,
-  "citedNew": 4,
-  "fallbackNew": 38,
+  "citedNew": 3,
+  "fallbackNew": 39,
   "samples": [
     {
       "title": "Rouge d’une part, blanche de l’autre",
@@ -20,11 +20,11 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "S.O.S. Huîtres menacées",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
+      "title": "Looking back at my journey walking El Camino de Santiago",
+      "source": "The Concordian",
+      "credit": "Photo: The Concordian",
+      "cited": false,
+      "method": null
     },
     {
       "title": "Tex Crick: Indie Through and Through",
