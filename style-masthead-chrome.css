@@ -396,7 +396,7 @@ html[data-script-dir="rtl"] .wordmark-full {
 
 /* Téléphone (≤599 px, site et app Android) : le mât s’empile au lieu de
    coincer la date et 9 boutons sur une seule rangée au-dessus du logo.
-   Ordre : logo, slogan, puis date, puis une rangée de boutons qui tient
+   Ordre : date et heure, logo, slogan, puis une rangée de boutons qui tient
    toujours dans la largeur (aucun chevauchement ni débordement à 360 px).
    Hors accueil, l’app garde sa barre compacte (app-site.css, plus spécifique). */
 @media (max-width: 599.98px) {
@@ -406,17 +406,11 @@ html[data-script-dir="rtl"] .wordmark-full {
   }
   /* Le crédit photo est posé en bas à droite : on lui laisse sa ligne. */
   .masthead:has(#bg-photo-layer) .masthead-inner { padding-bottom: 34px; }
+  /* .masthead-top se dissout : date (0), logo + slogan (1), boutons (2). */
   .masthead-inner > .masthead-brand { order: 1; }
-  .masthead-inner > .masthead-top {
-    order: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-inline: 0;
-    padding-top: 10px;
-    padding-bottom: 0;
-  }
+  .masthead-inner > .masthead-top { display: contents; }
+  .masthead-inner > .masthead-top .masthead-date { order: 0; margin-bottom: 8px; }
+  .masthead-inner > .masthead-top .masthead-actions { order: 2; margin-top: 10px; }
   .masthead-inner > .masthead-top .masthead-date,
   .masthead:has(#bg-photo-layer) .masthead-inner > .masthead-top .masthead-date {
     display: inline-flex;
