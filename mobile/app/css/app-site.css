@@ -266,3 +266,13 @@ body:not(.is-home) .masthead .masthead-icon.theme-toggle {
 body:not(.is-home) .wordmark-logo { margin-right: 4px; }
 
 .player-prev, .player-next { width: 40px; border-color: transparent; background: transparent; color: var(--ink); }
+
+/* Accueil sur téléphone : la barre d'onglets du bas mène déjà partout
+   (Accueil, Explorer, Recherche, Sports) ; la navigation texte du site
+   faisait doublon et repoussait le premier article. */
+@media (max-width: 599.98px) {
+  body.is-home .site-sections { display: none !important; }
+  body.is-home .wire-head { margin-top: 6px; }
+  body.is-home .chips[aria-label="Filtre du fil"] { margin: 6px 0 8px; }
+  body.is-home .chips[aria-label="Filtre du fil"] a { min-height: 38px; padding: 6px 14px; }
+}

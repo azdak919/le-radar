@@ -1804,7 +1804,15 @@ function initTunerSubRotateListeners() {
 }
 
 function renderTunerNowAir() {
-  if (!TUNER_NOWAIR || isTunerPresentationPaused()) return;
+  if (!TUNER_NOWAIR) return;
+  if (isTunerPresentationPaused()) {
+    // Page chargée en arrière-plan (PWA relancée, onglet ouvert derrière,
+    // préchargement) : aucun visibilitychange « hidden » n'a armé le
+    // rafraîchissement, et le retour au premier plan n'écrivait jamais le
+    // nom du poste — barre vide (L1/L2 à opacity: 0 faute d'is-dial-ready).
+    tunerPresentationNeedsRefresh = true;
+    return;
+  }
 
   // Wide E : dual « À l'antenne » + « À venir », dial institution/slogan complets.
   if (isWideTunerLayout()) {
@@ -2039,6 +2047,10 @@ function resumeTunerPresentation() {
       tunerPresentationPaused = false;
       tunerPresentationNeedsRefresh = false;
       document.documentElement.classList.remove('is-tuner-presentation-paused');
+      // Un fondu interrompu par l'arrière-plan laisse sa classe (opacity: 0) :
+      // le rAF qui devait la retirer a été annulé ou jamais servi.
+      TUNER_NAME?.classList.remove('is-crossfading');
+      TUNER_SUB?.classList.remove('is-crossfading');
       // Repartir de la phase la plus utile et d'un marquee neuf, jamais d'un
       // timer vieux de plusieurs minutes qui tenterait de combler son retard.
       airPhaseIndex = 0;
@@ -2060,6 +2072,8 @@ function initTunerPresentationLifecycle() {
   window.addEventListener('pagehide', pauseTunerPresentation);
   window.addEventListener('pageshow', resumeTunerPresentation);
   window.addEventListener('focus', resumeTunerPresentation);
+  document.addEventListener('prerenderingchange', resumeTunerPresentation);
+  if (document.visibilityState === 'hidden') pauseTunerPresentation();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

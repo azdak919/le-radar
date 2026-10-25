@@ -415,7 +415,7 @@
        En bref (.brief-rail), puis suite du fil (.news-tail-body). */
     const html = items.map((item, index) => cardHtml(item, cardRole(index, layout)));
     const group = (cls, part) => (part.length ? `<div class="${cls}">${part.join('')}</div>` : '');
-    return `<div class="cards cards--wire news-list">${group('news-hero', html.slice(0, 5))}${group('brief-rail', html.slice(5, 15))}${html.length > 15 ? `<div class="news-tail">${group('news-tail-body', html.slice(15))}</div>` : ''}</div>`;
+    return `<div class="cards cards--wire news-list" data-ready>${group('news-hero', html.slice(0, 5))}${group('brief-rail', html.slice(5, 15))}${html.length > 15 ? `<div class="news-tail">${group('news-tail-body', html.slice(15))}</div>` : ''}</div>`;
   }
 
   function chip(href, label, current) {
