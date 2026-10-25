@@ -583,6 +583,19 @@
   function syncMediaSession(radio) {
     const session = navigator.mediaSession;
     if (!session) return;
+    if (useNativeRadio()) {
+      // Android : seule la MediaSession native (Media3) parle à la notification,
+      // à l'écran verrouillé et à l'autoradio. On vide celle du WebView pour
+      // qu'elle ne publie jamais de métadonnées vides par-dessus.
+      try {
+        session.metadata = null;
+        session.playbackState = 'none';
+        for (const action of ['play', 'pause', 'stop', 'previoustrack', 'nexttrack', 'seekto']) {
+          try { session.setActionHandler(action, null); } catch { /* action inconnue */ }
+        }
+      } catch { /* WebView sans Media Session */ }
+      return;
+    }
     try {
       if (!radio) {
         session.metadata = null;
