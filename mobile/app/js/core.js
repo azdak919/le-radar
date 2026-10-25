@@ -464,6 +464,7 @@
       lang: String(raw.lang || '').trim(),
       type: String(raw.type || '').trim(),
       site,
+      popularity: typeof raw.popularity === 'number' ? raw.popularity : 100,
     };
   }
 

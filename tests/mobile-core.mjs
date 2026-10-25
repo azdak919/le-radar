@@ -178,7 +178,13 @@ const prepare = read('mobile/scripts/prepare.mjs');
 const article = read('article/index.html');
 // Barre radio persistante : l’unique <audio> vit dans la coquille, hors de
 // #screen (re-rendu par innerHTML à chaque route), sinon l’écoute meurt.
-assert.ok(shell.indexOf('id="player-audio"') > shell.indexOf('</main>'), 'audio radio hors de #screen');
+{
+  const a = shell.indexOf('id="player-audio"');
+  const m0 = shell.indexOf('<main id="screen"'), m1 = shell.indexOf('</main>');
+  assert.ok(a > 0 && (a < m0 || a > m1), 'audio radio hors de #screen');
+  // Barre radio à la place du syntoniseur : juste après le mât.
+  assert.ok(shell.indexOf('id="player"') > shell.indexOf('</header>') && shell.indexOf('id="player"') < m0, 'barre radio sous le mât');
+}
 assert.equal((shell.match(/<audio\b/g) || []).length, 1, 'un seul <audio> dans la coquille');
 assert.equal(/<audio\s/.test(appJs), false, 'aucun <audio> rendu dans un écran');
 assert.match(shell, /Journaux, radios et sports étudiants du Québec,/);

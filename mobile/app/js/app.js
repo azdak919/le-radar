@@ -425,31 +425,77 @@
     return `<a href="${href}"${aria}>${label}</a>`;
   }
 
+  /** Bouton de source au gabarit du site (.filter-btn). */
+  function filterBtnHtml(href, name, inst, color, current, extra = '') {
+    const aria = current ? ' aria-current="true"' : '';
+    return `<a class="filter-btn${extra}${current ? ' active' : ''}" href="${href}"${aria} style="--c:${esc(color)}">
+        <span class="filter-btn__row"><span class="filter-btn__dot" aria-hidden="true"></span><span class="filter-btn__name notranslate" translate="no">${esc(name)}</span></span>
+        ${inst ? `<span class="filter-btn__inst">${esc(inst)}</span>` : ''}
+      </a>`;
+  }
+
+  /** Rangée de sources du site : Le Radar (tout), Suivis, puis les médias
+   *  par nombre d'articles. Repliée : la première rangée + « Plus de sources ». */
+  function sourceFiltersHtml(mode, sourceId, follows, hidden) {
+    const counts = new Map();
+    for (const item of state.items) {
+      const id = core().slugify(item.sourceId || item.source);
+      if (!id || hidden.includes(id)) continue;
+      const row = counts.get(id) || { id, name: item.source, institution: item.institution || '', n: 0 };
+      row.n += 1;
+      counts.set(id, row);
+    }
+    // Même ordre que le site : FR, puis EN, puis popularité (news-sources.json).
+    const meta = new Map((state.sources || []).map((s) => [s.id, s]));
+    const langRank = (r) => { const l = ((meta.get(r.id) || {}).lang || '').toLowerCase(); return l === 'fr' ? 0 : l === 'en' ? 1 : 2; };
+    const pop = (r) => { const m = meta.get(r.id); return m && typeof m.popularity === 'number' ? m.popularity : 100; };
+    const rows = [...counts.values()].sort((a, b) => langRank(a) - langRank(b) || pop(a) - pop(b) || a.name.localeCompare(b.name, 'fr'));
+    const accent = 'var(--accent)';
+    const btns = [filterBtnHtml('#/accueil?filtre=tout', 'Le Radar', 'Toutes les sources', accent, mode === 'tout' && !sourceId, ' filter-btn--all')];
+    if (follows.length) {
+      btns.push(filterBtnHtml('#/accueil?filtre=suivis', 'Suivis', `${follows.length} ${follows.length === 1 ? 'média' : 'médias'}`, accent, mode === 'suivis' && !sourceId, ' filter-btn--followed'));
+    }
+    for (const row of rows) {
+      const src = state.sources.find((entry) => entry.id === row.id);
+      const inst = (src && src.institution) || row.institution;
+      btns.push(filterBtnHtml(`#/accueil?filtre=source:${encodeURIComponent(row.id)}`, row.name, inst, core().institutionColor(state.brand, inst), sourceId === row.id));
+    }
+    const open = Boolean(state.filtersOpen);
+    return `<div id="news-filters-panel" class="filters-panel has-overflow${open ? ' is-expanded' : ''}" data-ready="1">
+      <nav id="news-filters" class="filters" aria-label="Filtrer par source">${btns.join('')}</nav>
+      <button type="button" class="filters-toggle" data-action="filters-toggle" aria-expanded="${open}" aria-controls="news-filters">
+        <span class="filters-toggle__label">${open ? 'Moins de sources' : 'Plus de sources'}</span>
+        <svg class="filters-toggle__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>`;
+  }
+
   function viewHome(route) {
     const follows = followIds();
     const prefs = loadPrefs();
-    const mode = core().homeMode(route.filter, follows);
-    const modeName = mode === 'suivis' ? 'follows' : 'all';
-    const filtered = core().filterFeed(state.items, {
-      mode: modeName,
-      follows,
-      hidden: prefs.hidden,
-    });
+    const sourceId = /^source:/.test(route.filter || '') ? decodeURIComponent(route.filter.slice(7)) : '';
+    const mode = sourceId ? 'tout' : core().homeMode(route.filter, follows);
+    const filtered = sourceId
+      ? core().filterFeed(state.items, { mode: 'follows', follows: [sourceId], hidden: [] })
+      : core().filterFeed(state.items, {
+        mode: mode === 'suivis' ? 'follows' : 'all',
+        follows,
+        hidden: prefs.hidden,
+      });
     const shown = filtered.slice(0, state.visible);
-    const empty = {
-      tout: 'Aucun article dans le fil pour le moment.',
-      suivis: 'Vous ne suivez encore aucun média, ou leurs articles sont masqués. <a href="#/explorer">Choisir des médias</a>.',
-    }[mode];
+    const empty = sourceId
+      ? 'Aucun article de ce média pour le moment.'
+      : {
+        tout: 'Aucun article dans le fil pour le moment.',
+        suivis: 'Vous ne suivez encore aucun média, ou leurs articles sont masqués. <a href="#/explorer">Choisir des médias</a>.',
+      }[mode];
     const more = shown.length < filtered.length
       ? `<button type="button" class="wide" data-action="more">Afficher la suite (${filtered.length - shown.length})</button>`
       : '';
     state.homeCountLabel = `${filtered.length} ${filtered.length === 1 ? 'article' : 'articles'}`;
     return `
-      <nav class="chips" aria-label="Filtre du fil">
-        ${chip('#/accueil?filtre=tout', 'Tout', mode === 'tout')}
-        ${chip('#/accueil?filtre=suivis', 'Suivis', mode === 'suivis')}
-      </nav>
-      ${cardsHtml(shown, empty, mode === 'tout')}
+      ${sourceFiltersHtml(mode, sourceId, follows, prefs.hidden)}
+      ${cardsHtml(shown, empty, mode === 'tout' && !sourceId)}
       ${more}`;
   }
 
@@ -1916,6 +1962,16 @@
         const id = el.dataset.id;
         savePrefs(core().setHidden(prefs, id, !core().isHidden(prefs, id)));
         render();
+        return;
+      }
+      if (action === 'filters-toggle') {
+        state.filtersOpen = !state.filtersOpen;
+        const panel = el.closest('.filters-panel');
+        panel?.classList.toggle('is-expanded', state.filtersOpen);
+        el.setAttribute('aria-expanded', String(state.filtersOpen));
+        const label = el.querySelector('.filters-toggle__label');
+        if (label) label.textContent = state.filtersOpen ? 'Moins de sources' : 'Plus de sources';
+        if (event.pointerType !== 'mouse' && typeof el.blur === 'function') el.blur();
         return;
       }
       if (action === 'more') {

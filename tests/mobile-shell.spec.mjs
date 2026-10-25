@@ -62,7 +62,7 @@ test.describe('application mobile', () => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/mobile/app/#/explorer?section=radios', { waitUntil: 'domcontentloaded' });
     // Dans l'app : le syntoniseur du site est masqué ; la barre propre à l'app
-    // (#player) est toujours affichée en haut, même au repos.
+    // (#player) prend la place du syntoniseur : sous le mât, même au repos.
     const bar = page.locator('#player');
     await expect(page.locator('#tuner')).toBeHidden();
     await expect(bar).toBeVisible();
@@ -85,7 +85,6 @@ test.describe('application mobile', () => {
       await expect(bar).toBeVisible();
       await expect(bar).toHaveAttribute('data-state', 'playing');
       await expect(page.locator('#tuner')).toBeHidden();
-      expect(await barTop()).toBeLessThan(20);
       const audio = await page.evaluate(() => {
         const node = document.getElementById('player-audio');
         return { marker: node.dataset.marker, paused: node.paused, src: Boolean(node.getAttribute('src')) };
@@ -93,11 +92,16 @@ test.describe('application mobile', () => {
       expect(audio).toEqual({ marker: 'same', paused: false, src: true });
     }
 
-    // Collée en haut pendant le défilement, sans débordement horizontal.
-    const before = await barTop();
-    expect(before).toBeLessThan(20);
+    // Au chargement : sous le mât (à la place du syntoniseur du site).
+    await page.locator('#tabs').getByRole('link', { name: 'Accueil' }).click();
+    await page.evaluate(() => window.scrollTo(0, 0));
+    const mastBottom = await page.evaluate(() => Math.round(document.querySelector('.masthead').getBoundingClientRect().bottom));
+    expect(mastBottom).toBeGreaterThan(100);
+    expect(Math.abs(await barTop() - mastBottom)).toBeLessThanOrEqual(2);
+    // Après défilement : collée en haut de l'écran (sticky), sans débordement.
     await page.evaluate(() => window.scrollTo(0, 4000));
-    await expect.poll(barTop).toBe(before);
+    await expect.poll(barTop).toBeLessThan(2);
+    await expect(bar).toBeVisible();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
     expect(overflow).toBe(false);
 

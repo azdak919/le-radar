@@ -101,19 +101,35 @@ body:not(.is-home) .masthead-icon.theme-toggle {
    il est masqué dans l'app seulement ; le site web garde le sien. */
 .tuner, .tuner-safe-cap { display: none !important; }
 html.has-tuner-safe-cap body { --tuner-h: 0px; }
-.player {
-  top: calc(env(safe-area-inset-top, 0px) + 6px);
+/* Barre radio à la place du syntoniseur du site : sous le mât, puis collée
+   en haut de l'écran (sous la barre d'état) pendant le défilement. Le mât
+   occupe le haut de page, encoche comprise, comme sur le site. */
+.shell > .player {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
   bottom: auto;
+  left: auto;
+  right: auto;
+  transform: none;
+  width: auto;
+  margin: 0;
+  border-radius: 0;
+  border: 0;
+  background: #252830;
+  color: #f3f1ea;
+  --ink: #f3f1ea;
+  --ink-soft: #b9bcc6;
 }
-body.has-player { --player: 0px; --player-top: 66px; }
+body.has-player { --player: 0px; }
+.shell > .player .player-now { color: #b9bcc6; }
+.shell > .player .player-prev, .shell > .player .player-next { color: #f3f1ea; }
 /* Compacte, toujours là : au repos, la barre propose une station à lancer.
    Arrêter n'apparaît qu'en lecture (la barre revient alors au repos). */
 .player { min-height: 54px; padding: 4px 6px 4px 4px; }
 .player .player-info { min-height: 44px; }
 .player.is-idle .player-stop { display: none; }
-.player.is-idle { box-shadow: 0 4px 14px rgb(0 0 0 / 0.14); }
-body.has-player .shell { padding-top: calc(env(safe-area-inset-top, 0px) + var(--player-top)); }
-body.has-player #screen [id], body.has-player .sports-anchor { scroll-margin-top: calc(var(--player-top) + env(safe-area-inset-top, 0px)); }
+.player.is-idle { box-shadow: none; }
+body.has-player #screen [id], body.has-player .sports-anchor { scroll-margin-top: calc(66px + env(safe-area-inset-top, 0px)); }
 
 /* ─── Cartes article : exactement le rendu du site mobile (style-feed.css) ───
    Les blocs viennent de scripts/article-card-lib.js (même ordre, mêmes dates,
@@ -276,3 +292,7 @@ body:not(.is-home) .wordmark-logo { margin-right: 4px; }
   body.is-home .chips[aria-label="Filtre du fil"] { margin: 6px 0 8px; }
   body.is-home .chips[aria-label="Filtre du fil"] a { min-height: 38px; padding: 6px 14px; }
 }
+
+/* Rangée de sources (comme le site mobile) : liens-cartes sans soulignement. */
+#news-filters .filter-btn,
+#news-filters .filter-btn * { text-decoration: none; }
