@@ -1183,6 +1183,9 @@ async function main() {
   }
   const afterWithdrawn = withdrawn.items;
   const visibleItems = dedupeArticlesByLink(filterHousekeepingForDisplay(afterWithdrawn, referenceDate));
+  // Après fusion du cache des passes précédentes : dernière garde unicité.
+  const sharedVisible = keepNewestSharedImage(visibleItems);
+  if (sharedVisible) console.log(`↻ ${sharedVisible} photo(s) en double dans le fil → repli`);
   const hkRemoved = afterWithdrawn.length - visibleItems.length;
   if (hkRemoved > 0) {
     console.log(`Ménage médias: ${hkRemoved} avis de fermeture/pause hors saison retiré(s) du fil`);
