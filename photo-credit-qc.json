@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-25T20:03:26.671Z",
+  "updated": "2026-10-25T20:10:08.955Z",
   "total": 174,
   "withImage": 153,
   "withCredit": 153,
@@ -7,25 +7,11 @@
   "pending": 39,
   "missingHero": 0,
   "ok": false,
-  "checked": 66,
-  "updatedCount": 66,
-  "citedNew": 11,
-  "fallbackNew": 55,
+  "checked": 43,
+  "updatedCount": 4,
+  "citedNew": 2,
+  "fallbackNew": 41,
   "samples": [
-    {
-      "title": "L’islamophobie au Québec: une crise?",
-      "source": "The Plant",
-      "credit": "Photo : Samir Ben",
-      "cited": true,
-      "method": "body-line"
-    },
-    {
-      "title": "Letters from the Editors October 2026",
-      "source": "The Plant",
-      "credit": "Photo: The Plant",
-      "cited": false,
-      "method": null
-    },
     {
       "title": "Un changement d’aile qui pourrait faire s’envoler les Griffons du Cégep de l’Outaouais",
       "source": "La Griffe",
@@ -41,20 +27,6 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "De la France au Québec, la colère lycéenne trouve un écho",
-      "source": "Quartier Libre",
-      "credit": "Photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Student Spotlight: Farabi Khaleque",
-      "source": "The Concordian",
-      "credit": "Photo : Saima Mazumder",
-      "cited": true,
-      "method": "wp-caption"
-    },
-    {
       "title": "Looking back at my journey walking El Camino de Santiago",
       "source": "The Concordian",
       "credit": "Photo: The Concordian",
@@ -62,39 +34,11 @@
       "method": null
     },
     {
-      "title": "QUICKSPIN: Remi Wolf — Mud",
-      "source": "The Concordian",
-      "credit": "Photo: Courtesy of Spotify",
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
       "cited": true,
-      "method": "figcaption-trailing"
-    },
-    {
-      "title": "Our circle matters",
-      "source": "The Concordian",
-      "credit": "Illustration: Adrien Foula",
-      "cited": true,
-      "method": "figcaption-illustration"
-    },
-    {
-      "title": "Stingers men’s soccer team earns first win of the season",
-      "source": "The Concordian",
-      "credit": "Photo : Eric Kemplan",
-      "cited": true,
-      "method": "figcaption"
-    },
-    {
-      "title": "Reportages radio du 19 octobre 2026",
-      "source": "La Pige",
-      "credit": "Photo : La Pige",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Les partis politique muets sur la question de l’éducation",
-      "source": "La Griffe",
-      "credit": "Photo : La Griffe",
-      "cited": false,
-      "method": null
+      "method": "media-credit-featured"
     }
   ]
 }
