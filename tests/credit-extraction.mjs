@@ -65,3 +65,11 @@ assert.equal(A.evaluateAdmission(cand, { ...pr, creditSamples: [{ link: 'a', aut
 // Une page vérifiée avant le dernier correctif d'extraction est revérifiée.
 assert.equal(AL.needsPageAuthorVerification({ link: 'https://x.ca/a/', author: 'La rédaction', authorCheckedAt: '2026-10-25T18:11:06Z' }), true);
 console.log('credit-extraction recheck OK');
+// « Photo courtesy of X » en fin de longue légende → X, pas le média ni une autre image.
+const pc = PC.figureImageUrls('<img data-pk-src="https://t.com/wp-content/uploads/a-800x600.jpg">');
+assert.equal(pc[0], 'https://t.com/wp-content/uploads/a-800x600.jpg');
+const camino = `<html><body>${pad}<figure><img src="data:image/png;base64,A" data-pk-src="https://t.com/wp-content/uploads/2026/10/PXL_1-800x600.jpg"><figcaption>Anthony Tapia Ancinez in full gear looking into the horizon, three kilometres after leaving Sarria with 97.40 per cent left of the route to walk. Photo courtesy of Sonia Celi</figcaption></figure>
+<figure><img src="data:image/png;base64,A" data-pk-src="https://t.com/wp-content/uploads/2026/10/PXL_2-1024x768.jpg"><figcaption>Near Portomarin. Photo by Anthony Tapia Ancinez // IG @_anthonytapia // The Concordian</figcaption></figure></body></html>`;
+assert.equal(PC.extractPhotoCreditFromHtml(camino, 'https://t.com/wp-content/uploads/2026/10/PXL_1-1024x768.jpg', 'en').creator, 'Sonia Celi');
+assert.equal(PC.extractPhotoCreditFromHtml(camino, 'https://t.com/wp-content/uploads/2026/10/PXL_2.jpg', 'en').creator, 'Anthony Tapia Ancinez');
+console.log('credit-extraction courtesy OK');

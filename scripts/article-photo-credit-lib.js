@@ -18,7 +18,7 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 14;
+const CREDIT_EXTRACTOR_REV = 15;
 
 /** Placeholders WP / comptes génériques (Zone Campus : « Crédit : Journaliste »). */
 const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin)$/i;
@@ -467,11 +467,11 @@ function parseTrailingCaptionCredit(t = '', lang = 'fr') {
 
   // Point final optionnel (« Courtesy Sayplus. »).
   const trailing = t.match(
-    /(?:^|[.!?…»"”]\s+)(Photos?|Graphics?|Illustrations?|File photo|Courtesy(?:\s+of)?)\s+([\p{Lu}][\p{L}'’.-]*(?:\s+[\p{Lu}&][\p{L}'’.&-]*){0,4})\s*\.?$/u,
+    /(?:^|[.!?…»"”]\s+)(Photos?\s+(?:courtesy\s+of|by)|Graphics?\s+by|Photos?|Graphics?|Illustrations?|File photo|[Cc]ourtesy(?:\s+of)?)\s+([\p{Lu}][\p{L}'’.-]*(?:\s+[\p{Lu}&][\p{L}'’.&-]*){0,4})\s*\.?$/u,
   )
   // Repli : légende qui se termine juste par « Photo Prénom Nom » (The Link photo essays).
     || t.match(
-      /\b(Photos?|Graphics?|Illustrations?|File photo|Courtesy(?:\s+of)?)\s+([\p{Lu}][\p{L}'’.-]*(?:\s+[\p{Lu}&][\p{L}'’.&-]*){0,4})\s*\.?$/u,
+      /\b(Photos?\s+(?:courtesy\s+of|by)|Graphics?\s+by|Photos?|Graphics?|Illustrations?|File photo|[Cc]ourtesy(?:\s+of)?)\s+([\p{Lu}][\p{L}'’.-]*(?:\s+[\p{Lu}&][\p{L}'’.&-]*){0,4})\s*\.?$/u,
     );
   if (!trailing) return null;
   const kind = trailing[1].toLowerCase();
@@ -490,7 +490,7 @@ function parseTrailingCaptionCredit(t = '', lang = 'fr') {
   let creditLine = en ? `Photo: ${parsed.creator}` : `Photo : ${parsed.creator}`;
   if (kind.startsWith('graphic') || kind.startsWith('illustration')) {
     creditLine = en ? `Illustration: ${parsed.creator}` : `Illustration : ${parsed.creator}`;
-  } else if (kind.startsWith('courtesy')) {
+  } else if (kind.includes('courtesy')) {
     creditLine = en
       ? `Photo: Courtesy of ${parsed.creator}`
       : `Photo : avec l'aimable autorisation de ${parsed.creator}`;
