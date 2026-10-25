@@ -609,8 +609,35 @@ test('thème clair : sports et slogan partagent le verre météo @ci-critical', 
   expect(cascade.ctaLeaving, 'CTA live light qui sort : cascade').toBe('sports-chip-leave');
 });
 
+test('slogan : masqué à l\'écran sur téléphone (< 600 px), gardé pour lecteurs d\'écran @ci-critical', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => {
+    document.querySelector('#bg-photo-layer')?.classList.add('loaded');
+  });
+  const slogan = page.locator('.masthead-inner > .masthead-brand .wordmark-full').first();
+  await expect(slogan).toHaveCount(1);
+  const m = await slogan.evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    return {
+      w: r.width,
+      h: r.height,
+      pos: getComputedStyle(el).position,
+      display: getComputedStyle(el).display,
+      text: (el.textContent || '').trim().length,
+    };
+  });
+  expect(m.pos, 'slogan retiré du flux').toBe('absolute');
+  expect(m.w, 'slogan sans largeur visible').toBeLessThanOrEqual(1);
+  expect(m.h, 'slogan sans hauteur visible').toBeLessThanOrEqual(1);
+  expect(m.display, 'slogan gardé pour lecteurs d\'écran').not.toBe('none');
+  expect(m.text, 'slogan non vide').toBeGreaterThan(0);
+});
+
+// Le slogan est masqué sur téléphone (< 600 px, voir test ci-dessus) ;
+// on vérifie sa pastille sur tablette (iPad) et bureau.
 for (const viewport of [
-  { name: 'mobile', width: 390, height: 844 },
+  { name: 'tablette', width: 820, height: 1180 },
   { name: 'bureau', width: 1280, height: 900 },
 ]) {
   test(`slogan : le texte ne colle pas aux bords de la pastille — ${viewport.name} @ci-critical`, async ({ page }) => {
