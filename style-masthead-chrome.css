@@ -449,3 +449,35 @@ html[data-script-dir="rtl"] .wordmark-full {
   .masthead-inner > .masthead-top .masthead-icon svg,
   .masthead-inner > .masthead-top .masthead-icon .app-emoji { width: 16px; height: 16px; }
 }
+
+/* Mât empilé : un seul espacement vertical entre date, logo, slogan,
+   boutons et crédit photo (--mat-gap), porté par `gap`, sans marges. */
+@media (max-width: 599.98px) {
+  .masthead { --mat-gap: 12px; }
+  .masthead-inner { gap: var(--mat-gap); padding-top: var(--mat-gap); }
+  .masthead-inner > .masthead-brand,
+  .masthead:has(#bg-photo-layer.loaded) .masthead-inner > .masthead-brand {
+    margin: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important;
+  }
+  .masthead-inner > .masthead-brand .wordmark {
+    display: flex; flex-direction: column; align-items: center;
+    gap: var(--mat-gap); margin: 0; padding-top: 0; padding-bottom: 0;
+  }
+  .masthead-inner > .masthead-brand .wordmark-mark,
+  .masthead-inner > .masthead-brand .wordmark-full,
+  .masthead:has(#bg-photo-layer.loaded) .masthead-inner > .masthead-brand .wordmark-full {
+    margin-top: 0 !important; margin-bottom: 0 !important;
+  }
+  .masthead-inner > .masthead-top .masthead-date,
+  .masthead-inner > .masthead-top .masthead-actions { margin-top: 0; margin-bottom: 0; }
+  /* Crédit (absolu, bas droite) : une --mat-gap sous les boutons. */
+  .masthead:has(#bg-photo-layer) .masthead-inner {
+    padding-bottom: calc(var(--mat-gap) * 2 + var(--mat-credit-h, 15.4px));
+  }
+  .masthead:has(#bg-photo-layer) .bg-photo-credit { bottom: var(--mat-gap); }
+}
+@media (max-width: 599.98px) {
+  /* Date et heure : à gauche, sur la marge du contenu (logo, slogan, boutons centrés). */
+  .masthead-inner > .masthead-top .masthead-date,
+  .masthead:has(#bg-photo-layer) .masthead-inner > .masthead-top .masthead-date { align-self: flex-start; }
+}
