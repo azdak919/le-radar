@@ -248,6 +248,10 @@ function applyFetchRegistryUpdate(src, {
       : { status: 'ok' };
     // A successful fetch never stays `dead` — silent-in-window papers are stale.
     src._status = classified.status === 'dead' ? 'stale' : classified.status;
+    // En sommeil (source-health) : toujours sondée, réveillée au 1er article récent.
+    if (src._dormantSince && !require('./source-health-lib').wakeIfRepublished(src, referenceDate)) {
+      src._status = 'stale';
+    }
     return;
   }
 

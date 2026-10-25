@@ -1,5 +1,5 @@
 {
-  "_comment": "Registre des sources. Champs éditables : name, institution, region, type, lang, url, site, popularity, fetchMode (rss|html-list|firebase), firebase {}, urlFallback, wpFeaturedCategories, botHints {}, instagram/facebook/x/youtube/tiktok/podcast (canaux externes), googleNews { url, status }, _note. googleNews.url = page /publications/ vérifiée seulement — jamais une recherche, jamais une URL inventée. Champs bots : _status, _lastItemDate, _lastChecked, _failCount, _lastFetchOk. Voir docs/adding-news-source.md et docs/media-channels.md.",
+  "_comment": "Registre des sources. Champs éditables : name, institution, region, type, lang, url, site, popularity, fetchMode (rss|html-list|firebase), firebase {}, urlFallback, wpFeaturedCategories, botHints {}, instagram/facebook/x/youtube/tiktok/podcast (canaux externes), googleNews { url, status }, _note. googleNews.url = page /publications/ vérifiée seulement — jamais une recherche, jamais une URL inventée. Champs bots : _status, _lastItemDate, _lastChecked, _failCount, _lastFetchOk, _dormantSince (source-health : muette > 120 j, toujours sondée, réveillée au 1er nouvel article). Voir docs/adding-news-source.md et docs/media-channels.md.",
   "active": [
     {
       "name": "Quartier Libre",
@@ -146,7 +146,9 @@
       "_status": "ok",
       "_lastItemDate": "2026-05-08T14:20:26.000Z",
       "popularity": 9,
-      "_lastFetchOk": "2026-10-25T16:50:43.604Z"
+      "_lastFetchOk": "2026-10-25T16:50:43.604Z",
+      "_dormantSince": "2026-10-25T17:15:41.159Z",
+      "_dormantNote": "2026-10-25 : pause estivale annoncée (8 mai–8 sept. 2026), aucun article ni infolettre depuis; même flux https://www.zonecampus.ca/feed/."
     },
     {
       "name": "L'Exemplaire",
@@ -216,7 +218,9 @@
           "_note": "WordPress réutilise le logo X Exil (og:image / défaut 2020) sur les billets sans photo. Rejeter pour basculer stock thématique (ex. Hôtel du Parlement) ou banque campus."
         }
       },
-      "_note": "exilecvm.wordpress.com / exilecvm.ca — beaucoup d’opinions sans photo d’article, seulement le logo partagé."
+      "_note": "exilecvm.wordpress.com / exilecvm.ca — beaucoup d’opinions sans photo d’article, seulement le logo partagé.",
+      "_dormantSince": "2026-10-25T17:15:41.159Z",
+      "_dormantNote": "2026-10-25 : site/flux muets depuis le 18 avril 2026 (exilecvm.ca = exilecvm.wordpress.com); seulement Instagram/Threads @exile.cvm, sans flux public."
     },
     {
       "name": "La Pige",
@@ -404,7 +408,8 @@
       "_note": "Flux RSS de la rubrique Journal étudiant L'Oisif du Cégep de Chicoutimi. Les articles historiques sont conservés dans le catalogue; la règle de fraîcheur les exclut naturellement du fil vivant.",
       "_lastChecked": "2026-10-25T16:50:55.506Z",
       "_failCount": 0,
-      "_lastFetchOk": "2026-10-25T16:50:55.506Z"
+      "_lastFetchOk": "2026-10-25T16:50:55.506Z",
+      "_dormantSince": "2026-10-25T17:15:41.159Z"
     },
     {
       "name": "La Gifle",
@@ -426,7 +431,8 @@
       "_note": "Flux RSS WordPress du journal étudiant du Collège Lionel-Groulx. Le compte RSS « lagifleblog » est technique : la signature visible de chaque article prévaut. Les articles historiques sont conservés dans le catalogue; la règle de fraîcheur les exclut naturellement du fil vivant.",
       "_lastChecked": "2026-10-25T16:50:55.672Z",
       "_failCount": 0,
-      "_lastFetchOk": "2026-10-25T16:50:55.672Z"
+      "_lastFetchOk": "2026-10-25T16:50:55.672Z",
+      "_dormantSince": "2026-10-25T17:15:41.159Z"
     },
     {
       "name": "Le Trait d'Union",
@@ -448,7 +454,8 @@
       },
       "_lastChecked": "2026-10-25T16:50:56.748Z",
       "_failCount": 0,
-      "_lastFetchOk": "2026-10-25T16:50:56.748Z"
+      "_lastFetchOk": "2026-10-25T16:50:56.748Z",
+      "_dormantSince": "2026-10-25T17:15:41.159Z"
     },
     {
       "name": "The Concordian",

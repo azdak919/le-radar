@@ -126,14 +126,14 @@ function isFragile(url = '') {
   return FRAGILE_HOSTS.has(hostOf(url));
 }
 
-async function fetchBuffer(url) {
+async function fetchBuffer(url, timeoutMs = TIMEOUT_MS) {
   const res = await fetch(url, {
     redirect: 'follow',
     headers: {
       'User-Agent': UA,
       Accept: 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
     },
-    signal: AbortSignal.timeout(TIMEOUT_MS),
+    signal: AbortSignal.timeout(timeoutMs),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const ct = res.headers.get('content-type') || '';
@@ -149,10 +149,40 @@ async function fetchBuffer(url) {
   return { buf, contentType: ct, finalUrl: res.url || url };
 }
 
+/** Largeur cible des versions réduites (cartes ≤ ~800 px CSS, 2× écran). */
+const RESIZE_WIDTH = 1200;
+
+/** Proxy de redimensionnement public (wsrv.nl) — JPEG, sans recadrage. */
+function resizeProxyUrl(url = '', width = RESIZE_WIDTH) {
+  return `https://wsrv.nl/?url=${encodeURIComponent(url)}&w=${width}&we&output=jpg&q=82`;
+}
+
+/**
+ * Candidats réduits quand l'original dépasse MAX_BYTES (photos pleine
+ * résolution WordPress / Firebase de 1–27 Mo : 43/43 échecs du 2026-10-25).
+ */
+function resizedCandidates(url = '') {
+  // JPEG réduit d'abord (plus léger que Photon, qui garde les PNG en PNG).
+  const out = [{ url: resizeProxyUrl(url), via: 'resize-proxy' }];
+  const photon = photonUrl(url);
+  if (photon) out.push({ url: `${photon.split('?')[0]}?w=${RESIZE_WIDTH}&ssl=1`, via: 'photon-resize' });
+  return out;
+}
+
 async function downloadWithFallback(url) {
   try {
     return { ...(await fetchBuffer(url)), via: 'origin' };
   } catch (err) {
+    if (/too large/.test(String(err && err.message))) {
+      for (const cand of resizedCandidates(url)) {
+        try {
+          // Le proxy doit d'abord télécharger l'original (jusqu'à ~27 Mo).
+          return { ...(await fetchBuffer(cand.url, 45_000)), via: cand.via, sourceUrl: url };
+        } catch {
+          /* candidat suivant */
+        }
+      }
+    }
     if (!isFragile(url)) throw err;
     const photon = photonUrl(url);
     if (photon && photon !== url) {
@@ -213,6 +243,7 @@ async function main() {
   let downloaded = 0;
   let reused = 0;
   let failed = 0;
+  const failReasons = {};
   let fragileOk = 0;
   const keepKeys = new Set();
 
@@ -278,6 +309,8 @@ async function main() {
       }
     } catch (err) {
       failed += 1;
+      const reason = String((err && err.message) || err).replace(/\(.*$/, '').trim() || 'error';
+      failReasons[reason] = (failReasons[reason] || 0) + 1;
       // Conserver un ancien miroir si présent.
       if (prior?.local && fileExists(path.join(ROOT, prior.local))) {
         item.imageLocal = prior.local;
@@ -404,12 +437,23 @@ async function main() {
   }
 
   writeJson(MANIFEST_PATH, manifest);
+  // Lu par scripts/source-health.js (surveillance du taux d'échecs).
+  writeJson(path.join(ROOT, 'data', 'image-mirror-stats.json'), {
+    at: new Date().toISOString(),
+    targets: targets.length,
+    failed,
+    failReasons,
+  });
   news.updated = news.updated || new Date().toISOString();
   writeJson(NEWS_PATH, news);
   console.log(`Écrit ${path.relative(ROOT, CACHE_DIR)}/ et news.json`);
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
+
+module.exports = { resizedCandidates, resizeProxyUrl, photonUrl };
