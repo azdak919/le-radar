@@ -114,28 +114,34 @@ public class CastPlugin extends Plugin {
     pendingUrl = null;
   }
 
+  /**
+   * Disponibilité SANS initialiser Cast : seulement la vérification des
+   * services Google Play. CastContext n'est créé qu'au premier appui sur le
+   * bouton (showPicker). Ainsi, un plantage au lancement ne peut plus venir
+   * de l'initialisation de Cast.
+   */
   @PluginMethod
   public void isAvailable(PluginCall call) {
-    getActivity().runOnUiThread(() -> {
-      try { castContext(); } catch (Throwable t) { cast = null; }
-      JSObject r = new JSObject();
-      boolean connected = false;
-      try { connected = session() != null && session().isConnected(); } catch (Throwable ignored) { }
-      r.put("available", cast != null);
-      r.put("connected", connected);
-      call.resolve(r);
-    });
+    JSObject r = new JSObject();
+    boolean ok = false, connected = false;
+    try {
+      ok = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getContext()) == ConnectionResult.SUCCESS;
+    } catch (Throwable t) { Log.w("LeRadarCast", "Play Services", t); }
+    try { connected = session() != null && session().isConnected(); } catch (Throwable ignored) { }
+    r.put("available", ok);
+    r.put("connected", connected);
+    call.resolve(r);
   }
 
   /** Bouton Cast : sélecteur natif (ou contrôleur si déjà connecté). */
   @PluginMethod
   public void showPicker(PluginCall call) {
-    try { castContext(); } catch (Throwable t) { cast = null; }
-    if (cast == null) { call.reject("cast unavailable"); return; }
     pendingUrl = call.getString("url");
     pendingTitle = call.getString("title", "");
     pendingArtist = call.getString("artist", "");
     getActivity().runOnUiThread(() -> { try {
+      castContext();
+      if (cast == null) { call.reject("cast unavailable"); return; }
       MediaRouteSelector selector = cast.getMergedSelector();
       if (selector == null) { call.reject("no selector"); return; }
       CastSession s = session();
