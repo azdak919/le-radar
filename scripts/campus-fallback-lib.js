@@ -75,7 +75,10 @@ function campusNeedlesFor(institution = '') {
   }
   if (/\buqac\b/.test(raw) || (/\bchicoutimi\b/.test(raw) && /universit/.test(raw))) add('uqac');
   if (/\buqar\b/.test(raw) || (/\brimouski\b/.test(raw) && /universit/.test(raw))) add('uqar');
-  if (/\buqo\b/.test(raw) || /outaouais/.test(raw)) add('uqo');
+  // « outaouais » seul servait la photo de l’UQO au Cégep de l’Outaouais.
+  if (/\buqo\b/.test(raw) || (/outaouais/.test(raw) && /universit/.test(raw))) add('uqo');
+  if (/outaouais/.test(raw) && /cegep|college/.test(raw)) add('cegep de l outaouais');
+  if (/john abbott/.test(raw)) add('john abbott');
   if (/\buqat\b/.test(raw) || /abitibi/.test(raw)) add('uqat');
   if (/\bets\b/.test(raw) || /ecole de technologie/.test(raw)) add('ets');
   if (/\bhec\b/.test(raw)) add('hec');
@@ -249,6 +252,44 @@ const CEGEP_CAMPUS_EXTRAS = [
         credit: 'Gen. Quon',
         license: 'CC BY-SA 4.0',
         link: 'https://commons.wikimedia.org/wiki/File:C%C3%A9gep_du_Vieux_Montr%C3%A9al,_Nov_03_2022.jpg',
+      },
+    ],
+  },
+  {
+    needles: ['cegep de l outaouais'],
+    photos: [
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/9/97/CEGEP_Outaouais.jpg',
+        title: "Cégep de l'Outaouais",
+        credit: 'P199',
+        license: 'CC BY-SA 4.0',
+        link: 'https://commons.wikimedia.org/wiki/File:CEGEP_Outaouais.jpg',
+      },
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Campus_F%C3%A9lix-Leclerc_2024-08-22_01.jpg',
+        title: "Campus Félix-Leclerc du Cégep de l'Outaouais",
+        credit: 'Sorcier du Lac',
+        license: 'CC BY-SA 4.0',
+        link: 'https://commons.wikimedia.org/wiki/File:Campus_F%C3%A9lix-Leclerc_2024-08-22_01.jpg',
+      },
+    ],
+  },
+  {
+    needles: ['john abbott'],
+    photos: [
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/c/cf/John_Abbott_College_007.jpg',
+        title: 'John Abbott College',
+        credit: 'Jean Gagnon',
+        license: 'CC BY-SA 3.0',
+        link: 'https://commons.wikimedia.org/wiki/File:John_Abbott_College_007.jpg',
+      },
+      {
+        url: 'https://upload.wikimedia.org/wikipedia/commons/0/03/John_Abbott_College_015.jpg',
+        title: 'John Abbott College (2)',
+        credit: 'Jean Gagnon',
+        license: 'CC BY-SA 3.0',
+        link: 'https://commons.wikimedia.org/wiki/File:John_Abbott_College_015.jpg',
       },
     ],
   },

@@ -17,6 +17,7 @@ const {
   filterUniversityPhotos,
   isRejectedCampusPhoto,
   normalizeCampusKey,
+  campusNeedlesFor,
 } = require('../scripts/campus-fallback-lib.js');
 
 const ctx = {};
@@ -50,6 +51,8 @@ const EXPECT = [
   { re: /maisonneuve/, ok: ['maisonneuve'], no: [] },
   { re: /universite du quebec a chicoutimi/, ok: ['uqac', 'universite du quebec a chicoutimi'], no: [] },
   { re: /universite du quebec a rimouski/, ok: ['uqar', 'universite du quebec a rimouski', 'universite du quebec 300 allee des ursulines'], no: ['levis'] },
+  { re: /cegep de l\W?\s?outaouais/, ok: ['outaouais', 'felix leclerc'], no: ['universite du quebec en outaouais', 'uqo'] },
+  { re: /john abbott/, ok: ['john abbott'], no: [] },
   { re: /cegep de rimouski/, ok: ['cegep de rimouski', 'cegep rimouski', 'cegeprimouski'], no: ['uqar'] },
 ];
 
@@ -71,8 +74,11 @@ assert.ok(sources.length >= 20, 'sources chargées');
 
 for (const s of sources) {
   const inst = normalizeCampusKey(s.institution);
-  const rule = EXPECT.find((r) => r.re.test(inst));
-  assert.ok(rule, `${s.name} (${s.institution}) : établissement sans règle campus`);
+  // Établissement ajouté automatiquement sans règle dédiée : chaque photo doit
+  // nommer l’établissement (aiguilles du repli client), sans exception.
+  const rule = EXPECT.find((r) => r.re.test(inst))
+    || { ok: campusNeedlesFor(s.institution), no: [] };
+  assert.ok(rule.ok.length, `${s.name} (${s.institution}) : établissement sans règle campus`);
   const server = bankEntriesFor(s.institution);
   const client = filterUniversityPhotos(uniPhotos, s.institution);
   const all = [...server, ...client];
