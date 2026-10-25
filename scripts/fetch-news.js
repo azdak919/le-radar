@@ -14,6 +14,7 @@
  */
 
 const fs = require('fs');
+const { applyLeadImagePins } = require('./lead-image-pins-lib');
 const path = require('path');
 const https = require('https');
 const { fork } = require('child_process');
@@ -1225,6 +1226,7 @@ async function main() {
   );
 
   if (doUpdate) {
+    applyLeadImagePins(news.items || []);
     fs.writeFileSync(NEWS_PATH, JSON.stringify(news, null, 2) + '\n');
     fs.writeFileSync(ARCHIVE_PATH, serializeHistoricalCatalog(archiveResult.catalog, histConfig).text);
     registry._lastFetchRun = news.updated;

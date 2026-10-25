@@ -54,6 +54,7 @@ function isPathDemoted(rawUrl = '', demotePatterns = []) {
 }
 
 const { decodeEntities } = require('./html-entities-lib');
+const { isPinnedReject } = require('./lead-image-pins-lib');
 
 const BOT_USER_AGENT = 'Mozilla/5.0 (compatible; LE-RADAR-NewsBot/1.0)';
 // Certains journaux (Wordfence, Elementor…) bloquent les UA « bot » : on
@@ -639,6 +640,7 @@ function articleImageIsValidOnPage(html = '', imageUrl = '', extraRejectPatterns
 function isCandidateImageUrl(raw = '', extraRejectPatterns = []) {
   const src = String(raw).trim();
   if (!src) return false;
+  if (isPinnedReject(src)) return false;
   if (src.startsWith('data:image/') || src.startsWith('./assets/')) return true;
   try {
     const url = new URL(src);

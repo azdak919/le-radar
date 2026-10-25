@@ -1,0 +1,17 @@
+{
+  "_doc": "Corrections d'image persistantes, appliquées à chaque collecte (scripts/lead-image-pins-lib.js). rejectImages : URL jamais réutilisées comme photo de une (affiches-texte, captures d'écran). pins : photo imposée pour un billet (lien canonique).",
+  "rejectImages": [
+    "https://cdn.impactcampus.ca/wp-content/uploads/2026/10/22163152/Capture-decran-le-2026-10-22-a-16.27.40.png"
+  ],
+  "pins": {
+    "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/": {
+      "stockImage": "https://upload.wikimedia.org/wikipedia/commons/3/38/Qu%C3%A9bec_-_Maison_de_la_litt%C3%A9rature_20241031.jpg",
+      "imageTitle": "Maison de la littérature, Québec",
+      "imageCredit": "Photo : Pymouss / CC BY-SA 4.0 · Wikimedia Commons",
+      "imageCreator": "Pymouss",
+      "imageLicense": "CC BY-SA 4.0",
+      "imageProvider": "wikimedia",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Qu%C3%A9bec_-_Maison_de_la_litt%C3%A9rature_20241031.jpg"
+    }
+  }
+}

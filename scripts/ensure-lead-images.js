@@ -19,6 +19,7 @@
  */
 
 const fs = require('fs');
+const { applyLeadImagePins } = require('./lead-image-pins-lib');
 const path = require('path');
 const { hasUsableImage } = require('./lead-fallback-lib');
 const {
@@ -534,6 +535,7 @@ async function main() {
   // Point de sauvegarde : l’étape CI a un plafond de 6 min. Si la file
   // banque/campus dépasse, les unes bandeau/portrait déjà écartées restent.
   if (doUpdate) {
+    applyLeadImagePins(allItems);
     fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: allItems, count: allItems.length }, null, 2) + '\n');
     saveStockSearchCache();
   }
@@ -878,6 +880,7 @@ async function main() {
   logPhase('total');
 
   if (doUpdate) {
+    applyLeadImagePins(allItems);
     fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: allItems, count: allItems.length }, null, 2) + '\n');
     fs.writeFileSync(QC_PATH, JSON.stringify(qc, null, 2) + '\n');
     saveStockSearchCache();
