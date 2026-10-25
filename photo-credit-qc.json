@@ -1,19 +1,19 @@
 {
-  "updated": "2026-10-25T18:12:56.647Z",
+  "updated": "2026-10-25T18:44:58.798Z",
   "total": 174,
-  "withImage": 153,
-  "withCredit": 153,
+  "withImage": 154,
+  "withCredit": 154,
   "cited": 99,
   "pending": 38,
   "missingHero": 0,
   "ok": false,
-  "checked": 46,
-  "updatedCount": 8,
+  "checked": 45,
+  "updatedCount": 7,
   "citedNew": 5,
-  "fallbackNew": 41,
+  "fallbackNew": 40,
   "samples": [
     {
-      "title": "Les partis politique muets sur la question de l’éducation",
+      "title": "Un changement d’aile qui pourrait faire s’envoler les Griffons du Cégep de l’Outaouais",
       "source": "La Griffe",
       "credit": "Photo : La Griffe",
       "cited": false,
@@ -27,13 +27,6 @@
       "method": null
     },
     {
-      "title": "Grabuge au Minotaure avec Have No Heroes et Fair Do’S",
-      "source": "La Griffe",
-      "credit": "Photo : La Griffe",
-      "cited": false,
-      "method": null
-    },
-    {
       "title": "Rouge d’une part, blanche de l’autre",
       "source": "Le Délit",
       "credit": "Photo : Tan YiYang",
@@ -41,18 +34,18 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Les Griffons en forme !",
-      "source": "La Griffe",
-      "credit": "Photo : Nicolas Doire",
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
-      "method": "json-ld"
+      "method": "media-credit-featured"
     },
     {
-      "title": "Les Griffons reprennent où ils avaient laissé !",
-      "source": "La Griffe",
-      "credit": "Photo : Nicolas Doire",
+      "title": "Le « self-care » : qui valide votre repos ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
-      "method": "json-ld"
+      "method": "media-credit-featured"
     },
     {
       "title": "Tex Crick: Indie Through and Through",

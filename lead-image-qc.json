@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-25T18:12:24.120Z",
+  "updated": "2026-10-25T18:44:26.932Z",
   "total": 174,
-  "withPhoto": 154,
+  "withPhoto": 155,
   "withStock": 38,
   "withCampusBank": 27,
   "fullyCovered": 174,
   "leadReadyPhotos": 134,
-  "pageScraped": 37,
-  "photosRecovered": 36,
-  "imagesCleared": 11,
-  "stockSearches": 40,
-  "stockFound": 31,
-  "campusBankFound": 20,
+  "pageScraped": 33,
+  "photosRecovered": 32,
+  "imagesCleared": 12,
+  "stockSearches": 43,
+  "stockFound": 34,
+  "campusBankFound": 22,
   "mainPageLeadReady": true,
   "gaps": [
     {
@@ -33,28 +33,46 @@
       "image": "https://i0.wp.com/journallagriffe.ca/wp-content/uploads/2026/10/Article1.png?fit=601%2C403&ssl=1"
     },
     {
-      "title": "Un changement d’aile qui pourrait faire s’envoler les Griffons du Cégep de l’Outaouais",
-      "link": "https://journallagriffe.ca/2026/10/un-changement-daile-qui-pourrait-faire-senvoler-les-griffons-du-cegep-de-loutaouais/",
+      "title": "Gatineau est représenté dans les nominations du gala de l’ADISQ",
+      "link": "https://journallagriffe.ca/2026/10/gatineau-est-represente-dans-les-nominations-du-gala-de-ladisq/",
+      "reason": "no-stock-match",
+      "image": "https://journallagriffe.ca/wp-content/uploads/2026/10/Image1.png"
+    },
+    {
+      "title": "Démission de Christine Fréchette : quel avenir pour la CAQ ?",
+      "link": "https://lecollectif.ca/societe/demission-de-christine-frechette-quel-avenir-pour-la-caq/",
+      "reason": "stock-too-small",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/71/Christine_Fr%C3%A9chette.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "The Honey Bank: CSU’s sustainability initiatives",
+      "link": "https://theconcordian.com/2026/10/the-honey-bank-csus-sustainability-initiatives/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/9/97/CEGEP_Outaouais.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG"
+    },
+    {
+      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
+      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Pavillon_DKN%2C_Universit%C3%A9_Laval_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "“Decolonization”",
+      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
       "title": "Health First!",
       "link": "https://www.mcgilldaily.com/2026/10/health-first/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/McGill_University_downtown_campus_18.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
-      "title": "Horoscope September 2026",
-      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "title": "Shawarm-off!",
+      "link": "https://www.mcgilldaily.com/2026/10/shawarm-off/",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
-    },
-    {
-      "title": "Festivals au Québec : la fête à quel prix ?",
-      "link": "https://quartierlibre.ca/festivals-au-quebec-quel-prix/",
-      "reason": "stock-too-small",
-      "image": "https://quartierlibre.ca/wp-content/uploads/2026/10/16-17_angine.avif"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
     },
     {
       "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
@@ -67,24 +85,6 @@
       "link": "https://thebucampus.ca/2026/09/30/prepare-for-fewer-course-options-in-the-coming-years-budget-cuts-are-affecting-the-number-of-courses-available-at-bu/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "A Tradition on the Edge: The Future of Homecoming",
-      "link": "https://thebucampus.ca/2026/09/30/a-tradition-on-the-edge-the-future-of-homecoming/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Bishop%27s_University_McGreer_Hall.jpg"
-    },
-    {
-      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
-      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Pavillon_DKN%2C_Universit%C3%A9_Laval_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Battling Adversity",
-      "link": "https://thebucampus.ca/2026/09/30/battling-adversity/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Bishop%27s_University_campus_2011.jpg"
     }
   ]
 }
