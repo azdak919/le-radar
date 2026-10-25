@@ -96,7 +96,7 @@ test.describe('application mobile', () => {
     await page.locator('#tabs').getByRole('link', { name: 'Accueil' }).click();
     await page.evaluate(() => window.scrollTo(0, 0));
     const mastBottom = await page.evaluate(() => Math.round(document.querySelector('.masthead').getBoundingClientRect().bottom));
-    expect(mastBottom).toBeGreaterThan(100);
+    expect(mastBottom).toBeGreaterThan(40); // mât compact ; sans data/ en CI il est plus bas
     expect(Math.abs(await barTop() - mastBottom)).toBeLessThanOrEqual(2);
     // Après défilement : collée en haut de l'écran (sticky), sans débordement.
     await page.evaluate(() => window.scrollTo(0, 4000));

@@ -1,27 +1,34 @@
 {
-  "updatedAt": "2026-10-25T22:32:42.297Z",
+  "updatedAt": "2026-10-25T23:26:02.227Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
       "id": "chyz",
       "name": "CHYZ 94,3",
-      "current": null,
-      "next": {
+      "current": {
         "title": "Le Monde d'Erik Arsenault - 10 ans",
-        "source": "schedule",
+        "source": "api-live",
         "start": "19:00",
         "end": "21:00",
         "url": "https://chyz.ca/emission/le-monde-derik-arsenault-10-ans/"
       },
+      "next": {
+        "title": "Lundi Indie",
+        "source": "schedule-live",
+        "start": "08:00",
+        "end": "10:00",
+        "url": "https://chyz.ca/emission/lundie-indie-playlist-du-matin/"
+      },
       "track": "",
-      "showTitle": "",
+      "showTitle": "Le Monde d'Erik Arsenault - 10 ans",
       "host": "",
-      "source": "schedule",
+      "source": "api-live",
       "sources": [
-        "schedule"
+        "api-live",
+        "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T22:32:00.139Z"
+      "checkedAt": "2026-10-25T23:25:22.300Z"
     },
     "cism": {
       "id": "cism",
@@ -48,25 +55,25 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T22:32:02.304Z"
+      "checkedAt": "2026-10-25T23:25:24.170Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "Desi Beats",
-        "source": "api-live",
-        "start": "18:00",
-        "end": "19:00"
-      },
-      "next": {
         "title": "Bluegrass Rambling",
         "source": "api-live",
         "start": "19:00",
         "end": "20:00"
       },
+      "next": {
+        "title": "Country Classics",
+        "source": "api-live",
+        "start": "20:00",
+        "end": "21:00"
+      },
       "track": "",
-      "showTitle": "Desi Beats",
+      "showTitle": "Bluegrass Rambling",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +81,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T22:32:05.206Z"
+      "checkedAt": "2026-10-25T23:25:27.659Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Bills Country and Western Favourites",
-        "source": "schedule-live",
-        "start": "18:00",
-        "end": "19:00",
-        "url": "http://www.cjlo.com/shows/bills-country-and-western-favourites"
-      },
-      "next": {
         "title": "No Boundaries",
         "source": "schedule-live",
         "start": "19:00",
         "end": "20:00",
         "url": "http://www.cjlo.com/shows/no-boundaries"
       },
+      "next": {
+        "title": "Eastern Promises",
+        "source": "schedule-live",
+        "start": "20:00",
+        "end": "20:30",
+        "url": "http://www.cjlo.com/shows/eastern-promises"
+      },
       "track": "",
-      "showTitle": "Bills Country and Western Favourites",
+      "showTitle": "No Boundaries",
       "host": "",
       "source": "schedule-live",
       "sources": [
         "schedule-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T22:32:20.266Z"
+      "checkedAt": "2026-10-25T23:25:41.819Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,7 +128,7 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T22:32:21.526Z"
+      "checkedAt": "2026-10-25T23:25:43.572Z"
     },
     "choq": {
       "id": "choq",
@@ -142,7 +149,7 @@
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T22:32:41.947Z"
+      "checkedAt": "2026-10-25T23:26:01.876Z"
     }
   }
 }
