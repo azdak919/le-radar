@@ -61,7 +61,12 @@ const ctxOk = { registry: { active: [], candidates: [] }, institutions: [{ name:
 const cand = { name: 'La Griffe', institution: "Cégep de l'Outaouais", site: 'https://journallagriffe.ca/', vetted: true };
 const pr = { feedUrl: 'https://journallagriffe.ca/feed/', isFeed: true, items: 10, lastItemMs: ctxOk.now - 86400000, pageText: '' };
 assert.equal(A.evaluateAdmission(cand, pr, ctxOk).admit, true);
-assert.equal(A.evaluateAdmission(cand, { ...pr, creditSamples: [{ link: 'a', author: "X et See author's posts" }] }, ctxOk).admit, false);
+{
+  // Règle 10 non bloquante : admis, crédits douteux seulement notés (#220).
+  const v = A.evaluateAdmission(cand, { ...pr, creditSamples: [{ link: 'a', author: "X et See author's posts" }] }, ctxOk);
+  assert.equal(v.admit, true);
+  assert.equal(v.creditNotes.length, 1);
+}
 // Une page vérifiée avant le dernier correctif d'extraction est revérifiée.
 assert.equal(AL.needsPageAuthorVerification({ link: 'https://x.ca/a/', author: 'La rédaction', authorCheckedAt: '2026-10-25T18:11:06Z' }), true);
 console.log('credit-extraction recheck OK');
@@ -73,3 +78,42 @@ const camino = `<html><body>${pad}<figure><img src="data:image/png;base64,A" dat
 assert.equal(PC.extractPhotoCreditFromHtml(camino, 'https://t.com/wp-content/uploads/2026/10/PXL_1-1024x768.jpg', 'en').creator, 'Sonia Celi');
 assert.equal(PC.extractPhotoCreditFromHtml(camino, 'https://t.com/wp-content/uploads/2026/10/PXL_2.jpg', 'en').creator, 'Anthony Tapia Ancinez');
 console.log('credit-extraction courtesy OK');
+
+// ── « Crédit faussé ou étrange → La rédaction » (affichage partagé site/app) ──
+const C = require('../scripts/article-card-lib.js');
+const en = { lang: 'en', source: 'The Plant' };
+const fr = { lang: 'fr', source: 'La Griffe' };
+for (const bad of ['Co', 'admin', "See author's posts", 'Voir tous les articles', '@plant', 'juliebergeron', 'jdoe@x.ca', 'The Plant', '', 'Ab', 'Th3rdwave']) {
+  assert.equal(C.displayAuthorName(bad, en), 'The editorial team', bad);
+}
+assert.equal(C.displayAuthorName('Co', fr), 'La rédaction');
+for (const good of ['Simon Jaffary Osowski', 'Elsie Duque Hills', 'Atika Ume Fazal', 'Nathan Brisbois et Elora Veyron-Churlet', 'Colin van den Ameele', "Marie-Ève D'Amours"]) {
+  assert.equal(C.displayAuthorName(good, fr), good, good);
+}
+assert.equal(C.displayPhotoCredit('Photo : La Griffe', { ...fr, sourceImageCreditFrom: 'media' }), 'Photo : La rédaction');
+assert.equal(C.displayPhotoCredit('Photo: The Plant', en), 'Photo: The editorial team');
+assert.equal(C.displayPhotoCredit('Photo: Th3rdwave', en), 'Photo: The editorial team');
+assert.equal(C.displayPhotoCredit('Photo : Scannez le code QR pour lire la version complète de cet article, incluant les références! Avec la collaboration de X', fr), 'Photo : La rédaction');
+assert.equal(C.displayPhotoCredit('Photo : Nicolas Doire', fr), 'Photo : Nicolas Doire');
+assert.equal(C.displayPhotoCredit('Photo: Courtesy of Spotify', en), 'Photo: Courtesy of Spotify');
+assert.equal(C.displayPhotoCredit('Photo : Source : Getty Images', fr), 'Photo : Getty Images');
+assert.equal(C.displayPhotoCredit('Photo : Ana Camila Torchia l Le Délit', fr), 'Photo : Ana Camila Torchia / Le Délit');
+assert.equal(C.looksLikePersonName('Simon Jaffary Osowski'), true);
+assert.equal(C.looksLikePersonName('Pulp Fiction'), true); // forme seule : d'où la règle « Via » ci-dessous
+assert.equal(C.looksLikePersonName('see author posts'), false);
+
+// The Plant (25 oct.) : nom + rôle en tête d'article (« Visual Arts Editor »,
+// « Co-Managing Editor ») — l'ancien motif de rôle ratait ces deux libellés.
+const plant = (caption, name, role) => `<html><head><meta name="author" content=""></head><body><div class="entry-content wp-block-post-content"><figure class="wp-block-image"><img src="https://theplantnews.com/wp-content/uploads/2026/10/x.jpg"><figcaption>${caption}</figcaption></figure><p>${name}</p><p>${role}</p><p>I thought I knew it all. I mean, Pulp Fiction reformed me and the long body text continues here for a while.</p></div></body></html>`;
+assert.equal(AL.authorFromArticleHtml(plant('Via Pinterest', 'Simon Jaffary Osowski', 'Visual Arts Editor'), 'en', {}, 'The Plant'), 'Simon Jaffary Osowski');
+assert.equal(AL.authorFromArticleHtml(plant('Via Pulp Fiction', 'Elsie Duque Hills', 'Co-Managing Editor'), 'en', {}, 'The Plant'), 'Elsie Duque Hills');
+// « Via Pulp Fiction » : provenance, pas un photographe.
+const via = `<html><body><div class="entry-content"><p>Via Pulp Fiction</p><p>Elsie Duque Hills</p><p>Co-Managing Editor</p></div></body></html>`;
+const vc = PC.extractViaCredit ? PC.extractViaCredit(via, 'fr') : null;
+assert.equal(vc.creditLine, 'Image tirée de Pulp Fiction');
+assert.equal(PC.extractViaCredit(via, 'en').creditLine, 'Image via Pulp Fiction');
+assert.equal(PC.creditFromIptc('Jane Doe', 'fr').creditLine, 'Photo : Jane Doe');
+assert.equal(PC.creditFromIptc('IMG_2034', 'fr'), null);
+assert.equal(C.displayAuthorName('Ellen Lurie and Managing Editor', en), 'Ellen Lurie');
+assert.equal(C.displayAuthorName('Ingara Maidou and Eva Marriott-Fabre', en), 'Ingara Maidou and Eva Marriott-Fabre');
+console.log('credit-extraction la-rédaction OK');

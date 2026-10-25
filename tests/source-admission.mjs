@@ -101,3 +101,13 @@ assert.match(yml, /gh issue edit/);
 assert.match(yml, /data\/news-discovery\.md/);
 assert.match(yml, /brand-colors\.json/);
 console.log('source-admission : ok');
+
+// Règle 10 : un crédit faussé n'écarte plus une source (Charles, 25 oct.).
+{
+  const v = A.evaluateAdmission(good, { ...probe, creditSamples: [{ link: 'a', author: 'admin', creditLine: 'Photo : X // @x' }] }, ctx);
+  assert.equal(v.admit, true, v.reason);
+  assert.ok(v.creditNotes.length >= 1);
+  const log = A.renderDiscoveryLog({ added: [], rejected: [], creditNotes: [{ name: 'Test', notes: v.creditNotes }] });
+  assert.match(log, /Crédits douteux/);
+}
+console.log('source-admission règle 10 non bloquante OK');

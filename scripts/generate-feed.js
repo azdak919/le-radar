@@ -12,6 +12,7 @@
  */
 
 const fs = require('fs');
+const { displayAuthorName, displayPhotoCredit, isSuspectAuthorName } = require('./article-card-lib');
 const path = require('path');
 const { pruneToFreshWindow } = require('./source-retention-lib');
 const { buildAcronymMap } = require('./institution-labels-lib');
@@ -155,7 +156,7 @@ function sourceHomeUrl(item = {}, sourceSites = {}) {
 }
 
 function itemAuthor(item = {}) {
-  const author = String(item.author || '').trim();
+  const author = displayAuthorName(String(item.author || '').trim(), item);
   if (!author) return '';
   return author;
 }
@@ -177,7 +178,9 @@ function attributionLine(item = {}) {
 }
 
 function photoCreditLine(item = {}) {
-  const credit = String(item.sourceImageCredit || item.imageCredit || '').trim();
+  const credit = item.sourceImageCredit
+    ? displayPhotoCredit(String(item.sourceImageCredit).trim(), item)
+    : String(item.imageCredit || '').trim();
   if (!credit) return '';
   return item.lang === 'en' ? `Photo: ${credit.replace(/^Photo\s*:?\s*/i, '')}` : credit;
 }

@@ -1,8 +1,8 @@
 {
-  "updated": "2026-10-25T20:13:27.195Z",
+  "updated": "2026-10-25T20:28:55.164Z",
   "total": 174,
   "withAuthor": 174,
-  "mismatches": 17,
+  "mismatches": 18,
   "ok": true,
   "samples": [
     {
@@ -10,8 +10,16 @@
       "link": "https://theplantnews.com/2026/10/25/mens-clothing-ill-wear-on-gender-roles-and-expression-in-the-british-ballad/",
       "source": "The Plant",
       "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
+      "canonicalAuthor": "Simon Jaffary Osowski",
+      "reason": "page-byline"
+    },
+    {
+      "title": "Say “Coffee” Again! I Dare You.",
+      "link": "https://theplantnews.com/2026/10/25/say-coffee-again-i-dare-you/",
+      "source": "The Plant",
+      "fieldAuthor": "Co",
+      "canonicalAuthor": "Elsie Duque Hills",
+      "reason": "page-byline-overrides-rss"
     },
     {
       "title": "Letters from the Editors October 2026",
@@ -62,36 +70,28 @@
       "reason": "no-author-source"
     },
     {
-      "title": "MUNACA’s Campaign Exposes the McGill Administration’s Greed",
-      "link": "https://www.mcgilldaily.com/2026/10/munacas-campaign-exposes-the-mcgill-administrations-greed/",
+      "title": "McGill Students Pass Historic Boycott Motion",
+      "link": "https://www.mcgilldaily.com/2026/10/mcgill-students-pass-historic-boycott-motion/",
       "source": "The McGill Daily",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
+      "fieldAuthor": "Ingara Maidou et Eva Marriott-Fabre",
+      "canonicalAuthor": "Ingara Maidou and Eva Marriott-Fabre",
+      "reason": "page-byline-overrides-rss"
     },
     {
-      "title": "“Decolonization”",
-      "link": "https://www.mcgilldaily.com/2026/10/decolonization/",
-      "source": "The McGill Daily",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
+      "title": "From Scripts to Stage: BU New Plays 2026",
+      "link": "https://thebucampus.ca/2026/09/30/from-scripts-to-stage-bu-new-plays-2026/",
+      "source": "The Campus",
+      "fieldAuthor": "Zachary Jaimes",
+      "canonicalAuthor": "Zachary Jaimes Saint Cyr",
+      "reason": "page-byline-overrides-rss"
     },
     {
-      "title": "Health First!",
-      "link": "https://www.mcgilldaily.com/2026/10/health-first/",
-      "source": "The McGill Daily",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
-    },
-    {
-      "title": "Searching For a Third Space",
-      "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
-      "source": "The McGill Daily",
-      "fieldAuthor": "The editorial team",
-      "canonicalAuthor": "The editorial team",
-      "reason": "no-author-source"
+      "title": "Blackface at McGill",
+      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
+      "source": "The Tribune",
+      "fieldAuthor": "Ellen Lurie et Managing Editor",
+      "canonicalAuthor": "Ellen Lurie and Managing Editor",
+      "reason": "page-byline-overrides-rss"
     },
     {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
@@ -126,6 +126,14 @@
       "reason": "no-author-source"
     },
     {
+      "title": "What we liked this summer break",
+      "link": "https://www.thetribune.ca/a-e/what-we-liked-this-summer-break-08092026/",
+      "source": "The Tribune",
+      "fieldAuthor": "Dylan Hing, Lia James et Siena Torres",
+      "canonicalAuthor": "Dylan Hing, Lia James and Siena Torres",
+      "reason": "page-byline-overrides-rss"
+    },
+    {
       "title": "‘The Tribune’ Explains: How to vote in Quebec’s 2026 general election",
       "link": "https://www.thetribune.ca/news/the-tribune-explains-how-to-vote-in-quebecs-2026-general-election-08092026/",
       "source": "The Tribune",
@@ -142,5 +150,5 @@
       "reason": "no-author-source"
     }
   ],
-  "fixed": 17
+  "fixed": 18
 }

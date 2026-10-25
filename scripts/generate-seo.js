@@ -26,6 +26,7 @@
  */
 
 const fs = require('fs');
+const { isSuspectAuthorName } = require('./article-card-lib');
 const path = require('path');
 const { execFileSync } = require('child_process');
 const { decodeHtmlEntities } = require('./html-entities-lib');
@@ -497,7 +498,7 @@ function buildItemListJsonLd(items) {
         ...(item.excerpt ? { description: cleanText(item.excerpt).slice(0, 300) } : {}),
         ...(item.image ? { image: item.image } : {}),
         ...(item.lang ? { inLanguage: item.lang } : {}),
-        ...(item.author ? { author: { '@type': 'Person', name: cleanText(item.author) } } : {}),
+        ...(item.author && !isSuspectAuthorName(item.author, item.source) ? { author: { '@type': 'Person', name: cleanText(item.author) } } : {}),
         ...(item.source
           ? {
             publisher: {

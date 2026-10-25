@@ -260,8 +260,112 @@ function institutionShort(name = '', table = (typeof globalThis !== 'undefined' 
   return paren ? paren[1] : '';
 }
 
+// ── Crédits : auteur / photo faussés → « La rédaction » (dernier recours) ──
+// Partagé site ↔ app ↔ pipeline. Ne remplace jamais un vrai nom valide.
+const CREDIT_UI_LABEL_RE = /\b(?:see|view|more)\s+(?:all\s+)?(?:author['’]?s?\s+)?(?:posts|articles|stories)\b|\b(?:all\s+)?posts\s+by\b|\bvoir\s+(?:tous\s+)?(?:les\s+)?(?:articles|publications)\b|\barticles\s+de\s+l['’]auteur|\bplus\s+d['’]articles\b|\b(?:read more|lire la suite|skip to content|written by|recent posts|scannez|code qr|cliquez)\b/i;
+const CREDIT_ACCOUNT_RE = /^(?:admin|administrator|administrateur|wordpress|webmaster|editor|user\d*|auteur|author|guest|invité|staff|root|test|contributor|unknown|inconnu|anonyme|anonymous|n\/?a|none|journaliste|photographe)$/i;
+const EDITORIAL_RE = /^(?:la\s+r[eé]daction|l['’]?\s*[eé]quipe(?:\s+de\s+r[eé]daction)?|the\s+editorial\s+(?:team|staff|board)|editorial\s+(?:team|staff|board))$/i;
+
+function editorialLabel(lang = 'fr') {
+  return lang === 'en' ? 'The editorial team' : 'La rédaction';
+}
+function creditNorm(s = '') {
+  return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+    .replace(/^(?:le|la|les|l['’]|the)\s*/, '').replace(/[^a-z0-9]+/g, '');
+}
+/** Pseudo / handle : @x, x//y, nom_utilisateur, chiffres collés à des minuscules (Th3rdwave). */
+function looksLikeHandle(s = '') {
+  const t = String(s || '').trim();
+  if (/(?:^|\s)@[\w.]+|\/\//.test(t)) return true;
+  if (/\s/.test(t)) return false;
+  if (/[_]/.test(t)) return true;
+  if (/^[a-z][a-z0-9.\-]*$/.test(t)) return true; // tout en minuscules, un seul mot
+  if (/[a-z]\d|\d[a-z]/.test(t)) return true;
+  return false;
+}
+/** Vrai si le texte ressemble à un nom de personne (2 à 5 mots capitalisés). */
+function looksLikePersonName(s = '') {
+  const t = String(s || '').replace(/\s+/g, ' ').trim();
+  if (!t || t.length < 4 || t.length > 80) return false;
+  if (/[@\d/\\|:;!?{}<>=]|https?:|www\./i.test(t) || CREDIT_UI_LABEL_RE.test(t)) return false;
+  const words = t.split(' ');
+  if (words.length < 2 || words.length > 5) return false;
+  const particles = /^(?:de|du|des|d['’]|la|le|les|van|von|der|den|del|della|da|dos|di|y|e|bin|al|st|ste)$/i;
+  return words.every((w) => particles.test(w) || /^(?:\p{Lu}[\p{L}'’]*\.?|\p{Lu}\.)(?:-\p{Lu}?[\p{L}'’]*\.?)*$/u.test(w));
+}
+/**
+ * Auteur faussé ou étrange ? (libellé d'interface, pseudo, compte générique,
+ * courriel, nom du média, fragment d'un seul mot / < 3 lettres, chaîne vide).
+ */
+function isSuspectAuthorName(name = '', sourceName = '') {
+  const a = String(name || '').replace(/^(?:Par|By)\s+/i, '').replace(/\s+/g, ' ').trim();
+  if (!a) return true;
+  if (EDITORIAL_RE.test(a)) return false; // déjà le repli
+  if ((a.match(/\p{L}/gu) || []).length < 3) return true;
+  if (/@|https?:|www\.|\.(?:com|ca|org|net)\b/i.test(a)) return true;
+  if (CREDIT_UI_LABEL_RE.test(a) || CREDIT_ACCOUNT_RE.test(a) || looksLikeHandle(a)) return true;
+  if (/[{}<>=|\\]|\d/.test(a)) return true;
+  if (sourceName && creditNorm(a) === creditNorm(sourceName)) return true;
+  if (a.length > 120) return true;
+  // Un seul mot = fragment (« Co », « Daily ») : jamais un vrai nom complet.
+  if (!/[\s,]/.test(a)) return true;
+  return false;
+}
+const ROLE_LABEL_RE = /^(?:(?:co-?\s*)?(?:[\p{L}&]+\s+){0,3}(?:editors?(?:-in-chief)?|writers?|reporters?|correspondents?|contributors?|columnists?|photographers?|r[ée]dact(?:eur|rice)s?(?:\s+en\s+chef)?|journalistes?|chroniqueu(?:r|se)s?|collaborat(?:eur|rice)s?))$/iu;
+function displayAuthorName(name = '', item = {}) {
+  const lang = item.lang === 'en' ? 'en' : 'fr';
+  const a = String(name || '').replace(/^(?:Par|By)\s+/i, '').replace(/\s+/g, ' ').trim();
+  if (EDITORIAL_RE.test(a)) return editorialLabel(lang);
+  // Liste « A and Managing Editor » : retirer les libellés de rôle / fragments.
+  const sep = /\s*,\s*|\s+(?:et|and|&)\s+/;
+  if (sep.test(a)) {
+    const parts = a.split(sep).map((p) => p.trim()).filter(Boolean);
+    const keep = parts.filter((p) => !ROLE_LABEL_RE.test(p) && !isSuspectAuthorName(p, item.source));
+    if (!keep.length) return editorialLabel(lang);
+    if (keep.length !== parts.length) {
+      const and = lang === 'en' ? ' and ' : ' et ';
+      return keep.length === 1 ? keep[0] : `${keep.slice(0, -1).join(', ')}${and}${keep[keep.length - 1]}`;
+    }
+  }
+  return isSuspectAuthorName(a, item.source) ? editorialLabel(lang) : a;
+}
+const PHOTO_PREFIX_RE = /^((?:Photo(?:\s+credit)?|Crédits?(?:\s+photo)?|Credits?|Illustration|Dessin|Image(?:\s+tirée\s+de|\s+via|\s+from)?|Graphisme|Graphic|Art(?:work)?)\s*:?\s*)/i;
+/**
+ * Crédit photo d'article (sourceImageCredit) faussé ou étrange ?
+ * Le nom du média seul compte comme « pas de vrai crédit ».
+ */
+function isSuspectPhotoCredit(line = '', item = {}) {
+  const t = String(line || '').replace(/\s+/g, ' ').trim();
+  if (!t) return false;
+  if (item.sourceImageCreditFrom === 'media') return true;
+  const rest = t.replace(PHOTO_PREFIX_RE, '').replace(/^Source\s*:\s*/i, '').trim();
+  if (!rest || (rest.match(/\p{L}/gu) || []).length < 2) return true;
+  if (rest.length > 90 || CREDIT_UI_LABEL_RE.test(rest)) return true;
+  if (CREDIT_ACCOUNT_RE.test(rest) || EDITORIAL_RE.test(rest)) return true;
+  if (/[\w.+-]+@[\w-]+\.[\w.]+/.test(rest) || /(?:^|\s)@[\w.]+|\/\//.test(rest)) return true;
+  if (!/\s/.test(rest) && looksLikeHandle(rest)) return true;
+  if (item.source && creditNorm(rest) === creditNorm(item.source)) return true;
+  return false;
+}
+function displayPhotoCredit(line = '', item = {}) {
+  const t = String(line || '').replace(/\s+/g, ' ').trim();
+  if (!t) return '';
+  if (!isSuspectPhotoCredit(t, item)) {
+    return t.replace(/(\s*:\s*)Source\s*:\s*/i, '$1').replace(/\s+[l|¦]\s+(?=\p{Lu})/u, ' / ');
+  }
+  const en = item.lang === 'en';
+  return (en ? 'Photo: ' : 'Photo : ') + editorialLabel(en ? 'en' : 'fr');
+}
+
 return {
   MC_CATEGORY_PREFIX,
+  editorialLabel,
+  looksLikePersonName,
+  looksLikeHandle,
+  isSuspectAuthorName,
+  displayAuthorName,
+  isSuspectPhotoCredit,
+  displayPhotoCredit,
   decodeHtmlEntities,
   cleanTitle,
   stripLeadingByline,

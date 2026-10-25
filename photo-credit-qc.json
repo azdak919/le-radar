@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-25T20:15:33.630Z",
+  "updated": "2026-10-25T20:31:43.075Z",
   "total": 174,
   "withImage": 153,
   "withCredit": 153,
@@ -7,94 +7,87 @@
   "pending": 39,
   "missingHero": 0,
   "ok": false,
-  "checked": 62,
-  "updatedCount": 62,
-  "citedNew": 8,
-  "fallbackNew": 54,
+  "checked": 50,
+  "updatedCount": 11,
+  "citedNew": 11,
+  "fallbackNew": 39,
   "samples": [
     {
-      "title": "Un changement d’aile qui pourrait faire s’envoler les Griffons du Cégep de l’Outaouais",
-      "source": "La Griffe",
-      "credit": "Photo : La Griffe",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Rouge d’une part, blanche de l’autre",
-      "source": "Le Délit",
-      "credit": "Photo : Tan YiYang",
-      "cited": true,
-      "method": "figcaption-bare"
-    },
-    {
-      "title": "Arrestations visant les LGBTQ+ en Turquie",
-      "source": "Le Délit",
-      "credit": "Photo : Ana Camila Torchia",
-      "cited": true,
-      "method": "media-credit-featured"
-    },
-    {
-      "title": "Letters from the Editors October 2026",
+      "title": "Say “Coffee” Again! I Dare You.",
       "source": "The Plant",
-      "credit": "Photo: The Plant",
-      "cited": false,
-      "method": null
+      "credit": "Image via Pulp Fiction",
+      "cited": true,
+      "method": "via-attribution"
     },
     {
-      "title": "De la France au Québec, la colère lycéenne trouve un écho",
+      "title": "Comment bien habiter le campus ?",
       "source": "Quartier Libre",
-      "credit": "Photo : Quartier Libre",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Looking back at my journey walking El Camino de Santiago",
-      "source": "The Concordian",
-      "credit": "Photo: Courtesy of Sonia Celi",
+      "credit": "Photo : Simone Gingras",
       "cited": true,
-      "method": "figcaption-trailing"
+      "method": "figcaption-trailing-fr"
     },
     {
-      "title": "Reportages radio du 19 octobre 2026",
-      "source": "La Pige",
-      "credit": "Photo : La Pige",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Les partis politique muets sur la question de l’éducation",
-      "source": "La Griffe",
-      "credit": "Photo : La Griffe",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Gatineau est représenté dans les nominations du gala de l’ADISQ",
-      "source": "La Griffe",
-      "credit": "Photo : La Griffe",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "The different sides of Montreal’s nightlife",
-      "source": "The Link",
-      "credit": "Photo: The Link",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Grabuge au Minotaure avec Have No Heroes et Fair Do’S",
-      "source": "La Griffe",
-      "credit": "Photo : La Griffe",
-      "cited": false,
-      "method": null
-    },
-    {
-      "title": "Fin de saison abrupte pour la cycliste Magdeleine Vallières Mill",
-      "source": "Le Collectif",
-      "credit": "Photo : Source : Getty Images",
+      "title": "NAZA : enquête sur les rouages des frappes israéliennes sur Gaza.",
+      "source": "Quartier Libre",
+      "credit": "Photo : The Guardian",
       "cited": true,
-      "method": "body-line"
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "F(R)ICTION : quand le jeu vidéo devient une expérience artistique",
+      "source": "Quartier Libre",
+      "credit": "Photo : Joséphine Dao-Devenyns",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Festivals au Québec : la fête à quel prix ?",
+      "source": "Quartier Libre",
+      "credit": "Photo : Émanuel Novak-Bélanger pour Noovo info",
+      "cited": true,
+      "method": "figcaption-trailing-fr"
+    },
+    {
+      "title": "Math, now, … Thinking Outside the Box",
+      "source": "The Plant",
+      "credit": "Image via Charlie Reuter",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Figure Skating With a Stick",
+      "source": "The Plant",
+      "credit": "Image via Instagram",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "“Strava Or It Didn’t Happen”: On Our Obsession With Tracking",
+      "source": "The Plant",
+      "credit": "Image via Pinterest",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Needs and Spaces: How Often They Should Work Together",
+      "source": "The Plant",
+      "credit": "Image via Th3rdwave",
+      "cited": true,
+      "method": "via-attribution"
+    },
+    {
+      "title": "Sécurité routière à Marguerite-Bourgeoys : des défis persistent",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Héléna Pleau / L'Exemplaire",
+      "cited": true,
+      "method": "figcaption-paren-kind"
+    },
+    {
+      "title": "Le patrimoine religieux de Québec : un financement inégal",
+      "source": "L'Exemplaire",
+      "credit": "Photo : Hermione Durocher / L’Exemplaire",
+      "cited": true,
+      "method": "figcaption-paren-kind"
     }
   ]
 }

@@ -41,6 +41,36 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+const { isSuspectAuthorName, looksLikePersonName } = require('./article-card-lib');
+
+/** Noms d'auteur des sources structurées WP ; garde un nom confirmé (≥ 2) sinon unique. */
+async function wpStructuredAuthor(link = '') {
+  let u;
+  try { u = new URL(link); } catch { return ''; }
+  const slug = u.pathname.split('/').filter(Boolean).pop();
+  if (!slug) return '';
+  let post;
+  try {
+    const raw = await fetchText(`${u.origin}/wp-json/wp/v2/posts?slug=${encodeURIComponent(slug)}&_embed=author`, 2, PAGE_FETCH_TIMEOUT);
+    post = JSON.parse(raw || '[]')?.[0];
+  } catch { return ''; }
+  if (!post) return '';
+  const cands = [];
+  for (const a of post._embedded?.author || []) cands.push(a?.name);
+  cands.push(post.yoast_head_json?.author);
+  for (const n of post.yoast_head_json?.schema?.['@graph'] || []) {
+    if (/Person/.test(String(n?.['@type'] || ''))) cands.push(n.name);
+  }
+  for (const c of post.coauthors || []) cands.push(c?.display_name || c?.name);
+  const ok = cands.map((c) => String(c || '').trim()).filter((c) => looksLikePersonName(c));
+  if (!ok.length) return '';
+  const count = new Map();
+  for (const c of ok) count.set(c, (count.get(c) || 0) + 1);
+  const sorted = [...count.entries()].sort((a, b) => b[1] - a[1]);
+  if (sorted.length > 1 && sorted[0][1] < 2) return ''; // désaccord non tranché
+  return sorted[0][0];
+}
+
 async function fetchPageAuthors(items, feedDefaults, sourceMap = new Map()) {
   const pageAuthors = new Map();
   const checkedAtByKey = new Map();
@@ -83,6 +113,13 @@ async function fetchPageAuthors(items, feedDefaults, sourceMap = new Map()) {
       ]);
     } catch {
       author = '';
+    }
+    // Dernier recours avant « La rédaction » : données structurées WordPress
+    // (_embed author, yoast_head_json.author, schema Person) — nom de personne
+    // validé seulement.
+    if (!author || isSuspectAuthorName(author, item.source)) {
+      const wp = await wpStructuredAuthor(item.link);
+      if (wp) author = wp;
     }
     if (author) pageAuthors.set(key, author);
     fetched += 1;

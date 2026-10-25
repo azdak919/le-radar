@@ -3777,8 +3777,18 @@ function creditLink(href, label, className = '') {
 }
 
 function buildSourcePhotoCreditElement(item = {}) {
-  const credit = String(item.sourceImageCredit || '').trim();
-  if (!credit) return null;
+  const rawCredit = String(item.sourceImageCredit || '').trim();
+  if (!rawCredit) return null;
+  // Crédit faussé, étrange ou simple nom du média → « Photo : La rédaction ».
+  const card = globalThis.RadarArticleCard;
+  const credit = card?.displayPhotoCredit ? card.displayPhotoCredit(rawCredit, item) : rawCredit;
+  if (card?.isSuspectPhotoCredit?.(rawCredit, item)) {
+    const capE = document.createElement('figcaption');
+    capE.className = 'article-media-credit notranslate';
+    capE.setAttribute('translate', 'no');
+    capE.textContent = credit;
+    return capE;
+  }
 
   const cap = document.createElement('figcaption');
   // Crédit photo entier en original (photographe + libellé) — pas de MT.
@@ -4284,8 +4294,11 @@ function canonicalizeEditorialAuthor(name = '') {
 }
 
 function resolveDisplayAuthor(item, rawAuthor = '') {
-  return normalizeAuthor(rawAuthor || item.author || '')
+  const a = normalizeAuthor(rawAuthor || item.author || '')
     || editorialFallback(item.lang === 'en' ? 'en' : 'fr');
+  // Auteur faussé ou étrange (fragment, pseudo, compte, média) → « La rédaction ».
+  const card = globalThis.RadarArticleCard;
+  return card?.displayAuthorName ? card.displayAuthorName(a, item) : a;
 }
 
 const CONTRIBUTOR_BYLINE_RE = /^([\p{Lu}][\p{L}'’.\-]+(?:\s+[\p{Lu}][\p{L}'’.\-]+){0,3})\s*[–—-]\s*(?:Contributor|Staff Writer)\b/iu;

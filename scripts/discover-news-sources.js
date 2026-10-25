@@ -418,6 +418,7 @@ async function main() {
   };
   const added = [];
   const rejected = [];
+  const creditNotes = [];
   for (const cand of pending) {
     const stat = admission.staticRejection(cand, ctxBase);
     let verdict;
@@ -432,6 +433,7 @@ async function main() {
       registry.active.push(entry);
       ensureBrandColor(entry.institution);
       added.push(entry);
+      if (verdict.creditNotes?.length) creditNotes.push({ name: cand.name, notes: verdict.creditNotes });
       console.log(`  ⬆ ${cand.name.padEnd(22)} AJOUTÉ → ${entry.url}`);
     } else {
       // Les doublons de sources actives ne sont pas du bruit à journaliser.
@@ -448,7 +450,7 @@ async function main() {
   const addedNames = new Set(added.map((a) => admission.norm(a.name)));
   registry.candidates = registry.candidates.filter((c) => !addedNames.has(admission.norm(c.name)));
   const promotedCount = added.length;
-  const log = admission.renderDiscoveryLog({ added, rejected, activeCount: registry.active.length });
+  const log = admission.renderDiscoveryLog({ added, rejected, creditNotes, activeCount: registry.active.length });
   if (doUpdate) {
     fs.mkdirSync(path.dirname(DISCOVERY_LOG_PATH), { recursive: true });
     fs.writeFileSync(DISCOVERY_LOG_PATH, log);

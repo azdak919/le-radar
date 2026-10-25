@@ -13,10 +13,10 @@
  *     session en cours ;
  *  8. signal « média étudiant » (graine vérifiée, ou mention sur la page) ;
  *  9. une photo du campus de SON établissement existe (repli des images) ;
- * 10. crédits lisibles : sur les articles échantillonnés du flux, l'auteur
- *     et le crédit photo extraits par le pipeline ne sont ni des libellés
- *     d'interface (« See author's posts »), ni un pseudo/média collé
- *     (« X // @x // Média »), ni un compte générique (« admin »).
+ * 10. crédits (NON bloquant) : sur les articles échantillonnés du flux, un
+ *     auteur ou crédit photo faussé (libellé d'interface, pseudo, « admin »,
+ *     nom du média) n'empêche pas l'admission : le site affiche « La
+ *     rédaction » et la source est listée dans l'issue #220 (creditNotes).
  * Aucun réseau ici : fonctions pures, testées par tests/source-admission.mjs.
  */
 
@@ -157,11 +157,10 @@ function evaluateAdmission(cand, probe = {}, ctx = {}) {
   if (ctx.hasCampusPhoto && !ctx.hasCampusPhoto(inst.name, cand.institution)) {
     return { admit: false, reason: `pas de photo de campus pour ${inst.name} (repli d'image requis)` };
   }
-  const creditProblems = auditSampleCredits(probe.creditSamples, cand.name);
-  if (creditProblems.length) {
-    return { admit: false, reason: `crédits mal extraits : ${creditProblems[0]}` };
-  }
-  return { admit: true, reason: 'critères respectés', institution: inst };
+  // Règle 10 : jamais bloquante. Les crédits faussés s'affichent « La rédaction »
+  // et sont seulement notés dans l'issue de découverte (#220).
+  const creditNotes = auditSampleCredits(probe.creditSamples, cand.name);
+  return { admit: true, reason: 'critères respectés', institution: inst, creditNotes };
 }
 
 const JUNK_CREDIT = /\b(?:see|view)\s+(?:all\s+)?(?:author['’]?s?\s+)?posts\b|\bposts\s+by\b|\bvoir\s+(?:tous\s+)?(?:les\s+)?articles\b|\/\/|(?:^|\s)@[\w.]+|^(?:admin|administrator|administrateur|wordpress|webmaster|editor|user\d*)$/i;
@@ -239,7 +238,7 @@ function dedupeCandidates(list = []) {
 }
 
 /** Journal Markdown pour l'issue permanente. */
-function renderDiscoveryLog({ added = [], rejected = [], now = Date.now(), activeCount = 0 }) {
+function renderDiscoveryLog({ added = [], rejected = [], creditNotes = [], now = Date.now(), activeCount = 0 }) {
   const d = new Date(now).toISOString().replace('T', ' ').slice(0, 16) + ' UTC';
   const L = [];
   L.push('# Découverte des médias étudiants — journal du bot', '');
@@ -250,6 +249,11 @@ function renderDiscoveryLog({ added = [], rejected = [], now = Date.now(), activ
   else {
     L.push('| Média | Établissement | Flux | Dernier article |', '|---|---|---|---|');
     for (const a of added) L.push(`| ${a.name} | ${a.institution} | ${a.url} | ${String(a._lastItemDate || '').slice(0, 10)} |`);
+  }
+  if (creditNotes.length) {
+    L.push('', '## Crédits douteux à améliorer (sources admises)', '');
+    L.push('_Affichés « La rédaction » en attendant une meilleure extraction._', '');
+    for (const c of creditNotes) L.push(`- **${c.name}** : ${c.notes.slice(0, 3).join(' ; ')}`);
   }
   L.push('', '## Candidats écartés', '');
   if (!rejected.length) L.push('_Aucun._');

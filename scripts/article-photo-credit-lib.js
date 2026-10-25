@@ -5,6 +5,7 @@
 
 const { fetchText, articleBodyHtml, decodeEntities } = require('./article-image-lib');
 const { normalizeArticleUrl, GENERIC_AUTHORS } = require('./author-lib');
+const { looksLikePersonName } = require('./article-card-lib');
 
 const PHOTO_CREDIT_FIELDS = [
   'sourceImageCredit',
@@ -18,7 +19,7 @@ const PHOTO_CREDIT_FIELDS = [
 
 // Version des extracteurs de crédit : l'incrémenter force une re-vérification
 // (repli média + crédits cités issus d'anciens extracteurs buggés).
-const CREDIT_EXTRACTOR_REV = 15;
+const CREDIT_EXTRACTOR_REV = 16;
 
 /** Placeholders WP / comptes génériques (Zone Campus : « Crédit : Journaliste »). */
 const PLACEHOLDER_CREDIT_RE = /^(?:journaliste|journalist|photographe|photographer|staff|rédaction|redaction|la\s+rédaction|the\s+editorial\s+team|unknown|inconnu|n\/?a|none|anonyme|anonymous|auteur|author|admin)$/i;
@@ -631,8 +632,15 @@ function extractViaCredit(html = '', lang = 'fr') {
       if (/\b(?:editor|correspondent|staff writer|managing)\b/i.test(source)) continue;
       if (isPlaceholderPhotoCredit(source)) continue;
       const en = lang === 'en';
+      // « Via Pulp Fiction » / « Via Instagram » : une provenance, pas un
+      // photographe → « Image tirée de X » (jamais « Photo : Pulp Fiction »).
+      // Deux mots capitalisés restent ambigus (« Pulp Fiction ») : seul un nom
+      // de 3 mots et plus est présumé photographe.
+      const person = looksLikePersonName(source) && source.split(/\s+/).length >= 3;
       return {
-        creditLine: en ? `Photo: ${source}` : `Photo : ${source}`,
+        creditLine: person
+          ? (en ? `Photo: ${source}` : `Photo : ${source}`)
+          : (en ? `Image via ${source}` : `Image tirée de ${source}`),
         creator: source,
         agency: '',
         source: 'via-attribution',
@@ -1008,18 +1016,33 @@ function creditFromWpMediaCaption(captionHtml = '', lang = 'fr') {
   return null;
 }
 
-async function fetchWpFeaturedMediaCaption(link = '') {
+/** Légende + crédit IPTC (image_meta.credit / copyright) de l'image vedette WP. */
+async function fetchWpFeaturedMediaInfo(link = '') {
   let u;
-  try { u = new URL(link); } catch { return ''; }
+  try { u = new URL(link); } catch { return {}; }
   const slug = u.pathname.split('/').filter(Boolean).pop();
-  if (!slug) return '';
+  if (!slug) return {};
   const api = `${u.origin}/wp-json/wp/v2/posts?slug=${encodeURIComponent(slug)}&_embed=wp:featuredmedia&_fields=id,_links,_embedded`;
   try {
     const raw = await fetchText(api);
     const posts = JSON.parse(raw || '[]');
     const media = posts?.[0]?._embedded?.['wp:featuredmedia']?.[0];
-    return String(media?.caption?.rendered || '');
-  } catch { return ''; }
+    const meta = media?.media_details?.image_meta || {};
+    return {
+      caption: String(media?.caption?.rendered || ''),
+      iptcCredit: String(meta.credit || meta.copyright || '').replace(/^©\s*/, '').trim(),
+    };
+  } catch { return {}; }
+}
+async function fetchWpFeaturedMediaCaption(link = '') {
+  return (await fetchWpFeaturedMediaInfo(link)).caption || '';
+}
+
+/** Crédit IPTC/EXIF : accepté seulement s'il ressemble à un nom de personne. */
+function creditFromIptc(name = '', lang = 'fr') {
+  const c = String(name || '').replace(/\s+/g, ' ').trim();
+  if (!looksLikePersonName(c) || isPlaceholderPhotoCredit(c)) return null;
+  return { creditLine: lang === 'en' ? `Photo: ${c}` : `Photo : ${c}`, creator: c, source: 'wp-media-iptc' };
 }
 
 async function fetchSourcePhotoCredit(item) {
@@ -1027,8 +1050,9 @@ async function fetchSourcePhotoCredit(item) {
   const html = await fetchText(item.link);
   const resolved = resolveSourcePhotoCredit(item, html);
   if (resolved && resolved.from === 'media') {
-    const cap = await fetchWpFeaturedMediaCaption(item.link);
-    const hit = creditFromWpMediaCaption(cap, item.lang === 'en' ? 'en' : 'fr');
+    const info = await fetchWpFeaturedMediaInfo(item.link);
+    const lang = item.lang === 'en' ? 'en' : 'fr';
+    const hit = creditFromWpMediaCaption(info.caption, lang) || creditFromIptc(info.iptcCredit, lang);
     if (hit) {
       return { cited: true, creditLine: hit.creditLine, creator: hit.creator,
         creditUrl: String(item.link || '').trim(), from: 'article', method: hit.source };
@@ -1114,6 +1138,11 @@ function needsSourceCreditCheck(item) {
     return true;
   }
   if (item.sourceImageCreditFrom === 'media' && rev < CREDIT_EXTRACTOR_REV) {
+    return true;
+  }
+  // Crédits du flux (« Via X ») : revérifiés quand l'extracteur évolue
+  // (rev 16 : « Via Pulp Fiction » → « Image tirée de Pulp Fiction »).
+  if (item.sourceImageCreditFrom === 'rss-content' && rev < CREDIT_EXTRACTOR_REV) {
     return true;
   }
   // Crédit encodé dans le nom de fichier : re-vérifier si l'extracteur
@@ -1227,6 +1256,8 @@ module.exports = {
   resolveSourcePhotoCredit,
   fetchSourcePhotoCredit,
   creditFromWpMediaCaption,
+  creditFromIptc,
+  fetchWpFeaturedMediaInfo,
   fetchWpFeaturedMediaCaption,
   applySourcePhotoCredit,
   needsSourceCreditCheck,

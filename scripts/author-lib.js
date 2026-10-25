@@ -361,7 +361,7 @@ function authorsFromElementorPar(html = '') {
  *   <p>Bethany …, Pohanna …, and Ana …</p><p>Contributors</p>
  * On lit les premiers <p> (texte plat) — pas de regex lourde sur tout le HTML.
  */
-const PLANT_ROLE_LINE_RE = /^(?:Editor(?:-in-Chief)?|News Editor|Sports Editor|Arts(?:\s*&\s*Culture)?\s+(?:Editor|Correspondent)|Managing Editor|Staff Writer|Copy Editor|Contributors?|Contributor|Reporter|Correspondent|Photo Editor|Opinions Editor|Features? Editor|Online Editor|Assistant Editor)s?\.?$/i;
+const PLANT_ROLE_LINE_RE = /^(?:(?:(?:Co-?\s*)?(?:Senior|Junior|Assistant|Associate|Deputy|Managing|Head|Chief|Staff|Guest|Visual|Online|Digital|Copy|Photo|News|Sports?|Opinions?|Features?|Science|Culture|Music|Film|Arts?|Lifestyle|Social Media|Layout|Web|Video|Podcast|Creative|Local|Campus|Politics|Health|Tech(?:nology)?|Environment|Entertainment|Fashion|Literary|Poetry|Food)(?:\s*(?:&|and)\s*[A-Z][a-z]+)?\s+){0,3}(?:Co-?\s*)?(?:Editor(?:s)?(?:-in-Chief)?|Editor-in-Chief|Writers?|Reporters?|Correspondents?|Contributors?|Columnists?|Photographers?|Illustrators?|Coordinators?|Director)|Editor-in-Chief|Contributors?)\.?$/i;
 
 function looksLikePersonNameLine(text = '') {
   const t = String(text).replace(/\s+/g, ' ').trim();
@@ -1144,7 +1144,7 @@ const AUTHOR_PAGE_RECHECK_MS = 24 * 60 * 60 * 1000;
 // Date du dernier changement des extracteurs d'auteur : une page vérifiée
 // AVANT est revérifiée (sinon une byline mal lue reste figée 24 h).
 // À avancer à chaque correctif d'extraction.
-const AUTHOR_EXTRACTOR_SINCE = Date.parse('2026-10-25T19:50:00Z');
+const AUTHOR_EXTRACTOR_SINCE = Date.parse('2026-10-25T20:30:00Z');
 
 function pageAuthorRecentlyChecked(item = {}) {
   const checked = Date.parse(item.authorCheckedAt || '');
