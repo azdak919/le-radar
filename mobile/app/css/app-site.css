@@ -105,7 +105,13 @@ html.has-tuner-safe-cap body { --tuner-h: 0px; }
   top: calc(env(safe-area-inset-top, 0px) + 6px);
   bottom: auto;
 }
-body.has-player { --player: 0px; --player-top: 76px; }
+body.has-player { --player: 0px; --player-top: 66px; }
+/* Compacte, toujours là : au repos, la barre propose une station à lancer.
+   Arrêter n'apparaît qu'en lecture (la barre revient alors au repos). */
+.player { min-height: 54px; padding: 4px 6px 4px 4px; }
+.player .player-info { min-height: 44px; }
+.player.is-idle .player-stop { display: none; }
+.player.is-idle { box-shadow: 0 4px 14px rgb(0 0 0 / 0.14); }
 body.has-player .shell { padding-top: calc(env(safe-area-inset-top, 0px) + var(--player-top)); }
 body.has-player #screen [id], body.has-player .sports-anchor { scroll-margin-top: calc(var(--player-top) + env(safe-area-inset-top, 0px)); }
 
@@ -258,3 +264,5 @@ body:not(.is-home) .masthead .masthead-icon.theme-toggle {
   backdrop-filter: none !important;
 }
 body:not(.is-home) .wordmark-logo { margin-right: 4px; }
+
+.player-prev, .player-next { width: 40px; border-color: transparent; background: transparent; color: var(--ink); }

@@ -61,11 +61,12 @@ test.describe('application mobile', () => {
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/mobile/app/#/explorer?section=radios', { waitUntil: 'domcontentloaded' });
-    // Comme sur le site : le syntoniseur reste en haut sur toutes les routes ;
-    // le mini-lecteur du bas n'est plus affiché.
-    const bar = page.locator('#tuner');
+    // Dans l'app : le syntoniseur du site est masqué ; la barre propre à l'app
+    // (#player) est toujours affichée en haut, même au repos.
+    const bar = page.locator('#player');
+    await expect(page.locator('#tuner')).toBeHidden();
     await expect(bar).toBeVisible();
-    await expect(page.locator('#player')).toBeHidden();
+    await expect(bar).toHaveAttribute('data-state', 'idle');
     const listen = page.locator('[data-action="radio-toggle"]').first();
     await expect(listen).toBeVisible();
     const id = await listen.getAttribute('data-id');
@@ -73,17 +74,18 @@ test.describe('application mobile', () => {
     await expect(page.locator('#screen audio')).toHaveCount(0);
     await page.getByRole('button', { name: 'Écouter en direct' }).click();
     await expect(bar).toBeVisible();
-    await expect(bar).toHaveClass(/is-playing/);
-    await expect(page.locator('#player')).toHaveAttribute('data-state', 'playing');
-    await expect(page.locator('#player')).toBeHidden();
+    await expect(bar).toHaveAttribute('data-state', 'playing');
     await page.evaluate(() => { document.getElementById('player-audio').dataset.marker = 'same'; });
 
+    const barTop = () => page.evaluate(() => Math.round(document.getElementById('player').getBoundingClientRect().top));
     for (const tab of ['Accueil', 'Recherche', 'Réglages']) {
       await page.locator('#tabs').getByRole('link', { name: tab }).click();
       const heading = tab === 'Accueil' ? 'Le fil étudiant' : tab;
       await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible();
       await expect(bar).toBeVisible();
-      await expect(bar).toHaveClass(/is-playing/);
+      await expect(bar).toHaveAttribute('data-state', 'playing');
+      await expect(page.locator('#tuner')).toBeHidden();
+      expect(await barTop()).toBeLessThan(20);
       const audio = await page.evaluate(() => {
         const node = document.getElementById('player-audio');
         return { marker: node.dataset.marker, paused: node.paused, src: Boolean(node.getAttribute('src')) };
@@ -91,17 +93,27 @@ test.describe('application mobile', () => {
       expect(audio).toEqual({ marker: 'same', paused: false, src: true });
     }
 
-    // Collé en haut pendant le défilement, sans débordement horizontal.
+    // Collée en haut pendant le défilement, sans débordement horizontal.
+    const before = await barTop();
+    expect(before).toBeLessThan(20);
     await page.evaluate(() => window.scrollTo(0, 4000));
-    await expect.poll(async () => page.evaluate(() => Math.round(document.getElementById('tuner').getBoundingClientRect().top))).toBe(0);
+    await expect.poll(barTop).toBe(before);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
     expect(overflow).toBe(false);
 
-    await page.locator('#tuner-play').click();
-    await expect(bar).not.toHaveClass(/is-playing/);
+    // Pause et lecture par les boutons de la barre.
+    await page.locator('#player-toggle').click();
+    await expect(bar).toHaveAttribute('data-state', 'paused');
+    await expect(bar).toBeVisible();
     expect(await page.evaluate(() => document.getElementById('player-audio').getAttribute('src'))).toBeNull();
-    await page.locator('#tuner-play').click();
-    await expect(bar).toHaveClass(/is-playing/);
+    await page.locator('#player-toggle').click();
+    await expect(bar).toHaveAttribute('data-state', /loading|playing/);
+    await expect(bar).toHaveAttribute('data-state', 'playing');
+
+    // Arrêter ramène la barre au repos sans la faire disparaître.
+    await page.locator('#player .player-stop').click();
+    await expect(bar).toBeVisible();
+    await expect(bar).toHaveAttribute('data-state', 'idle');
   });
 
   test('slogan du site et anglais sans service de traduction @ci-critical', async ({ page }) => {

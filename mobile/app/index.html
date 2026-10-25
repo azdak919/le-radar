@@ -169,7 +169,7 @@
       <p class="loading">Chargement du fil…</p>
     </main>
   </div>
-  <section class="player" id="player" aria-label="Radio en cours" data-state="idle" hidden>
+  <section class="player" id="player" aria-label="Radio" data-state="idle">
     <audio id="player-audio" preload="none"></audio>
     <a class="player-info" id="player-info" href="#/explorer?section=radios">
       <span class="player-live" aria-hidden="true"></span>
@@ -178,6 +178,9 @@
         <span class="player-now notranslate" id="player-now"></span>
       </span>
     </a>
+    <button type="button" class="player-btn player-prev" data-action="tuner-step" data-dir="prev" aria-label="Station précédente">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M18 6.5v11a.6.6 0 0 1-.9.5l-8-5.5a.6.6 0 0 1 0-1l8-5.5a.6.6 0 0 1 .9.5z"/><rect x="5.6" y="6" width="2.4" height="12" rx="1"/></svg>
+    </button>
     <button type="button" class="player-btn player-toggle" id="player-toggle" data-action="player-toggle" aria-label="Écouter">
       <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M8 5.5v13a.6.6 0 0 0 .9.5l10.2-6.5a.6.6 0 0 0 0-1L8.9 5a.6.6 0 0 0-.9.5z"/></svg>
       <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><rect x="6.5" y="5" width="4" height="14" rx="1"/><rect x="13.5" y="5" width="4" height="14" rx="1"/></svg>

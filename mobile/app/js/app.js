@@ -274,6 +274,7 @@
     state.sources = core().sourceCatalog(sourcesResult && sourcesResult.data, state.items);
     state.radios = core().radioCatalog(radiosResult && radiosResult.data);
     pushNativeStations();
+    try { syncPlayer(); } catch { /* DOM pas prêt */ }
     state.brand = (brandResult && brandResult.data) || {};
   }
 
@@ -621,14 +622,46 @@
     } catch { /* Media Session partielle dans certaines WebView */ }
   }
 
+  /*
+   * Barre radio persistante de l'app : toujours affichée, même au repos.
+   * Au repos, elle propose la station choisie, sinon la dernière écoutée
+   * (mémorisée), sinon une station suivie, sinon la première de la liste.
+   */
+  const LAST_STATION_KEY = 'radar.mobile.lastStation';
+
+  function rememberStation(id) {
+    if (!id) return;
+    try { storage().setItem(LAST_STATION_KEY, id); } catch { /* plein */ }
+  }
+
+  function idleStationId() {
+    const usable = (id) => id && radioById(id);
+    if (usable(state.tunedId)) return state.tunedId;
+    let last = '';
+    try { last = storage().getItem(LAST_STATION_KEY) || ''; } catch { last = ''; }
+    if (usable(last)) return last;
+    try {
+      const followed = followIds().find((id) => usable(id));
+      if (followed) return followed;
+    } catch { /* aucune suivie */ }
+    const first = state.radios.find((radio) => radio && radio.id && radio.stream && !radio.offline)
+      || state.radios.find((radio) => radio && radio.id);
+    return first ? first.id : '';
+  }
+
+  function barStationId() {
+    return player.id || idleStationId();
+  }
+
   function syncPlayer() {
     const root = document.getElementById('player');
-    const radio = player.id ? radioById(player.id) : null;
+    const activeRadio = player.id ? radioById(player.id) : null;
+    const radio = activeRadio || (barStationId() ? radioById(barStationId()) : null);
     const visible = Boolean(radio);
     document.body.classList.toggle('has-player', visible);
     if (root) {
       root.hidden = !visible;
-      root.dataset.state = visible ? player.status : 'idle';
+      root.dataset.state = activeRadio ? player.status : 'idle';
     }
     player.now = radio ? core().nowPlayingLabel(player.nowPayload, radio.id) : '';
     if (radio) {
@@ -639,13 +672,14 @@
       if (name) name.textContent = radio.name;
       if (now) {
         let line = player.now || radio.institution || '';
-        if (player.status === 'loading') line = uiText('Connexion au direct…');
+        if (!activeRadio) line = uiText(player.now ? `Prête à écouter · ${player.now}` : 'Prête à écouter');
+        else if (player.status === 'loading') line = uiText('Connexion au direct…');
         else if (player.status === 'error') line = uiText('Flux indisponible. Touchez lecture pour réessayer.');
         now.textContent = line;
       }
       if (info) {
-        info.setAttribute('href', `#/radio/${radio.id}`);
-        info.setAttribute('aria-label', uiText(`${radio.name} : ouvrir la fiche`));
+        info.setAttribute('href', '#/explorer?section=radios');
+        info.setAttribute('aria-label', uiText(`${radio.name} : choisir une autre station`));
       }
       if (toggle) {
         toggle.setAttribute('aria-label', uiText(playerBusy() ? `Mettre ${radio.name} en pause` : `Écouter ${radio.name}`));
@@ -666,8 +700,9 @@
       if (span) span.textContent = text;
       line.hidden = !text;
     }
-    syncMediaSession(radio);
-    if (radio && useNativeRadio() && !player.nativeSync) pushNativeMetadata(radio);
+    if (root) root.classList.toggle('is-idle', !activeRadio);
+    syncMediaSession(activeRadio);
+    if (activeRadio && useNativeRadio() && !player.nativeSync) pushNativeMetadata(radio);
     syncTuner();
   }
 
@@ -782,7 +817,7 @@
     const list = state.radios.filter((radio) => radio && radio.id);
     if (!list.length) return;
     const select = document.getElementById('tuner-select');
-    const current = (select && select.value) || state.tunedId || player.id;
+    const current = player.id || (select && select.value) || state.tunedId || barStationId();
     let index = list.findIndex((radio) => radio.id === current);
     if (index < 0) index = direction > 0 ? -1 : 0;
     const next = list[(index + direction + list.length) % list.length];
@@ -798,6 +833,8 @@
   function playRadio(id) {
     const radio = radioById(id);
     if (!radio || !radio.stream) return;
+    rememberStation(id);
+    state.tunedId = id;
     if (radio.offline) {
       // On tente quand même la lecture, mais le message reste visible
       // OFFLINE_NOTICE_MS avant que le titre en ondes puisse le remplacer.
@@ -894,7 +931,7 @@
   }
 
   function toggleRadio(id) {
-    const target = id || player.id;
+    const target = id || player.id || barStationId();
     if (!target) return;
     if (target === player.id && playerBusy()) pauseRadio();
     else playRadio(target);
@@ -1552,7 +1589,7 @@
     const stop = document.querySelector('[data-action="player-stop"]');
     if (stop) stop.setAttribute('aria-label', uiText('Arrêter la radio'));
     const bar = document.getElementById('player');
-    if (bar) bar.setAttribute('aria-label', uiText('Radio en cours'));
+    if (bar) bar.setAttribute('aria-label', uiText('Radio'));
     const tabs = document.getElementById('tabs');
     if (tabs) tabs.setAttribute('aria-label', uiText('Sections de l’application'));
     const skip = document.querySelector('a.skip');
@@ -1834,7 +1871,7 @@
       }
       if (action === 'radio-toggle' || action === 'player-toggle') {
         event.preventDefault();
-        toggleRadio(action === 'radio-toggle' ? el.dataset.id : player.id);
+        toggleRadio(action === 'radio-toggle' ? el.dataset.id : barStationId());
         haptic();
         return;
       }
