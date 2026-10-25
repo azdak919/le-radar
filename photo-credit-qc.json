@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-25T20:10:08.955Z",
+  "updated": "2026-10-25T20:15:33.630Z",
   "total": 174,
   "withImage": 153,
   "withCredit": 153,
-  "cited": 98,
+  "cited": 99,
   "pending": 39,
   "missingHero": 0,
   "ok": false,
-  "checked": 43,
-  "updatedCount": 4,
-  "citedNew": 2,
-  "fallbackNew": 41,
+  "checked": 62,
+  "updatedCount": 62,
+  "citedNew": 8,
+  "fallbackNew": 54,
   "samples": [
     {
       "title": "Un changement d’aile qui pourrait faire s’envoler les Griffons du Cégep de l’Outaouais",
@@ -27,18 +27,74 @@
       "method": "figcaption-bare"
     },
     {
-      "title": "Looking back at my journey walking El Camino de Santiago",
-      "source": "The Concordian",
-      "credit": "Photo: The Concordian",
+      "title": "Arrestations visant les LGBTQ+ en Turquie",
+      "source": "Le Délit",
+      "credit": "Photo : Ana Camila Torchia",
+      "cited": true,
+      "method": "media-credit-featured"
+    },
+    {
+      "title": "Letters from the Editors October 2026",
+      "source": "The Plant",
+      "credit": "Photo: The Plant",
       "cited": false,
       "method": null
     },
     {
-      "title": "Tex Crick: Indie Through and Through",
-      "source": "The McGill Daily",
-      "credit": "Photo : Zafiro Chiossoni",
+      "title": "De la France au Québec, la colère lycéenne trouve un écho",
+      "source": "Quartier Libre",
+      "credit": "Photo : Quartier Libre",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Looking back at my journey walking El Camino de Santiago",
+      "source": "The Concordian",
+      "credit": "Photo: Courtesy of Sonia Celi",
       "cited": true,
-      "method": "media-credit-featured"
+      "method": "figcaption-trailing"
+    },
+    {
+      "title": "Reportages radio du 19 octobre 2026",
+      "source": "La Pige",
+      "credit": "Photo : La Pige",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Les partis politique muets sur la question de l’éducation",
+      "source": "La Griffe",
+      "credit": "Photo : La Griffe",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Gatineau est représenté dans les nominations du gala de l’ADISQ",
+      "source": "La Griffe",
+      "credit": "Photo : La Griffe",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "The different sides of Montreal’s nightlife",
+      "source": "The Link",
+      "credit": "Photo: The Link",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Grabuge au Minotaure avec Have No Heroes et Fair Do’S",
+      "source": "La Griffe",
+      "credit": "Photo : La Griffe",
+      "cited": false,
+      "method": null
+    },
+    {
+      "title": "Fin de saison abrupte pour la cycliste Magdeleine Vallières Mill",
+      "source": "Le Collectif",
+      "credit": "Photo : Source : Getty Images",
+      "cited": true,
+      "method": "body-line"
     }
   ]
 }

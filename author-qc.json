@@ -1,8 +1,8 @@
 {
-  "updated": "2026-10-25T20:08:36.130Z",
+  "updated": "2026-10-25T20:13:27.195Z",
   "total": 174,
   "withAuthor": 174,
-  "mismatches": 22,
+  "mismatches": 17,
   "ok": true,
   "samples": [
     {
@@ -20,14 +20,6 @@
       "fieldAuthor": "The editorial team",
       "canonicalAuthor": "The editorial team",
       "reason": "no-author-source"
-    },
-    {
-      "title": "Un changement d’aile qui pourrait faire s’envoler les Griffons du Cégep de l’Outaouais",
-      "link": "https://journallagriffe.ca/2026/10/un-changement-daile-qui-pourrait-faire-senvoler-les-griffons-du-cegep-de-loutaouais/",
-      "source": "La Griffe",
-      "fieldAuthor": "La rédaction",
-      "canonicalAuthor": "Alexandre Séguin Gingras",
-      "reason": "page-byline"
     },
     {
       "title": "Movember : au-delà de la moustache",
@@ -102,30 +94,6 @@
       "reason": "no-author-source"
     },
     {
-      "title": "McGill Students Pass Historic Boycott Motion",
-      "link": "https://www.mcgilldaily.com/2026/10/mcgill-students-pass-historic-boycott-motion/",
-      "source": "The McGill Daily",
-      "fieldAuthor": "Ingara Maidou et Eva Marriott-Fabre",
-      "canonicalAuthor": "Ingara Maidou and Eva Marriott-Fabre",
-      "reason": "page-byline-overrides-rss"
-    },
-    {
-      "title": "From Scripts to Stage: BU New Plays 2026",
-      "link": "https://thebucampus.ca/2026/09/30/from-scripts-to-stage-bu-new-plays-2026/",
-      "source": "The Campus",
-      "fieldAuthor": "Zachary Jaimes",
-      "canonicalAuthor": "Zachary Jaimes Saint Cyr",
-      "reason": "page-byline-overrides-rss"
-    },
-    {
-      "title": "Blackface at McGill",
-      "link": "https://www.thetribune.ca/features/blackface-at-mcgill/",
-      "source": "The Tribune",
-      "fieldAuthor": "Ellen Lurie et Managing Editor",
-      "canonicalAuthor": "Ellen Lurie and Managing Editor",
-      "reason": "page-byline-overrides-rss"
-    },
-    {
       "title": "Montreal’s gutted motion pacifies Israel’s apartheid regime and shirks precedented municipal responsibility",
       "link": "https://www.thetribune.ca/opinion/montreals-gutted-motion-pacifies-israels-apartheid-regime-and-shirks-precedented-municipal-responsibility-08092026/",
       "source": "The Tribune",
@@ -158,13 +126,21 @@
       "reason": "no-author-source"
     },
     {
-      "title": "What we liked this summer break",
-      "link": "https://www.thetribune.ca/a-e/what-we-liked-this-summer-break-08092026/",
+      "title": "‘The Tribune’ Explains: How to vote in Quebec’s 2026 general election",
+      "link": "https://www.thetribune.ca/news/the-tribune-explains-how-to-vote-in-quebecs-2026-general-election-08092026/",
       "source": "The Tribune",
-      "fieldAuthor": "Dylan Hing, Lia James et Siena Torres",
-      "canonicalAuthor": "Dylan Hing, Lia James and Siena Torres",
-      "reason": "page-byline-overrides-rss"
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
+    },
+    {
+      "title": "The Riffo Gómez brothers immerse audiences in a poignant exploration of belonging",
+      "link": "https://www.thetribune.ca/a-e/the-riffo-gomez-brothers-immerse-audiences-in-a-poignant-exploration-of-belonging-08092026/",
+      "source": "The Tribune",
+      "fieldAuthor": "The editorial team",
+      "canonicalAuthor": "The editorial team",
+      "reason": "no-author-source"
     }
   ],
-  "fixed": 22
+  "fixed": 17
 }

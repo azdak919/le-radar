@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-25T20:09:22.257Z",
+  "updated": "2026-10-25T20:14:16.659Z",
   "total": 174,
   "withPhoto": 154,
   "withStock": 39,
   "withCampusBank": 28,
   "fullyCovered": 174,
-  "leadReadyPhotos": 132,
+  "leadReadyPhotos": 133,
   "pageScraped": 30,
   "photosRecovered": 30,
-  "imagesCleared": 13,
+  "imagesCleared": 12,
   "stockSearches": 43,
-  "stockFound": 35,
+  "stockFound": 34,
   "campusBankFound": 23,
   "mainPageLeadReady": true,
   "gaps": [
@@ -63,12 +63,6 @@
       "image": "https://i0.wp.com/journallagriffe.ca/wp-content/uploads/2026/10/Thomas1.jpg?fit=288%2C216&ssl=1"
     },
     {
-      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
-      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Pavillon_DKN%2C_Universit%C3%A9_Laval_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
       "title": "CSU fails to reach quorum at special council meeting",
       "link": "https://thelinknewspaper.ca/article/16488",
       "reason": "campus-bank",
@@ -85,6 +79,12 @@
       "link": "https://www.mcgilldaily.com/2026/10/searching-for-a-third-space/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/d/de/McGill_University_downtown_campus_23.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    },
+    {
+      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
+      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Pavillon_DKN%2C_Universit%C3%A9_Laval_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }
