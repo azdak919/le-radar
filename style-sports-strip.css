@@ -115,6 +115,7 @@
 .masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):not([data-cta-lamp="soon"]) {
   animation: sports-chip-rim-glow 3.2s ease-in-out infinite;
 }
+@media (hover: hover) {
 .masthead-sports-strip .sports-chip:hover {
   border-color: color-mix(in srgb, var(--accent, #6c2163) 72%, rgba(255, 255, 255, 0.28));
   background:
@@ -124,6 +125,7 @@
     0 1px 3px rgba(0, 0, 0, 0.32),
     inset 0 1px 0 rgba(255, 255, 255, 0.14),
     0 0 0 1px color-mix(in srgb, var(--accent, #6c2163) 34%, transparent);
+}
 }
 /* Hover CTA hors direct : même élévation pourpre que les scores (le live garde son rouge). */
 .masthead-sports-strip .sports-chip--cta:not([data-cta-state="live"]):not([data-cta-lamp="soon"]):hover {
@@ -986,13 +988,38 @@
 }
 /* Mobile : même 8 px haut/bas (pas de padding bas réduit). */
 
-/* Défilement « En cours » : fondu doux aux deux bords de la fenêtre de texte,
- * pour que le défilement ne montre jamais un texte coupé net (« 00 · Hockey… »).
- * Fondu gauche court (6 px) : au repos, la première lettre reste lisible. */
+/* Défilement « En cours » : fondu seulement du côté où du texte reste caché.
+ * Les bords du masque suivent la même course (durée, délai, aller-retours,
+ * courbe, paliers) que le texte : au départ, aucun fondu à gauche ; en bout
+ * de course, aucun fondu à droite — texte net aux deux extrémités.
+ * Sans débordement, pas de classe is-*-overflowing, donc aucun fondu. */
+@property --sc-fade-l { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --sc-fade-r { syntax: "<length>"; inherits: false; initial-value: 14px; }
+@keyframes sports-chip-fade {
+  0%, 24% { --sc-fade-l: 0px; --sc-fade-r: 14px; }
+  76%, 100% { --sc-fade-l: 14px; --sc-fade-r: 0px; }
+}
+@keyframes sports-chip-fade-sub {
+  0%, 28% { --sc-fade-l: 0px; --sc-fade-r: 14px; }
+  72%, 100% { --sc-fade-l: 14px; --sc-fade-r: 0px; }
+}
 .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub,
 .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line {
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6px, #000 calc(100% - 14px), transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 6px, #000 calc(100% - 14px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--sc-fade-l), #000 calc(100% - var(--sc-fade-r)), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 var(--sc-fade-l), #000 calc(100% - var(--sc-fade-r)), transparent 100%);
+  animation: sports-chip-fade var(--sports-scroll-duration, 8s) cubic-bezier(0.45, 0.05, 0.55, 0.95) var(--sports-scroll-delay, 1.6s) var(--sports-scroll-trips, 2) alternate both;
+}
+.masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub {
+  animation-name: sports-chip-fade-sub;
+}
+/* Mouvement réduit : texte figé au début, seul le bord droit (texte caché) fond. */
+@media (prefers-reduced-motion: reduce) {
+  .masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub,
+  .masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line {
+    animation: none;
+    --sc-fade-l: 0px;
+    --sc-fade-r: 14px;
+  }
 }
 
 /* Bordure fine (1 px), comme les autres cartes : plus d'anneau d'ombre de

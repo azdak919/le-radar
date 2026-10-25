@@ -106,3 +106,26 @@ test('thèmes clair et sombre : couleurs et syntoniseur identique @ci-critical',
   await page.click('#theme-toggle');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 });
+
+// « Plus de sources » sur écran tactile : après ouvrir puis fermer d'un toucher,
+// la pastille revient exactement à son état de repos (pas de violet collant).
+test.describe('pastille Plus de sources (tactile)', () => {
+  test.use({ hasTouch: true, isMobile: true });
+  test('toucher ouvre, toucher ferme, retour au repos @ci-critical', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'load' });
+    const btn = page.locator('.filters-toggle').first();
+    await expect(btn).toBeVisible({ timeout: 15000 });
+    const look = () => btn.evaluate((el) => {
+      const s = getComputedStyle(el);
+      return { c: s.color, b: s.borderTopColor, bg: s.backgroundColor, o: s.outlineStyle };
+    });
+    const rest = await look();
+    await btn.tap();
+    await page.waitForTimeout(400);
+    const open = await look();
+    expect(open.c).not.toBe(rest.c);
+    await btn.tap();
+    await page.waitForTimeout(400);
+    expect(await look()).toEqual(rest);
+  });
+});

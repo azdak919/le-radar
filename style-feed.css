@@ -490,12 +490,26 @@ html[data-translate-busy="1"] .translate-toggle {
   transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
 }
 
-.filters-toggle:hover,
-.filters-compact:hover {
+/* Violet seulement : survol à la souris, menu ouvert, focus au clavier.
+ * Pas de :hover collant après un toucher (écran tactile). */
+@media (hover: hover) {
+  .filters-toggle:hover,
+  .filters-compact:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 6%, var(--bg));
+  }
+}
+.filters-toggle[aria-expanded="true"],
+.filters-panel.is-expanded > .filters-toggle,
+.filters-toggle:focus-visible,
+.filters-compact:focus-visible {
   border-color: var(--accent);
   color: var(--accent);
   background: color-mix(in srgb, var(--accent) 6%, var(--bg));
 }
+.filters-toggle:focus:not(:focus-visible),
+.filters-compact:focus:not(:focus-visible) { outline: none; }
 
 .filters-toggle__chev,
 .filters-compact__chev {
@@ -635,11 +649,13 @@ html[data-translate-busy="1"] .translate-toggle {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+@media (hover: hover) {
 .filter-btn:hover {
   border-color: color-mix(in srgb, var(--c, var(--accent)) 40%, var(--rule));
   background: color-mix(in srgb, var(--c, var(--accent)) 6%, var(--bg));
 }
 .filter-btn:hover .filter-btn__name { color: var(--ink); }
+}
 .filter-btn.active {
   background: color-mix(in srgb, var(--c, var(--accent)) 14%, var(--bg));
   border-color: color-mix(in srgb, var(--c, var(--accent)) 48%, var(--rule));
@@ -665,12 +681,14 @@ html[data-translate-busy="1"] .translate-toggle {
 [data-theme="dark"] .filter-btn .filter-btn__inst {
   color: var(--ink-soft);
 }
+@media (hover: hover) {
 [data-theme="dark"] .filter-btn:hover {
   border-color: var(--ink-soft);
   background: #1c1e24;
 }
 [data-theme="dark"] .filter-btn:hover .filter-btn__name {
   color: var(--ink);
+}
 }
 [data-theme="dark"] .filter-btn.active {
   background: color-mix(in srgb, var(--c, var(--accent)) 20%, var(--bg-soft));
