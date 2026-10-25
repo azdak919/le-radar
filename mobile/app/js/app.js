@@ -273,6 +273,7 @@
     const brandResult = await fetchJson(dataUrls('brand-colors.json'));
     state.sources = core().sourceCatalog(sourcesResult && sourcesResult.data, state.items);
     state.radios = core().radioCatalog(radiosResult && radiosResult.data);
+    pushNativeStations();
     state.brand = (brandResult && brandResult.data) || {};
   }
 
@@ -528,7 +529,7 @@
     const audio = radio.stream
       ? `<p class="now-line" data-now-for="${esc(radio.id)}"${now ? '' : ' hidden'}>En ondes : <span class="notranslate">${esc(now)}</span></p>
          ${radioToggleHtml(radio, 'Écouter en direct', 'Mettre en pause', 'wide primary')}
-         <p class="note">La radio reste dans la barre du bas pendant que vous parcourez l’application. L’écoute écran verrouillé n’est pas garantie.</p>`
+         <p class="note">La radio reste dans la barre du haut pendant que vous parcourez l’application, et dans la notification du téléphone, à l’écran verrouillé et dans la voiture.</p>`
       : '<p class="note">Pas de flux HTTPS validé. La station s’écoute sur son site.</p>';
     const site = radio.website
       ? `<a class="wide link" data-action="external" href="${esc(radio.website)}" target="_blank" rel="noopener noreferrer">Ouvrir le site de <span class="notranslate">${esc(radio.name)}</span></a>`
@@ -807,6 +808,7 @@
         title: radio.name,
         artist,
         stationId: id,
+        now: player.now || '',
       })).catch((error) => {
         if (player.id !== id || player.status !== 'loading') return;
         player.status = 'error';
@@ -921,10 +923,39 @@
     const native = radioNative();
     if (!native || !radio || !playerBusy()) return;
     const artist = player.now || radio.institution || '';
+    const now = player.now || '';
+    // N'envoyer que les changements : la voiture relit tout à chaque envoi.
+    const key = `${radio.id}|${now}`;
+    if (player.nativeMetaKey === key) return;
+    player.nativeMetaKey = key;
     Promise.resolve(native.updateMetadata({
       title: radio.name,
       artist,
+      stationId: radio.id,
+      now,
     })).catch(() => {});
+  }
+
+  /** Stations pour la notification, le volant et Android Auto. */
+  function pushNativeStations() {
+    const native = radioNative();
+    if (!native || typeof native.setStations !== 'function') return;
+    const stations = state.radios.filter((radio) => radio && radio.id && radio.stream).map((radio) => ({
+      id: radio.id,
+      name: radio.name,
+      fullName: radio.fullName || radio.name,
+      institution: radio.institution || '',
+      city: radio.city || '',
+      stream: radio.stream,
+      artwork: radio.logo ? new URL(radio.logo, 'https://le-radar.ca/').href : '',
+    }));
+    if (!stations.length) return;
+    const key = JSON.stringify(stations);
+    if (player.nativeStationsKey === key) return;
+    player.nativeStationsKey = key;
+    let favorites = [];
+    try { const ids = new Set(stations.map((s) => s.id)); favorites = followIds().filter((id) => ids.has(id)); } catch { favorites = []; }
+    Promise.resolve(native.setStations({ stations, favorites })).catch(() => {});
   }
 
   function bindPlayer() {

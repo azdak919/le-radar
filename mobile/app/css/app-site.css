@@ -95,13 +95,19 @@ body:not(.is-home) .masthead-icon.theme-toggle {
 
 .player { z-index: 31; }
 
-/* Barre radio persistante EN HAUT, comme sur le site : le syntoniseur reste
-   affiché sur toutes les routes et colle sous la barre d'état (StatusBar en
-   overlay sur Android). La coiffe .tuner-safe-cap comble la bande de l'encoche.
-   La mini-barre du bas devient redondante : on la retire. */
-html.has-tuner-safe-cap .tuner { top: var(--safe-top); }
-.player, .player:not([hidden]) { display: none !important; }
-body.has-player { --player: 0px; }
+/* Barre radio persistante : dans l'app, c'est la barre propre à l'app
+   (#player, reliée à la MediaSession native) qui reste affichée, EN HAUT,
+   sous la barre d'état. Le syntoniseur du site (.tuner) faisait doublon :
+   il est masqué dans l'app seulement ; le site web garde le sien. */
+.tuner, .tuner-safe-cap { display: none !important; }
+html.has-tuner-safe-cap body { --tuner-h: 0px; }
+.player {
+  top: calc(env(safe-area-inset-top, 0px) + 6px);
+  bottom: auto;
+}
+body.has-player { --player: 0px; --player-top: 76px; }
+body.has-player .shell { padding-top: calc(env(safe-area-inset-top, 0px) + var(--player-top)); }
+body.has-player #screen [id], body.has-player .sports-anchor { scroll-margin-top: calc(var(--player-top) + env(safe-area-inset-top, 0px)); }
 
 /* ─── Cartes article : exactement le rendu du site mobile (style-feed.css) ───
    Les blocs viennent de scripts/article-card-lib.js (même ordre, mêmes dates,

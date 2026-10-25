@@ -82,6 +82,7 @@ public class RadioPlaybackPlugin extends Plugin {
     intent.putExtra(RadioPlaybackService.EXTRA_TITLE, call.getString("title", ""));
     intent.putExtra(RadioPlaybackService.EXTRA_ARTIST, call.getString("artist", ""));
     intent.putExtra(RadioPlaybackService.EXTRA_STATION_ID, call.getString("stationId", ""));
+    intent.putExtra(RadioPlaybackService.EXTRA_NOW, call.getString("now", ""));
     ContextCompat.startForegroundService(getContext(), intent);
     JSObject ok = new JSObject();
     ok.put("ok", true);
@@ -92,7 +93,7 @@ public class RadioPlaybackPlugin extends Plugin {
   public void pause(PluginCall call) {
     Intent intent = new Intent(getContext(), RadioPlaybackService.class);
     intent.setAction(RadioPlaybackService.ACTION_PAUSE);
-    getContext().startService(intent);
+    startIfRunning(intent);
     call.resolve();
   }
 
@@ -100,7 +101,7 @@ public class RadioPlaybackPlugin extends Plugin {
   public void stop(PluginCall call) {
     Intent intent = new Intent(getContext(), RadioPlaybackService.class);
     intent.setAction(RadioPlaybackService.ACTION_STOP);
-    getContext().startService(intent);
+    startIfRunning(intent);
     call.resolve();
   }
 
@@ -110,8 +111,39 @@ public class RadioPlaybackPlugin extends Plugin {
     intent.setAction(RadioPlaybackService.ACTION_UPDATE_META);
     intent.putExtra(RadioPlaybackService.EXTRA_TITLE, call.getString("title", ""));
     intent.putExtra(RadioPlaybackService.EXTRA_ARTIST, call.getString("artist", ""));
-    getContext().startService(intent);
+    intent.putExtra(RadioPlaybackService.EXTRA_STATION_ID, call.getString("stationId", ""));
+    intent.putExtra(RadioPlaybackService.EXTRA_NOW, call.getString("now", ""));
+    startIfRunning(intent);
     call.resolve();
+  }
+
+  /**
+   * Liste des stations pour la voiture (suivante/précédente, Android Auto).
+   * Gardée dans les préférences : Android Auto la lit même app fermée.
+   */
+  @PluginMethod
+  public void setStations(PluginCall call) {
+    com.getcapacitor.JSArray list = call.getArray("stations");
+    com.getcapacitor.JSArray favs = call.getArray("favorites");
+    String json = list == null ? "[]" : list.toString();
+    String favJson = favs == null ? "[]" : favs.toString();
+    getContext().getSharedPreferences(RadioPlaybackService.PREFS, android.content.Context.MODE_PRIVATE)
+      .edit()
+      .putString(RadioPlaybackService.PREF_STATIONS, json)
+      .putString(RadioPlaybackService.PREF_FAVORITES, favJson)
+      .apply();
+    Intent intent = new Intent(getContext(), RadioPlaybackService.class);
+    intent.setAction(RadioPlaybackService.ACTION_SET_STATIONS);
+    intent.putExtra(RadioPlaybackService.EXTRA_STATIONS, json);
+    intent.putExtra(RadioPlaybackService.EXTRA_FAVORITES, favJson);
+    startIfRunning(intent);
+    call.resolve();
+  }
+
+  /** Ne réveille pas le service (ni de notification) s'il ne joue rien. */
+  private void startIfRunning(Intent intent) {
+    if (!RadioPlaybackService.isRunning()) return;
+    try { getContext().startService(intent); } catch (IllegalStateException ignored) { /* app en arrière-plan */ }
   }
 
   @PluginMethod

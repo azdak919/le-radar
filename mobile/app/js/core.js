@@ -9,7 +9,7 @@
   const ORIGIN = 'https://le-radar.ca';
   // Synchronisé depuis android/app/build.gradle (versionName) par mobile/scripts/prepare.mjs ;
   // vérifié par tests/mobile-core.mjs.
-  const APP_VERSION = '1.2.3';
+  const APP_VERSION = '1.2.4';
   const LIBRARY_KEY = 'radar-mobile-library-v1';
   const PREFS_KEY = 'radar-mobile-prefs-v1';
   const SNAPSHOT_KEY = 'radar-mobile-snapshot-v1';
@@ -503,6 +503,9 @@
         website: safeHttpUrl(radio.website),
         stream: safeHttpUrl(radio.stream),
         slogan: String(radio.slogan || '').trim(),
+        fullName: String(radio.fullName || radio.name || '').trim(),
+        logo: String(radio.logo || '').trim(),
+        city: String(radio.city || '').trim(),
         // Flux muet confirmé par le bot : affiché « Hors ligne », revient seul.
         offline: radio._streamStatus === 'silent',
       };

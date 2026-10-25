@@ -62,6 +62,16 @@ le-radar.ca en direct.
 
 Aucun pour l'instant.
 
+### Préparée, non étiquetée : `1.2.4` (versionCode 9)
+
+Barre radio de l'app en haut (le syntoniseur du site, en double, est masqué dans l'app
+seulement). Lecteur Media3 réparé : session ajoutée au service et filtres d'intention
+`MediaLibraryService`/`MediaSessionService`/`MediaBrowserService` (la notification et
+l'écran verrouillé n'apparaissaient pas), pause sans perdre la notification. Liste de
+lecture des stations : suivante/précédente au volant, métadonnées AVRCP (station,
+émission, « Le Radar », logo). Android Auto : `MediaLibraryService` + `automotive_app_desc`
+(stations suivies, toutes, par ville). Aucune bibliothèque Google.
+
 ### Contenu de `android-v1.2.3` (versionCode 8)
 
 Radios muettes affichées « Hors ligne » (`578dd4f80`, `664adde04`) : pastille dans la liste,

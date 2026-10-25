@@ -242,8 +242,24 @@ assert.match(appJs, /RadioPlayback/);
 assert.match(appJs, /useNativeRadio/);
 // F-Droid : signature optionnelle. Sans keystore.properties, assembleRelease sort un APK non signé.
 const appGradle = read('android/app/build.gradle');
-assert.match(appGradle, /versionCode 8/);
-assert.match(appGradle, /versionName "1\.2\.3"/);
+assert.match(appGradle, /versionCode 9/);
+assert.match(appGradle, /versionName "1\.2\.4"/);
+// Radio native : notification, écran verrouillé, Bluetooth et Android Auto.
+{
+  const svc = read('android/app/src/main/java/ca/leradar/app/radio/RadioPlaybackService.java');
+  const mf = read('android/app/src/main/AndroidManifest.xml');
+  assert.match(svc, /extends MediaLibraryService/);
+  assert.match(svc, /addSession\(session\)/);
+  assert.match(mf, /androidx\.media3\.session\.MediaSessionService/);
+  assert.match(mf, /android\.media\.browse\.MediaBrowserService/);
+  assert.match(mf, /@xml\/automotive_app_desc/);
+  assert.equal(existsSync(join(root, 'android/app/src/main/res/xml/automotive_app_desc.xml')), true);
+  assert.match(appJs, /setStations/);
+  // Une seule barre radio dans l'app : celle de l'app, en haut ; le syntoniseur du site est masqué.
+  const siteCss = read('mobile/app/css/app-site.css');
+  assert.match(siteCss, /\.tuner, \.tuner-safe-cap \{ display: none !important; \}/);
+  assert.doesNotMatch(siteCss, /\.player, \.player:not\(\[hidden\]\) \{ display: none/);
+}
 assert.match(appGradle, /if \(keystorePropertiesFile\.exists\(\)\) \{\s*signingConfigs \{/);
 assert.match(appGradle, /if \(keystorePropertiesFile\.exists\(\)\) \{\s*signingConfig signingConfigs\.release/);
 assert.equal(existsSync(join(root, 'fastlane/metadata/android/en-US/short_description.txt')), true);
