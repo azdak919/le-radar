@@ -63,7 +63,7 @@ export async function maybeDispatch(env, now = Date.now()) {
 // GitHub Actions). Pas un proxy ouvert : seulement les hôtes du registre
 // publié (news-sources.json + data/student-media-seeds.json), seulement du
 // RSS/Atom, jamais une page anti-robot (aucun contournement de captcha).
-const REGISTRY_URLS = ['https://le-radar.ca/news-sources.json', 'https://le-radar.ca/data/student-media-seeds.json'];
+const REGISTRY_URLS = ['https://le-radar.ca/news-sources.json', 'https://le-radar.ca/data/student-media-seeds.json', 'https://le-radar.ca/data/source-blocklist.json'];
 const FEED_TTL_SECONDS = 600;
 const FEED_UA = 'LE-RADAR-FeedRelay/1.0 (+https://le-radar.ca)';
 
@@ -71,11 +71,12 @@ function hostOf(u) {
   try { return new URL(u).hostname.toLowerCase().replace(/^www\./, ''); } catch { return ''; }
 }
 
-export function allowedHosts(registry = {}, seeds = {}) {
+export function allowedHosts(registry = {}, seeds = {}, blocklist = {}) {
   const set = new Set();
+  const blocked = new Set((blocklist.entries || []).map((e) => hostOf(e.site || e.url)).filter(Boolean));
   for (const s of [...(registry.active || []), ...(registry.candidates || []), ...(seeds.seeds || [])]) {
     if (s && s._status === 'retired') continue;
-    for (const u of [s && s.url, s && s.site]) { const h = hostOf(u); if (h) set.add(h); }
+    for (const u of [s && s.url, s && s.site]) { const h = hostOf(u); if (h && !blocked.has(h)) set.add(h); }
   }
   return set;
 }
@@ -86,9 +87,9 @@ export function looksLikeFeed(body = '') {
 }
 
 async function loadAllowed() {
-  const [reg, seeds] = await Promise.all(REGISTRY_URLS.map((u) => fetch(u, { cf: { cacheTtlByStatus: { '200-299': 600, '400-599': 0 }, cacheEverything: true } })
+  const [reg, seeds, blocklist] = await Promise.all(REGISTRY_URLS.map((u) => fetch(u, { cf: { cacheTtlByStatus: { '200-299': 600, '400-599': 0 }, cacheEverything: true } })
     .then((r) => (r.ok ? r.json() : {})).catch(() => ({}))));
-  return allowedHosts(reg, seeds);
+  return allowedHosts(reg, seeds, blocklist);
 }
 
 async function relayFeed(url) {

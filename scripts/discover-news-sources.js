@@ -81,9 +81,15 @@ const WEAK_NEWS_LABEL = /^(actualit[eé]s?|nouvelles?|news|communiqu[eé]s?|pres
 // === HTTP ====================================================================
 const { fetchViaRelay } = require('./feed-relay-lib');
 /** Direct, puis relais si (et seulement si) le direct échoue réseau/HTTP. */
+const CHALLENGE_RE = /sgcaptcha|cf-chl|captcha|challenge-platform|just a moment/i;
 async function fetchFeedWithRelay(url) {
   const direct = await fetchText(url);
-  if (direct.ok) return { ...direct, relayed: false };
+  if (direct.ok && direct.body && isFeed(direct.body)) return { ...direct, relayed: false };
+  const seen = String(direct.body || direct.errorBody || '').slice(0, 20000);
+  // Page anti-robot (même en 4xx) : on s'arrête là, jamais de relais.
+  if (seen && (isChallengeOrInterstitialPage(seen) || CHALLENGE_RE.test(seen))) {
+    return { ok: !!direct.ok, body: direct.body || seen, challenge: true, relayed: false };
+  }
   const body = await fetchViaRelay(url);
   return body ? { ok: true, body, relayed: true } : { ...direct, relayed: false };
 }
@@ -112,8 +118,12 @@ function fetchText(url, redirects = 4) {
             return resolve(fetchText(next, redirects - 1));
           }
           if (res.statusCode >= 400) {
-            res.resume();
-            return resolve({ ok: false, body: '' });
+            // Corps conservé (borné) : sert seulement à reconnaître une page anti-robot.
+            let err = '';
+            res.setEncoding('utf8');
+            res.on('data', (c) => { if (err.length < 20000) err += c; });
+            res.on('end', () => resolve({ ok: false, body: '', errorBody: err, status: res.statusCode }));
+            return undefined;
           }
           let data = '';
           res.setEncoding('utf8');
@@ -248,8 +258,9 @@ async function probeCandidate(cand) {
   let best = null;
   let challenge = false;
   for (const url of [...new Set(tries)]) {
-    const { ok, body, relayed } = await fetchFeedWithRelay(url);
+    const { ok, body, relayed, challenge: ch } = await fetchFeedWithRelay(url);
     if (relayed) console.log(`  ↪ relais utilisé pour ${url}`);
+    if (ch) challenge = true;
     if (ok && body && (isChallengeOrInterstitialPage(body) || /sgcaptcha|cf-chl|captcha/i.test(body.slice(0, 2000)))) challenge = true;
     if (!ok || !body || !isFeed(body) || countItems(body) === 0) continue;
     best = { feedUrl: url, isFeed: true, items: countItems(body), lastItemMs: latestItemDate(body), feedHead: body.slice(0, 3000) };

@@ -7,7 +7,7 @@ assert.equal(relayUrlFor('https://laplumejournal.ca/feed/', 'https://r.example')
 assert.equal(relayUrlFor('http://x.ca/feed', 'https://r.example'), '');
 assert.ok(looksLikeFeed('<?xml version="1.0"?><rss version="2.0">'));
 assert.ok(!looksLikeFeed('<html>'));
-const hosts = w.allowedHosts({ active: [{ url: 'https://www.a.ca/feed/' }], candidates: [{ site: 'https://b.ca', _status: 'retired' }] }, { seeds: [{ site: 'https://c.ca/' }] });
+const hosts = w.allowedHosts({ active: [{ url: 'https://www.a.ca/feed/' }], candidates: [{ site: 'https://b.ca', _status: 'retired' }] }, { seeds: [{ site: 'https://c.ca/' }, { site: 'https://bandersnatch.ca/' }] }, { entries: [{ site: 'https://bandersnatch.ca/' }] });
 assert.deepEqual([...hosts].sort(), ['a.ca', 'c.ca']);
 assert.ok(!w.looksLikeFeed('<html><script src="/.well-known/sgcaptcha/">'));
 assert.ok(!w.looksLikeFeed('<rss> sgcaptcha'));
