@@ -100,8 +100,20 @@
     return host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
   }
 
+  /** App Android/iOS (Capacitor sert https://localhost) : jamais la barre lab. */
+  function isNativeShell() {
+    try {
+      if (window.Capacitor || window.androidBridge) return true;
+      if (location.protocol === 'capacitor:') return true;
+      return /\bwv\b|; wv\)/.test(navigator.userAgent || '');
+    } catch {
+      return true;
+    }
+  }
+
   function shouldShowBar() {
     if (isLabFrame()) return false;
+    if (isNativeShell()) return false;
     return isLocalHost();
   }
 

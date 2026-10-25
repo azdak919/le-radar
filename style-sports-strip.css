@@ -985,3 +985,12 @@
   }
 }
 /* Mobile : même 8 px haut/bas (pas de padding bas réduit). */
+
+/* Défilement « En cours » : fondu doux aux deux bords de la fenêtre de texte,
+ * pour que le défilement ne montre jamais un texte coupé net (« 00 · Hockey… »).
+ * Fondu gauche court (6 px) : au repos, la première lettre reste lisible. */
+.masthead-sports-strip .sports-chip.is-sub-overflowing .sports-chip__sub,
+.masthead-sports-strip .sports-chip.is-overflowing .sports-chip__line {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6px, #000 calc(100% - 14px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 6px, #000 calc(100% - 14px), transparent 100%);
+}

@@ -1653,8 +1653,6 @@ html[data-translate-busy="1"] .translate-toggle {
    garde son icône (son libellé reste dans le menu et l'infobulle). */
 @media (max-width: 599.98px) {
   .masthead-weather-dock.masthead-weather-dock { padding-top: 4px; }
-  .masthead-sports-strip.masthead-sports-strip { padding-top: 6px; padding-bottom: 4px; }
-  .site-sections { margin-top: 2px; margin-bottom: 2px; }
   .wire-head {
     flex-wrap: nowrap;
     gap: 8px;
@@ -1676,8 +1674,28 @@ html[data-translate-busy="1"] .translate-toggle {
     flex-shrink: 0;
   }
   .wire-status .news-updated::before { display: none; }
-  /* Grille des sources repliée : seul « Plus de sources » reste visible. */
-  .filters-panel.has-overflow:not(.is-expanded):not(.is-compact) > #news-filters { display: none; }
+  /* Grille des sources repliée : la première rangée (2 cartes entières,
+     jamais coupées à mi-hauteur) reste visible, « Plus de sources » déplie
+     le reste juste en dessous. Cartes compactes. */
+  .filters-panel.has-overflow:not(.is-expanded):not(.is-compact) > #news-filters {
+    max-height: none;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .filters-panel.has-overflow:not(.is-expanded):not(.is-compact) > #news-filters > .filter-btn:nth-child(n+3) { display: none; }
+  .filters-panel.has-overflow:not(.is-expanded):not(.is-compact) > #news-filters::after,
+  .filters-panel.has-overflow:not(.is-expanded):not(.is-compact)::after { display: none; }
+  #news-filters > .filter-btn { padding-top: 5px; padding-bottom: 5px; min-height: 0; }
+  #news-filters .filter-btn__inst { line-height: 1.25; }
+  .filters-panel.has-overflow:not(.is-expanded):not(.is-compact) > .filters-toggle { margin-top: 6px; padding-top: 5px; padding-bottom: 5px; min-height: 0; line-height: 1.3; }
+  /* Place regagnée : bande sports et rubrique « À la une » plus serrées. */
+  .masthead-sports-strip.masthead-sports-strip { padding-top: 4px; padding-bottom: 2px; }
+  .news-hero .article--lead { padding-top: 6px; }
+  #news-filters-panel.filters-panel { margin-bottom: 4px; }
+  .masthead-sports-strip .sports-chip { padding-top: 5px; padding-bottom: 5px; min-height: 0; }
+  .site-sections { margin-top: 0; margin-bottom: 0; }
+  .news-hero .article--lead .article-eyebrow { margin-bottom: 4px; }
   .filters-panel.has-overflow:not(.is-expanded):not(.is-compact) > .filters-toggle { margin-top: 0; }
   #news-filters-panel { margin-top: 6px; }
 }

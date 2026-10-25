@@ -3030,7 +3030,10 @@ function createArticle(item, role = 'standard') {
 
   const d = item.date ? new Date(item.date) : null;
   const time = d
-    ? formatStampCompact(d, item.lang === 'en' ? 'en' : 'fr')
+    /* Date de l'interface : toujours en français (« aujourd'hui, 15 h 23 »),
+       même sur une carte en anglais. translate.js la traduit si l'interface
+       est passée dans une autre langue. */
+    ? formatStampCompact(d, 'fr')
     : '';
   /* Rouge « frais » : publié dans les 12 dernières heures (fenêtre glissante,
      scripts/article-card-lib.js isFreshRecent). Rafraîchi chaque minute par
