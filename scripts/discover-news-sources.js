@@ -353,7 +353,7 @@ async function main() {
   ]);
   const ctxBase = {
     registry, institutions, blocklist,
-    hasCampusPhoto: (...names) => names.some((n) => campusBank.bankEntriesFor(n).length > 0),
+    hasCampusPhoto: (...names) => names.some((n) => campusBank.bankEntriesFor(n).length >= 2), // gate campus-source-mapping : ≥ 2 photos
   };
   const added = [];
   const rejected = [];
