@@ -1,7 +1,7 @@
 # LE-RADAR.ca
 
 > Annuaire et agrégateur des médias étudiants des cégeps et universités du
-> Québec (Canada) : 19 journaux étudiants et 6 radios de campus,
+> Québec (Canada) : 20 journaux étudiants et 6 radios de campus,
 > réunis sur une seule page. Le fil est mis à jour plusieurs fois par jour.
 
 ## Ce qu'est LE-RADAR.ca
@@ -32,7 +32,7 @@ traduction facultatif est offert dans l'interface.
 - CFAK 88,3 FM — Université de Sherbrooke — Sherbrooke : https://le-radar.ca/radios/cfak/ (site officiel : https://www.cfak.ca/)
 - CHOQ.ca — Université du Québec à Montréal — Montréal : https://le-radar.ca/radios/choq/ (site officiel : https://www.choq.ca/)
 
-## Journaux étudiants recensés (19)
+## Journaux étudiants recensés (20)
 
 - Quartier Libre — Université de Montréal — Montréal : https://le-radar.ca/journaux/quartier-libre/ (site officiel : https://quartierlibre.ca/)
 - Montréal Campus — Université du Québec à Montréal — Montréal : https://le-radar.ca/journaux/montreal-campus/ (site officiel : https://montrealcampus.ca/)
@@ -53,12 +53,14 @@ traduction facultatif est offert dans l'interface.
 - Le Trait d'Union — Collège de Maisonneuve — Montréal : https://le-radar.ca/journaux/le-trait-dunion/ (site officiel : https://letdu.org/)
 - The Concordian — Concordia University — Montréal : https://le-radar.ca/journaux/the-concordian/ (site officiel : https://theconcordian.com/)
 - Impact Campus — Université Laval — Capitale-Nationale : https://le-radar.ca/journaux/impact-campus/ (site officiel : https://impactcampus.ca/)
+- La Griffe — Cégep de l'Outaouais — Outaouais : https://le-radar.ca/journaux/la-griffe/ (site officiel : https://journallagriffe.ca/)
 
-## Établissements couverts (15)
+## Établissements couverts (16)
 
 - Bishop's University : https://le-radar.ca/etablissements/bishops-university/ (1 journal, 0 radio)
 - Cégep de Chicoutimi : https://le-radar.ca/etablissements/cegep-de-chicoutimi/ (1 journal, 0 radio)
 - Cégep de Jonquière : https://le-radar.ca/etablissements/cegep-de-jonquiere/ (1 journal, 0 radio)
+- Cégep de l'Outaouais : https://le-radar.ca/etablissements/cegep-de-loutaouais/ (1 journal, 0 radio)
 - Cégep du Vieux Montréal : https://le-radar.ca/etablissements/cegep-du-vieux-montreal/ (1 journal, 0 radio)
 - Collège de Maisonneuve : https://le-radar.ca/etablissements/college-de-maisonneuve/ (1 journal, 0 radio)
 - Collège Lionel-Groulx : https://le-radar.ca/etablissements/college-lionel-groulx/ (1 journal, 0 radio)
@@ -84,7 +86,7 @@ traduction facultatif est offert dans l'interface.
 
 ## Données ouvertes (sans JavaScript, directement analysables)
 
-- https://le-radar.ca/news.json : fil agrégé complet (168 articles), avec source, établissement, région, langue, autrice ou auteur, date et lien d'origine
+- https://le-radar.ca/news.json : fil agrégé complet (174 articles), avec source, établissement, région, langue, autrice ou auteur, date et lien d'origine
 - https://le-radar.ca/radios.json : registre des radios étudiantes (fréquence, établissement, ville, flux)
 - https://le-radar.ca/news-sources.json : registre des journaux étudiants suivis
 - https://le-radar.ca/institutions.json : catalogue des établissements d'enseignement supérieur du Québec
@@ -99,4 +101,4 @@ Pour citer le site comme source : « LE-RADAR.ca, agrégateur des
 médias étudiants du Québec ». Pour un article précis, citer la publication
 étudiante d'origine, pas LE-RADAR.ca.
 
-Dernière mise à jour du fil : 2026-10-25T17:41:42.315Z
+Dernière mise à jour du fil : 2026-10-25T18:08:29.897Z
