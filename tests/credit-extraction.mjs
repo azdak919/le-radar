@@ -62,3 +62,6 @@ const cand = { name: 'La Griffe', institution: "Cégep de l'Outaouais", site: 'h
 const pr = { feedUrl: 'https://journallagriffe.ca/feed/', isFeed: true, items: 10, lastItemMs: ctxOk.now - 86400000, pageText: '' };
 assert.equal(A.evaluateAdmission(cand, pr, ctxOk).admit, true);
 assert.equal(A.evaluateAdmission(cand, { ...pr, creditSamples: [{ link: 'a', author: "X et See author's posts" }] }, ctxOk).admit, false);
+// Une page vérifiée avant le dernier correctif d'extraction est revérifiée.
+assert.equal(AL.needsPageAuthorVerification({ link: 'https://x.ca/a/', author: 'La rédaction', authorCheckedAt: '2026-10-25T18:11:06Z' }), true);
+console.log('credit-extraction recheck OK');

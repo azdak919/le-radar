@@ -1141,9 +1141,15 @@ function extractFirstPersonAuthor(text = '') {
 /** Re-vérifier une page déjà consultée au plus une fois par 24 h. */
 const AUTHOR_PAGE_RECHECK_MS = 24 * 60 * 60 * 1000;
 
+// Date du dernier changement des extracteurs d'auteur : une page vérifiée
+// AVANT est revérifiée (sinon une byline mal lue reste figée 24 h).
+// À avancer à chaque correctif d'extraction.
+const AUTHOR_EXTRACTOR_SINCE = Date.parse('2026-10-25T19:50:00Z');
+
 function pageAuthorRecentlyChecked(item = {}) {
   const checked = Date.parse(item.authorCheckedAt || '');
   if (!Number.isFinite(checked)) return false;
+  if (checked < AUTHOR_EXTRACTOR_SINCE) return false;
   return Date.now() - checked < AUTHOR_PAGE_RECHECK_MS;
 }
 
