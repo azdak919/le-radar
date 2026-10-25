@@ -7,8 +7,13 @@
  *  1. Health-checks every ACTIVE feed (still reachable? still publishing?)
  *     and tags it _status = ok | stale | dead, with _lastItemDate /
  *     _lastChecked / _failCount.
- *  2. Probes every CANDIDATE site for a working RSS feed and, when it finds
- *     a fresh one, PROMOTES it into the active list automatically.
+ *  2. Retire les sources listées dans data/source-blocklist.json (retrait
+ *     manuel définitif : elles ne reviennent jamais).
+ *  3. Découverte : sonde les candidats du registre + data/student-media-seeds.json
+ *     et AJOUTE AUTOMATIQUEMENT ceux qui passent les critères stricts de
+ *     scripts/source-admission-lib.js (configuration complète, couleur, repli
+ *     photo du campus de l'établissement). Journal : data/news-discovery.md,
+ *     recopié dans une seule issue bot permanente.
  *
  * A dead active feed stays in the registry and is re-probed (fetch-news +
  * this health check). A Cloudflare interstitial must not freeze it as dead.
@@ -44,10 +49,27 @@ const SOURCES_PATH = path.join(__dirname, '..', 'news-sources.json');
 const INSTITUTIONS_PATH = path.join(__dirname, '..', 'institutions.json');
 const NEWS_PATH = path.join(__dirname, '..', 'news.json');
 const TIMEOUT = 15000;
+const SEEDS_PATH = path.join(__dirname, '..', 'data', 'student-media-seeds.json');
+const BLOCKLIST_PATH = path.join(__dirname, '..', 'data', 'source-blocklist.json');
+const DISCOVERY_LOG_PATH = path.join(__dirname, '..', 'data', 'news-discovery.md');
+const BRAND_PATH = path.join(__dirname, '..', 'brand-colors.json');
+const admission = require('./source-admission-lib');
+const campusBank = require('./campus-photo-bank');
+
+function readJsonSafe(p, fallback) {
+  try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return fallback; }
+}
+
+// Couleur de pastille : garde l'officielle si elle existe, sinon une teinte stable.
+function ensureBrandColor(institution) {
+  const brand = readJsonSafe(BRAND_PATH, null);
+  if (!brand || !brand.institutions || brand.institutions[institution]) return;
+  brand.institutions[institution] = { color: admission.autoColor(institution), source: 'auto — discover-news-sources (à remplacer par la couleur officielle)' };
+  if (process.argv.includes('--update')) fs.writeFileSync(BRAND_PATH, JSON.stringify(brand, null, 2) + '\n');
+}
 
 const DAY = 86400000;
 const MAX_FAILS = 4;       // consecutive fetch failures before marking dead (if no fresh cache)
-const PROMOTE_DAYS = 365;  // a candidate must have posted within a year
 
 // Feed paths tried on a candidate site (most common first).
 const FEED_PATHS = ['feed/', 'feed', '?feed=rss2', 'rss/', 'rss', 'index.xml', 'atom.xml'];
@@ -55,24 +77,6 @@ const FEED_PATHS = ['feed/', 'feed', '?feed=rss2', 'rss/', 'rss', 'index.xml', '
 // Placeholders inventés par scan-media (portails institutionnels, pas journaux étudiants).
 const INSTITUTIONAL_PLACEHOLDER = /^m[eé]dia\s*[—–\-:]/i;
 const WEAK_NEWS_LABEL = /^(actualit[eé]s?|nouvelles?|news|communiqu[eé]s?|presse|media|média|publications?)$/i;
-
-/**
- * Un candidat n'est promouvable que s'il a un vrai nom de journal étudiant.
- * Voir docs/adding-news-source.md — exclus : portails de communications institutionnelles.
- */
-function isEligibleStudentPaperCandidate(cand = {}) {
-  if (!cand || cand._status === 'retired' || cand._status === 'rejected') return false;
-  const name = String(cand.name || '').trim();
-  if (!name || name.length < 2) return false;
-  if (INSTITUTIONAL_PLACEHOLDER.test(name)) return false;
-  if (WEAK_NEWS_LABEL.test(name)) return false;
-  // « Média — Institut… » déjà couvert ; aussi rejeter un name = institution seule.
-  if (/^(institut|universit[eé]|c[eé]gep|college|coll[eè]ge)\b/i.test(name)
-      && !/journal|campus|étudiant|etudiant|student|newspaper/i.test(name)) {
-    return false;
-  }
-  return true;
-}
 
 // === HTTP ====================================================================
 function fetchText(url, redirects = 4) {
@@ -219,60 +223,36 @@ async function checkActive(src, cachedBySource) {
   };
 }
 
+/**
+ * Sonde un candidat : premier flux RSS/Atom valide parmi url / site + FEED_PATHS,
+ * plus le texte de la page d'accueil (signal « journal étudiant »).
+ */
 async function probeCandidate(cand) {
   cand._lastChecked = new Date().toISOString();
-
-  // Retired / non-student placeholders stay staged (or drop off later) — never auto-promote.
-  if (!isEligibleStudentPaperCandidate(cand)) {
-    return { promoted: false, skipped: true, reason: 'ineligible' };
-  }
-
-  if (!cand.site && !cand.url) {
-    cand._failCount = (cand._failCount || 0) + 1;
-    return { promoted: false, reason: 'no-site' };
-  }
-
   const site = cand.site || cand.url;
+  if (!site) return { feedUrl: null, isFeed: false, items: 0, lastItemMs: null, pageText: '' };
   const base = site.endsWith('/') ? site : site + '/';
   const tries = [];
   if (cand.url) tries.push(cand.url);
-  if (site.match(/feed\/?$|\.xml$|feed=rss/i)) tries.push(site);
+  if (/feed\/?$|\.xml$|feed=rss/i.test(site)) tries.push(site);
   else FEED_PATHS.forEach((p) => tries.push(base + p));
-  // de-dupe
-  const seen = new Set();
-  const uniqueTries = tries.filter((u) => {
-    if (seen.has(u)) return false;
-    seen.add(u);
-    return true;
-  });
-
-  for (const url of uniqueTries) {
+  let best = null;
+  let challenge = false;
+  for (const url of [...new Set(tries)]) {
     const { ok, body } = await fetchText(url);
-    if (!ok || !isFeed(body) || countItems(body) === 0) continue;
-    const last = latestItemDate(body);
-    const fresh = last != null && (Date.now() - last) / DAY <= PROMOTE_DAYS;
-    if (fresh) {
-      return {
-        promoted: true,
-        entry: {
-          name: cand.name,
-          institution: cand.institution,
-          region: cand.region || '',
-          type: cand.type,
-          lang: cand.lang || 'fr',
-          url,
-          site: cand.site || undefined,
-          _status: 'ok',
-          _lastItemDate: new Date(last).toISOString(),
-          _lastChecked: cand._lastChecked,
-          _failCount: 0,
-        },
-        feedUrl: url,
-      };
-    }
+    if (ok && body && (isChallengeOrInterstitialPage(body) || /sgcaptcha|cf-chl|captcha/i.test(body.slice(0, 2000)))) challenge = true;
+    if (!ok || !body || !isFeed(body) || countItems(body) === 0) continue;
+    best = { feedUrl: url, isFeed: true, items: countItems(body), lastItemMs: latestItemDate(body), feedHead: body.slice(0, 3000) };
+    break;
   }
-  cand._failCount = (cand._failCount || 0) + 1;
-  return { promoted: false };
+  let pageText = '';
+  if (best) {
+    const home = await fetchText(base);
+    pageText = `${home.ok ? String(home.body || '').slice(0, 200000) : ''}\n${best.feedHead}`;
+  }
+  if (!best) cand._failCount = (cand._failCount || 0) + 1;
+  else cand._failCount = 0;
+  return { ...(best || { feedUrl: null, isFeed: false, items: 0, lastItemMs: null }), challenge, pageText };
 }
 
 // === Coverage report (cross-reference institutions.json) =====================
@@ -353,26 +333,62 @@ async function main() {
     console.log(`  ${flag} ${r.name.padEnd(20)} ${r.result}${r.before && r.before !== r.after ? `  [${r.before}→${r.after}]` : ''}`);
   }
 
-  // 3. Probe candidates → promote fresh ones (student papers only)
-  console.log('\n▸ Candidates');
-  const stillCandidates = [];
-  let promotedCount = 0;
-  for (const cand of registry.candidates) {
-    const r = await probeCandidate(cand);
-    if (r.promoted) {
-      registry.active.push(r.entry);
-      promotedCount++;
-      console.log(`  ⬆ ${cand.name.padEnd(20)} PROMOTED → ${r.feedUrl}`);
+  // 3. Liste de blocage : une source retirée à la main sort du fil et ne revient pas.
+  const blocklist = admission.loadBlocklist(readJsonSafe(BLOCKLIST_PATH, { entries: [] }));
+  registry.active = registry.active.filter((src) => {
+    const hit = admission.isBlocked(src, blocklist);
+    if (!hit) return true;
+    console.log(`  ⛔ ${src.name} retiré (liste de blocage : ${hit.reason || 'sans raison'})`);
+    registry.candidates.push({ ...src, _status: 'retired', _note: `Liste de blocage : ${hit.reason || ''}`.trim() });
+    return false;
+  });
+
+  // 4. Découverte : candidats du registre + graines, admission automatique stricte.
+  console.log('\n▸ Découverte (admission automatique)');
+  const institutions = (readJsonSafe(INSTITUTIONS_PATH, { institutions: [] }).institutions) || [];
+  const seeds = (readJsonSafe(SEEDS_PATH, { seeds: [] }).seeds) || [];
+  const pending = admission.dedupeCandidates([
+    ...registry.candidates.filter((c) => c._status !== 'retired' && c._status !== 'rejected'),
+    ...seeds,
+  ]);
+  const ctxBase = {
+    registry, institutions, blocklist,
+    hasCampusPhoto: (...names) => names.some((n) => campusBank.bankEntriesFor(n).length > 0),
+  };
+  const added = [];
+  const rejected = [];
+  for (const cand of pending) {
+    const stat = admission.staticRejection(cand, ctxBase);
+    let verdict;
+    let probe = {};
+    if (stat) verdict = { admit: false, reason: stat };
+    else {
+      probe = await probeCandidate(cand);
+      verdict = admission.evaluateAdmission(cand, probe, ctxBase);
+    }
+    if (verdict.admit) {
+      const entry = admission.buildSourceConfig(cand, probe, verdict.institution);
+      registry.active.push(entry);
+      ensureBrandColor(entry.institution);
+      added.push(entry);
+      console.log(`  ⬆ ${cand.name.padEnd(22)} AJOUTÉ → ${entry.url}`);
     } else {
-      stillCandidates.push(cand);
-      if (r.skipped) {
-        console.log(`  ⊗  ${cand.name.padEnd(20)} skip (${r.reason || 'ineligible'})`);
-      } else {
-        console.log(`  ·  ${cand.name.padEnd(20)} no fresh feed (${cand._failCount || 1} tries)`);
+      // Les doublons de sources actives ne sont pas du bruit à journaliser.
+      if (!/^doublon — déjà actif/.test(verdict.reason)) {
+        rejected.push({ name: cand.name, institution: cand.institution, site: cand.site || cand.url, reason: verdict.reason });
       }
+      console.log(`  ·  ${String(cand.name).padEnd(22)} ${verdict.reason}`);
     }
   }
-  registry.candidates = stillCandidates;
+  const addedNames = new Set(added.map((a) => admission.norm(a.name)));
+  registry.candidates = registry.candidates.filter((c) => !addedNames.has(admission.norm(c.name)));
+  const promotedCount = added.length;
+  const log = admission.renderDiscoveryLog({ added, rejected, activeCount: registry.active.length });
+  if (doUpdate) {
+    fs.mkdirSync(path.dirname(DISCOVERY_LOG_PATH), { recursive: true });
+    fs.writeFileSync(DISCOVERY_LOG_PATH, log);
+  }
+  if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `added=${added.length}\n`);
 
   // 3. Coverage report against the institutions catalogue
   reportCoverage(registry);

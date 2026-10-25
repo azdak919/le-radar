@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
+      issues: write
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -24,7 +25,20 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Health-check feeds + probe candidates
+      # Exploration des sites d'établissements (8 par semaine) : alimente
+      # news-sources.json → candidates. Ne promeut rien elle-même.
+      - name: Scan institution sites for new student media
+        timeout-minutes: 10
+        run: node scripts/scan-media.js --update
+        continue-on-error: true
+        env:
+          CI: true
+
+      # Santé des flux + découverte : les candidats qui passent les critères
+      # stricts (scripts/source-admission-lib.js) sont AJOUTÉS automatiquement.
+      # Retrait définitif : data/source-blocklist.json.
+      - name: Health-check feeds + discover and auto-add student media
+        id: discover
         run: node scripts/discover-news-sources.js --update
         env:
           CI: true
@@ -44,7 +58,7 @@ jobs:
       - name: Check for changes
         id: check
         run: |
-          if git diff --quiet news-sources.json news.json news-archive.json feed.xml; then
+          if git diff --quiet news-sources.json news.json news-archive.json feed.xml brand-colors.json radios-candidates.json; then
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
@@ -70,9 +84,9 @@ jobs:
         run: |
           git config user.name "LE-RADAR News Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add news-sources.json news.json news-archive.json historical-catalog.config.json feed.xml index.html sitemap.xml sitemap-archives.xml llms.txt
+          git add news-sources.json news.json news-archive.json historical-catalog.config.json feed.xml index.html sitemap.xml sitemap-archives.xml llms.txt brand-colors.json radios-candidates.json data/news-discovery.md
           git add -A radios journaux etablissements medias horaires en archives 2>/dev/null || true
-          git commit -m "bot: maintain news sources + refresh feed (auto)"
+          git commit -m "bot: maintain news sources + refresh feed (auto) — ajouts : ${{ steps.discover.outputs.added || 0 }}"
           # Fichiers générés : en cas de conflit avec un commit concurrent,
           # -X theirs garde la version fraîchement produite par ce bot, et un
           # rebase interrompu est abandonné avant la tentative suivante —
@@ -87,3 +101,22 @@ jobs:
           exit 1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # UNE seule issue permanente : journal de la découverte (ajouts
+      # automatiques + candidats écartés et pourquoi). Mise à jour à chaque
+      # passe, jamais recréée. Ce n'est pas une demande d'approbation.
+      - name: Sync discovery log issue
+        if: always() && steps.discover.outcome == 'success'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TITLE="Découverte des médias étudiants (bot)"
+          [ -f data/news-discovery.md ] || exit 0
+          NUM=$(gh issue list --repo "${{ github.repository }}" --state all --search "in:title \"${TITLE}\"" --json number,title --jq "[.[] | select(.title == \"${TITLE}\")][0].number // empty")
+          if [ -n "$NUM" ]; then
+            gh issue edit "$NUM" --repo "${{ github.repository }}" --body-file data/news-discovery.md
+            gh issue reopen "$NUM" --repo "${{ github.repository }}" 2>/dev/null || true
+          else
+            gh issue create --repo "${{ github.repository }}" --title "$TITLE" --body-file data/news-discovery.md
+          fi

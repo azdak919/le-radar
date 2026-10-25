@@ -28,6 +28,20 @@ ni le nom nu de l'université/cégep. L'établissement va dans `institution`.
 
 **Exemple ULaval** : seul `L'Exemplaire` (journal étudiant indépendant) est éligible.
 
+**Ajout automatique (depuis oct. 2026)** : chaque lundi, `discover-news-sources.js`
+sonde les candidats du registre et les graines de `data/student-media-seeds.json`,
+puis **ajoute sans approbation** ceux qui passent les critères stricts de
+`scripts/source-admission-lib.js` (vrai journal étudiant d'un établissement de
+`institutions.json`, pas d'association/administration/service, pas de doublon ni
+de source retirée, flux public ≥ 3 articles, actif ≤ 45 jours ou pendant la
+session en cours, photo du campus de l'établissement dans
+`scripts/campus-photo-bank.js`). Le journal de chaque passe est publié dans
+l'issue permanente « Découverte des médias étudiants (bot) ».
+**Retirer une source hors sujet** : l'ajouter à `data/source-blocklist.json`
+(`name`, `site`, `reason`, `date`) ; elle sort du fil à la passe suivante et ne
+revient jamais. **Proposer un média** : l'ajouter aux graines (`vetted: true` si
+vérifié à la main).
+
 **Bots** : `scan-media.js` ne doit **pas** proposer le `/feed` du site institutionnel
 comme candidat ; `discover-news-sources.js` refuse la promotion des placeholders
 `Média — …` et des candidats `_status: retired`.

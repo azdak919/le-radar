@@ -1,0 +1,302 @@
+{
+  "_comment": "Graines de découverte des médias étudiants (cégeps et universités du Québec). discover-news-sources.js les sonde chaque semaine et ajoute automatiquement celles qui passent scripts/source-admission-lib.js. « vetted » = média étudiant vérifié à la main (le signal sur la page n'est alors pas exigé).",
+  "seeds": [
+    {
+      "name": "La Plume",
+      "institution": "Cégep de Jonquière",
+      "region": "Saguenay–Lac-Saint-Jean",
+      "site": "https://laplumejournal.ca/",
+      "lang": "fr",
+      "vetted": true,
+      "_note": "Journal étudiant du Cégep de Jonquière (distinct de La Pige, ATM)."
+    },
+    {
+      "name": "La Griffe",
+      "institution": "Cégep de l'Outaouais",
+      "region": "Outaouais",
+      "site": "https://journallagriffe.ca/",
+      "lang": "fr",
+      "vetted": true,
+      "_note": "Journal des étudiants du Cégep de l'Outaouais."
+    },
+    {
+      "name": "Bandersnatch",
+      "institution": "John Abbott College",
+      "region": "Montréal",
+      "site": "https://bandersnatch.ca/",
+      "lang": "en",
+      "vetted": true,
+      "_note": "Journal étudiant du John Abbott College depuis 1971."
+    },
+    {
+      "name": "The Blue Ink",
+      "institution": "Champlain College Saint-Lambert",
+      "region": "Montérégie",
+      "site": "https://www.theblueink.ca/",
+      "lang": "en"
+    },
+    {
+      "name": "Le Griffonnier",
+      "institution": "Université du Québec à Chicoutimi",
+      "region": "Saguenay–Lac-Saint-Jean",
+      "site": "https://ceuc.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "Le Brise-Glace",
+      "institution": "Cégep de Rimouski",
+      "region": "Bas-Saint-Laurent",
+      "site": "https://lebrise-glace.com/",
+      "lang": "fr"
+    },
+    {
+      "name": "L'Heuristique",
+      "institution": "École de technologie supérieure (ÉTS)",
+      "region": "Montréal",
+      "site": "https://lheuris.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "L'Unité",
+      "institution": "UQAM",
+      "region": "Montréal",
+      "site": "https://lunite.org/",
+      "lang": "fr"
+    },
+    {
+      "name": "Le MotDit",
+      "institution": "Cégep Édouard-Montpetit",
+      "region": "Montérégie",
+      "site": "https://lemotdit.com/",
+      "lang": "fr"
+    },
+    {
+      "name": "L'Attribut",
+      "institution": "Collège Ahuntsic",
+      "region": "Montréal",
+      "site": "https://lattribut.com/",
+      "lang": "fr"
+    },
+    {
+      "name": "L'IntégrAL",
+      "institution": "Cégep André-Laurendeau",
+      "region": "Montréal",
+      "site": "https://lintegral.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "L'Infomane",
+      "institution": "Collège de Bois-de-Boulogne",
+      "region": "Montréal",
+      "site": "https://linfomane.com/",
+      "lang": "fr"
+    },
+    {
+      "name": "Pastiche",
+      "institution": "Cégep de Saint-Laurent",
+      "region": "Montréal",
+      "site": "https://pastichesl.com/",
+      "lang": "fr"
+    },
+    {
+      "name": "Le Phoque",
+      "institution": "Cégep Limoilou",
+      "region": "Capitale-Nationale",
+      "site": "https://lephoque.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "L'Éclosion",
+      "institution": "Cégep de Sainte-Foy",
+      "region": "Capitale-Nationale",
+      "site": "https://leclosion.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "Typographe",
+      "institution": "Collège Montmorency",
+      "region": "Laval",
+      "site": "https://typographe.agem.quebec/",
+      "lang": "fr"
+    },
+    {
+      "name": "Le Lunatique",
+      "institution": "Collège Montmorency",
+      "region": "Laval",
+      "site": "https://lelunatique.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "Le Matricule Zéro",
+      "institution": "Cégep de Sherbrooke",
+      "region": "Estrie",
+      "site": "https://matriculezero.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "Le Dogme",
+      "institution": "Cégep de Saint-Hyacinthe",
+      "region": "Montérégie",
+      "site": "https://ledogme.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "Météorites",
+      "institution": "Cégep de La Pocatière",
+      "region": "Bas-Saint-Laurent",
+      "site": "https://meteorites.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "Le Visionnaire",
+      "institution": "Cégep de Baie-Comeau",
+      "region": "Côte-Nord",
+      "site": "https://levisionnaire.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "Le Graffitti",
+      "institution": "Collège Jean-de-Brébeuf",
+      "region": "Montréal",
+      "site": "https://legraffitti.com/",
+      "lang": "fr"
+    },
+    {
+      "name": "Le Point G",
+      "institution": "Collège André-Grasset",
+      "region": "Montréal",
+      "site": "https://lepointg.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "The PaperCut",
+      "institution": "Marianopolis College",
+      "region": "Montréal",
+      "site": "https://marianopolispapercut.wordpress.com/",
+      "lang": "en"
+    },
+    {
+      "name": "The Free Press",
+      "institution": "John Abbott College",
+      "region": "Montréal",
+      "site": "https://jacfreepress.com/",
+      "lang": "en"
+    },
+    {
+      "name": "The Bull & Bear",
+      "institution": "McGill University",
+      "region": "Montréal",
+      "site": "https://bullandbearmcgill.com/",
+      "lang": "en"
+    },
+    {
+      "name": "L'Obiter",
+      "institution": "Université de Sherbrooke",
+      "region": "Estrie",
+      "site": "https://lobiter.com/",
+      "lang": "fr",
+      "note": "Journal de droit — niche"
+    },
+    {
+      "name": "Le Soufflet",
+      "institution": "Université du Québec à Rimouski (UQAR)",
+      "region": "Bas-Saint-Laurent",
+      "site": "https://lesoufflet.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "L’Organe",
+      "institution": "Concordia University",
+      "region": "Montréal",
+      "site": "https://lorgane.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "L'Artichaut",
+      "institution": "UQAM",
+      "region": "Montréal",
+      "site": "https://lartichaut.ca/",
+      "lang": "fr",
+      "note": "Journal des arts UQAM (Wiki)"
+    },
+    {
+      "name": "Le Scribe",
+      "institution": "Cégep de l'Outaouais",
+      "region": "Outaouais",
+      "site": "https://lescribe.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "L'Agora",
+      "institution": "Université du Québec en Outaouais (UQO)",
+      "region": "Outaouais",
+      "site": "https://lagora.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "Perspectives",
+      "institution": "Université du Québec en Abitibi-Témiscamingue (UQAT)",
+      "region": "Abitibi-Témiscamingue",
+      "site": "https://perspectivesuqat.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "Le Carcajou",
+      "institution": "Cégep de l'Abitibi-Témiscamingue",
+      "region": "Abitibi-Témiscamingue",
+      "site": "https://lecarcajou.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "Le Réservoir",
+      "institution": "Cégep de Trois-Rivières",
+      "region": "Mauricie",
+      "site": "https://lereservoir.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "La Forge",
+      "institution": "Cégep de Trois-Rivières",
+      "region": "Mauricie",
+      "site": "https://laforge.cegeptr.qc.ca/",
+      "lang": "fr"
+    },
+    {
+      "name": "Le Phare",
+      "institution": "Cégep de la Gaspésie et des Îles",
+      "region": "Gaspésie–Îles-de-la-Madeleine",
+      "site": "https://lepharegim.com/",
+      "lang": "fr"
+    },
+    {
+      "name": "Entre-Guillemets",
+      "institution": "Cégep Garneau",
+      "region": "Capitale-Nationale",
+      "site": "https://entreguillemets.com/",
+      "lang": "fr"
+    },
+    {
+      "name": "Le Hublot",
+      "institution": "Cégep de Sainte-Foy",
+      "region": "Capitale-Nationale",
+      "site": "https://lehublot.net/",
+      "lang": "fr",
+      "note": "OUT OF SCOPE — not a student newspaper (digital fab / territoire)"
+    },
+    {
+      "name": "Mosaïk",
+      "institution": "Collège Stanislas",
+      "region": "Montréal",
+      "site": "https://stanislas96.wixsite.com/mosaik",
+      "lang": "fr",
+      "note": "Wiki: Stanislas; collège privé"
+    },
+    {
+      "name": "L'Inter",
+      "institution": "Collège de Maisonneuve",
+      "region": "Montréal",
+      "site": "https://linter.ca/",
+      "lang": "fr"
+    }
+  ]
+}

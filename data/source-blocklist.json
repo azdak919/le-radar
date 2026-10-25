@@ -1,0 +1,17 @@
+{
+  "_comment": "Sources retirées à la main : jamais réajoutées par la découverte automatique. Entrée = { name, site, reason, date }. Le retrait du fil se fait aussi en supprimant l'entrée de news-sources.json → active (le bot la déplace sinon).",
+  "entries": [
+    {
+      "name": "Le Brise-Glace",
+      "site": "https://lebrise-glace.com/",
+      "reason": "site mort, retiré le 2026-10-23",
+      "date": "2026-10-23"
+    },
+    {
+      "name": "Le Débordement",
+      "site": "https://debordement.crues.org/",
+      "reason": "média d'une coalition militante, pas d'un établissement",
+      "date": "2026-10-25"
+    }
+  ]
+}

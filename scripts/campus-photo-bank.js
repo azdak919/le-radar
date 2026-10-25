@@ -44,6 +44,8 @@ const WALLPAPER_INST_RULES = [
   { re: /dawson/i, key: 'dawson college' },
   { re: /vieux\s*montr[eé]al/i, key: 'cegep du vieux montreal' },
   { re: /jonqui[eè]re/i, key: 'cegep de jonquiere' },
+  { re: /c[eé]gep\s+de\s+l.outaouais|f[eé]lix[\s-]leclerc/i, key: "cegep de l'outaouais" },
+  { re: /john[\s-]abbott/i, key: 'john abbott college' },
   { re: /lionel[\s-]?groulx/i, key: 'college lionel groulx' },
   { re: /coll[eè]ge\s+de\s+maisonneuve|c[eé]gep.{0,20}maisonneuve/i, key: 'college de maisonneuve' },
   { re: /cegep\s+de\s+chicoutimi|cegep\s+chicoutimi/i, key: 'cegep de chicoutimi' },
@@ -436,6 +438,58 @@ const BANK = {
       tags: 'exterior cegep jonquiere gerard arguin entree',
     },
   ],
+  "cegep de l'outaouais": [
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/9/97/CEGEP_Outaouais.jpg',
+      title: "Cégep de l'Outaouais",
+      creator: 'P199',
+      license: 'CC BY-SA 4.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:CEGEP_Outaouais.jpg',
+      tags: 'exterior cegep outaouais gatineau',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Campus_F%C3%A9lix-Leclerc_2024-08-22_01.jpg',
+      title: "Campus Félix-Leclerc du Cégep de l'Outaouais",
+      creator: 'Sorcier du Lac',
+      license: 'CC BY-SA 4.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Campus_F%C3%A9lix-Leclerc_2024-08-22_01.jpg',
+      tags: 'exterior cegep outaouais felix-leclerc summer',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/e/ed/Campus_F%C3%A9lix-Leclerc_2024-08-22_02.jpg',
+      title: "Campus Félix-Leclerc du Cégep de l'Outaouais (2)",
+      creator: 'Sorcier du Lac',
+      license: 'CC BY-SA 4.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Campus_F%C3%A9lix-Leclerc_2024-08-22_02.jpg',
+      tags: 'exterior cegep outaouais felix-leclerc',
+    },
+  ],
+  'john abbott college': [
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/c/cf/John_Abbott_College_007.jpg',
+      title: 'John Abbott College',
+      creator: 'Jean Gagnon',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:John_Abbott_College_007.jpg',
+      tags: 'exterior john abbott college sainte-anne-de-bellevue',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/0/03/John_Abbott_College_015.jpg',
+      title: 'John Abbott College (2)',
+      creator: 'Jean Gagnon',
+      license: 'CC BY-SA 3.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:John_Abbott_College_015.jpg',
+      tags: 'exterior john abbott college campus',
+    },
+    {
+      url: 'https://upload.wikimedia.org/wikipedia/commons/3/39/Pavillon_principal%2C_c%C3%A9gep_John-Abbott%2C_21111%2C_rue_Lakeshore_%28Sainte-Anne-de-Bellevue%29_%288531417191%29.jpg',
+      title: 'Pavillon principal du cégep John-Abbott',
+      creator: 'Parcours riverain - Ville de Montréal',
+      license: 'CC BY 2.0',
+      sourceUrl: 'https://commons.wikimedia.org/wiki/File:Pavillon_principal,_c%C3%A9gep_John-Abbott,_21111,_rue_Lakeshore_(Sainte-Anne-de-Bellevue)_(8531417191).jpg',
+      tags: 'exterior john abbott pavillon principal lakeshore',
+    },
+  ],
   'dawson college': [
     {
       url: 'https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg',
@@ -677,6 +731,10 @@ const ALIASES = {
   'cegep chicoutimi': 'cegep de chicoutimi',
   'cegep de rimouski': 'cegep de rimouski',
   'cegep rimouski': 'cegep de rimouski',
+  outaouais: "cegep de l'outaouais",
+  'cegep de l outaouais': "cegep de l'outaouais",
+  'john abbott': 'john abbott college',
+  'cegep john abbott': 'john abbott college',
 };
 
 function bankKeyHasPhotos(key, extrasMap) {
