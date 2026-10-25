@@ -167,3 +167,33 @@ console.log('OK live-link-health');
   assert.match(src, /allLinkKeys\.has\(linkKey\)/, 'fetch-news doit dédupliquer les liens à l’ingestion');
   assert.match(src, /dedupeArticlesByLink\(filterHousekeepingForDisplay/, 'fetch-news doit dédupliquer avant écriture');
 }
+
+// Clé de dédoublonnage : http/https, www., slash final, utm_*, #ancre.
+{
+  const { articleDedupeKey } = await import('../scripts/live-link-health-lib.js').then((m) => m.default || m);
+  const base = 'https://delitfrancais.com/2026/09/30/affaire-thelyson-orelien-une-chasse-aux-sorcieres';
+  for (const v of [
+    'https://www.delitfrancais.com/2026/09/30/affaire-thelyson-orelien-une-chasse-aux-sorcieres/',
+    'http://www.delitfrancais.com/2026/09/30/affaire-thelyson-orelien-une-chasse-aux-sorcieres',
+    'https://WWW.delitfrancais.com/2026/09/30/affaire-thelyson-orelien-une-chasse-aux-sorcieres/?utm_source=fb&utm_medium=x#top',
+    'https://delitfrancais.com/2026/09/30/affaire-thelyson-orelien-une-chasse-aux-sorcieres?fbclid=abc',
+  ]) assert.equal(articleDedupeKey(v), base, v);
+  assert.notEqual(articleDedupeKey('https://ex.com/?p=1'), articleDedupeKey('https://ex.com/?p=2'));
+
+  // Doublon issu d'un rebase : on garde l'entrée qui a l'image locale.
+  const { dedupeNewsItems } = await import('../scripts/dedupe-news-json.js').then((m) => m.default || m);
+  const r = dedupeNewsItems([
+    { title: 'X', link: `${base}/` },
+    { title: 'Y', link: 'https://ex.com/y' },
+    { title: 'X', link: `http://www.delitfrancais.com/2026/09/30/affaire-thelyson-orelien-une-chasse-aux-sorcieres/?utm_campaign=z`, imageLocal: 'assets/news-images/a.jpg' },
+  ]);
+  assert.equal(r.removed, 1);
+  assert.deepEqual(r.items.map((i) => i.imageLocal || i.title), ['assets/news-images/a.jpg', 'Y']);
+
+  // Le bot dédoublonne et vérifie l'intégrité APRÈS le rebase, avant de pousser.
+  for (const wf of ['update-news', 'guard-harvest-freshness', 'discover-news-sources', 'maintain']) {
+    const y = readFileSync(new URL(`../.github/workflows/${wf}.yml`, import.meta.url), 'utf8');
+    assert.match(y, /pull --rebase -X theirs[^\n]*&& node scripts\/dedupe-news-json\.js --commit && node tests\/data-integrity\.mjs && git push/, wf);
+  }
+  console.log('OK dédoublonnage après rebase');
+}

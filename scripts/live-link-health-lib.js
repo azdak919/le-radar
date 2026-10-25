@@ -31,11 +31,39 @@ function articleLinkKey(link = '') {
   }
 }
 
+const TRACKING_PARAM = /^(utm(_\w+)?|fbclid|gclid|dclid|msclkid|mc_cid|mc_eid|igshid|_ga|ref|ref_src)$/i;
+
+/**
+ * Clé de dédoublonnage d'un article : même page = même clé, quelles que
+ * soient les variantes du lien (http/https, www., slash final, #ancre,
+ * paramètres de suivi utm_*, fbclid…). Les autres paramètres sont gardés
+ * (triés) : ?p=123 distingue deux articles WordPress.
+ */
+function articleDedupeKey(link = '') {
+  const raw = String(link || '').trim();
+  if (!raw) return '';
+  try {
+    const url = new URL(raw);
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') return raw;
+    const host = url.hostname.toLowerCase().replace(/^www\./, '');
+    const params = [...url.searchParams.entries()]
+      .filter(([k]) => !TRACKING_PARAM.test(k))
+      .sort(([a, x], [b, y]) => (a === b ? x.localeCompare(y) : a.localeCompare(b)));
+    const query = params.length ? `?${new URLSearchParams(params).toString()}` : '';
+    let pathname = url.pathname.replace(/\/{2,}/g, '/');
+    if (pathname.length > 1) pathname = pathname.replace(/\/+$/, '');
+    const port = url.port && url.port !== '80' && url.port !== '443' ? `:${url.port}` : '';
+    return `https://${host}${port}${pathname}${query}`;
+  } catch {
+    return raw.split('#')[0].replace(/\/+$/, '').replace(/^http:/i, 'https:').replace(/\/\/www\./i, '//');
+  }
+}
+
 // Garde le premier article pour chaque lien canonique (ordre préservé).
 function dedupeArticlesByLink(items = []) {
   const seen = new Set();
   return items.filter((item) => {
-    const key = articleLinkKey(item?.link);
+    const key = articleDedupeKey(item?.link);
     if (!key) return true;
     if (seen.has(key)) return false;
     seen.add(key);
@@ -249,6 +277,7 @@ module.exports = {
   CHECK_REFRESH_MS,
   emptyLedger,
   articleLinkKey,
+  articleDedupeKey,
   dedupeArticlesByLink,
   pageTitleFromHtml,
   titleMatchesArticle,

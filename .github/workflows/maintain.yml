@@ -122,7 +122,7 @@ jobs:
           # rebase interrompu est abandonné avant la tentative suivante —
           # sinon les retries échouent tous sur « unmerged files ».
           for i in 1 2 3; do
-            git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && git push && exit 0
+            git pull --rebase -X theirs --autostash origin "${GITHUB_REF_NAME}" && node scripts/dedupe-news-json.js --commit && node tests/data-integrity.mjs && git push && exit 0
             git rebase --abort 2>/dev/null || true
             echo "push attempt $i failed, retrying…"
             sleep $((i * 3))

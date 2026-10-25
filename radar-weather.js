@@ -1162,13 +1162,20 @@ function showMastheadWeatherBoard() {
     // Hors wide : ne pas descendre sous 3 cartes si la colonne a de la place
     // (le shrink-wrap du board faisait faussement déborder MONTRÉAL).
     const avail = weatherBoardAvailWidth();
-    const floor = (!weatherWideDualPrimary() && avail >= 400) ? 3 : 1;
+    // Wide dual : weatherBoardCount() ne descend jamais sous MTL+QC (2).
+    const floor = weatherWideDualPrimary() ? 2 : (avail >= 400 ? 3 : 1);
     if (count > floor) {
+      const previousFit = mastheadWeatherFitCount;
       mastheadWeatherFitCount = count - 1;
-      mastheadWeatherLastBoardCount = 0;
-      mastheadWeatherSlots = [];
-      showMastheadWeatherBoard();
-      return;
+      // Ne relancer que si le compte baisse VRAIMENT : sinon récursion
+      // infinie (« Maximum call stack size exceeded », 2026-10-25).
+      if (Math.min(weatherBoardCount(), cities.length) < count) {
+        mastheadWeatherLastBoardCount = 0;
+        mastheadWeatherSlots = [];
+        showMastheadWeatherBoard();
+        return;
+      }
+      mastheadWeatherFitCount = previousFit;
     }
   }
   if (primaryOverflows) {
