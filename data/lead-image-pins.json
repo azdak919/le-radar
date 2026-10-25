@@ -1,7 +1,8 @@
 {
   "_doc": "Corrections d'image persistantes, appliquées à chaque collecte (scripts/lead-image-pins-lib.js). rejectImages : URL jamais réutilisées comme photo de une (affiches-texte, captures d'écran). pins : photo imposée pour un billet (lien canonique).",
   "rejectImages": [
-    "https://cdn.impactcampus.ca/wp-content/uploads/2026/10/22163152/Capture-decran-le-2026-10-22-a-16.27.40.png"
+    "https://cdn.impactcampus.ca/wp-content/uploads/2026/10/22163152/Capture-decran-le-2026-10-22-a-16.27.40.png",
+    "https://journallagriffe.ca/wp-content/uploads/2026/10/generique_tablette.png"
   ],
   "pins": {
     "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/": {
@@ -12,6 +13,11 @@
       "imageLicense": "CC BY-SA 4.0",
       "imageProvider": "wikimedia",
       "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Qu%C3%A9bec_-_Maison_de_la_litt%C3%A9rature_20241031.jpg"
+    },
+    "https://journallagriffe.ca/2026/10/un-changement-daile-qui-pourrait-faire-senvoler-les-griffons-du-cegep-de-loutaouais/": {
+      "image": "https://journallagriffe.ca/wp-content/uploads/2026/10/Image1-1.png",
+      "keepSourceImage": true,
+      "leadImageReady": true
     }
   }
 }

@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const { relayUrlFor, looksLikeFeed } = require('../scripts/feed-relay-lib.js');
+const w = await import('../workers/presto-cache/src/index.js');
+assert.equal(relayUrlFor('https://laplumejournal.ca/feed/', 'https://r.example'), 'https://r.example/v1/feed?url=https%3A%2F%2Flaplumejournal.ca%2Ffeed%2F');
+assert.equal(relayUrlFor('http://x.ca/feed', 'https://r.example'), '');
+assert.ok(looksLikeFeed('<?xml version="1.0"?><rss version="2.0">'));
+assert.ok(!looksLikeFeed('<html>'));
+const hosts = w.allowedHosts({ active: [{ url: 'https://www.a.ca/feed/' }], candidates: [{ site: 'https://b.ca', _status: 'retired' }] }, { seeds: [{ site: 'https://c.ca/' }] });
+assert.deepEqual([...hosts].sort(), ['a.ca', 'c.ca']);
+assert.ok(!w.looksLikeFeed('<html><script src="/.well-known/sgcaptcha/">'));
+assert.ok(!w.looksLikeFeed('<rss> sgcaptcha'));
+console.log('feed-relay: ok');

@@ -79,6 +79,15 @@ const INSTITUTIONAL_PLACEHOLDER = /^m[eé]dia\s*[—–\-:]/i;
 const WEAK_NEWS_LABEL = /^(actualit[eé]s?|nouvelles?|news|communiqu[eé]s?|presse|media|média|publications?)$/i;
 
 // === HTTP ====================================================================
+const { fetchViaRelay } = require('./feed-relay-lib');
+/** Direct, puis relais si (et seulement si) le direct échoue réseau/HTTP. */
+async function fetchFeedWithRelay(url) {
+  const direct = await fetchText(url);
+  if (direct.ok) return { ...direct, relayed: false };
+  const body = await fetchViaRelay(url);
+  return body ? { ok: true, body, relayed: true } : { ...direct, relayed: false };
+}
+
 function fetchText(url, redirects = 4) {
   if (!isAllowedFetchUrl(url)) {
     console.warn('discover-news: URL bloquée (sécurité):', url);
@@ -183,7 +192,7 @@ async function checkActive(src, cachedBySource) {
     };
   }
 
-  const { ok, body } = await fetchText(src.url);
+  const { ok, body } = isHtmlListSource(src) ? await fetchText(src.url) : await fetchFeedWithRelay(src.url);
   const freshCache = hasFreshCachedArticles(src, cachedBySource, referenceDate);
   const lastCached = latestCachedItemDate(cachedBySource.get(src.name) || []);
   const interstitial = isChallengeOrInterstitialPage(body);
@@ -239,7 +248,8 @@ async function probeCandidate(cand) {
   let best = null;
   let challenge = false;
   for (const url of [...new Set(tries)]) {
-    const { ok, body } = await fetchText(url);
+    const { ok, body, relayed } = await fetchFeedWithRelay(url);
+    if (relayed) console.log(`  ↪ relais utilisé pour ${url}`);
     if (ok && body && (isChallengeOrInterstitialPage(body) || /sgcaptcha|cf-chl|captcha/i.test(body.slice(0, 2000)))) challenge = true;
     if (!ok || !body || !isFeed(body) || countItems(body) === 0) continue;
     best = { feedUrl: url, isFeed: true, items: countItems(body), lastItemMs: latestItemDate(body), feedHead: body.slice(0, 3000) };

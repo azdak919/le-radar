@@ -59,6 +59,70 @@ export async function maybeDispatch(env, now = Date.now()) {
   return d.status === 204 ? 'dispatched' : `dispatch_http_${d.status}`;
 }
 
+// ── Relais de flux de nouvelles (repli quand un flux PUBLIC refuse les IP
+// GitHub Actions). Pas un proxy ouvert : seulement les hôtes du registre
+// publié (news-sources.json + data/student-media-seeds.json), seulement du
+// RSS/Atom, jamais une page anti-robot (aucun contournement de captcha).
+const REGISTRY_URLS = ['https://le-radar.ca/news-sources.json', 'https://le-radar.ca/data/student-media-seeds.json'];
+const FEED_TTL_SECONDS = 600;
+const FEED_UA = 'LE-RADAR-FeedRelay/1.0 (+https://le-radar.ca)';
+
+function hostOf(u) {
+  try { return new URL(u).hostname.toLowerCase().replace(/^www\./, ''); } catch { return ''; }
+}
+
+export function allowedHosts(registry = {}, seeds = {}) {
+  const set = new Set();
+  for (const s of [...(registry.active || []), ...(registry.candidates || []), ...(seeds.seeds || [])]) {
+    if (s && s._status === 'retired') continue;
+    for (const u of [s && s.url, s && s.site]) { const h = hostOf(u); if (h) set.add(h); }
+  }
+  return set;
+}
+
+export function looksLikeFeed(body = '') {
+  const head = String(body).slice(0, 2000);
+  return /<rss[\s>]|<feed[\s>]|<rdf:RDF[\s>]/i.test(head) && !/captcha|cf-chl|sgcaptcha|challenge-platform/i.test(head);
+}
+
+async function loadAllowed() {
+  const [reg, seeds] = await Promise.all(REGISTRY_URLS.map((u) => fetch(u, { cf: { cacheTtlByStatus: { '200-299': 600, '400-599': 0 }, cacheEverything: true } })
+    .then((r) => (r.ok ? r.json() : {})).catch(() => ({}))));
+  return allowedHosts(reg, seeds);
+}
+
+async function relayFeed(url) {
+  const target = String(url.searchParams.get('url') || '');
+  let t;
+  try { t = new URL(target); } catch { return json({ error: 'bad_url' }, 400); }
+  if (t.protocol !== 'https:') return json({ error: 'https_only' }, 400);
+  const allowed = await loadAllowed();
+  if (!allowed.has(hostOf(target))) return json({ error: 'host_not_in_registry' }, 403);
+  const cache = caches.default;
+  const key = new Request(`https://feed-relay.internal/${encodeURIComponent(target)}`);
+  const hit = await cache.match(key);
+  if (hit) return hit;
+  let up;
+  try {
+    up = await fetch(target, {
+      headers: { Accept: 'application/rss+xml, application/atom+xml, application/xml;q=0.9, */*;q=0.5', 'User-Agent': FEED_UA },
+      redirect: 'follow',
+      signal: AbortSignal.timeout(12000),
+    });
+  } catch (e) {
+    return json({ ok: false, error: 'upstream_fetch_failed', message: String((e && e.message) || e) }, 502);
+  }
+  const body = await up.text();
+  if (!up.ok) return json({ ok: false, error: 'upstream_http', status: up.status }, 502);
+  if (!looksLikeFeed(body)) return json({ ok: false, error: 'not_a_feed_or_challenge' }, 502);
+  const res = new Response(body, {
+    status: 200,
+    headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': `public, max-age=${FEED_TTL_SECONDS}`, 'X-Relay-Upstream': hostOf(target) },
+  });
+  await cache.put(key, res.clone());
+  return res;
+}
+
 export default {
   async scheduled(event, env, ctx) {
     ctx.waitUntil(maybeDispatch(env, event.scheduledTime).then((r) => console.log(`cron live: ${r}`)));
@@ -68,7 +132,8 @@ export default {
     if (request.method !== 'GET') return json({ error: 'method_not_allowed' }, 405);
     const url = new URL(request.url);
     const path = url.pathname.replace(/\/+$/, '') || '/';
-    if (path === '/' || path === '/health') return json({ ok: true, service: 'le-radar-presto', sites: Object.keys(HOSTS) });
+    if (path === '/' || path === '/health') return json({ ok: true, service: 'le-radar-presto', sites: Object.keys(HOSTS), feedRelay: true });
+    if (path === '/v1/feed') return relayFeed(url);
     if (path !== '/v1/presto') return json({ error: 'not_found' }, 404);
     const d = String(url.searchParams.get('d') || '');
     if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return json({ error: 'bad_date' }, 400);

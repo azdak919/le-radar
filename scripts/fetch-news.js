@@ -56,6 +56,7 @@ const {
 const { isHtmlListSource, parseHtmlListPage } = require('./html-list-fetcher');
 const { isFirebaseSource, fetchFirebaseFeed } = require('./firebase-list-fetcher');
 const { isAllowedFetchUrl } = require('./url-security-lib');
+const { fetchViaRelay } = require('./feed-relay-lib');
 const {
   groupItemsBySource,
   markRetainedArticles,
@@ -631,6 +632,11 @@ async function fetchRssItems(src = {}) {
     let feedUsed = '';
     for (const feedUrl of uniqueUrls) {
       xml = await fetchText(feedUrl);
+      // Échec réseau/HTTP (corps vide) seulement — jamais sur une page anti-robot.
+      if (!xml) {
+        xml = await fetchViaRelay(feedUrl);
+        if (xml) console.log(`  ↪ relais utilisé pour ${feedUrl}`);
+      }
       if (xml && isFeedXml(xml)) {
         feedUsed = feedUrl;
         break;
@@ -649,7 +655,7 @@ async function fetchRssItems(src = {}) {
   const seen = new Set();
   let feedsOk = 0;
   for (const feedUrl of uniqueUrls) {
-    const xml = await fetchText(feedUrl);
+    const xml = (await fetchText(feedUrl)) || (await fetchViaRelay(feedUrl));
     if (!xml || !isFeedXml(xml)) continue;
     feedsOk += 1;
     for (const item of filterFeedItems(parseFeed(xml), src)) {
