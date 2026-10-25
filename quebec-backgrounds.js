@@ -171,6 +171,11 @@
   const INDOOR_OBJECT_RE =
     /(?:\bcanot\b|\bcanoe\b|\bkayak\b|\bpaddle\b|\bpagaie\b|\bmuseum\b|\bmuseo\b|\bmusée\b|\bmusee\b|\binterior\b|\bintérieur\b|\binterieur\b|\bindoor\b|\bexhibit\b|\bexhibition\b|\bgallery\b|\bgalerie\b|\bmashteuiatsh[\s_-]?0*\d{2,}\b)/i;
 
+  /** Personnes, classe, conférence, manifestation — jamais en fond de mât,
+   *  même pour une photo de campus. */
+  const PEOPLE_EVENT_RE =
+    /(?:formation[\s_-]?wikip|wikipermanence|journ[eé]es?[\s_-]contributives?|edit[\s_-]?a[\s_-]?thon|wikimania|classroom|salle[\s_-]de[\s_-](?:classe|cours)|\bconf[eé]rence\b|\bconference\b|\bs[eé]minaire[\s_-]de\b|\bworkshop\b|\bmeeting\b|\bprotest\b|\brally\b|\bmanifestation\b|\bstudent[\s_-]strike\b|\bgr[eè]ve[\s_-][eé]tudiante\b|\bselfie\b|\bcrowd\b|\bfoule\b|roue[\s_-]de[\s_-]v[eé]lo|toronto)/i;
+
   /** Rocaille / toundra grise sans intérêt (ex. Ultramafic landscape). */
   const BARREN_SCENE_RE =
     /(?:\bultramafic\b|\bbarren\b|\btundra\b|\bwasteland\b|\brocky plain\b|\bquarry\b|\bcarri[eè]re\b)/i;
@@ -231,6 +236,14 @@
     if (!bg || isCampusBackground(bg)) return false;
     const hay = [bg.title, bg.url, bg.link, bg.credit].filter(Boolean).join(" ");
     return INDOOR_OBJECT_RE.test(hay);
+  }
+
+  function isPeopleEventSubject(bg) {
+    if (!bg) return false;
+    const hay = [bg.title, bg.url, bg.link].filter(Boolean).join(" ");
+    let decoded = hay;
+    try { decoded = decodeURIComponent(hay); } catch (_) { /* garde brut */ }
+    return PEOPLE_EVENT_RE.test(hay) || PEOPLE_EVENT_RE.test(decoded.replace(/_/g, " "));
   }
 
   function isBarrenSceneSubject(bg) {
@@ -2452,6 +2465,10 @@
     }
     if (isIndoorObjectSubject(bg)) {
       _rejectAndRetry(bg, pool, { ok: false, reason: "indoor_object_subject" });
+      return;
+    }
+    if (isPeopleEventSubject(bg)) {
+      _rejectAndRetry(bg, pool, { ok: false, reason: "people_event_subject" });
       return;
     }
     if (isBarrenSceneSubject(bg)) {

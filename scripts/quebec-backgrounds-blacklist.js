@@ -334,6 +334,22 @@ const HARD_BANNED = [
     reason: 'campus_fallback_wrong_place',
     note: 'Audit 2026-10-23 — repli campus : mauvais lieu, carte ou vue de ville',
   },
+  {
+    // Audit mât 2026-10-25 : personnes au premier plan, salle de classe,
+    // manifestation — jamais en fond d’en-tête (site et app Android).
+    fragments: [
+      'Formation_Wikip',
+      'Formation Wikip',
+      'Toronto rally and march in support of the Quebec student strike',
+      'Toronto_rally_and_march_in_support_of_the_Quebec_student_strike',
+      'df7c73f1dce7',
+      'Alexandre Castonguay, Roue de vélo',
+      'Alexandre_Castonguay%2C_Roue_de_v',
+      '84eff7796992',
+    ],
+    reason: 'people_or_classroom_subject',
+    note: 'Audit 2026-10-25 — personnes reconnaissables, classe ou manifestation',
+  },
 ];
 
 function loadLabRejectedEntries() {

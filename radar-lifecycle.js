@@ -612,7 +612,9 @@ function mastheadDateChipFits() {
   if (hostBox.width < 1) return false;
   if (MASTHEAD_ACTIONS) {
     const actionsBox = MASTHEAD_ACTIONS.getBoundingClientRect();
-    if (actionsBox.width > 0 && hostBox.right > actionsBox.left + 1) return false;
+    // Mât empilé (téléphone) : boutons sous la date — pas de conflit horizontal.
+    const sameRow = actionsBox.top < hostBox.bottom - 1 && actionsBox.bottom > hostBox.top + 1;
+    if (actionsBox.width > 0 && sameRow && hostBox.right > actionsBox.left + 1) return false;
   }
   if (TODAY_TIME) {
     const timeBox = TODAY_TIME.getBoundingClientRect();

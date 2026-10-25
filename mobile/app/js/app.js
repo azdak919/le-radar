@@ -1404,7 +1404,8 @@
     const actions = document.querySelector('.masthead-actions');
     if (actions) {
       const actionsBox = actions.getBoundingClientRect();
-      if (actionsBox.width > 0 && hostBox.right > actionsBox.left + 1) return false;
+      const sameRow = actionsBox.top < hostBox.bottom - 1 && actionsBox.bottom > hostBox.top + 1;
+      if (actionsBox.width > 0 && sameRow && hostBox.right > actionsBox.left + 1) return false;
     }
     const timeEl = document.getElementById('today-time');
     if (timeEl) {
