@@ -176,6 +176,11 @@
   const PEOPLE_EVENT_RE =
     /(?:formation[\s_-]?wikip|wikipermanence|journ[eé]es?[\s_-]contributives?|edit[\s_-]?a[\s_-]?thon|wikimania|classroom|salle[\s_-]de[\s_-](?:classe|cours)|\bconf[eé]rence\b|\bconference\b|\bs[eé]minaire[\s_-]de\b|\bworkshop\b|\bmeeting\b|\bprotest\b|\brally\b|\bmanifestation\b|\bstudent[\s_-]strike\b|\bgr[eè]ve[\s_-][eé]tudiante\b|\bselfie\b|\bcrowd\b|\bfoule\b|roue[\s_-]de[\s_-]v[eé]lo|toronto)/i;
 
+  /** Œuvres, murales, sculptures, enseignes, affiches, cartes/satellite,
+   *  montages, chantiers — illisibles ou hors sujet en fond de mât. */
+  const ARTWORK_SIGNAGE_RE =
+    /(?:\bmurals?\b|\bmurale?s?\b|\bfresque\b|\bsculptures?\b|\bstatues?\b|\binstallation[\s_-]artistique\b|\bart[\s_-]installation\b|\b(?:public|street)[\s_-]art\b|\bart[\s_-]public\b|\bœuvres?[\s_-]d['’]art\b|\boeuvres?[\s_-]d['’]art\b|\bartworks?\b|\bgraffiti\b|\bposters?\b|\baffiches?\b|\bsignage\b|\benseignes?\b|\bplaques?[\s_-]comm[eé]morative|\bcommemorative[\s_-]plaque|\bsatellite\b|\bnasa\b|\bmontage\b|\bcollage\b|\bcampus[\s_-]?map\b|\bchantier\b|\bunder[\s_-]construction\b|\bconstruction[\s_-]site\b|\bcrane\b)/i;
+
   /** Rocaille / toundra grise sans intérêt (ex. Ultramafic landscape). */
   const BARREN_SCENE_RE =
     /(?:\bultramafic\b|\bbarren\b|\btundra\b|\bwasteland\b|\brocky plain\b|\bquarry\b|\bcarri[eè]re\b)/i;
@@ -244,6 +249,14 @@
     let decoded = hay;
     try { decoded = decodeURIComponent(hay); } catch (_) { /* garde brut */ }
     return PEOPLE_EVENT_RE.test(hay) || PEOPLE_EVENT_RE.test(decoded.replace(/_/g, " "));
+  }
+
+  function isArtworkSignageSubject(bg) {
+    if (!bg) return false;
+    const hay = [bg.title, bg.url, bg.link, bg.categories].filter(Boolean).join(" ");
+    let decoded = hay;
+    try { decoded = decodeURIComponent(hay); } catch (_) { /* garde brut */ }
+    return ARTWORK_SIGNAGE_RE.test(hay) || ARTWORK_SIGNAGE_RE.test(decoded.replace(/_/g, " "));
   }
 
   function isBarrenSceneSubject(bg) {
@@ -2469,6 +2482,10 @@
     }
     if (isPeopleEventSubject(bg)) {
       _rejectAndRetry(bg, pool, { ok: false, reason: "people_event_subject" });
+      return;
+    }
+    if (isArtworkSignageSubject(bg)) {
+      _rejectAndRetry(bg, pool, { ok: false, reason: "artwork_signage_subject" });
       return;
     }
     if (isBarrenSceneSubject(bg)) {

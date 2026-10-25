@@ -350,6 +350,102 @@ const HARD_BANNED = [
     reason: 'people_or_classroom_subject',
     note: 'Audit 2026-10-25 — personnes reconnaissables, classe ou manifestation',
   },
+  {
+    // Audit visuel mât 2026-10-25 (390x170 / 412x180) : œuvre, murale ou détail architectural abstrait, illisible au bandeau.
+    fragments: [
+      'e5cbec7ef2b4', // Jean Gagnon — McGill University downtown campus 23
+      'd68ab398358c', // Khayman — UQTR - Pavillon Ringuet
+      '304086aaf953', // Chicoutimi — École Polytechnique de Montréal
+      '421514a73f00', // Pierre5018 — Hall dentrée de Polytechnique Montréal
+      '28fca3cd36ca', // Justinhandgregory — CJ Building, Loyola Campus, Communication Studies, Concordia
+      '70393ac79bac', // Cephas — Pavillon DKN, Université Laval 12
+      '017b41d9ba0d', // Jean Gagnon — Pavillon Judith-Jasmin UQAM 08
+    ],
+    reason: 'abstract_art_closeup',
+    note: 'Purge 2026-10-25 — signalement « image horrible » (Jean Gagnon — McGill, oiseaux découpés) + audit complet.',
+  },
+  {
+    // Audit visuel mât 2026-10-25 (390x170 / 412x180) : enseigne, plaque ou texte dominant.
+    fragments: [
+      '8c294e22a073', // LBM1948 — Parque Nacional de Forillon 12
+      '3c491281ecdd', // Uncivil Fire — Université de Sherbrooke - Centre culturel
+      'a2d0fe697235', // François Ruph — 190927-003-UQAT
+      '977541b0079a', // Jean Gagnon — McGill University downtown campus 29
+      '4dd2da64a207', // busand2003 — UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC - panoramio (
+      '28c20fac11c9', // abdallahh — Pavillon Claudette-MacKay-Lassonde, Polytechnique Montréal
+    ],
+    reason: 'signage_text',
+    note: 'Purge 2026-10-25 — signalement « image horrible » (Jean Gagnon — McGill, oiseaux découpés) + audit complet.',
+  },
+  {
+    // Audit visuel mât 2026-10-25 (390x170 / 412x180) : carte, vue satellite ou montage.
+    fragments: [
+      '0f3dbbddc6d6', // NASA — Montreal NASA cropped
+      'caa9c64d3a34', // Ljfaucher — Région métropolitaine de Montréal (2011)
+      '8b76a9e00a6c', // Chicoutimi CampusUQAC07_282.JPG : servic — Ville saguenay montage
+    ],
+    reason: 'map_or_aerial_abstract',
+    note: 'Purge 2026-10-25 — signalement « image horrible » (Jean Gagnon — McGill, oiseaux découpés) + audit complet.',
+  },
+  {
+    // Audit visuel mât 2026-10-25 (390x170 / 412x180) : flou, sombre ou délavé (ou hors Québec).
+    fragments: [
+      'f85bedb0ab7a', // Ferrand, Henri (1853-1926). Photographe — Bourg dOisans - lac des Sources de la Rives - btv1b10670534
+      '9515bb3e5d78', // Seeris — ManawanOct2016 12
+      '3ca1c6be9700', // abdallahh — Polytechnique Montréal la nuit
+      'd83fe1e1b5eb', // abdallahh — Pavillon Lassonde la nuit, Polytechnique Montréal
+      'b2addad2c3d4', // Université Laval — Institut universitaire en santé mentale de Québec, 2601, che
+      '0918e49b45c2', // Université Laval — Institut universitaire en santé mentale de Québec, 2601, che
+      '22e3e9cab1ae', // Université Laval — Institut universitaire en santé mentale de Québec, 2601, che
+      'a99b52ea2245', // Université Laval — Institut universitaire en santé mentale de Québec, 2601, che
+      '5271eb6c518f', // Université Laval — Institut universitaire en santé mentale de Québec, 2601, che
+      '4ce2f15fbb37', // Université Laval — Institut universitaire en santé mentale de Québec, 2601, che
+    ],
+    reason: 'blurry_dark_or_washed',
+    note: 'Purge 2026-10-25 — signalement « image horrible » (Jean Gagnon — McGill, oiseaux découpés) + audit complet.',
+  },
+  {
+    // Audit visuel mât 2026-10-25 (390x170 / 412x180) : gros plan : le sujet disparaît au recadrage 390x170.
+    fragments: [
+      '51a318153a96', // peupleloup — Assis au soleil (40916349852)
+      '582ef31c6453', // Jean Gagnon — Henry F. Hall Building 01, Concordia University
+      '4242d9aea59f', // Jean Gagnon — Henry F. Hall Building 10, Concordia University
+      '912fa583aa5b', // Jean Gagnon — Campus de Longueuil — Université de Sherbrooke
+      'd83f724160b3', // Jean Gagnon — McGill University downtown campus 31
+      '57e176d26a4f', // Cephas — Pavillon DKN, Université Laval 07
+      'f01aab488e1d', // Great11 — Pavillon Judith-Jasmin UQAM 1
+      '37e5052fe9d5', // Jean Gagnon — McGill University downtown campus 36
+      '23f64f9a62e9', // Jean Gagnon — McGill University downtown campus 37
+      'd0d1fe488fcd', // Thomas1313 — Campus UdeM sous la neige, Montréal 01
+      '68eee6cfefb2', // Thomas1313 — Campus UdeM sous la neige, Montréal 03
+      'a6912b63a539', // busand2003 — UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC - panoramio
+      '3bf58bbe1d71', // busand2003 — UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC - panoramio (
+      '10e449723dab', // busand2003 — UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC - panoramio (
+      'dd017af05727', // busand2003 — UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC - panoramio (
+      '2567e6e5f6b7', // busand2003 — UNIVERSITÉ DE SHERBROOKE, CAMPUS LONGUEUIL, QC - panoramio (
+      'fe03a5d0af2f', // Wilfredor — Entrance of the Pavillon Alphonse-Desjardins at Universite L
+      'f7322ee7f041', // abdallahh — Escalier vers Polytechnique Montréal
+      '3da5edaa89e6', // Jean Gagnon — McGill University downtown campus 16
+    ],
+    reason: 'closeup_crop_loses_subject',
+    note: 'Purge 2026-10-25 — signalement « image horrible » (Jean Gagnon — McGill, oiseaux découpés) + audit complet.',
+  },
+  {
+    // Audit visuel mât 2026-10-25 (390x170 / 412x180) : écluse / bassin industriel.
+    fragments: [
+      'e9306b527cab', // Dennis G. Jarvis — Quebec-00151 - Lock number 3 of the Soulanges Canal. (514451
+    ],
+    reason: 'industrial_basin',
+    note: 'Purge 2026-10-25 — signalement « image horrible » (Jean Gagnon — McGill, oiseaux découpés) + audit complet.',
+  },
+  {
+    // Audit visuel mât 2026-10-25 (390x170 / 412x180) : personnes visibles.
+    fragments: [
+      '7e22eeeb1d30', // D. Benjamin Miller — Roddick Gates closed, McGill University, July 17, 2024
+    ],
+    reason: 'people_visible',
+    note: 'Purge 2026-10-25 — signalement « image horrible » (Jean Gagnon — McGill, oiseaux découpés) + audit complet.',
+  },
 ];
 
 function loadLabRejectedEntries() {
