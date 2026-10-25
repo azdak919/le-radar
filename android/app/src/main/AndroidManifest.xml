@@ -74,6 +74,18 @@
             android:resource="@xml/automotive_app_desc" />
 
         <provider
+            android:name="ca.leradar.app.crash.CrashLogger"
+            android:authorities="${applicationId}.crashlogger"
+            android:exported="false"
+            android:initOrder="2147483647" />
+
+        <activity
+            android:name="ca.leradar.app.crash.CrashReportActivity"
+            android:exported="false"
+            android:label="Rapport de plantage"
+            android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
+
+        <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"

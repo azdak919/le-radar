@@ -97,10 +97,16 @@ test.describe('application mobile', () => {
     await page.evaluate(() => window.scrollTo(0, 0));
     const mastBottom = await page.evaluate(() => Math.round(document.querySelector('.masthead').getBoundingClientRect().bottom));
     expect(mastBottom).toBeGreaterThan(40); // mât compact ; sans data/ en CI il est plus bas
-    expect(Math.abs(await barTop() - mastBottom)).toBeLessThanOrEqual(2);
+    // Carte verre flottante : 8 px sous le mât.
+    expect(Math.abs(await barTop() - mastBottom - 8)).toBeLessThanOrEqual(2);
     // Après défilement : collée en haut de l'écran (sticky), sans débordement.
     await page.evaluate(() => window.scrollTo(0, 4000));
-    await expect.poll(barTop).toBeLessThan(2);
+    await expect.poll(barTop).toBeLessThan(10);
+    const glass = await page.evaluate(() => { const b = document.getElementById('player'); const r = b.getBoundingClientRect(); const cs = getComputedStyle(b); return { left: Math.round(r.left), right: Math.round(innerWidth - r.right), radius: parseFloat(cs.borderTopLeftRadius), blur: cs.backdropFilter || cs.webkitBackdropFilter || '' }; });
+    expect(glass.left).toBe(12); expect(glass.right).toBe(12); expect(glass.radius).toBeGreaterThanOrEqual(18);
+    expect(glass.blur).toContain('blur(20px)');
+    // Hors app native : pas de plugin Cast → pas de bouton Cast.
+    await expect(page.locator('#player-cast')).toBeHidden();
     await expect(bar).toBeVisible();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
     expect(overflow).toBe(false);

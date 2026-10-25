@@ -105,31 +105,53 @@ html.has-tuner-safe-cap body { --tuner-h: 0px; }
    en haut de l'écran (sous la barre d'état) pendant le défilement. Le mât
    occupe le haut de page, encoche comprise, comme sur le site. */
 .shell > .player {
+  /* Carte « verre dépoli » flottante : marges de 12 px, coins arrondis, le
+     contenu défile derrière avec le flou. Même rendu dans les deux thèmes.
+     Fond assez opaque pour un contraste AA du texte blanc même sur une
+     photo blanche (pire cas : ~#5d5e64 sous le texte → ≥ 6:1). */
   position: sticky;
-  top: env(safe-area-inset-top, 0px);
+  top: calc(env(safe-area-inset-top, 0px) + 8px);
   bottom: auto;
   left: auto;
   right: auto;
   transform: none;
   width: auto;
-  margin: 0;
-  border-radius: 0;
-  border: 0;
-  background: #252830;
-  color: #f3f1ea;
-  --ink: #f3f1ea;
-  --ink-soft: #b9bcc6;
+  margin: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.10) 0%, rgb(255 255 255 / 0.02) 42%, rgb(255 255 255 / 0) 100%),
+    rgb(30 32 40 / 0.94);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.30), 0 2px 6px rgb(0 0 0 / 0.18), inset 0 1px 0 rgb(255 255 255 / 0.14);
+  color: #f6f5f0;
+  --ink: #f6f5f0;
+  --ink-soft: #c9ccd6;
+  --muted: #c9ccd6;
+  isolation: isolate;
 }
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .shell > .player {
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.10) 0%, rgb(255 255 255 / 0.02) 42%, rgb(255 255 255 / 0) 100%),
+      rgb(30 32 40 / 0.72);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+  }
+}
+.shell > .player.is-idle { box-shadow: 0 6px 20px rgb(0 0 0 / 0.22), inset 0 1px 0 rgb(255 255 255 / 0.14); }
+.shell > .player .player-info { border-radius: 14px; }
+.shell > .player .player-toggle { box-shadow: 0 4px 12px rgb(200 16 46 / 0.35); }
+/* Un bouton masqué (Cast hors saveur full, × au repos) reste masqué. */
+.player [hidden] { display: none !important; }
 body.has-player { --player: 0px; }
-.shell > .player .player-now { color: #b9bcc6; }
+.shell > .player .player-now { color: #c9ccd6; }
 .shell > .player .player-prev, .shell > .player .player-next { color: #f3f1ea; }
 /* Compacte, toujours là : au repos, la barre propose une station à lancer.
    Arrêter n'apparaît qu'en lecture (la barre revient alors au repos). */
 .player { min-height: 54px; padding: 4px 6px 4px 4px; }
 .player .player-info { min-height: 44px; }
 .player.is-idle .player-stop { display: none; }
-.player.is-idle { box-shadow: none; }
-body.has-player #screen [id], body.has-player .sports-anchor { scroll-margin-top: calc(66px + env(safe-area-inset-top, 0px)); }
+body.has-player #screen [id], body.has-player .sports-anchor { scroll-margin-top: calc(80px + env(safe-area-inset-top, 0px)); }
 
 /* ─── Cartes article : exactement le rendu du site mobile (style-feed.css) ───
    Les blocs viennent de scripts/article-card-lib.js (même ordre, mêmes dates,
