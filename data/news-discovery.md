@@ -1,6 +1,6 @@
 # Découverte des médias étudiants — journal du bot
 
-Dernière passe : **2026-10-25 18:07 UTC** · sources actives : **20**.
+Dernière passe : **2026-10-25 18:28 UTC** · sources actives : **21**.
 
 Les médias qui respectent les règles sont **ajoutés automatiquement** au fil. Pour retirer une source hors sujet sans qu'elle revienne : ajouter une entrée dans `data/source-blocklist.json` (nom ou site + raison).
 
@@ -8,7 +8,7 @@ Les médias qui respectent les règles sont **ajoutés automatiquement** au fil.
 
 | Média | Établissement | Flux | Dernier article |
 |---|---|---|---|
-| La Griffe | Cégep de l'Outaouais | https://journallagriffe.ca/feed/ | 2026-10-19 |
+| Bandersnatch | John Abbott College | https://bandersnatch.ca/feed/ | 2026-10-12 |
 
 ## Candidats écartés
 
@@ -17,7 +17,6 @@ Les médias qui respectent les règles sont **ajoutés automatiquement** au fil.
 | Le Griffonnier | Université du Québec à Chicoutimi | https://ceuc.ca/ | aucun flux RSS/Atom public |
 | Le Prétexte | Cégep de Rimouski | https://www.cegep-rimouski.qc.ca/le-pretexte | site de l'établissement (portail institutionnel) |
 | La Plume | Cégep de Jonquière | https://laplumejournal.ca/ | aucun flux RSS/Atom public |
-| Bandersnatch | John Abbott College | https://bandersnatch.ca/ | aucun flux RSS/Atom public |
 | The Blue Ink | Champlain College Saint-Lambert | https://www.theblueink.ca/ | aucun flux RSS/Atom public |
 | Le Brise-Glace | Cégep de Rimouski | https://lebrise-glace.com/ | liste de blocage : site mort, retiré le 2026-10-23 |
 | L'Heuristique | École de technologie supérieure (ÉTS) | https://lheuris.ca/ | aucun flux RSS/Atom public |
