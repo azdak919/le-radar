@@ -75,7 +75,13 @@ function campusNeedlesFor(institution = '') {
   }
   if (/\buqac\b/.test(raw) || (/\bchicoutimi\b/.test(raw) && /universit/.test(raw))) add('uqac');
   if (/\buqar\b/.test(raw) || (/\brimouski\b/.test(raw) && /universit/.test(raw))) add('uqar');
-  if (/\buqo\b/.test(raw) || /outaouais/.test(raw)) add('uqo');
+  // « outaouais » seul servait l’UQO au Cégep de l’Outaouais.
+  if (/\buqo\b/.test(raw) || (/outaouais/.test(raw) && !/cegep|college/.test(raw))) add('uqo');
+  if (/outaouais/.test(raw) && /cegep|college/.test(raw)) {
+    add('cegep de l outaouais');
+    add('felix leclerc');
+  }
+  if (/john abbott/.test(raw)) add('john abbott');
   if (/\buqat\b/.test(raw) || /abitibi/.test(raw)) add('uqat');
   if (/\bets\b/.test(raw) || /ecole de technologie/.test(raw)) add('ets');
   if (/\bhec\b/.test(raw)) add('hec');

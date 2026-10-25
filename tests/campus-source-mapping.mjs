@@ -50,6 +50,8 @@ const EXPECT = [
   { re: /maisonneuve/, ok: ['maisonneuve'], no: [] },
   { re: /universite du quebec a chicoutimi/, ok: ['uqac', 'universite du quebec a chicoutimi'], no: [] },
   { re: /universite du quebec a rimouski/, ok: ['uqar', 'universite du quebec a rimouski', 'universite du quebec 300 allee des ursulines'], no: ['levis'] },
+  { re: /outaouais/, ok: ['outaouais', 'felix leclerc'], no: ['uqo', 'universite du quebec en outaouais'] },
+  { re: /john abbott/, ok: ['john abbott'], no: ['mcgill'] },
   { re: /cegep de rimouski/, ok: ['cegep de rimouski', 'cegep rimouski', 'cegeprimouski'], no: ['uqar'] },
 ];
 
