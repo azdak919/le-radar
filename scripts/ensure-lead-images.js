@@ -427,6 +427,46 @@ async function applyStockPhoto(item, sourceMap = new Map(), { avoidCampusUrls = 
   return true;
 }
 
+/**
+ * Dernière garde « jamais la même image sur deux cartes » : les étapes de
+ * scrape remettent l'og:image de chaque page (série Le Délit « Huîtres »).
+ * Le billet le plus récent garde la photo ; les autres reçoivent une photo
+ * libre pertinente (crédit), sinon le campus du média.
+ */
+async function dedupeCardImages(items = []) {
+  const keyOf = (u) => String(u || '').replace(/^https?:\/\//, '').replace(/[?#].*$/, '')
+    .replace(/-\d+x\d+(?=\.[a-z]+$)/i, '').toLowerCase();
+  const groups = new Map();
+  for (const it of items) {
+    if (!it || !it.image) continue;
+    const k = keyOf(it.image);
+    if (!groups.has(k)) groups.set(k, []);
+    groups.get(k).push(it);
+  }
+  const usedStock = new Set(items.map((it) => it && it.stockImage).filter(Boolean));
+  let fixed = 0;
+  for (const group of groups.values()) {
+    if (group.length < 2) continue;
+    group.sort((a, b) => (Date.parse(b.date || '') || 0) - (Date.parse(a.date || '') || 0));
+    for (const it of group.slice(1)) {
+      it.image = '';
+      it.leadImageReady = false;
+      clearMirroredLead(it);
+      let stock = null;
+      try { stock = await findStockPhoto(it); } catch { stock = null; }
+      if (!stock?.stockImage || usedStock.has(stock.stockImage)) {
+        stock = pickCampusPhoto(it, { avoidUrls: [...usedStock] });
+      }
+      if (stock?.stockImage) {
+        applyPhotoFields(it, stock);
+        usedStock.add(stock.stockImage);
+      }
+      fixed += 1;
+    }
+  }
+  return fixed;
+}
+
 function backfillImageCreator(item) {
   if (item.imageCreator || !item.imageCredit) return;
   const m = String(item.imageCredit).match(/^Photo\s*:\s*(.+?)\s*\/\s*/i);
@@ -881,6 +921,8 @@ async function main() {
 
   if (doUpdate) {
     applyLeadImagePins(allItems);
+    const dedup = await dedupeCardImages(allItems);
+    if (dedup) console.log(`↻ ${dedup} photo(s) déjà sur une autre carte → banque libre / campus`);
     fs.writeFileSync(NEWS_PATH, JSON.stringify({ ...news, items: allItems, count: allItems.length }, null, 2) + '\n');
     fs.writeFileSync(QC_PATH, JSON.stringify(qc, null, 2) + '\n');
     saveStockSearchCache();
@@ -891,7 +933,7 @@ async function main() {
   }
 }
 
-module.exports = { replacePortraitLead, fillClearedLead, mapPool, assignSourceImage, hasCropSafeImage, fillsLeadWhenCropped };
+module.exports = { dedupeCardImages, replacePortraitLead, fillClearedLead, mapPool, assignSourceImage, hasCropSafeImage, fillsLeadWhenCropped };
 
 if (require.main === module) {
   main().catch((e) => {
