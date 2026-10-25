@@ -354,7 +354,6 @@ const HARD_BANNED = [
     // Audit visuel mât 2026-10-25 (390x170 / 412x180) : œuvre, murale ou détail architectural abstrait, illisible au bandeau.
     fragments: [
       'e5cbec7ef2b4', // Jean Gagnon — McGill University downtown campus 23
-      'd68ab398358c', // Khayman — UQTR - Pavillon Ringuet
       '421514a73f00', // Pierre5018 — Hall dentrée de Polytechnique Montréal
       '28fca3cd36ca', // Justinhandgregory — CJ Building, Loyola Campus, Communication Studies, Concordia
     ],

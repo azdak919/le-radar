@@ -4754,5 +4754,18 @@ const PHOTO_BANK = [
     season: "automne",
     tags: ["mat", "pomo"],
     surfaces: ["masthead", "pomo"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/c/cb/UQTR_-_Pavillon_Ringuet.JPG",
+    credit: "Khayman",
+    link: "https://commons.wikimedia.org/wiki/File:UQTR_-_Pavillon_Ringuet.JPG",
+    license: "CC BY-SA 3.0",
+    title: "UQTR - Pavillon Ringuet",
+    place: "UQTR",
+    width: 1920,
+    height: 1080,
+    campus: true,
+    tags: ["mat", "campus"],
+    surfaces: ["masthead"],
   }
 ];

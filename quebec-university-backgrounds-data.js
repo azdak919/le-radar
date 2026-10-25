@@ -1721,5 +1721,17 @@ const QUEBEC_UNIVERSITY_BACKGROUNDS = [
     campus: true,
     season: "ete",
     tags: ["mat", "campus"],
+  },
+  {
+    url: "https://upload.wikimedia.org/wikipedia/commons/c/cb/UQTR_-_Pavillon_Ringuet.JPG",
+    credit: "Khayman",
+    link: "https://commons.wikimedia.org/wiki/File:UQTR_-_Pavillon_Ringuet.JPG",
+    license: "CC BY-SA 3.0",
+    title: "UQTR - Pavillon Ringuet",
+    width: 1920,
+    height: 1080,
+    place: "UQTR",
+    campus: true,
+    tags: ["mat", "campus"],
   }
 ];
