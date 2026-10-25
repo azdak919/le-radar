@@ -81,6 +81,7 @@ const WEAK_NEWS_LABEL = /^(actualit[eé]s?|nouvelles?|news|communiqu[eé]s?|pres
 // === HTTP ====================================================================
 const { fetchViaRelay } = require('./feed-relay-lib');
 /** Direct, puis relais si (et seulement si) le direct échoue réseau/HTTP. */
+const CHALLENGE_BLOCKED = 'challenge-blocked';
 const CHALLENGE_RE = /sgcaptcha|cf-chl|captcha|challenge-platform|just a moment/i;
 async function fetchFeedWithRelay(url) {
   const direct = await fetchText(url);
@@ -276,6 +277,16 @@ async function probeCandidate(cand) {
   return { ...(best || { feedUrl: null, isFeed: false, items: 0, lastItemMs: null }), challenge, pageText };
 }
 
+function markChallengeBlocked(registry, cand) {
+  const key = admission.norm(cand.name);
+  let c = registry.candidates.find((x) => admission.norm(x.name) === key);
+  if (!c) { c = { name: cand.name, institution: cand.institution, region: cand.region, site: cand.site, lang: cand.lang }; registry.candidates.push(c); }
+  c._status = CHALLENGE_BLOCKED;
+  c._statusLabel = 'bloqué par une page anti-robot';
+  c._lastChecked = new Date().toISOString();
+  delete c._retiredReason;
+}
+
 // === Coverage report (cross-reference institutions.json) =====================
 function norm(s = '') {
   return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
@@ -399,6 +410,10 @@ async function main() {
         rejected.push({ name: cand.name, institution: cand.institution, site: cand.site || cand.url, reason: verdict.reason });
       }
       console.log(`  ·  ${String(cand.name).padEnd(22)} ${verdict.reason}`);
+      // Vrai média bloqué par une page anti-robot : statut dédié, re-sondé
+      // chaque semaine, admis seul si le flux redevient accessible. Jamais de
+      // relais pour lui (le Worker refuse ce statut) — aucun contournement.
+      if (probe.challenge) markChallengeBlocked(registry, cand);
     }
   }
   const addedNames = new Set(added.map((a) => admission.norm(a.name)));

@@ -11,4 +11,6 @@ const hosts = w.allowedHosts({ active: [{ url: 'https://www.a.ca/feed/' }], cand
 assert.deepEqual([...hosts].sort(), ['a.ca', 'c.ca']);
 assert.ok(!w.looksLikeFeed('<html><script src="/.well-known/sgcaptcha/">'));
 assert.ok(!w.looksLikeFeed('<rss> sgcaptcha'));
+const h2 = w.allowedHosts({ candidates: [{ name: 'Bandersnatch', site: 'https://bandersnatch.ca/', _status: 'challenge-blocked' }] }, { seeds: [{ site: 'https://bandersnatch.ca/' }, { site: 'https://laplumejournal.ca/' }] });
+assert.deepEqual([...h2], ['laplumejournal.ca'], 'statut anti-robot : jamais relayé');
 console.log('feed-relay: ok');

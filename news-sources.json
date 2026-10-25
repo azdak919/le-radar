@@ -586,11 +586,21 @@
       },
       "_note": "Ajout automatique (2026-10-25) par discover-news-sources — John Abbott College, bandersnatch.ca. Repli images : banque campus John Abbott College. Retrait : data/source-blocklist.json.",
       "_autoAdded": "2026-10-25T18:24:38.755Z",
-      "_status": "retired",
+      "_status": "challenge-blocked",
       "_failCount": 1,
       "_lastItemDate": "2026-10-12T14:00:00.000Z",
       "_lastChecked": "2026-10-25T18:29:00.103Z",
-      "_retiredReason": "liste de blocage : captcha SiteGround (sgcaptcha)"
+      "_statusLabel": "bloqué par une page anti-robot"
+    },
+    {
+      "name": "La Plume",
+      "institution": "Cégep de Jonquière",
+      "region": "Saguenay–Lac-Saint-Jean",
+      "site": "https://laplumejournal.ca/",
+      "lang": "fr",
+      "_status": "challenge-blocked",
+      "_statusLabel": "bloqué par une page anti-robot",
+      "_lastChecked": "2026-10-25T18:34:58Z"
     }
   ],
   "_lastRun": "2026-10-25T18:40:14.458Z",

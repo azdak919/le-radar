@@ -301,3 +301,7 @@ scripts/
   discover-news-sources.js # santé + promotion candidates
   maintain.js              # orchestrateur
 ```
+## Relais et pages anti-robot
+
+- Un flux **public** qui échoue depuis GitHub Actions (blocage réseau/HTTP, sans page anti-robot) est relu automatiquement via le Worker `le-radar-presto` (`/v1/feed?url=`), limité aux hôtes du registre publié et au RSS/Atom (`scripts/feed-relay-lib.js`).
+- Une source qui renvoie une page anti-robot (captcha) n'est **jamais** relayée : elle reçoit le statut candidat `challenge-blocked` (« bloqué par une page anti-robot »), re-sondé chaque semaine et admis automatiquement si le flux redevient accessible. Ce n'est pas la liste de blocage (`data/source-blocklist.json`, réservée aux sources hors sujet retirées pour de bon).

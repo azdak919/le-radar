@@ -76,8 +76,10 @@ export function allowedHosts(registry = {}, seeds = {}, blocklist = {}) {
   const blocked = new Set((blocklist.entries || []).map((e) => hostOf(e.site || e.url)).filter(Boolean));
   for (const s of [...(registry.active || []), ...(registry.candidates || []), ...(seeds.seeds || [])]) {
     if (s && s._status === 'retired') continue;
+    if (s && s._status === 'challenge-blocked') { for (const u of [s.url, s.site]) { const h = hostOf(u); if (h) blocked.add(h); } }
     for (const u of [s && s.url, s && s.site]) { const h = hostOf(u); if (h && !blocked.has(h)) set.add(h); }
   }
+  for (const h of blocked) set.delete(h);
   return set;
 }
 

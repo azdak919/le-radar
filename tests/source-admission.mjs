@@ -87,6 +87,10 @@ assert.equal(A.dedupeCandidates(seeds).length, seeds.length, 'graines sans doubl
 const bl = JSON.parse(readFileSync(new URL('../data/source-blocklist.json', import.meta.url)));
 assert.ok(Array.isArray(bl.entries));
 const live = JSON.parse(readFileSync(new URL('../news-sources.json', import.meta.url)));
+for (const c of live.candidates.filter((x) => x._status === 'challenge-blocked')) {
+  assert.ok(!live.active.some((s) => A.norm(s.name) === A.norm(c.name)), `${c.name} : anti-robot mais actif`);
+  assert.equal(A.isBlocked(c, A.loadBlocklist(bl)), null, `${c.name} : anti-robot ≠ liste de blocage`);
+}
 for (const s of live.active) assert.equal(A.isBlocked(s, A.loadBlocklist(bl)), null, `${s.name} est bloqué mais actif`);
 
 // Le workflow publie UNE issue permanente et ne demande pas d'approbation
