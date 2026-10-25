@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-25T14:47:08.170Z",
+  "updatedAt": "2026-10-25T16:13:31.013Z",
   "timezone": "America/Toronto",
   "stations": {
     "chyz": {
@@ -7,11 +7,11 @@
       "name": "CHYZ 94,3",
       "current": null,
       "next": {
-        "title": "Le Ré-Show : Deuxième Service",
+        "title": "Remparts de Québec",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://chyz.ca/emission/le-re-show-deuxieme-service/"
+        "start": "14:45",
+        "end": "17:30",
+        "url": "https://chyz.ca/emission/hockey-des-remparts-de-quebec/"
       },
       "track": "",
       "showTitle": "",
@@ -21,52 +21,52 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T14:46:30.840Z"
+      "checkedAt": "2026-10-25T16:12:31.941Z"
     },
     "cism": {
       "id": "cism",
       "name": "CISM 89,3",
       "current": {
-        "title": "Ya Raï",
+        "title": "Les sirènes",
         "source": "schedule",
-        "start": "10:00",
-        "end": "11:00",
-        "url": "https://cism893.ca/emissions/ya-rai"
+        "start": "12:00",
+        "end": "14:00",
+        "url": "https://cism893.ca/emissions/les-sirenes"
       },
       "next": {
-        "title": "Effets sonores",
+        "title": "Le char de marge",
         "source": "schedule",
-        "start": "11:00",
-        "end": "12:00",
-        "url": "https://cism893.ca/emissions/effets-sonores"
+        "start": "14:00",
+        "end": "16:00",
+        "url": "https://cism893.ca/emissions/le-char-de-marge"
       },
       "track": "",
-      "showTitle": "Ya Raï",
+      "showTitle": "Les sirènes",
       "host": "",
       "source": "schedule",
       "sources": [
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T14:46:32.735Z"
+      "checkedAt": "2026-10-25T16:12:33.850Z"
     },
     "ckut": {
       "id": "ckut",
       "name": "CKUT 90,3",
       "current": {
-        "title": "International Radio Report",
-        "source": "api-live",
-        "start": "10:30",
-        "end": "11:00"
-      },
-      "next": {
         "title": "Free Kick",
         "source": "api-live",
         "start": "11:00",
         "end": "13:00"
       },
+      "next": {
+        "title": "Modular Systems/Future Classics",
+        "source": "api-live",
+        "start": "13:00",
+        "end": "14:00"
+      },
       "track": "",
-      "showTitle": "International Radio Report",
+      "showTitle": "Free Kick",
       "host": "",
       "source": "api-live",
       "sources": [
@@ -74,34 +74,34 @@
         "stream"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T14:46:35.126Z"
+      "checkedAt": "2026-10-25T16:12:36.431Z"
     },
     "cjlo": {
       "id": "cjlo",
       "name": "CJLO 1690AM",
       "current": {
-        "title": "Rigged Sessions",
-        "source": "schedule-live",
-        "start": "10:00",
-        "end": "12:00",
-        "url": "http://www.cjlo.com/shows/rigged-sessions"
-      },
-      "next": {
         "title": "Brave Little Emo Girl",
-        "source": "schedule-live",
+        "source": "schedule",
         "start": "12:00",
         "end": "13:00",
         "url": "http://www.cjlo.com/shows/brave-little-emo-girl"
       },
+      "next": {
+        "title": "Northern Stagelights",
+        "source": "schedule",
+        "start": "13:00",
+        "end": "14:00",
+        "url": "http://www.cjlo.com/shows/northern-stagelights"
+      },
       "track": "",
-      "showTitle": "Rigged Sessions",
+      "showTitle": "Brave Little Emo Girl",
       "host": "",
-      "source": "schedule-live",
+      "source": "schedule",
       "sources": [
-        "schedule-live"
+        "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T14:46:49.354Z"
+      "checkedAt": "2026-10-25T16:13:11.324Z"
     },
     "cfak": {
       "id": "cfak",
@@ -121,28 +121,34 @@
         "schedule"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T14:46:50.271Z"
+      "checkedAt": "2026-10-25T16:13:12.499Z"
     },
     "choq": {
       "id": "choq",
       "name": "CHOQ.ca",
-      "current": null,
-      "next": {
+      "current": {
         "title": "OPUS",
         "source": "api-live",
         "start": "12:00",
         "end": "13:00",
         "slug": "opus"
       },
+      "next": {
+        "title": "Mutations",
+        "source": "api-live",
+        "start": "17:00",
+        "end": "18:00",
+        "slug": "mutations"
+      },
       "track": "Cadence Weapon — Line Dry",
-      "showTitle": "",
+      "showTitle": "OPUS",
       "host": "",
       "source": "api-live",
       "sources": [
         "api-live"
       ],
       "clientPoll": null,
-      "checkedAt": "2026-10-25T14:47:07.819Z"
+      "checkedAt": "2026-10-25T16:13:30.662Z"
     }
   }
 }
