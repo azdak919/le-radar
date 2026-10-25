@@ -1678,6 +1678,7 @@ html[data-translate-busy="1"] .translate-toggle {
      jamais coupées à mi-hauteur) reste visible, « Plus de sources » déplie
      le reste juste en dessous. Cartes compactes. */
   .filters-panel.has-overflow:not(.is-expanded):not(.is-compact) > #news-filters {
+    margin-bottom: 0;
     max-height: none;
     overflow: visible;
     -webkit-mask-image: none;
@@ -1688,7 +1689,7 @@ html[data-translate-busy="1"] .translate-toggle {
   .filters-panel.has-overflow:not(.is-expanded):not(.is-compact)::after { display: none; }
   #news-filters > .filter-btn { padding-top: 5px; padding-bottom: 5px; min-height: 0; }
   #news-filters .filter-btn__inst { line-height: 1.25; }
-  .filters-panel.has-overflow:not(.is-expanded):not(.is-compact) > .filters-toggle { margin-top: 6px; padding-top: 5px; padding-bottom: 5px; min-height: 0; line-height: 1.3; }
+  .filters-panel.has-overflow:not(.is-expanded):not(.is-compact) > .filters-toggle { margin-top: 8px; padding-top: 5px; padding-bottom: 5px; min-height: 0; line-height: 1.3; }
   /* Place regagnée : bande sports et rubrique « À la une » plus serrées. */
   .masthead-sports-strip.masthead-sports-strip { padding-top: 4px; padding-bottom: 2px; }
   .news-hero .article--lead { padding-top: 6px; }
@@ -1696,6 +1697,5 @@ html[data-translate-busy="1"] .translate-toggle {
   .masthead-sports-strip .sports-chip { padding-top: 5px; padding-bottom: 5px; min-height: 0; }
   .site-sections { margin-top: 0; margin-bottom: 0; }
   .news-hero .article--lead .article-eyebrow { margin-bottom: 4px; }
-  .filters-panel.has-overflow:not(.is-expanded):not(.is-compact) > .filters-toggle { margin-top: 0; }
   #news-filters-panel { margin-top: 6px; }
 }

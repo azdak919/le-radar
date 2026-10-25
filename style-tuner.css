@@ -1325,3 +1325,9 @@ html.is-firefox .tuner-cast--bar[hidden] { display: flex !important; }
 #tuner-select option.is-offline { color: #8a8a8a; }
 .tuner.is-station-offline #tuner-now-name,
 #tuner.is-station-offline #tuner-now-name { opacity: .55; filter: grayscale(1); }
+
+/* Thème sombre : filet fin pour détacher la barre radio du fond (thème clair inchangé). */
+[data-theme="dark"] .tuner {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}

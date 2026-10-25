@@ -50,7 +50,9 @@
   --muted: #888d96;
   --rule: #26282d;
   --rule-strong: #f1f2f4;
-  --tuner-bg: #1a1c21; /* synthé thème sombre — d’origine */
+  /* Synthé thème sombre : un cran plus clair que le fond (#0e0f12) pour qu'il
+     ne s'y fonde pas, bordure fine dans style-tuner.css. */
+  --tuner-bg: #252830;
   --accent: #cf7ec1;       /* pourpre éclairci pour lisibilité sur fond sombre */
   --accent-dark: #b85fa8;
   color-scheme: dark;

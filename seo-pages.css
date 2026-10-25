@@ -1739,3 +1739,10 @@
 /* Mosaïque (sports-board.js) : rangées fines, chaque carte s’étend selon sa hauteur. */
 .sports-board.is-masonry { grid-auto-rows: 4px !important; row-gap: 0 !important; }
 .sports-board.is-masonry > * { align-self: start; }
+
+/* Page Sports et mosaïque : bordure fine (1 px) cohérente avec les autres
+ * cartes ; la couleur d'équipe ou de statut reste portée par la bordure. */
+.sports-panel { border-top-width: 1px; }
+.sports-result--next,
+.sports-result--W,
+.sports-result--L { border-left-width: 1px; }
