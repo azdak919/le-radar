@@ -1,19 +1,25 @@
 {
-  "updated": "2026-10-25T18:44:26.932Z",
+  "updated": "2026-10-25T20:00:01.988Z",
   "total": 174,
-  "withPhoto": 155,
-  "withStock": 38,
-  "withCampusBank": 27,
+  "withPhoto": 154,
+  "withStock": 39,
+  "withCampusBank": 28,
   "fullyCovered": 174,
   "leadReadyPhotos": 134,
-  "pageScraped": 33,
-  "photosRecovered": 32,
-  "imagesCleared": 12,
-  "stockSearches": 43,
+  "pageScraped": 30,
+  "photosRecovered": 30,
+  "imagesCleared": 13,
+  "stockSearches": 42,
   "stockFound": 34,
-  "campusBankFound": 22,
+  "campusBankFound": 23,
   "mainPageLeadReady": true,
   "gaps": [
+    {
+      "title": "Letters from the Editors October 2026",
+      "link": "https://theplantnews.com/2026/10/25/letters-from-the-editors-october-2026/",
+      "reason": "no-stock-match",
+      "image": "https://theplantnews.com/wp-content/uploads/2026/10/pplant.jpg"
+    },
     {
       "title": "L’Oktoberfest du Club Lions célèbre sa 7e édition",
       "link": "https://lapige.atmjonquiere.com/2026/10/23/loktoberfest-du-club-lions-celebre-sa-7e-edition/?utm_source=rss&utm_medium=rss&utm_campaign=loktoberfest-du-club-lions-celebre-sa-7e-edition",
@@ -33,28 +39,22 @@
       "image": "https://i0.wp.com/journallagriffe.ca/wp-content/uploads/2026/10/Article1.png?fit=601%2C403&ssl=1"
     },
     {
+      "title": "Un changement d’aile qui pourrait faire s’envoler les Griffons du Cégep de l’Outaouais",
+      "link": "https://journallagriffe.ca/2026/10/un-changement-daile-qui-pourrait-faire-senvoler-les-griffons-du-cegep-de-loutaouais/",
+      "reason": "no-stock-match",
+      "image": "https://journallagriffe.ca/wp-content/uploads/2026/10/Image1-1.png"
+    },
+    {
       "title": "Gatineau est représenté dans les nominations du gala de l’ADISQ",
       "link": "https://journallagriffe.ca/2026/10/gatineau-est-represente-dans-les-nominations-du-gala-de-ladisq/",
       "reason": "no-stock-match",
       "image": "https://journallagriffe.ca/wp-content/uploads/2026/10/Image1.png"
     },
     {
-      "title": "Démission de Christine Fréchette : quel avenir pour la CAQ ?",
-      "link": "https://lecollectif.ca/societe/demission-de-christine-frechette-quel-avenir-pour-la-caq/",
-      "reason": "stock-too-small",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/7/71/Christine_Fr%C3%A9chette.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "The Honey Bank: CSU’s sustainability initiatives",
-      "link": "https://theconcordian.com/2026/10/the-honey-bank-csus-sustainability-initiatives/",
+      "title": "CSU fails to reach quorum at special council meeting",
+      "link": "https://thelinknewspaper.ca/article/16488",
       "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/2135-2149_Mackay_Street%2C_Montreal.JPG"
-    },
-    {
-      "title": "Retour sur le festival d’arts littéraires Québec en toutes lettres",
-      "link": "https://impactcampus.ca/arts-et-culture/retour-sur-le-festival-darts-litteraires-quebec-en-toutes-lettres/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Pavillon_DKN%2C_Universit%C3%A9_Laval_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Henry_F._Hall_Building_10.jpg"
     },
     {
       "title": "“Decolonization”",
@@ -63,28 +63,28 @@
       "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Wilson_Hall%2C_McGill_University.jpg"
     },
     {
+      "title": "Horoscope September 2026",
+      "link": "https://theplantnews.com/2026/10/13/horoscope-september-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/16/Metro-level_entrance%2C_Dawson_College%2C_Apr_06_2022.jpg"
+    },
+    {
+      "title": "Creative Writing September 2026",
+      "link": "https://theplantnews.com/2026/10/13/creative-writing-september-2026/",
+      "reason": "campus-bank",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Dawson_College_1.jpg"
+    },
+    {
       "title": "Health First!",
       "link": "https://www.mcgilldaily.com/2026/10/health-first/",
       "reason": "campus-bank",
       "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Roddick_Gates_%28McGill_University%29_2005-09-02.jpg"
     },
     {
-      "title": "Shawarm-off!",
-      "link": "https://www.mcgilldaily.com/2026/10/shawarm-off/",
-      "reason": "campus-bank",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Roddick_Gates_closed%2C_McGill_University%2C_July_17%2C_2024.jpg"
-    },
-    {
       "title": "Gods, Heroes, Men, and Pigs: Classics Department Brings Reflections on Nolan’s The Odyssey to the Agora",
       "link": "https://thebucampus.ca/2026/09/30/gods-heroes-men-and-pigs-classics-department-brings-reflections-on-nolans-the-odyssey-to-the-agora/",
       "reason": "no-stock-match",
       "image": "https://upload.wikimedia.org/wikipedia/commons/8/82/Bishop%27s_University_campus_2011_04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
-    },
-    {
-      "title": "Prepare for Fewer Course Options in the Coming Years: Budget Cuts are Affecting the Number of Courses Available at BU",
-      "link": "https://thebucampus.ca/2026/09/30/prepare-for-fewer-course-options-in-the-coming-years-budget-cuts-are-affecting-the-number-of-courses-available-at-bu/",
-      "reason": "no-stock-match",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Bishop%27s_University_campus_2011_03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
     }
   ]
 }
