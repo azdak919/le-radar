@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-25T20:31:43.075Z",
+  "updated": "2026-10-25T21:01:28.151Z",
   "total": 174,
   "withImage": 153,
   "withCredit": 153,
@@ -7,87 +7,45 @@
   "pending": 39,
   "missingHero": 0,
   "ok": false,
-  "checked": 50,
-  "updatedCount": 11,
-  "citedNew": 11,
-  "fallbackNew": 39,
+  "checked": 44,
+  "updatedCount": 5,
+  "citedNew": 4,
+  "fallbackNew": 40,
   "samples": [
     {
-      "title": "Say “Coffee” Again! I Dare You.",
-      "source": "The Plant",
-      "credit": "Image via Pulp Fiction",
-      "cited": true,
-      "method": "via-attribution"
+      "title": "Un changement d’aile qui pourrait faire s’envoler les Griffons du Cégep de l’Outaouais",
+      "source": "La Griffe",
+      "credit": "Photo : La Griffe",
+      "cited": false,
+      "method": null
     },
     {
-      "title": "Comment bien habiter le campus ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Simone Gingras",
+      "title": "Rouge d’une part, blanche de l’autre",
+      "source": "Le Délit",
+      "credit": "Photo : Tan YiYang",
       "cited": true,
-      "method": "figcaption-trailing-fr"
+      "method": "figcaption-bare"
     },
     {
-      "title": "NAZA : enquête sur les rouages des frappes israéliennes sur Gaza.",
-      "source": "Quartier Libre",
-      "credit": "Photo : The Guardian",
+      "title": "Est-ce que je dois un bébé à l’État ?",
+      "source": "Le Délit",
+      "credit": "Photo : Catvy Tran",
       "cited": true,
-      "method": "figcaption-trailing-fr"
+      "method": "media-credit-featured"
     },
     {
-      "title": "F(R)ICTION : quand le jeu vidéo devient une expérience artistique",
-      "source": "Quartier Libre",
-      "credit": "Photo : Joséphine Dao-Devenyns",
+      "title": "Looking back at my journey walking El Camino de Santiago",
+      "source": "The Concordian",
+      "credit": "Photo: Courtesy of Sonia Celi",
       "cited": true,
-      "method": "figcaption-trailing-fr"
+      "method": "figcaption-trailing"
     },
     {
-      "title": "Festivals au Québec : la fête à quel prix ?",
-      "source": "Quartier Libre",
-      "credit": "Photo : Émanuel Novak-Bélanger pour Noovo info",
+      "title": "Tex Crick: Indie Through and Through",
+      "source": "The McGill Daily",
+      "credit": "Photo : Zafiro Chiossoni",
       "cited": true,
-      "method": "figcaption-trailing-fr"
-    },
-    {
-      "title": "Math, now, … Thinking Outside the Box",
-      "source": "The Plant",
-      "credit": "Image via Charlie Reuter",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Figure Skating With a Stick",
-      "source": "The Plant",
-      "credit": "Image via Instagram",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "“Strava Or It Didn’t Happen”: On Our Obsession With Tracking",
-      "source": "The Plant",
-      "credit": "Image via Pinterest",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Needs and Spaces: How Often They Should Work Together",
-      "source": "The Plant",
-      "credit": "Image via Th3rdwave",
-      "cited": true,
-      "method": "via-attribution"
-    },
-    {
-      "title": "Sécurité routière à Marguerite-Bourgeoys : des défis persistent",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Héléna Pleau / L'Exemplaire",
-      "cited": true,
-      "method": "figcaption-paren-kind"
-    },
-    {
-      "title": "Le patrimoine religieux de Québec : un financement inégal",
-      "source": "L'Exemplaire",
-      "credit": "Photo : Hermione Durocher / L’Exemplaire",
-      "cited": true,
-      "method": "figcaption-paren-kind"
+      "method": "media-credit-featured"
     }
   ]
 }
