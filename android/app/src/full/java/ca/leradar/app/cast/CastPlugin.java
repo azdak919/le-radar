@@ -1,6 +1,7 @@
 package ca.leradar.app.cast;
 
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.mediarouter.app.MediaRouteChooserDialog;
@@ -13,6 +14,8 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.cast.MediaInfo;
 import com.google.android.gms.cast.MediaLoadRequestData;
 import com.google.android.gms.cast.MediaMetadata;
@@ -46,18 +49,34 @@ public class CastPlugin extends Plugin {
     @Override public void onSessionSuspended(@NonNull CastSession s, int r) {}
   };
 
-  @Override
-  public void load() {
+  private boolean initTried;
+
+  /**
+   * Initialisation PARESSEUSE et tolérante : rien au lancement de l'app.
+   * Premier appel JS (isAvailable) seulement, sur le fil principal, après
+   * vérification des services Google Play. Toute erreur (y compris Error,
+   * p. ex. NoClassDefFoundError / module dynamite) → Cast indisponible,
+   * l'app continue sans bouton Cast.
+   */
+  private CastContext castContext() {
+    if (initTried) return cast;
+    initTried = true;
     try {
-      cast = CastContext.getSharedInstance(getContext());
-      cast.getSessionManager().addSessionManagerListener(listener, CastSession.class);
-    } catch (RuntimeException e) {
-      cast = null; // Pas de services Google Play : Cast indisponible.
+      int gms = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getContext());
+      if (gms != ConnectionResult.SUCCESS) return cast = null;
+      CastContext ctx = CastContext.getSharedInstance(getContext().getApplicationContext());
+      ctx.getSessionManager().addSessionManagerListener(listener, CastSession.class);
+      cast = ctx;
+    } catch (Throwable t) {
+      Log.w("LeRadarCast", "Cast indisponible", t);
+      cast = null;
     }
+    return cast;
   }
 
   private CastSession session() {
-    return cast == null ? null : cast.getSessionManager().getCurrentCastSession();
+    if (cast == null) return null;
+    try { return cast.getSessionManager().getCurrentCastSession(); } catch (Throwable t) { return null; }
   }
 
   private void onConnected(CastSession s) {
@@ -97,20 +116,26 @@ public class CastPlugin extends Plugin {
 
   @PluginMethod
   public void isAvailable(PluginCall call) {
-    JSObject r = new JSObject();
-    r.put("available", cast != null);
-    r.put("connected", session() != null && session().isConnected());
-    call.resolve(r);
+    getActivity().runOnUiThread(() -> {
+      try { castContext(); } catch (Throwable t) { cast = null; }
+      JSObject r = new JSObject();
+      boolean connected = false;
+      try { connected = session() != null && session().isConnected(); } catch (Throwable ignored) { }
+      r.put("available", cast != null);
+      r.put("connected", connected);
+      call.resolve(r);
+    });
   }
 
   /** Bouton Cast : sélecteur natif (ou contrôleur si déjà connecté). */
   @PluginMethod
   public void showPicker(PluginCall call) {
+    try { castContext(); } catch (Throwable t) { cast = null; }
     if (cast == null) { call.reject("cast unavailable"); return; }
     pendingUrl = call.getString("url");
     pendingTitle = call.getString("title", "");
     pendingArtist = call.getString("artist", "");
-    getActivity().runOnUiThread(() -> {
+    getActivity().runOnUiThread(() -> { try {
       MediaRouteSelector selector = cast.getMergedSelector();
       if (selector == null) { call.reject("no selector"); return; }
       CastSession s = session();
@@ -123,11 +148,11 @@ public class CastPlugin extends Plugin {
         dialog.show();
       }
       call.resolve();
-    });
+    } catch (Throwable t) { Log.w("LeRadarCast", "sélecteur", t); call.reject("cast error"); } });
   }
 
   @PluginMethod
-  public void load(PluginCall call) {
+  public void loadMedia(PluginCall call) {
     CastSession s = session();
     if (s == null || !s.isConnected()) { call.reject("not connected"); return; }
     getActivity().runOnUiThread(() -> {

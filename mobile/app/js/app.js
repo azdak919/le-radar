@@ -167,7 +167,7 @@
   }
   function castLoad(radio) {
     const p = castPlugin();
-    if (p && radio) Promise.resolve(p.load(castPayload(radio))).catch(() => {});
+    if (p && radio) Promise.resolve(p.loadMedia(castPayload(radio))).catch(() => {});
   }
   function syncCastButton() {
     const btn = document.getElementById('player-cast');

@@ -21,7 +21,7 @@ public class CastPlugin extends Plugin {
   public void showPicker(PluginCall call) { call.reject("cast unavailable"); }
 
   @PluginMethod
-  public void load(PluginCall call) { call.reject("cast unavailable"); }
+  public void loadMedia(PluginCall call) { call.reject("cast unavailable"); }
 
   @PluginMethod
   public void end(PluginCall call) { call.resolve(); }

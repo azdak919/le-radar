@@ -44,3 +44,7 @@
 -keep class ca.leradar.app.radio.** { *; }
 -keep class androidx.media3.** { *; }
 -dontwarn androidx.media3.**
+
+# Cast (saveur full) : le fournisseur d'options est lu par réflexion (meta-data).
+-keep class ca.leradar.app.cast.CastOptionsProvider { *; }
+-keep class ca.leradar.app.cast.CastPlugin { *; }
